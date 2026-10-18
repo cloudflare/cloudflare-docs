@@ -22,7 +22,7 @@ Every Access policy has four building blocks:
 - [**Selectors**](#selectors): The attributes being checked (for example, email domain, country, or device posture)
 - **Values**: The specific values to match against (for example, `@example.com`)
 
-## Cloudflare Access policy actions
+## Cloudflare Access policy actions {/* actions */}
 
 Actions let you grant or deny permission to a certain user or user group. You can set only one action per policy.
 
@@ -97,7 +97,7 @@ The following table shows an example Cloudflare Access Service Auth policy confi
 | ------------ | --------- | ----------------- |
 | Service Auth | Include   | Valid certificate |
 
-## Cloudflare Access rule types
+## Cloudflare Access rule types {/* rule-types */}
 
 Rule types work like logical operators and determine how your criteria are combined to evaluate a user. All Access policies must contain at least one Include rule. This Include rule defines the initial pool of eligible users who can access an application. You can then add Exclude and Require rules to narrow the scope.
 
@@ -139,7 +139,7 @@ This policy requires the user to be in the United States AND Portugal simultaneo
         | Allow  | Require   | Rule group         | `Country requirements`                    |
         |        | Include   | Emails ending in  | `@cloudflare.com`, `@contractors.com` |
 
-## Cloudflare Access selectors
+## Cloudflare Access selectors {/* selectors */}
 
 When you add a rule to your Cloudflare Access policy, you will be asked to specify the criteria, or attributes, you want users to meet. These attributes are available for all Access application types, including [SaaS](/cloudflare-one/access-controls/applications/http-apps/saas-apps/), [self-hosted](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/), and [non-HTTP](/cloudflare-one/access-controls/applications/non-http/) applications.
 
@@ -157,7 +157,7 @@ Non-identity attributes are polled continuously, meaning they are evaluated with
 | Valid Certificate        | The request will need to present any valid client certificate.                                                                                                                                                                                                                                                                           | ✅               | ✅                               | ❌                       |
 | Service Token            | The request will need to present the correct service token headers configured for the specific application. Requires the [Service Auth](#service-auth) action.                                                                                                                                                                           | ✅               | ✅                               | ❌                       |
 | Any Access Service Token | The request will need to present the headers for any [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) created for this account. Requires the [Service Auth](#service-auth) action.                                                                                                                   | ✅               | ✅                               | ❌                       |
-| User Risk Score          | The user's current [risk score](/cloudflare-one/team-and-resources/users/risk-score/) (Low, Medium, or High). Acts as a threshold — users with a score at or below the specified level pass the check. This selector only displays for Enterprise plans.                                                                                 | ✅               | ✅                               | ✅                       |
+| User Risk Score          | The user's current [risk score](/cloudflare-one/team-and-resources/users/risk-score/) (Low, Medium, High, or Unscored). Matches only the values selected in the rule. This selector only displays for Enterprise plans.                                                                                                                   | ✅               | ✅                               | ✅                       |
 | Linked App Token         | Checks for a valid [OAuth access token](/cloudflare-one/access-controls/applications/linked-app-token/) issued to a specific Access application. Requires the [Service Auth](#service-auth) action.                                                                                                                                                   | ✅               | ✅                               | ❌                       |
 | Login Methods            | Checks the identity provider used at the time of login.                                                                                                                                                                                                                                                                                  | ✅               | ❌                               | ✅                       |
 | Authentication Method    | Checks the [multi-factor authentication](/cloudflare-one/access-controls/policies/mfa-requirements/#identity-provider-based-mfa) method used by the user, if supported by the identity provider. To enforce MFA independently of your IdP, refer to [independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/). | ✅               | ❌                               | ✅                       |

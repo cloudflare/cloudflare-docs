@@ -13,6 +13,12 @@
 	"context_length": 200000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 3,
+		"Output tokens (per 1M)": 15,
+		"Cached input tokens (per 1M)": 0.3,
+		"Cache creation tokens (per 1M)": 3.75
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -641,6 +647,17 @@
 		"anthropic-messages"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "anthropic",
+			"pricing": {
+				"input_tokens": 3,
+				"output_tokens": 15,
+				"input_cached_tokens": 0.3,
+				"input_cache_creation_tokens": 3.75
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:52:57",
 	"schema": {
@@ -789,13 +806,9 @@
 					"type": "string"
 				},
 				"stop_reason": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {

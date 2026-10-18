@@ -24,7 +24,8 @@ const label = date.toLocaleDateString("en-US", {
 	<time
 		datetime={iso}
 		class="text-muted-foreground mb-2 block font-mono text-[0.8125rem] leading-[1.1] font-medium whitespace-nowrap tabular-nums lg:absolute lg:top-[var(--node-y)] lg:right-[calc(100%+1.75rem)] lg:mb-0 lg:w-[var(--date-w)] lg:-translate-y-1/2 lg:text-right"
-		>{label}</time
 	>
+		{label}
+	</time>
 	<span class="nb-cl-dot" aria-hidden="true"></span>
 </div>

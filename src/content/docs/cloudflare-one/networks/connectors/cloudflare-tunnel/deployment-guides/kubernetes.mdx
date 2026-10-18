@@ -270,6 +270,8 @@ To run the Cloudflare Tunnel in Kubernetes:
                - --no-autoupdate
                - --loglevel
                - info
+               - --output
+               - json
                - --metrics
                - 0.0.0.0:2000
                - run
@@ -290,7 +292,11 @@ To run the Cloudflare Tunnel in Kubernetes:
    kubectl create -f tunnel.yaml
    ```
 
-   Kubernetes will install the `cloudflared` image on two pods and run the tunnel using the command `cloudflared tunnel --no-autoupdate --loglevel info --metrics 0.0.0.0:2000 run`. `cloudflared` will consume the tunnel token from the `TUNNEL_TOKEN` environment variable.
+   Kubernetes will install the `cloudflared` image on two pods and run the tunnel using the command `cloudflared tunnel --no-autoupdate --loglevel info --output json --metrics 0.0.0.0:2000 run`.
+
+   The `--output json` flag formats each console log line as a JSON object. This format is useful for log collection systems that consume JSON.
+
+   `cloudflared` will consume the tunnel token from the `TUNNEL_TOKEN` environment variable.
 
 3. Check the status of your cluster:
 
@@ -328,14 +334,8 @@ To print logs for a `cloudflared` instance:
 kubectl logs pod/cloudflared-deployment-6d5f9f9666-85l5w
 ```
 
-```sh output
-2025-06-11T22:00:47Z INF Starting tunnel tunnelID=64c359b6-e111-40ec-a3a9-199c2a656613
-2025-06-11T22:00:47Z INF Version 2025.6.0 (Checksum 72f233bb55199093961bf099ad62d491db58819df34b071ab231f622deff33ce)
-2025-06-11T22:00:47Z INF GOOS: linux, GOVersion: go1.24.2, GoArch: amd64
-2025-06-11T22:00:47Z INF Settings: map[loglevel:debug metrics:0.0.0.0:2000 no-autoupdate:true token:*****]
-2025-06-11T22:00:47Z INF Generated Connector ID: aff7c4a0-85a3-4ac9-8475-1e0aa1af8d94
-2025-06-11T22:00:47Z DBG Fetched protocol: quic
-2025-06-11T22:00:47Z INF Initial protocol quic
+```txt output
+{"level":"info","message":"Starting tunnel","time":"2025-06-20T22:00:47Z","tunnelID":"64c359b6-e111-40ec-a3a9-199c2a656613"}
 ...
 ```
 

@@ -93,7 +93,7 @@ By default a deployment takes effect immediately, because the Worker version is 
 If your origin data changed but requests still return stale content:
 
 - **Check the TTL.** The response stays cached for `max-age` seconds. You may be looking at a response that is still within its freshness window.
-- **Purge the affected responses.** Use `ctx.cache.purge()` with tags or a path prefix to invalidate specific entries. Refer to [Purging the cache](/workers/cache/purge/).
+- **Purge the affected responses.** Use `ctx.cache.purge()` with tags or a path prefix to delete specific entries. Refer to [Purging the cache](/workers/cache/purge/).
 - **Add tags at write time.** If you did not set `Cache-Tag` headers, you cannot purge by tag. Add tags to your cached responses, deploy, and once new entries are written they become purgeable.
 
 ## Two callers receive each other's cached responses

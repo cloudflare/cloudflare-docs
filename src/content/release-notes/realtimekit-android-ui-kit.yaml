@@ -3,6 +3,12 @@ link: "/realtime/realtimekit/release-notes/android-ui-kit/"
 productName: RealtimeKit Android UI Kit
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-09-16"
+    title: RealtimeKit Android UI Kit 3.2.0
+    description: |-
+      **Enhancements**
+
+      - Aligned the version with [RealtimeKit Android Core v3.2.0](/realtime/realtimekit/release-notes/android-core/#2026-09-16). This release has no breaking changes.
   - publish_date: "2026-07-17"
     title: RealtimeKit Android UI Kit 3.1.0
     description: |-

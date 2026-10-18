@@ -1,0 +1,620 @@
+"use client";
+
+// Container placement & routing (Concepts page). The first request to a
+// location starts an instance there; later requests reuse the warm instance.
+// Bursts demonstrate additional requested instances being placed.
+import { useEffect, useRef, useState } from "react";
+import { Diagram, useDiagramOrDefault } from "@cloudflare/nimbus-docs/react";
+import {
+	Connector,
+	LabelCard,
+	SimpleCard,
+	WeldedCard,
+	ComputeGlyph,
+	COMPUTE_GLYPH_W,
+	COMPUTE_GLYPH_H,
+	convergenceDocks,
+	autoLabelRect,
+	dockPoint,
+	edgePoint,
+	makeRect,
+	uniformCardWidth,
+	EASE_OUT,
+	MOTION,
+} from "../diagram-weld";
+import { indentedRect } from "../diagram-weld/welding";
+import { RENDER_SCALE, WeldCanvas } from "./WeldCanvas";
+import { Toolbar, ResetButton } from "./Transport";
+import type { DiagramFallbackProps } from "./DiagramFallback";
+
+const REGION_H = 60;
+const REGION_HEADER_H = 28;
+const REGION_PAD_X = 12;
+const REGION_FONT_SIZE = 11;
+
+const INSTANCE_W = 124;
+const INSTANCE_H = 88;
+const INSTANCE_HEADER_H = 28;
+const INSTANCE_HEADER_FS = 11;
+const DESKTOP_GLYPH_SCALE = 1;
+const MOBILE_GLYPH_SCALE = 1.35;
+const REFERENCE_VIEW_W = 340;
+const REFERENCE_HEADER_FS = 11;
+
+const DESKTOP_REGION_GAP = 24;
+const MOBILE_REGION_GAP = 32;
+const ROW_GAP_TOP = 54;
+const MOBILE_REGION_W_DELTA = 8;
+const MOBILE_INSTANCE_W_DELTA = 10;
+const ROW_GAP_BOTTOM = 64;
+
+const SCHEDULER_H = 32;
+const SCHEDULER_PAD_X = 12;
+
+const MAX_INSTANCES = 4;
+const CONCURRENCY = 1;
+const PROCESS_MS = 900;
+const TILE_OFFSET = 5;
+const IDLE_MS = 2600;
+const DECAY_MS = 700;
+const DECK_REACH = (MAX_INSTANCES - 1) * TILE_OFFSET;
+
+const REGIONS = ["us", "eu", "apac"] as const;
+type RegionId = (typeof REGIONS)[number];
+const REGION_LABELS: Record<RegionId, string> = {
+	us: "Location A",
+	eu: "Location B",
+	apac: "Location C",
+};
+
+const MIN_VIEW_W = 360;
+const SIDE_MARGIN = 16;
+const TOP = 18;
+const BOTTOM_MARGIN = 20;
+const REGION_DOCK_FRAC = 0.5;
+const PULSE_MS = 650;
+const STARTUP_MS = 400;
+
+const zeros = (): Record<RegionId, number> => ({ us: 0, eu: 0, apac: 0 });
+const falses = (): Record<RegionId, boolean> => ({
+	us: false,
+	eu: false,
+	apac: false,
+});
+
+// Container + spiral compute glyph, matching the Workers `worker` card.
+function InstanceCard({
+	rect,
+	active,
+	playing,
+	reduced,
+	headerH,
+	headerFS,
+}: {
+	rect: ReturnType<typeof makeRect>;
+	active: boolean;
+	playing: boolean;
+	reduced: boolean;
+	headerH: number;
+	headerFS: number;
+}) {
+	const bodyTop = rect.t + headerH;
+	const bodyAvail = rect.h - headerH;
+	const glyphTransform = (scale: number) => {
+		const glyphW = COMPUTE_GLYPH_W * scale;
+		const glyphH = COMPUTE_GLYPH_H * scale;
+		const gx = rect.cx - glyphW / 2;
+		const gy = bodyTop + (bodyAvail - glyphH) / 2;
+		return `translate(${gx} ${gy}) scale(${scale})`;
+	};
+	return (
+		<SimpleCard
+			rect={rect}
+			notches={{ top: true, bottom: true }}
+			label="Container"
+			active={active}
+			headerH={headerH}
+			headerFontSize={headerFS}
+			pad={Math.max(2, (headerH - 6) / 2)}
+		>
+			<g
+				style={{
+					color: active ? "var(--color-brand)" : "currentColor",
+					transition: `color ${MOTION.transition}ms ${EASE_OUT}`,
+				}}
+				className={active ? "" : "text-neutral-500 dark:text-neutral-500"}
+			>
+				<g
+					className="hidden min-[480px]:inline"
+					transform={glyphTransform(DESKTOP_GLYPH_SCALE)}
+				>
+					<ComputeGlyph
+						x={0}
+						y={0}
+						active={active}
+						reduced={reduced}
+						playing={playing}
+					/>
+				</g>
+				<g
+					className="min-[480px]:hidden"
+					transform={glyphTransform(MOBILE_GLYPH_SCALE)}
+				>
+					<ComputeGlyph
+						x={0}
+						y={0}
+						active={active}
+						reduced={reduced}
+						playing={playing}
+					/>
+				</g>
+			</g>
+		</SimpleCard>
+	);
+}
+
+export function ContainerPlacement(_props: DiagramFallbackProps) {
+	return (
+		<Diagram
+			label="Requests starting and reusing Container instances in different locations, with a scheduler placing new instances"
+			keyboard={false}
+		>
+			<PlacementBody />
+		</Diagram>
+	);
+}
+
+function PlacementBody() {
+	const ctx = useDiagramOrDefault("ContainerPlacement");
+	const reduced = ctx.reducedMotion;
+	const glyphPlaying = ctx.playing && ctx.visible && ctx.tabVisible;
+
+	const [load, setLoad] = useState<Record<RegionId, number>>(zeros);
+	const [pulse, setPulse] = useState<Record<RegionId, boolean>>(falses);
+	const [scaleFlash, setScaleFlash] =
+		useState<Record<RegionId, boolean>>(falses);
+	const [schedulerArrow, setSchedulerArrow] =
+		useState<Record<RegionId, boolean>>(falses);
+	const [status, setStatus] = useState("");
+	const [instanceHeaderFS, setInstanceHeaderFS] = useState(INSTANCE_HEADER_FS);
+	const [widenMobileNodes, setWidenMobileNodes] = useState(false);
+	const contentRef = useRef<HTMLDivElement>(null);
+	const countRef = useRef<Record<RegionId, number>>(zeros());
+	const inflightRef = useRef<Record<RegionId, number>>(zeros());
+
+	const pulseTimers = useRef<
+		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
+	>({});
+	const scaleTimers = useRef<
+		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
+	>({});
+	const startupTimers = useRef<
+		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
+	>({});
+	const sleepTimers = useRef<
+		Partial<Record<RegionId, ReturnType<typeof setTimeout>>>
+	>({});
+	const releaseTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+	const regionAt = (i: number): RegionId => REGIONS[i] ?? REGIONS[0];
+	const setCount = (id: RegionId, count: number) => {
+		countRef.current = { ...countRef.current, [id]: count };
+		setLoad((current) => ({ ...current, [id]: count }));
+	};
+
+	const scheduleSleep = (id: RegionId) => {
+		if (sleepTimers.current[id]) clearTimeout(sleepTimers.current[id]);
+		const step = () => {
+			const count = countRef.current[id];
+			if (count <= 1) return;
+			setCount(id, count - 1);
+			if (count - 1 > 1) {
+				sleepTimers.current[id] = setTimeout(step, DECAY_MS);
+			}
+		};
+		sleepTimers.current[id] = setTimeout(step, IDLE_MS);
+	};
+
+	const pulseRequest = (id: RegionId) => {
+		setPulse((p) => ({ ...p, [id]: true }));
+		if (pulseTimers.current[id]) clearTimeout(pulseTimers.current[id]);
+		pulseTimers.current[id] = setTimeout(() => {
+			setPulse((p) => ({ ...p, [id]: false }));
+		}, PULSE_MS);
+	};
+
+	const sendRequest = (i: number) => {
+		const id = regionAt(i);
+		const count = countRef.current[id];
+
+		if (count === 0) {
+			if (startupTimers.current[id]) return;
+			setScaleFlash((current) => ({ ...current, [id]: true }));
+			setStatus(`Scheduler is placing an instance in ${REGION_LABELS[id]}.`);
+			startupTimers.current[id] = setTimeout(
+				() => {
+					delete startupTimers.current[id];
+					setCount(id, 1);
+					setSchedulerArrow((current) => ({ ...current, [id]: true }));
+					pulseRequest(id);
+					setStatus(
+						`Scheduler placed and started an instance in ${REGION_LABELS[id]}.`,
+					);
+					scaleTimers.current[id] = setTimeout(() => {
+						setScaleFlash((current) => ({ ...current, [id]: false }));
+						setSchedulerArrow((current) => ({ ...current, [id]: false }));
+					}, PULSE_MS);
+				},
+				reduced ? 0 : STARTUP_MS,
+			);
+			return;
+		}
+
+		pulseRequest(id);
+
+		const inflight = inflightRef.current[id] + 1;
+		inflightRef.current[id] = inflight;
+		const release = setTimeout(() => {
+			inflightRef.current[id] = Math.max(0, inflightRef.current[id] - 1);
+			releaseTimers.current = releaseTimers.current.filter(
+				(timer) => timer !== release,
+			);
+		}, PROCESS_MS);
+		releaseTimers.current.push(release);
+
+		if (inflight > count * CONCURRENCY && count < MAX_INSTANCES) {
+			const next = count + 1;
+			setCount(id, next);
+			setScaleFlash((current) => ({ ...current, [id]: true }));
+			setSchedulerArrow((current) => ({ ...current, [id]: true }));
+			if (scaleTimers.current[id]) clearTimeout(scaleTimers.current[id]);
+			scaleTimers.current[id] = setTimeout(() => {
+				setScaleFlash((current) => ({ ...current, [id]: false }));
+				setSchedulerArrow((current) => ({ ...current, [id]: false }));
+			}, PULSE_MS);
+			setStatus(`${REGION_LABELS[id]} scaled out to ${next} instances.`);
+		} else {
+			setStatus(
+				`${REGION_LABELS[id]} routed the request to ${count} warm instance${count === 1 ? "" : "s"}.`,
+			);
+		}
+
+		scheduleSleep(id);
+	};
+
+	const clearAllTimers = () => {
+		for (const timers of [
+			pulseTimers,
+			scaleTimers,
+			startupTimers,
+			sleepTimers,
+		]) {
+			Object.values(timers.current).forEach((timer) => {
+				if (timer) clearTimeout(timer);
+			});
+			timers.current = {};
+		}
+		releaseTimers.current.forEach(clearTimeout);
+		releaseTimers.current = [];
+	};
+
+	const handleReset = () => {
+		clearAllTimers();
+		countRef.current = zeros();
+		inflightRef.current = zeros();
+		setLoad(zeros());
+		setPulse(falses());
+		setScaleFlash(falses());
+		setSchedulerArrow(falses());
+		setStatus("Reset — no running instances.");
+	};
+
+	useEffect(() => clearAllTimers, []);
+
+	const regionW = uniformCardWidth(
+		[...REGIONS.map((r) => REGION_LABELS[r]), "SEND REQUEST"],
+		{ padX: REGION_PAD_X, fontSize: REGION_FONT_SIZE },
+	);
+	const viewRegionRowW = regionW * 3 + DESKTOP_REGION_GAP * 2;
+	const VIEW_W = Math.max(
+		MIN_VIEW_W,
+		viewRegionRowW + (SIDE_MARGIN + DECK_REACH) * 2,
+	);
+	const regionGap = widenMobileNodes ? MOBILE_REGION_GAP : DESKTOP_REGION_GAP;
+	const regionRowW = regionW * 3 + regionGap * 2;
+	const regionStartX = (VIEW_W - regionRowW) / 2;
+	const regionRects = REGIONS.map((_, i) =>
+		makeRect(regionStartX + i * (regionW + regionGap), TOP, regionW, REGION_H),
+	);
+
+	const instTop = TOP + REGION_H + ROW_GAP_TOP;
+	const instRects = regionRects.map((r) =>
+		makeRect(r.cx - INSTANCE_W / 2, instTop, INSTANCE_W, INSTANCE_H),
+	);
+	const visibleRegionRects = regionRects.map((rect) =>
+		widenMobileNodes
+			? makeRect(
+					rect.l - MOBILE_REGION_W_DELTA / 2,
+					rect.t,
+					rect.w + MOBILE_REGION_W_DELTA,
+					rect.h,
+				)
+			: rect,
+	);
+	const visibleInstRects = instRects.map((rect) =>
+		widenMobileNodes
+			? makeRect(
+					rect.l - MOBILE_INSTANCE_W_DELTA / 2,
+					rect.t,
+					rect.w + MOBILE_INSTANCE_W_DELTA,
+					rect.h,
+				)
+			: rect,
+	);
+
+	const schedulerProbe = autoLabelRect(0, 0, "Scheduler", {
+		h: SCHEDULER_H,
+		padX: SCHEDULER_PAD_X,
+		fontSize: instanceHeaderFS,
+	});
+	const schedulerTop = instTop + INSTANCE_H + ROW_GAP_BOTTOM;
+	const schedulerRect = makeRect(
+		(VIEW_W - schedulerProbe.w) / 2,
+		schedulerTop,
+		schedulerProbe.w,
+		SCHEDULER_H,
+	);
+	const schedulerDocks = convergenceDocks(REGIONS.length);
+	const schedulerCorridorY = (instTop + INSTANCE_H + schedulerTop) / 2;
+	const anyScaling = REGIONS.some((id) => scaleFlash[id]);
+	const VIEW_H = schedulerRect.b + BOTTOM_MARGIN;
+
+	useEffect(() => {
+		const content = contentRef.current;
+		const available = content?.parentElement;
+		if (!content || !available) return;
+
+		const updateHeaderSize = () => {
+			const contentWidth = content.getBoundingClientRect().width;
+			const availableWidth = available.getBoundingClientRect().width;
+			if (contentWidth === 0 || availableWidth === 0) return;
+			setWidenMobileNodes(availableWidth < VIEW_W * RENDER_SCALE);
+
+			const referenceWidth = Math.min(
+				availableWidth,
+				REFERENCE_VIEW_W * RENDER_SCALE,
+			);
+			const referenceRenderedFS =
+				REFERENCE_HEADER_FS * (referenceWidth / REFERENCE_VIEW_W);
+			const placementScale = contentWidth / VIEW_W;
+			const nextSize = Math.min(
+				REFERENCE_HEADER_FS * (VIEW_W / REFERENCE_VIEW_W),
+				Math.max(REFERENCE_HEADER_FS, referenceRenderedFS / placementScale),
+			);
+
+			setInstanceHeaderFS(Number(nextSize.toFixed(2)));
+		};
+
+		updateHeaderSize();
+		const observer = new ResizeObserver(updateHeaderSize);
+		observer.observe(content);
+		observer.observe(available);
+		return () => observer.disconnect();
+	}, [VIEW_W]);
+
+	return (
+		<WeldCanvas
+			width={VIEW_W}
+			height={VIEW_H}
+			contentRef={contentRef}
+			liveStatus={status}
+			controls={
+				<Toolbar
+					status={
+						<span className="block text-center text-[11px] leading-4 font-medium tracking-wide text-balance text-neutral-600 normal-case dark:text-neutral-300">
+							Choose a location
+							<br className="min-[480px]:hidden" /> to send a request
+						</span>
+					}
+					className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-2 py-2.5 [&>div]:col-start-3 [&>div]:ml-auto [&>span]:col-start-2"
+				>
+					<ResetButton onClick={handleReset} />
+				</Toolbar>
+			}
+			overlay={visibleRegionRects.map((rect, i) => {
+				const id = regionAt(i);
+				const actionCenter =
+					rect.t + REGION_HEADER_H + (rect.h - REGION_HEADER_H) / 2;
+				return (
+					<button
+						key={id}
+						type="button"
+						aria-label={`Send a request to ${REGION_LABELS[id]}`}
+						onClick={() => sendRequest(i)}
+						className="absolute flex min-h-11 -translate-y-1/2 cursor-pointer items-center justify-center gap-2 rounded-b-sm bg-transparent px-2.5 font-mono text-[9px] font-medium tracking-widest text-neutral-600 uppercase transition-[color,transform] duration-150 ease-out hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 dark:text-neutral-400 dark:hover:text-neutral-100"
+						style={{
+							left: `${(rect.l / VIEW_W) * 100}%`,
+							top: `${(actionCenter / VIEW_H) * 100}%`,
+							width: `${(rect.w / VIEW_W) * 100}%`,
+							cursor: "pointer",
+						}}
+					>
+						<span className="hidden leading-none min-[480px]:inline">
+							Send request
+						</span>
+						<svg
+							aria-hidden="true"
+							viewBox="0 0 16 16"
+							className="size-3 shrink-0"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="1.75"
+							strokeLinecap="round"
+						>
+							<path d="M8 3v10M3 8h10" />
+						</svg>
+					</button>
+				);
+			})}
+		>
+			<g>
+				{regionRects.map((rR, i) => {
+					const id = regionAt(i);
+					const rI = instRects[i];
+					if (!rI) return null;
+					if (load[id] === 0) {
+						if (!scaleFlash[id]) return null;
+						return (
+							<Connector
+								key={`startup-${i}`}
+								from={edgePoint(rR, "bottom", REGION_DOCK_FRAC)}
+								to={edgePoint(schedulerRect, "top", schedulerDocks[i])}
+								midY={schedulerCorridorY}
+								arrowhead
+								active
+							/>
+						);
+					}
+					if (!pulse[id]) {
+						return (
+							<Connector
+								key={`v-${i}`}
+								from={dockPoint(rR, "bottom", REGION_DOCK_FRAC)}
+								to={dockPoint(rI, "top", REGION_DOCK_FRAC)}
+								ghost
+							/>
+						);
+					}
+					return (
+						<Connector
+							key={`v-${i}`}
+							from={edgePoint(rR, "bottom", REGION_DOCK_FRAC)}
+							to={edgePoint(rI, "top", REGION_DOCK_FRAC)}
+							fromSide="bottom"
+							toSide="top"
+							arrowhead
+							active
+						/>
+					);
+				})}
+
+				{visibleInstRects.map((rect, i) => {
+					const id = regionAt(i);
+					return (
+						<g
+							key={`scheduler-${id}`}
+							style={{
+								opacity: schedulerArrow[id] ? 1 : 0,
+								transition: reduced ? "none" : `opacity 160ms ${EASE_OUT}`,
+							}}
+						>
+							<Connector
+								from={edgePoint(schedulerRect, "top", schedulerDocks[i])}
+								to={edgePoint(rect, "bottom")}
+								fromSide="top"
+								toSide="bottom"
+								arrowhead
+								active
+							/>
+						</g>
+					);
+				})}
+
+				{visibleRegionRects.map((rect, i) => (
+					<SimpleCard
+						key={`region-${i}`}
+						rect={rect}
+						notches={{ bottom: true }}
+						label={REGION_LABELS[regionAt(i)]}
+						active={pulse[regionAt(i)]}
+						headerH={REGION_HEADER_H}
+						headerFontSize={Math.min(instanceHeaderFS, 13.5)}
+						pad={Math.max(2, (REGION_HEADER_H - 6) / 2)}
+					>
+						<path
+							d={indentedRect(
+								makeRect(
+									rect.l + 1,
+									rect.t + REGION_HEADER_H + 1,
+									rect.w - 2,
+									rect.h - REGION_HEADER_H - 2,
+								),
+								{ bottom: true },
+							)}
+							className="fill-neutral-50 dark:fill-neutral-950"
+						/>
+					</SimpleCard>
+				))}
+
+				{visibleInstRects.map((rect, i) => {
+					const id = regionAt(i);
+					const active = pulse[id];
+					const running = load[id] > 0;
+					const extra = Math.max(0, Math.min(MAX_INSTANCES, load[id]) - 1);
+					const depths = Array.from(
+						{ length: MAX_INSTANCES - 1 },
+						(_, index) => MAX_INSTANCES - 1 - index,
+					);
+					return (
+						<g key={`inst-${i}`}>
+							{depths.map((depth) => {
+								const visible = depth <= extra;
+								const offset = depth * TILE_OFFSET;
+								const tileRect = makeRect(
+									rect.l + offset,
+									rect.t + offset,
+									rect.w,
+									rect.h,
+								);
+								return (
+									<g
+										key={`tile-${id}-${depth}`}
+										style={{
+											opacity: visible ? 1 : 0,
+											transform: visible
+												? "translate(0px, 0px)"
+												: `translate(${-TILE_OFFSET}px, ${-TILE_OFFSET}px)`,
+											transition: reduced
+												? "none"
+												: `opacity 220ms ${EASE_OUT}, transform 220ms ${EASE_OUT}`,
+										}}
+									>
+										<WeldedCard
+											rect={tileRect}
+											notches={{ top: true, bottom: true }}
+										/>
+									</g>
+								);
+							})}
+							<g
+								style={{
+									opacity: running ? 1 : 0,
+									transition: reduced ? "none" : `opacity 220ms ${EASE_OUT}`,
+								}}
+							>
+								<InstanceCard
+									rect={rect}
+									active={active}
+									playing={glyphPlaying}
+									reduced={reduced}
+									headerH={INSTANCE_HEADER_H}
+									headerFS={instanceHeaderFS}
+								/>
+							</g>
+						</g>
+					);
+				})}
+
+				<LabelCard
+					rect={schedulerRect}
+					notches={{ top: schedulerDocks }}
+					label="Scheduler"
+					active={anyScaling}
+					fontSize={instanceHeaderFS}
+				/>
+			</g>
+		</WeldCanvas>
+	);
+}
+
+export default ContainerPlacement;

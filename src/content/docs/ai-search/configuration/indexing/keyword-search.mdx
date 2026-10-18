@@ -8,6 +8,8 @@ products:
   - ai-search
 ---
 
+import { Aside } from "~/components";
+
 Enable keyword search to match chunks that contain your query terms exactly. For an overview of search modes, refer to [Search modes](/ai-search/concepts/search-modes/).
 
 ## Enable keyword search
@@ -17,9 +19,11 @@ Set `index_method.keyword` to `true` when creating or updating an instance. You 
 | Field     | Type    | Default | Description                      |
 | --------- | ------- | ------- | -------------------------------- |
 | `vector`  | boolean | `true`  | Enable vector (semantic) search. |
-| `keyword` | boolean | `false` | Enable keyword (BM25) search.    |
+| `keyword` | boolean | `true`  | Enable keyword (BM25) search.    |
 
 At least one of `vector` or `keyword` must be `true`. Changing `index_method` triggers a full reindex of your content.
+
+The `keyword` field defaults to `true`.
 
 ```ts
 const instance = await env.AI_SEARCH.create({
@@ -39,6 +43,14 @@ The `keyword_tokenizer` field (inside `indexing_options`) controls how text is s
 | --------- | ------- | --------------------------------------------------------------------------------- |
 | `porter`  | Yes     | Applies Porter stemming. "running" matches "run." Best for natural language.      |
 | `trigram` | No      | Overlapping 3-character windows. "config" matches "configuration." Best for code. |
+
+<Aside type="caution" title="Japanese, Chinese, and Korean content">
+
+The `porter` tokenizer splits text on spaces and punctuation, so it does not work well for Japanese, Chinese, or Korean. Japanese and Chinese do not separate words with spaces, and Korean attaches particles to words. Keyword search with `porter` may return no results for queries in these languages.
+
+If your content is in Japanese, Chinese, or Korean, use the `trigram` tokenizer. With `trigram`, keyword search matches these queries, including full natural-language questions, against overlapping three-character sequences in your content. Words shorter than three characters cannot be matched on their own.
+
+</Aside>
 
 ## Keyword match mode
 

@@ -25,27 +25,27 @@ Every product includes at least these two pages, from its first release:
 
 Beyond the required pair, use these standard sections whenever your product has the content they describe. Use the standard name so that readers and agents navigate every product's docs the same way.
 
-| Section | What it contains | Related content type |
-| --- | --- | --- |
-| Overview | Orients a new reader to the product and routes them onward. Required. | [Overview](/style-guide/documentation-content-strategy/content-types/overview/) |
-| Get started | The shortest path from nothing to a first working result. Required. | [Get started](/style-guide/documentation-content-strategy/content-types/get-started/) |
-| Concepts | What the product's key ideas are and why they work the way they do. | [Concept](/style-guide/documentation-content-strategy/content-types/concept/) |
-| Features | Groups the task and settings content for a major feature of the product. | [How to](/style-guide/documentation-content-strategy/content-types/how-to/) |
-| Guides | Task-focused pages for completing one specific job. | [How to](/style-guide/documentation-content-strategy/content-types/how-to/) |
-| Tutorials | End-to-end lessons where the reader builds a real project. | [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/) |
-| Examples | Complete, runnable samples that show how something is done. | None |
-| Configuration | The settings, values, and options for a configuration-intensive feature. | [Configuration](/style-guide/documentation-content-strategy/content-types/configuration/) |
-| Reference | Complete, neutral lookup details such as parameters, values, and options. | [Reference](/style-guide/documentation-content-strategy/content-types/reference/) |
-| API | The product's API documentation and command guidance. | [API content strategy](/style-guide/api-content-strategy/) |
-| Models | The available models and their details, for AI products. | [Reference](/style-guide/documentation-content-strategy/content-types/reference/) |
-| Observability | Testing, metrics, analytics, and local development. | None |
-| Best practices | Recommended patterns and guidance for using the product well. | None |
-| Platform | Product-wide pages such as pricing, limits, changelog, betas, and known issues. | [Changelog](/style-guide/documentation-content-strategy/content-types/changelog/) |
-| Glossary | The product's defined terms. | [Glossary](/style-guide/build-the-page/components/glossary/) |
+| Section        | What it contains                                                                | Related content type                                                                      |
+| -------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Overview       | Orients a new reader to the product and routes them onward. Required.           | [Overview](/style-guide/documentation-content-strategy/content-types/overview/)           |
+| Get started    | The shortest path from nothing to a first working result. Required.             | [Get started](/style-guide/documentation-content-strategy/content-types/get-started/)     |
+| Concepts       | What the product's key ideas are and why they work the way they do.             | [Concept](/style-guide/documentation-content-strategy/content-types/concept/)             |
+| Features       | Groups the task and settings content for a major feature of the product.        | [How to](/style-guide/documentation-content-strategy/content-types/how-to/)               |
+| Guides         | Task-focused pages for completing one specific job.                             | [How to](/style-guide/documentation-content-strategy/content-types/how-to/)               |
+| Tutorials      | End-to-end lessons where the reader builds a real project.                      | [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/)           |
+| Examples       | Complete, runnable samples that show how something is done.                     | None                                                                                      |
+| Configuration  | The settings, values, and options for a configuration-intensive feature.        | [Configuration](/style-guide/documentation-content-strategy/content-types/configuration/) |
+| Reference      | Complete, neutral lookup details such as parameters, values, and options.       | [Reference](/style-guide/documentation-content-strategy/content-types/reference/)         |
+| API            | The product's API documentation and command guidance.                           | [API content strategy](/style-guide/api-content-strategy/)                                |
+| Models         | The available models and their details, for AI products.                        | [Reference](/style-guide/documentation-content-strategy/content-types/reference/)         |
+| Observability  | Testing, metrics, analytics, and local development.                             | None                                                                                      |
+| Best practices | Recommended patterns and guidance for using the product well.                   | None                                                                                      |
+| Platform       | Product-wide pages such as pricing, limits, changelog, betas, and known issues. | [Changelog](/style-guide/documentation-content-strategy/content-types/changelog/)         |
+| Glossary       | The product's defined terms.                                                    | [Glossary](/style-guide/build-the-page/components/glossary/)                              |
 
 ## Structure and ordering rules
 
-- Make each core section a folder, even when it currently holds a single page. A lone `get-started.mdx` becomes a `get-started/` folder.
+- Keep the Overview at the product root `index.mdx`. Make every other core section a folder, even when it currently holds a single page. A lone `get-started.mdx` becomes a `get-started/` folder.
 - Place the core folders before any product-specific folders, in the order given under [Core sections](#core-sections).
 - Give every product a Platform folder that holds at least one page, so this section is present consistently rather than only on some products.
 - Name any product-specific folder uniquely and clearly. A product-specific folder is additive: it adds to the core, and it never replaces or reshapes a core section.

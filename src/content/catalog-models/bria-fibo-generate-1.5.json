@@ -1,0 +1,254 @@
+{
+	"model_id": "bria/fibo-generate-1.5",
+	"provider_id": "bria",
+	"name": "FIBO Generate 1.5",
+	"description": "FIBO Generate creates images from a text prompt, a reference image, or both. Each result includes the seed and the structured JSON (VGL) prompt used to render it; send them back to recreate the image exactly or to refine it with a new prompt. Outputs are 1MP or 4MP in nine aspect ratios.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Text-to-Image",
+		"Reference Images",
+		"Structured Prompts"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.03
+	},
+	"examples": [
+		{
+			"name": "Product Photo",
+			"description": "Text-to-image product shot, from Bria's quickstart.",
+			"input": {
+				"prompt": "studio product photo of a matte black insulated travel mug on a white seamless background, soft diffused key light from the upper left, crisp edges",
+				"aspect_ratio": "1:1"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/fibo-generate-1.5/product-photo.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/fibo-generate-1.5/product-photo.png",
+					"seed": 1528689072,
+					"structured_prompt": "{\"short_description\": \"A meticulously composed studio product photograph of a matte black insulated travel mug. The mug stands prominently on a pristine white seamless background, highlighted by soft, diffused key lighting from the upper left, emphasizing its sleek design and crisp edges. The image conveys a sense of modern simplicity and sophisticated utility.\", \"objects\": [{\"description\": \"A modern, insulated travel mug with a minimalist design. It features a cylindrical body that tapers slightly towards the top, with a secure, leak-proof lid. The matte black finish absorbs light, giving it a premium, non-reflective appearance.\", \"location\": \"center\", \"relationship\": \"The primary subject of the photograph, centrally positioned to draw immediate attention.\", \"relative_size\": \"large within frame\", \"shape_and_color\": \"Cylindrical, matte black\", \"texture\": \"Smooth, non-reflective matte finish\", \"appearance_details\": \"Subtle branding logo debossed near the bottom, barely visible due to the matte finish and lighting. The lid is also matte black, with a small, integrated sip opening.\", \"orientation\": \"Upright, perfectly vertical\"}], \"background_setting\": \"A pristine, pure white seamless studio background that creates an infinite, shadow-free horizon, ensuring the product stands out without distractions.\", \"lighting\": {\"conditions\": \"Studio lighting, soft and diffused\", \"direction\": \"Key light from the upper left, fill light from the right to minimize harsh shadows\", \"shadows\": \"Very soft, subtle shadow cast directly beneath and slightly to the right of the mug, providing just enough depth without being distracting. Edges are crisp and well-defined.\"}, \"aesthetics\": {\"composition\": \"Centered, product photography composition, emphasizing symmetry and clean lines.\", \"color_scheme\": \"Monochromatic with high contrast between the matte black mug and the pure white background.\", \"mood_atmosphere\": \"Clean, sophisticated, modern, and minimalist.\", \"aesthetic_score\": \"very high\", \"preference_score\": \"very high\"}, \"photographic_characteristics\": {\"depth_of_field\": \"Shallow, with the mug in sharp focus and the background completely blurred into an abstract white field.\", \"focus\": \"Sharp focus on the entire travel mug, highlighting its crisp edges and surface details.\", \"camera_angle\": \"Eye-level, slightly elevated to showcase the top edge of the lid.\", \"lens_focal_length\": \"Standard lens (e.g., 50mm-85mm) to avoid distortion and accurately represent the product.\"}, \"style_medium\": \"photograph\", \"context\": \"This is a product marketing photograph intended for e-commerce websites, print catalogs, or advertising campaigns, designed to showcase the quality and aesthetic appeal of the travel mug.\", \"artistic_style\": \"realistic\"}"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/fibo-generate-1.5',\n  {\n    prompt:\n      'studio product photo of a matte black insulated travel mug on a white seamless background, soft diffused key light from the upper left, crisp edges',\n    aspect_ratio: '1:1',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/fibo-generate-1.5\",\n  \"input\": {\n    \"prompt\": \"studio product photo of a matte black insulated travel mug on a white seamless background, soft diffused key light from the upper left, crisp edges\",\n    \"aspect_ratio\": \"1:1\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Reference Image",
+			"description": "Generate a new piece of jewelry inspired by a reference photo, from Bria's docs.",
+			"input": {
+				"prompt": "a ring inspired by the image",
+				"images": [
+					"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo/ref_1.jpg"
+				]
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/fibo-generate-1.5/reference-image.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/fibo-generate-1.5/reference-image.png",
+					"seed": 120559985,
+					"structured_prompt": "{\"short_description\": \"A close-up photograph of an elegant ring featuring a teardrop-shaped ruby set in a thick, curb-chain inspired gold band. The ring is positioned on a smooth, light-colored surface, with soft, diffused lighting highlighting its intricate details and the gem's vibrant color.\", \"objects\": [{\"description\": \"An elegant ring with a prominent teardrop-shaped ruby gemstone. The band of the ring is crafted from polished gold, designed to resemble a thick, interlocked curb chain, giving it a modern yet classic aesthetic. The ruby is securely set in a gold bezel, allowing light to pass through and enhance its deep red hue.\", \"location\": \"center\", \"relationship\": \"The central focus of the image, resting on a smooth surface.\", \"relative_size\": \"large within frame\", \"shape_and_color\": \"Irregular shape with a teardrop red gem and a golden band.\", \"texture\": \"Smooth, polished metal and faceted, glassy gemstone.\", \"appearance_details\": \"The gold band has distinct, interlocked links, mimicking a curb chain. The ruby is a rich, translucent red with visible facets.\", \"orientation\": \"Slightly angled, with the teardrop point facing towards the bottom-right.\"}], \"background_setting\": \"A minimalist, light-colored, smooth surface, possibly a tabletop or a display stand, providing a clean and uncluttered backdrop that allows the ring to stand out. There are no other distracting elements in the background.\", \"lighting\": {\"conditions\": \"Soft, diffused studio lighting\", \"direction\": \"Evenly lit from above and slightly to the front\", \"shadows\": \"Subtle, soft shadows directly beneath the ring, indicating depth without harshness.\"}, \"aesthetics\": {\"composition\": \"Centered, close-up shot, with the ring occupying a significant portion of the frame.\", \"color_scheme\": \"Warm complementary colors, with the rich red of the ruby contrasting with the golden band and the neutral, light background.\", \"mood_atmosphere\": \"Elegant, luxurious, and sophisticated.\", \"aesthetic_score\": \"very high\", \"preference_score\": \"very high\"}, \"photographic_characteristics\": {\"depth_of_field\": \"Shallow, with the ring in sharp focus and the background slightly blurred to isolate the subject.\", \"focus\": \"Sharp focus on subject\", \"camera_angle\": \"Slightly high angle, looking down at the ring.\", \"lens_focal_length\": \"Macro\"}, \"style_medium\": \"photograph\", \"context\": \"This is a concept for a high-end jewelry product photograph, suitable for an e-commerce website, a luxury catalog, or a fashion magazine advertisement.\", \"artistic_style\": \"realistic\"}"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/fibo-generate-1.5',\n  {\n    prompt: 'a ring inspired by the image',\n    images: ['https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo/ref_1.jpg'],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/fibo-generate-1.5\",\n  \"input\": {\n    \"prompt\": \"a ring inspired by the image\",\n    \"images\": [\n      \"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo/ref_1.jpg\"\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "4MP Landscape",
+			"description": "Generate a widescreen image at 4MP. 4MP adds about 30 seconds of latency compared with 1MP.",
+			"input": {
+				"prompt": "aerial view of a winding river through an autumn forest at golden hour, mist rising from the water, highly detailed",
+				"resolution": "4MP",
+				"aspect_ratio": "16:9"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/fibo-generate-1.5/4mp-landscape.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/fibo-generate-1.5/4mp-landscape.png",
+					"seed": 1535063202,
+					"structured_prompt": "{\"short_description\": \"An aerial view of a winding river meandering through a dense autumn forest during the golden hour. Soft mist gently rises from the water's surface, illuminated by the warm, low-angle sunlight, highlighting the vibrant reds, oranges, and yellows of the fall foliage. The scene is highly detailed, capturing the intricate patterns of the trees and the river's flow.\", \"objects\": [{\"description\": \"A wide, winding river, appearing as a dark, reflective ribbon cutting through the forest. Its surface is smooth in some areas, with subtle ripples in others, and a delicate mist hovers just above it.\", \"location\": \"center, extending from foreground to background\", \"relationship\": \"The central element, guiding the eye through the forest.\", \"relative_size\": \"large within frame\", \"shape_and_color\": \"Irregular, sinuous shape; dark blue-green with golden reflections.\", \"texture\": \"Smooth, reflective water with soft, wispy mist.\", \"appearance_details\": \"Reflects the golden light of the sky, creating shimmering streaks.\", \"orientation\": \"Flowing from bottom-right to top-left, then curving through the scene.\"}, {\"description\": \"Dense clusters of deciduous trees, showcasing a spectacular array of autumn colors. Each tree is individually distinguishable, contributing to the rich tapestry of the forest.\", \"location\": \"surrounding the river, filling the midground and background\", \"relationship\": \"Form the main environment through which the river flows, providing a vibrant contrast.\", \"relative_size\": \"large within frame\", \"shape_and_color\": \"Varied organic shapes; predominantly red, orange, yellow, and some lingering green.\", \"texture\": \"Rough, textured canopy with individual leaves visible.\", \"appearance_details\": \"Leaves are illuminated from above, creating a glowing effect.\", \"orientation\": \"Upright, forming a continuous canopy.\"}, {\"description\": \"Thin, ethereal wisps of mist gently rising from the cool surface of the river, catching the golden light.\", \"location\": \"directly above the river\", \"relationship\": \"Intertwined with the river, enhancing the atmospheric quality.\", \"relative_size\": \"small to medium within frame\", \"shape_and_color\": \"Amorphous, transparent white.\", \"texture\": \"Soft, translucent, and diffuse.\", \"appearance_details\": \"Subtly glows with the warm light, creating a mystical effect.\", \"orientation\": \"Rising vertically and drifting gently.\"}], \"background_setting\": \"The forest extends into the horizon, appearing as a vast, undulating carpet of autumn colors. The distant sky, partially visible, shows a soft, hazy golden glow typical of late afternoon.\", \"lighting\": {\"conditions\": \"Golden hour sunlight, low and warm.\", \"direction\": \"Side-lit from the upper left, casting long, soft highlights.\", \"shadows\": \"Long, soft shadows are cast by the trees, stretching across the forest floor and partially obscuring some areas, adding depth and contrast. The mist catches the light, reducing some shadow intensity over the river.\"}, \"aesthetics\": {\"composition\": \"Leading lines created by the winding river, drawing the viewer's eye through the vast landscape. The composition is balanced with the river as a central element.\", \"color_scheme\": \"Warm complementary colors, dominated by rich oranges, reds, and yellows against the cool blues and greens of the river and deeper forest areas.\", \"mood_atmosphere\": \"Serene, majestic, ethereal, and tranquil.\", \"aesthetic_score\": \"very high\", \"preference_score\": \"very high\"}, \"photographic_characteristics\": {\"depth_of_field\": \"Deep, ensuring clarity from the foreground river to the distant forest.\", \"focus\": \"Sharp focus throughout the entire scene, emphasizing the high detail.\", \"camera_angle\": \"High aerial view, directly overhead but slightly angled to show the river's flow and forest depth.\", \"lens_focal_length\": \"Wide-angle, to capture the expansive landscape.\"}, \"style_medium\": \"photograph\", \"context\": \"This is a concept for a high-resolution landscape photograph, ideal for nature documentaries, travel magazines, or fine art prints, capturing the breathtaking beauty of autumn from an aerial perspective.\", \"artistic_style\": \"realistic\"}"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/fibo-generate-1.5',\n  {\n    prompt:\n      'aerial view of a winding river through an autumn forest at golden hour, mist rising from the water, highly detailed',\n    resolution: '4MP',\n    aspect_ratio: '16:9',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/fibo-generate-1.5\",\n  \"input\": {\n    \"prompt\": \"aerial view of a winding river through an autumn forest at golden hour, mist rising from the water, highly detailed\",\n    \"resolution\": \"4MP\",\n    \"aspect_ratio\": \"16:9\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bria.ai/image-generation/generation/image-generate",
+	"terms": "https://bria.ai/terms-of-use",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bria/fibo-generate-1.5.png",
+	"metadata": {
+		"Aspect Ratios": "1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9",
+		"Output Formats": "PNG, JPEG",
+		"Reference Images": "1",
+		"Resolutions": "1MP, 4MP"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bria",
+			"pricing": {
+				"output_image_count": 0.03
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-06 18:58:48",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Text prompt. Use alone, with `images` as a reference, or with `structured_prompt` to refine a previous result.",
+					"type": "string",
+					"minLength": 1
+				},
+				"images": {
+					"description": "One reference image: a public URL or base64-encoded image data (a `data:` URI prefix is accepted).",
+					"minItems": 1,
+					"maxItems": 1,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"structured_prompt": {
+					"description": "Structured (VGL) prompt as a JSON string, as returned by a previous result. Recreates that image with the same `seed`; add `prompt` to refine it. Cannot be combined with `images`.",
+					"type": "string",
+					"minLength": 1
+				},
+				"resolution": {
+					"description": "Output resolution. 4MP adds about 30 seconds of latency. Default 1MP.",
+					"type": "string",
+					"enum": [
+						"1MP",
+						"4MP"
+					]
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio. Default 1:1.",
+					"type": "string",
+					"enum": [
+						"1:1",
+						"2:3",
+						"3:2",
+						"3:4",
+						"4:3",
+						"4:5",
+						"5:4",
+						"9:16",
+						"16:9"
+					]
+				},
+				"seed": {
+					"description": "Seed for reproducible results. Pass the seed of a previous result with its `structured_prompt` to recreate or refine it.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"output_type": {
+					"description": "Output image format. Default png.",
+					"type": "string",
+					"enum": [
+						"png",
+						"jpeg"
+					]
+				},
+				"ip_signal": {
+					"description": "When true, the result carries a `warning` if the text input may reference IP-protected content. Default false.",
+					"type": "boolean"
+				},
+				"prompt_content_moderation": {
+					"description": "Reject the request if the prompt fails content moderation. Default true.",
+					"type": "boolean"
+				},
+				"visual_input_content_moderation": {
+					"description": "Reject the request if the reference image fails content moderation. Default true.",
+					"type": "boolean"
+				},
+				"visual_output_content_moderation": {
+					"description": "Fail the request if the generated image fails content moderation. Default true.",
+					"type": "boolean"
+				}
+			},
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the generated image. Bria hosts it for a limited time (3 days by default); download it to keep it."
+				},
+				"seed": {
+					"description": "Seed used for this image.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"structured_prompt": {
+					"description": "Structured (VGL) prompt used for this image, as a JSON string. Pass it back with `seed` to recreate or refine the image.",
+					"type": "string"
+				},
+				"warning": {
+					"description": "Present when `ip_signal` flagged the prompt as possibly IP-protected.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
