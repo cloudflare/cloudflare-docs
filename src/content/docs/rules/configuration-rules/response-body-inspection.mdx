@@ -33,6 +33,8 @@ The following features can change HTML response bodies when turned on and applic
 | [Rocket Loader](/speed/optimization/content/rocket-loader/) | Changes script loading behavior |
 | [Web Analytics](/web-analytics/) | Injects the Real User Monitoring beacon |
 
+When [Response Body Buffering](/rules/configuration-rules/settings/#response-body-buffering) is set to **None**, these features do not change the response body.
+
 Security and AI features may also read HTML without changing it. [Prefetch URLs](/speed/optimization/content/prefetch-urls/) reads URL manifests served as `text/plain`.
 
 This list excludes explicit rules that inspect response content. Review each rule separately when troubleshooting.

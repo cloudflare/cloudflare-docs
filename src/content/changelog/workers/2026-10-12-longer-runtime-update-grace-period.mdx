@@ -1,0 +1,19 @@
+---
+title: More time for requests to finish during Workers runtime updates
+description: Long-running requests and WebSocket connections have up to 20 minutes to continue during routine updates to the Workers runtime
+products:
+  - workers
+date: 2026-10-12
+---
+
+Pending requests and connections to Workers now have a grace period of up to 20 minutes during Workers runtime updates. Previously, the grace period was up to 30 seconds.
+
+This gives long-running HTTP requests, streamed AI responses, and live WebSocket sessions more time to continue before an update interrupts them.
+
+![Workers runtime versions: existing work drains on the previous version; new HTTP requests use the updated version](~/assets/images/workers/runtime-update-grace-period.svg)
+
+New incoming HTTP requests go to the updated version of the Workers runtime once it is ready. Processes running the previous version stop accepting these requests and drain existing work. The grace period applies to each process running the previous version. When it ends, unfinished requests and open connections on that process are terminated.
+
+You should design your application to reconnect WebSockets, safely retry interrupted requests, and recover saved state after a restart. WebSockets can disconnect before the grace period ends, including connections using the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/).
+
+For more information, refer to [Workers runtime updates](/workers/platform/limits/#runtime-updates).

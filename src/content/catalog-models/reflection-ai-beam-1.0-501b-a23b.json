@@ -1,0 +1,650 @@
+{
+	"model_id": "reflection-ai/beam-1.0-501b-a23b",
+	"provider_id": "reflection-ai",
+	"name": "Beam 1.0 501B A23B",
+	"description": "Beam-1.0-501B-A23B is Reflection AI's open-weights mixture-of-experts model with 501B total parameters and 23B active parameters, built for coding, reasoning, and agentic workloads.",
+	"task": "Text Generation",
+	"tags": [
+		"Text Generation",
+		"Coding",
+		"Reasoning",
+		"Tool Calling",
+		"Agentic",
+		"MoE"
+	],
+	"context_length": 262144,
+	"max_output_tokens": 131072,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0,
+		"Cached input tokens (per 1M)": 0,
+		"Output tokens (per 1M)": 0
+	},
+	"examples": [
+		{
+			"name": "Simple answer",
+			"description": "Generate a concise answer with low reasoning effort",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain why the sky is blue in one sentence."
+					}
+				],
+				"max_completion_tokens": 256,
+				"reasoning_effort": "low"
+			},
+			"output": {
+				"text": "The sky is blue because sunlight undergoes Rayleigh scattering in the atmosphere, which preferentially redirects shorter blue wavelengths toward your eyes."
+			},
+			"raw_response": {
+				"id": "chatcmpl-002d24bd-de9c-4bab-947d-47f77166eb5c",
+				"object": "chat.completion",
+				"created": 1792089654,
+				"model": "reflection-ai/beam-1.0-501b-a23b",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "The sky is blue because sunlight undergoes Rayleigh scattering in the atmosphere, which preferentially redirects shorter blue wavelengths toward your eyes.",
+							"refusal": null,
+							"reasoning_content": "The user asks: \"Explain why the sky is blue in one sentence.\" Straightforward. Need one sentence. Ensure accuracy: Rayleigh scattering scatters shorter blue wavelengths more. Provide concise. No safety issues."
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 506,
+					"completion_tokens": 79,
+					"total_tokens": 585,
+					"prompt_tokens_details": {
+						"cached_tokens": 448
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 50
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'reflection-ai/beam-1.0-501b-a23b',\n  {\n    messages: [{ role: 'user', content: 'Explain why the sky is blue in one sentence.' }],\n    max_completion_tokens: 256,\n    reasoning_effort: 'low',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"reflection-ai/beam-1.0-501b-a23b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Explain why the sky is blue in one sentence.\"\n    }\n  ],\n  \"max_completion_tokens\": 256,\n  \"reasoning_effort\": \"low\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "Structured project status",
+			"description": "Return a typed project status summary using structured output",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Summarize this project update: API integration is complete, security review is scheduled for Friday, and the mobile client is blocked on final design assets."
+					}
+				],
+				"max_completion_tokens": 512,
+				"response_format": {
+					"type": "json_schema",
+					"json_schema": {
+						"name": "project_status",
+						"strict": true,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"overall_status": {
+									"type": "string",
+									"enum": [
+										"on_track",
+										"at_risk",
+										"blocked"
+									]
+								},
+								"completed": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"next_steps": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								},
+								"blockers": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								}
+							},
+							"required": [
+								"overall_status",
+								"completed",
+								"next_steps",
+								"blockers"
+							],
+							"additionalProperties": false
+						}
+					}
+				}
+			},
+			"output": {
+				"text": "{\"overall_status\": \"on_track\",\n\"completed\": [\"API integration\"],\n\"next_steps\": [\"Security review scheduled for Friday\"],\n\"blockers\": [\"Mobile client awaiting final design assets\"]}"
+			},
+			"raw_response": {
+				"id": "chatcmpl-781353f2-706b-4d56-b771-c785968bbf97",
+				"object": "chat.completion",
+				"created": 1792089661,
+				"model": "reflection-ai/beam-1.0-501b-a23b",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "{\"overall_status\": \"on_track\",\n\"completed\": [\"API integration\"],\n\"next_steps\": [\"Security review scheduled for Friday\"],\n\"blockers\": [\"Mobile client awaiting final design assets\"]}",
+							"refusal": null,
+							"reasoning_content": "The user wants a summary of a project update. Straightforward. Just summarize."
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 527,
+					"completion_tokens": 64,
+					"total_tokens": 591,
+					"prompt_tokens_details": {
+						"cached_tokens": 512
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 18
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'reflection-ai/beam-1.0-501b-a23b',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Summarize this project update: API integration is complete, security review is scheduled for Friday, and the mobile client is blocked on final design assets.',\n      },\n    ],\n    max_completion_tokens: 512,\n    response_format: {\n      type: 'json_schema',\n      json_schema: {\n        name: 'project_status',\n        strict: true,\n        schema: {\n          type: 'object',\n          properties: {\n            overall_status: { type: 'string', enum: ['on_track', 'at_risk', 'blocked'] },\n            completed: { type: 'array', items: { type: 'string' } },\n            next_steps: { type: 'array', items: { type: 'string' } },\n            blockers: { type: 'array', items: { type: 'string' } },\n          },\n          required: ['overall_status', 'completed', 'next_steps', 'blockers'],\n          additionalProperties: false,\n        },\n      },\n    },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"reflection-ai/beam-1.0-501b-a23b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Summarize this project update: API integration is complete, security review is scheduled for Friday, and the mobile client is blocked on final design assets.\"\n    }\n  ],\n  \"max_completion_tokens\": 512,\n  \"response_format\": {\n    \"type\": \"json_schema\",\n    \"json_schema\": {\n      \"name\": \"project_status\",\n      \"strict\": true,\n      \"schema\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"overall_status\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"on_track\",\n              \"at_risk\",\n              \"blocked\"\n            ]\n          },\n          \"completed\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"next_steps\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"blockers\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          }\n        },\n        \"required\": [\n          \"overall_status\",\n          \"completed\",\n          \"next_steps\",\n          \"blockers\"\n        ],\n        \"additionalProperties\": false\n      }\n    }\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Weather tool call",
+			"description": "Choose a weather lookup function and supply its arguments",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What is the weather in Lisbon today?"
+					}
+				],
+				"max_completion_tokens": 256,
+				"tool_choice": "required",
+				"tools": [
+					{
+						"type": "function",
+						"function": {
+							"name": "get_weather",
+							"description": "Look up the current weather for a city.",
+							"parameters": {
+								"type": "object",
+								"properties": {
+									"city": {
+										"type": "string"
+									},
+									"units": {
+										"type": "string",
+										"enum": [
+											"celsius",
+											"fahrenheit"
+										]
+									}
+								},
+								"required": [
+									"city",
+									"units"
+								],
+								"additionalProperties": false
+							}
+						}
+					}
+				]
+			},
+			"output": {
+				"tool_calls": [
+					{
+						"id": "call-c105de7f-4e34-4ce9-bab9-ef2e6a89b645",
+						"type": "function",
+						"function": {
+							"name": "get_weather",
+							"arguments": "{\"city\": \"Lisbon\", \"units\": \"celsius\"}"
+						}
+					}
+				]
+			},
+			"raw_response": {
+				"id": "chatcmpl-fda9d6ad-dcb0-4b60-9e5a-4d78f406ecc1",
+				"object": "chat.completion",
+				"created": 1792089672,
+				"model": "reflection-ai/beam-1.0-501b-a23b",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": null,
+							"tool_calls": [
+								{
+									"id": "call-c105de7f-4e34-4ce9-bab9-ef2e6a89b645",
+									"type": "function",
+									"function": {
+										"name": "get_weather",
+										"arguments": "{\"city\": \"Lisbon\", \"units\": \"celsius\"}"
+									}
+								}
+							],
+							"refusal": null,
+							"reasoning_content": "The user is asking about the weather in Lisbon today. I have a tool to get weather. Let me call it with city Lisbon and units... the user didn't specify units. Celsius is reasonable default, but maybe I should pick. Let me use celsius as default. Actually, let me just call."
+						},
+						"finish_reason": "tool_calls",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 544,
+					"completion_tokens": 92,
+					"total_tokens": 636,
+					"prompt_tokens_details": {
+						"cached_tokens": 512
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 69
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'reflection-ai/beam-1.0-501b-a23b',\n  {\n    messages: [{ role: 'user', content: 'What is the weather in Lisbon today?' }],\n    max_completion_tokens: 256,\n    tool_choice: 'required',\n    tools: [\n      {\n        type: 'function',\n        function: {\n          name: 'get_weather',\n          description: 'Look up the current weather for a city.',\n          parameters: {\n            type: 'object',\n            properties: {\n              city: { type: 'string' },\n              units: { type: 'string', enum: ['celsius', 'fahrenheit'] },\n            },\n            required: ['city', 'units'],\n            additionalProperties: false,\n          },\n        },\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"reflection-ai/beam-1.0-501b-a23b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the weather in Lisbon today?\"\n    }\n  ],\n  \"max_completion_tokens\": 256,\n  \"tool_choice\": \"required\",\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Look up the current weather for a city.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"city\": {\n              \"type\": \"string\"\n            },\n            \"units\": {\n              \"type\": \"string\",\n              \"enum\": [\n                \"celsius\",\n                \"fahrenheit\"\n              ]\n            }\n          },\n          \"required\": [\n            \"city\",\n            \"units\"\n          ],\n          \"additionalProperties\": false\n        }\n      }\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Scheduling reasoning",
+			"description": "Reason through a scheduling constraint with system guidance",
+			"input": {
+				"messages": [
+					{
+						"role": "system",
+						"content": "Answer concisely and show the scheduling logic in two bullet points."
+					},
+					{
+						"role": "user",
+						"content": "Maya is available Monday and Wednesday. Theo is available Wednesday and Thursday. Priya is available Monday, Wednesday, and Friday. Which day should they schedule a 90-minute meeting, and why?"
+					},
+					{
+						"role": "user",
+						"content": "The meeting must include all three attendees."
+					},
+					{
+						"role": "user",
+						"content": "Please give the recommendation."
+					}
+				],
+				"max_completion_tokens": 384,
+				"reasoning_effort": "medium"
+			},
+			"output": {
+				"text": "- All three must attend, so the meeting day must be in the intersection of Maya's (Mon, Wed), Theo's (Wed, Thu), and Priya's (Mon, Wed, Fri) calendars; only Wednesday appears for all three.\n- Therefore, schedule the 90-minute meeting on Wednesday, since it is the only day all attendees are available."
+			},
+			"raw_response": {
+				"id": "chatcmpl-26cd51e7-33f7-4048-93f0-69f51b1c66cc",
+				"object": "chat.completion",
+				"created": 1792089681,
+				"model": "reflection-ai/beam-1.0-501b-a23b",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "- All three must attend, so the meeting day must be in the intersection of Maya's (Mon, Wed), Theo's (Wed, Thu), and Priya's (Mon, Wed, Fri) calendars; only Wednesday appears for all three.\n- Therefore, schedule the 90-minute meeting on Wednesday, since it is the only day all attendees are available.",
+							"refusal": null,
+							"reasoning_content": "The user asks: Maya available Mon/Wed, Theo available Wed/Thu, Priya available Mon/Wed/Fri. Meeting must include all three. Need schedule 90-min meeting. Which day should schedule and why? Concise, two bullet points showing scheduling logic. Constraints: all three must attend. Intersection: Maya \u2229 Theo = Wed; Priya \u2229 {Wed} = Wed. So Wednesday is common day. Need 90-minute meeting\u2014presumably available all day? No time specifics. So recommend Wednesday; only day all three available. Answer with two bullet points.\n\nNeed ensure not violate policy. Fine.\n\nLet's craft concise."
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 572,
+					"completion_tokens": 218,
+					"total_tokens": 790,
+					"prompt_tokens_details": {
+						"cached_tokens": 448
+					},
+					"completion_tokens_details": {
+						"reasoning_tokens": 138
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'reflection-ai/beam-1.0-501b-a23b',\n  {\n    messages: [\n      {\n        role: 'system',\n        content: 'Answer concisely and show the scheduling logic in two bullet points.',\n      },\n      {\n        role: 'user',\n        content:\n          'Maya is available Monday and Wednesday. Theo is available Wednesday and Thursday. Priya is available Monday, Wednesday, and Friday. Which day should they schedule a 90-minute meeting, and why?',\n      },\n      { role: 'user', content: 'The meeting must include all three attendees.' },\n      { role: 'user', content: 'Please give the recommendation.' },\n    ],\n    max_completion_tokens: 384,\n    reasoning_effort: 'medium',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"reflection-ai/beam-1.0-501b-a23b\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"Answer concisely and show the scheduling logic in two bullet points.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Maya is available Monday and Wednesday. Theo is available Wednesday and Thursday. Priya is available Monday, Wednesday, and Friday. Which day should they schedule a 90-minute meeting, and why?\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"The meeting must include all three attendees.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Please give the recommendation.\"\n    }\n  ],\n  \"max_completion_tokens\": 384,\n  \"reasoning_effort\": \"medium\"\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developers.reflection.ai/models",
+	"terms": "https://developers.reflection.ai/introduction",
+	"cover_image_url": null,
+	"metadata": {
+		"Architecture": "Mixture-of-Experts (MoE)",
+		"Context Window": "256K tokens",
+		"Max Output": "128K tokens",
+		"Parameters": "501B total, 23B active",
+		"Reasoning": "Always on"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": null,
+	"banner": null,
+	"created_at": "2026-10-16 13:57:23",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {},
+				"modalities": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"text",
+							"audio"
+						]
+					}
+				},
+				"audio": {
+					"type": "object",
+					"properties": {
+						"voice": {
+							"type": "string",
+							"enum": [
+								"alloy",
+								"ash",
+								"ballad",
+								"coral",
+								"echo",
+								"sage",
+								"shimmer",
+								"verse"
+							]
+						},
+						"format": {
+							"type": "string",
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							]
+						}
+					},
+					"additionalProperties": false
+				},
+				"reasoning_effort": {
+					"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+					"type": [
+						"string",
+						"null"
+					]
+				}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"tool_calls": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"audio": {
+										"anyOf": [
+											{
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"type": [
+									"string",
+									"null"
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

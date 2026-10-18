@@ -27,6 +27,8 @@ Issues provides built-in error monitoring for Cloudflare Workers. It detects pro
 
 ![Issues overview showing occurrence totals and active and resolved issues.](~/assets/images/workers-observability/issues/issues-overview.png)
 
+Enable [source maps](/workers/observability/source-maps/) so captured JavaScript and TypeScript exception stacks point to the original files and lines. Framework builds must generate maps as well as upload them.
+
 ## How Issues works
 
 When a Worker throws an uncaught exception, fails an invocation, returns a `5xx` response, or logs an error, Issues records the failure as an occurrence. It groups related occurrences from the same Worker into one issue.

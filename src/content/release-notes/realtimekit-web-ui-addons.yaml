@@ -1,0 +1,28 @@
+---
+link: "/realtime/realtimekit/release-notes/ui-kit-addons/"
+productName: RealtimeKit Web UI Addons
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-10-12"
+    title: RealtimeKit Web UI Addons 0.2.0
+    description: |-
+      **Feature**
+
+      - Emoji reactions now display the participant's first name when available, making it easier to identify who reacted.
+
+      **Fix**
+      - The reaction picker background now uses UI Kit design tokens to match the configured theme.
+
+  - publish_date: "2025-11-25"
+    title: RealtimeKit Web UI Addons 0.1.0
+    description: |-
+      **Features**
+
+      Initial release of the [`@cloudflare/realtimekit-ui-addons`](https://www.npmjs.com/package/@cloudflare/realtimekit-ui-addons) package, with examples for extending RealtimeKit Web UI Kit:
+
+      - Host controls: [Camera Host Control](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/camera-host-control/), [Mic Host Control](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/mic-host-control/), and [Chat Host Control](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/chat-host-control/).
+      - Reactions: [Hand Raise](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/hand-raise/) and [Reactions](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/reactions-manager/).
+      - Participant customization: [Participant Tile Menu](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participant-tile-menu/), [Participant Menu Item](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participant-menu-item/), [Participants Tab Action](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participants-tab-action/), and [Participants Tab Toggle](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participants-tab-toggle/).
+      - Meeting appearance and controls: [Video Background](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/video-background/) and [Custom Control Bar Button](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/custom-controlbar-button/).
+
+      Refer to [UI Kit Addons](/realtime/realtimekit/ui-kit/addons/) for installation and usage.

@@ -65,7 +65,7 @@ The API values in the table are case-sensitive.
 
 ## Skip the remaining custom rules (current phase)
 
-- Dashboard option: N/A (currently only available via API)
+- Dashboard option: **All remaining custom rules in this phase** (zone-level rules only)
 - API action parameter: `phase`
 
 The `phase: "current"` option is supported only in zone-level custom and entry point rulesets for the `http_request_firewall_custom` phase. When matched, it skips all remaining rules in the phase, including rules in custom rulesets executed later.

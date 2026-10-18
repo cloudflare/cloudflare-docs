@@ -7,7 +7,7 @@ products:
 date: 2026-09-23
 ---
 
-Gateway [HTTP](/cloudflare-one/traffic-policies/http-policies/) and [Network](/cloudflare-one/traffic-policies/network-policies/) policies now include a **Traffic Destination** selector that identifies how traffic exits Cloudflare. This allows administrators to write policies that target specific off-ramp methods - for example, applying different rules to traffic destined for the public Internet compared to traffic routed through Cloudflare Tunnel or Cloudflare WAN.
+Gateway [HTTP](/cloudflare-one/traffic-controls/http-policies/) and [Network](/cloudflare-one/traffic-controls/network-policies/) policies now include a **Traffic Destination** selector that identifies how traffic exits Cloudflare. This allows administrators to write policies that target specific off-ramp methods - for example, applying different rules to traffic destined for the public Internet compared to traffic routed through Cloudflare Tunnel or Cloudflare WAN.
 
 ### Available traffic destination values
 
@@ -25,4 +25,4 @@ The selector uses the `net.offramp.type` API field in both HTTP and Network poli
 | ------------------- | -------------------------------- |
 | Traffic Destination | `net.offramp.type == "internet"` |
 
-For more information, refer to [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) and [Network policies](/cloudflare-one/traffic-policies/network-policies/).
+For more information, refer to [HTTP policies](/cloudflare-one/traffic-controls/http-policies/) and [Network policies](/cloudflare-one/traffic-controls/network-policies/).

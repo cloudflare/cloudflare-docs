@@ -33,6 +33,7 @@ export interface FacetGroup {
  */
 export const pinnedModelNames: string[] = [
 	"@cf/cloudflare/clef",
+	"@cf/cloudflare/clef-omni",
 	"@cf/cloudflare/clef-flash",
 ];
 

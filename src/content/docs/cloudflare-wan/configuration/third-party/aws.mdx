@@ -1,97 +1,2645 @@
 ---
 pcx_content_type: integration-guide
-description: Connect Amazon AWS Transit Gateway to Cloudflare WAN.
+description: Connect AWS Transit Gateway to Cloudflare WAN with two redundant IPsec tunnels and dynamic BGP routing.
 products:
   - cloudflare-wan
 title: Amazon AWS Transit Gateway
-
 ---
 
-This tutorial provides information and examples of how to configure IPsec VPN between Cloudflare WAN (formerly Magic WAN) with an AWS Transit Gateway.
+This guide provides step-by-step instructions for connecting an Amazon Web Services (AWS) Transit Gateway to Cloudflare WAN with redundant, route-based IPsec tunnels and Border Gateway Protocol (BGP). The primary topology uses:
 
-## Prerequisites
+- One Cloudflare anycast IP
+- One AWS customer gateway
+- One AWS Site-to-Site VPN connection with two IPsec tunnels
+- Two BGP sessions between AWS Transit Gateway and Cloudflare WAN
 
-You need to have an AWS transit gateway created in your AWS account. This is needed to route traffic between your AWS virtual private cloud (VPC) and Cloudflare WAN. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-getting-started.html) to learn more about creating a transit gateway.
+Cloudflare assigns an IPv4 anycast IP to each Cloudflare WAN account, and additional anycast IPs are available from your account team. Because the anycast IP is served from Cloudflare data centers globally, a tunnel is not tied to a single Cloudflare server or data center. This guide uses one anycast IP for the baseline and supports a second anycast IP for customers who have one. For more information, refer to [Anycast](/cloudflare-wan/reference/gre-ipsec-tunnels/#anycast) and [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
 
-Additionally, you also need to configure the necessary route table entries for the virtual machine (VM) in your VPC, as well as the route table entries for the transit gateway. Otherwise, connectivity between your VM and another VM routed through Cloudflare WAN will not work. Refer to the [AWS documentation](https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Route_Tables.html) to learn more about routing tables.
+AWS Transit Gateway uses equal-cost multipath (ECMP) to distribute traffic across equal BGP paths. BGP dynamically exchanges routes and withdraws a path when its session fails. This design avoids the active/standby limitation of an AWS static-routing Site-to-Site VPN connection.
 
-## AWS
+AWS requires a `/30` inside tunnel network for each tunnel and supports a maximum Phase 1 lifetime of `28800` seconds. This guide uses `/30` tunnel addressing and a `28800`-second Phase 1 lifetime for that reason.
 
-### Create AWS transit gateway VPN attachment
-
-1. Go to **Transit gateways** > **Transit gateway attachments**, and select **Create transit gateway attachment**.
-2. Select the **Transit gateway ID** that you created previously from the drop-down menu.
-3. For **Attachment type**, select _VPN_.
-4. Under VPN attachment, select the following settings (you can leave settings not mentioned here with their default values):
-   1. **Customer Gateway**: Select **New**.
-   2. **IP Address**: Enter your Cloudflare anycast IP address.
-   3. **Routing options**: Select **Static**.
-5. Select **Create transit gateway attachment**.
-
-### Configure the VPN connection
-
-1. Select the VPN connection you created > **Download configuration**.
-
-2. This action downloads a text file. Search for the IP range that the AWS Transit Gateway assigned your tunnel. The first IP range should be the one used by the AWS Transit Gateway. Use the second IP range to configure your [Interface address](#ipsec-tunnels) in Cloudflare WAN.
-
-3. Select the VPN connection you created > **Actions** > **Modify VPN tunnel options**.
-
-4. From the **VPN tunnel outside IP address** drop-down menu, select one of the tunnels.
-
-5. Take note of the **IP address** you chose, as this corresponds to the customer endpoint IP that you will need to configure on the Cloudflare side of the IPsec tunnel.
-
-6. The number of options for the VPN connection will expand. Take note of the **Pre-shared key**.  You will need it to create the IPsec tunnel on Cloudflare's side.
-
-7. In **Inside IPv4 CIDR**, AWS enforces that only a `/30` block within the `169.254.0.0/16` range can be used. To accommodate this, Cloudflare supports a subset of this IP block. Namely, Cloudflare supports `169.254.240.0/20` to be assigned as the IPsec tunnel's (internal) interface IPs. This example will use `169.254.244.0/30` as the CIDR block for the IPsec tunnel: `169.254.244.1` for the AWS side of the tunnel, and `169.254.244.2` for the Cloudflare side of the tunnel.
-
-   :::caution
-   Make sure you input an IP address supported by Cloudflare. If you do not input a value here, AWS will randomly generate an IP address that might not be supported by Cloudflare.
-   :::
-
-8. Configure the following settings for the IPsec tunnel. Note that the **Startup action** needs to be set to **Start**, which means the AWS side will initiate IPsec negotiation. Settings not mentioned here can be left at their default settings:
-   - **Phase 1 encryption algorithms**: `AES256-GCM-16`
-   - **Phase 2 encryption algorithms**: `AES256-GCM-16`
-   - **Phase 1 integrity algorithms**: `SHA2-256`
-   - **Phase 2 integrity algorithms**: `SHA2-256`
-   - **Phase 1 DH group numbers**: `20`
-   - **Phase 2 DH group numbers**: `20`
-   - **IKE Version**: `ikev2`
-   - **Startup action**: **Start**
-   - **DPD timeout action**: `Restart`
-
-9. Select **Save changes**.
-
-10. Repeat the steps above to configure the second VPN connection. Use the second outside IP address, and make the appropriate changes to IP addresses as well when configuring Cloudflare's side of the tunnel.
-
-:::note
-ECMP over two VPN tunnels is not supported with a static routing configuration. You will need to configure dynamic routing for the VPN between the transit gateway and the customer gateway device. Refer to [AWS documentation](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-transit-gateways.html) for more information.
+:::note[Support scope]
+This configuration is a reference example demonstrating known compatibility with Cloudflare services. It is not an officially supported AWS configuration. The steps and settings were tested in the [test environment](#test-environment) listed below. Adjustments may be required for other Regions or environments.
 :::
 
-## Cloudflare WAN
+:::note[Terraform is recommended]
+Terraform is the recommended deployment method for this integration because it consistently applies the interdependent AWS, tunnel, routing, and Cloudflare WAN settings described in this guide. The [Terraform reference deployment](#terraform-reference-deployment) has been tested against the reference environment, and testing has not identified any issues.
+:::
 
-After configuring the AWS transit gateway VPN connection and the tunnel as mentioned above, go to the Cloudflare dashboard and create the corresponding IPsec tunnel and static routes on the Cloudflare WAN side.
+## Architecture
 
-### IPsec tunnels
+The general design uses the following resources:
 
-1. Refer to [Add tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels) to learn how to add an IPsec tunnel. When creating your IPsec tunnel, make sure you define the following settings:
-   - **Tunnel name**: `tunnel01`
-   - **Interface address**: The `/30` CIDR block enforced by AWS (first usable IP is for the AWS side). For example, `169.254.244.2`.
-   - **Customer endpoint**: The IP address from AWS's VPN tunnel outside IP address. For example, `35.xx.xx.xx`.
-   - **Cloudflare endpoint**: Enter the first of your two anycast IPs.
-   - **Pre-shared key**: Select **Use my own pre-shared key**, and enter the PSK you created for the AWS VPN tunnel.
-   - **Health check type**: Select **Request**
-   - **Health check direction**: Select **Bidirectional**
-   - **Replay protection**: Select **Enabled**.
-2. Select **Save**.
-3. Repeat the above steps for `tunnel02`. Select the same prefix, but select the second IPsec tunnel for **Tunnel/Next hop**.
+- One AWS Transit Gateway with VPN ECMP support enabled
+- One dedicated Transit Gateway route table for the workload VPC and AWS VPN attachments for Cloudflare WAN
+- One or more workload VPCs attached to the Transit Gateway
+- One AWS customer gateway for each configured Cloudflare anycast IP
+- One dynamic-routing AWS Site-to-Site VPN connection for each customer gateway
+- Two AWS-managed IPsec tunnels and two corresponding Cloudflare WAN IPsec tunnels per VPN connection
+- One BGP session per tunnel between AWS Transit Gateway and Cloudflare WAN
 
-### Static routes
+The Terraform proof of concept creates:
 
-The static route in Cloudflare WAN should point to the appropriate virtual machine (VM) subnet you created inside your AWS virtual private cloud. For example, if your VM has a subnet of  `192.168.192.0/26`, you should use it as the prefix for your static route.
+- One workload VPC with exactly one public workload subnet
+- Two Transit Gateway attachment subnets in separate Availability Zones
+- One Internet Gateway for direct egress from the public workload subnet
+- Selective routes that send only `vpn_routed_prefixes` destinations to the Transit Gateway
 
-To create a static route:
+It does not create:
 
-1. Refer to [Create a static route](/cloudflare-wan/configuration/how-to/configure-routes/#create-a-static-route) to learn how to create one.
-2. In **Prefix**, enter the subnet for your VM. For example, `192.xx.xx.xx/24`.
-3. For the **Tunnel/Next hop**, select the IPsec tunnel you created in the previous step.
-4. Repeat the steps above for the second IPsec tunnel you created.
+- Virtual machines or test hosts
+- Standalone Elastic Network Interfaces (ENIs); AWS creates ENIs for the Transit Gateway VPC attachment in the attachment subnets
+- Security groups
+- Elastic IP addresses
+- NAT services
+
+The workload subnet assigns public IPv4 addresses on launch. Its route table sends only the more-specific destinations configured in `vpn_routed_prefixes` to the Transit Gateway and Site-to-Site VPNs; remaining IPv4 egress follows the `0.0.0.0/0` route to the Internet Gateway.
+
+```txt
+Terraform proof of concept: AWS workload VPC 192.168.0.0/16
+
+Public workload subnet 192.168.125.0/24
+  Workload route table
+    +-- vpn_routed_prefixes (more-specific) --> AWS Transit Gateway ASN 65020
+    |                                             |
+    |                                VPN connection 1
+    |                                        |
+    |                                   +----+----+
+    |                                   |         |
+    |                                Tunnel 1  Tunnel 2
+    |                                   |         |
+    |                             Cloudflare WAN ASN 13335
+    |                                  162.159.135.1
+    |
+    +-- 0.0.0.0/0 (remaining IPv4) --> Internet Gateway --> Internet
+
+TGW attachment subnets: 192.168.124.0/28 and 192.168.124.16/28
+```
+
+The AWS Site-to-Site VPN connection terminates on one AWS customer gateway. Because an AWS customer gateway has one public IP address, both tunnels use the same Cloudflare anycast IP.
+
+:::note[AWS tunnel model]
+AWS requires every Site-to-Site VPN connection to contain two tunnel objects and does not provide an option to define a single-tunnel connection. Tunnels 01 and 02 therefore both terminate on `162.159.135.1`. Configure both tunnels for AWS redundancy, even though a connection can temporarily operate while only one tunnel is established.
+:::
+
+:::note[Secondary anycast IP customers]
+Each leased anycast IP uses one AWS customer gateway and one Site-to-Site VPN connection. The first anycast IP uses tunnels 01 and 02, and the second uses tunnels 03 and 04. The Terraform configuration supports one or two distinct anycast IPs, with exactly two tunnel CIDRs and two PSKs for each anycast IP.
+:::
+
+## Test environment
+
+| **Field**                     | **Value**                                    |
+| ----------------------------- | -------------------------------------------- |
+| Cloud provider                | Amazon Web Services                          |
+| Services                      | AWS Transit Gateway and AWS Site-to-Site VPN |
+| AWS Region                    | US East (Ohio), `us-east-2`                  |
+| Routing mode                  | Dynamic routing with BGP                     |
+| AWS Transit Gateway ASN       | `65020`                                      |
+| Cloudflare ASN                | `13335`                                      |
+| Number of anycast IPs         | Two                                          |
+| Number of VPN connections     | Two                                          |
+| Number of IPsec tunnels       | Four                                         |
+| Terraform AWS provider        | `hashicorp/aws` `6.67.0`                     |
+| Terraform Cloudflare provider | `cloudflare/cloudflare` `5.27.0`             |
+| Date tested                   | October 2026                                 |
+
+The test environment used:
+
+- Two leased anycast IPs
+- Four IPsec tunnels
+- Four BGP sessions
+
+AWS imported the expected Cloudflare WAN routes on every configured tunnel, and Cloudflare learned the complete AWS VPC prefix.
+
+The baseline deployment in this guide uses one anycast IP, one VPN connection, and two tunnels. It uses the same settings as the first VPN connection in the test environment. The baseline was not deployed on its own; its Terraform plan is covered by the included `terraform test` suite, which uses mock providers.
+
+## IKE/IPsec and BGP settings
+
+| **Field**                    | **Value**               |
+| ---------------------------- | ----------------------- |
+| Traffic selection criteria   | Route-based VPN         |
+| Routing                      | BGP                     |
+| Tunnel forwarding            | Active/active with ECMP |
+| IKE version                  | IKEv2                   |
+| Authentication               | Pre-shared key          |
+| Phase 1 encryption           | AES-256-CBC             |
+| Phase 1 integrity            | SHA-256                 |
+| Phase 1 DH group             | Group 20                |
+| Phase 1 lifetime             | 28,800 seconds          |
+| Phase 2 encryption           | AES-256-CBC             |
+| Phase 2 integrity            | SHA-256                 |
+| Phase 2 PFS group            | Group 20                |
+| Phase 2 lifetime             | 3,600 seconds           |
+| **AWS replay window**        | **2,048 packets**       |
+| Cloudflare replay protection | Enabled                 |
+| NAT traversal (NAT-T)        | Automatic               |
+| Dead Peer Detection action   | Restart                 |
+| Tunnel startup action        | Start                   |
+| AWS Transit Gateway ASN      | `65020`                 |
+| CF Account ASN               | `13335` (default)       |
+| BGP authentication           | None                    |
+
+AWS Site-to-Site VPN does not support disabling anti-replay protection. Enable replay protection on each corresponding Cloudflare WAN tunnel and use the maximum AWS replay window of `2048`. Replay protection can pin traffic for a tunnel to one Cloudflare server to preserve packet sequence, reducing some anycast performance and resilience benefits.
+
+### Pre-shared key requirements
+
+Configure a pre-shared key that meets the following AWS requirements:
+
+- Contains 8 to 64 characters
+- Contains only letters, numbers, periods (`.`), and underscores (`_`)
+- Does not begin with `0`
+
+Configure the same PSK on the matching AWS and Cloudflare WAN tunnel objects. In Cloudflare, select **Use my own pre-shared key** and enter the PSK configured on the AWS tunnel.
+
+For more information, refer to [VpnTunnelOptionsSpecification](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_VpnTunnelOptionsSpecification.html) in the AWS documentation.
+
+For the AWS console workflow, configure a unique PSK for each tunnel or reuse the same PSK across all tunnels. The Terraform workflow requires a unique PSK for each tunnel.
+
+:::caution[Use unique PSKs with Terraform]
+The Terraform AWS provider identifies which AWS public IPv4 address belongs to tunnel 1 by matching the tunnel 1 PSK. If both tunnels in a VPN connection use the same PSK, the provider cannot make that match and can assign the wrong AWS public IPv4 address to a Cloudflare WAN tunnel. IKE can still establish because the PSKs match, but BGP and tunnel health checks fail because the inside addresses do not match. The Terraform configuration rejects duplicate PSKs.
+:::
+
+## Configuration settings
+
+Cloudflare WAN accepts a `/31` or `/30` interface address for each tunnel and recommends `/31`. For more information, refer to [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
+
+AWS Site-to-Site VPN requires a unique `/30` inside tunnel network for each tunnel, so this guide uses `/30`. AWS assigns the first usable IP address in the `/30` to its side of the tunnel. Therefore, configure the second usable IP address on the Cloudflare WAN side. Cloudflare supports AWS inside tunnel networks selected from `169.254.240.0/20`.
+
+AWS and Cloudflare WAN also require different input formats:
+
+- AWS accepts the `/30` network address as the **Inside IPv4 CIDR**
+- Cloudflare WAN requires its usable host address with the `/30` prefix length as the **IPv4 interface address**
+
+Do not enter the `/30` network address as the Cloudflare interface address. In this example, AWS uses `169.254.240.45`, and Cloudflare WAN uses `169.254.240.46`. The baseline uses the following two `/30` networks.
+
+| **Attribute**                | **Tunnel 01 of 02**   | **Tunnel 02 of 02**   |
+| ---------------------------- | --------------------- | --------------------- |
+| Cloudflare tunnel name       | `AWS_TUN_01`          | `AWS_TUN_02`          |
+| AWS VPN connection           | VPN 1                 | VPN 1                 |
+| AWS public IPv4 address      | `<AWS_OUTSIDE_IP_01>` | `<AWS_OUTSIDE_IP_02>` |
+| Cloudflare anycast IP        | `162.159.135.1`       | `162.159.135.1`       |
+| AWS inside IPv4 CIDR input   | `169.254.240.44/30`   | `169.254.240.48/30`   |
+| AWS inside IP                | `169.254.240.45`      | `169.254.240.49`      |
+| Cloudflare interface address | `169.254.240.46/30`   | `169.254.240.50/30`   |
+| BGP initiator                | AWS                   | AWS                   |
+| AWS ASN                      | `65020`               | `65020`               |
+| CF Account ASN               | `13335`               | `13335`               |
+| Pre-shared key               | `<TUNNEL_01_PSK>`     | `<TUNNEL_02_PSK>`     |
+
+:::note[Secondary anycast IP customers]
+Use tunnels 03 and 04 with `169.254.240.52/30` and `169.254.240.56/30`, respectively. Their Cloudflare interface addresses are `169.254.240.54/30` and `169.254.240.58/30`.
+:::
+
+The example AWS VPC prefix is `192.168.0.0/16`. Replace it and all angle-bracketed values with values from your environment. AWS generates two public IPv4 addresses per VPN connection. These values are unavailable before AWS creates the connection.
+
+## Assumptions
+
+This guide assumes the following:
+
+- Your Cloudflare WAN account has Unified Routing and BGP over IPsec enabled
+- The Cloudflare WAN account has `162.159.135.1` available and, when using two anycast IPs, also has `172.64.135.1` available
+- For the AWS console path, an AWS Transit Gateway exists and the workload VPC is attached in at least two Availability Zones; the Terraform path creates these resources
+- The AWS VPC prefix is `192.168.0.0/16` for this example
+- The AWS VPC prefix and prefixes learned from Cloudflare WAN do not overlap
+- Security groups, network access control lists, host firewalls, and Cloudflare WAN network firewall policies allow the required application and test traffic
+- You can create and modify AWS customer gateways, Site-to-Site VPN connections, Transit Gateway route tables, VPC route tables, and Cloudflare WAN resources
+- IPv4 is used for tunnel interfaces and routed prefixes
+- AWS Transit Gateway ASN `65020` is not used by another Cloudflare WAN-connected site whose routes AWS must learn; otherwise, BGP loop prevention can reject those routes
+
+## Configuration workflow
+
+1. Configure the AWS Transit Gateway for ASN `65020` and VPN ECMP.
+2. Create a dedicated Transit Gateway route table.
+3. Create one AWS customer gateway for the Cloudflare anycast IP.
+4. Create one dynamic-routing AWS Site-to-Site VPN connection.
+5. Configure the IKE version and Phase 1 and Phase 2 settings for each tunnel by using **Modify VPN tunnel options**.
+6. Create two matching Cloudflare WAN IPsec tunnels.
+7. Enable BGP on each Cloudflare tunnel.
+8. Propagate the VPC and VPN attachments into the Transit Gateway route table.
+9. Add VPC routes toward Cloudflare WAN.
+10. Verify every configured tunnel, BGP session, and end-to-end traffic.
+
+## Choose a deployment method
+
+Use the Terraform workflow unless you have a specific requirement to configure existing resources manually. Review the generated plan for your account and network before applying it. Do not complete both workflows for the same deployment.
+
+- To create the complete reference AWS and Cloudflare WAN environment, continue with [Terraform reference deployment](#terraform-reference-deployment)
+- To configure an existing Transit Gateway and workload VPC manually, continue with [Gather Cloudflare WAN information](#gather-cloudflare-wan-information)
+
+## Gather Cloudflare WAN information
+
+Gather and verify the Cloudflare information before creating AWS resources. AWS customer gateways use the Cloudflare anycast IPs as their public IP addresses, so changing an anycast IP later requires replacing the corresponding AWS customer gateway and VPN connection.
+
+For more information about Cloudflare anycast IPs and tunnel addressing, refer to [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
+
+1. Log in to the Cloudflare dashboard.
+2. Go to **Address Space** > **Leased IPs**.
+3. Confirm the account has the baseline IPv4 anycast IP `162.159.135.1`.
+4. Go to **Networking** > **Routes** > **WAN configuration**.
+5. Confirm Unified Routing and BGP over IPsec are available for the account.
+6. Record the **CF Account ASN**. The default is `13335`.
+7. Inventory the eligible routes in the Unified Routing dataplane that AWS should learn.
+8. [Check existing tunnel names and interface addresses](#check-existing-tunnel-names-and-interface-addresses).
+
+:::note[Secondary anycast IP customers]
+In step 3, also confirm that `172.64.135.1` is leased to the account.
+:::
+
+Record the following values before continuing:
+
+| **Item**                                       | **Reference value**              |
+| ---------------------------------------------- | -------------------------------- |
+| Cloudflare anycast IP 1                        | `162.159.135.1`                  |
+| Cloudflare anycast IP 2                        | `172.64.135.1`                   |
+| CF Account ASN                                 | `13335` (default)                |
+| AWS Transit Gateway ASN                        | `65020`                          |
+| AWS VPC prefix                                 | `192.168.0.0/16`                 |
+| Expected RFC 1918 prefixes from Cloudflare WAN | `<EXPECTED_RFC1918_PREFIX_LIST>` |
+
+By default, Cloudflare WAN routes RFC 1918 address space. Publicly routable address space can be enabled one prefix at a time. Contact Cloudflare for assistance with enabling public prefixes.
+
+:::note[Create the AWS VPN connection first]
+Do not create the Cloudflare tunnel objects yet. AWS generates two public IPv4 addresses for each VPN connection. Each generated address identifies the **Customer endpoint** for one Cloudflare tunnel. Record the VPN connection ID, inside `/30` CIDR, and public IPv4 address together so you can apply the generated address to the correct Cloudflare tunnel.
+:::
+
+### Check existing tunnel names and interface addresses
+
+Cloudflare rejects a new tunnel whose name or interface address matches another tunnel in the same Cloudflare account. The AWS Site-to-Site VPN connections are created before the Cloudflare tunnels, so a conflict otherwise appears only after the AWS resources exist. Before you choose tunnel names and inside `/30` CIDRs, list the names and interface addresses already in use.
+
+In the Cloudflare dashboard, go to the **Connectors** page and review the **IPsec/GRE tunnels** tab. Alternatively, run the following commands with an API token that can read Cloudflare WAN configuration:
+
+```bash
+curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/<CLOUDFLARE_ACCOUNT_ID>/magic/ipsec_tunnels" | jq -r '.result.ipsec_tunnels[] | "\(.interface_address)\t\(.name)"' | sort
+curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "https://api.cloudflare.com/client/v4/accounts/<CLOUDFLARE_ACCOUNT_ID>/magic/gre_tunnels" | jq -r '.result.gre_tunnels[] | "\(.interface_address)\t\(.name)"' | sort
+```
+
+Choose tunnel names that do not appear in the output. For each tunnel, choose an inside `/30` CIDR within `169.254.240.0/20` that does not contain any listed interface address. The reference values in this guide (`169.254.240.44/30` through `169.254.240.56/30`) are examples; replace them if any are already in use, for example by another deployment of this configuration.
+
+## Configure the AWS Transit Gateway
+
+### Verify the Transit Gateway options
+
+1. Log in to the AWS Management Console and open **VPC**.
+2. Go to **Transit gateways** > **Transit gateways**.
+3. Select the Transit Gateway used by the workload VPC.
+4. Confirm the following settings:
+
+| **Transit Gateway option** | **Value** |
+| -------------------------- | --------- |
+| Amazon side ASN            | `65020`   |
+| VPN ECMP support           | Enabled   |
+| DNS support                | Enabled   |
+
+This guide uses `65020` as an example private ASN. Choose an ASN that no other Cloudflare WAN-connected site uses, and avoid the AWS default of `64512`. For more information, refer to [AS path loop prevention](#as-path-loop-prevention).
+
+AWS allows changing the Amazon-side ASN only when the Transit Gateway has no VPN, Direct Connect gateway, Connect, VPN Concentrator, or Client VPN attachments. To change it, run the following command:
+
+```bash
+aws ec2 modify-transit-gateway --transit-gateway-id <AWS_TGW_ID> --options AmazonSideAsn=65020
+```
+
+If the Transit Gateway already has one of those attachments, keep its current ASN, substitute that ASN throughout this guide, and configure the same value as **Customer device ASN** in Cloudflare. Confirm that no other Cloudflare WAN-connected site uses that ASN.
+
+### Verify the workload VPC attachment
+
+1. Go to **Transit gateways** > **Transit gateway attachments**.
+2. Confirm that the workload VPC has an available VPC attachment to the Transit Gateway.
+3. Confirm that attachment subnets exist in at least two Availability Zones.
+
+### Create a dedicated Transit Gateway route table
+
+The route table associated with an AWS VPN attachment determines which routes AWS advertises through that Site-to-Site VPN connection. Use a dedicated route table so unrelated VPC, Site-to-Site VPN, and Direct Connect routes are not exported to Cloudflare WAN.
+
+1. Go to **Transit gateways** > **Transit gateway route tables**.
+2. Select **Create transit gateway route table**.
+3. For **Transit gateway ID**, select `<AWS_TGW_ID>`.
+4. Add a descriptive Name tag, such as `cloudflare-wan-routing`.
+5. Select **Create transit gateway route table**.
+6. Record its ID as `<AWS_TGW_ROUTE_TABLE_ID>`.
+
+:::caution[Prevent unintended route advertisement]
+Do not enable propagation from unrelated attachments into this route table. If you use an existing dedicated table, audit every active route and propagation before attaching the VPNs.
+:::
+
+## Create the AWS customer gateway
+
+1. Go to **Virtual private network (VPN)** > **Customer gateways**.
+2. Select **Create customer gateway**.
+3. Configure the following values:
+
+   | **AWS field**   | **Value**                           |
+   | --------------- | ----------------------------------- |
+   | Name tag        | `cloudflare-wan-anycast-01`         |
+   | BGP ASN         | CF Account ASN (`13335` by default) |
+   | IP address      | `162.159.135.1`                     |
+   | Certificate ARN | Leave blank                         |
+   | Device          | `cloudflare-wan-anycast-01`         |
+
+4. Select **Create customer gateway**.
+5. Record the generated customer gateway ID as `<AWS_CUSTOMER_GATEWAY_01_ID>`.
+
+:::note[Secondary anycast IP customers]
+Repeat the preceding process with name and device `cloudflare-wan-anycast-02`, the same CF Account ASN, and IP address `172.64.135.1`. Record the generated ID as `<AWS_CUSTOMER_GATEWAY_02_ID>`.
+:::
+
+:::caution[Use a unique device name]
+If a customer gateway with the same type, IP address, and BGP ASN already exists in the Region, AWS returns the existing customer gateway instead of creating a new one unless the **Device** value differs. Enter a device name that no other customer gateway in the Region uses, and confirm that the recorded customer gateway ID is new.
+:::
+
+:::note[Use tags for readability]
+Record each generated customer gateway ID as the authoritative resource identifier. You can also apply descriptive AWS tags, including a `Name` tag, to make customer gateways easier to identify in the AWS console and operational tooling.
+:::
+
+## Create the AWS Site-to-Site VPN connection
+
+1. Go to **Virtual private network (VPN)** > **Site-to-Site VPN connections**.
+2. Select **Create VPN connection**.
+3. Configure the following values:
+
+   | **AWS field**            | **Value**                      |
+   | ------------------------ | ------------------------------ |
+   | Name tag                 | `cloudflare-wan-bgp-01`        |
+   | Target gateway type      | Transit gateway                |
+   | Transit gateway          | `<AWS_TGW_ID>`                 |
+   | Customer gateway         | Existing                       |
+   | Customer gateway ID      | `<AWS_CUSTOMER_GATEWAY_01_ID>` |
+   | Routing options          | Dynamic (requires BGP)         |
+   | Local IPv4 network CIDR  | `0.0.0.0/0`                    |
+   | Remote IPv4 network CIDR | `0.0.0.0/0`                    |
+   | Tunnel inside IP version | IPv4                           |
+
+   The local and remote network CIDR fields are IKE traffic selectors. Route-based forwarding is controlled by the Transit Gateway route table and BGP, not by these broad selectors.
+
+4. Select **Create VPN connection**.
+5. Wait until the connection state is **Available**.
+6. Record the VPN connection ID as `<AWS_VPN_CONNECTION_01_ID>`.
+
+:::note[Secondary anycast IP customers]
+Repeat the preceding process with these values:
+
+| **AWS field**       | **Value**                      |
+| ------------------- | ------------------------------ |
+| Name tag            | `cloudflare-wan-bgp-02`        |
+| Customer gateway ID | `<AWS_CUSTOMER_GATEWAY_02_ID>` |
+
+Use the same Transit Gateway and dynamic-routing options. Record the VPN connection ID as `<AWS_VPN_CONNECTION_02_ID>`.
+:::
+
+### Record the AWS resource IDs
+
+Keep a deployment record that maps the generated AWS resources to their Cloudflare role:
+
+| **Resource**                          | **Recorded value**             |
+| ------------------------------------- | ------------------------------ |
+| Transit Gateway                       | `<AWS_TGW_ID>`                 |
+| Dedicated Transit Gateway route table | `<AWS_TGW_ROUTE_TABLE_ID>`     |
+| Workload VPC attachment               | `<AWS_VPC_ATTACHMENT_ID>`      |
+| Customer gateway for `162.159.135.1`  | `<AWS_CUSTOMER_GATEWAY_01_ID>` |
+| VPN connection for `162.159.135.1`    | `<AWS_VPN_CONNECTION_01_ID>`   |
+
+:::note[Secondary anycast IP customers]
+Also record the customer gateway and VPN connection IDs for `172.64.135.1` as `<AWS_CUSTOMER_GATEWAY_02_ID>` and `<AWS_VPN_CONNECTION_02_ID>`.
+:::
+
+Tag each AWS resource with a descriptive name, environment, owner, and change-management reference according to your organization's standards.
+
+## Configure the AWS VPN tunnels
+
+AWS assigns two public IPv4 addresses to each VPN connection. Configure both tunnels; do not leave the second tunnel at its default settings.
+
+### Configure tunnel 01
+
+1. Select `<AWS_VPN_CONNECTION_01_ID>`.
+2. Open **Tunnel details** and record the first **Public IPv4 address** as `<AWS_OUTSIDE_IP_01>`.
+3. Select **Actions** > **Modify VPN tunnel options**.
+4. Select `<AWS_OUTSIDE_IP_01>` for **VPN tunnel outside IP address**.
+5. Configure the following options. Remove other algorithm choices so AWS cannot negotiate an unexpected proposal.
+
+| **AWS option**                | **Value**                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------ |
+| Inside IPv4 CIDR              | `169.254.240.44/30`                                                            |
+| Pre-shared key                | Enter a PSK that meets the AWS requirements and record it as `<TUNNEL_01_PSK>` |
+| Phase 1 encryption algorithms | `AES256`                                                                       |
+| Phase 2 encryption algorithms | `AES256`                                                                       |
+| Phase 1 integrity algorithms  | `SHA2-256`                                                                     |
+| Phase 2 integrity algorithms  | `SHA2-256`                                                                     |
+| Phase 1 DH group numbers      | `20`                                                                           |
+| Phase 2 DH group numbers      | `20`                                                                           |
+| IKE versions                  | `ikev2`                                                                        |
+| **Replay window size**        | **`2048`**                                                                     |
+| DPD timeout action            | `Restart`                                                                      |
+| Startup action                | `Start`                                                                        |
+
+Leave the Phase 1 lifetime at `28800` seconds and Phase 2 lifetime at `3600` seconds, then select **Save changes**.
+
+AWS supports the **Start** startup action only with IKEv2. Cloudflare only responds to IKE and never initiates it, so AWS must initiate each tunnel.
+
+### Configure tunnel 02
+
+Repeat the preceding process for the second public IPv4 address and tunnel-specific values:
+
+| **Tunnel** | **VPN connection**           | **Inside IPv4 CIDR** | **Pre-shared key** |
+| ---------- | ---------------------------- | -------------------- | ------------------ |
+| 02         | `<AWS_VPN_CONNECTION_01_ID>` | `169.254.240.48/30`  | `<TUNNEL_02_PSK>`  |
+
+Record the public IPv4 address as `<AWS_OUTSIDE_IP_02>`. Use the same IKE, IPsec, DPD, replay-window, lifetime, and startup settings on both tunnels. Configure each tunnel with a PSK that meets the [pre-shared key requirements](#pre-shared-key-requirements). The tunnels can share a PSK.
+
+:::note[Secondary anycast IP customers]
+For the second VPN connection, configure tunnel 03 with `169.254.240.52/30` and `<TUNNEL_03_PSK>`, and tunnel 04 with `169.254.240.56/30` and `<TUNNEL_04_PSK>`. Record their public IPv4 addresses as `<AWS_OUTSIDE_IP_03>` and `<AWS_OUTSIDE_IP_04>`. Apply the same tunnel settings used for tunnels 01 and 02.
+:::
+
+:::caution[AWS connection changes restart tunnels]
+Modifying an AWS Site-to-Site VPN connection triggers a tunnel restart and will most likely result in a brief loss of connectivity. Changes typically take approximately three to five minutes to complete. Make changes to an existing production connection during an approved maintenance window.
+:::
+
+## Create the Cloudflare WAN IPsec tunnels
+
+AWS assigns a public IPv4 address to each VPN tunnel and automatically uses that address as the IKE ID. AWS does not allow the IKE ID to be changed. Cloudflare WAN refers to this AWS address as the **Customer endpoint**. Although **Customer endpoint** is generally optional in a Cloudflare WAN IPsec tunnel configuration, it is required for this integration so that it matches the IKE ID presented by AWS.
+
+Create the AWS VPN connection first to obtain its two public IPv4 addresses. Because each AWS VPN connection contains two tunnels, the baseline requires two corresponding Cloudflare WAN IPsec tunnels.
+
+For general Cloudflare WAN tunnel configuration guidance and field definitions, refer to [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/).
+
+:::caution[AWS assigns the Customer endpoint values]
+Use the AWS **Public IPv4 address** generated for the corresponding VPN tunnel as the **Customer endpoint**. If you create a Cloudflare tunnel before adding the generated AWS address, the tunnel will remain down until you update and save its **Customer endpoint**.
+:::
+
+1. In the Cloudflare dashboard, go to the **Connectors** page.
+2. From the **IPsec/GRE tunnels** tab, select **Create a tunnel**.
+3. On the **Add tunnels** page, select **IPsec tunnel**.
+4. Create two tunnels using the following values:
+
+| **Attribute**            | **AWS_TUN_01**        | **AWS_TUN_02**        |
+| ------------------------ | --------------------- | --------------------- |
+| IPv4 interface address   | `169.254.240.46/30`   | `169.254.240.50/30`   |
+| Customer endpoint        | `<AWS_OUTSIDE_IP_01>` | `<AWS_OUTSIDE_IP_02>` |
+| Cloudflare anycast IP    | `162.159.135.1`       | `162.159.135.1`       |
+| Pre-shared key           | `<TUNNEL_01_PSK>`     | `<TUNNEL_02_PSK>`     |
+| Tunnel health checks     | Enabled               | Enabled               |
+| Health check rate        | Medium                | Medium                |
+| Health check type        | Request               | Request               |
+| Health check direction   | Bidirectional         | Bidirectional         |
+| Health check target      | Default (not shown)   | Default (not shown)   |
+| Replay protection        | Enabled               | Enabled               |
+| Automatic return routing | Disabled              | Disabled              |
+
+:::note[Secondary anycast IP customers]
+Create `AWS_TUN_03` and `AWS_TUN_04` using the corresponding values recorded earlier and Cloudflare anycast IP `172.64.135.1`.
+:::
+
+Tunnel names and interface addresses must be unique within the Cloudflare account. If another tunnel already uses one of these names or interface addresses, choose a different name or a different inside `/30` CIDR for the matching AWS tunnel.
+
+Replace every `<AWS_OUTSIDE_IP_XX>` placeholder with the address shown for the matching AWS tunnel. Match tunnels by VPN connection and inside IPv4 CIDR rather than by comparing or sorting the generated public IP addresses.
+
+Select **Use my own pre-shared key** for each tunnel and enter the PSK configured on the matching AWS tunnel. AWS uses IP-address IKE identities for this integration; do not use the Cloudflare-generated FQDN identity workflow. Cloudflare matches an IP-address IKE identity to a tunnel by its **Customer endpoint**, so each Cloudflare tunnel must use a unique **Customer endpoint** value.
+
+:::note[Automatic return routing]
+Automatic return routing is disabled because this design exchanges routes with BGP and supports traffic initiated from other Cloudflare WAN sites toward AWS.
+
+For more information, refer to [Automatic return routing (ARR)](/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-tunnel/#automatic-return-routing-arr).
+:::
+
+### Verify tunnel-to-VPN pairing
+
+Before saving each tunnel, verify these tunnel-specific values as a set:
+
+- AWS VPN connection ID
+- AWS **Public IPv4 address** used as the Cloudflare **Customer endpoint**
+- Inside `/30` CIDR and Cloudflare interface address
+- Cloudflare anycast IP used by the AWS customer gateway
+- Matching pre-shared key
+
+:::note[Match tunnels by their AWS details]
+Do not infer tunnel order from the AWS public IPv4 addresses. Match each Cloudflare tunnel to the **Public IPv4 address** and **Inside IPv4 CIDR** shown under the AWS VPN connection's **Tunnel details**.
+:::
+
+### Verify health check settings
+
+Cloudflare health checks test reachability independently of IKE, IPsec, and BGP state. Configure every tunnel with exactly these values:
+
+| **Health check field** | **Value**     |
+| ---------------------- | ------------- |
+| Rate                   | Medium        |
+| Type                   | Request       |
+| Direction              | Bidirectional |
+| Target                 | Default       |
+
+The dashboard shows **Health check target** only when **Health check direction** is **Unidirectional**. With **Bidirectional** selected, the field is hidden and the default target applies, so no action is required. Do not set a custom target through the API or Terraform.
+
+The default target is the other usable address in the tunnel's `/30`, which is the AWS inside address. For example, for the Cloudflare interface address `169.254.240.46/30`, Cloudflare sends health checks to `169.254.240.45`. A healthy IPsec security association does not by itself prove that the health check or BGP session is working.
+
+For more information, refer to [Tunnel health checks](/cloudflare-wan/reference/tunnel-health-checks/).
+
+## Configure BGP in Cloudflare WAN
+
+BGP over IPsec requires Unified Routing. AWS initiates each BGP session; Cloudflare does not initiate BGP peering.
+
+### Record the CF Account ASN
+
+1. Go to **Networking** > **Routes**.
+2. Select **WAN configuration**.
+3. Record the **CF Account ASN**.
+
+The CF Account ASN defaults to `13335` and can be changed to a private ASN from `64512` through `65534`. It applies to every BGP session in the Cloudflare account and must differ from the AWS Transit Gateway ASN. This guide uses `13335` as the reference value. If your account uses a different CF Account ASN, use that value wherever this guide shows `13335`, including the BGP ASN of each AWS customer gateway.
+
+For more information, refer to [Configure routes](/cloudflare-wan/configuration/how-to/configure-routes/#choose-an-asn-for-bgp-peering).
+
+### Enable BGP on each tunnel
+
+For `AWS_TUN_01` and `AWS_TUN_02`:
+
+1. In the Cloudflare dashboard, go to the **Connectors** page.
+2. In **IPsec/GRE tunnels**, locate the tunnel.
+3. Select the three-dot menu next to the tunnel, then select **Configure BGP**.
+4. For **Customer device ASN**, enter `65020`.
+5. Leave **MD5 key** blank. AWS Site-to-Site VPN does not provide a matching BGP MD5 configuration option.
+6. Leave **Additional advertised prefix list** blank unless AWS must receive an additional route that is not already eligible in the Unified Routing dataplane.
+7. Select **Save**.
+
+:::note[Secondary anycast IP customers]
+Repeat these steps for `AWS_TUN_03` and `AWS_TUN_04`.
+:::
+
+Leaving **Additional advertised prefix list** blank does not restrict advertisements to zero routes. Cloudflare still advertises eligible routes from the Unified Routing dataplane. Inventory those routes before enabling BGP, and block any prefix that AWS must not use as described in [Block unwanted prefixes](#block-unwanted-prefixes). In the split-egress design used throughout this guide, AWS must not learn `0.0.0.0/0`; advertise it only for the optional Cloudflare Gateway egress design described in [Prefix control](#prefix-control).
+
+Cloudflare peers with the AWS inside IP through the tunnel. AWS peers with the corresponding Cloudflare interface address. The resulting sessions are:
+
+| **Tunnel**   | **AWS BGP address** | **Cloudflare BGP address** |
+| ------------ | ------------------- | -------------------------- |
+| `AWS_TUN_01` | `169.254.240.45`    | `169.254.240.46`           |
+| `AWS_TUN_02` | `169.254.240.49`    | `169.254.240.50`           |
+
+:::note[Secondary anycast IP customers]
+The sessions for the second anycast IP use `169.254.240.53` and `169.254.240.54` for tunnel 03, and `169.254.240.57` and `169.254.240.58` for tunnel 04.
+:::
+
+Do not create a Cloudflare WAN static route for `192.168.0.0/16`. Cloudflare learns the VPC prefix from AWS over BGP.
+
+### Understand route exchange
+
+The two route directions use different sources:
+
+| **Direction**     | **Route source**                                                                                       | **Control point**                                                    |
+| ----------------- | ------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
+| AWS to Cloudflare | Routes in the Transit Gateway route table associated with each VPN attachment                          | Dedicated route table and attachment propagation                     |
+| Cloudflare to AWS | Eligible routes from the Unified Routing dataplane plus tunnel-specific additional advertised prefixes | Cloudflare route inventory and **Additional advertised prefix list** |
+
+AWS advertises the propagated VPC prefix over every established BGP session. Cloudflare can therefore retain equivalent paths and withdraw only the paths affected by a failed session. AWS learns RFC 1918 prefixes from Cloudflare WAN by default, along with any publicly routable prefixes explicitly enabled for the account. AWS can install equal-cost paths when their BGP attributes are equivalent.
+
+## Configure AWS Transit Gateway routing
+
+The example propagates and exports the complete `192.168.0.0/16` VPC CIDR. It also propagates all prefixes learned through the VPN attachments into the dedicated Transit Gateway route table.
+
+### Associate the attachments
+
+1. Go to **Transit gateways** > **Transit gateway route tables**.
+2. Select `<AWS_TGW_ROUTE_TABLE_ID>`.
+3. Open **Associations**.
+4. Confirm the workload VPC attachment and every configured VPN attachment are associated with this route table.
+5. If an attachment is not associated, select **Create association**, select the attachment, and create the association.
+6. Confirm no unrelated attachment is associated with this route table.
+
+An attachment can be associated with only one Transit Gateway route table. Moving an existing workload attachment can change its forwarding behavior; ensure the dedicated table contains every route the workload requires before changing the association.
+
+### Enable VPC route propagation
+
+1. Open **Propagations** for `<AWS_TGW_ROUTE_TABLE_ID>`.
+2. Select **Create propagation**.
+3. Select the workload VPC attachment and create the propagation.
+4. Confirm `192.168.0.0/16` appears as a propagated route.
+
+AWS advertises the propagated VPC CIDR to Cloudflare through every established BGP session.
+
+### Enable VPN route propagation
+
+1. Open **Propagations** for `<AWS_TGW_ROUTE_TABLE_ID>`.
+2. Select **Create propagation**.
+3. Select the VPN attachment and create the propagation.
+
+:::note[Secondary anycast IP customers]
+Repeat these steps for the second VPN attachment.
+:::
+
+The propagated routes are the prefixes that AWS learns from Cloudflare over BGP. When the same prefix arrives with equivalent BGP attributes over multiple tunnels, the Transit Gateway can install equal-cost paths and use ECMP.
+
+### Configure workload subnet routes
+
+For each VPC route table associated with a workload subnet:
+
+1. Go to **Virtual private cloud** > **Route tables**.
+2. Select the workload subnet route table.
+3. Select **Routes** > **Edit routes**.
+4. For each approved destination prefix that should traverse Cloudflare WAN, add a route with `<AWS_TGW_ID>` as the target.
+5. Leave any existing `0.0.0.0/0` route unchanged.
+6. Save the changes.
+
+This produces the same split-egress design as the Terraform reference deployment: approved prefixes use the Transit Gateway, and the existing default route continues to carry Internet traffic through the Internet Gateway or NAT gateway. AWS longest-prefix matching selects the more-specific routes over the default route. Add only prefixes from the approved inventory that Cloudflare advertises; do not add a route that overlaps the VPC CIDR.
+
+:::caution[Do not point the default route at the Transit Gateway by default]
+A VPC route table holds one `0.0.0.0/0` route. Targeting it to `<AWS_TGW_ID>` replaces any existing Internet Gateway or NAT gateway route rather than adding a second path. If Cloudflare does not advertise an active default route over BGP, the Transit Gateway has no matching route and drops Internet-bound traffic from the subnet.
+
+Change the default route only if you intend to send Internet traffic through Cloudflare Gateway, Cloudflare advertises `0.0.0.0/0`, and that route appears as active in `<AWS_TGW_ROUTE_TABLE_ID>`. Record the original target first so you can restore it. Refer to [Prefix control](#prefix-control).
+:::
+
+### Review security controls
+
+Confirm that the following controls permit the intended traffic:
+
+- Workload security groups
+- Subnet network access control lists
+- Host firewalls
+- Cloudflare WAN network firewall policies
+
+AWS manages UDP 500, UDP 4500, and ESP connectivity for the Site-to-Site VPN tunnels. These protocols do not require rules in workload security groups.
+
+## BGP design considerations
+
+This section covers only the BGP behavior specific to combining AWS Transit Gateway and Cloudflare WAN.
+
+### BGP timers and convergence
+
+AWS sets the BGP hold time for each tunnel, and it cannot be changed. Cloudflare advertises 240 seconds and uses the lower value, so the AWS value applies. Cloudflare requires a hold time of at least 30 seconds. Terraform reports the AWS value as `aws_bgp_holdtime` in the `cloudflare_tunnel_mapping` output.
+
+After a session goes down, Cloudflare propagates the route withdrawal in no more than a few minutes. In Edge Resiliency Mode, a Cloudflare data center keeps forwarding on its last known routes while tunnel health checks pass, so a BGP failure on a healthy tunnel may not withdraw the path immediately.
+
+For more information, refer to [BGP route distribution and convergence](/cloudflare-wan/reference/traffic-steering/#bgp-route-distribution-and-convergence), [BGP timers and settings](/cloudflare-wan/reference/traffic-steering/#bgp-timers-and-settings), and [Edge Resiliency Mode](/cloudflare-wan/reference/traffic-steering/#edge-resiliency-mode-non-stop-forwarding).
+
+### AS path loop prevention
+
+Cloudflare preserves the original AS path between Cloudflare WAN sites, and AWS Transit Gateway has no `allowas-in` option. AWS silently rejects routes from any other Cloudflare WAN site that uses the Transit Gateway ASN. Give each site a unique ASN, and do not use the AWS defaults: `64512` for Transit Gateways and virtual private gateways, and `65000` for customer gateways.
+
+### Prefix control
+
+Cloudflare advertises every eligible route from the Unified Routing dataplane, plus any entries in **Additional advertised prefix list**. Leaving that list empty does not limit what Cloudflare advertises. AWS accepts up to 1,000 routes from each VPN connection and advertises up to 5,000; neither quota is adjustable.
+
+Advertising `0.0.0.0/0` to AWS sends Internet traffic through Cloudflare Gateway only if the workload route table also sends `0.0.0.0/0` to the Transit Gateway. The Terraform reference deployment does not use this design.
+
+### Block unwanted prefixes
+
+To stop AWS from using a prefix, remove it from the Cloudflare advertisement (a static route under **Networking** > **Routes**, or an **Additional advertised prefix list** entry), or add a blackhole static route for the exact CIDR in `<AWS_TGW_ROUTE_TABLE_ID>`. A Transit Gateway static route takes precedence over a VPN-propagated route for the same CIDR, but not over a more-specific route. Routes that Cloudflare learns over BGP from other sites can only be withdrawn at the originating site or blocked in AWS. Remove any `0.0.0.0/0` blackhole route before adopting Cloudflare Gateway egress.
+
+For more information, refer to [Route evaluation order](https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html#tgw-route-evaluation-overview) in the AWS documentation.
+
+## MSS and MTU
+
+For Cloudflare WAN guidance, refer to [Maximum transmission unit and maximum segment size](/cloudflare-wan/reference/mtu-mss/).
+
+IPsec encapsulation reduces the usable packet size. Cloudflare recommends a maximum TCP MSS clamp of `1360` bytes for IPsec tunnels. This value is below the `1382`-byte MSS that AWS lists for AES-CBC with SHA-256 and NAT-T, so it is compatible with the cipher suite in this guide. AWS Site-to-Site VPN does not provide a per-VPN MSS-clamping control, so apply the clamp on a device or workload in the traffic path when necessary.
+
+AWS Site-to-Site VPN does not support Path MTU Discovery. Validate large TCP flows with controlled packet-size and Don't Fragment (DF) tests. Where supported, fragment packets before encryption or apply MSS clamping rather than relying on Path MTU Discovery.
+
+## Verification
+
+### Verify AWS tunnel and BGP status
+
+For each VPN connection:
+
+1. In the AWS VPC console, go to **Site-to-Site VPN connections**.
+2. Select the VPN connection.
+3. Open **Tunnel details**.
+4. Confirm both tunnels show **UP**.
+5. Confirm the accepted route count matches the expected Cloudflare WAN prefix inventory.
+
+An **UP** tunnel confirms IKE and IPsec state, not the BGP finite-state-machine state. Confirm each session is **Established** in the Cloudflare BGP status view. A positive accepted route count confirms route exchange, but an established session can legitimately have zero accepted routes.
+
+You can also verify the configured tunnels with the AWS CLI:
+
+```bash
+aws ec2 describe-vpn-connections --vpn-connection-ids <AWS_VPN_CONNECTION_01_ID> --query 'VpnConnections[].{VpnId:VpnConnectionId,Tunnels:VgwTelemetry[].{OutsideIP:OutsideIpAddress,Status:Status,ImportedRoutes:AcceptedRouteCount,Message:StatusMessage}}' --output table --no-cli-pager
+```
+
+:::note[Secondary anycast IP customers]
+Add `<AWS_VPN_CONNECTION_02_ID>` after `<AWS_VPN_CONNECTION_01_ID>` in the `--vpn-connection-ids` argument.
+:::
+
+Expected results:
+
+- Every configured tunnel reports `UP`
+- `AcceptedRouteCount` matches the expected Cloudflare WAN prefixes and is greater than zero when routes are being advertised
+
+The command reports tunnel telemetry and accepted route counts; it does not expose an explicit BGP session state. Use the Cloudflare BGP status view to verify that every configured session is currently established.
+
+### Verify the Transit Gateway routes
+
+1. Go to **Transit gateways** > **Transit gateway route tables**.
+2. Select `<AWS_TGW_ROUTE_TABLE_ID>` and open **Routes**.
+3. Confirm `192.168.0.0/16` is an active propagated route to the workload VPC attachment.
+4. Confirm the expected RFC 1918 prefixes and any explicitly enabled public prefixes appear as propagated routes through the VPN attachments.
+5. Confirm equivalent Cloudflare WAN routes have multiple equal paths when ECMP is expected.
+
+Enumerate the exact active Transit Gateway routes and compare every CIDR and attachment with the approved prefix inventory:
+
+```bash
+aws ec2 search-transit-gateway-routes --transit-gateway-route-table-id <AWS_TGW_ROUTE_TABLE_ID> --filters Name=state,Values=active --max-results 1000 --query '{AdditionalRoutesAvailable:AdditionalRoutesAvailable,Routes:Routes[].{CIDR:DestinationCidrBlock,Type:Type,State:State,Attachments:TransitGatewayAttachments[].TransitGatewayAttachmentId}}' --output json --no-cli-pager
+```
+
+If `AdditionalRoutesAvailable` is `true`, the result is incomplete. Run narrower searches for each approved prefix and investigate any route not covered by the approved inventory.
+
+### Verify Cloudflare tunnel and route status
+
+1. In the Cloudflare dashboard, go to **Networking** > **Insights** > **Network health** > **IPsec/GRE tunnels and interconnects**.
+2. Confirm every configured tunnel is healthy.
+3. Inspect the BGP status for each tunnel and confirm every configured session is **Established**.
+4. Go to **Networking** > **Routes**.
+5. Confirm `192.168.0.0/16` is learned through the AWS BGP sessions.
+6. Inspect the available route paths and confirm the expected tunnels contribute paths.
+7. Confirm the complete AWS VPC prefix is present and no unrelated AWS prefix is advertised.
+
+### Test end-to-end connectivity
+
+1. Start a packet capture or flow-log query where available.
+2. From a permitted AWS workload in `192.168.125.0/24`, ping or connect to a host in a prefix learned from Cloudflare WAN.
+3. Test the reverse direction from a Cloudflare WAN-connected network to the AWS workload.
+4. Confirm the application flow is not translated unexpectedly.
+5. During a maintenance window, disable one tunnel and confirm its BGP path is withdrawn while traffic continues over the other tunnel. Allow up to the negotiated BGP hold time for each side to declare the session down, plus up to a few minutes for Cloudflare to propagate the withdrawal. Refer to [BGP timers and convergence](#bgp-timers-and-convergence).
+
+:::note[Secondary anycast IP customers]
+Also test the loss of both tunnels in one VPN connection and confirm traffic continues through the second Cloudflare anycast IP. Allow the same convergence time.
+:::
+
+Also confirm that every approved destination prefix (`vpn_routed_prefixes` in Terraform) uses the Transit Gateway and that an unmatched IPv4 destination still uses the existing Internet Gateway or NAT gateway default route. AWS longest-prefix matching gives the configured VPN routes precedence over `0.0.0.0/0`. Testing direct Internet egress requires a workload with a public IPv4 address or a NAT gateway path; the Terraform proof of concept does not create a workload or NAT service.
+
+## Troubleshooting
+
+### All tunnels are down
+
+- Confirm each AWS customer gateway IP matches its configured Cloudflare anycast IP
+- Confirm **Startup action** is `Start`; Cloudflare only responds to IKE and never initiates it
+- Verify IKEv2, AES-256-CBC, SHA-256, and DH group 20 are the enabled proposals
+- Confirm each pre-shared key matches the corresponding AWS public IPv4 address and Cloudflare WAN tunnel
+- Review Cloudflare tunnel health events
+
+### One tunnel is down
+
+- Confirm the Cloudflare **Customer endpoint** contains the AWS **Public IPv4 address** generated for that specific VPN tunnel
+- Verify the inside `/30`, AWS public IPv4 address, and pre-shared key were not copied from another tunnel
+- Confirm every inside CIDR is unique and within `169.254.240.0/20`
+- Confirm replay protection is enabled in Cloudflare and the AWS replay window is `2048`
+- Confirm **DPD timeout action** is `Restart`
+
+### IPsec is up but BGP is down
+
+- Confirm the AWS customer gateway BGP ASN matches the CF Account ASN
+- Confirm **Customer device ASN** is `65020` on the corresponding Cloudflare WAN tunnel
+- Confirm BGP is enabled on every Cloudflare WAN tunnel
+- Confirm the Cloudflare interface address matches the second usable address in the AWS `/30`
+- Confirm no BGP MD5 key is configured in Cloudflare
+- Confirm AWS initiates TCP port 179 toward the Cloudflare interface address
+
+Interpret the reported BGP state as follows:
+
+| **State**   | **Meaning**                              | **Primary checks**                                             |
+| ----------- | ---------------------------------------- | -------------------------------------------------------------- |
+| Established | The session is exchanging routes         | Validate received and advertised prefix inventories            |
+| Active      | The peer is retrying the connection      | Check the peer address, ASN, and TCP port 179 reachability     |
+| Connect     | The TCP connection is in progress        | Check tunnel reachability and the Cloudflare interface address |
+| Idle        | The session is not attempting to connect | Confirm BGP is enabled and AWS is configured to initiate       |
+
+### BGP is up but routes are missing
+
+- Confirm every configured VPN attachment has propagation enabled in the intended Transit Gateway route table
+- Confirm the workload VPC attachment is associated with and propagated into that table
+- Confirm `192.168.0.0/16` exists as a propagated Transit Gateway route to the VPC attachment
+- Check whether BGP loop prevention rejects a route containing ASN `65020`
+- Confirm the expected Cloudflare WAN routes are eligible in the Unified Routing dataplane
+- Check for route filters or a more-specific route that changes the forwarding result
+
+### Routes exist but traffic does not pass
+
+- Check the workload subnet route table, Transit Gateway route table, and Cloudflare WAN route table in both directions
+- Confirm security groups, network access control lists, host firewalls, and Cloudflare WAN network firewall policies allow the traffic
+- Check for overlapping or more-specific routes
+- Review VPC Flow Logs and Transit Gateway Flow Logs, if enabled
+- Confirm source and destination prefixes are not translated unexpectedly
+
+Trace the route at all three forwarding layers:
+
+1. The workload subnet route table must send the destination prefix to the Transit Gateway.
+2. The dedicated Transit Gateway route table must send the destination through the VPN attachments.
+3. Cloudflare WAN must have a return route for `192.168.0.0/16` learned from the AWS BGP sessions.
+
+If only one direction works, compare source and destination prefixes in the flow logs and confirm the return route is present rather than assuming the IPsec tunnel is the cause.
+
+### Tunnel health is degraded but IPsec is up
+
+- Confirm the health check rate is **Medium**, type is **Request**, and direction is **Bidirectional**
+- Confirm no custom health check target is set; the target should be the AWS inside address in the same `/30`
+- Verify the Cloudflare interface and AWS inside addresses belong to the same `/30`
+- Confirm the corresponding AWS tunnel is using the expected inside CIDR
+- Check whether a network policy blocks ICMP to the AWS tunnel inside address
+
+### Traffic uses fewer tunnels than expected
+
+- Confirm VPN ECMP support is enabled on the Transit Gateway
+- Confirm every configured IPsec tunnel and BGP session is up
+- Confirm each tunnel advertises the same prefix with equivalent BGP attributes
+- Confirm every configured VPN attachment is associated with and propagated into the dedicated route table
+- Remember that ECMP distributes flows, not individual packets; a small number of test flows may not use every tunnel
+
+### Unexpected prefixes appear in AWS or Cloudflare
+
+- Audit every route and propagation in the dedicated Transit Gateway route table
+- Confirm the workload VPC attachment and every configured VPN attachment are propagated
+- Confirm no unrelated attachment is propagated into the dedicated table
+- Review the eligible route inventory in the Unified Routing dataplane and each tunnel's **Additional advertised prefix list**
+- Remove an unintended route at its source rather than relying on a less-specific route to override it
+
+### Small packets work but applications fail
+
+- Do not rely on Path MTU Discovery, which AWS Site-to-Site VPN does not support
+- Use controlled packet-size and DF-bit tests to identify the effective path MTU
+- Apply a TCP MSS clamp of no more than `1360` bytes where the architecture permits
+- Check whether ICMP fragmentation-needed messages are filtered
+
+## Design notes
+
+- Each AWS Site-to-Site VPN connection provides two tunnels in different AWS Availability Zones
+- AWS does not support creating a single-tunnel Site-to-Site VPN connection; both tunnels use the same customer gateway and therefore the same Cloudflare anycast IP
+- The baseline VPN connection provides two paths through one Cloudflare anycast IP; a second anycast IP adds a second VPN connection and two more paths
+- AWS requires `/30` inside tunnel networks, so this integration cannot use the `/31` interface addresses that Cloudflare recommends for other devices
+- AWS Transit Gateway can use ECMP across equal BGP paths when VPN ECMP support is enabled
+- Cloudflare automatically withdraws a route learned from a failed BGP session while equivalent paths remain available through healthy sessions
+- Standard AWS Site-to-Site VPN tunnels support the AWS-published bandwidth limit per tunnel; Transit Gateway also supports Large Bandwidth Tunnels in eligible Regions, but validate Cloudflare interoperability and commercial requirements before using that option
+- Modifying an AWS VPN tunnel option can interrupt that tunnel for several minutes
+- Configure every tunnel with an 8-64 character PSK containing only letters, numbers, periods, and underscores; a PSK cannot begin with `0`, and console-configured tunnels can use unique PSKs or reuse one PSK across all tunnels, while the Terraform workflow requires a unique PSK for each tunnel
+
+## Summary
+
+The primary topology connects AWS Transit Gateway through:
+
+- One Cloudflare anycast IP
+- One AWS customer gateway
+- One AWS Site-to-Site VPN connection
+- Two IPsec tunnels and two BGP sessions
+
+:::note[Secondary anycast IP customers]
+Add:
+
+- One additional Cloudflare anycast IP
+- One additional AWS customer gateway
+- One additional AWS Site-to-Site VPN connection
+- Two additional IPsec tunnels and two additional BGP sessions
+
+:::
+
+For each configured anycast IP, the Terraform workflow requires:
+
+- Exactly two unique `/30` tunnel CIDRs
+- Exactly two AWS-compatible pre-shared keys
+
+## Configuration record
+
+Use this table during implementation and handoff. Do not record pre-shared key values in the document.
+
+| **Placeholder**                         | **Description**                                                        |
+| --------------------------------------- | ---------------------------------------------------------------------- |
+| `<AWS_TGW_ID>`                          | Transit Gateway ID                                                     |
+| `<AWS_TGW_ROUTE_TABLE_ID>`              | Dedicated route table associated with the workload and VPN attachments |
+| `<AWS_VPC_ATTACHMENT_ID>`               | Workload VPC attachment ID                                             |
+| `<AWS_CUSTOMER_GATEWAY_01_ID>`          | Customer gateway representing `162.159.135.1`                          |
+| `<AWS_VPN_CONNECTION_01_ID>`            | VPN connection using `162.159.135.1`                                   |
+| `<AWS_OUTSIDE_IP_01>`                   | AWS public IPv4 address for VPN 1, tunnel 1                            |
+| `<AWS_OUTSIDE_IP_02>`                   | AWS public IPv4 address for VPN 1, tunnel 2                            |
+| `<TUNNEL_01_PSK>` and `<TUNNEL_02_PSK>` | Pre-shared keys for tunnels 01 and 02                                  |
+| `<EXPECTED_RFC1918_PREFIX_LIST>`        | RFC 1918 prefixes AWS is expected to learn from Cloudflare WAN         |
+
+:::note[Secondary anycast IP customers]
+Also record:
+
+- `<AWS_CUSTOMER_GATEWAY_02_ID>` for the customer gateway representing `172.64.135.1`
+- `<AWS_VPN_CONNECTION_02_ID>` for the VPN connection using `172.64.135.1`
+- `<AWS_OUTSIDE_IP_03>` for VPN 2, tunnel 1
+- `<AWS_OUTSIDE_IP_04>` for VPN 2, tunnel 2
+- `<TUNNEL_03_PSK>` for tunnel 03
+- `<TUNNEL_04_PSK>` for tunnel 04
+
+:::
+
+The completed record should let an operator correlate an AWS tunnel alarm, Cloudflare tunnel-health event, BGP session, and route-table path without guessing which resources belong together.
+
+## Terraform reference deployment
+
+The self-contained Terraform configuration creates a minimal proof of concept with:
+
+- One workload VPC
+- One public workload subnet
+- Two Transit Gateway attachment subnets in separate Availability Zones
+- One Internet Gateway
+- One workload route table with split-egress routes
+- One Transit Gateway and one dedicated Transit Gateway route table
+- One VPC attachment
+- One customer gateway and one Site-to-Site VPN connection per configured anycast IP
+- Two AWS IPsec/BGP tunnels per VPN connection
+- Two matching Cloudflare WAN tunnels with BGP per VPN connection
+- The required Transit Gateway route-table associations and propagations
+
+The configuration does not create:
+
+- Virtual machines or test hosts
+- Standalone Elastic Network Interfaces (ENIs); AWS creates ENIs for the Transit Gateway VPC attachment in the attachment subnets
+- Security groups
+- Elastic IP addresses
+- NAT gateways or other NAT services
+- Cloudflare routes
+- Cloudflare network firewall policies
+
+AWS assigns two public IPv4 addresses per VPN connection for use as the Cloudflare **Customer endpoint** values.
+
+The deployment propagates the complete VPC CIDR into the Transit Gateway route table for advertisement to Cloudflare and propagates all routes learned from Cloudflare into that table. In the VPC workload route table, each configured `vpn_routed_prefixes` destination is a more-specific route to the Transit Gateway and Site-to-Site VPNs, while `0.0.0.0/0` sends all remaining IPv4 egress directly through the Internet Gateway. AWS longest-prefix matching selects a configured VPN route over the Internet default when both match.
+
+The workload subnet enables public IPv4 assignment on launch, but this configuration does not create a workload to receive an address. Direct Internet Gateway egress requires a public IPv4 address on the workload ENI and appropriate security controls; an Internet Gateway does not provide NAT for private-only hosts.
+
+:::caution[Route availability for VPN-routed prefixes]
+A destination matching `vpn_routed_prefixes` has no fallback to the Internet Gateway and will blackhole unless the Transit Gateway has an active matching route learned through the AWS VPN attachments for Cloudflare WAN.
+:::
+
+:::caution[Billable AWS resources]
+Terraform creates billable AWS resources. Run this deployment in a non-production AWS account. Review the plan against your organization's security and tagging requirements. Remove the resources when testing is complete.
+:::
+
+### Reference deployment layout
+
+| **Resource**                        | **Reference value** |
+| ----------------------------------- | ------------------- |
+| AWS Region                          | `us-east-2`         |
+| VPC CIDR                            | `192.168.0.0/16`    |
+| Public workload subnet              | `192.168.125.0/24`  |
+| Transit Gateway attachment subnet A | `192.168.124.0/28`  |
+| Transit Gateway attachment subnet B | `192.168.124.16/28` |
+| VPN-routed prefix example           | `172.16.0.0/16`     |
+| Remaining IPv4 egress               | Internet Gateway    |
+| AWS Transit Gateway ASN             | `65020`             |
+| CF Account ASN                      | `13335` (default)   |
+| Cloudflare anycast IP 1             | `162.159.135.1`     |
+
+The baseline reference layout uses one anycast IP.
+
+:::note[Secondary anycast IP customers]
+Use `172.64.135.1` as the second anycast IP.
+:::
+
+### Terraform prerequisites
+
+Install Terraform `1.11.0` or later. The included tests use `override_during`, which requires Terraform `1.11.0`. Configure AWS credentials for the target account. Discover the active AWS account ID with the following command:
+
+```bash
+aws sts get-caller-identity --query Account --output text
+```
+
+Set the returned value as `expected_account_id`. The Terraform AWS provider verifies the active account against this value before creating resources.
+
+Create a Cloudflare API token scoped to the target account with `Magic WAN Write` or `Magic Transit Write` permission. Make the token available to the Terraform process as `CLOUDFLARE_API_TOKEN`:
+
+macOS or Linux:
+
+```bash
+export CLOUDFLARE_API_TOKEN="<API_TOKEN>"
+```
+
+PowerShell:
+
+```powershell
+$env:CLOUDFLARE_API_TOKEN = "<API_TOKEN>"
+```
+
+Run `terraform plan` and `terraform apply` from the same environment where the token is set. In the Cloudflare dashboard, select the target account and copy its Account ID from the account overview; avoid relying on a fixed navigation path because the dashboard can change. Set this 32-character value as `cloudflare_account_id` in `terraform.tfvars`. Set `cloudflare_asn` to the account's CF Account ASN, recorded under **Networking** > **Routes** > **WAN configuration**. Terraform accepts `13335` or a private ASN from `64512` through `65534` that differs from `aws_transit_gateway_asn`. Terraform does not change the CF Account ASN because Cloudflare provider v5.27 does not expose the account-wide BGP settings as a resource.
+
+Confirm that every value in `cloudflare_anycast_ips` appears under **Address Space** > **Leased IPs** in the account identified by `cloudflare_account_id`. These values are the public Cloudflare anycast IPs, not Cloudflare WAN routed prefixes or link-local tunnel interface addresses.
+
+Create an empty Terraform directory and add the following files from the complete listings in this guide:
+
+| **File**                                   | **Purpose**                                                               |
+| ------------------------------------------ | ------------------------------------------------------------------------- |
+| `versions.tf`                              | Configures Terraform, the AWS and Cloudflare providers, and account guard |
+| `variables.tf`                             | Declares and validates all deployment inputs                              |
+| `main.tf`                                  | Creates the AWS network, IGW, selective routes, Transit Gateway, and VPNs |
+| `cloudflare.tf`                            | Creates the Cloudflare WAN tunnels, health checks, and BGP sessions       |
+| `outputs.tf`                               | Returns resource IDs, egress routes, tunnel mappings, and status          |
+| `terraform.tfvars.example`                 | Provides the reference input values for one anycast IP                    |
+| `terraform.tfvars.two-anycast-ips.example` | Provides the reference input values for two anycast IPs                   |
+| `tests/reference.tftest.hcl`               | Tests reference invariants and invalid inputs with mock providers         |
+
+Do not create `.terraform.lock.hcl` from a listing. `terraform init` generates it from the provider constraints, and you should commit the generated file to preserve the provider selections reviewed for your deployment. A `.gitignore` and `README.md` are optional repository support files and are not required to execute this configuration or its tests, so they are not included.
+
+:::caution[Existing deployments]
+Terraform does not automatically adopt AWS or Cloudflare resources created outside this configuration, such as by the console workflow in this guide. Import each existing resource into Terraform state, or remove the existing deployment before applying this configuration. Do not apply it over an existing deployment without first choosing one of those options.
+:::
+
+:::caution[Existing Cloudflare tunnels]
+Terraform does not automatically adopt manually created Cloudflare tunnels. Import matching tunnels before applying this configuration, or remove them first.
+
+Cloudflare rejects a tunnel whose name or interface address matches another tunnel in the same Cloudflare account, including tunnels from another deployment of this configuration. Before applying, review the existing tunnels on the **Connectors** page and choose:
+
+- A `deployment_name` or `cloudflare_tunnel_names` value that produces names no other tunnel uses
+- `tunnel_inside_cidrs` values whose Cloudflare interface addresses do not overlap any existing tunnel
+
+To list the names and interface addresses already in use, refer to [Check existing tunnel names and interface addresses](#check-existing-tunnel-names-and-interface-addresses).
+:::
+
+### Configure the Terraform variables
+
+After creating the files below, copy `terraform.tfvars.example` to `terraform.tfvars`. Replace both account IDs and the two PSK placeholders.
+
+:::note[Secondary anycast IP customers]
+Copy `terraform.tfvars.two-anycast-ips.example` to `terraform.tfvars` instead, and replace all four PSK placeholders.
+:::
+
+Terraform derives the deployment size from the number of entries in `cloudflare_anycast_ips`. One anycast IP creates one customer gateway, one Site-to-Site VPN connection, and two Cloudflare WAN tunnels. Two anycast IPs create two of each AWS resource and four Cloudflare WAN tunnels. Validation rejects zero or more than two anycast IPs, duplicate anycast IPs, and any tunnel CIDR or PSK count other than two per anycast IP.
+
+Cloudflare tunnel names default to `<deployment_name>-tun-01`, `-02`, and so on. To choose the names, set `cloudflare_tunnel_names` to two unique names per anycast IP in tunnel order. Names can contain letters, numbers, hyphens, and underscores, and must be unique within the Cloudflare account.
+
+Configure exactly two tunnel CIDRs and two PSKs per anycast IP. Every PSK must be unique. Review every CIDR, anycast IP, ASN, `vpn_routed_prefixes` destination, and additional advertised prefix. The VPN-routed list accepts unique canonical IPv4 prefixes more specific than `0.0.0.0/0` that do not overlap the VPC CIDR; use it only for destinations that should traverse Cloudflare WAN.
+
+The anycast IP list order defines Terraform resource identity. Keep the first anycast IP unchanged. Append a second anycast IP to expand, or remove only the final anycast IP to shrink. Reordering anycast IPs or replacing the first anycast IP can replace every customer gateway and VPN path, causing an outage. Review those changes in a maintenance window.
+
+The `resource_ids` output returns `vpn_connection_ids` and `vpn_attachment_ids` maps keyed by `"01"` and optional `"02"`.
+
+Each customer gateway uses the device name `<deployment_name>-cgw-NN`, so AWS creates a distinct customer gateway instead of returning an existing gateway with the same IP address and ASN. Changing `deployment_name` replaces every customer gateway and briefly interrupts each VPN connection. Review those changes in a maintenance window.
+
+The `aws_transit_gateway_asn` default is `65020`. AWS does not allow changing the ASN of a Transit Gateway that has VPN attachments, so set `aws_transit_gateway_asn` before the first apply and do not change it afterward.
+
+The empty `cloudflare_additional_advertised_prefixes` list does not suppress routes already eligible for BGP advertisement from the Cloudflare routing table. Add only prefixes that Cloudflare must advertise in addition to those routes.
+
+### Complete Terraform configuration
+
+#### `versions.tf`
+
+Create `versions.tf` to constrain Terraform and provider versions, configure provider authentication, guard the AWS account, and apply default tags.
+
+```hcl
+terraform {
+  # terraform test uses override_during, which requires Terraform 1.11.0 or later.
+  required_version = ">= 1.11.0"
+
+  # Keep provider behavior within the minor versions tested by this guide.
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 6.67.0"
+    }
+
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5.27.0"
+    }
+  }
+}
+
+# Authentication comes from CLOUDFLARE_API_TOKEN rather than a Terraform variable,
+# which keeps the API token out of configuration and variable files.
+provider "cloudflare" {}
+
+provider "aws" {
+  region = var.aws_region
+  # Refuse to operate if the active credentials point at the wrong AWS account.
+  allowed_account_ids = [var.expected_account_id]
+
+  default_tags {
+    tags = {
+      Deployment = var.deployment_name
+      ManagedBy  = "Terraform"
+    }
+  }
+}
+```
+
+#### `variables.tf`
+
+Create `variables.tf` to declare deployment inputs and reject invalid account IDs, CIDRs, anycast IPs, ASNs, and pre-shared keys.
+
+```hcl
+variable "aws_region" {
+  description = "AWS Region for the reference deployment."
+  type        = string
+  default     = "us-east-2"
+}
+
+variable "expected_account_id" {
+  description = "Twelve-digit AWS account ID allowed to receive the deployment."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[0-9]{12}$", var.expected_account_id))
+    error_message = "expected_account_id must be a 12-digit AWS account ID."
+  }
+}
+
+variable "cloudflare_account_id" {
+  description = "Cloudflare account ID that owns the Cloudflare WAN configuration."
+  type        = string
+
+  validation {
+    condition     = can(regex("^[0-9a-fA-F]{32}$", var.cloudflare_account_id))
+    error_message = "cloudflare_account_id must be a 32-character hexadecimal Cloudflare account ID."
+  }
+}
+
+variable "deployment_name" {
+  description = "Name used to tag the reference deployment."
+  type        = string
+  default     = "cloudflare-wan-reference"
+
+  validation {
+    condition     = can(regex("^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$", var.deployment_name))
+    error_message = "deployment_name may contain only letters, numbers, periods, underscores, and hyphens."
+  }
+}
+
+variable "vpc_cidr" {
+  description = "IPv4 CIDR for the workload VPC."
+  type        = string
+  default     = "192.168.0.0/16"
+
+  validation {
+    # Require the canonical network address so containment checks are unambiguous.
+    condition = try(
+      can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.vpc_cidr)) &&
+      cidrhost(var.vpc_cidr, 0) == split("/", var.vpc_cidr)[0] &&
+      tonumber(split("/", var.vpc_cidr)[1]) >= 16 &&
+      tonumber(split("/", var.vpc_cidr)[1]) <= 28,
+      false
+    )
+    error_message = "vpc_cidr must be an IPv4 network with an AWS-supported /16 through /28 prefix."
+  }
+}
+
+variable "workload_subnet_cidr" {
+  description = "Public subnet for workloads that use split Internet and Cloudflare WAN connectivity."
+  type        = string
+  default     = "192.168.125.0/24"
+
+  validation {
+    condition = try(
+      can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.workload_subnet_cidr)) &&
+      cidrhost(var.workload_subnet_cidr, 0) == split("/", var.workload_subnet_cidr)[0] &&
+      tonumber(split("/", var.workload_subnet_cidr)[1]) >= 16 &&
+      tonumber(split("/", var.workload_subnet_cidr)[1]) <= 28,
+      false
+    )
+    error_message = "workload_subnet_cidr must be an IPv4 network with an AWS-supported /16 through /28 prefix."
+  }
+}
+
+variable "vpn_routed_prefixes" {
+  description = "IPv4 destination prefixes routed through the Transit Gateway and Site-to-Site VPNs instead of the Internet Gateway."
+  type        = list(string)
+  default     = []
+
+  validation {
+    # The default route belongs to the Internet Gateway; only more-specific
+    # canonical networks can be selected for the VPN path.
+    condition = length(distinct(var.vpn_routed_prefixes)) == length(var.vpn_routed_prefixes) && alltrue([
+      for cidr in var.vpn_routed_prefixes : try(
+        can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", cidr)) &&
+        cidrhost(cidr, 0) == split("/", cidr)[0] &&
+        tonumber(split("/", cidr)[1]) >= 1 &&
+        tonumber(split("/", cidr)[1]) <= 32,
+        false
+      )
+    ])
+    error_message = "vpn_routed_prefixes must contain unique canonical IPv4 network CIDRs more specific than 0.0.0.0/0."
+  }
+
+  validation {
+    # Overlapping local and remote address space cannot be routed unambiguously.
+    condition = alltrue([
+      for cidr in var.vpn_routed_prefixes : try(
+        cidrhost("${cidrhost(cidr, 0)}/${split("/", var.vpc_cidr)[1]}", 0) != cidrhost(var.vpc_cidr, 0) &&
+        cidrhost("${cidrhost(var.vpc_cidr, 0)}/${split("/", cidr)[1]}", 0) != cidrhost(cidr, 0),
+        false
+      )
+    ])
+    error_message = "vpn_routed_prefixes must not overlap vpc_cidr."
+  }
+}
+
+variable "tgw_subnet_a_cidr" {
+  description = "Transit Gateway attachment subnet in the first Availability Zone."
+  type        = string
+  default     = "192.168.124.0/28"
+
+  validation {
+    condition = try(
+      can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.tgw_subnet_a_cidr)) &&
+      cidrhost(var.tgw_subnet_a_cidr, 0) == split("/", var.tgw_subnet_a_cidr)[0] &&
+      tonumber(split("/", var.tgw_subnet_a_cidr)[1]) >= 16 &&
+      tonumber(split("/", var.tgw_subnet_a_cidr)[1]) <= 28,
+      false
+    )
+    error_message = "tgw_subnet_a_cidr must be an IPv4 network with an AWS-supported /16 through /28 prefix."
+  }
+}
+
+variable "tgw_subnet_b_cidr" {
+  description = "Transit Gateway attachment subnet in the second Availability Zone."
+  type        = string
+  default     = "192.168.124.16/28"
+
+  validation {
+    condition = try(
+      can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", var.tgw_subnet_b_cidr)) &&
+      cidrhost(var.tgw_subnet_b_cidr, 0) == split("/", var.tgw_subnet_b_cidr)[0] &&
+      tonumber(split("/", var.tgw_subnet_b_cidr)[1]) >= 16 &&
+      tonumber(split("/", var.tgw_subnet_b_cidr)[1]) <= 28,
+      false
+    )
+    error_message = "tgw_subnet_b_cidr must be an IPv4 network with an AWS-supported /16 through /28 prefix."
+  }
+}
+
+variable "tunnel_inside_cidrs" {
+  description = "Two unique AWS VPN tunnel /30 networks per Cloudflare anycast IP, ordered by VPN connection and tunnel."
+  type        = list(string)
+  default = [
+    "169.254.240.44/30",
+    "169.254.240.48/30",
+  ]
+
+  validation {
+    # Every AWS VPN connection contains exactly two tunnels.
+    condition = length(var.tunnel_inside_cidrs) == length(var.cloudflare_anycast_ips) * 2 && length(distinct(var.tunnel_inside_cidrs)) == length(var.tunnel_inside_cidrs) && alltrue([
+      for cidr in var.tunnel_inside_cidrs : try(
+        split("/", cidr)[1] == "30" &&
+        cidrhost(cidr, 0) == split("/", cidr)[0] &&
+        cidrhost("${cidrhost(cidr, 0)}/20", 0) == "169.254.240.0" &&
+        cidrhost("${cidrhost(cidr, -1)}/20", 0) == "169.254.240.0",
+        false
+      )
+    ])
+    error_message = "tunnel_inside_cidrs must contain two unique /30 network addresses within 169.254.240.0/20 for each Cloudflare anycast IP."
+  }
+}
+
+variable "vpn_preshared_keys" {
+  description = "Two AWS-compatible pre-shared keys per Cloudflare anycast IP, in tunnel order."
+  type        = list(string)
+  # Sensitive suppresses CLI display, but the keys are still stored in state.
+  sensitive = true
+
+  validation {
+    # List order matches tunnel_inside_cidrs and the generated tunnel numbering.
+    # Key format matches the AWS Site-to-Site VPN PreSharedKey constraints.
+    condition = length(var.vpn_preshared_keys) == length(var.cloudflare_anycast_ips) * 2 && alltrue([
+      for key in var.vpn_preshared_keys : can(regex("^[A-Za-z1-9._][A-Za-z0-9._]{7,63}$", key))
+    ])
+    error_message = "vpn_preshared_keys must contain two keys per Cloudflare anycast IP; each key must contain 8-64 letters, numbers, periods, or underscores and cannot begin with 0."
+  }
+
+  validation {
+    # The AWS provider identifies tunnel1_address by matching the tunnel 1 PSK.
+    # Identical PSKs disable that match and can swap the AWS public IPv4
+    # addresses assigned to the Cloudflare WAN tunnels.
+    condition     = length(distinct(var.vpn_preshared_keys)) == length(var.vpn_preshared_keys)
+    error_message = "vpn_preshared_keys must be unique for every tunnel."
+  }
+}
+
+variable "cloudflare_anycast_ips" {
+  description = "One or two Cloudflare anycast IPs leased to cloudflare_account_id."
+  type        = list(string)
+  default     = ["162.159.135.1"]
+
+  validation {
+    # Each anycast IP backs one AWS VPN connection containing two tunnels.
+    condition = length(var.cloudflare_anycast_ips) >= 1 && length(var.cloudflare_anycast_ips) <= 2 && length(distinct(var.cloudflare_anycast_ips)) == length(var.cloudflare_anycast_ips) && alltrue([
+      for address in var.cloudflare_anycast_ips : try(
+        can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}$", address)) &&
+        cidrhost("${address}/32", 0) == address,
+        false
+      )
+    ])
+    error_message = "cloudflare_anycast_ips must contain one or two distinct IPv4 addresses."
+  }
+}
+
+variable "aws_transit_gateway_asn" {
+  description = "Private ASN used by the AWS Transit Gateway."
+  type        = number
+  default     = 65020
+
+  validation {
+    condition     = floor(var.aws_transit_gateway_asn) == var.aws_transit_gateway_asn && ((var.aws_transit_gateway_asn >= 64512 && var.aws_transit_gateway_asn <= 65534) || (var.aws_transit_gateway_asn >= 4200000000 && var.aws_transit_gateway_asn <= 4294967294))
+    error_message = "aws_transit_gateway_asn must be an AWS-supported private ASN."
+  }
+}
+
+variable "cloudflare_asn" {
+  description = "CF Account ASN configured in Cloudflare WAN and used by every AWS customer gateway."
+  type        = number
+  default     = 13335
+
+  validation {
+    # Cloudflare defaults to 13335 and permits a private 2-byte ASN instead.
+    condition     = floor(var.cloudflare_asn) == var.cloudflare_asn && (var.cloudflare_asn == 13335 || (var.cloudflare_asn >= 64512 && var.cloudflare_asn <= 65534))
+    error_message = "cloudflare_asn must match the CF Account ASN: 13335 or a private ASN from 64512 through 65534."
+  }
+
+  validation {
+    # The CF Account ASN must differ from the customer device ASN on each tunnel.
+    condition     = var.cloudflare_asn != var.aws_transit_gateway_asn
+    error_message = "cloudflare_asn must differ from aws_transit_gateway_asn."
+  }
+}
+
+variable "cloudflare_additional_advertised_prefixes" {
+  description = "Additional prefixes for Cloudflare to advertise to AWS on every BGP session. Eligible Cloudflare WAN routes are advertised without listing them here."
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition = length(distinct(var.cloudflare_additional_advertised_prefixes)) == length(var.cloudflare_additional_advertised_prefixes) && alltrue([
+      for cidr in var.cloudflare_additional_advertised_prefixes : try(
+        can(regex("^([0-9]{1,3}\\.){3}[0-9]{1,3}/[0-9]{1,2}$", cidr)) &&
+        cidrhost(cidr, 0) == split("/", cidr)[0],
+        false
+      )
+    ])
+    error_message = "cloudflare_additional_advertised_prefixes must contain unique IPv4 network CIDRs."
+  }
+}
+
+variable "cloudflare_tunnel_names" {
+  description = "Optional Cloudflare WAN tunnel names in tunnel order, two per Cloudflare anycast IP. Leave empty to use <deployment_name>-tun-01, -02, and so on."
+  type        = list(string)
+  default     = []
+
+  validation {
+    # Cloudflare rejects a tunnel whose name matches any other tunnel in the account.
+    condition = length(var.cloudflare_tunnel_names) == 0 || (
+      length(var.cloudflare_tunnel_names) == length(var.cloudflare_anycast_ips) * 2 &&
+      length(distinct(var.cloudflare_tunnel_names)) == length(var.cloudflare_tunnel_names) &&
+      alltrue([for name in var.cloudflare_tunnel_names : can(regex("^[A-Za-z0-9_-]+$", name))])
+    )
+    error_message = "cloudflare_tunnel_names must be empty or contain two unique names per Cloudflare anycast IP, using only letters, numbers, hyphens, and underscores."
+  }
+}
+```
+
+#### `main.tf`
+
+Create `main.tf` to build the AWS VPC, public workload subnet, Internet Gateway, split-egress routes, Transit Gateway, and one customer gateway and VPN connection per configured anycast IP. Each VPN connection contains two ordered tunnels.
+
+```hcl
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+locals {
+  # Resources require two AZs; try() keeps expression evaluation safe until the
+  # VPC precondition can return a clear error in a single-AZ Region.
+  availability_zone_a = data.aws_availability_zones.available.names[0]
+  availability_zone_b = try(data.aws_availability_zones.available.names[1], data.aws_availability_zones.available.names[0])
+  subnet_cidrs        = [var.workload_subnet_cidr, var.tgw_subnet_a_cidr, var.tgw_subnet_b_cidr]
+  subnet_pairs        = [[0, 1], [0, 2], [1, 2]]
+
+  # Each anycast IP creates one AWS customer gateway and one two-tunnel VPN.
+  customer_gateways = {
+    for index, anycast_ip in var.cloudflare_anycast_ips : format("%02d", index + 1) => {
+      cloudflare_anycast_ip = anycast_ip
+      tunnel1_index         = index * 2
+      tunnel2_index         = index * 2 + 1
+    }
+  }
+}
+
+resource "aws_vpc" "workload" {
+  cidr_block           = var.vpc_cidr
+  instance_tenancy     = "default"
+  enable_dns_support   = true
+  enable_dns_hostnames = false
+
+  tags = {
+    Name = "${var.deployment_name}-vpc"
+  }
+
+  lifecycle {
+    precondition {
+      condition     = length(data.aws_availability_zones.available.names) >= 2
+      error_message = "The selected AWS Region must have at least two available Availability Zones."
+    }
+
+    precondition {
+      # Check both ends of each subnet against the VPC to prevent partial overlap.
+      condition = alltrue([
+        for cidr in local.subnet_cidrs : try(
+          cidrhost(cidr, 0) == split("/", cidr)[0] &&
+          tonumber(split("/", cidr)[1]) >= tonumber(split("/", var.vpc_cidr)[1]) &&
+          cidrhost("${cidrhost(cidr, 0)}/${split("/", var.vpc_cidr)[1]}", 0) == cidrhost(var.vpc_cidr, 0) &&
+          cidrhost("${cidrhost(cidr, -1)}/${split("/", var.vpc_cidr)[1]}", 0) == cidrhost(var.vpc_cidr, 0),
+          false
+        )
+      ])
+      error_message = "Each subnet CIDR must be a valid network contained within vpc_cidr."
+    }
+
+    precondition {
+      # Evaluate every pair so no workload or attachment subnet can overlap.
+      condition = try(alltrue([
+        for pair in local.subnet_pairs :
+        cidrhost("${cidrhost(local.subnet_cidrs[pair[1]], 0)}/${split("/", local.subnet_cidrs[pair[0]])[1]}", 0) != cidrhost(local.subnet_cidrs[pair[0]], 0) &&
+        cidrhost("${cidrhost(local.subnet_cidrs[pair[0]], 0)}/${split("/", local.subnet_cidrs[pair[1]])[1]}", 0) != cidrhost(local.subnet_cidrs[pair[1]], 0)
+      ]), false)
+      error_message = "The workload and Transit Gateway subnet CIDRs must not overlap."
+    }
+  }
+}
+
+resource "aws_subnet" "workload" {
+  vpc_id                  = aws_vpc.workload.id
+  cidr_block              = var.workload_subnet_cidr
+  availability_zone       = local.availability_zone_a
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = "${var.deployment_name}-workload"
+  }
+}
+
+# The workload subnet uses direct Internet Gateway egress for destinations that
+# do not match a more-specific VPN route. Workloads still need a public IPv4
+# address and security controls; this reference deployment does not create workloads.
+resource "aws_internet_gateway" "workload" {
+  vpc_id = aws_vpc.workload.id
+
+  tags = {
+    Name = "${var.deployment_name}-igw"
+  }
+}
+
+resource "aws_subnet" "tgw_a" {
+  vpc_id            = aws_vpc.workload.id
+  cidr_block        = var.tgw_subnet_a_cidr
+  availability_zone = local.availability_zone_a
+
+  tags = {
+    Name = "${var.deployment_name}-tgw-${local.availability_zone_a}"
+  }
+}
+
+resource "aws_subnet" "tgw_b" {
+  vpc_id            = aws_vpc.workload.id
+  cidr_block        = var.tgw_subnet_b_cidr
+  availability_zone = local.availability_zone_b
+
+  tags = {
+    Name = "${var.deployment_name}-tgw-${local.availability_zone_b}"
+  }
+}
+
+resource "aws_route_table" "workload" {
+  vpc_id = aws_vpc.workload.id
+
+  tags = {
+    Name = "${var.deployment_name}-workload-rt"
+  }
+}
+
+resource "aws_route_table_association" "workload" {
+  subnet_id      = aws_subnet.workload.id
+  route_table_id = aws_route_table.workload.id
+}
+
+resource "aws_ec2_transit_gateway" "cloudflare" {
+  amazon_side_asn                = var.aws_transit_gateway_asn
+  auto_accept_shared_attachments = "disable"
+  # Explicit associations and propagations below avoid implicit routing changes.
+  default_route_table_association    = "disable"
+  default_route_table_propagation    = "disable"
+  dns_support                        = "enable"
+  multicast_support                  = "disable"
+  security_group_referencing_support = "disable"
+  vpn_ecmp_support                   = "enable"
+
+  tags = {
+    Name = "${var.deployment_name}-tgw"
+  }
+}
+
+resource "aws_ec2_transit_gateway_route_table" "cloudflare" {
+  transit_gateway_id = aws_ec2_transit_gateway.cloudflare.id
+
+  tags = {
+    Name = "${var.deployment_name}-tgw-rt"
+  }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "workload" {
+  subnet_ids                                      = [aws_subnet.tgw_a.id, aws_subnet.tgw_b.id]
+  transit_gateway_id                              = aws_ec2_transit_gateway.cloudflare.id
+  vpc_id                                          = aws_vpc.workload.id
+  appliance_mode_support                          = "disable"
+  dns_support                                     = "enable"
+  ipv6_support                                    = "disable"
+  security_group_referencing_support              = "disable"
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
+
+  tags = {
+    Name = "${var.deployment_name}-vpc-attachment"
+  }
+}
+
+resource "aws_ec2_transit_gateway_route_table_association" "workload" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.workload.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.cloudflare.id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "workload" {
+  transit_gateway_attachment_id  = aws_ec2_transit_gateway_vpc_attachment.workload.id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.cloudflare.id
+}
+
+# Route only approved destination prefixes through the Transit Gateway. AWS
+# longest-prefix matching gives these routes precedence over the Internet default.
+resource "aws_route" "cloudflare" {
+  for_each = toset(var.vpn_routed_prefixes)
+
+  route_table_id         = aws_route_table.workload.id
+  destination_cidr_block = each.value
+  transit_gateway_id     = aws_ec2_transit_gateway.cloudflare.id
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.workload]
+}
+
+# All destinations not selected above use direct Internet Gateway egress.
+resource "aws_route" "internet" {
+  route_table_id         = aws_route_table.workload.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.workload.id
+}
+
+resource "aws_customer_gateway" "cloudflare" {
+  for_each = local.customer_gateways
+
+  bgp_asn    = var.cloudflare_asn
+  ip_address = each.value.cloudflare_anycast_ip
+  type       = "ipsec.1"
+  # AWS returns an existing customer gateway for an identical type, IP address,
+  # and ASN unless the device name differs, so this name keeps the gateway unique.
+  device_name = "${var.deployment_name}-cgw-${each.key}"
+
+  tags = {
+    Name = "${var.deployment_name}-cgw-${each.key}"
+  }
+
+  lifecycle {
+    # AWS cannot delete an in-use customer gateway, so establish its replacement first.
+    create_before_destroy = true
+  }
+}
+
+resource "aws_vpn_connection" "cloudflare" {
+  for_each = local.customer_gateways
+
+  customer_gateway_id   = aws_customer_gateway.cloudflare[each.key].id
+  transit_gateway_id    = aws_ec2_transit_gateway.cloudflare.id
+  type                  = "ipsec.1"
+  static_routes_only    = false
+  preshared_key_storage = "Standard"
+
+  local_ipv4_network_cidr  = "0.0.0.0/0"
+  remote_ipv4_network_cidr = "0.0.0.0/0"
+  outside_ip_address_type  = "PublicIpv4"
+  tunnel_bandwidth         = "standard"
+  tunnel_inside_ip_version = "ipv4"
+
+  # Each VPN consumes the two tunnel inputs assigned to its anycast IP.
+  tunnel1_inside_cidr                  = var.tunnel_inside_cidrs[each.value.tunnel1_index]
+  tunnel1_preshared_key                = var.vpn_preshared_keys[each.value.tunnel1_index]
+  tunnel1_replay_window_size           = 2048
+  tunnel1_dpd_timeout_action           = "restart"
+  tunnel1_phase1_encryption_algorithms = ["AES256"]
+  tunnel1_phase2_encryption_algorithms = ["AES256"]
+  tunnel1_phase1_integrity_algorithms  = ["SHA2-256"]
+  tunnel1_phase2_integrity_algorithms  = ["SHA2-256"]
+  tunnel1_phase1_dh_group_numbers      = [20]
+  tunnel1_phase2_dh_group_numbers      = [20]
+  tunnel1_phase1_lifetime_seconds      = 28800
+  tunnel1_phase2_lifetime_seconds      = 3600
+  tunnel1_ike_versions                 = ["ikev2"]
+  tunnel1_startup_action               = "start"
+
+  tunnel2_inside_cidr                  = var.tunnel_inside_cidrs[each.value.tunnel2_index]
+  tunnel2_preshared_key                = var.vpn_preshared_keys[each.value.tunnel2_index]
+  tunnel2_replay_window_size           = 2048
+  tunnel2_dpd_timeout_action           = "restart"
+  tunnel2_phase1_encryption_algorithms = ["AES256"]
+  tunnel2_phase2_encryption_algorithms = ["AES256"]
+  tunnel2_phase1_integrity_algorithms  = ["SHA2-256"]
+  tunnel2_phase2_integrity_algorithms  = ["SHA2-256"]
+  tunnel2_phase1_dh_group_numbers      = [20]
+  tunnel2_phase2_dh_group_numbers      = [20]
+  tunnel2_phase1_lifetime_seconds      = 28800
+  tunnel2_phase2_lifetime_seconds      = 3600
+  tunnel2_ike_versions                 = ["ikev2"]
+  tunnel2_startup_action               = "start"
+
+  tags = {
+    Name = "${var.deployment_name}-vpn-${each.key}"
+  }
+}
+
+resource "aws_ec2_transit_gateway_route_table_association" "vpn" {
+  for_each = aws_vpn_connection.cloudflare
+
+  transit_gateway_attachment_id  = each.value.transit_gateway_attachment_id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.cloudflare.id
+}
+
+resource "aws_ec2_transit_gateway_route_table_propagation" "vpn" {
+  for_each = aws_vpn_connection.cloudflare
+
+  transit_gateway_attachment_id  = each.value.transit_gateway_attachment_id
+  transit_gateway_route_table_id = aws_ec2_transit_gateway_route_table.cloudflare.id
+}
+```
+
+#### `cloudflare.tf`
+
+Create `cloudflare.tf` to map the AWS tunnels to Cloudflare WAN, select Cloudflare host addresses, and enable health checks and BGP for every configured anycast IP.
+
+```hcl
+locals {
+  # Cloudflare tunnel names must be unique within the account. Use the supplied names, or
+  # prefix generated names with deployment_name. Periods are replaced because tunnel names
+  # avoid special characters.
+  cloudflare_tunnel_name_prefix = replace(var.deployment_name, ".", "-")
+
+  # Expand each anycast IP and AWS VPN connection into two Cloudflare WAN tunnel objects. Tunnel keys
+  # remain globally ordered as 01-02 for anycast IP 1 and 03-04 for anycast IP 2.
+  cloudflare_tunnels = merge([
+    for vpn_key, vpn in local.customer_gateways : {
+      (format("%02d", vpn.tunnel1_index + 1)) = {
+        name                  = length(var.cloudflare_tunnel_names) > 0 ? var.cloudflare_tunnel_names[vpn.tunnel1_index] : "${local.cloudflare_tunnel_name_prefix}-tun-${format("%02d", vpn.tunnel1_index + 1)}"
+        vpn_connection_key    = vpn_key
+        cloudflare_anycast_ip = vpn.cloudflare_anycast_ip
+        customer_endpoint     = aws_vpn_connection.cloudflare[vpn_key].tunnel1_address
+        aws_bgp_holdtime      = aws_vpn_connection.cloudflare[vpn_key].tunnel1_bgp_holdtime
+        inside_cidr           = var.tunnel_inside_cidrs[vpn.tunnel1_index]
+        psk                   = var.vpn_preshared_keys[vpn.tunnel1_index]
+      }
+      (format("%02d", vpn.tunnel2_index + 1)) = {
+        name                  = length(var.cloudflare_tunnel_names) > 0 ? var.cloudflare_tunnel_names[vpn.tunnel2_index] : "${local.cloudflare_tunnel_name_prefix}-tun-${format("%02d", vpn.tunnel2_index + 1)}"
+        vpn_connection_key    = vpn_key
+        cloudflare_anycast_ip = vpn.cloudflare_anycast_ip
+        customer_endpoint     = aws_vpn_connection.cloudflare[vpn_key].tunnel2_address
+        aws_bgp_holdtime      = aws_vpn_connection.cloudflare[vpn_key].tunnel2_bgp_holdtime
+        inside_cidr           = var.tunnel_inside_cidrs[vpn.tunnel2_index]
+        psk                   = var.vpn_preshared_keys[vpn.tunnel2_index]
+      }
+    }
+  ]...)
+}
+
+resource "cloudflare_magic_wan_ipsec_tunnel" "aws" {
+  for_each = local.cloudflare_tunnels
+
+  account_id          = var.cloudflare_account_id
+  name                = each.value.name
+  description         = "AWS Transit Gateway tunnel ${each.key} managed by Terraform"
+  customer_endpoint   = each.value.customer_endpoint
+  cloudflare_endpoint = each.value.cloudflare_anycast_ip
+  # AWS uses host 1 and Cloudflare uses host 2 in each /30 inside network.
+  interface_address = "${cidrhost(each.value.inside_cidr, 2)}/30"
+  # The provider writes this secret to Terraform state; protect the backend.
+  psk               = each.value.psk
+  replay_protection = true
+  # BGP and the Cloudflare routing table, not automatic return routing, select paths.
+  automatic_return_routing = false
+
+  # Leave target unset so bidirectional checks use the default target: the AWS
+  # inside address in the same /30.
+  health_check = {
+    enabled   = true
+    rate      = "mid"
+    type      = "request"
+    direction = "bidirectional"
+  }
+
+  bgp = {
+    customer_asn   = var.aws_transit_gateway_asn
+    extra_prefixes = var.cloudflare_additional_advertised_prefixes
+  }
+}
+```
+
+#### `outputs.tf`
+
+Create `outputs.tf` to expose resource IDs, workload egress routes, ordered tunnel mappings, and provider-refreshed status for every configured anycast IP.
+
+```hcl
+output "resource_ids" {
+  description = "AWS resource IDs used to verify the deployment."
+  value = {
+    vpc_id                      = aws_vpc.workload.id
+    workload_subnet_id          = aws_subnet.workload.id
+    internet_gateway_id         = aws_internet_gateway.workload.id
+    transit_gateway_id          = aws_ec2_transit_gateway.cloudflare.id
+    transit_gateway_route_table = aws_ec2_transit_gateway_route_table.cloudflare.id
+    vpc_attachment_id           = aws_ec2_transit_gateway_vpc_attachment.workload.id
+    vpn_connection_ids          = { for key, vpn in aws_vpn_connection.cloudflare : key => vpn.id }
+    vpn_attachment_ids          = { for key, vpn in aws_vpn_connection.cloudflare : key => vpn.transit_gateway_attachment_id }
+    cloudflare_tunnel_ids       = { for key, tunnel in cloudflare_magic_wan_ipsec_tunnel.aws : key => tunnel.id }
+  }
+}
+
+output "workload_egress_routes" {
+  description = "Workload route-table destinations split between the VPN and Internet Gateway paths."
+  value = {
+    vpn              = sort(var.vpn_routed_prefixes)
+    internet_default = aws_route.internet.destination_cidr_block
+  }
+}
+
+output "bgp_asns" {
+  description = "BGP ASNs used to configure Cloudflare WAN."
+  value = {
+    aws_transit_gateway = var.aws_transit_gateway_asn
+    cloudflare          = var.cloudflare_asn
+  }
+}
+
+output "cloudflare_tunnel_mapping" {
+  description = "AWS and Cloudflare values for the two or four Terraform-managed tunnels."
+  # Keep this list in tunnel-number order for direct operational correlation.
+  value = [
+    for key in sort(keys(local.cloudflare_tunnels)) : {
+      tunnel                       = cloudflare_magic_wan_ipsec_tunnel.aws[key].name
+      vpn_connection_id            = aws_vpn_connection.cloudflare[local.cloudflare_tunnels[key].vpn_connection_key].id
+      aws_outside_ip               = local.cloudflare_tunnels[key].customer_endpoint
+      cloudflare_anycast_ip        = local.cloudflare_tunnels[key].cloudflare_anycast_ip
+      inside_cidr                  = local.cloudflare_tunnels[key].inside_cidr
+      aws_inside_ip                = cidrhost(local.cloudflare_tunnels[key].inside_cidr, 1)
+      cloudflare_interface_address = "${cidrhost(local.cloudflare_tunnels[key].inside_cidr, 2)}/30"
+      # AWS sets this value; Cloudflare negotiates the lower of it and 240 seconds.
+      aws_bgp_holdtime     = local.cloudflare_tunnels[key].aws_bgp_holdtime
+      cloudflare_tunnel_id = cloudflare_magic_wan_ipsec_tunnel.aws[key].id
+    }
+  ]
+}
+
+output "cloudflare_bgp_status" {
+  description = "Cloudflare BGP status refreshed during the most recent Terraform operation."
+  # Provider status is a state snapshot, not continuous monitoring telemetry.
+  value = {
+    for key, tunnel in cloudflare_magic_wan_ipsec_tunnel.aws : key => tunnel.bgp_status
+  }
+}
+
+output "vpn_telemetry" {
+  description = "AWS tunnel telemetry refreshed during the most recent Terraform operation."
+  # Refresh state before relying on these provider-reported values.
+  value = {
+    for key, vpn in aws_vpn_connection.cloudflare : key => vpn.vgw_telemetry
+  }
+}
+```
+
+#### `terraform.tfvars.example`
+
+Create `terraform.tfvars.example` as the reviewed input template. Copy it to `terraform.tfvars` and replace every placeholder before planning. It configures the baseline of one anycast IP, two tunnel CIDRs, and two PSKs. Customers with two anycast IPs use the following template instead.
+
+```hcl
+expected_account_id   = "REPLACE_WITH_AWS_ACCOUNT_ID"
+cloudflare_account_id = "REPLACE_WITH_CLOUDFLARE_ACCOUNT_ID"
+deployment_name       = "cloudflare-wan-reference"
+aws_region            = "us-east-2"
+
+# These three subnets must be canonical, non-overlapping networks inside the VPC.
+vpc_cidr             = "192.168.0.0/16"
+workload_subnet_cidr = "192.168.125.0/24"
+tgw_subnet_a_cidr    = "192.168.124.0/28"
+tgw_subnet_b_cidr    = "192.168.124.16/28"
+
+# Only these destinations use the Site-to-Site VPNs. All other IPv4 traffic
+# uses the Internet Gateway default route.
+vpn_routed_prefixes = [
+  "172.16.0.0/16",
+]
+
+# Accounts using one anycast IP have two tunnels.
+tunnel_inside_cidrs = [
+  "169.254.240.44/30",
+  "169.254.240.48/30",
+]
+
+# PSKs are sensitive and persist in Terraform state; never commit terraform.tfvars.
+vpn_preshared_keys = [
+  "REPLACE_WITH_UNIQUE_TUNNEL_01_PSK",
+  "REPLACE_WITH_UNIQUE_TUNNEL_02_PSK",
+]
+
+# One anycast IP is the baseline and backs tunnels 01-02.
+cloudflare_anycast_ips  = ["162.159.135.1"]
+aws_transit_gateway_asn = 65020
+# Set to the CF Account ASN shown under Networking > Routes > WAN configuration.
+cloudflare_asn                            = 13335
+cloudflare_additional_advertised_prefixes = []
+
+# Optional. Cloudflare tunnel names must be unique in the Cloudflare account.
+# Leave empty to use <deployment_name>-tun-01, -02, and so on, or list two names
+# per anycast IP in tunnel order, for example:
+# cloudflare_tunnel_names = ["aws-tun-01", "aws-tun-02"]
+cloudflare_tunnel_names = []
+```
+
+#### `terraform.tfvars.two-anycast-ips.example`
+
+Create `terraform.tfvars.two-anycast-ips.example` as the input template for customers with two anycast IPs. Copy it to `terraform.tfvars` instead of `terraform.tfvars.example`. It configures two anycast IPs, four tunnel CIDRs, and four PSKs, which creates two customer gateways, two Site-to-Site VPN connections, and four Cloudflare WAN tunnels.
+
+```hcl
+expected_account_id   = "REPLACE_WITH_AWS_ACCOUNT_ID"
+cloudflare_account_id = "REPLACE_WITH_CLOUDFLARE_ACCOUNT_ID"
+deployment_name       = "cloudflare-wan-reference"
+aws_region            = "us-east-2"
+
+# These three subnets must be canonical, non-overlapping networks inside the VPC.
+vpc_cidr             = "192.168.0.0/16"
+workload_subnet_cidr = "192.168.125.0/24"
+tgw_subnet_a_cidr    = "192.168.124.0/28"
+tgw_subnet_b_cidr    = "192.168.124.16/28"
+
+# Only these destinations use the Site-to-Site VPNs. All other IPv4 traffic
+# uses the Internet Gateway default route.
+vpn_routed_prefixes = [
+  "172.16.0.0/16",
+]
+
+# Accounts using two anycast IPs have four tunnels. Entries 1-2 belong to
+# anycast IP 1 and entries 3-4 belong to anycast IP 2.
+tunnel_inside_cidrs = [
+  "169.254.240.44/30",
+  "169.254.240.48/30",
+  "169.254.240.52/30",
+  "169.254.240.56/30",
+]
+
+# PSKs are sensitive and persist in Terraform state; never commit terraform.tfvars.
+vpn_preshared_keys = [
+  "REPLACE_WITH_UNIQUE_TUNNEL_01_PSK",
+  "REPLACE_WITH_UNIQUE_TUNNEL_02_PSK",
+  "REPLACE_WITH_UNIQUE_TUNNEL_03_PSK",
+  "REPLACE_WITH_UNIQUE_TUNNEL_04_PSK",
+]
+
+# List order is resource identity. Anycast IP 1 backs tunnels 01-02 and VPN
+# connection 01; anycast IP 2 backs tunnels 03-04 and VPN connection 02.
+cloudflare_anycast_ips  = ["162.159.135.1", "172.64.135.1"]
+aws_transit_gateway_asn = 65020
+# Set to the CF Account ASN shown under Networking > Routes > WAN configuration.
+cloudflare_asn                            = 13335
+cloudflare_additional_advertised_prefixes = []
+
+# Optional. Cloudflare tunnel names must be unique in the Cloudflare account.
+# Leave empty to use <deployment_name>-tun-01, -02, and so on, or list two names
+# per anycast IP in tunnel order, for example:
+# cloudflare_tunnel_names = ["aws-tun-01", "aws-tun-02", "aws-tun-03", "aws-tun-04"]
+cloudflare_tunnel_names = []
+```
+
+#### `tests/reference.tftest.hcl`
+
+Create the `tests/` directory first, then create `tests/reference.tftest.hcl` to run 24 tests: five positive cases and nineteen invalid-input cases, without contacting AWS or Cloudflare.
+
+```hcl
+# Mock providers let plan assertions run without credentials or live API calls.
+mock_provider "aws" {}
+mock_provider "cloudflare" {}
+
+# terraform test also loads terraform.tfvars from the module directory. Set every
+# input here so a deployment's terraform.tfvars cannot change the test baseline.
+variables {
+  expected_account_id   = "123456789012"
+  cloudflare_account_id = "0123456789abcdef0123456789abcdef"
+  aws_region            = "us-east-2"
+  deployment_name       = "cloudflare-wan-reference"
+  vpc_cidr              = "192.168.0.0/16"
+  workload_subnet_cidr  = "192.168.125.0/24"
+  tgw_subnet_a_cidr     = "192.168.124.0/28"
+  tgw_subnet_b_cidr     = "192.168.124.16/28"
+  # Exercise multiple selective routes instead of relying on the empty default.
+  vpn_routed_prefixes    = ["172.16.0.0/16", "172.17.0.0/16"]
+  cloudflare_anycast_ips = ["162.159.135.1"]
+  tunnel_inside_cidrs = [
+    "169.254.240.44/30",
+    "169.254.240.48/30",
+  ]
+  vpn_preshared_keys = [
+    "A0123456789abcdef0123456789abcdef0123456789abcdef",
+    "B0123456789abcdef0123456789abcdef0123456789abcdef",
+  ]
+  aws_transit_gateway_asn                   = 65020
+  cloudflare_asn                            = 13335
+  cloudflare_additional_advertised_prefixes = []
+  cloudflare_tunnel_names                   = []
+}
+
+# Supply deterministic AZs so the two-AZ safety precondition can be tested offline.
+override_data {
+  target = data.aws_availability_zones.available
+  values = {
+    names = ["us-east-2a", "us-east-2b"]
+  }
+}
+
+# AWS normally computes public IPv4 addresses during apply. Fixed plan-time values make the
+# default AWS VPN connection's two Cloudflare WAN-to-AWS tunnel mappings testable offline.
+override_resource {
+  target          = aws_vpn_connection.cloudflare["01"]
+  override_during = plan
+  values = {
+    tunnel1_address = "198.51.100.1"
+    tunnel2_address = "198.51.100.2"
+  }
+}
+
+# Make route targets known during plan so assertions can verify exact wiring.
+override_resource {
+  target          = aws_route_table.workload
+  override_during = plan
+  values = {
+    id = "rtb-0123456789abcdef0"
+  }
+}
+
+override_resource {
+  target          = aws_internet_gateway.workload
+  override_during = plan
+  values = {
+    id = "igw-0123456789abcdef0"
+  }
+}
+
+override_resource {
+  target          = aws_ec2_transit_gateway.cloudflare
+  override_during = plan
+  values = {
+    id = "tgw-0123456789abcdef0"
+  }
+}
+
+# This default positive case protects one anycast IP, one VPN, and two tunnels.
+run "valid_reference_configuration" {
+  command = plan
+
+  assert {
+    condition = (
+      length(var.cloudflare_anycast_ips) == 1 &&
+      length(var.tunnel_inside_cidrs) == 2 &&
+      length(nonsensitive(var.vpn_preshared_keys)) == 2 &&
+      length(aws_customer_gateway.cloudflare) == 1 &&
+      length(aws_vpn_connection.cloudflare) == 1 &&
+      length(cloudflare_magic_wan_ipsec_tunnel.aws) == 2
+    )
+    error_message = "The default configuration must create one customer gateway, one VPN, and two tunnels from two CIDRs and two PSKs."
+  }
+
+  assert {
+    condition     = aws_ec2_transit_gateway.cloudflare.amazon_side_asn == var.aws_transit_gateway_asn
+    error_message = "The Transit Gateway ASN does not match aws_transit_gateway_asn."
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["01"].name == "cloudflare-wan-reference-tun-01" && cloudflare_magic_wan_ipsec_tunnel.aws["02"].name == "cloudflare-wan-reference-tun-02"
+    error_message = "Cloudflare tunnel names must be prefixed with deployment_name."
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["01"].interface_address == "${cidrhost(var.tunnel_inside_cidrs[0], 2)}/30" && cloudflare_magic_wan_ipsec_tunnel.aws["02"].interface_address == "${cidrhost(var.tunnel_inside_cidrs[1], 2)}/30"
+    error_message = "A Cloudflare interface address does not match its tunnel CIDR."
+  }
+
+  assert {
+    condition = (
+      cloudflare_magic_wan_ipsec_tunnel.aws["01"].customer_endpoint == "198.51.100.1" &&
+      cloudflare_magic_wan_ipsec_tunnel.aws["02"].customer_endpoint == "198.51.100.2"
+    )
+    error_message = "A customer_endpoint value is mapped to the wrong AWS VPN tunnel."
+  }
+
+  assert {
+    condition = (
+      cloudflare_magic_wan_ipsec_tunnel.aws["01"].cloudflare_endpoint == var.cloudflare_anycast_ips[0] &&
+      cloudflare_magic_wan_ipsec_tunnel.aws["02"].cloudflare_endpoint == var.cloudflare_anycast_ips[0]
+    )
+    error_message = "A Cloudflare anycast IP is mapped to the wrong tunnel."
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["01"].replay_protection == true && cloudflare_magic_wan_ipsec_tunnel.aws["01"].automatic_return_routing == false && cloudflare_magic_wan_ipsec_tunnel.aws["01"].health_check.type == "request" && cloudflare_magic_wan_ipsec_tunnel.aws["01"].health_check.direction == "bidirectional"
+    error_message = "The Cloudflare tunnel liveness or routing settings changed unexpectedly."
+  }
+
+  assert {
+    condition = alltrue([
+      for tunnel in cloudflare_magic_wan_ipsec_tunnel.aws :
+      tunnel.health_check.enabled == true && tunnel.health_check.rate == "mid" && tunnel.health_check.type == "request" && tunnel.health_check.direction == "bidirectional"
+    ])
+    error_message = "Every Cloudflare tunnel must use enabled, medium-rate, request-type, bidirectional health checks."
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["01"].bgp.customer_asn == var.aws_transit_gateway_asn && toset(cloudflare_magic_wan_ipsec_tunnel.aws["01"].bgp.extra_prefixes) == toset(var.cloudflare_additional_advertised_prefixes)
+    error_message = "The Cloudflare BGP settings do not match the configured inputs."
+  }
+
+  assert {
+    condition     = aws_ec2_transit_gateway.cloudflare.default_route_table_association == "disable" && aws_ec2_transit_gateway.cloudflare.default_route_table_propagation == "disable" && aws_ec2_transit_gateway.cloudflare.vpn_ecmp_support == "enable"
+    error_message = "The Transit Gateway routing controls changed unexpectedly."
+  }
+
+  assert {
+    condition     = aws_subnet.workload.map_public_ip_on_launch == true && aws_route.internet.destination_cidr_block == "0.0.0.0/0" && aws_route.internet.gateway_id == "igw-0123456789abcdef0" && aws_route.internet.route_table_id == "rtb-0123456789abcdef0"
+    error_message = "The public workload subnet must use the Internet Gateway default route."
+  }
+
+  assert {
+    condition     = toset([for route in aws_route.cloudflare : route.destination_cidr_block]) == toset(var.vpn_routed_prefixes) && alltrue([for route in aws_route.cloudflare : route.transit_gateway_id == "tgw-0123456789abcdef0" && route.route_table_id == "rtb-0123456789abcdef0"])
+    error_message = "The Transit Gateway routes do not match vpn_routed_prefixes."
+  }
+
+  assert {
+    condition     = aws_customer_gateway.cloudflare["01"].ip_address == var.cloudflare_anycast_ips[0] && tostring(aws_customer_gateway.cloudflare["01"].bgp_asn) == tostring(var.cloudflare_asn)
+    error_message = "The AWS customer gateway settings do not match the Cloudflare inputs."
+  }
+
+  assert {
+    condition     = aws_vpn_connection.cloudflare["01"].tunnel1_inside_cidr == var.tunnel_inside_cidrs[0] && aws_vpn_connection.cloudflare["01"].tunnel2_inside_cidr == var.tunnel_inside_cidrs[1]
+    error_message = "The default VPN has the wrong inside CIDRs."
+  }
+
+  assert {
+    condition     = aws_vpn_connection.cloudflare["01"].static_routes_only == false && aws_vpn_connection.cloudflare["01"].tunnel1_startup_action == "start" && aws_vpn_connection.cloudflare["01"].tunnel1_dpd_timeout_action == "restart" && aws_vpn_connection.cloudflare["01"].tunnel1_replay_window_size == 2048
+    error_message = "The dynamic-routing or tunnel liveness settings changed unexpectedly."
+  }
+
+  assert {
+    condition     = aws_vpn_connection.cloudflare["01"].tunnel2_phase1_encryption_algorithms == toset(["AES256"]) && aws_vpn_connection.cloudflare["01"].tunnel2_phase2_integrity_algorithms == toset(["SHA2-256"]) && aws_vpn_connection.cloudflare["01"].tunnel2_phase1_dh_group_numbers == toset([20]) && aws_vpn_connection.cloudflare["01"].tunnel2_ike_versions == toset(["ikev2"])
+    error_message = "The tunnel cryptographic settings changed unexpectedly."
+  }
+
+  assert {
+    condition     = aws_vpn_connection.cloudflare["01"].tunnel1_phase1_lifetime_seconds == 28800 && aws_vpn_connection.cloudflare["01"].tunnel1_phase2_lifetime_seconds == 3600
+    error_message = "The tunnel lifetimes changed unexpectedly."
+  }
+}
+
+# Customers with two distinct anycast IPs use two VPNs and four tunnels.
+run "valid_two_anycast_ip_configuration" {
+  command = plan
+
+  override_resource {
+    target          = aws_vpn_connection.cloudflare["02"]
+    override_during = plan
+    values = {
+      tunnel1_address = "198.51.100.3"
+      tunnel2_address = "198.51.100.4"
+    }
+  }
+
+  variables {
+    cloudflare_anycast_ips = ["162.159.135.1", "162.159.135.2"]
+    tunnel_inside_cidrs = [
+      "169.254.240.44/30",
+      "169.254.240.48/30",
+      "169.254.240.52/30",
+      "169.254.240.56/30",
+    ]
+    vpn_preshared_keys = [
+      "A0123456789abcdef0123456789abcdef0123456789abcdef",
+      "B0123456789abcdef0123456789abcdef0123456789abcdef",
+      "C0123456789abcdef0123456789abcdef0123456789abcdef",
+      "D0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  assert {
+    condition     = length(aws_customer_gateway.cloudflare) == 2 && length(aws_vpn_connection.cloudflare) == 2 && length(cloudflare_magic_wan_ipsec_tunnel.aws) == 4
+    error_message = "The two-anycast-IP configuration must create two customer gateways, two AWS Site-to-Site VPN connections, and four Cloudflare WAN tunnels."
+  }
+
+  assert {
+    condition     = aws_customer_gateway.cloudflare["01"].ip_address == var.cloudflare_anycast_ips[0] && aws_customer_gateway.cloudflare["02"].ip_address == var.cloudflare_anycast_ips[1]
+    error_message = "A customer gateway is mapped to the wrong Cloudflare anycast IP."
+  }
+
+  assert {
+    condition     = aws_customer_gateway.cloudflare["01"].device_name == "${var.deployment_name}-cgw-01" && aws_customer_gateway.cloudflare["02"].device_name == "${var.deployment_name}-cgw-02"
+    error_message = "Each customer gateway must use a unique device name derived from deployment_name."
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["03"].cloudflare_endpoint == var.cloudflare_anycast_ips[1] && cloudflare_magic_wan_ipsec_tunnel.aws["04"].cloudflare_endpoint == var.cloudflare_anycast_ips[1]
+    error_message = "Anycast IP 2 must map to Cloudflare tunnels 03 and 04."
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["03"].customer_endpoint == "198.51.100.3" && cloudflare_magic_wan_ipsec_tunnel.aws["04"].customer_endpoint == "198.51.100.4"
+    error_message = "Cloudflare WAN tunnels 03 and 04 must map to AWS VPN 02 tunnels 1 and 2."
+  }
+
+  assert {
+    condition     = [for key in sort(keys(cloudflare_magic_wan_ipsec_tunnel.aws)) : cloudflare_magic_wan_ipsec_tunnel.aws[key].name] == ["cloudflare-wan-reference-tun-01", "cloudflare-wan-reference-tun-02", "cloudflare-wan-reference-tun-03", "cloudflare-wan-reference-tun-04"]
+    error_message = "All four Cloudflare tunnel names must be unique and prefixed with deployment_name."
+  }
+
+  assert {
+    condition     = nonsensitive(cloudflare_magic_wan_ipsec_tunnel.aws["03"].psk) == nonsensitive(var.vpn_preshared_keys[2]) && nonsensitive(cloudflare_magic_wan_ipsec_tunnel.aws["04"].psk) == nonsensitive(var.vpn_preshared_keys[3])
+    error_message = "Cloudflare tunnels 03 and 04 must use PSKs 3 and 4."
+  }
+
+  assert {
+    condition     = aws_vpn_connection.cloudflare["02"].tunnel1_inside_cidr == var.tunnel_inside_cidrs[2] && aws_vpn_connection.cloudflare["02"].tunnel2_inside_cidr == var.tunnel_inside_cidrs[3]
+    error_message = "VPN 02 must consume tunnel CIDRs at indexes 2 and 3."
+  }
+}
+
+# The remaining runs verify a private CF Account ASN and confirm that unsafe or ambiguous inputs fail at plan time.
+run "reject_non_network_tunnel_cidr" {
+  command = plan
+
+  variables {
+    tunnel_inside_cidrs = [
+      "169.254.240.45/30",
+      "169.254.240.48/30",
+    ]
+  }
+
+  expect_failures = [var.tunnel_inside_cidrs]
+}
+
+run "reject_unsupported_vpc_prefix" {
+  command = plan
+
+  variables {
+    vpc_cidr = "192.168.0.0/15"
+  }
+
+  expect_failures = [var.vpc_cidr]
+}
+
+run "reject_unsupported_subnet_prefix" {
+  command = plan
+
+  variables {
+    workload_subnet_cidr = "192.168.125.0/29"
+  }
+
+  expect_failures = [var.workload_subnet_cidr]
+}
+
+run "reject_overlapping_subnets" {
+  command = plan
+
+  variables {
+    tgw_subnet_a_cidr = "192.168.125.0/24"
+  }
+
+  expect_failures = [aws_vpc.workload]
+}
+
+run "reject_duplicate_cloudflare_anycast_ips" {
+  command = plan
+
+  variables {
+    cloudflare_anycast_ips = ["162.159.135.1", "162.159.135.1"]
+    tunnel_inside_cidrs = [
+      "169.254.240.44/30",
+      "169.254.240.48/30",
+      "169.254.240.52/30",
+      "169.254.240.56/30",
+    ]
+    vpn_preshared_keys = [
+      "A0123456789abcdef0123456789abcdef0123456789abcdef",
+      "B0123456789abcdef0123456789abcdef0123456789abcdef",
+      "C0123456789abcdef0123456789abcdef0123456789abcdef",
+      "D0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.cloudflare_anycast_ips]
+}
+
+run "accept_private_cloudflare_asn" {
+  command = plan
+
+  variables {
+    cloudflare_asn = 65000
+  }
+
+  assert {
+    condition     = tostring(aws_customer_gateway.cloudflare["01"].bgp_asn) == "65000"
+    error_message = "The AWS customer gateway must use a configured private CF Account ASN."
+  }
+}
+
+run "reject_unsupported_cloudflare_asn" {
+  command = plan
+
+  variables {
+    cloudflare_asn = 64511
+  }
+
+  expect_failures = [var.cloudflare_asn]
+}
+
+run "reject_cloudflare_asn_matching_tgw_asn" {
+  command = plan
+
+  variables {
+    cloudflare_asn = 65020
+  }
+
+  expect_failures = [var.cloudflare_asn]
+}
+
+run "accept_aws_psk_characters" {
+  command = plan
+
+  variables {
+    vpn_preshared_keys = [
+      "Key.01_a",
+      "_Key.02_b",
+    ]
+  }
+
+  assert {
+    condition     = nonsensitive(aws_vpn_connection.cloudflare["01"].tunnel1_preshared_key) == "Key.01_a"
+    error_message = "An 8-character PSK with a period and underscore must be accepted."
+  }
+}
+
+run "reject_psk_with_unsupported_character" {
+  command = plan
+
+  variables {
+    vpn_preshared_keys = [
+      "Invalid-psk-1",
+      "B0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.vpn_preshared_keys]
+}
+
+run "reject_short_psk" {
+  command = plan
+
+  variables {
+    vpn_preshared_keys = [
+      "Short_7",
+      "B0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.vpn_preshared_keys]
+}
+
+run "reject_psk_with_leading_zero" {
+  command = plan
+
+  variables {
+    vpn_preshared_keys = [
+      "0LeadingZeroKey",
+      "B0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.vpn_preshared_keys]
+}
+
+run "reject_default_route_as_vpn_prefix" {
+  command = plan
+
+  variables {
+    vpn_routed_prefixes = ["0.0.0.0/0"]
+  }
+
+  expect_failures = [var.vpn_routed_prefixes]
+}
+
+run "reject_mismatched_tunnel_input_cardinality" {
+  command = plan
+
+  variables {
+    tunnel_inside_cidrs = [
+      "169.254.240.44/30",
+      "169.254.240.48/30",
+      "169.254.240.52/30",
+    ]
+  }
+
+  expect_failures = [var.tunnel_inside_cidrs]
+}
+
+run "reject_mismatched_psk_cardinality" {
+  command = plan
+
+  variables {
+    vpn_preshared_keys = [
+      "A0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.vpn_preshared_keys]
+}
+
+run "reject_duplicate_psks" {
+  command = plan
+
+  variables {
+    vpn_preshared_keys = [
+      "A0123456789abcdef0123456789abcdef0123456789abcdef",
+      "A0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.vpn_preshared_keys]
+}
+
+run "reject_zero_cloudflare_anycast_ips" {
+  command = plan
+
+  variables {
+    cloudflare_anycast_ips = []
+    tunnel_inside_cidrs    = []
+    vpn_preshared_keys     = []
+  }
+
+  expect_failures = [var.cloudflare_anycast_ips]
+}
+
+run "reject_more_than_two_cloudflare_anycast_ips" {
+  command = plan
+
+  variables {
+    cloudflare_anycast_ips = ["162.159.135.1", "162.159.135.2", "162.159.135.3"]
+    tunnel_inside_cidrs = [
+      "169.254.240.44/30",
+      "169.254.240.48/30",
+      "169.254.240.52/30",
+      "169.254.240.56/30",
+      "169.254.240.60/30",
+      "169.254.240.64/30",
+    ]
+    vpn_preshared_keys = [
+      "A0123456789abcdef0123456789abcdef0123456789abcdef",
+      "B0123456789abcdef0123456789abcdef0123456789abcdef",
+      "C0123456789abcdef0123456789abcdef0123456789abcdef",
+      "D0123456789abcdef0123456789abcdef0123456789abcdef",
+      "E0123456789abcdef0123456789abcdef0123456789abcdef",
+      "F0123456789abcdef0123456789abcdef0123456789abcdef",
+    ]
+  }
+
+  expect_failures = [var.cloudflare_anycast_ips]
+}
+
+run "reject_vpn_prefix_overlapping_vpc" {
+  command = plan
+
+  variables {
+    vpn_routed_prefixes = ["192.168.64.0/18"]
+  }
+
+  expect_failures = [var.vpn_routed_prefixes]
+}
+
+run "accept_custom_tunnel_names" {
+  command = plan
+
+  variables {
+    cloudflare_tunnel_names = ["aws-usw1-tun-a", "aws-usw1-tun-b"]
+  }
+
+  assert {
+    condition     = cloudflare_magic_wan_ipsec_tunnel.aws["01"].name == "aws-usw1-tun-a" && cloudflare_magic_wan_ipsec_tunnel.aws["02"].name == "aws-usw1-tun-b"
+    error_message = "Supplied tunnel names must be applied in tunnel order."
+  }
+}
+
+run "reject_duplicate_tunnel_names" {
+  command = plan
+
+  variables {
+    cloudflare_tunnel_names = ["aws-tun", "aws-tun"]
+  }
+
+  expect_failures = [var.cloudflare_tunnel_names]
+}
+
+run "reject_mismatched_tunnel_name_count" {
+  command = plan
+
+  variables {
+    cloudflare_tunnel_names = ["aws-tun-01"]
+  }
+
+  expect_failures = [var.cloudflare_tunnel_names]
+}
+```
+
+The configuration validates the following conditions before creating resources:
+
+- The active AWS account matches `expected_account_id`
+- The Region provides at least two Availability Zones
+- All three subnet CIDRs are inside the VPC and do not overlap
+- `vpn_routed_prefixes` contains unique canonical IPv4 networks more specific than `0.0.0.0/0` that do not overlap the VPC CIDR
+- `tunnel_inside_cidrs` contains exactly two unique `/30` networks within `169.254.240.0/20` per configured anycast IP
+- `vpn_preshared_keys` contains exactly two unique PSKs per configured anycast IP, and each PSK meets the AWS requirements of 8-64 letters, numbers, periods, or underscores without a leading `0`
+- `cloudflare_anycast_ips` contains one or two distinct IPv4 addresses
+- `cloudflare_asn` is `13335` or a private ASN from `64512` through `65534`, and differs from `aws_transit_gateway_asn`
+- `cloudflare_tunnel_names` is empty or contains two unique names per configured anycast IP, using only letters, numbers, hyphens, and underscores
+- The Cloudflare account ID is a 32-character hexadecimal identifier
+- Additional advertised prefixes are unique IPv4 network CIDRs
+
+:::caution[Protect Terraform state]
+The AWS and Cloudflare providers store IPsec tunnel pre-shared keys in Terraform state as plaintext. Use an encrypted remote backend with restricted access for shared or production use. For local testing, protect `terraform.tfvars`, saved plan files, and all Terraform state files. Do not commit them to source control.
+:::
+
+:::caution[Public workload subnet]
+The workload subnet assigns public IPv4 addresses on launch and sends unmatched IPv4 destinations to the Internet Gateway. Direct Internet Gateway egress requires a public IPv4 address and appropriate network and host controls. The Internet Gateway does not perform NAT for private-only hosts.
+
+Terraform does not create:
+
+- Virtual machines
+- Standalone Elastic Network Interfaces (ENIs); AWS creates ENIs for the Transit Gateway VPC attachment in the attachment subnets
+- Security groups
+- Elastic IP addresses
+- Test hosts
+
+Add and review those controls separately before deploying a workload.
+:::
+
+### Initialize and validate Terraform
+
+Run these commands from the Terraform directory you created:
+
+```bash
+terraform init
+terraform fmt -check -recursive
+terraform validate
+terraform test
+```
+
+Initialization resolves the provider constraints, downloads the AWS and Cloudflare providers, and creates or updates `.terraform.lock.hcl`. Validation checks the Terraform syntax and provider schemas without creating resources. The tests use mock providers and do not create resources.
+
+### Review the Terraform plan
+
+Create a saved plan:
+
+```bash
+terraform plan -out cloudflare-wan.tfplan
+```
+
+Review every proposed resource and value. For the baseline, the plan should create:
+
+- One VPC
+- One public workload subnet
+- Two Transit Gateway attachment subnets
+- One Internet Gateway
+- One workload route table
+- One Internet default route
+- One Transit Gateway route for each `vpn_routed_prefixes` entry
+- One Transit Gateway
+- One dedicated Transit Gateway route table
+- One VPC attachment
+- One customer gateway
+- One Site-to-Site VPN connection containing two AWS IPsec/BGP tunnels
+- Two Cloudflare WAN IPsec tunnels with BGP
+- The required Transit Gateway route-table associations and propagations
+
+:::note[Secondary anycast IP customers]
+The plan also creates:
+
+- One additional customer gateway
+- One additional Site-to-Site VPN connection containing two AWS IPsec/BGP tunnels
+- Two additional Cloudflare WAN IPsec tunnels with BGP
+
+:::
+
+The plan should not create:
+
+- Virtual machines or test hosts
+- Standalone Elastic Network Interfaces (ENIs); AWS creates ENIs for the Transit Gateway VPC attachment in the attachment subnets
+- Security groups
+- Elastic IP addresses
+- NAT services
+
+Saved plan files can contain sensitive values. Protect and delete the plan file according to your organization's secrets-handling requirements.
+
+### Apply the Terraform plan
+
+Apply the reviewed plan:
+
+```bash
+terraform apply cloudflare-wan.tfplan
+```
+
+Terraform waits for AWS to assign each VPN public IPv4 address before creating the corresponding Cloudflare tunnel. If an operation fails, correct the reported issue and run `terraform plan` again. Terraform retains successfully created resources in state and proposes only the remaining work.
+
+If the apply creates the AWS resources but the Cloudflare requests fail with error `9106` stating that authorization headers are missing, `CLOUDFLARE_API_TOKEN` was not available to the Terraform process. Set the environment variable, create and review a fresh saved plan, and apply the new plan. Do not reuse the partially applied saved plan because Terraform state changed during the failed apply.
+
+Cloudflare error `1016` with `local IP not in Cloudflare assigned IPs` means a configured Cloudflare anycast IP is not leased to the account identified by `cloudflare_account_id`. In this message, `local IP` refers to `cloudflare_endpoint`, not the link-local `interface_address`. Verify the account ID and every configured anycast IP under **Address Space** > **Leased IPs**, update `terraform.tfvars`, and create a fresh plan. Changing an anycast IP replaces its AWS customer gateway and updates the VPN connection to use the replacement gateway. This can interrupt its tunnels, so review the actions and use a maintenance window.
+
+The Terraform configuration creates a replacement customer gateway before destroying the existing gateway. This ordering lets AWS retarget the VPN connection before the old customer gateway is removed. If an apply fails with `IncorrectState: The customer gateway is in use`, confirm that the `aws_customer_gateway` lifecycle includes `create_before_destroy = true`, discard the failed saved plan, and create a fresh plan.
+
+Delete `cloudflare-wan.tfplan` after the apply completes. The saved plan can contain the VPN pre-shared keys.
+
+### Display Terraform outputs
+
+Display the generated tunnel values after the apply completes:
+
+```bash
+terraform output cloudflare_tunnel_mapping
+terraform output workload_egress_routes
+```
+
+The tunnel output provides each Cloudflare tunnel ID, AWS public IPv4 address, Cloudflare anycast IP, inside CIDR, AWS inside IP, and Cloudflare interface address. The egress output lists destinations routed through the VPN path and the Internet Gateway default. Terraform has already applied these values to the managed resources. The outputs are authoritative when you change any reference input.
+
+| **Tunnel**                        | **Inside CIDR**     | **AWS inside IP** | **Cloudflare interface address** |
+| --------------------------------- | ------------------- | ----------------- | -------------------------------- |
+| `cloudflare-wan-reference-tun-01` | `169.254.240.44/30` | `169.254.240.45`  | `169.254.240.46/30`              |
+| `cloudflare-wan-reference-tun-02` | `169.254.240.48/30` | `169.254.240.49`  | `169.254.240.50/30`              |
+
+The table uses the default `deployment_name`; the `tunnel` field in `cloudflare_tunnel_mapping` shows the actual names.
+
+:::note[Secondary anycast IP customers]
+The second anycast IP adds tunnel 03 with `169.254.240.52/30`, AWS address `169.254.240.53`, and Cloudflare address `169.254.240.54/30`; and tunnel 04 with `169.254.240.56/30`, AWS address `169.254.240.57`, and Cloudflare address `169.254.240.58/30`.
+:::
+
+Match tunnels by VPN connection and inside CIDR. Do not infer tunnel order by sorting the generated AWS public IPv4 addresses.
+
+The table shows the reference values. If you changed the tunnel CIDRs, use only the values returned by Terraform.
+
+Skip the manual Cloudflare tunnel and BGP creation procedures when using Terraform. Continue with [Verification](#verification). Use the manual sections only to understand or audit the values Terraform configured.
+
+### Verify the Terraform deployment
+
+Refresh Terraform state after the apply:
+
+```bash
+terraform apply -refresh-only
+```
+
+Review the refresh-only plan before approving it. Then display AWS tunnel telemetry and Cloudflare BGP status:
+
+```bash
+terraform output vpn_telemetry
+terraform output cloudflare_bgp_status
+terraform output workload_egress_routes
+```
+
+Every configured tunnel must report `UP`. The accepted route count should match the number of prefixes that Cloudflare advertises. Confirm in the Cloudflare dashboard that every configured BGP session is **Established**. Confirm that Cloudflare learned the VPC CIDR from AWS. Compare `workload_egress_routes` with the approved routing inventory: AWS longest-prefix matching sends a destination matching a configured VPN prefix to the Transit Gateway even though the Internet Gateway default also matches, while unmatched IPv4 destinations use `0.0.0.0/0`. Complete every route, traffic, and failover check in [Verification](#verification).
+
+Also verify these resources in the AWS console:
+
+- The VPC attachment and every configured VPN attachment use the dedicated Transit Gateway route table
+- Propagation is active for the VPC and every configured VPN attachment
+- The complete VPC CIDR appears as an active propagated route to the VPC attachment
+- The expected RFC 1918 prefixes and any explicitly enabled public prefixes appear as active propagated routes through the VPN attachments
+- The workload subnet is associated with the intended route table and enables public IPv4 assignment on launch
+- Every `vpn_routed_prefixes` destination targets the Transit Gateway
+- The workload route table sends `0.0.0.0/0` to the Internet Gateway, not the Transit Gateway
+- No VMs, standalone ENIs, security groups, Elastic IP addresses, NAT services, or test hosts were created by this configuration
+
+### Remove the Terraform deployment
+
+Create and review a destroy plan:
+
+```bash
+terraform plan -destroy -out cloudflare-wan-destroy.tfplan
+```
+
+Apply the reviewed destroy plan:
+
+```bash
+terraform apply cloudflare-wan-destroy.tfplan
+```
+
+Terraform removes the managed Cloudflare tunnels before removing their AWS dependencies, including the selective Transit Gateway routes, Internet default route, Internet Gateway, and VPC resources. It removes only resources tracked in the current Terraform state. It does not remove manually created Cloudflare or AWS resources unless you imported them into this state.
+
+Delete the saved destroy plan after use. Follow the retention policy for local or remote state versions that contain PSKs.
+
+## Resources
+
+### Cloudflare documentation
+
+- [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/)
+- [Configure BGP routes](/cloudflare-wan/configuration/how-to/configure-routes/#configure-bgp-routes)
+- [GRE and IPsec tunnels](/cloudflare-wan/reference/gre-ipsec-tunnels/)
+- [Anti-replay protection](/cloudflare-wan/reference/anti-replay-protection/)
+- [Maximum transmission unit and maximum segment size](/cloudflare-wan/reference/mtu-mss/)
+- [Traffic steering](/cloudflare-wan/reference/traffic-steering/)
+- [Tunnel health](/cloudflare-wan/troubleshooting/tunnel-health/)
+
+### AWS documentation
+
+- [AWS Site-to-Site VPN attachments in AWS Transit Gateway](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-vpn-attachments.html)
+- [Transit Gateway route tables](https://docs.aws.amazon.com/vpc/latest/tgw/tgw-route-tables.html)
+- [Transit Gateway route evaluation order](https://docs.aws.amazon.com/vpc/latest/tgw/how-transit-gateways-work.html#tgw-route-evaluation-overview)
+- [Tunnel options for AWS Site-to-Site VPN](https://docs.aws.amazon.com/vpn/latest/s2svpn/VPNTunnels.html)
+- [Modify AWS Site-to-Site VPN tunnel options](https://docs.aws.amazon.com/vpn/latest/s2svpn/modify-vpn-tunnel-options.html)
+- [Static and dynamic routing in AWS Site-to-Site VPN](https://docs.aws.amazon.com/vpn/latest/s2svpn/vpn-static-dynamic.html)
+- [AWS Site-to-Site VPN tunnel initiation options](https://docs.aws.amazon.com/vpn/latest/s2svpn/initiate-vpn-tunnels.html)

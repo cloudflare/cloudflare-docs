@@ -20,7 +20,7 @@ There are a few ways to access logs with Workers for Platforms. They differ in h
 
 [Workers Logs](/workers/observability/logs/workers-logs/) automatically stores logs from your user Workers in your Cloudflare account, where you can query them with the [Query Builder](/workers/observability/query-builder/) or the [Workers Observability API](/api/resources/workers/subresources/observability/). Because it is fully managed, you can surface a per-user view of logs in your own dashboard without standing up a database, setting up Logpush, or deploying a Tail Worker.
 
-Enable Workers Logs on a user Worker by including the `observability` setting in the [metadata](/cloudflare-for-platforms/workers-for-platforms/reference/metadata/) when you [upload the script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to your dispatch namespace:
+Enable Workers Logs on a user Worker by including the `observability` setting in the [metadata](/workers/configuration/multipart-upload-metadata/) when you [upload the script](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/subresources/scripts/methods/update/) to your dispatch namespace:
 
 ```json
 {
