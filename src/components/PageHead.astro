@@ -5,7 +5,6 @@
  */
 import { existsSync } from "node:fs";
 import { join } from "node:path";
-import { differenceInCalendarDays } from "date-fns";
 import { config } from "virtual:nimbus/config";
 import {
 	getVersionAlternates,
@@ -165,10 +164,6 @@ const { contentType, isChangelog, schemaType } =
 const resolvedSchemaType = pathname === "/" ? "WebPage" : schemaType;
 
 const reviewed = meta?.reviewed ? new Date(meta.reviewed) : null;
-const daysSince = (d: Date | null | undefined) =>
-	d ? differenceInCalendarDays(new Date(), d) : null;
-const lastModifiedDays = daysSince(lastUpdated);
-const lastReviewedDays = daysSince(reviewed);
 const dateModified = (lastUpdated ?? reviewed)?.toISOString().slice(0, 10);
 const datePublished = meta?.datePublished
 	? new Date(meta.datePublished).toISOString().slice(0, 10)
@@ -276,12 +271,6 @@ const hasRssAlternate = headExtras.some(
 	<meta name="pcx_additional_products" content={meta.products.join(",")} />
 )}
 {meta?.tags && <meta name="pcx_tags" content={meta.tags.join(",")} />}
-{lastModifiedDays !== null && (
-	<meta name="pcx_last_modified" content={String(lastModifiedDays)} />
-)}
-{lastReviewedDays !== null && (
-	<meta name="pcx_last_reviewed" content={String(lastReviewedDays)} />
-)}
 
 {!noindex && jsonLd && (
 	<script type="application/ld+json" set:html={jsonLd} is:inline></script>

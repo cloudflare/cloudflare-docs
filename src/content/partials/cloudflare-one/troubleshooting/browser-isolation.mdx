@@ -39,4 +39,4 @@ Text on a website may render in a different font through Browser Isolation than 
 To resolve this, add a generic fallback family (such as `sans-serif` or `serif`) to the end of the website's `font-family` CSS declarations. For more information, refer to [Font rendering](/cloudflare-one/remote-browser-isolation/known-limitations/#font-rendering).
 
 ### Rendering issues (CSS/Images)
-If a website displays incorrectly (for example, broken CSS or missing images), it may indicate that the remote browser is unable to fetch specific resources from the origin server. Check your [Gateway HTTP logs](/cloudflare-one/traffic-policies/troubleshooting/) for any blocked subresources that might be required by the page.
+If a website displays incorrectly (for example, broken CSS or missing images), it may indicate that the remote browser is unable to fetch specific resources from the origin server. Check your [Gateway HTTP logs](/cloudflare-one/traffic-controls/troubleshooting/) for any blocked subresources that might be required by the page.

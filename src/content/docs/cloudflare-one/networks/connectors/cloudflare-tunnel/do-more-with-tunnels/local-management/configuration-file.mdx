@@ -27,13 +27,16 @@ In the absence of a configuration file, `cloudflared` will proxy outbound traffi
 
 <h2>File structure for private networks</h2>
 <p>
-	If you are <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/">exposing a private network</a> to end users running the Cloudflare One Client, you need to add the <code>warp-routing</code> key
-	and set it to <code>true</code>:
+	If you are <a href="/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/">exposing a private network</a> to end users running the Cloudflare One Client, the configuration file only requires your tunnel UUID and credentials file path:
 </p>
 <Code
-	code={`tunnel: <Tunnel-UUID>\ncredentials-file: /path/<Tunnel-UUID>.json\nwarp-routing:\n  enabled: true`}
+	code={`tunnel: <Tunnel-UUID>\ncredentials-file: /path/<Tunnel-UUID>.json`}
 	lang="yml"
 />
+
+:::note
+In `cloudflared` 2023.9.0 and later, `warp-routing.enabled` is no longer supported and will produce a configuration warning. Private network traffic is routed automatically when you [add a private network route](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/create-local-tunnel/#5-start-routing-traffic).
+:::
 
 ## File structure for published applications
 
@@ -186,3 +189,4 @@ Your `cloudflared` will now be running with the updated version of your configur
 When the first instance of `cloudflared` is stopped, long-lived HTTP requests (for example, Websocket) and TCP connections (for example, SSH) will be dropped. UDP flows will also be dropped, as they are modeled based on timeouts. When the new replica connects, it will handle all new traffic, including new HTTP requests, TCP connections, and UDP flows.
 
 :::
+

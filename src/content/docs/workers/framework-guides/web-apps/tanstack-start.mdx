@@ -65,6 +65,12 @@ Start a local development server to preview your project during development:
 
 If you have an existing TanStack Start application, configure it to run on Cloudflare Workers:
 
+:::note
+
+Cloudflare does not support TanStack Start projects that use Rsbuild. If your application uses Rsbuild, migrate it to Vite before following these configuration steps.
+
+:::
+
 <Steps>
 
 1. Install `@cloudflare/vite-plugin` and `wrangler`:
@@ -194,6 +200,7 @@ If you are using TypeScript, generate Workers types before adding a custom entry
    ```jsonc
    {
    	"main": "src/server.ts",
+       "upload_source_maps": true,
    }
    ```
 

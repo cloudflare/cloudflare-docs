@@ -46,7 +46,7 @@ flowchart LR
   CF <--> D
 ```
 
-All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and access rules apply to every connection.
+All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and access rules apply to every connection.
 
 ## Protocol requirement
 
@@ -91,9 +91,9 @@ If you have used Tailscale, WireGuard, or a similar product, here is how concept
 | Tailnet / mesh network | Your Cloudflare account's Mesh network                                                                                                                                                                              |
 | Node / peer            | Mesh node (servers) or client device (laptops/phones)                                                                                                                                                               |
 | Subnet router          | Mesh node with [CIDR routes](/mesh/features/routes/)                                                                                                                  |
-| MagicDNS / custom DNS  | [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) + [Gateway resolver policies](/cloudflare-one/traffic-policies/resolver-policies/) |
-| ACLs / access rules    | [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) + [device posture](/cloudflare-one/reusable-components/posture-checks/)                                                              |
-| Exit node              | Attach a public CIDR to a Mesh node and traffic to those IPs exits through that node. For broader Internet filtering, use [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/).             |
+| MagicDNS / custom DNS  | [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) + [Gateway resolver policies](/cloudflare-one/traffic-controls/resolver-policies/) |
+| ACLs / access rules    | [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/) + [device posture](/cloudflare-one/reusable-components/posture-checks/)                                                              |
+| Exit node              | Attach a public CIDR to a Mesh node and traffic to those IPs exits through that node. For broader Internet filtering, use [Gateway egress policies](/cloudflare-one/traffic-controls/egress-policies/).             |
 | Admin console          | [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh) under **Networking** > **Mesh**                                                                                                              |
 
 Key differences:
