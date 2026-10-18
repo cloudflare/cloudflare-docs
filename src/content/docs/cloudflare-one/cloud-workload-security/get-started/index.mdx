@@ -73,7 +73,7 @@ Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-crea
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/policies" />
 
-   Click **Add policy** and name it `restrict-r2-public-access`. In **Filters**, select **Wirefilter** and enter:
+   Select **Add policy** and name it `restrict-r2-public-access`. In **Filters**, select **Wirefilter** and enter:
 
    ```txt
    application.name == "Cloudflare" and application.service == "r2" and application.operation == "r2-put-bucket-public-policy"
@@ -91,7 +91,7 @@ Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-crea
    }
    ```
 
-   Click **Add policy** to save it.
+   Select **Add policy** to save it.
 
 3. ### Create a policy set
 
@@ -99,9 +99,9 @@ Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-crea
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/policy-sets" />
 
-   Click **Add policy set** and name it `r2-private-buckets`. In **Policies**, click **Attach policy**, choose `restrict-r2-public-access`, and click **Attach policies**.
+   Select **Add policy set** and name it `r2-private-buckets`. In **Policies**, select **Attach policy**, choose `restrict-r2-public-access`, and select **Attach policies**.
 
-   Turn on **Enforce** for the policy. Leave **Workloads** empty for this walkthrough, then click **Add policy set**.
+   Turn on **Enforce** for the policy. Leave **Workloads** empty for this walkthrough, then select **Add policy set**.
 
 4. ### Create a deployment
 
@@ -109,9 +109,9 @@ Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-crea
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/deployments" />
 
-   Click **Add deployment** and name it `cws-r2-test`. In **Policy sets**, click **Attach policy set**, choose `r2-private-buckets`, and click **Attach policy sets**.
+   Select **Add deployment** and name it `cws-r2-test`. In **Policy sets**, select **Attach policy set**, choose `r2-private-buckets`, and select **Attach policy sets**.
 
-   In **Deployment settings**, choose *Default allow* for **Default mode**. This permits requests outside the guardrail's filter. Click **Add deployment** to save it.
+   In **Deployment settings**, choose *Default allow* for **Default mode**. This permits requests outside the guardrail's filter. Select **Add deployment** to save it.
 
    Open the deployment and copy its **ID**. Also copy your [Cloudflare Account ID](/fundamentals/account/find-account-and-zone-ids/).
 

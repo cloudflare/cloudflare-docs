@@ -22,7 +22,7 @@ Rego modules hold reusable library code under `lib.`. Write each policy's `polic
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/rego-modules" />
 
-2. Click **Add Rego module** and enter a **Module name**.
+2. Select **Add Rego module** and enter a **Module name**.
 
 3. In **Rego source**, enter library code. This example checks whether a request turns off public access:
 
@@ -36,7 +36,7 @@ Rego modules hold reusable library code under `lib.`. Write each policy's `polic
 
    **Package path** is derived from the source and is read-only.
 
-4. Click **Add Rego module** to save the module.
+4. Select **Add Rego module** to save the module.
 </Steps>
 
 To call the library from a policy, import it and reference its rule:
@@ -64,7 +64,7 @@ Metadata stores reusable JSON values. An import path such as `metadata.bucket_ru
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/rego-metadata" />
 
-2. Click **Add Rego metadata**. Enter a **Name** and an **Import path** in the format `metadata.<NAME>`.
+2. Select **Add Rego metadata**. Enter a **Name** and an **Import path** in the format `metadata.<NAME>`.
 
 3. In **Data**, enter valid JSON. For example:
 
@@ -74,7 +74,7 @@ Metadata stores reusable JSON values. An import path such as `metadata.bucket_ru
    }
    ```
 
-4. Click **Add Rego metadata** to save the value.
+4. Select **Add Rego metadata** to save the value.
 </Steps>
 
 For this example, a policy can read `data.metadata.bucket_rules.require_private_buckets`. Update the metadata to change the shared value without editing each policy.
@@ -88,13 +88,13 @@ Tenant structures describe an AWS or Cloudflare resource hierarchy. An optional 
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/tenant-structures" />
 
-2. Click **Add tenant structure**. Enter a **Name** and select **AWS** or **Cloudflare** for **Application**.
+2. Select **Add tenant structure**. Enter a **Name** and select **AWS** or **Cloudflare** for **Application**.
 
 3. (Optional) Enter a **Package path** using `tenant.aws.<NAME>` or `tenant.cloudflare.<NAME>`, matching your selected application.
 
-4. In **Nodes**, click **Import nodes** and choose a `.json` file. Review the imported nodes in **Table view** or **JSON view**.
+4. In **Nodes**, select **Import nodes** and choose a `.json` file. Review the imported nodes in **Table view** or **JSON view**.
 
-5. Click **Add tenant structure** to save the structure and nodes.
+5. Select **Add tenant structure** to save the structure and nodes.
 </Steps>
 
 ### Node import format
@@ -121,6 +121,6 @@ AWS supports `root`, `ou`, and `account` nodes. Cloudflare supports `org`, `acco
 
 ### Edit nodes
 
-Open an existing tenant structure to add, edit, or delete nodes in **Table view**. Click **Save** to apply the changes. **JSON view** is read-only.
+Open an existing tenant structure to add, edit, or delete nodes in **Table view**. Select **Save** to apply the changes. **JSON view** is read-only.
 
 Policies read mounted nodes by native ID. For example, `data.tenant.aws.production.nodes["123456789012"]` returns the example account node.

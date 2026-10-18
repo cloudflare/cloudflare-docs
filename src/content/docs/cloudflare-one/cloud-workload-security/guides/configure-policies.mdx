@@ -25,7 +25,7 @@ Use separate workloads to [target security profiles for production and non-produ
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/workloads" />
 
-2. Click **Add workload** and enter a **Workload name**.
+2. Select **Add workload** and enter a **Workload name**.
 
 3. In **Filters**, select **Wirefilter** and enter a filter. This example matches Cloudflare API requests:
 
@@ -35,7 +35,7 @@ Use separate workloads to [target security profiles for production and non-produ
 
    You can also use **Visual Builder** to select fields, operators, and values. Select an application before selecting its service or operation.
 
-4. Click **Add workload** to save the workload.
+4. Select **Add workload** to save the workload.
 </Steps>
 
 ## Create a policy
@@ -49,7 +49,7 @@ A policy filter selects the requests that run its Rego check. The Rego source mu
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/policies" />
 
-2. Click **Add policy** and enter a **Policy name**.
+2. Select **Add policy** and enter a **Policy name**.
 
 3. In **Filters**, select **Wirefilter** and enter the request scope. This example selects R2 API requests:
 
@@ -71,7 +71,7 @@ A policy filter selects the requests that run its Rego check. The Rego source mu
 
    Use `input.http.request.body` to inspect parsed request content. For a request-body example, refer to the [R2 public-access guardrail](/cloudflare-one/cloud-workload-security/get-started/#create-the-guardrail-policy).
 
-5. Click **Add policy** to save the policy. Correct any filter or Rego errors before continuing.
+5. Select **Add policy** to save the policy. Correct any filter or Rego errors before continuing.
 </Steps>
 
 ## Create a policy set
@@ -83,15 +83,15 @@ A policy set groups policies and their workload scope. A request must match an i
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/policy-sets" />
 
-2. Click **Add policy set** and enter a **Policy set name**.
+2. Select **Add policy set** and enter a **Policy set name**.
 
-3. In **Workloads**, click **Attach workload**, choose the workloads to include, and confirm the selection. To omit a group of requests, click **Exclude workload**.
+3. In **Workloads**, select **Attach workload**, choose the workloads to include, and confirm the selection. To omit a group of requests, select **Exclude workload**.
 
-4. In **Policies**, click **Attach policy**, choose the policies, and click **Attach policies**.
+4. In **Policies**, select **Attach policy**, choose the policies, and select **Attach policies**.
 
 5. For each policy, turn on **Enforce** to block requests that fail its check. Turn it off to evaluate the policy without blocking on its result.
 
-6. Click **Add policy set** to save the set.
+6. Select **Add policy set** to save the set.
 </Steps>
 
 The policy filter still applies within the policy set's workload scope. A workload match does not bypass a policy filter.
@@ -103,11 +103,11 @@ The policy filter still applies within the policy set's workload scope. A worklo
 
    <DashButton url="/?to=/:account/one/cloud-workload-security/deployments" />
 
-2. In **Policy sets**, click **Attach policy set**, choose the set, and click **Attach policy sets**.
+2. In **Policy sets**, select **Attach policy set**, choose the set, and select **Attach policy sets**.
 
 3. In **Deployment settings**, choose a **Default mode**. *Default allow* permits requests outside every policy's request scope. *Default block* blocks those requests.
 
-4. Click **Save**. Allow a configuration refresh interval before testing through the proxy.
+4. Select **Save**. Allow a configuration refresh interval before testing through the proxy.
 </Steps>
 
 ### Default mode and enforcement
@@ -118,4 +118,4 @@ For example, a matching policy with **Enforce** off does not block a `false` res
 
 Send one request that passes your policy and one that fails it. Confirm the failing request returns a CWS block response when **Enforce** is on.
 
-To change an existing resource, open it from its list and click **Save** after editing. Changes to a policy or policy set affect deployments that reference it.
+To change an existing resource, open it from its list and select **Save** after editing. Changes to a policy or policy set affect deployments that reference it.

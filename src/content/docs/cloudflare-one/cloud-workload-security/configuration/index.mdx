@@ -107,7 +107,7 @@ The `proxy` object requires `logging`, `tls_interception`, and `upstream`. Its l
 | `proxy.logging.format`    | `json`         | Log format: `json` or `text`.                                                                                             |
 | `proxy.logging.verbosity` | `INFO`         | Log level: `CRITICAL`, `ERROR`, `WARN`, `INFO`, `DEBUG`, or `TRACE`. Values are case-sensitive.                           |
 
-Keep `127.0.0.1:8080` for clients on the same host or network namespace. For a shared proxy, choose an address clients can reach and restrict network access to intended clients. `0.0.0.0` listens on all IPv4 interfaces; it is not a destination address for clients.
+Keep `127.0.0.1:8080` for clients on the same host or network namespace. For a shared proxy, choose an address clients can reach and restrict network access to intended clients. `0.0.0.0` listens on all IPv4 interfaces. It is not a destination address for clients.
 
 An empty `logging: {}` uses JSON at `INFO`. For human-readable logging, replace `proxy.logging` with:
 
@@ -148,7 +148,7 @@ The outbound proxy settings are:
 | `ca_cert`     | `null`  | Additional CA certificate file trusted when connecting to an `https://` upstream proxy. Only the first certificate in the file is read. |
 | `no_proxy`    | `null`  | Unique destination rules that connect directly instead of using the upstream proxy. An empty list also means no exceptions.             |
 
-Both proxy URL fields accept `http://` or `https://`. The field chooses the destination traffic; the URL scheme chooses whether CWS uses TLS to connect to the upstream proxy. For example, `https_proxy: "http://proxy.example.com:8080"` routes port `443` through an HTTP proxy.
+Both proxy URL fields accept `http://` or `https://`. The field chooses the destination traffic. The URL scheme chooses whether CWS uses TLS to connect to the upstream proxy. For example, `https_proxy: "http://proxy.example.com:8080"` routes port `443` through an HTTP proxy.
 
 Configure each traffic type independently. Setting only `http_proxy` does not route port `443` through it. Omit a field or use `null` for direct connections of that type. `proxy.upstream.proxy: {}` uses direct connections for both types.
 
