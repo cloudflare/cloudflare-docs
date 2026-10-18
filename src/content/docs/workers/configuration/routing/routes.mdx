@@ -203,7 +203,9 @@ The following examples illustrate the difference between `*example.com/*` and `*
 
 :::note[Zone scope]
 
-Cloudflare evaluates a Workers route only within the [zone](/dns/zone-setups/) where you create it. For example, Cloudflare does not evaluate a route in the `example.com` zone for requests to `myexample.com` or `not-example.com`. Those rows illustrate the wildcard's string-matching behavior.
+Cloudflare evaluates Workers routes within the [zone](/dns/zone-setups/) where you create them. For ordinary zone routing, a matching pattern does not make unrelated domains such as `myexample.com` or `not-example.com` use the `example.com` zone's routes. Those rows illustrate the wildcard's string-matching behavior.
+
+[Cloudflare for SaaS custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/worker-as-origin/#how-custom-hostname-traffic-reaches-your-worker) can send traffic through the provider's zone, where its Workers routes are evaluated.
 
 The distinction matters for subdomain patterns within a zone. For example, `*sub.example.com/*` in the `example.com` zone matches `sub.example.com`, `foo.sub.example.com`, and `notsub.example.com`.
 
