@@ -1,0 +1,95 @@
+---
+import { renderMarkdown } from "~/util/markdown";
+import { Badge } from "../ui/badge";
+import { Code } from "../ui/code";
+import { PackageManagers } from "../ui/package-managers";
+import CommandArgument from "./CommandArgument.astro";
+import Details from "./Details.astro";
+import type {
+	CommandArgumentDefinition,
+	HeadingLevel,
+} from "./command-reference";
+
+interface Props {
+	title: string;
+	headingId?: string | false;
+	invocation: string;
+	description: string;
+	headingLevel?: HeadingLevel;
+	mode: "wrangler" | "cf";
+	epilogue?: string;
+	experimental?: boolean;
+	args?: Record<string, CommandArgumentDefinition>;
+	globalFlags?: Record<string, CommandArgumentDefinition>;
+	positionals?: string[];
+}
+
+const {
+	title,
+	headingId,
+	invocation,
+	description,
+	headingLevel = 2,
+	mode,
+	epilogue,
+	experimental = false,
+	args,
+	globalFlags,
+	positionals = [],
+} = Astro.props;
+const positionalSet = new Set(positionals);
+const visibleArgs = args
+	? Object.entries(args).filter(([, definition]) => !definition.hidden)
+	: [];
+const visibleGlobalFlags = globalFlags
+	? Object.entries(globalFlags).filter(([, definition]) => !definition.hidden)
+	: [];
+const resolvedHeadingId =
+	headingId === false
+		? undefined
+		: (headingId ?? title.toLowerCase().replace(/[^a-z0-9]+/g, "-"));
+const Heading = `h${headingLevel}` as `h${HeadingLevel}`;
+---
+
+<Heading id={resolvedHeadingId}>
+	<code>{title}</code>
+</Heading>
+
+{experimental && (
+	<>
+		<br />
+		<Badge text="Experimental" variant="warning" />
+	</>
+)}
+<Fragment set:html={renderMarkdown(description)} />
+{epilogue && <Fragment set:html={renderMarkdown(epilogue)} />}
+
+{mode === "wrangler" ? (
+	<PackageManagers pkg="wrangler" type="exec" args={invocation} />
+) : (
+	<Code code={invocation} lang="sh" />
+)}
+
+{visibleArgs.length > 0 && (
+	<ul>
+		{visibleArgs.map(([key, definition]) => (
+			<CommandArgument
+				key={key}
+				definition={{
+					...definition,
+					positional: definition.positional ?? positionalSet.has(key),
+				}}
+			/>
+		))}
+	</ul>
+)}
+
+{visibleGlobalFlags.length > 0 && (
+	<Details header="Global flags">
+		<ul>
+			{visibleGlobalFlags.map(([key, definition]) => (
+				<CommandArgument key={key} definition={definition} />
+			))}
+		</ul>
+	</Details>
+)}

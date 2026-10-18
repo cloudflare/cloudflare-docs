@@ -1,10 +1,9 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { defineConfig, passthroughImageService } from "astro/config";
+import { defineConfig, envField, passthroughImageService } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import skills from "astro-skills";
 import nimbus, {
 	defineConfig as defineNimbusConfig,
 } from "@cloudflare/nimbus-docs";
@@ -55,7 +54,12 @@ async function getExternalLinkPaths(dir: string): Promise<Set<string>> {
 
 const sidebarItems = await autogenSections();
 const externalLinkPaths = await getExternalLinkPaths("src/content/docs");
-const serializeSitemapLastmod = createSitemapLastmodSerializer();
+// Previews build from a shallow clone, so git dates are wrong, and any
+// per-build date forces every page to be re-uploaded. `astro:env` isn't
+// available here; unset means preview, matching the env schema default.
+const serializeSitemapLastmod = createSitemapLastmodSerializer({
+	lastmod: process.env.DEPLOYMENT_ENV === "production",
+});
 
 // Mirrors production's sitemap `filter` (root astro.config.ts).
 function isExcludedFromSitemap(url: string): boolean {
@@ -204,8 +208,6 @@ const markdown = {
 
 const integrations = [
 	react(),
-	// Injects /.well-known/agent-skills/* routes (index.json, SKILL.md, tarballs).
-	skills(),
 	nimbus(nimbusConfig, {
 		mdx: { optimize: true },
 		markdown: {
@@ -237,8 +239,29 @@ const integrations = [
 				"error",
 				{ aliases: { "~/assets/": "src/assets/" } },
 			],
-			"nimbus/internal-link": "error",
+			// Paths below are served by the Worker or another deployment, so the
+			// build's route list never contains them.
+			"nimbus/internal-link": [
+				"error",
+				{
+					ignore: [
+						"/api/**",
+						"/openapi.json",
+						"/.well-known/**",
+						"**/llms-full.txt",
+						"**/og.png",
+						"**/index.md",
+						// Model 404s are handled directly via custom worker/index.ts logic.
+						"/workers-ai/models/**",
+						"/ai/models/**",
+					],
+				},
+			],
+			// Reuses internal-link's `ignore` list.
+			"nimbus/redirected-link": "error",
 		},
+		// The Worker reads redirects from this file, not from `_redirects`.
+		redirectsFile: "public/__redirects",
 	}),
 ];
 
@@ -279,6 +302,16 @@ export default defineConfig({
 		defaultStrategy: "hover",
 	},
 	outDir: "./dist",
+	env: {
+		schema: {
+			DEPLOYMENT_ENV: envField.enum({
+				context: "server",
+				access: "public",
+				values: ["preview", "production"],
+				default: "preview",
+			}),
+		},
+	},
 	experimental: {
 		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
 	},

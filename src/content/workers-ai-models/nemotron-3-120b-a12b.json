@@ -50,14 +50,9 @@
                 {
                     "title": "Prompt",
                     "properties": {
-                        "prompt": {
-                            "type": "string",
-                            "minLength": 1,
-                            "description": "The input text prompt for the model to generate a response."
-                        },
                         "model": {
                             "type": "string",
-                            "description": "ID of the model to use (e.g. '@cf/zai-org/glm-4.7-flash, etc')."
+                            "description": "ID of the model to use (for example, '@cf/nvidia/nemotron-3-120b-a12b')."
                         },
                         "audio": {
                             "anyOf": [
@@ -161,7 +156,7 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Deprecated in favor of max_completion_tokens. The maximum number of tokens to generate."
+                            "description": "The maximum number of tokens to generate."
                         },
                         "max_completion_tokens": {
                             "anyOf": [
@@ -183,7 +178,7 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Set of 16 key-value pairs that can be attached to the object."
+                            "description": "Set of key-value pairs that can be attached to the object."
                         },
                         "modalities": {
                             "anyOf": [
@@ -201,7 +196,7 @@
                                     "type": "null"
                                 }
                             ],
-                            "description": "Output types requested from the model (e.g. ['text'] or ['text', 'audio'])."
+                            "description": "Output types requested from the model."
                         },
                         "n": {
                             "anyOf": [
@@ -283,34 +278,24 @@
                             "default": 0,
                             "description": "Penalizes new tokens based on whether they appear in the text so far."
                         },
-                        "reasoning_effort": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "low",
-                                        "medium",
-                                        "high"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                        },
                         "chat_template_kwargs": {
                             "type": "object",
+                            "description": "Nemotron chat-template controls for normal reasoning, low-effort reasoning, and non-reasoning responses.",
                             "properties": {
                                 "enable_thinking": {
                                     "type": "boolean",
                                     "default": true,
-                                    "description": "Whether to enable reasoning, enabled by default."
+                                    "description": "Whether to enable reasoning. Reasoning is enabled by default."
                                 },
-                                "clear_thinking": {
+                                "low_effort": {
                                     "type": "boolean",
                                     "default": false,
-                                    "description": "If false, preserves reasoning context between turns."
+                                    "description": "When reasoning is enabled, use Nemotron's low-effort reasoning mode, which uses significantly fewer reasoning tokens."
+                                },
+                                "force_nonempty_content": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "For coding agent use, Nvidia suggests setting force_nonempty_content=true"
                                 }
                             }
                         },
@@ -433,7 +418,7 @@
                                 }
                             ],
                             "default": false,
-                            "description": "Whether to store the output for model distillation / evals."
+                            "description": "Whether to store the output for model distillation or evaluation."
                         },
                         "stream": {
                             "anyOf": [
@@ -848,6 +833,11 @@
                             },
                             "minItems": 1,
                             "maxItems": 128
+                        },
+                        "prompt": {
+                            "type": "string",
+                            "minLength": 1,
+                            "description": "The input text prompt for the model to generate a response."
                         }
                     },
                     "required": [
@@ -857,6 +847,790 @@
                 {
                     "title": "Messages",
                     "properties": {
+                        "model": {
+                            "type": "string",
+                            "description": "ID of the model to use (for example, '@cf/nvidia/nemotron-3-120b-a12b')."
+                        },
+                        "audio": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "description": "Parameters for audio output. Required when modalities includes 'audio'.",
+                                    "properties": {
+                                        "voice": {
+                                            "oneOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "id"
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "format": {
+                                            "type": "string",
+                                            "enum": [
+                                                "wav",
+                                                "aac",
+                                                "mp3",
+                                                "flac",
+                                                "opus",
+                                                "pcm16"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "voice",
+                                        "format"
+                                    ]
+                                }
+                            ]
+                        },
+                        "frequency_penalty": {
+                            "anyOf": [
+                                {
+                                    "type": "number",
+                                    "minimum": -2,
+                                    "maximum": 2
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 0,
+                            "description": "Penalizes new tokens based on their existing frequency in the text so far."
+                        },
+                        "logit_bias": {
+                            "anyOf": [
+                                {
+                                    "type": "object"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Modify the likelihood of specified tokens appearing in the completion. Maps token IDs to bias values from -100 to 100."
+                        },
+                        "logprobs": {
+                            "anyOf": [
+                                {
+                                    "type": "boolean"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": false,
+                            "description": "Whether to return log probabilities of the output tokens."
+                        },
+                        "top_logprobs": {
+                            "anyOf": [
+                                {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 20
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "How many top log probabilities to return at each token position (0-20). Requires logprobs=true."
+                        },
+                        "max_tokens": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "The maximum number of tokens to generate."
+                        },
+                        "max_completion_tokens": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "An upper bound for the number of tokens that can be generated for a completion."
+                        },
+                        "metadata": {
+                            "anyOf": [
+                                {
+                                    "type": "object"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Set of key-value pairs that can be attached to the object."
+                        },
+                        "modalities": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "enum": [
+                                            "text",
+                                            "audio"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "Output types requested from the model."
+                        },
+                        "n": {
+                            "anyOf": [
+                                {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 128
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 1,
+                            "description": "How many chat completion choices to generate for each input message."
+                        },
+                        "parallel_tool_calls": {
+                            "type": "boolean",
+                            "default": true,
+                            "description": "Whether to enable parallel function calling during tool use."
+                        },
+                        "prediction": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "enum": [
+                                                "content"
+                                            ]
+                                        },
+                                        "content": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "string"
+                                                },
+                                                {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "type": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                    "text"
+                                                                ]
+                                                            },
+                                                            "text": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "type",
+                                                            "text"
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "content"
+                                    ]
+                                }
+                            ]
+                        },
+                        "presence_penalty": {
+                            "anyOf": [
+                                {
+                                    "type": "number",
+                                    "minimum": -2,
+                                    "maximum": 2
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 0,
+                            "description": "Penalizes new tokens based on whether they appear in the text so far."
+                        },
+                        "chat_template_kwargs": {
+                            "type": "object",
+                            "description": "Nemotron chat-template controls for normal reasoning, low-effort reasoning, and non-reasoning responses.",
+                            "properties": {
+                                "enable_thinking": {
+                                    "type": "boolean",
+                                    "default": true,
+                                    "description": "Whether to enable reasoning. Reasoning is enabled by default."
+                                },
+                                "low_effort": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "When reasoning is enabled, use Nemotron's low-effort reasoning mode, which uses significantly fewer reasoning tokens."
+                                },
+                                "force_nonempty_content": {
+                                    "type": "boolean",
+                                    "default": false,
+                                    "description": "For coding agent use, Nvidia suggests setting force_nonempty_content=true"
+                                }
+                            }
+                        },
+                        "response_format": {
+                            "anyOf": [
+                                {
+                                    "description": "Specifies the format the model must output.",
+                                    "oneOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "text"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "json_object"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "json_schema"
+                                                    ]
+                                                },
+                                                "json_schema": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "schema": {
+                                                            "type": "object"
+                                                        },
+                                                        "strict": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "boolean"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "json_schema"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "seed": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "description": "If specified, the system will make a best effort to sample deterministically."
+                        },
+                        "stop": {
+                            "description": "Up to 4 sequences where the API will stop generating further tokens.",
+                            "anyOf": [
+                                {
+                                    "type": "null"
+                                },
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "minItems": 1,
+                                    "maxItems": 4
+                                }
+                            ]
+                        },
+                        "store": {
+                            "anyOf": [
+                                {
+                                    "type": "boolean"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": false,
+                            "description": "Whether to store the output for model distillation or evaluation."
+                        },
+                        "stream": {
+                            "anyOf": [
+                                {
+                                    "type": "boolean"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": false,
+                            "description": "If true, partial message deltas will be sent as server-sent events."
+                        },
+                        "stream_options": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "include_usage": {
+                                            "type": "boolean"
+                                        },
+                                        "include_obfuscation": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "temperature": {
+                            "anyOf": [
+                                {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 2
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 1,
+                            "description": "Sampling temperature between 0 and 2."
+                        },
+                        "tool_choice": {
+                            "anyOf": [
+                                {
+                                    "description": "Controls which (if any) tool is called by the model. 'none' = no tools, 'auto' = model decides, 'required' = must call a tool.",
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "enum": [
+                                                "none",
+                                                "auto",
+                                                "required"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "description": "Force a specific function tool.",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "function"
+                                                    ]
+                                                },
+                                                "function": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "function"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "description": "Force a specific custom tool.",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "custom"
+                                                    ]
+                                                },
+                                                "custom": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "name": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "name"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "custom"
+                                            ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "description": "Constrain to an allowed subset of tools.",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "allowed_tools"
+                                                    ]
+                                                },
+                                                "allowed_tools": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "mode": {
+                                                            "type": "string",
+                                                            "enum": [
+                                                                "auto",
+                                                                "required"
+                                                            ]
+                                                        },
+                                                        "tools": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "object"
+                                                            }
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "mode",
+                                                        "tools"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "allowed_tools"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "tools": {
+                            "type": "array",
+                            "description": "A list of tools the model may call.",
+                            "items": {
+                                "oneOf": [
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "function"
+                                                ]
+                                            },
+                                            "function": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string",
+                                                        "description": "The name of the function to be called."
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "description": "A description of what the function does."
+                                                    },
+                                                    "parameters": {
+                                                        "type": "object",
+                                                        "description": "The parameters the function accepts, described as a JSON Schema object."
+                                                    },
+                                                    "strict": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "boolean"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ],
+                                                        "default": false,
+                                                        "description": "Whether to enable strict schema adherence."
+                                                    }
+                                                },
+                                                "required": [
+                                                    "name"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "type",
+                                            "function"
+                                        ]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "custom"
+                                                ]
+                                            },
+                                            "custom": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "format": {
+                                                        "oneOf": [
+                                                            {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "type": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "text"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "type"
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "type": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "grammar"
+                                                                        ]
+                                                                    },
+                                                                    "grammar": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "definition": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "syntax": {
+                                                                                "type": "string",
+                                                                                "enum": [
+                                                                                    "lark",
+                                                                                    "regex"
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "definition",
+                                                                            "syntax"
+                                                                        ]
+                                                                    }
+                                                                },
+                                                                "required": [
+                                                                    "type",
+                                                                    "grammar"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "name"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "type",
+                                            "custom"
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        "top_p": {
+                            "anyOf": [
+                                {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ],
+                            "default": 1,
+                            "description": "Nucleus sampling: considers the results of the tokens with top_p probability mass."
+                        },
+                        "user": {
+                            "type": "string",
+                            "description": "A unique identifier representing your end-user, for abuse monitoring."
+                        },
+                        "web_search_options": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "description": "Options for the web search tool (when using built-in web search).",
+                                    "properties": {
+                                        "search_context_size": {
+                                            "type": "string",
+                                            "enum": [
+                                                "low",
+                                                "medium",
+                                                "high"
+                                            ],
+                                            "default": "medium"
+                                        },
+                                        "user_location": {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "approximate"
+                                                    ]
+                                                },
+                                                "approximate": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "city": {
+                                                            "type": "string"
+                                                        },
+                                                        "country": {
+                                                            "type": "string"
+                                                        },
+                                                        "region": {
+                                                            "type": "string"
+                                                        },
+                                                        "timezone": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "type",
+                                                "approximate"
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "function_call": {
+                            "anyOf": [
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "none",
+                                        "auto"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ]
+                                }
+                            ]
+                        },
+                        "functions": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "description": "The name of the function to be called."
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "description": "A description of what the function does."
+                                    },
+                                    "parameters": {
+                                        "type": "object",
+                                        "description": "The parameters the function accepts, described as a JSON Schema object."
+                                    },
+                                    "strict": {
+                                        "anyOf": [
+                                            {
+                                                "type": "boolean"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ],
+                                        "default": false,
+                                        "description": "Whether to enable strict schema adherence."
+                                    }
+                                },
+                                "required": [
+                                    "name"
+                                ]
+                            },
+                            "minItems": 1,
+                            "maxItems": 128
+                        },
                         "messages": {
                             "type": "array",
                             "description": "A list of messages comprising the conversation so far.",
@@ -1301,800 +2075,6 @@
                                 ]
                             },
                             "minItems": 1
-                        },
-                        "model": {
-                            "type": "string",
-                            "description": "ID of the model to use (e.g. '@cf/zai-org/glm-4.7-flash, etc')."
-                        },
-                        "audio": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "description": "Parameters for audio output. Required when modalities includes 'audio'.",
-                                    "properties": {
-                                        "voice": {
-                                            "oneOf": [
-                                                {
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "id"
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        "format": {
-                                            "type": "string",
-                                            "enum": [
-                                                "wav",
-                                                "aac",
-                                                "mp3",
-                                                "flac",
-                                                "opus",
-                                                "pcm16"
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "voice",
-                                        "format"
-                                    ]
-                                }
-                            ]
-                        },
-                        "frequency_penalty": {
-                            "anyOf": [
-                                {
-                                    "type": "number",
-                                    "minimum": -2,
-                                    "maximum": 2
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": 0,
-                            "description": "Penalizes new tokens based on their existing frequency in the text so far."
-                        },
-                        "logit_bias": {
-                            "anyOf": [
-                                {
-                                    "type": "object"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Modify the likelihood of specified tokens appearing in the completion. Maps token IDs to bias values from -100 to 100."
-                        },
-                        "logprobs": {
-                            "anyOf": [
-                                {
-                                    "type": "boolean"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": false,
-                            "description": "Whether to return log probabilities of the output tokens."
-                        },
-                        "top_logprobs": {
-                            "anyOf": [
-                                {
-                                    "type": "integer",
-                                    "minimum": 0,
-                                    "maximum": 20
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "How many top log probabilities to return at each token position (0-20). Requires logprobs=true."
-                        },
-                        "max_tokens": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Deprecated in favor of max_completion_tokens. The maximum number of tokens to generate."
-                        },
-                        "max_completion_tokens": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "An upper bound for the number of tokens that can be generated for a completion."
-                        },
-                        "metadata": {
-                            "anyOf": [
-                                {
-                                    "type": "object"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Set of 16 key-value pairs that can be attached to the object."
-                        },
-                        "modalities": {
-                            "anyOf": [
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string",
-                                        "enum": [
-                                            "text",
-                                            "audio"
-                                        ]
-                                    }
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Output types requested from the model (e.g. ['text'] or ['text', 'audio'])."
-                        },
-                        "n": {
-                            "anyOf": [
-                                {
-                                    "type": "integer",
-                                    "minimum": 1,
-                                    "maximum": 128
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": 1,
-                            "description": "How many chat completion choices to generate for each input message."
-                        },
-                        "parallel_tool_calls": {
-                            "type": "boolean",
-                            "default": true,
-                            "description": "Whether to enable parallel function calling during tool use."
-                        },
-                        "prediction": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": {
-                                            "type": "string",
-                                            "enum": [
-                                                "content"
-                                            ]
-                                        },
-                                        "content": {
-                                            "anyOf": [
-                                                {
-                                                    "type": "string"
-                                                },
-                                                {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "type": {
-                                                                "type": "string",
-                                                                "enum": [
-                                                                    "text"
-                                                                ]
-                                                            },
-                                                            "text": {
-                                                                "type": "string"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "type",
-                                                            "text"
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "required": [
-                                        "type",
-                                        "content"
-                                    ]
-                                }
-                            ]
-                        },
-                        "presence_penalty": {
-                            "anyOf": [
-                                {
-                                    "type": "number",
-                                    "minimum": -2,
-                                    "maximum": 2
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": 0,
-                            "description": "Penalizes new tokens based on whether they appear in the text so far."
-                        },
-                        "reasoning_effort": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "low",
-                                        "medium",
-                                        "high"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                        },
-                        "chat_template_kwargs": {
-                            "type": "object",
-                            "properties": {
-                                "enable_thinking": {
-                                    "type": "boolean",
-                                    "default": true,
-                                    "description": "Whether to enable reasoning, enabled by default."
-                                },
-                                "clear_thinking": {
-                                    "type": "boolean",
-                                    "default": false,
-                                    "description": "If false, preserves reasoning context between turns."
-                                }
-                            }
-                        },
-                        "response_format": {
-                            "anyOf": [
-                                {
-                                    "description": "Specifies the format the model must output.",
-                                    "oneOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "text"
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "type"
-                                            ]
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "json_object"
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "type"
-                                            ]
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "json_schema"
-                                                    ]
-                                                },
-                                                "json_schema": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "name": {
-                                                            "type": "string"
-                                                        },
-                                                        "description": {
-                                                            "type": "string"
-                                                        },
-                                                        "schema": {
-                                                            "type": "object"
-                                                        },
-                                                        "strict": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "type": "boolean"
-                                                                },
-                                                                {
-                                                                    "type": "null"
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "name"
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "type",
-                                                "json_schema"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "seed": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "stop": {
-                            "description": "Up to 4 sequences where the API will stop generating further tokens.",
-                            "anyOf": [
-                                {
-                                    "type": "null"
-                                },
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "minItems": 1,
-                                    "maxItems": 4
-                                }
-                            ]
-                        },
-                        "store": {
-                            "anyOf": [
-                                {
-                                    "type": "boolean"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": false,
-                            "description": "Whether to store the output for model distillation / evals."
-                        },
-                        "stream": {
-                            "anyOf": [
-                                {
-                                    "type": "boolean"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": false,
-                            "description": "If true, partial message deltas will be sent as server-sent events."
-                        },
-                        "stream_options": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "include_usage": {
-                                            "type": "boolean"
-                                        },
-                                        "include_obfuscation": {
-                                            "type": "boolean"
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        "temperature": {
-                            "anyOf": [
-                                {
-                                    "type": "number",
-                                    "minimum": 0,
-                                    "maximum": 2
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": 1,
-                            "description": "Sampling temperature between 0 and 2."
-                        },
-                        "tool_choice": {
-                            "anyOf": [
-                                {
-                                    "description": "Controls which (if any) tool is called by the model. 'none' = no tools, 'auto' = model decides, 'required' = must call a tool.",
-                                    "oneOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "none",
-                                                "auto",
-                                                "required"
-                                            ]
-                                        },
-                                        {
-                                            "type": "object",
-                                            "description": "Force a specific function tool.",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "function"
-                                                    ]
-                                                },
-                                                "function": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "name": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "name"
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "type",
-                                                "function"
-                                            ]
-                                        },
-                                        {
-                                            "type": "object",
-                                            "description": "Force a specific custom tool.",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "custom"
-                                                    ]
-                                                },
-                                                "custom": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "name": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "name"
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "type",
-                                                "custom"
-                                            ]
-                                        },
-                                        {
-                                            "type": "object",
-                                            "description": "Constrain to an allowed subset of tools.",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "allowed_tools"
-                                                    ]
-                                                },
-                                                "allowed_tools": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "mode": {
-                                                            "type": "string",
-                                                            "enum": [
-                                                                "auto",
-                                                                "required"
-                                                            ]
-                                                        },
-                                                        "tools": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "type": "object"
-                                                            }
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "mode",
-                                                        "tools"
-                                                    ]
-                                                }
-                                            },
-                                            "required": [
-                                                "type",
-                                                "allowed_tools"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        "tools": {
-                            "type": "array",
-                            "description": "A list of tools the model may call.",
-                            "items": {
-                                "oneOf": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "function"
-                                                ]
-                                            },
-                                            "function": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "name": {
-                                                        "type": "string",
-                                                        "description": "The name of the function to be called."
-                                                    },
-                                                    "description": {
-                                                        "type": "string",
-                                                        "description": "A description of what the function does."
-                                                    },
-                                                    "parameters": {
-                                                        "type": "object",
-                                                        "description": "The parameters the function accepts, described as a JSON Schema object."
-                                                    },
-                                                    "strict": {
-                                                        "anyOf": [
-                                                            {
-                                                                "type": "boolean"
-                                                            },
-                                                            {
-                                                                "type": "null"
-                                                            }
-                                                        ],
-                                                        "default": false,
-                                                        "description": "Whether to enable strict schema adherence."
-                                                    }
-                                                },
-                                                "required": [
-                                                    "name"
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "function"
-                                        ]
-                                    },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string",
-                                                "enum": [
-                                                    "custom"
-                                                ]
-                                            },
-                                            "custom": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "name": {
-                                                        "type": "string"
-                                                    },
-                                                    "description": {
-                                                        "type": "string"
-                                                    },
-                                                    "format": {
-                                                        "oneOf": [
-                                                            {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "type": {
-                                                                        "type": "string",
-                                                                        "enum": [
-                                                                            "text"
-                                                                        ]
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "type"
-                                                                ]
-                                                            },
-                                                            {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "type": {
-                                                                        "type": "string",
-                                                                        "enum": [
-                                                                            "grammar"
-                                                                        ]
-                                                                    },
-                                                                    "grammar": {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "definition": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "syntax": {
-                                                                                "type": "string",
-                                                                                "enum": [
-                                                                                    "lark",
-                                                                                    "regex"
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        "required": [
-                                                                            "definition",
-                                                                            "syntax"
-                                                                        ]
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "type",
-                                                                    "grammar"
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                "required": [
-                                                    "name"
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "type",
-                                            "custom"
-                                        ]
-                                    }
-                                ]
-                            }
-                        },
-                        "top_p": {
-                            "anyOf": [
-                                {
-                                    "type": "number",
-                                    "minimum": 0,
-                                    "maximum": 1
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": 1,
-                            "description": "Nucleus sampling: considers the results of the tokens with top_p probability mass."
-                        },
-                        "user": {
-                            "type": "string",
-                            "description": "A unique identifier representing your end-user, for abuse monitoring."
-                        },
-                        "web_search_options": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "description": "Options for the web search tool (when using built-in web search).",
-                                    "properties": {
-                                        "search_context_size": {
-                                            "type": "string",
-                                            "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
-                                            ],
-                                            "default": "medium"
-                                        },
-                                        "user_location": {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": {
-                                                    "type": "string",
-                                                    "enum": [
-                                                        "approximate"
-                                                    ]
-                                                },
-                                                "approximate": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "city": {
-                                                            "type": "string"
-                                                        },
-                                                        "country": {
-                                                            "type": "string"
-                                                        },
-                                                        "region": {
-                                                            "type": "string"
-                                                        },
-                                                        "timezone": {
-                                                            "type": "string"
-                                                        }
-                                                    }
-                                                }
-                                            },
-                                            "required": [
-                                                "type",
-                                                "approximate"
-                                            ]
-                                        }
-                                    }
-                                }
-                            ]
-                        },
-                        "function_call": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "none",
-                                        "auto"
-                                    ]
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "name"
-                                    ]
-                                }
-                            ]
-                        },
-                        "functions": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string",
-                                        "description": "The name of the function to be called."
-                                    },
-                                    "description": {
-                                        "type": "string",
-                                        "description": "A description of what the function does."
-                                    },
-                                    "parameters": {
-                                        "type": "object",
-                                        "description": "The parameters the function accepts, described as a JSON Schema object."
-                                    },
-                                    "strict": {
-                                        "anyOf": [
-                                            {
-                                                "type": "boolean"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ],
-                                        "default": false,
-                                        "description": "Whether to enable strict schema adherence."
-                                    }
-                                },
-                                "required": [
-                                    "name"
-                                ]
-                            },
-                            "minItems": 1,
-                            "maxItems": 128
                         }
                     },
                     "required": [

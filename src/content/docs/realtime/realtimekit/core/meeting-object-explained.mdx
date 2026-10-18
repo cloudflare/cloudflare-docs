@@ -29,7 +29,7 @@ The meeting object contains several properties that organize different aspects o
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.self`](https://docs.realtime.cloudflare.com/web-core/reference/RTKSelf) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
+The [`meeting.self`](/realtime/realtimekit/core/api-reference/rtkself/) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
 
 **Key Properties:**
 
@@ -83,7 +83,7 @@ await meeting.self.setDevice((await meeting.self.getAllDevices())[0]);
 
 <RTKCodeSnippet id="web-web-components">
 
-The [`meeting.self`](https://docs.realtime.cloudflare.com/web-core/reference/RTKSelf) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
+The [`meeting.self`](/realtime/realtimekit/core/api-reference/rtkself/) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
 
 **Key Properties:**
 
@@ -137,7 +137,7 @@ await meeting.self.setDevice((await meeting.self.getAllDevices())[0]);
 
 <RTKCodeSnippet id="web-angular">
 
-The [`meeting.self`](https://docs.realtime.cloudflare.com/web-core/reference/RTKSelf) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
+The [`meeting.self`](/realtime/realtimekit/core/api-reference/rtkself/) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
 
 **Key Properties:**
 
@@ -362,7 +362,7 @@ meeting.localUser.shouldJoinMediaRoom() // Check if local user should join media
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.self`](https://docs.realtime.cloudflare.com/mobile-core/reference/RTKSelf) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
+The [`meeting.self`](/realtime/realtimekit/core/api-reference/rtkself/) represents the local user (you) in the meeting. It provides properties and methods to control your own audio, video, and screen sharing.
 
 **Key Properties:**
 
@@ -420,7 +420,7 @@ await meeting.self.setDevice((await meeting.self.getAllDevices())[0]);
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.participants`](https://docs.realtime.cloudflare.com/web-core/reference/RTKParticipants) contains maps of all remote participants in the meeting, organized by their state.
+The [`meeting.participants`](/realtime/realtimekit/core/api-reference/rtkparticipants/) contains maps of all remote participants in the meeting, organized by their state.
 
 :::note
 `meeting.participants` only contains remote participants. It does not include the local participant.
@@ -881,7 +881,7 @@ participant.flags // Participant flags (recorder, hiddenParticipant, webinarHidd
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.participants`](https://docs.realtime.cloudflare.com/mobile-core/reference/RTKParticipants) contains maps of all remote participants in the meeting, organized by their state.
+The [`meeting.participants`](/realtime/realtimekit/core/api-reference/rtkparticipants/) contains maps of all remote participants in the meeting, organized by their state.
 
 :::note
 `meeting.participants` only contains remote participants. It does not include the local participant.
@@ -963,7 +963,7 @@ participant.screenShareTrack; // Screen share MediaStreamTrack
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.meta`](https://docs.realtime.cloudflare.com/web-core/reference/RTKMeta) contains information about the meeting room itself.
+The [`meeting.meta`](/realtime/realtimekit/core/api-reference/rtkmeta/) contains information about the meeting room itself.
 
 ```javascript
 meeting.meta.meetingId; // Meeting identifier
@@ -975,7 +975,7 @@ meeting.meta.meetingStartedTimestamp; // Meeting start time
 
 <RTKCodeSnippet id="web-web-components">
 
-The [`meeting.meta`](https://docs.realtime.cloudflare.com/web-core/reference/RTKMeta) contains information about the meeting room itself.
+The [`meeting.meta`](/realtime/realtimekit/core/api-reference/rtkmeta/) contains information about the meeting room itself.
 
 ```javascript
 meeting.meta.meetingId; // Meeting identifier
@@ -987,7 +987,7 @@ meeting.meta.meetingStartedTimestamp; // Meeting start time
 
 <RTKCodeSnippet id="web-angular">
 
-The [`meeting.meta`](https://docs.realtime.cloudflare.com/web-core/reference/RTKMeta) contains information about the meeting room itself.
+The [`meeting.meta`](/realtime/realtimekit/core/api-reference/rtkmeta/) contains information about the meeting room itself.
 
 ```javascript
 meeting.meta.meetingId; // Meeting identifier
@@ -1060,7 +1060,7 @@ meeting.meta.syncTab(
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.meta`](https://docs.realtime.cloudflare.com/mobile-core/reference/RTKMeta) contains information about the meeting room itself.
+The [`meeting.meta`](/realtime/realtimekit/core/api-reference/rtkmeta/) contains information about the meeting room itself.
 
 ```javascript
 meeting.meta.meetingId; // Meeting identifier
@@ -1076,7 +1076,7 @@ meeting.meta.meetingStartedTimestamp; // Meeting start time
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.chat`](https://docs.realtime.cloudflare.com/web-core/reference/RTKChat) manages text messages, images, and files shared in the meeting.
+The [`meeting.chat`](/realtime/realtimekit/core/api-reference/rtkchat/) manages text messages, images, and files shared in the meeting.
 
 ```javascript
 // Get all chat messages
@@ -1101,7 +1101,7 @@ meeting.chat.on("chatUpdate", ({ message, messages }) => {
 
 <RTKCodeSnippet id="web-web-components">
 
-The [`meeting.chat`](https://docs.realtime.cloudflare.com/web-core/reference/RTKChat) manages text messages, images, and files shared in the meeting.
+The [`meeting.chat`](/realtime/realtimekit/core/api-reference/rtkchat/) manages text messages, images, and files shared in the meeting.
 
 ```javascript
 // Get all chat messages
@@ -1126,7 +1126,7 @@ meeting.chat.on("chatUpdate", ({ message, messages }) => {
 
 <RTKCodeSnippet id="web-angular">
 
-The [`meeting.chat`](https://docs.realtime.cloudflare.com/web-core/reference/RTKChat) manages text messages, images, and files shared in the meeting.
+The [`meeting.chat`](/realtime/realtimekit/core/api-reference/rtkchat/) manages text messages, images, and files shared in the meeting.
 
 ```javascript
 // Get all chat messages
@@ -1259,7 +1259,7 @@ default:
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.chat`](https://docs.realtime.cloudflare.com/mobile-core/reference/RTKChat) manages text messages, images, and files shared in the meeting.
+The [`meeting.chat`](/realtime/realtimekit/core/api-reference/rtkchat/) manages text messages, images, and files shared in the meeting.
 
 ```javascript
 // Get all chat messages
@@ -1288,7 +1288,7 @@ meeting.chat.on("chatUpdate", ({ message, messages }) => {
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.polls`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPolls) manages polls in the meeting.
+The [`meeting.polls`](/realtime/realtimekit/core/api-reference/rtkpolls/) manages polls in the meeting.
 
 ```javascript
 // Get all polls
@@ -1310,7 +1310,7 @@ await meeting.polls.vote(pollId, optionIndex); // Retrieve pollId from meeting.p
 
 <RTKCodeSnippet id="web-web-components">
 
-The [`meeting.polls`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPolls) manages polls in the meeting.
+The [`meeting.polls`](/realtime/realtimekit/core/api-reference/rtkpolls/) manages polls in the meeting.
 
 ```javascript
 // Get all polls
@@ -1332,7 +1332,7 @@ await meeting.polls.vote(pollId, optionIndex); // Retrieve pollId from meeting.p
 
 <RTKCodeSnippet id="web-angular">
 
-The [`meeting.polls`](https://docs.realtime.cloudflare.com/web-core/reference/RTKPolls) manages polls in the meeting.
+The [`meeting.polls`](/realtime/realtimekit/core/api-reference/rtkpolls/) manages polls in the meeting.
 
 ```javascript
 // Get all polls
@@ -1434,7 +1434,7 @@ meeting.addPollsEventListener(self)
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.polls`](https://docs.realtime.cloudflare.com/mobile-core/reference/RTKPolls) manages polls in the meeting.
+The [`meeting.polls`](/realtime/realtimekit/core/api-reference/rtkpolls/) manages polls in the meeting.
 
 ```javascript
 // Get all polls
@@ -1632,7 +1632,7 @@ meeting.addPluginsEventListener(self)
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.plugins`](https://docs.realtime.cloudflare.com/mobile-core/reference/RTKPlugins) manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/core/api-reference/rtkplugins/) manages meeting plugins (collaborative apps).
 
 ```javascript
 // Get all available plugins

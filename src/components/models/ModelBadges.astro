@@ -10,9 +10,10 @@ import { CAPABILITY_PROPERTIES, type ModelCardData } from "~/util/models";
 
 interface Props {
 	model: ModelCardData;
+	maxVisible?: number;
 }
 
-const { model } = Astro.props;
+const { model, maxVisible } = Astro.props;
 
 type BadgeDef = {
 	variant: "default" | "caution" | "danger";
@@ -53,11 +54,23 @@ for (const { property_id, value } of model.propertiesList) {
 }
 
 const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
+const visibleBadges =
+	maxVisible === undefined ? badges : badges.slice(0, maxVisible);
+const remainingBadges =
+	maxVisible === undefined ? [] : badges.slice(maxVisible);
+const remainingBadgeLabels = remainingBadges
+	.map((badge) => badge.text)
+	.join(", ");
 ---
 
-<ul class="m-0 flex list-none flex-wrap items-center gap-x-1.5 p-0">
-	{badges.map((badge) => (
-		<li class="m-0">
+<ul
+	class:list={[
+		"pointer-events-auto m-0 flex list-none flex-wrap items-center gap-x-1.5 gap-y-0.5 p-0",
+		maxVisible !== undefined && "cursor-default",
+	]}
+>
+	{visibleBadges.map((badge) => (
+		<li class="m-0 flex">
 			<Badge
 				text={badge.text}
 				variant={badge.variant}
@@ -66,4 +79,34 @@ const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
 			/>
 		</li>
 	))}
+	{remainingBadges.length > 0 && (
+		<li class="m-0 flex">
+			<Badge
+				text={`+${remainingBadges.length}`}
+				variant="default"
+				size="small"
+				data-model-badge-tooltip={remainingBadgeLabels}
+				aria-label={`${remainingBadges.length} more: ${remainingBadgeLabels}`}
+				tabindex="0"
+			/>
+		</li>
+	)}
 </ul>
+
+<script>
+	import { addTooltip } from "~/util/tippy";
+
+	function initModelBadgeTooltips() {
+		document
+			.querySelectorAll<HTMLElement>("[data-model-badge-tooltip]")
+			.forEach((element) => {
+				if ((element as unknown as { _tippy?: unknown })._tippy) return;
+				const content = element.dataset.modelBadgeTooltip;
+				if (!content) return;
+				addTooltip(element, content, { maxWidth: 280, delay: [150, 0] });
+			});
+	}
+
+	initModelBadgeTooltips();
+	document.addEventListener("astro:page-load", initModelBadgeTooltips);
+</script>

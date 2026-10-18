@@ -1,0 +1,114 @@
+---
+pcx_content_type: how-to
+title: Foldkit
+sidebar:
+  order: 9.5
+tags: ["full-stack"]
+description: Deploy a Foldkit single-page, statically generated, or server-rendered application to Cloudflare Workers.
+products:
+  - workers
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+[Foldkit](https://foldkit.dev/) supports single-page applications (SPA), static site generation (SSG), and server-side rendering (SSR). Each mode uses [Workers Assets](/workers/static-assets/) to serve browser files. SSR also runs a Worker `fetch` handler.
+
+You need Node.js 22.22.2 or newer and a Cloudflare account.
+
+## Create a Foldkit application
+
+<Steps>
+
+1. Create a project with [`create-foldkit-app`](https://www.npmjs.com/package/create-foldkit-app):
+
+   <PackageManagers type="dlx" pkg="create-foldkit-app@latest" args="--name my-foldkit-app" managers={["npm"]} />
+
+   Choose a rendering mode when prompted. For SPA, choose the `routing` example. Select npm as the package manager.
+
+2. In the project directory, install Wrangler:
+
+   ```sh
+   cd my-foldkit-app
+   ```
+
+   <PackageManagers pkg="wrangler" dev managers={["npm"]} />
+
+</Steps>
+
+## Configure your rendering mode
+
+In the project directory, create a `wrangler.jsonc` file with the configuration for your rendering mode.
+
+### SPA
+
+The SPA build writes `index.html` and browser assets to `dist`. The `single-page-application` setting serves `index.html` when a client-side route does not match an asset.
+
+<WranglerConfig>
+
+```toml
+name = "my-foldkit-app"
+compatibility_date = "$today"
+
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
+```
+
+</WranglerConfig>
+
+### SSG
+
+The SSG build uses a server bundle to prerender routes, then writes HTML and browser assets to `dist/client`. Deploy only `dist/client` with Workers Assets.
+
+<WranglerConfig>
+
+```toml
+name = "my-foldkit-app"
+compatibility_date = "$today"
+
+[assets]
+directory = "./dist/client"
+```
+
+</WranglerConfig>
+
+### SSR
+
+The SSR build writes a Web `fetch` handler to `dist/server/fetch.js` and browser assets to `dist/client`. The Worker handles page requests, while Workers Assets serves the browser files.
+
+<WranglerConfig>
+
+```toml
+name = "my-foldkit-app"
+main = "./dist/server/fetch.js"
+compatibility_date = "$today"
+
+[assets]
+directory = "./dist/client"
+```
+
+</WranglerConfig>
+
+## Preview and deploy
+
+<Steps>
+
+1. Build the application:
+
+   <PackageManagers type="run" args="build" managers={["npm"]} />
+
+2. Preview it in the Workers runtime:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" managers={["npm"]} />
+
+   Open the local URL printed by Wrangler. For SPA, open `/people` and reload it. For SSG, visit `/about/`. For SSR, increment the counter and reload. Its cookie-backed value should persist.
+
+3. Build and deploy the application:
+
+   <PackageManagers type="run" args="build" managers={["npm"]} />
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" managers={["npm"]} />
+
+</Steps>
+
+Open the `workers.dev` URL printed by Wrangler to verify the deployed application. For more information about SSG and SSR builds, refer to [Foldkit's server rendering guide](https://foldkit.dev/core/server-rendering).

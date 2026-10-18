@@ -8,9 +8,15 @@ interface ConfigItem {
 interface Props {
 	framework: string;
 	configs: ConfigItem[];
+	cli?: "wrangler" | "cf";
 }
 
-const { framework, configs } = Astro.props;
+const { framework, configs, cli = "wrangler" } = Astro.props;
+
+const statusText =
+	cli === "cf"
+		? "cf delegates configuration to the project build implementation"
+		: "Wrangler handles configuration automatically";
 ---
 
 <autoconfig-diagram data-framework={framework}>
@@ -90,9 +96,7 @@ const { framework, configs } = Astro.props;
 		<!-- Status indicator -->
 		<div class="status-indicator">
 			<div class="status-dot"></div>
-			<span class="status-text">
-				Wrangler handles configuration automatically
-			</span>
+			<span class="status-text">{statusText}</span>
 		</div>
 	</div>
 </autoconfig-diagram>

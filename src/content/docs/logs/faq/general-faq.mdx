@@ -22,7 +22,7 @@ These timings are only a guideline, not a guarantee, and may depend on network c
 
 ### Are logs available for customers who are not on an Enterprise plan?
 
-Not yet, but we are planning to make them available to other customer plans in the future.
+Yes. Logpush is available on Free, Pro, Business, and Enterprise plans. Available datasets depend on the products enabled on your account. For more information, refer to [Logpush pricing](/logs/logpush/pricing/). The legacy Logpull API remains available only on the Enterprise plan.
 
 ### When pulling or pushing logs, I occasionally come across a time period with no data, even though I am sure my domain received requests at that time. Is this an expected behavior?
 
@@ -41,5 +41,4 @@ Yes, since Nov 25, 2025 [Audit Log v2](/fundamentals/account/account-security/au
 
 Requests are logged only after they successfully reach our proxy.
 It means that requests failing during the TCP or TLS handshake between the client and the Cloudflare proxy will not be available in the logs.
-
 

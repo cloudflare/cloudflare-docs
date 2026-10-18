@@ -57,6 +57,8 @@
 	--nb-border-strong: oklch(0.87 0 0);
 	--nb-selected: var(--nb-border);
 	--nb-ring: oklch(0.145 0 0 / 0.35);
+	--nb-selection-background: oklch(0.949266 0.027009 43.655);
+	--nb-selection-foreground: oklch(0.550485 0.178435 37.337);
 
 	/* Status colors — base (text/border) + muted (bg). */
 	--nb-info: oklch(0.45 0.18 255);
@@ -156,6 +158,8 @@
 	--nb-border-strong: oklch(0.371 0 0);
 	--nb-selected: var(--nb-border);
 	--nb-ring: oklch(0.9 0 0 / 0.35);
+	--nb-selection-background: oklch(0.274455 0.054378 45.496);
+	--nb-selection-foreground: oklch(0.711408 0.187682 40.376);
 
 	--nb-info: oklch(0.75 0.12 255);
 	--nb-info-muted: oklch(0.17 0.03 260);
@@ -297,6 +301,52 @@
 	}
 }
 
+/* Tunnel concept diagrams: a request "pour" draws itself along a path
+ * (pathLength=1 + unit dash), holds, then fades out. */
+@keyframes weld-draw {
+	from {
+		stroke-dashoffset: 1;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes weld-pour-fade {
+	0%,
+	72% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+/* A refused request flattens against a boundary, then fades out. */
+@keyframes weld-squash {
+	0% {
+		opacity: 1;
+		transform: scale(1, 1);
+	}
+	55% {
+		opacity: 1;
+		transform: scale(1.6, 0.3);
+	}
+	100% {
+		opacity: 0;
+		transform: scale(1.6, 0.3);
+	}
+}
+/* Sparks: small marks that drift up and outward, then fade. */
+@keyframes weld-spark {
+	from {
+		opacity: 1;
+		transform: translate(0, 0) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translate(var(--spark-x, 0px), var(--spark-y, -12px)) scale(0.4);
+	}
+}
+
 @keyframes weld-compute-pulse {
 	0%,
 	100% {
@@ -367,8 +417,8 @@ body {
 }
 
 ::selection {
-	background: color-mix(in oklch, var(--nb-primary) 10%, transparent);
-	color: var(--nb-foreground);
+	background: var(--nb-selection-background);
+	color: var(--nb-selection-foreground);
 }
 
 /* ---- Focus indicators ---- */

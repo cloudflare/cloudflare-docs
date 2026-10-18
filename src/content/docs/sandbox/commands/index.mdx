@@ -1,0 +1,27 @@
+---
+title: Run commands in a sandbox
+description: Run Python code or a test suite, stream command output, keep a process running after the request ends, or open an interactive shell in a Linux sandbox.
+pcx_content_type: navigation
+sidebar:
+  order: 5
+  label: Overview
+  group:
+    label: Run commands
+products:
+  - sandbox
+  - containers
+  - durable-objects
+---
+
+Each of the following guides runs a command in a sandbox with `exec()`. They differ in how the output reaches the caller and in what ends the command:
+
+| Guide                                                                                 | How the output reaches the caller             | The command runs until                          |
+| ------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
+| [Run Python code](/sandbox/commands/run-python-code/)                                 | In the response, after the code exits         | The code exits                                  |
+| [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/) | In the response, after the tests finish       | The tests finish                                |
+| [Stream command output](/sandbox/commands/stream-command-output/)                     | As server-sent events, while the command runs | It exits, or the client disconnects             |
+| [Run background processes](/sandbox/commands/run-background-processes/)               | In files that later requests read             | It exits, or a later request stops it           |
+| [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/)   | Over the server port, and in a log file       | The container stops, or a request stops it      |
+| [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/)   | In an interactive terminal, over a WebSocket  | You run `exit`, or your Worker ends the session |
+
+For every option that `exec()` accepts, refer to [Execute commands](/containers/guides/execute-commands/) in the Containers documentation.

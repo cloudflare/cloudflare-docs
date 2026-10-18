@@ -7,13 +7,12 @@ sidebar:
 ---
 
 import {
-	InlineBadge,
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
 } from "~/components";
 
-Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues with [Browser Run](/browser-run/) tools. <InlineBadge preset="beta" />
+Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues with [Browser Run](/browser-run/) tools.
 
 Instead of a fixed set of browser actions (click, screenshot, navigate), the LLM writes JavaScript code that runs CDP commands against a live browser session — accessing all domains, commands, events, and types in the protocol.
 
@@ -266,12 +265,7 @@ For custom integrations, import the building blocks directly:
 <TypeScriptExample>
 
 ```ts
-import {
-	CdpSession,
-	connectBrowser,
-	connectUrl,
-	createBrowserToolHandlers,
-} from "agents/browser";
+import { CdpSession, connectBrowser, connectUrl } from "agents/browser";
 
 // Connect to a custom CDP endpoint
 const session = await connectUrl("http://localhost:9222");

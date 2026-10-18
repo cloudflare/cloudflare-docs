@@ -15,7 +15,6 @@
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Long-context threshold (input tokens)": 272000,
 		"Short-context input (per 1M)": 10,
 		"Short-context cached input (per 1M)": 1,
 		"Short-context cache write (per 1M)": 12,

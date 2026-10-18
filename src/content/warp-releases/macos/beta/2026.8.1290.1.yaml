@@ -19,8 +19,6 @@ releaseNotes: |-
 
   - None
 
-  For Zero Trust documentation, see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/  
-  For Consumer documentation, see: https://developers.cloudflare.com/warp-client/
 version: 2026.8.1290.1
 releaseDate: 2026-09-09T18:10:27.467Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.8.1290.1

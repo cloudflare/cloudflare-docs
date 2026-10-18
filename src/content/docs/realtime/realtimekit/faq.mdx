@@ -7,7 +7,7 @@ sidebar:
   order: 17
 ---
 
-import { Details } from "~/components";
+import { Details, Steps } from "~/components";
 
 ### API token
 
@@ -18,6 +18,36 @@ To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloud
 Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a token from the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). When configuring permissions, select **Realtime** > **Realtime Admin**. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
 
 Cloudflare API tokens authenticate requests to Cloudflare APIs. Use these tokens only in your backend. Never expose an API token to your frontend or share it with an end user.
+
+</Details>
+
+### APIs
+
+<Details header="Why does the peer report endpoint return a 404 error for every participant ID?">
+
+The peer report endpoint requires a `peer_id`, not a `participant_id`. RealtimeKit creates a peer when a participant joins a meeting. Each time the participant rejoins or reloads the page, RealtimeKit creates a new peer with a new unique peer ID.
+
+To retrieve the peer report data:
+
+<Steps>
+1. Call the [Get session participant details](/api/resources/realtime_kit/subresources/sessions/methods/get_session_participant_details/) endpoint with `include_peer_events=true`:
+
+   ```txt
+   /accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/participants/{participant_id}?include_peer_events=true
+   ```
+
+   The `peer_events` field in the response contains every peer ID associated with the participant.
+
+2. Call the [Get participant data from peer ID](/api/resources/realtime_kit/subresources/sessions/methods/get_participant_data_from_peer_id/) endpoint with a `peer_id` from `peer_events`:
+
+   ```txt
+   /accounts/{account_id}/realtime/kit/{app_id}/sessions/peer-report/{peer_id}
+   ```
+
+   This endpoint returns call statistics for that peer.
+</Steps>
+
+Passing a `participant_id` to the peer report endpoint returns a `404` response with `No peer event exists for id <given-id>`.
 
 </Details>
 
@@ -222,6 +252,14 @@ Higher screen share frame rates increase bandwidth usage and may impact the vide
 
 </Details>
 
+<Details header="What do I need to do to enable screen sharing with the iOS SDK?">
+
+The iOS platform requires the use of a [Broadcast Upload Extension](https://developer.apple.com/documentation/replaykit/rpbroadcastsamplehandler) that you will need to include in your apps.
+
+You can find more detailed steps for it on its [dedicated page](/realtime/realtimekit/core/ios-screen-sharing/).
+
+</Details>
+
 ### Chat
 
 <Details header="I cannot send a chat message">
@@ -235,6 +273,22 @@ To troubleshoot integration issues, first check if the user has joined the meeti
 If this does not solve the issue, check if your framework is blocking the UI. Frameworks like Material UI can block input focus using focus traps in Drawer component. There is usually a prop to disable the focus trap. Material UI has a `disableEnforceFocus` prop for this purpose.
 
 If you are still unable to send a message, please contact support.
+
+</Details>
+
+### Notifications
+
+<Details header="Why are SDK notifications not visible when my meeting tab is in the background or minimized? How can I see them without returning to the tab?">
+
+Browsers do not show in-page content outside a backgrounded tab or minimized window. RealtimeKit UI Kit notifications are in-page elements, so they follow this browser behavior. Picture in Picture is a separate browser feature that can show participant video in a floating window, but it does not show notifications.<br/>
+
+A host may need to know when someone enters the waiting room, a participant joins, or recording starts while they are viewing another tab. To display system notifications outside the meeting tab, choose an approach:
+
+- **Notifications API in the page:** Use the browser [Notification() constructor](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) after requesting [notification permission](https://developer.mozilla.org/en-US/docs/Web/API/Notification/requestPermission_static). This can notify users while the page is open. [Browser support](https://caniuse.com/mdn-api_notification_notification) varies, and the constructor does not work in most mobile browsers.
+- **Service worker notifications:** Use a service worker with [showNotification()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification). This works in more browsers, including many mobile browsers. The meeting page must pass SDK events to the worker. A service worker alone cannot continue receiving SDK events after the tab closes.
+- **Web Push:** Use a service worker, the [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API), and a push subscription. Keep the [VAPID private key on your server](https://developer.mozilla.org/en-US/docs/Web/API/PushManager/subscribe). Your backend can send push messages even when the meeting tab is closed.
+
+Choose notification triggers based on where the event is available. While the meeting page is open, the SDK exposes [participant join, leave, audio, and video events](/realtime/realtimekit/core/remote-participants/events/), [local audio and video events](/realtime/realtimekit/core/local-participant/#events), and [chat updates](/realtime/realtimekit/core/chat/#receiving-chat-messages). For backend-triggered notifications, subscribe to [RealtimeKit webhooks](/realtime/realtimekit/webhooks/#supported-events), then send relevant events to your clients. Webhooks cover a smaller set of events, including participant joins and recording status changes. They do not provide individual chat messages or waiting-room arrivals.
 
 </Details>
 

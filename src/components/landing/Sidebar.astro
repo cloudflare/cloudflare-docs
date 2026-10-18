@@ -52,6 +52,7 @@ function toItem(node: SidebarNode, order: number): SidebarItem {
 							<SidebarLink
 								label={node.label}
 								href={node.href}
+								icon={node.icon}
 								isCurrent={isActive(node.href)}
 							/>
 						) : (

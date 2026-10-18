@@ -18,6 +18,13 @@
             "value": "true"
         },
         {
+            "property_id": "reasoning_effort",
+            "value": {
+                "mandatory": false,
+                "default_enabled": true
+            }
+        },
+        {
             "property_id": "terms",
             "value": "https://ai.google.dev/gemma/docs/gemma_4_license"
         },
@@ -297,29 +304,13 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -1548,29 +1539,13 @@
                                     "default": 0,
                                     "description": "Penalizes new tokens based on whether they appear in the text so far."
                                 },
-                                "reasoning_effort": {
-                                    "anyOf": [
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "low",
-                                                "medium",
-                                                "high"
-                                            ]
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ],
-                                    "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                },
                                 "chat_template_kwargs": {
                                     "type": "object",
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
                                             "default": true,
-                                            "description": "Whether to enable reasoning, enabled by default."
+                                            "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
                                             "type": "boolean",
@@ -2369,29 +2344,13 @@
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
                                             },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                            },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",
@@ -3620,29 +3579,13 @@
                                                 "default": 0,
                                                 "description": "Penalizes new tokens based on whether they appear in the text so far."
                                             },
-                                            "reasoning_effort": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "low",
-                                                            "medium",
-                                                            "high"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ],
-                                                "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                                            },
                                             "chat_template_kwargs": {
                                                 "type": "object",
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
                                                         "default": true,
-                                                        "description": "Whether to enable reasoning, enabled by default."
+                                                        "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
                                                         "type": "boolean",

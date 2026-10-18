@@ -21,8 +21,12 @@ Each individual D1 database is inherently single-threaded, and processes queries
 
 Your maximum throughput is directly related to the duration of your queries.
 
-- If your average query takes 1 ms, you can run approximately 1,000 queries per second.
-- If your average query takes 100 ms, you can run 10 queries per second.
+- If your average query takes 1 ms, you can run at most 1,000 queries per second.
+- If your average query takes 100 ms, you can run at most 10 queries per second.
+
+Note that there is a small overhead per request that is not included in the timings that D1 reports. As a result, a database receiving many small requests would reach its limit before `1 / query duration` requests per second.
+
+To get more throughput from a single database, reduce the number of requests rather than only the duration of each query. For example, use [`batch()`](/d1/worker-api/d1-database/#batch) to send multiple statements in a single request, so that the per-request overhead is paid once for the whole batch.
 
 A database that receives too many concurrent requests will first attempt to queue them. If the queue becomes full, the database will return an ["overloaded" error](/d1/observability/debug-d1/#error-list).
 

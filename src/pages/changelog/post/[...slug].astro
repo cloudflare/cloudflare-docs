@@ -14,7 +14,7 @@ import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 import { PageActions } from "~/components/ui/page-actions";
 import { components } from "~/mdx-components";
-import { getOgImage } from "~/util/og";
+import { changelogOgImage } from "~/util/og";
 
 export const prerender = true;
 
@@ -52,7 +52,7 @@ const { Content } = await render(note);
 	title={title}
 	description={description}
 	noindex={note.data.hidden}
-	socialImage={await getOgImage(note)}
+	socialImage={await changelogOgImage(note)}
 	lastUpdated={date}
 	meta={{
 		titleSuffix: "Changelog",

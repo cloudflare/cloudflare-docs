@@ -1,10 +1,90 @@
 import { describe, expect, it } from "vitest";
-import { formatCompactTokens, formatModelPricing } from "./model-format";
+import {
+	formatCompactTokens,
+	formatModelPricing,
+	formatModelReasoning,
+} from "./model-format";
 
 describe("model display formatting", () => {
 	it("formats token counts compactly", () => {
 		expect(formatCompactTokens(200_000)).toBe("200K tokens");
 		expect(formatCompactTokens(null)).toBeNull();
+	});
+
+	it("formats structured reasoning efforts in a concise natural order", () => {
+		expect(
+			formatModelReasoning(
+				{
+					supported_efforts: ["xhigh", "medium", "low"],
+					default_effort: "xhigh",
+					default_enabled: true,
+				},
+				"true",
+			),
+		).toEqual([
+			{ value: "low", isDefault: false },
+			{ value: "medium", isDefault: false },
+			{ value: "xhigh", isDefault: true },
+		]);
+		expect(
+			formatModelReasoning(
+				{
+					supported_efforts: ["medium", "low", "none"],
+					default_effort: "medium",
+				},
+				"true",
+			),
+		).toEqual([
+			{ value: "none", isDefault: false },
+			{ value: "low", isDefault: false },
+			{ value: "medium", isDefault: true },
+		]);
+		expect(
+			formatModelReasoning(
+				{
+					supported_efforts: ["max", "high", "low"],
+					default_effort: "max",
+				},
+				"true",
+			),
+		).toEqual([
+			{ value: "low", isDefault: false },
+			{ value: "high", isDefault: false },
+			{ value: "max", isDefault: true },
+		]);
+		expect(
+			formatModelReasoning(
+				{ supported_efforts: ["off", "none", "low"] },
+				"true",
+			),
+		).toEqual([
+			{ value: "none", isDefault: false },
+			{ value: "low", isDefault: false },
+		]);
+	});
+
+	it("falls back to a clean yes or no when effort metadata is absent", () => {
+		expect(formatModelReasoning(undefined, "true")).toBe("Yes");
+		expect(formatModelReasoning(undefined, "false")).toBe("No");
+		expect(formatModelReasoning(undefined, undefined)).toBeNull();
+	});
+
+	it("summarizes structured binary reasoning metadata", () => {
+		expect(
+			formatModelReasoning({ mandatory: true, default_enabled: true }, "false"),
+		).toBe("Always on");
+		expect(
+			formatModelReasoning(
+				{ mandatory: false, default_enabled: true },
+				"false",
+			),
+		).toBe("Yes");
+		expect(
+			formatModelReasoning(
+				{ mandatory: false, default_enabled: false },
+				"false",
+			),
+		).toBe("Yes");
 	});
 
 	it("formats supported pricing values and omits nested metadata", () => {

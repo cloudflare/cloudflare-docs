@@ -85,7 +85,7 @@ The recording is finalized when the browser session closes, whether you call `br
 When connecting to Browser Run from any environment using the [CDP endpoint](/browser-run/cdp/), add `recording=true` as a query parameter to the WebSocket URL:
 
 ```txt
-wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000
+wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?recording=true&keep_alive=600000
 ```
 
 For example, to enable session recording in an MCP client, add `recording=true` to the `--wsEndpoint` URL in your client configuration:
@@ -98,7 +98,7 @@ For example, to enable session recording in an MCP client, add `recording=true` 
 			"args": [
 				"-y",
 				"chrome-devtools-mcp@latest",
-				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?recording=true&keep_alive=600000",
+				"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?recording=true&keep_alive=600000",
 				"--wsHeaders={\"Authorization\":\"Bearer <API_TOKEN>\"}"
 			]
 		}
@@ -125,7 +125,7 @@ If a session opened multiple tabs, the recording viewer shows a tab selector dro
 You can also retrieve a recording programmatically using the session ID. Use `browser.sessionId()` to capture the session ID before closing the browser, then pass it to the recordings endpoint.
 
 ```bash
-curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/recording/<SESSION_ID> \
+curl https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/recording/<SESSION_ID> \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -154,7 +154,7 @@ The event arrays are available under `result.events`. The keys in `result.events
 Use the network recording endpoint to retrieve the requests captured for a specific target. The `target` query parameter is required and must contain one of the target IDs returned in `result.events`:
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/recording/<SESSION_ID>/network?target=<TARGET_ID>' \
+curl 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/recording/<SESSION_ID>/network?target=<TARGET_ID>' \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 
@@ -163,7 +163,7 @@ The response is a JSON array containing the recorded requests for that target, i
 To retrieve the network activity as an [HTTP Archive (HAR) 1.2](https://w3c.github.io/web-performance/specs/HAR/Overview.html) document, set `format=har`:
 
 ```bash
-curl 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/recording/<SESSION_ID>/network?target=<TARGET_ID>&format=har' \
+curl 'https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/recording/<SESSION_ID>/network?target=<TARGET_ID>&format=har' \
   -H "Authorization: Bearer <API_TOKEN>"
 ```
 

@@ -29,6 +29,10 @@ Four endpoints are available, each suited to different use cases:
 The `/ai/v1/messages` endpoint strictly uses Anthropic's API schema and supports routing to Anthropic and other third-party models. Workers AI models (`@cf/`) do not support this schema. Use `/ai/run` or `/ai/v1/chat/completions` for Workers AI models, or `/ai/v1/responses` only for Workers AI models that support the Responses API, such as GPT-OSS.
 :::
 
+:::note
+Claude Code sends requests using the Anthropic Messages API. It cannot use the OpenAI-compatible `/ai/v1/chat/completions` endpoint or the universal `/ai/run` endpoint directly. To route Claude Code through AI Gateway, use an Anthropic-compatible endpoint and configure it as described in [Claude Code](/ai-gateway/integrations/coding-agents/claude-code/). This supports Anthropic, Amazon Bedrock, and Google Vertex AI models, but not models available only through the OpenAI-compatible schema.
+:::
+
 ## Authentication
 
 Authenticate with a [Cloudflare API token](/fundamentals/api/get-started/create-token/) that has the **Account** > **Workers AI** > **Read** permission. Pass it in the `Authorization` header.
@@ -254,7 +258,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
   --header "Content-Type: application/json" \
   --data '{
-    "model": "anthropic/claude-sonnet-4-5",
+    "model": "anthropic/claude-sonnet-5",
     "max_tokens": 512,
     "messages": [
       {
@@ -276,7 +280,7 @@ const anthropic = new Anthropic({
 });
 
 const message = await anthropic.messages.create({
-	model: "anthropic/claude-sonnet-4-5",
+	model: "anthropic/claude-sonnet-5",
 	max_tokens: 512,
 	messages: [{ role: "user", content: "What is Cloudflare?" }],
 });

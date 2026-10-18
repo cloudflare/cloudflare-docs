@@ -757,7 +757,7 @@ describe("renderRecommendationsComment", () => {
 		expect(body).not.toContain("Suggested reviewers");
 		expect(body).not.toContain("alice");
 	});
-	it("falls back to the expanded CODEOWNERS roster for unsuggested areas without mentioning them", () => {
+	it("renders no suggestions instead of the expanded CODEOWNERS roster", () => {
 		const body = renderRecommendationsComment(
 			view({
 				recommendation: result([
@@ -770,36 +770,17 @@ describe("renderRecommendationsComment", () => {
 						],
 						suggestedPeople: [],
 						fallbackOwners: ["dave", "erin", "frank"],
-						totalOwners: 3,
-					}),
-				]),
-			}),
-		);
-		expect(body).toContain("`dave`");
-		expect(body).toContain("`erin`");
-		expect(body).toContain("`frank`");
-		expect(body).toContain("`@cloudflare/product-owners`");
-		expect(body).not.toContain("_none_");
-		expect(body).not.toContain("@dave");
-		expect(body).not.toContain("@erin");
-		expect(body).not.toContain("@frank");
-		expect(body).not.toContain("Suggested reviewers:");
-	});
-	it("renders the + N more suffix when the fallback roster was capped", () => {
-		const body = renderRecommendationsComment(
-			view({
-				recommendation: result([
-					area({
-						key: "1:changelog",
-						codeownersPattern: "/src/content/changelog/",
-						suggestedPeople: [],
-						fallbackOwners: ["dave", "erin", "frank"],
 						totalOwners: 90,
 					}),
 				]),
 			}),
 		);
-		expect(body).toContain("+ 87 more");
+		expect(body).toContain("`@cloudflare/product-owners`");
+		expect(body).toContain("_No suggestions_");
+		expect(body).not.toContain("dave");
+		expect(body).not.toContain("more");
+		expect(body).not.toContain("CODEOWNERS fallback");
+		expect(body).not.toContain("Suggested reviewers:");
 	});
 	it("does not add a + N more suffix to suggested people", () => {
 		const body = renderRecommendationsComment(
@@ -817,23 +798,6 @@ describe("renderRecommendationsComment", () => {
 		);
 		expect(body).toContain("`alice`");
 		expect(body).not.toContain("more");
-	});
-	it("renders an unavailable-contact label when the fallback roster is empty", () => {
-		const body = renderRecommendationsComment(
-			view({
-				recommendation: result([
-					area({
-						key: "1:changelog",
-						codeownersPattern: "/src/content/changelog/",
-						suggestedPeople: [],
-						fallbackOwners: [],
-						totalOwners: 5,
-					}),
-				]),
-			}),
-		);
-		expect(body).toContain("_No suggestions_");
-		expect(body).not.toContain("5 more");
 	});
 	it("renders a warning when an area matched no CODEOWNERS rule", () => {
 		const body = renderRecommendationsComment(

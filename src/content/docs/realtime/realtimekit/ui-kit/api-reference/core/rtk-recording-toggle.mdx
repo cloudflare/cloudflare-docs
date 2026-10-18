@@ -5,6 +5,17 @@ description: API reference for rtk-recording-toggle component (Web Components (H
 products:
   - realtime
 ---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-recording-toggle/rtk-recording-toggle.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
 A button which toggles recording state of a meeting.
  Only a privileged user can perform this action,
  thus the button will not be visible for participants
@@ -33,7 +44,8 @@ A button which toggles recording state of a meeting.
 
 ```html
 <rtk-recording-toggle
- size="md">
+ size="md"
+ variant="button">
 </rtk-recording-toggle>
 ```
 
@@ -42,7 +54,7 @@ A button which toggles recording state of a meeting.
 <script>
   const el = document.querySelector("rtk-recording-toggle");
 
-  el.disabled= true;
-  el.meeting= meeting
+  el.meeting = meeting;
+  el.disabled = true;
 </script>
 ```

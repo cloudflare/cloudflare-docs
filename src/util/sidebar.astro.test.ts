@@ -12,13 +12,18 @@ vi.mock("astro:content", async (importOriginal) => {
 		...actual,
 		getCollection: vi.fn(async (id: string, ...args: any[]) =>
 			id === "product-availability"
-				? []
+				? [
+						{ id: "zY33Vr", data: { availability: "Beta" } },
+						{ id: "7nEJGj", data: { availability: "Beta" } },
+						{ id: "yWaDMQ", data: { availability: "Beta" } },
+						{ id: "FX9rys", data: { availability: "Beta" } },
+					]
 				: actual.getCollection(id as any, ...args),
 		),
 	};
 });
 
-const ARROW = " \u2197";
+const ARROW = " \u2197\uFE0E";
 
 const run = (tree: SidebarItem[]) =>
 	externalAppLinksTransform({
@@ -27,10 +32,10 @@ const run = (tree: SidebarItem[]) =>
 		currentSlug: "test/page",
 	});
 
-const runDocs = (tree: SidebarItem[]) =>
+const runDocs = (tree: SidebarItem[], sectionSlug = "test") =>
 	docsSidebarTransform({
 		tree,
-		sectionSlug: "test",
+		sectionSlug,
 		currentSlug: "test/page",
 	});
 
@@ -113,5 +118,49 @@ describe("docsSidebarTransform badges", () => {
 			type: "external",
 			badge: { text: "API", variant: "note" },
 		});
+	});
+
+	test.each(["/basin/", "/basin-pipelines/", "/basin-catalog/", "/basin-sql/"])(
+		"does not add a stale Beta badge to %s",
+		async (href) => {
+			const [item] = await runDocs([link({ href })]);
+			expect(item.badge).toBeUndefined();
+		},
+	);
+});
+
+describe("docsSidebarTransform Basin links", () => {
+	test.each(["/basin-pipelines/", "/basin-catalog/", "/basin-sql/"])(
+		"opens the %s sidebar redirect in a new tab",
+		async (href) => {
+			const [item] = await runDocs(
+				[link({ label: "Basin product", href, _neverActive: true })],
+				"basin",
+			);
+			expect(item).toMatchObject({
+				type: "external",
+				label: `Basin product${ARROW}`,
+				href,
+			});
+		},
+	);
+
+	test("keeps other Basin redirects in the same tab", async () => {
+		const [item] = await runDocs(
+			[link({ label: "Other", href: "/other/", _neverActive: true })],
+			"basin",
+		);
+		expect(item).toMatchObject({ type: "link", label: `Other${ARROW}` });
+	});
+
+	test("keeps links to Basin products from other sections in the same tab", async () => {
+		const [item] = await runDocs([
+			link({
+				label: "Basin SQL",
+				href: "/basin-sql/",
+				_neverActive: true,
+			}),
+		]);
+		expect(item).toMatchObject({ type: "link", label: `Basin SQL${ARROW}` });
 	});
 });
