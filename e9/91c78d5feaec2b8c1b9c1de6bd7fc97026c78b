@@ -1,0 +1,19 @@
+src/content/docs/agents/runtime/operations/observability.mdx
+  s_ddb8094a758708::t_75d927d3c8c8a2 62-63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e991c78d5feaec2b8c1b9c1de6bd7fc97026c78b",
+  "prompts": {},
+  "sessions": {
+    "s_ddb8094a758708": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3cf0eb75-fa5e-4f10-820a-9dbf6611c182",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

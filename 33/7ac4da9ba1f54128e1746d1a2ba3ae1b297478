@@ -1,0 +1,49 @@
+src/content/docs/realtime/realtimekit/faq.mdx
+  s_6b54e749133066::t_8f5ececfc6e4df 7
+src/content/docs/realtime/realtimekit/ai/index.mdx
+  s_c90bbbc75bd3f2::t_152703085baa9a 6
+src/content/docs/realtime/realtimekit/audio-calls.mdx
+  s_c90bbbc75bd3f2::t_1f9db9cd90fff6 6
+src/content/docs/realtime/realtimekit/best-practices/index.mdx
+  s_c90bbbc75bd3f2::t_93956155f3c85b 6
+src/content/docs/realtime/realtimekit/custom-plugins/index.mdx
+  s_c90bbbc75bd3f2::t_e8ad678f581d1e 6
+src/content/docs/realtime/realtimekit/legal/index.mdx
+  s_c90bbbc75bd3f2::t_dc7e010b89c893 7
+src/content/docs/realtime/realtimekit/network-allowlist.mdx
+  s_c90bbbc75bd3f2::t_8b9575e3a0d609 8
+src/content/docs/realtime/realtimekit/pricing.mdx
+  s_c90bbbc75bd3f2::t_480b3118e24782 7
+src/content/docs/realtime/realtimekit/recording-guide/index.mdx
+  s_c90bbbc75bd3f2::t_269f151b65bb72 6
+src/content/docs/realtime/realtimekit/release-notes/index.mdx
+  s_c90bbbc75bd3f2::t_35e10b0c52d41e 6
+src/content/docs/realtime/realtimekit/rest-api-reference.mdx
+  s_c90bbbc75bd3f2::t_0bc3e35ae72a00 8
+src/content/docs/realtime/realtimekit/webhooks.mdx
+  s_c90bbbc75bd3f2::t_0e2c2562666fb8 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "337ac4da9ba1f54128e1746d1a2ba3ae1b297478",
+  "prompts": {},
+  "sessions": {
+    "s_6b54e749133066": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fa8d331bcffeZBGAOXeiQCEuHQ",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Swapnil Madavi <smadavi@cloudflare.com>"
+    },
+    "s_c90bbbc75bd3f2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f9d47ea61ffeofcmoDadyjCq6i",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "Swapnil Madavi <smadavi@cloudflare.com>"
+    }
+  }
+}

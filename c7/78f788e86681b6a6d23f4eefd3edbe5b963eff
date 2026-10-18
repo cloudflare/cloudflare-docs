@@ -1,0 +1,19 @@
+src/content/docs/data-localization/what-stays-in-your-region.mdx
+  s_de76d3e303a90e::t_06cdd64f899171 21-26,83-85,87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c778f788e86681b6a6d23f4eefd3edbe5b963eff",
+  "prompts": {},
+  "sessions": {
+    "s_de76d3e303a90e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eefc17d0effeh0M3rvDgmymUV3",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Allan Leinwand <aleinwand@cloudflare.com>"
+    }
+  }
+}

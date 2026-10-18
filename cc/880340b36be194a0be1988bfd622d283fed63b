@@ -1,0 +1,30 @@
+.github/CODEOWNERS
+  s_f88dacf13bd65b::t_256ef6024a27b8 587-592
+src/content/docs/monetization-gateway/index.mdx
+  s_f88dacf13bd65b::t_c9982bce89d04f 1-43
+  s_f88dacf13bd65b::t_3e00c875ccdcd6 44
+.github/labeler.yml
+  s_f88dacf13bd65b::t_6e17648df50985 457-461
+src/icons/monetization-gateway.svg
+  s_f88dacf13bd65b::t_d433b13e77659a 1-2
+src/content/docs/monetization-gateway/configuration/index.mdx
+  s_f88dacf13bd65b::t_a2de28452b7f49 1-17
+src/content/directory/monetization-gateway.yaml
+  s_f88dacf13bd65b::t_bd112e352534e0 1-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cc880340b36be194a0be1988bfd622d283fed63b",
+  "prompts": {},
+  "sessions": {
+    "s_f88dacf13bd65b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f5928295effeKtN6My8tX9KfHU",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    }
+  }
+}

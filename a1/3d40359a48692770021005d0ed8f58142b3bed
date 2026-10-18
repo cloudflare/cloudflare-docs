@@ -1,0 +1,19 @@
+src/content/docs/d1/observability/query-insights.mdx
+  s_0b069aec28da21::t_cca31eca8b33b6 1-354
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a13d40359a48692770021005d0ed8f58142b3bed",
+  "prompts": {},
+  "sessions": {
+    "s_0b069aec28da21": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f736012a1ffeVzB4h575461HB5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/workers/ci-cd/builds/git-integration/cursor-origin-integration.mdx
+  s_a44cbdd7be0874::t_d1c5549dc63c5a 11,21,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8bdeab8745ffa825c0b8cd6a2b2cff93faecd206",
+  "prompts": {},
+  "sessions": {
+    "s_a44cbdd7be0874": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f36b003eeffeHJbDh4aZuu9EwP",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
