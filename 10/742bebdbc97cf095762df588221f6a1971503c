@@ -1,0 +1,27 @@
+src/content/changelog/workers/2026-10-17-local-explorer-cron-triggers.mdx
+  s_eb4873ae8598c2::t_ab76f877470edb 6-7,12-13,21-25
+src/content/docs/cf/projects/index.mdx
+  s_eb4873ae8598c2::t_8f2ac0952d50f4 114
+src/content/docs/workers/configuration/cron-triggers.mdx
+  s_eb4873ae8598c2::t_3ea2ac7da6cb0e 17,93-113,219,221,230,239-240,245,286,288,297
+src/content/docs/workers/local-development/local-explorer.mdx
+  s_eb4873ae8598c2::t_f78db2f5b66f4c 12,18,22,29-40,43-51,54,85,87,90,116,122,142-143,154
+src/content/docs/workers/runtime-apis/handlers/scheduled.mdx
+  s_eb4873ae8598c2::t_77d5c9118aa94c 19,21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "10742bebdbc97cf095762df588221f6a1971503c",
+  "prompts": {},
+  "sessions": {
+    "s_eb4873ae8598c2": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14a5e-9060-7772-8326-e9ab1626d37f",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

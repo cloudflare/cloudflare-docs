@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-13-cloudflare-mcp-events.mdx
+  s_255070e7a9b49a::t_57a2f900ca4656 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f81235120d4c6fc6d6dd8846a0c659dff24367e0",
+  "prompts": {},
+  "sessions": {
+    "s_255070e7a9b49a": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11212-80e2-7424-b702-bf91c45a6895",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
