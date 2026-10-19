@@ -77,6 +77,7 @@ You pass the context as the third argument to evaluation methods on the binding:
 
 ```ts
 const value = await env.FLAGS.getBooleanValue("new-checkout", false, {
+	userId: "user-42",
 	profile: { plan: "enterprise" },
 	tags: ["beta"],
 });

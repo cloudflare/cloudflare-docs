@@ -41,6 +41,7 @@ The binding provides type-safe methods for evaluating feature flags. If an evalu
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const enabled = await env.FLAGS.getBooleanValue("new-feature", false, {
+			userId: "user-42",
 			profile: { plan: "enterprise" },
 			tags: ["beta"],
 		});
