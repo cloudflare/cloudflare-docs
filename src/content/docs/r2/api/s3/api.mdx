@@ -14,7 +14,7 @@ R2 implements the S3 API to allow users and their applications to migrate with e
 The API is available via the `https://<ACCOUNT_ID>.r2.cloudflarestorage.com` endpoint. Find your [account ID in the Cloudflare dashboard](/fundamentals/account/find-account-and-zone-ids/).
 
 :::note[API token `last_used_on` not updated]
-API tokens used with the R2 S3-compatible API authenticate at the Cloudflare edge. These requests do not update the `last_used_on` field on your API token and are not captured in [Audit Logs](/fundamentals/account/account-security/audit-logs/). To verify R2 bucket activity, check object modification timestamps in the Cloudflare dashboard or enable [R2 Logpush](/logs/logpush/).
+API tokens used with the R2 S3-compatible API authenticate at the Cloudflare edge. These requests do not update the `last_used_on` field on your API token. To verify bucket activity, check object modification timestamps in the Cloudflare dashboard or enable [Data Access Logs](/r2/buckets/data-access-logs/) for per-request visibility.
 :::
 
 
