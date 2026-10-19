@@ -16,7 +16,7 @@ sidebar:
 
 | Control | What it controls | Current availability |
 | - | - | - |
-| [Regional Services for Gateway](#regional-services-for-gateway) | Where Gateway decrypts HTTPS traffic and performs HTTP inspection | Available for supported on-ramps and [the regions listed below](#regional-services-for-gateway) |
+| [Regional Services for Gateway](#regional-services-for-gateway) | Where Gateway decrypts HTTPS traffic and performs HTTP inspection | Available for [supported on-ramps and regions](#regional-services-for-gateway) |
 | [Cloudflare Tunnel region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) | Where `cloudflared` establishes its tunnel connections | Global or United States; in FedRAMP High environments, Cloudflare Tunnel automatically connects to FedRAMP data centers |
 | [Cloudflare One Client environment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#environment) | Which Cloudflare environment the client connects to | Global or the FedRAMP High environment |
 | [Customer Metadata Boundary (CMB)](#customer-metadata-boundary) | Where Cloudflare stores supported Customer Logs | European Union and United States for selected datasets |
@@ -32,9 +32,9 @@ Customers that require a FedRAMP-authorized Cloudflare One deployment should use
 
 ## Regional Services for Gateway
 
-Regional Services controls where Cloudflare Gateway decrypts eligible HTTPS traffic and performs HTTP inspection. Gateway HTTP inspection requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/). Regional Services for Gateway does not apply to Gateway DNS or network policy processing.
+Regional Services controls where Cloudflare Gateway decrypts HTTPS traffic and performs HTTP inspection. Gateway HTTP inspection requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/). Regional Services for Gateway does not apply to Gateway DNS or network policy processing.
 
-Regional Services for Gateway is configured at the Cloudflare One account level. The selected region applies to eligible Gateway HTTP traffic for the account.
+Regional Services for Gateway is configured at the Cloudflare One account level. The selected region applies to Gateway HTTP traffic from supported on-ramps for the account.
 
 Cloudflare One supports this behavior for traffic sent to Gateway through these on-ramps:
 
@@ -44,7 +44,7 @@ Cloudflare One supports this behavior for traffic sent to Gateway through these 
 
 Cloudflare WAN requires [unified routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode) for this support.
 
-Connections from these on-ramps may terminate at a Cloudflare data center outside the selected region. Eligible HTTPS traffic remains encrypted until Gateway forwards it to the selected region for TLS decryption and HTTP inspection.
+Connections from these on-ramps may terminate at a Cloudflare data center outside the selected region. HTTPS traffic remains encrypted until Gateway forwards it to the selected region for TLS decryption and HTTP inspection.
 
 Regional Services for Gateway is available in these regions:
 
