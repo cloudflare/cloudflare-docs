@@ -1,0 +1,19 @@
+---
+title: Cloudflare API MCP server asks for a missing OAuth scope when a tool needs it
+description: When Cloudflare refuses a call for a missing OAuth scope, the Cloudflare API MCP server asks your MCP client to re-authorize with it, and says why the call was refused.
+products:
+  - agents
+date: 2026-10-19
+---
+
+When the Cloudflare API refuses a call, the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now says why, instead of returning only `10000: Authentication error`:
+
+- The connection lacks an OAuth scope the endpoint accepts. The error names the scope to grant.
+- The connection already holds an accepted scope, so reconnecting will not help. The user's role on the account or zone is usually the cause.
+- No OAuth scope covers the endpoint. Use an API token with one of the listed permissions.
+
+If the connection lacks the scope and the call is safe to retry, the server asks your MCP client to re-authorize with that scope added to the ones you already granted, following the MCP [scope challenge flow](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#scope-challenge-handling). Claude, Claude Code and Codex step up this way. In Claude Code, run `/mcp` to re-authenticate when prompted.
+
+You can also start with almost no access. The consent page offers a **Minimal** template next to **Read only** and **Full access**. It grants only your user and account identity, and clients that support step-up request each further scope the first time a tool needs it.
+
+To use it, connect `https://mcp.cloudflare.com/mcp` to your MCP client.
