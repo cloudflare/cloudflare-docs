@@ -1,19 +1,15 @@
 ---
-title: Cloudflare API MCP server asks for a missing OAuth scope when a tool needs it
-description: When Cloudflare refuses a call for a missing OAuth scope, the Cloudflare API MCP server asks your MCP client to re-authorize with it, and says why the call was refused.
+title: Cloudflare API MCP server now supports step-up authorization
+description: Grant only the required scopes when you connect, and authorize more on demand as your agent performs a task.
 products:
   - agents
 date: 2026-10-19
 ---
 
-When the Cloudflare API refuses a call, the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now says why, instead of returning only `10000: Authentication error`:
+The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now supports [step-up authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#step-up-authorization-flow).
 
-- The connection lacks an OAuth scope the endpoint accepts. The error names the scope to grant.
-- The connection already holds an accepted scope, so reconnecting will not help. The user's role on the account or zone is usually the cause.
-- No OAuth scope covers the endpoint. Use an API token with one of the listed permissions.
+Grant only the required scopes when you connect, then authorize more on demand as your agent performs a task. When a tool call needs a scope you have not granted, the server returns an [`insufficient_scope` challenge](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#scope-challenge-handling) naming it, and your MCP client asks you to approve it. Scopes you already granted are kept.
 
-If the connection lacks the scope and the call is safe to retry, the server asks your MCP client to re-authorize with that scope added to the ones you already granted, following the MCP [scope challenge flow](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#scope-challenge-handling). Claude, Claude Code and Codex step up this way. In Claude Code, run `/mcp` to re-authenticate when prompted.
+To start with the least access, choose **Minimal** on the consent page when you connect `https://mcp.cloudflare.com/mcp`. Learn more about [authorization in MCP](/agents/model-context-protocol/protocol/authorization/).
 
-You can also start with almost no access. The consent page offers a **Minimal** template next to **Read only** and **Full access**. It grants only your user and account identity, and clients that support step-up request each further scope the first time a tool needs it.
-
-To use it, connect `https://mcp.cloudflare.com/mcp` to your MCP client.
+Available now in all MCP clients that support step-up authorization.
