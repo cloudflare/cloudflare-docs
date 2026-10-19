@@ -40,8 +40,6 @@ The following limits apply to each evaluation context:
 | Serialized UTF-8 JSON size      | 32 KiB        | All evaluation paths                     |
 | Values visited during traversal | 10,000 values | Data-plane HTTP and Workers binding only |
 
-Flagship control-plane `POST` endpoints do not apply the 10,000-value traversal limit. Other context limits still apply.
-
 ## Notes
 
 - Condition grouping depth counts from the top-level condition group. A flat list of conditions has a depth of one.
