@@ -44,7 +44,7 @@ Cloudflare One supports this behavior for traffic sent to Gateway through these 
 
 Cloudflare WAN requires [unified routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode) for this support.
 
-Connections from these on-ramps may terminate at a Cloudflare data center outside the selected region. HTTPS traffic remains encrypted until Gateway forwards it to the selected region for TLS decryption and HTTP inspection.
+These on-ramps create tunnels that may terminate at a Cloudflare data center outside the selected region (e.g. Cloudflare One Client create a MASQUE tunnel that may terminate outside the region).  HTTPS traffic that is within the tunnel remains encrypted until Gateway forwards it to the selected region for TLS decryption and HTTP inspection.
 
 Regional Services for Gateway is available in these regions:
 
