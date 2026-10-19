@@ -164,7 +164,13 @@ A Durable Object fits the agent: one instance per meeting, a long-lived outbound
    	},
    	"durable_objects": {
    		"bindings": [{ "name": "MEETING_AGENT", "class_name": "MeetingAgent" }],
-   	}
+   	},
+   	"exports": {
+   		"MeetingAgent": {
+   			"type": "durable-object",
+   			"storage": "sqlite",
+   		},
+   	},
    }
    ```
 
@@ -374,10 +380,10 @@ Use one of these to end a session:
 
 To end the session for everyone, for example when the scheduled meeting time is over, call the Kick all participants API:
 
-```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/realtime/kit/$APP_ID/meetings/$MEETING_ID/active-session/kick-all" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+	path="/accounts/{account_id}/realtime/kit/{app_id}/meetings/{meeting_id}/active-session/kick-all"
+	method="POST"
+/>
 
 ## Connection reference
 
