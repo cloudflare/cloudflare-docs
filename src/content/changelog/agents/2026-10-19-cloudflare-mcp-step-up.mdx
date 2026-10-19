@@ -10,6 +10,6 @@ The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/server
 
 Grant only the required scopes when you connect, then authorize more on demand as your agent performs a task. When a tool call needs a scope you have not granted, the server returns an [`insufficient_scope` challenge](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#scope-challenge-handling) naming it, and your MCP client asks you to approve it. Scopes you already granted are kept.
 
-To start with the least access, choose **Minimal** on the consent page when you connect `https://mcp.cloudflare.com/mcp`. Learn more about [authorization in MCP](/agents/model-context-protocol/protocol/authorization/).
+To start with the least access, choose **Minimal** on the consent page when you connect `https://mcp.cloudflare.com/mcp`. Refer to [authorization in MCP](/agents/model-context-protocol/protocol/authorization/).
 
 Available now in all MCP clients that support step-up authorization.
