@@ -305,6 +305,12 @@ export default defineConfig({
 	},
 	experimental: {
 		incrementalBuild: process.env.INCREMENTAL_BUILD === "true" || false,
+		parallelPrerender:
+			process.env.PARALLEL_PRERENDER === "true"
+				? process.env.PARALLEL_WORKERS
+					? { workers: Number(process.env.PARALLEL_WORKERS) }
+					: true
+				: false,
 	},
 	markdown,
 	image: {
