@@ -50,7 +50,7 @@ entries:
       **Features**
 
       - **AI Transcription** — A new `RtkAi` class (exposed as `client.ai`) provides access to real-time transcripts. Implement `RtkAiEventListener` and register it with `addAiEventListener()` to receive `onTranscript(data: RtkTranscriptionData)` callbacks. A `transcriptionEnabled` permission is available on `MiscellaneousPermissions`.
-      - **Connected Meetings (Breakout Rooms)** — A new `RtkConnectedMeetings` class (exposed as `client.connectedMeetings`) enables breakout room workflows. Register an `RtkConnectedMeetingsEventListener` to handle room transitions and state updates. See the [Breakout Rooms](/realtime/realtimekit/core/breakout-rooms/) documentation for a full guide.
+      - **Connected Meetings (Breakout Rooms)** — A new `RtkConnectedMeetings` class (exposed as `client.connectedMeetings`) enables breakout room workflows. Register an `RtkConnectedMeetingsEventListener` to handle room transitions and state updates. See the [Breakout Rooms](/realtime/realtimekit/humans/core/breakout-rooms/) documentation for a full guide.
       - **Chat: Edit and Delete** — Messages can now be edited and deleted. New methods on `RtkChat`: `editTextMessage()`, `editImageMessage()`, `editFileMessage()`, and `deleteMessage()`. `RtkChatEventListener` gains `onMessageEdited()` and `onMessageDeleted()` callbacks. `ChatMessage` now includes an `isEdited` flag.
       - **Chat: Fetch and Pagination** — New methods on `RtkChat` — `fetchPublicMessages()`, `fetchPrivateMessages()`, `fetchPinnedMessages()`, and `getMessages()` — allow fetching historical messages with cursor-based pagination via `FetchMessagesResult(messages, hasMore)`.
       - **Client-Declared Plugins** — Plugins are now configured entirely on the client via `RtkClientPluginConfig` and `RtkClientPluginPermissions`. `RtkPlugin` exposes the new `icon` and `permissions` properties accordingly.
@@ -246,7 +246,7 @@ entries:
 
       **Features**
 
-      - Reimplemented middlewares using WebRTC-native primitives to resolve intermittent crashes and other issues, check out the new [Video Processing](/realtime/realtimekit/core/video-effects/) docs section to learn more
+      - Reimplemented middlewares using WebRTC-native primitives to resolve intermittent crashes and other issues, check out the new [Video Processing](/realtime/realtimekit/humans/core/video-effects/) docs section to learn more
       - `VideoDevice` now properly labels multiple cameras based on their camera characteristics such as wide-angle and telephoto
 
       **Fixes**
