@@ -1,0 +1,23 @@
+---
+pcx_content_type: troubleshooting
+title: Troubleshooting
+description: Common Delta issues and how to resolve them.
+sidebar:
+  order: 4
+products:
+  - browser-run
+---
+
+## Common issues
+
+| Symptom | Cause | Fix |
+| ------- | ----- | --- |
+| Every story is "new" | No baseline run yet. | Let the pipeline run once on your default branch to seed baselines. |
+| `delta/visual` never appears | Delta's identity is not a `Developer` on your project, so the status write is rejected. | Check **Settings → Members** and add the Delta service account. |
+| `delta/visual` appears on the wrong commit | Merged-results pipelines put a temporary merge commit in `CI_COMMIT_SHA` rather than your source-branch tip. | Contact the Browser Rendering team — this is untested. |
+| Merge request is mergeable despite changes | **Pipelines must succeed** is not enabled. | Enable it under **Settings → Merge requests**. |
+| `401 Unauthorized` from `/ci/trigger` | `delta_url` does not match the target worker's `GITLAB_OIDC_AUDIENCE`, or the bundled JWKS is stale after a GitLab key rotation. | Check Delta logs for `ci_auth_failed` with the reason. |
+| `403 Forbidden` — "token is bound to project X" | The payload names a different project than the token was minted for. | Check for hand-edited `project` or `projectPath` inputs. |
+| Job cannot reach Delta (HTML response) | Cloudflare Access rejected the request. | Verify the Access service token at `delta_access_vault_path` is correct for this deployment. |
+| `Invalid request body` | Malformed `catalog_path` or `browser_context_overrides_path` JSON. | Validate your JSON files. |
+| Stories time out | Per-story timeout is too short for your components. | Raise `screenshot.storyTimeoutMs` in project settings, or enable `allowUnstableElements` for stories that never settle. |

@@ -1,0 +1,70 @@
+---
+pcx_content_type: overview
+title: Delta — Visual regression testing
+description: Automated visual regression testing for Storybook projects, powered by Cloudflare Workers and Browser Run.
+sidebar:
+  order: 10
+products:
+  - browser-run
+---
+
+import { LinkTitleCard, CardGrid } from "~/components";
+
+Delta captures screenshots of your [Storybook](https://storybook.js.org/) stories and compares them against baseline images to detect visual regressions. It runs on Cloudflare Workers and [Browser Run](/browser-run/), and integrates directly with GitLab CI pipelines to gate merge requests on visual changes.
+
+## How it works
+
+1. **Trigger** — A GitLab CI component sends your Storybook source to Delta, then exits. No long-running job.
+2. **Gate** — Delta claims a `delta/visual` commit status on the pipeline as `running`, blocking the merge request while the build is in flight.
+3. **Capture** — Delta launches a headless browser and captures screenshots of each story.
+4. **Compare** — Screenshots are compared pixel-by-pixel against baseline images stored in R2.
+5. **Report** — Results are saved, a comment is posted on the merge request, and `delta/visual` updates to the verdict — `success` when clean, `failed` when there are changes to review.
+6. **Review** — Approving changes in the Delta UI pushes `success` to GitLab immediately, with no job re-run needed.
+7. **Baselines** — When a build runs on the configured baseline branch (usually `main`), baselines are automatically updated.
+
+## Features
+
+- Pixel-by-pixel comparison with diff highlighting
+- Baseline management with configurable baseline branch per project
+- GitLab CI integration via a reusable CI component
+- Real-time build progress via SSE streaming
+- Accessibility regression detection
+- Sticky approvals (approve once, carry forward on unchanged snapshots)
+- AI-generated summaries of detected regressions
+- Support for deployed Storybooks, uploaded tarballs, or custom URL catalogs
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Get started"
+	href="/browser-run/delta/get-started/"
+	icon="open-book"
+>
+	Onboard your GitLab project in three steps.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Reviewing changes"
+	href="/browser-run/delta/reviewing-changes/"
+	icon="magnifier"
+>
+	Approve, reject, or reset visual changes on your merge requests.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Configuration"
+	href="/browser-run/delta/configuration/"
+	icon="setting"
+>
+	CI component inputs, project settings, and advanced options.
+</LinkTitleCard>
+
+<LinkTitleCard
+	title="Troubleshooting"
+	href="/browser-run/delta/troubleshooting/"
+	icon="warning"
+>
+	Common issues and how to fix them.
+</LinkTitleCard>
+
+</CardGrid>

@@ -1,0 +1,84 @@
+---
+pcx_content_type: get-started
+title: Get started
+description: Onboard your GitLab project to Delta for visual regression testing in three steps.
+sidebar:
+  order: 1
+products:
+  - browser-run
+---
+
+Onboarding Delta is one `include:` block, two project settings, and one pipeline run on your default branch. There are no secrets to request, store, or rotate.
+
+## Prerequisites
+
+- A GitLab project on `gitlab.cfdata.org` with a Storybook build
+- A CI pipeline that produces either a deployed Storybook URL or a `.tar.gz` artifact of `storybook-static`
+
+## 1. Add the CI component
+
+Add the Delta component to your `.gitlab-ci.yml`:
+
+```yaml
+include:
+  - component: $CI_SERVER_FQDN/cloudflare/brapi/delta/delta@main
+    inputs:
+      storybook_artifact: "storybook.tar.gz"
+```
+
+Add a job that produces the Storybook tarball and wires it to Delta:
+
+```yaml
+build-storybook:
+  stage: build
+  script:
+    - pnpm build-storybook
+    - tar czf storybook.tar.gz -C storybook-static .
+  artifacts:
+    paths:
+      - storybook.tar.gz
+
+delta:
+  needs:
+    - job: build-storybook
+      artifacts: true
+```
+
+Delta extracts the tarball (max 100 MB compressed, max 10,000 files, max 25 MB per file) into R2 and serves it for the duration of the build. Artifacts are auto-deleted after 30 days.
+
+The job authenticates with a GitLab OIDC `id_token` that the component declares for you, and your project self-registers with Delta on its first trigger. No `secrets:` block, no Vault paths, no `DELTA_TOKEN`.
+
+### Alternative: deployed Storybook
+
+If your Storybook is already deployed, point Delta at the URL instead:
+
+```yaml
+include:
+  - component: $CI_SERVER_FQDN/cloudflare/brapi/delta/delta@main
+    inputs:
+      storybook_url: "https://your-storybook.pages.dev"
+```
+
+`storybook_url` also reads `STORYBOOK_URL` from a dotenv artifact, so a deploy job can hand the URL over dynamically.
+
+## 2. Configure project settings
+
+Two settings are required in your GitLab project:
+
+1. **Settings → Merge requests → Pipelines must succeed.** This makes `delta/visual` block the merge when there are unreviewed changes.
+2. **Settings → Members → Add Delta's GitLab identity as `Developer`.** GitLab requires the Developer role to create a commit status. Without it, the status write is rejected and no `delta/visual` entry appears. Ask the Browser Rendering team which account to add.
+
+## 3. Seed your baselines
+
+Merge the pipeline change to your default branch and let it run once. That run has nothing to compare against, so it records every snapshot as the baseline.
+
+:::caution
+Do not skip this step. If you open a merge request before any baseline run, every story reports as "new" because there is nothing to diff against.
+:::
+
+Delta picks its behavior from the branch name — a branch matching the project's baseline branch (`main` unless you change it) publishes baselines, any other branch compares against them. Same job, both roles, which is why one `include` is enough.
+
+## Next steps
+
+- Learn about [reviewing changes](/browser-run/delta/reviewing-changes/) when Delta finds visual regressions
+- Explore [configuration options](/browser-run/delta/configuration/) including sticky approvals, skipping stories, and authenticated captures
