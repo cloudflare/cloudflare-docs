@@ -1,0 +1,31 @@
+src/content/docs/moq/index.mdx
+  s_fd40a299e73adf::t_4bb71cb3a38ce8 39
+src/content/docs/realtime/realtimekit/quickstart.mdx
+  s_fd40a299e73adf::t_8192d51def126b 79
+src/content/docs/realtime/realtimekit/webhooks.mdx
+  s_fd40a299e73adf::t_8344d21d3b618b 81
+src/content/docs/realtime/realtimekit/webinar.mdx
+  s_fd40a299e73adf::t_98ccf5049a1436 45
+src/content/docs/realtime/turn/generate-credentials.mdx
+  s_fd40a299e73adf::t_1106be27da4520 25
+src/content/partials/realtime/realtimekit/preset-prompt.mdx
+  s_fd40a299e73adf::t_5304a4f73cdea4 7
+src/content/partials/realtime/sfu/create-app-prompt.mdx
+  s_fd40a299e73adf::t_dddf7bde9162e8 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ad3b539122ad0a9929bea8bee8e06bf36216aaf3",
+  "prompts": {},
+  "sessions": {
+    "s_fd40a299e73adf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a0fdb4-cefa-76f3-a839-7d43af18c323",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}
