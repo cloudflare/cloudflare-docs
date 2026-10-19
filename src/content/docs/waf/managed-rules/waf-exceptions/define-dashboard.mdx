@@ -83,11 +83,11 @@ To add an exception at the account level (Enterprise plans only):
 
 :::note[Skipping the OWASP anomaly score rule (949110)]
 
-Rule `949110: Inbound Anomaly Score Exceeded` in the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/) is the cumulative score trigger: counting rules raise the request's score, and 949110 applies the configured action when the score exceeds the threshold.
+In the [Cloudflare OWASP Core Ruleset](/waf/managed-rules/reference/owasp-core-ruleset/), each matching rule increases the [request threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score), and rule `949110: Inbound Anomaly Score Exceeded` applies the configured ruleset action when the score reaches the [threshold](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#score-threshold).
 
-Skipping only some counting rules may leave the score above the threshold, so 949110 can still fire for matching requests. To fully exempt matching requests from OWASP, skip 949110 itself or select all rules of the Cloudflare OWASP Core Ruleset — either removes all OWASP score-based protection for those requests.
+An exception that skips only some OWASP rules may leave the threat score above the threshold, so 949110 can still match and apply the configured action. To fully exempt matching requests from OWASP, skip rule 949110 itself or select all the rules of the Cloudflare OWASP Core Ruleset. Either option removes all OWASP score-based protection for matching requests.
 
-**Skip all remaining rules** also bypasses 949110, but it skips every remaining rule of all WAF managed rulesets for matching requests, not only OWASP rules.
+Alternatively, **Skip all remaining rules** also bypasses 949110, but it skips every remaining rule of all WAF managed rulesets for matching requests — not only OWASP rules.
 :::
 
 ## 4. Create the exception
