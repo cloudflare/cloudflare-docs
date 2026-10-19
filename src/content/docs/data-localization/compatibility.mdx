@@ -114,15 +114,15 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 ---
 
-## Zero Trust
+## Cloudflare One
 
 Cloudflare One compatibility depends on the DLS control, traffic path, on-ramp, and dataset. The following table summarizes current support. Refer to [Data localization for Cloudflare One](/data-localization/how-to/zero-trust/) for supported regions, configuration, and product-specific behavior.
 
 | DLS control | Current Cloudflare One coverage |
 | - | - |
-| **Geo Key Manager** | For an Access-protected application that uses a supported custom certificate, Geo Key Manager can restrict where Cloudflare stores the private TLS key for the protected application hostname. Refer to [Geo Key Manager](/data-localization/how-to/zero-trust/#geo-key-manager). |
-| **Regional Services** | Gateway decrypts and inspects supported HTTPS traffic within the selected region when traffic is sent through the Cloudflare One Client in Traffic and DNS mode, Cloudflare Mesh, or Cloudflare WAN using IPsec. Access supports the FedRAMP Moderate Compliant (Domestic) region. Browser Isolation supports the US FedRAMP region. Separately, [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) uses its own region setting for Global or United States connections. Refer to [Regional Services for Gateway](/data-localization/how-to/zero-trust/#regional-services-for-gateway), [Access](/data-localization/how-to/zero-trust/#access), and [Browser Isolation](/data-localization/how-to/zero-trust/#browser-isolation). |
-| **Customer Metadata Boundary** | CMB stores supported Customer Logs in the United States or European Union. Refer to [Customer Metadata Boundary for Cloudflare One](/data-localization/how-to/zero-trust/#customer-metadata-boundary). |
+| **Geo Key Manager** | For an Access-protected application that uses a supported custom certificate, Geo Key Manager can restrict where Cloudflare stores the private TLS key for the protected application hostname. Customer-provided Gateway certificates cannot be restricted to a specific region. Refer to [Geo Key Manager](/data-localization/how-to/zero-trust/#geo-key-manager) and [Gateway limitations](/data-localization/how-to/zero-trust/#gateway-limitations). |
+| **Regional Services** | Gateway decrypts eligible HTTPS traffic and performs HTTP inspection within the selected region when traffic is sent through supported on-ramps. The Access team domain supports FedRAMP Moderate Compliant (Domestic). Browser Isolation supports the US FedRAMP region. Refer to [Regional Services for Gateway](/data-localization/how-to/zero-trust/#regional-services-for-gateway), [Access](/data-localization/how-to/zero-trust/#access), and [Browser Isolation](/data-localization/how-to/zero-trust/#browser-isolation). Separately, Cloudflare Tunnel connects globally by default or can restrict connections to US data centers. In FedRAMP High environments, Cloudflare Tunnel automatically connects to FedRAMP data centers. Cloudflare One Client supports global and FedRAMP High connections, and Direct CNI terminates at its provisioned facility. Refer to [on-ramp and egress locations](/data-localization/how-to/zero-trust/#on-ramp-and-egress-locations). |
+| **Customer Metadata Boundary** | CMB stores supported Customer Logs in the United States or European Union, with coverage varying by dataset. Refer to [Customer Metadata Boundary for Cloudflare One](/data-localization/how-to/zero-trust/#customer-metadata-boundary) for details. |
 
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 
