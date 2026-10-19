@@ -1,0 +1,29 @@
+src/content/docs/k2/configuration/index.mdx
+  s_4693b4aa9d3d57::t_41fb143c2e1057 97-120
+src/content/docs/k2/features/consume.mdx
+  s_4693b4aa9d3d57::t_5e2bafaffd7136 255-258
+src/content/docs/k2/features/produce.mdx
+  s_4693b4aa9d3d57::t_492b3cfaec9828 152-153
+src/content/docs/k2/get-started/index.mdx
+  s_4693b4aa9d3d57::t_bfdef95e473ef4 24,247,321-329,338-341
+src/content/docs/k2/index.mdx
+  s_4693b4aa9d3d57::t_ce834273082520 11-17,25-26,29
+src/content/docs/k2/platform/limits.mdx
+  s_4693b4aa9d3d57::t_a49d21ecd73168 17,58
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a54523dec72713a5605c62aab7100857c150df6e",
+  "prompts": {},
+  "sessions": {
+    "s_4693b4aa9d3d57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "15295e40-bedc-4ee4-a329-722b8f3375ed",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    }
+  }
+}
