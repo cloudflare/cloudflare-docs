@@ -3,6 +3,15 @@ link: "/realtime/realtimekit/release-notes/"
 productName: RealtimeKit Web Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-10-19"
+    title: RealtimeKit Web Core 2.0.4
+    description: |-
+      **Fixes**
+
+      - Fixed a device selection priority issue in mobile browsers that caused "Headset earpiece" to be selected instead of the speaker.
+      - Fixed a resource leak that kept the audio activity reporter running after a participant left a meeting.
+      - Fixed an issue where a waitlisted participant's request disappeared from the host's waitlist after the participant reconnected.
+
   - publish_date: "2026-10-12"
     title: RealtimeKit Web Core 2.0.3
     description: |-
