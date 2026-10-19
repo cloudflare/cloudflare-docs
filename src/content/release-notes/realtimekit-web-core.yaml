@@ -8,7 +8,7 @@ entries:
     description: |-
       **Fixes**
 
-      - Fixed a mobile web issue that selected "Headset earpiece" instead of the speaker.
+      - Fixed a device selection priority issue in mobile browsers that caused "Headset earpiece" to be selected instead of the speaker.
       - Fixed a resource leak that kept the audio activity reporter running after a participant left a meeting.
       - Fixed an issue where a waitlisted participant's request disappeared from the host's waitlist after the participant reconnected.
 
