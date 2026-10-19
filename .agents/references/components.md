@@ -122,6 +122,8 @@ import { PackageManagers } from "~/components";
 
 Use `global` only for packages designed to be installed globally. Use `cfCommand` only for a reviewed, single-line `cf` equivalent of a Wrangler execution command. The value is the complete alternative command and must begin with `cf `; `args` continues to define only the Wrangler invocation. Unlike `WranglerCommand`'s `cfCommand` prop, this prop includes the `cf` prefix. Supplying it surfaces the shared CLI selector. Existing calls without `cfCommand` remain Wrangler-only.
 
+Use `managers` to show only supported package managers when a command or workflow has been validated with a subset. For example, `<PackageManagers type="dlx" pkg="create-foldkit-app@latest" args="--name my-foldkit-app" managers={["npm"]} />` shows only the npm command. Without this prop, the component shows every manager supported by the command type.
+
 ---
 
 ## Tabs / TabItem
@@ -799,6 +801,18 @@ Renders a copyable rule ID. Used in WAF and security rules documentation.
 import { RuleID } from "~/components";
 
 <RuleID id="abcdefghijklmnopqrstuvwxyz" />
+```
+
+---
+
+## CopyPrompt
+
+Renders a one-line prompt next to a **Copy prompt** button, for readers to paste into an AI coding agent. The prompt is truncated on screen but copied in full. Keep it short; use a `txt` code block for longer prompts.
+
+```mdx
+import { CopyPrompt } from "~/components";
+
+<CopyPrompt text="Build a Cloudflare Worker that returns Hello World, then deploy it with Wrangler." />
 ```
 
 ---

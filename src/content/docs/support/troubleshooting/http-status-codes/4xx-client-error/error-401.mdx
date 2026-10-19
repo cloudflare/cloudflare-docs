@@ -22,3 +22,12 @@ If the client resends the request with the same credentials and the challenge re
 ### Cloudflare-specific information
 
 When encountering a `401` error while using the Cloudflare API, ensure that you are providing the correct authentication credentials (for example, [API tokens](/fundamentals/api/get-started/create-token/) or [keys](/fundamentals/api/get-started/ca-keys/)). Double-check that the credentials are active and properly formatted. If the error persists, refer to the `WWW-Authenticate` header in the response for guidance on resolving the issue.
+
+For a website or application, a `401` usually comes from the origin server, which requires authentication that the request did not provide. If the application is protected by [Cloudflare Access](/cloudflare-one/access-controls/), Access can also return a `401` instead of redirecting to its login page, for example:
+
+- Requests that use a service token, when [strict service token authentication](/cloudflare-one/access-controls/service-credentials/service-tokens/#strict-service-token-authentication) is on.
+- AJAX sub-requests with an [expired session](/cloudflare-one/access-controls/access-settings/session-management/#ajax) that send the `X-Requested-With: XMLHttpRequest` header.
+- Non-browser clients, when [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/#authorization-flow) is enabled.
+- Non-browser traffic that fails Cloudflare One Client authentication, when [401 responses for non-browser traffic](/cloudflare-one/access-controls/access-settings/session-management/#return-401-responses-for-non-browser-traffic) are enabled.
+
+To tell the two apart, check whether the request reached your origin server's logs.

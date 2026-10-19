@@ -62,6 +62,11 @@
 			"binding": "COMMENT_SPAM",
 			"class_name": "CommentSpamWorkflow",
 		},
+		{
+			"name": "cloudflare-docs-flue-effort-label",
+			"binding": "EFFORT_LABEL",
+			"class_name": "EffortLabelWorkflow",
+		},
 	],
 	"migrations": [
 		{
@@ -215,6 +220,12 @@
 			// verdicts and writes an R2 audit record first.
 			"tag": "v13",
 			"new_sqlite_classes": ["FlueCommentSpamFilterAgent"],
+		},
+		{
+			// v14: Both spam gates get their verdicts from direct Clef calls in
+			// trusted workflow code, so the agent DO classes are no longer needed.
+			"tag": "v14",
+			"deleted_classes": ["FlueSpamFilterAgent", "FlueCommentSpamFilterAgent"],
 		},
 	],
 	"triggers": {

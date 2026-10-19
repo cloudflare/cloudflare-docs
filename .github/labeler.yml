@@ -841,7 +841,7 @@ product:posture-checks:
 product:privacy-gateway:
   - changed-files:
       - any-glob-to-any-file:
-          - src/content/docs/privacy-gateway/**
+          - src/content/docs/ohttp-relay/**
 
 product:privacy-pass:
   - changed-files:
@@ -1166,6 +1166,12 @@ product:web-analytics:
           - src/content/release-notes/beacon-min-js.yaml
           - src/content/changelog/web-analytics/**
           - src/assets/images/changelog/web-analytics/**
+
+product:web-search:
+  - changed-files:
+      - any-glob-to-any-file:
+          - src/content/docs/web-search/**
+          - src/content/changelog/web-search/**
 
 product:web3:
   - changed-files:

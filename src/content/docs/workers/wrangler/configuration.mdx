@@ -47,6 +47,7 @@ It is best practice to treat Wrangler's configuration file as the [source of tru
 	// Top-level configuration
 	"name": "my-worker",
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"workers_dev": false,
 	"route": {
@@ -236,6 +237,8 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
   - A list of KV namespaces that your Worker should be bound to. Refer to [KV namespaces](#kv-namespaces).
 - `r2_buckets` <Type text="object" /> <MetaInfo text="optional" />
   - A list of R2 buckets that your Worker should be bound to. Refer to [R2 buckets](#r2-buckets).
+- `analytics` <Type text="object" /> <MetaInfo text="optional" />
+  - An Analytics SQL binding. Refer to [Analytics SQL](#analytics-sql).
 - `ai_search_namespaces` <Type text="object" /> <MetaInfo text="optional" />
   - A list of AI Search namespaces that your Worker should be bound to. Refer to [AI Search namespaces](#ai-search-namespaces).
 - `ai_search` <Type text="object" /> <MetaInfo text="optional" />
@@ -397,8 +400,10 @@ Example:
 
 The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
 
-- `enabled` <Type text="boolean" /> <MetaInfo text="required" />
-  - When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+- `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Shorthand for `logs.enabled`. When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+- `logs.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether logs for the Worker are persisted.
 - `head_sampling_rate` <Type text="number" /> <MetaInfo text="optional" />
   - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
 
@@ -1116,6 +1121,29 @@ Example:
 
 </WranglerConfig>
 
+### Analytics SQL
+
+The [Analytics SQL binding](/analytics/sql-api/workers-binding/) queries analytics datasets without an API token. It requires Wrangler 4.145.0 or later. Assign an object with the following fields to the `analytics` key:
+
+- `binding` <Type text="string" /> <MetaInfo text="required" />
+  - The binding name used to query Analytics SQL from your Worker.
+- `remote` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Set to `true` to acknowledge that local development connects to the remote service and suppress the remote resource warning. Analytics SQL has no local implementation and always uses the remote service.
+
+Example:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"analytics": {
+		"binding": "ANALYTICS_SQL"
+	}
+}
+```
+
+</WranglerConfig>
+
 ### mTLS Certificates
 
 To communicate with origins that require client authentication, a Worker can present a certificate for mTLS in subrequests. Wrangler provides the `mtls-certificate` [command](/workers/wrangler/commands#mtls-certificate) to upload and manage these certificates.
@@ -1383,6 +1411,29 @@ The following options are available:
 - `constraints.jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - Restrict containers to compliance boundaries. Valid values: `"eu"`, `"fedramp"`.
 
+- `observability` <Type text="object" /> <MetaInfo text="optional" />
+  - Configures observability for this container application when deploying with `wrangler deploy`.
+  - If omitted, Wrangler uses the top-level [`observability`](#observability) setting as a fallback for that container.
+  - If set, it overrides the top-level `observability` setting for that container.
+
+- `observability.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Shorthand for `observability.logs.enabled`.
+
+- `observability.logs.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether logs for this container are persisted to Cloudflare's observability platform.
+
+- `observability.target_instance_percentage` <Type text="number" /> <MetaInfo text="optional" />
+  - Apply application-level observability changes to this percentage of running instances.
+  - Must be an integer from `1` to `99`.
+  - Cannot be used with `observability.target_instance_count`.
+  - Requires observability to be enabled for the container.
+
+- `observability.target_instance_count` <Type text="number" /> <MetaInfo text="optional" />
+  - Apply application-level observability changes to this many running instances.
+  - Must be a positive integer.
+  - Cannot be used with `observability.target_instance_percentage`.
+  - Requires observability to be enabled for the container.
+
 <WranglerConfig>
 
 ```jsonc
@@ -1394,6 +1445,10 @@ The following options are available:
 			"image": "./Dockerfile",
 			"max_instances": 10,
 			"instance_type": "basic", // Optional, defaults to "lite"
+			"observability": {
+				"enabled": true,
+				"target_instance_percentage": 25,
+			},
 			"image_vars": {
 				"FOO": "BAR",
 			},
@@ -1662,6 +1717,11 @@ You can configure various aspects of local development, such as the local protoc
 
 * Port for the local dev server to listen on. Defaults to `8787`.
 
+- `inspector_port` <Type text="number" /> <MetaInfo text="optional" />
+  - Port for the local dev server's inspector (DevTools) to listen on. Defaults to `9229`. If you do not set this and the default port is in use, Wrangler picks another available port. Set this when you run several dev servers at once and need each inspector on a predictable port. The [`--inspector-port`](/workers/wrangler/commands/workers/#dev) flag overrides this value.
+- `inspector_ip` <Type text="string" /> <MetaInfo text="optional" />
+  - IP address for the local dev server's inspector to listen on. Defaults to `127.0.0.1`.
+
 - `local_protocol` <Type text="string" /> <MetaInfo text="optional" />
   - Protocol that local dev server listens to requests on. Defaults to `http`.
 - `upstream_protocol` <Type text="string" /> <MetaInfo text="optional" />
@@ -1682,6 +1742,7 @@ You can configure various aspects of local development, such as the local protoc
 	"dev": {
 		"ip": "192.168.1.1",
 		"port": 8080,
+		"inspector_port": 9230,
 		"local_protocol": "http",
 	},
 }
@@ -1823,8 +1884,10 @@ In many cases, this allows you to work provide just enough of an API to make a d
 
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
 
+Enable source map uploads for JavaScript and TypeScript Workers. Frameworks and custom builds must also [generate maps](/workers/observability/source-maps/#frameworks-and-custom-builds).
+
 - `upload_source_maps` <Type text="boolean" />
-  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions deploy`](/workers/wrangler/commands/general/#versions-deploy).
+  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload).
 
 Example:
 
@@ -1950,6 +2013,7 @@ A common example of using a redirected configuration is where a custom build too
         	"$schema": "./node_modules/wrangler/config-schema.json",
         	"name": "my-worker",
         	"main": "src/index.ts",
+            "upload_source_maps": true,
         	"vars": {
         		"MY_VARIABLE": "production variable",
         	},

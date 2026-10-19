@@ -120,13 +120,80 @@ Codeowner commands are authorized in the pipeline entry:
 
 `/review` and `/full-review` route Dependabot PRs to `DEPENDABOT_REVIEW`. `/draft-never-stale` only applies to open draft PRs. Draft PRs skip automatic review; commands can still run. `DOCS_FLUE_REVIEW_MODE=log` is the default and only logs rendered output. `comment` updates the singleton summary comment.
 
+## PR Size Labels
+
+Deterministic and inline (no agent, no Workflow), in `lib/pr-size-label.ts`. On every `opened`, `reopened`, `synchronize`, and `ready_for_review` PR event, including drafts and Dependabot, `runSizeLabelSafely` re-reads the PR and makes it carry exactly one `size/*` label from additions + deletions. It always acts and ignores `DOCS_FLUE_REVIEW_MODE`.
+
+| Label     | Additions + deletions |
+| --------- | --------------------- |
+| `size/xs` | Under 10              |
+| `size/s`  | Under 100             |
+| `size/m`  | Under 500             |
+| `size/l`  | Under 1,000           |
+| `size/xl` | 1,000 or more         |
+
+Labels are added and removed one at a time, never replaced wholesale, so product labels set by `actions/labeler` are untouched. Failures are logged and never block review routing. Counts are read after the push and GitHub computes them asynchronously, so a stale count self-corrects on the next event.
+
+### Size Label Replay
+
+`pnpm run flue:replay:size-label --pr <n,...>` replays size labeling against existing PRs. Run `pnpm run flue:dev` first. It uses the same `DOCS_FLUE_INTERNAL_TOKEN` and `FLUE_BASE_URL` as the other replays and follows `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                          |
+| --------- | -------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the current labels, target label, and what it would add and remove     |
+| `comment` | Real path. Adds the target label and removes stale `size/*` labels; also fixes old PRs |
+
+Real webhooks ignore the mode and always act.
+
+## Issue Effort Labels
+
+`EffortLabelWorkflow` (`EFFORT_LABEL`) gives each open issue one `effort:*` label: how much docs-team work is left to close it. It runs on issue `opened`, `reopened`, and title or body `edited` events from non-bot senders, alongside spam routing.
+
+Gemma (`EFFORT_MODEL`) answers `prompts/effort-label.md` from the issue, human comments, linked PRs, and live docs evidence (`lib/docs-evidence.ts`): up to 3 linked pages, quote checks, recent commits to their source files, and diffs of up to 2 docs PRs. Unreadable evidence becomes "can't tell". Trusted code validates the answer and scores it with CODEOWNERS areas (`scoreEffort` in `lib/effort-label.ts`).
+
+| Label              | Points    | Meaning                                                      |
+| ------------------ | --------- | ------------------------------------------------------------ |
+| `effort:low`       | Under 2.5 | Under an hour: close it, or a small edit on one page         |
+| `effort:medium`    | Under 5   | A few hours: one page of writing, or a PR review             |
+| `effort:high`      | Under 8   | A day or more: new content, several pages, or a product team |
+| `effort:very-high` | 8 or more | A new guide, cross-team work, an initiative                  |
+
+- On `opened` and `reopened`, it waits 3 minutes for the spam gate. PRs, closed issues, and `spam` or `off topic` items are skipped.
+- `effort:*` labels are never a scoring input. A model error leaves labels unchanged.
+- Labels are re-read, then added and removed one at a time, so retries are no-ops.
+- Webhooks write only when the `DOCS_FLUE_EFFORT_LABEL_MODE` Worker secret is `label`; otherwise they log the plan. Create the four labels first.
+
+`pnpm run flue:replay:effort-label --issue <n,...>` replays existing issues (run `pnpm run flue:dev` first). It follows `DOCS_FLUE_REVIEW_MODE`: `log` is a dry run, `comment` writes labels.
+
 ## Spam Gates
 
-The item gate (`INGEST`) evaluates new issues and non-Dependabot PRs and closes items the `spam-filter` agent flags as spam or clearly off-topic at medium/high confidence. The comment gate (`COMMENT_SPAM`) evaluates new `issue_comment` events and deletes comments the `comment-spam-filter` agent flags as spam at **high** confidence only. Off-topic content is never deletable at the comment level — support questions and short reactions are normal conversation. Both gates fail open: an agent error is treated as not spam. All side effects live in trusted code; agents only return structured verdicts.
+Both gates call the Clef decision model (`@cf/cloudflare/clef`) directly from the workflow through the `AI` binding, via `lib/clef.ts`. There are no spam agents. Clef answers typed questions with probabilities; trusted code maps them to a verdict and performs every side effect. Both gates fail open: a Clef error or malformed response is treated as not spam.
 
-The comment gate skips comments from authors with write access (`OWNER`, `MEMBER`, or `COLLABORATOR` via `author_association`), any `[bot]` account, the item's own author, and exact-match slash commands (payload-derived, zero API calls in the classifier). Codeowners are skipped via an API check inside the workflow, keeping the webhook fast. The gate runs on comments on open and closed items alike.
+| Gate                     | Workflow              | Questions                                                                                                                   | Acts when                                                     |
+| ------------------------ | --------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Item (`INGEST`)          | `IngestWorkflow`      | `is_spam` (yes/no) and `category`: `spam`, `bot_or_test`, `irrelevant_change`, `support_request`, `feature_request`, `none` | Spam probability >= 0.5 (category does not matter); item open |
+| Comment (`COMMENT_SPAM`) | `CommentSpamWorkflow` | `is_spam` (yes/no) and `category`: `link_promo`, `scam_phishing`, `bot_flood`, `gibberish`, `email_reply_artifact`, `none`  | Spam probability >= 0.8 (high) and category is not `none`     |
 
-Before deleting, the workflow writes an audit record to `spam-gate/comment-deletions/<commentId>.json` in R2. That prefix sits outside `reviews/v2/` on purpose: run cleanup and the clear-R2 script never touch it. The deletion is 404-tolerant, so webhook redeliveries and step retries are idempotent.
+Item gate: new issues and non-Dependabot PRs. The category picks the response: `support_request` and `feature_request` get the `off topic` label and `OFF_TOPIC_COMMENT`; `spam`, `bot_or_test`, and `irrelevant_change` get the `spam` label and `SPAM_COMMENT`. Any other category, including `none`, gets the `spam` label and `SPAM_COMMENT`. Then the item is closed.
+
+Comment gate: new `issue_comment` events, on open and closed items. Off-topic content is never deletable at the comment level; support questions, short reactions, and email replies with a real question or correction are normal conversation. An email-reply artifact is a brief acknowledgment plus a quoted GitHub notification email.
+
+The comment gate skips comments from authors with write access (`OWNER`, `MEMBER`, or `COLLABORATOR` via `author_association`), any `[bot]` account, the item's own author, and exact-match slash commands (payload-derived, zero API calls in the classifier). Codeowners are skipped via an API check inside the workflow, keeping the webhook fast.
+
+Before deleting, the comment workflow writes an audit record to `spam-gate/comment-deletions/<commentId>.json` in R2. That prefix sits outside `reviews/v2/` on purpose: run cleanup and the clear-R2 script never touch it. The deletion is 404-tolerant, so webhook redeliveries and step retries are idempotent.
+
+Clef requests go through AI Gateway when `DOCS_FLUE_AI_GATEWAY_ID` is set.
+
+## Spam Replay
+
+`pnpm run flue:replay:spam --issue <n,...> --pr <n,...>` replays the item gate against existing issues and PRs. `pnpm run flue:replay:comment-spam [--comment <id,...>]` replays the comment gate against existing comments (default: the three #33799 email-reply comments). Run `pnpm run flue:dev` first. Both follow `DOCS_FLUE_REVIEW_MODE`:
+
+| Mode      | Replay output                                                                                               |
+| --------- | ----------------------------------------------------------------------------------------------------------- |
+| `log`     | Dry run. Prints the verdict and `wouldClose` / `wouldDelete`; no labels, close, comment, audit, or delete   |
+| `comment` | Real path. The item gate labels, comments, and closes; the comment gate writes the audit record and deletes |
+
+An item replay never starts a review. Comment exemptions (write access, bots, item author, codeowners) still apply, and a deleted comment replays as `comment-missing`. Real webhooks ignore replay mode and always act.
 
 ## Replay And Evals
 
@@ -170,7 +237,7 @@ pnpm run flue:evals
 | Reset local Worker state | `pnpm run flue:reset:local`                          |
 | Focused tests            | `pnpm --dir .flue exec vitest run <file>`            |
 
-`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`. Migration `v13` creates `FlueCommentSpamFilterAgent` for the comment spam gate.
+`wrangler.jsonc` defines the Worker bindings, R2 bucket, Workflow bindings, AI binding, Durable Object migrations, and queue consumers. Migration `v12` deletes `FlueCodeReviewFileAgent`, `FlueStyleGuideFileAgent`, `FlueReconcileReviewerAgent`, and `FlueReviewValidatorAgent`; it creates `FlueCodeReviewerAgent`, `FlueStyleGuideReviewerAgent`, and `FlueReviewJudgeAgent`. Migration `v13` created `FlueCommentSpamFilterAgent` and `v14` deletes it along with `FlueSpamFilterAgent`.
 
 Because `wrangler.jsonc` declares `secrets.required`, local dev loads only those secrets from `.flue/.env(.local)` and drops every other key. `vite.config.ts` forwards the non-secret settings in `LOCAL_DEV_SETTINGS` (review mode, recommendations mode, and debounce) as Worker vars during `vite dev` only, and logs them at startup. Restart `flue dev` after editing these values. `flue:dev:wrangler` does not forward them.
 

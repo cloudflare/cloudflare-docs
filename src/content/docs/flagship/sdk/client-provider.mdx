@@ -80,6 +80,12 @@ if (showBanner) {
 | `retryDelay`    | `number`      | No       | Delay between retries in milliseconds. Defaults to `1000` and is capped at `30000`.                                                  |
 | `prefetchFlags` | `string[]`    | Yes      | Flag keys to fetch on initialization and on every context change. Flags not in this list return `FLAG_NOT_FOUND` at evaluation time. |
 
+## Evaluation context
+
+From version `0.6.0`, the client provider accepts strings, finite numbers, booleans, `null`, nested objects, and arrays. It normalizes valid `Date` values to ISO 8601 strings, including within objects and arrays.
+
+During initialization and context changes, the provider sends structured context using `POST` with a JSON body. Context containing only strings, numbers, booleans, or dates uses `GET` query parameters. JSON-looking strings remain strings and do not create nested context.
+
 ## When to use the client provider
 
 Use the client provider in browser applications, single-page apps, or any client-side JavaScript environment.

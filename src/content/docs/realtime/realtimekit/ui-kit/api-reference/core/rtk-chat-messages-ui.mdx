@@ -5,6 +5,17 @@ description: API reference for rtk-chat-messages-ui component (Web Components (H
 products:
   - realtime
 ---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-chat-messages-ui/rtk-chat-messages-ui.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
 @deprecated Use `rtk-chat-messages-ui-paginated` instead.
 
 ## Properties
@@ -31,7 +42,9 @@ products:
 
 ```html
 <rtk-chat-messages-ui
- selectedGroup="example">
+ selectedGroup="example"
+ selfUserId="example"
+ size="md">
 </rtk-chat-messages-ui>
 ```
 
@@ -40,7 +53,7 @@ products:
 <script>
   const el = document.querySelector("rtk-chat-messages-ui");
 
-  el.canPinMessages= true;
-  el.messages= [];
+  el.canPinMessages = true;
+  el.messages = [];
 </script>
 ```

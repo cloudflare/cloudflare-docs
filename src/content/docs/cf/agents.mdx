@@ -121,6 +121,35 @@ Root and group `--help` output starts with a reminder for agents to use
 If an agent types a command that does not exist, `cf` lists the closest
 matches.
 
+## Find Cloudflare documentation
+
+You and your agent can use `cf docs search` to find guides, tutorials, and
+examples across Cloudflare products. The search uses live Cloudflare
+documentation and requires an Internet connection, but no Cloudflare login.
+
+<Steps>
+1. Describe the task or ask a question:
+
+   ```sh
+   cf docs search "proxy a DNS record"
+   ```
+
+   Put the query in quotes. The command returns up to five ranked JSON
+   results, each with a `title`, `description`, and `url`.
+
+2. Choose a result and fetch its URL with the `Accept: text/markdown` header
+   to read the complete page as Markdown:
+
+   ```sh
+   curl -H "Accept: text/markdown" \
+     https://developers.cloudflare.com/learning-paths/prevent-ddos-attacks/baseline/proxy-dns-records/
+   ```
+</Steps>
+
+Use `cf cli search` to find commands and `cf docs search` to find
+documentation. Keep both kinds of search generic: do not include account IDs,
+domains, email addresses, tokens, or other identifying information.
+
 ## Read command output
 
 Results go to standard output as JSON. Messages, such as the selected zone,

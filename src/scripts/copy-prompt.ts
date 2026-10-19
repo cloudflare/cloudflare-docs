@@ -1,3 +1,8 @@
+export function resolvePrompt(prompt: string, pageUrl: URL): string {
+	const currentPage = new URL(pageUrl.pathname, pageUrl.origin).href;
+	return prompt.replaceAll("{{pageUrl}}", currentPage);
+}
+
 export function bindCopyPromptButtons() {
 	document
 		.querySelectorAll<HTMLButtonElement>(".copy-prompt-btn")
@@ -10,7 +15,12 @@ export function bindCopyPromptButtons() {
 
 			button.addEventListener("click", async () => {
 				try {
-					await navigator.clipboard.writeText(button.dataset.prompt ?? "");
+					await navigator.clipboard.writeText(
+						resolvePrompt(
+							button.dataset.prompt ?? "",
+							new URL(window.location.href),
+						),
+					);
 				} catch {
 					return;
 				}

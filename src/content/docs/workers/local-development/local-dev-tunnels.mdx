@@ -84,14 +84,17 @@ export default defineConfig({
 
 ## Security considerations
 
-Anyone with the tunnel URL can reach your dev server, so review what your app exposes before enabling a tunnel.
+The [local development security considerations](/workers/local-development/#security-considerations) apply with or without a tunnel. A tunnel increases exposure by making your dev server remotely reachable. It does not add security isolation around the local `workerd` process.
+
+Unless the tunnel is protected by access controls, anyone with its URL can reach your dev server. Review what your app exposes before starting a tunnel.
 
 - Pay special attention to ungated preview or admin endpoints.
+- Do not expose endpoints that accept and execute code supplied by users.
 - Review any [remote bindings](/workers/local-development/#remote-bindings) connected to real resources.
 - Review any code that proxies requests to private or internal services.
-- If you are using the Cloudflare Vite plugin with `vite dev`, HMR and module serving may expose source files, file paths, or project structure over the tunnel. If you only need to share a built preview, prefer `vite preview` for public sharing.
+- If you are using the Cloudflare Vite plugin with `vite dev`, HMR and module serving may expose source files, file paths, or project structure over the tunnel. If you only need to share a built preview, prefer `vite preview` for public sharing. This reduces source exposure but does not add runtime isolation.
 - Local dev-related routes, such as `/cdn-cgi/*`, remain restricted and are not exposed over the tunnel.
-- If you need a stable hostname or stricter access control, use a named tunnel protected by Cloudflare Access.
+- If you need a stable hostname or stricter access control, use a named tunnel protected by Cloudflare Access. Access restricts who can reach the server but does not harden the local runtime.
 
 ## Related docs
 

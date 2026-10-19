@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Using a dynamic route
-description: Send requests through an AI Gateway dynamic route using the OpenAI SDK, a direct HTTP request, or the Workers AI binding.
+description: Send requests through an AI Gateway dynamic route using the OpenAI SDK, a direct HTTP request, or the AI binding in a Worker.
 sidebar:
   order: 2
 products:
@@ -14,9 +14,35 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
 
 :::
 
+Use the route name in place of the model, in the form `dynamic/<your-dynamic-route-name>`. Dynamic routes accept the OpenAI chat completions request shape only — other formats, such as Anthropic Messages, return a `400` error.
+
+Routes are scoped to the gateway you created them on. On the REST API and the AI binding, name that gateway explicitly, otherwise the request resolves against your default gateway and returns a `404` error.
+
 ## Examples
 
+### REST API
+
+Send the route name as the `model` to [`/ai/v1/chat/completions`](/ai-gateway/usage/rest-api/#aiv1chatcompletions-openai-compatible), and set `cf-aig-gateway-id` to the gateway that owns the route.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/{account_id}/ai/v1/chat/completions" \
+  --header 'Authorization: Bearer {CLOUDFLARE_API_TOKEN}' \
+  --header 'cf-aig-gateway-id: {gateway_id}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "model": "dynamic/<your-dynamic-route-name>",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is Cloudflare?"
+      }
+    ]
+  }'
+```
+
 ### OpenAI SDK
+
+Point the SDK at the OpenAI-compatible endpoint on your gateway.
 
 ```js
 import OpenAI from "openai";
@@ -64,6 +90,8 @@ curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/comp
 
 ### Workers
 
+Call a dynamic route from a Worker with the [AI binding](/ai-gateway/usage/worker-binding-methods/). Pass the route name as the model and the gateway that owns the route in the `gateway` options.
+
 ```ts title="index.ts"
 export interface Env {
 	AI: Ai;
@@ -71,21 +99,18 @@ export interface Env {
 
 export default {
 	async fetch(request: Request, env: Env) {
-		const response = await env.AI.gateway("default").run({
-			provider: "compat",
-			endpoint: "chat/completions",
-			headers: {},
-			query: {
-				model: "dynamic/<your-dynamic-route-name>",
-				messages: [
-					{
-						role: "user",
-						content: "What is Cloudflare?",
-					},
-				],
+		const response = await env.AI.run(
+			"dynamic/<your-dynamic-route-name>",
+			{
+				messages: [{ role: "user", content: "What is Cloudflare?" }],
 			},
-		});
-		return Response(response);
+			{
+				gateway: {
+					id: "{gateway_id}",
+				},
+			},
+		);
+		return Response.json(response);
 	},
 };
 ```

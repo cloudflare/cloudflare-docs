@@ -1,0 +1,13 @@
+---
+title: Run schema learning on demand
+description: Manually request a zone-wide schema learning run and review results for individual operations.
+date: 2026-10-12
+---
+
+You can now manually request an API Shield schema learning run without waiting for the weekly schedule. Use this during testing after sending representative traffic to your API.
+
+In **Web Assets** > **Operations**, open the **More options** menu for the operations table and select **Ad-hoc learn schema**. In the **Schema learning** dialog, select **Run learning**. The run covers the entire zone and uses observed traffic. Existing learning thresholds still apply.
+
+The dialog shows the learning status and last completed run for the zone. The **Learned schema** view shows the learning result and last learning run for each operation. You can review individual results while the zone-wide run continues.
+
+For instructions and traffic requirements, refer to [Run schema learning manually](/api-shield/management-and-monitoring/endpoint-management/schema-learning/#run-schema-learning-manually).

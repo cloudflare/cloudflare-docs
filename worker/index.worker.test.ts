@@ -99,6 +99,71 @@ describe("Cloudflare Docs", () => {
 	});
 
 	describe("redirects", () => {
+		it.each([
+			[
+				"/cloudflare-one/traffic-policies/",
+				"/cloudflare-one/traffic-controls/",
+			],
+			[
+				"/cloudflare-one/traffic-policies/http-policies/example/",
+				"/cloudflare-one/traffic-controls/http-policies/example/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/",
+				"/cloudflare-one/traffic-controls/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/locations/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/",
+				"/cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/configure-pac-file-on-device/",
+			],
+			[
+				"/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/",
+				"/cloudflare-one/traffic-controls/proxy-endpoints/best-practices/",
+			],
+		])("redirects %s to %s", async (source, destination) => {
+			const request = new Request(`http://fakehost${source}`);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(destination);
+		});
+
+		it("redirects an unslashed resolver and proxy request", async () => {
+			const request = new Request(
+				"http://fakehost/cloudflare-one/networks/resolvers-and-proxies",
+			);
+			const response = await SELF.fetch(request, { redirect: "manual" });
+
+			expect(response.status).toBe(301);
+			expect(response.headers.get("Location")).toBe(
+				"/cloudflare-one/traffic-controls/",
+			);
+		});
+
 		it("redirects requests with a trailing slash", async () => {
 			const request = new Request("http://fakehost/docs/");
 			const response = await SELF.fetch(request, { redirect: "manual" });
@@ -111,6 +176,82 @@ describe("Cloudflare Docs", () => {
 			const response = await SELF.fetch(request, { redirect: "manual" });
 			expect(response.status).toBe(301);
 			expect(response.headers.get("Location")).toBe("/directory/");
+		});
+
+		it.each(["?", "?foo=bar", "?foo=bar%2F", "?cf_page=%2Fpost-slug%2F"])(
+			"redirects requests without a trailing slash and with query %s",
+			async (query) => {
+				const request = new Request(`http://fakehost/docs${query}`);
+				const response = await SELF.fetch(request, { redirect: "manual" });
+				expect(response.status).toBe(301);
+				// The query string is carried over to the destination.
+				expect(response.headers.get("Location")).toBe(
+					`/directory/${new URL(request.url).search}`,
+				);
+			},
+		);
+	});
+
+	describe("unavailable model pages", () => {
+		it.each([
+			[
+				"/workers-ai/models/llama-3-8b-instruct/",
+				"/workers-ai/models/?unavailable=llama-3-8b-instruct",
+			],
+			[
+				// The `@` is percent-encoded by the asset layer before the 404 lands,
+				// so the id must survive the round trip without double-encoding.
+				"/ai/models/%40cf/meta/llama-3-8b-instruct/",
+				"/ai/models/?unavailable=%40cf%2Fmeta%2Fllama-3-8b-instruct",
+			],
+			[
+				"/ai/models/openai/retired-model/",
+				"/ai/models/?unavailable=openai%2Fretired-model",
+			],
+		])("redirects %s to the catalog", async (path, location) => {
+			const response = await SELF.fetch(new Request(`http://fakehost${path}`), {
+				redirect: "manual",
+			});
+			expect(response.status).toBe(302);
+			expect(response.headers.get("Location")).toBe(location);
+		});
+
+		it("serves a model page that still exists", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/ai/models/openai/tts-1/"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(200);
+		});
+
+		it.each(["/workers-ai/models/", "/ai/models/"])(
+			"serves the catalog at %s",
+			async (path) => {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+					{ redirect: "manual" },
+				);
+				expect(response.status).toBe(200);
+			},
+		);
+
+		it("leaves markdown requests as a 404", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/workers-ai/models/retired-model/index.md"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(404);
+			expect(response.headers.get("Content-Type")).toContain("text/markdown");
+		});
+
+		it("leaves schema endpoints as a 404", async () => {
+			const response = await SELF.fetch(
+				new Request(
+					"http://fakehost/workers-ai/models/retired-model/schema-input.json",
+				),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(404);
 		});
 	});
 
@@ -210,6 +351,19 @@ describe("Cloudflare Docs", () => {
 
 			const text = await response.text();
 			expect(text).toContain("# Cloudflare Developer Documentation");
+		});
+
+		it("llms.txt declares utf-8 charset", async () => {
+			for (const path of ["/llms.txt", "/workers/llms.txt"]) {
+				const response = await SELF.fetch(
+					new Request(`http://fakehost${path}`),
+				);
+
+				expect(response.status).toBe(200);
+				expect(response.headers.get("Content-Type")).toBe(
+					"text/plain; charset=utf-8",
+				);
+			}
 		});
 
 		it("agent setup prompt declares utf-8 charset", async () => {

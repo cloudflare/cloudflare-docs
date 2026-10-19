@@ -40,7 +40,7 @@ Reference: [PQC for all websites and APIs](https://blog.cloudflare.com/post-quan
 - The Cloudflare API and dashboard.
 - [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) self-hosted applications (browser-to-edge leg).
 
-Customers can measure per-zone post-quantum key agreement adoption on their inbound traffic using the [`ClientTLSKeyExchangeGroup`](/logs/logpush/logpush-job/datasets/zone/http_requests/#clienttlskeyexchangegroup) field in the `http_requests` Logpush dataset, which is also queryable in [Log Explorer](/log-explorer/).
+Customers can measure per-zone post-quantum key agreement adoption on their inbound traffic using the [`ClientTLSKeyExchangeGroup`](/logs/logpush/logpush-job/datasets/zone/http_requests/#clienttlskeyexchangegroup) field in the `http_requests` Logpush dataset, which is also queryable in [Log Explorer](/observability/logs/log-explorer/).
 
 This section only covers the inbound TLS connection from the end-user client to Cloudflare's edge. When a Worker fetches data from a backend storage service ([D1](/d1/), [KV](/kv/), [Durable Objects](/durable-objects/), [R2](/r2/), [Workers AI](/workers-ai/), [Hyperdrive](/hyperdrive/), and similar), that connection is governed by the [Cloudflare internal network](#cloudflare-internal-network) section. When a Worker calls out to a third-party origin via `fetch()`, it is governed by the [Cloudflare to origin](#cloudflare-to-origin) section.
 
@@ -112,7 +112,7 @@ Mesh inherits its post-quantum protection from the [Cloudflare One Client](#clou
 
 ### Cloudflare Gateway
 
-[Cloudflare Gateway](/cloudflare-one/traffic-policies/http-policies/tls-decryption/#post-quantum-support) is a Secure Web Gateway that runs on Cloudflare's edge and filters HTTPS traffic egressing to the public Internet. Gateway has no client-side component; clients reach Gateway via one of several post-quantum on-ramps:
+[Cloudflare Gateway](/cloudflare-one/traffic-controls/http-policies/tls-decryption/#post-quantum-support) is a Secure Web Gateway that runs on Cloudflare's edge and filters HTTPS traffic egressing to the public Internet. Gateway has no client-side component; clients reach Gateway via one of several post-quantum on-ramps:
 
 - The [Cloudflare One Client](#cloudflare-one-client).
 - A [Cloudflare IPsec](#cloudflare-ipsec) tunnel.

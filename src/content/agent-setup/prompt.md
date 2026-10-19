@@ -32,17 +32,20 @@ First, install skills:
 npx -y skills add cloudflare/skills --skill '*' --yes --global
 ```
 
-Then register the MCP servers using the default config location for your agent. OAuth triggers automatically on first Cloudflare tool use.
+Then register the Cloudflare MCP server using the default config location for your agent. OAuth triggers automatically on first Cloudflare tool use.
 
 ### Codex
 
 ```
 codex mcp add cloudflare --url https://mcp.cloudflare.com/mcp
-codex mcp add cloudflare-docs --url https://docs.mcp.cloudflare.com/mcp
-codex mcp add cloudflare-bindings --url https://bindings.mcp.cloudflare.com/mcp
-codex mcp add cloudflare-builds --url https://builds.mcp.cloudflare.com/mcp
-codex mcp add cloudflare-observability --url https://observability.mcp.cloudflare.com/mcp
 codex mcp login cloudflare
+```
+
+### Pi
+
+```
+pi mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+pi mcp login cloudflare
 ```
 
 ### OpenCode — `~/.config/opencode/opencode.jsonc`
@@ -50,11 +53,7 @@ codex mcp login cloudflare
 Add under `"mcp"`:
 
 ```json
-"cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
-"cloudflare-docs": { "type": "remote", "url": "https://docs.mcp.cloudflare.com/mcp", "enabled": true },
-"cloudflare-bindings": { "type": "remote", "url": "https://bindings.mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
-"cloudflare-builds": { "type": "remote", "url": "https://builds.mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} },
-"cloudflare-observability": { "type": "remote", "url": "https://observability.mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} }
+"cloudflare": { "type": "remote", "url": "https://mcp.cloudflare.com/mcp", "enabled": true, "oauth": {} }
 ```
 
 Then run:
@@ -68,11 +67,7 @@ opencode mcp auth cloudflare
 Add under `"mcpServers"` (note: `serverUrl`, not `url`):
 
 ```json
-"cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" },
-"cloudflare-docs": { "serverUrl": "https://docs.mcp.cloudflare.com/mcp" },
-"cloudflare-bindings": { "serverUrl": "https://bindings.mcp.cloudflare.com/mcp" },
-"cloudflare-builds": { "serverUrl": "https://builds.mcp.cloudflare.com/mcp" },
-"cloudflare-observability": { "serverUrl": "https://observability.mcp.cloudflare.com/mcp" }
+"cloudflare": { "serverUrl": "https://mcp.cloudflare.com/mcp" }
 ```
 
 OAuth triggers automatically on first Cloudflare tool use.
@@ -82,16 +77,10 @@ OAuth triggers automatically on first Cloudflare tool use.
 Add to `.cursor/mcp.json` (Cursor), `.vscode/mcp.json` (Copilot), or your agent's MCP config file under `"mcpServers"`:
 
 ```json
-"cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
-"cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" },
-"cloudflare-bindings": { "url": "https://bindings.mcp.cloudflare.com/mcp" },
-"cloudflare-builds": { "url": "https://builds.mcp.cloudflare.com/mcp" },
-"cloudflare-observability": { "url": "https://observability.mcp.cloudflare.com/mcp" }
+"cloudflare": { "url": "https://mcp.cloudflare.com/mcp" }
 ```
 
 OAuth triggers automatically on first Cloudflare tool use.
-
-The `cloudflare-docs` server is public and requires no authentication.
 
 ---
 
@@ -147,50 +136,13 @@ url = "https://mcp.cloudflare.com/mcp"
 [mcp_servers.auth]
 type = "oauth"
 scopes = []
-
-[[mcp_servers]]
-name = "cloudflare-docs"
-transport = "streamable-http"
-url = "https://docs.mcp.cloudflare.com/mcp"
-
-[[mcp_servers]]
-name = "cloudflare-bindings"
-transport = "streamable-http"
-url = "https://bindings.mcp.cloudflare.com/mcp"
-
-[mcp_servers.auth]
-type = "oauth"
-scopes = []
-
-[[mcp_servers]]
-name = "cloudflare-builds"
-transport = "streamable-http"
-url = "https://builds.mcp.cloudflare.com/mcp"
-
-[mcp_servers.auth]
-type = "oauth"
-scopes = []
-
-[[mcp_servers]]
-name = "cloudflare-observability"
-transport = "streamable-http"
-url = "https://observability.mcp.cloudflare.com/mcp"
-
-[mcp_servers.auth]
-type = "oauth"
-scopes = []
 ```
 
-Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruct them to authenticate the servers that access their Cloudflare account:
+Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruct them to authenticate the Cloudflare MCP server:
 
 ```
 /mcp login cloudflare
-/mcp login cloudflare-bindings
-/mcp login cloudflare-builds
-/mcp login cloudflare-observability
 ```
-
-The `cloudflare-docs` server is public and does not require authentication.
 
 ---
 

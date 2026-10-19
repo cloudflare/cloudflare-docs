@@ -8,25 +8,34 @@ products:
   - fundamentals
 ---
 
-:::note
-
-Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers.
-
-:::
-
 The following limitations currently apply to Cloudflare Organizations. For common errors and resolutions, refer to [Troubleshooting](#troubleshooting).
 
 ## Account and zone limits
 
-Each Organization supports a maximum of **500 accounts** and **5,000 zones**. This limit applies to both Enterprise and MSSP/Distributor Organizations. These limits may be adjusted as usage patterns are better understood during the beta.
+Each Organization supports a maximum of **20,000 accounts** and **200,000 zones**. This limit applies to both Enterprise and MSSP/Distributor Organizations. These limits are defaults and can be adjusted for larger enterprises and partners in some cases.
 
 ## API authentication
 
-User API Tokens support some Organization operations. They cannot complete the full Terraform resource lifecycle. Full user API Token support for Organization operations is planned. To manage Organization resources with Terraform, configure the Cloudflare provider with a Global API key and the registered account email.
+The following credentials support core Organization management operations and Terraform:
 
-A user API Token may create an Organization. A later Terraform refresh or `terraform plan` may fail when reading the Organization. If the request returns HTTP `403` with error code `10000`, use a Global API key and the account email instead.
+| Operation | Supported credentials |
+| --- | --- |
+| [List Organizations](/api/resources/organizations/methods/list/) | Global API key, or user API token with User Details Read or User Details Write |
+| [Create an Organization](/api/resources/organizations/methods/create/) | Global API key, or user API token with User Details Write |
+| [Read](/api/resources/organizations/methods/get/), [update](/api/resources/organizations/methods/update/), or [delete](/api/resources/organizations/methods/delete/) an Organization | Global API key |
+| [List accounts directly attached to an Organization](/api/resources/organizations/subresources/organization_accounts/methods/get/); [view](/api/resources/organizations/subresources/organization_profile/methods/get/) or [update](/api/resources/organizations/subresources/organization_profile/methods/update/) its profile; [manage its members](/api/resources/organizations/subresources/members/) | Global API key |
+| Accept or reject an Organization invitation | Global API key or user API token for the invited user; no additional token permission |
+| Create and manage an Organization with Terraform ([`cloudflare_organization` resource](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization)) | Global API key and the registered email address |
+| Look up an existing Organization with Terraform ([`cloudflare_organization` data source](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/organization)) | Global API key and the registered email address |
+| List Organizations with Terraform ([`cloudflare_organizations` data source](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/data-sources/organizations)) | Global API key and the registered email address, or user API token with User Details Read or User Details Write |
 
-API Tokens remain the preferred authentication method for supported operations. A Global API key has full access to the user's Cloudflare resources. Refer to [Global API key limitations](/fundamentals/api/get-started/keys/#limitations).
+A supported credential must belong to a user with the required access.
+
+User API tokens cannot currently receive the Organization-scoped permissions required by operations that require a Global API key. Prefer user API tokens where the table supports them. When you use a Global API key, also provide the user's registered email address. A Global API key has full access to the user's Cloudflare resources. Refer to [Global API key limitations](/fundamentals/api/get-started/keys/#limitations).
+
+[Organization audit logs](/api/resources/organizations/subresources/logs/subresources/audit/methods/list/) and [billing usage](/api/resources/organizations/subresources/billing/subresources/usage/methods/get/) are separate subresources outside this matrix.
+
+Account moves and other account-scoped operations are also outside this matrix. Refer to each endpoint's **Security** and **Accepted Permissions** sections, including [move account to an Organization](/api/resources/accounts/subresources/account_organizations/methods/create/), [get account profile](/api/resources/accounts/subresources/account_profile/methods/get/), and [update account profile](/api/resources/accounts/subresources/account_profile/methods/update/).
 
 ## Enterprise Organizations
 

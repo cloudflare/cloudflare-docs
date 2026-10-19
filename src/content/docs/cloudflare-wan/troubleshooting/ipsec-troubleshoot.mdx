@@ -92,6 +92,46 @@ Use Request-style health checks instead. Configure a loopback address on your tu
 
 ---
 
+## Health checks fail at a low, steady rate {/* anti-replay-mismatch */}
+
+### Symptoms
+
+All of the following apply:
+
+- The tunnel is an IPsec tunnel with **Replay protection** turned off in Cloudflare. This is the default.
+- Tunnel health checks are turned on.
+- The health check pass rate stays between 95% and 100%. Failures are small and steady, not a full outage.
+- Most traffic passes through the tunnel, with occasional packet loss.
+
+### Cause
+
+The anti-replay setting on your tunnel endpoint does not match the replay protection setting on your Cloudflare tunnel. Your device still enforces anti-replay protection and drops some Encapsulating Security Payload (ESP) packets as replays.
+
+Cloudflare sends tunnel traffic from many anycast servers, each with its own sequence counter. Packets therefore arrive at your device out of order, and the device drops the packets that fall outside its replay window.
+
+This can happen even if you have turned off anti-replay on your device. On some devices, the option to turn it off does not take effect or reverts to its previous value.
+
+To confirm the cause, check your device logs for packets dropped as replays. The message depends on the vendor. For example, Check Point logs the following:
+
+```txt
+Encryption failure: Warning: possible replay attack
+```
+
+Other devices may log messages such as `replay check failed` or `invalid sequence number`.
+
+### Solution
+
+Make the anti-replay setting on your device match the replay protection setting on your Cloudflare tunnel. Choose one of the following options:
+
+- **Turn off anti-replay on your device (recommended).** Fully disable anti-replay protection, or set the replay window to `0`. After you make the change, check your device logs to confirm the device no longer drops packets as replays. For vendor-specific steps, refer to [Fortinet](/cloudflare-wan/configuration/third-party/fortinet/#disable-anti-replay-protection), [Sophos Firewall](/cloudflare-wan/configuration/third-party/sophos-firewall/), [SonicWall](/cloudflare-wan/configuration/third-party/sonicwall/), [Palo Alto Networks](/cloudflare-wan/configuration/third-party/palo-alto/), or other [third-party integration guides](/cloudflare-wan/configuration/third-party/).
+- **Turn on replay protection on your Cloudflare tunnel.** Use this option if your device cannot reliably turn off anti-replay. For dashboard and API steps, refer to [Add tunnels](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/#add-tunnels).
+
+:::caution
+Turning on replay protection currently reduces throughput for Cloudflare IPsec tunnels. For more information, refer to [Anti-replay protection](/cloudflare-wan/reference/anti-replay-protection/).
+:::
+
+---
+
 ## Tunnel works intermittently (flapping)
 
 ### Symptoms

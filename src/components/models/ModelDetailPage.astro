@@ -48,6 +48,7 @@ import TranslationCode from "~/components/models/code/TranslationCode.astro";
 import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
+import ClefCode from "~/components/models/code/ClefCode.astro";
 
 interface Props {
 	model: ModelView;
@@ -68,6 +69,13 @@ const displayName =
 const firstExample = model.examples?.[0];
 const remainingExamples = model.examples?.slice(1) ?? [];
 const hasCatalogUsage = !!firstExample?.code_snippets?.length;
+
+// Clef decision models take typed questions, not chat messages.
+const isClef = [
+	"@cf/cloudflare/clef",
+	"@cf/cloudflare/clef-flash",
+	"@cf/cloudflare/clef-omni",
+].includes(model.name);
 
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
@@ -103,6 +111,9 @@ if (!hasCatalogUsage) {
 	if (model.name === "@cf/deepgram/aura-1") {
 		CodeExamples = DeepgramAura;
 	}
+	if (isClef) {
+		CodeExamples = ClefCode;
+	}
 }
 
 const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
@@ -134,7 +145,7 @@ function bannerAsideType(
 // exclusion (gpt-oss is not in our slice — kept as a documented dead branch).
 let hasPlayground =
 	model.task === "Text Generation" && model.hosting === "hosted";
-if (model.name.includes("@cf/openai/gpt-oss")) {
+if (model.name.includes("@cf/openai/gpt-oss") || isClef) {
 	hasPlayground = false;
 }
 
@@ -348,6 +359,14 @@ const headings: MarkdownHeading[] = [
 	)}
 
 	<ModelFeatures model={model} />
+
+	{isClef && (
+		<Render
+			file="clef-media-input-pricing"
+			product="workers-ai"
+			params={{ omni: model.name === "@cf/cloudflare/clef-omni" }}
+		/>
+	)}
 
 	{hasGlm52ReasoningEffortGuidance && (
 		<Fragment>

@@ -1,0 +1,29 @@
+---
+title: Target Flagship feature flags with structured evaluation context
+description: Use nested objects, arrays, and null in Flagship evaluation context, with dot-path targeting and array membership operators.
+date: 2026-10-23
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Flagship](/flagship/) supports nested objects, arrays, and `null` in evaluation context. Pass user profiles and tag lists directly, then target nested attributes without flattening your application data.
+
+For example, pass a profile and tags when evaluating a flag through the Workers binding:
+
+<TypeScriptExample>
+
+```ts
+const enabled = await env.FLAGS.getBooleanValue("new-checkout", false, {
+	targetingKey: "user-42",
+	profile: { plan: "enterprise" },
+	tags: ["beta", "early-access"],
+});
+```
+
+</TypeScriptExample>
+
+A targeting rule can combine `profile.plan equals "enterprise"` with `tags has "beta"` to serve the feature to enterprise users in the beta group. Use dot-separated paths for nested attributes and the `has` and `not_has` operators for array membership. Percentage rollouts can also use a nested identifier, such as `profile.id`, for consistent user assignment.
+
+Structured context works through the Workers binding, the evaluation REST API with a JSON `POST` body, and the TypeScript, Python, and Go OpenFeature SDKs from version `0.6.0`. The SDKs automatically use `POST` when HTTP evaluation requires structured context.
+
+Refer to [targeting rules](/flagship/targeting/), the [evaluation API](/flagship/reference/evaluation-api/), and [SDK context support](/flagship/sdk/#context-support) for usage and supported values.
