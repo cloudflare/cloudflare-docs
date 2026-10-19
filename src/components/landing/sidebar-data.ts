@@ -193,7 +193,7 @@ export const sidebarSections: SidebarSection[] = [
 							"Cloud Workload Security",
 							"/cloudflare-one/cloud-workload-security/",
 						),
-						badge: "Beta",
+						badge: { text: "Beta", variant: "caution" },
 					},
 					link("Data loss prevention", "/cloudflare-one/data-loss-prevention/"),
 					link(
