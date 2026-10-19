@@ -331,6 +331,14 @@ package.json @cloudflare/content-engineering
 /src/content/glossary/cloudflare-one.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/icons/cloudflare-one.svg @cloudflare/cf1-reviewers @cloudflare/product-owners
 
+# cloud-workload-security
+
+/src/content/changelog/cloud-workload-security/ @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/cloudflare-one/cloud-workload-security/ @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/directory/cloud-workload-security.yaml @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/icons/cloud-workload-security.svg @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+/public/cloudflare-one/cloud-workload-security/ @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+
 # cloudflare-one-client
 
 /src/content/changelog/cloudflare-one-client/ @cf-rhett @csujedihy @jiulingz @samin-cf @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
