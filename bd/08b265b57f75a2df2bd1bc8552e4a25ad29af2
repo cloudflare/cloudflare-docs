@@ -1,0 +1,21 @@
+src/content/changelog/workers-ai/2026-10-19-deepseek-v4.1-flash-workers-ai.mdx
+  s_320307ba9c2bfe::t_3d2753a1aaef84 16
+src/content/workers-ai-models/deepseek-v4.1-flash-1017.json
+  s_320307ba9c2bfe::t_8d686d11821cf8 30,345,1594,2413,3662
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bd08b265b57f75a2df2bd1bc8552e4a25ad29af2",
+  "prompts": {},
+  "sessions": {
+    "s_320307ba9c2bfe": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ea938ddfeffeShFuGXQdRq7HRk",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Kevin Flansburg <kflansburg@cloudflare.com>"
+    }
+  }
+}
