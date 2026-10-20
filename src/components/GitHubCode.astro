@@ -3,6 +3,7 @@ import { z } from "astro:schema";
 import { Code } from "@astrojs/starlight/components";
 import TypeScriptExample from "./TypeScriptExample.astro";
 import type { ComponentProps } from "astro/types";
+import { fetchGitHubCode } from "~/util/github-code";
 
 type Props = z.infer<typeof props>;
 
@@ -40,13 +41,7 @@ const props = z
 const { repo, commit, file, lang, lines, tag, useTypeScriptExample, code } =
 	props.parse(Astro.props);
 
-const res = await fetch(
-	`https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`,
-);
-
-if (!res.ok) {
-	throw new Error(`[GitHubCode] Received ${res.status} from Worker.`);
-}
+const res = await fetchGitHubCode(repo, commit, file);
 
 const content = await res.text();
 let contentLines = content.split("\n");
