@@ -139,27 +139,6 @@ export default async function () {
 
 `exec` offers every backend the Workspace has, and each backend describes itself to the model. To change a built-in tool, return a tool with the same name from `getTools()`. It replaces the built-in. To hide tools for a turn, return `activeTools` from `beforeTurn`.
 
-### Share a workspace
-
-To work in a Workspace another Durable Object owns, wrap `getWorkspace` in `lazyWorkspace`. Think contacts the owner only when a turn first touches a file:
-
-<TypeScriptExample>
-
-```ts
-import { getWorkspace } from "@cloudflare/computer";
-import { Think, lazyWorkspace } from "@cloudflare/think";
-
-export class Chat extends Think<Env> {
-	override workspace = lazyWorkspace(async () =>
-		getWorkspace(await this.parentAgent(Directory)),
-	);
-}
-```
-
-</TypeScriptExample>
-
-Every Think agent can hand out its Workspace this way. `getWorkspace(stub)` calls the agent's `__getWorkspaceStub()` method over RPC. A lazy Workspace gets the file tools but no `exec`.
-
 ### Upgrade from `@cloudflare/shell`
 
 Earlier versions of Think used a `Workspace` from `@cloudflare/shell`, which is now deprecated. Computer stores files in different tables, and Think does not move your data. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md).
