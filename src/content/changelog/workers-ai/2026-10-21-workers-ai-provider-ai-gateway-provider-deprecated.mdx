@@ -1,18 +1,19 @@
 ---
-title: workers-ai-provider and ai-gateway-provider are deprecated
-description: The workers-ai-provider and ai-gateway-provider npm packages are deprecated. Use createAI from agents/models/ai-sdk, and ai-search-provider for AI Search.
+title: createAI replaces workers-ai-provider and ai-gateway-provider
+description: The Agents SDK has a new createAI function for the AI SDK and Pi AI that unifies workers-ai-provider and ai-gateway-provider. Both packages are now feature frozen and deprecated.
 products:
   - workers-ai
   - ai-gateway
+  - agents
 date: 2026-10-21
 ---
 
-The `workers-ai-provider` and `ai-gateway-provider` npm packages are deprecated. To call Workers AI and AI Gateway from the [AI SDK](https://ai-sdk.dev/), use [`createAI`](/agents/models/ai-sdk/) from `agents/models/ai-sdk`. For AI Search, use [`ai-search-provider`](/ai-search/agent-sdks/ai-sdk/).
+The Agents SDK has a new `createAI` function for the [AI SDK](/agents/models/ai-sdk/) and [Pi AI](/agents/models/pi-ai/). It unifies what `workers-ai-provider` and `ai-gateway-provider` did: Workers AI models, AI Gateway catalog models, dynamic routes, and vendor models, through the `AI` binding or an account id and API token.
 
-Existing code keeps working. Nothing changes at runtime.
+`workers-ai-provider` and `ai-gateway-provider` are now feature frozen and marked as deprecated. Existing code keeps working. Migrate at your convenience.
 
 ```sh
-npm install agents ai @ai-sdk/provider
+npm i agents
 ```
 
 ```ts
@@ -23,11 +24,11 @@ const ai = createAI({ binding: env.AI });
 const model = ai("@cf/zai-org/glm-4.7-flash");
 ```
 
-| Before                                                  | After                                                    |
-| ------------------------------------------------------- | -------------------------------------------------------- |
-| `createWorkersAI({ binding })`                          | `createAI({ binding })`                                  |
-| `createWorkersAI({ accountId, apiKey })`                | `createAI({ accountId, apiToken })`                      |
-| `createAiGateway(...)`                                  | `createAI(...)`, with `fallback` for a list of models    |
-| `createAISearch` from `workers-ai-provider`             | `createAISearchNamespace` from `ai-search-provider`      |
+| Before                                      | After                                                 |
+| ------------------------------------------- | ----------------------------------------------------- |
+| `createWorkersAI({ binding })`              | `createAI({ binding })`                               |
+| `createWorkersAI({ accountId, apiKey })`    | `createAI({ accountId, apiToken })`                   |
+| `createAiGateway(...)`                      | `createAI(...)`, with `fallback` for a list of models |
+| `createAISearch` from `workers-ai-provider` | `createAISearchNamespace` from `ai-search-provider`   |
 
-For more information, refer to [AI SDK](/agents/models/ai-sdk/).
+For AI Search, use [`ai-search-provider`](/ai-search/agent-sdks/ai-sdk/). For more information, refer to [Models](/agents/models/).
