@@ -50,11 +50,11 @@ Treat the returned value as a secret. Do not commit it to source control or shar
 
 ## Verify a token
 
-To check that an API token or Wrangler OAuth token is valid, send it to the [List accounts](/api/resources/accounts/methods/list/) endpoint:
+To check that a user API token is valid, send it to the [Verify Token](/api/resources/user/subresources/tokens/methods/verify/) endpoint:
 
 <CURL
-	url="https://api.cloudflare.com/client/v4/accounts"
+	url="https://api.cloudflare.com/client/v4/user/tokens/verify"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 />
 
-If the token is valid, the response lists the accounts the token can access. If the token is invalid or expired, the request fails with an authentication error.
+If the token is valid, the response includes the token's `id` and a `status` of `active`.
