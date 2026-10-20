@@ -27,7 +27,7 @@
                     "none"
                 ],
                 "default_effort": "high",
-                "default_enabled": false,
+                "default_enabled": true,
                 "mandatory": false,
                 "normalizes_to": {
                     "null": "high",
@@ -342,7 +342,7 @@
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": false,
+                                            "default": true,
                                             "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
@@ -1591,7 +1591,7 @@
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": false,
+                                            "default": true,
                                             "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
@@ -2410,7 +2410,7 @@
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": false,
+                                                        "default": true,
                                                         "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
@@ -3659,7 +3659,7 @@
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": false,
+                                                        "default": true,
                                                         "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
