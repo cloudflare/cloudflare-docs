@@ -1,7 +1,7 @@
 ---
 title: AI SDK
 pcx_content_type: how-to
-description: Use createAI from agents/models/ai-sdk to call Workers AI models, AI Gateway catalog models, dynamic routes, and vendor AI SDK models through the AI binding.
+description: Use createAI from agents/models/ai-sdk to call Workers AI models, AI Gateway catalog models, dynamic routes, and vendor AI SDK models through the AI binding or an account id and API token.
 tags:
   - AI
 sidebar:
@@ -19,7 +19,7 @@ import {
 
 `agents/models/ai-sdk` is an [AI SDK](https://ai-sdk.dev/) provider for Workers AI and AI Gateway. `createAI` returns a full `ProviderV4`, so its models work anywhere the AI SDK takes a model: `generateText`, `streamText`, tools, structured output, and [Think](/agents/harnesses/think/).
 
-The provider takes two kinds of model. Both go through the `AI` binding:
+The provider takes two kinds of model. Both go through the `AI` binding, or over HTTP with an [account id and API token](#use-an-account-id-and-api-token):
 
 ```ts
 // A string runs on env.AI.run.
@@ -33,7 +33,7 @@ ai(anthropic("claude-opus-5-5"));
 
 A string needs no vendor package and no vendor key. A model object keeps the vendor's own request builder and parser.
 
-`createAI` replaces the `AI` binding mode of `workers-ai-provider` (`createWorkersAI({ binding })`) and `ai-gateway-provider` (`createAiGateway({ binding })`). Those packages will be deprecated once `createAI` covers everything they do.
+`createAI` replaces `workers-ai-provider` and `ai-gateway-provider`. For AI Search, use `ai-search-provider`.
 
 :::caution[Beta]
 This provider is in beta. Its API may change in a minor release.
@@ -60,6 +60,22 @@ Add the `AI` binding to your Wrangler configuration:
 ```
 
 </WranglerConfig>
+
+## Use an account id and API token
+
+To use a gateway in another account, or to call from outside a Worker, pass `accountId` and `apiToken` instead of `binding`:
+
+```ts
+const ai = createAI({
+	accountId: "<ACCOUNT_ID>",
+	apiToken: env.CLOUDFLARE_API_TOKEN,
+	gateway: "my-gateway",
+});
+```
+
+The call forms and options are the same, and the gateway still defaults to `default`. A string goes to AI Gateway's [REST API](/ai-gateway/usage/rest-api/), which runs it as `env.AI.run()` does. A model object goes to the [provider-native endpoint](/ai-gateway/usage/providers/) at `gateway.ai.cloudflare.com`, with the token in the `cf-aig-authorization` header. The token is sent to those two hosts only.
+
+[Create an API token](/fundamentals/api/get-started/create-token/) with the **Workers AI Read** permission for strings and **AI Gateway Run** for model objects.
 
 ## Call a Workers AI model
 
@@ -271,7 +287,7 @@ export default {
 
 ## Resume a dropped stream
 
-A stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything:
+Through the binding, a stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything:
 
 ```ts
 const result = streamText({
@@ -390,6 +406,9 @@ Gateway options can be given flat or nested: `{ cacheTtl: 60 }` and `{ gateway: 
 
 | Option               | Type                                                     | Description                                                                                |
 | -------------------- | -------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `binding`            | `Ai`                                                     | The `AI` binding. Provider only.                                                           |
+| `accountId`          | `string`                                                 | The account for an [account id and API token](#use-an-account-id-and-api-token). Provider only. |
+| `apiToken`           | `string`                                                 | A Cloudflare API token for that account. Provider only.                                    |
 | `id`                 | `string`                                                 | Gateway id. Defaults to `"default"`, which is created the first time you use it.           |
 | `gateway`            | `string \| GatewayOptions`                              | The gateway id, or the gateway options nested.                                             |
 | `skipCache`          | `boolean`                                                | Bypass the gateway cache.                                                                  |
@@ -435,7 +454,7 @@ providerMetadata?.cloudflare;
 | Field         | Description                                                                     |
 | ------------- | ------------------------------------------------------------------------------- |
 | `model`       | The model that answered, after any fallback.                                    |
-| `gateway`     | The gateway id the request went through.                                        |
+| `gateway`     | The gateway id, when a gateway handled the request.                             |
 | `provider`    | The gateway provider, for a model object.                                       |
 | `logId`       | The gateway log entry, from `cf-aig-log-id`.                                    |
 | `eventId`     | The gateway event, from `cf-aig-event-id`.                                      |
@@ -445,7 +464,7 @@ providerMetadata?.cloudflare;
 | `cacheStatus` | `HIT` or `MISS`, from `cf-aig-cache-status`.                                    |
 | `step`        | The step of a gateway route that answered, from `cf-aig-step`.                  |
 
-Only `model` and `gateway` are always present. Check for the other fields before you use them.
+Only `model` is always present. Check for the other fields before you use them.
 
 ## Handle errors
 
@@ -517,7 +536,7 @@ Model-specific settings go under `providerOptions.cloudflare`:
 | Transcription | `audio`, `mediaType`                                                                      | `language`, `task`, `initialPrompt`, `prefix`, `vadFilter` |
 | Reranking     | `query`, `documents`, `topN` (as `top_k`)                                                 | None                                                       |
 
-An option a model does not take is listed in the result's `warnings` instead of being sent. For example, `flux-1-schnell` takes only a prompt and `steps`. Image generation makes one image per request, so `generateImage` with a larger `n` sends parallel requests.
+An option a model does not take is listed in the result's `warnings` instead of being sent. For example, `flux-1-schnell` takes only a prompt and `steps`, and `@cf/deepgram/nova-3` takes `language` but not the Whisper-only transcription options. Image generation makes one image per request, so `generateImage` with a larger `n` sends parallel requests.
 
 These methods take Workers AI `@cf/` ids only, including in `fallback`. To route a vendor's own embedding, image, speech, or transcription model through AI Gateway, pass it to `ai.routed(model)`. It goes to the provider-native endpoint, like `ai(model)`. `ai.routed()` takes the gateway options, `headers`, `sessionAffinity`, and `vendorKey`.
 
@@ -543,7 +562,7 @@ A string can be a Workers AI id, a catalog id, or a dynamic route.
 
 ## Limitations
 
-- `@cf/deepgram/nova-3` and `@cf/deepgram/flux` are not supported. They throw a `CloudflareAIError` before any request is sent. Use `@cf/openai/whisper-large-v3-turbo` for transcription.
+- `@cf/deepgram/flux` takes websocket connections only, so it throws a `CloudflareAIError` before any request is sent. Use `@cf/deepgram/nova-3` or `@cf/openai/whisper-large-v3-turbo` for transcription.
 - `chatTemplateKwargs` and `sessionAffinity` apply to Workers AI models only.
 - `zdr` applies to model objects only.
 - Workers AI streams and model object streams do not resume after a dropped connection.

@@ -1,7 +1,7 @@
 ---
 title: Pi AI
 pcx_content_type: how-to
-description: Use createAI from agents/models/pi-ai to run Workers AI models, AI Gateway catalog models, dynamic routes, and Pi AI model objects through the AI binding with Pi AI, Pi Durable, and the Pi harness.
+description: Use createAI from agents/models/pi-ai to run Workers AI models, AI Gateway catalog models, dynamic routes, and Pi AI model objects through the AI binding or an account id and API token with Pi AI, Pi Durable, and the Pi harness.
 tags:
   - AI
 sidebar:
@@ -42,6 +42,18 @@ Add the `AI` binding to your Wrangler configuration:
 ```
 
 </WranglerConfig>
+
+To use a gateway in another account, or to call from outside a Worker, pass `accountId` and `apiToken` instead of `binding`. Everything else is the same, and the gateway still defaults to `default`:
+
+```ts
+const ai = createAI({
+	accountId: "<ACCOUNT_ID>",
+	apiToken: env.CLOUDFLARE_API_TOKEN,
+	gateway: "my-gateway",
+});
+```
+
+[Create the API token](/fundamentals/api/get-started/create-token/) with **Workers AI Read** and **AI Gateway Run**. The token is sent to the AI Gateway REST API and to `gateway.ai.cloudflare.com` only.
 
 ## Call a model
 
@@ -208,7 +220,7 @@ The gateway's own failures, such as a missing gateway or an unpaid account, beco
 
 ## Resume a dropped stream
 
-A stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything.
+Through the binding, a stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything.
 
 AI Gateway names each streamed run in the `cf-aig-run-id` header and keeps its events. If the connection drops, the provider reconnects through the binding and replays the run from the last complete event. The stream continues with nothing lost or repeated.
 
@@ -216,20 +228,20 @@ The provider gives up after five drops in one stream, or once the gateway no lon
 
 ## How requests are routed
 
-The provider routes every request through the `AI` binding. It has no HTTP transport and needs no API token:
+The provider routes every request through the `AI` binding, or over HTTP with an account id and API token:
 
-| Model                                                      | `api`                | Transport                                                      |
-| ---------------------------------------------------------- | -------------------- | -------------------------------------------------------------- |
-| `@cf/` models and dynamic routes                           | `cloudflare-ai`      | `env.AI.run()`, with Cloudflare's compatibility layer          |
-| Anthropic models from Pi AI's gateway catalog              | `anthropic-messages` | `env.AI.run()` to AI Gateway, in Anthropic Messages format     |
-| OpenAI models from Pi AI's gateway catalog                 | `openai-responses`   | `env.AI.run()` to AI Gateway, in OpenAI Responses format       |
-| Any other model object, such as Anthropic, OpenAI, or Groq | its own `api`        | The binding's `fetch` to AI Gateway's provider-native endpoint |
+| Model                                                      | `api`                | Through the binding                                            | With an account id and token                                  |
+| ---------------------------------------------------------- | -------------------- | -------------------------------------------------------------- | ------------------------------------------------------------- |
+| `@cf/` models and dynamic routes                           | `cloudflare-ai`      | `env.AI.run()`, with Cloudflare's compatibility layer          | The AI Gateway REST API, with the same compatibility layer    |
+| Anthropic models from Pi AI's gateway catalog              | `anthropic-messages` | `env.AI.run()` to AI Gateway, in Anthropic Messages format     | The REST API's `/ai/v1/messages`, in the same format          |
+| OpenAI models from Pi AI's gateway catalog                 | `openai-responses`   | `env.AI.run()` to AI Gateway, in OpenAI Responses format       | The REST API's `/ai/v1/responses`, in the same format         |
+| Any other model object, such as Anthropic, OpenAI, or Groq | its own `api`        | The binding's `fetch` to AI Gateway's provider-native endpoint | `gateway.ai.cloudflare.com`, the provider-native endpoint     |
 
 A model from Pi AI's Cloudflare AI Gateway catalog runs on `env.AI.run()` under its catalog id, in the model's native format. AI Gateway converts nothing, so Pi AI's own stream processors read the answer. The gateway picks the provider and bills through Unified Billing or a key stored on the gateway.
 
 Any other model object goes to AI Gateway's [provider-native endpoint](/ai-gateway/usage/providers/) through the binding's `fetch`. The provider takes the gateway provider from the model's `baseUrl` host. Pi AI's own converter builds the vendor's request body, and Pi AI parses the vendor's response stream.
 
-Either way, no credential header leaves your Worker. The provider never rewrites the model's `api`, `provider`, or `id`, so thinking signatures and encrypted reasoning items work on the next turn.
+Either way, no vendor credential leaves your Worker. The provider never rewrites the model's `api`, `provider`, or `id`, so thinking signatures and encrypted reasoning items work on the next turn.
 
 The provider routes four `api` values: `cloudflare-ai`, `anthropic-messages`, `openai-responses`, and `openai-completions`. Models from several Pi AI registries use other values and cannot be routed yet, including `mistral-conversations`, `google-generative-ai`, `google-vertex`, `amazon-bedrock`, `azure-openai-responses`, and `openai-codex`. Such a model's stream ends with an `error` event that names its `api`. So does a model whose `baseUrl` host AI Gateway has no provider for.
 

@@ -1,7 +1,7 @@
 ---
 title: Models
 pcx_content_type: overview
-description: Call Workers AI, AI Gateway catalog models, dynamic routes, and vendor models from the AI SDK or Pi AI with one createAI provider over the AI binding.
+description: Call Workers AI, AI Gateway catalog models, dynamic routes, and vendor models from the AI SDK or Pi AI with one createAI provider over the AI binding or an account id and API token.
 tags:
   - AI
 sidebar:
@@ -15,7 +15,7 @@ products:
 
 import { LinkCard, WranglerConfig } from "~/components";
 
-The Agents SDK includes model providers for [Workers AI](/workers-ai/) and [AI Gateway](/ai-gateway/). Each provider is one `createAI` factory over the Worker's `AI` binding. There are two, one per framework:
+The Agents SDK includes model providers for [Workers AI](/workers-ai/) and [AI Gateway](/ai-gateway/). Each provider is one `createAI` factory over the Worker's `AI` binding, or an account id and API token. There are two, one per framework:
 
 | Import                 | Framework                                                           | Use it with                                                   |
 | ---------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- |
@@ -48,17 +48,17 @@ The providers do not use the deprecated [Universal Endpoint](/ai-gateway/usage/u
 
 ## What every model gets
 
-- **No API tokens in your Worker.** Requests go through the `AI` binding. AI Gateway holds third-party credentials, through [Unified Billing](/ai-gateway/features/unified-billing/) or a key you [store on the gateway](/ai-gateway/configuration/bring-your-own-keys/). Unified Billing requires [authentication](/ai-gateway/configuration/authentication/) on the gateway.
+- **No vendor keys.** AI Gateway holds third-party credentials, through [Unified Billing](/ai-gateway/features/unified-billing/) or a key you [store on the gateway](/ai-gateway/configuration/bring-your-own-keys/). Unified Billing requires [authentication](/ai-gateway/configuration/authentication/) on the gateway.
 - **Gateway options.** Caching, logging, metadata, timeouts, retries, and BYOK key aliases are options on the provider, the model, or the call. The `default` gateway is created the first time you use it.
 - **Fallback.** List models to try in order if the first fails before it produces output. Mix Workers AI ids, catalog ids, dynamic routes, and model objects.
-- **Stream resume.** A stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything.
+- **Stream resume.** Through the binding, a stream from a catalog model or a dynamic route resumes after a dropped connection. You do not need to configure anything.
 - **Gateway metadata on every result.** Each response carries the gateway log id, cache status, run id, and the model that actually answered.
 
-`createAI` from `agents/models/ai-sdk` replaces the `AI` binding mode of `workers-ai-provider` (`createWorkersAI({ binding })`) and `ai-gateway-provider` (`createAiGateway({ binding })`). Those packages will be deprecated once `createAI` covers everything they do.
+`createAI` from `agents/models/ai-sdk` replaces `workers-ai-provider` and `ai-gateway-provider`. For AI Search, use `ai-search-provider`.
 
-## Configure the binding
+## Connect to Cloudflare
 
-Both providers need the `AI` binding:
+Inside a Worker, pass the `AI` binding, `createAI({ binding: env.AI })`, and add it to your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -71,6 +71,16 @@ Both providers need the `AI` binding:
 ```
 
 </WranglerConfig>
+
+To use a gateway in another account, or to call from outside a Worker, pass an account id and API token instead. [Create the token](/fundamentals/api/get-started/create-token/) with **Workers AI Read** and **AI Gateway Run**:
+
+```ts
+const ai = createAI({
+	accountId: "<ACCOUNT_ID>",
+	apiToken: env.CLOUDFLARE_API_TOKEN,
+	gateway: "my-gateway",
+});
+```
 
 ## Choose a provider
 
