@@ -160,7 +160,7 @@
 		"unist-util-visit": "5.1.0",
 		"valibot": "1.5.0",
 		"vite": "^8.3.4",
-		"vitest": "4.1.11",
+		"vitest": "5.0.5",
 		"workers-og": "0.0.27",
 		"wrangler": "4.150.0",
 		"yaml": "2.9.1",
