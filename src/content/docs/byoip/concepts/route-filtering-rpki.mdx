@@ -20,8 +20,8 @@ When you register your prefix with one of the five Regional Internet Registries 
 
 An [Autonomous System Provider Authorization (ASPA)](https://datatracker.ietf.org/doc/draft-ietf-sidrops-aspa-verification/) is another RPKI object. It declares which ASNs can act as upstream providers for an ASN.
 
-When ASPA validation is enabled for your account, Cloudflare checks ASPA data for your own ASN during onboarding and revalidation. A published ASPA must authorize AS13335 as a provider. It can also authorize other providers. You do not need to publish an ASPA to onboard a prefix.
+When you use your own ASN, Cloudflare checks ASPA data during onboarding and revalidation. Publishing an ASPA is optional. If you publish one for your ASN, include AS13335 in its provider list. Other authorized providers can remain.
 
-An ASPA that excludes AS13335 blocks approval when validation confirms that it does not authorize Cloudflare. An unavailable or unreadable ASPA response does not block otherwise-valid onboarding. In that case, the API omits `aspa_validation_state`. Omission does not confirm that no ASPA exists or that authorization passed. Refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/) for response states.
+Refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/) for response states and troubleshooting.
 
 [^1]: AFRINIC, APNIC, ARIN, LACNIC, and RIPE.

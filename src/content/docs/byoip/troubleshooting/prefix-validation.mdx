@@ -31,7 +31,7 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
    }
    ```
 
-2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review your IRR record, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, ownership validation method, and any ASPA accordingly.
+2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review the corresponding records: your IRR `route` or `route6` object, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, prefix ownership validation records, ASN `aut-num` object, and any published ASPA.
 
     - Information in the IRR and ROA records should meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
 
@@ -50,7 +50,7 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
     | `missing` | Cloudflare could not find an `aut-num` object for the ASN at a supported RIR. | Verify the object exists at AFRINIC, APNIC, ARIN, or RIPE. For a LACNIC-registered ASN, contact your account team. |
     | `invalid` | The `aut-num` object does not contain the expected token. | Add `cf-validation: <OWNERSHIP_VALIDATION_TOKEN>` to an editable field in the `aut-num` object. |
 
-    This field is omitted when ASN ownership validation does not apply or is not enabled for your account, such as when you use AS13335. Omission does not confirm ownership of a customer ASN.
+    This field is omitted when ASN ownership validation does not apply, such as when you use AS13335. Omission does not confirm ownership of a customer ASN.
 
     Use the following guidance for `aspa_validation_state`:
 
@@ -60,9 +60,9 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
     | `valid` | ASPA data for your ASN authorizes AS13335 as a provider. | No action is required. |
     | `invalid` | ASPA data for your ASN does not authorize AS13335 as a provider. | Use your RIR's RPKI tooling to add AS13335 to the ASPA provider list. You can keep other authorized providers. |
 
-    An omitted `aspa_validation_state` means the response has no ASPA validation result. This can occur when no ASPA exists, validation is not enabled for the account, validation does not apply to the ASN, or the ASPA lookup or response could not be processed. Do not interpret omission as successful validation or confirmed absence of an ASPA.
+    If `aspa_validation_state` is omitted, no ASPA validation result is available. Omission does not indicate successful validation or confirm that no ASPA exists.
 
-    An unpublished ASPA or an unavailable lookup does not block otherwise-valid onboarding. A confirmed `invalid` result blocks approval.
+    Publishing an ASPA is optional. An `invalid` result blocks approval until your ASPA authorizes AS13335.
 
 3. <Render file="validate-prefix-endpoint" product="byoip" />
 
