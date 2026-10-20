@@ -1,6 +1,6 @@
 ---
 title: Sandbox lifetime
-description: Understand what keeps a sandbox running, what stops it, and which files the next instance starts with.
+description: Understand what keeps a sandbox running, what stops it, where it runs, and which files the next instance starts with.
 pcx_content_type: concept
 sidebar:
   order: 2
@@ -30,6 +30,18 @@ The sandbox of the coding agent, from top to bottom: the name, the Durable Objec
 Your Worker calls `getByName()` with the sandbox name. The same name always reaches the same Durable Object. Durable Object storage keeps data such as session details or a snapshot ID, whether or not an instance is running.
 
 When work arrives and no instance is running, the Durable Object starts one with [`this.ctx.container.start()`](/containers/api/durable-object-container/#start).
+
+## A jurisdiction decides where the sandbox runs
+
+To keep a sandbox in a region for data residency, such as the EU, get its Durable Object from a namespace restricted to a [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction):
+
+```ts
+const sandbox = env.MY_SANDBOX.jurisdiction("eu").getByName(name);
+```
+
+The Durable Object and its storage stay in the jurisdiction, and so does each instance that it starts. Wrangler does not accept placement `constraints` for the Durable Object scheduling policy. For the regions in each jurisdiction, refer to [Placement](/containers/concepts/placement/).
+
+The jurisdiction is part of the Durable Object ID. `env.MY_SANDBOX.jurisdiction("eu").getByName("a")` reaches a different Durable Object from `env.MY_SANDBOX.getByName("a")`, with its own storage. Choose the jurisdiction before you create the sandboxes that need it.
 
 ## Activity keeps an instance running
 
