@@ -1,0 +1,15 @@
+---
+title: Bring your own ASN with BYOIP
+description: Onboard BYOIP prefixes with your own autonomous system number, with ASN ownership verification and ASPA validation.
+products:
+  - byoip
+date: 2026-10-20
+---
+
+[Bring Your Own IP (BYOIP)](/byoip/) now supports self-service onboarding with your own autonomous system number (ASN). You can use your ASN as the origin for your prefixes instead of Cloudflare's AS13335, retaining your routing identity while using Cloudflare's services.
+
+To get started, select your ASN when adding a prefix and verify ownership by publishing your validation token in the ASN's `aut-num` record. ASN verification is reused for additional prefixes in the same Cloudflare account. Self-service ASN verification supports AFRINIC, APNIC, ARIN, and RIPE. For a LACNIC-registered ASN, contact your account team.
+
+BYOIP also validates Autonomous System Provider Authorization (ASPA) data for your ASN. Publishing an ASPA is optional. If you publish one, its provider list must include AS13335; you can keep other authorized providers.
+
+Follow the [BYOIP onboarding guide](/byoip/get-started/) to configure your prefix and verify ownership. For help interpreting validation results, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/).
