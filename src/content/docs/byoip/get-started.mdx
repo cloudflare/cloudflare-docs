@@ -102,9 +102,9 @@ When you use your own ASN, the response can also include these fields:
 }
 ```
 
-`asn_ownership_validation_state` is omitted when ASN ownership validation does not apply or is not enabled for your account. Its initial state can be `valid` if the same account previously verified the ASN.
+`asn_ownership_validation_state` is omitted when ASN ownership validation does not apply, such as when you use AS13335. Its initial state can be `valid` if the same account previously verified the ASN.
 
-When `aspa_validation_state` is present, its value is `pending`, `valid`, or `invalid`. An omitted field means that the response has no ASPA validation result. It does not confirm that no ASPA exists. For more information, refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/).
+When `aspa_validation_state` is present, its value is `pending`, `valid`, or `invalid`. If the field is omitted, no ASPA validation result is available. Omission does not indicate successful validation or confirm that no ASPA exists. For more information, refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/).
 
 :::note[Letter of Agency]
 This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you must upload the LOA manually, [update the prefix](/api/resources/addressing/subresources/prefixes/methods/edit/) after it is approved, and contact your account team. Manual LOA processing can increase onboarding time.
