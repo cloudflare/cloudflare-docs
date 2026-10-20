@@ -4,7 +4,7 @@ description: The Agents SDK's createAI calls Workers AI, the AI Gateway catalog,
 products:
   - agents
   - workers
-date: 2026-10-14
+date: 2026-10-20
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -12,7 +12,7 @@ import { TypeScriptExample } from "~/components";
 The Agents SDK now ships [`createAI`](/agents/models/), one model provider for Workers AI and AI Gateway over the Worker's `AI` binding. There are two imports, with the same options:
 
 - `agents/models/ai-sdk` for the [AI SDK](/agents/models/ai-sdk/). It replaces the `AI` binding mode of `workers-ai-provider` and `ai-gateway-provider`.
-- `agents/models/pi-ai` for [Pi AI](/agents/models/pi-ai/) and the [Pi harness](/agents/harnesses/pi/). It gives Pi AI the same binding-based support.
+- `agents/models/pi-ai` for [Pi AI](/agents/models/pi-ai/) and the [Pi harness](/agents/harnesses/pi/). It gives Pi AI the same binding-based support, and needs `@earendil-works/pi-ai` 1.3.
 
 The [OpenCode harness](/agents/harnesses/opencode/) uses the AI SDK provider through `agents/models/opencode`.
 
