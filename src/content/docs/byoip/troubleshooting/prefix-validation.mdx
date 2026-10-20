@@ -35,11 +35,43 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
 
     - Information in the IRR and ROA records should meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
 
-    - [Prefix ownership validation](/byoip/get-started/#validate-prefix-ownership) requires the validation token in the matching `route` or `route6` object, or in each required reverse DNS zone. RPKI validation checks the ROA separately.
+    - Token-based [prefix ownership validation](/byoip/get-started/#validate-prefix-ownership) requires a valid ROA. Publish the validation token either in the matching `route` or `route6` object, or in each required reverse DNS zone.
 
     - [ASN ownership validation](/byoip/get-started/#validate-asn-ownership) requires the same token in the `aut-num` object when `asn_ownership_validation_state` applies.
 
     - [Autonomous System Provider Authorization (ASPA)](/byoip/concepts/route-filtering-rpki/#aspa-authorization) validation checks whether ASPA data for your ASN authorizes AS13335 as a provider.
+
+    Use the following guidance for `irr_validation_state`:
+
+    | State | Meaning | Resolution |
+    | --- | --- | --- |
+    | `pending` | IRR validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `valid` | An IRR `route` or `route6` object exactly matches the prefix and selected ASN. | No action is required. |
+    | `missing` | Cloudflare could not find a matching IRR route object. | Publish a `route` or `route6` object for the prefix with the selected ASN as its `origin`. |
+    | `mismatch_asn` | The IRR route object has a different origin ASN. | Update the `origin` to match the ASN selected when you added the prefix. |
+    | `mismatch_more_specific` | The IRR route object covers a smaller address range than the prefix you added. | Publish a route object that exactly matches the prefix you want to onboard. |
+    | `mismatch_less_specific` | The IRR route object covers a larger address range and has the selected origin ASN. | This passes IRR validation. Confirm that the other validation checks also pass. |
+    | `invalid` | The IRR records do not satisfy validation requirements. | Check the route object, prefix, and origin ASN against the onboarding prerequisites, then retry validation. |
+
+    Use the following guidance for `rpki_validation_state`:
+
+    | State | Meaning | Resolution |
+    | --- | --- | --- |
+    | `pending` | RPKI validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `valid` | A ROA authorizes the selected ASN to originate the prefix at its prefix length. | No action is required. |
+    | `missing` | No ROA covers the prefix. | Publish a ROA authorizing the selected ASN and prefix length. Token-based prefix ownership validation also requires a valid ROA. |
+    | `invalid` | The ROAs do not authorize the selected ASN or prefix length. | Correct the authorized ASN or maximum prefix length in your ROA. Verify the result with the [RPKI Portal](https://rpki.cloudflare.com/?view=validator), then retry validation. |
+
+    Use the following guidance for `ownership_validation_state`:
+
+    | State | Meaning | Resolution |
+    | --- | --- | --- |
+    | `pending` | Prefix ownership validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `valid` | Prefix ownership is verified. | No action is required. Remove the token only after any required ASN ownership check also returns `valid`. |
+    | `missing` | RPKI validation is `missing`, or neither the IRR nor reverse DNS method provides the required ownership records. | Check `rpki_validation_state`, publish a valid ROA, and confirm that your IRR record or each required reverse DNS zone contains the token. |
+    | `invalid` | Prefix ownership proof did not pass validation. | Confirm that RPKI validation is `valid` and that the token matches `ownership_validation_token` in the IRR record or each required reverse DNS zone. |
+
+    If you use a manually uploaded Letter of Agency (LOA), ownership validation remains `invalid` until Cloudflare verifies the document. Contact your account team to confirm its verification status.
 
     Use the following guidance for `asn_ownership_validation_state`:
 
