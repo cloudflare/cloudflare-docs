@@ -81,6 +81,7 @@ Returned repo tokens are secrets. Do not log them or store them in long-lived re
 
 ```ts
 export type NamespaceName = string;
+export type Jurisdiction = "eu" | "us";
 export type RepoName = string;
 export type BranchName = string;
 export type Scope = "read" | "write";
@@ -153,6 +154,31 @@ export interface TokenInfo {
 ```
 
 ## Namespaces
+
+### Create a namespace
+
+Route: `POST /artifacts/namespaces`
+
+Use the account-level base URL.
+
+Request body:
+
+- `namespace` <Type text="NamespaceName" /> <MetaInfo text="required" />
+- `jurisdiction` <Type text='"eu" | "us"' /> <MetaInfo text="optional (default: unrestricted)" />
+
+```bash
+curl --request POST "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "namespace": "my-eu-namespace",
+    "jurisdiction": "eu"
+  }'
+```
+
+The jurisdiction applies to every repo in the namespace and cannot be changed after creation. If you omit `jurisdiction`, Artifacts creates an unrestricted namespace.
+
+For more information, refer to [Data localization](/artifacts/guides/data-localization/).
 
 ### List namespaces
 

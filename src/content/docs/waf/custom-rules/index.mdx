@@ -8,7 +8,7 @@ sidebar:
   order: 5
 ---
 
-import { Render, FeatureTable } from "~/components";
+import { Render } from "~/components";
 
 <Render file="custom-rules-intro" product="waf" />
 
@@ -16,19 +16,22 @@ Custom rules are evaluated in order, and some actions like _Block_ will stop the
 
 ## Custom rulesets
 
-To define sets of custom rules that apply to more than one zone, use [custom rulesets](/waf/account/custom-rulesets/). At the zone level, all customers can create and deploy custom rulesets. Custom rulesets at the account level require an Enterprise plan.
-
-:::note
-Currently, the Cloudflare dashboard does not support working with custom rulesets at the zone level. You will need to [use the Cloudflare API](/waf/custom-rules/create-api/) to configure or deploy these rulesets.
-:::
+At the zone level, all customers can create and deploy [custom rulesets](/waf/custom-rules/custom-rulesets/) in the dashboard or via the API. To define sets of custom rules that apply to more than one zone, use [account-level custom rulesets](/waf/account/custom-rulesets/). Account-level custom rulesets require an Enterprise plan.
 
 ## Interaction with other app security features
 
-<Render file="app-security-interoperability" product="waf" />
+<Render file="app-security-interoperability" product="waf" params={{ botsFeatureName: "Super Bot Fight Mode" }} />
 
 ## Availability
 
-<FeatureTable id="security.waf_c_custom_rules" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | Yes | Yes | Yes | Yes |
+| Number of rules | 5 | 20 | 100 | 1,000 |
+| Supported actions | All except Log | All except Log | All except Log | All |
+| Regex support | No | No | Yes | Yes |
+| Number of custom rulesets (zone) | 1 | 2 | 5 | 10 |
+| Account-level custom rulesets | No | No | No | Yes |
 
 The maximum number of custom rules applies to all rules in the `http_request_firewall_custom` [phase](/ruleset-engine/about/phases/), which is where custom rules run. Each scope (zone or account) has a separate maximum number of rules, counted in the following way:
 

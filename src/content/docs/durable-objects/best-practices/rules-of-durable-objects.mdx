@@ -967,9 +967,13 @@ export default {
 
 Refer to [Invoke methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for more details on RPC and the legacy `fetch()` handler.
 
-### Initialize Durable Objects explicitly with an `init()` method
+### Read a Durable Object's identity from `ctx.id`
 
-Durable Objects do not know their own name or ID from within. If your Durable Object needs to know its identity (for example, to store a reference to itself or to communicate with related objects), you must explicitly initialize it.
+A Durable Object can read its own ID from `this.ctx.id`. If the caller accessed the Durable Object with `getByName()` or `idFromName()`, `this.ctx.id.name` holds that name. You do not need to pass the name as an argument or store it yourself. This also works in [alarm handlers](/durable-objects/api/alarms/), where there is no caller to pass the name.
+
+`ctx.id.name` is `undefined` if the Durable Object was created with `newUniqueId()`, was accessed with `idFromString()`, or was given a name longer than 1,024 bytes. Refer to [Durable Object ID](/durable-objects/api/id/#name) for details.
+
+If your Durable Object needs application-defined data that is not part of its ID (for example, who created it), use an explicit `init()` method to store that data.
 
 <TypeScriptExample filename="index.ts">
 ```ts
@@ -980,37 +984,24 @@ export interface Env {
 }
 
 export class ChatRoom extends DurableObject<Env> {
-	private roomId: string | null = null;
+	// The name passed to getByName() or idFromName()
+	getRoomId(): string {
+		const roomId = this.ctx.id.name;
+		if (!roomId) {
+			throw new Error("ChatRoom must be accessed by name.");
+		}
+		return roomId;
+	}
 
-	// Call this after creating the Durable Object for the first time
-	async init(roomId: string, createdBy: string) {
-		// Check if already initialized
-		const existing = await this.ctx.storage.get("roomId");
+	// Store application-defined data that is not part of the ID
+	async init(createdBy: string) {
+		const existing = await this.ctx.storage.get("createdBy");
 		if (existing) {
 			return; // Already initialized
 		}
 
-		// Store the identity
-		await this.ctx.storage.put("roomId", roomId);
 		await this.ctx.storage.put("createdBy", createdBy);
 		await this.ctx.storage.put("createdAt", Date.now());
-
-		// Cache in memory for this session
-		this.roomId = roomId;
-	}
-
-	async getRoomId(): Promise<string> {
-		if (this.roomId) {
-			return this.roomId;
-		}
-
-		const stored = await this.ctx.storage.get<string>("roomId");
-		if (!stored) {
-			throw new Error("ChatRoom not initialized. Call init() first.");
-		}
-
-		this.roomId = stored;
-		return stored;
 	}
 }
 
@@ -1019,11 +1010,10 @@ export default {
 		const url = new URL(request.url);
 		const roomId = url.searchParams.get("room") ?? "lobby";
 
-		const id = env.CHAT_ROOM.idFromName(roomId);
-		const stub = env.CHAT_ROOM.get(id);
+		const stub = env.CHAT_ROOM.getByName(roomId);
 
 		// Initialize on first access
-		await stub.init(roomId, "system");
+		await stub.init("system");
 
 		return new Response(`Room ${await stub.getRoomId()} ready`);
 	},
@@ -1497,7 +1487,7 @@ This pattern does not scale. As traffic increases, the single Durable Object bec
 
 ### Test with Vitest and plan for class lifecycle changes
 
-Use `@cloudflare/vitest-pool-workers` for testing Durable Objects. The integration provides utilities for direct instance access.
+Use `@cloudflare/vitest-plugin` for testing Durable Objects. The integration provides utilities for direct instance access.
 
 <TypeScriptExample filename="test/chat-room.test.ts">
 ```ts
@@ -1546,7 +1536,7 @@ const stub = env.CHAT_ROOM.get(id);
 Configure Vitest in your `vitest.config.ts`:
 
 ```ts
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({

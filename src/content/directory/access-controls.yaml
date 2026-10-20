@@ -1,0 +1,12 @@
+id: kduQAP
+name: Access controls
+
+entry:
+  title: Access controls
+  url: /cloudflare-one/access-controls/
+  show: false
+
+meta:
+  title: Cloudflare One Access controls docs
+  description: Secure self-hosted and SaaS applications with Cloudflare Access policies
+  author: "@cloudflare"

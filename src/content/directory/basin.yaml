@@ -1,0 +1,14 @@
+id: zY33Vr
+name: Basin
+
+entry:
+  title: Basin
+  url: /basin/
+  group: Developer platform
+  additional_groups: [Storage]
+  tags: [Storage]
+
+meta:
+  title: Cloudflare Basin docs
+  description: Ingest, manage, and query analytics data stored in R2
+  author: "@cloudflare"

@@ -87,7 +87,7 @@ An object containing properties that you want to apply to the request.
 
 * `redirect` <Type text="string" /> <MetaInfo text="optional" />
 
-  * The redirect mode to use: `follow`, `error`, or `manual`. The default  for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
+  * The redirect mode to use: `follow` or `manual`. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`. Workers does not implement the `error` mode from the Fetch standard: passing `redirect: "error"` throws a `TypeError` as soon as the `Request` is constructed (including inside `fetch(url, init)`), before any request is sent. Use `manual` and check the status code of the returned response instead.
 
 * `signal` AbortSignal optional
   * If provided, the request can be canceled by triggering an abort on the corresponding `AbortController`.
@@ -262,7 +262,7 @@ All properties of an incoming `Request` object (the request you receive from the
 
 * `redirect` string read-only
 
-  * The redirect mode to use: `follow`, `error`, or `manual`. The `fetch` method will automatically follow redirects if the redirect mode is set to `follow`. If set to `manual`, the `3xx` redirect response will be returned to the caller as-is. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
+  * The redirect mode to use: `follow` or `manual`. The `fetch` method will automatically follow redirects if the redirect mode is set to `follow`. If set to `manual`, the `3xx` redirect response will be returned to the caller as-is. The `error` mode from the Fetch standard is not implemented in Workers, and passing it throws a `TypeError` when the `Request` is constructed. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
 * `signal` AbortSignal read-only
   * The `AbortSignal` corresponding to this request. If you use the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag, you can attach an event listener to the signal. This allows you to perform cleanup tasks or write to logs before your Worker's invocation ends.

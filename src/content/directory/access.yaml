@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare Access docs
-  description: Determine who can reach your application using policies
+  description: Authenticate users for self-hosted, SaaS, and private applications, and log every request
   author: "@cloudflare"

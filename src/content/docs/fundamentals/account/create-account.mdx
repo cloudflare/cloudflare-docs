@@ -9,15 +9,91 @@ products:
   - fundamentals
 ---
 
-import { DashButton, Render } from "~/components"
+import { DashButton, Render, Steps, TabItem, Tabs } from "~/components"
 
-To create a Cloudflare account:
+To create your first Cloudflare account:
 
+<Steps>
 1. Go to the [Sign up page](https://dash.cloudflare.com/sign-up).
 2. Enter your **Email** and **Password**.
 3. Select **Create Account**.
+</Steps>
 
 Once you create your account, Cloudflare will automatically send an email to your address to [verify that email address](/fundamentals/user-profiles/verify-email-address/).
+
+## Create an additional Free account
+
+Existing users can create additional Free accounts in the dashboard or with the API.
+
+### Eligibility
+
+The following requirements apply to Free account creation:
+
+- Your Cloudflare user must be active and at least seven days old.
+- You must have the Super Administrator role on an existing account.
+- You can create up to five additional Free accounts.
+
+### Create an account in the dashboard
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Accounts**.
+
+    <DashButton url="/" />
+
+2. Select **Create Account**.
+3. Enter an account name.
+4. Select **Create Account**.
+</Steps>
+
+### Create an account with the API
+
+Use a user-owned API token or OAuth access token. Account-owned API tokens cannot create accounts.
+
+A user-owned API token requires the **User Details Read** permission. An OAuth access token requires the `user-details.read` scope.
+
+Set the `standalone` field to `true` and omit `unit`. Every Free account creation request requires exactly one valid `Idempotency-Key` header. Reuse the same key when retrying the same request.
+
+<Tabs>
+	<TabItem label="API token">
+		Set `CLOUDFLARE_API_TOKEN` to a user-owned API token. Set `IDEMPOTENCY_KEY` to a unique value for this account creation request.
+
+		```bash
+		curl "https://api.cloudflare.com/client/v4/accounts" \
+			--request POST \
+			--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+			--header "Content-Type: application/json" \
+			--header "Idempotency-Key: $IDEMPOTENCY_KEY" \
+			--data '{"name":"Example account","type":"standard","standalone":true}'
+		```
+	</TabItem>
+	<TabItem label="OAuth">
+		Set `CLOUDFLARE_OAUTH_TOKEN` to an OAuth access token. Set `IDEMPOTENCY_KEY` to a unique value for this account creation request.
+
+		```bash
+		curl "https://api.cloudflare.com/client/v4/accounts" \
+			--request POST \
+			--header "Authorization: Bearer $CLOUDFLARE_OAUTH_TOKEN" \
+			--header "Content-Type: application/json" \
+			--header "Idempotency-Key: $IDEMPOTENCY_KEY" \
+			--data '{"name":"Example account","type":"standard","standalone":true}'
+		```
+	</TabItem>
+</Tabs>
+
+For the complete request schema, refer to [Create Account](/api/resources/accounts/methods/create/).
+
+### Resolve account creation errors
+
+Use the error message to resolve common account creation failures:
+
+| Error | Resolution |
+| --- | --- |
+| Your user is less than seven days old. | Wait until the user is at least seven days old. |
+| You are not a Super Administrator. | Confirm that you have the Super Administrator role on an existing account. |
+| You reached an account creation limit. | Use an existing account or contact your account team. |
+| Account creation is temporarily unavailable. | Retry the request later with the same idempotency key. |
+| The idempotency key was used for a different request. | Use a new key for the new request. Reuse the original key only for an identical retry. |
+| Your user is suspended. | Contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
 
 ## Account name
 
@@ -62,4 +138,3 @@ For those who prefer to interact with Cloudflare programmatically, you can use s
 | [cloudflare-go](https://github.com/cloudflare/cloudflare-go)                           | [README](https://github.com/cloudflare/cloudflare-go#readme)         | The official Go library for the Cloudflare API.                                |
 | [cloudflare-typescript](https://github.com/cloudflare/cloudflare-typescript)           | [README](https://github.com/cloudflare/cloudflare-typescript#readme) | The official TypeScript library for the Cloudflare API.                        |
 | [cloudflare-python](https://github.com/cloudflare/cloudflare-python)                   | [README](https://github.com/cloudflare/cloudflare-python#readme)     | The official Python library for the Cloudflare API.                            |
-

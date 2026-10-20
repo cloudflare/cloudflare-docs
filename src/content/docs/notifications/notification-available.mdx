@@ -1,23 +1,29 @@
 ---
-title: Available Notifications
+title: Platform Notifications
 pcx_content_type: concept
 sidebar:
-  order: 2
+  order: 4
 products:
   - notifications
-description: Browse available notification types by product.
+description: Browse built-in notification types that Cloudflare triggers automatically, organized by product.
 ---
 
-import { AvailableNotifications } from "~/components"
+import { AvailableNotifications } from "~/components";
 
-Available Notifications depend on your Cloudflare plan. Cloudflare offers a variety of Notifications for our products and services, such as [Billing](/billing/), [Denial of Service protection](/ddos-protection/), [Magic Transit](/magic-transit/), and [SSL/TLS](/ssl/).
+Platform Notifications are pre-configured alert types tied to specific Cloudflare products. You enable the ones you care about and choose where they are delivered. Cloudflare evaluates the trigger conditions, covering events like DDoS attacks, certificate expirations, origin health changes, and billing thresholds. The notification types available to you depend on your Cloudflare plan and the products you use.
 
-Depending on your plan, you can also configure webhooks, allowing you to connect your account with external services such as Slack and Google Chat, and PagerDuty to receive Cloudflare Notifications.
+To define your own alerting conditions using SQL API queries, refer to [Monitors](/notifications/monitors/).
 
-## Actions available on receiving a Notification
+## Create a platform notification
 
-Each Notification carries different types of information about the status of your Cloudflare account, or the type of action you can take.
+1. Go to **Alerts** > **Platform Notifications** in the Cloudflare dashboard.
+2. Select **Create a Notification**.
+3. Choose the notification type from the categorized list and select **Select**.
+4. Follow the wizard steps to configure the notification, name it, and add delivery destinations.
+5. Select **Create**.
 
-Refer to information below to understand what each Notification does and what to do when receiving one.
+## Available notification types
+
+Refer to the list below to understand what each notification does and what action to take when you receive one.
 
 <AvailableNotifications />

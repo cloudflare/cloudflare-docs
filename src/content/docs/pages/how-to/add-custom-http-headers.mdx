@@ -81,8 +81,10 @@ To operate your Workers function alongside your Pages application, deploy it to 
 	"name": "custom-headers-example",
 	"account_id": "FILL-IN-YOUR-ACCOUNT-ID",
 	"workers_dev": false,
-	"route": "FILL-IN-YOUR-WEBSITE.com/*",
-	"zone_id": "FILL-IN-YOUR-ZONE-ID"
+	"route": {
+		"pattern": "FILL-IN-YOUR-WEBSITE.com/*",
+		"zone_id": "FILL-IN-YOUR-ZONE-ID"
+	}
 }
 ```
 

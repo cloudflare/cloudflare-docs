@@ -188,6 +188,25 @@ The Rules language supports these comparison operators:
 Comparison operators entered using English notation (such as `eq`, `lt`, and `gt`) must be written in lowercase.
 :::
 
+### Compare dynamic values
+
+Equality and ordering operators can compare dynamic values. The right side can be a field, indexed value, or function result. This works with `eq` (`==`), `ne` (`!=`), `lt` (`<`), `le` (`<=`), `gt` (`>`), and `ge` (`>=`). Both values must have the same scalar data type. Supported types vary by operator. Refer to the [comparison operator table](#comparison-operators).
+
+```txt title="Examples"
+# Compare the current request path with its original value
+http.request.uri.path ne raw.http.request.uri.path
+
+# Compare the lengths of two request values
+len(http.request.uri.path) gt len(http.request.uri.query)
+
+# Use a query parameter, or fall back to "/" if it is missing
+http.request.uri.path eq coalesce(http.request.uri.args["expected_path"][0], "/")
+```
+
+The [`coalesce()` function](/ruleset-engine/rules-language/functions/#coalesce) returns the first value that is not nil.
+
+For comparison results involving nil, refer to [Missing values](/ruleset-engine/rules-language/values/#missing-values).
+
 ### Additional operators in the Cloudflare dashboard
 
 The Cloudflare dashboard may show the following additional operators, depending on the exact field and the type of rule:

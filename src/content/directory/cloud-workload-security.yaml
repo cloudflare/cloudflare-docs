@@ -1,0 +1,10 @@
+id: d4sMCs
+name: Cloud Workload Security
+
+entry:
+  title: Cloud Workload Security
+  group: Cloudflare One
+  url: /cloudflare-one/cloud-workload-security/
+
+meta:
+  description: Apply request-level policies to cloud API traffic through a proxy in your environment

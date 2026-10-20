@@ -322,22 +322,25 @@ const result = await agent.stub.processData({ input: "test" });
 
 ### Streaming responses
 
-For methods that return `StreamingResponse`, handle chunks as they arrive:
+Mark a callable method as streaming. The framework passes a `StreamingResponse` as its first argument:
 
 <TypeScriptExample>
 
 ```ts
-// Agent-side:
+// Agent-side
+import { Agent, callable, type StreamingResponse } from "agents";
+
 class MyAgent extends Agent {
 	@callable({ streaming: true })
 	async generateText(stream: StreamingResponse, prompt: string) {
 		for await (const chunk of llm.stream(prompt)) {
-			await stream.write(chunk);
+			stream.send(chunk);
 		}
+		stream.end();
 	}
 }
 
-// Client-side:
+// Client-side
 await agent.call("generateText", [prompt], {
 	onChunk: (chunk) => {
 		// Called for each chunk
@@ -613,6 +616,29 @@ client.addEventListener("message", () => {});
 ```
 
 </TypeScriptExample>
+
+### Chat from a non-React client
+
+An `AgentClient` connection can drive an AI SDK chat UI in any framework. `agents/chat/transport` exports `WebSocketChatTransport`, which requires no React peer dependency:
+
+<TypeScriptExample>
+
+```ts
+import { AgentClient } from "agents/client";
+import { WebSocketChatTransport } from "agents/chat/transport";
+
+const transport = new WebSocketChatTransport({
+	agent: new AgentClient({
+		agent: "ChatAgent",
+		name: "user-123",
+		host: window.location.host,
+	}),
+});
+```
+
+</TypeScriptExample>
+
+Refer to [Non-React clients](/agents/communication-channels/chat/chat-agents/#non-react-clients) for the behaviors this transport does and does not cover.
 
 ## Agent-tool events
 

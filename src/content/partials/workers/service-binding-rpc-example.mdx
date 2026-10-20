@@ -2,7 +2,13 @@
 {}
 ---
 
-import { PackageManagers, WranglerConfig, TypeScriptExample, TabItem, Tabs } from "~/components";
+import {
+	PackageManagers,
+	WranglerConfig,
+	TypeScriptExample,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 The TypeScript example below uses a separate directory for each Worker:
 
@@ -25,7 +31,8 @@ Worker B implements the public method `add(a, b)`:
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker-b",
 	"main": "./src/index.ts",
-	"compatibility_date": "$today"
+	"compatibility_date": "$today",
+	"upload_source_maps": true
 }
 ```
 
@@ -71,6 +78,7 @@ Worker A can declare a [binding](/workers/runtime-apis/bindings) to Worker B:
 	"name": "worker-a",
 	"main": "./src/index.ts",
 	"compatibility_date": "$today",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "WORKER_B",
@@ -93,7 +101,6 @@ For TypeScript, generate Worker A's binding types from both configuration files.
 Passing both files lets Wrangler resolve Worker B's default export. The generated `Env` interface types `WORKER_B` as a `Service` with the `add()` method. Do not set `entrypoint` to `default`; omitting `entrypoint` selects the default export.
 
 Worker A can then call `add()`:
-
 
 <Tabs syncKey="workersExamples">
 
@@ -126,7 +133,7 @@ class Default(WorkerEntrypoint):
 
 </Tabs>
 
-To run both Workers locally, run the following command from the `rpc-example` directory. The first configuration is the primary Worker and is available at `http://localhost:8787`.
+To run both TypeScript Workers locally, run the following command from the `rpc-example` directory. The first configuration is the primary Worker and is available at `http://localhost:8787`.
 
 <PackageManagers
 	type="exec"

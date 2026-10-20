@@ -1,0 +1,83 @@
+---
+title: Cloudflare CLI
+description: Use one command-line interface for the public Cloudflare API and for Workers projects.
+pcx_content_type: overview
+sidebar:
+  order: 1
+  label: Overview
+  badge:
+    text: Beta
+products:
+  - cf
+---
+
+import { CardGrid, LinkCard, PackageManagers, Render } from "~/components";
+
+The Cloudflare CLI, `cf`, is one command-line interface for the public
+Cloudflare API and for Workers projects. Use it to manage zones, DNS, storage,
+and security settings, and to create, develop, and deploy Workers. Coding
+agents run the same commands you do.
+
+<Render file="beta-note" product="cf" />
+
+Install `cf` globally:
+
+<PackageManagers type="add" pkg="cf" global />
+
+To sign in and run your first command, refer to
+[Install and sign in](/cf/get-started/).
+
+## Choose your path
+
+<CardGrid>
+	<LinkCard
+		title="Deploy a Worker"
+		description="Create a project with cf init, develop it locally, and deploy it."
+		href="/cf/get-started/first-worker/"
+	/>
+	<LinkCard
+		title="Manage resources"
+		description="Find zones and create, list, and delete DNS records from the command line."
+		href="/cf/get-started/resources/"
+	/>
+	<LinkCard
+		title="Coming from Wrangler"
+		description="Learn what changes, and move a project to cf with cf migrate."
+		href="/cf/wrangler/"
+	/>
+	<LinkCard
+		title="Coding agents"
+		description="Set up coding agents to find and run Cloudflare commands with cf."
+		href="/cf/agents/"
+	/>
+	<LinkCard
+		title="CI and automation"
+		description="Authenticate with API tokens and run cf in pipelines."
+		href="/cf/ci/"
+	/>
+</CardGrid>
+
+## What `cf` provides
+
+- **Commands for the public API.** More than 2,900 commands, most of them
+  generated from the schemas that describe the Cloudflare API.
+- **Typed project configuration.** Workers projects use
+  [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), so editors and
+  agents can autocomplete bindings and triggers.
+- **Project commands.** `cf dev`, `cf build`, and `cf deploy` run your
+  framework's own command, the [Cloudflare Vite plugin](/workers/vite-plugin/),
+  or Wrangler, depending on the project. To learn more, refer to
+  [How cf runs your project](/cf/projects/#how-cf-runs-your-project).
+- **Command search.** `cf cli search` finds commands from a plain-language
+  description of a task.
+
+## `cf` and Wrangler
+
+[Wrangler](/workers/wrangler/) is the CLI for Workers projects configured with
+`wrangler.jsonc` or `wrangler.toml`. `cf` covers the public Cloudflare API and
+uses `cloudflare.config.ts` for Workers projects.
+
+You can run `cf` resource commands alongside an existing Wrangler project
+without changing it. Before you run `cf dev`, `cf build`, or `cf deploy` in a
+Wrangler project, convert it with `cf migrate`. To compare the two tools and
+plan a move, refer to [`cf` for Wrangler users](/cf/wrangler/).

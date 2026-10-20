@@ -1,9 +1,8 @@
 ---
-params:
-  - ruleAction?
+{}
 ---
 
-import { Render, Markdown, Steps, DashButton } from "~/components";
+import { Render, Steps, DashButton } from "~/components";
 
 :::note
 Only available to customers with Client-Side Security Advanced.
@@ -32,10 +31,9 @@ Only available to customers with Client-Side Security Advanced.
 
 6. <Render
    	file="rule-create-action"
-   	params={{ ruleAction: props.ruleAction }}
    	product="client-side-security"
    />
 
-7. To save and deploy your rule, select **Deploy**. { !props.ruleAction && <Markdown text="If you are not ready to deploy your rule, select **Save as Draft**." /> }
+7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.
 
 </Steps>

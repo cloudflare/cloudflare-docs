@@ -1,0 +1,91 @@
+---
+title: Visual Studio Code
+description: Route VS Code chat through an AI Gateway custom domain.
+pcx_content_type: configuration
+sidebar:
+  order: 7
+products:
+  - ai-gateway
+---
+
+import { Steps, RuleID } from "~/components";
+
+[Visual Studio Code](https://code.visualstudio.com/) supports custom endpoint models for chat. Point a custom endpoint at an AI Gateway [custom domain](/ai-gateway/configuration/custom-domains/) protected by Cloudflare Access. Visual Studio Code authenticates with an Access service token stored in its secret storage.
+
+This integration uses static credentials. Visual Studio Code cannot use `cloudflared` to generate short-lived Access tokens.
+
+## Prerequisites
+
+Before you start, you need:
+
+- An AI Gateway with a [custom domain](/ai-gateway/configuration/custom-domains/).
+- Cloudflare Access enabled on the custom domain.
+- An Access [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/) allowed by a **Service Auth** policy.
+- The Access application configured to [authenticate service tokens with the `Authorization` header](/cloudflare-one/access-controls/service-credentials/service-tokens/#authenticate-with-a-single-header).
+- [Unified Billing](/ai-gateway/features/unified-billing/) credits or a stored [provider key](/ai-gateway/configuration/bring-your-own-keys/) for each model.
+- Visual Studio Code installed and updated to the latest version.
+
+:::note
+Service token requests do not include `cf.user_id` because they do not represent an individual Access user. You cannot filter AI Gateway logs by user for these requests.
+:::
+
+<Steps>
+
+1. In Visual Studio Code, open the Command Palette and run **Chat: Manage Language Models**.
+
+2. Select **Add Models** > **Custom Endpoint**.
+
+3. Enter a group name, such as `AI Gateway`.
+
+4. Enter a display name and API key. For the API key, use the following single-header service token value. Replace `<CLIENT_ID>` and `<CLIENT_SECRET>` with your Access service token values.
+
+   ```json
+   {"cf-access-client-id":"<CLIENT_ID>","cf-access-client-secret":"<CLIENT_SECRET>"}
+   ```
+
+5. Select **Chat Completions** as the API type.
+
+6. In the `chatLanguageModels.json` file that opens, configure your models. Replace `ai.example.com` with your AI Gateway custom domain. Replace the model IDs and token limits with values supported by your models.
+
+   ```json title="chatLanguageModels.json"
+   [
+     {
+       "name": "AI Gateway",
+       "vendor": "customendpoint",
+       "apiKey": "${input:cloudflareAccessServiceToken}",
+       "apiType": "chat-completions",
+       "models": [
+         {
+           "id": "openai/gpt-4.1-mini",
+           "name": "GPT-4.1 mini",
+           "url": "https://ai.example.com/compat/chat/completions",
+           "toolCalling": true,
+           "vision": true,
+           "maxInputTokens": 1000000,
+           "maxOutputTokens": 32768,
+           "requestHeaders": {
+             "Authorization": "${apiKey}"
+           }
+         }
+       ]
+     }
+   ]
+   ```
+
+   Visual Studio Code replaces `${apiKey}` with the service token value stored in secret storage. The `Authorization` override prevents Visual Studio Code's default authentication behavior from adding a `Bearer` prefix.
+
+7. Save the file, then select the model from the chat model picker.
+
+8. Send a prompt. Requests now route through AI Gateway.
+
+</Steps>
+
+For more information about custom endpoint settings, refer to [AI language models in Visual Studio Code](https://code.visualstudio.com/docs/copilot/customization/language-models#_add-a-custom-endpoint-model).
+
+## Configure a WAF exception
+
+When you use an AI Gateway custom domain, WAF rule <RuleID id="64fa151963064ea09fc8a7df851d2f71" /> (**Command Injection - Common Attack Commands**) can block prompts that contain shell commands.
+
+If the rule blocks Visual Studio Code requests, [create a WAF exception](/waf/managed-rules/waf-exceptions/) that skips only this rule for your AI Gateway custom domain. Scope the exception as narrowly as possible.
+
+To confirm traffic reaches AI Gateway, refer to [Verify it works](/ai-gateway/integrations/coding-agents/#verify-it-works).

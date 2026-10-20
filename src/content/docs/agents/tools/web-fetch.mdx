@@ -1,0 +1,222 @@
+---
+title: Web fetch
+description: Give your agent a web fetch tool with document conversion, pagination, and request controls. Use Pi Durable, AI SDK, TanStack AI, or your own harness.
+pcx_content_type: integration-guide
+sidebar:
+  order: 3
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Give your agent a `web_fetch` tool to read a URL. The Agents SDK handles the work around the HTTP request: converting documents into readable text, splitting long pages into smaller results, and controlling which URLs the model can fetch.
+
+Use the supplied adapters with [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. For another harness, use the public fetch, pagination, and formatting functions in `agents/webfetch`.
+
+## What the tool adds
+
+A research agent might need to read a webpage, a PDF report, and a JSON feed. Instead of returning each response body directly to the model, `web_fetch` handles each format and provides context about what it read.
+
+| Task                        | What `web_fetch` does                                                                                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Read webpages and documents | Converts HTML, PDF, and supported Office documents into Markdown through [Workers AI Markdown Conversion](/workers-ai/features/markdown-conversion/).       |
+| Use Markdown when available | Requests Markdown first. Sites that support [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) can return it directly, without conversion. |
+| Read structured data        | Pretty-prints JSON and passes through Markdown and other text formats.                                                                                      |
+| Read a long page            | Returns a bounded window of content with an offset for reading the next part.                                                                               |
+| Understand a response       | Includes the final URL, HTTP status, content type, total character count, and continuation information.                                                     |
+| Control requests            | Applies your host restrictions, redirect checks, byte limit, and timeout. Honors cancellation from the harness.                                             |
+| Recover from errors         | Gives the model guidance to fix input, retry, or use another source, with structured errors for your application.                                           |
+
+## Add the tool to your harness
+
+These examples require Agents SDK 0.28.0 or later and an existing harness. For a new Pi Durable agent, start with the [Pi harness guide](/agents/harnesses/pi/).
+
+<Steps>
+
+1. Update the Agents SDK in your Worker project:
+
+   <PackageManagers pkg="agents@latest" />
+
+2. In your Wrangler configuration, add a Workers AI binding for HTML and document conversion:
+
+   <WranglerConfig>
+
+   ```toml
+   [ai]
+   binding = "AI"
+   remote = true
+   ```
+
+   </WranglerConfig>
+
+   The tool uses the Worker's `fetch` to retrieve URLs. Markdown, JSON, and plain text skip Workers AI conversion. Conversions during local development run remotely against your Cloudflare account.
+
+3. Register the tool with your harness using one of the examples that follow.
+
+</Steps>
+
+### Pi Durable
+
+In your [Pi harness factory](/agents/harnesses/pi/extensions/#install-an-extension), install the tool on the registry before passing it to `Harness.open()`:
+
+<TypeScriptExample>
+
+```ts
+import { webFetchTool } from "agents/webfetch/pi";
+
+// Inside the harness factory, before Harness.open():
+this.registry.install({
+	name: "web-tools",
+	tools: [webFetchTool({ binding: this.env.AI })],
+});
+```
+
+</TypeScriptExample>
+
+Ask your agent to read a URL, such as a documentation page or PDF report. The model can call `web_fetch` with a `url`, then pass the suggested continuation offset to read more.
+
+The Pi tool is marked `replay: "safe"`. Pi reruns a fetch interrupted by an eviction when the session recovers. Completed results remain stored and are not fetched again during recovery. The tool also honors Pi's abort signal when you cancel a running call.
+
+### AI SDK
+
+Add the tool to the `tools` object in your existing `streamText()` or `generateText()` call:
+
+<TypeScriptExample>
+
+```ts
+import { streamText } from "ai";
+import { webFetchTool } from "agents/webfetch/ai-sdk";
+
+const tools = {
+	web_fetch: webFetchTool({ binding: env.AI }),
+};
+
+const result = streamText({ model, messages, tools });
+```
+
+</TypeScriptExample>
+
+If you convert UI messages yourself, pass the same `tools` to `convertToModelMessages(messages, { tools })`. This preserves the formatted header and untrusted-content wrapper when the model reads earlier results.
+
+### TanStack AI
+
+Add the server tool to your existing `chat()` call:
+
+<TypeScriptExample>
+
+```ts
+import { chat } from "@tanstack/ai";
+import { webFetchTool } from "agents/webfetch/tanstack-ai";
+
+const stream = chat({
+	adapter,
+	messages,
+	tools: [webFetchTool({ binding: env.AI })],
+});
+```
+
+</TypeScriptExample>
+
+### Other harnesses
+
+Use `fetchWeb()` inside your harness's tool handler. It returns the full converted page. Use `windowWebFetchPage()` and `renderWebFetchPage()` to give the model the same bounded result as the supplied adapters:
+
+<TypeScriptExample>
+
+```ts
+import {
+	fetchWeb,
+	renderWebFetchPage,
+	windowWebFetchPage,
+	type WebFetchToolInput,
+} from "agents/webfetch";
+
+// Register this handler with your harness's tool interface.
+// Forward the harness's cancellation signal when it provides one.
+async function readUrl(
+	input: WebFetchToolInput,
+	env: { AI: Ai },
+	signal?: AbortSignal,
+) {
+	const page = await fetchWeb(
+		{ url: input.url, format: input.format },
+		{ binding: env.AI, signal },
+	);
+	const output = windowWebFetchPage(page, {
+		offset: input.offset,
+		pageChars: 20_000,
+	});
+	return renderWebFetchPage(output);
+}
+```
+
+</TypeScriptExample>
+
+Define the tool's input schema with a required `url`, optional nonnegative integer `offset`, and optional `format` of `"auto"` or `"raw"`. Map `WebFetchError` to your harness's error result. These functions do not require a Durable Object, browser, or Worker Loader binding.
+
+## Read long pages
+
+The model receives up to 20,000 characters per call by default. Each result includes a header and wraps the content in an `untrusted_web_content` tag:
+
+```txt
+web_fetch: https://example.com/report · 200 · text/html → markdown · chars 0–19873 of 81200 · continue with offset=19873
+<untrusted_web_content>
+# Report
+...
+</untrusted_web_content>
+```
+
+The model continues with the offset from the result, which may end at a line break. Your application receives `nextOffset`, or `null` when it reaches the end, in the structured output. Pi stores that output in `details.output`; the AI SDK returns it from `execute`. TanStack AI returns the formatted text.
+
+The built-in source fetches the URL again for each tool call. Reading five windows makes five fetches, and content may change between calls. To reuse a fetched page, retain the `WebFetchPage` returned by `fetchWeb()` and call `windowWebFetchPage()` again with the next offset.
+
+The wrapper marks external content as data, not instructions. It is not a guarantee against prompt injection.
+
+## Control requests
+
+The model chooses `url`, `offset`, and `format`. Your application chooses the request policy and limits when creating the tool:
+
+<TypeScriptExample>
+
+```ts
+import { webFetchTool } from "agents/webfetch/pi";
+
+const readDocs = webFetchTool({
+	binding: env.AI,
+	allowedHosts: ["developers.cloudflare.com"],
+	pageChars: 10_000,
+	maxBytes: 1_000_000,
+	timeoutMs: 15_000,
+	maxRedirects: 3,
+});
+```
+
+</TypeScriptExample>
+
+| Option              | Default         | Effect                                                                                      |
+| ------------------- | --------------- | ------------------------------------------------------------------------------------------- |
+| `pageChars`         | `20000`         | Maximum characters in one tool result's content window.                                     |
+| `maxBytes`          | `5000000`       | Maximum response body bytes read before rejecting it.                                       |
+| `timeoutMs`         | `30000`         | Deadline in milliseconds, including redirects and conversion.                               |
+| `maxRedirects`      | `5`             | Maximum redirects to follow. Accepts integers from `0` to `20`.                             |
+| `allowedHosts`      | Any public host | Hostnames the tool may fetch. `*.example.com` matches subdomains, not `example.com` itself. |
+| `blockedHosts`      | None            | Hostnames the tool must reject, checked before `allowedHosts`.                              |
+| `allowPrivateHosts` | `false`         | Allows local and private hosts when set to `true`, for local development.                   |
+
+The built-in source checks each URL and redirect target. It rejects non-HTTP schemes, credentials in URLs, URLs longer than 2,000 characters, and HTTPS-to-HTTP redirects. It blocks private IP literals and local hostnames by default, but does not resolve DNS to check the addresses behind public hostnames.
+
+To add caching or a different retrieval service, supply a `WebFetchSource` through the `source` option instead of `binding`. The custom source owns URL validation, host restrictions, byte limits, and redirect handling. The tool still applies `pageChars` and `timeoutMs`. You can wrap `createDirectWebFetch()` to retain the built-in request policy.
+
+## Handle errors and choose a browser when needed
+
+Readable HTTP error pages are returned with their status. Fetch failures use `WebFetchError` codes such as `web_fetch_timeout`, `web_fetch_too_large`, and `web_fetch_unsupported_content_type`, with a `retryable` field. Pi returns failures in `details` with `ok: false`; the AI SDK and TanStack AI adapters throw `WebFetchError`. Cancellation propagates as an abort rather than a fetch failure.
+
+Use `format: "raw"` to read textual bodies without conversion. Raw mode cannot return PDF or other binary document content. Images, audio, and video are unsupported.
+
+Use [Browser](/agents/tools/browser/) when the agent needs JavaScript-rendered content, a login session, screenshots, or interaction. Web fetch makes GET requests without browser cookies, credentials, or custom request headers. A detected bot challenge returns `web_fetch_blocked` and advises the model to use a browser or another source.

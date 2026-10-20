@@ -1,0 +1,35 @@
+---
+{}
+---
+
+import { PackageManagers } from "~/components";
+
+### Add Workers TypeScript types
+
+<PackageManagers type="add" pkg="@cloudflare/workers-types" dev />
+
+Create a `tsconfig.worker.json` that extends your Node TypeScript configuration and adds the Workers types:
+
+```jsonc title="tsconfig.worker.json"
+{
+	"extends": "./tsconfig.node.json",
+	"compilerOptions": {
+		"tsBuildInfoFile": "./node_modules/.tmp/tsconfig.worker.tsbuildinfo",
+		"types": ["@cloudflare/workers-types/2023-07-01", "vite/client"],
+	},
+	"include": ["worker"],
+}
+```
+
+Then add a reference to this new configuration in your root `tsconfig.json`:
+
+```jsonc {6} title="tsconfig.json"
+{
+	"files": [],
+	"references": [
+		{ "path": "./tsconfig.app.json" },
+		{ "path": "./tsconfig.node.json" },
+		{ "path": "./tsconfig.worker.json" },
+	],
+}
+```

@@ -46,6 +46,7 @@ To bind to a Workflow from your Workers code, you need to define a [binding](/wo
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "workflows-tutorial",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"workflows": [
 		{
@@ -77,6 +78,7 @@ If you want to create Workflow instances on a recurring interval, add a `schedul
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "workflows-tutorial",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"workflows": [
 		{
@@ -187,6 +189,8 @@ The possible values of status are as follows:
 
 If your Workflow registers rollback handlers on `step.do()`, inspect `rollback` after the instance finishes to see whether the compensating steps completed successfully. While rollback is actively running, the Workers API continues to return `status: "running"`.
 
+To receive historical and live execution updates without polling, refer to [Subscribe to events](/workflows/build/subscribe-to-instance-events/).
+
 ### Explicitly pause a Workflow
 
 You can explicitly pause a Workflow instance (and later resume it) by calling `pause` against a specific instance ID.
@@ -244,9 +248,139 @@ let instance = await env.MY_WORKFLOW.get("abc-123");
 await instance.restart(); // Returns Promise<void>
 ```
 
-Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time.
+Restarting an instance will immediately cancel any in-progress steps, erase any intermediate state, and treat the Workflow as if it was run for the first time. However, the restarted instance maintains the concurrency slot of the previous instance instead of returning to the queued state.
+
+:::caution
+Exercise caution when using the `restart()` method to avoid concurrency slot deprivation. If you call the `restart()` method recursively without a conditional, that instance will run indefinitely, effectively eliminating a concurrency slot.
+:::
 
 To restart an instance from a specific step instead of the beginning, refer to [`restart`](/workflows/build/workers-api/#restart) in the Workers API reference.
+
+Because a restart erases all intermediate state, keep any state that must survive a restart outside of the instance itself. The following example uses the `restart` method to maintain a document processing pipeline:
+
+- Chunks of a document are stored in, and retrieved from, R2 with an identifiable object [prefix](/r2/api/workers/workers-api-reference/#r2listoptions).
+- Each [R2 object key](/r2/api/workers/workers-api-reference/#r2object-definition) is used as the `instanceId` for processing that chunk.
+- The workflow retrieves 100 chunks at a time, processes the chunks, and updates their prefix.
+- Then, if there are remaining objects with the original prefix, the Workflow instance restarts.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export class MyWorkflow extends WorkflowEntrypoint<Env, Params> {
+	async run(event: WorkflowEvent<Params>, step: WorkflowStep) {
+		const listResult = await step.do("list files from R2", async () => {
+			// Restarts delete all state with the exception of search params.
+			// So we will need a cursor to keep track of progress.
+			const maybeCursor = await this.env.CHUNKS_BUCKET.get(
+				`cursor/${event.instanceId}`,
+			);
+
+			const cursor = maybeCursor
+				? (await maybeCursor.json<{ cursor: string }>()).cursor
+				: undefined;
+
+			// List first 100 files from R2 with prefix "chunked/"
+			const listed = await this.env.CHUNKS_BUCKET.list({
+				prefix: "chunked/",
+				limit: 100,
+				cursor,
+			});
+
+			if (listed.truncated) {
+				const cursor = listed.cursor;
+				await this.env.CHUNKS_BUCKET.put(
+					`cursor/${event.instanceId}`,
+					JSON.stringify({ cursor }),
+					{
+						httpMetadata: {
+							contentType: "application/json",
+						},
+					},
+				);
+			}
+
+			return {
+				keys: listed.objects.map((obj) => obj.key),
+				truncated: listed.truncated,
+			};
+		});
+
+		for (const key of listResult.keys) {
+			await step.do(`process file: ${key}`, async () => {
+				return await doSomething(key, this.env.CHUNKS_BUCKET, event.instanceId);
+			});
+		}
+
+		await step.do("restart workflow", async () => {
+			if (listResult.truncated) {
+				// There are still chunks to process, restarting the workflow to continue processing.
+				const instance = await this.env.CHUNK_PROCESSOR.get(event.instanceId);
+				await instance.restart();
+			} else {
+				// If the workflow has ended we reset the cursor, so that we can preserve determinism.
+				// If/when we re-run this workflow we will still process all the files.
+				await this.env.CHUNKS_BUCKET.delete(`cursor/${event.instanceId}`);
+
+				return "was not truncated, done";
+			}
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Delete Workflow instances
+
+Deleting an instance removes its stored state. Deleting a running instance stops its current execution without running rollback handlers.
+
+Delete one instance by calling `delete()` on its handle:
+
+<TypeScriptExample>
+
+```ts
+const instance = await env.MY_WORKFLOW.get("instance-abc");
+await instance.delete();
+```
+
+</TypeScriptExample>
+
+If a Workflow deletes its own instance, execution stops during `await instance.delete()`. Code after the call does not run.
+
+Delete up to 100 instances in one call with `deleteBatch()`:
+
+<TypeScriptExample>
+
+```ts
+const result = await env.MY_WORKFLOW.deleteBatch([
+	"instance-abc",
+	"instance-def",
+]);
+
+console.log(result.deleted); // [{ id: "instance-abc" }, { id: "instance-def" }]
+console.log(result.errors); // Per-instance failures, if any
+```
+
+</TypeScriptExample>
+
+`deleteBatch()` accepts between 1 and 100 IDs. Missing IDs are returned as per-instance errors. Duplicate IDs count toward the limit and are deleted once, with the result repeated for each input position. If any ID is invalid, the call fails before deleting any instances.
+
+Wrangler accepts one or more instance IDs or a file containing a top-level JSON array of strings. You can combine positional IDs with `--filename`, up to 100 IDs total. Use `latest` to delete the most recently created instance.
+
+```json title="instance-ids.json"
+["instance-abc", "instance-def"]
+```
+
+```sh
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID>
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> <INSTANCE_ID>
+npx wrangler workflows instances delete <WORKFLOW_NAME> latest
+npx wrangler workflows instances delete <WORKFLOW_NAME> --filename ./instance-ids.json
+# For local Workflow instances during wrangler dev:
+npx wrangler workflows instances delete <WORKFLOW_NAME> <INSTANCE_ID> --local
+```
+
+For the full APIs, refer to [`delete`](/workflows/build/workers-api/#delete) and [`deleteBatch`](/workflows/build/workers-api/#deletebatch).
 
 ### Trigger a Workflow from another Workflow
 

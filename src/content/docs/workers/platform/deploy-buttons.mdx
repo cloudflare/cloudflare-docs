@@ -75,6 +75,7 @@ Cloudflare will read the Wrangler configuration file of your source repo to dete
 {
   "name": "my-worker",
   "main": "./src/index.ts",
+  "upload_source_maps": true,
 	"compatibility_date": "$today",
   "vars": {
     "API_HOST": "https://example.com",
@@ -96,6 +97,7 @@ COOKIE_SIGNING_KEY=my-secret # comment
 {
   "name": "my-worker",
   "main": "./src/index.ts",
+  "upload_source_maps": true,
 	"compatibility_date": "$today",
 	"secrets_store_secrets": [
 		{

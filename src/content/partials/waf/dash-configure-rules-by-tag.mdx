@@ -1,22 +1,9 @@
 ---
-params:
-  - rulesetName?
+{}
 ---
 
 import { Render } from "~/components";
 
-<Render
-	file="managed-rules-browse-zone-new-nav"
-	product="waf"
-	params={{
-		rulesetName: props.rulesetName,
-	}}
-/>
+<Render file="managed-rules-browse-zone-new-nav" product="waf" />
 
-<Render
-	file="managed-ruleset-configure-rules-by-tag"
-	product="waf"
-	params={{
-		rulesetName: props.rulesetName,
-	}}
-/>
+<Render file="managed-ruleset-configure-rules-by-tag" product="waf" />

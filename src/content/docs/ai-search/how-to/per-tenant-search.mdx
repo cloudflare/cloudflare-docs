@@ -17,8 +17,8 @@ import {
 	TypeScriptExample,
 	FileTree,
 	LinkCard,
-	AiSearchNamespacesDiagram,
 } from "~/components";
+import AiSearchNamespacesDiagram from "~/components/AiSearchNamespacesDiagram.astro";
 
 In a multi-tenant application, each tenant must only ever see their own data. AI Search supports two ways to isolate search per tenant: give each tenant its own instance, or share one instance and filter by tenant at query time.
 
@@ -44,10 +44,9 @@ Create a new project named `tenant-search` by running:
 <PackageManagers type="create" pkg="cloudflare@latest" args={"tenant-search"} />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "TypeScript",
 	}}

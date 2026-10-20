@@ -26,6 +26,12 @@ On running `vite build`, an output `wrangler.json` configuration file is generat
 The `assets.directory` field in this file is automatically populated with the path to your `client` build output.
 It is therefore not necessary to provide the `assets.directory` field in your input Worker configuration.
 
+:::note[Cloudflare Access context]
+The Vite plugin can add Static Assets to the generated deployment configuration even when the input Wrangler configuration does not include `assets`. Workers with Static Assets do not receive `ctx.access` in the user Worker.
+
+This behavior affects frameworks that use the Cloudflare Vite plugin, including TanStack Start. For more information, refer to [`ctx.access` limitations](/workers/configuration/cloudflare-access/#ctxaccess-limitations).
+:::
+
 The `assets` configuration should be used, however, if you wish to set [routing configuration](/workers/static-assets/routing/) or enable the [assets binding](/workers/static-assets/binding/#binding).
 The following example configures the `not_found_handling` for a single-page application so that the fallback will always be the root `index.html` file.
 

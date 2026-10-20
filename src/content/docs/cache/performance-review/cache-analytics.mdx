@@ -7,13 +7,16 @@ products:
 
 ---
 
-import { FeatureTable, DashButton } from "~/components"
+import { DashButton } from "~/components"
 
 Cache Analytics shows how much of your site's traffic is served from Cloudflare's cache versus your origin server. When content is served from cache, visitors get faster page loads and your origin web server handles less traffic. Use Cache Analytics to identify resources that are [missing from cache](/cache/concepts/cache-responses/#miss), [expired](/cache/concepts/cache-responses/#expired) (cached copy is outdated), or [ineligible for caching](/cache/concepts/cache-responses/#noneunknown) (not eligible for caching). You can filter by hostname, review the top URLs that miss cache, and query up to three days of data.
 
 ## Availability
 
-<FeatureTable id="cache.cache_analytics" />
+|  | Free | Pro | Business | Enterprise |
+| - | - | - | - | - |
+| Availability | No | Yes | Yes | Yes |
+| Retention period | N/A | 7 days | 30 days | 30 days |
 
 ## Access Cache Analytics
 

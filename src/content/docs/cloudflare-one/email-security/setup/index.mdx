@@ -32,8 +32,8 @@ The following table compares features available across API, BCC/Journaling and M
 Note that:
 
 - All email providers support MX/Inline deployment.
-- Microsoft 365 or Google Workspace users who integrate Email security via API, BCC/Journaling can modify emails primarily through deletion or  post-delivery [move](/cloudflare-one/email-security/settings/auto-moves/).
-- Microsoft 365 or Google Workspace users who integrate Email security via MX/Inline can modify emails via post-delivery [move](/cloudflare-one/email-security/settings/auto-moves/), [link actions](/cloudflare-one/email-security/settings/detection-settings/configure-link-actions/) and [text add-ons](/cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/).
+- Microsoft 365 or Google Workspace users who integrate Email security via API, BCC/Journaling can modify emails primarily through deletion or  post-delivery [move](/cloudflare-one/email-security/settings/detection-settings/auto-moves/).
+- Microsoft 365 or Google Workspace users who integrate Email security via MX/Inline can modify emails via post-delivery [move](/cloudflare-one/email-security/settings/detection-settings/auto-moves/), [link actions](/cloudflare-one/email-security/settings/detection-settings/configure-link-actions/) and [text add-ons](/cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/).
 
 ## 1. Choose a deployment
 
@@ -47,7 +47,7 @@ If you are a [Google Workspace](/cloudflare-one/email-security/setup/post-delive
 
 #### Why you should consider post-delivery deployment
 
-Post-delivery deployment is time-efficient, because it does not involve MX changes. Post-delivery deployment does not disrupt mail flow. Post-delivery deployment allows you to enable [auto-move events](/cloudflare-one/email-security/settings/auto-moves/) to hard or soft delete messages, and synchronize your [directory](/cloudflare-one/email-security/directories/) when you use Microsoft Graph API or Google Workspace.
+Post-delivery deployment is time-efficient, because it does not involve MX changes. Post-delivery deployment does not disrupt mail flow. Post-delivery deployment allows you to enable [auto-move events](/cloudflare-one/email-security/settings/detection-settings/auto-moves/) to hard or soft delete messages, and synchronize your [directory](/cloudflare-one/email-security/settings/domains-and-directories/directories/) when you use Microsoft Graph API or Google Workspace.
 
 :::note
 When you choose post-delivery deployment:
@@ -130,7 +130,7 @@ Follow the below checklist to ensure your email environment is set up correctly:
 | Associate an integration with an MX/Inline domain                                                                                                                                                                                                                                                        |               | Required      |
 | Add/verify domains                                                                                                                                                                                                                                                                                       | Required      | Required      |
 | [Update MX records/connector](/cloudflare-one/email-security/setup/pre-delivery-deployment/mx-inline-deployment-setup/), then allow Cloudflare [egress IPs](/cloudflare-one/email-security/setup/pre-delivery-deployment/egress-ips/) on downstream mail server                                          |               | Required      |
-| Populate [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) and [allow](/cloudflare-one/email-security/settings/detection-settings/allow-policies/)/[block](/cloudflare-one/email-security/settings/detection-settings/blocked-senders/) lists | Required      | Required      |
+| Populate [impersonation registry](/cloudflare-one/email-security/settings/detection-settings/impersonation-registry/) and [allow](/cloudflare-one/email-security/policies/inbound/allow-policies/)/[block](/cloudflare-one/email-security/policies/inbound/blocked-senders/) lists | Required      | Required      |
 | Configure [partner domain TLS](/cloudflare-one/email-security/setup/pre-delivery-deployment/partner-domain-tls/) and admin quarantine                                                                                                                                                                    |               | Required      |
 | Configure [text add-ons](/cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/) and [link actions](/cloudflare-one/email-security/settings/detection-settings/configure-link-actions/)                                                                                      |               | Required      |
 | Send a test email and verify it appears in **Monitoring** > [**Email activity**](/cloudflare-one/email-security/monitoring/#email-activity) with expected disposition                                                                                                                                    | Required      | Required      |

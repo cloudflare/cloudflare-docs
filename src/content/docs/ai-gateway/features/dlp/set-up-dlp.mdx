@@ -8,7 +8,7 @@ products:
   - ai-gateway
 ---
 
-import { Render } from "~/components";
+import { APIRequest, Render } from "~/components";
 
 Add Data Loss Prevention (DLP) to any AI Gateway to start scanning AI prompts and responses for sensitive data.
 
@@ -45,13 +45,61 @@ After enabling DLP, you can create policies to define how sensitive data should 
    - **Action**: Choose the action to take when any of the selected profiles match:
      - **Flag** - Record the detection for audit purposes without blocking
      - **Block** - Prevent the request/response from proceeding
-
    - **Check**: Select what to scan:
      - **Request** - Scan user prompts sent to AI providers
      - **Response** - Scan AI model responses before returning to users
      - **Both** - Scan both requests and responses
 
 3. Click **Save** to save your policy configuration.
+
+## Configure DLP with the API
+
+Use the [Update a Gateway](/api/resources/ai_gateway/methods/update/) endpoint to manage DLP programmatically:
+
+<APIRequest
+	path="/accounts/{account_id}/ai-gateway/gateways/{id}"
+	method="PUT"
+	json={{
+		rate_limiting_interval: 0,
+		rate_limiting_limit: 0,
+		collect_logs: true,
+		cache_ttl: 0,
+		cache_invalidate_on_update: false,
+		dlp: {
+			enabled: true,
+			policies: [
+				{
+					id: "block-financial-prompts",
+					enabled: true,
+					action: "BLOCK",
+					profiles: ["DLP_PROFILE_ID"],
+					check: ["REQUEST"],
+				},
+			],
+		},
+	}}
+/>
+
+The following `dlp` object blocks requests that match the selected DLP profile:
+
+```json
+{
+	"dlp": {
+		"enabled": true,
+		"policies": [
+			{
+				"id": "block-financial-prompts",
+				"enabled": true,
+				"action": "BLOCK",
+				"profiles": ["DLP_PROFILE_ID"],
+				"check": ["REQUEST"]
+			}
+		]
+	}
+}
+```
+
+The update endpoint uses `PUT`. Retrieve the current gateway first and preserve its existing settings in the update body. Omitting the `dlp` property removes the gateway's DLP configuration.
 
 ## Manage DLP policies
 
@@ -155,7 +203,6 @@ When DLP blocks a request, your application will receive structured error respon
 - **Request blocked by DLP**
   - `"code": 2029`
   - `"message": "Request content blocked due to DLP policy violations"`
-
 - **Response blocked by DLP**
   - `"code": 2030`
   - `"message": "Response content blocked due to DLP policy violations"`

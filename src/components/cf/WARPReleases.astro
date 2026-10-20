@@ -52,15 +52,13 @@ const platform = latestRelease.platformName;
 <WARPRelease header="Latest release" open={true} release={latestRelease} />
 
 <Details header={`Previous version history (${releases.length - 1})`}>
-	{
-		releases
-			.slice(1)
-			.sort(sortByDate)
-			.map((release) => (
-				<WARPRelease
-					header={`${platform} ${release.version}`}
-					release={release}
-				/>
-			))
-	}
+	{releases
+		.slice(1)
+		.sort(sortByDate)
+		.map((release) => (
+			<WARPRelease
+				header={`${platform} ${release.version}`}
+				release={release}
+			/>
+		))}
 </Details>

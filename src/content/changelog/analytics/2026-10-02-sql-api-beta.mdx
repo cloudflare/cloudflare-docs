@@ -1,0 +1,13 @@
+---
+title: SQL API (Beta)
+description: Query Cloudflare analytics and observability data using SQL over a single HTTP endpoint.
+date: 2026-10-02
+---
+
+The SQL API is now available in beta. It provides a single HTTP endpoint for querying Cloudflare analytics and observability data using SQL. Supported dataset types include event datasets (such as HTTP requests and security events), state datasets (such as D1 storage), log datasets (such as Workers logs), and Workers Analytics Engine datasets.
+
+The SQL API supports `SELECT` queries with filtering, aggregation, `LIKE`, `CASE`, `BETWEEN`, `IS NULL`, and ordering. Adaptively sampled datasets apply sample weights automatically for `COUNT`, `SUM`, and `AVG`. You can also query from a Cloudflare Worker using the [Workers binding](/analytics/sql-api/workers-binding/) without managing an API token.
+
+The SQL API powers [Monitors](/notifications/monitors/) and is available for direct querying on all plans.
+
+For syntax, datasets, and limits, refer to [SQL API](/analytics/sql-api/).

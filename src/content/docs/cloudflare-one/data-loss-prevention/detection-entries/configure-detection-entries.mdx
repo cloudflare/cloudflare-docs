@@ -29,6 +29,12 @@ The Detection entries section includes dedicated views for different entry types
 
 You can add the same detection entry to multiple custom DLP profiles. When you delete a custom detection entry, Cloudflare lists the profiles that currently use it.
 
+## Test a detection entry
+
+To test whether a detection entry identifies sample content, add the entry to a [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile), then use [Test scan](/cloudflare-one/data-loss-prevention/test-scan/). Test scan confirms whether the selected profile detects the sample. It does not test a Gateway policy or traffic flowing through Gateway.
+
+If the profile does not match the sample, review the detection entry configuration, the profile [match count](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#match-count), and [confidence threshold](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/#confidence-thresholds).
+
 ## Predefined detection entries
 
 Predefined detection entries are Cloudflare-managed detections for specific types of sensitive content. You can review them from the **Predefined** view in **Detection entries** and add them directly to custom DLP profiles.
@@ -55,6 +61,8 @@ DLP does not support regular expressions with `+` or `*` operators because they 
 6. After the regex is validated, select **Save**.
 
 To use a pattern entry, add it as an existing entry to one or more [custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
+
+To apply organization-specific checks to pattern matches, refer to [Validate data loss prevention matches with Cloudflare Workers](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/).
 
 ## Exact Data Match datasets
 
@@ -180,7 +188,7 @@ Your new document entry will replace the original document entry. If your file u
 
 ## AI prompt topics
 
-DLP uses [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
+DLP uses [Application Granular Controls](/cloudflare-one/traffic-controls/http-policies/#granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
 
 | Detection entry | Description |
 | --- | --- |

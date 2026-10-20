@@ -12,6 +12,10 @@
 import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
+import { markdownNotFound, requestsMarkdown } from "./markdown-404";
+import { unavailableModelRedirect } from "./unavailable-model";
+import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
+import { handleOg } from "./og/route";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -20,6 +24,8 @@ const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 });
 
 const LLMS_FULL_R2_PREFIX = "v1/cloudflare-docs-llms-full";
+
+const PRODUCTION_ORIGIN = "https://developers.cloudflare.com";
 
 // RFC 9727 requires the path to be exactly /.well-known/api-catalog with no
 // extension. The Cloudflare ASSETS binding cannot serve extensionless files
@@ -35,10 +41,8 @@ const API_CATALOG = JSON.stringify({
 				},
 			],
 			"service-doc": [
-				{
-					href: "https://developers.cloudflare.com/api/index.md",
-					type: "text/markdown",
-				},
+				// TODO: Add a Markdown `service-doc` URL once /api/* supports a real
+				// Markdown representation (e.g. content negotiation or /index.md).
 				{
 					href: "https://developers.cloudflare.com/api/",
 					type: "text/html",
@@ -74,7 +78,9 @@ function withRobotsHeaders(response: Response): Response {
 	});
 }
 
-function injectRobotsMeta(response: Response): Response {
+// Pages are built with the production origin; point social images at this
+// preview so they show the PR's images.
+function rewriteHtml(response: Response, origin: string): Response {
 	const contentType = response.headers.get("Content-Type") ?? "";
 	if (!contentType.includes("text/html")) return response;
 	return new HTMLRewriter()
@@ -85,11 +91,20 @@ function injectRobotsMeta(response: Response): Response {
 				});
 			},
 		})
+		.on(`meta[property$="image"][content^="${PRODUCTION_ORIGIN}/"]`, {
+			element(meta) {
+				const content = meta.getAttribute("content") ?? "";
+				meta.setAttribute(
+					"content",
+					origin + content.slice(PRODUCTION_ORIGIN.length),
+				);
+			},
+		})
 		.transform(response);
 }
 
-function hardenResponse(response: Response): Response {
-	return injectRobotsMeta(withRobotsHeaders(response));
+function hardenResponse(response: Response, origin: string): Response {
+	return rewriteHtml(withRobotsHeaders(response), origin);
 }
 
 // --- End preview anti-indexing ---
@@ -133,7 +148,7 @@ function rewriteRedirectForMarkdown(
 export default class extends WorkerEntrypoint<Env> {
 	override async fetch(request: Request) {
 		const response = await this.handleRequest(request);
-		return hardenResponse(response);
+		return hardenResponse(response, new URL(request.url).origin);
 	}
 
 	private async handleRequest(request: Request): Promise<Response> {
@@ -170,12 +185,22 @@ export default class extends WorkerEntrypoint<Env> {
 			});
 		}
 
+		if (pathname.endsWith("/og.png")) {
+			return handleOg(request, this.env, this.ctx, { cache: false });
+		}
+
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
 				headers: {
 					"Content-Type":
 						'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
 				},
+			});
+		}
+
+		if (pathname === "/.well-known/ai-catalog.json") {
+			return new Response(AI_CATALOG_BODY, {
+				headers: AI_CATALOG_HEADERS,
 			});
 		}
 
@@ -252,10 +277,12 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			try {
-				const forceTrailingSlashURL = new URL(
-					request.url.replace(/([^/])$/, "$1/"),
-					request.url,
-				);
+				// Append the slash to the path only. Doing it on the full URL string
+				// puts it after the query string, so rules never match.
+				const forceTrailingSlashURL = new URL(request.url);
+				if (!forceTrailingSlashURL.pathname.endsWith("/")) {
+					forceTrailingSlashURL.pathname += "/";
+				}
 				const redirect = await redirectsEvaluator(
 					new Request(forceTrailingSlashURL, request),
 					this.env.ASSETS,
@@ -278,6 +305,13 @@ export default class extends WorkerEntrypoint<Env> {
 		const response = await this.env.ASSETS.fetch(request);
 
 		if (response.status === 404) {
+			if (requestsMarkdown(request)) {
+				return markdownNotFound();
+			}
+
+			const modelRedirect = unavailableModelRedirect(pathname);
+			if (modelRedirect) return modelRedirect;
+
 			const section = new URL(response.url).pathname.split("/").at(1);
 
 			if (!section) return response;
