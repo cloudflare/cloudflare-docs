@@ -1,6 +1,6 @@
 ---
-title: "DeepSeek V4.1 Flash now available on Workers AI"
-description: DeepSeek V4.1 Flash is now available on Workers AI, a multimodal MoE model with vision, reasoning, function calling, and a one million token context window.
+title: "DeepSeek V4.1 Flash 1017 now available on Workers AI"
+description: DeepSeek V4.1 Flash 1017 is now available on Workers AI, a multimodal MoE model with vision, reasoning, function calling, and a one million token context window.
 products:
   - workers-ai
 date: 2026-10-19
@@ -8,7 +8,7 @@ date: 2026-10-19
 
 [`@cf/deepseek-ai/deepseek-v4.1-flash-1017`](/workers-ai/models/deepseek-v4.1-flash-1017/) is now available on Workers AI. DeepSeek V4.1 Flash is a multimodal Mixture-of-Experts model with 552B backbone parameters. It activates 8B parameters per token during prefill and 16B during decode, which keeps input-heavy agentic workloads fast and low-cost.
 
-This is the first DeepSeek model on Workers AI that accepts images as well as text. The 1017 release is an update to DeepSeek V4.1 Flash with improvements across reasoning, coding, agentic tasks, and visual benchmarks, and it completes tasks with shorter outputs.
+The 1017 release is an update to DeepSeek V4.1 Flash with improvements across reasoning, coding, agentic tasks, and visual benchmarks, and it completes tasks with shorter outputs.
 
 **Key capabilities:**
 
@@ -17,7 +17,7 @@ This is the first DeepSeek model on Workers AI that accepts images as well as te
 - **Function calling**: Build agents that invoke tools and APIs across multiple conversation turns.
 - **Long context**: A full 1,048,576 token context window.
 
-DeepSeek V4.1 Flash requires the [Workers Paid plan](/workers/platform/pricing/#workers) or prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/).
+DeepSeek V4.1 Flash requires the [Workers Paid plan](/workers/platform/pricing/#workers) or prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/). The default rate limit is 20 requests per minute with standard Workers AI billing and 50 requests per minute with prepaid AI Gateway credits. For details, refer to [limits](/workers-ai/platform/limits/#paid-models).
 
 Use DeepSeek V4.1 Flash through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`), the REST API, the [OpenAI-compatible endpoint](/workers-ai/configuration/open-ai-compatibility/), or [AI Gateway](/ai-gateway/).
 
