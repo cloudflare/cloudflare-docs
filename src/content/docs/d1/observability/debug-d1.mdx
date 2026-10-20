@@ -123,7 +123,7 @@ You should include as much of the following in any bug report:
 
 D1 binding methods — `run()`, `all()`, `first()`, and `batch()` — do not accept a timeout option or an `AbortSignal`. There is no per-call timeout built into the D1 binding client.
 
-Workers have no wall-time limit on incoming HTTP requests while the client connection is open — see [Workers limits](/workers/platform/limits/). If the Durable Object backing a D1 database is temporarily unreachable, a D1 binding call blocks until the operation completes, an internal limit is reached, or the Worker is terminated by an external event such as the client disconnecting.
+Workers have no wall-time limit on incoming HTTP requests while the client connection is open — see [Workers limits](/workers/platform/limits/). If the D1 database is temporarily unreachable, a D1 binding call blocks until the operation completes, an internal limit is reached, or the Worker is terminated by an external event such as the client disconnecting.
 
 To limit how long your Worker waits on a D1 call, use `Promise.race` with a timer:
 
