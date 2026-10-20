@@ -65,9 +65,11 @@ You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/
 
 The following limitations apply to Regional Services for Gateway outside dedicated FedRAMP environments. 
 
-[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) and [Browser Isolation](/cloudflare-one/remote-browser-isolation/) are incompatible with Regional Services for Gateway
-
 Regional Services for Gateway supports [predefined and custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) that do not use [EDM, custom wordlists, document entries, or AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/), or [pattern entries with custom functions](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/). [AI context analysis and OCR](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) are also unsupported.
+
+[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) is incompatible with Regional Services for Gateway.  
+
+Regional Services for Gateway does not control where [Browser Isolation](/cloudflare-one/remote-browser-isolation/) are run.
 
 ### On-ramp and egress locations
 
