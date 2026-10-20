@@ -35,12 +35,16 @@ The Whiteboard plugin does not support images, frames, embedded web content, or 
 Each participant loads the Whiteboard plugin from the following URL, with their auth token in the URL fragment after `#`:
 
 ```txt
-https://whiteboard-v2-plugin.cf-realtime.workers.dev/#authToken=<auth_token>
+https://whiteboard-v2.plugins.realtime.cloudflare.com/#authToken=<auth_token>
 ```
 
 The Whiteboard plugin verifies the token with RealtimeKit, then opens the board for the token's meeting with the participant's display name. You do not pass a meeting ID or participant name.
 
 Browsers do not send the URL fragment to servers or include it in `Referer` headers, so the token stays out of request logs. The plugin also removes the token from its address as soon as it loads.
+
+:::note[Use the fragment, not a query parameter]
+Pass the auth token only after `#`, not as a query parameter such as `?authToken=`. The auth token lets anyone who has it join the meeting as that participant, and browsers send query parameters to servers, where they can appear in logs. The plugin does not use a token in a query parameter, and shows **Whiteboard link needs updating** instead.
+:::
 
 ## Integration steps
 
@@ -55,7 +59,7 @@ Select your platform to see the code for each step.
 Create an `iframe` that loads the plugin URL. Create it once, before you initialize the SDK, and reuse the same element for the life of the meeting.
 
 ```ts title="whiteboard-plugin.ts"
-const WHITEBOARD_URL = "https://whiteboard-v2-plugin.cf-realtime.workers.dev/";
+const WHITEBOARD_URL = "https://whiteboard-v2.plugins.realtime.cloudflare.com/";
 
 function createWhiteboard(authToken: string): HTMLIFrameElement {
 	const iframe = document.createElement("iframe");
@@ -133,7 +137,7 @@ val meetingInfo = RtkMeetingInfo(
 			id = "whiteboard",
 			name = "Whiteboard",
 			icon = "https://example.com/whiteboard.png",
-			url = "https://whiteboard-v2-plugin.cf-realtime.workers.dev/#authToken=$authToken",
+			url = "https://whiteboard-v2.plugins.realtime.cloudflare.com/#authToken=$authToken",
 			permissions = RtkClientPluginPermissions(
 				canActivate = true,
 				canDeactivate = true,
@@ -157,7 +161,7 @@ let meetingInfo = RtkMeetingInfo(
 			id: "whiteboard",
 			name: "Whiteboard",
 			icon: "https://example.com/whiteboard.png",
-			url: "https://whiteboard-v2-plugin.cf-realtime.workers.dev/#authToken=\(authToken)",
+			url: "https://whiteboard-v2.plugins.realtime.cloudflare.com/#authToken=\(authToken)",
 			permissions: RtkClientPluginPermissions(
 				canActivate: true,
 				canDeactivate: true
@@ -188,7 +192,7 @@ await initMeeting({
 					canDeactivate: true,
 				},
 				component: {
-					src: `https://whiteboard-v2-plugin.cf-realtime.workers.dev/#authToken=${authToken}`,
+					src: `https://whiteboard-v2.plugins.realtime.cloudflare.com/#authToken=${authToken}`,
 				},
 			},
 		],
@@ -246,6 +250,7 @@ When the board cannot load, the plugin shows a message instead of the board. Use
 | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Rejoin the meeting                                                               | The auth token is invalid, has expired, or belongs to a different meeting. | Pass the participant's current auth token in the plugin URL.                                                                                      |
 | Open the whiteboard from your meeting                                            | The plugin URL has no auth token.                                          | Add `#authToken=<auth_token>` to the plugin URL.                                                                                                  |
+| Whiteboard link needs updating                                                   | The auth token is in a query parameter, such as `?authToken=`.             | Pass the token after `#` instead: `#authToken=<auth_token>`. The plugin does not use a token in a query parameter.                                |
 | Cannot verify your meeting                                                       | The Whiteboard plugin could not reach RealtimeKit to verify the token.     | Select **Try again**.                                                                                                                             |
 | Too many attempts                                                                | Too many connection attempts came from the same network in a short time.   | Wait a minute, then select **Try again**.                                                                                                         |
 | Cannot load the whiteboard                                                       | The participant's browser could not download the whiteboard.               | Check the participant's network connection, then select **Try again**.                                                                            |
