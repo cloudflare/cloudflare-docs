@@ -12,6 +12,8 @@ import { TypeScriptExample } from "~/components";
 
 The Agents SDK provides `paidTool`, which registers a tool with x402 payment requirements. Clients pay per tool call, and you can mix free and paid tools in the same server.
 
+`agents/x402` needs `@modelcontextprotocol/sdk`, which is an optional peer dependency of `agents`. It does not load the package at runtime, but its types refer to MCP SDK v1. Add the exact version your Agents release expects, such as `@modelcontextprotocol/sdk@1.32.1`, to your `package.json`.
+
 ## Setup
 
 Wrap your `McpServer` with `withX402` and use `paidTool` for tools you want to charge for:

@@ -12,7 +12,7 @@ products:
 
 import { Render, TypeScriptExample, LinkCard } from "~/components";
 
-Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.20.0 uses `@modelcontextprotocol/client` and negotiates stateless or legacy behavior automatically.
+Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.20.0 uses `@modelcontextprotocol/client` and negotiates stateless or legacy behavior automatically. The MCP client does not need `@modelcontextprotocol/sdk` or `@modelcontextprotocol/server`.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package, type, OAuth provider, and rollout changes.
 
@@ -151,6 +151,7 @@ export class MyAgent extends Agent<Env> {
 - **No authentication.** The RPC transport has no OAuth flow. Pass user context in `props`. The `McpAgent` reads it as `this.props`.
 - **Restored after hibernation.** The binding name and props are stored, so the connection comes back without extra code.
 - **Deduplicated by name.** Calling `addMcpServer()` again with a name that already has an active RPC connection returns the existing connection, so it is safe to call in `onStart()`.
+- **No MCP SDK v1 on the Agent side.** Connecting does not need `@modelcontextprotocol/sdk`. Import `RPCClientTransport` and `RPC_DO_PREFIX` from `agents/mcp/client`, not `agents/mcp`, which loads the v1 SDK.
 
 For the server side, including bindings and the tool timeout, refer to [RPC transport](/agents/model-context-protocol/apis/agent-api/#rpc-transport) in the `McpAgent` reference.
 
