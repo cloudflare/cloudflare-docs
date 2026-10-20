@@ -1,6 +1,6 @@
 ---
-title: Think agents now use a @cloudflare/computer Workspace
-description: Think and Agent Skills now work in a Workspace from @cloudflare/computer. @cloudflare/shell is deprecated.
+title: Think agents now use a @cloudflare/computer workspace
+description: Think and Agent Skills now use @cloudflare/computer for their workspace. @cloudflare/shell is deprecated.
 products:
   - agents
   - workers
@@ -9,9 +9,9 @@ date: 2026-10-20
 
 import { TypeScriptExample } from "~/components";
 
-[Think](/agents/harnesses/think/) and [Agent Skills](/agents/runtime/execution/agent-skills/) now work in a `Workspace` from [`@cloudflare/computer`](https://github.com/cloudflare/computer). Think's built-in workspace tools are now Computer's tools. Add an execution backend to the Workspace and the model gets an `exec` tool.
+[Think](/agents/harnesses/think/) and [Agent Skills](/agents/runtime/execution/agent-skills/) now use the workspace from [`@cloudflare/computer`](https://github.com/cloudflare/computer) as well as the filesystem tools. A JavaScript execution environment can be configured by adding the `JavaScriptWorkerBackend`.
 
-`@cloudflare/shell` is deprecated, and so is Think's `createExecuteTool`.
+`@cloudflare/shell` is deprecated, and so is Think's `createExecuteTool`. These will no longer be developed nor supported from today onwards.
 
 <TypeScriptExample>
 
@@ -34,6 +34,6 @@ export class MyAgent extends Think<Env> {
 
 ## Migrate your workspace data
 
-This is a breaking change. Computer stores files in different tables from Shell, and there is no automatic data migration between workspace formats. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md). If you do not, your agent starts with an empty workspace.
+This is a breaking change. @cloudflare/computer stores files in different tables from @cloudflare/shell, and there is no automatic data migration between workspace formats. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md). Otherwise your agent will start with an empty workspace, though the original data will still be present in the existing tables.
 
 For more information, refer to [Think tools](/agents/harnesses/think/tools/#built-in-workspace-tools).
