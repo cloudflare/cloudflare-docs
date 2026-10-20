@@ -39,6 +39,10 @@
             }
         },
         {
+            "property_id": "terms",
+            "value": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017/blob/main/LICENSE"
+        },
+        {
             "property_id": "vision",
             "value": "true"
         },
