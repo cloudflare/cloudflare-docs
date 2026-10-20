@@ -10,6 +10,8 @@ description: Define threshold, anomaly detection, and SLO monitors that evaluate
 
 Monitors evaluate a [SQL API](/analytics/sql-api/) query on a schedule. Cloudflare sends a notification when the query result meets your detection criteria. You can create monitors from the Cloudflare dashboard under **Alerts** > **Monitors**.
 
+![Monitor creation showing the detection method choice: Threshold, Anomaly detection, or SLO.](~/assets/images/observability/monitors-detection-choice.png)
+
 The datasets available to monitors depend on your plan and permissions. The dashboard only lists datasets available to the selected account or zone. For more information about dataset scopes and sampling, refer to [SQL API datasets](/analytics/sql-api/datasets/).
 
 ## Create a monitor
@@ -98,6 +100,8 @@ A threshold monitor compares the query result with a fixed value. It supports th
 | Comparison operator | Compares the result with the threshold. Supported operators are `<`, `>`, `<=`, `>=`, `==`, and `!=`. |
 | Threshold           | Sets the numeric value used by the comparison.                                                        |
 
+![Threshold monitor query builder with dataset selection, metric, filters, and query preview.](~/assets/images/observability/monitors-threshold.png)
+
 ### Anomaly detection
 
 Anomaly detection calculates the number of standard deviations between the current result and its historical baseline. It supports these options:
@@ -113,6 +117,8 @@ Anomaly detection calculates the number of standard deviations between the curre
 
 New anomaly detection monitors require at least 30 minutes of historical data before they can trigger.
 
+![Anomaly detection monitor showing baseline bounds and sensitivity configuration.](~/assets/images/observability/monitors-anomaly.png)
+
 ### Service-level objective
 
 An SLO monitor calculates the successful-event percentage from bad and total event counts. Both queries must return a numeric column named `value`. It supports these options:
@@ -127,6 +133,8 @@ An SLO monitor calculates the successful-event percentage from bad and total eve
 | Minimum event count | Optionally suppresses alerts for low-volume evaluation windows.                                                                      |
 
 Use equivalent filters in both queries. The bad events query should represent a subset of the total events query.
+
+![SLO monitor showing bad events query, total events query, and SLO target percentage.](~/assets/images/observability/monitors-slo.png)
 
 ## Evaluation and notification frequency
 
