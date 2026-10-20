@@ -1,0 +1,33 @@
+---
+title: workers-ai-provider and ai-gateway-provider are deprecated
+description: The workers-ai-provider and ai-gateway-provider npm packages are deprecated. Use createAI from agents/models/ai-sdk, and ai-search-provider for AI Search.
+products:
+  - workers-ai
+  - ai-gateway
+date: 2026-10-21
+---
+
+The `workers-ai-provider` and `ai-gateway-provider` npm packages are deprecated. To call Workers AI and AI Gateway from the [AI SDK](https://ai-sdk.dev/), use [`createAI`](/agents/models/ai-sdk/) from `agents/models/ai-sdk`. For AI Search, use [`ai-search-provider`](/ai-search/agent-sdks/ai-sdk/).
+
+Existing code keeps working. Nothing changes at runtime.
+
+```sh
+npm install agents ai @ai-sdk/provider
+```
+
+```ts
+import { createAI } from "agents/models/ai-sdk";
+
+const ai = createAI({ binding: env.AI });
+
+const model = ai("@cf/zai-org/glm-4.7-flash");
+```
+
+| Before                                                  | After                                                    |
+| ------------------------------------------------------- | -------------------------------------------------------- |
+| `createWorkersAI({ binding })`                          | `createAI({ binding })`                                  |
+| `createWorkersAI({ accountId, apiKey })`                | `createAI({ accountId, apiToken })`                      |
+| `createAiGateway(...)`                                  | `createAI(...)`, with `fallback` for a list of models    |
+| `createAISearch` from `workers-ai-provider`             | `createAISearchNamespace` from `ai-search-provider`      |
+
+For more information, refer to [AI SDK](/agents/models/ai-sdk/).
