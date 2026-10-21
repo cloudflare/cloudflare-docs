@@ -1,16 +1,16 @@
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { fetchGitHubCode } from "./github-code";
+import { fetchGitHubFile } from "./github-code";
 
 afterEach(() => {
 	vi.unstubAllGlobals();
 });
 
-describe("fetchGitHubCode", () => {
+describe("fetchGitHubFile", () => {
 	test("uses the code worker when it is available", async () => {
 		const fetchMock = vi.fn().mockResolvedValue(new Response("example"));
 		vi.stubGlobal("fetch", fetchMock);
 
-		const response = await fetchGitHubCode("cloudflare/agents", "commit", "file");
+		const response = await fetchGitHubFile("cloudflare/agents", "commit", "file");
 
 		expect(await response.text()).toBe("example");
 		expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -26,7 +26,7 @@ describe("fetchGitHubCode", () => {
 			.mockResolvedValueOnce(new Response("example"));
 		vi.stubGlobal("fetch", fetchMock);
 
-		const response = await fetchGitHubCode("cloudflare/agents", "commit", "file");
+		const response = await fetchGitHubFile("cloudflare/agents", "commit", "file");
 
 		expect(await response.text()).toBe("example");
 		expect(fetchMock).toHaveBeenNthCalledWith(
@@ -42,7 +42,7 @@ describe("fetchGitHubCode", () => {
 			.mockResolvedValueOnce(new Response("example"));
 		vi.stubGlobal("fetch", fetchMock);
 
-		const response = await fetchGitHubCode("cloudflare/agents", "commit", "file");
+		const response = await fetchGitHubFile("cloudflare/agents", "commit", "file");
 
 		expect(await response.text()).toBe("example");
 		expect(fetchMock).toHaveBeenCalledTimes(2);

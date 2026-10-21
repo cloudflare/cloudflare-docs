@@ -1,4 +1,4 @@
-export async function fetchGitHubCode(repo: string, commit: string, file: string) {
+export async function fetchGitHubFile(repo: string, commit: string, file: string) {
 	const workerUrl = `https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`;
 	let response: Response | undefined;
 
@@ -14,7 +14,7 @@ export async function fetchGitHubCode(repo: string, commit: string, file: string
 	response = await fetch(githubUrl);
 
 	if (!response.ok) {
-		throw new Error(`[GitHubCode] Received ${response.status} from GitHub.`);
+		throw new Error(`[GitHubFile] Received ${response.status} from GitHub.`);
 	}
 
 	return response;

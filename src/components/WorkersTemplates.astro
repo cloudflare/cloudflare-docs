@@ -1,6 +1,7 @@
 ---
 import { AnchorHeading, PackageManagers } from "~/components";
 import { fetchWithToken } from "~/util/github";
+import { fetchGitHubFile } from "~/util/github-code";
 
 const REPO = "cloudflare/templates";
 
@@ -21,8 +22,10 @@ const dirs = contents.filter((ent: any) => ent.type === "dir");
 	dirs
 		.filter((dir: any) => dir.name !== ".github")
 		.map(async (dir: any) => {
-			const packageJson = await fetch(
-				`https://gh-code.developers.cloudflare.com/${REPO}/${latestCommit}/${dir.path}/package.json`,
+			const packageJson = await fetchGitHubFile(
+				REPO,
+				latestCommit,
+				`${dir.path}/package.json`,
 			)
 				.then((r) => r.json())
 				.catch((reason) => {
