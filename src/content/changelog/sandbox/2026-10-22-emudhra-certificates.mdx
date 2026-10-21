@@ -1,0 +1,15 @@
+---
+title: Sandbox SDK 0.12.13 updates trusted certificates after the eMudhra compromise
+description: In Sandbox SDK 0.12.13 images, the CA bundle, Node.js, cloudflared, and pip reject certificates from the compromised eMudhra intermediate CAs. Update your package and image to 0.12.13.
+products:
+  - sandbox
+date: 2026-10-22
+---
+
+The private keys of [eight eMudhra intermediate certificate authorities](https://blog.cloudflare.com/emudhra-certificate-compromise/) can be recovered, so anyone can forge a certificate for any hostname that chains to them. Sandbox SDK images up to 0.12.12 trust these certificates. An HTTPS connection that leaves the container directly, such as one from `mountBucket()`, backups, `gitCheckout()`, tunnels, or code that runs in the sandbox, can be intercepted with a forged certificate.
+
+In the `docker.io/cloudflare/sandbox:0.12.13` images, the system CA bundle, Node.js, `cloudflared`, and pip reject these certificates. The images ship updated Ubuntu and Alpine CA certificates, Node.js 22.23.4, `cloudflared` 2026.10.2, and pip 26.2.2 in the `-python` image. Update `@cloudflare/sandbox` and the `FROM` line in your `Dockerfile` to 0.12.13, then redeploy.
+
+The `bun` command, OpenCode (built on Bun), and `createBackup()` uploads of archives of 10 MiB or more check certificates against Bun's built-in CA list rather than the image's. A later release will update Bun. Until then, pass `multipart: false` to [`createBackup()`](/sandbox/sdk/api/backups/#createbackup) to upload with `curl`, which uses the image's CA bundle. For `bun` and OpenCode, set [`interceptHttps = true`](/sandbox/sdk/guides/outbound-traffic/#https-traffic) and add an `outbound` handler that returns `fetch(request)`, so that Cloudflare checks their certificates.
+
+Sandbox SDK 1.x makes no TLS connections of its own, so your image decides which certificates your sandboxes trust. Pull your base image again and rebuild without the Docker build cache, so your image picks up updated CA certificates and runtimes.
