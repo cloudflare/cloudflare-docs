@@ -37,7 +37,7 @@ npm init -y
 Install dependencies:
 
 ```sh
-npm install @cloudflare/think @cloudflare/computer @cloudflare/ai-chat agents ai zod workers-ai-provider react react-dom
+npm install @cloudflare/think @cloudflare/computer @cloudflare/ai-chat agents ai zod @ai-sdk/provider react react-dom
 npm install -D wrangler @cloudflare/vite-plugin @cloudflare/workers-types @vitejs/plugin-react @tailwindcss/vite tailwindcss typescript vite
 ```
 
@@ -101,12 +101,12 @@ Create `src/server.ts`:
 
 ```ts
 import { Think } from "@cloudflare/think";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { routeAgentRequest } from "agents";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		return createWorkersAI({ binding: this.env.AI })(
+		return createAI({ binding: this.env.AI })(
 			"@cf/moonshotai/kimi-k2.6",
 		);
 	}
@@ -226,7 +226,7 @@ Override `configureSession` to give the model writable memory that survives rest
 ```ts
 export class MyAgent extends Think<Env> {
 	getModel(): LanguageModel {
-		return createWorkersAI({ binding: this.env.AI })(
+		return createAI({ binding: this.env.AI })(
 			"@cf/moonshotai/kimi-k2.6",
 		);
 	}

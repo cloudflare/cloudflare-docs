@@ -53,9 +53,9 @@ cd ai-search-agent
 
 ## 2. Install the Agents SDK packages
 
-Install the Agents SDK, the AI SDK, and the Workers AI provider:
+Install the Agents SDK and the AI SDK. The example calls Workers AI with [`createAI`](/agents/models/ai-sdk/) from `agents/models/ai-sdk`:
 
-<PackageManagers pkg="agents @cloudflare/ai-chat ai workers-ai-provider zod" />
+<PackageManagers pkg="agents @cloudflare/ai-chat ai @ai-sdk/provider zod" />
 
 ## 3. Bind your Worker to AI Search
 
@@ -100,7 +100,7 @@ Create `src/server.ts`. New AI Search instances use [hybrid search](/ai-search/c
 ```ts
 import { AIChatAgent } from "@cloudflare/ai-chat";
 import { routeAgentRequest } from "agents";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { streamText, convertToModelMessages, tool, stepCountIs } from "ai";
 import { z } from "zod";
 
@@ -149,10 +149,10 @@ export class SearchAgent extends AIChatAgent {
 		// The agent exposes AI Search's search() as a tool instead of using AI
 		// Search's own chat model, so this model must support function calling to
 		// decide when to search and drive the tool calls.
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-5.2"),
+			model: ai("@cf/zai-org/glm-5.2"),
 			system:
 				"You are a support assistant. Use search_knowledge_base to find " +
 				"relevant content before answering, and cite what you use.",

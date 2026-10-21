@@ -175,14 +175,14 @@ import { Workspace } from "@cloudflare/computer";
 import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
 import { generateText, stepCountIs } from "ai";
 import { DurableObject } from "cloudflare:workers";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class WriterAgent extends DurableObject<Env> {
 	workspace = new Workspace({ storage: this.ctx.storage });
 
 	async write(prompt: string) {
 		const { text } = await generateText({
-			model: createWorkersAI({ binding: this.env.AI })(
+			model: createAI({ binding: this.env.AI })(
 				"@cf/moonshotai/kimi-k2.6",
 			),
 			system:
