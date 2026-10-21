@@ -1,0 +1,22 @@
+src/content/docs/logs/logpush/logpush-job/enable-destinations/r2.mdx
+  s_6a51ff73737c94::t_b02f97b44e9814 12
+  s_6a51ff73737c94::t_c9765fae90a84e 59-60
+  s_6a51ff73737c94::t_d89a4c8ea93cdc 19-20
+  s_6a51ff73737c94::t_9c66695325dcf2 161-177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "710fa0f1befebe9ebe2dae14479986f63899c0ab",
+  "prompts": {},
+  "sessions": {
+    "s_6a51ff73737c94": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6b772232-ee22-47ee-a76a-dbf37c26cf53",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}
