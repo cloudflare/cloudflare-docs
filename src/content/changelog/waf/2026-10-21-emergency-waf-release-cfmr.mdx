@@ -1,0 +1,71 @@
+---
+title: "WAF Release - 2026-10-21 - Emergency - Cloudflare Managed Ruleset"
+description: Cloudflare Managed Ruleset 2026-10-21 emergency release
+date: 2026-10-21
+---
+
+import { RuleID } from "~/components";
+
+This emergency release adds four rules to the Cloudflare Managed Ruleset to detect anomalous request patterns. Two rules block matching requests, and two log matches without blocking.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="c1d409ad838f47f59446f21cc438d5dd" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Anomalous Execution - 1</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f9a45927414245e3a64bb12d0a0c2f64" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Anomalous Execution - 2</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="771c654ae1154d4daa72f4e1545d163c" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Anomalous Execution - 3</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="217005865f0145f392300bac212afcc9" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Anomalous Execution - 4</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
+
+For more information, refer to [WAF Managed Rules](/waf/managed-rules/).
