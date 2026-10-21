@@ -242,6 +242,10 @@ To view the execution history of Cron Triggers, view **Cron Events**:
 
 Cron Events stores the 100 most recent invocations of the Cron scheduled event. [Workers Logs](/workers/observability/logs/workers-logs) also records invocation logs for the Cron Trigger with a longer retention period and a filter & query interface. If you are interested in an API to access Cron Events, use Cloudflare's [GraphQL Analytics API](/analytics/graphql-api).
 
+:::note[No indefinite execution history]
+Cloudflare does not retain a permanent history of cron trigger executions. **Cron Events** shows only the 100 most recent invocations, and [Workers Logs](/workers/observability/logs/workers-logs) retains logs for a limited period. To verify or audit past executions beyond these windows, instrument your Worker to write a record at trigger time — for example, using [KV](/kv/), [Durable Objects](/durable-objects/), [D1](/d1/), or an external logging service.
+:::
+
 :::note
 
 It can take up to 30 minutes before events are displayed in **Past Cron Events** when creating a new Worker or changing a Worker's name.
