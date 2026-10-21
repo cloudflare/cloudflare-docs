@@ -1,4 +1,8 @@
-export async function fetchGitHubFile(repo: string, commit: string, file: string) {
+export async function fetchGitHubFile(
+	repo: string,
+	commit: string,
+	file: string,
+) {
 	const workerUrl = `https://gh-code.developers.cloudflare.com/${repo}/${commit}/${file}`;
 	let response: Response | undefined;
 

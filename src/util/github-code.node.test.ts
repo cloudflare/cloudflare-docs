@@ -10,7 +10,11 @@ describe("fetchGitHubFile", () => {
 		const fetchMock = vi.fn().mockResolvedValue(new Response("example"));
 		vi.stubGlobal("fetch", fetchMock);
 
-		const response = await fetchGitHubFile("cloudflare/agents", "commit", "file");
+		const response = await fetchGitHubFile(
+			"cloudflare/agents",
+			"commit",
+			"file",
+		);
 
 		expect(await response.text()).toBe("example");
 		expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -26,7 +30,11 @@ describe("fetchGitHubFile", () => {
 			.mockResolvedValueOnce(new Response("example"));
 		vi.stubGlobal("fetch", fetchMock);
 
-		const response = await fetchGitHubFile("cloudflare/agents", "commit", "file");
+		const response = await fetchGitHubFile(
+			"cloudflare/agents",
+			"commit",
+			"file",
+		);
 
 		expect(await response.text()).toBe("example");
 		expect(fetchMock).toHaveBeenNthCalledWith(
@@ -42,7 +50,11 @@ describe("fetchGitHubFile", () => {
 			.mockResolvedValueOnce(new Response("example"));
 		vi.stubGlobal("fetch", fetchMock);
 
-		const response = await fetchGitHubFile("cloudflare/agents", "commit", "file");
+		const response = await fetchGitHubFile(
+			"cloudflare/agents",
+			"commit",
+			"file",
+		);
 
 		expect(await response.text()).toBe("example");
 		expect(fetchMock).toHaveBeenCalledTimes(2);
