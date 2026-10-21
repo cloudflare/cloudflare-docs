@@ -1,0 +1,20 @@
+src/content/docs/observability/logs/datasets.mdx
+  s_e8c7b6997c45bb::t_2cad8135b532fa 65,67
+  s_e8c7b6997c45bb::t_d8294526344e6e 11-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4bd801c36218b9cb6656c11ada1d516847181c98",
+  "prompts": {},
+  "sessions": {
+    "s_e8c7b6997c45bb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "95fec39b-8363-4f43-a8fb-1fd966730f66",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

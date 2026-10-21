@@ -1,0 +1,25 @@
+src/content/docs/api-shield/plans.mdx
+  s_06fdda159e069d::t_315f92a3d3d1ae 17-23
+src/content/docs/api-shield/security/index.mdx
+  s_06fdda159e069d::t_31b9aec9de7685 17-23,31-32,35-42
+src/content/docs/waf/detections/application-profiles/fields.mdx
+  s_06fdda159e069d::t_bf84110ca2e0ec 16-19
+src/content/docs/waf/detections/index.mdx
+  s_06fdda159e069d::t_677a79c95f065c 14,32-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dd33d29566205bd13aee8957a040ef0fd3173643",
+  "prompts": {},
+  "sessions": {
+    "s_06fdda159e069d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fff61ec26ffe62o51EtdEd96A4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Zhiyuan Zheng <zhiyuan@cloudflare.com>"
+    }
+  }
+}

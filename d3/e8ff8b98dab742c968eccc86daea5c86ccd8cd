@@ -1,0 +1,21 @@
+src/content/changelog/workers/2026-08-04-wrangler-login-device-flow.mdx
+  s_fa70db94e29527::t_bad483c6a8f9ed 1-39
+src/content/docs/workers/wrangler/commands/general.mdx
+  s_fa70db94e29527::t_342f323110ed6d 45-46,48-50,53-54,90-91,122-171
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d3e8ff8b98dab742c968eccc86daea5c86ccd8cd",
+  "prompts": {},
+  "sessions": {
+    "s_fa70db94e29527": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_034469f67ffehYUXnM47wx2KV5",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Pete Bacon Darwin <pbacondarwin@cloudflare.com>"
+    }
+  }
+}

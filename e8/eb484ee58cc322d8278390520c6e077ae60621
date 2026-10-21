@@ -1,0 +1,37 @@
+src/content/docs/ai-search/configuration/data-source/website.mdx
+  s_06d12654339c1a::t_9680090fb6ec8a 27-28,79-82
+src/content/partials/ai-search/v2-create-instance-params.mdx
+  s_06d12654339c1a::t_c13c6af8e1df0f 45,55,60-80
+src/content/docs/ai-search/configuration/data-source/index.mdx
+  s_06d12654339c1a::t_dc04e21686e077 21-22
+src/content/docs/ai-search/configuration/data-source/parse-types.mdx
+  s_c66e303bd944ce::t_361a19919b1d63 1-163
+.nimbus/routes.json
+  s_06d12654339c1a::t_c5f1225ad6b2c2 348
+src/content/docs/ai-search/troubleshooting/api-error-codes.mdx
+  s_06d12654339c1a::t_d8b96c449ce135 76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e8eb484ee58cc322d8278390520c6e077ae60621",
+  "prompts": {},
+  "sessions": {
+    "s_06d12654339c1a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_02df736f1ffecadLtKcQN69otI",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Nelson Duarte <nelsonjsduarte@gmail.com>"
+    },
+    "s_c66e303bd944ce": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_04762b051ffejBKSrkOvU2FqTx",
+        "model": "claude-opus-5"
+      },
+      "human_author": "Nelson Duarte <nelsonjsduarte@gmail.com>"
+    }
+  }
+}

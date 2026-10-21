@@ -1,0 +1,23 @@
+.github/CODEOWNERS
+  40aa865792717d6a 243-244
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "f19614ff04f22f6c759628e09e8e180685c02701",
+  "prompts": {
+    "40aa865792717d6a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1bf766d31ffexDNNh9nDnP2lEi",
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "human_author": "André Páscoa",
+      "messages": [],
+      "total_additions": 2,
+      "total_deletions": 2,
+      "accepted_lines": 2,
+      "overriden_lines": 0
+    }
+  }
+}

@@ -1,0 +1,40 @@
+src/content/docs/workers/framework-guides/web-apps/nextjs.mdx
+  s_46b199818d8a63::t_9569059123b5e6 19,21
+  s_46b199818d8a63::t_00651431da69ad 205-206,208-209
+  s_46b199818d8a63::t_19d84ccd00e33e 207
+  s_80effd9682baf2::t_02c94c04973862 207
+src/content/docs/workers/framework-guides/automatic-configuration.mdx
+  s_46b199818d8a63::t_00651431da69ad 37-48
+  s_46b199818d8a63::t_9569059123b5e6 167,169
+  s_46b199818d8a63::t_a3c7aeb04a3fcd 34-36,165,171
+src/content/docs/pages/framework-guides/nextjs/index.mdx
+  s_46b199818d8a63::t_9569059123b5e6 14
+src/content/docs/workers/framework-guides/web-apps/opennext.mdx
+  s_46b199818d8a63::t_19d84ccd00e33e 19
+  s_46b199818d8a63::t_a3c7aeb04a3fcd 49
+  s_80effd9682baf2::t_6dc43e0f7b0eed 19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "80981999e758a9ba627f4f44b07e019ef5d14bd8",
+  "prompts": {},
+  "sessions": {
+    "s_46b199818d8a63": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_032adbe6bffeXa3Lc3EwXa2whA",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    },
+    "s_80effd9682baf2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05bb45deaffewtDlY70jw9oUz8",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

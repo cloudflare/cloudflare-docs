@@ -1,0 +1,23 @@
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/client-errors.mdx
+  9a99dc64d381cbcb 108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.2.8",
+  "base_commit_sha": "d8e66287227866627ae78839f3499ca8fd2ef227",
+  "prompts": {
+    "9a99dc64d381cbcb": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_1b0a11ce0ffemOABr3PhHXXA34",
+        "model": "anthropic/claude-opus-4-7"
+      },
+      "human_author": "Rhett Griggs",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}

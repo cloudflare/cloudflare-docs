@@ -1,0 +1,19 @@
+src/components/cf/GitHubCode.astro
+  s_1f93ce60df5f0e::t_04fc05539a7058 52,56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2794e0ec8cb9ab83880ee7c4843d0b5f332c8fa4",
+  "prompts": {},
+  "sessions": {
+    "s_1f93ce60df5f0e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fce87-143c-7e21-b6fd-1815fcfdc476",
+        "model": "unknown"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

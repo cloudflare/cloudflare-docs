@@ -1,0 +1,39 @@
+src/components/agent-setup/AgentHeader.astro
+  s_8045362b510a8c::t_e5d0f48415e7fa 31
+src/components/agent-setup/CloudflareToolsBanner.astro
+  s_8045362b510a8c::t_90d0d6aa9e84c0 26-27,31
+src/components/agent-setup/McpServerList.astro
+  s_8045362b510a8c::t_355d8f4a733443 7-8,14-55,57-58,60-68
+src/components/agent-setup/PlatformAccessSection.astro
+  s_8045362b510a8c::t_c79352cef44d96 37-39,41-43
+src/content/agent-setup/prompt.md
+  s_8045362b510a8c::t_c2d3482c1503d5 3,5,9,20-31,35,37,45,47,52,61,66,71,73,76,88,99,105
+src/content/docs/agent-setup/bionic.mdx
+  s_8045362b510a8c::t_61dabba8f98a16 66,75,91-94,107-108
+src/content/docs/agent-setup/cursor.mdx
+  s_8045362b510a8c::t_c713f3556ac84c 3,10,34,59,69,95-96,102-103
+src/content/docs/agent-setup/visual-studio-code/detailed-walkthrough.mdx
+  s_8045362b510a8c::t_a556d9dc0861fc 13,15,199
+src/content/docs/agent-setup/visual-studio-code/index.mdx
+  s_8045362b510a8c::t_249399c6f6b74c 10-11,33,35-38,40-42,44,66
+src/content/docs/agent-setup/windsurf.mdx
+  s_8045362b510a8c::t_595eeeb6ac257b 3,38,40,45,69,86,106-107
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_8045362b510a8c::t_abf42d8f16f779 13,55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "82dc120dce28450fb72f9702054e85b5b67dbd00",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+src/content/docs/pages/functions/routing.mdx
+  s_a82c98808da4e7::t_417986e428fc57 203
+  s_a82c98808da4e7::t_8ba50feff58f43 191-193
+  s_a82c98808da4e7::t_ca25a062a36be2 167
+  s_a82c98808da4e7::t_e323b48d0234c3 204
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d3c32c8086113b547e703cf8c9d071a0e6f59094",
+  "prompts": {},
+  "sessions": {
+    "s_a82c98808da4e7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2adb1968ffeZhZeBXILHclIZ7",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
