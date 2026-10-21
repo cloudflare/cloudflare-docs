@@ -1,0 +1,11 @@
+---
+title: Cloudflare MCP servers no longer serve /sse
+description: Product-specific Cloudflare MCP servers now serve only /mcp. Update any MCP client still configured with an /sse URL.
+products:
+  - agents
+date: 2026-10-21
+---
+
+Cloudflare's [product-specific MCP servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#product-specific-mcp-servers) now serve only `/mcp`. A request to `/sse` returns `410 Gone` with the server's `/mcp` URL, which most MCP clients show in their connection error.
+
+If your MCP client is configured with an `/sse` URL, change it to `/mcp`, for example `https://docs.mcp.cloudflare.com/mcp`. If you signed in through `/sse`, your client asks you to sign in again. Connections that already use `/mcp` are not affected.
