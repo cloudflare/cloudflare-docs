@@ -1,0 +1,53 @@
+---
+pcx_content_type: navigation
+title: rtk-transcript
+description: API reference for rtk-transcript component (Web Components (HTML) Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-transcript/rtk-transcript.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A component which shows a transcript.
+ You need to remove the element after you receive the
+ `rtkTranscriptDismiss` event.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `transcript` | `Transcript & { renderedId?: string }` | ❌ | - | Message |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-transcript></rtk-transcript>
+```
+
+### With Properties
+
+```html
+<rtk-transcript
+ transcript="example">
+</rtk-transcript>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-transcript");
+
+  el.transcript = {};
+</script>
+```

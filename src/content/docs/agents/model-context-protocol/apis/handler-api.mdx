@@ -87,7 +87,7 @@ function createServer() {
 		"hello",
 		{
 			description: "Return a greeting",
-			inputSchema: { name: z.string().optional() },
+			inputSchema: z.object({ name: z.string().optional() }),
 		},
 		async ({ name }) => ({
 			content: [{ type: "text", text: `Hello, ${name ?? "World"}!` }],
@@ -357,10 +357,11 @@ interface McpAuthContext {
 
 ```ts
 import { getMcpAuthContext } from "agents/mcp/server";
+import { z } from "zod";
 
 server.registerTool(
 	"whoami",
-	{ description: "Return the current identity", inputSchema: {} },
+	{ description: "Return the current identity", inputSchema: z.object({}) },
 	async (_args, context) => {
 		const auth = getMcpAuthContext();
 

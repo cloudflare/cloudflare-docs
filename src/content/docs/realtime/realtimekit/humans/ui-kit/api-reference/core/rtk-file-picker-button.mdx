@@ -1,0 +1,53 @@
+---
+pcx_content_type: navigation
+title: rtk-file-picker-button
+description: API reference for rtk-file-picker-button component (Web Components (HTML) Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-file-picker-button/rtk-file-picker-button.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `filter` | `string` | ✅ | - | File type filter to open file picker with |
+| `icon` | `keyof IconPack1` | ✅ | - | Icon |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `label` | `string` | ✅ | - | Label for tooltip |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-file-picker-button></rtk-file-picker-button>
+```
+
+### With Properties
+
+```html
+<rtk-file-picker-button
+ filter="example"
+ label="example">
+</rtk-file-picker-button>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-file-picker-button");
+
+  el.icon = defaultIconPack;
+</script>
+```

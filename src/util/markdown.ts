@@ -14,7 +14,7 @@
 import { markdownToHtml } from "satteri";
 import { NodeType, parse } from "node-html-parser";
 import type { HTMLElement, Node, TextNode } from "node-html-parser";
-import he from "he";
+import { decode } from "he";
 import { stripExternalLinkArrow } from "./external-link-arrow";
 
 const FRAGMENT_FEATURES = {
@@ -128,7 +128,7 @@ export function stripMarkdownToText(source: string): string {
 
 	return stripExternalLinkArrow(
 		dom.childNodes
-			.map((node) => he.decode(node.innerText))
+			.map((node) => decode(node.innerText))
 			.filter((text) => text.trim().length > 0)
 			.join("\n\n"),
 	).trim();

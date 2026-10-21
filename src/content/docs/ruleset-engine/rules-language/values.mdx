@@ -8,8 +8,6 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components";
-
 When an HTTP request reaches the Cloudflare global network, Cloudflare creates a table of field–value pairs against which to match expressions. This table exists for as long as the current request is being processed.
 
 The values that populate the lookup tables of the Rules language are drawn from a variety of sources:
@@ -160,11 +158,7 @@ In the last example, the `lower()` function includes the `[*]` notation so that 
 
 It is not possible to define your own arrays. You can only use arrays returned by fields, either directly or modified by functions.
 
-<Render
-	file="rules-language-missing-value-behavior"
-	product="ruleset-engine"
-	params={{ errorDescription: "an out-of-bounds array index" }}
-/>
+Accessing an out-of-bounds array index produces a [missing value](#missing-values).
 
 You can only use `[*]` multiple times in the same expression if applied to the same array. Also, you can only use `[*]` in the first argument of a function call.
 
@@ -177,7 +171,7 @@ The Rules language [operators](/ruleset-engine/rules-language/operators/) do not
 
 A map, also called associative array, is a data structure that stores a collection of key-value pairs, where the key must be a `String` and the value can be of any type (for example, a `String` or an array of values). All values in a map must have the same type.
 
-The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<Array<String>>`, indicates the data type of the values associated with keys (an `Array` of `String` elements). This means that when you access the value of key `"foo"` you will get either an array of `String` elements or a [missing value](#notes-1).
+The Cloudflare Rules language includes several [fields](/ruleset-engine/rules-language/fields/) of `Map` data type. The type notation for map fields, for example `Map<Array<String>>`, indicates the data type of the values associated with keys (an `Array` of `String` elements). This means that when you access the value of key `"foo"` you will get either an array of `String` elements or a [missing value](#missing-values).
 
 To access a value in a map, enter the key between square brackets (`[]`):
 
@@ -232,11 +226,38 @@ For more information on `any()`, `all()`, `len()`, and other available functions
 
 It is not possible to define your own maps. You can only use maps returned by fields.
 
-<Render
-	file="rules-language-missing-value-behavior"
-	product="ruleset-engine"
-	params={{ errorDescription: "a non-existing key in a map" }}
-/>
+Accessing a key that does not exist produces a [missing value](#missing-values).
+
+## Missing values
+
+An absent map key or out-of-bounds array index produces a missing value (nil). Nil is not a literal you can enter in an expression.
+
+### Comparisons
+
+These results apply to HTTP rules when both values have the same type. The following table shows the result of each comparison:
+
+| Operand values | `eq` | `ne` | `lt` | `le` | `gt` | `ge` |
+| --- | --- | --- | --- | --- | --- | --- |
+| Both nil | `true` | `false` | `false` | `true` | `false` | `true` |
+| Exactly one nil | `false` | `true` | `false` | `false` | `false` | `false` |
+
+The one-nil results also apply when the other operand is a literal.
+
+:::caution
+An equality rule might match nearly every request if both values are usually nil. The following expressions return different results when both query parameters are missing:
+
+```txt
+# Returns true
+http.request.uri.args["first"][0] eq http.request.uri.args["second"][0]
+
+# Returns false because the empty string is different from nil
+coalesce(http.request.uri.args["first"][0], "") eq http.request.uri.args["second"][0]
+```
+:::
+
+### Functions
+
+Functions usually return nil when an argument is nil. The exact behavior varies by function. Use [`coalesce()`](/ruleset-engine/rules-language/functions/#coalesce) to provide a fallback value.
 
 ## Lists
 

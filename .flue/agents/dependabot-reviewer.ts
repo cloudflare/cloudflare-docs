@@ -87,8 +87,8 @@ function buildPrompt(input: DependabotReviewInput): string {
 		"prBody:",
 		JSON.stringify(input.prBody || ""),
 		"",
-		`When finished, call ${SUBMIT_TOOL} exactly once with the overall summary,`,
-		"recommendation, and one packageReviews entry per package. This is the only",
+		`When finished, call ${SUBMIT_TOOL} exactly once with the recommendation,`,
+		"headline, checks, and one packageReviews entry per package. This is the only",
 		"way to return your result.",
 	].join("\n");
 }
@@ -115,7 +115,7 @@ export default function DependabotReviewer(_props: AgentProps): string {
 		DEPENDABOT_REVIEW_DATA,
 		SUBMIT_TOOL,
 		DependabotReviewResultSchema,
-		"Submit the completed Dependabot review exactly once with the overall summary, recommendation, and one packageReviews entry per bumped package.",
+		"Submit the completed Dependabot review exactly once with the recommendation, headline, checks, and one packageReviews entry per bumped package.",
 	);
 
 	return buildPrompt(input);

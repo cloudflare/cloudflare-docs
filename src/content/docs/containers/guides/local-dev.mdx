@@ -8,10 +8,12 @@ products:
   - containers
 ---
 
-You can run both your container and your Worker locally by simply running [`npx wrangler dev`](/workers/wrangler/commands/general/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
+You can run both your container and your Worker locally by running [`npx wrangler dev`](/workers/wrangler/commands/workers/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
 To develop Container-enabled Workers locally, you will need to first ensure that a
 Docker compatible CLI tool and Engine are installed. For instance, you could use [Docker Desktop](https://docs.docker.com/desktop/) or [Colima](https://github.com/abiosoft/colima).
+
+Containers that use the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) require Wrangler 4.136.0 or later for local development. To run the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) locally, use Wrangler 4.141.0 or later.
 
 When you start a dev session, your container image will be built or downloaded. If your
 [Wrangler configuration](/workers/wrangler/configuration/#containers) sets
@@ -64,6 +66,32 @@ You may prefer to set up your own code watchers and reloading mechanisms, or mou
 into the local container images to sync code changes. This can be done, but there is no built-in
 mechanism for doing so, and best-practices will depend on the languages and frameworks
 you are using in your container code.
+
+## Differences after you deploy
+
+Local development runs your container in Docker. A deployed container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) differs from a local container in the following ways. Code that works locally can fail after you deploy.
+
+{/* Remove this section when the deployed hostname fits in a DNS label and /etc/hosts lists it. */}
+
+### The hostname is longer than a DNS label
+
+The hostname of a container is the name it uses for itself, which the `hostname` command prints. Nothing routes traffic to it. In a deployed container, the hostname is 64 characters, one more than a DNS label allows. `/etc/hosts` does not list it, so it does not resolve. Locally, the hostname is the 12-character Docker container ID, and `/etc/hosts` lists it. Code that looks up its own hostname can fail after you deploy.
+
+For example, `python3 -m http.server` and other servers built on the Python `http.server` module, such as `wsgiref`, exit on startup with this error:
+
+```txt
+UnicodeEncodeError: 'idna' codec can't encode characters in position 0-63: label too long
+```
+
+To serve files with Python, use `socketserver`, which does not look up the hostname:
+
+```sh
+python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer(("", 8000), h.SimpleHTTPRequestHandler).serve_forever()'
+```
+
+### Other Linux users keep root capabilities
+
+Locally, Docker gives no capabilities to a process that runs as a user other than `root`. File permissions apply to that process. In a deployed container, every process has the same Linux capabilities as `root`, regardless of user. For more information, refer to the [`exec()` `user` option](/containers/api/durable-object-container/#exec).
 
 ## Troubleshooting
 

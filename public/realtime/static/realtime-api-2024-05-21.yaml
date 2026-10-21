@@ -73,7 +73,6 @@ paths:
                       trackName: tts-track
                       endpoint: wss://example.com/ingest
                       inputCodec: pcm
-                      mode: buffer
               remote_stream_audio:
                 description: Stream an existing WebRTC audio track to a WebSocket endpoint
                 value:
@@ -83,7 +82,6 @@ paths:
                       trackName: mic-track
                       endpoint: wss://example.com/stream-audio
                       outputCodec: pcm
-                      mode: stream
               remote_stream_video:
                 description: Stream an existing WebRTC video track as JPEG to a WebSocket endpoint
                 value:
@@ -93,7 +91,6 @@ paths:
                       trackName: camera-track
                       endpoint: wss://example.com/stream-video
                       outputCodec: jpeg
-                      mode: stream
         required: true
       security:
         - secret: []
@@ -179,10 +176,10 @@ paths:
                 errorCode: invalid_params
                 errorDescription: Expecting at most 4 track in the request
       description:
-        Create one to four unidirectional WebSocket adapters. Ingest accepts PCM audio and
-        allocates a publishing session. Egress reads an existing audio or video track. The response
-        may contain both successful allocations and item errors; save successful adapter IDs before
-        retrying failed work.
+        Create one to four adapters, each carrying one track in one direction. The SFU opens the
+        connection to your WebSocket endpoint. Ingest accepts PCM audio and allocates a publishing
+        session. Egress reads an existing audio or video track. The response may contain both
+        successful allocations and item errors; save successful adapter IDs before retrying failed work.
   /apps/{appId}/adapters/websocket/close:
     post:
       tags:
@@ -208,7 +205,9 @@ paths:
           description: WebRTC application ID
       responses:
         "200":
-          description: At least one item succeeded. Inspect every tracks entry for item-level errors.
+          description:
+            At least one item succeeded. Already-closed adapters count as successful closes.
+            Inspect every tracks entry for item-level errors.
           headers:
             vary:
               schema:
@@ -218,14 +217,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CloseAdapterResponse"
-              example:
-                tracks:
-                  - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
-                    bytesProcessed: 83492
+              examples:
+                closed:
+                  description: A successful close with an available byte statistic.
+                  value:
+                    tracks:
+                      - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+                        bytesProcessed: 83492
+                already_closed:
+                  description: An already-closed adapter succeeds without a byte statistic.
+                  value:
+                    tracks:
+                      - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+                partial_success:
+                  description: A successful close and a failed item can share an HTTP 200 response.
+                  value:
+                    tracks:
+                      - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
+                      - adapterId: 2b2ff7d2e17a4d638be5b6e3075ed6ce
+                        errorCode: internal_error
+                        errorDescription: Backend error
         "503":
           description:
-            No requested adapter could be closed. Inspect each item errorCode and errorDescription;
-            per-item HTTP status codes are not returned.
+            Every attempted close failed. Inspect each item errorCode and errorDescription and
+            retain failed items for retry. Per-item HTTP status codes are not returned.
           headers:
             vary:
               schema:
@@ -238,8 +253,8 @@ paths:
               example:
                 tracks:
                   - adapterId: 4e66a9d5a35e4a0899f6f8d0b63a35c1
-                    errorCode: adapter_not_found
-                    errorDescription: Adapter not found
+                    errorCode: internal_error
+                    errorDescription: Backend error
         "400":
           description: The JSON body or its field types could not be decoded.
           content:
@@ -259,9 +274,9 @@ paths:
                 errorCode: invalid_params
                 errorDescription: Expecting at most 4 track in the request
       description:
-        Close one to four adapters and inspect every item result. An absent or already-closed
-        adapter may return adapter_not_found. If every item fails, including already-absent items,
-        the outer response is 503. Do not treat every 503 response as successful cleanup.
+        Close one to four adapters. Close is idempotent. You can safely repeat a close request,
+        including for an adapter that is already closed. Inspect every item for errorCode and
+        retry failed items with bounded backoff.
   /apps/{appId}/sessions/{sessionId}/tracks/new:
     post:
       tags:
@@ -1359,8 +1374,8 @@ components:
             - local
             - remote
           description:
-            Use local to ingest media from an external endpoint. Use remote to stream media from an
-            existing WebRTC track.
+            Use local to publish audio from an external endpoint into the SFU. Use remote to
+            stream media from an existing WebRTC track to the endpoint.
         sessionId:
           type: string
           description:
@@ -1374,9 +1389,9 @@ components:
         endpoint:
           type: string
           description:
-            Publicly reachable WebSocket endpoint. Custom WebSocket request headers and HTTP
-            redirects are not supported. Use wss:// and authenticate the endpoint independently of
-            the SFU API.
+            Publicly reachable WebSocket endpoint. The SFU initiates the connection for both local
+            and remote adapters. Custom WebSocket request headers and HTTP redirects are not
+            supported. Use wss:// and authenticate the endpoint independently of the SFU API.
           minLength: 1
           format: uri
           pattern: ^wss?://
@@ -1413,8 +1428,9 @@ components:
         bytesProcessed:
           type: number
           description:
-            Operational bytes-processed statistic at close. This value is not the authoritative
-            billed-usage total.
+            Operational bytes-processed statistic at close. Omitted when unavailable, including
+            for an already-closed adapter. Omission does not mean zero usage. This is
+            not the authoritative billed-usage total.
     NewAdapterRequest:
       type: object
       properties:

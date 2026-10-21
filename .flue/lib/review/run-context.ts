@@ -34,7 +34,9 @@ export interface RunCtx {
 	mode: ReviewMode;
 }
 
-export function reviewMode(env: ReviewRunEnv): ReviewMode {
+export function reviewMode(
+	env: Pick<ReviewRunEnv, "DOCS_FLUE_REVIEW_MODE">,
+): ReviewMode {
 	return env.DOCS_FLUE_REVIEW_MODE === "comment" ? "comment" : "log";
 }
 

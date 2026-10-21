@@ -18,6 +18,10 @@ import { Render } from "~/components";
 
 The following sections cover typical rate limiting configurations for common use cases. You can combine the provided example rules and adjust them to your own scenario.
 
+:::caution[Path matching and URL normalization]
+Path-based examples on this page assume that Cloudflare and your origin application interpret request paths consistently. Origin servers and frameworks may normalize or decode paths differently. As a result, alternative path representations could reach the same endpoint without matching the rule. Review your [URL normalization settings](/rules/normalization/) and test all path representations accepted by your application.
+:::
+
 The main use cases for rate limiting are the following:
 
 <Render file="rate-limiting-best-practices" product="waf" />

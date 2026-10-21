@@ -1,0 +1,771 @@
+{
+	"model_id": "meta/muse-spark-1.3",
+	"provider_id": "meta",
+	"name": "Muse Spark 1.3",
+	"description": "Muse Spark 1.3 is Meta's latest agentic and coding model, tuned for multi-step tool loops, browser tasks, software engineering, and long-horizon reasoning.",
+	"task": "Text Generation",
+	"tags": [
+		"Text Generation",
+		"Reasoning",
+		"Tool Calling",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 1.25,
+		"Cached input tokens (per 1M)": 0.16,
+		"Output tokens (per 1M)": 4.25
+	},
+	"examples": [
+		{
+			"name": "Webhook Service Architecture",
+			"description": "Design a resilient event-driven architecture and make the key trade-offs explicit.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a principal engineer writing for a team that will implement the design. Be concrete, identify failure modes, and avoid unnecessary infrastructure."
+					},
+					{
+						"role": "user",
+						"content": "Design a multi-tenant webhook delivery service for a SaaS product. It must support signed webhooks, at-least-once delivery, exponential backoff, tenant-specific rate limits, and replay from an audit log. Provide: (1) a short component diagram in text, (2) the event state machine, (3) an idempotency strategy, and (4) three operational metrics with alert thresholds. Keep the proposal under 700 words."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "## Multi-tenant Webhook Delivery: Proposal\n\nGoal: durable, at-least-once delivery without building streaming infra. Use **Postgres as source of truth + queue, stateless workers, Redis only for rate limiting.**\n\n### 1. Component diagram (text)\n\n```\nProducer services -> [Ingest API] -> [Postgres: events, deliveries, audit_log]\n                          |                    ^\n[Tenant Control Plane: endpoints, secrets/KMS, rate limits] |\n                          v                    | claim with SKIP LOCKED\n[Replay API] --------> [Scheduler/Workers] -> [Redis Token Bucket per-tenant] -> [HTTPS Sender] -> Customer endpoint\n                            |                          (respect Retry-After)\n                            v\n                       [DLQ + Metrics/Logs]\n```\n\n* **Ingest API:** validates, assigns `event_id (UUIDv7)`, writes event + first delivery row. Idempotent.\n* **Postgres:** tables `webhook_events`, `deliveries`, `audit_log (append-only)`, `endpoints`. No Kafka needed until >2k rps sustained.\n* **Workers:** poll due deliveries, HMAC-sign, POST with timeout (10s), handle retry scheduling.\n* **Control Plane:** per-tenant endpoint URL, secret refs, `rate_per_min, burst, max_attempts, timeout`.\n\n**Failure modes:** slow customer blocks worker threads -> use isolated worker pool + per-endpoint circuit breaker (open after 20 consecutive 5xx/timeouts, half-open after 5m). Poison event -> cap payload 256KB, max 12 attempts then DLQ. Redis loss -> fail-open with local in-memory limiter + alert, never fail-closed delivery. Replay storm -> replay is rate-limited like normal traffic.\n\n### 2. Event state machine\n\nOne row per `(tenant_id, event_id, endpoint_id)`, `attempt_count` increments:\n\n`PENDING -> QUEUED -> IN_FLIGHT -> DELIVERED (terminal)`\n`IN_FLIGHT -> RETRY_WAIT -> QUEUED -> IN_FLIGHT ... -> DEAD_LETTER (terminal)`\n\nTransitions:\n* `PENDING->QUEUED`: ingest commit, `next_attempt_at=now()`.\n* `QUEUED->IN_FLIGHT`: worker claims via `SELECT ... FOR UPDATE SKIP LOCKED`, sets `lease_until=now()+5m`.\n* `IN_FLIGHT->DELIVERED`: receiver returns 2xx within timeout. Log to audit.\n* `IN_FLIGHT->RETRY_WAIT`: timeout, 5xx, 429, network error. Set `next_attempt_at = now() + backoff`. Backoff: `min(30s * 2^attempt + jitter(0-10s), 6h)`, max 12 attempts over ~24h.\n* `IN_FLIGHT->DEAD_LETTER`: 4xx except 408/429, or attempts exhausted, or HMAC misconfig. Require manual replay.\n* Lease expiry: crashed worker -> `IN_FLIGHT` with expired lease returns to `QUEUED`.\n\n### 3. Idempotency strategy\n\nAt-least-once means receivers **will** see duplicates. Make duplicates harmless:\n\n1. **Inbound dedup:** Producer must send `Idempotency-Key: <event_id>`. DB has `UNIQUE(tenant_id, event_id)`. Retried ingest returns existing row, no new delivery.\n2. **Stable identity downstream:** Payload immutable. Headers on every attempt:\n`X-Webhook-Id: <event_id>, X-Delivery-Attempt: <n>, X-Webhook-Timestamp: <unix>, X-Webhook-Signature: v1=<hex>`\nSignature: `HMAC_SHA256(endpoint_secret, timestamp + \".\" + event_id + \".\" + raw_body)`. Receivers dedup on `X-Webhook-Id` for 24h. Replays reuse same `event_id` with new `attempt_id` + `replay_of` audit ref, so customer dedup still works.\n3. **Worker safety:** Side-effects only via single `deliver()` function guarded by `lease_owner`. Double-claim impossible due to row lock; duplicate send after crash is expected and safe due to (2).\n4. **Secrets:** per-endpoint secret, encrypted with KMS, versioned `v1,v2` for rotation. Reject if timestamp skew >5m.\n\n### 4. Operational metrics + alerts\n\n1. **Delivery Success Rate (global + per-tenant):** `delivered / (delivered+dead_letter) over 10m`. Alert: `<99.5% global` or `<98% for any top-20 tenant` for 10m -> page. Indicates receiver outage or our bug.\n2. **Oldest Undelivered Age / Queue Depth:** `now() - min(next_attempt_at) where state in (QUEUED, RETRY_WAIT)`. Alert: `age >15m OR depth >10k` for 5m -> page. Indicates worker stall, DB lock contention, or per-tenant limiter too strict.\n3. **Dead-Letter Insertion Rate:** `rate(dead_letter_total[5m])`. Alert: `>10/min global OR spike 5x per-tenant vs 1h baseline` -> ticket + Slack to tenant owner. Indicates bad endpoint config, auth/4xx loop, signature failures.\n\nDashboards must be sliceable by `tenant_id, endpoint_id, status_code`."
+			},
+			"raw_response": {
+				"id": "resp_6ac7acc41128bd4d6cd74cef",
+				"object": "response",
+				"created_at": 1791470788,
+				"model": "muse-spark-1.3",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7acc41128bd4d6cd74cef:rs_4c7f2910-34ff-4ac8-bc50-e03e60bc61b9",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_2783bcfa-5988-4878-9a6b-6a7edb9b3c07",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "## Multi-tenant Webhook Delivery: Proposal\n\nGoal: durable, at-least-once delivery without building streaming infra. Use **Postgres as source of truth + queue, stateless workers, Redis only for rate limiting.**\n\n### 1. Component diagram (text)\n\n```\nProducer services -> [Ingest API] -> [Postgres: events, deliveries, audit_log]\n                          |                    ^\n[Tenant Control Plane: endpoints, secrets/KMS, rate limits] |\n                          v                    | claim with SKIP LOCKED\n[Replay API] --------> [Scheduler/Workers] -> [Redis Token Bucket per-tenant] -> [HTTPS Sender] -> Customer endpoint\n                            |                          (respect Retry-After)\n                            v\n                       [DLQ + Metrics/Logs]\n```\n\n* **Ingest API:** validates, assigns `event_id (UUIDv7)`, writes event + first delivery row. Idempotent.\n* **Postgres:** tables `webhook_events`, `deliveries`, `audit_log (append-only)`, `endpoints`. No Kafka needed until >2k rps sustained.\n* **Workers:** poll due deliveries, HMAC-sign, POST with timeout (10s), handle retry scheduling.\n* **Control Plane:** per-tenant endpoint URL, secret refs, `rate_per_min, burst, max_attempts, timeout`.\n\n**Failure modes:** slow customer blocks worker threads -> use isolated worker pool + per-endpoint circuit breaker (open after 20 consecutive 5xx/timeouts, half-open after 5m). Poison event -> cap payload 256KB, max 12 attempts then DLQ. Redis loss -> fail-open with local in-memory limiter + alert, never fail-closed delivery. Replay storm -> replay is rate-limited like normal traffic.\n\n### 2. Event state machine\n\nOne row per `(tenant_id, event_id, endpoint_id)`, `attempt_count` increments:\n\n`PENDING -> QUEUED -> IN_FLIGHT -> DELIVERED (terminal)`\n`IN_FLIGHT -> RETRY_WAIT -> QUEUED -> IN_FLIGHT ... -> DEAD_LETTER (terminal)`\n\nTransitions:\n* `PENDING->QUEUED`: ingest commit, `next_attempt_at=now()`.\n* `QUEUED->IN_FLIGHT`: worker claims via `SELECT ... FOR UPDATE SKIP LOCKED`, sets `lease_until=now()+5m`.\n* `IN_FLIGHT->DELIVERED`: receiver returns 2xx within timeout. Log to audit.\n* `IN_FLIGHT->RETRY_WAIT`: timeout, 5xx, 429, network error. Set `next_attempt_at = now() + backoff`. Backoff: `min(30s * 2^attempt + jitter(0-10s), 6h)`, max 12 attempts over ~24h.\n* `IN_FLIGHT->DEAD_LETTER`: 4xx except 408/429, or attempts exhausted, or HMAC misconfig. Require manual replay.\n* Lease expiry: crashed worker -> `IN_FLIGHT` with expired lease returns to `QUEUED`.\n\n### 3. Idempotency strategy\n\nAt-least-once means receivers **will** see duplicates. Make duplicates harmless:\n\n1. **Inbound dedup:** Producer must send `Idempotency-Key: <event_id>`. DB has `UNIQUE(tenant_id, event_id)`. Retried ingest returns existing row, no new delivery.\n2. **Stable identity downstream:** Payload immutable. Headers on every attempt:\n`X-Webhook-Id: <event_id>, X-Delivery-Attempt: <n>, X-Webhook-Timestamp: <unix>, X-Webhook-Signature: v1=<hex>`\nSignature: `HMAC_SHA256(endpoint_secret, timestamp + \".\" + event_id + \".\" + raw_body)`. Receivers dedup on `X-Webhook-Id` for 24h. Replays reuse same `event_id` with new `attempt_id` + `replay_of` audit ref, so customer dedup still works.\n3. **Worker safety:** Side-effects only via single `deliver()` function guarded by `lease_owner`. Double-claim impossible due to row lock; duplicate send after crash is expected and safe due to (2).\n4. **Secrets:** per-endpoint secret, encrypted with KMS, versioned `v1,v2` for rotation. Reject if timestamp skew >5m.\n\n### 4. Operational metrics + alerts\n\n1. **Delivery Success Rate (global + per-tenant):** `delivered / (delivered+dead_letter) over 10m`. Alert: `<99.5% global` or `<98% for any top-20 tenant` for 10m -> page. Indicates receiver outage or our bug.\n2. **Oldest Undelivered Age / Queue Depth:** `now() - min(next_attempt_at) where state in (QUEUED, RETRY_WAIT)`. Alert: `age >15m OR depth >10k` for 5m -> page. Indicates worker stall, DB lock contention, or per-tenant limiter too strict.\n3. **Dead-Letter Insertion Rate:** `rate(dead_letter_total[5m])`. Alert: `>10/min global OR spike 5x per-tenant vs 1h baseline` -> ticket + Slack to tenant owner. Indicates bad endpoint config, auth/4xx loop, signature failures.\n\nDashboards must be sliceable by `tenant_id, endpoint_id, status_code`.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 144,
+					"output_tokens": 2443,
+					"total_tokens": 2587,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1306
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791470788,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.3',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a principal engineer writing for a team that will implement the design. Be concrete, identify failure modes, and avoid unnecessary infrastructure.',\n      },\n      {\n        role: 'user',\n        content:\n          'Design a multi-tenant webhook delivery service for a SaaS product. It must support signed webhooks, at-least-once delivery, exponential backoff, tenant-specific rate limits, and replay from an audit log. Provide: (1) a short component diagram in text, (2) the event state machine, (3) an idempotency strategy, and (4) three operational metrics with alert thresholds. Keep the proposal under 700 words.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.3\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a principal engineer writing for a team that will implement the design. Be concrete, identify failure modes, and avoid unnecessary infrastructure.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Design a multi-tenant webhook delivery service for a SaaS product. It must support signed webhooks, at-least-once delivery, exponential backoff, tenant-specific rate limits, and replay from an audit log. Provide: (1) a short component diagram in text, (2) the event state machine, (3) an idempotency strategy, and (4) three operational metrics with alert thresholds. Keep the proposal under 700 words.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "OAuth Callback Threat Model",
+			"description": "Threat-model an OAuth callback endpoint and prioritize concrete mitigations.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are an application security engineer. Distinguish threats from mitigations and call out assumptions explicitly."
+					},
+					{
+						"role": "user",
+						"content": "Threat-model an OAuth callback at GET /oauth/callback?code=...&state=... for a multi-tenant SaaS app. The callback exchanges the code server-side, redirects to the tenant dashboard, and stores the resulting session in an HttpOnly cookie. List the five most important threats, their impact, and one mitigation for each. Include one test case for state validation and one for redirect validation."
+					}
+				],
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "For `GET /oauth/callback?code=...&state=...` in a multi-tenant SaaS, here is a focused model.\n\n**How I\u2019m using terms:**\n* **Threat =** what an attacker can do to you.\n* **Mitigation =** what you build to stop it. They are not the same.\n\n### Explicit Assumptions\n\n1. Authorization Code Flow + OIDC, code exchanged **server-to-server** over TLS with `client_secret` (or private_key_jwt).\n2. Attacker can send the victim links, run their own tenant/subdomain like `evil.saas.com`, and observe/intercept a `code` if it leaks via logs, `Referer`, browser history.\n3. Attacker cannot break TLS, compromise the IdP, or read server-side session store.\n4. Tenants are mutually untrusted. Tenant identity comes from your app, not from a user-controlled query param.\n5. `HttpOnly` alone does not prevent CSRF, XSS exfiltration via API calls, or subdomain cookie abuse.\n\n### 5 Most Important Threats\n\n**T1: Login CSRF / Code Injection via weak `state`**\nThreat: Attacker starts OAuth with their own IdP account, gets `codeA`, then tricks victim into visiting `/oauth/callback?code=codeA&state=victimState` or with no state check. Victim's browser is now logged in as attacker.\nImpact: Victim uploads company data to attacker's account, attacker later logs in to retrieve it. Reverse variant leads to account takeover.\nMitigation: Generate 128+ bit random `state` per login attempt, store server-side bound to the pre-login browser session + `code_verifier` + `tenant_id`, single-use with 5-10 min expiry, validate with constant-time compare. Fail closed if missing/mismatched/replayed. Use PKCE `S256` even for confidential clients.\n\n**T2: Authorization Code Theft and Replay**\nThreat: `code` leaks in access logs, error pages, `Referer: /oauth/callback?code=...` to analytics/CDN, browser history, or is stolen on open network if IdP redirect not HTTPS.\nImpact: Attacker replays `code` in their own browser to impersonate victim -> full account takeover.\nMitigation: Require PKCE, never log `code/state/tokens`, set `Referrer-Policy: no-referrer`, make IdP `redirect_uri` exact-match HTTPS, and enforce single-use code exchange server-side. Do not accept `code` in any endpoint other than the callback.\n\n**T3: Open Redirect after login to \"tenant dashboard\"**\nThreat: Callback honors attacker-controlled `?next=`, `?redirect_uri=`, or `state.redirect` like `https://evil.com` or `//evil.com` or `https://legit.saas.com.evil.com`.\nImpact: Post-login phishing that looks trusted, theft of session via `Referer`, bypass of allowlists. In multi-tenant, redirect to attacker tenant to steal tokens.\nMitigation: No open redirects. Ignore user-controlled URLs. Redirect only to relative path like `/dashboard` or lookup `tenant_id -> allowlisted URL` server-side. If you must support `next`, allowlist per-tenant exact paths, reject `//`, `\\`, `http`, encoded variants.\n\n**T4: Cross-Tenant / Issuer Confusion**\nThreat: Attacker swaps `tenant_id` in `state`, uses token issued for `tenant-B` or different `iss/aud` to login to `tenant-A`. E.g. `/oauth/callback?code=...&state=...tenantB...` while victim belongs to `tenantA`, or mixes up IdPs in multi-IdP setup.\nImpact: Horizontal privilege escalation, access to another tenant's data - catastrophic for SaaS.\nMitigation: Bind signed/encrypted `state` to `{ nonce, tenant_id, expected_iss, expected_aud }`. After exchange, validate ID Token signature via IdP JWKS, and check `iss`, `aud == your client_id`, `exp/iat/nonce`, then check `email/sub` is actually a member of `tenant_id` in your DB. Never trust tenant from query param.\n\n**T5: Session Fixation + Cookie Over-Scoping**\nThreat: App reuses pre-login session ID or sets cookie as `Domain=.saas.com; SameSite=None; Secure=false` or without `__Host-` prefix. Attacker subdomain or network attacker steals/forces session.\nImpact: Session hijack across tenants, stays logged in even after OAuth completes.\nMitigation: Regenerate session ID on successful callback, set: `__Host-session=...; HttpOnly; Secure; Path=/; SameSite=Lax` (Strict for dashboard), no `Domain` attribute. Scope session to tenant server-side. Add idle/absolute timeout and logout that revokes server session.\n\n> Note: `HttpOnly` stops `document.cookie` theft only. You still need `Secure + SameSite + __Host-` + server rotation.\n\n### Test Cases\n\n**TEST-STATE-01: State must be bound and single-use**\nSteps:\n1. `GET /login?tenant=acme` -> capture `Set-Cookie: oauth_state` + `state=GOOD` redirect to IdP.\n2. Complete IdP login to get valid `code`.\n3. Send: `GET /oauth/callback?code=<valid>&state=EVIL` and `GET /oauth/callback?code=<valid>&state=` (missing) and replay `GET /oauth/callback?code=<valid2>&state=GOOD` a second time.\nExpected: All 3 return `400/403`, **no** code exchange with IdP, **no** `Set-Cookie: session`, error logged without logging `code`. Only exact `GOOD` first-use succeeds.\n\n**TEST-REDIRECT-01: Post-login redirect cannot be abused**\nSteps:\n1. `GET /login?tenant=acme&next=https://evil.com` and variants: `//evil.com`, `https://acme.saas.com.evil.com`, `/\\evil.com`, `%2F%2Fevil.com`.\n2. Complete flow with valid `code + state`.\nExpected: Session is created, but `Location:` is always default `/dashboard` or `https://acme.saas.com/dashboard` from server allowlist, never attacker URL. Test with two tenants to ensure `tenantA` code cannot redirect to `tenantB` dashboard."
+			},
+			"raw_response": {
+				"id": "resp_6ac7ad07d24591db7a1f43aa",
+				"object": "response",
+				"created_at": 1791470855,
+				"model": "muse-spark-1.3",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7ad07d24591db7a1f43aa:rs_196a2d24-ee7c-402f-87d2-7fd8d5e2a652",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_a0fe4664-80b0-418c-935b-be4e53a10b0a",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "For `GET /oauth/callback?code=...&state=...` in a multi-tenant SaaS, here is a focused model.\n\n**How I\u2019m using terms:**\n* **Threat =** what an attacker can do to you.\n* **Mitigation =** what you build to stop it. They are not the same.\n\n### Explicit Assumptions\n\n1. Authorization Code Flow + OIDC, code exchanged **server-to-server** over TLS with `client_secret` (or private_key_jwt).\n2. Attacker can send the victim links, run their own tenant/subdomain like `evil.saas.com`, and observe/intercept a `code` if it leaks via logs, `Referer`, browser history.\n3. Attacker cannot break TLS, compromise the IdP, or read server-side session store.\n4. Tenants are mutually untrusted. Tenant identity comes from your app, not from a user-controlled query param.\n5. `HttpOnly` alone does not prevent CSRF, XSS exfiltration via API calls, or subdomain cookie abuse.\n\n### 5 Most Important Threats\n\n**T1: Login CSRF / Code Injection via weak `state`**\nThreat: Attacker starts OAuth with their own IdP account, gets `codeA`, then tricks victim into visiting `/oauth/callback?code=codeA&state=victimState` or with no state check. Victim's browser is now logged in as attacker.\nImpact: Victim uploads company data to attacker's account, attacker later logs in to retrieve it. Reverse variant leads to account takeover.\nMitigation: Generate 128+ bit random `state` per login attempt, store server-side bound to the pre-login browser session + `code_verifier` + `tenant_id`, single-use with 5-10 min expiry, validate with constant-time compare. Fail closed if missing/mismatched/replayed. Use PKCE `S256` even for confidential clients.\n\n**T2: Authorization Code Theft and Replay**\nThreat: `code` leaks in access logs, error pages, `Referer: /oauth/callback?code=...` to analytics/CDN, browser history, or is stolen on open network if IdP redirect not HTTPS.\nImpact: Attacker replays `code` in their own browser to impersonate victim -> full account takeover.\nMitigation: Require PKCE, never log `code/state/tokens`, set `Referrer-Policy: no-referrer`, make IdP `redirect_uri` exact-match HTTPS, and enforce single-use code exchange server-side. Do not accept `code` in any endpoint other than the callback.\n\n**T3: Open Redirect after login to \"tenant dashboard\"**\nThreat: Callback honors attacker-controlled `?next=`, `?redirect_uri=`, or `state.redirect` like `https://evil.com` or `//evil.com` or `https://legit.saas.com.evil.com`.\nImpact: Post-login phishing that looks trusted, theft of session via `Referer`, bypass of allowlists. In multi-tenant, redirect to attacker tenant to steal tokens.\nMitigation: No open redirects. Ignore user-controlled URLs. Redirect only to relative path like `/dashboard` or lookup `tenant_id -> allowlisted URL` server-side. If you must support `next`, allowlist per-tenant exact paths, reject `//`, `\\`, `http`, encoded variants.\n\n**T4: Cross-Tenant / Issuer Confusion**\nThreat: Attacker swaps `tenant_id` in `state`, uses token issued for `tenant-B` or different `iss/aud` to login to `tenant-A`. E.g. `/oauth/callback?code=...&state=...tenantB...` while victim belongs to `tenantA`, or mixes up IdPs in multi-IdP setup.\nImpact: Horizontal privilege escalation, access to another tenant's data - catastrophic for SaaS.\nMitigation: Bind signed/encrypted `state` to `{ nonce, tenant_id, expected_iss, expected_aud }`. After exchange, validate ID Token signature via IdP JWKS, and check `iss`, `aud == your client_id`, `exp/iat/nonce`, then check `email/sub` is actually a member of `tenant_id` in your DB. Never trust tenant from query param.\n\n**T5: Session Fixation + Cookie Over-Scoping**\nThreat: App reuses pre-login session ID or sets cookie as `Domain=.saas.com; SameSite=None; Secure=false` or without `__Host-` prefix. Attacker subdomain or network attacker steals/forces session.\nImpact: Session hijack across tenants, stays logged in even after OAuth completes.\nMitigation: Regenerate session ID on successful callback, set: `__Host-session=...; HttpOnly; Secure; Path=/; SameSite=Lax` (Strict for dashboard), no `Domain` attribute. Scope session to tenant server-side. Add idle/absolute timeout and logout that revokes server session.\n\n> Note: `HttpOnly` stops `document.cookie` theft only. You still need `Secure + SameSite + __Host-` + server rotation.\n\n### Test Cases\n\n**TEST-STATE-01: State must be bound and single-use**\nSteps:\n1. `GET /login?tenant=acme` -> capture `Set-Cookie: oauth_state` + `state=GOOD` redirect to IdP.\n2. Complete IdP login to get valid `code`.\n3. Send: `GET /oauth/callback?code=<valid>&state=EVIL` and `GET /oauth/callback?code=<valid>&state=` (missing) and replay `GET /oauth/callback?code=<valid2>&state=GOOD` a second time.\nExpected: All 3 return `400/403`, **no** code exchange with IdP, **no** `Set-Cookie: session`, error logged without logging `code`. Only exact `GOOD` first-use succeeds.\n\n**TEST-REDIRECT-01: Post-login redirect cannot be abused**\nSteps:\n1. `GET /login?tenant=acme&next=https://evil.com` and variants: `//evil.com`, `https://acme.saas.com.evil.com`, `/\\evil.com`, `%2F%2Fevil.com`.\n2. Complete flow with valid `code + state`.\nExpected: Session is created, but `Location:` is always default `/dashboard` or `https://acme.saas.com/dashboard` from server allowlist, never attacker URL. Test with two tenants to ensure `tenantA` code cannot redirect to `tenantB` dashboard.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 127,
+					"output_tokens": 3327,
+					"total_tokens": 3454,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1945
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791470855,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 8192
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.3',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are an application security engineer. Distinguish threats from mitigations and call out assumptions explicitly.',\n      },\n      {\n        role: 'user',\n        content:\n          'Threat-model an OAuth callback at GET /oauth/callback?code=...&state=... for a multi-tenant SaaS app. The callback exchanges the code server-side, redirects to the tenant dashboard, and stores the resulting session in an HttpOnly cookie. List the five most important threats, their impact, and one mitigation for each. Include one test case for state validation and one for redirect validation.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.3\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are an application security engineer. Distinguish threats from mitigations and call out assumptions explicitly.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Threat-model an OAuth callback at GET /oauth/callback?code=...&state=... for a multi-tenant SaaS app. The callback exchanges the code server-side, redirects to the tenant dashboard, and stores the resulting session in an HttpOnly cookie. List the five most important threats, their impact, and one mitigation for each. Include one test case for state validation and one for redirect validation.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Queue Migration Plan",
+			"description": "Create a staged migration plan for replacing a legacy queue without interrupting event processing.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a staff engineer planning a zero-downtime migration. Favor observable, reversible phases and identify the rollback trigger for each phase."
+					},
+					{
+						"role": "user",
+						"content": "We are replacing a legacy job queue with a partitioned event log. Producers currently publish jobs directly to the old queue and three worker fleets consume them. Design a six-phase migration plan covering dual writes, shadow consumers, cutover, deduplication, lag monitoring, and rollback. State the invariant that must hold before deleting the old queue. Keep it under 300 words."
+					}
+				],
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "Here's a reversible plan \u2014 old queue stays source-of-truth until parity is proven. All switches behind flags.\n\n**1. Monitor - lag monitoring:**\nAdd publish rate, `queue_depth_old`, `log_end_offset - consumer_offset` per partition/fleet, e2e latency, DLQ counts. Rollback trigger: metrics missing/divergent in audit -> stop.\n\n**2. Dual write - old primary:**\nProducers sync-write old, best-effort async-write new log with same `job_id`. Compare counts. Rollback trigger: new-write error >0.1% or p99 +10% -> flag off, ignore new log.\n\n**3. Shadow consumers:**\nDeploy 3 new fleets reading new log, execute but suppress side-effects, diff vs old. Rollback trigger: mismatch or crash -> disable shadow, fix.\n\n**4. Deduplicate:**\nAdd `job_id` idempotency table, TTL > retention. New workers dedup; reconcile old vs new processed sets hourly. Rollback trigger: duplicate side-effect or reconcile gap -> stay on old.\n\n**5. Cutover - new primary:**\nFlip to new log primary, old as fallback, dual-read + dedup. Move one fleet at a time. Rollback trigger: lag >30s, error-budget burn, or DLQ spike -> flag back to old instantly.\n\n**6. Drain:**\nStop writes to old, drain workers, dark-launch 48h. Rollback trigger: old-queue reappearance -> re-enable.\n\n**Invariant before deleting old queue:** `queue_depth_old=0` for full retention window AND producer refs=0 AND new-log lag ~0 AND 100% reconciled `job_ids` with zero pending dedup keys."
+			},
+			"raw_response": {
+				"id": "resp_6ac7ad2d29eeea2059184ed9",
+				"object": "response",
+				"created_at": 1791470893,
+				"model": "muse-spark-1.3",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7ad2d29eeea2059184ed9:rs_9a03ef30-1d43-4ddb-92ff-faea1c123a3f",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_807b479b-0d11-45d6-9fb5-2e304375c590",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Here's a reversible plan \u2014 old queue stays source-of-truth until parity is proven. All switches behind flags.\n\n**1. Monitor - lag monitoring:**\nAdd publish rate, `queue_depth_old`, `log_end_offset - consumer_offset` per partition/fleet, e2e latency, DLQ counts. Rollback trigger: metrics missing/divergent in audit -> stop.\n\n**2. Dual write - old primary:**\nProducers sync-write old, best-effort async-write new log with same `job_id`. Compare counts. Rollback trigger: new-write error >0.1% or p99 +10% -> flag off, ignore new log.\n\n**3. Shadow consumers:**\nDeploy 3 new fleets reading new log, execute but suppress side-effects, diff vs old. Rollback trigger: mismatch or crash -> disable shadow, fix.\n\n**4. Deduplicate:**\nAdd `job_id` idempotency table, TTL > retention. New workers dedup; reconcile old vs new processed sets hourly. Rollback trigger: duplicate side-effect or reconcile gap -> stay on old.\n\n**5. Cutover - new primary:**\nFlip to new log primary, old as fallback, dual-read + dedup. Move one fleet at a time. Rollback trigger: lag >30s, error-budget burn, or DLQ spike -> flag back to old instantly.\n\n**6. Drain:**\nStop writes to old, drain workers, dark-launch 48h. Rollback trigger: old-queue reappearance -> re-enable.\n\n**Invariant before deleting old queue:** `queue_depth_old=0` for full retention window AND producer refs=0 AND new-log lag ~0 AND 100% reconciled `job_ids` with zero pending dedup keys.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 126,
+					"output_tokens": 2390,
+					"total_tokens": 2516,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 2024
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791470893,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 8192
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.3',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a staff engineer planning a zero-downtime migration. Favor observable, reversible phases and identify the rollback trigger for each phase.',\n      },\n      {\n        role: 'user',\n        content:\n          'We are replacing a legacy job queue with a partitioned event log. Producers currently publish jobs directly to the old queue and three worker fleets consume them. Design a six-phase migration plan covering dual writes, shadow consumers, cutover, deduplication, lag monitoring, and rollback. State the invariant that must hold before deleting the old queue.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.3\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a staff engineer planning a zero-downtime migration. Favor observable, reversible phases and identify the rollback trigger for each phase.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"We are replacing a legacy job queue with a partitioned event log. Producers currently publish jobs directly to the old queue and three worker fleets consume them. Design a six-phase migration plan covering dual writes, shadow consumers, cutover, deduplication, lag monitoring, and rollback. State the invariant that must hold before deleting the old queue.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Incident Timeline Analysis",
+			"description": "Analyze an outage timeline, identify the likely contributing factors, and propose follow-up actions.",
+			"input": {
+				"input": [
+					{
+						"role": "user",
+						"content": "Analyze this incident timeline:\n\n09:00: deploy increases worker concurrency from 20 to 80.\n09:07: queue depth begins rising.\n09:12: database connection utilization reaches 95%.\n09:16: retries increase and queue depth doubles.\n09:25: rollback starts.\n09:31: queue depth returns to normal.\n\nWrite a blameless root-cause summary, distinguish direct cause from contributing factors, and propose four follow-up actions with measurable success criteria."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "### Blameless Root-Cause Summary\n\n**TL;DR:** A 4x increase in worker concurrency at 09:00 saturated a downstream bottleneck - the database connection pool - which reduced effective throughput, causing queue depth to grow. Retries then amplified the load and created a feedback loop. Rollback removed the overload and service recovered, which strongly implicates the concurrency change as the trigger.\n\nIncreasing workers from 20 to 80 would normally *decrease* queue depth. That the queue *rose* 7 minutes after the deploy is a key signal: workers were not processing faster, they were getting slower/blocked waiting on a shared resource.\n\nWhat we can infer from the timeline alone:\n09:00 -> 09:07 deploy precedes queue growth\n09:12 -> DB at 95% shows downstream saturation\n09:16 -> retries + doubling queue shows amplification\n09:25 -> 09:31 rollback -> recovery confirms causal link\n\nThis analysis is based on metrics correlation. Trace-level confirmation - worker wait time, DB query latency/timeouts, connection acquire timeouts - would finalize it.\n\n### Direct Cause vs. Contributing Factors\n\n**Direct Cause:**\nWorker demand exceeded database serving capacity. 80 concurrent workers contended for a finite pool of DB connections. Once utilization approached saturation (~95%), connection wait time, query latency, and timeouts increased. Throughput fell below arrival rate, so queue depth rose even though there were more workers.\n\n**Contributing Factors - the system allowed this to happen:**\n\n1. **Unsafe config change:** The system permitted a 4x concurrency jump with no validation against downstream DB capacity.\n2. **No backpressure / load-shedding:** Workers kept accepting/polling work even when the DB could not keep up, instead of throttling.\n3. **Retry amplification:** Retries starting at 09:16 added load to an already saturated DB, doubling queue depth - a classic retry storm without sufficient backoff.\n4. **Slow detection and mitigation:** First signal at 09:07, but rollback did not start until 09:25 - 18 minutes of growing impact. There was no early joint alert on queue + DB, no canary, and no auto-rollback.\n\nNo individual is at fault. The process lacked guardrails, safe rollout, and resilient defaults.\n\n### 4 Follow-Up Actions\n\n**1. Enforce concurrency-to-DB capacity guardrail**\nCap `worker_concurrency * max_connections_per_worker` to a safe fraction of provisioned DB connections.\n*Owner: Platform / DBA*\n*Success criteria:* Within 2 weeks, CI blocks any deploy where projected usage >70% of DB max connections. Achieve 100% coverage of worker pools and 0 violations over the next 30 days. Verified by a load test at 80 workers staying <70% DB utilization.\n\n**2. Make retries safe under saturation**\nAdd bounded retries with exponential backoff + jitter, timeouts, and a circuit-breaker on DB connection timeouts.\n*Owner: Backend*\n*Success criteria:* In a staging reproduction of 95% DB utilization, retry amplification is <1.2x baseline traffic vs. ~2x seen on 09:16, and p95 job latency does not degrade >20%. Merged and load-tested within 3 weeks.\n\n**3. Require progressive rollout for scaling changes**\nAny concurrency increase >20% must go via canary: 5% -> 25% -> 100% with automatic halt/rollback.\n*Owner: SRE / Release*\n*Success criteria:* Within 1 month, all worker scaling uses canary. Canary auto-halts if queue depth growth >20% over 5-min baseline OR DB utilization >80% for 3 min. Demonstrated in one game day with time-to-halt <10 min.\n\n**4. Add joint alerting + mitigation runbook**\nCreate a paging alert that correlates leading and lagging signals, not just one metric.\n*Owner: On-call / Observability*\n*Success criteria:* Within 2 weeks, new alert: `queue depth increasing for 5 min AND DB utilization >80%` pages within 5 min. Runbook for \"worker saturation\" documented and drill-tested. In next drill: Time-to-detect <5 min, Time-to-start-mitigation <10 min."
+			},
+			"raw_response": {
+				"id": "resp_6ac7ad5f3c5042d4703149a8",
+				"object": "response",
+				"created_at": 1791470943,
+				"model": "muse-spark-1.3",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7ad5f3c5042d4703149a8:rs_c616723d-3712-4ee3-96ad-72d2a63569fa",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_36a2fc5c-fce5-43d7-808a-6603c27b4779",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "### Blameless Root-Cause Summary\n\n**TL;DR:** A 4x increase in worker concurrency at 09:00 saturated a downstream bottleneck - the database connection pool - which reduced effective throughput, causing queue depth to grow. Retries then amplified the load and created a feedback loop. Rollback removed the overload and service recovered, which strongly implicates the concurrency change as the trigger.\n\nIncreasing workers from 20 to 80 would normally *decrease* queue depth. That the queue *rose* 7 minutes after the deploy is a key signal: workers were not processing faster, they were getting slower/blocked waiting on a shared resource.\n\nWhat we can infer from the timeline alone:\n09:00 -> 09:07 deploy precedes queue growth\n09:12 -> DB at 95% shows downstream saturation\n09:16 -> retries + doubling queue shows amplification\n09:25 -> 09:31 rollback -> recovery confirms causal link\n\nThis analysis is based on metrics correlation. Trace-level confirmation - worker wait time, DB query latency/timeouts, connection acquire timeouts - would finalize it.\n\n### Direct Cause vs. Contributing Factors\n\n**Direct Cause:**\nWorker demand exceeded database serving capacity. 80 concurrent workers contended for a finite pool of DB connections. Once utilization approached saturation (~95%), connection wait time, query latency, and timeouts increased. Throughput fell below arrival rate, so queue depth rose even though there were more workers.\n\n**Contributing Factors - the system allowed this to happen:**\n\n1. **Unsafe config change:** The system permitted a 4x concurrency jump with no validation against downstream DB capacity.\n2. **No backpressure / load-shedding:** Workers kept accepting/polling work even when the DB could not keep up, instead of throttling.\n3. **Retry amplification:** Retries starting at 09:16 added load to an already saturated DB, doubling queue depth - a classic retry storm without sufficient backoff.\n4. **Slow detection and mitigation:** First signal at 09:07, but rollback did not start until 09:25 - 18 minutes of growing impact. There was no early joint alert on queue + DB, no canary, and no auto-rollback.\n\nNo individual is at fault. The process lacked guardrails, safe rollout, and resilient defaults.\n\n### 4 Follow-Up Actions\n\n**1. Enforce concurrency-to-DB capacity guardrail**\nCap `worker_concurrency * max_connections_per_worker` to a safe fraction of provisioned DB connections.\n*Owner: Platform / DBA*\n*Success criteria:* Within 2 weeks, CI blocks any deploy where projected usage >70% of DB max connections. Achieve 100% coverage of worker pools and 0 violations over the next 30 days. Verified by a load test at 80 workers staying <70% DB utilization.\n\n**2. Make retries safe under saturation**\nAdd bounded retries with exponential backoff + jitter, timeouts, and a circuit-breaker on DB connection timeouts.\n*Owner: Backend*\n*Success criteria:* In a staging reproduction of 95% DB utilization, retry amplification is <1.2x baseline traffic vs. ~2x seen on 09:16, and p95 job latency does not degrade >20%. Merged and load-tested within 3 weeks.\n\n**3. Require progressive rollout for scaling changes**\nAny concurrency increase >20% must go via canary: 5% -> 25% -> 100% with automatic halt/rollback.\n*Owner: SRE / Release*\n*Success criteria:* Within 1 month, all worker scaling uses canary. Canary auto-halts if queue depth growth >20% over 5-min baseline OR DB utilization >80% for 3 min. Demonstrated in one game day with time-to-halt <10 min.\n\n**4. Add joint alerting + mitigation runbook**\nCreate a paging alert that correlates leading and lagging signals, not just one metric.\n*Owner: On-call / Observability*\n*Success criteria:* Within 2 weeks, new alert: `queue depth increasing for 5 min AND DB utilization >80%` pages within 5 min. Runbook for \"worker saturation\" documented and drill-tested. In next drill: Time-to-detect <5 min, Time-to-start-mitigation <10 min.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 102,
+					"output_tokens": 2497,
+					"total_tokens": 2599,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1600
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791470943,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.3',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Analyze this incident timeline:\\n\\n09:00: deploy increases worker concurrency from 20 to 80.\\n09:07: queue depth begins rising.\\n09:12: database connection utilization reaches 95%.\\n09:16: retries increase and queue depth doubles.\\n09:25: rollback starts.\\n09:31: queue depth returns to normal.\\n\\nWrite a blameless root-cause summary, distinguish direct cause from contributing factors, and propose four follow-up actions with measurable success criteria.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.3\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Analyze this incident timeline:\\n\\n09:00: deploy increases worker concurrency from 20 to 80.\\n09:07: queue depth begins rising.\\n09:12: database connection utilization reaches 95%.\\n09:16: retries increase and queue depth doubles.\\n09:25: rollback starts.\\n09:31: queue depth returns to normal.\\n\\nWrite a blameless root-cause summary, distinguish direct cause from contributing factors, and propose four follow-up actions with measurable success criteria.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search Grounding",
+			"description": "Use Meta's Responses API web search grounding to answer a current-events question with citations.",
+			"input": {
+				"input": "Who won the most recent Formula 1 race? Include the race date and cite the sources.",
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				]
+			},
+			"output": {
+				"text": "I'll search for the latest Formula 1 race results to identify the most recent winner."
+			},
+			"raw_response": {
+				"id": "resp_6ac7ad5f1bc61d4f2a4249e4",
+				"object": "response",
+				"created_at": 1791470943,
+				"model": "muse-spark-1.3",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7ad5f1bc61d4f2a4249e4:rs_88dd68c5-6408-432d-b789-4d07fe55798b",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_a13f25f4-4c27-4e6d-bb27-4c78bd8058e5",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "I'll search for the latest Formula 1 race results to identify the most recent winner.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_0016fa58-99c9-40a6-9f75-4c6d1f87fb95",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "most recent Formula 1 race winner October 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_3a556ebb-ba2e-4521-beea-7e055d503467",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Formula 1 2026 race results Singapore Grand Prix winner"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_0152c7a7-e917-4ce5-9722-969275f9436d",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "F1 calendar 2026 results October"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7ad5f1bc61d4f2a4249e4:rs_90bfb331-ed33-45c3-82c4-347167b46bdc",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_3c322074-709c-412d-88d0-644f05fb7d38",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Initial results point to Max Verstappen winning on October 4th. I'll open the official sources to verify the details.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_9c481115-cc36-41ec-82d3-0999d9344919",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.formula1.com/en/video/2026-bahrain-grand-prix-verstappen-crosses-the-line-to-take-his-first-win-of-the-season.1878116592061332264"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_8e19b920-79a4-41aa-a3cc-ca78ee0990bc",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.sportsnet.ca/formula-1/article/verstappen-beats-antonelli-to-win-f1s-bahrain-gp-in-malaysia/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_3d4fa047-7226-4fad-a49a-968225be7456",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.mightytips.com/news/sports-calendar-in-october/"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7ad5f1bc61d4f2a4249e4:rs_b8c254dd-14f4-4011-b53b-879d9e24cd48",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_8ab466bc-a006-4703-96c9-55b15352e7db",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "As of **October 8, 2026**, the most recent Formula 1 race was:\n\n**Winner: Max Verstappen \u2013 Red Bull**\n**Race: 2026 Bahrain Grand Prix \u2013 held at Sepang International Circuit in Malaysia**\n**Race date: Sunday, October 4, 2026**\n\n> \u201cMax Verstappen takes the chequered flag to seal his \u2013 and Red Bull\u2019s \u2013 first victory of the season, at the Sepang International Circuit in Malaysia.\u201d\n\n> \u201cOct 04, 2026 11:09am UTC\u201d\n\n> \u201cRed Bull driver Max Verstappen of the Netherlands celebrates on the podium after winning the Bahrain Grand Prix in Sepang, Malaysia, Sunday, Oct. 4, 2026.\u201d\n\n> \u201cVerstappen took his first victory of an often-frustrating year for the four-time champion at Formula 1's Bahrain Grand Prix in Malaysia on Sunday.\u201d\n\nIt was the latest completed round because October\u2019s schedule was:\n\n> \u201cF1: Bahrain Grand Prix (October 4, 2026), Singapore Grand Prix (October 11, 2026) & United States Grand Prix (October 25, 2026)\u201d\n\n> \u201cSingapore follows on October 9-11 before F1 heads to Austin\u201d",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"url": "https://www.formula1.com/en/video/2026-bahrain-grand-prix-verstappen-crosses-the-line-to-take-his-first-win-of-the-season.1878116592061332264",
+										"start_index": 227,
+										"end_index": 379,
+										"title": "2026 Bahrain Grand Prix: Verstappen crosses the line to take his first win of the season"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.formula1.com/en/video/2026-bahrain-grand-prix-verstappen-crosses-the-line-to-take-his-first-win-of-the-season.1878116592061332264",
+										"start_index": 381,
+										"end_index": 409,
+										"title": "2026 Bahrain Grand Prix: Verstappen crosses the line to take his first win of the season"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.sportsnet.ca/formula-1/article/verstappen-beats-antonelli-to-win-f1s-bahrain-gp-in-malaysia/",
+										"start_index": 560,
+										"end_index": 569,
+										"title": "Verstappen beats Antonelli to win F1's Bahrain GP in Malaysia"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.sportsnet.ca/formula-1/article/verstappen-beats-antonelli-to-win-f1s-bahrain-gp-in-malaysia/",
+										"start_index": 571,
+										"end_index": 721,
+										"title": "Verstappen beats Antonelli to win F1's Bahrain GP in Malaysia"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.mightytips.com/news/sports-calendar-in-october/",
+										"start_index": 790,
+										"end_index": 921,
+										"title": "Sports events in October 2026 to bet on"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.mightytips.com/news/sports-calendar-in-october/",
+										"start_index": 923,
+										"end_index": 986,
+										"title": "Sports events in October 2026 to bet on"
+									}
+								],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 12240,
+					"output_tokens": 1650,
+					"total_tokens": 13890,
+					"input_tokens_details": {
+						"cached_tokens": 3164
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 843
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791470966,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.3',\n  {\n    input: 'Who won the most recent Formula 1 race? Include the race date and cite the sources.',\n    tools: [{ type: 'web_search' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.3\",\n  \"input\": {\n    \"input\": \"Who won the most recent Formula 1 race? Include the race date and cite the sources.\",\n    \"tools\": [\n      {\n        \"type\": \"web_search\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://dev.meta.ai/docs/models",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/meta/muse-spark-1.3.png",
+	"metadata": {
+		"Context Window": "1,048,576 tokens",
+		"Input Modalities": "Text, image, video, audio, PDF",
+		"Output Modalities": "Text"
+	},
+	"request_formats": [
+		"responses"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "meta",
+			"pricing": {
+				"input_tokens": 1.25,
+				"input_cached_tokens": 0.16,
+				"output_tokens": 4.25
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-12 01:28:15",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high",
+								"xhigh",
+								"max"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

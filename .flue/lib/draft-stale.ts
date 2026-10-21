@@ -363,6 +363,23 @@ export function getMarkedComment(
 	);
 }
 
+/**
+ * The close comment from the current stale cycle, or null. A close comment
+ * older than this cycle's reminder belongs to an earlier close that someone
+ * reopened. Reusing it would make the post-comment activity check see the
+ * reopen as newer activity, cancel the close, and repeat every night.
+ */
+export function findCurrentClosingComment(
+	comments: GitHubIssueComment[],
+	state: DraftStaleState,
+): GitHubIssueComment | null {
+	const closing = getMarkedComment(comments, DRAFT_STALE_CLOSE_MARKER);
+	if (!closing) return null;
+	return Date.parse(closing.created_at) >= Date.parse(state.reminderPostedAt)
+		? closing
+		: null;
+}
+
 export async function runDraftStaleSweep(
 	token: string,
 	bucket: R2Bucket,
@@ -440,10 +457,7 @@ export async function runDraftStaleSweep(
 				case "close": {
 					if (!state) break;
 					if (!state.closingCommentId) {
-						const closingComment = getMarkedComment(
-							comments,
-							DRAFT_STALE_CLOSE_MARKER,
-						);
+						const closingComment = findCurrentClosingComment(comments, state);
 						const closingCommentId = closingComment
 							? closingComment.id
 							: await createIssueComment(

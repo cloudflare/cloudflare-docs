@@ -85,6 +85,51 @@ To authenticate using a single header:
    curl -H "Authorization: {\"cf-access-client-id\": \"<CLIENT_ID>\", \"cf-access-client-secret\": \"<CLIENT_SECRET>\"}" https://app.example.com
    ```
 
+## Strict service token authentication
+
+Strict service token authentication is a Zero Trust organization setting that applies consistent behavior to requests made with service tokens. When the setting is on, Access handles requests with service token headers as follows:
+
+- If authentication or authorization fails, Access always returns `401` or `403` instead of redirecting the client to the login page with `302`.
+- Only Service Auth policies can authorize the request. Access ignores Allow policies and any `CF_Authorization` cookie sent with the request.
+- Access does not return a `CF_Authorization` cookie to the client after successful authentication. Subsequent requests should continue to use service token headers.
+- Failed requests for recognized service tokens appear in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication). Access logs expired or disabled tokens, incorrect Client Secrets, and tokens not authorized for the application. It does not log malformed headers or unknown Client IDs.
+
+Zero Trust organizations created on or after `2026-10-05` have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well.
+
+:::note
+Organizations created before `2026-10-05` can turn this setting on or off.
+:::
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+
+   <DashButton url="/?to=/:account/access-controls/settings" zeroTrust />
+
+2. Under **Manage service tokens**, turn on **Strict service token authentication**.
+3. In the confirmation dialog, select **Enable**.
+</Steps>
+
+To turn off strict service token authentication, turn off the setting and select **Disable**.
+
+</TabItem> <TabItem label="API">
+
+Send a `PATCH` request to the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) endpoint:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		strict_service_token_auth: true,
+	}}
+/>
+
+To turn off strict service token authentication, set `strict_service_token_auth` to `false`.
+
+</TabItem> </Tabs>
+
 ## Rotate service token secrets
 
 Rotate a service token secret when you suspect exposure or as part of regular credential rotation. The Client ID remains the same, but Access generates a new Client Secret.

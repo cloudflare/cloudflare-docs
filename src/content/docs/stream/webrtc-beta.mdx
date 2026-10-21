@@ -3,8 +3,6 @@ pcx_content_type: navigation
 title: Ultra-low Latency with WebRTC
 description: Sub-second latency live streaming and playback using WHIP and WHEP protocols in Cloudflare Stream.
 sidebar:
-  badge:
-    text: Beta
   order: 9
 products:
   - stream
@@ -16,9 +14,9 @@ products:
 
 import { Badge, InlineBadge, DashButton } from "~/components";
 
-:::note[Stream Live WebRTC is going GA:]
+:::note[Stream Live WebRTC is now GA:]
 
-Billing for WebRTC delivery will begin on October 15th, 2026.
+Billing for WebRTC delivery began on October 15th, 2026.
 
 :::
 
@@ -106,7 +104,7 @@ ffmpeg -hide_banner -y \
 If using Windows/PowerShell:
 
 - Add `:fontfile='C\:/Windows/Fonts/consola.ttf'` to the `vf` string; a font must be specified in Windows environments
-- Use backticks `\`` instead of backslashes `\` to segment a multiline command
+- Use backticks `\`` instead of backslashes to segment a multiline command
 
 FFmpeg's WHIP support currently requires the use of `libx264` at `baseline`. The `ts_buffer_size` is a memory allocation strategy, not a buffer that increases latency.
 

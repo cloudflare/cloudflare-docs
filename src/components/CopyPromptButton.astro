@@ -1,5 +1,5 @@
 ---
-import { AGENTS, type AgentId } from "./agents";
+import { AGENTS, AGENT_SETUP_PROMPT, type AgentId } from "./agents";
 import { Button } from "@/components/ui/button";
 import type {
 	ButtonVariant,
@@ -7,6 +7,7 @@ import type {
 } from "@/components/ui/button/variants";
 
 interface Props {
+	prompt?: string;
 	/** Agent ids shown in the icon row. */
 	agentIds?: readonly AgentId[];
 	class?: string;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const {
+	prompt = AGENT_SETUP_PROMPT,
 	agentIds = ["claude", "cursor", "codex", "opencode"] as const,
 	class: className = "",
 	tooltip,
@@ -36,6 +38,7 @@ const featuredAgents = AGENTS.filter((a) =>
 	variant={variant}
 	size={size}
 	type="button"
+	data-prompt={prompt}
 	data-tooltip={tooltip}
 >
 	<span class="inline-flex items-center gap-2.5 text-base font-medium">
@@ -70,29 +73,7 @@ const featuredAgents = AGENTS.filter((a) =>
 </Button>
 
 <script>
-	import { AGENT_SETUP_PROMPT } from "./agents";
-
-	function bindCopyPromptButtons() {
-		document
-			.querySelectorAll<HTMLButtonElement>(".copy-prompt-btn")
-			.forEach((btn) => {
-				if (btn.dataset.bound === "true") return;
-				btn.dataset.bound = "true";
-
-				const tooltip = btn.dataset.tooltip;
-				if (tooltip) btn.setAttribute("title", tooltip);
-
-				btn.addEventListener("click", async () => {
-					try {
-						await navigator.clipboard.writeText(AGENT_SETUP_PROMPT);
-					} catch {
-						return;
-					}
-					btn.dataset.copied = "true";
-					setTimeout(() => delete btn.dataset.copied, 1500);
-				});
-			});
-	}
+	import { bindCopyPromptButtons } from "~/scripts/copy-prompt";
 
 	bindCopyPromptButtons();
 	document.addEventListener("astro:page-load", bindCopyPromptButtons);

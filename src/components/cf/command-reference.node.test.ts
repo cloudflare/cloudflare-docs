@@ -11,7 +11,7 @@ import {
 
 describe("CF command metadata", () => {
 	test("uses the pinned CF package version", () => {
-		expect(getCfCommandMetadataVersion()).toBe("0.11.0");
+		expect(getCfCommandMetadataVersion()).toBe("0.15.0");
 	});
 
 	test("resolves a command from generated metadata", () => {
@@ -28,26 +28,26 @@ describe("CF command metadata", () => {
 	});
 
 	test("does not expose hidden CF commands without explicit opt-in", () => {
-		expect(() => resolveCfCommand("d1 query")).toThrow(
+		expect(() => resolveCfCommand("tunnels create")).toThrow(
 			"is hidden by the installed CF CLI",
 		);
-		expect(resolveCfCommand("d1 query", { includeHidden: true }).key).toBe(
-			"d1 query",
-		);
+		expect(
+			resolveCfCommand("tunnels create", { includeHidden: true }).key,
+		).toBe("tunnels create");
 	});
 
 	test("filters hidden commands from native CF namespaces", () => {
-		const visibleCommands = resolveCfNamespace("d1").map(
+		const visibleCommands = resolveCfNamespace("tunnels").map(
 			(command) => command.key,
 		);
 
 		expect(visibleCommands.length).toBeGreaterThan(0);
-		expect(visibleCommands).not.toContain("d1 query");
+		expect(visibleCommands).not.toContain("tunnels create");
 		expect(
-			resolveCfNamespace("d1", { includeHidden: true }).map(
+			resolveCfNamespace("tunnels", { includeHidden: true }).map(
 				(command) => command.key,
 			),
-		).toContain("d1 query");
+		).toContain("tunnels create");
 		expect(() => resolveCfNamespace("deploy")).toThrow(
 			'does not contain namespace "deploy"',
 		);

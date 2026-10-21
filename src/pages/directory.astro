@@ -24,9 +24,18 @@ const products: CollectionEntry<"directory">[] = await getCollection(
 	},
 );
 
+const iconAliases: Record<string, string> = {
+	"basin-catalog": "r2-data-catalog",
+	"basin-pipelines": "pipelines",
+	"basin-sql": "r2-sql",
+};
+
 const productData: ProductData[] = products
 	.map((product) => {
-		const iconData = getIconData(iconCollection.local, product.id);
+		const iconData = getIconData(
+			iconCollection.local,
+			iconAliases[product.id] ?? product.id,
+		);
 		let icon = undefined;
 		if (iconData) {
 			icon = iconToSVG(iconData);

@@ -10,6 +10,10 @@ products:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
+:::note
+Rollouts apply to Container applications that use the [`default` scheduling policy](/containers/configuration/scheduling-policy/). Durable Object-managed Container instances do not participate in application-wide rollouts; application code selects their image when it calls `ctx.container.start()`.
+:::
+
 ## How rollouts work
 
 A **rollout** applies a target container application configuration after you [deploy](/containers/guides/deploy/) a Worker that uses Containers. The target can change the image, instance type, limits, placement, or other container settings.
@@ -144,12 +148,12 @@ Use none when the deploy should not publish a new image or start a container ins
 			},
 		],
 	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["MyContainer"],
+	"exports": {
+		"MyContainer": {
+			"type": "durable-object",
+			"storage": "sqlite",
 		},
-	],
+	},
 }
 ```
 

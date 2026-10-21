@@ -42,9 +42,9 @@ const lastIndex = sorted.length - 1;
 
 <style>
 	/* Geometry tokens drive the spine, node, and date in lockstep.
-       --body-x   content indent from the spine (the column's left edge)
-       --date-w   width of the right-aligned gutter date (≥lg)
-       --node-y   y of the node + gutter date = the title's first-line center */
+	       --body-x   content indent from the spine (the column's left edge)
+	       --date-w   width of the right-aligned gutter date (≥lg)
+	       --node-y   y of the node + gutter date = the title's first-line center */
 	.nb-cl-feed {
 		--body-x: 3.5rem;
 		--date-w: 5.5rem;
@@ -58,7 +58,7 @@ const lastIndex = sorted.length - 1;
 	}
 
 	/* Solid spine segment — overlays the dashed backdrop rule in the feed region,
-     running node-center to node-center so the left line reads continuous + solid. */
+	     running node-center to node-center so the left line reads continuous + solid. */
 	:global(.nb-cl-entry)::before {
 		content: "";
 		position: absolute;
@@ -71,7 +71,7 @@ const lastIndex = sorted.length - 1;
 		display: none;
 	}
 	/* Last visible entry: no next node to reach — run to the bottom of the entry
-     and fade out, a soft close for the end of the timeline. */
+	     and fade out, a soft close for the end of the timeline. */
 	:global(.nb-cl-entry[data-rail-end])::before {
 		bottom: 0;
 		background: linear-gradient(
@@ -88,10 +88,10 @@ const lastIndex = sorted.length - 1;
 	}
 
 	/* The date + rail wrapper styling live in Tailwind (DateRail); the date
-     positions against .nb-cl-entry using --node-y / --date-w defined above. */
+	     positions against .nb-cl-entry using --node-y / --date-w defined above. */
 
 	/* Node — a small rounded square (CornerMarks look) dead-center on the spine.
-     Fills on entry hover. */
+	     Fills on entry hover. */
 	:global(.nb-cl-dot) {
 		position: absolute;
 		left: 0;
@@ -119,8 +119,8 @@ const lastIndex = sorted.length - 1;
 	}
 
 	/* Entry title styling + hover underline live in Tailwind (ChangelogEntry,
-     via group-hover). The .nb-cl-title-link class remains as the dot's :has()
-     hover hook below. */
+	     via group-hover). The .nb-cl-title-link class remains as the dot's :has()
+	     hover hook below. */
 
 	@media (prefers-reduced-motion: reduce) {
 		:global(.nb-cl-dot) {

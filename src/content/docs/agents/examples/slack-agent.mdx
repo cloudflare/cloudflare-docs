@@ -132,6 +132,7 @@ The `OPENAI_BASE_URL` is optional but recommended. Using [Cloudflare AI Gateway]
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "my-slack-agent",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": [
 		"nodejs_compat"
@@ -275,7 +276,7 @@ Your agent is now running at `http://localhost:8787`.
 
 ### Configure Slack Event Subscriptions
 
-Now that your agent is running locally, you need to expose it to Slack. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/) to create a secure tunnel:
+Now that your agent is running locally, you need to expose it to Slack. Use a [Quick Tunnel](/tunnel/get-started/quick-tunnels/) to create a public URL:
 
 ```sh
 npx cloudflared tunnel --url http://localhost:8787

@@ -16,7 +16,7 @@
 	},
 	{
 		"deeplink": "/?to=/:account/data-catalog/overview",
-		"name": "R2 Data Catalog",
+		"name": "Basin Catalog",
 		"parent": ["Storage & databases", "R2 object storage"]
 	},
 	{
@@ -68,5 +68,65 @@
 		"deeplink": "/?to=/:account/r2/metrics",
 		"name": "R2 Metrics",
 		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
+		"deeplink": "/?to=/:account/workers/services/view/:worker/production/issues?status=active",
+		"name": "Issues",
+		"parent": ["Compute & AI", "Workers & Pages"]
+	},
+	{
+		"deeplink": "/?to=/:account/observability/destinations",
+		"name": "OpenTelemetry",
+		"parent": ["Observability", "Export"]
+	},
+	{
+		"deeplink": "/?to=/:account/observability/logs",
+		"name": "Logs",
+		"parent": ["Observability"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/deployments",
+		"name": "Deployments",
+		"parent": ["Cloud Workload Security"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/workloads",
+		"name": "Workloads",
+		"parent": ["Cloud Workload Security"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/policies",
+		"name": "Policies",
+		"parent": ["Cloud Workload Security"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/policy-sets",
+		"name": "Policy sets",
+		"parent": ["Cloud Workload Security"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/domain-acls",
+		"name": "Domain ACLs",
+		"parent": ["Cloud Workload Security", "Traffic scope"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/credentials/basic-auth",
+		"name": "Basic Auth",
+		"parent": ["Cloud Workload Security", "Traffic scope", "Credentials"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/rego-modules",
+		"name": "Rego modules",
+		"parent": ["Cloud Workload Security", "Policy reference"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/rego-metadata",
+		"name": "Rego metadata",
+		"parent": ["Cloud Workload Security", "Policy reference"]
+	},
+	{
+		"deeplink": "/?to=/:account/one/cloud-workload-security/tenant-structures",
+		"name": "Tenant structures",
+		"parent": ["Cloud Workload Security", "Policy reference"]
 	}
 ]

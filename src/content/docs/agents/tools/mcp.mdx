@@ -30,7 +30,7 @@ Call `addMcpServer()` to connect to a remote MCP server, then pass `this.mcp.get
 ```ts
 import { Agent } from "agents";
 import { generateText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class ToolAgent extends Agent<Env> {
 	async onStart() {
@@ -38,10 +38,10 @@ export class ToolAgent extends Agent<Env> {
 	}
 
 	async onRequest(request: Request) {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const response = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt: "Use available tools to summarize the latest issue activity.",
 			tools: this.mcp.getAITools(),
 		});

@@ -69,6 +69,27 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
   }'
 ```
 
+### Image queries
+
+Set `messages[].content` to an array of content parts. Use an `image_url` part with an HTTPS URL or an inline `data:image/<subtype>;base64,...` URI.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/<INSTANCE_NAME>/search" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "messages": [{
+      "role": "user",
+      "content": [{
+        "type": "image_url",
+        "image_url": { "url": "https://example.com/product.png" }
+      }]
+    }]
+  }'
+```
+
+The response includes `query_kind` as `image`. Image-only responses omit `search_query`. Add a `text` part to create a multimodal query. Native image embedding requires `@cf/qwen/qwen3-vl-embedding-2b` or `google-ai-studio/gemini-embedding-2`. Text-only embedding models caption the image before embedding it.
+
 #### Streaming
 
 Set `stream` to `true` to receive responses as Server-Sent Events (SSE). The retrieved chunks are sent first as a `chunks` event, followed by the streamed response.

@@ -3,22 +3,41 @@
  * ListTutorials — table of every tutorial in the current product section
  * (pages with `pcx_content_type: tutorial`), newest-reviewed first.
  *
- * CF source: cloudflare-docs/src/components/ListTutorials.astro
- * Mapping notes: upstream also pulls cross-product tutorials via the
- * `directory` collection + `products` frontmatter references; this app
- * only carries Queues content, so the section-prefix filter is enough.
- * date-fns `formatDistance` → Intl.RelativeTimeFormat; rehype external
- * link processing dropped (tutorial links here are always internal).
+ * A tutorial is listed when it lives under the section (or the optional
+ * `directory` prefix) or when its `products` frontmatter references the
+ * section's directory entry, so tutorials stored in another product's
+ * folder still appear.
  */
-import { getCollection } from "astro:content";
+import { getCollection, getEntry } from "astro:content";
+
+interface Props {
+	/** Path prefix to restrict tutorials to, e.g. `rules/origin-rules/tutorials/`. */
+	directory?: string;
+}
+
+// `products` entries are typed as strings but resolve to `{ id }` references at runtime.
+const productRefId = (product: string | { id: string }) =>
+	typeof product === "string" ? product : product.id;
 
 const currentSection = (Astro.params.slug as string).split("/")[0];
+const { directory } = Astro.props;
+
+// Some sections (e.g. style-guide) have no directory entry; fall back to path matching only.
+const currentProduct = await getEntry("directory", currentSection);
+const productId = currentProduct?.id;
+
+const pathPrefix = directory ?? `${currentSection}/`;
 
 const tutorials = await getCollection(
 	"docs",
 	(entry) =>
 		entry.data.pcx_content_type === "tutorial" &&
-		entry.id.startsWith(`${currentSection}/`),
+		(entry.id.startsWith(pathPrefix) ||
+			(!directory &&
+				productId !== undefined &&
+				entry.data.products?.some(
+					(product) => productRefId(product) === productId,
+				))),
 );
 
 const toDate = (value?: string | Date) => (value ? new Date(value) : undefined);

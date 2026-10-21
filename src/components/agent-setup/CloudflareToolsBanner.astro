@@ -1,6 +1,12 @@
 ---
 // Shown between the page title and the agent catalog.
 // Communicates what Cloudflare provides before the user picks an agent.
+
+interface Props {
+	cli?: "current" | "cf";
+}
+
+const { cli = "current" } = Astro.props;
 ---
 
 <div class="cf-banner not-content">
@@ -48,17 +54,20 @@
 		<div class="cf-banner-item">
 			<p class="cf-banner-item-title">CLI</p>
 			<p class="cf-banner-item-desc">
-				<a href="/workers/wrangler/">Wrangler</a> for deploying and managing
-				Workers, KV, D1, R2, and more.
-				<a
-					href="https://blog.cloudflare.com/cf-cli-local-explorer/"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					cf CLI &nearr;
-				</a>{" "}
-				is a next-generation CLI covering every Cloudflare product — in
-				technical preview.
+				{cli === "cf" ? (
+					<>
+						The <a href="/cf/">Cloudflare CLI</a>, <code>cf</code>, manages
+						resources across Cloudflare and supports Workers project workflows.
+						<a href="/workers/wrangler/">Wrangler</a> remains available for
+						Workers-specific workflows and convenience commands.
+					</>
+				) : (
+					<>
+						<a href="/workers/wrangler/">Wrangler</a> for deploying and managing
+						Workers, KV, D1, R2, and more. The <a href="/cf/">Cloudflare CLI</a>
+						, <code>cf</code>, covers the whole Cloudflare API and is in beta.
+					</>
+				)}
 			</p>
 		</div>
 	</div>

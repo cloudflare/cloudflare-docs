@@ -50,6 +50,8 @@ Start a local server for developing your Worker.
 wrangler dev [<SCRIPT>] [OPTIONS]
 ```
 
+By default, `wrangler dev` executes your Worker in a local `workerd` process, which is not a hardened sandbox. Only run code you trust. For more information, refer to [Local development security considerations](/workers/local-development/#security-considerations).
+
 :::note
 
 None of the options for this command are required. Many of these options can be set in your Wrangler file. Refer to the [Wrangler configuration](/workers/wrangler/configuration) documentation for more information.
@@ -122,7 +124,7 @@ None of the options for this command are required. Many of these options can be 
 - `--persist-to` <Type text="string" /> <MetaInfo text="optional" />
   - Specify directory to use for local persistence.
 - `--remote` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
-  - Develop against remote resources and data stored on Cloudflare's network.
+  - Execute your Worker in a preview environment on Cloudflare. All bindings connect to remote resources.
 - `--tunnel` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
   - Expose your local dev server over a Cloudflare Tunnel. For more information, refer to [Share a local dev server](/workers/local-development/local-dev-tunnels/).
 - `--tunnel-name` <Type text="string" /> <MetaInfo text="optional" />
@@ -588,9 +590,10 @@ To generate types for only a specific environment, use the `--env` flag.
   - If `true`, (the default) Wrangler generates literal and union types for bindings (e.g. `myVar: 'my dev variable' | 'my prod variable'`).
   - If `false`, Wrangler generates generic types (e.g. `myVar: string`). This is useful when variables change frequently, especially when working across multiple environments.
 - `--check` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Check if the generated types at the specified path are up-to-date without regenerating them.
+  - Compare the generated file's recorded environment/configuration hash and runtime header with the current Wrangler configuration and runtime inputs.
+  - This does not compare or validate the generated file body or regenerate the file.
   - Exits with code 0 if types are up-to-date, or code 1 if types are out-of-date.
-  - Useful for CI/CD pipelines and pre-commit hooks to ensure types have been regenerated after configuration changes.
+  - Useful for CI/CD pipelines and pre-commit hooks to detect input changes that require regeneration.
 - `--config`, `-c` <Type text="string[]" /> <MetaInfo text="optional" />
   - Path(s) to [Wrangler configuration file](/workers/wrangler/configuration/). If the Worker you are generating types for has service bindings or bindings to Durable Objects, you can also provide the paths to those configuration files so that the generated `Env` type will include RPC types. For example, given a Worker with a service binding, `wrangler types -c wrangler.toml -c ../bound-worker/wrangler.toml` will generate an `Env` type like this:
   ```ts
