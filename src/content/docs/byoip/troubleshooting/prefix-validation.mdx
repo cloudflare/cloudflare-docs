@@ -47,13 +47,13 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
 
     | State | Meaning | Resolution |
     | --- | --- | --- |
-    | `pending` | IRR validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `pending` | IRR validation has not completed. | Monitor the results using Prefix Details. You do not need to queue validation again while checks are pending. |
     | `valid` | An IRR `route` or `route6` object exactly matches the prefix and selected ASN. | No action is required. |
     | `missing` | Cloudflare could not find a matching IRR route object. | Publish a `route` or `route6` object for the prefix with the selected ASN as its `origin`. |
     | `mismatch_asn` | The IRR route object has a different origin ASN. | Update the `origin` to match the ASN selected when you added the prefix. |
     | `mismatch_more_specific` | The IRR route object covers a smaller address range than the prefix you added. | Publish a route object that exactly matches the prefix you want to onboard. |
     | `mismatch_less_specific` | The IRR route object covers a larger address range and has the selected origin ASN. | This passes IRR validation. Confirm that the other validation checks also pass. |
-    | `invalid` | The IRR records do not satisfy validation requirements. | Check the route object, prefix, and origin ASN against the onboarding prerequisites, then retry validation. |
+    | `invalid` | The IRR records do not satisfy validation requirements. | Check the route object, prefix, and origin ASN against the onboarding prerequisites, then queue validation again. |
 
     ## RPKI validation
 
@@ -61,10 +61,10 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
 
     | State | Meaning | Resolution |
     | --- | --- | --- |
-    | `pending` | RPKI validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `pending` | RPKI validation has not completed. | Monitor the results using Prefix Details. You do not need to queue validation again while checks are pending. |
     | `valid` | A ROA authorizes the selected ASN to originate the prefix at its prefix length. | No action is required. |
     | `missing` | No ROA covers the prefix. | Publish a ROA authorizing the selected ASN and prefix length. Token-based prefix ownership validation also requires a valid ROA. |
-    | `invalid` | The ROAs do not authorize the selected ASN or prefix length. | Correct the authorized ASN or maximum prefix length in your ROA. Verify the result with the [RPKI Portal](https://rpki.cloudflare.com/?view=validator), then retry validation. |
+    | `invalid` | The ROAs do not authorize the selected ASN or prefix length. | Correct the authorized ASN or maximum prefix length in your ROA. Verify the result with the [RPKI Portal](https://rpki.cloudflare.com/?view=validator), then queue validation again. |
 
     ## Prefix ownership validation
 
@@ -72,7 +72,7 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
 
     | State | Meaning | Resolution |
     | --- | --- | --- |
-    | `pending` | Prefix ownership validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `pending` | Prefix ownership validation has not completed. | Monitor the results using Prefix Details. You do not need to queue validation again while checks are pending. |
     | `valid` | Prefix ownership is verified. | No action is required. Remove the token only after any required ASN ownership check also returns `valid`. |
     | `missing` | RPKI validation is `missing`, or neither the IRR nor reverse DNS method provides the required ownership records. | Check `rpki_validation_state`, publish a valid ROA, and confirm that your IRR record or each required reverse DNS zone contains the token. |
     | `invalid` | Prefix ownership proof did not pass validation. | Confirm that RPKI validation is `valid` and that the token matches `ownership_validation_token` in the IRR record or each required reverse DNS zone. |
@@ -85,7 +85,7 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
 
     | State | Meaning | Resolution |
     | --- | --- | --- |
-    | `pending` | ASN ownership validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `pending` | ASN ownership validation has not completed. | Monitor the results using Prefix Details. You do not need to queue validation again while checks are pending. |
     | `valid` | The account has verified ownership of the ASN. | No action is required. Future prefixes in the same account reuse this verification. |
     | `missing` | Cloudflare could not find an `aut-num` object for the ASN at a supported RIR. | Verify the object exists at AFRINIC, APNIC, ARIN, or RIPE. For a LACNIC-registered ASN, contact your account team. |
     | `invalid` | The `aut-num` object does not contain the expected token. | Add `cf-validation: <OWNERSHIP_VALIDATION_TOKEN>` to an editable field in the `aut-num` object. |
@@ -98,7 +98,7 @@ import { APIRequest, GlossaryTooltip, Render, Steps } from "~/components";
 
     | State | Meaning | Resolution |
     | --- | --- | --- |
-    | `pending` | ASPA validation has not completed. | Trigger validation, then check Prefix Details again. |
+    | `pending` | ASPA validation has not completed. | Monitor the results using Prefix Details. You do not need to queue validation again while checks are pending. |
     | `valid` | ASPA data for your ASN authorizes AS13335 as a provider. | No action is required. |
     | `invalid` | ASPA data for your ASN does not authorize AS13335 as a provider. | Use your RIR's RPKI tooling to add AS13335 to the ASPA provider list. You can keep other authorized providers. |
 

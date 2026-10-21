@@ -91,14 +91,12 @@ Self-service onboarding with your own ASN supports ASNs registered with AFRINIC,
 
 </Steps>
 
-When you use your own ASN, the response can also include these fields:
+When you use your own ASN, the same response's `result` object can also include the following fields:
 
-```json title="Customer ASN response excerpt"
+```json title="Additional fields in result"
 {
-  "result": {
-    "asn_ownership_validation_state": "pending",
-    "aspa_validation_state": "pending"
-  }
+  "asn_ownership_validation_state": "pending",
+  "aspa_validation_state": "pending"
 }
 ```
 
@@ -175,19 +173,21 @@ Cloudflare verifies ASN ownership once per Cloudflare account and ASN. If `asn_o
 
 If you publish an ASPA for your ASN, use your RIR's RPKI tooling to confirm its provider list includes AS13335. You can keep other authorized providers. Publishing an ASPA is optional.
 
-### Run validation
+### Queue validation
 
-After publishing the required ownership tokens and updating any ASPA, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to trigger validation:
+After publishing the required ownership tokens and updating any ASPA, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to queue validation:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/validate" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to monitor validation. When all applicable checks pass, the `approved` field returns `"V"`. Checks include IRR, RPKI, prefix ownership, and, when applicable, ASN ownership and ASPA authorization.
+Checks run asynchronously. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to monitor the results. You do not need to submit repeated validation requests while checks are pending.
+
+When all applicable checks pass, the `approved` field returns `"V"`. Checks include IRR, RPKI, prefix ownership, and, when applicable, ASN ownership and ASPA authorization.
 
 After prefix ownership and any required ASN ownership checks return `valid`, you can remove the token from the IRR, reverse DNS, and `aut-num` records where you added it. Approval allows you to create service bindings. It does not advertise the prefix or activate traffic.
 
-If validation fails, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/), correct the reported issues, and trigger validation again.
+If validation fails, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/), correct the reported issues, and queue validation again.
 
 ### Optional: Delegate the prefix
 
