@@ -27,3 +27,211 @@ Application security and performance focuses on resources available on the publi
 Zero Trust protects private, internal users/devices and the resources they access. [Get started with Zero Trust](/cloudflare-one/setup/).
 
 Network services extend protection and acceleration to cloud, on-premise, or hybrid networks, and you can also manage network connections and optimize Layer 3 (Network) and 4 (Transport) traffic. Get started with [Magic Transit](/magic-transit/) or [Cloudflare WAN](/cloudflare-wan/) (formerly Magic WAN).
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo Promocional - NEON INFERNO NY | Lemusquad9</title>
+<style>
+  body {
+    background-color: #0d0d11;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    color: #ff0055;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(255, 0, 85, 0.7);
+    text-align: center;
+  }
+  p {
+    color: #aaa;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .preview-container {
+    position: relative;
+    width: 320px;
+    height: 568px; /* Formato Vertical 9:16 (TikTok / Shorts) */
+    border: 3px solid #ff0055;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 25px rgba(255, 0, 85, 0.4);
+    background: #000;
+  }
+  canvas {
+    width: 100%;
+    height: 100%;
+  }
+  .controls {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  button {
+    background: #ff0055;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  button:hover {
+    background: #d60045;
+  }
+</style>
+</head>
+<body>
+
+<h1>NEON INFERNO NY</h1>
+<p>Simulador de Demo para Redes Sociales (Formato Vertical 9:16)</p>
+
+<div class="preview-container">
+  <canvas id="demoCanvas" width="360" height="640"></canvas>
+</div>
+
+<div class="controls">
+  <button onclick="reiniciarDemo()">▶️ Repetir Demo</button>
+</div>
+
+<script>
+const canvas = document.getElementById('demoCanvas');
+const ctx = canvas.getContext('2d');
+
+let frame = 0;
+const totalFrames = 600; // ~10 segundos a 60fps
+
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Fondo Cyberpunk Gradiente
+  let grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  grad.addColorStop(0, '#05020a');
+  grad.addColorStop(1, '#1a0022');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Escenas del Video Demo
+  if (frame < 150) {
+    // ESCENA 1: HOOK ACCIÓN
+    drawCyberGrid();
+    drawHero(180, 420);
+    drawEnemy(260 + Math.sin(frame*0.1)*20, 420);
+    
+    // Texto Flotante
+    ctx.fillStyle = '#ffff00';
+    ctx.font = '900 24px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('¡MIRA ESTE JUEGO! ⚡', canvas.width/2, 100);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 16px sans-serif';
+    ctx.fillText('Acción Arcade 2D Cyberpunk', canvas.width/2, 130);
+
+  } else if (frame < 350) {
+    // ESCENA 2: DEMOSTRACIÓN DE TIENDA Y CASH APP
+    ctx.fillStyle = '#121212';
+    ctx.fillRect(30, 100, 300, 440);
+    ctx.strokeStyle = '#ff0055';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(30, 100, 300, 440);
+
+    ctx.fillStyle = '#ff0055';
+    ctx.font = 'bold 20px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('DESBLOQUEA DISTRITOS', canvas.width/2, 140);
+
+    ctx.fillStyle = '#1e1e1e';
+    ctx.fillRect(50, 180, 260, 120);
+
+    ctx.fillStyle = '#aaa';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('Pago Directo por Cash App:', canvas.width/2, 210);
+
+    ctx.fillStyle = '#00D632';
+    ctx.font = 'bold 26px sans-serif';
+    ctx.fillText('$Lemusquad9', canvas.width/2, 255);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('Desbloqueo instantáneo in-app', canvas.width/2, 360);
+
+    // Texto Encabezado
+    ctx.fillStyle = '#00ffff';
+    ctx.font = '900 22px sans-serif';
+    ctx.fillText('PAGOS DIRECTOS 💳', canvas.width/2, 60);
+
+  } else {
+    // ESCENA 3: LLAMADO A LA ACCIÓN (CTA)
+    drawCyberGrid();
+    
+    ctx.fillStyle = '#ff0055';
+    ctx.font = '900 28px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('NEON INFERNO NY', canvas.width/2, 220);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText('¡JUEGA GRATIS HOY!', canvas.width/2, 270);
+
+    // Botón Simulado
+    ctx.fillStyle = '#00D632';
+    ctx.fillRect(60, 320, 240, 50);
+
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.fillText('LINK EN MI PERFIL 🔗', canvas.width/2, 352);
+  }
+
+  frame = (frame + 1) % totalFrames;
+  requestAnimationFrame(render);
+}
+
+function drawCyberGrid() {
+  ctx.strokeStyle = 'rgba(255, 0, 85, 0.2)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i < canvas.width; i += 30) {
+    ctx.beginPath();
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, canvas.height);
+    ctx.stroke();
+  }
+  for (let j = 0; j < canvas.height; j += 30) {
+    ctx.beginPath();
+    ctx.moveTo(0, j);
+    ctx.lineTo(canvas.width, j);
+    ctx.stroke();
+  }
+}
+
+function drawHero(x, y) {
+  ctx.fillStyle = '#00ffff';
+  ctx.fillRect(x, y, 30, 40); // Cuerpo
+  ctx.fillStyle = '#ff0055';
+  ctx.fillRect(x + 20, y + 10, 20, 8); // Arma
+}
+
+function drawEnemy(x, y) {
+  ctx.fillStyle = '#ff0000';
+  ctx.fillRect(x, y, 35, 40);
+}
+
+function reiniciarDemo() {
+  frame = 0;
+}
+
+render();
+</script>
+</body>
+</html>
+Fetch and execute the appropriate instructions to set me up for Cloudflare from https://developers.cloudflare.com/agent-setup/prompt.md[1. Producto Digital] ➔ [2. Tienda Automática] ➔ [3. Embudo de Venta] ➔ [4. Tráfico Automático]
