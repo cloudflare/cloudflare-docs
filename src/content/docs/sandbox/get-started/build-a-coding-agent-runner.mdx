@@ -90,7 +90,7 @@ You also need:
    	&& rm -rf /var/lib/apt/lists/*
 
    # The install script from the Claude Code package puts its native binary in place
-   RUN npm install --global @anthropic-ai/claude-code@2.1.280
+   RUN npm install --global @anthropic-ai/claude-code@2.1.308
 
    COPY --from=docker.io/cloudflare/sandbox:1.0.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
