@@ -21,7 +21,7 @@ This guide shows how to deploy a remote MCP server on Cloudflare using [Streamab
 
 The templates in this guide build the server with [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) from the Agents SDK. The handler is stateless: each request gets a fresh `McpServer` from a factory function, so the server needs no Durable Object or session. Keep data that must outlive a request in a binding such as KV, D1, or a Durable Object.
 
-To move an existing `McpAgent` server, refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/).
+To move an existing `McpAgent` server, refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/). The deprecated API is documented in the [`McpAgent` reference](/agents/model-context-protocol/apis/agent-api/).
 
 ## Deploy your first MCP server
 
