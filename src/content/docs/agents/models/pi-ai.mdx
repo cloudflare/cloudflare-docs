@@ -6,7 +6,6 @@ tags:
   - AI
 sidebar:
   order: 2
-  badge: Beta
 products:
   - agents
 ---
@@ -18,10 +17,6 @@ import {
 } from "~/components";
 
 `agents/models/pi-ai` is a [Pi AI](https://github.com/earendil-works/pi/tree/main/packages/ai) provider for Workers AI and AI Gateway. It has the same `createAI` factory and options as the [AI SDK provider](/agents/models/ai-sdk/), and returns Pi AI `Model` objects. Use it with Pi AI's `stream` and `complete`, with [Pi Durable](https://github.com/earendil-works/pi/tree/main/packages/durable), with the [Pi harness](/agents/harnesses/pi/), or with any framework built on a Pi AI `Models` registry.
-
-:::caution[Beta]
-This provider is in beta. Its API may change in a minor release.
-:::
 
 ## Install
 
@@ -68,7 +63,7 @@ export default {
 	async fetch(request: Request, env: Env) {
 		const ai = createAI({ binding: env.AI });
 
-		const reply = await ai.complete(ai("@cf/zai-org/glm-4.7-flash"), {
+		const reply = await ai.complete(ai("@cf/zai-org/glm-5.3-flash"), {
 			messages: [{ role: "user", content: "Hello", timestamp: Date.now() }],
 		});
 
@@ -113,7 +108,7 @@ import { getBuiltinModel } from "@earendil-works/pi-ai/providers/all";
 const ai = createAI({ binding: env.AI, id: "my-gateway" });
 
 // 1. A Workers AI model, by its @cf/ id.
-ai("@cf/zai-org/glm-4.7-flash");
+ai("@cf/zai-org/glm-5.3-flash");
 
 // 2. An AI Gateway dynamic route, by dynamic/<route>.
 ai("dynamic/support");
@@ -149,7 +144,7 @@ const models = createModels();
 models.setProvider(ai.provider);
 
 // In PiHarness options:
-// defaults: { model: ai("@cf/moonshotai/kimi-k2.7-code") }
+// defaults: { model: ai("@cf/zai-org/glm-5.3-flash") }
 
 // For one session:
 await session.setModel(ai("anthropic/claude-opus-5.5"));
@@ -193,7 +188,7 @@ A Pi AI model is plain data. Per-model options are stored on it under symbol key
 
 ```ts
 ai(getBuiltinModel("anthropic", "claude-opus-5-5"), {
-	fallback: ["@cf/zai-org/glm-4.7-flash"],
+	fallback: ["@cf/zai-org/glm-5.3-flash"],
 });
 ```
 
