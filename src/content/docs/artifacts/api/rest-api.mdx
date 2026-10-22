@@ -187,11 +187,11 @@ curl --request DELETE "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces/$ARTIFACTS_NAMESPA
 
 The API returns the following response status codes:
 
-| Status | Description                              |
-| ------ | ---------------------------------------- |
-| `204`  | Namespace deleted.                       |
-| `404`  | Namespace is missing or already deleted. |
-| `409`  | Namespace contains repositories.         |
+| Status | Description                                                                |
+| ------ | -------------------------------------------------------------------------- |
+| `204`  | Namespace deleted.                                                         |
+| `404`  | Namespace is missing or already deleted.                                   |
+| `409`  | Namespace contains repositories, or activation or deletion is in progress. |
 
 ## Repos
 
