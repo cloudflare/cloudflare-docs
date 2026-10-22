@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-22-cloudflare-mcp-servers-retire-sse.mdx
+  s_c2ecc4559915fd::t_e558474ebe2a2e 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c91a36a4deec72d84a160813603bed80ac588b07",
+  "prompts": {},
+  "sessions": {
+    "s_c2ecc4559915fd": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15e11-bdd7-70b6-9349-1fb5e6d5767c",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
