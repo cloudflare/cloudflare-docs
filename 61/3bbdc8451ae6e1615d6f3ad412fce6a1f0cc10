@@ -1,0 +1,35 @@
+src/content/changelog/durable-objects/2026-11-01-durable-object-memory-tiers.mdx
+  s_aab93ba58aaf8f::t_b465267f5c5526 1-31
+src/content/docs/containers/platform/limits.mdx
+  s_aab93ba58aaf8f::t_f9424e3ff3f952 43-44
+src/content/docs/durable-objects/observability/metrics-and-analytics.mdx
+  s_aab93ba58aaf8f::t_0e3e0719d2b3b8 41
+src/content/docs/durable-objects/platform/limits.mdx
+  s_aab93ba58aaf8f::t_546835b24cbb71 28,68
+src/content/docs/durable-objects/platform/pricing.mdx
+  s_aab93ba58aaf8f::t_53f19e9d25c058 35,143-164
+src/content/docs/workers/platform/limits.mdx
+  s_aab93ba58aaf8f::t_6dc08d11758196 126-127
+src/content/docs/workers/wrangler/configuration.mdx
+  s_aab93ba58aaf8f::t_517fdd720ab0ed 482-483,500-513
+src/content/partials/durable-objects/do-faq-limits.mdx
+  s_aab93ba58aaf8f::t_289cc219e0ff7a 46-67
+src/content/partials/durable-objects/durable-objects-pricing.mdx
+  s_aab93ba58aaf8f::t_7acf20951257a5 40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "613bbdc8451ae6e1615d6f3ad412fce6a1f0cc10",
+  "prompts": {},
+  "sessions": {
+    "s_aab93ba58aaf8f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d827cfbd-d500-4733-ad8d-4cbf0742e7d3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Dan Lapid <dlapid@cloudflare.com>"
+    }
+  }
+}
