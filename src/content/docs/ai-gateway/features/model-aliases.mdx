@@ -47,7 +47,7 @@ Configuration changes can take time to reach requests served from different loca
 
 ## Routing preferences
 
-Turn on **Custom routing** to set defaults for this alias.
+Turn on **Custom routing** to save routing preferences for this alias.
 
 | Setting          | Value                           | Behavior                                                                 |
 | ---------------- | ------------------------------- | ------------------------------------------------------------------------ |
@@ -56,15 +56,9 @@ Turn on **Custom routing** to set defaults for this alias.
 | **Optimize for** | _Cost_ (`cost`)                 | Favor cost efficiency when using smart routing.                          |
 | **Optimize for** | _Best quality_ (`best`)         | Favor the router's quality ranking when using smart routing.             |
 
-The optimization preference applies to smart routing. Smart routing requires access to that feature. If smart routing is unavailable or cannot produce a ranking, the gateway retains the configured candidate order.
+The optimization preference applies to smart routing. If smart routing cannot rank the models, the gateway uses the model order you configured.
 
-Routing options follow this precedence, separately for the algorithm and optimization preference:
-
-1. Options supplied with the request.
-2. Options saved on the alias.
-3. Gateway defaults.
-
-When **Custom routing** is off, the alias inherits gateway defaults. To explicitly prefer the configured model order, turn on **Custom routing** and select _Preferred order_.
+When **Custom routing** is off, the gateway uses the model order you configured. Routing options supplied with a request override the alias's saved preferences.
 
 Only models and providers that support the request format and pass gateway checks are eligible. A failed attempt can fall back to another eligible model or provider. This does not bypass authentication, billing, or gateway policies.
 
