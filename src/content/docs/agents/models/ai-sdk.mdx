@@ -299,7 +299,7 @@ const result = streamText({
 
 AI Gateway names each streamed run in the `cf-aig-run-id` header and keeps its events. If the connection drops mid-stream, the provider reconnects through the binding and replays the run from the last complete event. Your stream continues with nothing lost or repeated. The run keeps going on the gateway while the connection is down, so the resumed stream continues the same answer.
 
-The provider gives up and throws a `CloudflareAIError` after five drops in one stream, or once the gateway no longer holds the run. The gateway keeps a run for a few minutes after it ends. Aborting the call never resumes it.
+The provider reconnects up to five times in one stream. It gives up and throws a `CloudflareAIError` on the drop after that, or once the gateway no longer holds the run. The gateway keeps a run for a few minutes after it ends. Aborting the call never resumes it.
 
 Workers AI `@cf/` streams and model objects have no run id, so they do not resume. The run id is in `providerMetadata.cloudflare.runId`.
 
@@ -478,7 +478,8 @@ try {
 } catch (error) {
 	if (error instanceof CloudflareAIError) {
 		console.log(error.status, error.code, error.logId, error.model);
-		// error.attempts lists every fallback model that failed.
+		// error.attempts lists every model tried, and is set only when a
+		// fallback chain ran. A model called on its own leaves it undefined.
 	}
 }
 ```
