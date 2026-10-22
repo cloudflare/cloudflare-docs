@@ -20,7 +20,15 @@ This guide covers what to get right when you protect an MCP server with [Workers
 
 Every MCP client that connects to your server can register itself, so your `/authorize` page must ask the user whether this client may act for them before calling `completeAuthorization()`. The page must show the client's name, the scopes, and the hostname the tokens will be sent to, and it must not be possible to frame or forge it.
 
-The library's consent helpers do this. `describeConsent()` returns what the page must show, `beginConsent()` returns headers that bind the form to the browser and block framing, and `approveConsent()` or `denyConsent()` finish it:
+Workers OAuth Provider handles the security of the consent flow. Your code renders the page.
+
+| API | What it does |
+| --- | --- |
+| `describeConsent(request)` | Returns what the page must show: `clientName`, `clientDomain` (the verified domain of a Client ID Metadata Document client), `redirectHost`, `redirectIsLoopback`, and `scope`. |
+| `beginConsent(request)` | Stores the authorization request on the server and returns a single-use `handle` for your form, plus `headers` to send with the page. The headers set a browser-bound `__Host-` cookie and block framing. |
+| `approveConsent(request, handle, options?)` | Checks the handle against the cookie and returns the stored authorization request. Pass `scope` with the scopes the user approved. |
+| `denyConsent(request, handle)` | Returns headers that redirect the user back to the client with `access_denied`. |
+| `isConsentRemembered(request, authRequest, remember)` | Returns `true` if the user already approved this client, redirect URI, and scopes. Pass `remember` to `approveConsent()` to record an approval. |
 
 <TypeScriptExample>
 
@@ -59,22 +67,23 @@ return new Response(null, { status: 302, headers: approved.headers });
 
 </TypeScriptExample>
 
-The form carries only a single-use handle. The authorization request stays on the server, so a forged form cannot approve a different client or redirect URI.
+The form carries only the handle. The authorization request stays on the server, so a forged form cannot approve a different client or redirect URI.
 
-Escape everything that comes from the client before you render it. Client names, URIs, and scope strings come from registration or a client metadata document, so an attacker chooses them:
+`describeConsent()` returns the values but does not render HTML, and every string in it can come from the client. Render them with a template or JSX library that escapes output, such as Hono's JSX.
 
-```ts
-const escape = (value: string) =>
-	value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
-```
-
-To skip the page for clients a user already approved, pass `remember` to `approveConsent()` and check `isConsentRemembered()` before you show it. Refer to [Building a consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) for a complete page, remembered consent, and which errors to redirect back to the client and which to render.
+Refer to [Building a consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) for a complete page and for which errors to redirect back to the client and which to render on your page.
 
 ## Signing in through a third-party provider
 
 If your server signs users in with GitHub, Google, or another provider, every MCP client reaches that provider through your one OAuth app. This is the [confused deputy problem](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices#confused-deputy-problem): without per-client consent, an attacker's client can ride on a user's earlier approval at the provider.
 
-Ask for consent first, then use `beginUpstream()` to send the user to the provider and `finishUpstream()` in your callback. `beginUpstream()` creates a `state` value bound to the user's browser, so a stolen provider code cannot be replayed elsewhere:
+Ask for consent first, then hand the user to the provider:
+
+| API | What it does |
+| --- | --- |
+| `beginUpstream(authRequest, options)` | Call after `approveConsent()`. Stores the authorization request and your `data` (for example, a PKCE verifier), and returns a `state` value for the provider redirect, bound to the user's browser by a `__Host-` cookie. |
+| `finishUpstream(request)` | Call in your callback. Checks `state` against the cookie and returns the original authorization request and your `data`. A provider code replayed in another browser is rejected. |
+| `tokenExchangeCallback` | An `OAuthAuthorizationServer` option that runs on token refresh. Refresh the provider's token there, and throw `OAuthError("invalid_grant")` when the provider has revoked access. |
 
 <TypeScriptExample>
 
@@ -139,7 +148,7 @@ Props can hold upstream access tokens. Do not log them or return them from tools
 | --------------------------------------------------- | ---------------------------------------------- |
 | Per-client consent before `completeAuthorization()` | `beginConsent()`, `approveConsent()`           |
 | Consent form cannot be framed or forged             | `beginConsent()` headers and single-use handle |
-| Client metadata escaped on the consent page         | Your page                                      |
+| Client metadata escaped on the consent page         | Your page template                             |
 | Provider `state` bound to the browser               | `beginUpstream()`, `finishUpstream()`          |
 | Tokens accepted only for this MCP server            | `OAuthResourceServer`                          |
 | Scopes checked for each operation                   | Your handler, with `insufficientScope()`       |
