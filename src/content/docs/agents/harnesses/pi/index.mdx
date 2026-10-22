@@ -27,8 +27,10 @@ Pi runs the agent loop: the transcript, the inbox of follow-ups and steers, mode
 
 <CopyPromptButton
 	tooltip="Build and deploy a Pi Durable agent"
-	prompt="Read https://developers.cloudflare.com/agents/harnesses/pi/, then use the linked Pi harness example to build and deploy my first Pi Durable agent on Cloudflare. Give me the deployed URL."
+	prompt="Read https://developers.cloudflare.com/agents/harnesses/pi/, then use the Pi harness example at https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi to build and deploy my first Pi Durable agent on Cloudflare. Give me the deployed URL."
 />
+
+To start from a complete app, deploy the [Pi harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi). It streams sessions to a browser UI over WebSockets, and gives Pi a durable filesystem and JavaScript execution from `@cloudflare/computer`.
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
 
@@ -51,7 +53,7 @@ Install `agents` with Pi Durable, Pi AI, and Chord:
 
 <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
 
-The three Pi packages are optional peer dependencies of `agents`, at `~1.4.0`. Pi Durable is experimental and its API can change in minor releases, so each `agents` release supports one Pi minor version. Agents SDK 0.30.0 and later support Pi 1.4.
+The three Pi packages are optional peer dependencies of `agents`, at `~1.4.0`. Each `agents` release supports one Pi minor version. Agents SDK 0.30.0 and later support Pi 1.4.
 
 The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing Pi AI provider. The examples on this page use Workers AI through the `AI` binding and the [Pi AI model provider](/agents/models/pi-ai/). Add the binding and a SQLite-backed Durable Object to your Wrangler configuration:
 
@@ -76,67 +78,9 @@ The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models,
 
 </WranglerConfig>
 
-## Use it in an Agent
+## Create the agent
 
-Creating a Pi agent requires configuring the Pi `Harness` with a model, skills, and tools, then registering the `PiHarness` with the `Agent` class. Every `Agent` already has a Lifecycle, so add the harness to it in the constructor:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { Agent } from "agents";
-import { createModels } from "@earendil-works/pi-ai/models";
-import { createRegistry, Harness } from "@earendil-works/pi-durable";
-import { PiHarness } from "agents/harness/pi";
-import { createAI } from "agents/models/pi-ai";
-
-export class Assistant extends Agent<Env> {
-	ai = createAI({ binding: this.env.AI });
-	registry = createRegistry();
-
-	harness = new PiHarness({
-		harness: ({ storage, context, onWake }) => {
-			const models = createModels();
-			models.setProvider(this.ai.provider);
-			return Harness.open(
-				storage,
-				{ models, registry: this.registry, onWake },
-				context,
-			);
-		},
-		defaults: {
-			model: this.ai("@cf/moonshotai/kimi-k2.7-code"),
-			thinkingLevel: "low",
-		},
-	});
-
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.lifecycle.use(this.harness);
-	}
-
-	async ask(prompt: string) {
-		const { text } = await this.harness.prompt(prompt);
-		return text;
-	}
-}
-
-export default {
-	async fetch(request: Request, env: Env) {
-		const agent = env.Assistant.getByName("demo");
-		return Response.json({ text: await agent.ask("What is 47 × 19?") });
-	},
-};
-```
-
-</TypeScriptExample>
-
-The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, `context`, a background context for opening Pi, and `onWake`, so the object can hibernate while Pi's tasks sleep. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
-
-The factory runs inside the object's startup, before any session is used, and again whenever the harness reopens Pi after a storage error (refer to [Recovery](#recovery)). Keep it safe to run more than once. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
-
-## Use it in a plain Durable Object
-
-You do not need the `Agent` class. Install a Lifecycle on a `DurableObject` and add the harness to it:
+`PiHarness` is a Lifecycle capability, so it runs on a plain Durable Object. Open Pi's `Harness` in a factory, install a Lifecycle on the object, and add the harness to it:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -162,7 +106,7 @@ export class Assistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
 	lifecycle = Lifecycle.install(this).use(this.harness);
@@ -172,11 +116,67 @@ export class Assistant extends DurableObject<Env> {
 		return text;
 	}
 }
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const agent = env.Assistant.getByName("demo");
+		return Response.json({ text: await agent.ask("What is 47 × 19?") });
+	},
+};
 ```
 
 </TypeScriptExample>
 
-Address the object by name, for example with `env.Assistant.getByName("demo")`.
+The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, `context`, a background context for opening Pi, and `onWake`, so the object can hibernate while Pi's tasks sleep. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
+
+The factory runs inside the object's startup, before any session is used, and again whenever the harness reopens Pi after a storage error (refer to [Recovery](#recovery)). Keep it safe to run more than once. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
+
+## Use it in an Agent
+
+If your object already extends the `Agent` class, it already has a Lifecycle. Add the harness to it in the constructor instead of installing a new one:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Agent } from "agents";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { createAI } from "agents/models/pi-ai";
+
+export class Assistant extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: {
+			model: this.ai("@cf/zai-org/glm-5.3-flash"),
+			thinkingLevel: "low",
+		},
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Options
 
@@ -316,7 +316,7 @@ const all = await this.harness.sessions.list();
 | `pending()`                 | Operations Pi has not settled yet: `queued`, `running`, or `parked`.                                  |
 | `retry()`                   | Run the tasks Pi's restart limit parked again. Resolves `false` when nothing was parked.              |
 | `reset(handoff)`            | Start a new context, optionally from a handoff note.                                                  |
-| `setModel(model)`           | Change this session's model to a Pi AI `Model`, such as `ai("@cf/zai-org/glm-4.7-flash")`.            |
+| `setModel(model)`           | Change this session's model to a Pi AI `Model`, such as `ai("@cf/zai-org/glm-5.3-flash")`.            |
 | `messages()`                | The active transcript, as Pi's `EntryRecord` entries since the newest reset.                          |
 | `events()`                  | Pi's event stream for this session.                                                                   |
 | `busy()`                    | Whether the session is running.                                                                       |
@@ -378,6 +378,12 @@ A task that keeps crashing the object would restart it forever. Pi parks a task 
 - **Session deletion.** Pi Durable cannot delete a conversation yet.
 
 ## Related resources
+
+<LinkCard
+	title="Pi harness example"
+	href="https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi"
+	description="A complete Pi agent app with WebSocket sessions, a durable filesystem, and code execution."
+/>
 
 <LinkCard
 	title="Extensions"

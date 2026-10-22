@@ -72,7 +72,7 @@ export class BrowserAssistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
 	lifecycle = Lifecycle.install(this).use(this.browser).use(this.harness);
