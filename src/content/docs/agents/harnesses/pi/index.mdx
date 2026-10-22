@@ -134,9 +134,7 @@ export default {
 
 </TypeScriptExample>
 
-The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, `context`, a background context for opening Pi, and `onWake`. Pass `onWake` to `Harness.open()` so the object can hibernate while Pi's tasks sleep. Without it, the harness still works, but the object stays in memory while a task sleeps, and the harness logs a warning. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
-
-Create the registry per object, as the `registry` field does, not at module scope. Pi keeps every `Harness` subscribed to its registry until the `Harness` closes, and an evicted object never closes it, so a module-scope registry keeps every evicted object's harness in memory.
+The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, `context`, a background context for opening Pi, and `onWake`, so the object can hibernate while Pi's tasks sleep. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
 
 The factory runs inside the object's startup, before any session is used, and again whenever the harness reopens Pi after a storage error (refer to [Recovery](#recovery)). Keep it safe to run more than once. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
 
@@ -350,12 +348,6 @@ While Pi's tasks sleep, such as during a retry backoff, the job is due when the 
 ### Parked tasks
 
 A task that keeps crashing the object would restart it forever. Pi parks a task that a crash or eviction cuts off `settings.restartLimit` times in a row (default 5) without progress. A parked task is not work, so the job completes and the object can hibernate. Its operations show as `parked` in `pending()`, and `wait()` keeps waiting. If the factory passes `onReport` to `Harness.open()`, Pi reports it there as `task_parked`. Once you have dealt with the cause, `session.retry()` runs it again. `session.abort()` gives up on it instead.
-
-### Storage errors
-
-A storage error closes Pi. The call that hit it rejects with the error, and calls and `events()` streams already underway end with Pi's `SessionFailed`, so retry them. If the factory passes `onReport` to `Harness.open()`, Pi reports the failure there as `session_failed`. Once the failed Pi has closed, the harness opens Pi again on the next call or the job's next step, which runs the factory again. Pi recovers from what it committed and resumes its work. Closing waits for running tool calls to return, so a tool that ignores its abort signal delays the reopen.
-
-If a step of the wake-up job fails, such as when the factory throws, the job is not dropped. It tries again after 30 seconds, doubling the delay with each failure in a row up to 10 minutes, and returns to its usual schedule once a step succeeds.
 
 ## Limitations
 
