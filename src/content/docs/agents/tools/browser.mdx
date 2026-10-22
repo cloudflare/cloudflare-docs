@@ -29,7 +29,7 @@ The browser runs outside your agent's Durable Object. The object saves its sessi
 
 Start with a [Pi Durable agent](/agents/harnesses/pi/). Install the browser runtime alongside the Pi packages:
 
-<PackageManagers pkg="agents @cloudflare/codemode @earendil-works/pi-durable @earendil-works/pi-ai" />
+<PackageManagers pkg="agents @cloudflare/codemode @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
 
 This example installs a `Browser` and `PiHarness` on a plain Durable Object. Pi chooses when to call the browser tool. [Lifecycle](/agents/runtime/lifecycle/) starts both components and provides their storage.
 
@@ -53,7 +53,7 @@ export class BrowserAssistant extends DurableObject<Env> {
 	registry = createRegistry();
 
 	harness = new PiHarness({
-		harness: ({ storage, context }) => {
+		harness: ({ storage, context, onWake }) => {
 			const models = createModels();
 			models.setProvider(this.ai.provider);
 			this.registry.install({
@@ -68,7 +68,7 @@ export class BrowserAssistant extends DurableObject<Env> {
 			});
 			return Harness.open(
 				storage,
-				{ models, registry: this.registry },
+				{ models, registry: this.registry, onWake },
 				context,
 			);
 		},

@@ -54,7 +54,7 @@ export class Editor extends Agent<Env> {
 	registry = createRegistry();
 
 	harness = new PiHarness({
-		harness: ({ storage, context }) => {
+		harness: ({ storage, context, onWake }) => {
 			this.registry.install({
 				name: "editor",
 				sections: [
@@ -66,7 +66,7 @@ export class Editor extends Agent<Env> {
 			models.setProvider(this.ai.provider);
 			return Harness.open(
 				storage,
-				{ models, registry: this.registry },
+				{ models, registry: this.registry, onWake },
 				context,
 			);
 		},
@@ -82,7 +82,9 @@ export class Editor extends Agent<Env> {
 
 </TypeScriptExample>
 
-The factory runs once per isolate, inside the object's startup, so each extension is installed once. `registry.install()` replaces an installed extension with the same name.
+The factory runs inside the object's startup, and again if the harness reopens Pi after a storage error. `registry.install()` replaces an installed extension with the same name, so installing extensions in the factory is safe to repeat.
+
+Create the registry per object, as a class field, not at module scope. Pi keeps every `Harness` subscribed to its registry until the `Harness` closes, and an evicted object never closes it.
 
 ## Write a tool
 
@@ -153,9 +155,9 @@ const handbook = fromManifest({
 });
 
 harness = new PiHarness({
-	harness: async ({ storage, context }) => {
+	harness: async ({ storage, context, onWake }) => {
 		this.registry.install(await skills([handbook]));
-		// ...models, then Harness.open()
+		// ...models, then Harness.open() with onWake
 	},
 });
 ```

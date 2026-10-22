@@ -25,7 +25,7 @@ This provider is in beta. Its API may change in a minor release.
 
 ## Install
 
-The provider needs `@earendil-works/pi-ai@~1.3.0`, an optional peer dependency of `agents`:
+The provider needs `@earendil-works/pi-ai@~1.4.0`, an optional peer dependency of `agents`:
 
 <PackageManagers pkg="agents @earendil-works/pi-ai" />
 
@@ -157,6 +157,8 @@ await session.setModel(ai("anthropic/claude-opus-5.5"));
 
 A Pi session stores only its model's provider and id, then looks the model up in the `Models` registry. Use the `@cf/`, `dynamic/`, and `<provider>/<id>` forms there. They belong to the `cloudflare` provider (`CLOUDFLARE_PROVIDER_ID`) that you registered. A model object keeps its vendor's provider id, which this registry does not know. Options passed to `ai(model, options)` do not reach a session. Set them on `createAI` instead.
 
+A model stream that is cut off, or that sends nothing for `streamIdleTimeoutMs`, ends in an error that Pi AI's `isRetryableAssistantError()` treats as transient. The Pi harness retries the turn under its retry settings instead of failing it.
+
 The provider's model list is every Workers AI model Pi AI knows, plus every `<provider>/<id>` in Pi AI's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-5.5")` resolves.
 
 ## Cache, tag, and time out requests
@@ -230,12 +232,12 @@ The provider gives up after five drops in one stream, or once the gateway no lon
 
 The provider routes every request through the `AI` binding, or over HTTP with an account id and API token:
 
-| Model                                                      | `api`                | Through the binding                                            | With an account id and token                                  |
-| ---------------------------------------------------------- | -------------------- | -------------------------------------------------------------- | ------------------------------------------------------------- |
-| `@cf/` models and dynamic routes                           | `cloudflare-ai`      | `env.AI.run()`, with Cloudflare's compatibility layer          | The AI Gateway REST API, with the same compatibility layer    |
-| Anthropic models from Pi AI's gateway catalog              | `anthropic-messages` | `env.AI.run()` to AI Gateway, in Anthropic Messages format     | The REST API's `/ai/v1/messages`, in the same format          |
-| OpenAI models from Pi AI's gateway catalog                 | `openai-responses`   | `env.AI.run()` to AI Gateway, in OpenAI Responses format       | The REST API's `/ai/v1/responses`, in the same format         |
-| Any other model object, such as Anthropic, OpenAI, or Groq | its own `api`        | The binding's `fetch` to AI Gateway's provider-native endpoint | `gateway.ai.cloudflare.com`, the provider-native endpoint     |
+| Model                                                      | `api`                | Through the binding                                            | With an account id and token                               |
+| ---------------------------------------------------------- | -------------------- | -------------------------------------------------------------- | ---------------------------------------------------------- |
+| `@cf/` models and dynamic routes                           | `cloudflare-ai`      | `env.AI.run()`, with Cloudflare's compatibility layer          | The AI Gateway REST API, with the same compatibility layer |
+| Anthropic models from Pi AI's gateway catalog              | `anthropic-messages` | `env.AI.run()` to AI Gateway, in Anthropic Messages format     | The REST API's `/ai/v1/messages`, in the same format       |
+| OpenAI models from Pi AI's gateway catalog                 | `openai-responses`   | `env.AI.run()` to AI Gateway, in OpenAI Responses format       | The REST API's `/ai/v1/responses`, in the same format      |
+| Any other model object, such as Anthropic, OpenAI, or Groq | its own `api`        | The binding's `fetch` to AI Gateway's provider-native endpoint | `gateway.ai.cloudflare.com`, the provider-native endpoint  |
 
 A model from Pi AI's Cloudflare AI Gateway catalog runs on `env.AI.run()` under its catalog id, in the model's native format. AI Gateway converts nothing, so Pi AI's own stream processors read the answer. The gateway picks the provider and bills through Unified Billing or a key stored on the gateway.
 

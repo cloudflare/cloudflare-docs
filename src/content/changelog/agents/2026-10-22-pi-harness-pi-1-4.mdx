@@ -1,0 +1,53 @@
+---
+title: Pi harness supports Pi 1.4 and hibernates while tasks sleep
+description: Agents SDK v0.30.0 runs PiHarness on Pi 1.4, lets the Durable Object hibernate while Pi's tasks sleep, and recovers more reliably from crash loops and storage errors.
+products:
+  - agents
+  - workers
+date: 2026-10-22
+---
+
+import { PackageManagers, TypeScriptExample } from "~/components";
+
+Agents SDK v0.30.0 runs [`PiHarness`](/agents/harnesses/pi/) on [Pi 1.4](https://github.com/earendil-works/pi/blob/v1.4.0/packages/durable/CHANGELOG.md#140---2026-10-21), and makes it recover more reliably from evictions, crashes, and storage errors.
+
+- **Hibernation while Pi's tasks sleep.** `PiHarness` passes Pi's new `onWake` callback to your harness factory. While a task sleeps, such as during a model retry backoff, the Durable Object can hibernate until the task is due instead of staying in memory.
+- **Parked tasks.** Pi 1.4 parks a task that keeps crashing the object instead of restarting it forever. Parked operations show as `parked` in `pending()`, and `session.retry()` runs them again.
+- **Recovery from storage errors.** `PiHarness` reopens Pi after a storage error instead of failing every call until the object restarts. Its wake-up job retries failed steps with a backoff instead of being dropped.
+- **Retried model streams.** `agents/models/pi-ai` reports a cut-off or idle model stream as a transient error, so Pi retries the turn instead of failing it.
+
+## Upgrade
+
+Install Pi 1.4 and `@earendil-works/chord`, which `agents/harness/pi` now needs:
+
+<PackageManagers pkg="agents@latest @earendil-works/pi-durable@~1.4.0 @earendil-works/pi-ai@~1.4.0 @earendil-works/chord@~1.4.0" />
+
+Pi 1.4 migrates the session storage in the object's SQLite database to a schema that Pi 1.3 cannot open, so a deployment cannot roll back past this release. Existing objects need no other migration.
+
+Pass `onWake` from the factory to `Harness.open()`. Without it the harness still works, but logs a warning and keeps the object in memory while Pi's tasks sleep. If you created Pi's registry at module scope, move it into your class: Pi keeps every `Harness` subscribed to its registry, so a module-scope registry keeps evicted objects in memory.
+
+<TypeScriptExample>
+
+```ts
+export class Assistant extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+	});
+}
+```
+
+</TypeScriptExample>
+
+The factory now also runs again when the harness reopens Pi after a storage error, so keep it safe to run more than once. Refer to the [Pi Durable 1.4.0 changelog](https://github.com/earendil-works/pi/blob/v1.4.0/packages/durable/CHANGELOG.md#140---2026-10-21) for Pi's own breaking changes, and to [Pi harness recovery](/agents/harnesses/pi/#recovery) for how parked tasks and storage errors work.
