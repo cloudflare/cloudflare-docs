@@ -12,7 +12,7 @@ The private keys of [eight eMudhra intermediate certificate authorities](https:/
 
 ### Sandbox SDK 0.x
 
-Update immediately. Install `@cloudflare/sandbox@0.12.13`, change the `FROM` line in your `Dockerfile` to the matching image, and redeploy. Keep any `-python`, `-opencode`, or `-musl` suffix on the image tag.
+Update immediately. Install `@cloudflare/sandbox@0.12.13`, change the `FROM` line in your `Dockerfile` to the matching image, and redeploy. Keep any `-python`, `-opencode`, or `-musl` suffix on the image tag. The deployment's [rollout](/containers/configuration/rollouts/) replaces running sandboxes with ones that use the new image.
 
 ```dockerfile title="Dockerfile"
 FROM docker.io/cloudflare/sandbox:0.12.13
@@ -27,7 +27,20 @@ If your sandboxes use none of these, updating to 0.12.13 is all you need to do.
 
 ### Sandbox SDK 1.x
 
-You do not need to update the SDK, because it makes no TLS connections of its own. Your image decides which certificates your sandboxes trust, so pull your base image again and rebuild it without the Docker build cache to pick up updated CA certificates and runtimes.
+You do not need to update the SDK, because it makes no TLS connections of its own. Your image decides which certificates your sandboxes trust, so rebuild it and replace the sandboxes that run the old one:
+
+1. Run `docker pull` for each base image in your `Dockerfile`, then clear the Docker build cache with `docker builder prune --all`. `wrangler deploy` builds with your local images and build cache, so without these steps it can ship the old CA certificates and runtimes. If your Wrangler configuration references an image by digest, build and push a new image and update the digest instead.
+2. Deploy your Worker.
+3. Stop sandboxes that are still running, for example with `this.ctx.container.destroy()`. A running sandbox keeps the image it started with until it stops. To restart only the sandboxes whose image is out of date, refer to [Roll out a named image update](/containers/guides/image-management/#roll-out-a-named-image-update).
+4. If you use [snapshots](/containers/guides/snapshots/), create new ones from sandboxes that run the updated image. A snapshot restores the image it was created from, so an older snapshot brings back the old certificates.
+
+## Check your sandboxes
+
+From inside a sandbox, connect to one of the test hosts listed at [emudhra.we-have-a-problem.com](https://emudhra.we-have-a-problem.com/) with each TLS client your code uses, such as `curl`, `node`, or `bun`. Every request should fail:
+
+```sh
+curl -f https://dv-g3b-emudhra.we-have-a-problem.com/
+```
 
 ## What changed in 0.12.13
 
