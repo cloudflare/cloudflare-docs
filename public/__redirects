@@ -319,6 +319,8 @@
 /agents/guides/webhooks/ /agents/communication-channels/webhooks/ 301
 /agents/model-context-protocol/authorization/ /agents/model-context-protocol/protocol/authorization/ 301
 /agents/model-context-protocol/protocol/codemode/ /agents/tools/codemode/ 301
+/agents/model-context-protocol/codemode/ /agents/model-context-protocol/guides/build-codemode-mcp-server/ 301
+/agents/model-context-protocol/guides/build-codemode-openapi-mcp-server/ /agents/model-context-protocol/guides/build-codemode-mcp-server/ 301
 /agents/model-context-protocol/governance/ /agents/model-context-protocol/protocol/governance/ 301
 /agents/model-context-protocol/mcp-portal/ /agents/model-context-protocol/cloudflare/mcp-portal/ 301
 /agents/model-context-protocol/mcp-servers-for-cloudflare/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
