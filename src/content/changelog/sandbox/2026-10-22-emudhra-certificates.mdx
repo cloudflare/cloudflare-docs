@@ -1,6 +1,6 @@
 ---
 title: Sandbox SDK 0.12.13 updates trusted certificates after the eMudhra compromise
-description: In Sandbox SDK 0.12.13 images, the CA bundle, Node.js, cloudflared, and pip reject certificates from the compromised eMudhra intermediate CAs. Update your package and image to 0.12.13.
+description: Sandbox SDK images up to 0.12.12 trust certificates from the compromised eMudhra intermediate CAs. If you use Sandbox SDK 0.x, update your package and image to 0.12.13 immediately.
 products:
   - sandbox
 date: 2026-10-22
@@ -8,8 +8,27 @@ date: 2026-10-22
 
 The private keys of [eight eMudhra intermediate certificate authorities](https://blog.cloudflare.com/emudhra-certificate-compromise/) can be recovered, so anyone can forge a certificate for any hostname that chains to them. Sandbox SDK images up to 0.12.12 trust these certificates. An HTTPS connection that leaves the container directly, such as one from `mountBucket()`, backups, `gitCheckout()`, tunnels, or code that runs in the sandbox, can be intercepted with a forged certificate.
 
-In the `docker.io/cloudflare/sandbox:0.12.13` images, the system CA bundle, Node.js, `cloudflared`, and pip reject these certificates. The images ship updated Ubuntu and Alpine CA certificates, Node.js 22.23.4, `cloudflared` 2026.10.2, and pip 26.2.2 in the `-python` image. Update `@cloudflare/sandbox` and the `FROM` line in your `Dockerfile` to 0.12.13, then redeploy.
+## What you need to do
 
-The `bun` command, OpenCode (built on Bun), and `createBackup()` uploads of archives of 10 MiB or more check certificates against Bun's built-in CA list rather than the image's. A later release will update Bun. Until then, pass `multipart: false` to [`createBackup()`](/sandbox/sdk/api/backups/#createbackup) to upload with `curl`, which uses the image's CA bundle. For `bun` and OpenCode, set [`interceptHttps = true`](/sandbox/sdk/guides/outbound-traffic/#https-traffic) and add an `outbound` handler that returns `fetch(request)`, so that Cloudflare checks their certificates.
+### Sandbox SDK 0.x
 
-Sandbox SDK 1.x makes no TLS connections of its own, so your image decides which certificates your sandboxes trust. Pull your base image again and rebuild without the Docker build cache, so your image picks up updated CA certificates and runtimes.
+Update immediately. Install `@cloudflare/sandbox@0.12.13`, change the `FROM` line in your `Dockerfile` to the matching image, and redeploy. Keep any `-python`, `-opencode`, or `-musl` suffix on the image tag.
+
+```dockerfile title="Dockerfile"
+FROM docker.io/cloudflare/sandbox:0.12.13
+```
+
+If your sandboxes run `bun` or OpenCode, or `createBackup()` uploads archives of 10 MiB or more, also apply these workarounds until a later release updates Bun. All three check certificates against Bun's built-in CA list rather than the image's.
+
+- For backups, pass `multipart: false` to [`createBackup()`](/sandbox/sdk/api/backups/#createbackup) to upload with `curl`, which uses the image's CA bundle.
+- For `bun` and OpenCode, set [`interceptHttps = true`](/sandbox/sdk/guides/outbound-traffic/#https-traffic) and add an `outbound` handler that returns `fetch(request)`, so that Cloudflare checks their certificates.
+
+If your sandboxes use none of these, updating to 0.12.13 is all you need to do.
+
+### Sandbox SDK 1.x
+
+You do not need to update the SDK, because it makes no TLS connections of its own. Your image decides which certificates your sandboxes trust, so pull your base image again and rebuild it without the Docker build cache to pick up updated CA certificates and runtimes.
+
+## What changed in 0.12.13
+
+In the 0.12.13 images, the system CA bundle, Node.js, `cloudflared`, and pip reject certificates from the compromised intermediates. The images ship updated Ubuntu and Alpine CA certificates, Node.js 22.23.4, `cloudflared` 2026.10.2, and pip 26.2.2 in the `-python` image.
