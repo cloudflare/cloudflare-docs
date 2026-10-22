@@ -19,7 +19,7 @@ Create the registry with `createRegistry()` and install extensions in the `harne
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 import { Type } from "@earendil-works/pi-ai";
 import { createModels } from "@earendil-works/pi-ai/models";
 import {
@@ -28,6 +28,7 @@ import {
 	type ToolRegistration,
 } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/pi-ai";
 
 const WordCount = Type.Object({ text: Type.String() });
@@ -44,7 +45,7 @@ const wordCount: ToolRegistration<typeof WordCount> = {
 	},
 };
 
-export class Editor extends Agent<Env> {
+export class Editor extends DurableObject<Env> {
 	ai = createAI({ binding: this.env.AI });
 	registry = createRegistry();
 
@@ -68,10 +69,7 @@ export class Editor extends Agent<Env> {
 		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.lifecycle.use(this.harness);
-	}
+	lifecycle = Lifecycle.install(this).use(this.harness);
 }
 ```
 
