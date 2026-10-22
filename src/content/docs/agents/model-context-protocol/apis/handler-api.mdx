@@ -265,35 +265,34 @@ Notifications are isolate-local. A notification published in one Worker isolate 
 
 ## Authentication context
 
-Wrap the handler with `OAuthProvider` from `@cloudflare/workers-oauth-provider` to require OAuth. The provider validates the access token before it calls the handler:
+To require OAuth, wrap the handler in an `OAuthResourceServer` from `@cloudflare/workers-oauth-provider`. It validates the access token with your authorization server before it calls the handler. Refer to [Authorization](/agents/model-context-protocol/protocol/authorization/) to build the authorization server.
 
 <TypeScriptExample>
 
 ```ts title="src/index.ts"
-import OAuthProvider from "@cloudflare/workers-oauth-provider";
+import { OAuthResourceServer } from "@cloudflare/workers-oauth-provider";
 import { createMcpHandler } from "agents/mcp/server";
+import { env } from "cloudflare:workers";
 
 const mcpHandler = createMcpHandler(createServer);
 
-export default new OAuthProvider({
-	apiRoute: "/mcp",
-	apiHandler: {
-		fetch(request: Request, env: Env, ctx: ExecutionContext) {
+export default new OAuthResourceServer<Env, AuthProps>({
+	resourceMetadata: {
+		resource: env.MCP_SERVER_URL, // the URL MCP clients connect to
+		authorization_servers: [env.AUTH_SERVER_URL],
+	},
+	validateToken: (env) => env.AUTH_SERVER.validateToken, // Service Binding to your authorization server
+	handler: {
+		fetch(request, env, ctx) {
 			return mcpHandler(request, env, ctx);
 		},
 	},
-	authorizeEndpoint: "/authorize",
-	tokenEndpoint: "/token",
-	clientRegistrationEndpoint: "/register",
-	defaultHandler: AuthHandler, // your login and consent flow
 });
 ```
 
 </TypeScriptExample>
 
-A compatible `@cloudflare/workers-oauth-provider` supplies verified standard `AuthInfo` to SDK v2 callbacks at `context.http.authInfo`.
-
-The existing `getMcpAuthContext()` helper continues to return application props:
+The resource server passes the `props` stored with `completeAuthorization()` as `ctx.props`. Read them with `getMcpAuthContext()`:
 
 ```ts
 interface McpAuthContext {
@@ -310,18 +309,14 @@ import { z } from "zod";
 server.registerTool(
 	"whoami",
 	{ description: "Return the current identity", inputSchema: z.object({}) },
-	async (_args, context) => {
+	async () => {
 		const auth = getMcpAuthContext();
 
 		return {
 			content: [
 				{
 					type: "text",
-					text: JSON.stringify({
-						clientId: context.http?.authInfo?.clientId,
-						scopes: context.http?.authInfo?.scopes,
-						userId: auth?.props.userId,
-					}),
+					text: JSON.stringify({ userId: auth?.props.userId }),
 				},
 			],
 		};
@@ -346,9 +341,9 @@ function createServer() {
 }
 ```
 
-When your own code authenticates the request instead of `OAuthProvider`, pass the identity with the `authContext` option, for example `createMcpHandler(createServer, { authContext: { props: { userId } } })`.
+When your own code authenticates the request instead of `OAuthResourceServer`, pass the identity with the `authContext` option, for example `createMcpHandler(createServer, { authContext: { props: { userId } } })`.
 
-Do not log or return `authInfo.token` or `authInfo.extra.props`.
+Props often hold upstream access tokens. Do not log or return them.
 
 ## Related resources
 

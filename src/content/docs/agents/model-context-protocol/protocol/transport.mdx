@@ -77,21 +77,28 @@ export default {
 
 #### MCP server with authentication
 
-If your MCP server implements authentication and authorization using the [Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider) library, pass the handler through the `apiRoute` and `apiHandler` properties. `OAuthProvider` needs an object with a `fetch` method, so wrap the handler. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker-authenticated).
+To require OAuth, wrap the handler in an `OAuthResourceServer` from [Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider). It answers requests without a valid token with a `401` that points MCP clients at your authorization server. Refer to [Authorization](/agents/model-context-protocol/protocol/authorization/) for the authorization server and the full setup.
 
 <TypeScriptExample>
 
 ```ts
+import { OAuthResourceServer } from "@cloudflare/workers-oauth-provider";
+import { createMcpHandler } from "agents/mcp/server";
+import { env } from "cloudflare:workers";
+
 const mcpHandler = createMcpHandler(createServer);
 
-export default new OAuthProvider({
-	apiRoute: "/mcp",
-	apiHandler: {
-		fetch(request: Request, env: Env, ctx: ExecutionContext) {
+export default new OAuthResourceServer<Env, AuthProps>({
+	resourceMetadata: {
+		resource: env.MCP_SERVER_URL, // the URL MCP clients connect to
+		authorization_servers: [env.AUTH_SERVER_URL],
+	},
+	validateToken: (env) => env.AUTH_SERVER.validateToken, // Service Binding to your authorization server
+	handler: {
+		fetch(request, env, ctx) {
 			return mcpHandler(request, env, ctx);
 		},
 	},
-	// ... other OAuth configuration
 });
 ```
 

@@ -12,272 +12,137 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-MCP servers, like any web application, need to be secured so they can be used by trusted users without abuse. The MCP specification uses OAuth 2.1 for authentication between MCP clients and servers.
+MCP servers, like any web application, need to be secured so they can be used by trusted users without abuse. The MCP specification uses OAuth 2.1 for authorization between MCP clients and servers.
 
-This guide covers security best practices for MCP servers that act as OAuth proxies to third-party providers (like GitHub or Google).
+This guide covers what to get right when you protect an MCP server with [Workers OAuth Provider](https://github.com/cloudflare/workers-oauth-provider): the authorization server's consent page, signing users in through a third-party provider, and the checks your MCP server makes on every request. Refer to [Authorization](/agents/model-context-protocol/protocol/authorization/) to set up the authorization server and the MCP server first.
 
-## OAuth protection with workers-oauth-provider
+## Consent page
 
-Cloudflare's [`workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) handles token management, client registration, and access token validation:
+Every MCP client that connects to your server can register itself, so your `/authorize` page must ask the user whether this client may act for them before calling `completeAuthorization()`. The page must show the client's name, the scopes, and the hostname the tokens will be sent to, and it must not be possible to frame or forge it.
+
+The library's consent helpers do this. `describeConsent()` returns what the page must show, `beginConsent()` returns headers that bind the form to the browser and block framing, and `approveConsent()` or `denyConsent()` finish it:
 
 <TypeScriptExample>
 
 ```ts
-import { OAuthProvider } from "@cloudflare/workers-oauth-provider";
-import { createMcpHandler } from "agents/mcp/server";
-import { createServer } from "./mcp";
+const oauth = authorizationServer.getOAuthApi(env);
 
-const mcpHandler = createMcpHandler(createServer);
-
-export default new OAuthProvider({
-	authorizeEndpoint: "/authorize",
-	tokenEndpoint: "/token",
-	clientRegistrationEndpoint: "/register",
-	apiRoute: "/mcp",
-	apiHandler: {
-		fetch(request: Request, env: Env, ctx: ExecutionContext) {
-			return mcpHandler(request, env, ctx);
-		},
-	},
-	defaultHandler: AuthHandler,
+// GET /authorize, after signing the user in
+const authRequest = await oauth.parseAuthRequest(request);
+const details = await oauth.describeConsent(authRequest);
+const consent = await oauth.beginConsent(authRequest);
+consent.headers.set("Content-Type", "text/html; charset=utf-8");
+return new Response(consentPage(details, consent.handle), {
+	headers: consent.headers,
 });
+
+// POST /authorize
+const form = await request.formData();
+const handle = String(form.get("handle"));
+if (form.get("decision") !== "approve") {
+	const denied = await oauth.denyConsent(request, handle);
+	return new Response(null, { status: 302, headers: denied.headers });
+}
+const approved = await oauth.approveConsent(request, handle, {
+	scope: form.getAll("scope").map(String),
+});
+const { redirectTo } = await oauth.completeAuthorization({
+	request: approved.request, // from storage, not from the form
+	userId: session.userId,
+	metadata: {},
+	scope: approved.request.scope,
+	props: { userId: session.userId },
+});
+approved.headers.set("Location", redirectTo);
+return new Response(null, { status: 302, headers: approved.headers });
 ```
 
 </TypeScriptExample>
 
-## Consent dialog security
+The form carries only a single-use handle. The authorization request stays on the server, so a forged form cannot approve a different client or redirect URI.
 
-When your MCP server proxies to third-party OAuth providers, you must implement your own consent dialog before forwarding users upstream. This prevents the "confused deputy" problem where attackers could exploit cached consent.
+Escape everything that comes from the client before you render it. Client names, URIs, and scope strings come from registration or a client metadata document, so an attacker chooses them:
 
-### CSRF protection
+```ts
+const escape = (value: string) =>
+	value.replace(/[&<>"']/g, (char) => `&#${char.charCodeAt(0)};`);
+```
 
-Without CSRF protection, attackers can trick users into approving malicious OAuth clients. Use a random token stored in a secure cookie:
+To skip the page for clients a user already approved, pass `remember` to `approveConsent()` and check `isConsentRemembered()` before you show it. Refer to [Building a consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) for a complete page, remembered consent, and which errors to redirect back to the client and which to render.
+
+## Signing in through a third-party provider
+
+If your server signs users in with GitHub, Google, or another provider, every MCP client reaches that provider through your one OAuth app. This is the [confused deputy problem](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices#confused-deputy-problem): without per-client consent, an attacker's client can ride on a user's earlier approval at the provider.
+
+Ask for consent first, then use `beginUpstream()` to send the user to the provider and `finishUpstream()` in your callback. `beginUpstream()` creates a `state` value bound to the user's browser, so a stolen provider code cannot be replayed elsewhere:
 
 <TypeScriptExample>
 
 ```ts
-// Generate CSRF token when showing consent form
-function generateCSRFProtection() {
-	const token = crypto.randomUUID();
-	const setCookie = `__Host-CSRF_TOKEN=${token}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=600`;
-	return { token, setCookie };
-}
+// POST /authorize: the user approved this client
+const approved = await oauth.approveConsent(request, handle);
+const { state, headers } = await oauth.beginUpstream(approved.request, {
+	data: { verifier }, // returned at the callback, never sent to the provider
+	headers: approved.headers,
+});
+headers.set("Location", providerAuthorizeUrl({ state }));
+return new Response(null, { status: 302, headers });
 
-// Validate CSRF token on form submission
-function validateCSRFToken(formData: FormData, request: Request) {
-	const tokenFromForm = formData.get("csrf_token");
-	const cookieHeader = request.headers.get("Cookie") || "";
-	const tokenFromCookie = cookieHeader
-		.split(";")
-		.find((c) => c.trim().startsWith("__Host-CSRF_TOKEN="))
-		?.split("=")[1];
-
-	if (!tokenFromForm || !tokenFromCookie || tokenFromForm !== tokenFromCookie) {
-		throw new Error("CSRF token mismatch");
-	}
-
-	// Clear cookie after use (one-time use)
-	return {
-		clearCookie: `__Host-CSRF_TOKEN=; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=0`,
-	};
-}
+// GET /callback
+const { request: original, data, headers: clear } =
+	await oauth.finishUpstream<{ verifier: string }>(request);
+const upstream = await exchangeProviderCode(
+	new URL(request.url).searchParams.get("code")!,
+	data.verifier,
+);
+const { redirectTo } = await oauth.completeAuthorization({
+	request: original,
+	userId: upstream.userId,
+	metadata: {},
+	scope: original.scope,
+	props: { providerToken: upstream.accessToken }, // encrypted at rest
+});
+clear.set("Location", redirectTo);
+return new Response(null, { status: 302, headers: clear });
 ```
 
 </TypeScriptExample>
 
-Include the token as a hidden field in your consent form:
+Refer to [Signing in through another provider](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) for the full flow, including refreshing and revoking the provider's tokens.
 
-```html
-<input type="hidden" name="csrf_token" value="${csrfToken}" />
-```
+## Checks on the MCP server
 
-### Input sanitization
+`OAuthResourceServer` accepts only tokens issued for its own `resourceMetadata.resource`, so a token for another server is rejected even if the same authorization server issued it. Keep that URL exactly what clients connect to.
 
-User-controlled content (client names, logos, URIs) can execute malicious scripts if not sanitized:
+`requiredScopes` is advertised to clients but not enforced. Check scopes in the handler, and return `insufficientScope()` when one is missing so the client can ask the user for it:
 
 <TypeScriptExample>
 
 ```ts
-function sanitizeText(text: string): string {
-	return text
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#039;");
-}
-
-function sanitizeUrl(url: string): string {
-	if (!url) return "";
-	try {
-		const parsed = new URL(url);
-		// Only allow http/https - reject javascript:, data:, file:
-		if (!["http:", "https:"].includes(parsed.protocol)) {
-			return "";
+handler: {
+	fetch(request, env, ctx) {
+		if (!ctx.auth.scope.includes("mcp:read")) {
+			return insufficientScope(ctx.auth, ["mcp:read"]);
 		}
-		return url;
-	} catch {
-		return "";
-	}
-}
-
-// Always sanitize before rendering
-const clientName = sanitizeText(client.clientName);
-const logoUrl = sanitizeText(sanitizeUrl(client.logoUri));
+		return mcpHandler(request, env, ctx);
+	},
+},
 ```
 
 </TypeScriptExample>
 
-### Content Security Policy
-
-CSP headers instruct browsers to block dangerous content:
-
-<TypeScriptExample>
-
-```ts
-function buildSecurityHeaders(setCookie: string, nonce?: string): HeadersInit {
-	const cspDirectives = [
-		"default-src 'none'",
-		"script-src 'self'" + (nonce ? ` 'nonce-${nonce}'` : ""),
-		"style-src 'self' 'unsafe-inline'",
-		"img-src 'self' https:",
-		"font-src 'self'",
-		"form-action 'self'",
-		"frame-ancestors 'none'", // Prevent clickjacking
-		"base-uri 'self'",
-		"connect-src 'self'",
-	].join("; ");
-
-	return {
-		"Content-Security-Policy": cspDirectives,
-		"X-Frame-Options": "DENY",
-		"X-Content-Type-Options": "nosniff",
-		"Content-Type": "text/html; charset=utf-8",
-		"Set-Cookie": setCookie,
-	};
-}
-```
-
-</TypeScriptExample>
-
-## State handling
-
-Between the consent dialog and the OAuth callback, you need to ensure it is the same user. Use a state token stored in KV with a short expiration:
-
-<TypeScriptExample>
-
-```ts
-// Create state token before redirecting to upstream provider
-async function createOAuthState(oauthReqInfo: AuthRequest, kv: KVNamespace) {
-	const stateToken = crypto.randomUUID();
-	await kv.put(`oauth:state:${stateToken}`, JSON.stringify(oauthReqInfo), {
-		expirationTtl: 600, // 10 minutes
-	});
-	return { stateToken };
-}
-
-// Bind state to browser session with a hashed cookie
-async function bindStateToSession(stateToken: string) {
-	const encoder = new TextEncoder();
-	const hashBuffer = await crypto.subtle.digest(
-		"SHA-256",
-		encoder.encode(stateToken),
-	);
-	const hashHex = Array.from(new Uint8Array(hashBuffer))
-		.map((b) => b.toString(16).padStart(2, "0"))
-		.join("");
-
-	return {
-		setCookie: `__Host-CONSENTED_STATE=${hashHex}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=600`,
-	};
-}
-
-// Validate state in callback
-async function validateOAuthState(request: Request, kv: KVNamespace) {
-	const url = new URL(request.url);
-	const stateFromQuery = url.searchParams.get("state");
-
-	if (!stateFromQuery) {
-		throw new Error("Missing state parameter");
-	}
-
-	// Check state exists in KV
-	const storedData = await kv.get(`oauth:state:${stateFromQuery}`);
-	if (!storedData) {
-		throw new Error("Invalid or expired state");
-	}
-
-	// Validate state matches session cookie
-	// ... (hash comparison logic)
-
-	await kv.delete(`oauth:state:${stateFromQuery}`);
-	return JSON.parse(storedData);
-}
-```
-
-</TypeScriptExample>
-
-## Cookie security
-
-### Why use the `__Host-` prefix?
-
-The `__Host-` prefix prevents subdomain attacks, which is especially important on `*.workers.dev` domains:
-
-- Must be set with `Secure` flag (HTTPS only)
-- Must have `Path=/`
-- Must not have a `Domain` attribute
-
-Without `__Host-`, an attacker controlling `evil.workers.dev` could set cookies for your `mcp-server.workers.dev` domain.
-
-### Multiple OAuth flows
-
-If running multiple OAuth flows on the same domain, namespace your cookies:
-
-```txt
-__Host-CSRF_TOKEN_GITHUB
-__Host-CSRF_TOKEN_GOOGLE
-__Host-APPROVED_CLIENTS_GITHUB
-__Host-APPROVED_CLIENTS_GOOGLE
-```
-
-## Approved clients registry
-
-Maintain a registry of approved client IDs per user to avoid showing the consent dialog repeatedly:
-
-<TypeScriptExample>
-
-```ts
-async function addApprovedClient(
-	request: Request,
-	clientId: string,
-	cookieSecret: string,
-) {
-	const existingClients =
-		(await getApprovedClientsFromCookie(request, cookieSecret)) || [];
-	const updatedClients = [...new Set([...existingClients, clientId])];
-
-	const payload = JSON.stringify(updatedClients);
-	const signature = await signData(payload, cookieSecret); // HMAC-SHA256
-	const cookieValue = `${signature}.${btoa(payload)}`;
-
-	return `__Host-APPROVED_CLIENTS=${cookieValue}; HttpOnly; Secure; Path=/; SameSite=Lax; Max-Age=2592000`;
-}
-```
-
-</TypeScriptExample>
-
-When reading the cookie, verify the HMAC signature before trusting the data. If the client is not in the approved list, show the consent dialog.
+Props can hold upstream access tokens. Do not log them or return them from tools.
 
 ## Security checklist
 
-| Protection         | Purpose                          |
-| ------------------ | -------------------------------- |
-| CSRF tokens        | Prevent forged consent approvals |
-| Input sanitization | Prevent XSS in consent dialogs   |
-| CSP headers        | Block injected scripts           |
-| State binding      | Prevent session fixation         |
-| `__Host-` cookies  | Prevent subdomain attacks        |
-| HMAC signatures    | Verify cookie integrity          |
+| Protection                                          | Provided by                                    |
+| --------------------------------------------------- | ---------------------------------------------- |
+| Per-client consent before `completeAuthorization()` | `beginConsent()`, `approveConsent()`           |
+| Consent form cannot be framed or forged             | `beginConsent()` headers and single-use handle |
+| Client metadata escaped on the consent page         | Your page                                      |
+| Provider `state` bound to the browser               | `beginUpstream()`, `finishUpstream()`          |
+| Tokens accepted only for this MCP server            | `OAuthResourceServer`                          |
+| Scopes checked for each operation                   | Your handler, with `insufficientScope()`       |
 
 ## Next steps
 

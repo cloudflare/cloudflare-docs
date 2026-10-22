@@ -121,6 +121,10 @@ export default new OAuthProvider({
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
 	defaultHandler: AuthHandler,
+	resourceMetadata: {
+		// The URL MCP clients connect to. Use http://localhost:8787/mcp with wrangler dev.
+		resource: "https://my-mcp-server.<your-subdomain>.workers.dev/mcp",
+	},
 });
 ```
 
