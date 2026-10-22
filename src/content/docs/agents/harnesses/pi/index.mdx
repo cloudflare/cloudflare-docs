@@ -53,10 +53,6 @@ Install `agents` with Pi Durable, Pi AI, and Chord:
 
 The three Pi packages are optional peer dependencies of `agents`, at `~1.4.0`. Pi Durable is experimental and its API can change in minor releases, so each `agents` release supports one Pi minor version. Agents SDK 0.30.0 and later support Pi 1.4.
 
-:::note[Upgrading from Pi 1.3]
-Pi 1.4 migrates the session storage in the object's SQLite database to a schema that Pi 1.3 cannot open, so a deployment cannot roll back past this upgrade. Refer to the [Pi Durable 1.4.0 changelog](https://github.com/earendil-works/pi/blob/v1.4.0/packages/durable/CHANGELOG.md#140---2026-10-21) for its other breaking changes.
-:::
-
 The `agents/models/pi-ai` entry point supports AI Gateway and Workers AI models, so you can get started with Cloudflare models right away or use your existing Pi AI provider. The examples on this page use Workers AI through the `AI` binding and the [Pi AI model provider](/agents/models/pi-ai/). Add the binding and a SQLite-backed Durable Object to your Wrangler configuration:
 
 <WranglerConfig>

@@ -1,13 +1,12 @@
 ---
-title: Pi harness supports Pi 1.4 and hibernates while tasks sleep
+title: Agents SDK now supports the latest Pi 1.4 release
 description: Agents SDK v0.30.0 runs PiHarness on Pi 1.4, lets the Durable Object hibernate while Pi's tasks sleep, and recovers more reliably from crash loops and storage errors.
 products:
   - agents
-  - workers
 date: 2026-10-22
 ---
 
-import { PackageManagers, TypeScriptExample } from "~/components";
+import { CopyPromptButton } from "~/components";
 
 Agents SDK v0.30.0 runs [`PiHarness`](/agents/harnesses/pi/) on [Pi 1.4](https://github.com/earendil-works/pi/blob/v1.4.0/packages/durable/CHANGELOG.md#140---2026-10-21), and makes it recover more reliably from evictions, crashes, and storage errors.
 
@@ -18,36 +17,11 @@ Agents SDK v0.30.0 runs [`PiHarness`](/agents/harnesses/pi/) on [Pi 1.4](https:/
 
 ## Upgrade
 
-Install Pi 1.4 and `@earendil-works/chord`, which `agents/harness/pi` now needs:
+The [Agents SDK v0.30.0 changelog](https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0300) has step-by-step upgrade instructions. Point your coding agent at them and upgrade today:
 
-<PackageManagers pkg="agents@latest @earendil-works/pi-durable@~1.4.0 @earendil-works/pi-ai@~1.4.0 @earendil-works/chord@~1.4.0" />
+<CopyPromptButton
+	tooltip="Upgrade to Pi 1.4"
+	prompt="Upgrade my Pi harness agent to Agents SDK v0.30.0 and Pi 1.4 by following the upgrade steps at https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0300. Refer to https://developers.cloudflare.com/agents/harnesses/pi/ for the current PiHarness API."
+/>
 
-Pi 1.4 migrates the session storage in the object's SQLite database to a schema that Pi 1.3 cannot open, so a deployment cannot roll back past this release. Existing objects need no other migration.
-
-Pass `onWake` from the factory to `Harness.open()`. Without it the harness still works, but logs a warning and keeps the object in memory while Pi's tasks sleep. If you created Pi's registry at module scope, move it into your class: Pi keeps every `Harness` subscribed to its registry, so a module-scope registry keeps evicted objects in memory.
-
-<TypeScriptExample>
-
-```ts
-export class Assistant extends Agent<Env> {
-	ai = createAI({ binding: this.env.AI });
-	registry = createRegistry();
-
-	harness = new PiHarness({
-		harness: ({ storage, context, onWake }) => {
-			const models = createModels();
-			models.setProvider(this.ai.provider);
-			return Harness.open(
-				storage,
-				{ models, registry: this.registry, onWake },
-				context,
-			);
-		},
-		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
-	});
-}
-```
-
-</TypeScriptExample>
-
-The factory now also runs again when the harness reopens Pi after a storage error, so keep it safe to run more than once. Refer to the [Pi Durable 1.4.0 changelog](https://github.com/earendil-works/pi/blob/v1.4.0/packages/durable/CHANGELOG.md#140---2026-10-21) for Pi's own breaking changes, and to [Pi harness recovery](/agents/harnesses/pi/#recovery) for how parked tasks and storage errors work.
+Pi 1.4 migrates the session storage in the object's SQLite database to a schema that Pi 1.3 cannot open, so a deployment cannot roll back past this upgrade. Refer to the [Pi Durable 1.4.0 changelog](https://github.com/earendil-works/pi/blob/v1.4.0/packages/durable/CHANGELOG.md#140---2026-10-21) for Pi's own breaking changes.
