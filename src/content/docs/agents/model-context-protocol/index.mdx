@@ -29,12 +29,11 @@ The MCP standard supports two modes of operation:
 - **Remote MCP connections**: MCP clients connect to MCP servers over the Internet, establishing a connection using [Streamable HTTP](/agents/model-context-protocol/protocol/transport/), and authorizing the MCP client access to resources on the user's account using [OAuth](/agents/model-context-protocol/protocol/authorization/).
 - **Local MCP connections**: MCP clients connect to MCP servers on the same machine, using [stdio](https://modelcontextprotocol.io/specification/2025-06-18/basic/transports#stdio) as a local transport method.
 
-### Best Practices
+### Best practices
 
-- **Tool design**: Do not treat your MCP server as a wrapper around your full API schema. Instead, build tools that are optimized for specific user goals and reliable outcomes. Fewer, well-designed tools often outperform many granular ones, especially for agents with small context windows or tight latency budgets.
-- **Scoped permissions**: Deploying several focused MCP servers, each with narrowly scoped permissions, reduces the risk of over-privileged access and makes it easier to manage and audit what each server is allowed to do.
-- **Tool descriptions**: Detailed parameter descriptions help agents understand how to use your tools correctly — including what values are expected, how they affect behavior, and any important constraints. This reduces errors and improves reliability.
-- **Evaluation tests**: Use evaluation tests ('evals') to measure the agent’s ability to use your tools correctly. Run these after any updates to your server or tool descriptions to catch regressions early and track improvements over time.
+- **Keep tool definitions out of the context window**: MCP clients used to send every tool definition straight to the model, so a server with many tools filled the agent's context window. Newer clients use Code Mode instead: the model writes code that calls your tools and loads only the definitions it needs. You can apply the same pattern on the server, exposing a large API through a small search-and-execute interface. Refer to [Code Mode for MCP servers](https://blog.cloudflare.com/code-mode-mcp/), [Code Mode MCP server patterns](/agents/model-context-protocol/codemode/), and the guides for [building a Code Mode MCP server](/agents/model-context-protocol/guides/build-codemode-mcp-server/) and [serving an OpenAPI spec through Code Mode](/agents/model-context-protocol/guides/build-codemode-openapi-mcp-server/).
+- **Use granular authorization**: Protect your server with OAuth, and give each operation its own scopes. When a token lacks a scope, return an `insufficientScope()` challenge so the client asks the user to approve it (step-up authorization) instead of requesting every scope up front. Refer to [Authorization](/agents/model-context-protocol/protocol/authorization/).
+- **Declare accurate input and output schemas**: Strict MCP clients validate tool calls against `inputSchema` and tool results against `outputSchema`, and reject tools whose results do not match. Define both schemas for every tool, and return `structuredContent` that matches `outputSchema`. Refer to [Tools](/agents/model-context-protocol/protocol/tools/).
 
 ### Get Started
 
