@@ -3,6 +3,20 @@ link: "/realtime/realtimekit/release-notes/android-core/"
 productName: RealtimeKit Android Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-10-22"
+    title: RealtimeKit Android Core 3.3.0
+    description: |-
+      **Enhancements**
+
+      - The SDK now enforces the documented [SDK rate limits](/realtime/realtimekit/platform/limits/#sdk-rate-limits).
+      - `RtkStore` and broadcast messages now preserve non-primitive JSON types when sharing data.
+      - When objects are converted to JSON for persistence, dates are encoded as ISO 8601 UTC strings. Numeric timestamps remain numbers.
+      - Added `RtkStoreManager.refresh(storeName)` to refresh a store by name.
+
+      **Fixes**
+
+      - Fixed an API mismatch that caused the SDK to reject null meeting titles. This affected `cf realtime kit meetings create` when `--title` was omitted.
+      - Plugins active in a meeting are now automatically enabled for mobile participants who join later.
   - publish_date: "2026-09-16"
     title: RealtimeKit Android Core 3.2.0
     description: |-
