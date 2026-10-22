@@ -59,6 +59,7 @@ package.json @cloudflare/content-engineering
 
 # agents
 
+/src/components/cf/AgentsPlatformDiagram.astro @irvinebroque @fredkschott @cloudflare/ai-agents
 /public/icons/agents @cloudflare/ai-agents @cloudflare/dev-plat-leads @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @cloudflare/ai-agents @cloudflare/dev-plat-leads @cloudflare/product-owners
 /src/content/partials/agents/ @irvinebroque @rita3ko @thomasgauvin @vy-ton @cloudflare/product-owners
