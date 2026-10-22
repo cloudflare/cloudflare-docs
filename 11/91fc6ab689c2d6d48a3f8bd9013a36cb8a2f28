@@ -1,0 +1,21 @@
+src/content/docs/artifacts/get-started/rest-api.mdx
+  s_c939338179ae38::t_bcae502c41f210 26
+src/content/docs/artifacts/get-started/workers.mdx
+  s_c939338179ae38::t_6cb0fe7352caf6 38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1191fc6ab689c2d6d48a3f8bd9013a36cb8a2f28",
+  "prompts": {},
+  "sessions": {
+    "s_c939338179ae38": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1658f-670f-7fb3-b039-73a7784a9e17",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
