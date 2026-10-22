@@ -10,7 +10,7 @@ products:
   - agents
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import { LinkCard } from "~/components";
 
 MCP servers, like any web application, need to be secured so they can be used by trusted users without abuse. The MCP specification uses OAuth 2.1 for authorization between MCP clients and servers.
 
@@ -29,8 +29,6 @@ Workers OAuth Provider handles the security of the consent flow. Your code rende
 | `approveConsent(request, handle, options?)` | Checks the handle against the cookie and returns the stored authorization request. Pass `scope` with the scopes the user approved. |
 | `denyConsent(request, handle)` | Returns headers that redirect the user back to the client with `access_denied`. |
 | `isConsentRemembered(request, authRequest, remember)` | Returns `true` if the user already approved this client, redirect URI, and scopes. Pass `remember` to `approveConsent()` to record an approval. |
-
-<TypeScriptExample>
 
 ```ts
 const oauth = authorizationServer.getOAuthApi(env);
@@ -65,8 +63,6 @@ approved.headers.set("Location", redirectTo);
 return new Response(null, { status: 302, headers: approved.headers });
 ```
 
-</TypeScriptExample>
-
 The form carries only the handle. The authorization request stays on the server, so a forged form cannot approve a different client or redirect URI.
 
 `describeConsent()` returns the values but does not render HTML, and every string in it can come from the client. Render them with a template or JSX library that escapes output, such as Hono's JSX.
@@ -84,8 +80,6 @@ Ask for consent first, then hand the user to the provider:
 | `beginUpstream(authRequest, options)` | Call after `approveConsent()`. Stores the authorization request and your `data` (for example, a PKCE verifier), and returns a `state` value for the provider redirect, bound to the user's browser by a `__Host-` cookie. |
 | `finishUpstream(request)` | Call in your callback. Checks `state` against the cookie and returns the original authorization request and your `data`. A provider code replayed in another browser is rejected. |
 | `tokenExchangeCallback` | An `OAuthAuthorizationServer` option that runs on token refresh. Refresh the provider's token there, and throw `OAuthError("invalid_grant")` when the provider has revoked access. |
-
-<TypeScriptExample>
 
 ```ts
 // POST /authorize: the user approved this client
@@ -115,8 +109,6 @@ clear.set("Location", redirectTo);
 return new Response(null, { status: 302, headers: clear });
 ```
 
-</TypeScriptExample>
-
 Refer to [Signing in through another provider](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) for the full flow, including refreshing and revoking the provider's tokens.
 
 ## Checks on the MCP server
@@ -124,8 +116,6 @@ Refer to [Signing in through another provider](https://github.com/cloudflare/wor
 `OAuthResourceServer` accepts only tokens issued for its own `resourceMetadata.resource`, so a token for another server is rejected even if the same authorization server issued it. Keep that URL exactly what clients connect to.
 
 `requiredScopes` is advertised to clients but not enforced. Check scopes in the handler, and return `insufficientScope()` when one is missing so the client can ask the user for it:
-
-<TypeScriptExample>
 
 ```ts
 handler: {
@@ -137,8 +127,6 @@ handler: {
 	},
 },
 ```
-
-</TypeScriptExample>
 
 Props can hold upstream access tokens. Do not log them or return them from tools.
 
