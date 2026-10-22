@@ -1,12 +1,11 @@
 ---
 title: Pi
 pcx_content_type: overview
-description: Run the Pi Durable harness on Cloudflare with the Agents SDK. PiHarness keeps your agent's work durable inside an Agent or Durable Object, even if it is interrupted mid-turn.
+description: Run the Pi Durable harness on Cloudflare with the Agents SDK. PiHarness keeps your agent's work durable inside a Durable Object, even if it is interrupted mid-turn.
 tags:
   - AI
 sidebar:
-  order: 10
-  badge: Beta
+  order: 9
   group:
     hideIndex: false
 products:
@@ -130,53 +129,6 @@ export default {
 The `harness` factory receives `storage`, Pi's storage over the object's SQLite database, `context`, a background context for opening Pi, and `onWake`, so the object can hibernate while Pi's tasks sleep. Everything else that `Harness.open()` takes is yours to build in the factory: `models`, the `registry` of tools and prompt sections, `settings`, `env`, and `onReport`.
 
 The factory runs inside the object's startup, before any session is used, and again whenever the harness reopens Pi after a storage error (refer to [Recovery](#recovery)). Keep it safe to run more than once. If it throws, the operation that started it fails, and the next operation tries again. Every `PiHarness` operation waits for startup, so a call that arrives over RPC before startup does not open Pi on its own.
-
-## Use it in an Agent
-
-If your object already extends the `Agent` class, it already has a Lifecycle. Add the harness to it in the constructor instead of installing a new one:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { Agent } from "agents";
-import { createModels } from "@earendil-works/pi-ai/models";
-import { createRegistry, Harness } from "@earendil-works/pi-durable";
-import { PiHarness } from "agents/harness/pi";
-import { createAI } from "agents/models/pi-ai";
-
-export class Assistant extends Agent<Env> {
-	ai = createAI({ binding: this.env.AI });
-	registry = createRegistry();
-
-	harness = new PiHarness({
-		harness: ({ storage, context, onWake }) => {
-			const models = createModels();
-			models.setProvider(this.ai.provider);
-			return Harness.open(
-				storage,
-				{ models, registry: this.registry, onWake },
-				context,
-			);
-		},
-		defaults: {
-			model: this.ai("@cf/zai-org/glm-5.3-flash"),
-			thinkingLevel: "low",
-		},
-	});
-
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.lifecycle.use(this.harness);
-	}
-
-	async ask(prompt: string) {
-		const { text } = await this.harness.prompt(prompt);
-		return text;
-	}
-}
-```
-
-</TypeScriptExample>
 
 ## Options
 

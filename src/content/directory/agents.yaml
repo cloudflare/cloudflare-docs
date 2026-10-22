@@ -10,5 +10,5 @@ entry:
 
 meta:
   title: Cloudflare Agents docs
-  description: Build and host AI agents. Run the Pi harness in a Durable Object for a durable agent loop with tools and state
+  description: Build AI-powered agents to perform tasks, persist state, browse the web, and communicate in real-time
   author: "@cloudflare"
