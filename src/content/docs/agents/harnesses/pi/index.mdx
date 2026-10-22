@@ -247,11 +247,15 @@ A submission made while the session is running is queued and answered after the 
 
 Pi records every submitted input as a `pi.user` entry, as if the user typed it. Your code often submits input of its own, such as a prompt from a scheduled job, a webhook payload, or the outcome of an approval. To record where that input came from, pass `entry` with a `kind` of your own and any `data` you want to keep with it:
 
+<TypeScriptExample>
+
 ```ts
 await this.harness.submit("The deploy was approved. Run the migration.", {
 	entry: { kind: "app.approval", data: { approved: true, by: "ben" } },
 });
 ```
+
+</TypeScriptExample>
 
 The model sees no difference: it still gets the text as a user message. Only the transcript changes. The input is stored with your `kind` and `data` instead of `pi.user`, and `messages()` and `events()` return both, so your UI can show it differently, for example as "Approved by ben" rather than as something the user said. Pi reserves kinds that start with `pi.`, so use a prefix of your own, such as `app.`.
 
@@ -269,6 +273,8 @@ A run fails with `model_error` when the model errors and Pi does not retry it, o
 
 Set it in the factory:
 
+<TypeScriptExample>
+
 ```ts
 harness: ({ storage, context, onWake }) =>
 	Harness.open(
@@ -282,6 +288,8 @@ harness: ({ storage, context, onWake }) =>
 		context,
 	);
 ```
+
+</TypeScriptExample>
 
 With `keep`, the kept submissions are not work for Pi, so the object can hibernate until the next `submit()` or `reset()`. Pass a `signal` to `wait()` if a caller should not wait that long. To withdraw a kept submission, call `abort(operationId)`.
 
