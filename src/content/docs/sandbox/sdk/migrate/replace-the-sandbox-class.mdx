@@ -46,7 +46,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    CMD ["sleep", "infinity"]
    ```
 
-   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files` and `S3Mount` need `sandbox-shim`. Match its tag to the `@cloudflare/sandbox` version that you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
+   The 0.12 image included Python, Node.js, and Git. Keep the ones your commands use. `Files`, `S3Mount`, and `DirectoryBackup` need `sandbox-shim`. Match its tag to the `@cloudflare/sandbox` version that you installed. Remove `EXPOSE` lines, which 1.0 does not use. Commands that `exec()` runs do not see `ENV` lines, so pass those values in the `env` option instead.
 
 3. Change the `containers` entry for your class in the Wrangler configuration. Keep your class name and its binding, so each name reaches the Durable Object and storage it reached in 0.12. Replace `my-worker-mysandbox-v2` with a name that your account does not use yet:
 
@@ -131,9 +131,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    		const container = this.ctx.container;
 
    		if (!container) {
-   			throw new Error(
-   				"The container binding is not configured",
-   			);
+   			throw new Error("No container is configured");
    		}
 
    		return container;
@@ -225,7 +223,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
    }
    ```
 
-   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it misses a stop that happens before the next request. While the call waits, the inactivity timeout does not start, so a watched container keeps running past the timeout. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#activity-keeps-an-instance-running). For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
+   `monitor()` resolves when the main process exits with code `0` or `destroy()` stops the container without a reason. It rejects when the process fails or `destroy()` passes a reason. The call ends when the Durable Object restarts, so it misses a stop that happens before the next request. While the call waits, the inactivity timeout does not start, so a watched container keeps running past the timeout. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#what-stops-an-instance). For a record of every stop, refer to [Run code when a sandbox stops](/sandbox/manage/run-code-when-a-sandbox-stops/).
 
 9. Move the calls your Worker makes into methods on the class. In 0.12, the Worker calls package methods on the stub that `getSandbox()` returns:
 

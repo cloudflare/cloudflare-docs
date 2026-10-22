@@ -19,7 +19,7 @@ Each of the following guides runs a command in a sandbox with `exec()`. They dif
 | ------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
 | [Run Python code](/sandbox/commands/run-python-code/)                                 | In the response, after the code exits         | The code exits                                  |
 | [Run tests from a Git repository](/sandbox/commands/run-tests-from-a-git-repository/) | In the response, after the tests finish       | The tests finish                                |
-| [Stream command output](/sandbox/commands/stream-command-output/)                     | As server-sent events, while the command runs | It exits, or the client disconnects             |
+| [Stream command output](/sandbox/commands/stream-command-output/)                     | As server-sent events, while the command runs | It exits, or a disconnect sends it `SIGTERM`    |
 | [Run background processes](/sandbox/commands/run-background-processes/)               | In files that later requests read             | It exits, or a later request stops it           |
 | [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/)   | Over the server port, and in a log file       | The container stops, or a request stops it      |
 | [Open a terminal in the browser](/sandbox/commands/open-a-terminal-in-the-browser/)   | In an interactive terminal, over a WebSocket  | You run `exit`, or your Worker ends the session |
