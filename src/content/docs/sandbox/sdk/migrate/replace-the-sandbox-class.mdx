@@ -73,7 +73,7 @@ The steps keep your class name, which moves every sandbox in place. To move sand
 
    The new entry makes these changes:
 
-   - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, or `max_instances`, so remove them. The `Dockerfile` moves to `images`, and the instance type moves to `start()`.
+   - `scheduling_policy: "durable_object"` lets each Durable Object start its own container. This policy does not accept `image`, `instance_type`, `max_instances`, or `constraints`, so remove them. The `Dockerfile` moves to `images`, and the instance type moves to `start()`. If your `constraints` set a `jurisdiction`, get sandboxes from a [jurisdiction namespace](/sandbox/concepts/lifetime/#a-jurisdiction-decides-where-the-sandbox-runs) instead. A jurisdiction changes the Durable Object that each name reaches, so [move sandboxes side by side](/sandbox/sdk/migrate/move-side-by-side/) if you add one.
    - The container application gets a new `name`. Without one, the new application takes the name that Wrangler generated for the old application, and the deploy fails after the new Worker version is already live.
    - Leave `durable_objects` and your `migrations` or `exports` as they are. The class keeps its name, so it needs no class migration.
 
