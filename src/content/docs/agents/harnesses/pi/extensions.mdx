@@ -45,7 +45,7 @@ const wordCount: ToolRegistration<typeof WordCount> = {
 	// `text` is typed from `parameters`, which Pi validates first.
 	async execute({ text }) {
 		const words = text.split(/\s+/).filter(Boolean).length;
-		return { content: [{ type: "text", text: String(words) }] };
+		return { output: [{ type: "text", text: String(words) }] };
 	},
 };
 
@@ -106,7 +106,7 @@ const fetchPage: ToolRegistration<typeof FetchPage> = {
 	async execute({ url }, api, context) {
 		api.output(`fetching ${url}\n`);
 		const response = await fetch(url, { signal: context.abortSignal });
-		return { content: [{ type: "text", text: await response.text() }] };
+		return { output: [{ type: "text", text: await response.text() }] };
 	},
 };
 ```

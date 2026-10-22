@@ -206,7 +206,7 @@ const wordCount: ToolRegistration<typeof WordCount> = {
 	replay: "safe",
 	async execute({ text }) {
 		const words = text.split(/\s+/).filter(Boolean).length;
-		return { content: [{ type: "text", text: String(words) }] };
+		return { output: [{ type: "text", text: String(words) }] };
 	},
 };
 
@@ -242,6 +242,20 @@ An `operationId` makes a submission idempotent. Submitting the same id again ret
 A submission made while the session is running is queued and answered after the current run, as its own run. Set `whenBusy: "steer"`, or call `session.steer()`, to join the running work after its current tool round instead.
 
 `harness.pending()` lists submissions Pi has not finished, with their status: `queued`, `running`, or `parked`. A submission is `parked` when Pi's restart limit stopped its work (refer to [Recovery](#recovery)).
+
+### Label input the user did not type
+
+Pi records every submitted input as a `pi.user` entry, as if the user typed it. Your code often submits input of its own, such as a prompt from a scheduled job, a webhook payload, or the outcome of an approval. To record where that input came from, pass `entry` with a `kind` of your own and any `data` you want to keep with it:
+
+```ts
+await this.harness.submit("The deploy was approved. Run the migration.", {
+	entry: { kind: "app.approval", data: { approved: true, by: "ben" } },
+});
+```
+
+The model sees no difference: it still gets the text as a user message. Only the transcript changes. The input is stored with your `kind` and `data` instead of `pi.user`, and `messages()` and `events()` return both, so your UI can show it differently, for example as "Approved by ben" rather than as something the user said. Pi reserves kinds that start with `pi.`, so use a prefix of your own, such as `app.`.
+
+The kind is a label, not a permission. It records what your code said the input was, and nothing checks it. The model reads the input as if the user wrote it, so do not put anything in it that you would not let the user send.
 
 ### Inputs queued behind a failed run
 
@@ -286,7 +300,7 @@ const all = await this.harness.sessions.list();
 
 | Method                      | Description                                                                                           |
 | --------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `submit(input, options)`    | Durably submit input. Returns a receipt.                                                              |
+| `submit(input, options)`    | Durably submit input with `operationId`, `whenBusy`, or `entry`. Returns a receipt.                   |
 | `prompt(input, options)`    | Submit and wait for the answer and the updated transcript.                                            |
 | `steer(input)`              | Submit with `whenBusy: "steer"`.                                                                      |
 | `wait(operationId, signal)` | Wait for an operation. Aborting `signal` stops the wait, not the work.                                |
