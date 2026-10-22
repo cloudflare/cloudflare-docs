@@ -40,7 +40,7 @@ The 0.x Docker setup starts from `docker:dind-rootless`, switches to `USER root`
    ```dockerfile title="Dockerfile"
    FROM docker:dind
 
-   COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+   COPY --from=docker.io/cloudflare/sandbox:1.0.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
    ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false > /var/log/dockerd.log 2>&1 & exec sleep infinity"]
    ```
@@ -213,7 +213,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 1. Install OpenCode in your `Dockerfile`, as in [Run OpenCode in a sandbox](/sandbox/coding-agents/opencode/#switch-the-worker-to-opencode):
 
    ```dockerfile title="Dockerfile"
-   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.18.32 \
+   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.19.4 \
    	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
    ```
 
@@ -221,7 +221,7 @@ In 0.12, `createOpencode()` started `opencode serve` in the sandbox, and returne
 
 2. Install the OpenCode SDK in your Worker project:
 
-   <PackageManagers pkg="@opencode-ai/sdk@1.18.32" />
+   <PackageManagers pkg="@opencode-ai/sdk@1.19.4" />
 
 3. Replace `createOpencode()` with a method that starts the server once for each container. It uses the scripts and functions from step 1 of [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/#run-a-server):
 

@@ -7,7 +7,9 @@ products:
   - workers
 ---
 
-import { Type, MetaInfo, WranglerConfig } from "~/components";
+import { MetaInfo, Render, Type, WranglerConfig } from "~/components";
+
+<Render file="local-development-security" product="workers" />
 
 A Worker Loader binding allows you to load additional Workers containing arbitrary code at runtime.
 
@@ -20,7 +22,7 @@ Worker Loaders also enable **sandboxing** of code, meaning that you can strictly
 - You can arrange to intercept or simply block all network requests made by the Worker within.
 - You can supply the sandboxed Worker with custom bindings to represent specific resources which it should be allowed to access.
 
-With proper sandboxing configured, you can safely run code you do not trust in a dynamic isolate.
+When deployed to Cloudflare, properly configured Dynamic Workers can run code you do not trust in a dynamic isolate.
 
 ## Code Mode
 

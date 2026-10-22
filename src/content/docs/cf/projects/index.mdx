@@ -111,7 +111,7 @@ Start the project's development server:
 cf dev
 ```
 
-The dev server prints its local URL.
+The dev server prints its local URL. Append `/cdn-cgi/local/explorer` to that URL to open [Local Explorer](/workers/local-development/local-explorer/). Use it to inspect local binding data, view logs and traces, and [test Cron Triggers](/workers/local-development/local-explorer/#test-cron-triggers) with a chosen cron expression and scheduled time.
 
 ## Build
 
@@ -264,7 +264,7 @@ cf workers versions create
 This command builds and validates the project the same way as `cf deploy`. It
 accepts `--prebuilt`, `--mode`, `--message`, `--tag`, `--secrets-file`,
 `--dry-run`, and `--worker`. Use `--preview-alias <ALIAS>` to give the version
-a [preview URL](/workers/versions-and-deployments/preview-urls/) alias.
+a [preview URL](/workers/versions-and-deployments/version-urls/) alias.
 
 To send traffic to an uploaded version, create a deployment:
 

@@ -94,6 +94,45 @@ describe("classifyWebhook — changelog date check", () => {
 	});
 });
 
+describe("classifyWebhook — size label", () => {
+	it.each(["opened", "reopened", "synchronize", "ready_for_review"])(
+		"marks %s as a size label event",
+		(action) => {
+			const c = classifyWebhook("pull_request", {
+				action,
+				pull_request: { number: 50, user: { login: "octocat" } },
+			});
+			expect(c.isSizeLabelEvent).toBe(true);
+			expect(isActionable(c)).toBe(true);
+		},
+	);
+
+	it("includes Dependabot and draft PRs", () => {
+		const c = classifyWebhook("pull_request", {
+			action: "synchronize",
+			pull_request: {
+				number: 51,
+				draft: true,
+				user: { login: "dependabot[bot]" },
+			},
+		});
+		expect(c.isSizeLabelEvent).toBe(true);
+	});
+
+	it("ignores unrelated PR actions and issue events", () => {
+		expect(
+			classifyWebhook("pull_request", {
+				action: "labeled",
+				pull_request: { number: 52, user: { login: "octocat" } },
+			}).isSizeLabelEvent,
+		).toBe(false);
+		expect(
+			classifyWebhook("issues", { action: "opened", issue: { number: 53 } })
+				.isSizeLabelEvent,
+		).toBe(false);
+	});
+});
+
 describe("classifyWebhook — Dependabot", () => {
 	it("routes a Dependabot PR to the dependabot review path", () => {
 		const c = classifyWebhook("pull_request", {
@@ -267,5 +306,50 @@ describe("classifyWebhook — comment spam gate", () => {
 			expect(c.isCommentSpamEvent).toBe(false);
 			expect(isActionable(c)).toBe(false);
 		}
+	});
+});
+
+describe("classifyWebhook — effort label", () => {
+	it.each(["opened", "reopened"])("routes issue %s", (action) => {
+		const c = classifyWebhook("issues", {
+			action,
+			issue: { number: 60 },
+			sender: { login: "octocat" },
+		});
+		expect(c.isEffortLabelEvent).toBe(true);
+		expect(isActionable(c)).toBe(true);
+	});
+
+	it("routes title or body edits only", () => {
+		const edit = (changes: Record<string, unknown>) =>
+			classifyWebhook("issues", {
+				action: "edited",
+				issue: { number: 61 },
+				changes,
+				sender: { login: "octocat" },
+			}).isEffortLabelEvent;
+		expect(edit({ body: { from: "old" } })).toBe(true);
+		expect(edit({ title: { from: "old" } })).toBe(true);
+		expect(edit({})).toBe(false);
+	});
+
+	it("ignores PRs, labeled events and bot senders", () => {
+		expect(
+			classifyWebhook("pull_request", {
+				action: "opened",
+				pull_request: { number: 62, user: { login: "octocat" } },
+			}).isEffortLabelEvent,
+		).toBe(false);
+		expect(
+			classifyWebhook("issues", { action: "labeled", issue: { number: 63 } })
+				.isEffortLabelEvent,
+		).toBe(false);
+		expect(
+			classifyWebhook("issues", {
+				action: "opened",
+				issue: { number: 64 },
+				sender: { login: "cloudflare-docs-bot[bot]" },
+			}).isEffortLabelEvent,
+		).toBe(false);
 	});
 });

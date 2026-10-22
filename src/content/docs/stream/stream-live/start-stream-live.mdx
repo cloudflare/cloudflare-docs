@@ -34,16 +34,22 @@ After you subscribe to Stream, you can create Live Inputs in Dash or via the API
 
 In the Stream Dashboard, within seconds of going live, you will see a preview of what your viewers will see. To add live video playback to your website or app, refer to [Play videos](/stream/viewing-videos).
 
-## Use the API
+## Use `cf` or the API
 
-To start a live stream programmatically, make a `POST` request to the `/live_inputs` endpoint:
+To create a live input programmatically, use `cf` or make a `POST` request to the `/live_inputs` API endpoint:
 
-```bash title="Request"
+```bash title="Using cf"
+cf stream live-inputs create
+```
+
+```bash title="API Request"
 curl -X POST \
 --header "Authorization: Bearer <API_TOKEN>" \
 --data '{"meta": {"name":"test stream"},"recording": { "mode": "automatic" }}' \
 https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/live_inputs
 ```
+
+In either case, the response will include details about the live input:
 
 ```json title="Response"
 {

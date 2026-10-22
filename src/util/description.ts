@@ -1,5 +1,5 @@
 import { parse } from "node-html-parser";
-import he from "he";
+import { decode } from "he";
 import { stripMarkdownToText } from "./markdown";
 import { stripExternalLinkArrow } from "./external-link-arrow";
 
@@ -12,7 +12,7 @@ export function generateDescriptionFromHtml(html: string): string | undefined {
 
 	if (!paragraph) return undefined;
 
-	return stripExternalLinkArrow(he.decode(paragraph.innerText)).trim();
+	return stripExternalLinkArrow(decode(paragraph.innerText)).trim();
 }
 
 // Parity: production strips Markdown from the description only for JSON-LD

@@ -51,3 +51,7 @@ If your authoritative DNS provider does not support CNAME Flattening, redirect i
 ### Domain ownership
 
 Enterprise customers can use [zone holds](/fundamentals/account/account-security/zone-holds/) to prevent other teams in the organization from adding zones that are already active in another Cloudflare account. For CNAME setups (partial), if the same zone is added to different accounts, the last account to complete the setup will gain ownership.
+
+### HTTPS records
+
+Cloudflare automatically generates HTTPS records for proxied hostnames when [Universal SSL](/ssl/edge-certificates/universal-ssl/) is enabled. If Universal SSL is disabled on your partial zone, Cloudflare will not generate HTTPS records for proxied names, even if you have a custom certificate in place. Refer to [SVCB and HTTPS records](/dns/manage-dns-records/reference/dns-record-types/#svcb-and-https) for details.

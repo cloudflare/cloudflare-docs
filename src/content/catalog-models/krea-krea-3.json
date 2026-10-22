@@ -1,0 +1,299 @@
+{
+	"model_id": "krea/krea-3",
+	"provider_id": "krea",
+	"name": "Krea 3",
+	"description": "Krea 3 is Krea's image generation and editing model, in beta. It edits one or more reference images from a text instruction, or generates an image from the prompt alone. References are passed as HTTP(S) URLs in image_urls (up to 8). Outputs go up to 2K, with optional thinking_mode, aspect_ratio, seed and regional_edit controls.",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image Editing",
+		"Image to Image",
+		"Text to Image"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"output_size_1k": 0.03,
+		"Per image": 0.03,
+		"output_size_2k": 0.06,
+		"Per input image": 0.07
+	},
+	"examples": [
+		{
+			"name": "Season Change",
+			"description": "Turn a photo of a forest visitor centre into a damp late-autumn morning, keeping the building and the framing. Prompt and image from Krea's Krea 3 launch examples.",
+			"input": {
+				"prompt": "Change this forest visitor-centre photograph to a damp late-autumn morning after rain. Deciduous foliage turns copper, russet and yellow with some bare branches; keep evergreen areas green. Modest soft mist recedes between distant trunks, never obscuring the building. Add scattered fallen leaves at path edges, damp darkened timber, subtle silvering on exposed boards, water beading on the metal roof and natural moss only at shaded ground junctions. Keep the path and bridge clear, with subdued wet reflections rather than mirror gloss. Existing visitors stay in their positions and scale, with varied light autumn jackets. Preserve architecture, bridge, opening rhythm, existing material identities and exact framing. No dramatic cloud wall, new structures or blanket distress texture.",
+				"image_urls": [
+					"https://gen.krea.ai/images/296f8f50-13db-43f4-ae7a-c5c7a08f7fa7.png"
+				],
+				"resolution": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/krea/krea-3/season-change.png"
+			},
+			"raw_response": {
+				"created_at": "2026-10-15T16:35:51.175Z",
+				"completed_at": "2026-10-15T16:36:07.244Z",
+				"job_id": "57b62982-c38b-4137-9e2a-2cae0c65786e",
+				"status": "completed",
+				"type": "k3",
+				"result": {
+					"urls": [
+						"https://examples.aig.cloudflare.com/krea/krea-3/season-change.png"
+					]
+				},
+				"progress": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'krea/krea-3',\n  {\n    prompt:\n      'Change this forest visitor-centre photograph to a damp late-autumn morning after rain. Deciduous foliage turns copper, russet and yellow with some bare branches; keep evergreen areas green. Modest soft mist recedes between distant trunks, never obscuring the building. Add scattered fallen leaves at path edges, damp darkened timber, subtle silvering on exposed boards, water beading on the metal roof and natural moss only at shaded ground junctions. Keep the path and bridge clear, with subdued wet reflections rather than mirror gloss. Existing visitors stay in their positions and scale, with varied light autumn jackets. Preserve architecture, bridge, opening rhythm, existing material identities and exact framing. No dramatic cloud wall, new structures or blanket distress texture.',\n    image_urls: ['https://gen.krea.ai/images/296f8f50-13db-43f4-ae7a-c5c7a08f7fa7.png'],\n    resolution: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"krea/krea-3\",\n  \"input\": {\n    \"prompt\": \"Change this forest visitor-centre photograph to a damp late-autumn morning after rain. Deciduous foliage turns copper, russet and yellow with some bare branches; keep evergreen areas green. Modest soft mist recedes between distant trunks, never obscuring the building. Add scattered fallen leaves at path edges, damp darkened timber, subtle silvering on exposed boards, water beading on the metal roof and natural moss only at shaded ground junctions. Keep the path and bridge clear, with subdued wet reflections rather than mirror gloss. Existing visitors stay in their positions and scale, with varied light autumn jackets. Preserve architecture, bridge, opening rhythm, existing material identities and exact framing. No dramatic cloud wall, new structures or blanket distress texture.\",\n    \"image_urls\": [\n      \"https://gen.krea.ai/images/296f8f50-13db-43f4-ae7a-c5c7a08f7fa7.png\"\n    ],\n    \"resolution\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Clay Model to Photo",
+			"description": "Render a clay model of a ceramics-school courtyard as a photograph without changing its geometry. Prompt and image from Krea's Krea 3 launch examples.",
+			"input": {
+				"prompt": "Convert this clay ceramics-school courtyard to a late-summer editorial photograph. Preserve its exact vertical framing, sawtooth roofs, chimney, pergola, door openings, worktable, washbasin and planted edge. Warm buff handmade brick with scattered slightly overfired units, smoked oak doors and pergola, deep olive glazed ceramic washbasin, terracotta pavers with fine dusty mortar joints. Strong but natural oblique afternoon light, a quiet nearly clear sky. Believable working craft space: small kiln-fired ceramic pieces on the existing table, light clay dust near the work area, subtle water/mineral traces at the basin and weathering of exposed timber only. Retain mounted wall lights, handles and drainage. Two small adult students, one with dark curls and a sage apron at the table, another with auburn hair and a cream shirt near a door. Full-frame photograph derived solely from this clay geometry and text; no geometry changes or graphic labels.",
+				"image_urls": [
+					"https://gen.krea.ai/images/44ec07df-337c-4ec4-970a-639a48953c12.png"
+				],
+				"resolution": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/krea/krea-3/clay-model-to-photo.png"
+			},
+			"raw_response": {
+				"created_at": "2026-10-15T16:36:20.005Z",
+				"completed_at": "2026-10-15T16:36:37.546Z",
+				"job_id": "d02a6643-e856-471f-8190-303e4d0eacc5",
+				"status": "completed",
+				"type": "k3",
+				"result": {
+					"urls": [
+						"https://examples.aig.cloudflare.com/krea/krea-3/clay-model-to-photo.png"
+					]
+				},
+				"progress": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'krea/krea-3',\n  {\n    prompt:\n      'Convert this clay ceramics-school courtyard to a late-summer editorial photograph. Preserve its exact vertical framing, sawtooth roofs, chimney, pergola, door openings, worktable, washbasin and planted edge. Warm buff handmade brick with scattered slightly overfired units, smoked oak doors and pergola, deep olive glazed ceramic washbasin, terracotta pavers with fine dusty mortar joints. Strong but natural oblique afternoon light, a quiet nearly clear sky. Believable working craft space: small kiln-fired ceramic pieces on the existing table, light clay dust near the work area, subtle water/mineral traces at the basin and weathering of exposed timber only. Retain mounted wall lights, handles and drainage. Two small adult students, one with dark curls and a sage apron at the table, another with auburn hair and a cream shirt near a door. Full-frame photograph derived solely from this clay geometry and text; no geometry changes or graphic labels.',\n    image_urls: ['https://gen.krea.ai/images/44ec07df-337c-4ec4-970a-639a48953c12.png'],\n    resolution: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"krea/krea-3\",\n  \"input\": {\n    \"prompt\": \"Convert this clay ceramics-school courtyard to a late-summer editorial photograph. Preserve its exact vertical framing, sawtooth roofs, chimney, pergola, door openings, worktable, washbasin and planted edge. Warm buff handmade brick with scattered slightly overfired units, smoked oak doors and pergola, deep olive glazed ceramic washbasin, terracotta pavers with fine dusty mortar joints. Strong but natural oblique afternoon light, a quiet nearly clear sky. Believable working craft space: small kiln-fired ceramic pieces on the existing table, light clay dust near the work area, subtle water/mineral traces at the basin and weathering of exposed timber only. Retain mounted wall lights, handles and drainage. Two small adult students, one with dark curls and a sage apron at the table, another with auburn hair and a cream shirt near a door. Full-frame photograph derived solely from this clay geometry and text; no geometry changes or graphic labels.\",\n    \"image_urls\": [\n      \"https://gen.krea.ai/images/44ec07df-337c-4ec4-970a-639a48953c12.png\"\n    ],\n    \"resolution\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Product Reference",
+			"description": "Replace the pendant lights in image 1 with the product in image 2, keeping the people and the room. Prompt and images from Krea's Krea 3 launch examples.",
+			"input": {
+				"prompt": "Replace each of the FOUR existing opal pendant lights above the market counter in image 1 with the amber-glass saucer pendant from image 2, one for one. Keep the original ceiling mounting positions and suspension heights, varying apparent size naturally with depth. Retain the reference's amber saucer, opal cylindrical centre, bronze stem and real ceiling canopy; scale the shade to the counter, not an oversized chandelier. Gentle warm emission, not a global orange relight. Preserve all five occupants and their distinct clothes, hair and poses. Keep counters, food, green tile and banquette, yellow chairs, brick ceiling, other fittings, daylight and camera exactly unchanged.",
+				"image_urls": [
+					"https://gen.krea.ai/images/b1acd96f-580f-4072-a0e8-19dd10355d5b.png",
+					"https://gen.krea.ai/images/8f7a7086-08a2-42a6-8572-3e1245384f2a.png"
+				],
+				"resolution": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/krea/krea-3/product-reference.png"
+			},
+			"raw_response": {
+				"created_at": "2026-10-15T16:36:51.455Z",
+				"completed_at": "2026-10-15T16:37:21.388Z",
+				"job_id": "6ed124d6-bd7e-46a0-bf77-0e7f98eabda5",
+				"status": "completed",
+				"type": "k3",
+				"result": {
+					"urls": [
+						"https://examples.aig.cloudflare.com/krea/krea-3/product-reference.png"
+					]
+				},
+				"progress": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'krea/krea-3',\n  {\n    prompt:\n      \"Replace each of the FOUR existing opal pendant lights above the market counter in image 1 with the amber-glass saucer pendant from image 2, one for one. Keep the original ceiling mounting positions and suspension heights, varying apparent size naturally with depth. Retain the reference's amber saucer, opal cylindrical centre, bronze stem and real ceiling canopy; scale the shade to the counter, not an oversized chandelier. Gentle warm emission, not a global orange relight. Preserve all five occupants and their distinct clothes, hair and poses. Keep counters, food, green tile and banquette, yellow chairs, brick ceiling, other fittings, daylight and camera exactly unchanged.\",\n    image_urls: [\n      'https://gen.krea.ai/images/b1acd96f-580f-4072-a0e8-19dd10355d5b.png',\n      'https://gen.krea.ai/images/8f7a7086-08a2-42a6-8572-3e1245384f2a.png',\n    ],\n    resolution: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"krea/krea-3\",\n  \"input\": {\n    \"prompt\": \"Replace each of the FOUR existing opal pendant lights above the market counter in image 1 with the amber-glass saucer pendant from image 2, one for one. Keep the original ceiling mounting positions and suspension heights, varying apparent size naturally with depth. Retain the reference'\\''s amber saucer, opal cylindrical centre, bronze stem and real ceiling canopy; scale the shade to the counter, not an oversized chandelier. Gentle warm emission, not a global orange relight. Preserve all five occupants and their distinct clothes, hair and poses. Keep counters, food, green tile and banquette, yellow chairs, brick ceiling, other fittings, daylight and camera exactly unchanged.\",\n    \"image_urls\": [\n      \"https://gen.krea.ai/images/b1acd96f-580f-4072-a0e8-19dd10355d5b.png\",\n      \"https://gen.krea.ai/images/8f7a7086-08a2-42a6-8572-3e1245384f2a.png\"\n    ],\n    \"resolution\": \"2K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-Reference Furniture Swap",
+			"description": "Replace the sofa, chairs and table in image 1 with three product references (images 2 to 4), keeping the people and the room. Prompt and images from Krea's Krea 3 launch examples.",
+			"input": {
+				"prompt": "Replace ONLY the living-room seating suite in image 1 using the three product references: image 2 supplies the saffron three-seat sofa replacing the orange sofa; image 3 supplies TWO oxblood velvet/chrome-sled lounge chairs replacing the two petrol chairs; image 4 supplies the green-marble oval table replacing the pale table. Image 1 controls each object's location, facing direction, relative scale and seat/table heights. Maintain the usable conversation group and the same rug; keep complete furniture within the frame and clear routes. Keep the reading woman in her original pose, clothes and position seated naturally on the new rear chair, with proper body/arm occlusion. Preserve both terrace residents and their outfits/hair, the terrace furniture, bowl on the table, shelves, lighting, timber ceiling, glazing, fittings and courtyard. Do not change the camera or architecture. No duplicate old furniture.",
+				"image_urls": [
+					"https://gen.krea.ai/images/6a93c58a-76e3-40a8-8d42-71f535b3e5cf.png",
+					"https://gen.krea.ai/images/dc41ed7c-4cf2-4b9a-aa76-0befd256edc4.png",
+					"https://gen.krea.ai/images/246fd687-602f-43c4-b1bb-05efea8ffdc1.png",
+					"https://gen.krea.ai/images/b0a40ddb-b46c-4410-a320-234e414513e4.png"
+				],
+				"resolution": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/krea/krea-3/multi-reference-furniture-swap.png"
+			},
+			"raw_response": {
+				"created_at": "2026-10-15T16:37:34.706Z",
+				"completed_at": "2026-10-15T16:38:45.434Z",
+				"job_id": "2f565064-7605-4d6a-9f9b-31e79268b8f7",
+				"status": "completed",
+				"type": "k3",
+				"result": {
+					"urls": [
+						"https://examples.aig.cloudflare.com/krea/krea-3/multi-reference-furniture-swap.png"
+					]
+				},
+				"progress": null
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'krea/krea-3',\n  {\n    prompt:\n      \"Replace ONLY the living-room seating suite in image 1 using the three product references: image 2 supplies the saffron three-seat sofa replacing the orange sofa; image 3 supplies TWO oxblood velvet/chrome-sled lounge chairs replacing the two petrol chairs; image 4 supplies the green-marble oval table replacing the pale table. Image 1 controls each object's location, facing direction, relative scale and seat/table heights. Maintain the usable conversation group and the same rug; keep complete furniture within the frame and clear routes. Keep the reading woman in her original pose, clothes and position seated naturally on the new rear chair, with proper body/arm occlusion. Preserve both terrace residents and their outfits/hair, the terrace furniture, bowl on the table, shelves, lighting, timber ceiling, glazing, fittings and courtyard. Do not change the camera or architecture. No duplicate old furniture.\",\n    image_urls: [\n      'https://gen.krea.ai/images/6a93c58a-76e3-40a8-8d42-71f535b3e5cf.png',\n      'https://gen.krea.ai/images/dc41ed7c-4cf2-4b9a-aa76-0befd256edc4.png',\n      'https://gen.krea.ai/images/246fd687-602f-43c4-b1bb-05efea8ffdc1.png',\n      'https://gen.krea.ai/images/b0a40ddb-b46c-4410-a320-234e414513e4.png',\n    ],\n    resolution: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"krea/krea-3\",\n  \"input\": {\n    \"prompt\": \"Replace ONLY the living-room seating suite in image 1 using the three product references: image 2 supplies the saffron three-seat sofa replacing the orange sofa; image 3 supplies TWO oxblood velvet/chrome-sled lounge chairs replacing the two petrol chairs; image 4 supplies the green-marble oval table replacing the pale table. Image 1 controls each object'\\''s location, facing direction, relative scale and seat/table heights. Maintain the usable conversation group and the same rug; keep complete furniture within the frame and clear routes. Keep the reading woman in her original pose, clothes and position seated naturally on the new rear chair, with proper body/arm occlusion. Preserve both terrace residents and their outfits/hair, the terrace furniture, bowl on the table, shelves, lighting, timber ceiling, glazing, fittings and courtyard. Do not change the camera or architecture. No duplicate old furniture.\",\n    \"image_urls\": [\n      \"https://gen.krea.ai/images/6a93c58a-76e3-40a8-8d42-71f535b3e5cf.png\",\n      \"https://gen.krea.ai/images/dc41ed7c-4cf2-4b9a-aa76-0befd256edc4.png\",\n      \"https://gen.krea.ai/images/246fd687-602f-43c4-b1bb-05efea8ffdc1.png\",\n      \"https://gen.krea.ai/images/b0a40ddb-b46c-4410-a320-234e414513e4.png\"\n    ],\n    \"resolution\": \"2K\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://www.krea.ai/docs/api-reference/krea/krea-3-beta",
+	"terms": "https://www.krea.ai/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Max Resolution": "2K",
+		"Reference Images": "Up to 8 (HTTP(S) URLs via image_urls)",
+		"Thinking Mode": "fast or high",
+		"Status": "Beta"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "krea",
+			"pricing": {
+				"output_size_1k": 0.03,
+				"output_image_count": 0.03,
+				"output_size_2k": 0.06,
+				"input_image_count": 0.07
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-16 11:55:20",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Text description of the image to generate or the edit to apply."
+				},
+				"image_urls": {
+					"description": "HTTP(S) URLs of up to 8 reference images, passed to Krea as-is. With references the request edits them; without, it generates from the prompt.",
+					"maxItems": 8,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"format": "uri"
+					}
+				},
+				"thinking_mode": {
+					"description": "How much Krea reasons about the request before generating.",
+					"type": "string",
+					"enum": [
+						"fast",
+						"high"
+					]
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K"
+					],
+					"description": "Output resolution."
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio.",
+					"type": "string",
+					"enum": [
+						"1:1",
+						"4:5",
+						"3:4",
+						"2:3",
+						"9:16",
+						"5:4",
+						"4:3",
+						"3:2",
+						"16:9",
+						"21:9"
+					]
+				},
+				"seed": {
+					"description": "Seed for reproducible results.",
+					"type": "number"
+				},
+				"negative_prompt": {
+					"description": "What to avoid in the image, up to 1024 characters.",
+					"type": "string",
+					"maxLength": 1024
+				},
+				"regional_edit": {
+					"description": "Turns on Krea's regional editing for the request.",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "Presigned URL for the generated image."
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

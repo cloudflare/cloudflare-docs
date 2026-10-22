@@ -23,6 +23,8 @@
  *         directly for a non-draft PR.
  *       · otherwise → `INGEST`, which runs the spam gate and, for a clean
  *         non-draft PR, kicks the review itself.
+ *   - effort label event (issue opened / reopened / edited) → `EFFORT_LABEL`
+ *     (additive; never replaces the spam routing below).
  *   - comment spam event (issue_comment created by a non-exempt author) →
  *     `COMMENT_SPAM`, which re-checks exemptions (including codeowner) and
  *     deletes high-confidence spam comments.
@@ -34,6 +36,7 @@
 import type { DependabotReviewParams } from "../orchestrators/dependabot-review-workflow";
 import type { RebaseParams } from "../orchestrators/rebase-workflow";
 import type { IngestParams } from "../orchestrators/ingest-workflow";
+import type { EffortLabelParams } from "../orchestrators/effort-label-workflow";
 import type { CommentSpamParams } from "./comment-spam";
 import {
 	addReactionToComment,
@@ -45,6 +48,7 @@ import {
 import { setAutoReviewDisabled } from "./review/state";
 import { startReview, type ReviewWorkflowParams } from "./review/start";
 import { reconcileChangelogDateComment } from "./changelog-date-check";
+import { reconcileSizeLabel } from "./pr-size-label";
 import { clearDraftStaleState, setDraftNeverStale } from "./draft-stale";
 import type { WebhookClassification } from "./webhook-classify";
 
@@ -59,6 +63,7 @@ export interface PipelineEnv {
 	REBASE: Workflow<RebaseParams>;
 	INGEST: Workflow<IngestParams>;
 	COMMENT_SPAM: Workflow<CommentSpamParams>;
+	EFFORT_LABEL: Workflow<EffortLabelParams>;
 	[key: string]: unknown;
 }
 
@@ -84,6 +89,29 @@ export async function startReviewPipeline(
 	if (c.isChangelogDateEvent) {
 		await runChangelogDateCheckSafely(env, c, number);
 		if (c.action === "closed") return;
+	}
+
+	// ── 1.6 Size label (additive; runs for every PR, Dependabot included) ───
+	if (c.isSizeLabelEvent) {
+		await runSizeLabelSafely(env, c, number);
+	}
+
+	// ── 1.7 Effort label (additive; issues only) ────────────────────────────
+	if (c.isEffortLabelEvent) {
+		try {
+			await env.EFFORT_LABEL.create({ params: { number, action: c.action } });
+			log("effort-label", c, number, "effort_label_kicked");
+		} catch (err) {
+			log(
+				"effort-label",
+				c,
+				number,
+				"effort_label_kick_failed",
+				err instanceof Error ? err.message : String(err),
+			);
+		}
+		// Title or body edits have no other route.
+		if (!c.isSpamFilterEvent) return;
 	}
 
 	// ── 2. Dependabot PR event → dependabot review (skips the spam gate) ─────
@@ -346,6 +374,32 @@ async function runChangelogDateCheckSafely(
 			c,
 			number,
 			"changelog_date_check_failed",
+			err instanceof Error ? err.message : String(err),
+		);
+	}
+}
+
+/**
+ * Deterministic and cheap (one PR read plus at most a few label writes), so it
+ * runs inline. Failures are logged and never block review routing.
+ */
+async function runSizeLabelSafely(
+	env: PipelineEnv,
+	c: WebhookClassification,
+	number: number,
+): Promise<void> {
+	const ghEnv = env as unknown as Record<string, string>;
+	try {
+		const token = await getInstallationToken(ghEnv);
+		const pr = await getPullRequest(token, number);
+		const result = await reconcileSizeLabel(token, pr);
+		log("size-label", c, number, `size_label_${result.target}`);
+	} catch (err) {
+		log(
+			"size-label",
+			c,
+			number,
+			"size_label_failed",
 			err instanceof Error ? err.message : String(err),
 		);
 	}

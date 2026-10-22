@@ -17,6 +17,7 @@
  * Group related checkboxes under a shared legend with <CheckboxGroup>.
  */
 import { cn } from "@/lib/cn";
+import { stableId } from "~/util/stable-id";
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import type { HTMLAttributes } from "astro/types";
 import { checkboxVariants, type CheckboxVariant } from "./variants";
@@ -45,7 +46,9 @@ const {
 } = Astro.props;
 
 // Stable id so the inline indeterminate-seeding script can target this input.
-const inputId = id ?? `cb-${Math.random().toString(36).slice(2, 10)}`;
+const inputId =
+	id ??
+	stableId(Astro.locals, "cb", { label, name: attrs.name, value: attrs.value });
 ---
 
 <label

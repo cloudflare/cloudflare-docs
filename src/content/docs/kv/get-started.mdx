@@ -188,7 +188,7 @@ To create a KV namespace via Wrangler:
 
 <Render file="kv-instant-beta" product="kv" />
 
-Use [Workers KV Instant](/kv/reference/kv-instant/) for small, read-heavy application configurations values that update infrequently and are proactively propagated across Cloudflare's network.
+Use Workers KV Instant for small, read-heavy application configurations values that update infrequently and are proactively propagated across Cloudflare's network.
 
 To optionally create a KV Instant namespace named `APP_CONFIG` with [Wrangler](/workers/wrangler/), pass `--experimental-mode instant`:
 
@@ -212,7 +212,7 @@ Alternatively, create it through the API with `mode: "instant"`:
 	json={{ title: "APP_CONFIG", mode: "instant" }}
 />
 
-KV Instance namespaces have additional limitations compared to classic namespaces. Refer to [KV Instant limits](/kv/platform/limits/#kv-instant) and [API differences](/kv/reference/kv-instant/#compare-api-behavior) before choosing this mode.
+KV Instance namespaces have additional limitations compared to classic namespaces. Refer to [KV Instant limits](/kv/platform/limits/#kv-instant) before choosing this mode.
 
 ## 3. Bind your Worker to your KV namespace
 
