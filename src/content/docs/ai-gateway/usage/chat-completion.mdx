@@ -23,7 +23,7 @@ For standard single-model chat completions, this endpoint is deprecated. Use the
 :::
 
 :::note[Dynamic routing]
-[Dynamic routes](/ai-gateway/features/dynamic-routing/) (`dynamic/{route}`) can be invoked through this `/compat/chat/completions` endpoint, and existing integrations continue to work. For new integrations, use the [REST API](/ai-gateway/usage/rest-api/) at `/ai/v1/chat/completions` or the [AI binding](/ai-gateway/usage/worker-binding-methods/) instead. See [Using a dynamic route](/ai-gateway/features/dynamic-routing/usage/) for examples.
+[Dynamic routes](/ai-gateway/features/routing/dynamic-routing/) (`dynamic/{route}`) can be invoked through this `/compat/chat/completions` endpoint, and existing integrations continue to work. For new integrations, use the [REST API](/ai-gateway/usage/rest-api/) at `/ai/v1/chat/completions` or the [AI binding](/ai-gateway/usage/worker-binding-methods/) instead. See [Using a dynamic route](/ai-gateway/features/routing/dynamic-routing/usage/) for examples.
 :::
 
 Cloudflare's AI Gateway offers an OpenAI-compatible `/chat/completions` endpoint, enabling integration with multiple AI providers using a single URL. This feature simplifies the integration process, allowing for seamless switching between different models without significant code modifications.

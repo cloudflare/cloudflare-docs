@@ -14,7 +14,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-To call AI Gateway from the [AI SDK](https://ai-sdk.dev/), use `createAI` from `agents/models/ai-sdk`. It calls models from the [model catalog](/ai/models/), [dynamic routes](/ai-gateway/features/dynamic-routing/), and a vendor's own AI SDK models through your gateway. This page covers the AI Gateway features. For the full reference, refer to [AI SDK](/agents/models/ai-sdk/).
+To call AI Gateway from the [AI SDK](https://ai-sdk.dev/), use `createAI` from `agents/models/ai-sdk`. It calls models from the [model catalog](/ai/models/), [dynamic routes](/ai-gateway/features/routing/dynamic-routing/), and a vendor's own AI SDK models through your gateway. This page covers the AI Gateway features. For the full reference, refer to [AI SDK](/agents/models/ai-sdk/).
 
 The `ai-gateway-provider` package is deprecated. Use `createAI` instead.
 
@@ -64,7 +64,7 @@ export default {
 
 </TypeScriptExample>
 
-Use the catalog's spelling of the id, such as `anthropic/claude-opus-5.5` or `openai/gpt-5.5`. `id` sets the gateway and defaults to `default`. A [dynamic route](/ai-gateway/features/dynamic-routing/) on that gateway is `dynamic/<route>`, for example `ai("dynamic/support")`.
+Use the catalog's spelling of the id, such as `anthropic/claude-opus-5.5` or `openai/gpt-5.5`. `id` sets the gateway and defaults to `default`. A [dynamic route](/ai-gateway/features/routing/dynamic-routing/) on that gateway is `dynamic/<route>`, for example `ai("dynamic/support")`.
 
 ## Call a vendor's model object
 
@@ -133,5 +133,5 @@ The call forms and options are the same. [Create an API token](/fundamentals/api
 
 - [AI SDK provider reference](/agents/models/ai-sdk/)
 - [Model catalog](/ai/models/)
-- [Dynamic routing](/ai-gateway/features/dynamic-routing/)
+- [Dynamic routes](/ai-gateway/features/routing/dynamic-routing/)
 - [Unified Billing](/ai-gateway/features/unified-billing/)

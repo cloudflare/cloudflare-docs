@@ -1,0 +1,25 @@
+---
+title: Routing
+description: Choose how AI Gateway selects models with model aliases and dynamic routes, without changing application code.
+pcx_content_type: navigation
+sidebar:
+  order: 6
+products:
+  - ai-gateway
+---
+
+import { Feature } from "~/components";
+
+Routing lets you configure how AI Gateway selects models. In the dashboard, select your gateway, then go to **Routing** to manage model aliases and dynamic routes.
+
+<Feature header="Model aliases" href="/ai-gateway/features/routing/model-aliases/">
+
+Give one or more models a stable name such as `custom/support-fast`. Use an alias to configure model order or smart routing preferences without updating your application.
+
+</Feature>
+
+<Feature header="Dynamic routes" href="/ai-gateway/features/routing/dynamic-routing/" badge="Beta">
+
+Build a routing flow with conditional branches, percentage splits, rate limits, and budget limits. Use a dynamic route when requests need to follow different paths based on rules you define.
+
+</Feature>
