@@ -24,14 +24,21 @@ Cloudflare's [`workers-oauth-provider`](https://github.com/cloudflare/workers-oa
 
 ```ts
 import { OAuthProvider } from "@cloudflare/workers-oauth-provider";
-import { MyMCP } from "./mcp";
+import { createMcpHandler } from "agents/mcp/server";
+import { createServer } from "./mcp";
+
+const mcpHandler = createMcpHandler(createServer);
 
 export default new OAuthProvider({
 	authorizeEndpoint: "/authorize",
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
 	apiRoute: "/mcp",
-	apiHandler: MyMCP.serve("/mcp"),
+	apiHandler: {
+		fetch(request: Request, env: Env, ctx: ExecutionContext) {
+			return mcpHandler(request, env, ctx);
+		},
+	},
 	defaultHandler: AuthHandler,
 });
 ```

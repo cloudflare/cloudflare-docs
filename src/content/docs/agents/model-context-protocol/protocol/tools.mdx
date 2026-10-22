@@ -14,18 +14,18 @@ import { TypeScriptExample, LinkCard } from "~/components";
 
 MCP tools are functions that an [MCP server](/agents/model-context-protocol/) exposes for clients to call. An LLM can invoke a tool to look up data, run a calculation, or call an API. The MCP server executes the tool and returns its result.
 
-Use `@modelcontextprotocol/server` for a stateless `createMcpHandler` server. `McpAgent` is deprecated and feature-frozen. Existing `McpAgent` routes must keep using `@modelcontextprotocol/sdk` only while they migrate.
+Define tools on an `McpServer` from `@modelcontextprotocol/server` and serve it with [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
 :::note[Experimental WebMCP adapter]
 
-The Agents SDK also includes the experimental `agents/experimental/webmcp` adapter for bridging `McpAgent` tools to Chrome's native `navigator.modelContext` API. This API is under active development and may change between releases.
+The Agents SDK also includes the experimental `agents/experimental/webmcp` adapter for bridging tools from a remote MCP server to Chrome's native `navigator.modelContext` API. This API is under active development and may change between releases.
 
 :::
 
 <LinkCard
 	title="WebMCP example"
 	href="https://github.com/cloudflare/agents/tree/main/examples/webmcp"
-	description="Bridge MCP tools from a Cloudflare McpAgent into Chrome's experimental WebMCP API."
+	description="Bridge tools from a remote MCP server into Chrome's experimental WebMCP API."
 />
 
 ## Defining tools
@@ -172,38 +172,33 @@ export default {
 
 </TypeScriptExample>
 
-## Using tools with `McpAgent`
+## Tools that need state
 
-This section applies only to existing legacy routes during migration. Define their tools in the `init()` method of an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/). Tools have access to the agent instance through `this`, so they can read and write state.
+`createMcpHandler` builds a new server for every request, so a tool cannot keep data in memory between calls. Read and write a binding instead, using `env` from `cloudflare:workers`:
 
 <TypeScriptExample>
 
 ```ts
-import { McpAgent } from "agents/mcp";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { z } from "zod";
+import { env } from "cloudflare:workers";
+import { getMcpAuthContext } from "agents/mcp/server";
 
-export class MyMCP extends McpAgent {
-	server = new McpServer({ name: "Stateful Tools", version: "1.0.0" });
-
-	async init() {
-		this.server.tool(
-			"incrementCounter",
-			"Increment and return a counter",
-			{},
-			async () => {
-				const count = (this.state?.count ?? 0) + 1;
-				this.setState({ count });
-				return {
-					content: [{ type: "text", text: `Counter: ${count}` }],
-				};
-			},
-		);
-	}
-}
+server.registerTool(
+	"incrementCounter",
+	{ description: "Increment and return your counter" },
+	async () => {
+		const userId = String(getMcpAuthContext()?.props.userId ?? "anonymous");
+		const count = Number((await env.COUNTERS.get(userId)) ?? 0) + 1;
+		await env.COUNTERS.put(userId, String(count));
+		return {
+			content: [{ type: "text", text: `Counter: ${count}` }],
+		};
+	},
+);
 ```
 
 </TypeScriptExample>
+
+For data that needs transactions or per-user logic, call a Durable Object or an [Agent](/agents/) from the tool.
 
 ## Next steps
 
@@ -217,12 +212,6 @@ export class MyMCP extends McpAgent {
 	title="createMcpHandler API"
 	href="/agents/model-context-protocol/apis/handler-api/"
 	description="Reference for stateless MCP servers."
-/>
-
-<LinkCard
-	title="McpAgent API"
-	href="/agents/model-context-protocol/apis/agent-api/"
-	description="Reference for stateful MCP servers."
 />
 
 <LinkCard

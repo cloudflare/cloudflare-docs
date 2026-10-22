@@ -258,7 +258,8 @@
 /agents/api-reference/sdk/ /agents/runtime/agents-api/ 301
 /agents/guides/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
-/agents/model-context-protocol/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
+/agents/model-context-protocol/mcp-agent-api/ /agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/ 301
+/agents/model-context-protocol/apis/agent-api/ /agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/ 301
 /agents/model-context-protocol/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
 /agents/model-context-protocol/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
 /agents/api-reference/calling-agents/ /agents/runtime/communication/routing/ 301
@@ -283,7 +284,7 @@
 /agents/api-reference/email/ /agents/communication-channels/email/ 301
 /agents/api-reference/get-current-agent/ /agents/runtime/lifecycle/get-current-agent/ 301
 /agents/api-reference/http-sse/ /agents/runtime/communication/http-sse/ 301
-/agents/api-reference/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
+/agents/api-reference/mcp-agent-api/ /agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/ 301
 /agents/api-reference/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
 /agents/api-reference/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
 /agents/api-reference/observability/ /agents/runtime/operations/observability/ 301
