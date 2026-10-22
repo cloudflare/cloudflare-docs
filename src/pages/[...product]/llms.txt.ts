@@ -283,14 +283,17 @@ function buildSections(
 		sectionMap.get(sectionId)!.delegatedIndexes.push(index);
 	}
 
-	if (hasDelegation) {
-		for (const [sectionId, section] of sectionMap) {
-			const metadataPage = metadataPages.get(sectionId);
-			if (metadataPage) {
-				section.label =
-					getSidebarGroupLabel(metadataPage) ?? metadataPage.data.title;
-				section.order = getSidebarOrder(metadataPage);
-			}
+	for (const [sectionId, section] of sectionMap) {
+		// A section whose index page only renders a directory listing is left
+		// out of `pages`, but its title and sidebar order still name and place
+		// the section.
+		if (!hasDelegation && section.indexPage) continue;
+		const metadataPage = metadataPages.get(sectionId);
+		if (metadataPage) {
+			section.label = hasDelegation
+				? (getSidebarGroupLabel(metadataPage) ?? metadataPage.data.title)
+				: metadataPage.data.title;
+			section.order = getSidebarOrder(metadataPage);
 		}
 	}
 
