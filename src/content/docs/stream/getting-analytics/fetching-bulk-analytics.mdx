@@ -49,14 +49,9 @@ The dataset supports these filters and grouping dimensions:
 | ------------------------ | -------------------------------------------------------------------------------------------- |
 | `date`                   | Date                                                                                         |
 | `datetime`               | Date and time                                                                                |
-| `datetimeMinute`         | Date and time, truncated to the minute                                                       |
-| `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval                                           |
-| `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval                                             |
-| `datetimeHour`           | Date and time, truncated to the hour                                                         |
 | `uid`                    | Video ID (for HLS/DASH) or Input ID (for WebRTC/WHEP)                                        |
 | `clientCountryName`      | ISO 3166-1 alpha-2 country code for the viewer                                               |
 | `creator`                | [Creator ID](/stream/manage-video-library/creator-id/) associated with the video, if set     |
-| `mediaType`              | Delivery type: `playback` or `downloads`                                                     |
 
 @TODO: NOTE -- INPUT ID LINKS FOR WHEP
 
@@ -66,10 +61,10 @@ Some filters, like `date`, can be used with operators, such as `gt` (greater tha
 
 The dataset exposes these metrics:
 
-| Field               | Description                          |
-| ------------------- | ------------------------------------ |
-| `count`             | Number of values per dimension group |
-| `sum.minutesViewed` | Minutes of video delivered           |
+| Field               | Description                                           |
+| ------------------- | ----------------------------------------------------- |
+| `count`             | Number of values per dimension group                  |
+| `sum.minutesViewed` | Minutes of video delivered (must be queried as a sum) |
 
 ### Example
 
@@ -166,10 +161,6 @@ You can select and filter these fields:
 | ------------------------ | -------------------------------------------------- |
 | `date`                   | Date                                               |
 | `datetime`               | Date and time                                      |
-| `datetimeMinute`         | Date and time, truncated to the minute             |
-| `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval |
-| `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval   |
-| `datetimeHour`           | Date and time, truncated to the hour               |
 | `eventCode`              | Stored segment event code                          |
 | `inputId`                | Live input ID                                      |
 
@@ -182,7 +173,6 @@ A GOP (group of pictures) is a sequence of video frames. A "GOP size" is sometim
 | `count`                                                                         | Number of segments stored                          |
 | `avg.gopUploadTime`, `min.gopUploadTime`, `max.gopUploadTime`                   | GOP upload time, in milliseconds                   |
 | `avg.gopDuration`, `min.gopDuration`, `max.gopDuration`                         | GOP duration, in milliseconds                      |
-| `avg.uploadDurationRatio`, `min.uploadDurationRatio`, `max.uploadDurationRatio` | Upload time divided by GOP duration, without units |
 | `avg.gopByteSize`, `min.gopByteSize`, `max.gopByteSize`                         | GOP size, in bytes                                 |
 
 To estimate average broadcast bitrate, filter `liveInputEventsAdaptiveGroups` by `inputId` and the broadcast `datetime` range. Select `avg.gopByteSize` and `avg.gopDuration` in the same group.
@@ -229,11 +219,6 @@ The dataset supports these filters and grouping dimensions:
 | `playbackRate`                    | Playback rate: `1` for real time, `2` for twice real time, or `0` when not playing |
 | `date`                            | Date                                                                               |
 | `datetime`                        | Date and time                                                                      |
-| `datetimeMinute`                  | Date and time, truncated to the minute                                             |
-| `datetimeFiveMinutes`             | Date and time, truncated to a five-minute interval                                 |
-| `datetimeFifteenMinutes`          | Date and time, truncated to a 15-minute interval                                   |
-| `datetimeHour`                    | Date and time, truncated to the hour                                               |
-| `datetimeSixHours`                | Date and time, truncated to a six-hour interval                                    |
 
 ### Metrics
 
@@ -306,10 +291,6 @@ Stream collects WHIP observations every 15 seconds. They can take two to three m
 | ------------------------ | -------------------------------------------------- |
 | `date`                   | Date                                               |
 | `datetime`               | Date and time                                      |
-| `datetimeMinute`         | Date and time, truncated to the minute             |
-| `datetimeFiveMinutes`    | Date and time, truncated to a five-minute interval |
-| `datetimeFifteenMinutes` | Date and time, truncated to a 15-minute interval   |
-| `datetimeHour`           | Date and time, truncated to the hour               |
 | `sampleInterval`         | Adaptive sampling interval                         |
 | `inputId`                | Live input ID                                      |
 | `peerConnectionState`    | Peer connection state                              |
