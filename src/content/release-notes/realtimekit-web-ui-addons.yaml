@@ -25,4 +25,4 @@ entries:
       - Participant customization: [Participant Tile Menu](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participant-tile-menu/), [Participant Menu Item](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participant-menu-item/), [Participants Tab Action](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participants-tab-action/), and [Participants Tab Toggle](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/participants-tab-toggle/).
       - Meeting appearance and controls: [Video Background](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/video-background/) and [Custom Control Bar Button](https://github.com/cloudflare/realtimekit-ui-addons/blob/HEAD/src/custom-controlbar-button/).
 
-      Refer to [UI Kit Addons](/realtime/realtimekit/ui-kit/addons/) for installation and usage.
+      Refer to [UI Kit Addons](/realtime/realtimekit/humans/ui-kit/addons/) for installation and usage.

@@ -45,6 +45,17 @@
 # Custom Dashboards (moved from log-explorer to analytics)
 /log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
 
+# Log Explorer (moved into Observability Logs)
+/log-explorer/ /observability/logs/log-explorer/ 301
+/log-explorer/api/ /observability/logs/log-explorer/api/ 301
+/log-explorer/changelog/ /observability/logs/log-explorer/changelog/ 301
+/log-explorer/example-queries/ /observability/logs/log-explorer/example-queries/ 301
+/log-explorer/faq/ /observability/logs/log-explorer/faq/ 301
+/log-explorer/log-search/ /observability/logs/log-explorer/log-search/ 301
+/log-explorer/manage-datasets/ /observability/logs/log-explorer/manage-datasets/ 301
+/log-explorer/pricing/ /observability/logs/log-explorer/pricing/ 301
+/log-explorer/sql-queries/ /observability/logs/log-explorer/sql-queries/ 301
+
 # Solutions (moved from use-cases/application-security/bots/)
 /use-cases/application-security/bots/stop-malicious-bots/ /use-cases/solutions/stop-malicious-bots/ 301
 
@@ -609,13 +620,23 @@
 /realtime/changelog/ /realtime/sfu/platform/changelog/ 302
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/realtimekit/core/ai/ /realtime/realtimekit/ai/ 302
-/realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/core/remote-participants/ 302
-/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/ui-kit/state-management/ 302
-/realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
+/realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/humans/core/remote-participants/ 302
+/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/humans/ui-kit/state-management/ 302
+/realtime/realtimekit/core/video-background/ /realtime/realtimekit/humans/core/video-effects/ 302
 /realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
-/realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
-/realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/core/api-reference/rtkparticipants/ 301
+/realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/humans/core/manage-participants-in-a-session/ 302
+/realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/humans/core/api-reference/rtkparticipants/ 301
+/realtime/realtimekit/sdk-selection/ /realtime/realtimekit/humans/sdk-selection/ 301
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
+/realtime/realtimekit/pricing/ /realtime/realtimekit/platform/pricing/ 301
+/realtime/realtimekit/limits/ /realtime/realtimekit/platform/limits/ 301
+/realtime/realtimekit/data-retention/ /realtime/realtimekit/platform/data-retention/ 301
+/realtime/realtimekit/network-allowlist/ /realtime/realtimekit/platform/network-allowlist/ 301
+/realtime/realtimekit/legal/ /realtime/realtimekit/platform/legal/ 301
+/realtime/realtimekit/legal/3rdparty/ /realtime/realtimekit/platform/legal/3rdparty/ 301
+/realtime/realtimekit/collaborative-stores/ /realtime/realtimekit/collaboration/meeting-key-value-store/ 301
+/realtime/realtimekit/broadcast-apis/ /realtime/realtimekit/collaboration/message-broadcast/ 301
+/realtime/realtimekit/collaborative-stores/broadcast/ /realtime/realtimekit/collaboration/message-broadcast/ 301
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/agents/ /realtime/ 301
 /realtime/agents/getting-started/ /realtime/ 301
@@ -943,6 +964,14 @@
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
 /durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
+# Email Service information architecture
+/email-service/local-development/ /email-service/observability/local-development/ 301
+/email-service/local-development/sending/ /email-service/observability/local-development/sending/ 301
+/email-service/local-development/routing/ /email-service/observability/local-development/routing/ 301
+/email-service/platform/email-routing-rest-api/ /email-service/api/email-routing-rest-api/ 301
+/email-service/platform/email-sending-rest-api/ /email-service/api/email-sending-rest-api/ 301
+/email-service/platform/event-subscriptions/ /email-service/reference/event-subscriptions/ 301
+
 # Email Routing -> Email Service (product merged)
 # Top-level
 /email-routing/ /email-service/ 301
@@ -973,7 +1002,7 @@
 /email-routing/email-workers/reply-email-workers/ /email-service/api/route-emails/email-handler/#reply-to-emails 301
 /email-routing/email-workers/send-email-workers/ /email-service/api/send-emails/workers-api/ 301
 /email-routing/email-workers/runtime-api/ /email-service/api/route-emails/email-handler/ 301
-/email-routing/email-workers/local-development/ /email-service/local-development/routing/ 301
+/email-routing/email-workers/local-development/ /email-service/observability/local-development/routing/ 301
 
 # Troubleshooting
 /email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
@@ -1492,7 +1521,7 @@
 
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
-/logs/log-explorer/ /log-explorer/log-search/ 301
+/logs/log-explorer/ /observability/logs/log-explorer/log-search/ 301
 /logs/reference/glossary/ /logs/glossary/ 301
 /logs/about/ /logs/logpush/ 301
 /logs/tutorials/ /logs/logpush/ 301
@@ -3182,6 +3211,10 @@
 
 # Calls
 /calls/* /realtime/:splat 301
+
+# RealtimeKit SDK docs moved under Human participant
+/realtime/realtimekit/ui-kit/* /realtime/realtimekit/humans/ui-kit/:splat 301
+/realtime/realtimekit/core/* /realtime/realtimekit/humans/core/:splat 301
 
 # Magic Firewall renamed to Cloudflare Network Firewall
 /magic-firewall/* /cloudflare-network-firewall/:splat 301

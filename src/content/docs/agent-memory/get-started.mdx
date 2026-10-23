@@ -55,7 +55,7 @@ cd memory-agent
 
 Install the dependencies used by this guide:
 
-<PackageManagers pkg="agents ai workers-ai-provider" />
+<PackageManagers pkg="agents ai @ai-sdk/provider" />
 
 ## 2. Create a namespace
 
@@ -183,7 +183,7 @@ Change the `agents` import and add the AI SDK imports. Keep the `Session` import
 import { Agent, getAgentByName, routeAgentRequest } from "agents";
 import { convertToModelMessages, generateText, stepCountIs } from "ai";
 import type { UIMessage } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 ```
 
 </TypeScriptExample>
@@ -218,9 +218,9 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 
 		await this.scheduleIngest();
 
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 		const result = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			system: await this.session.freezeSystemPrompt(),
 			messages: await convertToModelMessages(
 				(await this.session.getHistory()) as UIMessage[],

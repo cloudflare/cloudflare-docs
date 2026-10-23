@@ -5,6 +5,7 @@
  * an inline custom element restores the saved tab before paint.
  */
 import { getCfCommand, getTabs } from "~/util/package-managers";
+import { stableId } from "~/util/stable-id";
 import type {
 	CommandType,
 	CommandOptions,
@@ -41,7 +42,17 @@ const tabs = getTabs(
 	{ args, dev, global, comment, prefix },
 	managers,
 );
-const uid = `pm-${crypto.randomUUID()}`;
+const uid = stableId(Astro.locals, "pm", {
+	type,
+	pkg,
+	args,
+	dev,
+	global,
+	comment,
+	prefix,
+	cfCommand,
+	managers,
+});
 const normalizedCfCommand = cfCommand?.trim();
 const renderedCfCommand = normalizedCfCommand
 	? getCfCommand(normalizedCfCommand, { comment, prefix })

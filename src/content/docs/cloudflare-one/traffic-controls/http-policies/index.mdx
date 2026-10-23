@@ -61,10 +61,10 @@ The Allow action allows outbound traffic to reach destinations you specify withi
 
 The **Untrusted certificate action** determines how to handle insecure requests.
 
-| Option       | Action                                                                                                                                                                                                                                               |
-| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                               |
-| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in the Cloudflare dashboard.                                                                                                                                 |
+| Option       | Action                                                                                                                                                                                                                                                   |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error        | Display Gateway error page. Matches the default behavior when no action is configured.                                                                                                                                                                   |
+| Block        | Display [block page](/cloudflare-one/reusable-components/custom-pages/gateway-block-page/) as set in the Cloudflare dashboard.                                                                                                                           |
 | Pass through | Bypass insecure connection warnings and seamlessly connect to the upstream. For more information on what statuses are bypassed, refer to [Troubleshooting Gateway](/cloudflare-one/traffic-controls/troubleshooting/#error-526-invalid-ssl-certificate). |
 
 #### Custom headers
@@ -95,7 +95,9 @@ The Block action blocks outbound traffic from reaching destinations you specify 
 <Render
 	file="gateway/client-notifications"
 	product="cloudflare-one"
-	params={{ toggleName: "**Display block notification for Cloudflare One Client**" }}
+	params={{
+		toggleName: "**Display block notification for Cloudflare One Client**",
+	}}
 />
 
 ### Redirect
@@ -163,6 +165,26 @@ When you turn on both options, Gateway will preserve the original path and query
 ```txt "cloudflare.com/redirect-path" "?querystring=Y" ins="&cf_user_email=user@example.com"
 cloudflare.com/redirect-path/path/to/page?querystring=Y&k=1&cf_user_email=user@example.com
 ```
+
+### Forward <Badge text="Beta" variant="caution" />
+
+API value: `forward`
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
+
+Forward invokes a Worker on permitted HTTP traffic. The Worker can modify a request before sending it to its original destination, transform the response, return a synthetic response, or run background work.
+
+Forward policies run in a separate phase after HTTP request policies and before body policies and inspection. Gateway invokes the Worker selected by the first matching Forward policy in order of precedence.
+
+Gateway inspects the original body before delivering it to the Worker. A body-inspection Block decision can interrupt the Worker.
+
+An Allow decision does not skip the Forward phase. A Forward policy does not override a Block decision.
+
+Use request metadata selectors, identity, and device posture conditions to select traffic. Body inspection results, DLP matches, and response selectors cannot select a Worker.
+
+HTTPS traffic requires TLS decryption. Do Not Inspect traffic bypasses Forward. Gateway does not invoke a Worker for CONNECT tunnels, protocol upgrades, or trailers. WebSocket traffic connects directly to the original upstream service and bypasses the Worker. Refer to [Known limitations](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#known-limitations) for protocol restrictions and other constraints.
+
+Refer to [Forward traffic](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/) for setup, the Worker entrypoint, and inspection order. Start with a [Worker template](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/) for notifications, capture, or transformation.
 
 ### Isolate
 
@@ -464,8 +486,8 @@ When combining this selector with the [Download and Upload File Types selectors]
 
 Whether the current session is running inside [Remote Browser Isolation](/cloudflare-one/remote-browser-isolation/). Use this selector to apply different policy behavior to isolated and non-isolated traffic.
 
-| UI name           | API example              |
-| ----------------- | ------------------------ |
+| UI name           | API example               |
+| ----------------- | ------------------------- |
 | Browser Isolation | `net.is_isolated == true` |
 
 ### Content Categories
@@ -479,7 +501,7 @@ Whether the current session is running inside [Remote Browser Isolation](/cloudf
 ### Destination Continent
 
 :::note
-Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#gateway-with-warp-default).
+Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#traffic-and-dns-mode-default).
 :::
 
 <Render
@@ -491,7 +513,7 @@ Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one
 ### Destination Country
 
 :::note
-Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#gateway-with-warp-default).
+Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#traffic-and-dns-mode-default).
 :::
 
 <Render
@@ -503,7 +525,7 @@ Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one
 ### Destination IP
 
 :::note
-Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#gateway-with-warp-default).
+Only applies to traffic sent through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up/#traffic-and-dns-mode-default).
 :::
 
 <Render
@@ -656,7 +678,7 @@ For example, the following policy blocks MCP traffic that does not arrive throug
 | Selector       | Operator | Value        | Logic | Action |
 | -------------- | -------- | ------------ | ----- | ------ |
 | Is MCP         | is       | _True_       | And   | Block  |
-| Traffic Source  | is not   | _MCP portal_ |       |        |
+| Traffic Source | is not   | _MCP portal_ |       |        |
 
 ### Host
 
@@ -694,32 +716,32 @@ The package registry ecosystem detected from the HTTP request URL. For more info
 
 The name of the package detected from the HTTP request URL.
 
-| UI name      | API example             |
-| ------------ | ----------------------- |
+| UI name      | API example            |
+| ------------ | ---------------------- |
 | Package Name | `pkg.name == "lodash"` |
 
 ### Package Namespace
 
 The namespace of the package, when the ecosystem supports one. For npm, this is the scope. For Maven, this is the group ID. For Go, this is the module path.
 
-| UI name           | API example                  |
-| ----------------- | ---------------------------- |
+| UI name           | API example                 |
+| ----------------- | --------------------------- |
 | Package Namespace | `pkg.namespace == "@babel"` |
 
 ### Package URL (PURL)
 
 The [Package URL](https://github.com/package-url/purl-spec) derived from the detected package coordinates.
 
-| UI name     | API example                              |
-| ----------- | ---------------------------------------- |
+| UI name     | API example                            |
+| ----------- | -------------------------------------- |
 | Package URL | `pkg.purl == "pkg:npm/lodash@4.17.21"` |
 
 ### Package Version
 
 The version of the package detected from the HTTP request URL. Supports exact match and ecosystem-aware version comparison operators. For more information on version comparison semantics, refer to [Package registry security](/cloudflare-one/traffic-controls/http-policies/package-registry-security/#version-comparison-operators).
 
-| UI name         | API example                 |
-| --------------- | --------------------------- |
+| UI name         | API example                |
+| --------------- | -------------------------- |
 | Package Version | `pkg.version == "4.17.21"` |
 
 ### Proxy Endpoint
@@ -774,7 +796,7 @@ The method used to on-ramp traffic to Cloudflare. Use this selector to apply pol
 
 | UI name        | API example                          |
 | -------------- | ------------------------------------ |
-| Traffic Source  | `net.onramp.type == "device_client"` |
+| Traffic Source | `net.onramp.type == "device_client"` |
 
 Available values: `device_client` (Device client), `mesh` (Mesh), `cloudflare_wan` (Cloudflare WAN), `clientless_rdp` (Clientless RDP), `proxy_endpoint` (Proxy endpoint), `agentless_biso` (Clientless Browser Isolation), `mcp_portal` (MCP portal).
 

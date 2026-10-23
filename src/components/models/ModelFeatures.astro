@@ -89,9 +89,13 @@ const reasoning = formatModelReasoning(
 				<tr>
 					<td>Terms and License</td>
 					<td>
-						<a href={properties.terms} target="_blank">
-							link<span class="external-link"> ↗</span>
-						</a>
+						{String(properties.terms).startsWith("#") ? (
+							<a href={properties.terms}>link</a>
+						) : (
+							<a href={properties.terms} target="_blank">
+								link<span class="external-link"> ↗</span>
+							</a>
+						)}
 					</td>
 				</tr>
 			)}

@@ -5,7 +5,7 @@ params:
   - slugifiedName
 ---
 
-import { Aside, Render } from "~/components";
+import { Render } from "~/components";
 
 <Render
 	file="casb/integration-description"
@@ -19,19 +19,22 @@ import { Aside, Render } from "~/components";
 ## Integration prerequisites
 
 - `admin` access to a {props.environmentName}
-- Ability to [create an OAuth API endpoint for external clients](https://docs.servicenow.com/csh?topicname=t_CreateEndpointforExternalClients)
+- Ability to [configure an OAuth authorization code grant for an inbound integration](https://www.servicenow.com/docs/r/platform-security/authentication/configure-an-oauth-authorization-code-grant.html)
 
-<Aside type="note">
-	If a **Scope Restriction** field appears, set it to **Broadly scoped**.
-</Aside>
+### Create an inbound integration
+
+1. In ServiceNow, go to **Machine Identity Console** > **Inbound integrations**.
+2. Select **New integration** > **OAuth - Authorization code grant**.
+3. For **Provider name**, enter `Auth0`.
+4. Set **Redirect URL** to the URL shown in Cloudflare.
+5. Leave **This is a public client** turned off.
+6. [Configure a REST API Auth Scope](https://www.servicenow.com/docs/r/platform-security/authentication/configure-rest-api-auth-scope.html) that grants `GET` access to the **Table API**.
+7. In **Scope validation settings**, turn on **Allow access only to APIs in selected scope**.
+8. Select **Submit**, then copy the client ID and client secret into Cloudflare.
 
 ## Integration permissions
 
-For the {props.integrationName} integration to function, Cloudflare CASB requires the following permissions:
-
-- `Global` application scope
-
-These permissions follow the principle of least privilege to ensure that only the minimum required access is granted. To learn more about each permission, refer to the [ServiceNow Application scope documentation](https://docs.servicenow.com/bundle/utah-application-development/page/build/applications/concept/c_GlobalScope.html).
+Cloudflare CASB requires `GET` access to the ServiceNow Table API. The authorizing user's roles and access control lists must permit reading the `incident`, `instance`, `kb_knowledge`, and `sys_user` tables. For more information, refer to the [ServiceNow Table API documentation](https://www.servicenow.com/docs/r/api-reference/rest-apis/c_TableAPI.html).
 
 ## Security findings
 

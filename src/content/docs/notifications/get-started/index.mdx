@@ -8,12 +8,14 @@ sidebar:
     label: Get started
 products:
   - notifications
-description: Set up alerts via email, webhooks, or PagerDuty.
+description: Set up monitors and platform notifications via email, webhooks, or PagerDuty.
 ---
 
 import { DashButton } from "~/components";
 
-This guide covers creating and managing alerts from the Cloudflare dashboard. For a full list of available alert types, refer to [Available alerts](/notifications/notification-available/).
+This guide covers permissions, management, and delivery configuration for alerts. To create alerts, refer to [Monitors](/notifications/monitors/) or [Platform Notifications](/notifications/notification-available/).
+
+<DashButton url="/?to=/:account/notifications" buttonName="Alerts" />
 
 ## Permissions
 
@@ -25,27 +27,19 @@ To create an alert, you need one of the following:
 
 Some alert types are only available on Professional, Business, or Enterprise plans, or require a specific Cloudflare product.
 
-## Create an alert
-
-1. In the Cloudflare dashboard, go to **Alerts** > **Overview**.
-
-    <DashButton url="/?to=/:account/notifications" buttonName="Alerts" />
-2. Select **Create an Alert**.
-3. Choose the alert type you want to create and select **Select**.
-4. Name the alert.
-5. Add one or more delivery destinations (email, webhook, or PagerDuty).
-6. (Optional) Configure any additional options, such as specific domains or services to monitor.
-7. Select **Create**.
-
 ## Manage alerts
 
 Once created, each alert has an action menu (⋯) with the following options:
 
-- **Edit** — modify the alert name, delivery destinations, or configuration.
-- **Disable / Enable** — toggle the alert on or off.
-- **Test** — send a test alert with sample data to verify delivery.
-- **Mute** — temporarily suppress the alert for a preset duration (**1h**, **12h**, **24h**) or a custom time range. Muted alerts still appear in [Alert history](/notifications/notification-history/) and are marked as silenced.
-- **Delete** — permanently remove the alert.
+- **Edit**: modify the alert name, delivery destinations, or configuration.
+- **Disable / Enable**: toggle the alert on or off.
+- **Test**: send a test alert with sample data to verify delivery.
+- **Mute**: temporarily suppress the alert for a preset duration (**1h**, **12h**, **24h**) or a custom time range. Muted alerts still appear in [Alert history](/notifications/notification-history/) and are marked as silenced.
+- **Delete**: permanently remove the alert.
+
+## Manage destinations
+
+Destinations define where your alerts are delivered. You can manage all destinations from **Alerts** > **Destinations**.
 
 ## Manage silences
 

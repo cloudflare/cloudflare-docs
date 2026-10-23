@@ -21,6 +21,44 @@ When you choose the _Application_ selector in a Gateway policy builder, the **Va
 
 To manage a consolidated list of applications across Cloudflare One, you can use the [Application Library](/cloudflare-one/team-and-resources/app-library/).
 
+### Custom applications
+
+You can [create a custom application in the Application Library](/cloudflare-one/team-and-resources/app-library/custom-applications/#create-a-custom-application) and select it by name in the existing **Application** selector for DNS, HTTP, and network policies. Custom and Cloudflare-managed applications can appear in the same condition. Custom applications are available only in the account that owns them.
+
+For API and Terraform rules, use the application's assigned numeric ID with the existing application fields, such as `app.ids`, `app.hosts_ids`, and `app.supports_ids`. The human-readable **Application ID** entered during creation is not the numeric ID used in a rule expression.
+
+To retrieve custom application IDs, list your account's applications with `GET /accounts/{account_id}/resource-library/applications`. The legacy Gateway `app_types` endpoint returns the Cloudflare-managed catalog and does not include custom applications.
+
+For example, replace `<CUSTOM_APPLICATION_NUMERIC_ID>` with the numeric ID to match the application:
+
+```txt
+any(app.ids[*] in {<CUSTOM_APPLICATION_NUMERIC_ID>})
+```
+
+Editing the application's network identifiers updates what referencing rules match after the definition propagates to Gateway. You do not need to replace its ID or recreate the rules. A custom application cannot be deleted while a Gateway rule or reusable profile references it, including a rule that is turned off. Refer to [Delete a custom application](/cloudflare-one/team-and-resources/app-library/custom-applications/#delete-a-custom-application).
+
+#### Custom application matching
+
+Gateway matches a custom application when the hostname or destination IP matches its definition. If the definition includes both hostnames and IP subnets, either can match independently. Multiple entries within each field are also alternatives.
+
+Hostnames match the specified domain and its subdomains. For example, `example.com` matches both `example.com` and `api.example.com`. Choose specific hostnames when you need to limit the scope of a custom application.
+
+In HTTP and network policies, configured port protocols add a restriction to the hostname or IP match. The destination must also match one of the configured port/protocol pairs or inclusive ranges. If **Port protocols** is empty, the definition applies to any port and protocol. A port/protocol match alone does not identify an application.
+
+For example, define a custom application with the hostname `crm.example.com`, the IP subnet `192.0.2.0/24`, and the port protocol `tcp/443`:
+
+| Traffic                                                                                     | Matches the custom application in an HTTP or network policy? |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `crm.example.com` on TCP port `443`, outside the configured IP subnet                       | Yes. The hostname and port/protocol match.                   |
+| A destination in `192.0.2.0/24` on TCP port `443`, with a different hostname or no hostname | Yes. The IP subnet and port/protocol match.                  |
+| `crm.example.com` on TCP port `8443`                                                        | No. The port does not match.                                 |
+| A destination in `192.0.2.0/24` on UDP port `443`                                           | No. The protocol does not match.                             |
+| An unrelated hostname and IP on TCP port `443`                                              | No. Neither the hostname nor the IP subnet matches.          |
+
+DNS policies match the query hostname before resolution and can also match resolved IP addresses after resolution. DNS application matching does not use the application's port/protocol constraints because a DNS query does not identify the destination port of the subsequent connection. For the example application, a query for `crm.example.com` can match even when the subsequent connection would use port `8443`.
+
+[Support hostnames](#support-hostnames) identify application dependencies. Gateway includes them in Allow policies and excludes them from Block policies, using the same behavior as support hostnames for Cloudflare-managed applications. Adding support hostnames does not replace the requirement for a primary hostname or IP subnet. Refer to [custom application limits](/cloudflare-one/team-and-resources/app-library/custom-applications/#custom-application-limits) for the combined hostname limit, IP subnet limits, and port formats.
+
 ## App types
 
 Gateway sorts applications into the following app type groups:
@@ -101,7 +139,7 @@ Gateway automatically groups applications incompatible with TLS decryption into 
 When managing applications with the [Application Library](/cloudflare-one/team-and-resources/app-library/), Do Not Inspect applications will appear under the corresponding application. For example, the App Library will group _Google Drive (Do Not Inspect)_ under **Google Drive**.
 
 :::note[Install Cloudflare certificate manually to allow TLS decryption]
-Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
+Instead of creating a Do Not Inspect policy for an application, you may be able to configure the application to [trust a Cloudflare certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/manual-deployment/#5-add-the-certificate-to-applications). Doing so will allow the application to function without losing visibility into your traffic.
 :::
 
 #### TLS decryption limitations
@@ -112,7 +150,6 @@ Applications can be incompatible with [TLS decryption](/cloudflare-one/traffic-c
   	term="certificate pinning"
   	prepend="**Certificate pinning**: Certificate pinning is "
   />
-
 - **Non-web traffic**: Some applications send non-web traffic over TLS, such as Session Initiation Protocol (SIP) for voice and video calls and Extensible Messaging and Presence Protocol (XMPP) for chat. Gateway cannot inspect these protocols.
 
 #### Microsoft 365 integration

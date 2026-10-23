@@ -14,7 +14,9 @@ import { Render, WranglerConfig, FileTree } from "~/components";
 
 ## Enable source maps
 
-Enable source maps for every JavaScript or TypeScript Worker to get stack traces with original file names and line numbers. Add the following to your Worker's [Wrangler configuration](/workers/wrangler/configuration/):
+Source maps are uploaded by default from Wrangler 4.150.0. When you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload), or [`wrangler preview`](/workers/wrangler/commands/workers/#preview), Wrangler generates and uploads source maps for your Worker, so stack traces show original file names and line numbers without any configuration.
+
+By default, Wrangler skips source maps it cannot resolve, such as inline `data:` source maps or a `sourceMappingURL` that points to a missing file, and continues the upload. To fail the upload instead, set `upload_source_maps` to `true` in your Worker's [Wrangler configuration](/workers/wrangler/configuration/):
 
 <WranglerConfig>
 
@@ -26,8 +28,9 @@ Enable source maps for every JavaScript or TypeScript Worker to get stack traces
 
 </WranglerConfig>
 
-When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload).
-​​
+On earlier versions of Wrangler, source maps are only uploaded when `upload_source_maps` is set to `true`.
+
+[`cf deploy`](/cf/) also uploads source maps by default. It uploads every source map in the build output, and `cf build` generates them for Workers built with the Cloudflare Vite plugin 1.64.0 or later, or with Wrangler 4.151.0 or later. To opt out, [disable source maps](#disable-source-maps) in your build.
 
 :::note
 
@@ -37,9 +40,11 @@ Miniflare can also [output source maps](https://miniflare.dev/developing/source-
 
 ### Frameworks and custom builds
 
-When Vite or another build tool bundles your Worker, that tool must generate source maps. Setting `upload_source_maps` only enables uploading maps from an existing build.
+When Vite or another build tool bundles your Worker, that tool must generate source maps. Wrangler only uploads maps that already exist in the build output.
 
-With the [Cloudflare Vite plugin](/workers/vite-plugin/), enable external maps for your [Worker environment](/workers/vite-plugin/reference/vite-environments/). For a Worker environment named `my_worker`, use:
+The [Cloudflare Vite plugin](/workers/vite-plugin/) generates external maps for your [Worker environment](/workers/vite-plugin/reference/vite-environments/) by default from version 1.64.0, unless you set Vite's `build.sourcemap` or the Worker's `upload_source_maps`. Maps are not added to the client environment, so they do not end up in your public assets.
+
+On earlier versions, enable external maps for your Worker environment. For a Worker environment named `my_worker`, use:
 
 ```ts title="vite.config.ts"
 import { defineConfig } from "vite";
@@ -59,7 +64,23 @@ Use `ssr` when your framework assigns the Worker to that environment. The plugin
 
 For other build tools, emit external map files and preserve their `sourceMappingURL` references in the generated JavaScript. Keep server maps out of your public assets directory.
 
-To disable uploads, set `upload_source_maps` to `false` or pass `--no-upload-source-maps` when deploying or uploading a version.
+### Disable source maps
+
+To disable uploads, set `upload_source_maps` to `false`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"upload_source_maps": false
+}
+```
+
+</WranglerConfig>
+
+You can also pass `--no-upload-source-maps` to `wrangler deploy` or `wrangler versions upload`.
+
+With the Cloudflare Vite plugin, you can instead set `build.sourcemap` to `false` for the Worker environment. `cf deploy` uploads every source map in the build output, so with a `cf` project, turn off source map generation in your build to opt out.
 
 ## Stack traces
 

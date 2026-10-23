@@ -57,6 +57,8 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
 
 ## Set up mTLS with your CA
 
+If your client certificates are issued by an intermediate CA, upload the full CA chain (the Intermediate CA followed by the Root CA) in a single PEM file. Refer to [Upload the CA certificate, not a leaf certificate](/ssl/client-certificates/troubleshooting/#upload-the-ca-certificate-not-a-leaf-certificate).
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the Cloudflare dashboard, go to the **Client Certificates** page.

@@ -4,7 +4,8 @@ name: Cloudflare CLI
 entry:
   title: Cloudflare CLI
   url: /cf/
-  group: Developer platform
+  group: Core platform
+  additional_groups: [Developer platform]
 
 meta:
   title: Cloudflare CLI docs

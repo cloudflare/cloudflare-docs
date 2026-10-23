@@ -36,7 +36,7 @@ Run [OpenCode](https://opencode.ai) in a Linux sandbox to edit a GitHub reposito
    	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
    	&& rm -rf /var/lib/apt/lists/*
 
-   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.18.32 \
+   RUN npm install --global --ignore-scripts opencode-linux-x64-baseline@1.19.4 \
    	&& ln -s /usr/local/lib/node_modules/opencode-linux-x64-baseline/bin/opencode /usr/local/bin/opencode
 
    COPY --from=docker.io/cloudflare/sandbox:1.0.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim

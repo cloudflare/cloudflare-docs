@@ -169,7 +169,7 @@ jobs:
           DEPLOYMENT_ENV: ${{ github.event_name == 'merge_group' && 'production' || 'preview' }}
         run: |
           set -o pipefail
-          pnpm run build 2>&1 | tee build.log
+          pnpm run build:parallel 2>&1 | tee build.log
           echo "succeeded=true" >> "$GITHUB_OUTPUT"
 
       - name: Upload build artifact
@@ -242,8 +242,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: pnpm exec tsx bin/post-pr-ci-failure-comment/index.ts
 
-  publish-preview:
-    name: Deploy Preview
+  publish-worker-preview:
+    name: Deploy Worker Preview
     needs: build
     if: ${{ !cancelled() && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && needs.build.outputs.succeeded == 'true' }}
     runs-on: ubuntu-latest
@@ -263,7 +263,6 @@ jobs:
 
       - name: Set up node
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
-        id: setup-node
         with:
           node-version: 24.x
           cache: pnpm
@@ -277,34 +276,32 @@ jobs:
           name: dist
           path: dist
 
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy Worker Preview
         id: deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
         run: |
-          SHORT_SHA="${PR_HEAD_SHA:0:8}"
-          BRANCH_SLUG=$(echo "$PR_HEAD_REF" | iconv -c -t ascii//TRANSLIT | sed -E 's/[~^]+//g' | sed -E 's/[^a-zA-Z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | tr A-Z a-z)
+          PREVIEW_NAME=$(pnpm exec tsx bin/print-worker-preview-name.ts "$PR_HEAD_REF")
+          OUTPUT_FILE="$RUNNER_TEMP/wrangler-preview.ndjson"
 
-          echo "branch_slug=${BRANCH_SLUG}" >> "$GITHUB_OUTPUT"
-          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          WRANGLER_OUTPUT_FILE_PATH="$OUTPUT_FILE" \
+            pnpm exec wrangler preview --config wrangler.preview.json \
+              --name "$PREVIEW_NAME" --tag "${PR_HEAD_SHA:0:8}" --message "$PR_HEAD_SHA"
 
-          # These two deploys are independent (different Worker names in the
-          # same dispatch namespace), so run them concurrently instead of
-          # back-to-back.
-          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${SHORT_SHA}" &
-          short_sha_pid=$!
-          pnpm exec wrangler deploy --config wrangler.preview.json --dispatch-namespace preview-deployments --name "${BRANCH_SLUG}" &
-          branch_slug_pid=$!
+          # Use the URLs wrangler reports instead of building them by hand.
+          PREVIEW_URL=$(jq -r 'select(.type == "preview") | .preview_urls[0] // empty' "$OUTPUT_FILE" | tail -n 1)
+          DEPLOYMENT_URL=$(jq -r 'select(.type == "preview") | .deployment_urls[0] // empty' "$OUTPUT_FILE" | tail -n 1)
+          [ -n "$PREVIEW_URL" ] || { echo "::error::No Preview URL in wrangler output"; exit 1; }
 
-          wait "$short_sha_pid"
-          wait "$branch_slug_pid"
+          echo "preview_url=${PREVIEW_URL}" >> "$GITHUB_OUTPUT"
+          echo "deployment_url=${DEPLOYMENT_URL}" >> "$GITHUB_OUTPUT"
 
-      - name: Post preview URL on PR
+      - name: Post Worker Preview URL on PR
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_SLUG: ${{ steps.deploy.outputs.branch_slug }}
-          SHORT_SHA: ${{ steps.deploy.outputs.short_sha }}
-        run: pnpm exec tsx bin/post-preview-url-comment/index.ts
+          WORKER_PREVIEW_URL: ${{ steps.deploy.outputs.preview_url }}
+          WORKER_PREVIEW_DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment_url }}
+        run: pnpm exec tsx bin/post-preview-url-comment/worker-preview.ts
         continue-on-error: true

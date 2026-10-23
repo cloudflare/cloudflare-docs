@@ -1,0 +1,130 @@
+---
+title: Redact a JSON field
+description: Replace a specific top-level JSON field in a bounded application request before continuing through Gateway.
+pcx_content_type: tutorial
+difficulty: Intermediate
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  badge:
+    text: Beta
+    variant: caution
+  order: 7
+---
+
+import { Render, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
+
+Replace the top-level `customerId` field in a JSON request with `[REDACTED]` before sending it to an application. Use this template for a specific endpoint with a known schema and uncompressed UTF-8 JSON bodies.
+
+This is field-based transformation. It does not detect sensitive data throughout arbitrary text or files, and it does not use Data Loss Prevention (DLP) match results.
+
+Gateway inspects the original request body before delivering it to the Worker. A DLP Block decision can interrupt the Worker, so this script cannot use redaction to bypass request-side DLP inspection.
+
+Gateway does not scan the modified request again before forwarding it.
+
+## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
+
+Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
+
+const LIMIT = 256 * 1024;
+
+export class GatewayMiddleware extends WorkerEntrypoint {
+	async handle(
+		request: Request,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
+	): Promise<Response> {
+		if (request.method !== "POST") return next(request);
+		const type = request.headers.get("content-type") ?? "";
+		if (
+			!/^application\/json\s*(?:;|$)/i.test(type) ||
+			request.headers.has("content-encoding")
+		) {
+			return new Response("Expected uncompressed JSON", { status: 415 });
+		}
+		if (!request.body)
+			return new Response("Expected a JSON object", { status: 400 });
+
+		const reader = request.body.getReader();
+		const decoder = new TextDecoder("utf-8", { fatal: true, ignoreBOM: false });
+		let size = 0;
+		let text = "";
+		try {
+			while (true) {
+				const { done, value } = await reader.read();
+				if (done) break;
+				size += value.byteLength;
+				if (size > LIMIT) {
+					void reader.cancel().catch(() => {});
+					return new Response("Request body too large", { status: 413 });
+				}
+				text += decoder.decode(value, { stream: true });
+			}
+			text += decoder.decode();
+		} catch {
+			void reader.cancel().catch(() => {});
+			return new Response("Invalid request body", { status: 400 });
+		} finally {
+			reader.releaseLock();
+		}
+
+		let object: Record<string, unknown>;
+		try {
+			object = JSON.parse(text);
+			if (!object || typeof object !== "object" || Array.isArray(object))
+				throw new Error();
+		} catch {
+			return new Response("Expected a JSON object", { status: 400 });
+		}
+		if (Object.hasOwn(object, "customerId")) object.customerId = "[REDACTED]";
+		const headers = new Headers(request.headers);
+		for (const name of [
+			"content-length",
+			"content-md5",
+			"digest",
+			"content-digest",
+			"repr-digest",
+		]) {
+			headers.delete(name);
+		}
+		return next(
+			new Request(request, { headers, body: JSON.stringify(object) }),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The reader counts bytes while streaming and rejects bodies larger than 256 KiB. Invalid JSON, compressed bodies, and unsupported content types receive an explicit error. The script reconstructs the consumed body and preserves the original request URL.
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for a controlled API host and path, with **HTTP Method** `POST` and your test user group.
+
+Send this JSON body through Gateway:
+
+```json
+{
+	"customerId": "test-customer",
+	"message": "Test request"
+}
+```
+
+Confirm at the origin that `customerId` is `[REDACTED]` and `message` is unchanged. Verify that an invalid JSON body returns `400` and a body over the size limit returns `413`, with neither request reaching the origin.
+
+The transformation changes JSON serialization and can invalidate signed payloads or application checksums. Use it only with an endpoint that accepts rewritten JSON. It replaces one top-level field and does not redact nested fields, query parameters, or other headers.
