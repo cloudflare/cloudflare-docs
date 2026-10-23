@@ -1,0 +1,29 @@
+---
+title: Select a virtual network for VPC Network bindings
+description: Configure VPC Network bindings to use a specific virtual network.
+date: 2026-10-20
+---
+
+import { WranglerConfig } from "~/components";
+
+<!-- TODO: Update the date to the launch date when this feature is ready. -->
+
+VPC Network bindings can select a specific virtual network by setting `network_id` to `cf1:vnet:<UUID>`, where the UUID is the ID of the virtual network. Continue to use `cf1:network` to select your account's default virtual network.
+
+Multiple bindings can select different virtual networks. This lets one Worker reach separate backends that use the same private IP address:
+
+<WranglerConfig>
+```toml
+[[vpc_networks]]
+binding = "PRODUCTION"
+network_id = "cf1:vnet:<PRODUCTION_VNET_UUID>"
+remote = true
+
+[[vpc_networks]]
+binding = "STAGING"
+network_id = "cf1:vnet:<STAGING_VNET_UUID>"
+remote = true
+```
+</WranglerConfig>
+
+For details, refer to [VPC Networks configuration](/workers-vpc/configuration/vpc-networks/).
