@@ -23,6 +23,9 @@ If you use the `next` prerelease, update to `0.13.0-next.825.1` or later.
 If you cannot update yet and use 0.8.7 or later, send all HTTPS through your Worker, so that Cloudflare checks every certificate on port 443 whatever your image trusts:
 
 ```ts title="src/index.ts"
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy };
+
 export class MySandbox extends Sandbox {
 	interceptHttps = true;
 }
