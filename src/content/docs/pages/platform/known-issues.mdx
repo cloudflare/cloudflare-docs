@@ -57,13 +57,24 @@ Here are some known bugs and issues with Cloudflare Pages:
 All requests to a Pages project are evaluated by [Browser Integrity Check](/waf/tools/browser-integrity-check/) (BIC) on the Cloudflare-managed `pages.dev` zone. This includes requests to your `*.pages.dev` subdomain and requests made through a [custom domain](/pages/configuration/custom-domains/).
 
 - You cannot turn off this check for a Pages project.
-- If your custom domain is on a Cloudflare zone, turning off BIC for that zone, skipping it with a [custom rule with a skip action](/waf/custom-rules/skip/), or turning it off with a [configuration rule](/rules/configuration-rules/) only applies to your zone. It does not prevent the check on the `pages.dev` zone.
-- Clients that send certain non-browser `User-Agent` headers (for example, the default Python `urllib` user agent) receive an HTTP `403` response with [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
+- Turning off BIC in your own zone, or adding a [custom rule](/waf/custom-rules/skip/) or [configuration rule](/rules/configuration-rules/) that skips or turns off BIC, only affects your zone. It does not affect the check on the `pages.dev` zone.
+- Clients that send some default library `User-Agent` headers (for example, the default Python `urllib` user agent) receive an HTTP `403` response with [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
 
 To allow automated clients to reach your Pages project:
 
-- Configure the client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0 (+https://example.com)`).
-- If your domain's nameservers are managed by Cloudflare, you can instead serve your site with [Workers static assets](/workers/static-assets/) on a [custom domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/), where your zone's Browser Integrity Check settings apply. Refer to [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/).
+1. **Recommended:** Configure the client to send a descriptive `User-Agent` header that identifies your application. The client does not need to send a browser user agent. For example, in Python:
+
+   ```python
+   import urllib.request
+
+   req = urllib.request.Request(
+       "https://example.com/data.json",
+       headers={"User-Agent": "my-app/1.0 (+https://example.com)"},
+   )
+   urllib.request.urlopen(req)
+   ```
+
+2. If you need full control over Browser Integrity Check, and your domain's nameservers are managed by Cloudflare, serve your site with [Workers static assets](/workers/static-assets/) on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in your zone. Your zone's Browser Integrity Check settings and rules then apply. Refer to [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/).
 
 ## Pages Functions
 
