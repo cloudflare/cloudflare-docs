@@ -102,7 +102,9 @@ export const getStaticPaths = (async () => {
 			return {
 				params: { product: urlPath },
 				props: { entry, pages, navigationPages, models },
-				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest ?? model.id).join(",")}`,
+				// Directory-only pages are not listed, but their title and sidebar order
+				// name and place sections, so their digests must invalidate the page.
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${navigationPages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest ?? model.id).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
@@ -145,11 +147,7 @@ export const getStaticPaths = (async () => {
 		const productUrl = `/${product.params.product}/`;
 		const delegatedIndexes = getDelegatedIndexes(productUrl, indexes);
 		const cacheKey = isInDelegatingLlmsTree(productUrl)
-			? [
-					product.cacheKey,
-					product.props.navigationPages.map((page) => page.digest).join(","),
-					JSON.stringify(delegatedIndexes),
-				].join(":")
+			? [product.cacheKey, JSON.stringify(delegatedIndexes)].join(":")
 			: product.cacheKey;
 
 		return {
