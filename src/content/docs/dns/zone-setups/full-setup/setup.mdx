@@ -184,6 +184,11 @@ nslookup -type=ns <DOMAIN_NAME> 8.8.8.8
 
 If you see unexpected results, refer to our [troubleshooting suggestions](/dns/zone-setups/full-setup/troubleshooting/) and check with your domain registrar. If your zone is stuck in **Pending Nameserver Update**, refer to [Zone stuck in Pending Nameserver Update](/dns/zone-setups/troubleshooting/pending-nameservers/) for how to verify the delegation at the parent zone.
 
+
+If you use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/)
+or [nameserver sets](/dns/nameservers/custom-nameservers/nameserver-sets/), verify the
+nameservers to set at your registrar from your Cloudflare **activation email** rather than
+the dashboard — the two may differ depending on your nameserver configuration.
 :::
 
 ## 4. Re-enable DNSSEC
