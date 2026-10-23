@@ -82,20 +82,51 @@ To require OAuth, wrap the handler in an `OAuthResourceServer` from [Workers OAu
 <TypeScriptExample>
 
 ```ts
-import { OAuthResourceServer } from "@cloudflare/workers-oauth-provider";
-import { createMcpHandler } from "agents/mcp/server";
+import {
+	OAuthResourceServer,
+	insufficientScope,
+	type AuthorizationServerBinding,
+} from "@cloudflare/workers-oauth-provider";
+import { McpServer } from "@modelcontextprotocol/server";
+import { createMcpHandler, getMcpAuthContext } from "agents/mcp/server";
 import { env } from "cloudflare:workers";
+
+type AuthProps = { userId: string };
+
+interface Env {
+	AUTH_SERVER: AuthorizationServerBinding<AuthProps>;
+}
+
+function createServer() {
+	const server = new McpServer({ name: "my-mcp-server", version: "1.0.0" });
+	const props = getMcpAuthContext()?.props as AuthProps;
+
+	server.registerTool(
+		"whoami",
+		{ description: "Return the signed-in user" },
+		async () => ({
+			content: [{ type: "text", text: props.userId }],
+		}),
+	);
+
+	return server;
+}
 
 const mcpHandler = createMcpHandler(createServer);
 
 export default new OAuthResourceServer<Env, AuthProps>({
 	resourceMetadata: {
-		resource: env.MCP_SERVER_URL, // the URL MCP clients connect to
+		resource: env.MCP_SERVER_URL, // tokens for any other resource are rejected
 		authorization_servers: [env.AUTH_SERVER_URL],
 	},
-	validateToken: (env) => env.AUTH_SERVER.validateToken, // Service Binding to your authorization server
+	requiredScopes: ["mcp:read"],
+	validateToken: (env) => env.AUTH_SERVER.validateToken,
 	handler: {
 		fetch(request, env, ctx) {
+			// requiredScopes is advertised, not enforced: check it here.
+			if (!ctx.auth.scope.includes("mcp:read")) {
+				return insufficientScope(ctx.auth, ["mcp:read"]);
+			}
 			return mcpHandler(request, env, ctx);
 		},
 	},

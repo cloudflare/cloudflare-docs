@@ -8,11 +8,15 @@ products:
   - agents
 ---
 
+import { TypeScriptExample } from "~/components";
+
 The Agents SDK provides `paidTool`, which registers a tool with x402 payment requirements. Clients pay per tool call, and you can mix free and paid tools in the same server.
 
 ## Setup
 
 Wrap your `McpServer` with `withX402` and use `paidTool` for tools you want to charge for:
+
+<TypeScriptExample>
 
 ```ts
 import { McpServer } from "@modelcontextprotocol/server";
@@ -66,6 +70,8 @@ export default {
 } satisfies ExportedHandler;
 ```
 
+</TypeScriptExample>
+
 ## Configuration
 
 | Field         | Description                                                  |
@@ -74,18 +80,18 @@ export default {
 | `recipient`   | Wallet address to receive payments                           |
 | `facilitator` | Payment facilitator URL (use `https://x402.org/facilitator`) |
 
-## paidTool signature
+## paidTool parameters
 
-```ts
-server.paidTool(
-	name, // Tool name
-	description, // Tool description
-	price, // Price in USD (e.g., 0.01)
-	inputSchema, // Zod schema for inputs
-	annotations, // MCP annotations
-	handler, // Async function that executes the tool
-);
-```
+`paidTool()` takes the same arguments as registering a tool, plus a price:
+
+| Parameter     | Description                                     |
+| ------------- | ----------------------------------------------- |
+| `name`        | Tool name                                       |
+| `description` | Tool description                                |
+| `price`       | Price per call in USD, for example `0.01`       |
+| `inputSchema` | Zod shape for the tool's input                  |
+| `annotations` | MCP tool annotations                            |
+| `handler`     | Async function that runs after payment succeeds |
 
 When a client calls a paid tool without payment, the server returns 402 with payment requirements. The client pays via x402, retries with payment proof, and receives the result.
 

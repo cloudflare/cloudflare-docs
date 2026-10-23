@@ -280,34 +280,7 @@ For every option, refer to the [Workers OAuth Provider documentation](https://gi
 
 The `props` you passed to `completeAuthorization()` reach the resource server handler as `ctx.props`, and `createMcpHandler` exposes them to your server through `getMcpAuthContext()`. The verified token's scopes and client are on `ctx.auth` in the handler.
 
-```ts
-import { getMcpAuthContext } from "agents/mcp/server";
-import { McpServer } from "@modelcontextprotocol/server";
-
-type AuthContext = {
-	claims: { sub: string; name: string; email: string };
-	permissions: string[];
-};
-
-function createServer() {
-	const server = new McpServer({ name: "Auth Demo", version: "1.0.0" });
-
-	server.registerTool(
-		"whoami",
-		{ description: "Get the current user" },
-		async () => {
-			const props = getMcpAuthContext()?.props as AuthContext | undefined;
-			return {
-				content: [
-					{ type: "text", text: `Hello, ${props?.claims.name ?? "anonymous"}!` },
-				],
-			};
-		},
-	);
-
-	return server;
-}
-```
+The `whoami` tool in the [MCP server example](#make-your-mcp-server-a-resource-server) reads `props.name` this way.
 
 Props often hold upstream access tokens. Do not log or return them.
 
@@ -315,10 +288,28 @@ Props often hold upstream access tokens. Do not log or return them.
 
 You can control which tools are available based on user permissions. There are two approaches: check permissions inside the tool handler, or register tools only for users who can use them. `getMcpAuthContext()` works inside the server factory, so the factory can decide which tools to register for each request.
 
+<TypeScriptExample>
+
 ```ts
+import {
+	OAuthResourceServer,
+	insufficientScope,
+	type AuthorizationServerBinding,
+} from "@cloudflare/workers-oauth-provider";
+import { McpServer } from "@modelcontextprotocol/server";
+import { createMcpHandler, getMcpAuthContext } from "agents/mcp/server";
+import { env } from "cloudflare:workers";
+
+// Stored with completeAuthorization() when the user signed in.
+type AuthProps = { userId: string; permissions: string[] };
+
+interface Env {
+	AUTH_SERVER: AuthorizationServerBinding<AuthProps>;
+}
+
 function createServer() {
 	const server = new McpServer({ name: "Permissions Demo", version: "1.0.0" });
-	const props = getMcpAuthContext()?.props as AuthContext | undefined;
+	const props = getMcpAuthContext()?.props as AuthProps;
 
 	server.registerTool(
 		"publicTool",
@@ -328,15 +319,15 @@ function createServer() {
 		}),
 	);
 
+	// Check inside the handler: the model sees the tool and the denial.
 	server.registerTool(
 		"adminAction",
 		{ description: "Requires admin permission" },
 		async () => {
-			if (!props?.permissions.includes("admin")) {
+			if (!props.permissions.includes("admin")) {
 				return {
-					content: [
-						{ type: "text", text: "Permission denied: requires admin" },
-					],
+					isError: true,
+					content: [{ type: "text", text: "Permission denied: requires admin" }],
 				};
 			}
 			return {
@@ -345,7 +336,8 @@ function createServer() {
 		},
 	);
 
-	if (props?.permissions.includes("special_feature")) {
+	// Register conditionally: the model never sees the tool.
+	if (props.permissions.includes("special_feature")) {
 		server.registerTool(
 			"specialTool",
 			{ description: "Special feature" },
@@ -357,7 +349,28 @@ function createServer() {
 
 	return server;
 }
+
+const mcpHandler = createMcpHandler(createServer);
+
+export default new OAuthResourceServer<Env, AuthProps>({
+	resourceMetadata: {
+		resource: env.MCP_SERVER_URL,
+		authorization_servers: [env.AUTH_SERVER_URL],
+	},
+	requiredScopes: ["mcp:read"],
+	validateToken: (env) => env.AUTH_SERVER.validateToken,
+	handler: {
+		fetch(request, env, ctx) {
+			if (!ctx.auth.scope.includes("mcp:read")) {
+				return insufficientScope(ctx.auth, ["mcp:read"]);
+			}
+			return mcpHandler(request, env, ctx);
+		},
+	},
+});
 ```
+
+</TypeScriptExample>
 
 Checking inside the handler returns an error message to the LLM, which can explain the denial to the user. Conditionally registering tools means the LLM never sees tools the user cannot access, so it cannot try to call them.
 

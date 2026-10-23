@@ -10,7 +10,7 @@ products:
   - agents
 ---
 
-import { LinkCard } from "~/components";
+import { LinkCard, TypeScriptExample } from "~/components";
 
 MCP servers, like any web application, need to be secured so they can be used by trusted users without abuse. The MCP specification uses OAuth 2.1 for authorization between MCP clients and servers.
 
@@ -30,38 +30,113 @@ Workers OAuth Provider handles the security of the consent flow. Your code rende
 | `denyConsent(request, handle)` | Returns headers that redirect the user back to the client with `access_denied`. |
 | `isConsentRemembered(request, authRequest, remember)` | Returns `true` if the user already approved this client, redirect URI, and scopes. Pass `remember` to `approveConsent()` to record an approval. |
 
+<TypeScriptExample>
+
 ```ts
-const oauth = authorizationServer.getOAuthApi(env);
+import {
+	AuthorizationError,
+	OAuthAuthorizationServer,
+	type ConsentDescription,
+} from "@cloudflare/workers-oauth-provider";
+import { env, WorkerEntrypoint } from "cloudflare:workers";
+import { html } from "hono/html";
 
-// GET /authorize, after signing the user in
-const authRequest = await oauth.parseAuthRequest(request);
-const details = await oauth.describeConsent(authRequest);
-const consent = await oauth.beginConsent(authRequest);
-consent.headers.set("Content-Type", "text/html; charset=utf-8");
-return new Response(consentPage(details, consent.handle), {
-	headers: consent.headers,
+const SCOPES = ["mcp:read", "mcp:write"];
+
+const authorizationServer = new OAuthAuthorizationServer<Env>({
+	issuer: env.ISSUER,
+	resources: [env.MCP_SERVER_URL],
+	scopesSupported: SCOPES,
+	clientIdMetadataDocumentEnabled: true,
 });
 
-// POST /authorize
-const form = await request.formData();
-const handle = String(form.get("handle"));
-if (form.get("decision") !== "approve") {
-	const denied = await oauth.denyConsent(request, handle);
-	return new Response(null, { status: 302, headers: denied.headers });
+// Replace with your own sign-in. Return undefined when no one is signed in.
+async function getSignedInUser(
+	request: Request,
+): Promise<{ id: string } | undefined> {
+	return { id: "user-123" };
 }
-const approved = await oauth.approveConsent(request, handle, {
-	scope: form.getAll("scope").map(String),
-});
-const { redirectTo } = await oauth.completeAuthorization({
-	request: approved.request, // from storage, not from the form
-	userId: session.userId,
-	metadata: {},
-	scope: approved.request.scope,
-	props: { userId: session.userId },
-});
-approved.headers.set("Location", redirectTo);
-return new Response(null, { status: 302, headers: approved.headers });
+
+// hono/html escapes every interpolated value, so client-supplied strings are safe.
+function consentPage(details: ConsentDescription, handle: string) {
+	return html`<!doctype html>
+		<h1>Allow ${details.clientName} to access your account?</h1>
+		<p>Access will be sent to <strong>${details.redirectHost}</strong>.</p>
+		${details.redirectIsLoopback
+			? html`<p>This sends access to an app on your computer.</p>`
+			: ""}
+		<form method="post">
+			<input type="hidden" name="handle" value="${handle}" />
+			${details.scope.map(
+				(scope) =>
+					html`<label>
+						<input type="checkbox" name="scope" value="${scope}" checked />
+						${scope}
+					</label>`,
+			)}
+			<button name="decision" value="approve">Allow</button>
+			<button name="decision" value="deny">Deny</button>
+		</form>`;
+}
+
+async function authorize(request: Request, env: Env): Promise<Response> {
+	const oauth = authorizationServer.getOAuthApi(env);
+	const user = await getSignedInUser(request);
+	if (!user) return Response.redirect(new URL("/login", request.url).toString(), 302);
+
+	if (request.method === "GET") {
+		const authRequest = await oauth.parseAuthRequest(request);
+		const details = await oauth.describeConsent(authRequest);
+		const consent = await oauth.beginConsent(authRequest);
+		consent.headers.set("Content-Type", "text/html; charset=utf-8");
+		return new Response(await consentPage(details, consent.handle), {
+			headers: consent.headers,
+		});
+	}
+
+	const form = await request.formData();
+	const handle = String(form.get("handle"));
+	if (form.get("decision") !== "approve") {
+		const denied = await oauth.denyConsent(request, handle);
+		return new Response(null, { status: 302, headers: denied.headers });
+	}
+
+	const approved = await oauth.approveConsent(request, handle, {
+		scope: form.getAll("scope").map(String),
+	});
+	const { redirectTo } = await oauth.completeAuthorization({
+		request: approved.request, // from storage, not from the form
+		userId: user.id,
+		metadata: {},
+		scope: approved.request.scope,
+		props: { userId: user.id },
+	});
+	approved.headers.set("Location", redirectTo);
+	return new Response(null, { status: 302, headers: approved.headers });
+}
+
+export default class AuthServer extends WorkerEntrypoint<Env> {
+	async fetch(request: Request) {
+		if (new URL(request.url).pathname !== "/authorize") {
+			return authorizationServer.fetch(request, this.env, this.ctx);
+		}
+		try {
+			return await authorize(request, this.env);
+		} catch (error) {
+			if (!(error instanceof AuthorizationError)) throw error;
+			// Redirect to the client only when the library validated where to send it.
+			if (error.redirectTo) return Response.redirect(error.redirectTo, 302);
+			return new Response(error.description, { status: 400 });
+		}
+	}
+
+	validateToken(resource: string, token: string) {
+		return authorizationServer.validateToken(resource, token, this.env);
+	}
+}
 ```
+
+</TypeScriptExample>
 
 The form carries only the handle. The authorization request stays on the server, so a forged form cannot approve a different client or redirect URI.
 
@@ -81,33 +156,144 @@ Ask for consent first, then hand the user to the provider:
 | `finishUpstream(request)` | Call in your callback. Checks `state` against the cookie and returns the original authorization request and your `data`. A provider code replayed in another browser is rejected. |
 | `tokenExchangeCallback` | An `OAuthAuthorizationServer` option that runs on token refresh. Refresh the provider's token there, and throw `OAuthError("invalid_grant")` when the provider has revoked access. |
 
-```ts
-// POST /authorize: the user approved this client
-const approved = await oauth.approveConsent(request, handle);
-const { state, headers } = await oauth.beginUpstream(approved.request, {
-	data: { verifier }, // returned at the callback, never sent to the provider
-	headers: approved.headers,
-});
-headers.set("Location", providerAuthorizeUrl({ state }));
-return new Response(null, { status: 302, headers });
+<TypeScriptExample>
 
-// GET /callback
-const { request: original, data, headers: clear } =
-	await oauth.finishUpstream<{ verifier: string }>(request);
-const upstream = await exchangeProviderCode(
-	new URL(request.url).searchParams.get("code")!,
-	data.verifier,
-);
-const { redirectTo } = await oauth.completeAuthorization({
-	request: original,
-	userId: upstream.userId,
-	metadata: {},
-	scope: original.scope,
-	props: { providerToken: upstream.accessToken }, // encrypted at rest
+```ts
+import {
+	AuthorizationError,
+	OAuthAuthorizationServer,
+	type ConsentDescription,
+} from "@cloudflare/workers-oauth-provider";
+import { env, WorkerEntrypoint } from "cloudflare:workers";
+import { html } from "hono/html";
+
+const authorizationServer = new OAuthAuthorizationServer<Env>({
+	issuer: env.ISSUER,
+	resources: [env.MCP_SERVER_URL],
+	scopesSupported: ["mcp:read"],
+	clientIdMetadataDocumentEnabled: true,
 });
-clear.set("Location", redirectTo);
-return new Response(null, { status: 302, headers: clear });
+
+// hono/html escapes every interpolated value, so client-supplied strings are safe.
+function consentPage(details: ConsentDescription, handle: string) {
+	return html`<!doctype html>
+		<h1>Allow ${details.clientName} to use your GitHub account?</h1>
+		<p>Access will be sent to <strong>${details.redirectHost}</strong>.</p>
+		<form method="post">
+			<input type="hidden" name="handle" value="${handle}" />
+			<button name="decision" value="approve">Continue to GitHub</button>
+			<button name="decision" value="deny">Deny</button>
+		</form>`;
+}
+
+async function sha256(value: string): Promise<string> {
+	const digest = await crypto.subtle.digest(
+		"SHA-256",
+		new TextEncoder().encode(value),
+	);
+	return btoa(String.fromCharCode(...new Uint8Array(digest)))
+		.replace(/\+/g, "-")
+		.replace(/\//g, "_")
+		.replace(/=+$/, "");
+}
+
+async function authorize(request: Request, env: Env): Promise<Response> {
+	const oauth = authorizationServer.getOAuthApi(env);
+
+	// GET /authorize: ask for consent before sending the user to GitHub.
+	if (request.method === "GET") {
+		const authRequest = await oauth.parseAuthRequest(request);
+		const details = await oauth.describeConsent(authRequest);
+		const consent = await oauth.beginConsent(authRequest);
+		consent.headers.set("Content-Type", "text/html; charset=utf-8");
+		return new Response(await consentPage(details, consent.handle), {
+			headers: consent.headers,
+		});
+	}
+
+	// POST /authorize: the user decided.
+	const form = await request.formData();
+	const handle = String(form.get("handle"));
+	if (form.get("decision") !== "approve") {
+		const denied = await oauth.denyConsent(request, handle);
+		return new Response(null, { status: 302, headers: denied.headers });
+	}
+	const approved = await oauth.approveConsent(request, handle);
+
+	const verifier = crypto.randomUUID() + crypto.randomUUID();
+	const { state, headers } = await oauth.beginUpstream(approved.request, {
+		data: { verifier }, // returned at the callback, never sent to GitHub
+		headers: approved.headers,
+	});
+
+	const github = new URL("https://github.com/login/oauth/authorize");
+	github.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
+	github.searchParams.set("redirect_uri", new URL("/callback", request.url).toString());
+	github.searchParams.set("scope", "read:user");
+	github.searchParams.set("state", state);
+	github.searchParams.set("code_challenge", await sha256(verifier));
+	github.searchParams.set("code_challenge_method", "S256");
+	headers.set("Location", github.toString());
+	return new Response(null, { status: 302, headers });
+}
+
+async function callback(request: Request, env: Env): Promise<Response> {
+	const oauth = authorizationServer.getOAuthApi(env);
+	const { request: original, data, headers } =
+		await oauth.finishUpstream<{ verifier: string }>(request);
+
+	const code = new URL(request.url).searchParams.get("code");
+	if (!code) return new Response("GitHub did not return a code", { status: 400 });
+
+	const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
+		method: "POST",
+		headers: { Accept: "application/json", "Content-Type": "application/json" },
+		body: JSON.stringify({
+			client_id: env.GITHUB_CLIENT_ID,
+			client_secret: env.GITHUB_CLIENT_SECRET,
+			code,
+			code_verifier: data.verifier,
+		}),
+	});
+	const { access_token } = await tokenResponse.json<{ access_token: string }>();
+
+	const userResponse = await fetch("https://api.github.com/user", {
+		headers: { Authorization: `Bearer ${access_token}`, "User-Agent": "my-mcp-server" },
+	});
+	const user = await userResponse.json<{ id: number; login: string }>();
+
+	const { redirectTo } = await oauth.completeAuthorization({
+		request: original,
+		userId: String(user.id),
+		metadata: {},
+		scope: original.scope,
+		props: { login: user.login, githubToken: access_token }, // encrypted at rest
+	});
+	headers.set("Location", redirectTo);
+	return new Response(null, { status: 302, headers });
+}
+
+export default class AuthServer extends WorkerEntrypoint<Env> {
+	async fetch(request: Request) {
+		const { pathname } = new URL(request.url);
+		try {
+			if (pathname === "/authorize") return await authorize(request, this.env);
+			if (pathname === "/callback") return await callback(request, this.env);
+		} catch (error) {
+			if (!(error instanceof AuthorizationError)) throw error;
+			if (error.redirectTo) return Response.redirect(error.redirectTo, 302);
+			return new Response(error.description, { status: 400 });
+		}
+		return authorizationServer.fetch(request, this.env, this.ctx);
+	}
+
+	validateToken(resource: string, token: string) {
+		return authorizationServer.validateToken(resource, token, this.env);
+	}
+}
 ```
+
+</TypeScriptExample>
 
 Refer to [Signing in through another provider](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/upstream-sign-in.md) for the full flow, including refreshing and revoking the provider's tokens.
 
@@ -117,16 +303,61 @@ Refer to [Signing in through another provider](https://github.com/cloudflare/wor
 
 `requiredScopes` is advertised to clients but not enforced. Check scopes in the handler, and return `insufficientScope()` when one is missing so the client can ask the user for it:
 
+<TypeScriptExample>
+
 ```ts
-handler: {
-	fetch(request, env, ctx) {
-		if (!ctx.auth.scope.includes("mcp:read")) {
-			return insufficientScope(ctx.auth, ["mcp:read"]);
-		}
-		return mcpHandler(request, env, ctx);
+import {
+	OAuthResourceServer,
+	insufficientScope,
+	type AuthorizationServerBinding,
+} from "@cloudflare/workers-oauth-provider";
+import { McpServer } from "@modelcontextprotocol/server";
+import { createMcpHandler, getMcpAuthContext } from "agents/mcp/server";
+import { env } from "cloudflare:workers";
+
+type AuthProps = { userId: string };
+
+interface Env {
+	AUTH_SERVER: AuthorizationServerBinding<AuthProps>;
+}
+
+function createServer() {
+	const server = new McpServer({ name: "my-mcp-server", version: "1.0.0" });
+	const props = getMcpAuthContext()?.props as AuthProps;
+
+	server.registerTool(
+		"whoami",
+		{ description: "Return the signed-in user" },
+		async () => ({
+			content: [{ type: "text", text: props.userId }],
+		}),
+	);
+
+	return server;
+}
+
+const mcpHandler = createMcpHandler(createServer);
+
+export default new OAuthResourceServer<Env, AuthProps>({
+	resourceMetadata: {
+		resource: env.MCP_SERVER_URL, // tokens for any other resource are rejected
+		authorization_servers: [env.AUTH_SERVER_URL],
 	},
-},
+	requiredScopes: ["mcp:read"],
+	validateToken: (env) => env.AUTH_SERVER.validateToken,
+	handler: {
+		fetch(request, env, ctx) {
+			// requiredScopes is advertised, not enforced: check it here.
+			if (!ctx.auth.scope.includes("mcp:read")) {
+				return insufficientScope(ctx.auth, ["mcp:read"]);
+			}
+			return mcpHandler(request, env, ctx);
+		},
+	},
+});
 ```
+
+</TypeScriptExample>
 
 Props can hold upstream access tokens. Do not log them or return them from tools.
 
