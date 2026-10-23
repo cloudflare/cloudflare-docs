@@ -162,12 +162,12 @@ Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruc
 For MCP setup guides and troubleshooting, refer to each agent's official documentation:
 
 - Claude Code: `https://docs.anthropic.com/en/docs/claude-code/mcp`
-- Droid: `https://docs.factory.ai/cli/configuration/mcp`
 - Cursor: `https://cursor.com/docs/mcp`
 - Devin Desktop: `https://docs.devin.ai/desktop/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
 - GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
 - Vibe: `https://docs.mistral.ai/vibe/code/cli/mcp-servers`
+- Droid: `https://docs.factory.ai/cli/configuration/mcp`
 - Skills: `https://github.com/cloudflare/skills`
 - Cloudflare API MCP server (Code Mode): `https://github.com/cloudflare/mcp`
 - Other Cloudflare MCP servers: `https://github.com/cloudflare/mcp-server-cloudflare`
