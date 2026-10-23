@@ -123,7 +123,7 @@ import {
 	type VoiceTurnContext,
 } from "@cloudflare/voice";
 import { generateText, tool, stepCountIs } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
 
 const VoiceAgent = withVoice(Agent);
@@ -137,11 +137,11 @@ export class TalkToDocs extends VoiceAgent<Env> {
 	// the reply, calling AI Search as a retrieval tool when it needs facts from
 	// your knowledge base.
 	async onTurn(transcript: string, context: VoiceTurnContext) {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = await generateText({
 			// Use a Workers AI model that supports function calling.
-			model: workersai("@cf/zai-org/glm-5.2"),
+			model: ai("@cf/zai-org/glm-5.2"),
 			system:
 				"You are a helpful voice assistant that answers from a Cloudflare AI Search knowledge base. " +
 				"For questions about the product, call the searchKnowledgeBase tool first and answer using the results. " +

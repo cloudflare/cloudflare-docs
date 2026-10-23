@@ -142,6 +142,7 @@ The REST API returns the following error codes:
 | 403         | 10102 | `email.sending.error.authentication.forbidden`      | Token lacks permission to send                 |
 | 403         | 10105 | `email.sending.error.authentication.not_entitled`   | Account not entitled to use Email Sending      |
 | 403         | 10203 | `email.sending.error.email.sending_disabled`        | Sending disabled for this zone or account      |
+| 403         | 10207 | `email.sending.error.email.account_suspended`       | Email Sending is paused for the account        |
 | 404         | 10000 | `email.sending.error.not_found`                     | Resource not found                             |
 | 429         | 10004 | `email.sending.error.throttled`                     | Rate limit exceeded                            |
 | 500         | 10002 | `email.sending.error.internal_server`               | Internal server error                          |

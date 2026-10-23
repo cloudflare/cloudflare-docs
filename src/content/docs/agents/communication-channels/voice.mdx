@@ -243,17 +243,17 @@ export class MyAgent extends VoiceAgent<Env> {
 
 ```ts
 import { streamText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends VoiceAgent<Env> {
 	transcriber = new WorkersAIFluxSTT(this.env.AI);
 	tts = new WorkersAITTS(this.env.AI);
 
 	async onTurn(transcript: string, context: VoiceTurnContext) {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/moonshotai/kimi-k2.6"),
+			model: ai("@cf/moonshotai/kimi-k2.6"),
 			system: "You are a helpful voice assistant. Keep responses concise.",
 			messages: [
 				...context.messages.map((m) => ({

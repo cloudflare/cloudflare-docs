@@ -49,6 +49,7 @@ import DeepgramAura from "~/components/models/code/DeepgramAura.astro";
 import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 import ClefCode from "~/components/models/code/ClefCode.astro";
+import ClairicCode from "~/components/models/code/ClairicCode.astro";
 
 interface Props {
 	model: ModelView;
@@ -76,6 +77,9 @@ const isClef = [
 	"@cf/cloudflare/clef-flash",
 	"@cf/cloudflare/clef-omni",
 ].includes(model.name);
+
+// Clairic extraction models take typed fields, not chat messages.
+const isClairic = model.name === "@cf/cloudflare/clairic";
 
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
@@ -114,6 +118,9 @@ if (!hasCatalogUsage) {
 	if (isClef) {
 		CodeExamples = ClefCode;
 	}
+	if (isClairic) {
+		CodeExamples = ClairicCode;
+	}
 }
 
 const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
@@ -145,7 +152,7 @@ function bannerAsideType(
 // exclusion (gpt-oss is not in our slice — kept as a documented dead branch).
 let hasPlayground =
 	model.task === "Text Generation" && model.hosting === "hosted";
-if (model.name.includes("@cf/openai/gpt-oss") || isClef) {
+if (model.name.includes("@cf/openai/gpt-oss") || isClef || isClairic) {
 	hasPlayground = false;
 }
 
@@ -240,6 +247,7 @@ const headings: MarkdownHeading[] = [
 	hasRemainingExamples && { depth: 2, slug: "examples", text: "Examples" },
 	hasSchema && { depth: 2, slug: "parameters", text: "Parameters" },
 	hasSchema && { depth: 2, slug: "api-schemas", text: "API Schemas (Raw)" },
+	isClairic && { depth: 2, slug: "terms", text: "Terms" },
 ].filter(Boolean) as MarkdownHeading[];
 ---
 
@@ -685,6 +693,26 @@ const headings: MarkdownHeading[] = [
 					</div>
 				))}
 			</div>
+		</Fragment>
+	)}
+
+	{isClairic && (
+		<Fragment>
+			<AnchorHeading depth={2} title="Terms" slug="terms" />
+			<p>
+				You may access or use this model at your sole discretion. Cloudflare
+				does not make any representations, warranties, or guarantees regarding
+				the model, including, but not limited to, as to its continued
+				availability and integrity. If Cloudflare makes the model available to
+				you, it is on an “AS IS” and “AS AVAILABLE” basis, and Cloudflare has no
+				obligation to indemnify you for any claims arising from your use of the
+				model. Cloudflare may cease providing it without entitling you to any
+				refund, credit, or other compensation. Cloudflare will not be directly
+				or indirectly responsible or liable to you in any manner, for any harms,
+				damages, loss, lost profits, special or consequential damages, or
+				claims, arising out of or in connection with the use of, or reliance on
+				the performance of the model.
+			</p>
 		</Fragment>
 	)}
 </DocsLayout>

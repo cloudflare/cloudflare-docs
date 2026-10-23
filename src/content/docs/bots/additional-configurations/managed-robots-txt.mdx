@@ -17,6 +17,12 @@ AI companies use crawlers to collect website content for training language model
 
 `robots.txt` compliance is voluntary. The file expresses your preferences, but it does not prevent crawlers from accessing your content at a technical level. Some crawler operators may disregard your `robots.txt` directives (instructions like `Disallow: /`) and crawl your content regardless.
 
+:::caution[When does the managed content appear?]
+Cloudflare prepends managed directives and the Content Signals Policy to your `robots.txt` only when **Enable Bot Preference Sync** is turned on and at least one of your Search, Agent, or Training policies is set to **Block**, **Block on pages with ads**, or, for Training, **Disallow**. With every policy set to allow, there is nothing to prepend and your `robots.txt` is served unchanged.
+
+After you save your AI bot policies, the managed content appears within a few seconds. Reload your `robots.txt` to verify — no cache purge is required.
+:::
+
 :::note
 To enforce access restrictions, use [AI Crawl Control](/ai-crawl-control/features/manage-ai-crawlers/) to block selected AI crawlers. You can use `robots.txt` to express your preferences and AI Crawl Control to enforce crawler-specific blocks.
 :::

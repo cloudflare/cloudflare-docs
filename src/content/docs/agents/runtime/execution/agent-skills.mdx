@@ -113,6 +113,8 @@ export default async function run(input: unknown, ctx: SkillRunContext) {
 
 `ctx` is `{ skill, files, workspace, tools, output }`. `ctx.files` holds bundled text resources by relative path, `ctx.workspace` is gated by the workspace permission, `ctx.tools` only exposes tools the runner was given, and `ctx.output.writeFile(name, content)` returns scratch artifacts to the model (it does not mutate the workspace). Python and Bash use the path-based contract instead: `/input.json`, `/context.json`, bundled resources under `/skill`, and `/output` for artifacts.
 
+`workspaceInstance` must be a `Workspace` from [`@cloudflare/computer`](https://github.com/cloudflare/computer). In Think, `this.workspace` already is one. Relative paths in skill scripts resolve against `/workspace`.
+
 Passing `workspaceInstance` gives scripts read-only workspace access by default. Network access, tools, and workspace writes are opt-in. The default timeout is 30 seconds.
 
 ## Example

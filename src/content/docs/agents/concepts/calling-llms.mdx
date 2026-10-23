@@ -58,15 +58,15 @@ An Agent keeps running after the client disconnects. When the response arrives, 
 ```ts
 import { Agent } from "agents";
 import { streamText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Agent<Env> {
 	async onMessage(connection: Connection, message: WSMessage) {
 		const { prompt } = JSON.parse(message as string);
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt,
 		});
 
@@ -103,9 +103,9 @@ export class DigestAgent extends Agent<Env> {
 			SELECT title, body FROM articles
 			WHERE created_at > datetime('now', '-1 day')`;
 
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 		const { text } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt: `Summarize these articles:\n${articles.map((a) => a.title + ": " + a.body).join("\n\n")}`,
 		});
 
@@ -128,25 +128,25 @@ Because an Agent maintains state across calls, you can chain multiple models in 
 ```ts
 import { Agent } from "agents";
 import { generateText, embed } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class TriageAgent extends Agent<Env> {
 	async triage(ticket: string) {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const { text: category } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt: `Classify this support ticket into one of: billing, technical, account. Ticket: ${ticket}`,
 		});
 
 		const { embedding } = await embed({
-			model: workersai("@cf/baai/bge-base-en-v1.5"),
+			model: ai.embedding("@cf/baai/bge-base-en-v1.5"),
 			value: ticket,
 		});
 		const similar = await this.env.VECTOR_DB.query(embedding, { topK: 5 });
 
 		const { text: response } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt: `Draft a response for this ${category} ticket. Similar resolved tickets: ${JSON.stringify(similar)}. Ticket: ${ticket}`,
 		});
 
@@ -180,9 +180,9 @@ export class CachingAgent extends Agent<Env> {
 			return cached[0].response;
 		}
 
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 		const { text } = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt,
 		});
 

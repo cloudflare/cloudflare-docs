@@ -135,6 +135,33 @@ export function renderRepoFile(
 	return `${header}\n${shown.join("\n")}${rest}`;
 }
 
+const BINARY_SNIFF_BYTES = 8_192;
+
+/**
+ * Binary files (images, fonts, archives) are not useful as text, and their
+ * JSON-escaped bytes cost many times more tokens than the character cap
+ * suggests. A NUL byte in the leading bytes, or invalid UTF-8, marks a file
+ * as binary.
+ */
+export function isBinaryContent(bytes: Uint8Array): boolean {
+	if (bytes.subarray(0, BINARY_SNIFF_BYTES).includes(0)) return true;
+	try {
+		new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+		return false;
+	} catch {
+		return true;
+	}
+}
+
+/** Metadata-only result for a binary file; confirms it exists at the ref. */
+export function renderBinaryFile(
+	path: string,
+	ref: string,
+	size: number,
+): string {
+	return `[${path}: binary file, ${size} bytes, exists at ${ref}. Contents are not shown.]`;
+}
+
 const lineNumber = (description: string) =>
 	v.optional(
 		v.pipe(v.number(), v.integer(), v.minValue(1), v.description(description)),
@@ -144,7 +171,7 @@ const lineNumber = (description: string) =>
 export function readRepoFileDefinition(defaultRef: string = DEFAULT_REF) {
 	return {
 		name: "read_repo_file",
-		description: `Read a text file from the cloudflare/cloudflare-docs repo. The default ref is "${defaultRef}". Pass start_line and end_line to read part of a large file. Output over ${MAX_FILE_CHARS} characters is cut at a line boundary with a note saying where to continue.`,
+		description: `Read a text file from the cloudflare/cloudflare-docs repo. Binary files (images, fonts) return only their size, which confirms they exist. The default ref is "${defaultRef}". Pass start_line and end_line to read part of a large file. Output over ${MAX_FILE_CHARS} characters is cut at a line boundary with a note saying where to continue.`,
 		input: v.object({
 			path: v.pipe(
 				v.string(),
@@ -194,6 +221,8 @@ export function makeReadRepoFileTool(
 				// mojibake for non-ASCII content (em dashes, smart quotes, CJK, etc.).
 				const binary = atob((data_.content as string).replace(/\n/g, ""));
 				const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+				if (isBinaryContent(bytes))
+					return renderBinaryFile(path, ref, bytes.length);
 				const text = new TextDecoder().decode(bytes);
 				return renderRepoFile(path, text, {
 					start_line: data.start_line,

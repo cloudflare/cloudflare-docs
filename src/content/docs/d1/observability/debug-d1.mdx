@@ -73,7 +73,7 @@ Before retrying any failed operation:
 | `Your account has exceeded D1's free tier daily row write limit. Upgrade to a paid plan or wait until tomorrow (midnight UTC) to continue. See https://developers.cloudflare.com/d1/platform/limits/ for more details.` | Your account has reached its daily D1 Free tier row write limit. | App action: Wait until midnight UTC for the limit to reset, or upgrade your account to a paid plan. Refer to [Limits](/d1/platform/limits/). |
 | `D1 DB reset because its code was updated.`                                 | Cloudflare has updated the code for D1 (or the underlying Durable Object), and the Durable Object which contains the D1 database is restarting.                           | Retry the operation.                                                                                                                              |
 | `Internal error while starting up D1 DB storage caused object to be reset.` | The Durable Object containing the D1 database is failing to start.                                                                                                        | Retry the operation.                                                                                                                              |
-| `Network connection lost.`                                                  | A network error.                                                                                                                                                          | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
+| `Network connection lost.`                                                  | A network error affecting the specific D1 database instance. Each D1 database runs as its own Durable Object. A disruption to one database does not affect other databases on the account. D1 automatically retries read-only queries up to two additional times. Write queries are not retried automatically.                | Retry the operation. For write queries, use idempotent application-level retry logic — refer to [Retry queries](/d1/best-practices/retry-queries/). |
 | `Replica disconnected from primary.`                                        | A network error between the read replica and its primary instance.                                                                                                        | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
 | `Internal error in D1 DB storage caused object to be reset.`                | An error has caused the D1 database to restart.                                                                                                                           | Retry the operation.                                                                                                                              |
 | `Cannot resolve D1 DB due to transient issue on remote node.`               | The query cannot reach the Durable Object containing the D1 database.                                                                                                     | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
@@ -118,3 +118,25 @@ You should include as much of the following in any bug report:
 * Learn [how to debug Workers](/workers/observability/).
 * Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
 * Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/local-development/).
+
+## D1 binding timeout behavior
+
+D1 binding methods — `run()`, `all()`, `first()`, and `batch()` — do not accept a timeout option or an `AbortSignal`. There is no per-call timeout built into the D1 binding client.
+
+Workers have no wall-time limit on incoming HTTP requests while the client connection is open — see [Workers limits](/workers/platform/limits/). If the D1 database is temporarily unreachable, a D1 binding call blocks until the operation completes, an internal limit is reached, or the Worker is terminated by an external event such as the client disconnecting.
+
+To limit how long your Worker waits on a D1 call, use `Promise.race` with a timer:
+
+```js
+const timeout = new Promise((_, reject) =>
+  setTimeout(() => reject(new Error('D1 call timed out')), 5000)
+);
+const result = await Promise.race([
+  db.prepare('SELECT 1').first(),
+  timeout,
+]);
+```
+
+:::caution[Write operations and Promise.race]
+`Promise.race` bounds how long your Worker waits — it does not cancel the D1 query. A write that loses the race may still commit in the background. Always confirm the outcome of a write before retrying to avoid duplicate writes.
+:::
