@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { DirectoryListing } from "~/components";
+import { DashButton, DirectoryListing, Steps } from "~/components";
 
 You can integrate cloud environments and SaaS applications with [Cloudflare CASB](/cloudflare-one/cloud-and-saas-findings/). Once you have added an integration, you can [view and manage findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/).
 
@@ -17,3 +17,40 @@ You can also configure [CASB webhooks](/cloudflare-one/integrations/cloud-and-sa
 The workflow pages for managing findings and webhooks appear first, followed by supported integrations and troubleshooting guides:
 
 <DirectoryListing maxDepth={2} />
+
+## Create an integration
+
+### Create an integration manually
+
+<Steps>
+
+1. In [Cloudflare One](https://one.dash.cloudflare.com/), go to **Integrations** > **Cloud & SaaS integrations**.
+
+   <DashButton url="/?to=/:account/integrations/cloud-and-saas/integrations" zeroTrust />
+
+2. Select **Connect an integration** or **Add integration**.
+3. Browse the available integrations and select the application you want to add.
+4. Follow the integration instructions in the dashboard.
+5. To run your first scan, select **Save integration**.
+
+</Steps>
+
+### Create an integration with Terraform
+
+Terraform supports only integrations that do not use OAuth. Use version 5 of the Cloudflare Terraform provider. Version 4 is not supported.
+
+Use the [`cloudflare_zero_trust_casb_integration`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_casb_integration) resource to create a CASB integration:
+
+```tf
+resource "cloudflare_zero_trust_casb_integration" "google_cloud_platform" {
+  account_id = var.cloudflare_account_id
+  name       = "Google Cloud Platform"
+  paused     = false
+
+  google_cloud_platform = {
+    google_cloud_platform_service_account = {
+      service_account_key_json = file("service-account-key.json")
+    }
+  }
+}
+```
