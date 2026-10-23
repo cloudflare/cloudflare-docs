@@ -199,8 +199,6 @@ This means:
 - A spam or junk classification after acceptance is a receiver-side decision. It can occur even when SPF, DKIM, and DMARC all pass.
 - The receiving provider's reputation databases, spam filters, and user feedback signals all influence placement independently of authentication.
 
-Spam complaints from some providers do reach Cloudflare. You can see them as `complaint` suppressions and `message.complained` events.
-
 #### Step 1: Verify authentication records
 
 Go to **Compute** > **Email Service** > **Email Sending** > **Settings** and confirm that all DNS records show a healthy status. Every record must be present and valid. For more information about each record type, see [SPF issues](#spf-sender-policy-framework-issues), [DKIM issues](#dkim-domainkeys-identified-mail-issues), and [DMARC issues](#dmarc-domain-based-message-authentication-reporting--conformance-issues).
@@ -212,7 +210,7 @@ If a DNS record is missing, restore it from the **Settings** page.
 1. Go to **Compute** > **Email Service** > **Email Sending** > **Activity log**.
 2. Locate the affected message and confirm its status is **Delivered** — not **Retrying**, **Delivery failed**, **Suppressed**, **Rejected as spam**, or **Error**.
 3. Note the **Message-ID** — you will need this value if you open a support case.
-4. Check whether the message appears in your suppression list with `reason: complaint`. Spam complaints from some providers are recorded as `complaint` suppressions. If you subscribe to event subscriptions, also check for `message.complained` events.
+4. Check whether the recipient is on your suppression list with `reason: complaint`. Spam complaints from some providers are recorded as `complaint` suppressions. If you subscribe to event subscriptions, also check for `message.complained` events.
 
 A **Delivered** status means the provider's server accepted the message. To confirm authentication, check the received headers in Step 3.
 
@@ -326,7 +324,6 @@ If you have completed the checklist and still need support, include these detail
 | **Zone ID** | Cloudflare dashboard **Overview** page, sidebar |
 | **Full received headers** | Full message source from the recipient's mail client, including `Authentication-Results` and any `X-Spam-*` headers |
 | **Provider and folder** | Where the message landed, for example `iCloud Mail — Junk` |
-| **Reputation status** | **Email Sending** > **Settings** — reputation indicator |
 | **Messages sent in the last 7 days** | Email Sending dashboard or Analytics |
 
 For other authentication and delivery issues:
