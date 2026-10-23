@@ -157,7 +157,7 @@ Configure these settings in the **Advanced settings** tab of your [self-hosted a
 
 - **Allow localhost clients**: Allow any client with redirect URIs on `localhost`.
 - **Allow loopback clients**: Allow any client with redirect URIs on `127.0.0.1`.
-- **Allowed redirect URIs**: Redirect URIs allowed for dynamically registered clients (for example, `https://playground.ai.cloudflare.com/*`). The URL must use `https`. Paths may end in `/*` to match all sub-paths.
+- **Allowed redirect URIs**: Redirect URIs allowed for dynamically registered clients. HTTP and HTTPS paths may end in `/*` to match all sub-paths (for example, `https://playground.ai.cloudflare.com/*`). Native applications may use private-use URI schemes such as `cursor://anysphere.cursor-mcp/oauth/callback` or `com.example.app:/oauth/callback`. Custom-scheme URIs must be listed explicitly and match exactly; they cannot contain wildcards, credentials, or fragments.
 - **Grant session duration**: How long the OAuth refresh token remains valid.
 - **Access token lifetime**: How long an OIDC Access token can be used to authenticate with your application. Cloudflare recommends configuring a short **Access token lifetime** (default 15 minutes) in conjunction with a longer **Grant session duration**. When the access token expires, Cloudflare uses the refresh token to issue a new one after re-evaluating the user against your Access policies. When the refresh token expires, the user must re-authenticate with the identity provider.
 
