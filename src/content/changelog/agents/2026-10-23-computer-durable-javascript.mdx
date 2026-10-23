@@ -1,6 +1,6 @@
 ---
-title: "@cloudflare/computer resumes JavaScript runs after deploys and pauses them for approvals"
-description: Isolate JavaScript runs in @cloudflare/computer can now survive deploys and crashes, and pause until someone approves an action.
+title: "@cloudflare/computer JavaScript runs can now be paused and resumed"
+description: Isolate JavaScript runs in @cloudflare/computer can now survive deploys and crashes as well as pausing on approvals or out of band checks.
 products:
   - agents
   - workers
@@ -9,13 +9,11 @@ date: 2026-10-23
 
 import { TypeScriptExample } from "~/components";
 
-[`@cloudflare/computer`](https://github.com/cloudflare/computer) v0.7.0 can resume isolate JavaScript runs after a deploy or crash, and lets a run pause until someone answers, for example to approve an action. Both features are experimental.
-
-Until now, a deploy or a Durable Object restart ended every run in flight. Long agent tasks, and tasks that need a person to sign off, had to fit between deploys.
+[`@cloudflare/computer`](https://github.com/cloudflare/computer) v0.7.0 now supports resuming a JavaScript run after a deploy or crash. It also supports pausing a run on an external action, for example to approve a tool call.
 
 ## Resume interrupted runs
 
-Set `onInterrupt: "replay"` on `WorkerJavaScriptBackend`, or on a single run. The code the agent runs does not need to change.
+Set `onInterrupt: "replay"` on `WorkerJavaScriptBackend`, or on a single run.
 
 <TypeScriptExample>
 
@@ -41,13 +39,11 @@ export class MyAgent extends DurableObject<Env> {
 
 After a restart, the run carries on from where it was, without repeating calls it already made or printing its output twice.
 
-A call that was still running at the restart runs again. Each host module call gets a `context.callId` that stays the same across that rerun, so you can use it as an idempotency key. To fail the run instead, wrap the function in `unsafeToRepeat()`.
+Interrupted runs resume on the next call or by calling `workspace.runtime.recover()`. Passing `onInterrupt: "restart"` starts the run again from the beginning.
 
-Nothing wakes a Durable Object after a deploy. Interrupted runs resume on the next runtime call, or when your alarm calls `workspace.runtime.recover()`. For code that is safe to repeat, `onInterrupt: "restart"` starts the run again from the beginning instead.
+## Wait for approvals
 
-## Wait for an answer
-
-A host module function can call `ctx.interrupt()` to pause a replayable run until someone answers. The code in the isolate calls the function as usual and gets its result.
+A host module function can call `ctx.interrupt()` to pause a replay-able run until it receives an answer.
 
 <TypeScriptExample>
 
@@ -72,7 +68,7 @@ new WorkerJavaScriptBackend({
 
 </TypeScriptExample>
 
-A waiting run holds no isolate, and time spent waiting does not count toward its timeout. The wait also survives deploys. List the waiting calls with `workspace.runtime.pending()`, and answer one with `respond()`:
+The time spent waiting does not count toward its timeout. The wait also survives deploys. Fetch the pending calls with `workspace.runtime.pending()` and resolve them with `respond()`:
 
 <TypeScriptExample>
 
@@ -84,6 +80,6 @@ for (const call of await workspace.runtime.pending()) {
 
 </TypeScriptExample>
 
-Once every waiting call in the run has an answer, the run continues, and `ctx.interrupt()` returns the answer. To notify someone when a call starts waiting, give the backend an `onWait` function.
+The run continues once all pending calls are resolved. The `onWait` option can be passed to the backend to listen for and act on pending calls.
 
 For setup, current limitations, and how replay works, refer to [Resume runs after a restart](/agents/tools/filesystem/#resume-runs-after-a-restart).
