@@ -47,6 +47,8 @@ The following example configures the `not_found_handling` for a single-page appl
 
 </WranglerConfig>
 
+If `assets.base_path` is not set, the plugin uses the root-relative Vite [`base`](https://vite.dev/config/shared-options.html#base) value. Set `assets.base_path` explicitly to override the Vite value. Relative paths, full URLs, and protocol-relative Vite base values are not used for `assets.base_path`.
+
 ## Features
 
 The Vite plugin ensures that all of Vite's [static asset handling](https://vite.dev/guide/assets) features are supported in your Worker as well as in your frontend.
