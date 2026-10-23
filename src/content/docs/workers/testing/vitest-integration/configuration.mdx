@@ -134,7 +134,7 @@ export default defineConfig({
 Options passed directly to `cloudflareTest()`.
 
 - `config`: `boolean | string` optional
-  - Load `main`, [compatibility settings](/workers/configuration/compatibility-dates/), [bindings](/workers/runtime-apis/bindings/), triggers, and exports from a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file. Pass `true` to load `cloudflare.config.ts` from the project root, or pass a path to the file relative to the project root. You cannot use `config` together with `wrangler`.
+  - Load `main`, [compatibility settings](/workers/configuration/compatibility-dates/), [bindings](/workers/runtime-apis/bindings/), triggers, and exports from a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file. Pass `true` to load `cloudflare.config.ts` from the project root, or pass a path to the file relative to the project root. You cannot use `config` together with `wrangler` or `miniflare`.
 
   - Function-form configuration receives the Vitest mode as `ctx.mode`. The mode defaults to `test`. To use a different mode, run `vitest --mode <MODE>`. Refer to [Select a mode](/cf/projects/cloudflare-config/#select-a-mode) for more information.
 
@@ -144,18 +144,11 @@ Options passed directly to `cloudflareTest()`.
 
   - [Remote bindings](/workers/local-development/#remote-bindings) authenticate with `cf` credentials. Sign in with [`cf auth login`](/cf/get-started/#sign-in), or set `CLOUDFLARE_API_TOKEN` in the environment. Apart from Hyperdrive connection strings, the integration reads `CLOUDFLARE_*` variables from the environment only, not from `.env` files.
 
-  - With `config`, the `miniflare` option takes native Miniflare Worker options, which are merged over `cloudflare.config.ts`:
-    - `miniflare.config` sets Worker settings, such as `env`, `triggers`, and `assets`. Bindings in `env` replace bindings with the same name in `cloudflare.config.ts`, and queue triggers replace the triggers for the same queue. Other settings replace those in `cloudflare.config.ts`.
-    - `miniflare.dev` sets development settings, such as `outboundService`.
-    - `miniflare.workers` defines auxiliary Workers, each in the native Miniflare Worker shape.
-
-  - To serve static assets, set `miniflare.config.assets.directory`. The assets binding and settings from `cloudflare.config.ts` then apply.
-
 - `main`: string optional
   - Entry point to Worker run in the same isolate/context as tests. This option is required to use Durable Objects without an explicit `scriptName` if classes are defined in the same Worker. This file goes through Vite transforms and can be TypeScript. Note that `import module from "<path-to-main>"` inside tests gives exactly the same `module` instance as is used internally for `exports` and Durable Object bindings. If `wrangler.configPath` is defined and this option is not, it will be read from the `main` field in that configuration file. If `config` is set and this option is not, the integration uses the `entrypoint` from `cloudflare.config.ts`.
 
 - `miniflare`: `SourcelessWorkerOptions & { workers?: WorkerOptions\[]; }` optional
-  - If `config` is set, this option takes native Miniflare Worker options instead. Refer to the `config` option above.
+  - You cannot use `miniflare` together with `config`.
   - Use this to provide configuration information that is typically stored within the [Wrangler configuration file](/workers/wrangler/configuration/), such as [bindings](/workers/runtime-apis/bindings/), [compatibility dates](/workers/configuration/compatibility-dates/), and [compatibility flags](/workers/configuration/compatibility-flags/). The `WorkerOptions` interface is defined [here](https://github.com/cloudflare/workers-sdk/tree/main/packages/miniflare#interface-workeroptions). Use the `main` option above to configure the entry point, instead of the Miniflare `script`, `scriptPath`, or `modules` options.
     - If no `compatibility_date` is provided, then the test will use the latest locally available date.
 
