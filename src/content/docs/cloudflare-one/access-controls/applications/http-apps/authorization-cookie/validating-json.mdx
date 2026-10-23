@@ -109,9 +109,9 @@ You can now paste the AUD tag into your token validation script. The AUD tag wil
 
 ### Cloudflare Workers example
 
-When Cloudflare Access is in front of your [Worker](/workers), your Worker still needs to validate the JWT that Cloudflare Access adds to the `Cf-Access-Jwt-Assertion` header on the incoming request.
+When Cloudflare Access directly invokes your [Worker](/workers/), use [`ctx.access`](/workers/configuration/cloudflare-access/#read-authenticated-user-identity-with-ctxaccess) to confirm that Access authenticated the request. You can also use it to read the signed-in user's identity. You do not need to parse or validate the JWT. Before using this option, review the [`ctx.access` limitations](/workers/configuration/cloudflare-access/#ctxaccess-limitations) for Static Assets and Service Bindings.
 
-The following code will validate the JWT using the [jose NPM package](https://www.npmjs.com/package/jose):
+If you need to validate the JWT manually, read it from the `Cf-Access-Jwt-Assertion` header. The following code validates the token using the [jose npm package](https://www.npmjs.com/package/jose):
 
 <TypeScriptExample>
 
