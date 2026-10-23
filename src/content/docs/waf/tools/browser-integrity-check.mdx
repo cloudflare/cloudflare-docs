@@ -40,7 +40,8 @@ Also, use a [configuration rule](/rules/configuration-rules/) to selectively ena
 Your Browser Integrity Check setting, custom rules with a skip action, and configuration rules only apply to requests evaluated in your zone.
 
 - Hostnames on Cloudflare-managed zones, such as `*.pages.dev` and `*.workers.dev`, always have Browser Integrity Check turned on. You cannot turn it off for these hostnames.
-- Requests to a custom domain of a Pages project are also evaluated on the `pages.dev` zone. A rule in your zone that skips Browser Integrity Check does not prevent the check on the `pages.dev` zone. For more information, refer to [Pages known issues](/pages/platform/known-issues/).
+- Requests to a custom domain of a Pages project are evaluated again on the `pages.dev` zone. A rule in your zone does not apply to that second evaluation. For more information, refer to [Pages known issues](/pages/platform/known-issues/).
+- A Worker on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in your zone uses your zone's settings.
 
-If an automated client is blocked with [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/) in these cases, configure it to send a descriptive `User-Agent` header that identifies your application.
+If an automated client is blocked with [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/), configure it to send a descriptive `User-Agent` header that identifies your application. You do not need to impersonate a browser.
 :::
