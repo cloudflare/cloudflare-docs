@@ -30,20 +30,20 @@ The Sandbox SDK provides multiple image variants. All except `-musl` are based o
 
 ```dockerfile
 # Default - lean, no Python
-FROM docker.io/cloudflare/sandbox:0.12.13
+FROM docker.io/cloudflare/sandbox:0.12.14
 
 # Python - includes Python 3.11 + data science packages
-FROM docker.io/cloudflare/sandbox:0.12.13-python
+FROM docker.io/cloudflare/sandbox:0.12.14-python
 
 # OpenCode - includes OpenCode CLI for AI coding
-FROM docker.io/cloudflare/sandbox:0.12.13-opencode
+FROM docker.io/cloudflare/sandbox:0.12.14-opencode
 
 # musl - minimal Alpine image, no Node.js, Bun, or Python
-FROM docker.io/cloudflare/sandbox:0.12.13-musl
+FROM docker.io/cloudflare/sandbox:0.12.14-musl
 ```
 
 :::caution[Version synchronization required]
-Always match the Docker image version to your npm package version. If you're using `@cloudflare/sandbox@0.12.13`, use `docker.io/cloudflare/sandbox:0.12.13` (or variant) as your base image.
+Always match the Docker image version to your npm package version. If you are using `@cloudflare/sandbox@0.12.14`, use `docker.io/cloudflare/sandbox:0.12.14` (or variant) as your base image.
 
 **Why this matters**: The SDK automatically checks version compatibility on startup. Mismatched versions can cause features to break or behave unexpectedly. If versions don't match, you'll see warnings in your logs.
 
@@ -87,7 +87,7 @@ Its sandbox binary is built for musl, so it also runs in other Alpine-based imag
 Create a `Dockerfile` in your project root:
 
 ```dockerfile title="Dockerfile"
-FROM docker.io/cloudflare/sandbox:0.12.13-python
+FROM docker.io/cloudflare/sandbox:0.12.14-python
 
 # Install additional Python packages
 RUN pip install --no-cache-dir \
@@ -128,7 +128,7 @@ You can add sandbox capabilities to any Docker image using the standalone binary
 FROM your-custom-image:tag
 
 # Copy the sandbox binary from the official image
-COPY --from=docker.io/cloudflare/sandbox:0.12.13 /container-server/sandbox /sandbox
+COPY --from=docker.io/cloudflare/sandbox:0.12.14 /container-server/sandbox /sandbox
 
 ENTRYPOINT ["/sandbox"]
 ```
@@ -138,7 +138,7 @@ The `/sandbox` binary starts the HTTP API server that enables SDK communication.
 ```dockerfile title="Dockerfile"
 FROM node:22-slim
 
-COPY --from=docker.io/cloudflare/sandbox:0.12.13 /container-server/sandbox /sandbox
+COPY --from=docker.io/cloudflare/sandbox:0.12.14 /container-server/sandbox /sandbox
 
 # Copy your application
 COPY . /app
@@ -155,7 +155,7 @@ When using `CMD`, the sandbox binary runs your command as a child process with p
 For more complex startup sequences, create a custom startup script:
 
 ```dockerfile title="Dockerfile"
-FROM docker.io/cloudflare/sandbox:0.12.13-python
+FROM docker.io/cloudflare/sandbox:0.12.14-python
 
 COPY my-app.js /workspace/my-app.js
 COPY startup.sh /workspace/startup.sh
