@@ -1,0 +1,343 @@
+<figure
+	class="realtimekit-preset-diagram not-content"
+	aria-label="An App contains a reusable Preset library. Presets are assigned to Participants in a large ed-tech classroom Meeting: webinar-host to the Teacher, webinar-participant to Students, and group-call-host to the Teaching assistant."
+>
+	<div class="rtpd-stage">
+		<section class="rtpd-app">
+			<span class="rtpd-boundary-label">App</span>
+
+			<div class="rtpd-card rtpd-library">
+				<div class="rtpd-card-head">App-level configuration</div>
+				<div class="rtpd-card-title">
+					<span class="rtpd-icon" aria-hidden="true">
+						<svg viewBox="0 0 20 20" fill="none">
+							<path d="M4 5h7M15 5h1M4 10h2M10 10h6M4 15h8M16 15h0"></path>
+							<circle cx="13" cy="5" r="2"></circle>
+							<circle cx="8" cy="10" r="2"></circle>
+							<circle cx="14" cy="15" r="2"></circle>
+						</svg>
+					</span>
+					<span>
+						<strong>Preset library</strong>
+						<small>Reusable participant roles</small>
+					</span>
+				</div>
+
+				<div class="rtpd-library-list">
+					<code>webinar-host</code>
+					<code>webinar-participant</code>
+					<code>group-call-host</code>
+				</div>
+			</div>
+
+			<div class="rtpd-assignment" aria-hidden="true">
+				<span>assigned to Participants</span>
+				<svg viewBox="0 0 16 36" fill="none">
+					<path d="M8 1v31M2 26l6 6 6-6"></path>
+				</svg>
+			</div>
+
+			<section class="rtpd-meeting">
+				<span class="rtpd-boundary-label"
+					>Meeting · Large Ed-Tech Classroom</span
+				>
+
+				<div class="rtpd-card rtpd-roster">
+					<div class="rtpd-card-head">participant roster</div>
+					<div class="rtpd-roster-row rtpd-roster-heading" aria-hidden="true">
+						<span>Participant</span>
+						<span>Assigned Preset</span>
+					</div>
+					<div class="rtpd-roster-row">
+						<span><strong>Teacher</strong><small>Participant</small></span>
+						<code>webinar-host</code>
+					</div>
+					<div class="rtpd-roster-row">
+						<span
+							><strong>Students</strong><small>Multiple Participants</small
+							></span
+						>
+						<code>webinar-participant</code>
+					</div>
+					<div class="rtpd-roster-row">
+						<span
+							><strong>Teaching assistant</strong><small>Participant</small
+							></span
+						>
+						<code>group-call-host</code>
+					</div>
+				</div>
+			</section>
+		</section>
+	</div>
+</figure>
+
+<style>
+	.realtimekit-preset-diagram {
+		--rtpd-panel: #fbfbfb;
+		--rtpd-dot: rgb(0 0 0 / 8%);
+		--rtpd-card: #ffffff;
+		--rtpd-head: #f4f4f5;
+		--rtpd-border: #e3e3e6;
+		--rtpd-line: #c1c1c8;
+		--rtpd-text: #1a1a1c;
+		--rtpd-muted: #8a8a90;
+		--rtpd-accent: #f6821f;
+		--rtpd-accent-soft: rgb(246 130 31 / 14%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .realtimekit-preset-diagram {
+		--rtpd-panel: #121213;
+		--rtpd-dot: rgb(255 255 255 / 9%);
+		--rtpd-card: #1b1b1d;
+		--rtpd-head: #242427;
+		--rtpd-border: #38383c;
+		--rtpd-line: #4d4d54;
+		--rtpd-text: #f3f3f5;
+		--rtpd-muted: #9a9aa2;
+	}
+
+	.rtpd-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem;
+		border: 1px solid var(--rtpd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtpd-dot) 1px, transparent 1px),
+			var(--rtpd-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtpd-app,
+	.rtpd-meeting {
+		position: relative;
+		box-sizing: border-box;
+		border: 1px dashed var(--rtpd-border);
+		border-radius: 0.75rem;
+	}
+
+	.rtpd-app {
+		max-width: 680px;
+		margin: 0 auto;
+		padding: 1.4rem 0.8rem 0.8rem;
+	}
+
+	.rtpd-meeting {
+		padding: 1.4rem 0.7rem 0.7rem;
+		border-color: var(--rtpd-accent);
+		background: var(--rtpd-accent-soft);
+	}
+
+	.rtpd-boundary-label {
+		position: absolute;
+		top: -0.65rem;
+		left: 1rem;
+		display: inline-flex;
+		max-width: calc(100% - 1.5rem);
+		padding: 0.1rem 0.5rem;
+		border: 1px solid var(--rtpd-border);
+		border-radius: 9999px;
+		background: var(--rtpd-panel);
+		color: var(--rtpd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+
+	.rtpd-meeting > .rtpd-boundary-label {
+		border-color: var(--rtpd-accent);
+		color: var(--rtpd-accent);
+	}
+
+	.rtpd-card {
+		display: flex;
+		box-sizing: border-box;
+		min-width: 0;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--rtpd-border);
+		border-radius: 0.625rem;
+		background: var(--rtpd-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+	}
+
+	.rtpd-card-head {
+		overflow: hidden;
+		padding: 0.25rem 0.625rem;
+		border-bottom: 1px solid var(--rtpd-border);
+		background: var(--rtpd-head);
+		color: var(--rtpd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.625rem;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.rtpd-card-title {
+		display: flex;
+		align-items: center;
+		gap: 0.625rem;
+		padding: 0.75rem;
+	}
+
+	.rtpd-card-title > span:last-child,
+	.rtpd-roster-row > span:first-child {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.rtpd-card-title strong,
+	.rtpd-roster-row strong {
+		color: var(--rtpd-text);
+		font-size: 0.75rem;
+		font-weight: 600;
+		line-height: 1.25;
+	}
+
+	.rtpd-card-title strong {
+		font-size: 0.875rem;
+	}
+
+	.rtpd-card-title small,
+	.rtpd-roster-row small {
+		color: var(--rtpd-muted);
+		font-size: 0.625rem;
+		line-height: 1.3;
+	}
+
+	.rtpd-icon {
+		display: grid;
+		width: 1.5rem;
+		height: 1.5rem;
+		flex: none;
+		place-items: center;
+		color: var(--rtpd-accent);
+	}
+
+	.rtpd-icon svg {
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtpd-library-list {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		border-top: 1px solid var(--rtpd-border);
+	}
+
+	.rtpd-library-list code {
+		display: grid;
+		min-width: 0;
+		min-height: 2.75rem;
+		place-items: center;
+		padding: 0.4rem;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+		color: var(--rtpd-text);
+		font-size: 0.625rem;
+		text-align: center;
+		white-space: normal;
+		word-break: break-word;
+	}
+
+	.rtpd-library-list code + code {
+		border-left: 1px solid var(--rtpd-border);
+	}
+
+	.rtpd-assignment {
+		display: flex;
+		height: 3.5rem;
+		align-items: center;
+		justify-content: center;
+		gap: 0.4rem;
+		color: var(--rtpd-muted);
+	}
+
+	.rtpd-assignment span {
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+	}
+
+	.rtpd-assignment svg {
+		width: 0.85rem;
+		height: 2.25rem;
+		stroke: var(--rtpd-line);
+		stroke-width: 1.7;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtpd-meeting .rtpd-card {
+		border-color: color-mix(
+			in srgb,
+			var(--rtpd-accent) 55%,
+			var(--rtpd-border)
+		);
+	}
+
+	.rtpd-roster-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		align-items: center;
+		gap: 0.75rem;
+		padding: 0.55rem 0.75rem;
+		border-top: 1px solid var(--rtpd-border);
+	}
+
+	.rtpd-roster-heading {
+		padding-block: 0.35rem;
+		border-top: 0;
+		background: var(--rtpd-head);
+		color: var(--rtpd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+	}
+
+	.rtpd-roster-row code {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		box-shadow: none;
+		color: var(--rtpd-text);
+		font-size: 0.625rem;
+		white-space: normal;
+		word-break: break-word;
+	}
+
+	@container (max-width: 640px) {
+		.rtpd-app {
+			max-width: 360px;
+		}
+
+		.rtpd-library-list {
+			grid-template-columns: 1fr;
+		}
+
+		.rtpd-library-list code + code {
+			border-top: 1px solid var(--rtpd-border);
+			border-left: 0;
+		}
+
+		.rtpd-meeting {
+			padding-inline: 0.5rem;
+		}
+	}
+</style>

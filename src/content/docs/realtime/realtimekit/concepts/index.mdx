@@ -8,7 +8,11 @@ products:
   - realtime
 ---
 
-This page outlines the core concepts and key terminology used throughout RealtimeKit.
+import RealtimeKitConceptsDiagram from "~/components/realtimekit/RealtimeKitConceptsDiagram.astro";
+
+RealtimeKit organizes video and audio experiences around five core resources. An [**App**](/realtime/realtimekit/concepts/#app) is the top-level workspace. Within an App, you create reusable [**Meetings**](/realtime/realtimekit/concepts/#meeting) and add [**Participants**](/realtime/realtimekit/concepts/#participant) to them. Each Participant receives a [**Preset**](/realtime/realtimekit/concepts/#preset) that defines what they can do and how the Meeting appears to them. When Participants join a Meeting, RealtimeKit creates a [**Session**](/realtime/realtimekit/concepts/#session) for that live call. The same Meeting can host many Sessions over time. The diagram below shows how these resources fit together.
+
+<RealtimeKitConceptsDiagram />
 
 ### App
 

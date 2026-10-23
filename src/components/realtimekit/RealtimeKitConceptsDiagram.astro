@@ -1,0 +1,552 @@
+<figure
+	class="realtimekit-concepts-diagram not-content"
+	aria-label="The Acme Learning App has reusable teacher and student Presets for group calls. Both roles can use a microphone and camera, but only the teacher can share their screen and use host controls. Biology 101 and Chemistry 101 are separate Meetings that reuse these Presets. Each Meeting contains separate Sessions for each weekly class."
+>
+	<div class="rtcd-stage">
+		<section class="rtcd-app">
+			<header class="rtcd-app-label">
+				<strong>App</strong>
+				<span>Acme Learning</span>
+			</header>
+
+			<section class="rtcd-presets">
+				<header class="rtcd-section-label">
+					<strong>Presets</strong>
+					<span>Reusable across every Meeting in this App</span>
+				</header>
+
+				<div class="rtcd-preset-grid">
+					<article class="rtcd-card rtcd-preset">
+						<div class="rtcd-card-head">GROUP_CALL · Custom Preset</div>
+						<div class="rtcd-card-title">
+							<span class="rtcd-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<path d="M4 5h7M15 5h1M4 10h2M10 10h6M4 15h8M16 15h0"></path>
+									<circle cx="13" cy="5" r="2"></circle>
+									<circle cx="8" cy="10" r="2"></circle>
+									<circle cx="14" cy="15" r="2"></circle>
+								</svg>
+							</span>
+							<strong><code>teacher</code></strong>
+						</div>
+						<ul class="rtcd-permissions">
+							<li>Microphone and camera: Allowed</li>
+							<li>Screen sharing: Allowed</li>
+							<li>Host controls: Allowed</li>
+						</ul>
+					</article>
+
+					<article class="rtcd-card rtcd-preset">
+						<div class="rtcd-card-head">GROUP_CALL · Custom Preset</div>
+						<div class="rtcd-card-title">
+							<span class="rtcd-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<path d="M4 5h7M15 5h1M4 10h2M10 10h6M4 15h8M16 15h0"></path>
+									<circle cx="13" cy="5" r="2"></circle>
+									<circle cx="8" cy="10" r="2"></circle>
+									<circle cx="14" cy="15" r="2"></circle>
+								</svg>
+							</span>
+							<strong><code>student</code></strong>
+						</div>
+						<ul class="rtcd-permissions">
+							<li>Microphone and camera: Allowed</li>
+							<li>Screen sharing: Not allowed</li>
+							<li>Host controls: Not allowed</li>
+						</ul>
+					</article>
+				</div>
+			</section>
+
+			<div class="rtcd-reuse" aria-hidden="true">
+				<span
+					>Assign the same Presets to Participants in different Meetings</span
+				>
+				<svg class="rtcd-branch" viewBox="0 0 400 36" fill="none">
+					<path d="M200 1v12M60 13h280M60 13v20M340 13v20"></path>
+					<path d="m54 27 6 6 6-6M334 27l6 6 6-6"></path>
+				</svg>
+				<svg class="rtcd-arrow" viewBox="0 0 16 40" fill="none">
+					<path d="M8 1v36M2 31l6 6 6-6"></path>
+				</svg>
+			</div>
+
+			<div class="rtcd-meeting-grid">
+				<section class="rtcd-meeting">
+					<header class="rtcd-meeting-label">
+						<span>Reusable Meeting</span>
+						<strong>Biology 101</strong>
+					</header>
+
+					<div class="rtcd-resource-group">
+						<div class="rtcd-group-label">Participants</div>
+						<div class="rtcd-participant">
+							<span class="rtcd-person-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<circle cx="10" cy="7" r="3"></circle>
+									<path d="M4.5 17c.5-3 2.3-4.5 5.5-4.5s5 1.5 5.5 4.5"></path>
+								</svg>
+							</span>
+							<span>Teacher</span>
+							<small><code>teacher</code></small>
+						</div>
+						<div class="rtcd-participant">
+							<span class="rtcd-person-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<circle cx="10" cy="7" r="3"></circle>
+									<path d="M4.5 17c.5-3 2.3-4.5 5.5-4.5s5 1.5 5.5 4.5"></path>
+								</svg>
+							</span>
+							<span>Students</span>
+							<small><code>student</code></small>
+						</div>
+					</div>
+
+					<div class="rtcd-resource-group">
+						<div class="rtcd-group-label">Sessions</div>
+						<div class="rtcd-session-grid">
+							<div class="rtcd-session">
+								<span class="rtcd-session-icon" aria-hidden="true">1</span>
+								<span
+									><strong>Session 1</strong><small>Week 1 class</small></span
+								>
+							</div>
+							<div class="rtcd-session">
+								<span class="rtcd-session-icon" aria-hidden="true">2</span>
+								<span
+									><strong>Session 2</strong><small>Week 2 class</small></span
+								>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="rtcd-meeting">
+					<header class="rtcd-meeting-label">
+						<span>Reusable Meeting</span>
+						<strong>Chemistry 101</strong>
+					</header>
+
+					<div class="rtcd-resource-group">
+						<div class="rtcd-group-label">Participants</div>
+						<div class="rtcd-participant">
+							<span class="rtcd-person-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<circle cx="10" cy="7" r="3"></circle>
+									<path d="M4.5 17c.5-3 2.3-4.5 5.5-4.5s5 1.5 5.5 4.5"></path>
+								</svg>
+							</span>
+							<span>Teacher</span>
+							<small><code>teacher</code></small>
+						</div>
+						<div class="rtcd-participant">
+							<span class="rtcd-person-icon" aria-hidden="true">
+								<svg viewBox="0 0 20 20" fill="none">
+									<circle cx="10" cy="7" r="3"></circle>
+									<path d="M4.5 17c.5-3 2.3-4.5 5.5-4.5s5 1.5 5.5 4.5"></path>
+								</svg>
+							</span>
+							<span>Students</span>
+							<small><code>student</code></small>
+						</div>
+					</div>
+
+					<div class="rtcd-resource-group">
+						<div class="rtcd-group-label">Sessions</div>
+						<div class="rtcd-session-grid">
+							<div class="rtcd-session">
+								<span class="rtcd-session-icon" aria-hidden="true">1</span>
+								<span
+									><strong>Session 1</strong><small>Week 1 class</small></span
+								>
+							</div>
+							<div class="rtcd-session">
+								<span class="rtcd-session-icon" aria-hidden="true">2</span>
+								<span
+									><strong>Session 2</strong><small>Week 2 class</small></span
+								>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+		</section>
+	</div>
+</figure>
+
+<style>
+	.realtimekit-concepts-diagram {
+		--rtcd-panel: #fbfbfb;
+		--rtcd-dot: rgb(0 0 0 / 8%);
+		--rtcd-card: #ffffff;
+		--rtcd-head: #f4f4f5;
+		--rtcd-border: #dedee2;
+		--rtcd-line: #b8b8bf;
+		--rtcd-text: #1a1a1c;
+		--rtcd-muted: #77777f;
+		--rtcd-accent: #f6821f;
+		--rtcd-accent-soft: rgb(246 130 31 / 9%);
+
+		min-width: 0;
+		max-width: 100%;
+		margin: 1.5rem 0;
+		container-type: inline-size;
+	}
+
+	:root[data-theme="dark"] .realtimekit-concepts-diagram {
+		--rtcd-panel: #121213;
+		--rtcd-dot: rgb(255 255 255 / 9%);
+		--rtcd-card: #1b1b1d;
+		--rtcd-head: #242427;
+		--rtcd-border: #38383c;
+		--rtcd-line: #5c5c64;
+		--rtcd-text: #f3f3f5;
+		--rtcd-muted: #a0a0a8;
+	}
+
+	.rtcd-stage {
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem 1rem 1rem;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 0.75rem;
+		background:
+			radial-gradient(circle, var(--rtcd-dot) 1px, transparent 1px),
+			var(--rtcd-panel);
+		background-size: 16px 16px;
+	}
+
+	.rtcd-app {
+		position: relative;
+		box-sizing: border-box;
+		max-width: 720px;
+		margin: 0 auto;
+		padding: 2.5rem 0.75rem 0.75rem;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 0.75rem;
+		background: color-mix(in srgb, var(--rtcd-panel) 88%, transparent);
+	}
+
+	.rtcd-app-label {
+		position: absolute;
+		top: 0.7rem;
+		left: 0.9rem;
+		display: flex;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+
+	.rtcd-app-label strong,
+	.rtcd-section-label strong,
+	.rtcd-meeting-label strong {
+		color: var(--rtcd-text);
+		font-weight: 650;
+		line-height: 1.2;
+	}
+
+	.rtcd-app-label strong {
+		font-size: 0.875rem;
+	}
+
+	.rtcd-app-label span,
+	.rtcd-section-label span,
+	.rtcd-meeting-label span,
+	.rtcd-group-label,
+	.rtcd-reuse span {
+		color: var(--rtcd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+		line-height: 1.3;
+	}
+
+	.rtcd-presets {
+		padding: 0.75rem;
+		border: 1px dashed var(--rtcd-border);
+		border-radius: 0.625rem;
+	}
+
+	.rtcd-section-label {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 0.625rem;
+	}
+
+	.rtcd-section-label strong {
+		font-size: 0.75rem;
+	}
+
+	.rtcd-preset-grid,
+	.rtcd-meeting-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.75rem;
+	}
+
+	.rtcd-card {
+		display: flex;
+		box-sizing: border-box;
+		min-width: 0;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 0.625rem;
+		background: var(--rtcd-card);
+		box-shadow: 0 1px 2px rgb(0 0 0 / 5%);
+	}
+
+	.rtcd-card-head {
+		padding: 0.3rem 0.625rem;
+		border-bottom: 1px solid var(--rtcd-border);
+		background: var(--rtcd-head);
+		color: var(--rtcd-muted);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+		line-height: 1.2;
+	}
+
+	.rtcd-card-title {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.625rem 0.625rem 0.35rem;
+	}
+
+	.rtcd-card-title strong {
+		color: var(--rtcd-text);
+		font-size: 0.8125rem;
+		font-weight: 600;
+	}
+
+	.rtcd-card-title code,
+	.rtcd-participant code {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: inherit;
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: inherit;
+	}
+
+	.rtcd-icon,
+	.rtcd-person-icon {
+		display: grid;
+		width: 1.25rem;
+		height: 1.25rem;
+		flex: none;
+		place-items: center;
+		color: var(--rtcd-accent);
+	}
+
+	.rtcd-icon svg,
+	.rtcd-person-icon svg {
+		width: 100%;
+		height: 100%;
+		stroke: currentColor;
+		stroke-width: 1.5;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtcd-permissions {
+		display: grid;
+		gap: 0.2rem;
+		margin: 0;
+		padding: 0.15rem 0.625rem 0.625rem 2.25rem;
+		color: var(--rtcd-muted);
+		font-size: 0.625rem;
+		line-height: 1.3;
+	}
+
+	.rtcd-permissions li::marker {
+		color: var(--rtcd-accent);
+	}
+
+	.rtcd-reuse {
+		display: flex;
+		height: 4.5rem;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 0.25rem;
+		color: var(--rtcd-muted);
+	}
+
+	.rtcd-reuse svg {
+		display: block;
+		width: min(80%, 400px);
+		height: 2.25rem;
+		stroke: var(--rtcd-line);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
+
+	.rtcd-reuse .rtcd-arrow {
+		display: none;
+	}
+
+	.rtcd-meeting {
+		min-width: 0;
+		padding: 0.75rem;
+		border: 1px solid var(--rtcd-accent);
+		border-radius: 0.75rem;
+		background: var(--rtcd-accent-soft);
+	}
+
+	.rtcd-meeting-label {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.rtcd-meeting-label strong {
+		font-size: 0.875rem;
+	}
+
+	.rtcd-resource-group {
+		padding: 0.625rem;
+		border: 1px solid color-mix(in srgb, var(--rtcd-border) 85%, transparent);
+		border-radius: 0.5rem;
+		background: color-mix(in srgb, var(--rtcd-card) 92%, transparent);
+	}
+
+	.rtcd-resource-group + .rtcd-resource-group {
+		margin-top: 0.625rem;
+	}
+
+	.rtcd-group-label {
+		margin-bottom: 0.45rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.rtcd-participant {
+		display: grid;
+		grid-template-columns: 1.25rem minmax(0, 1fr) auto;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.4rem 0;
+		color: var(--rtcd-text);
+		font-size: 0.6875rem;
+	}
+
+	.rtcd-participant + .rtcd-participant {
+		border-top: 1px solid var(--rtcd-border);
+	}
+
+	.rtcd-participant small {
+		padding: 0.15rem 0.4rem;
+		border: 1px solid
+			color-mix(in srgb, var(--rtcd-accent) 35%, var(--rtcd-border));
+		border-radius: 9999px;
+		background: var(--rtcd-accent-soft);
+		color: var(--rtcd-muted);
+		font-size: 0.5625rem;
+		line-height: 1.2;
+		white-space: nowrap;
+	}
+
+	.rtcd-session-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.4rem;
+	}
+
+	.rtcd-session {
+		display: flex;
+		min-width: 0;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.45rem;
+		border: 1px solid var(--rtcd-border);
+		border-radius: 0.4rem;
+		background: var(--rtcd-card);
+	}
+
+	.rtcd-session-icon {
+		display: grid;
+		width: 1.25rem;
+		height: 1.25rem;
+		flex: none;
+		place-items: center;
+		border: 1px solid var(--rtcd-accent);
+		border-radius: 50%;
+		color: var(--rtcd-accent);
+		font-family:
+			ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.5625rem;
+	}
+
+	.rtcd-session > span:last-child {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		gap: 0.1rem;
+	}
+
+	.rtcd-session strong {
+		color: var(--rtcd-text);
+		font-size: 0.625rem;
+		font-weight: 600;
+	}
+
+	.rtcd-session small {
+		color: var(--rtcd-muted);
+		font-size: 0.5625rem;
+		line-height: 1.2;
+	}
+
+	@container (max-width: 560px) {
+		.rtcd-stage {
+			padding: 2rem 0.75rem 0.75rem;
+		}
+
+		.rtcd-section-label {
+			align-items: flex-start;
+			flex-direction: column;
+			gap: 0.2rem;
+		}
+
+		.rtcd-preset-grid,
+		.rtcd-meeting-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.rtcd-reuse {
+			height: 4rem;
+			justify-content: center;
+			text-align: center;
+		}
+
+		.rtcd-reuse .rtcd-branch {
+			display: none;
+		}
+
+		.rtcd-reuse .rtcd-arrow {
+			display: block;
+			width: 1rem;
+			height: 1.75rem;
+		}
+	}
+
+	@container (max-width: 360px) {
+		.rtcd-session-grid {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.rtcd-participant {
+			grid-template-columns: 1.25rem minmax(0, 1fr);
+		}
+
+		.rtcd-participant small {
+			grid-column: 2;
+			justify-self: start;
+		}
+	}
+</style>
