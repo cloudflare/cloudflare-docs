@@ -17,6 +17,7 @@ vi.mock("astro:content", async (importOriginal) => {
 						{ id: "7nEJGj", data: { availability: "Beta" } },
 						{ id: "yWaDMQ", data: { availability: "Beta" } },
 						{ id: "FX9rys", data: { availability: "Beta" } },
+						{ id: "iLjfwT", data: { availability: "Beta" } },
 					]
 				: actual.getCollection(id as any, ...args),
 		),
@@ -120,13 +121,16 @@ describe("docsSidebarTransform badges", () => {
 		});
 	});
 
-	test.each(["/basin/", "/basin-pipelines/", "/basin-catalog/", "/basin-sql/"])(
-		"does not add a stale Beta badge to %s",
-		async (href) => {
-			const [item] = await runDocs([link({ href })]);
-			expect(item.badge).toBeUndefined();
-		},
-	);
+	test.each([
+		"/basin/",
+		"/basin-pipelines/",
+		"/basin-catalog/",
+		"/basin-sql/",
+		"/stream/webrtc/",
+	])("does not add a stale Beta badge to %s", async (href) => {
+		const [item] = await runDocs([link({ href })]);
+		expect(item.badge).toBeUndefined();
+	});
 });
 
 describe("docsSidebarTransform Basin links", () => {
