@@ -434,6 +434,8 @@ const { exitCode, value, stdout, stderr } = await run.result();
 | `maxTimeoutMs`     | `180000`              | The longest timeout that a caller can request.                                                    |
 | `globalOutbound`   | `null`                | A `Fetcher` that receives every outbound request from the code. `null` blocks network access.     |
 | `modules`          | —                     | Extra modules that code can import, such as bundled libraries or functions that run in the agent. |
+| `onInterrupt`      | `"fail"`              | What happens to runs that a restart interrupts. Refer to [Resume runs after a restart](#resume-runs-after-a-restart). |
+| `onWait`           | —                     | Called when a host module call starts waiting for an answer. |
 
 ### Give code access to your own functions
 
@@ -467,6 +469,123 @@ export default async function ({ ids }) {
 ```
 
 Always validate input to your module functions, because it comes directly from the model. Computer also includes prebuilt host modules for Git, [Artifacts](/artifacts/), and the agent's own tools. For more information, refer to [Host modules](#host-modules) in the API reference.
+
+## Resume runs after a restart
+
+:::note[Experimental]
+Resuming runs and waiting for answers are experimental. Their behavior and stored data may change in any release, and a run interrupted across such an upgrade fails instead of resuming.
+:::
+
+A deploy or a crash restarts the Durable Object and ends every JavaScript run in flight. The `onInterrupt` option decides what happens to those runs. Set a default on the backend, and override it for a single run in `exec()`:
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({ loader: this.env.LOADER, onInterrupt: "replay" });
+
+await this.workspace.runtime.exec(source, { onInterrupt: "fail" });
+```
+
+</TypeScriptExample>
+
+| Value              | After a restart                                                                                                                                         |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `"fail"` (default) | The run fails.                                                                                                                                          |
+| `"restart"`        | The run starts again from the beginning. Calls it already made run again, and its output repeats.                                                       |
+| `"replay"`         | The run starts again from the beginning, but calls it already made are answered from a journal, and its output is not repeated. Then it continues live. |
+
+The code being run does not need to change for either policy.
+
+A replayable run writes every file system call, host module call, and `fetch` response to a journal in SQLite before the code sees the result. On replay, the code gets the same responses in the same order. Clocks, timers, `Math.random()`, and `crypto.randomUUID()` also return the same values, so the run takes the same path. Everything saved for a run is deleted when the run finishes.
+
+Interrupted runs resume the next time something calls `workspace.runtime`, such as `exec()` or `getExec()`. Nothing else wakes a Durable Object after a deploy. To resume runs without waiting for traffic, call `workspace.runtime.recover()` from the [alarm](/durable-objects/api/alarms/) of the Durable Object.
+
+### Calls that must not run twice
+
+A call that was still running at the restart never returned, so the replay runs it again. Each host module call gets a `callId` that stays the same across that rerun, which you can pass on as an idempotency key. When a function cannot use one, wrap it in `unsafeToRepeat()`. An interruption during that call then fails the run instead.
+
+<TypeScriptExample>
+
+```ts
+import { unsafeToRepeat } from "@cloudflare/computer";
+
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	onInterrupt: "replay",
+	modules: {
+		"ws:billing": {
+			refund: ([order], { callId }) =>
+				this.refund(String(order), { idempotencyKey: callId }),
+			charge: unsafeToRepeat(([order, cents]) =>
+				this.charge(String(order), Number(cents)),
+			),
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+### Wait for an answer
+
+A host module function can pause a replayable run until someone answers, for example to approve an action. The code in the isolate calls the function as usual, and gets its result once the answer arrives.
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	onInterrupt: "replay",
+	modules: {
+		"ws:github": {
+			postComment: async ([issue, body], ctx) => {
+				const { approved } = await ctx.interrupt<{ approved: boolean }>({
+					issue,
+					body,
+				});
+				if (!approved) throw new Error("The comment was rejected.");
+				return this.postComment(issue, body, { idempotencyKey: ctx.callId });
+			},
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+`ctx.interrupt(payload)` releases the isolate of the run once its other calls in flight finish. The run stays running, and time spent waiting does not count toward its timeout. A waiting run survives deploys like any interrupted run.
+
+List the waiting calls with `workspace.runtime.pending()`, and answer one with `respond()`:
+
+<TypeScriptExample>
+
+```ts
+for (const call of await this.workspace.runtime.pending()) {
+	await this.workspace.runtime.respond(call.id, call.callId, {
+		approved: true,
+	});
+}
+```
+
+</TypeScriptExample>
+
+Once none of its calls are waiting, the run replays to the call, and the function runs again with the same `callId`. This time, `ctx.interrupt()` returns the answer straight away. To notify someone when a call starts waiting, pass an `onWait` function to the backend. It receives the same fields as `pending()`, at most once per wait. `killExec()` ends a waiting run.
+
+- A call can interrupt once. A second `ctx.interrupt()` in the same call throws.
+- Only a run with `onInterrupt: "replay"` can wait. In any other run, `ctx.interrupt()` throws.
+- `respond()` throws an `ENOTWAITING` error for a call that is not waiting, such as one already answered.
+
+### Current limitations
+
+These limitations apply to the experimental release and may change in future releases.
+
+- A replay must take the same path as the first attempt. A run fails if it calls or prints something different. Keys from `crypto.subtle.generateKey()`, `node:crypto` randomness, `node:timers`, and `cloudflare:sockets` are not replayed.
+- A replayable run buffers `fetch` responses instead of streaming them, and each body must fit in 1 MiB by default. Requests go through the Durable Object, so they are slower than in other runs. A request in flight at the restart is sent again.
+- A host module function runs again once its answer arrives, so any work before `ctx.interrupt()` must be safe to repeat. Every answer replays the run from the beginning.
+- A run gets three attempts, counted again each time it journals a call. It must finish within its original timeout, counted from when it first started.
+- A run resumes only on the same runtime. A new compatibility date or flags, new size limits on the backend, or a package upgrade that changes how runs replay fails the runs it interrupted.
+- Interrupted runs restart four at a time, because a Durable Object can run up to ten Dynamic Workers at once.
+- Until a run finishes, its journal uses Durable Object storage of roughly the size of every response, plus the code of the run.
 
 ## Limits
 
@@ -530,6 +649,9 @@ Failed operations reject with an error whose `code` is a POSIX error code, such 
 | `killExec(id, options?)`    | Stops a run.                                                                                         |
 | `disposeExec(id, options?)` | Discards a completed run.                                                                            |
 | `backends()`                | Lists the backends and the description that each gives to the model.                                 |
+| `recover()`                 | Resumes interrupted runs. Call it from an alarm. Experimental. |
+| `pending()`                 | Lists the host module calls that are waiting for an answer. Experimental. |
+| `respond(id, callId, answer, options?)` | Answers a waiting call. Experimental. |
 
 `exec()` accepts the following options:
 
@@ -542,6 +664,7 @@ Failed operations reject with an error whose `code` is a POSIX error code, such 
 | `env`       | Environment variables for this run, available to JavaScript as `process.env`. |
 | `stdin`     | Standard input, as a string or `Uint8Array`.                                  |
 | `timeoutMs` | How long the run can take, up to the backend's `maxTimeoutMs`.                |
+| `onInterrupt` | What happens to this run if a restart interrupts it. Overrides the backend's default. |
 
 The result contains `status` (`"completed"`, `"failed"`, or `"cancelled"`), `exitCode`, `stdout`, `stderr`, and `value`, the return value of a JavaScript module. When output is too long, `truncated` names the workspace file that holds all of it.
 
