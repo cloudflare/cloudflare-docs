@@ -15,7 +15,7 @@ Server Name Indication (SNI) is a TLS extension that lets a client specify which
 
 Clients that omit SNI from their `ClientHello` — typically legacy embedded devices or very old operating systems — receive a TLS handshake failure (alert 40) when connecting to a Cloudflare for SaaS custom hostname. Without SNI, the edge cannot determine which certificate to serve.
 
-SNI support has been part of TLS 1.2 since [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066) (2011) and is available in all modern TLS stacks. Upgrading the TLS library on affected devices is the recommended fix.
+SNI support has been part of TLS 1.2 since [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066) and is available in all modern TLS stacks. Upgrading the TLS library on affected devices is the recommended fix.
 
 ## Limitation for custom hostnames
 
