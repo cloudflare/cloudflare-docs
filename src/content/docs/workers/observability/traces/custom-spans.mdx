@@ -433,7 +433,7 @@ Returns the identity of the span: its trace ID, span ID, and trace flags. The fi
 - For the root span returned by `getActiveSpan()` outside any custom span, `spanContext()` returns the invocation's trace ID and root span ID.
 - If observability is disabled for the Worker, `traceId` and `spanId` are all zeros (`"00000000000000000000000000000000"` and `"0000000000000000"`).
 - If traces are disabled or the request is not sampled for tracing, but [Workers Logs](/workers/observability/logs/workers-logs/) is enabled, `spanContext()` still returns non-zero IDs. The trace ID matches the one attached to the invocation's logs, but no spans are stored for it.
-- `traceFlags` is currently always `0`, including for requests that are sampled.
+- `traceFlags` does not currently indicate whether the request is sampled for tracing. Do not use it to decide whether to record telemetry, or to build a `traceparent` header for downstream services.
 
 Use `spanContext()` to correlate a request with its trace, for example by logging the trace ID or returning it to the client:
 
@@ -460,7 +460,9 @@ export default {
 
 #### `span.isTraced`
 
-A `readonly boolean` indicating whether this invocation is being traced. When the request is not sampled (based on your [`head_sampling_rate`](/workers/observability/traces/#sampling)), `isTraced` is `false` and `enterSpan` still runs the callback but does not record any telemetry.
+A `readonly boolean` indicating whether this invocation is being traced. `isTraced` is `false` when observability is disabled for the Worker, and after the span has ended. When `isTraced` is `false`, `enterSpan` still runs the callback but does not record any telemetry.
+
+`isTraced` does not currently account for [head sampling](/workers/observability/traces/#sampling). A request that is not sampled for tracing can still report `true`, and its spans are discarded after the invocation.
 
 You can use this to skip expensive attribute computation when the request is not being traced:
 
@@ -633,6 +635,7 @@ After a span reaches its data limit, the runtime ignores further `setAttribute`,
 ## Limitations
 
 - **No manual parent-child wiring.** Parent-child relationships are determined by the JavaScript async context automatically.
+- **Sampling decisions are not visible to your code.** `span.isTraced` and `spanContext().traceFlags` do not reflect head sampling. Trace context is also not propagated automatically. Refer to [known limitations](/workers/observability/traces/known-limitations/).
 - **Span status is not shown in the dashboard.** Status set with `setStatus()` is included in exported traces, but the Workers Observability dashboard does not display it yet, and you cannot query or filter by it.
 
 For other tracing limitations, refer to the [known limitations](/workers/observability/traces/known-limitations/) page.
