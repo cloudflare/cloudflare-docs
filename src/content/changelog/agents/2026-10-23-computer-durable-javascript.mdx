@@ -1,0 +1,89 @@
+---
+title: "@cloudflare/computer resumes JavaScript runs after deploys and pauses them for approvals"
+description: Isolate JavaScript runs in @cloudflare/computer can now survive deploys and crashes, and pause until someone approves an action.
+products:
+  - agents
+  - workers
+date: 2026-10-23
+---
+
+import { TypeScriptExample } from "~/components";
+
+[`@cloudflare/computer`](https://github.com/cloudflare/computer) v0.7.0 can resume isolate JavaScript runs after a deploy or crash, and lets a run pause until someone answers, for example to approve an action. Both features are experimental.
+
+Until now, a deploy or a Durable Object restart ended every run in flight. Long agent tasks, and tasks that need a person to sign off, had to fit between deploys.
+
+## Resume interrupted runs
+
+Set `onInterrupt: "replay"` on `WorkerJavaScriptBackend`, or on a single run. The code the agent runs does not need to change.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+
+export class MyAgent extends DurableObject<Env> {
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({
+				loader: this.env.LOADER,
+				onInterrupt: "replay",
+			}),
+		],
+	});
+}
+```
+
+</TypeScriptExample>
+
+The backend writes every filesystem call, host module call, and `fetch` response to a journal in SQLite. After a restart, the run starts again from the top. Calls it already made are answered from the journal, in their original order, and its output is not repeated. Once the run catches up, it continues live. Clocks, timers, and random values repeat on replay, so the run takes the same path.
+
+A call that was still running at the restart runs again. Each host module call gets a `context.callId` that stays the same across that rerun, so you can use it as an idempotency key. To fail the run instead, wrap the function in `unsafeToRepeat()`.
+
+Nothing wakes a Durable Object after a deploy. Interrupted runs resume on the next runtime call, or when your alarm calls `workspace.runtime.recover()`. For code that is safe to repeat, `onInterrupt: "restart"` starts the run again from the beginning instead.
+
+## Wait for an answer
+
+A host module function can call `ctx.interrupt()` to pause a replayable run until someone answers. The code in the isolate calls the function as usual and gets its result.
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	onInterrupt: "replay",
+	modules: {
+		"ws:github": {
+			postComment: async ([issue, body], ctx) => {
+				const { approved } = await ctx.interrupt<{ approved: boolean }>({
+					issue,
+					body,
+				});
+				if (!approved) throw new Error("The comment was rejected.");
+				return github.comment(issue, body, { idempotencyKey: ctx.callId });
+			},
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+A waiting run holds no isolate, and time spent waiting does not count toward its timeout. The wait also survives deploys. List the waiting calls with `workspace.runtime.pending()`, and answer one with `respond()`:
+
+<TypeScriptExample>
+
+```ts
+for (const call of await workspace.runtime.pending()) {
+	await workspace.runtime.respond(call.id, call.callId, { approved: true });
+}
+```
+
+</TypeScriptExample>
+
+Once every waiting call in the run has an answer, the run replays to the call, and `ctx.interrupt()` returns the answer. To notify someone when a call starts waiting, give the backend an `onWait` function.
+
+For setup, current limitations, and how replay works, refer to [Resume runs after a restart](/agents/tools/filesystem/#resume-runs-after-a-restart).
