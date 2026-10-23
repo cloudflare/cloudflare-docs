@@ -102,7 +102,7 @@ If your [custom domain](/pages/configuration/custom-domains/) has not moved from
 
 ### Blocked HTTP validation
 
-Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/access-controls/policies/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
+Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/access-controls/policies/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), [a WAF custom rule](/waf/custom-rules/), a [Client-Side Security content security rule](/client-side-security/rules/) etc.), validation cannot be completed.
 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 
