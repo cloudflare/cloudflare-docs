@@ -11,14 +11,24 @@ products:
 
 This error indicates that access to the website is denied based on your browser's signature.
 
-### Common cause
+### Common causes
 
-A website owner blocked your request based on your client's web browser.
+- A website owner blocked your request based on your client's web browser.
+- The request was sent to a `*.pages.dev` or `*.workers.dev` hostname, or to a custom domain of a Pages project, with a `User-Agent` header that Browser Integrity Check treats as a non-browser client (for example, the default Python `urllib` user agent). Refer to [Requests to Pages projects or workers.dev](#requests-to-pages-projects-or-workersdev).
 
 ### Resolution
 
-Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/). Site owners can [turn off Browser Integrity Check](/waf/tools/browser-integrity-check/#disable-browser-integrity-check) in the Security **Settings** page.
+Notify the website owner of the blocking. If you cannot determine how to contact the website owner, lookup contact information for the domain via the [Whois database](https://lookup.icann.org/). Site owners can [turn off Browser Integrity Check](/waf/tools/browser-integrity-check/#disable-browser-integrity-check) in the Security **Settings** page. This does not apply to `pages.dev` and `workers.dev` hostnames, or to custom domains of Pages projects. Refer to [Requests to Pages projects or workers.dev](#requests-to-pages-projects-or-workersdev).
 
 :::note
-Since the website owner performed the blocking, Cloudflare support cannot override a customer's security settings.
+Cloudflare support cannot override a customer's security settings. Browser Integrity Check on `pages.dev` and `workers.dev` cannot be turned off, either by the site owner or by Cloudflare support.
 :::
+
+### Requests to Pages projects or workers.dev
+
+Requests to `*.pages.dev` and `*.workers.dev` hostnames, and to custom domains of Pages projects, are checked by Browser Integrity Check on a Cloudflare-managed zone. This check runs even if you have turned off Browser Integrity Check in your own zone, or skipped it with a custom rule or configuration rule. These blocks do not appear in your zone's Security Events. You may only see your own skip rule match.
+
+**Resolution:** Configure your client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0`) instead of the library default.
+
+- For Workers, serve the Worker on a [custom domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) on your zone instead of `workers.dev`. Your zone's Browser Integrity Check settings then apply.
+- For Pages, refer to [Pages known issues](/pages/platform/known-issues/).
