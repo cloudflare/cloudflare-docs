@@ -121,8 +121,8 @@ If DKIM validation is failing:
 
 1. Verify the DKIM record exists in DNS
 2. Check that the record name matches the correct selector:
-   - Email Sending: `cf-bounce._domainkey.yourdomain.com`
-   - Email Routing: `cf2024-1._domainkey.yourdomain.com`
+   - Email Sending: `cf-bounce._domainkey.example.com`
+   - Email Routing: `cf2024-1._domainkey.example.com`
 3. Ensure there are no extra spaces or characters in the DNS record
 4. Wait for DNS propagation (up to 48 hours)
 5. Use online DKIM validators to test your configuration
@@ -131,7 +131,9 @@ If DKIM validation is failing:
 
 ### Missing DMARC policy
 
-While not required, DMARC significantly improves email deliverability:
+While not required, DMARC significantly improves email deliverability. When Email Sending is enabled on a domain, Cloudflare adds a `p=reject` DMARC record to the sending domain if none exists. If you already have a DMARC record, Cloudflare keeps it unchanged.
+
+To add a DMARC record manually:
 
 1. Go to **DNS** > **Records** in the Cloudflare dashboard.
 
@@ -185,7 +187,7 @@ This error occurs when passing `ArrayBuffer` content in attachment fields during
 
 ### Transactional email going to spam or junk
 
-Use this checklist to diagnose inbox placement problems before opening a support case. Work through each step in order — most issues are identified at steps 1 through 4.
+Use this checklist to diagnose inbox placement problems before opening a support case. Work through each step in order.
 
 #### Delivery status versus inbox placement
 
@@ -195,45 +197,24 @@ This means:
 
 - A message can show as **Delivered** in your logs and still land in the recipient's spam or junk folder.
 - A spam or junk classification after acceptance is a receiver-side decision. It can occur even when SPF, DKIM, and DMARC all pass.
-- The receiving provider's reputation databases, spam filters, and user feedback signals (recipients marking messages as spam or moving them to their inbox) all influence placement independently of authentication.
+- The receiving provider's reputation databases, spam filters, and user feedback signals all influence placement independently of authentication.
+
+Spam complaints from some providers do reach Cloudflare. You can see them as `complaint` suppressions and `message.complained` events.
 
 #### Step 1: Verify authentication records
 
-Go to **Compute** > **Email Service** > **Email Sending** > **Settings** and confirm that all DNS records show a healthy status. Every record must be present and valid.
+Go to **Compute** > **Email Service** > **Email Sending** > **Settings** and confirm that all DNS records show a healthy status. Every record must be present and valid. For more information about each record type, see [SPF issues](#spf-sender-policy-framework-issues), [DKIM issues](#dkim-domainkeys-identified-mail-issues), and [DMARC issues](#dmarc-domain-based-message-authentication-reporting--conformance-issues).
 
-You can also verify from the command line:
-
-```sh
-# SPF for the bounce domain
-dig TXT cf-bounce.yourdomain.com +short
-
-# DKIM for Email Sending
-dig TXT cf-bounce._domainkey.yourdomain.com +short
-
-# DMARC on the organizational domain
-dig TXT _dmarc.yourdomain.com +short
-```
-
-Expected results:
-
-- SPF: `"v=spf1 include:_spf.mx.cloudflare.net ~all"`
-- DKIM: `"v=DKIM1; h=sha256; k=rsa; p=..."`
-- DMARC: `"v=DMARC1; p=none;"` or stricter
-
-If DMARC is missing, add a record with `p=none` and a `rua` reporting address to begin receiving aggregate data:
-
-```txt
-v=DMARC1; p=none; rua=mailto:dmarc@yourdomain.com
-```
+If a DNS record is missing, restore it from the **Settings** page.
 
 #### Step 2: Check the Activity log
 
 1. Go to **Compute** > **Email Service** > **Email Sending** > **Activity log**.
-2. Locate the affected message and confirm its status is **Delivered** — not **Failed** or **Rejected**.
-3. Expand the message row to review the authentication results (SPF, DKIM, DMARC) and the receiving server's SMTP response.
-4. Note the **Message-ID** — you will need this value if you open a support case.
+2. Locate the affected message and confirm its status is **Delivered** — not **Retrying**, **Delivery failed**, **Suppressed**, **Rejected as spam**, or **Error**.
+3. Note the **Message-ID** — you will need this value if you open a support case.
+4. Check whether the message appears in your suppression list with `reason: complaint`. Spam complaints from some providers are recorded as `complaint` suppressions. If you subscribe to event subscriptions, also check for `message.complained` events.
 
-A **Delivered** status with passing authentication and no bounce means the message reached the provider's server successfully. Any junk classification happened after acceptance and is outside Cloudflare's control.
+A **Delivered** status means the provider's server accepted the message. To confirm authentication, check the received headers in Step 3.
 
 #### Step 3: Read the received headers
 
@@ -244,46 +225,23 @@ Look for these headers:
 | Header | What it tells you |
 |---|---|
 | `X-Spam-Flag: yes` / `X-Suspected-Spam: true` | The provider flagged the message as spam after delivery |
-| `X-Apple-Action: JUNK` / `X-Icl-Score` | iCloud classified the message as junk and its internal spam score |
+| `X-Apple-MoveToFolder: Junk` / `X-Apple-Action: .../Junk` | iCloud moved the message to Junk |
 | `X-MS-Exchange-Organization-SCL` | Outlook spam confidence level — 5 or higher causes junk placement |
 | `X-Microsoft-Antispam: BCL` | Outlook bulk confidence level |
 | `Authentication-Results` | The provider's own SPF, DKIM, and DMARC evaluation |
 
 If all authentication results show `pass` and the spam flag is still set, the classification is based on domain reputation or message content — not a Cloudflare configuration problem.
 
-#### Step 4: Assess domain age and sending history
-
-Inbox providers weight domain sending history heavily. A domain that has sent fewer than a few hundred messages, or has been active for less than a few weeks, has no positive reputation signal for providers to draw on. Providers treat new senders cautiously regardless of whether authentication passes.
-
-If your domain is fewer than four weeks old, or you have sent fewer than a few hundred messages, inbox placement problems are expected during this warm-up period. To build domain reputation:
-
-1. Send at a low, steady volume — a few dozen messages per day — and increase gradually over two to four weeks.
-2. Send only to recipients who expect the message. High engagement (opens, replies, inbox moves) improves your reputation.
-3. Keep a consistent `From` address and sender name for each sending domain throughout warm-up.
-4. Include both HTML and plain text versions in every message.
-5. Link only to your own domain in message bodies. Third-party redirect services and URL shorteners can lower your reputation score.
-6. Ask early recipients to move messages from junk to their inbox or mark them **Not Junk** or **Not Spam**. User actions are the strongest positive signal for most providers.
-
-Cloudflare manages the shared sending IP pool and maintains good IP-level reputation with inbox providers. Domain reputation, message content, and engagement signals are under your control.
-
-#### Step 5: Review message content
-
-Check the message that was classified as junk:
-
-- Does the `From` address use your own sending domain?
-- Is the sender name consistent across messages?
-- Does the message include both plain text and HTML versions?
-- Do all links point to your own domain?
-- Does the subject line or body contain words commonly associated with unsolicited mail, such as FREE, URGENT, or GUARANTEED?
-- Is the HTML well-formed? Providers penalise messages with broken markup.
-
-#### Step 6: Use provider postmaster tools
+#### Step 4: Use provider postmaster tools
 
 Register your sending domain with provider postmaster tools to see your reputation from each provider's perspective:
 
-- **Gmail**: [postmaster.google.com](https://postmaster.google.com) shows your domain reputation (Low, Medium, High, Bad) and spam rate in Google's systems. Your domain must have a DMARC record with a `rua` reporting address to receive data.
-- **Outlook**: [postmaster.live.com](https://postmaster.live.com) provides access to Microsoft's Smart Network Data Services (SNDS) and Junk Mail Reporting Program (JMRP).
-- **iCloud**: Apple does not publish sender dashboards or allowlists. The only signal available to you is user action — having recipients mark your messages **Not Junk**.
+- **Gmail**: Add and verify your sending domain in [Postmaster Tools](https://postmaster.google.com) to see domain reputation and spam rate. Data appears only when your daily volume to Gmail is high enough.
+- **iCloud**: Apple does not offer sender dashboards, a feedback loop, or an allowlist.
+
+#### Step 5: Build sending reputation
+
+If your domain is new or has a low sending volume, inbox placement problems are common while you build a sending history. Refer to [Build reputation for a new domain](/email-service/concepts/deliverability/#build-reputation-for-a-new-domain) for guidance on domain warm-up, content best practices, and engagement signals.
 
 ### High bounce rates
 
@@ -349,20 +307,20 @@ Use these tools to validate your email authentication setup:
 - **[Mail Tester](https://www.mail-tester.com/)**: Test email deliverability and authentication
 - **[Google Admin Toolbox](https://toolbox.googleapps.com/apps/checkmx/)**: Google's email authentication checker
 - **[Gmail Postmaster Tools](https://postmaster.google.com)**: Monitor domain reputation and spam rate for Gmail recipients
-- **[Microsoft SNDS](https://postmaster.live.com)**: Monitor sender reputation for Outlook and Hotmail recipients
 
 ## Getting help
 
 Before opening a support case for email going to spam or junk, complete the [transactional email troubleshooting checklist](#transactional-email-going-to-spam-or-junk). Domain warm-up causes many inbox placement problems, and most resolve without engineering involvement.
 
-Cloudflare cannot force inbox placement. Inbox providers classify messages after accepting them, and that decision is entirely within the provider's own systems. New domains (fewer than four weeks old) being filtered to junk are experiencing expected new-sender treatment. Apple iCloud does not offer a feedback loop or allowlist path for senders on shared infrastructure.
+Cloudflare cannot force inbox placement. Inbox providers classify messages after accepting them, and that decision is entirely within the provider's own systems. Apple iCloud does not offer a feedback loop or allowlist path for any sender.
 
 If you have completed the checklist and still need support, include these details in your support case:
 
 | Detail | Where to find it |
 |---|---|
 | **Message-ID** | Activity log — expand the message row |
-| **UTC send time** | Activity log — timestamp column |
+| **Session-ID** | Activity log — expand the message row |
+| **Timestamp** | Activity log — **Received** column (note your dashboard timezone setting and include it with the time) |
 | **Recipient address** | Activity log or your application logs |
 | **Sending domain** | **Email Sending** > **Settings** |
 | **Zone ID** | Cloudflare dashboard **Overview** page, sidebar |
@@ -370,8 +328,6 @@ If you have completed the checklist and still need support, include these detail
 | **Provider and folder** | Where the message landed, for example `iCloud Mail — Junk` |
 | **Reputation status** | **Email Sending** > **Settings** — reputation indicator |
 | **Messages sent in the last 7 days** | Email Sending dashboard or Analytics |
-
-If you subscribe to [Email Sending event subscriptions](/email-service/reference/event-subscriptions/), also include the raw event payload for the affected message.
 
 For other authentication and delivery issues:
 
