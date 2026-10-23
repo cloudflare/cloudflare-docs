@@ -26,9 +26,10 @@ Cloudflare support cannot override a customer's security settings. Browser Integ
 
 ### Requests to Pages projects or workers.dev
 
-Requests to `*.pages.dev` and `*.workers.dev` hostnames, and to custom domains of Pages projects, are checked by Browser Integrity Check on a Cloudflare-managed zone. This check runs even if you have turned off Browser Integrity Check in your own zone, or skipped it with a custom rule or configuration rule. These blocks do not appear in your zone's Security Events. You may only see your own skip rule match.
+Requests to `*.pages.dev` and `*.workers.dev` hostnames, and to custom domains of Pages projects, are also checked by Browser Integrity Check on a Cloudflare-managed zone. This happens even if you have turned off Browser Integrity Check, or skipped it with a custom rule or configuration rule, in your own zone. These blocks are not recorded in your zone's Security Events or in your Worker logs. In Security Events, you may only see your own skip rule match.
 
-**Resolution:** Configure your client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0`) instead of the library default.
+**Resolution:**
 
-- For Workers, serve the Worker on a [custom domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) on your zone instead of `workers.dev`. Your zone's Browser Integrity Check settings then apply.
-- For Pages, refer to [Pages known issues](/pages/platform/known-issues/).
+- Configure your client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0`) instead of the library default. The client does not need to send a browser user agent.
+- **Workers:** Serve the Worker on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in your zone instead of `workers.dev`. Then turn off or skip Browser Integrity Check for the affected paths with a [configuration rule](/rules/configuration-rules/) or [custom rule](/waf/custom-rules/skip/). Refer to [workers.dev](/workers/configuration/routing/workers-dev/).
+- **Pages:** Refer to [Pages known issues](/pages/platform/known-issues/).
