@@ -1,0 +1,126 @@
+---
+title: Non-SNI client support
+pcx_content_type: concept
+description: Learn how to support legacy clients that do not send the SNI extension during the TLS handshake when using Cloudflare for SaaS.
+products:
+  - cloudflare-for-saas
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Non-SNI client support | Cloudflare for SaaS
+---
+
+Server Name Indication (SNI) is a TLS extension that lets a client specify which hostname it is trying to reach during the TLS handshake, before any HTTP traffic is exchanged. Cloudflare relies on SNI to select the correct certificate when multiple custom hostnames share the same IP address.
+
+Clients that omit SNI from their `ClientHello` — typically legacy embedded devices or very old operating systems — receive a TLS handshake failure (alert 40) when connecting to a Cloudflare for SaaS custom hostname on shared IPs, because the edge cannot determine which certificate to serve.
+
+SNI support has been part of TLS 1.2 since [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066) (2011) and is available in all modern TLS stacks. Upgrading the TLS library on affected devices is the recommended fix.
+
+## What non-SNI support covers
+
+The non-SNI support feature allows non-SNI clients to successfully complete a TLS handshake when connecting to IPs associated with your SaaS zone. It does this by configuring a zone-level fallback certificate that the edge serves to any client that does not present SNI.
+
+:::caution
+This feature covers the SaaS zone itself — not arbitrary custom hostnames. The fallback certificate is always the SaaS provider's own zone certificate. If a non-SNI client is connecting to a custom hostname on a domain the SaaS provider does not own (for example, `shop.customer.com`), this feature does not help: the fallback certificate will not match the requested hostname, and the client's TLS verification will fail.
+
+For non-SNI clients connecting to arbitrary third-party custom hostnames, there is no workaround available within Cloudflare for SaaS. Those clients must be upgraded to a TLS stack that supports SNI.
+:::
+
+Non-SNI support is useful when your end users connect to subdomains of your own SaaS zone (for example, `tenant.saas.com`) from legacy devices.
+
+## How it works
+
+When a TLS connection arrives without an SNI extension, the Cloudflare edge looks up a `default_sni` hostname associated with the destination IP address. The edge uses this hostname to select a fallback certificate. If no `default_sni` is configured for that IP — which is the case for shared IPs — the handshake fails with alert 40.
+
+Non-SNI support requires either a zone-level legacy custom certificate or dedicated IPs with a configured `default_sni`. In both cases, the fallback certificate must be issued for a hostname in your own SaaS zone.
+
+:::note
+Non-SNI support for the SaaS zone is unrelated to [custom certificates for individual custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/), which are per-hostname certificates uploaded by the SaaS provider on behalf of their end customers.
+:::
+
+## Option 1 — Upload a legacy custom certificate to your SaaS zone
+
+If your SaaS zone is on a Business or Enterprise plan, you can upload a zone-level custom certificate with `type: "legacy_custom"`. The edge serves this certificate as a fallback to any client that connects without SNI.
+
+The certificate you upload must cover the hostnames your non-SNI clients are trying to reach. If those hostnames are subdomains of your SaaS zone (for example, `tenant.saas.com`), upload a wildcard certificate for `*.saas.com`.
+
+:::caution
+Zone-level custom certificates with `type: "legacy_custom"` are not compatible with [BYOIP](/byoip/). If you use BYOIP, use [Option 2](#option-2--byoip-or-static-ips-with-default_sni) instead.
+:::
+
+**To upload a legacy custom certificate using the API:**
+
+```bash
+curl https://api.cloudflare.com/client/v4/zones/{zone_id}/custom_certificates \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "certificate": "<CERTIFICATE_PEM>",
+    "private_key": "<PRIVATE_KEY_PEM>",
+    "bundle_method": "ubiquitous",
+    "type": "legacy_custom"
+  }'
+```
+
+**To upload a legacy custom certificate using the dashboard:**
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your SaaS zone.
+2. Go to **SSL/TLS** > **Edge Certificates**.
+3. Select **Upload Custom SSL Certificate**.
+4. Paste your certificate and private key.
+5. For **Legacy Client Support**, select **Legacy**.
+6. Select **Upload Custom Certificate**.
+
+For full requirements on certificate format and key types, refer to [Manage custom certificates](/ssl/edge-certificates/custom-certificates/uploading/).
+
+## Option 2 — BYOIP or Static IPs with `default_sni`
+
+If your SaaS zone uses [BYOIP](/byoip/) or [Static IPs](/byoip/concepts/static-ips/) with dedicated edge IPs, you can configure a `default_sni` on your [Address Map](/byoip/address-maps/). The edge uses this value to select a fallback certificate for non-SNI connections.
+
+The `default_sni` value must be a hostname in a zone that belongs to your Cloudflare account and is a member of the Address Map. You cannot set `default_sni` to a hostname in a domain you do not own.
+
+**To set `default_sni` on an Address Map:**
+
+```bash
+curl https://api.cloudflare.com/client/v4/accounts/{account_id}/addressing/address_maps/{address_map_id} \
+  --request PATCH \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "default_sni": "*.saas.com"
+  }'
+```
+
+For guidance on creating and managing Address Maps, refer to [Address Maps](/byoip/address-maps/).
+
+## Limitations
+
+Both options share the same fundamental constraint: one fallback certificate per IP address. That certificate is served to every non-SNI client regardless of which custom hostname they requested.
+
+When a non-SNI TLS connection arrives, the Cloudflare edge resolves the destination IP to a single `default_sni` hostname, then serves the certificate for that hostname. There is no mechanism to select a per-custom-hostname certificate on the non-SNI path. The `default_sni` value must also be a hostname within a zone you own — you cannot set it to a hostname belonging to your end customers.
+
+| Custom hostname type | Non-SNI supported? | Reason |
+| --- | --- | --- |
+| Subdomain of your SaaS zone (for example, `tenant.saas.com`) | Yes | Your zone wildcard certificate covers these hostnames |
+| Customer-owned arbitrary domain (for example, `shop.customer.com`) | No | `default_sni` cannot point to a hostname outside your zone; your zone certificate does not match the requested hostname |
+
+If your end customers' custom hostnames are arbitrary third-party domains, these options do not apply. The only reliable solution is to upgrade the affected devices to a TLS stack that includes SNI support.
+
+## Non-SNI support for arbitrary custom hostnames
+
+There is no supported path to enable non-SNI for arbitrary customer-owned custom hostnames (for example, `shop.customer.com`) within Cloudflare for SaaS.
+
+An alternative architecture combining [Spectrum](/spectrum/) and [BYOIP](/byoip/) can address this scenario, but it is a fundamentally different setup that does not use Cloudflare for SaaS. In that model, each custom hostname is assigned a dedicated IP via BYOIP, Spectrum routes at Layer 4 by IP:port without terminating TLS, and TLS is handled entirely at the origin. Because the destination IP identifies the tenant rather than SNI, non-SNI clients can connect successfully.
+
+This is a significant architectural change that requires Spectrum and BYOIP add-ons. Contact your account team if you are evaluating this option.
+
+## Plan requirements
+
+| Option | Requirement |
+| --- | --- |
+| Zone-level legacy custom certificate | SaaS zone on Business or Enterprise plan |
+| BYOIP with `default_sni` | Enterprise (BYOIP add-on required) |
+| Static IPs with `default_sni` | Enterprise (Static IPs add-on required) |
+
+To check which options are available on your plan, refer to the [Plans](/cloudflare-for-platforms/cloudflare-for-saas/plans/) page.
