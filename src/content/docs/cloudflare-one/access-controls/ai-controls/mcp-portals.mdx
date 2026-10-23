@@ -103,6 +103,26 @@ Earlier 2025 clients create a session that persists until the user disconnects o
 
 Users can turn individual servers on or off without disconnecting. For stateless requests, server toggles apply to every request that uses the same portal authorization grant. For legacy clients, toggles are scoped to the MCP session. Toggles do not affect other users.
 
+#### Authentication expiry
+
+Two independent timers can require a user to authenticate again. They apply to different parts of the connection, and only one is configurable.
+
+| Expiry path | Applies to | Duration | Configurable |
+| --- | --- | --- | --- |
+| MCP session inactivity timeout | Legacy 2025 clients that create a stateful MCP session | 24 hours of inactivity | No |
+| Managed OAuth grant session | The portal authorization grant, for all clients | **Grant session duration** on the portal's Access application | Yes |
+
+Access refreshes the Access token silently while the grant session remains valid. It re-evaluates the user against your policies on each refresh. The user sees an identity provider prompt only when the grant session expires. The default Access token lifetime is 15 minutes.
+
+Stateless `2026-07-28` requests do not create an MCP session, so the grant session is the only expiry path that applies to them. Legacy 2025 clients can reach either timer.
+
+If users are prompted to authenticate more often than expected:
+
+- Prompts during active use of the MCP client mean the grant session expired. Extend the **Grant session duration**.
+- Prompts after a period of inactivity mean the MCP session inactivity timeout ended the session. This timeout is fixed and cannot be changed. Reconnecting starts a new session.
+
+To change the grant session duration, go to the portal's Access application, open **Advanced settings** > **Managed OAuth**, and update **Grant session duration**. Cloudflare recommends a grant session of 1 to 2 weeks for CLI tools and AI agents, with an Access token lifetime of 5 to 15 minutes. For more information, refer to [Managed OAuth settings](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/#managed-oauth-settings).
+
 ### Naming
 
 MCP server portals were previously referred to as **Agents Gateway** in some contexts. The API paths, Terraform resources, and internal codebases may still use `agents_gateway` or `agw` prefixes. The product name is **MCP server portals** and the dashboard navigation is **MCP Portals**.
