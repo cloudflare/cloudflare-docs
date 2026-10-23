@@ -203,6 +203,15 @@ The timeout after which `cloudflared` sends a TCP keepalive packet to the origin
 
 Requires `cloudflared` to validate the <a href={props.validatingJwtURL}>Cloudflare Access JWT</a> prior to proxying traffic to your origin. You can enforce this check on public hostname services that are protected by an Access application. For all L7 requests to these hostnames, Access will send the JWT to `cloudflared` as a `Cf-Access-Jwt-Assertion` request header.
 
+:::note[URL normalization]
+In `cloudflared` version `2026.10.0` and later, URL normalization before ingress matching improves security for rules requiring Access validation. The URL path sent to your origin stays the same.
+
+Normalization removes dot segments (`.` and `..`) according to [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-5.2.4). It also converts backslashes to forward slashes and merges repeated slashes.
+
+Normalization is off by default in version `2026.10.0`. Refer to the [URL normalization changelog](/changelog/post/2026-10-22-cloudflared-path-normalization/) for instructions and the planned default change.
+:::
+
+
 To enable this security control in a <a href={props.configurationFileURL}>configuration file</a>, [get the AUD tag](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
 
 ```yml

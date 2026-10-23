@@ -22,6 +22,10 @@ Customers who create a secrets store in the open beta can have up to 100 secrets
 If you use [Wrangler](/secrets-store/manage-secrets/how-to/#manage-via-wrangler), there is a difference between production secrets and secrets that are only created locally (without the `--remote` flag). The limit of 100 secrets per account only considers production secrets.
 :::
 
+:::caution[Local secrets are not encrypted]
+Secrets that you create locally (without the `--remote` flag) are stored unencrypted in your project's [local data directory](/workers/local-development/local-data/#where-local-data-gets-stored), which is `.wrangler/state` by default. Use test values for local development, and do not commit the local data directory to version control.
+:::
+
 ## Resources
 
 - [Manage via Wrangler](/workers/wrangler/commands/secrets-store/#secrets-store-secret)

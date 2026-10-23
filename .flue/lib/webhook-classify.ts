@@ -41,6 +41,13 @@ export interface WebhookClassification {
 	 * dated in the past). Additive to review routing — it never replaces it.
 	 */
 	isChangelogDateEvent: boolean;
+	/**
+	 * PR event that should reconcile the `size/*` label. Includes Dependabot
+	 * and draft PRs.
+	 */
+	isSizeLabelEvent: boolean;
+	/** Issue opened, reopened, or title/body edited by a non-bot: assess `effort:*`. */
+	isEffortLabelEvent: boolean;
 	/** Whether the PR is a draft (code review is suppressed unless ready_for_review). */
 	isDraft: boolean;
 	/** Codeowner slash command, if the event is an actionable PR comment. */
@@ -137,6 +144,17 @@ export function classifyWebhook(
 		action !== undefined &&
 		CHANGELOG_DATE_ACTIONS.includes(action);
 
+	const isSizeLabelEvent = eventType === "pull_request" && isPrReviewAction;
+
+	const changes = asRecord(body.changes);
+	const isEffortLabelEvent =
+		eventType === "issues" &&
+		(action === "opened" ||
+			action === "reopened" ||
+			(action === "edited" &&
+				(changes?.body !== undefined || changes?.title !== undefined))) &&
+		!/\[bot\]$/.test(senderLogin ?? "");
+
 	const isDraft = pullRequest?.draft === true;
 
 	// Slash commands: issue_comment created on a PR.
@@ -188,6 +206,8 @@ export function classifyWebhook(
 		isSpamFilterEvent,
 		isCodeReviewEvent,
 		isChangelogDateEvent,
+		isSizeLabelEvent,
+		isEffortLabelEvent,
 		isDraft,
 		command,
 		commentId,
@@ -205,6 +225,8 @@ export function isActionable(c: WebhookClassification): boolean {
 		c.isSpamFilterEvent ||
 		c.isCodeReviewEvent ||
 		c.isChangelogDateEvent ||
+		c.isSizeLabelEvent ||
+		c.isEffortLabelEvent ||
 		c.isCommentSpamEvent ||
 		c.command !== null
 	);

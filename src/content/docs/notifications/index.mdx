@@ -10,14 +10,24 @@ products:
 head:
   - tag: title
     content: Cloudflare Alerts
-description: Set up alerts across Cloudflare products and deliver them to email, webhooks, PagerDuty, or connected services.
+description: Set up monitors and platform notifications, and deliver them to email, webhooks, PagerDuty, or connected services.
 ---
 
-Cloudflare Alerts monitor your account and notify you when something needs attention — from DDoS attacks and certificate expirations to origin failures and billing spikes. Built-in alerts cover products such as DDoS Protection, SSL/TLS, and Billing. Custom Alerts let you define your own threshold, anomaly, or SLO conditions on supported SQL API datasets.
+Alerts is part of [Cloudflare Observability](/observability/). In the dashboard, you can find it under **Observability** > **Alerts**.
+
+Alerts are organized into two categories: **Monitors** that you define yourself, and **Platform Notifications** that Cloudflare evaluates automatically.
+
+## Monitors
+
+Monitors evaluate a SQL API query on a schedule and send a notification when the result meets your detection criteria. You choose the dataset, define the query, and select a detection method: threshold, anomaly detection, or service-level objective (SLO). Refer to [Monitors](/notifications/monitors/) for configuration details.
+
+## Platform Notifications
+
+Platform Notifications are pre-configured alert types tied to specific Cloudflare products. You enable the ones you care about, choose where they are delivered, and Cloudflare evaluates the trigger conditions. They cover products such as DDoS Protection, SSL/TLS, Health Checks, Load Balancing, and Billing. Refer to [Platform Notifications](/notifications/notification-available/) for the full list.
 
 ## Delivery methods
 
-Alerts can be delivered to:
+All alerts can be delivered to:
 
 - **Email** (all plans)
 - **[Webhooks](/notifications/get-started/configure-webhooks/)** (all plans; accounts without a paid zone can configure up to 100 webhook destinations)
@@ -28,9 +38,13 @@ Alerts can be delivered to:
 
 Create and manage alerts from the Cloudflare dashboard. Configure where alerts are delivered.
 
-## [Available alerts](/notifications/notification-available/)
+## [Monitors](/notifications/monitors/)
 
-Browse the full list of alert types organized by Cloudflare product.
+Define custom threshold, anomaly detection, and SLO monitors on SQL API datasets.
+
+## [Platform Notifications](/notifications/notification-available/)
+
+Browse built-in notification types organized by Cloudflare product.
 
 ## [Alert history](/notifications/notification-history/)
 

@@ -59,6 +59,7 @@ package.json @cloudflare/content-engineering
 
 # agents
 
+/src/components/cf/AgentsPlatformDiagram.astro @irvinebroque @fredkschott @cloudflare/ai-agents
 /public/icons/agents @cloudflare/ai-agents @cloudflare/dev-plat-leads @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @cloudflare/ai-agents @cloudflare/dev-plat-leads @cloudflare/product-owners
 /src/content/partials/agents/ @irvinebroque @rita3ko @thomasgauvin @vy-ton @cloudflare/product-owners
@@ -296,8 +297,9 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/changelog/access.mdx @asamborski @cloudflare/product-owners
 /src/content/docs/cloudflare-one/changelog/browser-isolation.mdx @asamborski @cloudflare/product-owners
 /src/content/docs/cloudflare-one/changelog/gateway.mdx @asamborski @cloudflare/product-owners
-/src/content/docs/cloudflare-one/integrations/ @claudiocn @jlu-cloudflare @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @claudiocn @jlu-cloudflare @kennyj42 @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/ @rklarsfeld @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/service-providers/ @claudiocn @jlu-cloudflare @marcinflare @mkdewidar @mmiranda-cf @pjennings1020 @TylerStanish @zesilva63 @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/integrations/identity-providers/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-mesh/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/ @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/ @asamborski @nikitacano @cloudflare/cf1-reviewers @cloudflare/product-owners
@@ -309,8 +311,13 @@ package.json @cloudflare/content-engineering
 /src/content/docs/cloudflare-one/team-and-resources/devices/ @cf-rhett @csujedihy @jiulingz @samin-cf @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/set-up.mdx @asamborski @cf-rhett @csujedihy @jiulingz @samin-cf @lpraneis @tojens-ietf @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/docs/cloudflare-one/team-and-resources/users/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/cloudflare-one/traffic-policies/ @alexmoraru7 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/traffic-controls/ @alexmoraru7 @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/ @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/cloud-and-saas-findings/ @rklarsfeld @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/changelog/casb.mdx @rklarsfeld @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/cloudflare-one/troubleshooting/casb.mdx @rklarsfeld @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/casb/ @rklarsfeld @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/cloudflare-one/troubleshooting/casb.mdx @rklarsfeld @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/access/ @asamborski @kennyj42 @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/choose-team-name.mdx @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/partials/cloudflare-one/gateway/ @asamborski @cloudflare/cf1-reviewers @cloudflare/product-owners
@@ -324,6 +331,14 @@ package.json @cloudflare/content-engineering
 /src/content/directory/cloudflare-one.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/content/glossary/cloudflare-one.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners
 /src/icons/cloudflare-one.svg @cloudflare/cf1-reviewers @cloudflare/product-owners
+
+# cloud-workload-security
+
+/src/content/changelog/cloud-workload-security/ @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/cloudflare-one/cloud-workload-security/ @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/directory/cloud-workload-security.yaml @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/icons/cloud-workload-security.svg @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
+/public/cloudflare-one/cloud-workload-security/ @madhu-cf @marcuslean @johnc @joe-kivera @tyler-matheson @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # cloudflare-one-client
 
@@ -735,15 +750,15 @@ package.json @cloudflare/content-engineering
 
 # r2
 
-/src/content/docs/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/src/content/partials/r2/ @helloimalastair @irvinebroque @rdimaio @rita3ko @vy-ton @cloudflare/product-owners
-/src/content/release-notes/r2.yaml @helloimalastair @rdimaio @cloudflare/product-owners
-/src/assets/images/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/src/content/changelog/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/r2.yaml @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/src/icons/r2.svg @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
-/public/images/r2/ @harshil1712 @helloimalastair @jonesphillip @rdimaio @cloudflare/product-owners
+/src/content/docs/r2/ @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/product-owners
+/src/content/partials/r2/ @carolx715 @enorman-cf @helloimalastair @irvinebroque @rdimaio @rita3ko @soumyakhanna05 @vy-ton @cloudflare/product-owners
+/src/content/release-notes/r2.yaml @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/product-owners
+/src/assets/images/changelog/r2/ @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/r2/ @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/product-owners
+/src/content/changelog/r2/ @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/r2.yaml @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/product-owners
+/src/icons/r2.svg @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/product-owners
+/public/images/r2/ @carolx715 @enorman-cf @helloimalastair @rdimaio @soumyakhanna05 @vy-ton @cloudflare/product-owners
 
 # basin-catalog
 
@@ -798,6 +813,7 @@ package.json @cloudflare/content-engineering
 /src/content/release-notes/realtimekit-react-native-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-recording-sdk.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-web-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-web-ui-addons.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-web-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 
 # reference-architecture

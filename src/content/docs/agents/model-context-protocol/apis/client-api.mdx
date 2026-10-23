@@ -349,13 +349,13 @@ To use MCP tools with the AI SDK, use `this.mcp.getAITools()` which converts MCP
 
 ```ts
 import { generateText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 		const response = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt: "What's the weather in San Francisco?",
 			tools: this.mcp.getAITools(),
 		});

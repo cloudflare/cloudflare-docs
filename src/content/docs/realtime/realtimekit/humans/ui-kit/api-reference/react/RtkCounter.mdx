@@ -1,0 +1,58 @@
+---
+pcx_content_type: navigation
+title: RtkCounter
+description: API reference for RtkCounter component (React Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-counter/rtk-counter.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A number picker with increment and decrement buttons.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `minValue` | `number` | ✅ | - | Minimum value |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `value` | `number` | ✅ | - | Initial value |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkCounter } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkCounter />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkCounter } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkCounter
+      minValue={42}
+      size="md"
+      value={42}
+    />
+  );
+}
+```
+

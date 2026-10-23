@@ -156,7 +156,7 @@ export class MyDurableObject extends DurableObject<Env> {
 
     async sayHello(): Promise<string> {
     	let result = this.ctx.storage.sql
-    		.exec("SELECT 'Hello, World!' as greeting")
+    		.exec<{ greeting: string }>("SELECT 'Hello, World!' as greeting")
     		.one();
     	return result.greeting;
     }

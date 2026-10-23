@@ -121,18 +121,18 @@ Fraud detections focus on account abuse attacks such as account takeover, bulk a
 
 Disposable Email Checks detect when users sign up with throwaway email addresses commonly used for promotion abuse and fake account creation. These disposable email services allow attackers to create thousands of unique accounts without maintaining real infrastructure.
 
-You can use the following binary field as you build rules to enforce security preferences, choosing to block all disposable emails outright, or issue a [challenge](/cloudflare-challenges/challenge-types/) to anyone attempting to create an account with a disposable email.
+You can use `cf.fraud_detection.disposable_email` to block disposable emails or issue a [challenge](/cloudflare-challenges/challenge-types/) to anyone attempting to create an account with a disposable email.
 
 #### Suspicious emails
 
-Cloudflare analyzes the components of an email used during sign up to help identify suspicious patterns. Refer to [prerequisites](#prerequisites) to ensure your traffic is eligible for detections.
+Cloudflare checks email domains used during sign up against lists of known temporary or disposable email services. Cloudflare runs the same check on login requests when the extracted username is an email address.
 
-Cloudflare does not store email addresses during this analysis. All detections processed without any storage or caching.
+This check also determines the value of `cf.fraud.email_risk` in Security Rules and Security Analytics. Refer to [prerequisites](#prerequisites) to ensure your traffic is eligible for detections.
 
-| Detection tag                         | Description                                                                                                                                                                                                                                                                                                                                                                           |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cf.fraud_detection.disposable_email` | Identifies emails with domains that are commonly found in lists of temporary or disposable email services.                                                                                                                                                                                                                                                                            |
-| `cf.fraud.email_risk`                 | Analyzes the randomness (entropy) of characters in an email username and top level domain. For example, `a8xk2m9p@example.com` has high entropy (very random characters), while `john.smith@example.com` has low entropy (recognizable pattern). <br />High risk emails indicate high entropy, while medium and low risk emails indicate less randomness in the string of characters. |
+| Detection tag                         | Description                                                                                                         |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `cf.fraud_detection.disposable_email` | Identifies emails with domains that are commonly found in lists of temporary or disposable email services.          |
+| `cf.fraud.email_risk`                 | Returns `high` when Cloudflare identifies the email domain as temporary or disposable. Returns `unknown` otherwise. |
 
 ---
 
@@ -144,10 +144,10 @@ The following Fraud detection fields can be used in Security Rules to help ident
 
 The following fields can be used in new and existing Security Rules.
 
-| Field                                  | Description                                                                                        | Values                                                                                                                                                                                                                                                              |
-| -------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `cf.fraud_detection.disposable_domain` | Flags whether a domain for a given email is included in a known list of temporary email providers. | `True` or `False`                                                                                                                                                                                                                                                   |
-| `cf.fraud.email_risk`                  | Measures risk of email based on randomness of characters in the username and domain.               | `Low` represents low risk due to reduced randomness and simple emails. <br />`Medium` represents medium risk based on larger strings with slightly more randomness. <br />`High` represents high risk based on larger and random character strings. <br />`Unknown` |
+| Field                                 | Description                                                                                        | Values                                                                                             |
+| ------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `cf.fraud_detection.disposable_email` | Flags whether a domain for a given email is included in a known list of temporary email providers. | `True` or `False`                                                                                  |
+| `cf.fraud.email_risk`                 | Indicates whether Cloudflare identifies an email domain as temporary or disposable.                | `high` when Cloudflare identifies the domain as temporary or disposable. <br/>`unknown` otherwise. |
 
 #### Other rules
 

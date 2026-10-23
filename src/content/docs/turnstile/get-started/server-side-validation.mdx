@@ -168,18 +168,21 @@ function validateTurnstile($token, $secret, $remoteip = null) {
         $data['remoteip'] = $remoteip;
     }
 
-    $options = [
-        'http' => [
-            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method' => 'POST',
-            'content' => http_build_query($data)
-        ]
-    ];
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [
+        CURLOPT_POST => true,
+        CURLOPT_POSTFIELDS => http_build_query($data),
+        CURLOPT_HTTPHEADER => ['Content-Type: application/x-www-form-urlencoded'],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_TIMEOUT => 10,
+    ]);
 
-    $context = stream_context_create($options);
-    $response = file_get_contents($url, false, $context);
+    $response = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
 
-    if ($response === FALSE) {
+    if ($response === false || $error !== '') {
         return ['success' => false, 'error-codes' => ['internal-error']];
     }
 

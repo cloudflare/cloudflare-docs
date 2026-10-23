@@ -1,0 +1,56 @@
+---
+pcx_content_type: navigation
+title: RtkImageViewer
+description: API reference for RtkImageViewer component (React Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-image-viewer/rtk-image-viewer.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A component which shows an image sent via chat.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `image` | `ImageMessage` | ✅ | - | Image message |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkImageViewer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkImageViewer />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkImageViewer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkImageViewer
+      image={imagemessage}
+      size="md"
+    />
+  );
+}
+```
+

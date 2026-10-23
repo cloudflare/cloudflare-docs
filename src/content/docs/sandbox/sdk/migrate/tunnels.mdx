@@ -31,11 +31,11 @@ This page replaces `tunnels.get()`, `tunnels.list()`, and `tunnels.destroy()`. R
 1. Copy `cloudflared` into your image. Add this line to your `Dockerfile`, after the `FROM` line:
 
    ```dockerfile title="Dockerfile"
-   COPY --from=docker.io/cloudflare/cloudflared:2026.3.0 \
+   COPY --from=docker.io/cloudflare/cloudflared:2026.10.2 \
    	/usr/local/bin/cloudflared /usr/local/bin/cloudflared
    ```
 
-   0.12 also ran version 2026.3.0. `cloudflared` needs the `ca-certificates` package, which the `Dockerfile` from Replace the Sandbox class installs.
+   0.12.13 also runs version 2026.10.2. `cloudflared` needs the `ca-certificates` package, which the `Dockerfile` from Replace the Sandbox class installs.
 
 2. Add the scripts that check tunnels to the top level of `src/index.ts`:
 
@@ -353,6 +353,6 @@ Call `resumeTunnel(8080)`, and send the request again. The response comes from y
 ## Related resources
 
 - [Move preview URLs](/sandbox/sdk/migrate/preview-urls/)
-- [Quick tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/)
+- [Quick tunnels](/tunnel/get-started/quick-tunnels/)
 - [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/)
 - [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/)

@@ -29,7 +29,7 @@ MCP server portals provide the following capabilities:
 - **Tool and prompt aliases**: Admins can [rename tools and prompts](#rename-tools-and-prompts-with-aliases) and edit their descriptions at the portal or server level without modifying the upstream MCP server. Aliases help end users find the right tool and help AI agents select the correct one.
 - **Context optimization**: Portals support query parameter options that reduce context window usage by minimizing or hiding tool definitions. Refer to [Optimize context](#optimize-context) for details.
 - **Non-browser client support**: MCP clients authenticate to the portal using a standard OAuth 2.0 authorization code flow via [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/). This managed OAuth configuration applies to the portal's Access application. It is separate from upstream OAuth used by individual MCP servers in the portal. Non-browser clients receive a `401` response with a `WWW-Authenticate` header pointing to Access's OAuth discovery endpoints, rather than a browser redirect. You can also connect using [Access service tokens](#connect-with-a-service-token) for machine-to-machine access.
-- **Code Mode**: Code Mode collapses all upstream tools into two tools for search and code execution. The AI agent writes JavaScript that calls typed methods for each tool. The code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. Admins can control whether Code Mode is unavailable, optional, on by default, or required. Refer to [Code Mode](#code-mode) for configuration and connection instructions.
+- **Code Mode**: Code Mode collapses all upstream tools into two tools for search and code execution. The AI agent writes JavaScript that calls typed methods for each tool. The code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment. Admins can control whether Code Mode is unavailable, optional, on by default, or required. Refer to [Code Mode](#code-mode) for configuration and connection instructions.
 - **Observability**: Once the user's AI agent is connected to the portal, Cloudflare Access logs the individual requests made using the tools in the portal. You can optionally route portal traffic through [Cloudflare Gateway](#route-portal-traffic-through-gateway) for richer HTTP logging and data loss prevention (DLP) scanning.
 
 ## How it works
@@ -243,6 +243,18 @@ MCP server portals use upstream OAuth callback URLs to authorize administrators 
 
 OAuth providers typically exact-match the full URI, including the path.
 
+If your upstream OAuth provider restricts redirect URIs, add the URLs that match your server's configuration:
+
+| OAuth configuration | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider |
+| --- | --- | --- |
+| Automatic (DCR) | No | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server. |
+| Automatic (DCR) | Yes | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
+| Manual OAuth credentials | Not available | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration. |
+
+For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
+
+For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare uses the shared callback URL regardless of the value of `registration_info.redirect_uris`, so you can omit this field. You cannot override the shared callback URL.
+
 #### Dashboard callback URL
 
 When Cloudflare registers the OAuth client using DCR, the dashboard uses the following callback URL:
@@ -263,13 +275,15 @@ End users never use the dashboard callback URL to authorize the upstream MCP ser
 
 When a user authorizes an upstream MCP server that requires per-user OAuth, the portal performs an OAuth authorization code flow with the upstream server on the user's behalf. As part of this flow, the portal registers a callback URL (`redirect_uri`) with the upstream server. The upstream server redirects to this URL after the user authorizes access.
 
-By default, the portal uses a callback URL on your portal domain:
+When the **Use the Cloudflare-hosted OAuth callback** setting is off, the portal uses a callback URL on your portal domain:
 
 ```txt
 https://<your-portal-hostname>/servers-callback
 ```
 
 Add the callback URL to the OAuth provider's redirect URI allowlist.
+
+Use `/servers-callback`, not `/server-callback`, for automatic (DCR) servers when the shared callback setting is off. Manual OAuth servers use the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) instead.
 
 #### Shared Cloudflare callback URL
 
@@ -283,7 +297,7 @@ The **Use the Cloudflare-hosted OAuth callback** setting is not available when y
 
 When Cloudflare uses DCR to register the OAuth client, turn on **Use the Cloudflare-hosted OAuth callback** to use the shared callback URL for per-user authorization. If the setting is off, per-user authorization uses the [portal-scoped callback URL](#portal-callback-url).
 
-Use the shared callback URL if the upstream OAuth provider limits the number of allowed redirect URIs or if you want one callback URL for a server across multiple portals. The **Use the Cloudflare-hosted OAuth callback** setting is off by default. Configure it separately for each MCP server that uses DCR.
+Use the shared callback URL if the upstream OAuth provider limits the number of allowed redirect URIs or if you want one callback URL for a server across multiple portals. DCR still uses the dashboard callback URL for administrator authorization, regardless of whether the **Use the Cloudflare-hosted OAuth callback** setting is on. The setting is off by default. Configure it separately for each MCP server that uses DCR.
 
 To turn on the setting, go to **Zero Trust** > **Access controls** > **MCP Portals** > **MCP servers**, add or edit an MCP server that uses DCR, and turn on **Use the Cloudflare-hosted OAuth callback** under **Basic information** > **Advanced settings**.
 
@@ -623,6 +637,8 @@ The `auth_type` field accepts the following values:
 
 #### Manual OAuth credentials
 
+For manual OAuth, allowlist the shared callback URL at the upstream provider. Set `is_shared_oauth_callback_enabled` to `true` when creating the server through the API.
+
 To create an MCP server with a pre-registered OAuth client, set `auth_type` to `oauth` and provide both `auth_credentials` and `client_secret`. The `auth_credentials` value is required and must be a JSON-encoded string:
 
 <CURL
@@ -634,8 +650,9 @@ To create an MCP server with a pre-registered OAuth client, set `auth_type` to `
 		name: "GitHub MCP Server",
 		hostname: "https://github-mcp.example.com/mcp",
 		auth_type: "oauth",
+		is_shared_oauth_callback_enabled: true,
 		auth_credentials:
-			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","redirect_uris":["https://mcp.example.com/servers-callback"],"token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
+			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
 		client_secret: "<client-secret>",
 	}}
 />
@@ -645,7 +662,7 @@ The decoded `auth_credentials` object must contain:
 - `auth_mode`: Must be `manual`.
 - `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
 - `registration_info.client_id`: The client ID issued by the upstream provider.
-- `registration_info.redirect_uris`: At least one registered redirect URI. This can be omitted when `is_shared_oauth_callback_enabled` is `true`; Cloudflare then adds the shared callback URL.
+- `registration_info.redirect_uris`: Optional when `is_shared_oauth_callback_enabled` is `true`. Cloudflare uses the shared callback URL even if you provide a different URI. This field cannot override the shared callback URL.
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
 
@@ -755,7 +772,7 @@ For the full list of supported resource arguments, refer to the [Terraform provi
 
 ## Code Mode
 
-[Code Mode](/agents/tools/codemode/) reduces context window usage by replacing upstream tool definitions with two tools for search and code execution. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. Authentication credentials and environment variables remain outside the model context.
+[Code Mode](/agents/tools/codemode/) reduces context window usage by replacing upstream tool definitions with two tools for search and code execution. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment. Authentication credentials and environment variables remain outside the model context.
 
 Code Mode is useful for portals with many MCP servers or tools. Context window usage stays fixed as the portal adds tools.
 
@@ -809,12 +826,7 @@ For MCP clients with server configuration files, use the portal URL with the que
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp?codemode=search_and_execute"
-			]
+			"url": "https://<subdomain>.<domain>/mcp?codemode=search_and_execute"
 		}
 	}
 }
@@ -826,13 +838,13 @@ For more information on building with Code Mode, refer to the [Code Mode SDK ref
 
 ## Route portal traffic through Gateway
 
-When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal are routed through [Cloudflare Gateway](/cloudflare-one/traffic-policies/). This makes portal traffic appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss Prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from being sent to your upstream MCP servers.
+When Gateway routing is turned on, calls to MCP servers protected by your MCP server portal are routed through [Cloudflare Gateway](/cloudflare-one/traffic-controls/). This makes portal traffic appear in your [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) alongside the rest of your organization's HTTP traffic. You can then create [Data Loss Prevention (DLP) policies](#example-gateway-policy) to detect and block sensitive data from being sent to your upstream MCP servers.
 
 ### How Gateway routing works
 
 When a user calls a tool through the portal, the portal proxies the request to the upstream MCP server. With Gateway routing turned on, this outbound request passes through Cloudflare Gateway before reaching the upstream server. Gateway inspects the traffic and applies any matching HTTP policies, including DLP scanning.
 
-Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/traffic-policies/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
+Because portal traffic routes through Gateway, it also respects [Gateway egress policies](/cloudflare-one/traffic-controls/egress-policies/). This means outbound requests to upstream MCP servers will originate from your dedicated egress IPs or Gateway IP ranges rather than generic Cloudflare IPs. If your upstream MCP servers restrict inbound traffic by source IP (for example, to a VPN or corporate IP range), you can use egress policies to ensure portal traffic comes from a predictable set of IPs.
 
 :::note
 Server-level Gateway routing also applies to DCR and [admin credential synchronization](#synchronize-the-mcp-server). Portal-level Gateway routing applies only to real-time requests through that portal.
@@ -840,12 +852,12 @@ Server-level Gateway routing also applies to DCR and [admin credential synchroni
 
 ### TLS decryption
 
-DLP inspection requires Gateway to decrypt TLS traffic. For portal traffic, Gateway decrypts and inspects the payload automatically — you do not need to turn on the account-level [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) setting. Because the portal terminates the connection from the MCP client and re-originates the request through Gateway, Gateway decrypts portal traffic regardless of whether the global TLS decryption setting is on.
+DLP inspection requires Gateway to decrypt TLS traffic. For portal traffic, Gateway decrypts and inspects the payload automatically — you do not need to turn on the account-level [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) setting. Because the portal terminates the connection from the MCP client and re-originates the request through Gateway, Gateway decrypts portal traffic regardless of whether the global TLS decryption setting is on.
 
-This automatic decryption applies only to traffic that flows through the portal. To inspect MCP traffic that does not pass through the portal — for example, an agent on a [device running the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) connecting directly to an upstream MCP server — you must turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) as you would for any other [HTTP policy](/cloudflare-one/traffic-policies/http-policies/).
+This automatic decryption applies only to traffic that flows through the portal. To inspect MCP traffic that does not pass through the portal — for example, an agent on a [device running the WARP client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) connecting directly to an upstream MCP server — you must turn on [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) as you would for any other [HTTP policy](/cloudflare-one/traffic-controls/http-policies/).
 
 :::note
-Portal traffic ignores the global TLS decryption setting, but it still respects [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) HTTP policies. If a Do Not Inspect policy matches portal traffic, Gateway does not decrypt it and DLP cannot scan it. Check that your Do Not Inspect policies do not unintentionally exempt your upstream MCP servers from inspection.
+Portal traffic ignores the global TLS decryption setting, but it still respects [Do Not Inspect](/cloudflare-one/traffic-controls/http-policies/#do-not-inspect) HTTP policies. If a Do Not Inspect policy matches portal traffic, Gateway does not decrypt it and DLP cannot scan it. Check that your Do Not Inspect policies do not unintentionally exempt your upstream MCP servers from inspection.
 :::
 
 ### Supported transports
@@ -909,7 +921,7 @@ The agent can retry the request, but it will continue to be blocked until the co
 
 ## Connect to a portal
 
-Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-from-an-mcp-client) that support remote MCP servers.
 
 To test in Workers AI Playground:
 
@@ -922,24 +934,17 @@ To test in Workers AI Playground:
 
 Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
 
-For MCP clients with server configuration files, we recommend using the `npx` command with the `mcp-remote@latest` argument:
+For MCP clients with server configuration files, add the portal as a remote HTTP server. The exact URL field depends on your client. For example:
 
-```json title= "MCP client configuration for MCP portals"
+```json title="MCP client configuration for MCP portals"
 {
 	"mcpServers": {
 		"example-mcp-server": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>.com/mcp"
-			]
+			"url": "https://<subdomain>.<domain>/mcp"
 		}
 	}
 }
 ```
-
-We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
 
 ### Portal homepage
 
@@ -1004,22 +1009,17 @@ curl https://<subdomain>.<domain>/mcp \
   -H "CF-Access-Client-Secret: <CLIENT_SECRET>"
 ```
 
-For `mcp-remote`, pass the headers with `--header`:
+For clients that support custom headers, configure the service token directly:
 
 ```json title="MCP client configuration for service token connections"
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp",
-				"--header",
-				"CF-Access-Client-Id: <CLIENT_ID>",
-				"--header",
-				"CF-Access-Client-Secret: <CLIENT_SECRET>"
-			]
+			"url": "https://<subdomain>.<domain>/mcp",
+			"headers": {
+				"CF-Access-Client-Id": "<CLIENT_ID>",
+				"CF-Access-Client-Secret": "<CLIENT_SECRET>"
+			}
 		}
 	}
 }
@@ -1057,12 +1057,7 @@ For MCP clients with server configuration files:
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools"
-			]
+			"url": "https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools"
 		}
 	}
 }
@@ -1070,7 +1065,7 @@ For MCP clients with server configuration files:
 
 ### Search and execute
 
-The `search_and_execute` option hides all upstream tools and exposes only two tools to the agent: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools. The generated code runs in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment, which keeps authentication credentials and environment variables out of the model context.
+The `search_and_execute` option hides all upstream tools and exposes only two tools to the agent: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools. The generated code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment, which keeps authentication credentials and environment variables out of the model context.
 
 This option reduces the initial token cost of portal tools to a small constant, regardless of how many tools are available. However, the agent becomes fully reliant on `query` to discover tools before it can call them.
 
@@ -1086,12 +1081,7 @@ For MCP clients with server configuration files:
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute"
-			]
+			"url": "https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute"
 		}
 	}
 }
@@ -1134,17 +1124,7 @@ The portal toggles the server and refreshes the active tool list immediately. Th
 
 When an upstream MCP server token expires, the portal prompts you to reauthenticate from within your MCP client. Open the provided URL in your browser and complete the login to restore the session.
 
-If your MCP client does not display the reauthentication prompt, you can manually clear cached credentials:
-
-:::note
-This command clears credentials for all MCP servers using `mcp-remote@latest`, not just MCP portals.
-:::
-
-```sh
-rm -rf ~/.mcp-auth
-```
-
-After clearing credentials, reconnect to the portal from your MCP client.
+If your MCP client does not display the reauthentication prompt, use its authentication controls to remove the saved portal credentials. Then reconnect to the portal.
 
 ### Authorize new servers
 
@@ -1259,11 +1239,11 @@ Contact the upstream MCP server vendor if you do not control the allowlist.
 2. If the upstream server URL ends in `/sse`, the portal automatically attempts to connect using Streamable HTTP on a `/mcp` path instead. If the server does not support this, the connection will fail.
 3. Check [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) for DLP block events. If a DLP policy is blocking the traffic, the portal returns an error to the MCP client with the DLP rule ID.
 
-### Users cannot connect with `mcp-remote` or similar tools.
+### Users cannot connect from an MCP client
 
-1. Ensure you are using the latest version of `mcp-remote`. Run `npx -y mcp-remote@latest` to update.
-2. Use the `command` and `args` format in your MCP client configuration, not the `serverURL` parameter. The `serverURL` parameter may cause issues with portal session creation.
-3. If authentication fails repeatedly, clear cached credentials by running `rm -rf ~/.mcp-auth` and reconnecting.
+1. Verify that the client supports Streamable HTTP and OAuth discovery.
+2. Configure the portal URL as a remote HTTP server.
+3. If authentication fails repeatedly, use the client authentication controls to remove the saved portal credentials and reconnect.
 
 ### The portal homepage shows the wrong name or domain.
 

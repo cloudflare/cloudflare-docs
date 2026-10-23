@@ -7,13 +7,13 @@ sidebar:
 ---
 
 import {
-	InlineBadge,
 	TypeScriptExample,
 	WranglerConfig,
 	PackageManagers,
+	Render,
 } from "~/components";
 
-Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues with [Browser Run](/browser-run/) tools. <InlineBadge preset="beta" />
+Build an agent that can browse the web, inspect pages, capture screenshots, and debug frontend issues with [Browser Run](/browser-run/) tools.
 
 Instead of a fixed set of browser actions (click, screenshot, navigate), the LLM writes JavaScript code that runs CDP commands against a live browser session — accessing all domains, commands, events, and types in the protocol.
 
@@ -93,12 +93,12 @@ Pass browser tools alongside your other tools. The `model` can be any AI SDK pro
 
 ```ts
 import { streamText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
-const workersai = createWorkersAI({ binding: env.AI });
+const ai = createAI({ binding: env.AI });
 
 const result = streamText({
-	model: workersai("@cf/zai-org/glm-4.7-flash"),
+	model: ai("@cf/zai-org/glm-4.7-flash"),
 	system: "You are a helpful assistant that can inspect web pages.",
 	messages,
 	tools: {
@@ -151,19 +151,19 @@ The typical pattern is to create browser tools inside an [`AIChatAgent`](/agents
 ```ts
 import { AIChatAgent } from "@cloudflare/ai-chat";
 import { createBrowserTools } from "agents/browser/ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { streamText, convertToModelMessages, stepCountIs } from "ai";
 
 export class MyAgent extends AIChatAgent<Env> {
 	async onChatMessage() {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 		const browserTools = createBrowserTools({
 			browser: this.env.BROWSER,
 			loader: this.env.LOADER,
 		});
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			system: "You can browse the web and inspect pages.",
 			messages: await convertToModelMessages(this.messages),
 			tools: {
@@ -266,12 +266,7 @@ For custom integrations, import the building blocks directly:
 <TypeScriptExample>
 
 ```ts
-import {
-	CdpSession,
-	connectBrowser,
-	connectUrl,
-	createBrowserToolHandlers,
-} from "agents/browser";
+import { CdpSession, connectBrowser, connectUrl } from "agents/browser";
 
 // Connect to a custom CDP endpoint
 const session = await connectUrl("http://localhost:9222");
@@ -287,7 +282,11 @@ Recent Wrangler releases support Browser Run in local development. `npx wrangler
 
 Use `cdpUrl` only when you intentionally want to connect to some other CDP-compatible browser endpoint, such as a tunnel or a manually managed Chrome instance.
 
+<Render file="local-development-security" product="workers" />
+
 ## Security considerations
+
+The following protections apply when you deploy this agent to Cloudflare:
 
 - LLM-generated code runs in **isolated Worker sandboxes** — each execution gets its own Worker instance
 - External network access (`fetch`, `connect`) is **blocked** in the sandbox at the runtime level

@@ -1,0 +1,1028 @@
+{
+	"model_id": "meta/muse-spark-1.2",
+	"provider_id": "meta",
+	"name": "Muse Spark 1.2",
+	"description": "Muse Spark 1.2 is Meta's agentic and coding model for multi-step tool loops, software engineering assistants, and long-context reasoning.",
+	"task": "Text Generation",
+	"tags": [
+		"Text Generation",
+		"Reasoning",
+		"Tool Calling",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 1.25,
+		"Cached input tokens (per 1M)": 0.16,
+		"Output tokens (per 1M)": 4.25
+	},
+	"examples": [
+		{
+			"name": "Weather Tool Round Trip",
+			"description": "Complete a weather tool round trip and turn the tool result into a practical recommendation.",
+			"input": {
+				"input": [
+					{
+						"role": "user",
+						"content": "I am planning an outdoor dinner in Lisbon tonight. Check the weather and then give me a one-sentence recommendation."
+					},
+					{
+						"type": "function_call",
+						"call_id": "call_weather_lisbon",
+						"name": "get_weather",
+						"arguments": "{\"city\":\"Lisbon\"}"
+					},
+					{
+						"type": "function_call_output",
+						"call_id": "call_weather_lisbon",
+						"output": "22 C, partly cloudy, 10 percent chance of rain, light wind"
+					}
+				],
+				"tools": [
+					{
+						"type": "function",
+						"name": "get_weather",
+						"description": "Get the current weather and short-term forecast for a city.",
+						"parameters": {
+							"type": "object",
+							"properties": {
+								"city": {
+									"type": "string",
+									"description": "City name"
+								}
+							},
+							"required": [
+								"city"
+							]
+						}
+					}
+				],
+				"max_output_tokens": 800
+			},
+			"error": {
+				"kind": "runner-failure",
+				"message": "normalizer returned empty output \u2014 check modality vs response shape, or recapture",
+				"timestamp": "2026-10-08T15:02:13.380Z"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.2',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'I am planning an outdoor dinner in Lisbon tonight. Check the weather and then give me a one-sentence recommendation.',\n      },\n      {\n        role: 'assistant',\n        content: null,\n        tool_calls: [\n          {\n            id: 'call_weather_lisbon',\n            type: 'function',\n            function: { name: 'get_weather', arguments: '{\"city\":\"Lisbon\"}' },\n          },\n        ],\n      },\n      {\n        role: 'tool',\n        content: '22 C, partly cloudy, 10 percent chance of rain, light wind',\n        tool_call_id: 'call_weather_lisbon',\n      },\n    ],\n    tools: [\n      {\n        type: 'function',\n        function: {\n          name: 'get_weather',\n          description: 'Get the current weather and short-term forecast for a city.',\n          parameters: {\n            type: 'object',\n            properties: { city: { type: 'string', description: 'City name' } },\n            required: ['city'],\n          },\n        },\n      },\n    ],\n    max_completion_tokens: 800,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.2\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"I am planning an outdoor dinner in Lisbon tonight. Check the weather and then give me a one-sentence recommendation.\"\n      },\n      {\n        \"role\": \"assistant\",\n        \"content\": null,\n        \"tool_calls\": [\n          {\n            \"id\": \"call_weather_lisbon\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"get_weather\",\n              \"arguments\": \"{\\\"city\\\":\\\"Lisbon\\\"}\"\n            }\n          }\n        ]\n      },\n      {\n        \"role\": \"tool\",\n        \"content\": \"22 C, partly cloudy, 10 percent chance of rain, light wind\",\n        \"tool_call_id\": \"call_weather_lisbon\"\n      }\n    ],\n    \"tools\": [\n      {\n        \"type\": \"function\",\n        \"function\": {\n          \"name\": \"get_weather\",\n          \"description\": \"Get the current weather and short-term forecast for a city.\",\n          \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"city\": {\n                \"type\": \"string\",\n                \"description\": \"City name\"\n              }\n            },\n            \"required\": [\n              \"city\"\n            ]\n          }\n        }\n      }\n    ],\n    \"max_completion_tokens\": 800\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Currency Conversion Tool Round Trip",
+			"description": "Complete a currency-conversion tool round trip and report the result with the supplied rate and timestamp.",
+			"input": {
+				"input": [
+					{
+						"role": "user",
+						"content": "Convert a 125 EUR invoice to USD and tell me whether it exceeds a 130 USD approval threshold."
+					},
+					{
+						"type": "function_call",
+						"call_id": "call_fx_invoice",
+						"name": "get_exchange_rate",
+						"arguments": "{\"base\":\"EUR\",\"quote\":\"USD\"}"
+					},
+					{
+						"type": "function_call_output",
+						"call_id": "call_fx_invoice",
+						"output": "{\"rate\":1.09,\"as_of\":\"2026-10-06T12:00:00Z\"}"
+					}
+				],
+				"tools": [
+					{
+						"type": "function",
+						"name": "get_exchange_rate",
+						"description": "Return the current exchange rate between two currencies.",
+						"parameters": {
+							"type": "object",
+							"properties": {
+								"base": {
+									"type": "string"
+								},
+								"quote": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"base",
+								"quote"
+							]
+						}
+					}
+				],
+				"max_output_tokens": 1200
+			},
+			"output": {
+				"text": "125 EUR = **~136.25 USD** at the current rate of 1 EUR = 1.09 USD (as of 2026-10-06T12:00:00Z).\n\nCalculation: 125 * 1.09 = 136.25\n\n**Yes, it exceeds the 130 USD approval threshold** by approximately 6.25 USD and would require approval."
+			},
+			"raw_response": {
+				"id": "resp_6ac7b04ba509d24598194b61",
+				"object": "response",
+				"created_at": 1791471690,
+				"model": "muse-spark-1.2",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b04ba509d24598194b61:rs_f4b0a6f3-023e-4c06-a3e4-10004d9ca24d",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_7d979f31-94ee-4666-b03e-a5e4a0c61fcc",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "125 EUR = **~136.25 USD** at the current rate of 1 EUR = 1.09 USD (as of 2026-10-06T12:00:00Z).\n\nCalculation: 125 * 1.09 = 136.25\n\n**Yes, it exceeds the 130 USD approval threshold** by approximately 6.25 USD and would require approval.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 679,
+					"output_tokens": 362,
+					"total_tokens": 1041,
+					"input_tokens_details": {
+						"cached_tokens": 113
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 271
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [
+					{
+						"type": "function",
+						"name": "get_exchange_rate",
+						"description": "Return the current exchange rate between two currencies.",
+						"parameters": {
+							"properties": {
+								"base": {
+									"type": "string"
+								},
+								"quote": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"base",
+								"quote"
+							],
+							"type": "object"
+						}
+					}
+				],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471691,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 1200
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.2',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Convert a 125 EUR invoice to USD and tell me whether it exceeds a 130 USD approval threshold.',\n      },\n      {\n        role: 'assistant',\n        content: null,\n        tool_calls: [\n          {\n            id: 'call_fx_invoice',\n            type: 'function',\n            function: { name: 'get_exchange_rate', arguments: '{\"base\":\"EUR\",\"quote\":\"USD\"}' },\n          },\n        ],\n      },\n      {\n        role: 'tool',\n        content: '{\"rate\":1.09,\"as_of\":\"2026-10-06T12:00:00Z\"}',\n        tool_call_id: 'call_fx_invoice',\n      },\n    ],\n    tools: [\n      {\n        type: 'function',\n        function: {\n          name: 'get_exchange_rate',\n          description: 'Return the current exchange rate between two currencies.',\n          parameters: {\n            type: 'object',\n            properties: { base: { type: 'string' }, quote: { type: 'string' } },\n            required: ['base', 'quote'],\n          },\n        },\n      },\n    ],\n    max_completion_tokens: 1200,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.2\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Convert a 125 EUR invoice to USD and tell me whether it exceeds a 130 USD approval threshold.\"\n      },\n      {\n        \"role\": \"assistant\",\n        \"content\": null,\n        \"tool_calls\": [\n          {\n            \"id\": \"call_fx_invoice\",\n            \"type\": \"function\",\n            \"function\": {\n              \"name\": \"get_exchange_rate\",\n              \"arguments\": \"{\\\"base\\\":\\\"EUR\\\",\\\"quote\\\":\\\"USD\\\"}\"\n            }\n          }\n        ]\n      },\n      {\n        \"role\": \"tool\",\n        \"content\": \"{\\\"rate\\\":1.09,\\\"as_of\\\":\\\"2026-10-06T12:00:00Z\\\"}\",\n        \"tool_call_id\": \"call_fx_invoice\"\n      }\n    ],\n    \"tools\": [\n      {\n        \"type\": \"function\",\n        \"function\": {\n          \"name\": \"get_exchange_rate\",\n          \"description\": \"Return the current exchange rate between two currencies.\",\n          \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"base\": {\n                \"type\": \"string\"\n              },\n              \"quote\": {\n                \"type\": \"string\"\n              }\n            },\n            \"required\": [\n              \"base\",\n              \"quote\"\n            ]\n          }\n        }\n      }\n    ],\n    \"max_completion_tokens\": 1200\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Meeting Action Register",
+			"description": "Extract decisions, owners, and follow-up dates from an unstructured project meeting transcript.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a precise project coordinator. Do not invent owners or dates. Mark missing information as unassigned or unspecified."
+					},
+					{
+						"role": "user",
+						"content": "Extract a concise action register from this transcript:\n\nMaya: We will ship the billing retry change after the staging soak.\nJon: I can own the dashboard, but I need the final event names from Priya.\nPriya: I will send those by Thursday.\nMaya: Let's review staging results Friday morning; if error rate stays below 0.5%, release Monday.\nJon: I will also add a rollback link to the runbook.\n\nReturn a table with action, owner, due date, and dependency, followed by the release criteria."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "Based on transcript only - no assumptions made:\n\n| Action | Owner | Due Date | Dependency |\n| :--- | :--- | :--- | :--- |\n| Ship billing retry change | Unassigned | Unspecified | Staging soak completion |\n| Own/build dashboard | Jon | Unspecified | Final event names from Priya |\n| Send final event names | Priya | Thursday | Unspecified |\n| Review staging results | Unassigned (proposed by Maya) | Friday morning | Staging results available |\n| Add rollback link to runbook | Jon | Unspecified | Unspecified |\n\n**Release Criteria:**\nError rate stays below 0.5% during staging soak, to be reviewed Friday morning. If criteria is met, release Monday."
+			},
+			"raw_response": {
+				"id": "resp_6ac7b05469fb209135cc4a09",
+				"object": "response",
+				"created_at": 1791471700,
+				"model": "muse-spark-1.2",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b05469fb209135cc4a09:rs_ab4bc0f0-3e37-48bf-92b6-2ddb16697c16",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_1062dd18-3e14-4f69-ad99-c9e552a4698c",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Based on transcript only - no assumptions made:\n\n| Action | Owner | Due Date | Dependency |\n| :--- | :--- | :--- | :--- |\n| Ship billing retry change | Unassigned | Unspecified | Staging soak completion |\n| Own/build dashboard | Jon | Unspecified | Final event names from Priya |\n| Send final event names | Priya | Thursday | Unspecified |\n| Review staging results | Unassigned (proposed by Maya) | Friday morning | Staging results available |\n| Add rollback link to runbook | Jon | Unspecified | Unspecified |\n\n**Release Criteria:**\nError rate stays below 0.5% during staging soak, to be reviewed Friday morning. If criteria is met, release Monday.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 158,
+					"output_tokens": 2323,
+					"total_tokens": 2481,
+					"input_tokens_details": {
+						"cached_tokens": 113
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 2168
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471700,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.2',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a precise project coordinator. Do not invent owners or dates. Mark missing information as unassigned or unspecified.',\n      },\n      {\n        role: 'user',\n        content:\n          \"Extract a concise action register from this transcript:\\n\\nMaya: We will ship the billing retry change after the staging soak.\\nJon: I can own the dashboard, but I need the final event names from Priya.\\nPriya: I will send those by Thursday.\\nMaya: Let's review staging results Friday morning; if error rate stays below 0.5%, release Monday.\\nJon: I will also add a rollback link to the runbook.\\n\\nReturn a table with action, owner, due date, and dependency, followed by the release criteria.\",\n      },\n    ],\n    max_completion_tokens: 1600,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.2\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a precise project coordinator. Do not invent owners or dates. Mark missing information as unassigned or unspecified.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Extract a concise action register from this transcript:\\n\\nMaya: We will ship the billing retry change after the staging soak.\\nJon: I can own the dashboard, but I need the final event names from Priya.\\nPriya: I will send those by Thursday.\\nMaya: Let'\\''s review staging results Friday morning; if error rate stays below 0.5%, release Monday.\\nJon: I will also add a rollback link to the runbook.\\n\\nReturn a table with action, owner, due date, and dependency, followed by the release criteria.\"\n      }\n    ],\n    \"max_completion_tokens\": 1600\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Event Processing Trade-offs",
+			"description": "Explain a distributed-systems trade-off to an engineering team and recommend an approach for the stated workload.",
+			"input": {
+				"input": [
+					{
+						"role": "user",
+						"content": "We need to process 50,000 events per second, preserve per-customer ordering, tolerate consumer restarts, and replay events for up to seven days. Compare partitioned logs with a task queue in a decision table covering ordering, throughput, retries, replay, and operations. Then recommend one approach and name its main failure mode. Keep it under 600 words."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "For 50k events/sec with strict ordering + replay, **Partitioned Log** is the correct pattern.\n\n### Decision Table: Partitioned Log vs Task Queue\n\n| Criteria | Partitioned Log `Kafka / Redpanda / Kinesis` | Task Queue `SQS / RabbitMQ / Celery / Sidekiq` |\n| :--- | :--- | :--- |\n| **Ordering** | **Strong per-key ordering.** Partition key = `customer_id` guarantees all events for one customer go to one ordered partition. Total order not guaranteed, but per-customer order is. | **Weak / No ordering.** Most queues provide best-effort FIFO per-queue, but scaling with multiple consumers breaks ordering. Requires one queue per customer to guarantee order - not feasible. |\n| **Throughput** | **High & Horizontally Scalable.** 50k/sec is easily handled by adding partitions and brokers. Sequential disk I/O. Consumers scale with partition count. | **Limited by broker/acknowledgement overhead.** High throughput requires many queues/workers. Contention on central broker, prefetch limits and per-message ACKs reduce throughput at 50k/sec. |\n| **Retries** | **At-least-once, consumer-managed.** Offset not committed until processed. On restart, consumer resumes from last committed offset. Requires idempotent consumer + Dead Letter Topic for poison pills to avoid blocking partition. | **Built-in ACK/NACK & retries.** Failed job NACKs and is retried/requeued automatically. Easy per-message retry with visibility timeout / backoff. Risk of duplicate execution if worker crashes after processing but before ACK. |\n| **Replay** | **Native, for retention window.** Log is durable and immutable. Any consumer can rewind offset and replay last 7 days by configuration `retention.ms=7 days`. Ideal for new consumers, debugging, and reprocessing. | **No replay.** Once ACKed, message is deleted. Requires separate archival DB to rebuild history. Cannot replay 7 days without custom infrastructure. |\n| **Operations** | **Higher operational cost.** Must manage brokers, partitions, replication, consumer rebalancing, schema registry, and monitor consumer lag. Partition count is hard to change and hot customers create skew. | **Lower operational cost.** Fully managed services `SQS` are simple. No partitions/rebalancing to manage. Monitoring is queue depth. |\n\n### Recommendation: Partitioned Log\n\nA Task Queue cannot meet two core requirements: per-customer ordering at scale and 7-day replay. It is designed for *distribution of work*, not *ordered event history*.\n\nA Partitioned Log is designed for this exact workload. Partition by `customer_id` to preserve ordering, scale consumers via a consumer group `1 consumer per partition`, set retention to 7 days, and use committed offsets to tolerate restarts.\n\n### Main Failure Mode to Design For\n\n**Head-of-Line Blocking & Hot Partitions.**\n\nBecause ordering is strict per-partition, a single poison pill event or a high-volume customer will block all subsequent events for every other customer mapped to that same partition. The consumer cannot skip the failed event without violating order.\n\n**Mitigation required:** 1) Idempotent consumers for at-least-once restarts, 2) Dead-letter topic with non-blocking retry to park poison pills after N attempts, and 3) Watch for partition skew - split hot customers with virtual partitions or salting if one customer dominates throughput, otherwise lag will grow unbounded."
+			},
+			"raw_response": {
+				"id": "resp_6ac7b061a100161e1ff649a1",
+				"object": "response",
+				"created_at": 1791471713,
+				"model": "muse-spark-1.2",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b061a100161e1ff649a1:rs_60a314bf-06b8-48e8-a780-22fd4ffef97f",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_18082550-8bb3-4b52-a537-4673ef8152ab",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "For 50k events/sec with strict ordering + replay, **Partitioned Log** is the correct pattern.\n\n### Decision Table: Partitioned Log vs Task Queue\n\n| Criteria | Partitioned Log `Kafka / Redpanda / Kinesis` | Task Queue `SQS / RabbitMQ / Celery / Sidekiq` |\n| :--- | :--- | :--- |\n| **Ordering** | **Strong per-key ordering.** Partition key = `customer_id` guarantees all events for one customer go to one ordered partition. Total order not guaranteed, but per-customer order is. | **Weak / No ordering.** Most queues provide best-effort FIFO per-queue, but scaling with multiple consumers breaks ordering. Requires one queue per customer to guarantee order - not feasible. |\n| **Throughput** | **High & Horizontally Scalable.** 50k/sec is easily handled by adding partitions and brokers. Sequential disk I/O. Consumers scale with partition count. | **Limited by broker/acknowledgement overhead.** High throughput requires many queues/workers. Contention on central broker, prefetch limits and per-message ACKs reduce throughput at 50k/sec. |\n| **Retries** | **At-least-once, consumer-managed.** Offset not committed until processed. On restart, consumer resumes from last committed offset. Requires idempotent consumer + Dead Letter Topic for poison pills to avoid blocking partition. | **Built-in ACK/NACK & retries.** Failed job NACKs and is retried/requeued automatically. Easy per-message retry with visibility timeout / backoff. Risk of duplicate execution if worker crashes after processing but before ACK. |\n| **Replay** | **Native, for retention window.** Log is durable and immutable. Any consumer can rewind offset and replay last 7 days by configuration `retention.ms=7 days`. Ideal for new consumers, debugging, and reprocessing. | **No replay.** Once ACKed, message is deleted. Requires separate archival DB to rebuild history. Cannot replay 7 days without custom infrastructure. |\n| **Operations** | **Higher operational cost.** Must manage brokers, partitions, replication, consumer rebalancing, schema registry, and monitor consumer lag. Partition count is hard to change and hot customers create skew. | **Lower operational cost.** Fully managed services `SQS` are simple. No partitions/rebalancing to manage. Monitoring is queue depth. |\n\n### Recommendation: Partitioned Log\n\nA Task Queue cannot meet two core requirements: per-customer ordering at scale and 7-day replay. It is designed for *distribution of work*, not *ordered event history*.\n\nA Partitioned Log is designed for this exact workload. Partition by `customer_id` to preserve ordering, scale consumers via a consumer group `1 consumer per partition`, set retention to 7 days, and use committed offsets to tolerate restarts.\n\n### Main Failure Mode to Design For\n\n**Head-of-Line Blocking & Hot Partitions.**\n\nBecause ordering is strict per-partition, a single poison pill event or a high-volume customer will block all subsequent events for every other customer mapped to that same partition. The consumer cannot skip the failed event without violating order.\n\n**Mitigation required:** 1) Idempotent consumers for at-least-once restarts, 2) Dead-letter topic with non-blocking retry to park poison pills after N attempts, and 3) Watch for partition skew - split hot customers with virtual partitions or salting if one customer dominates throughput, otherwise lag will grow unbounded.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 80,
+					"output_tokens": 1386,
+					"total_tokens": 1466,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 667
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471713,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.2',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'We need to process 50,000 events per second, preserve per-customer ordering, tolerate consumer restarts, and replay events for up to seven days. Compare partitioned logs with a task queue in a decision table covering ordering, throughput, retries, replay, and operations. Then recommend one approach and name its main failure mode. Keep it under 600 words.',\n      },\n    ],\n    max_completion_tokens: 1800,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.2\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"We need to process 50,000 events per second, preserve per-customer ordering, tolerate consumer restarts, and replay events for up to seven days. Compare partitioned logs with a task queue in a decision table covering ordering, throughput, retries, replay, and operations. Then recommend one approach and name its main failure mode. Keep it under 600 words.\"\n      }\n    ],\n    \"max_completion_tokens\": 1800\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search Grounding",
+			"description": "Use Meta's Responses API web search grounding to answer a current-events question with citations.",
+			"input": {
+				"input": "What is the latest major technology news today? Cite the sources.",
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				]
+			},
+			"output": {
+				"text": "I'll gather today's biggest tech headlines for you \u2014 searching the latest coverage now."
+			},
+			"raw_response": {
+				"id": "resp_6ac7b061a0901a5463764dc7",
+				"object": "response",
+				"created_at": 1791471713,
+				"model": "muse-spark-1.2",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b061a0901a5463764dc7:rs_2c2099d2-8863-470a-8810-2ddf2fff9d3e",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_cb639230-45c1-4b26-a436-faaf8ab36206",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "I'll gather today's biggest tech headlines for you \u2014 searching the latest coverage now.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_1490572f-13ac-4577-ba12-f6f4907064ee",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "major technology news today October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_4744e507-abd8-4bb6-b4a3-5fb5c178ceb4",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "tech news headlines October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_40146bf5-4464-4d1e-9427-31493db38718",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "breaking technology news October 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_f37bd93c-4f72-4728-9b31-afd646c47129",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "\"October 8, 2026\" technology"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_ecaabafc-bbeb-4527-963d-865fb5de9357",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.archynetys.com/trend/2026-10-08/samsung-forecasts-record-third-quarter-profit-of-80-billion-on-the-back-of-ai"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_7fdbfebc-908c-4add-96eb-742232c1accf",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.archynetys.com/trend/2026-10-07/microsoft-surface-and-windows-event-2026-all-the-announcements-and-analysis"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_38245068-43bb-4a86-baa8-0731d239533e",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_bd19abc4-53ab-49a7-bb7f-b42a6f7ebaeb",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "technology news today AI chip"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_db54ecc1-ee6a-4f22-83f8-5ba42c60606b",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "latest technology news Reuters AP October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_581890ae-b3e4-4e91-81d1-a41b60a5d869",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "The Verge tech news today October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_1d4fa484-1ac1-4e9a-a7ed-d7559ff906de",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Samsung profit record AI demand October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_c3f9d6b5-5943-423a-9b36-43ddf5ed8b21",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.lapost.com/content/samsung-q3-profit-jumps-783-as-ai-memory-boom-lifts-chip-earnings"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_f630d925-7941-4b83-bec4-baaf78ab778e",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://harpianews.com/ai-chip-growth-pushes-samsung-earnings-to-file-80bn/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_42a04b68-1ce3-4369-a913-124d609dba29",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "http://dailyiq.me/stock/ORCL"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_9737abf0-ee83-4855-90ad-7b7bf7fd5cd6",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://aiagentstore.ai/ai-agent-news/today"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_99bdfd45-639e-467e-bd33-279755796cf7",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Wi-Fi 8 routers ASUS TP-Link October 2026"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b061a0901a5463764dc7:rs_4a9e895b-ecc8-41ec-9083-205c72d5dcc4",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_bd35a465-b38f-472b-bf73-f82c3256caaf",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Latest Major Technology News - Today, October 8, 2026:\n\n**1. Samsung forecasts record Q3 profit on AI memory boom**\n* Samsung Electronics on Thursday projected its quarterly profit would top 100 trillion won, a world first for a technology company, estimating a nearly nine-fold jump in third-quarter earnings as booming demand for AI chips drove strong memory sales.\n* The company projects a $80 billion Q3 profit as AI\u2011driven chip demand spikes, setting a new industry benchmark, published October 8, 2026 12:38 UTC.\n* Details: Samsung Electronics says it expects a nine-fold surge in its quarterly earnings contrast with a year earlier, pushed by surging demand for memory chips utilized in artificial intelligence (AI) information centres, with operating profit for the three months to the end of September to soar to 107.4tn won ($80bn), slightly ahead of an LSEG SmartEstimate of 106.1 trillion won. Related coverage notes it as Samsung flags $80 billion profit on AI boom, highest quarterly for any tech company and that Samsung\u2019s Q3 2026 profit jumps 782% to $80 billion on AI chip demand. The forecast marks Samsung's fourth straight quarter of record operating profit, driven by AI\u2011optimized memory chips, described as an AI chip boom.\n\n**2. Microsoft Surface and Windows Event 2026**\n* Microsoft Surface and Windows Event 2026: All the Announcements and Analysis Live From San Francisco \u2014 published October 8, 2026 06:46 UTC.\n* Primary Driver: Microsoft unveils MacBook Pro competitor at Windows and Surface event.\n* Microsoft has announced a MacBook Pro competitor, a new line of laptops designed to challenge Apple's dominance in the premium laptop market, with coverage from The Verge explaining that Microsoft built its new laptop with a focus on performance and portability, featuring a custom-designed processor and a sleek, aluminum design.\n\n**3. Oracle - AI chip financing and other tech developments**\n* On Oct 8, Oracle was reported to be negotiating with Apollo and Goldman Sachs to finance a large purchase of AI chips through a lease\u2011structured vehicle, a move designed to avoid adding to its bond debt amid concerns over rising leverage.\n* Oracle entered negotiations with Apollo and Goldman Sachs to finance a substantial purchase of AI chips through a lease\u2011structured vehicle, reflecting a broader trend of pursuing private debt arrangements worth tens of billions to fund AI hardware acquisitions.\n\n**4. Venture Funding - AI Agents, Quantum and Robotics dominate Oct 8**\n* Startup funding over the past 24 hours has been dominated by a remarkable comeback in the AI agent market, alongside major investments in quantum computing, physical AI, cybersecurity, fusion energy, and financial infrastructure.\n* Manus led the day with more than $500 million in fresh funding - Butterfly Effect, the parent company of AI agent startup Manus, has raised more than $500 million in a new financing round co-led by Boyu Capital and IDG Capital, returning to private capital after Chinese regulators forced Meta to unwind its $2 billion-plus acquisition, with funding date October 8, 2026.\n* British quantum computing startup Universal Quantum raised more than $100 million in Series A funding co-led by DCVC and Firgun Ventures, also dated October 8, 2026.\n* Mecka raised $60 million in Series B funding led by Sequoia Capital, with new investors including Nvidia, Microsoft venture arm M12, Qualcomm Ventures, and Samsung to build human-motion data infrastructure for robots.\n* Global cybersecurity startups raised approximately $5.26 billion in the third quarter of 2026, nearly double the previous quarter, with AI-related security increasingly attracting investor attention.\n\n**5. AI Model & Agent Releases**\n* Anthropic released Claude Haiku 5.5 on October 7, 2026, positioning it as a fast, low\u2011cost small model for high\u2011volume tasks (classification, extraction, routing and subagent work) and publishing pricing, context window (1M tokens) and migration guidance.\n* Meta expanded its Muse personal AI agent to a dedicated iPad app a month after mobile launch, reported on October 7, 2026.\n* Nous Research \u2014 the team behind the open\u2011weight Hermes agent \u2014 closed a late VC round and announced \u201cHermes for Businesses,\u201d reported Oct 7, 2026.\n\n**6. Networking Hardware - Wi-Fi 8 arrives early**\n* The first Wi-Fi 8 routers have gone on sale. ASUS started shipping the ROG Rapture GT-BN98, a gaming router, on 6th October 2026. TP-Link opened pre-orders for its Archer 8 Ultra in Germany on 30th September and in Australia on 1st October.\n\n**7. Other AI Chip Market Moves Today**\n* Micron Technology, trading under MU, has experienced a remarkable 7.5% increase today attributed to a strong upgrade from analysts who are responding to a spike in AI chip demand.\n* Samsung is among the world\u2019s largest memory chip makers alongside rival SK Hynix and Micron, which produce chips essential for AI companies like Nvidia.",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"url": "https://www.lapost.com/content/samsung-q3-profit-jumps-783-as-ai-memory-boom-lifts-chip-earnings",
+										"start_index": 116,
+										"end_index": 247,
+										"title": "Samsung flags $80 billion profit on AI boom, highest quarterly for any tech company"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.lapost.com/content/samsung-q3-profit-jumps-783-as-ai-memory-boom-lifts-chip-earnings",
+										"start_index": 247,
+										"end_index": 366,
+										"title": "Samsung flags $80 billion profit on AI boom, highest quarterly for any tech company"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-08/samsung-forecasts-record-third-quarter-profit-of-80-billion-on-the-back-of-ai",
+										"start_index": 368,
+										"end_index": 480,
+										"title": "Samsung forecasts record third-quarter profit of $80 billion on the back of AI boom"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-08/samsung-forecasts-record-third-quarter-profit-of-80-billion-on-the-back-of-ai",
+										"start_index": 480,
+										"end_index": 517,
+										"title": "Samsung forecasts record third-quarter profit of $80 billion on the back of AI boom"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://harpianews.com/ai-chip-growth-pushes-samsung-earnings-to-file-80bn/",
+										"start_index": 519,
+										"end_index": 742,
+										"title": "AI chip growth pushes Samsung earnings to file $80bn"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://harpianews.com/ai-chip-growth-pushes-samsung-earnings-to-file-80bn/",
+										"start_index": 742,
+										"end_index": 841,
+										"title": "AI chip growth pushes Samsung earnings to file $80bn"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.lapost.com/content/samsung-q3-profit-jumps-783-as-ai-memory-boom-lifts-chip-earnings",
+										"start_index": 841,
+										"end_index": 904,
+										"title": "Samsung flags $80 billion profit on AI boom, highest quarterly for any tech company"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.lapost.com/content/samsung-q3-profit-jumps-783-as-ai-memory-boom-lifts-chip-earnings",
+										"start_index": 1098,
+										"end_index": 1177,
+										"title": "Samsung flags $80 billion profit on AI boom, highest quarterly for any tech company"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-08/samsung-forecasts-record-third-quarter-profit-of-80-billion-on-the-back-of-ai",
+										"start_index": 1177,
+										"end_index": 1244,
+										"title": "Samsung forecasts record third-quarter profit of $80 billion on the back of AI boom"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-07/microsoft-surface-and-windows-event-2026-all-the-announcements-and-analysis",
+										"start_index": 1295,
+										"end_index": 1435,
+										"title": "Microsoft Surface and Windows Event 2026: All the Announcements and Analysis Live From San Francisco"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-07/microsoft-surface-and-windows-event-2026-all-the-announcements-and-analysis",
+										"start_index": 1437,
+										"end_index": 1524,
+										"title": "Microsoft Surface and Windows Event 2026: All the Announcements and Analysis Live From San Francisco"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-07/microsoft-surface-and-windows-event-2026-all-the-announcements-and-analysis",
+										"start_index": 1526,
+										"end_index": 1668,
+										"title": "Microsoft Surface and Windows Event 2026: All the Announcements and Analysis Live From San Francisco"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.archynetys.com/trend/2026-10-07/microsoft-surface-and-windows-event-2026-all-the-announcements-and-analysis",
+										"start_index": 1668,
+										"end_index": 1857,
+										"title": "Microsoft Surface and Windows Event 2026: All the Announcements and Analysis Live From San Francisco"
+									},
+									{
+										"type": "url_citation",
+										"url": "http://dailyiq.me/stock/ORCL",
+										"start_index": 1922,
+										"end_index": 2161,
+										"title": "Oracle Corporation (ORCL) Stock Price, News, Analysis | DailyIQ"
+									},
+									{
+										"type": "url_citation",
+										"url": "http://dailyiq.me/stock/ORCL",
+										"start_index": 2163,
+										"end_index": 2303,
+										"title": "Oracle Corporation (ORCL) Stock Price, News, Analysis | DailyIQ"
+									},
+									{
+										"type": "url_citation",
+										"url": "http://dailyiq.me/stock/ORCL",
+										"start_index": 2303,
+										"end_index": 2425,
+										"title": "Oracle Corporation (ORCL) Stock Price, News, Analysis | DailyIQ"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 2500,
+										"end_index": 2730,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 2732,
+										"end_index": 2796,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 2797,
+										"end_index": 2960,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 2960,
+										"end_index": 3069,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 3069,
+										"end_index": 3104,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 3106,
+										"end_index": 3244,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 3244,
+										"end_index": 3272,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 3274,
+										"end_index": 3439,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 3440,
+										"end_index": 3492,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://techstartups.com/2026/10/08/startup-funding-news-today-october-8-2026-manus-universal-quantum-mecka-verso-more/",
+										"start_index": 3494,
+										"end_index": 3694,
+										"title": "Startup Funding News Today, October 8, 2026: Manus, Universal Quantum, Mecka, Verso & More"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://aiagentstore.ai/ai-agent-news/today",
+										"start_index": 3730,
+										"end_index": 3986,
+										"title": "AI Agent News Today \u2014 October 8, 2026"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://aiagentstore.ai/ai-agent-news/today",
+										"start_index": 3988,
+										"end_index": 4111,
+										"title": "AI Agent News Today \u2014 October 8, 2026"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://aiagentstore.ai/ai-agent-news/today",
+										"start_index": 4113,
+										"end_index": 4260,
+										"title": "AI Agent News Today \u2014 October 8, 2026"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://harpianews.com/ai-chip-growth-pushes-samsung-earnings-to-file-80bn/",
+										"start_index": 4780,
+										"end_index": 4933,
+										"title": "AI chip growth pushes Samsung earnings to file $80bn"
+									}
+								],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 139797,
+					"output_tokens": 3328,
+					"total_tokens": 143125,
+					"input_tokens_details": {
+						"cached_tokens": 110472
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 754
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471733,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.2',\n  {\n    input: 'What is the latest major technology news today? Cite the sources.',\n    tools: [{ type: 'web_search' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.2\",\n  \"input\": {\n    \"input\": \"What is the latest major technology news today? Cite the sources.\",\n    \"tools\": [{\"type\": \"web_search\"}]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://dev.meta.ai/docs/models",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/meta/muse-spark-1.2.png",
+	"metadata": {
+		"Context Window": "1,048,576 tokens",
+		"Input Modalities": "Text, image, video, audio, PDF",
+		"Output Modalities": "Text"
+	},
+	"request_formats": [
+		"responses"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "meta",
+			"pricing": {
+				"input_tokens": 1.25,
+				"input_cached_tokens": 0.16,
+				"output_tokens": 4.25
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-12 01:28:03",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high",
+								"xhigh",
+								"max"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

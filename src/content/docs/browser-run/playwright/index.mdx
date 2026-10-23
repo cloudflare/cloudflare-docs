@@ -208,6 +208,7 @@ Then, add the KV namespace to your Wrangler configuration file:
 {
 	"name": "storage-state-examples",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_flags": ["nodejs_compat"],
 	"compatibility_date": "$today",
 	"browser": {
@@ -252,16 +253,16 @@ await env.KV.put("storageState", JSON.stringify(updatedStorageState));
 
 ### Keep Alive
 
-If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-run/features/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 10 minutes, by using the `keep_alive` option, set in milliseconds:
+If users omit the `browser.close()` statement, the browser instance will stay open, ready to be connected to again and [re-used](/browser-run/features/reuse-sessions/) but it will, by default, close automatically after 1 minute of inactivity. Users can optionally extend this idle time up to 20 minutes, by using the `keep_alive` option, set in milliseconds:
 
 ```js
-const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 600000 });
+const browser = await playwright.launch(env.MYBROWSER, { keep_alive: 1200000 });
 ```
 
-Using the above, the browser will stay open for up to 10 minutes, even if inactive.
+Using the above, the browser will stay open for up to 20 minutes, even if inactive.
 
 :::note
-This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 10 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 10 minutes). Refer to [session duration limits](/browser-run/limits/#is-there-a-maximum-session-duration) for more information.
+This is an inactivity timeout, not a maximum session duration. Sessions can remain open longer than 20 minutes as long as they stay active. To keep a session open beyond the inactivity timeout, send a command at least once within your configured window (for example, every 20 minutes). Refer to [session duration limits](/browser-run/limits/#is-there-a-maximum-session-duration) for more information.
 :::
 
 ### Session Reuse

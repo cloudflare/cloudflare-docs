@@ -6,6 +6,8 @@ import {
 	computeLastActivity,
 	getDraftStaleAction,
 	getDraftStaleState,
+	DRAFT_STALE_CLOSE_MARKER,
+	findCurrentClosingComment,
 	getMarkedComment,
 	latestHumanPush,
 	selectOrphanStateKeys,
@@ -732,5 +734,47 @@ describe("draft stale comment helpers", () => {
 		expect(
 			getMarkedComment([reminder, quoted], DRAFT_STALE_REMINDER_MARKER),
 		).toBe(reminder);
+	});
+});
+
+describe("findCurrentClosingComment", () => {
+	const state = {
+		staleSince: "2026-09-23T21:48:56.000Z",
+		reminderPostedAt: "2026-09-27T05:06:56.000Z",
+		reminderCommentId: 2,
+	};
+	const closing = {
+		id: 1,
+		body: DRAFT_STALE_CLOSE_MARKER,
+		created_at: "2026-09-23T05:11:06.000Z",
+		updated_at: "2026-09-23T05:11:06.000Z",
+		user: { login: "cloudflare-docs-bot", type: "Bot" },
+	};
+
+	it("returns null when there is no close comment", () => {
+		expect(findCurrentClosingComment([], state)).toBeNull();
+	});
+
+	it("ignores a close comment from an earlier, reopened cycle", () => {
+		expect(findCurrentClosingComment([closing], state)).toBeNull();
+	});
+
+	it("reuses a close comment posted after this cycle's reminder", () => {
+		const current = {
+			...closing,
+			id: 3,
+			created_at: "2026-10-04T05:06:00.000Z",
+		};
+		expect(findCurrentClosingComment([closing, current], state)).toBe(current);
+	});
+
+	it("ignores close marker text posted by a non-bot", () => {
+		const spoofed = {
+			...closing,
+			id: 4,
+			created_at: "2026-10-04T05:06:00.000Z",
+			user: { login: "author", type: "User" },
+		};
+		expect(findCurrentClosingComment([spoofed], state)).toBeNull();
 	});
 });
