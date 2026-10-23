@@ -1,0 +1,24 @@
+---
+title: Model aliases in AI Gateway (Beta)
+description: Give models a stable name and update routing preferences in AI Gateway without changing application code.
+date: 2026-10-22
+---
+
+AI Gateway now supports model aliases in Beta. An alias gives one or more models a stable name, such as `custom/support-fast`. You can update the models without changing your application code.
+
+Keep models in a preferred order for fallbacks. Or use smart routing to rank models by cost or quality. Create and manage aliases on your gateway's **Routing** page, alongside dynamic routes.
+
+To call an alias through the [REST API](/ai-gateway/usage/rest-api/), use its name as the `model`. For example, send this body to `/accounts/{account_id}/ai/run`:
+
+```json
+{
+	"model": "custom/support-fast",
+	"input": {
+		"messages": [{ "role": "user", "content": "Reply with a short greeting." }]
+	}
+}
+```
+
+Include the `cf-aig-gateway-id` header to select the gateway where you created the alias. Aliases are scoped to individual gateways.
+
+For setup instructions and routing options, refer to [Model aliases](/ai-gateway/features/routing/model-aliases/).
