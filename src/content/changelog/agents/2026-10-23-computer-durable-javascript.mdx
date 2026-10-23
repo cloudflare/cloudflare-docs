@@ -39,7 +39,7 @@ export class MyAgent extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-The backend writes every filesystem call, host module call, and `fetch` response to a journal in SQLite. After a restart, the run starts again from the top. Calls it already made are answered from the journal, in their original order, and its output is not repeated. Once the run catches up, it continues live. Clocks, timers, and random values repeat on replay, so the run takes the same path.
+After a restart, the run carries on from where it was, without repeating calls it already made or printing its output twice.
 
 A call that was still running at the restart runs again. Each host module call gets a `context.callId` that stays the same across that rerun, so you can use it as an idempotency key. To fail the run instead, wrap the function in `unsafeToRepeat()`.
 
@@ -84,6 +84,6 @@ for (const call of await workspace.runtime.pending()) {
 
 </TypeScriptExample>
 
-Once every waiting call in the run has an answer, the run replays to the call, and `ctx.interrupt()` returns the answer. To notify someone when a call starts waiting, give the backend an `onWait` function.
+Once every waiting call in the run has an answer, the run continues, and `ctx.interrupt()` returns the answer. To notify someone when a call starts waiting, give the backend an `onWait` function.
 
 For setup, current limitations, and how replay works, refer to [Resume runs after a restart](/agents/tools/filesystem/#resume-runs-after-a-restart).
