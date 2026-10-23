@@ -34,12 +34,14 @@ To use details about the signed-in user in your Worker, use [`ctx.access`](/work
 
 ## Browser Integrity Check on `workers.dev`
 
-`workers.dev` is a Cloudflare-managed zone. [Browser Integrity Check](/waf/tools/browser-integrity-check/) is always turned on for `workers.dev` hostnames, including [Preview URLs](/workers/previews/) and [Version URLs](/workers/versions-and-deployments/version-urls/), and you cannot turn it off. Automated clients that send certain non-browser `User-Agent` headers (for example, the default Python `urllib` user agent) receive [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
+`workers.dev` is a Cloudflare-managed zone. [Browser Integrity Check](/waf/tools/browser-integrity-check/) is always turned on for `workers.dev` hostnames, including [Preview URLs](/workers/previews/) and [Version URLs](/workers/versions-and-deployments/version-urls/). You cannot turn it off or skip it with your own rules.
 
-To allow automated clients to reach your Worker:
+Automated clients that send some default library `User-Agent` headers (for example, the default Python `urllib` user agent) receive [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/) before your Worker runs. These requests do not appear in your Worker logs.
 
-- Configure the client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0 (+https://example.com)`).
-- Serve your Worker on a [custom domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) on your zone, where your zone's Browser Integrity Check settings apply.
+To allow these clients:
+
+- Configure the client to send a descriptive `User-Agent` header that identifies your application (for example, `my-app/1.0 (+https://example.com)`). The client does not need to send a browser user agent.
+- Serve your Worker on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in a zone you own. You can then create a [configuration rule](/rules/configuration-rules/) that turns off Browser Integrity Check, or a [custom rule](/waf/custom-rules/skip/) that skips it, for only the paths that need it.
 
 ## Disabling `workers.dev`
 
