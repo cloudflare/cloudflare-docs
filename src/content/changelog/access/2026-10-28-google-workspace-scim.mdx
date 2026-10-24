@@ -1,0 +1,18 @@
+---
+title: Google Workspace SCIM user provisioning through generic SAML
+description: Use Google's custom SCIM profiles with Cloudflare One to synchronize user updates and deprovision users.
+date: 2026-10-28
+products:
+  - access
+  - cloudflare-one
+---
+
+Google Workspace is rolling out custom SCIM profiles in beta. Organizations with access to the feature can use Google's built-in provisioning service to send user updates and deprovisioning events to Cloudflare One.
+
+**You must use a generic SAML identity provider in Cloudflare One.** The dedicated Google Workspace integration does not support SCIM. Configure a SAML app in Google, then enter the Cloudflare SCIM endpoint and secret in the app's autoprovisioning settings. Turn on **Enable user deprovisioning** in Cloudflare One to revoke active Access sessions when Google deprovisions a user. Google's configured deprovisioning delay still applies.
+
+Group membership is configured separately. Have the Google SAML app send a `groups` attribute to include the user's selected Google groups during authentication. Selecting groups as a SCIM provisioning scope does not synchronize group membership.
+
+Cloudflare One users must first authenticate to Access or register a device with the Cloudflare One Client before SCIM updates can apply. Availability of custom SCIM profiles depends on Google's beta rollout.
+
+For setup instructions, refer to [Google Workspace with generic SAML](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace) and [Google Workspace SCIM provisioning](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace-beta).
