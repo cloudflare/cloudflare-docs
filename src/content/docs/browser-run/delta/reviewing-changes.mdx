@@ -1,0 +1,58 @@
+---
+pcx_content_type: how-to
+title: Reviewing changes
+description: Approve, reject, or reset visual regression results on your merge requests.
+sidebar:
+  order: 2
+products:
+  - browser-run
+---
+
+When Delta detects visual or accessibility changes on a merge request, it comments with a link to the build report. Open the report to see before/after/diff views for each affected story.
+
+## Build status
+
+Your merge request pipeline gains a `delta/visual` entry:
+
+| What Delta found             | `delta/visual` | Your merge request          |
+| ---------------------------- | -------------- | --------------------------- |
+| Capturing snapshots          | `running`      | Not mergeable yet           |
+| Nothing changed              | `success`      | Mergeable                   |
+| Visual or accessibility changes | `failed`    | Blocked, comment posted     |
+| Changes you rejected         | `failed`       | Blocked                     |
+| Delta build broke            | `failed`       | Blocked                     |
+| Superseded by a newer commit | `canceled`     | Blocked (new pipeline takes over) |
+
+:::note
+The `delta` job is not the verdict. It finishes in about 10 seconds — it triggers the build and exits. A green `delta` job means "build accepted", not "no visual changes." Read `delta/visual` for the actual result.
+:::
+
+## Review actions
+
+| Action           | Effect                                                    |
+| ---------------- | --------------------------------------------------------- |
+| **Approve**      | `delta/visual` updates to `success`. Merge request becomes mergeable within a second. |
+| **Reject**       | Stays `failed`. Records that you looked and pushed back.  |
+| **Reset review** | Returns to unreviewed. Undoes a mis-click.                |
+
+You never re-run a job. Delta pushes the status to GitLab directly.
+
+## Sticky approvals
+
+When sticky approvals are enabled in project settings, approvals are tied to the exact snapshot image. If you push a new commit that does not change an already-approved snapshot, the approval carries forward. A push that changes the snapshot flags it again for review.
+
+### New snapshots
+
+A story with no baseline — one you added on your branch — is reported as **new**. By default it counts as a change and flags `delta/visual` on every push until it has a baseline. You can adjust this under **Sticky approvals → New snapshots** in project settings:
+
+| Policy                             | Effect |
+| ---------------------------------- | ------ |
+| **Review on every push** (default) | New snapshots flag the build on every push. Approvals never cover them. |
+| **Approve once, stays approved**   | New snapshots flag the build once. Approving records the picture, so later pushes stay green unless the snapshot changes or a baseline lands. Requires sticky approvals. |
+| **Never gate the pipeline**        | New snapshots are captured and listed but never block the merge. |
+
+The policy is frozen onto each build when it is triggered — changing it affects the next build, not ones that have already reported.
+
+## Likely inherited failures
+
+Delta marks a failure as **Likely inherited** when its fingerprint matches another open merge request in the same project. This uses failures observed during the previous 30 days. The signal is advisory — it never changes `delta/visual`, approvals, or merge gating.

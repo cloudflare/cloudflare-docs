@@ -1,0 +1,150 @@
+---
+pcx_content_type: reference
+title: Configuration
+description: CI component inputs, project settings, and advanced configuration options for Delta.
+sidebar:
+  order: 3
+products:
+  - browser-run
+---
+
+## CI component inputs
+
+Provide exactly one of `storybook_url`, `storybook_artifact`, or `catalog_path`.
+
+Capture and review behavior — concurrency, per-story timeouts, diff thresholds, clock mocking, tracing, accessibility opt-out, and sticky approvals — lives in the Delta UI under **project settings**, not your pipeline. Tuning those needs no merge request.
+
+| Input                            | Required         | Default                    | Description |
+| -------------------------------- | ---------------- | -------------------------- | ----------- |
+| `storybook_url`                  | One of the three | —                          | URL to your deployed Storybook. Also reads `STORYBOOK_URL` from a dotenv artifact. |
+| `storybook_artifact`             | One of the three | —                          | Path to a `.tar.gz` of `storybook-static`, relative to the job workspace. |
+| `catalog_path`                   | One of the three | —                          | Path to a JSON file with a fully-resolved story catalog, for callers that resolve URLs at CI time. |
+| `baseline_branch`                | No               | Project setting            | Branch that updates baselines. Set it when your trunk is not the project default, or to trial against a scratch branch. |
+| `delta_url`                      | No               | `https://delta.cfdata.org` | Delta service URL. |
+| `project`                        | No               | `$CI_PROJECT_PATH`         | Group builds under a different name in the Delta UI. |
+| `job_name` / `stage`             | No               | `delta` / `test`           | Customize to fit your pipeline layout, or run several Delta jobs with different configs. |
+| `gate_job`                       | No               | —                          | Opt-in hard block: Delta plays a `when: manual` job on approval so the pipeline sits in GitLab's literal `blocked` state. |
+| `capture_setup_path`             | No               | —                          | Path to a `.js` file that primes an authenticated browser context once per build. See [Authenticated captures](#authenticated-captures). |
+| `capture_setup_config_path`      | No               | —                          | Path to a JSON file passed as the `config` argument to your setup script. Ignored when `capture_setup_path` is unset. |
+| `browser_context_overrides_path` | No               | —                          | Path to a JSON file with ephemeral cookies and headers merged into the browser context for one build only. |
+
+## Skipping stories
+
+Tag stories with `skip-visual-regression` to exclude them from visual capture:
+
+```ts
+// Story-level skip
+export const Animated: Story = {
+  tags: ["skip-visual-regression"],
+};
+
+// Component-level skip (every story under this default export)
+export default {
+  title: "Examples/Spinner",
+  component: Spinner,
+  tags: ["skip-visual-regression"],
+} satisfies Meta<typeof Spinner>;
+```
+
+### Hiding the tag from the Storybook sidebar
+
+Add this to your `.storybook/main.ts`:
+
+```ts
+const config: StorybookConfig = {
+  tags: {
+    "skip-visual-regression": {
+      excludeFromSidebar: true,
+    },
+  },
+};
+```
+
+## Authenticated captures
+
+Some apps bind server-side sessions to the originating IP. A session minted on a GitLab runner will not survive replay from Browser Run. Delta accepts a small JavaScript module that runs once per build as a sandboxed Dynamic Worker inside Delta's own network egress, then extracts the resulting `storageState` (cookies and localStorage) and replays it into every capture batch.
+
+### Setup script
+
+Write a `setup.js` file — plain JavaScript, no build step:
+
+```js
+export default async function setup({ browserContext, config }) {
+  const page = await browserContext.newPage();
+  try {
+    await page.goto("https://dash.cloudflare.com/login");
+    await page.fill('input[name="email"]', config.email);
+    await page.fill('input[name="password"]', config.password);
+    await page.click('button[type="submit"]');
+    await page.waitForURL(/\/accounts\/[a-f0-9]+/, { timeout: 20_000 });
+  } finally {
+    await page.close();
+  }
+}
+```
+
+Wire it into your pipeline:
+
+```yaml
+build-storybook:
+  stage: build
+  script:
+    - npm ci
+    - npm run build-storybook
+    - tar czf storybook.tar.gz -C storybook-static .
+    - jq -n --arg email "$E2E_EMAIL" --arg password "$E2E_PASSWORD"
+        '{email: $email, password: $password}' > setup-config.json
+  artifacts:
+    paths:
+      - storybook.tar.gz
+      - setup.js
+      - setup-config.json
+
+include:
+  - component: $CI_SERVER_FQDN/cloudflare/brapi/delta/delta@main
+    inputs:
+      storybook_artifact: storybook.tar.gz
+      capture_setup_path: setup.js
+      capture_setup_config_path: setup-config.json
+```
+
+Constraints:
+- Setup source is capped at 128 KiB combined (pre-minify if you approach it).
+- Setup runs once per build. If the upstream session expires mid-build, later batches fail. Use a session long enough to cover your capture time.
+- `capture_setup_config_path` is optional. When omitted, your function receives `{ browserContext, config: null }`.
+
+## Custom URL catalog
+
+For capturing a live app rather than Storybook stories:
+
+```yaml
+inputs:
+  catalog_path: "catalog.json"
+  browser_context_overrides_path: "overrides.json"
+  capture_setup_path: "setup.js"
+```
+
+The catalog JSON shape is `{ entries: { [id]: { id, title, name, url } } }`. Builds using `browser_context_overrides_path` are marked ephemeral and cannot be re-run from the Delta UI since the overrides carry short-lived secrets.
+
+## Migrating from Chromatic
+
+Chromatic uses `parameters.chromatic.disable: true` to skip stories. Delta does not read those parameters — they are not exposed in Storybook's `index.json`. Add a `skip-visual-regression` tag alongside or instead of the existing parameter:
+
+```ts
+export const Animated: Story = {
+  tags: ["skip-visual-regression"],
+  parameters: {
+    chromatic: { disableSnapshot: true }, // kept during migration
+  },
+};
+```
+
+## Migrating from token-based setup
+
+If your `include:` still passes `DELTA_TOKEN`, `CF_ACCESS_CLIENT_ID`, `CF_ACCESS_CLIENT_SECRET`, `GITLAB_MR_TOKEN`, or `fail_on_diff`:
+
+1. Bump the component ref.
+2. Delete all five inputs. Nothing replaces them.
+3. Delete the Vault entries and revoke the GitLab Project Access Token behind `GITLAB_MR_TOKEN`.
+
+The auth inputs are removed, not deprecated. Pipelines pinned to an older component ref keep working.
