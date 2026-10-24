@@ -61,6 +61,12 @@ If the build and deployment succeed but requests to your Worker return a `404` o
 - The [`assets.directory`](/workers/static-assets/binding/#directory) in your Wrangler configuration file points to the folder your build writes to (for example, `./dist` or `./build`).
 - For a single-page application, [`assets.not_found_handling`](/workers/static-assets/routing/single-page-application/) is set to `single-page-application` so that client-side routes do not return `404`.
 
+### `npm ci` reports that `package.json` and `package-lock.json` are out of sync
+
+`` npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. ``
+
+If this error appears in Workers Builds but `npm ci` works on your machine, your lockfile was probably written by a newer npm version than the build image's default. Workers Builds does not use the `engines.npm` field to choose an npm version. To use the same npm version as your local machine, set the [`packageManager`](/workers/ci-cd/builds/build-image/#package-manager-versions) field in your `package.json` to an exact version, for example `"packageManager": "npm@11.19.1"`. To check your local npm version, run `npm -v`.
+
 ### Git integration issues
 
 If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.
