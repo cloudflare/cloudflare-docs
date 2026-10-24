@@ -26,7 +26,7 @@ Cloudflare support cannot override a customer's security settings. Browser Integ
 
 ### Requests to Pages projects or workers.dev
 
-Requests to `*.pages.dev` and `*.workers.dev` hostnames, and to custom domains of Pages projects, are also checked by Browser Integrity Check on a Cloudflare-managed zone. This happens even if you have turned off Browser Integrity Check, or skipped it with a custom rule or configuration rule, in your own zone. These blocks are not recorded in your zone's Security Events or in your Worker logs. In Security Events, you may only see your own skip rule match.
+On a Cloudflare-managed zone, Browser Integrity Check also checks requests to `*.pages.dev` and `*.workers.dev` hostnames, and to custom domains of Pages projects. This happens even if you have turned off Browser Integrity Check, or skipped it with a custom rule or configuration rule, in your own zone. These blocks are not recorded in your zone's Security Events or in your Worker logs. In Security Events, you may only see your own skip rule match.
 
 **Resolution:**
 
