@@ -181,6 +181,27 @@ You can represent the shape of any result type you wish, including more complex 
 
 Creating indexes for your most queried tables and filtered columns reduces how much data is scanned and improves query performance at the same time. If you have a read-heavy workload (most common), this can be particularly advantageous. Writing to columns referenced in an index will add at least one (1) additional row written to account for updating the index, but this is typically offset by the reduction in rows read due to the benefits of an index.
 
+### Spatial indexes with R\*Tree
+
+A regular B-tree index cannot efficiently answer a query that filters on two or more ranges at once, such as finding every rectangle that contains a given point. For these queries, create a spatial index with SQLite's [R\*Tree module](https://www.sqlite.org/rtree.html):
+
+```ts
+this.ctx.storage.sql.exec(`
+	CREATE VIRTUAL TABLE IF NOT EXISTS delivery_zones USING rtree(
+		id, minLng, maxLng, minLat, maxLat, +name
+	);
+`);
+```
+
+The `rtree` variant stores coordinates as 32-bit floats, and `rtree_i32` stores them as 32-bit integers. A column prefixed with `+`, such as `name`, stores extra data alongside the coordinates.
+
+For how to insert and query rows, refer to the [SQLite R\*Tree documentation](https://www.sqlite.org/rtree.html).
+
+Cloudflare imposes two additional limits:
+
+- Each R\*Tree table is backed by three shadow tables, so writing to it counts as more rows written than in an equivalent ordinary table. Refer to [Durable Objects pricing](/durable-objects/platform/pricing/).
+- Of the functions the R\*Tree module provides, only `rtreecheck()` is available.
+
 <Render file="durable-objects-vs-d1" product="durable-objects" />
 
 ## Related resources
