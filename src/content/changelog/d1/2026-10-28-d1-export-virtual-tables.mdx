@@ -1,0 +1,29 @@
+---
+title: Export D1 databases with virtual tables
+description: Export D1 databases that contain virtual tables, such as FTS5, with a SQLite CLI compatible dump.
+products:
+  - d1
+date: 2026-10-28
+---
+
+You can now export a D1 database that contains virtual tables, such as full-text search tables using SQLite's [FTS5 module](https://www.sqlite.org/fts5.html) or spatial index tables using the `R*Tree` module. Previously, export failed for any database containing virtual tables.
+
+To include virtual tables in the dump, set `dump_options.compatibility` to `sqlite3_cli_only` on the [D1 export API](/api/resources/d1/subresources/database/methods/export/). The same option is available as a flag on `wrangler d1 export` and in the Cloudflare CLI.
+
+:::note[Import is not supported]
+This dump targets the SQLite CLI only. You cannot import it back into D1. Use the standard export for databases without virtual tables.
+:::
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database/$DATABASE_ID/export" \
+	--request POST \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--json '{
+		"output_format": "polling",
+		"dump_options": {
+			"compatibility": "sqlite3_cli_only"
+		}
+	}'
+```
+
+For more information, refer to [Export a D1 database with virtual tables](/d1/best-practices/import-export-data/#export-a-d1-database-with-virtual-tables).
