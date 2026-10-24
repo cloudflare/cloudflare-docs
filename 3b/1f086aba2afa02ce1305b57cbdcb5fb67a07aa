@@ -1,0 +1,21 @@
+src/content/docs/client-side-security/detection/review-changed-scripts.mdx
+  s_6a539cae31d3fb::t_fdeadad25af846 20-25
+src/content/docs/client-side-security/troubleshooting.mdx
+  s_6a539cae31d3fb::t_264867734b7580 25-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3b1f086aba2afa02ce1305b57cbdcb5fb67a07aa",
+  "prompts": {},
+  "sessions": {
+    "s_6a539cae31d3fb": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f034d6eb0ffeA8J6vRbhxepd3f",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}
