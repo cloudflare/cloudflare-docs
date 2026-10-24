@@ -10,9 +10,11 @@ sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem, Render } from "~/components";
+import { Tabs, TabItem, Render, Steps } from "~/components";
 
 Cloudflare One integrates with any identity provider that supports SAML 2.0. If your identity provider is not listed in the integration list of login methods in Cloudflare One, it can be configured using SAML 2.0 (or OpenID if OIDC based). Generic SAML can also be used if you would like to pass additional SAML headers or claims for an IdP in the integration list.
+
+To use Google's built-in SCIM provisioning, you must configure Google Workspace through this generic SAML integration. The dedicated [Google Workspace integration](/cloudflare-one/integrations/identity-providers/google-workspace/) does not support SCIM. Refer to [Google Workspace setup](#google-workspace) and [Configure SCIM in Google Workspace](#google-workspace-beta).
 
 ## Prerequisites
 
@@ -36,6 +38,28 @@ The typical setup requirements are:
    <Render file="find-team-name" product="cloudflare-one" />
 3. Set the **Name ID/Email format** to `emailAddress`.
 4. (Optional) Set the signature policy to _Always Sign_.
+
+### Google Workspace
+
+Use a [custom SAML app in Google Workspace](https://knowledge.workspace.google.com/admin/apps/set-up-your-own-custom-saml-app) to connect Google Workspace to Cloudflare One through generic SAML:
+
+<Steps>
+
+1. In the [Google Admin console](https://admin.google.com/), go to **Apps** > **Web and mobile apps**.
+2. Select **Add app** > **Add custom SAML app**, enter an app name, and select **Continue**.
+3. Copy Google's **SSO URL** and **Entity ID**, and download the signing certificate. You will use these values when you [add the SAML identity provider to Cloudflare One](#2-add-a-saml-identity-provider-to-cloudflare-one).
+4. In **Service provider details**, set both **ACS URL** and **Entity ID** to `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`.
+5. Set **Name ID format** to **EMAIL** and **Name ID** to the user's primary email address.
+6. In **Attribute mapping**, map the user's primary email address to an **App attribute** named `email`.
+7. To send group membership to Cloudflare One, under **Group membership (optional)**, search for and select the Google groups to include. Set **App attribute** to `groups`. Use this exact name so Cloudflare recognizes the values as IdP groups rather than a custom SAML attribute.
+8. Select **Finish**, then turn on the app for the users who will authenticate to Cloudflare One.
+9. When configuring the SAML identity provider in Cloudflare One, under **Optional configurations**, set **Email attribute name** to `email` and add `groups` to **SAML attributes**.
+
+</Steps>
+
+Google includes only the selected groups that the signing-in user belongs to, directly or indirectly. You can select up to 75 groups. If you rename a group in Google, select it again in the group membership mapping. Refer to Google's [group membership mapping documentation](https://knowledge.workspace.google.com/admin/apps/about-group-membership-mapping).
+
+Group membership is sent in the SAML assertion when a user authenticates. This mapping is separate from SCIM user provisioning; selecting groups as a SCIM provisioning scope does not send their memberships to Cloudflare One. After setup, [test the connection](#3-test-the-connection) with a member of a mapped group and confirm that the returned identity includes the expected groups.
 
 ### (Optional) Upload SAML metadata
 
@@ -115,6 +139,33 @@ Your identity provider must support SCIM version 2.0.
 
 Setup instructions vary depending on the identity provider. In your identity provider, you will either need to edit the [original SSO application](#1-create-an-application-in-your-identity-provider) or create a new SCIM application. Refer to your identity provider's documentation for more details. For example instructions, refer to our [Okta](/cloudflare-one/integrations/identity-providers/okta/#synchronize-users-and-groups) or [JumpCloud](/cloudflare-one/integrations/identity-providers/jumpcloud-saml/#synchronize-users-and-groups) guides.
 
+#### Google Workspace (beta)
+
+Google's custom SCIM profiles support automated user provisioning for SAML apps. The feature is in beta and must be available in your Google Admin console before you can configure it. You need a Google super administrator account and the [custom SAML app](#google-workspace) turned on for at least one user.
+
+:::caution[Use generic SAML]
+
+You must enable SCIM on the **SAML** identity provider in Cloudflare One, not on the dedicated **Google Workspace** integration. Use the SCIM endpoint and secret from that same SAML identity provider.
+
+:::
+
+<Steps>
+
+1. [Enable SCIM in Cloudflare One](#1-enable-scim-in-cloudflare-one) and copy the **SCIM Endpoint** and **SCIM Secret**. Turn on **Enable user deprovisioning** if Google deprovisioning events should revoke active Access sessions.
+2. In the [Google Admin console](https://admin.google.com/), go to **Apps** > **Web and mobile apps** and select the SAML app you created for Cloudflare One.
+3. Under **Autoprovisioning**, select **Configure auto-provisioning**. Enter the Cloudflare **SCIM Secret** in **Access token**, then enter the **SCIM Endpoint** in **Endpoint URL**.
+4. Review the discovered attribute mappings. Ensure that SCIM `userName` maps to the same primary email address used for SAML authentication.
+5. (Optional) Limit provisioning to specific Google groups. This scopes which users are provisioned; it does not configure group membership synchronization. Users must also have access to the SAML app. Google excludes group members from secondary domains or outside your organization from provisioning.
+6. Choose the deprovisioning actions and delays for users whose app access is turned off or whose Google accounts are suspended or deleted. Google can deactivate users or send a hard-delete request after the configured delay.
+7. Choose a dedicated test user who has already authenticated to Cloudflare One and select **Test Connection**. This test creates, updates, and deletes the test user at the SCIM endpoint. Review the results before selecting **Finish**.
+8. Return to the app's **Autoprovisioning** settings and set the toggle to **Active**. Finishing setup alone does not start provisioning.
+
+</Steps>
+
+This integration covers user lifecycle updates. Configure [Google's SAML `groups` attribute](#google-workspace) separately for group-based policies. Do not rely on SCIM provisioning scope to deliver group membership changes or revoke sessions when a user changes groups.
+
+Cloudflare One does not create new users from SCIM alone. Users must first authenticate to an Access application or register a device with the Cloudflare One Client. Use the [SCIM provisioning logs](/cloudflare-one/insights/logs/dashboard-logs/scim-logs/) to verify subsequent updates and deprovisioning events.
+
 #### IdP groups
 
 If you would like to build policies based on IdP groups:
@@ -155,10 +206,10 @@ After you turn on encryption, Access will reject any unencrypted assertions from
 
 Access supports the following encryption algorithms:
 
-| Algorithm type | Supported values |
-| --- | --- |
+| Algorithm type     | Supported values                                   |
+| ------------------ | -------------------------------------------------- |
 | Content encryption | AES-128-CBC, AES-256-CBC, AES-128-GCM, AES-256-GCM |
-| Key transport | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5 |
+| Key transport      | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5     |
 
 :::caution
 RSA-1.5 is supported for compatibility but is considered insecure. Use RSA-OAEP when your identity provider supports it.

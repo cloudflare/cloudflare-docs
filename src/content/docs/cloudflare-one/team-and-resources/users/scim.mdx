@@ -8,10 +8,9 @@ tags:
   - SCIM
 sidebar:
   order: 3
-
 ---
 
-import { Render } from "~/components"
+import { Render } from "~/components";
 
 System for Cross-domain Identity Management (SCIM) is an open standard protocol that allows identity providers to synchronize user identity information with cloud applications and services. After configuring SCIM, user identities that you create, edit, or delete in the identity provider are automatically updated across all supported applications. This makes it easier for IT admins to onboard new users, update their groups and permissions, and revoke access in the event of an employee termination or security breach.
 
@@ -24,6 +23,8 @@ Users provisioned via the [Zero Trust SCIM integration](#sync-users-and-groups-i
 ## Supported identity providers
 
 Cloudflare One supports SCIM provisioning for all SAML and OIDC identity providers that use SCIM version `2.0`.
+
+For Google's built-in SCIM provisioning, you must use a [generic SAML identity provider](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace-beta), not the dedicated Google Workspace integration. Google's custom SCIM profiles are in beta and provision users; configure [SAML group membership mapping](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace) separately to send groups during authentication.
 
 ## Sync users and groups in Zero Trust policies
 
@@ -41,5 +42,6 @@ Common issues include:
 
 - **Okta**: User sync and group sync are separate. Make sure **Push Groups** is configured if you expect groups to appear in Zero Trust policies.
 - **Microsoft Entra ID**: Group sync only occurs for groups included in the provisioning scope. The `userName` attribute should match the user's email address in Cloudflare One.
+- **Google Workspace**: SCIM requires a generic SAML integration. Selecting Google groups as a provisioning scope limits which users are provisioned; it does not send group membership. Configure the SAML app to send a `groups` attribute for group-based policies.
 
 If users appear but groups do not, verify the IdP-side SCIM app first before troubleshooting Cloudflare policy behavior.
