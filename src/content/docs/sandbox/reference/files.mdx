@@ -129,12 +129,7 @@ Creates a file, or truncates an existing file, then streams `content` into it.
 - The file opens before a `ReadableStream` is consumed. A later failure can leave the file created, truncated, or partially written.
 - If the `content` stream errors, the call rejects with the error from the stream instead of a `SandboxFileError`.
 
-`rename()` replaces an existing destination in one step. Writing a file to a temporary path and then renaming it keeps other processes from reading a partially written file:
-
-```ts
-await files.writeFile(`${path}.partial`, content, { cwd });
-await files.rename(`${path}.partial`, path, { cwd });
-```
+A process that reads the file during the write can read part of it. To replace a file in one step, write a temporary file and rename it, as [Replace a file in one step](/sandbox/files/manage-files/#replace-a-file-in-one-step) shows.
 
 ### `stat`
 
@@ -169,24 +164,7 @@ Returns the immediate entries of a directory as [`SandboxDirectoryEntry`](#sandb
 - A file at `path` rejects with `ENOTDIR`.
 - An entry name that is not valid UTF-8 rejects the whole call with `EILSEQ`.
 
-A recursive walk with `readDirectory()` lists a directory tree. This walk does not follow symbolic links to directories:
-
-```ts
-import type { Files } from "@cloudflare/sandbox";
-
-async function* walk(files: Files, directory: string): AsyncGenerator<string> {
-	for (const entry of await files.readDirectory(directory)) {
-		const path = `${directory}/${entry.name}`;
-		yield path;
-
-		if (entry.type === "directory") {
-			yield* walk(files, path);
-		}
-	}
-}
-```
-
-Each call to `readDirectory()` starts one process in the container. For a large tree, one `container.exec(["find", directory])` call is faster. The `signal` option of `exec()` cancels it.
+Each call starts one process in the container. To list a directory tree, refer to [List a directory tree](/sandbox/files/manage-files/#list-a-directory-tree).
 
 ### `mkdir`
 
