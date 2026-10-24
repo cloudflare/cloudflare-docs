@@ -79,6 +79,24 @@ You may also include [other metadata](/workers/wrangler/commands/r2/#r2-object-p
 	args="d1 execute <DATABASE_NAME> --file=./schema.sql --local"
 />
 
+### Flagship apps
+
+#### [Copy flags from a remote app](/flagship/configuration/#local-development)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="flagship flags pull <APP_ID>"
+/>
+
+#### [Create a flag in the local store](/flagship/reference/wrangler-commands/#local-flag-store)
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="flagship flags create <APP_ID> new-checkout --local"
+/>
+
 ### Durable Objects
 
 For Durable Objects, unlike KV, D1, and R2, there are no CLI commands to populate them with local data. To add data to Durable Objects during local development, you must write application code that creates Durable Object instances and [calls methods on them that store state](/durable-objects/best-practices/access-durable-objects-storage/). This typically involves creating development endpoints or test routes that initialize your Durable Objects with the desired data.

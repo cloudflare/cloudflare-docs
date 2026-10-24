@@ -83,6 +83,17 @@ export default {
 
 The third argument to `getBooleanValue` is the [evaluation context](/flagship/concepts/#evaluation-context). Flagship uses the context attributes to match targeting rules. In this example, the `userId` attribute is passed so that percentage rollouts and user-specific targeting work correctly.
 
+## Test locally
+
+Copy the flag into the local store, then start a local session:
+
+```sh
+npx wrangler flagship flags pull <APP_ID>
+npx wrangler dev
+```
+
+Without `pull`, the local store is empty and evaluations return the default you pass in code. Refer to [Local development](/flagship/configuration/#local-development) for `--local` flag commands and `remote: true`.
+
 ## Deploy and test
 
 Deploy your Worker:
@@ -180,6 +191,7 @@ Refer to the [SDK documentation](/flagship/sdk/) for detailed setup instructions
 ## Next steps
 
 - Manage flags from the command line with the [`wrangler flagship` commands](/flagship/reference/wrangler-commands/).
+- Test against a [local flag store](/flagship/configuration/#local-development) during `wrangler dev`.
 - Learn about [targeting rules](/flagship/targeting/) to serve different values based on user attributes.
 - Explore the full [binding API reference](/flagship/binding/) for all evaluation methods.
 - Read about [percentage rollouts](/flagship/targeting/percentage-rollouts/) for gradual feature releases.
