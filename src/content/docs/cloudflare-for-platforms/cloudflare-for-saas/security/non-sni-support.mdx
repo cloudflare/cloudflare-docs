@@ -1,0 +1,38 @@
+---
+title: Non-SNI client support
+pcx_content_type: concept
+description: Learn how Cloudflare for SaaS handles legacy clients that do not send the SNI extension during the TLS handshake, and what options are available.
+products:
+  - cloudflare-for-saas
+sidebar:
+  order: 5
+head:
+  - tag: title
+    content: Non-SNI client support | Cloudflare for SaaS
+---
+
+Server Name Indication (SNI) is a TLS extension that lets a client specify which hostname it is trying to reach during the TLS handshake, before any HTTP traffic is exchanged. Cloudflare uses SNI to select the correct certificate for a custom hostname.
+
+Clients that omit SNI from their `ClientHello` — typically legacy embedded devices or very old operating systems — receive a TLS handshake failure (alert 40) when connecting to a Cloudflare for SaaS custom hostname. Without SNI, the edge cannot determine which certificate to serve.
+
+SNI support has been part of TLS 1.2 since [RFC 6066](https://www.rfc-editor.org/rfc/rfc6066) and is available in all modern TLS stacks. Upgrading the TLS library on affected devices is the recommended fix.
+
+## Limitation for custom hostnames
+
+Cloudflare for SaaS does not support non-SNI clients connecting to custom hostnames. There is no mechanism to serve a per-hostname certificate to a client that does not include SNI in its `ClientHello`, because the TLS handshake must complete before any hostname information is available through other means.
+
+This applies to all custom hostname types, including customer-owned arbitrary domains (for example, `shop.customer.com`) and subdomains of your SaaS zone (for example, `tenant.saas.com`).
+
+## Alternative architecture
+
+If upgrading the affected devices is not possible, an alternative architecture combining [Spectrum](/spectrum/) and [BYOIP](/byoip/) can allow non-SNI clients to reach custom hostnames — but it does not use Cloudflare for SaaS.
+
+In this model:
+
+- Each custom hostname is assigned a dedicated IP via BYOIP, so the destination IP itself identifies the tenant rather than SNI.
+- Spectrum routes the connection at Layer 4 by IP:port without terminating TLS.
+- TLS is handled entirely at the origin, which is responsible for selecting the correct certificate per hostname.
+
+Because the destination IP carries the routing information that SNI would otherwise provide, non-SNI clients can connect successfully.
+
+This approach requires Spectrum and BYOIP add-ons and is a significant architectural change from a standard Cloudflare for SaaS setup. Contact your account team to evaluate this option.
