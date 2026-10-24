@@ -22,3 +22,9 @@ A Container that starts with `enableInternet: false` reaches only the hostnames 
 <DirectoryListing descriptions />
 
 For every outbound option in each environment, refer to [Handle outbound traffic](/containers/configuration/outbound-traffic/) for Containers and [Egress control](/dynamic-workers/usage/egress-control/) for Dynamic Workers.
+
+## Private-network access
+
+For private outbound connectivity with split DNS, refer to the draft [Connect to Tailscale](/containers/guides/connect-to-tailscale/). The guide keeps the Container configuration, runtime authentication, DNS, and Postgres verification in one place. Its platform requirements are awaiting engineering confirmation.
+
+The example uses `enableInternet: true`; the HTTP-only interception configuration on this page cannot be copied unchanged. Code in the sandbox receives the network access granted to that Tailscale node, including access from commands and dependencies. Use narrowly scoped tailnet permissions for DNS and Postgres and a read-only database identity. Runtime Tailscale and database credentials are available inside the Container, unlike credentials injected by a Worker into intercepted HTTP requests.
