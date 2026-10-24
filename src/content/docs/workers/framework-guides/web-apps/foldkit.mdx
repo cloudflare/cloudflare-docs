@@ -119,6 +119,8 @@ Open the `workers.dev` URL printed by Wrangler to verify the deployed applicatio
 
 [Alchemy](https://alchemy.run/) is a third-party infrastructure-as-code tool built on TypeScript and Effect. You can define a Worker and its Cloudflare resources in one program.
 
-For a Foldkit SPA, Alchemy's [`Cloudflare.Website.Foldkit`](https://alchemy.run/cloudflare/frontend/foldkit/) integration builds your existing Vite project and deploys its assets to Workers. It configures the SPA fallback for client-side routes.
+Alchemy's [`Cloudflare.Website.Foldkit`](https://alchemy.run/cloudflare/frontend/foldkit/) integration supports SPA, SSG, and SSR. It builds your application using its existing Vite configuration.
+
+Configure rendering in the `foldkit()` Vite plugin. Alchemy reads the build metadata to select the client assets, generated server handler, and routing defaults. SSG and SSR require `@foldkit/vite-plugin` 0.27.0 or newer and Foldkit 0.167.0 or newer.
 
 Follow [Alchemy's Cloudflare setup guide](https://alchemy.run/cloudflare/setup/), then its [Foldkit deployment guide](https://alchemy.run/cloudflare/frontend/foldkit/). Alchemy manages the Worker configuration, so this deployment path does not require a `wrangler.jsonc` file.
