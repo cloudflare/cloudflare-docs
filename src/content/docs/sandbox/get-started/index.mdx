@@ -106,7 +106,7 @@ You will send `uname -a` in the body of an HTTP POST request to a [Worker](/work
    			container.start({
    				// Debian Trixie with Node.js 24
    				image: "cloudflare/debian-trixie",
-   				// Keep the instance running so it can accept commands
+   				// Keep the container running so it can accept commands
    				entrypoint: ["sleep", "infinity"],
    				// Block commands in the sandbox from reaching the Internet
    				enableInternet: false,
@@ -133,13 +133,13 @@ You will send `uname -a` in the body of an HTTP POST request to a [Worker](/work
 
    </TypeScriptExample>
 
-   `start()` starts an instance of the container from the `cloudflare/debian-trixie` image. The `entrypoint` is the command that the instance runs when it starts. `sleep infinity` never exits, so the instance keeps running and accepts commands from `exec()`.
+   `start()` starts a container from the `cloudflare/debian-trixie` image. The `entrypoint` is the command that the container runs when it starts. `sleep infinity` never exits, so the container keeps running and accepts commands from `exec()`.
 
 5. Generate types for the binding. Wrangler reads the `MyContainer` class from `src/index.ts` to type `env.MY_CONTAINER`:
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-6. Start Docker. `wrangler dev` runs the instance in Docker on your machine. To install Docker, follow the [Docker Desktop installation docs](https://docs.docker.com/desktop/). Check that Docker is running:
+6. Start Docker. `wrangler dev` runs the container in Docker on your machine. To install Docker, follow the [Docker Desktop installation docs](https://docs.docker.com/desktop/). Check that Docker is running:
 
    ```sh
    docker info
@@ -161,11 +161,11 @@ You will send `uname -a` in the body of an HTTP POST request to a [Worker](/work
 
 </Steps>
 
-The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker started a Linux container and ran the command you sent. When you deploy, each instance runs in its own virtual machine instead of in Docker.
+The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker started a Linux container and ran the command you sent. When you deploy, each container runs in its own virtual machine instead of in Docker.
 
 ## Next steps
 
 - Run another command or change startup options. Refer to the [Durable Object container API](/containers/api/durable-object-container/).
-- Deploy your Worker. Refer to [Deploy Containers](/containers/guides/deploy/). A deploy does not replace a running instance. Refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
+- Deploy your Worker. Refer to [Deploy Containers](/containers/guides/deploy/). A deploy does not replace a running container. Refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
 - Run JavaScript. Refer to [Run JavaScript](/sandbox/get-started/dynamic-workers/).
 - Start a project from the [minimal sandbox template](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/minimal). It adds a `Dockerfile`, a sandbox for each name in the URL, and file reads and writes with `@cloudflare/sandbox`.
