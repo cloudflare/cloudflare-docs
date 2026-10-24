@@ -145,7 +145,7 @@ Unified Billing requires [authentication](/ai-gateway/configuration/authenticati
 
 ## Call a dynamic route
 
-An [AI Gateway dynamic route](/ai-gateway/features/dynamic-routing/) is named `dynamic/<route>`. The route you configured on the gateway picks the model, and can apply conditions, percentages, rate and budget limits, and its own fallbacks:
+An [AI Gateway dynamic route](/ai-gateway/features/routing/dynamic-routing/) is named `dynamic/<route>`. The route you configured on the gateway picks the model, and can apply conditions, percentages, rate and budget limits, and its own fallbacks:
 
 ```ts
 const ai = createAI({ binding: env.AI, id: "my-gateway" });
@@ -571,7 +571,7 @@ A string can be a Workers AI id, a catalog id, or a dynamic route.
 
 - [pi-ai provider](/agents/models/pi-ai/)
 - [Model catalog](/ai/models/)
-- [Dynamic routing](/ai-gateway/features/dynamic-routing/)
+- [Dynamic routes](/ai-gateway/features/routing/dynamic-routing/)
 - [AI Gateway provider-native endpoints](/ai-gateway/usage/providers/)
 - [AI Gateway Worker binding methods](/ai-gateway/usage/worker-binding-methods/)
 - [Unified Billing](/ai-gateway/features/unified-billing/)

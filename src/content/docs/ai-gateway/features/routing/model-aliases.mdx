@@ -1,0 +1,149 @@
+---
+title: Model aliases
+description: Give a group of models a stable name, configure routing preferences, and update model choices without changing application code.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+  badge: Beta
+products:
+  - ai-gateway
+---
+
+import { DashButton, Steps } from "~/components";
+
+A model alias gives one or more models a name such as `custom/support-fast`. Your application calls that name instead of a specific model. You can change the models and routing preferences on your gateway without updating your application.
+
+Aliases belong to individual gateways. A `custom/support-fast` alias on one gateway does not configure the same name on another gateway.
+
+Use an alias for a list of models with shared routing preferences. For conditional branches, percentage splits, or limits within a routing flow, use [dynamic routes](/ai-gateway/features/routing/dynamic-routing/).
+
+## Before you start
+
+- [Create a gateway](/ai-gateway/get-started/) and turn on [authentication](/ai-gateway/configuration/authentication/).
+- Configure [Unified Billing](/ai-gateway/features/unified-billing/) or [store provider keys](/ai-gateway/configuration/bring-your-own-keys/) for the models you want to use.
+- To call the REST API, create a [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Account** > **Workers AI** > **Read** permission. This differs from the AI Gateway permissions used to manage aliases.
+
+Not every catalog model is available as an alias target. Targets must be available to alias routing and support the protocol format you use.
+
+## Create an alias
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **AI** > **AI Gateway**.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select your gateway, then go to **Routing**.
+3. Select **Create alias**.
+4. In **Alias name**, enter a name such as `support-fast`. The dashboard adds the `custom/` prefix.
+5. In **Models**, select a model. To add fallbacks, select **Add model** and choose additional models. Drag the models to set their preferred order.
+6. (Optional) In **Routing**, turn on **Custom routing** and configure the [routing preferences](#routing-preferences).
+7. Select **Create alias**.
+
+</Steps>
+
+The alias appears in the Routing list with its `custom/` prefix. Select its name to edit the models or routing preferences, then select **Save alias**. Renaming an alias changes the name your application must request.
+
+Configuration changes can take time to reach requests served from different locations. A request may use a cached alias configuration while it refreshes.
+
+## Routing preferences
+
+Turn on **Custom routing** to save routing preferences for this alias.
+
+| Setting          | Value                           | Behavior                                                                 |
+| ---------------- | ------------------------------- | ------------------------------------------------------------------------ |
+| **Algorithm**    | _Preferred order_ (`preferred`) | Prefer eligible models in their configured order.                        |
+| **Algorithm**    | _Smart routing_ (`smart`)       | Rank eligible models for each request using the optimization preference. |
+| **Optimize for** | _Cost_ (`cost`)                 | Favor cost efficiency when using smart routing.                          |
+| **Optimize for** | _Best quality_ (`best`)         | Favor the router's quality ranking when using smart routing.             |
+
+The optimization preference applies to smart routing. If smart routing cannot rank the models, the gateway uses the model order you configured.
+
+When **Custom routing** is off, the gateway uses the model order you configured. Routing options supplied with a request override the alias's saved preferences.
+
+Only models and providers that support the request format and pass gateway checks are eligible. A failed attempt can fall back to another eligible model or provider. This does not bypass authentication, billing, or gateway policies.
+
+## Call an alias
+
+Use the [REST API](/ai-gateway/usage/rest-api/) with `custom/<alias-name>` as the model. Include the `cf-aig-gateway-id` header to select the gateway where you created the alias.
+
+Set `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN` to your account ID and API token. Replace `my-gateway` with your gateway ID and `custom/support-fast` with your alias.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --header "cf-aig-gateway-id: my-gateway" \
+  --data '{
+    "model": "custom/support-fast",
+    "input": {
+      "messages": [
+        { "role": "user", "content": "Reply with a short greeting." }
+      ]
+    }
+  }'
+```
+
+The request uses the alias configuration on `my-gateway`. Use an input format supported by the models you select. An alias does not make model-specific input formats interchangeable.
+
+To override the alias's routing preferences for one request, add `options.routing` alongside `model` and `input`:
+
+```json
+{
+	"model": "custom/support-fast",
+	"input": {
+		"messages": [{ "role": "user", "content": "Reply with a short greeting." }]
+	},
+	"options": {
+		"routing": {
+			"algorithm": "preferred"
+		}
+	}
+}
+```
+
+## Configure an alias through the API
+
+Alias configuration uses `/accounts/{account_id}/ai-gateway/gateways/{gateway_id}/model_aliases` under the Cloudflare API's `/client/v4` prefix. These operations require AI Gateway permissions, rather than the Workers AI permission used for inference.
+
+| Method   | Path suffix                 | Operation         |
+| -------- | --------------------------- | ----------------- |
+| `GET`    | `/model_aliases`            | List aliases.     |
+| `POST`   | `/model_aliases`            | Create an alias.  |
+| `GET`    | `/model_aliases/{alias_id}` | Get an alias.     |
+| `PUT`    | `/model_aliases/{alias_id}` | Replace an alias. |
+| `DELETE` | `/model_aliases/{alias_id}` | Delete an alias.  |
+
+For `POST` and `PUT`, provide an alias name without `custom/`, a list of catalog models, and optional routing preferences:
+
+```json
+{
+	"name": "support-fast",
+	"models": [
+		{ "model": "openai/gpt-4.1-nano", "providers": ["openai"] },
+		{ "model": "anthropic/claude-sonnet-4.6", "providers": ["anthropic"] }
+	],
+	"routing": {
+		"algorithm": "preferred"
+	}
+}
+```
+
+Each model's optional `providers` list restricts its providers and sets their preferred order. Omit `providers` to allow the gateway's registered providers for that model. Provider restrictions are configured through the API; the dashboard editor selects models only.
+
+`PUT` replaces the whole configuration. Include every model and provider restriction you want to keep. Omitting `routing`, or setting it to `null` or `{}`, clears the alias's routing preferences.
+
+## Limits and errors
+
+- Each gateway supports up to 100 aliases.
+- An alias must contain between 1 and 50 model entries.
+- Names must be unique within the gateway and contain 1–64 characters. Use lowercase letters and numbers, optionally separated by a single `.`, `_`, or `-`. For example, `support-fast` is valid; `Support Fast`, `support--fast`, and `support-` are not.
+- An alias cannot reference another `custom/` alias.
+- Models must support a shared protocol format for the request. Native-only model formats are not available through aliases.
+- Aliases do not support x402 payments.
+
+| Response                                               | Meaning                                                                      | Action                                                       |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `404` with `Model not found`                           | The selected gateway has no alias with that name.                            | Check the alias name, `custom/` prefix, and gateway ID.      |
+| `400` with `has no available models`                   | None of the alias's targets resolve to available protocol-compatible models. | Check the exact catalog model IDs and provider restrictions. |
+| `503` with `Model aliases are temporarily unavailable` | The gateway cannot read the alias configuration.                             | Retry the request.                                           |
