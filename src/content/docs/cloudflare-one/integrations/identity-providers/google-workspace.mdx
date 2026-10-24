@@ -21,22 +21,22 @@ Once integrated, users will log in with their Google Workspace credentials to re
 
 You do not need to be a Google Cloud Platform user to integrate Google Workspace as an identity provider with Cloudflare One. You will only need to open the Google Cloud Platform to configure IdP integration settings.
 
+:::caution[SCIM requires generic SAML]
+
+To use Google's built-in SCIM provisioning, you must configure a [generic SAML integration](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace) instead of this Google Workspace integration. Google's custom SCIM profiles provision users through a SAML app. Follow the generic SAML guide to configure both [SAML group membership](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace) and [SCIM user provisioning](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace-beta).
+
+:::
+
 ## Set up Google Workspace as an identity provider
 
 ### 1. Configure Google Workspace
 
 1.  Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). This is separate from your Google Workspace console.
-
 2.  A Google Cloud project is required to enable Google Workspace APIs. If you do not already have a Google Cloud project, go to **IAM & Admin** > **Create Project**. Name the project and select **Create**.
-
 3.  Go to **APIs & Services** and select **Enable APIs and Services**. The API Library will load.
-
 4.  In the API Library, search for `admin` and select **Admin SDK API**.
-
 5.  **Enable** the Admin SDK API.
-
 6.  Return to the **APIs & Services** page and go to **Credentials**.
-
 7.  Select **Configure Consent Screen**.
 
     ![Location to configure a Consent Screen in the Google Cloud Platform console.](~/assets/images/cloudflare-one/identity/google/configure-consent-screen.png)
@@ -48,13 +48,11 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
     4. Enter your **Contact Information**. Google Cloud Platform requires an email in your account.
     5. Agree to Google's user data policy and select **Continue**.
     6. Select **Create**.
-
 9.  The OAuth overview page will load. Select **Create OAuth Client**.
 
     ![Location to create an OAuth client in the Google Cloud Platform console.](~/assets/images/cloudflare-one/identity/google/create-oauth-client.png)
 
 10. Choose _Web application_ as the **Application type** and give your OAuth Client ID a name.
-
 11. Under **Authorized JavaScript origins**, in the **URIs** field, enter your team domain:
 
     ```txt
@@ -70,11 +68,8 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
     ```
 
 13. After creating the OAuth client, select the OAuth client that you just created. Google will present the **OAuth Client ID** value and **Client secret** value. The client secret field functions like a password and should not be shared. Copy both the **OAuth Client ID** value and **Client secret** value.
-
 14. On your [Google Admin console](https://admin.google.com), go to **Security** > **Access and data control** > **API controls**.
-
 15. In **API Controls**, select **Settings**.
-
 16. Select **Internal apps** and check the box next to **Trust internal apps** to enable this option. The **Trust internal apps** setting is disabled by default and must be enabled for Cloudflare Access to work correctly.
 
     ![Location to trust internal apps in the Google Cloud Platform console.](~/assets/images/cloudflare-one/identity/gsuite/trust-internal-apps.png)
@@ -82,19 +77,12 @@ You do not need to be a Google Cloud Platform user to integrate Google Workspace
 ### 2. Add Google Workspace to Cloudflare One
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
-
 2. Select **Add new identity provider** and select **Google Workspace**.
-
 3. Input the Client ID (**App ID** in the Cloudflare dashboard) and Client Secret fields generated previously. Additionally, enter the domain of your Google Workspace account.
-
 4. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
-
 5. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that you wish to add to your user's identity.
-
 6. (Optional) Under **Authentication options**, choose a **Google prompt** and turn on **Use previous email as a login hint**.
-
 7. Select **Save**. To complete setup, you must visit the generated link. If you are not the Google Workspace administrator, share the link with the administrator.
-
 8. The generated link will prompt you to log in to your Google admin account and to authorize Cloudflare Access to view group information. After allowing permissions, you will see a success page from Cloudflare Access.
 
 To test that your connection is working, go to **Integrations** > **Identity providers** and select **Test** next to Google Workspace. Your user identity and group membership should return.
@@ -175,4 +163,3 @@ If your organization has a primary Google Workspace domain and one or more secon
 When building Access policies, you can target users across all domains by using group membership selectors rather than email domain selectors. Alternatively, use the **Emails ending in** selector with each domain as a separate policy rule connected with **OR** logic.
 
 If you have multiple distinct Google Workspace organizations (not just multiple domains within one organization), you must add each organization as a separate Google Workspace identity provider in Cloudflare Zero Trust.
-
