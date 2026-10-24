@@ -265,7 +265,7 @@ All properties of an incoming `Request` object (the request you receive from the
   * The redirect mode to use: `follow` or `manual`. The `fetch` method will automatically follow redirects if the redirect mode is set to `follow`. If set to `manual`, the `3xx` redirect response will be returned to the caller as-is. The `error` mode from the Fetch standard is not implemented in Workers, and passing it throws a `TypeError` when the `Request` is constructed. The default for a new `Request` object is `follow`. Note, however, that the incoming `Request` property of a `FetchEvent` will have redirect mode `manual`.
 
 * `signal` AbortSignal read-only
-  * The `AbortSignal` corresponding to this request. If you use the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag, you can attach an event listener to the signal. This allows you to perform cleanup tasks or write to logs before your Worker's invocation ends.
+  * The `AbortSignal` corresponding to this request. For compatibility dates on or after November 8, 2026, the signal fires an `abort` event when the client disconnects. For earlier dates, add the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag. You can listen for the event to perform cleanup tasks or write logs before your Worker's invocation ends. Use `disable_request_signal` to opt out.
     For example, if you run the Worker below, and then abort the request from the client, a log will be written:
     <Render file="request-signal-example" product="workers" />
 
