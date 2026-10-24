@@ -12,7 +12,9 @@ import { APIRequest, DashButton } from "~/components";
 
 The HTTP requests dataset includes most standard log information by default. However, if you need to capture additional request or response headers or cookies, you can use custom fields to tailor the logs to your specific needs
 
-Custom fields are configured per zone and, once set up, are enabled for all Logpush jobs in that zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields. You can log these fields in their raw form or as transformed values.
+Custom fields are configured per zone. They apply to all HTTP requests Logpush jobs that process the zone, including account-scoped jobs. The job must include the request headers, response headers, or cookie fields. You can log these fields in their raw form or as transformed values.
+
+Account-scoped jobs honor the custom fields configuration for each zone. You cannot configure custom fields once for every zone in an account.
 
 :::note[By default:]
 
@@ -25,7 +27,7 @@ This default behavior can be changed. You can configure either request or respon
 Custom fields can be enabled via API or the Cloudflare dashboard.
 
 :::note
-Custom fields are only available for the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/).
+Custom fields are only available for the HTTP requests dataset. They apply to [account-scoped](/logs/logpush/logpush-job/datasets/account/http_requests/) and [zone-scoped](/logs/logpush/logpush-job/datasets/zone/http_requests/) jobs.
 :::
 
 :::note
