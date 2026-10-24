@@ -1,5 +1,5 @@
 ---
-title: McpClient
+title: MCP Client
 description: Connect Agents to external MCP servers to use their tools, resources, and prompts over the Model Context Protocol.
 pcx_content_type: reference
 tags:
@@ -27,7 +27,7 @@ The MCP client capability lets your agent:
 
 :::note
 
-This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [Creating MCP servers](/agents/model-context-protocol/apis/agent-api/).
+This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
 :::
 
@@ -157,8 +157,6 @@ MCP server URLs are validated before connection to prevent Server-Side Request F
 - Cloud metadata endpoints (`metadata.google.internal`)
 
 Loopback addresses (`localhost`, `127.x.x.x`, `[::1]`) are **allowed** for local development.
-
-For production connections to internal services, use the [RPC transport](/agents/model-context-protocol/protocol/transport/) with a Durable Object binding instead of HTTP.
 
 ### Return value
 
@@ -572,9 +570,9 @@ class MyAgent extends Agent<Env> {
 
 The example uses a 55-second timeout because MCP SDK requests default to 60 seconds. If your client call sets a longer request timeout, adjust this timeout to finish first.
 
-Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. [`mcp-elicitation-mrtr`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) demonstrates stateless elicitation. [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) demonstrates legacy elicitation.
+Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. [`mcp-elicitation-mrtr`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) demonstrates stateless elicitation.
 
-For server-side patterns, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler) and [Elicitation on legacy servers](/agents/model-context-protocol/apis/agent-api/#elicitation-on-legacy-servers).
+For the server side, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler).
 
 ## Managing servers
 
@@ -699,21 +697,9 @@ async addMcpServer(
   | { id: string; state: "authenticating"; authUrl: string }
   | { id: string; state: "ready" }
 >
-
-// RPC transport (Durable Object binding — no HTTP overhead)
-async addMcpServer(
-  serverName: string,
-  binding: DurableObjectNamespace,
-  options?: {
-    id?: string;
-    props?: Record<string, unknown>;
-    client?: McpClientOptions;
-    retry?: RetryOptions;
-  }
-): Promise<{ id: string; state: "ready" }>
 ```
 
-#### Parameters (HTTP transport)
+#### Parameters
 
 - `serverName` (string, required) — Display name for the MCP server
 - `url` (string, required) — URL of the MCP server endpoint
@@ -727,18 +713,6 @@ async addMcpServer(
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
   - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/runtime/execution/retries/) for details on `RetryOptions`.
-
-#### Parameters (RPC transport)
-
-- `serverName` (string, required) — Display name for the MCP server
-- `binding` (`DurableObjectNamespace`, required) — The Durable Object binding for the `McpAgent` class
-- `options` (object, optional) — Connection configuration:
-  - `id` — Optional stable, caller-supplied server ID. Refer to [Stable server IDs](#stable-server-ids)
-  - `props` — Initialization data passed to the `McpAgent`'s `onStart(props)`. Use this to pass user context, configuration, or other data to the MCP server instance
-  - `client` — MCP client configuration options
-  - `retry` — Retry options for the connection
-
-RPC transport connects your Agent directly to an `McpAgent` via Durable Object bindings without HTTP overhead. Refer to [MCP Transport](/agents/model-context-protocol/protocol/transport/) for details on configuring RPC transport.
 
 #### Returns
 
@@ -1240,8 +1214,8 @@ export class MyAgent extends Agent {
 
 <LinkCard
 	title="Creating MCP servers"
-	href="/agents/model-context-protocol/apis/agent-api/"
-	description="Build your own MCP server."
+	href="/agents/model-context-protocol/apis/handler-api/"
+	description="Build your own MCP server with createMcpHandler."
 />
 
 <LinkCard

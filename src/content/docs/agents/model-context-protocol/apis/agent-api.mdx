@@ -1,11 +1,11 @@
 ---
 pcx_content_type: reference
-title: McpAgent
+title: McpAgent (deprecated)
 description: Reference the deprecated, feature-frozen McpAgent class while migrating existing stateful MCP servers to stateless handlers.
 tags:
   - MCP
 sidebar:
-  order: 25
+  order: 27
 products:
   - agents
 ---
@@ -121,6 +121,10 @@ export default new OAuthProvider({
 	tokenEndpoint: "/token",
 	clientRegistrationEndpoint: "/register",
 	defaultHandler: AuthHandler,
+	resourceMetadata: {
+		// The URL MCP clients connect to. Use http://localhost:8787/mcp with wrangler dev.
+		resource: "https://my-mcp-server.<your-subdomain>.workers.dev/mcp",
+	},
 });
 ```
 
@@ -187,18 +191,257 @@ const eventStore = new DurableObjectEventStore(this.ctx.storage);
 
 </TypeScriptExample>
 
-Refer to [MCP Transport](/agents/model-context-protocol/protocol/transport/) for transport configuration.
+## RPC transport
+
+The **RPC transport** is designed for internal applications where your MCP server and agent are both running on Cloudflare — they can even run in the same Worker. It sends JSON-RPC messages directly over Cloudflare's [RPC bindings](/workers/runtime-apis/bindings/service-bindings/rpc/) without going over the public internet.
+
+- **Faster** — no network overhead, direct function calls between Durable Objects
+- **Simpler** — no HTTP endpoints, no connection management
+- **Internal only** — perfect for agents calling MCP servers within the same Worker
+
+RPC transport does not support authentication. Use Streamable HTTP for external connections that require OAuth.
+
+### Connect an Agent to an existing `McpAgent` through RPC
+
+#### 1. Define your MCP server
+
+Create your `McpAgent` with the tools you want to expose:
+
+<TypeScriptExample>
+
+```ts
+import { McpAgent } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { z } from "zod";
+
+type State = { counter: number };
+
+export class MyMCP extends McpAgent<Env, State> {
+	server = new McpServer({ name: "MyMCP", version: "1.0.0" });
+	initialState: State = { counter: 0 };
+
+	async init() {
+		this.server.tool(
+			"add",
+			"Add to the counter",
+			{ amount: z.number() },
+			async ({ amount }) => {
+				this.setState({ counter: this.state.counter + amount });
+				return {
+					content: [
+						{
+							type: "text",
+							text: `Added ${amount}, total is now ${this.state.counter}`,
+						},
+					],
+				};
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+#### 2. Connect your Agent to the MCP server
+
+In your `Agent`, call `addMcpServer()` with the Durable Object binding in `onStart()`:
+
+<TypeScriptExample>
+
+```ts
+import { AIChatAgent } from "@cloudflare/ai-chat";
+
+export class Chat extends AIChatAgent<Env> {
+	async onStart(): Promise<void> {
+		// Pass the DO namespace binding directly
+		await this.addMcpServer("my-mcp", this.env.MyMCP);
+	}
+
+	async onChatMessage(onFinish) {
+		const allTools = this.mcp.getAITools();
+
+		const result = streamText({
+			model,
+			tools: allTools,
+			// ...
+		});
+
+		return createUIMessageStreamResponse({ stream: result });
+	}
+}
+```
+
+</TypeScriptExample>
+
+RPC connections are automatically restored after Durable Object hibernation, just like HTTP connections. The binding name and props are persisted to storage so the connection can be re-established without any extra code.
+
+For RPC transport, if `addMcpServer` is called with a name that already has an active connection, the existing connection is returned instead of creating a duplicate. For HTTP transport, deduplication matches on both server name and URL (refer to [MCP Client API](/agents/model-context-protocol/apis/client-api/) for details). This makes it safe to call in `onStart()`.
+
+#### 3. Configure Durable Object bindings
+
+In your `wrangler.jsonc`, define bindings for both Durable Objects:
+
+```jsonc
+{
+	"durable_objects": {
+		"bindings": [
+			{ "name": "Chat", "class_name": "Chat" },
+			{ "name": "MyMCP", "class_name": "MyMCP" },
+		],
+	},
+	"migrations": [
+		{
+			"new_sqlite_classes": ["MyMCP", "Chat"],
+			"tag": "v1",
+		},
+	],
+}
+```
+
+#### 4. Set up your Worker fetch handler
+
+Route requests to your Chat agent:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
+		const url = new URL(request.url);
+
+		// Optionally expose the MCP server via HTTP as well
+		if (url.pathname.startsWith("/mcp")) {
+			return MyMCP.serve("/mcp").fetch(request, env, ctx);
+		}
+
+		const response = await routeAgentRequest(request, env);
+		if (response) return response;
+
+		return new Response("Not found", { status: 404 });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Passing props to the MCP server
+
+Since RPC transport does not have an OAuth flow, you can pass user context directly as props:
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("my-mcp", this.env.MyMCP, {
+	props: { userId: "user-123", role: "admin" },
+});
+```
+
+</TypeScriptExample>
+
+Your `McpAgent` can then access these props:
+
+<TypeScriptExample>
+
+```ts
+export class MyMCP extends McpAgent<
+	Env,
+	State,
+	{ userId?: string; role?: string }
+> {
+	async init() {
+		this.server.tool("whoami", "Get current user info", {}, async () => {
+			const userId = this.props?.userId || "anonymous";
+			const role = this.props?.role || "guest";
+
+			return {
+				content: [{ type: "text", text: `User ID: ${userId}, Role: ${role}` }],
+			};
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Props are type-safe (TypeScript extracts the Props type from your `McpAgent` generic), persistent (stored in Durable Object storage), and available immediately before any tool calls are made.
+
+### Configuring RPC transport server timeout
+
+The RPC transport has a configurable timeout for waiting for tool responses. By default, the server waits **60 seconds** for a tool handler to respond. You can customize this by overriding `getRpcTransportOptions()` in your `McpAgent`:
+
+<TypeScriptExample>
+
+```ts
+export class MyMCP extends McpAgent<Env, State> {
+	server = new McpServer({ name: "MyMCP", version: "1.0.0" });
+
+	protected getRpcTransportOptions() {
+		return { timeout: 120000 }; // 2 minutes
+	}
+
+	async init() {
+		this.server.tool(
+			"long-running-task",
+			"A tool that takes a while",
+			{ input: z.string() },
+			async ({ input }) => {
+				await longRunningOperation(input);
+				return {
+					content: [{ type: "text", text: "Task completed" }],
+				};
+			},
+		);
+	}
+}
+```
+
+</TypeScriptExample>
 
 ## Authentication and authorization
 
-The McpAgent class provides seamless integration with the [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider) for [authentication and authorization](/agents/model-context-protocol/protocol/authorization/).
-
-When a user authenticates to your MCP server, their identity information and tokens are made available through the `props` parameter, allowing you to:
+The McpAgent class integrates with the [OAuth Provider Library](https://github.com/cloudflare/workers-oauth-provider). When a user authenticates to your MCP server, their identity information and tokens are available through `this.props`, allowing you to:
 
 - access user-specific data
 - check user permissions before performing operations
 - customize responses based on user attributes
 - use authentication tokens to make requests to external services on behalf of the user
+
+The third type parameter defines the shape of `props`:
+
+<TypeScriptExample>
+
+```ts
+import { McpAgent } from "agents/mcp";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+type AuthContext = {
+	claims: { sub: string; name: string; email: string };
+	permissions: string[];
+};
+
+export class MyMCP extends McpAgent<Env, unknown, AuthContext> {
+	server = new McpServer({ name: "Auth Demo", version: "1.0.0" });
+
+	async init() {
+		this.server.tool("whoami", "Get the current user", {}, async () => ({
+			content: [{ type: "text", text: `Hello, ${this.props.claims.name}!` }],
+		}));
+
+		if (this.props.permissions?.includes("admin")) {
+			this.server.tool("adminTool", "Admin only", {}, async () => ({
+				content: [{ type: "text", text: "Admin action completed" }],
+			}));
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+For a stateless server, read the same props with `getMcpAuthContext()`. Refer to [Authorization](/agents/model-context-protocol/protocol/authorization/).
 
 ## State synchronization APIs
 
@@ -211,7 +454,7 @@ The `McpAgent` class provides full access to the [Agent state APIs](/agents/runt
 - [`sql`](/agents/runtime/agents-api/#sql-api) — Execute SQL queries on embedded database
 
 :::note[State resets after the session ends]
-Currently, each client session is backed by an instance of the `McpAgent` class. This is handled automatically for you, as shown in the [getting started guide](/agents/model-context-protocol/guides/remote-mcp-server/). This means that when the same client reconnects, they will start a new session, and the state will be reset.
+Each client session is backed by an instance of the `McpAgent` class. This means that when the same client reconnects, they will start a new session, and the state will be reset.
 :::
 
 For example, the following code implements an MCP server that remembers a counter value, and updates the counter when the `add` tool is called:
@@ -391,27 +634,9 @@ For more human-in-the-loop patterns, refer to [Human-in-the-loop patterns](/agen
 ## Next steps
 
 <LinkCard
-	title="Build a Remote MCP server"
-	href="/agents/model-context-protocol/guides/remote-mcp-server/"
-	description="Get started with MCP servers on Cloudflare."
-/>
-
-<LinkCard
-	title="MCP Tools"
-	href="/agents/model-context-protocol/protocol/tools/"
-	description="Design and add tools to your MCP server."
-/>
-
-<LinkCard
-	title="Authorization"
-	href="/agents/model-context-protocol/protocol/authorization/"
-	description="Set up OAuth authentication."
-/>
-
-<LinkCard
-	title="Securing MCP servers"
-	href="/agents/model-context-protocol/guides/securing-mcp-server/"
-	description="Security best practices for production."
+	title="Migrate to MCP SDK v2"
+	href="/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/"
+	description="Move an McpAgent server to createMcpHandler."
 />
 
 <LinkCard
