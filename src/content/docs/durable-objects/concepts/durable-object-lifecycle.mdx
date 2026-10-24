@@ -109,3 +109,29 @@ When your Durable Object code is updated, your Worker and Durable Objects are re
 ### Working without shutdown hooks
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
+
+## Activation latency and keep-alive
+
+When a Durable Object transitions from **inactive** to **active**, the platform must allocate the instance and attach its SQLite storage backend before your constructor runs. This initialization phase is reflected as **wall-time latency — typically hundreds of milliseconds to several seconds — while CPU usage remains near-zero**. This is expected behavior, not a platform error.
+
+If your application is latency-sensitive, you can keep a Durable Object warm by sending periodic lightweight requests at an interval shorter than the eviction timeout. The example below shows a simple keep-alive pattern using `setInterval`:
+
+```js
+export class MyDurableObject extends DurableObject {
+  constructor(ctx, env) {
+    super(ctx, env);
+    this.ctx.waitUntil(
+      (async () => {
+        while (true) {
+          await new Promise(resolve => setTimeout(resolve, 25_000));
+          await this.ctx.storage.get('__keepalive__');
+        }
+      })()
+    );
+  }
+}
+```
+
+:::caution[Keep-alive has a cost]
+Keeping a Durable Object warm with `waitUntil` consumes CPU and storage reads continuously. Use this pattern only when the latency cost of cold activation outweighs the ongoing compute cost.
+:::
