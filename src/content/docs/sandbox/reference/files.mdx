@@ -14,7 +14,7 @@ reviewed: 2026-09-23
 
 import { TypeScriptExample } from "~/components";
 
-`Files` reads and changes files and directories in a running container. It does not start or stop the container.
+`Files` reads and changes files and directories in a running container.
 
 Each method runs the `sandbox-shim` helper binary in the container through [`exec()`](/containers/api/durable-object-container/#exec). Every method except `readFile()` waits for the helper to finish; `readFile()` returns once the file is open and streams its contents. Paths follow Linux rules, and `Files` does not restrict which paths a caller can open.
 
@@ -67,7 +67,7 @@ new Files(container: Pick<Container, "exec">)
 - A relative path requires `cwd`. `cwd` must be absolute.
 - A path cannot be empty or contain a null character.
 - An invalid path or `cwd` throws `TypeError` before the helper process starts.
-- A relative path is joined onto `cwd`, and Linux resolves the joined path. An absolute path ignores `cwd`. A `cwd` that does not exist rejects with `SandboxFileError` `ENOENT`. So does a missing directory anywhere in a path.
+- A relative path is joined onto `cwd`, and Linux resolves the joined path. An absolute path ignores `cwd`. For a relative path, a `cwd` that does not exist rejects with `SandboxFileError` `ENOENT`. So does a missing directory anywhere in a path.
 - Paths resolve through symbolic links as they do in Linux, except where a method states otherwise.
 
 ## Options
@@ -103,8 +103,9 @@ Reads the contents of a file as bytes.
 - Returns a `Response` with status `200` and no `Content-Type` header. The body applies backpressure to the helper process.
 - Rejects with `SandboxFileError` when the file cannot be opened, such as `ENOENT` for a missing file or `EISDIR` for a directory.
 - An error after the file opens errors the response body instead of rejecting the call.
+- The operation finishes when the response body is read to the end or canceled. Aborting `signal` before then errors the body with the abort reason and kills the helper process.
 
-Read the `Response` like any HTTP response. `text()`, `json()`, `arrayBuffer()`, and `blob()` load the whole file into memory. For a large file or a file of unknown size, stream `body` instead.
+Read the `Response` like any HTTP response. `text()`, `json()`, `arrayBuffer()`, and `blob()` load the whole file into memory. Reading `body` as a stream does not.
 
 ### `writeFile`
 
@@ -128,7 +129,7 @@ Creates a file, or truncates an existing file, then streams `content` into it.
 - The file opens before a `ReadableStream` is consumed. A later failure can leave the file created, truncated, or partially written.
 - If the `content` stream errors, the call rejects with the error from the stream instead of a `SandboxFileError`.
 
-`rename()` replaces an existing destination in one step. To keep other processes from reading a partially written file, write the file to a temporary path and then rename it:
+`rename()` replaces an existing destination in one step. Writing a file to a temporary path and then renaming it keeps other processes from reading a partially written file:
 
 ```ts
 await files.writeFile(`${path}.partial`, content, { cwd });
@@ -168,7 +169,7 @@ Returns the immediate entries of a directory as [`SandboxDirectoryEntry`](#sandb
 - A file at `path` rejects with `ENOTDIR`.
 - An entry name that is not valid UTF-8 rejects the whole call with `EILSEQ`.
 
-To list a directory tree, walk it with `readDirectory()`. This walk does not follow symbolic links to directories:
+A recursive walk with `readDirectory()` lists a directory tree. This walk does not follow symbolic links to directories:
 
 ```ts
 import type { Files } from "@cloudflare/sandbox";
@@ -185,7 +186,7 @@ async function* walk(files: Files, directory: string): AsyncGenerator<string> {
 }
 ```
 
-Each call to `readDirectory()` starts one process in the container. For a large tree, one `container.exec(["find", directory])` call is faster. To cancel it, pass `signal` to `exec()`.
+Each call to `readDirectory()` starts one process in the container. For a large tree, one `container.exec(["find", directory])` call is faster. The `signal` option of `exec()` cancels it.
 
 ### `mkdir`
 
@@ -264,7 +265,7 @@ A string is written as UTF-8.
 | `modifiedAt` | `Date`            | Last content modification time                                                                       |
 | `changedAt`  | `Date`            | Last metadata change time                                                                            |
 
-`JSON.stringify()` and `Response.json()` throw `TypeError` for a `bigint`. Convert `size` with `Number()` or `String()` before serializing a `SandboxFileStat`. `bigint` and `Date` values pass through Durable Object RPC unchanged.
+`JSON.stringify()` and `Response.json()` throw `TypeError` for a `bigint`, so convert `size` with `Number()` or `String()` before serializing a `SandboxFileStat`. `bigint` and `Date` values pass through Durable Object RPC unchanged.
 
 ### `SandboxDirectoryEntry`
 

@@ -20,7 +20,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Run the tests of a repository in a fresh sandbox. In this example, the Durable Object clones the repository, installs its dependencies, runs its test script, returns the result, and stops the instance.
+Run the tests of a repository in a fresh sandbox. In this example, the Durable Object clones the repository, installs its dependencies, runs its test script, returns the result, and stops the container.
 
 ## Prerequisites
 
@@ -141,7 +141,7 @@ Run the tests of a repository in a fresh sandbox. In this example, the Durable O
 
    `--` stops `git` from reading a repository value that starts with `-` as an option.
 
-   A step that runs longer than 10 minutes returns exit code `124`, or `137` if `timeout` also sends `SIGKILL`. `timeout` stops the step together with the processes it starts that stay in its process group. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The `finally` block stops the instance after the run.
+   A step that runs longer than 10 minutes returns exit code `124`, or `137` if `timeout` also sends `SIGKILL`. `timeout` stops the step together with the processes it starts that stay in its process group. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts). The `finally` block stops the container after the run.
 
    `output()` holds the whole output of a step in the memory of the Durable Object. For test suites that print a lot, [stream the output](/sandbox/commands/stream-command-output/) instead.
 
@@ -173,7 +173,7 @@ Run the tests of a repository in a fresh sandbox. In this example, the Durable O
 
    </TypeScriptExample>
 
-   A random sandbox name gives each run a new instance, so one run cannot see files from another.
+   A random sandbox name reaches a new Durable Object, which starts a new container for this run, so one run cannot see files from another. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/).
 
    In this example, the Worker runs the tests of version `v0.0.6` of the public [`workers-oauth-provider`](https://github.com/cloudflare/workers-oauth-provider) repository. Replace the repository, revision, and `npm` commands with your own. `exec()` does not start a shell, so keep each argument in its own array entry.
 

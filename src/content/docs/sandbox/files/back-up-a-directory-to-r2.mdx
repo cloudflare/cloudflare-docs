@@ -21,7 +21,9 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. A backup restores after the instance stops or after you deploy a new image. R2 keeps each backup until you delete it. In this example, the directory is a project in `/workspace/project`.
+The `DirectoryBackup` class from `@cloudflare/sandbox` saves one directory as one object in your R2 bucket and restores it as ordinary files. R2 keeps each backup until you delete it. A container instance, the Linux virtual machine that your Durable Object starts, loses its files when it stops. You can restore a backup into a later instance, including one that runs a different image. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
+
+In this example, the directory is a project in `/workspace/project`.
 
 ## Prerequisites
 
@@ -324,7 +326,7 @@ export class MyContainer extends DurableObject<Env> {
 
 An [object lifecycle rule](/r2/buckets/object-lifecycles/) that expires objects under `backups/` also deletes backups. The rule leaves their records, and restoring one of those backups throws `BACKUP_NOT_FOUND`.
 
-A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until the default lifecycle rule of the bucket aborts it after seven days.
+A backup that fails does not leave an object. If the Durable Object restarts during a backup, the incomplete multipart upload stays in the bucket until an [object lifecycle rule](/r2/buckets/object-lifecycles/) of the bucket aborts it.
 
 ## Related resources
 
