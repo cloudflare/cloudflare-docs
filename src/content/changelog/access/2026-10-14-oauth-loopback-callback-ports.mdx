@@ -1,0 +1,26 @@
+---
+title: Dynamic loopback callback ports for Access OAuth clients
+description: Managed OAuth and MCP portal client OAuth accept port changes on registered loopback callback URIs.
+date: 2026-10-14
+products:
+  - access
+  - cloudflare-one
+---
+
+Managed OAuth and MCP portal client OAuth allow desktop and CLI clients to choose an available local callback port at runtime. Clients no longer need to listen on the exact port in their registered loopback redirect URI.
+
+For example, a client registered with this callback:
+
+```txt
+http://127.0.0.1:3000/callback
+```
+
+can authorize with:
+
+```txt
+http://127.0.0.1:49152/callback
+```
+
+Only the port can change. The scheme, host, path, and query must match exactly. The exception applies to `127.0.0.1`, `[::1]`, and explicitly registered `localhost` callbacks. Public clients must use PKCE with `S256`. If the port changes, the token exchange must include the exact `redirect_uri` used during authorization.
+
+For matching rules and application settings, refer to [Loopback callback ports](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/#loopback-callback-ports).
