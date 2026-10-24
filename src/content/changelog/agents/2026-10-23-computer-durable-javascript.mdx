@@ -1,0 +1,85 @@
+---
+title: "@cloudflare/computer JavaScript runs can now be paused and resumed"
+description: Isolate JavaScript runs in @cloudflare/computer can now survive deploys and crashes as well as pausing on approvals or out of band checks.
+products:
+  - agents
+  - workers
+date: 2026-10-23
+---
+
+import { TypeScriptExample } from "~/components";
+
+[`@cloudflare/computer`](https://github.com/cloudflare/computer) v0.7.0 now supports resuming a JavaScript run after a deploy or crash. It also supports pausing a run on an external action, for example to approve a tool call.
+
+## Resume interrupted runs
+
+Set `onInterrupt: "replay"` on `WorkerJavaScriptBackend`, or on a single run.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+
+export class MyAgent extends DurableObject<Env> {
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({
+				loader: this.env.LOADER,
+				onInterrupt: "replay",
+			}),
+		],
+	});
+}
+```
+
+</TypeScriptExample>
+
+After a restart, the run carries on from where it was, without repeating calls it already made or printing its output twice.
+
+Interrupted runs resume on the next call or by calling `workspace.runtime.recover()`. Passing `onInterrupt: "restart"` starts the run again from the beginning.
+
+## Wait for approvals
+
+A host module function can call `ctx.interrupt()` to pause a replay-able run until it receives an answer.
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	onInterrupt: "replay",
+	modules: {
+		"ws:github": {
+			postComment: async ([issue, body], ctx) => {
+				const { approved } = await ctx.interrupt<{ approved: boolean }>({
+					issue,
+					body,
+				});
+				if (!approved) throw new Error("The comment was rejected.");
+				return github.comment(issue, body, { idempotencyKey: ctx.callId });
+			},
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+The time spent waiting does not count toward its timeout. The wait also survives deploys. Fetch the pending calls with `workspace.runtime.pending()` and resolve them with `respond()`:
+
+<TypeScriptExample>
+
+```ts
+for (const call of await workspace.runtime.pending()) {
+	await workspace.runtime.respond(call.id, call.callId, { approved: true });
+}
+```
+
+</TypeScriptExample>
+
+The run continues once all pending calls are resolved. The `onWait` option can be passed to the backend to listen for and act on pending calls.
+
+For setup, current limitations, and how replay works, refer to [Resume runs after a restart](/agents/tools/filesystem/#resume-runs-after-a-restart).
