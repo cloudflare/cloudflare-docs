@@ -154,7 +154,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   }'
 ```
 
-A background request returns immediately while the model runs. The result is delivered to your webhook when the run completes.
+An accepted background request returns HTTP `202` while the model runs. This confirms acceptance, not successful completion. AI Gateway sends the final outcome to your webhook when the run finishes.
 
 #### Webhook payload
 
@@ -171,6 +171,8 @@ When the run completes, AI Gateway sends a single `POST` request to your `webhoo
 	"usage": {}
 }
 ```
+
+Check `state` to determine the final outcome. A value of `Completed` indicates success. A value of `Failed` indicates failure, and `error` contains the error message.
 
 Webhook delivery is best-effort and is not retried. The destination must be an HTTPS URL that does not resolve to a private network address.
 

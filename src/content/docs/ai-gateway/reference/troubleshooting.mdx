@@ -38,6 +38,14 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 
 ## Request failures
 
+### Insufficient credits (`402`)
+
+When a [Run request](/ai-gateway/usage/rest-api/) uses Unified Billing, exhausted credits return HTTP `402` with `internalCode: 2021` in the error response.
+
+[Add credits](/ai-gateway/features/unified-billing/#load-credits) before retrying the request. Retrying without replenishing your balance does not resolve this error.
+
+A background run can also fail because credits are exhausted. An initial `202` response confirms acceptance, not successful completion. If you configured a webhook, check the `state` and `error` fields in its [payload](/ai-gateway/usage/rest-api/#webhook-payload) for the final outcome.
+
 ### Requests timing out
 
 - Check if the upstream provider is experiencing issues
