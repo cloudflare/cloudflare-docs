@@ -79,11 +79,11 @@ Before you start, [set up a custom domain protected by Access](/ai-gateway/confi
 
 <Steps>
 
-1. Create a local helper script, replacing `aig.example.org` with your gateway's custom domain:
+1. Create a local helper script, replacing `ai-gateway.example.com` with your gateway's custom domain:
 
    ```sh title="aig-access.sh"
    #!/bin/sh
-   exec cloudflared access login --no-verbose --app https://aig.example.org
+   exec cloudflared access login --no-verbose --app https://ai-gateway.example.com
    ```
 
    The `--no-verbose` flag prints only the JSON Web Token (JWT) to standard output, as the helper requires. If Claude Desktop cannot find `cloudflared`, replace it in the script with the full path returned by `command -v cloudflared`.
@@ -102,7 +102,7 @@ Before you start, [set up a custom domain protected by Access](/ai-gateway/confi
 
 6. In **Gateway credentials**, set **Credential kind** to _Helper script_ and **Gateway auth scheme** to _Bearer_.
 
-7. Set the gateway base URL to `https://aig.example.org/anthropic`, replacing `aig.example.org` with your gateway's custom domain.
+7. Set the gateway base URL to `https://ai-gateway.example.com/anthropic`, replacing `ai-gateway.example.com` with your gateway's custom domain.
 
 8. In **Helper Script**, set the path to your local `aig-access.sh` script. Use the full path to the file.
 
