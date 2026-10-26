@@ -17,7 +17,6 @@ tags:
 
 import {
 	Description,
-	Plan,
 	RelatedProduct,
 	DirectoryListing,
 } from "~/components";
@@ -26,11 +25,9 @@ import {
 Proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
 </Description>
 
-<Plan type="enterprise" />
+Connect Cloudflare's application services to origins in your private network. Traffic reaches the origin over your existing Cloudflare One connectivity: Cloudflare WAN (IPsec, GRE, or CNI), Cloudflare Tunnel, or Cloudflare Mesh. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
 
-Connect Cloudflare's application services to your private network through secure tunnels. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
-
-Getting started takes three steps. Follow the [setup guide](/dns/private-origins/set-up-via-cloudflare-wan/) to configure a tunnel, create a DNS record with [private network routing](/dns/private-origins/private-network-routing/), and verify end-to-end connectivity.
+To get started, check the [prerequisites](#prerequisites), follow the setup guide for your connectivity type, then create a DNS record with [private network routing](/dns/private-origins/private-network-routing/).
 
 :::note[Closed beta]
 This feature is in closed beta. Contact your account team to request access.
