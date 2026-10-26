@@ -35,6 +35,19 @@ This feature is in closed beta. Contact your account team to request access.
 
 ---
 
+## Prerequisites
+
+- **Private Origins entitlement** on your account. Contact your account team to enable it.
+- **Cloudflare One connectivity** to the network where your origin lives: Cloudflare WAN (IPsec, GRE, or CNI), Cloudflare Tunnel, or Cloudflare Mesh.
+- **A route to the origin in your default virtual network.** Private network routing does not support selecting another virtual network.
+- **For Cloudflare WAN and Cloudflare Mesh only:**
+  - [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing) on your account. Contact your account team to enable it. This applies to new and existing accounts.
+  - Return routes in your private network for the [Cloudflare source IP ranges](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/): `100.64.0.0/12` for IPv4 (default, configurable) and `2606:4700:cf1:5000::/64` for IPv6.
+
+Cloudflare Tunnel does not need Unified Routing or return routes. Your origin sees the host running `cloudflared` as the source.
+
+---
+
 ## Resources
 
 <DirectoryListing />
