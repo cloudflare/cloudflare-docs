@@ -157,10 +157,13 @@ npx wrangler r2 bucket lifecycle list <BUCKET_NAME>
 ### S3 API
 
 ```js
-import S3 from "aws-sdk/clients/s3.js";
+import {
+	S3Client,
+	GetBucketLifecycleConfigurationCommand,
+} from "@aws-sdk/client-s3";
 
 // Configure the S3 client to talk to R2.
-const client = new S3({
+const client = new S3Client({
 	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "<access_key_id>",
@@ -171,11 +174,11 @@ const client = new S3({
 
 // Get lifecycle configuration for bucket
 console.log(
-	await client
-		.getBucketLifecycleConfiguration({
+	await client.send(
+		new GetBucketLifecycleConfigurationCommand({
 			Bucket: "bucketName",
-		})
-		.promise(),
+		}),
+	),
 );
 ```
 
@@ -202,10 +205,13 @@ npx wrangler r2 bucket lifecycle remove <BUCKET_NAME> --id <RULE_ID>
 ### S3 API
 
 ```js
-import S3 from "aws-sdk/clients/s3.js";
+import {
+	S3Client,
+	DeleteBucketLifecycleCommand,
+} from "@aws-sdk/client-s3";
 
 // Configure the S3 client to talk to R2.
-const client = new S3({
+const client = new S3Client({
 	endpoint: "https://<account_id>.r2.cloudflarestorage.com",
 	credentials: {
 		accessKeyId: "<access_key_id>",
@@ -215,9 +221,9 @@ const client = new S3({
 });
 
 // Delete lifecycle configuration for bucket
-await client
-	.deleteBucketLifecycle({
+await client.send(
+	new DeleteBucketLifecycleCommand({
 		Bucket: "bucketName",
-	})
-	.promise();
+	}),
+);
 ```
