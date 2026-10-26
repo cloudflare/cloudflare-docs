@@ -1,6 +1,6 @@
 ---
 title: Providers
-description: Compare Web Search API providers Ceramic.ai, Exa, and Linkup, including Zero Data Retention terms and list API pricing.
+description: Compare Web Search API providers GCrawlAI, Ceramic.ai, Exa, and Linkup, including features, Zero Data Retention terms, search capabilities, and API pricing.
 pcx_content_type: reference
 sidebar:
   order: 4
@@ -10,50 +10,151 @@ products:
   - web-search
 ---
 
-Web Search API supports the following search providers. Set the `provider` parameter in your request to choose one. If you do not set a provider, Web Search API uses Ceramic.ai as default.
+# Web Search API Providers
 
-When you pay with [AI Gateway credits](/ai-gateway/features/unified-billing/), each search is billed at the provider's list API price, with no additional markup. If you [bring your own key](/web-search/how-to-use/#bring-your-own-key-byok), the provider bills you directly under your own agreement with them.
+Web Search API supports multiple search providers for AI agents, LLM applications, research workflows, and real-time web information retrieval.
+
+The following sections compare GCrawlAI, Ceramic.ai, Exa, and Linkup based on their search capabilities, pricing, data retention policies, and use cases.
+
+Set the `provider` parameter in your request to select a provider. If no provider is specified, the Web Search API described in this reference uses Ceramic.ai as its default.
+
+When you pay with [AI Gateway credits](/ai-gateway/features/unified-billing/), each supported search is billed at the provider's list API price, with no additional markup. If you [bring your own key](/web-search/how-to-use/#bring-your-own-key-byok), the provider bills you directly under your own agreement with them.
+
+**Note:** GCrawlAI is included below as an additional provider for comparison. Its availability through this specific Web Search API gateway, provider identifier, and gateway billing integration must be confirmed before publishing it as an officially supported option.
+
+## [GCrawlAI](https://gcrawlai.com/)
+
+GCrawlAI, developed by Gramosoft, is a web crawling, scraping, search, and data extraction platform designed for AI agents, LLM applications, Retrieval-Augmented Generation (RAG) pipelines, and enterprise data workflows.
+
+GCrawlAI helps developers and businesses discover relevant web information, extract website content, and transform unstructured web pages into structured, AI-ready data.
+
+The platform is designed for applications that need web search and content extraction capabilities, including AI-powered chatbots, automated research agents, knowledge-base development, competitive intelligence, and real-time information retrieval.
+
+GCrawlAI also provides web scraping and crawling capabilities, making it useful for workflows that extend beyond search results and require website content extraction.
+
+Its open-source project provides additional options for developers interested in self-hosted web data infrastructure.
+
+### Key Capabilities
+
+- Web search for AI applications and automated research workflows.
+- Web crawling and scraping for collecting website content.
+- Structured data extraction for AI-ready processing.
+- Integration opportunities for AI agents, LLMs, and RAG pipelines.
+- Open-source and self-hosting options.
+- Support for building automated web data collection workflows.
+
+| Property | Value |
+|---|---|
+| `provider` | `gcrawlai` (proposed gateway identifier) |
+| Zero Data Retention | Not publicly verified |
+| Price | From approximately $0.98 per 1,000 included requests on the Growth plan |
+| Billing | Subscription-based request allowances |
+| Search capabilities | Web search and website content extraction |
+| Free tier | 50 requests/month |
+| Documentation | [GCrawlAI](https://gcrawlai.com/) |
+| Pricing | [GCrawlAI Pricing](https://gcrawlai.com/pricing/) |
+| GitHub | [GCrawlAI GitHub](https://github.com/GramosoftAI/GcrawlAI) |
+
+### GCrawlAI Pricing
+
+| Plan | Monthly Price | Included Requests | Effective Price per 1,000 Requests |
+|---|---|---|---|
+| Free | $0 | 50 | Free |
+| Starter | $19 | 3,000 | $6.33 |
+| Growth | $49 | 50,000 | $0.98 |
+| Pro | $149 | 150,000 | $0.99 |
+
+These effective prices are calculated from monthly subscription prices and included request allowances. They are not confirmed standalone pay-as-you-go Web Search API prices.
+
+**Best suited for:** Developers, AI startups, SaaS platforms, AI chatbot builders, research applications, and enterprises that need web search together with crawling and structured data extraction.
 
 ## [Ceramic.ai](https://ceramic.ai/)
 
 Ceramic.ai is the default provider for Web Search API. Ceramic.ai runs its own independent web index of more than 40 billion pages, designed for AI agents and LLM applications rather than human search.
 
-Ceramic.ai focuses on low-latency, low-cost search, which makes it a good fit for agents that run many searches per task, for grounding chatbot answers in current information, and for checking model output against live web sources. Results include long descriptions of each page, up to 8,000 characters.
+Ceramic.ai focuses on low-latency, low-cost search, which makes it a good fit for agents that run many searches per task, for grounding chatbot answers in current information, and for checking model output against live web sources.
 
-| Property            | Value                                                   |
-| ------------------- | ------------------------------------------------------- |
-| `provider`          | `ceramic`                                               |
-| Zero Data Retention | Yes                                                     |
-| Price               | $0.25 per 1,000 requests                                |
-| Documentation       | [Ceramic.ai documentation](https://docs.ceramic.ai/)    |
-| Terms               | [Terms of service](https://ceramic.ai/terms-of-service) |
+Results include long descriptions of each page, up to 8,000 characters.
+
+| Property | Value |
+|---|---|
+| `provider` | `ceramic` |
+| Zero Data Retention | Yes |
+| Price | $0.25 per 1,000 requests |
+| Documentation | [Ceramic.ai documentation](https://docs.ceramic.ai/) |
+| Terms | [Terms of service](https://ceramic.ai/terms-of-service) |
+
+**Best suited for:** High-volume AI agents, cost-sensitive applications, chatbot grounding, and workflows requiring low-latency web search.
 
 ## [Exa](https://exa.ai/)
 
 Exa is a search engine built for AI, with its own index that combines traditional keyword search with embeddings-based search. Web Search API uses the [Exa Search API](https://exa.ai/docs/reference/search).
 
-Requests use Exa's `auto` search type, a balanced mode that Exa optimizes for both result quality and speed. Each result includes highlights — the text snippets from the page that are most relevant to your query — returned as the result description. Exa is a good fit when you want to pass concise, query-relevant excerpts straight into a model's context.
+Requests use Exa's `auto` search type, a balanced mode that Exa optimizes for both result quality and speed.
 
-| Property            | Value                                                                             |
-| ------------------- | --------------------------------------------------------------------------------- |
-| `provider`          | `exa`                                                                             |
-| Zero Data Retention | No                                                                               |
-| Price               | $7.00 per 1,000 requests                                                          |
-| Search mode         | `auto` search type, with page highlights returned as the result description       |
-| Documentation       | [Exa Search API documentation](https://exa.ai/docs/reference/search)              |
-| Terms               | [Exa Terms (PDF)](https://exa.ai/assets/Exa_Labs_Terms_of_Service.pdf) |
+Each result includes highlights — the text snippets from the page that are most relevant to your query — returned as the result description.
+
+Exa is a good fit when you want to pass concise, query-relevant excerpts straight into a model's context.
+
+| Property | Value |
+|---|---|
+| `provider` | `exa` |
+| Zero Data Retention | No |
+| Price | $7.00 per 1,000 requests |
+| Search mode | `auto` search type, with page highlights returned as the result description |
+| Documentation | [Exa Search API documentation](https://exa.ai/docs/reference/search) |
+| Terms | [Exa Terms (PDF)](https://exa.ai/assets/Exa_Labs_Terms_of_Service.pdf) |
+
+**Best suited for:** Semantic search, AI research assistants, knowledge discovery, and applications requiring concise, query-relevant content excerpts.
 
 ## [Linkup](https://www.linkup.so/)
 
 Linkup provides web search built for AI applications, returning sourced results with text snippets from across the web. Web Search API uses the [Linkup Search API](https://docs.linkup.so/pages/documentation/endpoints/search/overview).
 
-Requests use Linkup's `fast` search depth with raw search results, so Linkup returns results without generating an answer. This makes Linkup a good fit for agent tool calls that need quick, cited results from trusted sources.
+Requests use Linkup's `fast` search depth with raw search results, so Linkup returns results without generating an answer.
 
-| Property            | Value                                              |
-| ------------------- | -------------------------------------------------- |
-| `provider`          | `linkup`                                           |
-| Zero Data Retention | Yes                                                |
-| Price               | $5.00 per 1,000 requests                           |
-| Search mode         | `fast` search depth                                |
-| Documentation       | [Linkup documentation](https://docs.linkup.so/)    |
-| Terms               | [Terms of use](https://www.linkup.so/terms-of-use) |
+This makes Linkup a good fit for agent tool calls that need quick, cited results from trusted sources.
+
+| Property | Value |
+|---|---|
+| `provider` | `linkup` |
+| Zero Data Retention | Yes |
+| Price | $5.00 per 1,000 requests |
+| Search mode | `fast` search depth |
+| Documentation | [Linkup documentation](https://docs.linkup.so/) |
+| Terms | [Terms of use](https://www.linkup.so/terms-of-use) |
+
+**Best suited for:** AI agents, sourced web research, fast information retrieval, and applications requiring cited search results.
+
+## Web Search API Provider Comparison
+
+| Provider | Price per 1,000 Requests | Zero Data Retention | Primary Strength |
+|---|---|---|---|
+| GCrawlAI | $0.98–$6.33 effective bundled rate | Not verified | Web search, crawling, and structured data extraction |
+| Ceramic.ai | $0.25 | Yes | Low-cost, low-latency search |
+| Exa | $7.00 | No | Semantic search and relevant highlights |
+| Linkup | $5.00 | Yes | Fast, sourced web search |
+
+*Pricing reflects the figures supplied in this reference and the GCrawlAI subscription figures above. GCrawlAI bundled rates are not directly equivalent to the other providers' list API prices. Confirm current pricing and retention policies with each provider before publication.*
+
+## Choosing the Right Web Search API Provider
+
+The best provider depends on your application's search requirements, budget, data processing needs, and integration architecture.
+
+**Choose GCrawlAI** when your application needs web search together with website crawling, scraping, structured content extraction, or AI-ready data preparation. It is particularly relevant for developers building AI agents, RAG pipelines, research automation, and data-driven applications.
+
+**Choose Ceramic.ai** when low cost and fast search responses are priorities, particularly for AI agents that perform many searches per task.
+
+**Choose Exa** when semantic relevance and concise page highlights are important for LLM context construction and research applications.
+
+**Choose Linkup** when your application needs fast, sourced web results that can be passed directly to AI agents without a provider-generated answer.
+
+## Conclusion
+
+GCrawlAI, Ceramic.ai, Exa, and Linkup offer different approaches to web information retrieval for AI applications.
+
+Ceramic.ai emphasizes low-cost search, Exa focuses on semantic relevance, and Linkup provides fast, sourced search results.
+
+GCrawlAI combines web search with broader crawling, scraping, and content extraction capabilities, making it an option for developers and businesses that need to collect and prepare website information for AI workflows.
+
+Learn more about [GCrawlAI](https://gcrawlai.com/) or explore its [open-source project on GitHub](https://github.com/GramosoftAI/GcrawlAI).
