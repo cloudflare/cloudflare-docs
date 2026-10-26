@@ -9,13 +9,20 @@ products:
   - observability
 ---
 
-Beginning December 1, 2026, all Cloudflare logs and traces will use the same pricing model. Log Explorer datasets have a different price point of $1 per GB ingested and include 30-day retention. Queries, dashboards, alerts, and analytics do not incur additional charge.
+import { Details } from "~/components";
 
-Refer to [Datasets](/observability/logs/datasets/) to review the price point and retention for each dataset.
+:::note
+This pricing takes effect on December 1, 2026. Log Explorer (Legacy) has separate pricing. For details, refer to [Log Explorer (Legacy)](#log-explorer-legacy).
+:::
 
-## Included in the new Observability pricing
+Cloudflare Observability charges for two things:
 
-The following logs and traces share account-level ingestion and storage allowances:
+- **Ingestion**: data coming in. You pay once for each GB when Cloudflare receives it.
+- **Storage**: data being kept. You pay for each GB for as long as you can query it. Storage is measured in GB-month.
+
+## Included products
+
+The following products share one ingestion allowance and one storage allowance per account:
 
 - [Cloudflare Traces](/observability/traces/)
 - [Workers Logs](/workers/observability/logs/workers-logs/)
@@ -25,61 +32,100 @@ The following logs and traces share account-level ingestion and storage allowanc
 - [AI Gateway logs](/ai-gateway/observability/logging/)
 - [Issues](/workers/observability/issues/)
 
-### Plans
+To check the price and retention for each dataset, refer to [Datasets](/observability/logs/datasets/).
 
-| Plan | Included ingestion      | Included storage              | Additional ingestion | Additional storage     |
-| ---- | ----------------------- | ----------------------------- | -------------------- | ---------------------- |
-| Free | 0.5 GB per day          | Seven-day retention included  | Not available        | Not separately metered |
-| Paid | 50 GB per billing cycle | 10 GB-month per billing cycle | $0.25 per GB         | $0.10 per GB-month     |
+## Plans
 
-Enterprise accounts move to this pricing when their contract renews. Until then, existing contract terms apply.
+Each plan includes a set amount of ingestion and storage. On Paid, Cloudflare bills usage beyond that amount. The following table compares the plans:
 
-Paid usage continues automatically after an allowance is exhausted. Ingestion and storage are separate meters, so unused ingestion allowance cannot be applied to storage or the reverse. Allowances do not roll over between billing cycles.
+| Allowance or rate  | Free                    | Paid                          |
+| ------------------ | ----------------------- | ----------------------------- |
+| Included ingestion | 0.5 GB per day          | 50 GB per billing cycle       |
+| Included storage   | Seven days of retention | 10 GB-month per billing cycle |
+| Extra ingestion    | Not available           | $0.25 per GB                  |
+| Extra storage      | Not metered             | $0.10 per GB-month            |
 
 You will be able to view your current ingestion and storage usage, remaining allowances, and estimated charges in **Billable Usage**.
 
-On Free, Cloudflare stops ingesting new data when the account reaches its daily limit. Ingestion resumes when the allowance resets at 00:00 UTC. Stored data remains queryable for its seven-day retention period.
+### When you reach your allowance
 
-### How usage is measured
+On Free, Cloudflare stops ingesting new data when you reach the daily limit. Ingestion resumes when the allowance resets at 00:00 UTC. Data you already sent stays queryable until its seven-day retention period ends.
 
-#### Ingestion
+On Paid, Cloudflare keeps ingesting and storing data. Usage beyond your allowance is billed at the rates in the plans table.
 
-Ingestion includes the event body, the default enriched attributes, and custom attributes. Ingestion is pre-compression and does not include dropped events.
-Sampling data before storage reduces both ingestion and storage usage.
+The Paid ingestion and storage allowances are separate. Unused ingestion allowance does not cover storage, and unused storage allowance does not cover ingestion. Unused allowances do not carry over to the next billing cycle.
 
-#### Storage
+## How usage is measured
 
-Storage is measured in GB-month using the maximum amount of queryable data stored each day:
+### Ingestion
+
+Ingestion is the total size of the events Cloudflare receives. Each event includes:
+
+- The event body
+- Attributes Cloudflare adds automatically (default enriched attributes)
+- Custom attributes you add
+
+Cloudflare measures the uncompressed size. Events that Cloudflare drops do not count.
+
+:::tip
+To lower ingestion and storage, sample your data so Cloudflare stores only a share of events. For details, refer to [Head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling) and [Head sampling](/observability/traces/configuration/#head-sampling).
+:::
+
+### Storage
+
+Storage measures how much data you keep and for how long. One GB-month is 1 GB kept for 30 days.
+
+Logs and traces in the shared allowance are kept for seven days by default. Cloudflare plans to add configurable retention periods of 30, 90, and 365 days.
+
+If you ingest data at a steady rate, your storage is approximately:
+
+> **Storage (GB-month) ≈ GB ingested per billing cycle x 7 / 30**
+
+With seven-day retention, this formula gives the following results:
+
+- Each GB you ingest adds about 0.23 GB-month of storage.
+- The 10 GB-month storage allowance covers about 43 GB of ingestion.
+- On Paid, storage charges start at about 43 GB ingested, before ingestion charges start at 50 GB.
+
+<Details header="How Cloudflare calculates storage exactly">
+
+Each day, Cloudflare records the largest amount of queryable data in your account. At the end of the billing cycle, it calculates:
 
 > **GB-month = sum of each day's maximum queryable GB / 30**
 
-For example, 1 GB that remains queryable for 30 days contributes 1 GB-month. Data stops contributing to storage usage when it is no longer queryable.
+Data stops counting toward storage when it is no longer queryable. Data ingested near the end of one billing cycle can count toward storage in the next.
 
-### Example
+</Details>
 
-Suppose a Paid account uses 75 GB of ingestion and 20 GB-month of storage during one billing cycle:
+## Pricing example
 
-| Usage     | Calculation                                  | Additional charge |
-| --------- | -------------------------------------------- | ----------------- |
-| Ingestion | (75 GB - 50 GB included) x $0.25             | $6.25             |
-| Storage   | (20 GB-month - 10 GB-month included) x $0.10 | $1.00             |
-| Total     | $6.25 + $1.00                                | $7.25             |
+A Paid account ingests 75 GB at a steady rate during one billing cycle. Its storage is 75 x 7 / 30 = 17.5 GB-month. The account pays only for usage beyond the included amounts:
 
-### Longer retention
+| Usage     | Calculation                                    | Additional charge |
+| --------- | ---------------------------------------------- | ----------------- |
+| Ingestion | (75 GB - 50 GB included) x $0.25               | $6.25             |
+| Storage   | (17.5 GB-month - 10 GB-month included) x $0.10 | $0.75             |
+| Total     | $6.25 + $0.75                                  | $7.00             |
 
-Logs and traces in the shared allowance have a default seven-day retention. Log Explorer datasets include 30-day retention.
-Cloudflare plans to add configurable 30, 90, and 365-day retention periods in the future.
+## Existing customers
 
-### Existing customers
+For existing Workers Observability customers, the switch date depends on your plan:
 
-Existing Workers Observability customers on Free, Pro, and Business plans automatically move to this pricing on December 1, 2026. Ingestion charges apply only to data received on or after that date. Enterprise accounts move at contract renewal.
+| Plan                    | When this pricing applies       |
+| ----------------------- | ------------------------------- |
+| Free, Pro, and Business | Automatically, December 1, 2026 |
+| Enterprise              | At your next contract renewal   |
 
-For Paid accounts, data retained on December 1 begins contributing to storage usage from that date. Usage before December 1 is not charged retroactively.
+Enterprise accounts keep their existing contract terms until renewal.
+
+For Free, Pro, and Business accounts, Cloudflare does not charge for usage before December 1, 2026. Ingestion charges apply only to data received on or after that date. On Paid, data already stored on December 1 starts counting toward storage from that date.
 
 ## Log Explorer (Legacy)
 
-Log Explorer datasets preserve complete event fidelity and use a different ingestion price point. Their usage does not consume the pooled allowances in [Plans](#plans). For usage estimates, monitoring, and deactivation, refer to [Pricing and managing usage](/observability/logs/log-explorer/pricing/).
+Log Explorer datasets keep every event in full. They do not use the shared allowances in [Plans](#plans). Log Explorer datasets have the following pricing:
 
-| Ingestion          | Retention | Queries              |
-| ------------------ | --------- | -------------------- |
-| $1 per GB ingested | 30 days   | No additional charge |
+| Ingestion          | Retention | Queries   |
+| ------------------ | --------- | --------- |
+| $1 per GB ingested | 30 days   | No charge |
+
+For usage estimates, monitoring, and deactivation, refer to [Pricing and managing usage](/observability/logs/log-explorer/pricing/).
