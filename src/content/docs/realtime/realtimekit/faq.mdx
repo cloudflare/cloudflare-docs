@@ -65,7 +65,7 @@ If you need a new token after the previous token expires, use the [Refresh Parti
 
 <Details header="How long is an auth token valid?">
 
-By default, an auth token is a JSON Web Token (JWT) that is valid for 100 days from when it is issued. It contains `meetingId` and `participantId` fields that tie the token to a specific participant in a specific meeting. The token does not grant access to other meetings. If you need a new token after the previous token expires, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint. For more information, refer to [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
+By default, an auth token is a JSON Web Token (JWT) that is valid for 100 days from when it is issued. To set a shorter validity window, refer to [Token validity and refresh](/realtime/realtimekit/concepts/participant/#token-validity-and-refresh). The token contains `meetingId` and `participantId` fields that tie it to a specific participant in a specific meeting. The token does not grant access to other meetings. If you need a new token after the previous token expires, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint. For more information, refer to [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
 
 </Details>
 

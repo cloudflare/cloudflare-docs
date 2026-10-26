@@ -35,7 +35,7 @@ the SDK cannot join the meeting on behalf of that participant. As long as a part
 
 Participant authentication tokens are JSON Web Tokens (JWTs). The `meetingId` and `participantId` fields scope each token to one participant in one meeting.
 
-By default, a token becomes valid when issued and expires 100 days later. To set a custom validity window, pass `not_before` and `expires_on` in the `token` object when you add a participant, or in the request body when you refresh a token. Both fields are optional RFC 3339 timestamps with a timezone, such as `2026-10-01T09:00:00Z`:
+By default, a token becomes valid when issued and expires 100 days later. To set a custom validity window, pass `not_before` and `expires_on` in the `token` object when you add a participant, or in the request body when you refresh a token. Both fields are optional RFC 3339 timestamps with a timezone offset, such as `2026-10-01T09:00:00Z` (UTC) or `2026-10-01T14:30:00+05:30`:
 
 - `not_before` defaults to the current time and can be in the past.
 - `expires_on` defaults to `not_before` plus 100 days and must be in the future.
