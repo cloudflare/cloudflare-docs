@@ -47,7 +47,7 @@ Recovery starts on the next call to `workspace.runtime`. To recover without wait
 
 Expose your application functions through [custom modules](/agents/tools/filesystem/#give-code-access-to-your-own-functions). A function can call `ctx.interrupt()` to pause the run until your application supplies an approval decision.
 
-### Define the application function
+### Require approval before posting a comment
 
 For example, to provide a GitHub module that allows an agent to post a comment on an issue with approval, an implementation of `postComment` could look like this:
 
