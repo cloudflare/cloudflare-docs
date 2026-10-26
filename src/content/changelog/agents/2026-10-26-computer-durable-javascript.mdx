@@ -39,11 +39,13 @@ export class MyAgent extends DurableObject<Env> {
 
 After a restart, the run carries on from where it was, without repeating calls it already made or printing its output twice.
 
-Interrupted runs resume on the next call or by calling `workspace.runtime.recover()`. Passing `onInterrupt: "restart"` starts the run again from the beginning.
-
 ## Wait for approvals
 
-Functions you expose to the agent's code, called [host modules](/agents/tools/filesystem/#give-code-access-to-your-own-functions), can call `ctx.interrupt()` to pause the run until it receives an answer.
+![A run pauses at an approval gate, then resumes when approved or fails when rejected](~/assets/images/agents/computer-approval-flow.svg)
+
+User functionality can be provided to the agent's code, via [custom modules](/agents/tools/filesystem/#give-code-access-to-your-own-functions). The user function can now call `ctx.interrupt()` to pause the run until it receives an answer.
+
+For example, to provide a GitHub module that allows an agent to post a comment on an issue with approval, an implementation of `postComment` could look like this:
 
 <TypeScriptExample>
 
@@ -69,6 +71,16 @@ new WorkerJavaScriptBackend({
 
 </TypeScriptExample>
 
+When the agent's code calls `postComment()`, the run pauses at `ctx.interrupt()` until your app responds. The agent's code calls it like any other function:
+
+```js
+import { postComment } from "ws:github";
+
+export default async function ({ issue }) {
+	return postComment(issue, "Hello world");
+}
+```
+
 The time spent waiting does not count toward its timeout. The wait also survives deploys. Fetch the pending calls with `workspace.runtime.pending()` and resolve them with `respond()`:
 
 <TypeScriptExample>
@@ -81,6 +93,6 @@ for (const call of await workspace.runtime.pending()) {
 
 </TypeScriptExample>
 
-The run continues once all pending calls are resolved. The `onWait` option can be passed to the backend to listen for and act on pending calls.
+The run continues once all pending calls are resolved.
 
 For setup, current limitations, and how replay works, refer to [Resume runs after a restart](/agents/tools/filesystem/#resume-runs-after-a-restart).
