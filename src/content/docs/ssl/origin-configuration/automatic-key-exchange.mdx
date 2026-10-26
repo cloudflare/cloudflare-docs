@@ -92,6 +92,14 @@ The available selections are:
 
 Cloudflare rejects a combination if the selected requirements have no key agreement in common. Changing a compliance requirement stops any active rollout. A later scan selects from the new allowed set.
 
+:::caution
+When **Post-quantum hybrid** is set as a compliance requirement, Cloudflare only advertises post-quantum hybrid key agreements on TLS 1.3 connections. Destination servers that do not yet support post-quantum key exchange — including many public APIs and third-party services — will fail to complete the TLS handshake and return a [`525` error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/).
+
+This restriction applies to all TLS 1.3 connections made in the context of the zone, including outbound `fetch()` calls from [Workers](/workers/) running under that zone.
+
+If any service your origin or Workers connect to does not support post-quantum key exchange, do not set this requirement. Use **Automatic key exchange** (the default) to negotiate post-quantum key agreements where supported while retaining compatibility with servers that do not yet support them.
+:::
+
 ## Origin Post-Quantum Encryption API
 
 The [Origin Post-Quantum Encryption API](/api/resources/origin_post_quantum_encryption/methods/update/) remains available. Requests to this API are no-ops and do not change a zone's post-quantum key agreement behavior. Cloudflare plans to deprecate this API, but a deprecation date has not been established.
