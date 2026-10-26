@@ -3,6 +3,10 @@ link: "/radar/release-notes/"
 productName: Radar
 productLink: "/radar/"
 entries:
+  - publish_date: "2026-10-27"
+    title: Fix Markdown for Agents savings calculation
+    description: |-
+      * Fixed a bug where the [Markdown for Agents savings](https://radar.cloudflare.com/ai-insights#markdown-for-agents-savings) metric included conversions not served to AI bots or crawlers, overstating the median response size since August 27, 2026. Historical values are corrected on Radar and in the [API](/api/resources/radar/subresources/ai/subresources/markdown_for_agents/methods/summary).
   - publish_date: "2026-08-07"
     title: Add AS-level connectivity and upstream providers widgets to Cloudflare Radar
     description: |-
