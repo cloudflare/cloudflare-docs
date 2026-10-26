@@ -95,7 +95,7 @@ Cloudflare rejects a combination if the selected requirements have no key agreem
 :::caution
 When a compliance requirement is set, Cloudflare restricts outbound TLS 1.3 connections to only the key agreements permitted by that requirement. Destination servers that do not support the required key exchange algorithm will fail the TLS handshake and return a [`525` error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/).
 
-For example, **Post-quantum hybrid** causes Cloudflare to advertise only `X25519MLKEM768`; **FIPS** causes Cloudflare to advertise only FIPS-approved curves. In both cases, destinations that do not support the required algorithm will return `525`.
+For example, **Post-quantum hybrid** causes Cloudflare to advertise only `X25519MLKEM768`. **FIPS** causes Cloudflare to advertise only FIPS-approved curves. In both cases, destinations that do not support the required algorithm will return `525`.
 
 This restriction applies to all TLS 1.3 connections made in the context of the zone, including outbound `fetch()` calls from [Workers](/workers/) running under that zone.
 
