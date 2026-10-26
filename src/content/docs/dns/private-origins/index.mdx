@@ -59,6 +59,8 @@ Cloudflare Tunnel does not need Unified Routing or return routes. Your origin se
 With Tiered Cache enabled, cacheable requests that miss cache can fail with HTTP `403` at the upper tier when the origin is reached over Cloudflare WAN. The origin is never contacted. Dynamic requests are not affected. As a workaround, create a [Cache Rule](/cache/how-to/cache-rules/) that bypasses cache for the affected hostnames.
 :::
 
+Private network connectivity also works beyond HTTP. [Spectrum](/spectrum/) (beta) can sit in front of TCP and UDP services on private IPs, and [Workers VPC](/workers-vpc/) bindings let Workers reach private origins directly.
+
 ---
 
 ## Resources
@@ -74,5 +76,37 @@ With Tiered Cache enabled, cacheable requests that miss cache can fail with HTTP
 	href="/cloudflare-wan/"
 	product="cloudflare-wan"
 >
-	Connect your private network to Cloudflare with IPsec tunnels.
+	Connect your private network to Cloudflare with IPsec, GRE, or CNI.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare Tunnel"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/"
+	product="tunnel"
+>
+	Connect individual hosts and networks to Cloudflare with `cloudflared`.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare Mesh"
+	href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
+	product="cloudflare-mesh"
+>
+	Connect devices and sites to Cloudflare with the Mesh client.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Spectrum"
+	href="/spectrum/"
+	product="spectrum"
+>
+	Proxy TCP and UDP traffic to services on private IPs.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Workers VPC"
+	href="/workers-vpc/"
+	product="workers-vpc"
+>
+	Let Workers reach private origins directly through bindings.
 </RelatedProduct>
