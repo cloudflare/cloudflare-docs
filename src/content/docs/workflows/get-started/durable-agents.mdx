@@ -68,10 +68,9 @@ You will also need an [Anthropic API key](https://platform.claude.com/settings/k
    />
 
    <Render
-   	file="c3-post-run-steps"
+   	file="c3-post-run-steps-hello-world"
    	product="workers"
    	params={{
-   		category: "hello-world",
    		type: "Worker only",
    		lang: "TypeScript",
    	}}
@@ -428,6 +427,7 @@ export class ResearchAgent extends Agent<Env, State> {
    	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "durable-ai-agent",
    	"main": "src/index.ts",
+       "upload_source_maps": true,
    	"compatibility_date": "$today",
    	"observability": {
    		"enabled": true

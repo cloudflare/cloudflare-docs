@@ -10,6 +10,7 @@ import type {
 	SidebarTransform,
 } from "@cloudflare/nimbus-docs/types";
 import { getDirectoryEntryBySection } from "~/util/directory";
+import { EXTERNAL_LINK_ARROW } from "./external-link-arrow";
 
 export const sectionTitleResolver: SectionTitleResolver = async ({
 	sectionSlug,
@@ -86,8 +87,6 @@ export function getCfRouteNavigation(
 		resolveLabel: breadcrumbLabelResolver,
 	});
 }
-
-const EXTERNAL_LINK_ARROW = " \u2197";
 
 // Append the external-link arrow, unless already present.
 function appendExternalArrow(label: string): string {
@@ -215,14 +214,35 @@ function markExternalAppLinks(items: SidebarItem[]): SidebarItem[] {
 	});
 }
 
-// Append the external-link arrow to internal cross-section redirects
-// (relative `external_link` → same-tab `type: "link"` flagged `_neverActive`).
-function markInternalRedirects(items: SidebarItem[]): SidebarItem[] {
+const BASIN_PRODUCT_LINKS = new Set([
+	"/basin-pipelines/",
+	"/basin-catalog/",
+	"/basin-sql/",
+]);
+
+// Internal cross-section redirects are same-tab links by default. Basin's
+// product links open in new tabs so readers can keep the Basin overview open.
+function markInternalRedirects(
+	items: SidebarItem[],
+	sectionSlug?: string,
+): SidebarItem[] {
 	return items.map((item) => {
 		if (item.type === "group") {
-			return { ...item, children: markInternalRedirects(item.children) };
+			return {
+				...item,
+				children: markInternalRedirects(item.children, sectionSlug),
+			};
 		}
 		if (item.type === "link" && item._neverActive) {
+			if (sectionSlug === "basin" && BASIN_PRODUCT_LINKS.has(item.href)) {
+				return {
+					type: "external",
+					label: appendExternalArrow(item.label),
+					href: item.href,
+					badge: item.badge,
+					order: item.order,
+				};
+			}
 			return {
 				...item,
 				label: appendExternalArrow(item.label),
@@ -261,7 +281,7 @@ function inferBadgeVariant(badge: SidebarBadge): SidebarBadge {
 // Fixed badge for external-app links by URL shape (`/api` → "API", MCP server
 // repo → "MCP"). Takes precedence over authored/auto-Beta badges.
 function getExternalBadge(href: string): SidebarBadge | undefined {
-	if (href.startsWith("/api")) return { text: "API", variant: "note" };
+	if (isExternalAppHref(href)) return { text: "API", variant: "note" };
 	if (href.includes("/mcp-server-cloudflare"))
 		return { text: "MCP", variant: "note" };
 	return undefined;
@@ -269,6 +289,17 @@ function getExternalBadge(href: string): SidebarBadge | undefined {
 
 // URL → "Beta" badge, from directory entries whose product-availability is
 // "beta". Built once per build (the collections don't change mid-build).
+// Realtime is an umbrella for features with independent availability stages.
+// Basin is generally available, but the remote availability feed may still
+// report the preserved pre-GA product IDs as beta during the rename rollout.
+const AUTO_BETA_BADGE_EXCLUSIONS = new Set([
+	"/realtime/",
+	"/basin/",
+	"/basin-pipelines/",
+	"/basin-catalog/",
+	"/basin-sql/",
+]);
+
 let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;
 function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 	betaBadgeUrlsPromise ??= (async () => {
@@ -279,11 +310,13 @@ function getBetaBadgeUrls(): Promise<Map<string, SidebarBadge>> {
 		const map = new Map<string, SidebarBadge>();
 		for (const dirEntry of directory) {
 			const avail = productAvailability.find((e) => e.id === dirEntry.data.id);
+			const url = dirEntry.data.entry?.url;
 			if (
 				avail?.data.availability?.toLowerCase() === "beta" &&
-				dirEntry.data.entry?.url
+				url &&
+				!AUTO_BETA_BADGE_EXCLUSIONS.has(url)
 			) {
-				map.set(dirEntry.data.entry.url, { text: "Beta", variant: "caution" });
+				map.set(url, { text: "Beta", variant: "caution" });
 			}
 		}
 		return map;
@@ -322,7 +355,7 @@ export const docsSidebarTransform: SidebarTransform = async (ctx) => {
 		tree: isolated,
 	});
 	const withExternal = markExternalAppLinks(withAgentResources);
-	const withRedirects = markInternalRedirects(withExternal);
+	const withRedirects = markInternalRedirects(withExternal, ctx.sectionSlug);
 	const betaUrls = await getBetaBadgeUrls();
 	return applyBadges(withRedirects, betaUrls);
 };

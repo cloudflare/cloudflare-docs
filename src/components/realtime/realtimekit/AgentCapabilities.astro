@@ -1,0 +1,106 @@
+---
+import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
+---
+
+<RealtimeDiagramFrame
+	ariaLabel="Meeting participants and the agent share a RealtimeKit meeting. The agent joins as a participant. Through the Agent Participant WebSocket, your Worker or Durable Object receives transcripts, participant presence, and broadcasts. Sending chat and broadcasts back is planned."
+	className="rt-agent-caps"
+>
+	<div class="rtac-desktop">
+		<div class="rt-diagram__node rtac-people">
+			<strong>Participants</strong>
+			<small>Browsers and apps using RealtimeKit SDKs</small>
+		</div>
+
+		<div class="rt-diagram__connector rt-diagram__connector--both rtac-link-1">
+			<span class="rt-diagram__connector-start" aria-hidden="true"></span>
+			<span class="rt-diagram__connector-label">
+				Audio, video, chats, polls, broadcasts
+			</span>
+		</div>
+
+		<div class="rt-diagram__boundary rt-diagram__boundary--accent rtac-meeting">
+			<span class="rt-diagram__boundary-label">RealtimeKit meeting</span>
+			<div class="rt-diagram__node rt-diagram__node--accent">
+				<strong>Agent participant</strong>
+				<small>Configured by preset</small>
+			</div>
+		</div>
+
+		<div class="rtac-links">
+			<div class="rt-diagram__connector rtac-listen">
+				<span class="rt-diagram__connector-label">
+					Listen: transcripts, presence, broadcasts
+				</span>
+			</div>
+			<div class="rt-diagram__connector rt-diagram__connector--left rt-diagram__connector--dashed rtac-send">
+				<span class="rt-diagram__connector-label">
+					Send: chat, broadcasts, stream audio (future-scope)
+				</span>
+			</div>
+		</div>
+
+		<div class="rt-diagram__node rt-diagram__node--blue rtac-backend">
+			<span class="rt-diagram__eyebrow">My code</span>
+			<strong>Durable Object</strong>
+			<small>WebSocket &harr; JSON</small>
+		</div>
+	</div>
+
+	<div class="rt-diagram__mobile-routes">
+		<div class="rt-diagram__mobile-route">
+			<span>Participants</span>
+			<small>↔</small>
+			<span>RealtimeKit meeting</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Agent participant</span>
+			<small>Joins the meeting</small>
+			<span>RealtimeKit meeting</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Agent Participant</span>
+			<small>Listen →</small>
+			<span>Worker or Durable Object</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Worker or Durable Object</span>
+			<small>Send (planned) →</small>
+			<span>Agent Participant</span>
+		</div>
+	</div>
+</RealtimeDiagramFrame>
+
+<style>
+	.rtac-desktop {
+		display: grid;
+		grid-template-columns:
+			minmax(7rem, 1fr) minmax(4rem, 0.8fr) minmax(9rem, 1.2fr)
+			minmax(7rem, 1.2fr) minmax(8rem, 1fr);
+		align-items: center;
+		gap: 0;
+		max-width: 940px;
+		margin: 0 auto;
+	}
+
+	.rtac-meeting {
+		padding: 1.5rem 0.75rem 0.75rem;
+	}
+
+	.rtac-links {
+		display: grid;
+		gap: 1.75rem;
+		align-self: stretch;
+		align-content: center;
+	}
+
+	@container (max-width: 36rem) {
+		.rtac-desktop {
+			display: none;
+		}
+
+		.rt-diagram__mobile-routes {
+			display: grid;
+		}
+	}
+</style>

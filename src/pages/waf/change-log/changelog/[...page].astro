@@ -27,7 +27,13 @@ export const getStaticPaths = (async ({ paginate }) => {
 			entry.data.products.some((p) => p.id === "waf"),
 	});
 
-	return paginate(entries, { pageSize: 25 });
+	const pages = paginate(entries, { pageSize: 25 });
+	return pages.map((p) => {
+		const pageDigest = (p.props.page.data as typeof entries)
+			.map((e) => e.digest ?? e.id)
+			.join(",");
+		return { ...p, cacheKey: `waf:${p.params.page ?? 1}:${pageDigest}` };
+	});
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
@@ -49,26 +55,24 @@ const breadcrumbs = await getCfBreadcrumbs(sectionSlug);
 	collection="docs"
 	feedback={false}
 >
-	<Fragment slot="pagination"></Fragment>
+	<Fragment slot="pagination" />
 	<RSSButton href="/changelog/rss/waf.xml" />
 
-	{
-		page.data.map(async (entry) => {
-			const { Content } = await render(entry);
-			return (
-				<>
-					<AnchorHeading
-						depth={2}
-						title={format(entry.data.date, "yyyy-MM-dd")}
-					/>
-					<br />
-					<strong>{entry.data.title}</strong>
-					<br />
-					<Content components={components} />
-				</>
-			);
-		})
-	}
+	{page.data.map(async (entry) => {
+		const { Content } = await render(entry);
+		return (
+			<>
+				<AnchorHeading
+					depth={2}
+					title={format(entry.data.date, "yyyy-MM-dd")}
+				/>
+				<br />
+				<strong>{entry.data.title}</strong>
+				<br />
+				<Content components={components} />
+			</>
+		);
+	})}
 
 	<Pagination
 		currentPage={page.currentPage}

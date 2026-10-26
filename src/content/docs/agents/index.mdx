@@ -1,6 +1,6 @@
 ---
 title: Build Agents on Cloudflare
-description: Create stateful AI agents with persistent memory, real-time WebSocket connections, and scheduled tasks using the Cloudflare Agents SDK.
+description: Build and host AI agents on Cloudflare. Start with the Pi harness, which runs a durable model loop with tools in a Durable Object, and add state, real-time connections, and scheduled tasks with the Agents SDK.
 pcx_content_type: overview
 tags:
   - AI
@@ -11,10 +11,8 @@ head:
     content: Agents
 ---
 
-import {
-	AgentsPlatformDiagram,
-	RelatedProduct,
-} from "~/components";
+import { PackageManagers, RelatedProduct } from "~/components";
+import AgentsPlatformDiagram from "~/components/cf/AgentsPlatformDiagram.astro";
 
 Build and host Agents on Cloudflare, connect chat, voice, email, Slack, and webhooks to a durable agent runtime with Browser, Sandbox, AI Search, MCP, Payments, and other MCP tools.
 
@@ -27,23 +25,27 @@ Deploy once and Cloudflare runs your agents across its global network, scaling t
 Agents on Cloudflare are composed from four parts:
 
 - **Communication channels** define how users and systems reach your agent, such as [chat](/agents/communication-channels/chat/), [voice](/agents/communication-channels/voice/), [email](/agents/communication-channels/email/), [Slack](/agents/communication-channels/slack/), [webhooks](/agents/communication-channels/webhooks/), and other event sources.
-- **The agent harness** defines the loop: how the agent calls models, selects tools, handles tool results, streams responses, and decides whether to continue. Use [Project Think](/agents/harnesses/think/) for an opinionated harness, or build your own loop directly on the [Agents SDK runtime](/agents/runtime/agents-api/).
+- **The agent harness** defines the loop: how the agent calls models, selects tools, handles tool results, streams responses, and decides whether to continue. Use the [Pi harness](/agents/harnesses/pi/) to run Pi Durable in a Durable Object, or build your own loop directly on the [Agents SDK runtime](/agents/runtime/agents-api/).
 - **The Agents SDK runtime** provides durable infrastructure: the [`Agent` class](/agents/runtime/lifecycle/agent-class/), [state](/agents/runtime/lifecycle/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/runtime/communication/routing/), [WebSockets](/agents/runtime/communication/websockets/), [scheduling](/agents/runtime/execution/schedule-tasks/), [fibers](/agents/runtime/execution/durable-execution/), and [observability](/agents/runtime/operations/observability/).
 - **Tools** give the agent capabilities: [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), and [payments](/agents/tools/payments/). [Code Mode](/agents/tools/codemode/) lets models discover and orchestrate multiple tools by writing code.
 
 ### Get started
 
-Three commands to a running agent. No API keys required — the starter uses [Workers AI](/workers-ai/) by default.
+Build your agent with the [Pi harness](/agents/harnesses/pi/). [Pi Durable](https://earendil.com/posts/pi-durable/) runs the agent loop, including the transcript, model calls, tools, and retries, inside a Durable Object. `PiHarness` from the Agents SDK stores Pi's state in the object's SQLite database and resumes the run after an eviction. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
 
-```sh
-npx create-cloudflare@latest --template cloudflare/agents-starter
-cd agents-starter && npm install
-npm run dev
-```
+<PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
 
-The starter includes streaming AI chat, server-side and client-side tools, human-in-the-loop approval, and task scheduling — a foundation you can build on or tear apart. You can also swap in [OpenAI, Anthropic, Google Gemini, or any other provider](/agents/runtime/operations/using-ai-models/).
+The [Pi harness guide](/agents/harnesses/pi/) builds a first agent in one file. To start from a complete app with a browser UI, a durable filesystem, and code execution, deploy the Pi harness example:
+
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
 
 ### Example agents
+
+<RelatedProduct header="Pi agent" href="/agents/harnesses/pi/" product="agents">
+
+Build an agent on the Pi harness, with tools, sessions, and recovery after eviction.
+
+</RelatedProduct>
 
 <RelatedProduct header="Chat agent" href="/agents/examples/chat-agent/" product="workers-ai">
 

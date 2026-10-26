@@ -1,0 +1,26 @@
+---
+pcx_content_type: integration-guide
+description: Integrate Check Point with Zero Trust networking.
+products:
+  - cloudflare-one
+title: Check Point
+tags:
+  - IPsec
+---
+
+import { Render } from "~/components";
+
+<Render
+	file="cloudflare-wan/third-party/check-point"
+	product="networking-services"
+	params={{
+		antiReplayLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/reference/anti-replay-protection/",
+		tunnelInstabilityLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops",
+		antiReplayMismatchLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/troubleshooting/ipsec-troubleshoot/#anti-replay-mismatch",
+		configureTunnelsLink:
+			"/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/",
+	}}
+/>

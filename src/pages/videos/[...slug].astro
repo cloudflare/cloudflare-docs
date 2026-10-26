@@ -19,6 +19,7 @@ export const getStaticPaths = (async () => {
 		.map((entry) => ({
 			params: { slug: entry.data.url },
 			props: { entry: entry.data },
+			cacheKey: String(entry.digest),
 		}));
 }) satisfies GetStaticPaths;
 
@@ -51,9 +52,7 @@ if (entry.transcript) {
 		<BackgroundLines inner={1120} outer={1360} />
 		<PageShell class="pt-14">
 			<header class="mx-auto max-w-2xl text-center">
-				<h1
-					class="text-foreground text-[clamp(2.25rem,4vw,3rem)] leading-[1.1] font-medium text-balance"
-				>
+				<h1 class="text-foreground text-[clamp(2.25rem,4vw,3rem)] leading-[1.1] font-medium text-balance">
 					{entry.title}
 				</h1>
 			</header>
@@ -62,17 +61,15 @@ if (entry.transcript) {
 				<Width size="large" center={true}>
 					{entry.description && <p class="mb-6">{entry.description}</p>}
 					<Stream id={entry.id} title={entry.title} chapters={entry.chapters} />
-					{
-						parts && (
-							<Details header="Transcript">
-								<div class="space-y-4 leading-8">
-									{parts.map((part) => (
-										<p>{part}</p>
-									))}
-								</div>
-							</Details>
-						)
-					}
+					{parts && (
+						<Details header="Transcript">
+							<div class="space-y-4 leading-8">
+								{parts.map((part) => (
+									<p>{part}</p>
+								))}
+							</div>
+						</Details>
+					)}
 				</Width>
 			</section>
 		</PageShell>

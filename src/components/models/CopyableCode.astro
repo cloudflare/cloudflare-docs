@@ -19,9 +19,7 @@ const { text, label = "Copy" } = Astro.props;
 		aria-label={label}
 		class="copy-button border-border bg-card hover:border-border-strong hover:bg-accent inline-flex cursor-pointer items-center gap-2 rounded-md border px-2.5 py-1.5 transition-colors"
 	>
-		<code
-			class="text-muted-foreground border-0 bg-transparent p-0 font-mono text-[0.8125rem]"
-		>
+		<code class="text-muted-foreground border-0 bg-transparent p-0 font-mono text-[0.8125rem]">
 			{text}
 		</code>
 		<svg

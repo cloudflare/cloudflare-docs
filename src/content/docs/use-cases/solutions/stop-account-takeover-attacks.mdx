@@ -20,7 +20,7 @@ import {
 
 When your site has login pages, you need to decide how to verify that visitors are human, how aggressively to limit failed attempts, and which request patterns to block. This guide covers five stages: enforce HTTPS, turn on bot protection, add [Turnstile](/turnstile/) to your login form, create Application Security [rate limiting rules](/waf/rate-limiting-rules/) and [custom rules](/waf/custom-rules/) for suspicious patterns, and monitor for ongoing attacks using [SSL/TLS](/ssl/) transport security and [Cloudflare bot solutions](/bots/). The core workflow covers features available on Free, Pro, and Business plans. Enterprise features such as leaked credentials custom detection locations and Bot Management custom rules are included as callouts.
 
-<Render file="domain-scope-note" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
+<Render file="domain-scope-note-with-exception" product="use-cases" params={{ exception: "Turnstile is the exception: widgets are configured at the account level." }} />
 
 ## Enforce HTTPS to protect credentials in transit
 

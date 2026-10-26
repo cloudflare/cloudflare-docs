@@ -40,7 +40,7 @@ Built on the [AI SDK](https://ai-sdk.dev) and Cloudflare Durable Objects, you ge
 
 ### Install
 
-<PackageManagers pkg="@cloudflare/ai-chat agents ai @ai-sdk/react workers-ai-provider" />
+<PackageManagers pkg="@cloudflare/ai-chat agents ai @ai-sdk/react @ai-sdk/provider" />
 
 ### Server
 
@@ -48,16 +48,16 @@ Built on the [AI SDK](https://ai-sdk.dev) and Cloudflare Durable Objects, you ge
 
 ```ts
 import { AIChatAgent } from "@cloudflare/ai-chat";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { streamText, convertToModelMessages } from "ai";
 
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		// Use any provider such as workers-ai-provider, openai, anthropic, google, etc.
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		// Use any AI SDK provider, such as createAI from agents/models/ai-sdk, openai, anthropic, or google.
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			messages: await convertToModelMessages(this.messages),
 		});
 
@@ -194,10 +194,10 @@ This is the main method you override. It receives the conversation context and s
 ```ts
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			system: "You are a helpful assistant.",
 			messages: await convertToModelMessages(this.messages),
 		});
@@ -270,10 +270,10 @@ import { streamText, convertToModelMessages, pruneMessages } from "ai";
 
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			messages: pruneMessages({
 				messages: await convertToModelMessages(this.messages),
 				reasoning: "before-last-message",
@@ -550,7 +550,7 @@ When a user clicks "stop" in the chat UI, the client sends a `CF_AGENT_CHAT_REQU
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage(_onFinish, options) {
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			messages: await convertToModelMessages(this.messages),
 			abortSignal: options?.abortSignal, // Pass through for cancellation
 		});
@@ -596,9 +596,13 @@ export class ChatAgent extends AIChatAgent {
 		// Primary stuck-turn bound. Resets on every progress-bearing attempt, so a
 		// turn that keeps producing content survives unbounded interruption.
 		noProgressTimeoutMs: 5 * 60 * 1000,
-		// Runaway-loop guard. Defaults to 1,000. Set a higher value for a long
+		// Runaway-loop guard. Defaults to 10,000. Set a higher value for a long
 		// agentic turn, or Infinity to remove the cap.
-		maxRecoveryWork: 200,
+		maxRecoveryWork: 2000,
+		// How many of one turn's attempts may die before recovery gives up, for
+		// example to a memory-limit reset on every run. Defaults to 5, counting
+		// the original turn.
+		maxInterruptedAttempts: 5,
 		// Caller policy consulted from the second recovery attempt onward. Return
 		// false to stop recovery. This is where you enforce a token/cost budget.
 		// Note: this is called as `config.shouldKeepRecovering(ctx)`, so it is not
@@ -618,16 +622,16 @@ export class ChatAgent extends AIChatAgent {
 
 The `chatRecovery` object accepts the following configuration options:
 
-| Field                  | Default           | Description                                                                                                                                                                                                                                       |
-| ---------------------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `maxAttempts`          | `10`              | Attempt cap before terminal exhaustion. Resets on forward progress, so it catches a tight no-progress alarm loop, not a healthy long turn.                                                                                                        |
-| `stableTimeoutMs`      | `10_000`          | How long a recovery attempt waits for the isolate to reach stable state before rescheduling.                                                                                                                                                      |
-| `terminalMessage`      | generic message   | The message shown to the user when recovery is given up on.                                                                                                                                                                                       |
-| `noProgressTimeoutMs`  | `300_000` (5 min) | Primary stuck-turn bound: how long an incident may go without forward progress before it is sealed (`no_progress_timeout`). **Resets on every progress-bearing attempt**, so a turn that keeps producing content survives unbounded interruption. |
-| `maxRecoveryWork`      | `1,000`           | Runaway-loop guard. Maximum produced content/tool units since the incident began before a still-progressing turn is sealed. Set a higher value or `Infinity` for a long agentic turn.                                                              |
-| `maxOomRetries`        | `3`               | Retry budget for Durable Object memory-limit resets. Set `0` to stop after the first memory-limit reset.                                                                                                                                           |
-| `shouldKeepRecovering` | —                 | Caller policy consulted from the second recovery attempt onward. Return `false` to stop recovery. Use it to enforce a token or cost budget. `ctx.work` is a coarse segment count, not tokens, so track real spend yourself.                       |
-| `onExhausted`          | —                 | Called once when recovery is given up on, before the terminal message is delivered. Inspect `ctx.reason` for why.                                                                                                                                 |
+| Field                    | Default           | Description                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ------------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `maxAttempts`            | `10`              | Attempt cap before terminal exhaustion. Resets on forward progress, so it catches a tight no-progress alarm loop, not a healthy long turn.                                                                                                                                                                                                                                                                      |
+| `stableTimeoutMs`        | `10_000`          | How long a recovery attempt waits for the isolate to reach stable state before rescheduling.                                                                                                                                                                                                                                                                                                                    |
+| `terminalMessage`        | generic message   | The message shown to the user when recovery is given up on.                                                                                                                                                                                                                                                                                                                                                     |
+| `noProgressTimeoutMs`    | `300_000` (5 min) | Primary stuck-turn bound: how long an incident may go without forward progress before it is sealed (`no_progress_timeout`). **Resets on every progress-bearing attempt**, so a turn that keeps producing content survives unbounded interruption.                                                                                                                                                               |
+| `maxRecoveryWork`        | `10,000`          | Runaway-loop guard. Maximum produced content/tool units since the incident began before a still-progressing turn is sealed. Set a higher value or `Infinity` for a long agentic turn.                                                                                                                                                                                                                           |
+| `maxInterruptedAttempts` | `5`               | How many of one turn's attempts may be interrupted before recovery gives up (`interrupted_attempts_exceeded`). An attempt is interrupted when its isolate dies before it finishes, for example in a Durable Object memory-limit reset or a deploy. The original turn counts, and progress never resets the count. Replaces `maxOomRetries`, which is still read as `maxInterruptedAttempts: maxOomRetries + 1`. |
+| `shouldKeepRecovering`   | —                 | Caller policy consulted from the second recovery attempt onward. Return `false` to stop recovery. Use it to enforce a token or cost budget. `ctx.work` is a coarse segment count, not tokens, so track real spend yourself.                                                                                                                                                                                     |
+| `onExhausted`            | —                 | Called once when recovery is given up on, before the terminal message is delivered. Inspect `ctx.reason` for why.                                                                                                                                                                                                                                                                                               |
 
 `ChatRecoveryProgressContext` (the `ctx` passed to `shouldKeepRecovering`) contains the following fields:
 
@@ -642,13 +646,14 @@ The `chatRecovery` object accepts the following configuration options:
 | `work`                  | `number`                | Coarse, monotonic count of content/tool segments produced since the incident opened (not tokens). |
 | `ageMs`                 | `number`                | Wall-clock ms since the incident's first interruption.                                            |
 
-A progressing turn survives repeated interruptions as long as it stays within the `maxRecoveryWork` limit. Recovery is sealed by one of these `ctx.reason` values:
+A progressing turn survives repeated interruptions as long as it stays within the `maxRecoveryWork` limit and fewer than `maxInterruptedAttempts` of its attempts die. Recovery is sealed by one of these `ctx.reason` values:
 
 - `no_progress_timeout` — no forward progress within the no-progress window (a stuck turn).
 - `max_attempts_exceeded` — the attempt cap was spent on a tight no-progress alarm loop.
 - `work_budget_exceeded` — the turn kept producing content but exceeded `maxRecoveryWork` (a runaway loop).
+- `interrupted_attempts_exceeded` — the turn's attempts kept dying before they finished, for example in a memory-limit reset on every run, until `maxInterruptedAttempts` of them had been interrupted.
+- `out_of_memory` — the alarm memory-limit circuit breaker sealed the recovery after repeated memory-limit resets.
 - `recovery_aborted` — your `shouldKeepRecovering` hook returned `false`.
-- `out_of_memory` — recovery exceeded the memory-limit retry budget.
 - `stable_timeout` — recovery attempts kept timing out waiting for stable state until the budget drained (extreme churn).
 
 :::tip
@@ -897,6 +902,37 @@ function Chat() {
 
 Use `isToolContinuation` when your UI should distinguish a fresh user submit from a continuation after a tool result. For example, show a typing indicator only for `status === "submitted" && !isToolContinuation`, while keeping loading controls disabled whenever `isStreaming` is true.
 
+### Non-React clients
+
+`useAgentChat` is React-specific. For Vue, Svelte, or vanilla JavaScript, `agents/chat/transport` exports `WebSocketChatTransport`, which adapts an `AgentClient` WebSocket connection to the AI SDK transport interface. This entry point requires no React peer dependency.
+
+<TypeScriptExample>
+
+```ts
+import { useChat } from "@ai-sdk/vue";
+import { AgentClient } from "agents/client";
+import { WebSocketChatTransport } from "agents/chat/transport";
+
+const agent = new AgentClient({
+	agent: "ChatAgent",
+	name: "user-123",
+	host: window.location.host,
+});
+
+const { messages, sendMessage, status } = useChat({
+	transport: new WebSocketChatTransport({
+		agent,
+		cancelOnClientAbort: true,
+	}),
+});
+```
+
+</TypeScriptExample>
+
+The transport covers new turns, regenerated turns, and stream cancellation. It is a lower-level primitive than `useAgentChat`: loading persisted history, automatic stream resume after a reconnect, cross-tab transcript synchronization, and client-side tool continuations remain the React hook's responsibility. Implement whichever of those your client needs on top of the transport.
+
+The [`vue-chat` example](https://github.com/cloudflare/agents/tree/main/examples/vue-chat) shows a minimal Vue client, and [`ai-chat`](https://github.com/cloudflare/agents/tree/main/examples/ai-chat) shows the full React integration for comparison.
+
 ## Tools
 
 `AIChatAgent` supports three tool patterns, all using the AI SDK's `tool()` function:
@@ -918,10 +954,10 @@ import { streamText, convertToModelMessages, tool, stepCountIs } from "ai";
 import { z } from "zod";
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			messages: await convertToModelMessages(this.messages),
 			tools: {
 				getWeather: tool({
@@ -1170,12 +1206,12 @@ import {
 
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const stream = createUIMessageStream({
 			execute: async ({ writer }) => {
 				const result = streamText({
-					model: workersai("@cf/zai-org/glm-4.7-flash"),
+					model: ai("@cf/zai-org/glm-4.7-flash"),
 					messages: await convertToModelMessages(this.messages),
 				});
 
@@ -1349,7 +1385,7 @@ Storage (`maxPersistedMessages`) and LLM context are independent:
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
 		const result = streamText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			messages: pruneMessages({
 				// LLM context limit
 				messages: await convertToModelMessages(this.messages),
@@ -1374,11 +1410,11 @@ export class ChatAgent extends AIChatAgent {
 <TypeScriptExample>
 
 ```ts
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
-const workersai = createWorkersAI({ binding: this.env.AI });
+const ai = createAI({ binding: this.env.AI });
 const result = streamText({
-	model: workersai("@cf/zai-org/glm-4.7-flash"),
+	model: ai("@cf/zai-org/glm-4.7-flash"),
 	messages: await convertToModelMessages(this.messages),
 });
 ```
@@ -1703,6 +1739,7 @@ The originating client receives the streaming response. All other clients receiv
 | `@cloudflare/ai-chat/react` | `useAgentChat`, `extractClientToolSchemas`, `getToolPartState`, `getToolCallId`, `getToolInput`, `getToolOutput`, `getToolApproval`                                                                                  |
 | `@cloudflare/ai-chat/types` | `MessageType`, `OutgoingMessage`, `IncomingMessage`                                                                                                                                                                  |
 | `agents/chat`               | Shared advanced chat primitives such as `SaveMessagesResult`, `SaveMessagesOptions`, `CHAT_MESSAGE_TYPES`, `ROW_MAX_BYTES`, and `isReplayChunk()`                                                                    |
+| `agents/chat/transport`     | `WebSocketChatTransport` and its `AgentConnection` connection types, for non-React clients                                                                                                                           |
 
 ### WebSocket protocol
 

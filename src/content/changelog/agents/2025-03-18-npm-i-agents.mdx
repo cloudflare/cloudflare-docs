@@ -8,10 +8,9 @@ date: 2025-03-18
 ---
 
 import { Badge, MetaInfo, Render, TypeScriptExample } from "~/components";
-import { Image } from "astro:assets";
 import npmAgentsAnimated from "~/assets/images/agents/npm-i-agents.apng";
 
-<Image src={npmAgentsAnimated} alt="npm i agents" width="1000" height="541" />
+<img src={npmAgentsAnimated.src} alt="npm i agents" width="1000" height="541" />
 
 #### `agents-sdk` -> `agents` <Badge text="Updated" variant="tip" size="small" />
 
@@ -110,7 +109,7 @@ const fetchUserHistory = async () => {
 
 #### agents-starter <Badge text="Updated" variant="tip" size="small" />
 
-We've fixed a number of small bugs in the [`agents-starter`](https://github.com/cloudflare/agents-starter) project — a real-time, chat-based example application with tool-calling & human-in-the-loop built using the Agents SDK. The starter has also been upgraded to use the latest [wrangler v4](/changelog/2025-03-13-wrangler-v4/) release.
+We've fixed a number of small bugs in the [`agents-starter`](https://github.com/cloudflare/agents-starter) project — a real-time, chat-based example application with tool-calling & human-in-the-loop built using the Agents SDK. The starter has also been upgraded to use the latest [wrangler v4](/changelog/post/2025-03-13-wrangler-v4/) release.
 
 If you're new to Agents, you can install and run the `agents-starter` project in two commands:
 

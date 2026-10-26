@@ -1,0 +1,15 @@
+---
+title: Discover where sensitive data goes before you create a Data Loss Prevention policy
+description: Learn from your Gateway traffic with Passive Detection. Explore sensitive data and its destinations to decide where a data protection policy can help.
+date: 2026-09-14
+---
+
+**Passive Detection** for [Cloudflare Data Loss Prevention (DLP)](/cloudflare-one/data-loss-prevention/) lets you learn from your Gateway traffic before deciding what to log or block. Discover the sensitive data types in sampled traffic, explore their destinations, and use the findings to build policies around your organization's needs.
+
+The dashboard brings together detections from sampled HTTP request and response bodies. Select an entry to follow its detections over time, review destinations, and check policy coverage. You do not need a Gateway DLP policy to get these insights, and existing Gateway policies continue to apply.
+
+![Passive Detection dashboard showing detection totals, data type distribution, policy coverage, and detection entries](~/assets/images/changelog/dlp/passive-detection.gif)
+
+Passive Detection is generally available. The detection entries available to your account depend on your [Zero Trust plan](/cloudflare-one/data-loss-prevention/dlp-profiles/predefined-profiles/).
+
+To get started, refer to the [Passive Detection documentation](/cloudflare-one/data-loss-prevention/passive-detection/).

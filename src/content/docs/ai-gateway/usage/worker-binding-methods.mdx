@@ -64,7 +64,7 @@ const resp = await env.AI.run(
 
 </TypeScriptExample>
 
-To use prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/), set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing** and specify that gateway in the binding request. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#frontier-models).
+To use prepaid [AI Gateway credits](/ai-gateway/features/unified-billing/), set the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) to **Unified billing** and specify that gateway in the binding request. Prepaid credits provide access to Workers AI models that otherwise require the Workers Paid plan and provide [higher rate limits for frontier models](/workers-ai/platform/limits/#paid-models).
 
 **Third-party model:**
 
@@ -93,6 +93,28 @@ On the AI binding path, only a [BYOK (Bring Your Own Keys)](/ai-gateway/configur
 :::
 
 Browse available models in the [model catalog](/ai/models/).
+
+**Dynamic route:**
+
+Pass a [dynamic route](/ai-gateway/features/dynamic-routing/) as the model in the form `dynamic/{route}`. Set `gateway.id` to the gateway that owns the route — routes are not shared across gateways. Dynamic routes accept the OpenAI chat completions request shape only.
+
+<TypeScriptExample>
+
+```ts
+const resp = await env.AI.run(
+	"dynamic/my-route",
+	{
+		messages: [{ role: "user", content: "tell me a joke" }],
+	},
+	{
+		gateway: {
+			id: "my-gateway",
+		},
+	},
+);
+```
+
+</TypeScriptExample>
 
 ### Gateway options
 

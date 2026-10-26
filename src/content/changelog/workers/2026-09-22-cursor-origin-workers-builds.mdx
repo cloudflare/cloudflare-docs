@@ -1,0 +1,16 @@
+---
+title: Workers Builds now supports Cursor Origin
+description: Connect a Cursor Origin repository to Workers Builds for automatic deployments, branch previews, and build status in Origin.
+products:
+  - workers
+date: 2026-09-22
+publish_future_dated_entry: true
+---
+
+Workers Builds now supports repositories hosted in Cursor Origin. Connect a Cursor Origin repository to automatically build and deploy production changes, preview non-production branches, and see build status in pull requests.
+
+Pushes to your production branch automatically build and deploy your Worker. When you enable [non-production branch builds](/workers/ci-cd/builds/build-branches/#configure-non-production-branch-builds), each branch receives a version-specific preview URL and a stable preview URL that follows the latest build.
+
+Cloudflare posts build status and preview links to the Cursor Origin pull request and creates a check run for each triggered build.
+
+To get started, install the [Cloudflare app in Cursor](https://cursor.com/codebase/settings/apps/public/cloudflare), choose the Cursor Origin repositories Cloudflare can access, and follow the prompts to configure your Worker build. For details, refer to the [Cursor Origin integration](/workers/ci-cd/builds/git-integration/cursor-origin-integration/).
