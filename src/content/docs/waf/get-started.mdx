@@ -101,7 +101,7 @@ If you are on a Business plan, create a custom rule as mentioned above but use t
 Bot score is only available to Enterprise customers with [Bot Management](/bots/get-started/bot-management/). Customers on Pro and Business plans should turn on [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/) instead, which provides built-in bot protection without creating custom rules.
 :::
 
-Enterprise customers with Bot Management should first configure bot protection using **Security Settings**, which provide baseline protection without creating custom rules:
+Bot Management is always active for entitled Enterprise zones and assigns a bot score to every request. It does not block or challenge traffic on its own: you act on bot traffic with custom rules.
 
 <Steps>
 
@@ -109,27 +109,24 @@ Enterprise customers with Bot Management should first configure bot protection u
 
    <DashButton url="/?to=/:account/:zone/security/settings" />
 
-2. Configure the **Definitely automated**, **Likely automated**, and **Verified bots** settings according to your needs.
-3. Turn on **Block AI bots** if you want to block AI crawlers.
+2. In **Bot management**, select the edit icon and make sure **JavaScript Detections** and **Auto-update machine learning model** are turned on.
+3. [Create a custom rule](/waf/custom-rules/create-dashboard/) using the <GlossaryTooltip term="bot score">Bot Score</GlossaryTooltip>, <GlossaryTooltip term="verified bot">Verified Bot</GlossaryTooltip>, and Static Resource fields. You can also start from the bot traffic templates by selecting **View bot traffic templates** in **Bot management**.
+
+   - **When incoming requests match**:
+
+     | Field           | Operator  | Value | Logic |
+     | --------------- | --------- | ----- | ----- |
+     | Bot Score       | less than | `30`  | And   |
+     | Verified Bot    | equals    | Off   | And   |
+     | Static Resource | equals    | Off   |       |
+
+   - **Choose action**: Managed Challenge
+
+4. (Optional) In **Security Settings**, use **Configure AI bot policies** to control how AI crawlers and agents can access your site. For details, refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 
 </Steps>
 
-These built-in settings auto-update with new bot signatures and do not count toward your custom rule limits. For more details, refer to [Bot Management](/bots/get-started/bot-management/).
-
-### Create a custom rule for additional control
-
-Optionally, if you need more granular control — for example, a different score threshold or rules that combine bot score with other fields — [create a custom rule](/waf/custom-rules/create-dashboard/) using the <GlossaryTooltip term="bot score">Bot Score</GlossaryTooltip> and <GlossaryTooltip term="verified bot">Verified Bot</GlossaryTooltip> fields:
-
-- **When incoming requests match**:
-
-  | Field        | Operator  | Value | Logic |
-  | ------------ | --------- | ----- | ----- |
-  | Bot Score    | less than | `20`  | And   |
-  | Verified Bot | equals    | Off   |       |
-
-- **Choose action**: Managed Challenge
-
-This rule uses a threshold of 20 (instead of the default threshold of 30 used by the settings), providing stricter protection for traffic in the 20-29 score range.
+For more details on rule templates and recommended settings, refer to [Bot Management](/bots/get-started/bot-management/#deploy-custom-rule-templates).
 
 For a more comprehensive example of baseline protection against malicious bots, refer to [Challenge bad bots](/waf/custom-rules/use-cases/challenge-bad-bots/#general-protection).
 
