@@ -1,15 +1,15 @@
 ---
-title: "@cloudflare/computer JavaScript runs can now be paused and resumed"
-description: Isolate JavaScript runs in @cloudflare/computer can now survive deploys and crashes as well as pausing on approvals or out of band checks.
+title: Code that agents run with @cloudflare/computer can now pause and resume
+description: Code that agents run with @cloudflare/computer now survives deploys and crashes, and can pause for approvals or other external checks.
 products:
   - agents
   - workers
-date: 2026-10-23
+date: 2026-10-26
 ---
 
 import { TypeScriptExample } from "~/components";
 
-[`@cloudflare/computer`](https://github.com/cloudflare/computer) v0.7.0 now supports resuming a JavaScript run after a deploy or crash. It also supports pausing a run on an external action, for example to approve a tool call.
+[`@cloudflare/computer`](https://github.com/cloudflare/computer) gives your agent a workspace to run code in. From v0.7.0, that code can resume after a deploy or crash, and pause on an external action, for example to approve a tool call.
 
 ## Resume interrupted runs
 
@@ -43,7 +43,7 @@ Interrupted runs resume on the next call or by calling `workspace.runtime.recove
 
 ## Wait for approvals
 
-A host module function can call `ctx.interrupt()` to pause a replay-able run until it receives an answer.
+Functions you expose to the agent's code, called [host modules](/agents/tools/filesystem/#give-code-access-to-your-own-functions), can call `ctx.interrupt()` to pause the run until it receives an answer.
 
 <TypeScriptExample>
 
@@ -52,6 +52,7 @@ new WorkerJavaScriptBackend({
 	loader: this.env.LOADER,
 	onInterrupt: "replay",
 	modules: {
+		// The agent's code imports this with `import { postComment } from "ws:github"`.
 		"ws:github": {
 			postComment: async ([issue, body], ctx) => {
 				const { approved } = await ctx.interrupt<{ approved: boolean }>({
