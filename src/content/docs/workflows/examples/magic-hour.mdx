@@ -1,0 +1,25 @@
+---
+title: Generate images and videos with Magic Hour
+description: Use Cloudflare Workflows with Magic Hour to create images or videos and recover accepted media projects.
+summary: Create images and videos with Magic Hour. Recover accepted projects without resubmitting paid jobs.
+pcx_content_type: example
+products: [workflows]
+sidebar:
+  order: 7
+---
+
+The [Magic Hour example](https://github.com/magichourhq/magic-hour-cloudflare-workflows) creates images and short videos.
+Cloudflare Workflows saves accepted IDs using `step.do` checkpoints.
+
+`step.sleep` pauses polling between checks of the same project.
+Separate retrieval workflows recover accepted projects without another generation.
+
+Creation uses the Magic Hour API and requires credits.
+Provide a private Magic Hour API key before running.
+The API key stays outside workflow parameters and results.
+
+Creation retries are off to limit duplicate paid submissions.
+If acceptance is uncertain, inspect existing projects before resubmitting.
+
+Refer to the [maintained Magic Hour guide](https://docs.magichour.ai/integration/cloudflare-workflows) for setup, usage, and recovery.
+Local verification does not establish a deployed Cloudflare workflow.
