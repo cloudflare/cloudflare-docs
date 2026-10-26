@@ -42,6 +42,10 @@ Use **Automatic key exchange** to control scanning and preferred key share selec
 
 The [Origin Post-Quantum Encryption API](/api/resources/origin_post_quantum_encryption/methods/update/) remains available. Requests to this API are no-ops and do not change a zone's post-quantum key agreement behavior. Cloudflare plans to deprecate this API, but a deprecation date has not been established.
 
+:::note
+If you set the **Post-quantum hybrid** compliance requirement and a destination server does not support post-quantum key exchange, Cloudflare returns a [`525` error](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/). This also applies to outbound `fetch()` calls from [Workers](/workers/) running under that zone. Use **Automatic key exchange** (the default) to retain compatibility with servers that do not yet support post-quantum key exchange.
+:::
+
 #### Origin server
 
 To make sure that your origin server prefers the post-quantum key agreement, use the `bssl` tool of [BoringSSL](https://github.com/google/boringssl):
