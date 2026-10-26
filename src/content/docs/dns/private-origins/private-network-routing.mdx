@@ -29,7 +29,7 @@ Before you enable private network routing, consider the following:
 - Private network routing is available for `A` (IPv4) and `AAAA` (IPv6) records only. Records must be [proxied](/dns/proxy-status/).
 - If you have multiple `A` or `AAAA` records on the same name, and at least one of them has private network routing enabled, all records on that name will use private network routing. This is consistent with the [proxy status behavior](/dns/proxy-status/#mix-proxied-and-unproxied) in these cases.
 
-## IP ranges
+## Automatically detected ranges
 
 The following private address ranges are automatically detected:
 
@@ -40,6 +40,10 @@ The following private address ranges are automatically detected:
 | `192.168.0.0/16` | Private ([RFC 1918](https://www.rfc-editor.org/rfc/rfc1918.html)) |
 | `fc00::/7`       | Private ([RFC 4193](https://www.rfc-editor.org/rfc/rfc4193.html)) |
 | `100.64.0.0/10`  | CGNAT ([RFC 6598](https://www.rfc-editor.org/rfc/rfc6598.html))   |
+
+:::caution[CGNAT origins and the Cloudflare source range]
+`100.64.0.0/10` is detected as private, but the default Cloudflare source range `100.64.0.0/12` sits inside it. If your origins use addresses in `100.64.0.0/12`, [change the Cloudflare source IP range](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) to a different private `/12` before you enable private network routing.
+:::
 
 When you use an IP address from one of these ranges, the **Use private network routing** toggle turns on automatically. You can also turn it on manually for public IP addresses that are only reachable through your tunnel.
 
@@ -73,7 +77,7 @@ Traffic routes through your default virtual network. Selecting a specific virtua
 4. Verify that **Proxy status** is enabled (orange cloud).
 5. Turn on **Use private network routing**.
 
-   For [private IP addresses](#ip-ranges) (for example, `10.0.0.50`), the toggle turns on automatically. For public IP addresses used with private infrastructure, turn on the toggle manually.
+   For [private IP addresses](#automatically-detected-ranges) (for example, `10.0.0.50`), the toggle turns on automatically. For public IP addresses used with private infrastructure, turn on the toggle manually.
 
 6. Select **Save**.
 
