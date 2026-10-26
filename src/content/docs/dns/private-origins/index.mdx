@@ -46,6 +46,19 @@ This feature is in closed beta. Contact your account team to request access.
 
 Cloudflare Tunnel does not need Unified Routing or return routes. Your origin sees the host running `cloudflared` as the source.
 
+## Limitations
+
+- Argo Smart Routing is not supported for private origins.
+- Aegis is not supported for private origins.
+- Origin health checks require [Load Balancing](/load-balancing/). Configurations without Load Balancing do not get origin health visibility.
+- Traffic uses your default virtual network. Selecting another virtual network is not supported.
+- Zero Trust network session logs are not available for this traffic.
+- [Spectrum](/spectrum/) private origins are in beta. Proxy Protocol is not delivered over private networks yet.
+
+:::caution[Known issue: Tiered Cache]
+With Tiered Cache enabled, cacheable requests that miss cache can fail with HTTP `403` at the upper tier when the origin is reached over Cloudflare WAN. The origin is never contacted. Dynamic requests are not affected. As a workaround, create a [Cache Rule](/cache/how-to/cache-rules/) that bypasses cache for the affected hostnames.
+:::
+
 ---
 
 ## Resources
