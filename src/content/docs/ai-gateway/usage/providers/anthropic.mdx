@@ -17,6 +17,10 @@ import { Render, Details, Tabs, TabItem, Aside } from "~/components";
 https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic
 ```
 
+When supplying a provider key to `/anthropic/v1/messages`, send it in `x-api-key`. AI Gateway does not recognize `Authorization: Bearer` as provider credentials on this endpoint. Authenticate to AI Gateway separately with `cf-aig-authorization`.
+
+For stored keys and Unified Billing, refer to [credential precedence](/ai-gateway/features/unified-billing/#credential-precedence). If provider credentials are required but AI Gateway cannot find them, refer to [error `2044`](/ai-gateway/reference/troubleshooting/#400-provider-credentials-required-2044).
+
 ## Examples
 
 ### cURL
