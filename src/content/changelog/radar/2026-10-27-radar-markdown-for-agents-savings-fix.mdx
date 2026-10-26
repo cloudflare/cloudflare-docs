@@ -1,0 +1,13 @@
+---
+title: Fixed Markdown for Agents savings calculation on Cloudflare Radar
+description: Cloudflare Radar's Markdown for Agents savings metric now only includes responses served to AI bots and crawlers, correcting values reported since August 27, 2026.
+products:
+  - radar
+date: 2026-10-27
+---
+
+We fixed a bug in the [**Markdown for Agents savings**](https://radar.cloudflare.com/ai-insights#markdown-for-agents-savings) metric on [**Radar**](/radar/).
+
+Starting August 27, 2026, the metric included HTML-to-Markdown conversions that were not served to AI bots or crawlers. This raised the reported median response size from about 8% to about 13% of the original HTML size, understating the savings that [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) provides.
+
+The metric now only includes requests identified as bot traffic. The fix applies to historical data, so values for the affected period are corrected in both the Radar AI Insights page and the [Markdown for Agents API](/api/resources/radar/subresources/ai/subresources/markdown_for_agents/methods/summary).
