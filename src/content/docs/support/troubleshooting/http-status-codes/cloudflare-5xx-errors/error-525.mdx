@@ -23,6 +23,8 @@ Error `525` occurs when these two conditions are true:
 :::note
 
 If your hosting provider frequently changes your origin web server's IP address, refer to Cloudflare's documentation on [dynamic DNS updates](/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses).
+
+Zone's post-quantum compliance preset (PQH) intentionally offers only post-quantum key-exchange groups to origins; GitHub does not support post-quantum key exchange, so the handshake cannot complete. This is the compliance mode working as designed.
 :::
 
 ### Resolution
