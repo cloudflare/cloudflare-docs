@@ -61,7 +61,3 @@ WebAssembly support for Python packages is still in early stages, and some packa
 If a package you would like to use is not yet available, we encourage you to reach out to the package maintainers and request PyEmscripten wheels.
 You can also start a thread in the [Python Packages Discussions](https://github.com/cloudflare/workerd/discussions/categories/python-packages)
 on the Cloudflare Workers Runtime GitHub repository — we would be happy to help you communicate with package maintainers.
-
-## HTTP Client Libraries
-
-Only HTTP libraries that are able to make requests asynchronously are supported. Currently, these include [`aiohttp`](https://docs.aiohttp.org/en/stable/index.html) and [`httpx2`](https://pydantic.dev/docs/httpx2/). You can also use the [`fetch()` API](/workers/runtime-apis/fetch/) from JavaScript, using Python Workers' [foreign function interface](/workers/languages/python/ffi) to make HTTP requests.

@@ -1,0 +1,53 @@
+---
+pcx_content_type: navigation
+title: rtk-tooltip
+description: API reference for rtk-tooltip component (Angular Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-tooltip/rtk-tooltip.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+Tooltip component which follows RTK Design System.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `delay` | `number` | ✅ | - | Delay before showing the tooltip |
+| `disabled` | `boolean` | ✅ | - | Disabled |
+| `kind` | `TooltipKind` | ✅ | - | Tooltip kind |
+| `label` | `string` | ✅ | - | Tooltip label |
+| `open` | `boolean` | ✅ | - | Open |
+| `placement` | `Placement` | ✅ | - | Placement of menu |
+| `size` | `Size` | ✅ | - | Size |
+| `variant` | `TooltipVariant` | ✅ | - | Tooltip variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-tooltip></rtk-tooltip>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-tooltip
+ delay="42"
+ [disabled]="true"
+ [kind]="tooltipkind">
+</rtk-tooltip>
+```
+

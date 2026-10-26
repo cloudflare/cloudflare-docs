@@ -1,7 +1,13 @@
 {
+    "name": "@cf/google/embeddinggemma-300m",
+    "properties": [
+        {
+            "property_id": "beta",
+            "value": "true"
+        }
+    ],
     "id": "15631501-2742-4346-a469-22fe202188a2",
     "source": 1,
-    "name": "@cf/google/embeddinggemma-300m",
     "description": "EmbeddingGemma is a 300M parameter, state-of-the-art for its size, open embedding model from Google, built from Gemma 3 (with T5Gemma initialization) and the same research and technology used to create Gemini models. EmbeddingGemma produces vector representations of text, making it well-suited for search and retrieval tasks, including classification, clustering, and semantic similarity search. This model was trained with data in 100+ spoken languages.",
     "task": {
         "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
@@ -10,7 +16,6 @@
     },
     "created_at": "2025-09-04 16:38:44.980",
     "tags": [],
-    "properties": [],
     "schema": {
         "input": {
             "type": "object",
@@ -62,5 +67,6 @@
                 }
             }
         }
-    }
+    },
+    "deprecated": false
 }

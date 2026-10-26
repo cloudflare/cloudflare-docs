@@ -13,6 +13,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.04,
+		"output_size_1k": 0.04,
+		"output_size_2k": 0.07,
+		"Default (per second)": 0.04
+	},
 	"examples": [
 		{
 			"name": "Simple Generation",
@@ -144,6 +150,16 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "alibaba",
+			"pricing": {
+				"output_image_count": 0.04,
+				"output_size_1k": 0.04,
+				"output_size_2k": 0.07
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-08-11 22:17:49",
 	"schema": {

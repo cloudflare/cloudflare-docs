@@ -1,129 +1,194 @@
 ---
 pcx_content_type: configuration
 title: Vercel AI SDK
-description: Use Workers AI with the Vercel AI SDK for streaming text generation, tool calls, and structured output.
+description: Use Workers AI models with the AI SDK through createAI from agents/models/ai-sdk.
 sidebar:
   order: 3
 products:
   - workers-ai
 ---
 
-import { PackageManagers } from "~/components";
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
-Workers AI can be used with the [Vercel AI SDK](https://sdk.vercel.ai/) for JavaScript and TypeScript codebases.
+To use Workers AI with the [AI SDK](https://ai-sdk.dev/), use `createAI` from `agents/models/ai-sdk`. This page covers Workers AI models. For AI Gateway catalog models, fallback, gateway options, and the full option reference, refer to [AI SDK](/agents/models/ai-sdk/).
+
+The `workers-ai-provider` package is deprecated. Use `createAI` instead.
 
 ## Setup
 
-Install the [`workers-ai-provider` provider](https://sdk.vercel.ai/providers/community-providers/cloudflare-workers-ai):
+Install the Agents SDK and the AI SDK. `createAI` needs `ai@^7` and `@ai-sdk/provider@^4`:
 
-<PackageManagers pkg="workers-ai-provider" />
+<PackageManagers pkg="agents ai @ai-sdk/provider" />
 
-Then, add an AI binding in your Workers project Wrangler file:
+Add the `AI` binding to your Wrangler configuration:
 
-```toml
-[ai]
-binding = "AI"
+<WranglerConfig>
+
+```jsonc
+{
+	"ai": {
+		"binding": "AI",
+	},
+}
 ```
 
-## Models
+</WranglerConfig>
 
-The AI SDK can be configured to work with [any AI model](/workers-ai/models/).
+## Choose a model
 
-```js
-import { createWorkersAI } from "workers-ai-provider";
+Pass the id of any [Workers AI model](/workers-ai/models/). Model ids start with `@cf/` and autocomplete from `@cloudflare/workers-types`:
 
-const workersai = createWorkersAI({ binding: env.AI });
+```ts
+import { createAI } from "agents/models/ai-sdk";
 
-// Choose any model: https://developers.cloudflare.com/workers-ai/models/
-const model = workersai("@cf/meta/llama-3.1-8b-instruct", {});
+const ai = createAI({ binding: env.AI });
+
+const model = ai("@cf/zai-org/glm-4.7-flash");
 ```
 
-## Generate Text
+## Generate text
 
-Once you have selected your model, you can generate text from a given prompt.
+<TypeScriptExample>
 
-```js
-import { createWorkersAI } from 'workers-ai-provider';
-import { generateText } from 'ai';
-
-type Env = {
-  AI: Ai;
-};
+```ts
+import { createAI } from "agents/models/ai-sdk";
+import { generateText } from "ai";
 
 export default {
-  async fetch(_: Request, env: Env) {
-    const workersai = createWorkersAI({ binding: env.AI });
-    const result = await generateText({
-      model: workersai('@cf/meta/llama-2-7b-chat-int8'),
-      prompt: 'Write a 50-word essay about hello world.',
-    });
+	async fetch(request: Request, env: Env) {
+		const ai = createAI({ binding: env.AI });
 
-    return new Response(result.text);
-  },
+		const { text } = await generateText({
+			model: ai("@cf/zai-org/glm-4.7-flash"),
+			prompt: "Write a 50-word essay about hello world.",
+		});
+
+		return new Response(text);
+	},
 };
 ```
 
-## Stream Text
+</TypeScriptExample>
 
-For longer responses, consider streaming responses to provide as the generation completes.
+## Stream text
 
-```js
-import { createWorkersAI } from 'workers-ai-provider';
-import { streamText } from 'ai';
+For longer responses, stream the output as the model generates it:
 
-type Env = {
-  AI: Ai;
-};
+<TypeScriptExample>
+
+```ts
+import { createAI } from "agents/models/ai-sdk";
+import { streamText } from "ai";
 
 export default {
-  async fetch(_: Request, env: Env) {
-    const workersai = createWorkersAI({ binding: env.AI });
-    const result = streamText({
-      model: workersai('@cf/meta/llama-2-7b-chat-int8'),
-      prompt: 'Write a 50-word essay about hello world.',
-    });
+	async fetch(request: Request, env: Env) {
+		const ai = createAI({ binding: env.AI });
 
-    return result.toTextStreamResponse({
-      headers: {
-        // add these headers to ensure that the
-        // response is chunked and streamed
-        'Content-Type': 'text/x-unknown',
-        'content-encoding': 'identity',
-        'transfer-encoding': 'chunked',
-      },
-    });
-  },
+		const result = streamText({
+			model: ai("@cf/zai-org/glm-4.7-flash"),
+			prompt: "Write a 50-word essay about hello world.",
+		});
+
+		return result.toTextStreamResponse();
+	},
 };
 ```
 
-## Generate Structured Objects
+</TypeScriptExample>
 
-You can provide a Zod schema to generate a structured JSON response.
+## Generate structured output
 
-```js
-import { createWorkersAI } from 'workers-ai-provider';
-import { generateObject } from 'ai';
-import { z } from 'zod';
+Pass a Zod schema to get a typed JSON response:
 
-type Env = {
-  AI: Ai;
-};
+<TypeScriptExample>
+
+```ts
+import { createAI } from "agents/models/ai-sdk";
+import { generateText, Output } from "ai";
+import { z } from "zod";
 
 export default {
-  async fetch(_: Request, env: Env) {
-    const workersai = createWorkersAI({ binding: env.AI });
-    const result = await generateObject({
-      model: workersai('@cf/meta/llama-3.1-8b-instruct'),
-      prompt: 'Generate a Lasagna recipe',
-      schema: z.object({
-        recipe: z.object({
-          ingredients: z.array(z.string()),
-          description: z.string(),
-        }),
-      }),
-    });
+	async fetch(request: Request, env: Env) {
+		const ai = createAI({ binding: env.AI });
 
-    return Response.json(result.object);
-  },
+		const { output } = await generateText({
+			model: ai("@cf/zai-org/glm-4.7-flash"),
+			prompt: "Generate a lasagna recipe.",
+			output: Output.object({
+				schema: z.object({
+					recipe: z.object({
+						ingredients: z.array(z.string()),
+						description: z.string(),
+					}),
+				}),
+			}),
+		});
+
+		return Response.json(output);
+	},
 };
 ```
+
+</TypeScriptExample>
+
+## Use other model types
+
+Embeddings, images, speech, transcription, and reranking come from the same provider:
+
+```ts
+import {
+	embedMany,
+	generateImage,
+	generateSpeech,
+	rerank,
+	transcribe,
+} from "ai";
+
+const { embeddings } = await embedMany({
+	model: ai.embedding("@cf/baai/bge-base-en-v1.5"),
+	values: ["hello", "world"],
+});
+
+const { image } = await generateImage({
+	model: ai.image("@cf/black-forest-labs/flux-1-schnell"),
+	prompt: "A cyberpunk lizard",
+});
+
+const { audio } = await generateSpeech({
+	model: ai.speech("@cf/deepgram/aura-1"),
+	text: "Hello from Cloudflare.",
+});
+
+const { text } = await transcribe({
+	model: ai.transcription("@cf/openai/whisper-large-v3-turbo"),
+	audio: audio.uint8Array,
+});
+
+const { rerankedDocuments } = await rerank({
+	model: ai.reranking("@cf/baai/bge-reranker-base"),
+	documents: ["a cyberpunk lizard", "a rainy Tuesday"],
+	query: "Which one is cooler?",
+});
+```
+
+For model-specific settings, refer to [Use other modalities](/agents/models/ai-sdk/#use-other-modalities).
+
+## Use AI Gateway
+
+Requests go through [AI Gateway](/ai-gateway/). The gateway defaults to `default`. To use another gateway, set its `id`:
+
+```ts
+const ai = createAI({ binding: env.AI, id: "my-gateway" });
+```
+
+The same provider also calls models from the [AI Gateway catalog](/ai/models/), such as `anthropic/claude-opus-5.5`. Refer to [AI SDK](/agents/models/ai-sdk/) for catalog models, caching, fallback, and the other gateway options.
+
+## Related resources
+
+- [AI SDK provider reference](/agents/models/ai-sdk/)
+- [Workers AI models](/workers-ai/models/)
+- [AI SDK documentation](https://ai-sdk.dev/docs/introduction)

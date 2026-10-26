@@ -1,0 +1,59 @@
+---
+import RealtimeSequenceDiagram from "./RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "publisher", label: "Publishing endpoint" },
+	{ id: "backend", label: "Application backend" },
+	{ id: "sfu", label: "Realtime SFU", tone: "accent" as const },
+	{ id: "subscriber", label: "Receiving endpoint" },
+];
+
+const events = [
+	{
+		from: "publisher",
+		to: "backend",
+		label: "Authenticate and request publication",
+	},
+	{
+		from: "backend",
+		to: "sfu",
+		label: "Set up the publishing session and tracks",
+	},
+	{
+		from: "backend",
+		to: "publisher",
+		label: "Complete connection setup",
+		dashed: true,
+	},
+	{ from: "publisher", to: "sfu", label: "WebRTC media" },
+	{
+		from: "backend",
+		to: "subscriber",
+		label: "Share authorized publication identifiers",
+		dashed: true,
+	},
+	{
+		from: "subscriber",
+		to: "backend",
+		label: "Request those publications",
+	},
+	{
+		from: "backend",
+		to: "sfu",
+		label: "Set up the receiving session and subscriptions",
+	},
+	{
+		from: "backend",
+		to: "subscriber",
+		label: "Complete connection setup",
+		dashed: true,
+	},
+	{ from: "sfu", to: "subscriber", label: "Forward the selected media" },
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="A publishing endpoint authenticates with an application backend. The backend creates publishing and receiving sessions with Realtime SFU, and Realtime SFU forwards the selected media to the receiving endpoint."
+	participants={participants}
+	events={events}
+/>

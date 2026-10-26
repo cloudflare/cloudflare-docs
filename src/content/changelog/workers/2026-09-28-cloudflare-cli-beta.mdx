@@ -1,0 +1,31 @@
+---
+title: Cloudflare CLI is now in beta
+description: The Cloudflare CLI, cf, is now in beta. Use one command-line interface to manage resources across the Cloudflare API and to create, develop, and deploy Workers.
+products:
+  - workers
+  - cf
+date: 2026-09-28
+---
+
+import { PackageManagers } from "~/components";
+
+The [Cloudflare CLI](/cf/), `cf`, is now in beta. `cf` is one command-line interface for the public Cloudflare API and for Workers projects. Use it to manage zones, DNS, storage, and security settings, and to create, develop, and deploy Workers, without switching between tools.
+
+Install `cf` globally, then sign in:
+
+<PackageManagers type="add" pkg="cf" global />
+
+```sh
+cf auth login
+```
+
+With `cf`, you can:
+
+- **Manage resources across Cloudflare.** More than 2,900 commands cover the public Cloudflare API, and most print their results as JSON.
+- **Create and deploy Workers.** `cf init` creates a project that uses [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), a typed configuration file. `cf dev`, `cf build`, and `cf deploy` develop, build, and deploy it.
+- **Move from Wrangler.** `cf migrate` converts a Wrangler configuration file to `cloudflare.config.ts`. You can also run `cf` resource commands in an existing Wrangler project without migrating it.
+- **Work with coding agents.** `cf cli search` finds the command for a task from a plain-language description, so an agent can find and run commands without prior knowledge of `cf`.
+
+`cf` is in beta. Commands, configuration, and Build Output can change before the stable release.
+
+To get started, refer to [Install and sign in](/cf/get-started/). To move an existing project, refer to [Migrate a Wrangler project](/cf/wrangler/migrate/).

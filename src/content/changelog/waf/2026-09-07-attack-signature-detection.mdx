@@ -1,0 +1,13 @@
+---
+title: Attack Signature Detection is now available in Early Access
+description: Attack Signature Detection separates attack detection from mitigation and exposes signature match metadata for investigation and Security Rules.
+date: 2026-09-07
+---
+
+Attack Signature Detection is now available in Early Access. It evaluates requests against Cloudflare attack signatures and records matches without applying a mitigation action, allowing you to investigate detected traffic before deciding how to respond.
+
+In **Security Analytics** > **Attack Analysis**, you can review matching signature references, categories, confidence levels, and request outcomes. You can then use these fields in [Security Rules](/security/rules/) and combine them with request properties such as hostname, path, and HTTP method to apply scoped mitigation.
+
+Attack Signature Detection uses the same signature definitions as [Cloudflare Managed Rules](/waf/managed-rules/), but it does not inherit your Managed Rules actions, overrides, or deployment configuration. Managed Rules remain the recommended baseline protection during Early Access.
+
+Contact your Cloudflare account team to request access. For more information, refer to [Attack Signature Detection](/waf/detections/attack-signature-detection/).

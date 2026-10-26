@@ -12,8 +12,13 @@ import react from "@vitejs/plugin-react";
 import { cloudflare } from "@cloudflare/vite-plugin";
 
 export default defineConfig({
-	plugins: [react(), cloudflare()],
+	plugins: [react(), cloudflare({ viteEnvironment: { name: "worker" } })],
+	environments: {
+		worker: { build: { sourcemap: true } },
+	},
 });
 ```
 
-The Cloudflare Vite plugin does not require any configuration by default and will look for a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application.
+The Cloudflare Vite plugin looks for a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` in the root of your application.
+
+The `worker` environment generates [source maps](/workers/observability/source-maps/) for your Worker. The client environment keeps its existing source map settings.

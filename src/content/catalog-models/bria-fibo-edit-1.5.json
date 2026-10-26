@@ -1,0 +1,256 @@
+{
+	"model_id": "bria/fibo-edit-1.5",
+	"provider_id": "bria",
+	"name": "FIBO Edit 1.5",
+	"description": "FIBO Edit changes one to four input images from a natural-language or structured JSON (VGL) instruction. Add a black-and-white mask to edit only part of a single image, or refer to several images as \"image 1\", \"image 2\", and so on to combine them or transfer a style.",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image Editing",
+		"Image-to-Image",
+		"Multi-Reference Editing",
+		"Inpainting"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.03
+	},
+	"examples": [
+		{
+			"name": "Color Palette",
+			"description": "Recolor a photo to a five-color palette, from Bria's docs.",
+			"input": {
+				"instruction": "Change the color palette of the image to #014040, #02735E, #03A678, #F27405, and #731702",
+				"images": [
+					"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-cottonbro-3401900.jpg"
+				]
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/fibo-edit-1.5/color-palette.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/fibo-edit-1.5/color-palette.png",
+					"seed": 3749705
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/fibo-edit-1.5',\n  {\n    instruction:\n      'Change the color palette of the image to #014040, #02735E, #03A678, #F27405, and #731702',\n    images: [\n      'https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-cottonbro-3401900.jpg',\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/fibo-edit-1.5\",\n  \"input\": {\n    \"instruction\": \"Change the color palette of the image to #014040, #02735E, #03A678, #F27405, and #731702\",\n    \"images\": [\n      \"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-cottonbro-3401900.jpg\"\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Masked Edit",
+			"description": "Edit only the masked balloons: white areas of the mask are edited and black areas are kept. Adapted from Bria's docs.",
+			"input": {
+				"instruction": "Write PARTY on the balloons in a dark, playful font, using a different font for each balloon",
+				"images": [
+					"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-natalie-bond-320378-3371094.jpg"
+				],
+				"mask": "https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-natalie-bond-320378-3371094_mask.png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/fibo-edit-1.5/masked-edit.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/fibo-edit-1.5/masked-edit.png",
+					"seed": 912468565
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/fibo-edit-1.5',\n  {\n    instruction:\n      'Write PARTY on the balloons in a dark, playful font, using a different font for each balloon',\n    images: [\n      'https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-natalie-bond-320378-3371094.jpg',\n    ],\n    mask: 'https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-natalie-bond-320378-3371094_mask.png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/fibo-edit-1.5\",\n  \"input\": {\n    \"instruction\": \"Write PARTY on the balloons in a dark, playful font, using a different font for each balloon\",\n    \"images\": [\n      \"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-natalie-bond-320378-3371094.jpg\"\n    ],\n    \"mask\": \"https://bria-datasets.s3.us-east-1.amazonaws.com/api_doc/fibo-edit/pexels-natalie-bond-320378-3371094_mask.png\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-Image Style Transfer",
+			"description": "Restyle the first image in the style of the second. Both inputs are Nano Banana catalog examples.",
+			"input": {
+				"instruction": "Redraw image 1 in the pixel art style of image 2. Keep the armchair, the sleeping cat, and the hanging plants.",
+				"images": [
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png",
+					"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png"
+				]
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/fibo-edit-1.5/multi-image-style-transfer.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/fibo-edit-1.5/multi-image-style-transfer.png",
+					"seed": 1523838269
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/fibo-edit-1.5',\n  {\n    instruction:\n      'Redraw image 1 in the pixel art style of image 2. Keep the armchair, the sleeping cat, and the hanging plants.',\n    images: [\n      'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png',\n      'https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png',\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/fibo-edit-1.5\",\n  \"input\": {\n    \"instruction\": \"Redraw image 1 in the pixel art style of image 2. Keep the armchair, the sleeping cat, and the hanging plants.\",\n    \"images\": [\n      \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/cozy-coffee-shop.png\",\n      \"https://pub-04a6d208d361438ea01b797e6973bd19.r2.dev/catalog/google__nano-banana/pixel-art-marketplace.png\"\n    ]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bria.ai/image-editing/editing/edit-image",
+	"terms": "https://bria.ai/terms-of-use",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bria/fibo-edit-1.5.png",
+	"metadata": {
+		"Aspect Ratios": "1:1, 2:3, 3:2, 3:4, 4:3, 4:5, 5:4, 9:16, 16:9",
+		"Input Images": "1-4",
+		"Mask Support": "Single-image requests",
+		"Output Formats": "PNG, JPEG"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bria",
+			"pricing": {
+				"output_image_count": 0.03
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-06 18:59:07",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"images": {
+					"minItems": 1,
+					"maxItems": 4,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					},
+					"description": "One to four input images, each a public URL or base64-encoded image data (a `data:` URI prefix is accepted). Refer to them in the instruction as \"image 1\", \"image 2\", and so on."
+				},
+				"instruction": {
+					"description": "Edit instruction in natural language. Provide this or `structured_instruction`.",
+					"type": "string",
+					"minLength": 1
+				},
+				"structured_instruction": {
+					"description": "Structured (VGL) edit instruction as a JSON string, as returned by a previous result. Provide this or `instruction`.",
+					"type": "string",
+					"minLength": 1
+				},
+				"mask": {
+					"description": "Black-and-white mask the same size as the input image, a public URL or base64-encoded image data (a `data:` URI prefix is accepted). White areas are edited and black areas are kept. Only allowed with a single input image.",
+					"type": "string",
+					"minLength": 1
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio. Defaults to the aspect ratio of the first input image.",
+					"type": "string",
+					"enum": [
+						"1:1",
+						"2:3",
+						"3:2",
+						"3:4",
+						"4:3",
+						"4:5",
+						"5:4",
+						"9:16",
+						"16:9"
+					]
+				},
+				"seed": {
+					"description": "Seed for reproducible results.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"output_type": {
+					"description": "Output image format. Default png.",
+					"type": "string",
+					"enum": [
+						"png",
+						"jpeg"
+					]
+				},
+				"ip_signal": {
+					"description": "When true, the result carries a `warning` if the text input may reference IP-protected content. Default false.",
+					"type": "boolean"
+				},
+				"prompt_content_moderation": {
+					"description": "Reject the request if the instruction fails content moderation. Default true.",
+					"type": "boolean"
+				},
+				"visual_input_content_moderation": {
+					"description": "Reject the request if an input image or the mask fails content moderation. Default true.",
+					"type": "boolean"
+				},
+				"visual_output_content_moderation": {
+					"description": "Fail the request if the edited image fails content moderation. Default true.",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"images"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the edited image. Bria hosts it for a limited time (3 days by default); download it to keep it."
+				},
+				"seed": {
+					"description": "Seed used for this image.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"structured_instruction": {
+					"description": "Structured (VGL) edit instruction used for this image, as a JSON string.",
+					"type": "string"
+				},
+				"warning": {
+					"description": "Present when `ip_signal` flagged the instruction as possibly IP-protected.",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

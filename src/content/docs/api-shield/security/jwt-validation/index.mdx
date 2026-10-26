@@ -39,18 +39,70 @@ JWT issuers that use asymmetric algorithms typically publish public keys (JWKS) 
 
 For supported algorithms and symmetric key requirements, refer to [Configure JWT validation via the API](/api-shield/security/jwt-validation/api/#credentials).
 
-To automatically keep your JWKS up to date when your identity provider refreshes them, you can use a Worker. Refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/) to learn more about setting up the Worker.
+Token configurations do not automatically retrieve or refresh keys from a JWKS URL. Add updated JWK values directly, or use a Worker to synchronize the token configuration with your identity provider. To configure automatic updates, refer to [Configure Workers to automatically update keys](/api-shield/security/jwt-validation/jwt-worker/).
 
 ### Act on JWT validation results
 
-For new security policies, Cloudflare generally recommends using WAF custom rules.
+:::note
 
-- **[WAF custom rules](/waf/custom-rules/)** — use these for zone-wide policies based on verified JWT claims. Custom rules can combine claims with other signals, such as [attack score](/waf/detections/attack-score/). Endpoints do not need to be in Endpoint Management.
-- **JWT validation rules** — use these when enforcement must apply only to specific operations in [Endpoint Management](/api-shield/management-and-monitoring/). These rules support the `is_jwt_valid()` and `is_jwt_present()` functions, which are not available in custom rules.
+For new security policies, Cloudflare recommends using [WAF custom rules](/waf/custom-rules/) to act on JWT validation results. Existing API JWT validation rules remain supported.
+:::
+
+WAF custom rules support zone-wide policies and policies scoped to selected endpoints. They can also combine JWT validation results and verified claims with other security signals, such as [attack score](/waf/detections/attack-score/).
 
 Cloudflare validates JWTs the same way regardless of which rule type you choose.
 
-For example, to reference a simple string claim in a rule expression, use [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) with your token configuration ID and the claim name:
+#### WAF custom rule examples
+
+API JWT validation rules run their action when the rule expression evaluates to `false`. WAF custom rules run their action when the expression evaluates to `true`. The following examples match requests that violate the JWT policy and are intended for a WAF custom rule with a `Block` or `Log` action.
+
+In WAF custom rules, `cf.api_gateway.tokens.presented` contains the token configuration IDs for tokens found in the request. The `cf.api_gateway.tokens.valid` field contains the configuration IDs for tokens that passed validation. The `cf.api_gateway.operation_id` field contains the ID of the endpoint matched by the request.
+
+To require a valid token, use:
+
+```txt
+not any(cf.api_gateway.tokens.valid[*] == "<TOKEN_CONFIGURATION_ID>")
+```
+
+This expression also matches requests without a token. To require only that a token is present, use:
+
+```txt
+not any(cf.api_gateway.tokens.presented[*] == "<TOKEN_CONFIGURATION_ID>")
+```
+
+To match invalid tokens but ignore requests without a token, use:
+
+```txt
+any(cf.api_gateway.tokens.presented[*] == "<TOKEN_CONFIGURATION_ID>") and
+not any(cf.api_gateway.tokens.valid[*] == "<TOKEN_CONFIGURATION_ID>")
+```
+
+To accept a valid token from either of two token configurations, use:
+
+```txt
+not (
+  any(cf.api_gateway.tokens.valid[*] == "<TOKEN_CONFIGURATION_ID_1>") or
+  any(cf.api_gateway.tokens.valid[*] == "<TOKEN_CONFIGURATION_ID_2>")
+)
+```
+
+Each saved endpoint has an endpoint ID, also called an operation ID, in its Endpoint Management details. To apply a policy only to selected endpoints, use their full endpoint IDs:
+
+```txt
+cf.api_gateway.operation_id in {"<ENDPOINT_ID_1>" "<ENDPOINT_ID_2>"} and
+not any(cf.api_gateway.tokens.valid[*] == "<TOKEN_CONFIGURATION_ID>")
+```
+
+The `cf.api_gateway.fallthrough_detected` field is `false` when a request matches a saved endpoint. To apply a policy to saved endpoints on a hostname except for selected endpoints, use:
+
+```txt
+http.host eq "api.example.com" and
+not cf.api_gateway.fallthrough_detected and
+not (cf.api_gateway.operation_id in {"<EXCLUDED_ENDPOINT_ID_1>" "<EXCLUDED_ENDPOINT_ID_2>"}) and
+not any(cf.api_gateway.tokens.valid[*] == "<TOKEN_CONFIGURATION_ID>")
+```
+
+To reference a simple string claim, use [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string) with your token configuration ID and the claim name:
 
 ```txt
 lookup_json_string(http.request.jwt.claims["<TOKEN_CONFIGURATION_ID>"][0], "claim_name")

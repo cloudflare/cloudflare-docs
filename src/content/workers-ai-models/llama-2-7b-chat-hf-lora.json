@@ -1,15 +1,5 @@
 {
-    "id": "7ed8d8e8-6040-4680-843a-aef402d6b013",
-    "source": 1,
     "name": "@cf/meta-llama/llama-2-7b-chat-hf-lora",
-    "description": "This is a Llama2 base model that Cloudflare dedicated for inference with LoRA adapters. Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 7B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. ",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2024-04-02 00:17:18.579",
-    "tags": [],
     "properties": [
         {
             "property_id": "beta",
@@ -24,6 +14,16 @@
             "value": "true"
         }
     ],
+    "id": "7ed8d8e8-6040-4680-843a-aef402d6b013",
+    "source": 1,
+    "description": "This is a Llama2 base model that Cloudflare dedicated for inference with LoRA adapters. Llama 2 is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 70 billion parameters. This is the repository for the 7B fine-tuned model, optimized for dialogue use cases and converted for the Hugging Face Transformers format. ",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2024-04-02 00:17:18.579",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -458,5 +458,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

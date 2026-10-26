@@ -26,12 +26,12 @@ const indexes: LlmsIndex[] = [
 		url: "/cloudflare-one/access-controls/policies/",
 	},
 	{
-		title: "Traffic policies",
-		url: "/cloudflare-one/traffic-policies/",
+		title: "Traffic controls",
+		url: "/cloudflare-one/traffic-controls/",
 	},
 	{
 		title: "DNS filtering",
-		url: "/cloudflare-one/traffic-policies/get-started/dns/",
+		url: "/cloudflare-one/traffic-controls/get-started/dns/",
 	},
 	{
 		title: "Workers",
@@ -64,9 +64,9 @@ describe("getDelegatedIndexes", () => {
 			"cloudflare-one/access-controls",
 			"cloudflare-one/access-controls/policies",
 			"cloudflare-one/access-controls/policies/common-policies",
-			"cloudflare-one/traffic-policies",
-			"cloudflare-one/traffic-policies/get-started/dns",
-			"cloudflare-one/traffic-policies/get-started/dns/dns-filtering",
+			"cloudflare-one/traffic-controls",
+			"cloudflare-one/traffic-controls/get-started/dns",
+			"cloudflare-one/traffic-controls/get-started/dns/dns-filtering",
 		];
 		const ownership = new Map<string, number>();
 

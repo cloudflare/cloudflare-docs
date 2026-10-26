@@ -181,7 +181,7 @@ async function captureScreenshot(
 	apiToken: string,
 	pageUrl: string,
 ): Promise<ArrayBuffer> {
-	const endpoint = `${CF_API}/${accountId}/browser-rendering/screenshot`;
+	const endpoint = `${CF_API}/${accountId}/browser-run/screenshot`;
 
 	const res = await fetch(endpoint, {
 		method: "POST",

@@ -1,0 +1,18 @@
+---
+import CfCommand from "./CfCommand.astro";
+import type { HeadingLevel } from "./command-reference";
+
+interface Props {
+	namespace: string;
+	headingLevel?: HeadingLevel;
+}
+
+const { namespace, headingLevel = 2 } = Astro.props;
+const commands = (await import("./cf-command-metadata")).resolveCfNamespace(
+	namespace,
+);
+---
+
+{commands.map((command) => (
+	<CfCommand command={command.key} headingLevel={headingLevel} />
+))}

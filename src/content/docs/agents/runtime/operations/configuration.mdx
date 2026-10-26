@@ -47,6 +47,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "my-agent-app",
 	"main": "src/server.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 
@@ -706,6 +707,7 @@ Define environments in the Wrangler configuration file:
 {
 	"name": "my-agent",
 	"main": "src/server.ts",
+	"upload_source_maps": true,
 
 	// Base configuration (shared)
 	"compatibility_date": "$today",

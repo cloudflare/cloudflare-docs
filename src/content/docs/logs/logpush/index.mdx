@@ -8,7 +8,7 @@ products:
   - logpush
 ---
 
-import { LinkButton } from "~/components"
+import { LinkButton } from "~/components";
 
 Logpush delivers logs in batches as quickly as possible, with no minimum batch size, potentially delivering files more than once per minute. This capability enables Cloudflare to provide information almost in real time, in smaller file sizes.
 
@@ -22,28 +22,24 @@ Logpush does not offer storage or search functionality for logs; its primary aim
 
 Cloudflare Logpush supports pushing logs to storage services, SIEMs, and log management providers via the Cloudflare dashboard or API.
 
-Cloudflare aims to support additional services in the future. Interested in a particular service? Take this [survey](https://goo.gl/forms/0KpMfae63WMPjBmD2).
-
 ## Estimating log volume
 
-Before setting up a Logpush job, you can estimate the total volume of data that will be pushed to your destination. The volume depends on your traffic, selected fields, and compression.
+Before setting up a Logpush job, you can estimate the total volume of data that will be pushed to your destination. The volume depends on your traffic, the dataset, and the fields you select.
+
+Logpush usage is measured in uncompressed bytes delivered, so estimate with uncompressed record sizes. For rates and included usage, refer to [Pricing](/logs/logpush/pricing/).
 
 ### Quick sizing for HTTP Requests
 
-A quick sizing estimate for an [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) dataset:
+An [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) record is about 1.5–3 kB uncompressed, depending on the fields selected. Each request produces one record, including Worker subrequests.
 
-- ~100–250 bytes per request (compressed, depending on fields selected)
-- 1M requests/day → ~100–250 MB/day
-- 30M requests/month → ~3–7.5 GB/month
+- 100k requests/day → ~150–300 MB/day
+- 1M requests/day → ~1.5–3 GB/day, or ~45–90 GB/month
+- 10M requests/day → ~15–30 GB/day
+- 100M requests/day → ~150–300 GB/day
 
-### Daily storage by traffic volume
+Files arrive at your destination gzip-compressed, so they use roughly a tenth of the storage that the uncompressed volume suggests.
 
-- 100k req/day → ~25–50 MB/day
-- 1M req/day → ~250–500 MB/day
-- 10M req/day → ~2.5–5 GB/day
-- 100M req/day → ~25–50 GB/day
-
-These ranges reflect field selection, compression, and whether you include extra fields or [custom fields](/logs/logpush/logpush-job/custom-fields/). Other datasets (Firewall, Workers, Load Balancing) add volume separately.
+Extra fields and [custom fields](/logs/logpush/logpush-job/custom-fields/) increase record size. Other datasets (Firewall, Workers, Load Balancing) add volume separately. For average record sizes by dataset, refer to [Log Explorer pricing](/observability/logs/log-explorer/pricing/#record-size-by-dataset).
 
 For precise estimates, you can [sample your logs via Logpull](/logs/logpull/additional-details/#estimating-daily-data-volume) using a 1-hour sample.
 
@@ -53,14 +49,10 @@ There is currently a max limit of **4 Logpush jobs per zone**. Trying to create 
 
 ## Availability
 
-|  | Free | Pro | Business | Enterprise |
-| - | - | - | - | - |
-| Availability | No | No | No | Yes |
+|              | Free | Pro | Business | Enterprise |
+| ------------ | ---- | --- | -------- | ---------- |
+| Availability | Yes  | Yes | Yes      | Yes        |
 
-:::note
+Dataset availability depends on the Cloudflare products on your account. Workers Trace Events Logpush requires the [Workers Paid](/workers/platform/pricing/#workers-trace-events-logpush) plan and retains separate request-based pricing.
 
-
-Users without an Enterprise plan can still access [Workers Trace Events Logpush](/workers/observability/logs/logpush/) by subscribing to the [Workers Paid](/workers/platform/pricing/) plan.
-
-
-:::
+For usage rates and included monthly usage, refer to [Pricing](/logs/logpush/pricing/).

@@ -27,24 +27,18 @@ const href =
 ---
 
 <li>
-	<a href={href}>
-		{node.page.data.title}
-	</a>
-	{
-		descriptions && node.page.data.description && (
-			<>
-				<span>: </span>
-				<Fragment set:html={renderMarkdownInline(node.page.data.description)} />
-			</>
-		)
-	}
-	{
-		node.children.length > 0 && (
-			<ul>
-				{node.children.map((child) => (
-					<Astro.self node={child} descriptions={descriptions} />
-				))}
-			</ul>
-		)
-	}
+	<a href={href}>{node.page.data.title}</a>
+	{descriptions && node.page.data.description && (
+		<>
+			<span>: </span>
+			<Fragment set:html={renderMarkdownInline(node.page.data.description)} />
+		</>
+	)}
+	{node.children.length > 0 && (
+		<ul>
+			{node.children.map((child) => (
+				<Astro.self node={child} descriptions={descriptions} />
+			))}
+		</ul>
+	)}
 </li>
