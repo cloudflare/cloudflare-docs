@@ -10,9 +10,18 @@ tags:
   - Private networks
 ---
 
+## Order of checks
+
+Work through these in order:
+
+1. Public side: DNS, TLS, WAF, and other proxied features.
+2. Cloudflare to your private network: private network routing is on, and the route to the origin is in your default virtual network.
+3. Your connectivity: tunnel or connector health, and routes.
+4. Your network: routing, firewall rules, return path, and MSS clamp.
+
 ## Error 1002: DNS points to prohibited IP
 
-This error occurs when you proxy a private IP address without the necessary entitlement. Contact your account team to request access.
+This error occurs when you proxy a private IP address and your account does not have the Private Origins entitlement. Contact your account team to enable it.
 
 ## Setting seems off but traffic routes through tunnel
 
@@ -24,18 +33,40 @@ Private network routing applies per name, not per record. If you have multiple `
 
 If traffic is not reaching your private origin:
 
-1. Verify your tunnel is active and healthy in the Cloudflare dashboard.
-2. Confirm the origin IP is routable within your private network.
-3. Check that `private_routing` is set to `true` on the DNS record.
-4. Verify the record has proxy status enabled.
+1. Verify your connection is healthy: IPsec, GRE, or CNI tunnel health for Cloudflare WAN, tunnel status for Cloudflare Tunnel, or node status for Cloudflare Mesh.
+2. Confirm the route to the origin is in your default virtual network.
+3. Confirm the origin IP is routable within your private network.
+4. Check that `private_routing` is set to `true` on the DNS record.
+5. Verify the record has proxy status enabled.
 
-## Connection timeouts from clients
+## Timeouts with no response from the origin
 
-Cloudflare Source IP is set to a public range. Set it to a private `/12`. Refer to [Configure Cloudflare source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
+Applies to Cloudflare WAN and Cloudflare Mesh. Check both:
 
-## Request times out with no response on the origin
+- The Cloudflare source IP range is set to a private `/12`, not a public range.
+- Your network has return routes that send the Cloudflare source ranges (`100.64.0.0/12` or your configured `/12`, and `2606:4700:cf1:5000::/64`) back through your Cloudflare connection.
 
-The network where your origin lives has no return route for the Cloudflare Source IP range. Add a route that sends that range back through the tunnel.
+Refer to [Cloudflare source IP ranges](/dns/private-origins/private-network-routing/#cloudflare-source-ip-ranges).
+
+## Large responses hang or stall
+
+On IPsec tunnels, the MSS clamp is missing or above `1360`. Set the TCP MSS clamp on your tunnels to `1360` or lower.
+
+## Cacheable assets return 403
+
+Known issue with Tiered Cache when the origin is reached over Cloudflare WAN. As a workaround, create a [Cache Rule](/cache/how-to/cache-rules/) that bypasses cache for the affected hostnames. Refer to [Limitations](/dns/private-origins/#limitations).
+
+## 525 or 526 errors
+
+The origin certificate does not match the hostname, or the private CA is not in the Custom Origin Trust Store. Verify the certificate served by the origin and the trust store configuration.
+
+## Origin sees public Cloudflare IPs as the source
+
+The account is on legacy routing. Request Unified Routing through your account team.
+
+## Packets reach the origin but no response returns
+
+An asymmetric return path or a stateful firewall drop. Make sure return traffic goes back through the same connection Cloudflare used to reach the origin.
 
 ## Tunnel shows IKE established but health checks fail
 
