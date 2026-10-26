@@ -1,0 +1,72 @@
+---
+title: Ultra-low latency live with WebRTC is now Generally Available in Stream
+description: Go live to thousands in milliseconds without separate broadcast software using ultra-low latency WebRTC.
+products:
+  - stream
+date: 2026-10-15
+# For review:
+publish_future_dated_entry: true
+---
+
+[Stream WebRTC support](https://developers.cloudflare.com/stream/webrtc-beta/) lets you deliver high quality live video to thousands of concurrent viewers in milliseconds. WebRTC is compatible with native Web APIs and standard protocols, so creators can [go live from a browser](https://developers.cloudflare.com/stream/examples/browser-based-webrtc/) without needing a separate broadcast application. This powers platforms to build custom experiences with deep feature integration for creators as well as viewers. Here's how to get started with a Stream live input and a browser.
+
+Usage-based billing for WebRTC begins today, October 15, 2026 and follows the standard rates for minutes of video delivered. Refer to [pricing](https://developers.cloudflare.com/stream/pricing/) for rates.
+
+### What changed
+
+While in beta, Stream’s WebRTC support was rebuilt from the ground up to leverage [Cloudflare Realtime](https://developers.cloudflare.com/realtime/)’s primitives for stability and scale while managing these components in Stream’s familiar, unified API that makes it easy to build. We also adopted the latest WHIP and WHEP protocol standards for Trickle ICE, server and client offer modes, and counter-offer support for improved player library compatibility and network traversal adaptability. Finally, WebRTC delivery will now be visible in Stream’s [analytics](https://developers.cloudflare.com/stream/getting-analytics/) and billable usage charts.
+
+### How does this relate to Cloudflare Realtime
+
+Realtime exposes a set of tools and primitives to build applications that connect people, AI systems, and devices together in many-to-many experiences powered by WebRTC. Stream leverages these building-blocks to deliver one-to-many broadcast capabilities, controlled and managed by a single, unified API with features like the [built-in player](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/) and [analytics](https://developers.cloudflare.com/stream/getting-analytics/) that make it easy to get started.
+
+### How do I get started
+
+First, [create a live input](https://developers.cloudflare.com/stream/examples/browser-based-webrtc/#1-create-a-live-input) using [cf](https://developers.cloudflare.com/cf/), the API, or in the [Stream Dashboard](https://dash.cloudflare.com/?to=/:account/stream/inputs):
+
+```sh title="Creating a live input with cf or API"
+# Using cf, the new Cloudflare CLI
+cf stream live-inputs create
+
+# Using an API request,
+curl https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/live_inputs \
+    -H 'Content-Type: application/json' \
+    -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+    -X POST
+```
+
+The response will include `webRTC` and `webRTCPlayback` properties, each containing a `url` for WHIP (broadcast) and WHEP (playback) respectively.
+
+Next, you can go live using WHIP directly from a browser or supported broadcast software. Refer to our [new tutorial](https://developers.cloudflare.com/stream/examples/browser-based-webrtc/) that shows a dependency-free way to broadcast live video with browser-native JavaScript.
+
+Finally, you can play using WHEP using Stream’s [built-in player](https://developers.cloudflare.com/stream/viewing-videos/using-the-stream-player/), a supported player app/library, or simple JavaScript:
+
+```js title="Abbreviated JavaScript playback example"
+	const pc = new RTCPeerConnection();
+
+	// 1. Ask to receive one audio track and one video track.
+	pc.addTransceiver("video", { direction: "recvonly" });
+	pc.addTransceiver("audio", { direction: "recvonly" });
+
+	// 2. Attach incoming media to the video element as it arrives.
+	const stream = new MediaStream();
+	document.getElementById("playback-video").srcObject = stream;
+	pc.ontrack = (event) => stream.addTrack(event.track);
+
+	// 3. Create the SDP offer and set it as the local description.
+	const offer = await pc.createOffer();
+	await pc.setLocalDescription(offer);
+
+	// 4. POST the offer to the WHEP endpoint.
+	const response = await fetch(WHEP_URL, {
+		method: "POST",
+		headers: { "Content-Type": "application/sdp" },
+		body: offer.sdp,
+	});
+
+	// 5. Apply the SDP answer returned by Cloudflare.
+	const answer = await response.text();
+	await pc.setRemoteDescription({ type: "answer", sdp: answer });
+```
+
+Learn more in the [Stream WebRTC](https://developers.cloudflare.com/stream/webrtc-beta/) docs or [try the all-in-one tutorial](https://developers.cloudflare.com/stream/examples/browser-based-webrtc/) for yourself.

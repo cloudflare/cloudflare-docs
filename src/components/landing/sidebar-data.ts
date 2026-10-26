@@ -1,11 +1,14 @@
 // Landing mega-nav structure (sections → links / collapsible groups).
 
+import type { SidebarBadge } from "@cloudflare/nimbus-docs/types";
+
 export interface SidebarLink {
 	type: "link";
 	label: string;
 	href: string;
 	/** Product icon name (src/icons/<icon>.svg). */
 	icon?: string;
+	badge?: SidebarBadge;
 }
 
 export interface SidebarGroup {
@@ -179,12 +182,19 @@ export const sidebarSections: SidebarSection[] = [
 					link("Team & Resources", "/cloudflare-one/team-and-resources/"),
 					link("Networks", "/cloudflare-one/networks/"),
 					link("Access controls", "/cloudflare-one/access-controls/"),
-					link("Traffic policies", "/cloudflare-one/traffic-policies/"),
+					link("Traffic controls", "/cloudflare-one/traffic-controls/"),
 					link(
 						"Cloud & SaaS findings",
 						"/cloudflare-one/cloud-and-saas-findings/",
 					),
 					link("Email security", "/cloudflare-one/email-security/"),
+					{
+						...link(
+							"Cloud Workload Security",
+							"/cloudflare-one/cloud-workload-security/",
+						),
+						badge: { text: "Beta", variant: "caution" },
+					},
 					link("Data loss prevention", "/cloudflare-one/data-loss-prevention/"),
 					link(
 						"Browser isolation",
@@ -258,7 +268,7 @@ export const sidebarSections: SidebarSection[] = [
 					link("Analytics", "/analytics/"),
 					link("Web Analytics", "/web-analytics/"),
 					link("Logs", "/logs/"),
-					link("Log Explorer", "/log-explorer/"),
+					link("Log Explorer", "/observability/logs/log-explorer/"),
 					link("Health Checks", "/health-checks/"),
 				],
 			},

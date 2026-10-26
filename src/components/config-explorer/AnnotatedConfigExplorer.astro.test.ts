@@ -1,5 +1,5 @@
 import { experimental_AstroContainer as AstroContainer } from "astro/container";
-import { builtinEnvironments } from "vitest/environments";
+import { builtinEnvironments } from "vitest/runtime";
 import {
 	afterAll,
 	afterEach,

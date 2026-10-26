@@ -42,7 +42,7 @@ Every class in the package has these requirements. A class page lists any others
   The helper is a statically linked `linux/amd64` binary. It runs in any `linux/amd64` image.
 
 - The Worker has the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag. The package reads Linux error names through `node:os`.
-- The container is running when a method is called.
+- The container is running when a method runs the helper. A class page lists the methods that do not need it, such as `DirectoryBackup.delete()`.
 
 ## Example configuration
 
@@ -51,7 +51,7 @@ This configuration meets every requirement. The `Dockerfile` copies the helper i
 ```dockerfile title="Dockerfile"
 FROM node:24-trixie-slim
 
-COPY --from=docker.io/cloudflare/sandbox:1.0.0 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
+COPY --from=docker.io/cloudflare/sandbox:1.0.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 
 RUN mkdir /workspace
 CMD ["sleep", "infinity"]
@@ -66,6 +66,7 @@ The Wrangler configuration sets `nodejs_compat`, builds the `Dockerfile` as the 
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "sandbox-files",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"containers": [
@@ -117,7 +118,7 @@ export class MyContainer extends DurableObject<Env> {
 		const container = ctx.container;
 
 		if (!container) {
-			throw new Error("The container binding is not configured");
+			throw new Error("No container is configured");
 		}
 
 		this.container = container;

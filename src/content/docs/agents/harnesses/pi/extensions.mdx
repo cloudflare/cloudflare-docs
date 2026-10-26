@@ -4,7 +4,6 @@ pcx_content_type: concept
 description: Add tools, system prompt sections, and skills to a PiHarness with Pi Durable extensions.
 sidebar:
   order: 1
-  badge: Beta
 products:
   - agents
 ---
@@ -13,10 +12,6 @@ import { TypeScriptExample } from "~/components";
 
 Both tools and system prompt sections are provided to the Pi `Harness` via extensions. An extension is Pi Durable's own: a plain object with a `name`, `tools`, and `sections`, installed on the registry you pass to `Harness.open()`. [`PiHarness`](/agents/harnesses/pi/) does not wrap them, so every Pi Durable extension feature works.
 
-:::caution[Beta]
-`PiHarness` is in beta and will likely change as [Pi Durable](https://earendil.com/posts/pi-durable/) matures.
-:::
-
 ## Install an extension
 
 Create the registry with `createRegistry()` and install extensions in the `harness` factory, before `Harness.open()`:
@@ -24,7 +19,7 @@ Create the registry with `createRegistry()` and install extensions in the `harne
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 import { Type } from "@earendil-works/pi-ai";
 import { createModels } from "@earendil-works/pi-ai/models";
 import {
@@ -33,6 +28,7 @@ import {
 	type ToolRegistration,
 } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/pi-ai";
 
 const WordCount = Type.Object({ text: Type.String() });
@@ -45,16 +41,16 @@ const wordCount: ToolRegistration<typeof WordCount> = {
 	// `text` is typed from `parameters`, which Pi validates first.
 	async execute({ text }) {
 		const words = text.split(/\s+/).filter(Boolean).length;
-		return { content: [{ type: "text", text: String(words) }] };
+		return { output: [{ type: "text", text: String(words) }] };
 	},
 };
 
-export class Editor extends Agent<Env> {
+export class Editor extends DurableObject<Env> {
 	ai = createAI({ binding: this.env.AI });
 	registry = createRegistry();
 
 	harness = new PiHarness({
-		harness: ({ storage, context }) => {
+		harness: ({ storage, context, onWake }) => {
 			this.registry.install({
 				name: "editor",
 				sections: [
@@ -66,23 +62,22 @@ export class Editor extends Agent<Env> {
 			models.setProvider(this.ai.provider);
 			return Harness.open(
 				storage,
-				{ models, registry: this.registry },
+				{ models, registry: this.registry, onWake },
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/moonshotai/kimi-k2.7-code") },
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-		this.lifecycle.use(this.harness);
-	}
+	lifecycle = Lifecycle.install(this).use(this.harness);
 }
 ```
 
 </TypeScriptExample>
 
-The factory runs once per isolate, inside the object's startup, so each extension is installed once. `registry.install()` replaces an installed extension with the same name.
+The factory runs inside the object's startup, and again if the harness reopens Pi after a storage error. `registry.install()` replaces an installed extension with the same name, so installing extensions in the factory is safe to repeat.
+
+Create the registry per object, as a class field, not at module scope. Pi keeps every `Harness` subscribed to its registry until the `Harness` closes, and an evicted object never closes it.
 
 ## Write a tool
 
@@ -104,7 +99,7 @@ const fetchPage: ToolRegistration<typeof FetchPage> = {
 	async execute({ url }, api, context) {
 		api.output(`fetching ${url}\n`);
 		const response = await fetch(url, { signal: context.abortSignal });
-		return { content: [{ type: "text", text: await response.text() }] };
+		return { output: [{ type: "text", text: await response.text() }] };
 	},
 };
 ```
@@ -153,9 +148,9 @@ const handbook = fromManifest({
 });
 
 harness = new PiHarness({
-	harness: async ({ storage, context }) => {
+	harness: async ({ storage, context, onWake }) => {
 		this.registry.install(await skills([handbook]));
-		// ...models, then Harness.open()
+		// ...models, then Harness.open() with onWake
 	},
 });
 ```

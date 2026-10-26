@@ -95,10 +95,11 @@ export function getTabs(
 	type: CommandType,
 	pkg?: string,
 	options: CommandOptions = {},
+	managers: ReadonlyArray<Manager> = MANAGERS,
 ) {
-	return MANAGERS.filter((mgr) => commands[mgr][type] !== undefined).map(
-		(mgr) => ({ mgr, cmd: getCommand(mgr, type, pkg, options)! }),
-	);
+	return managers
+		.filter((mgr) => commands[mgr][type] !== undefined)
+		.map((mgr) => ({ mgr, cmd: getCommand(mgr, type, pkg, options)! }));
 }
 
 export function getCfCommand(

@@ -22,6 +22,17 @@ claude plugin install cloudflare@cloudflare
 
 Then instruct the user to run `/reload-plugins` inside Claude to activate the new plugins.
 
+### Droid (Factory)
+
+Run these two commands to install both Cloudflare skills and MCP servers in one step. Do not use `npx skills` or `droid mcp add` — the plugin commands below handle everything.
+
+```
+droid plugin marketplace add https://github.com/cloudflare/skills
+droid plugin install cloudflare@skills
+```
+
+Then instruct the user to restart `droid` (or start a new session) to activate the new plugin.
+
 ---
 
 ## Install for other agents
@@ -156,6 +167,7 @@ For MCP setup guides and troubleshooting, refer to each agent's official documen
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
 - GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
 - Vibe: `https://docs.mistral.ai/vibe/code/cli/mcp-servers`
+- Droid: `https://docs.factory.ai/cli/configuration/mcp`
 - Skills: `https://github.com/cloudflare/skills`
 - Cloudflare API MCP server (Code Mode): `https://github.com/cloudflare/mcp`
 - Other Cloudflare MCP servers: `https://github.com/cloudflare/mcp-server-cloudflare`

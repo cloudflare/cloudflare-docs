@@ -1,5 +1,7 @@
 ---
-const uid = `cli-preference-${crypto.randomUUID()}`;
+import { stableId } from "~/util/stable-id";
+
+const uid = stableId(Astro.locals, "cli-preference", null);
 const options = [
 	{ value: "wrangler", label: "Wrangler" },
 	{ value: "cf", label: "CF" },

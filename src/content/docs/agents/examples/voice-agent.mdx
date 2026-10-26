@@ -56,6 +56,7 @@ Update `wrangler.jsonc` to include a Workers AI binding and a Durable Object for
 	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "src/server.ts",
+	"upload_source_maps": true,
 	"ai": {
 		"binding": "AI"
 	},
@@ -93,7 +94,7 @@ import {
 	type VoiceTurnContext,
 } from "@cloudflare/voice";
 import { streamText, tool, stepCountIs } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
 
 const VoiceAgent = withVoice(Agent);
@@ -103,10 +104,10 @@ export class MyVoiceAgent extends VoiceAgent<Env> {
 	tts = new WorkersAITTS(this.env.AI);
 
 	async onTurn(transcript: string, context: VoiceTurnContext) {
-		const workersAi = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersAi("@cf/moonshotai/kimi-k2.6"),
+			model: ai("@cf/moonshotai/kimi-k2.6"),
 			system:
 				"You are a helpful voice assistant. Keep responses concise — you are being spoken aloud.",
 			messages: [

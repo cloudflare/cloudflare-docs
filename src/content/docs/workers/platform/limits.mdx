@@ -29,7 +29,7 @@ import {
 | [Environment variable<br/>size](#environment-variables)                          | 5 KB         | 5 KB           |
 | [Worker size](#worker-size)                                                      | 64 MiB       | 64 MiB         |
 | [Worker startup time](#worker-startup-time)                                      | 1 second     | 1 second       |
-| [Number of Workers](#number-of-workers)                                         | 100          | 500[^1]        |
+| [Number of Workers](#number-of-workers)                                          | 100          | 500[^1]        |
 | Number of [Cron Triggers](/workers/configuration/cron-triggers/)<br/>per account | 5            | 250            |
 | Number of [Static Asset](#static-assets) files per Worker version                | 20,000       | 100,000        |
 | Individual [Static Asset](#static-assets) file size                              | 25 MiB       | 25 MiB         |
@@ -162,10 +162,15 @@ Duration measures wall-clock time from start to end of a Worker invocation.
 
 There is no hard limit on duration for HTTP-triggered Workers. As long as the client remains connected, the Worker can continue processing, making subrequests, and streaming a response body. When the client disconnects or the response is complete, tasks associated with that request may be canceled. Use [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil) to perform work after returning a response. `waitUntil()` can extend execution for up to 30 seconds after the response is sent or the client disconnects.
 
-:::note
+### Runtime updates
 
-Cloudflare updates the Workers runtime a few times per week. The runtime gives in-flight requests a 30-second grace period to finish. If a request does not finish within this time, the runtime terminates it. This scenario is very unlikely because it requires a long-running request to coincide with a runtime update.
-:::
+Cloudflare regularly updates the Workers runtime. During routine updates, processes running the previous version of the Workers runtime give existing Workers requests and connections up to 20 minutes to finish. This includes streaming HTTP responses and WebSocket connections.
+
+Once the updated version of the Workers runtime is ready, it handles new incoming HTTP requests. Processes running the previous version stop accepting these requests and drain existing work during their grace period.
+
+The grace period applies to each process running the previous version, not to each request. When it ends, that process terminates its remaining requests and connections.
+
+Crashes, resource pressure, and shutdowns can interrupt work earlier. Design long-running applications to handle disconnections and safely retry interrupted work.
 
 ---
 
@@ -258,9 +263,9 @@ The runtime measures simultaneous open connections from the top-level request. W
 
 ## Worker size
 
-| Limit                    | Workers Free | Workers Paid |
-| ------------------------ | ------------ | ------------ |
-| Worker size (uncompressed) | 64 MiB     | 64 MiB       |
+| Limit                      | Workers Free | Workers Paid |
+| -------------------------- | ------------ | ------------ |
+| Worker size (uncompressed) | 64 MiB       | 64 MiB       |
 
 There is no compressed size limit. Only the uncompressed bundle size counts.
 
@@ -307,6 +312,8 @@ To reduce startup time, avoid expensive work in global scope. Move initializatio
 | Limit               | Workers Free | Workers Paid |
 | ------------------- | ------------ | ------------ |
 | Workers per account | 100          | 500[^1]      |
+
+If you are building a platform where your end customers deploy their own sites or applications, use [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/), which runs an unlimited number of user Workers.
 
 ---
 

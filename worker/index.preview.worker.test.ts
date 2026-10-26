@@ -150,7 +150,7 @@ describe.each([
 	["changelog", "/changelog/post/2025-02-11-custom-errors-beta/"],
 	["docs", "/workers/tutorials/upload-assets-with-r2/"],
 ])("Preview %s OG images", (_, POST) => {
-	const PREVIEW = "https://my-branch.preview.developers.cloudflare.com";
+	const PREVIEW = "https://gh-my-branch.previews.developers.cloudflare.com";
 	const escapeRegExp = (value: string) =>
 		value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 

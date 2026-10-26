@@ -28,7 +28,7 @@ In the Cloudflare dashboard, go to the **Browser Run** page and select the **Liv
 <DashButton url="/?to=/:account/workers/browser-run" />
 
 :::note
-Sessions created from the dashboard default to a five-minute inactivity timeout (`keep_alive`), compared to the one-minute default when creating sessions through the API. You can adjust the timeout up to 10 minutes — in the dashboard, use the timeout field when creating a session, or in the API and Workers Bindings, use the [`keep_alive` option](/browser-run/puppeteer/#keep-alive).
+Sessions created from the dashboard default to a five-minute inactivity timeout (`keep_alive`), compared to the one-minute default when creating sessions through the API. To adjust the timeout in the dashboard, use the timeout field when creating a session. In the API and Workers Bindings, use the [`keep_alive` option](/browser-run/puppeteer/#keep-alive), which accepts up to 20 minutes.
 :::
 
 ### Generated URL (any browser)

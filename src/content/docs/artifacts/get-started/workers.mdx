@@ -41,7 +41,7 @@ To set up Artifacts manually, follow the steps below.
 You also need:
 
 - Wrangler installed. If you use local Wrangler commands in this guide, authenticate Wrangler first. For local OAuth authentication or CI setup, refer to [`wrangler login`](/workers/wrangler/commands/general/#login) and [Running Wrangler in CI/CD](/workers/ci-cd/).
-- Access to Artifacts in your Cloudflare account.
+- Access to Artifacts on the [Workers Paid plan](/artifacts/platform/pricing/).
 - A namespace name, for example `default`.
 - A local `git` client.
 - `jq`, if you want to extract response fields automatically.
@@ -84,6 +84,7 @@ Open your Wrangler config file and add the Artifacts binding:
 ```toml title="wrangler.toml"
 name = "artifacts-worker"
 main = "src/index.ts"
+upload_source_maps = true
 compatibility_date = "$today"
 
 [[artifacts]]
