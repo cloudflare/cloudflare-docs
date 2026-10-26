@@ -2138,7 +2138,8 @@
 /r2/platform/pricing/ /r2/pricing/ 301
 /r2/examples/aws-cli/ /r2/examples/aws/aws-cli/ 301
 /r2/examples/aws-sdk-go/ /r2/examples/aws/aws-sdk-go/ 301
-/r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js/ 301
+/r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js-v3/ 301
+/r2/examples/aws/aws-sdk-js/ /r2/examples/aws/aws-sdk-js-v3/ 301
 /r2/examples/aws-sdk-js-v3/ /r2/examples/aws/aws-sdk-js-v3/ 301
 /r2/examples/aws-sdk-php/ /r2/examples/aws/aws-sdk-php/ 301
 /r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
