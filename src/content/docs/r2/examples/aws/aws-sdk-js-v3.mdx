@@ -7,7 +7,7 @@ products:
   - r2
 ---
 
-import { Render } from "~/components";
+import { Render, WranglerConfig } from "~/components";
 
 <Render file="keys" product="r2" />
 <br />
@@ -15,16 +15,19 @@ import { Render } from "~/components";
 JavaScript or TypeScript users may continue to use the [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) npm package as per normal. You must pass in the R2 configuration credentials when instantiating your `S3` service client.
 
 :::note[Using the SDK in a Worker]
-The AWS SDK for JavaScript v3 works in [Workers](/workers/) with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag enabled. Operations that parse an XML response, such as `ListObjectsV2`, `CopyObject`, `DeleteObjects`, and multipart uploads, can fail with `ReferenceError: DOMParser is not defined` when Wrangler bundles the SDK. This happens because the `browser` field of `@aws-sdk/xml-builder` swaps in a parser that depends on `DOMParser`, which the Workers runtime does not provide. To work around this, alias the package to its CommonJS build in your Wrangler configuration file:
+The AWS SDK for JavaScript v3 works in [Workers](/workers/) with the [`nodejs_compat`](/workers/runtime-apis/nodejs/) compatibility flag enabled. Operations that parse an XML response, such as `ListObjectsV2`, `CopyObject`, `DeleteObjects`, and multipart uploads, can fail with `ReferenceError: DOMParser is not defined` when Wrangler bundles the SDK. This happens because the `browser` field of `@aws-sdk/xml-builder` swaps in a parser that depends on `DOMParser`, which the Workers runtime does not provide. To work around this, install `@aws-sdk/xml-builder` as a direct dependency (for example, `npm i @aws-sdk/xml-builder`) so that it resolves from your project root, then alias the package to its CommonJS build in your Wrangler configuration file:
 
-```jsonc title="wrangler.jsonc"
-{
-	"compatibility_flags": ["nodejs_compat"],
-	"alias": {
-		"@aws-sdk/xml-builder": "./node_modules/@aws-sdk/xml-builder/dist-cjs/index.js",
-	},
-}
+<WranglerConfig>
+
+```toml
+compatibility_date = "$today"
+compatibility_flags = ["nodejs_compat"]
+
+[alias]
+"@aws-sdk/xml-builder" = "@aws-sdk/xml-builder/dist-cjs/index.js"
 ```
+
+</WranglerConfig>
 
 If you only need object reads and writes from a Worker, the [R2 Workers API binding](/r2/api/workers/workers-api-reference/) does not require the SDK. [aws4fetch](/r2/examples/aws/aws4fetch/) is a lighter alternative for S3-compatible requests and presigned URLs.
 :::
@@ -73,9 +76,7 @@ console.log(await S3.send(new ListBucketsCommand({})));
 //     }
 // }
 
-console.log(
-	await S3.send(new ListObjectsV2Command({ Bucket: "my-bucket" })),
-);
+console.log(await S3.send(new ListObjectsV2Command({ Bucket: "my-bucket" })));
 // {
 //     '$metadata': {
 //       httpStatusCode: 200,
@@ -167,18 +168,17 @@ curl -X PUT "https://my-bucket.<ACCOUNT_ID>.r2.cloudflarestorage.com/dog.png?X-A
 When generating presigned URLs for uploads, you can limit abuse and misuse by:
 
 1. **Restricting Content-Type**: Specify the allowed content type in the `PutObjectCommand`. The upload will fail if the client sends a different `Content-Type` header.
-
 2. **Configuring CORS**: Set up [CORS rules](/r2/buckets/cors/#add-cors-policies-from-the-dashboard) on your bucket to control which origins can upload files. Configure CORS via the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/r2/overview) by adding a JSON policy to your bucket settings:
 
 ```json
 [
-  {
-    "AllowedOrigins": ["https://example.com"],
-    "AllowedMethods": ["PUT"],
-    "AllowedHeaders": ["Content-Type"],
-    "ExposeHeaders": ["ETag"],
-    "MaxAgeSeconds": 3600
-  }
+	{
+		"AllowedOrigins": ["https://example.com"],
+		"AllowedMethods": ["PUT"],
+		"AllowedHeaders": ["Content-Type"],
+		"ExposeHeaders": ["ETag"],
+		"MaxAgeSeconds": 3600
+	}
 ]
 ```
 
@@ -197,5 +197,6 @@ const putUrl = await getSignedUrl(
 ```
 
 When a client uses this presigned URL, they must:
+
 - Make the request from an allowed origin (enforced by CORS)
 - Include the `Content-Type: image/png` header (enforced by the signature)

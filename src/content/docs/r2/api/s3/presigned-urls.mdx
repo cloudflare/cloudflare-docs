@@ -24,10 +24,10 @@ Presigned URLs are generated server-side with no communication with R2, requirin
 
 R2 supports two patterns for time-limited access. They overlap but have different trade-offs:
 
-| Pattern | Grants | Good for |
-| --- | --- | --- |
-| Presigned URLs (this page) | A single S3 operation on a single object | Granting direct HTTP access to a single object without an S3 client, such as a browser upload or a shareable download link |
-| [Temporary credentials](/r2/api/s3/temporary-credentials/) | Multiple S3 operations, scoped to a bucket and a set of permitted operations, and optionally to specific paths | Callers that use a standard S3 client or SDK to perform multiple operations in a scoped session |
+| Pattern                                                    | Grants                                                                                                         | Good for                                                                                                                   |
+| ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Presigned URLs (this page)                                 | A single S3 operation on a single object                                                                       | Granting direct HTTP access to a single object without an S3 client, such as a browser upload or a shareable download link |
+| [Temporary credentials](/r2/api/s3/temporary-credentials/) | Multiple S3 operations, scoped to a bucket and a set of permitted operations, and optionally to specific paths | Callers that use a standard S3 client or SDK to perform multiple operations in a scoped session                            |
 
 ## Generate a presigned URL
 
@@ -115,7 +115,7 @@ export default {
 					method: "PUT",
 					headers: { "Content-Type": "image/png" },
 				}),
-				{ aws: { signQuery: true } },
+				{ aws: { signQuery: true, allHeaders: true } },
 			)
 		).url.toString();
 
@@ -184,6 +184,7 @@ aws s3 presign --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com \
 </Tabs>
 
 For complete examples and additional operations, refer to the SDK-specific documentation:
+
 - [AWS SDK for JavaScript (Node.js)](/r2/examples/aws/aws-sdk-js-v3/#generate-presigned-urls)
 - [aws4fetch (Workers)](/r2/examples/aws/aws4fetch/#generate-presigned-urls)
 - [AWS SDK for Python (Boto3)](/r2/examples/aws/boto3/#generate-presigned-urls)
@@ -195,7 +196,7 @@ For complete examples and additional operations, refer to the SDK-specific docum
 
 When generating presigned URLs, you can limit abuse and misuse by:
 
-- **Restricting Content-Type**: Specify the allowed `Content-Type` in your SDK's parameters. The signature will include this header, so uploads will fail with a `403/SignatureDoesNotMatch` error if the client sends a different `Content-Type` for an upload request.
+- **Restricting Content-Type**: Specify the allowed `Content-Type` in your SDK's parameters. The signature will include this header, so uploads will fail with a `403/SignatureDoesNotMatch` error if the client sends a different `Content-Type` for an upload request. When using aws4fetch, set `allHeaders: true` so the `Content-Type` header is signed, and send the same `Content-Type` with the upload.
 - **Configuring CORS**: If your presigned URLs will be used from a browser, set up [CORS rules](/r2/buckets/cors/#use-cors-with-a-presigned-url) on your bucket to control which origins can make requests.
 
 ## Using a presigned URL
