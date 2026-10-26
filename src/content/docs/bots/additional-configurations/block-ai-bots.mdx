@@ -12,34 +12,75 @@ sidebar:
   label: Block AI Bots
 ---
 
+import { DashButton, Steps } from "~/components";
+
 ## Configure AI bot policies
 
-### New defaults on September 15, 2026
+### Default policies for new domains
 
-On September 15, 2026, Cloudflare will set updated defaults for new domains: bots classified as Training or as Agent will be blocked on pages that display ads, and Search will remain allowed. Mixed-purpose crawlers that combine Search and Training will also be blocked by all configurations to block AI training, including the legacy "Block AI bots" option. Before September 15, all customers can [opt out of these new defaults](https://dash.cloudflare.com/?to=/:account/:zone/security/settings).
+For new domains, **Search**, **Agents**, and **Training** are set to **Allow (do not block)** by default. Policies that block AI training also apply to mixed-purpose crawlers used for both Search and Training. You can change these defaults in **Security** > **Settings** > **Configure AI bot policies**.
 
 All Cloudflare customers can choose to block AI bots and agents based on their behavior. Cloudflare offers presets for the most common AI behaviors to give customers the option to treat different AI use cases distinctly:
 
 - **Search**: crawlers that collect or index your content to answer questions about it later.
-- **Agent**: automated activity acting in real time on a person's behalf, such as chat fetch bots and browser-use agents.
+- **Agents**: automated activity acting in real time on a person's behalf, such as chat fetch bots and browser-use agents.
 - **Training**: crawlers taking your content to train or fine-tune a model, including mixed-purpose crawlers that are used both for Training and for Search.
 
 Each blocking option will block Verified bots classified with that behavior, plus additional unverified bots that fall under these classifications.
 
-Each setting includes three mitigation options:
+Blocking options include:
 
 - **Block (on all pages)** - Issues the block across the entire zone.
 - **Block on pages with ads** - Uses Cloudflare automated detection for pages that display ads on your zone to block only on those pages.
 - **Allow (do not block)** - Does not add any blocking.
 
-To configure these policies, customers can go to **Security Settings** > **Configure AI bot policies**.
+To configure these policies, go to **Security** > **Settings** > **Configure AI bot policies**.
 
-## Block AI bots [Deprecating on September 15, 2026]
+### Personal agent policies
 
-This setting blocks verified bots that are classified as crawling for the purpose of AI training, as well as a number of unverified bots that behave similarly.
+Use **Agents** as the default policy for agent traffic, then tune access for individual **Personal Agents**. For example, you can block agents on pages with ads while allowing a personal agent to reach those pages. Personal agents follow the **Agents** action until you choose a different one. Changing **Agents** updates all personal agents to the new action, after which you can customize them again.
 
-:::note
-This option excludes mixed-purpose bots that are used both for Training and for Search.
-:::
+The **Agents** and personal agent policies offer these actions:
 
-To configure this setting and set their preference for blocking mixed-purpose bots, customers can go to **Security Settings** > **Block AI bots**.
+| Action                    | Effect                                                                                        |
+| ------------------------- | --------------------------------------------------------------------------------------------- |
+| _Block_                   | Block matching requests across the zone.                                                      |
+| _Block on pages with ads_ | Block matching requests to pages that display ads.                                            |
+| _Allow (do not block)_    | Do not add a block for matching requests. This is the recommended action for personal agents. |
+
+To set a personal agent policy in the dashboard:
+
+<Steps>
+  1. In the Cloudflare dashboard, go to **Security** > **Settings**.
+
+     <DashButton url="/?to=/:account/:zone/security/settings" />
+  2. Filter by **Bot traffic**, then select **Configure AI bot policies**.
+  3. Under **Personal Agents**, select an action for the agent.
+  4. Select **Save**.
+</Steps>
+
+You can also review these policies during zone onboarding. In **AI Crawl Control**, the **Configure AI bot policies** link opens the settings in **Security** > **Settings**.
+
+### Personal agent API settings
+
+The Bot Management settings endpoint uses `GET` and `PUT` on `/client/v4/zones/{zone_id}/bot_management`. Its `ai_agents` object stores actions by agent ID. A `PUT` request can include only the agents you want to change; omitted agent IDs keep their existing values.
+
+| Dashboard agent        | API agent ID      |
+| ---------------------- | ----------------- |
+| Muse, Meta             | `muse`            |
+| Gemini Spark, Google   | `google_agent`    |
+| Claude Duet, Anthropic | `anthropic_agent` |
+| dots, OpenAI           | `openai_agent`    |
+
+The API uses `block` for _Block_, `only_on_ad_pages` for _Block on pages with ads_, and `disabled` for _Allow (do not block)_. For example, this request blocks Muse and blocks dots only on pages with ads:
+
+```json
+{
+	"ai_agents": {
+		"muse": "block",
+		"openai_agent": "only_on_ad_pages"
+	}
+}
+```
+
+Set an agent to `disabled` to allow it again. An unknown agent ID returns an HTTP `400` response. The API response includes the complete `ai_agents` object, including agents set to `disabled`.
