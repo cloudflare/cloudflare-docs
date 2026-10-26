@@ -43,6 +43,19 @@ The following private address ranges are automatically detected:
 
 When you use an IP address from one of these ranges, the **Use private network routing** toggle turns on automatically. You can also turn it on manually for public IP addresses that are only reachable through your tunnel.
 
+## Cloudflare source IP ranges
+
+When Cloudflare reaches an origin over Cloudflare WAN or Cloudflare Mesh, traffic comes from the Cloudflare source IP ranges:
+
+| IP version | Range | Configurable |
+| --- | --- | --- |
+| IPv4 | `100.64.0.0/12` (default) | Yes, to another private `/12` |
+| IPv6 | `2606:4700:cf1:5000::/64` | No |
+
+Add return routes in your private network that send these ranges back to Cloudflare, and allow them in your origin's firewall. Refer to [Configure Cloudflare source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
+
+Behind Cloudflare Tunnel, your origin sees the host running `cloudflared` as the source instead.
+
 ## Enable private network routing
 
 :::note[Virtual networks]
