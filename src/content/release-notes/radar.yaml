@@ -1,0 +1,267 @@
+---
+link: "/radar/release-notes/"
+productName: Radar
+productLink: "/radar/"
+entries:
+  - publish_date: "2026-08-07"
+    title: Add AS-level connectivity and upstream providers widgets to Cloudflare Radar
+    description: |-
+      * Added an **AS-level connectivity** graph to AS [routing pages](https://radar.cloudflare.com/routing/as13335), aggregating the BGP paths an AS uses to reach the Tier-1 networks across every prefix it announces, as observed by selected RouteViews collectors. A **Show full paths** toggle switches between the simplified view and all observed paths, and an IP version selector switches between IPv4 and IPv6.
+      * Added an **Upstream providers** timeseries widget to AS routing pages, tracking the share of an AS's observed paths carried by each direct upstream network over time. Up to 10 upstreams appear as their own series, with the remainder grouped into **Other**.
+      * Added two new endpoints to the [`BGP`](/api/resources/radar/subresources/bgp/) API:
+        * [`/bgp/routes/paths/{asn}`](/api/resources/radar/subresources/bgp/subresources/routes/subresources/paths/methods/list/) - Returns the ordered AS path segments an AS uses to reach the Tier-1 networks, each with its observed path count, peer count, and contributing collectors.
+        * [`/bgp/routes/upstreams/{asn}/timeseries`](/api/resources/radar/subresources/bgp/subresources/routes/subresources/upstreams/methods/timeseries/) - Returns the share of an AS's observed paths carried by each direct upstream over time, split by IP version.
+  - publish_date: "2026-05-29"
+    title: Add TLS bug detection to the Radar post-quantum TLS support checker
+    description: |-
+      * The [post-quantum TLS support checker](https://radar.cloudflare.com/post-quantum) now reports TLS bugs detected during the handshake test (Split ClientHello, HRR Failure, Unknown Keyshare) with user-facing descriptions and remediation guidance. The bugs section only appears for hosts where issues are detected.
+      * Bug detection data is returned by the existing [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) endpoint.
+  - publish_date: "2026-05-04"
+    title: Add new routing widgets to Cloudflare Radar
+    description: |-
+      * Added a **Top ASes by announced IP space** chart to country [routing pages](https://radar.cloudflare.com/routing), breaking down the IPv4 and IPv6 address space announced from a country across the top originating autonomous systems.
+      * Added an **RPKI ROA deployment** timeseries widget to the [RPKI sub-page](https://radar.cloudflare.com/routing/rpki), tracking the share of announced BGP space covered by a valid Route Origin Authorization (ROA) over time, with a toggle between covered prefixes and covered IP address space. Available on global, country, and AS views.
+      * Added two new endpoints to the [`BGP`](/api/resources/radar/subresources/bgp/) API:
+        * [`/bgp/ips/top/ases`](/api/resources/radar/subresources/bgp/subresources/ips/subresources/top/methods/ases/) - Returns the top autonomous systems by announced IPv4 or IPv6 address space, globally or filtered by country.
+        * [`/bgp/rpki/roas/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/roas/methods/timeseries/) - Returns RPKI ROA validation coverage over time, by share of prefixes or share of IP address space, split by IP version, with optional ASN or location filters.
+  - publish_date: "2026-04-24"
+    title: Add signature agent URL to bot details
+    description: |-
+      * Added `signatureAgentUrl` field to the [bot details](/api/resources/radar/subresources/bots/methods/get/) API endpoint. For agents verified via [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/), this field contains the URL to the agent's HTTP Message Signatures key directory. It is `null` for bots not verified via request signature.
+      * Added signature agent URL to the [bot detail page](https://radar.cloudflare.com/bots/directory) on Radar, with a modal to inspect the key directory JSON content.
+  - publish_date: "2026-04-01"
+    title: Promote Routing to a dedicated section with sub-pages
+    description: |-
+      * Expanded the Routing page into a full section with dedicated [Overview](https://radar.cloudflare.com/routing), [RPKI](https://radar.cloudflare.com/routing/rpki), and [Anomalies](https://radar.cloudflare.com/routing/anomalies) sub-pages.
+      * Added new **Top 100 ASes** widget to the routing overview, with rankings by customer cone, IPv4 address space, and IPv6 address space.
+      * Added new **RPKI prefix validation** widget showing per-ASN prefixes grouped by validation status (Valid, Invalid, Unknown).
+      * Improved the IP address space chart to display both IPv4 and IPv6 trends on all views including global.
+  - publish_date: "2026-03-06"
+    title: Add region filtering and AS/location dimensions to API
+    description: |-
+      * Added region filtering across all location-aware pages, including continents, geographic subregions, political regions (EU, ASEAN, African Union), and US Census regions/divisions.
+      * Added traffic volume insights by top autonomous systems and countries/territories.
+      * Added AS and location dimensions to the [`HTTP`](/api/resources/radar/subresources/http/), [`DNS`](/api/resources/radar/subresources/dns/), and [`NetFlows`](/api/resources/radar/subresources/netflows/) APIs.
+      * Added breadcrumb navigation.
+  - publish_date: "2026-02-27"
+    title: Add Post-Quantum and Key Transparency insights
+    description: |-
+      * Added new [`Post-Quantum`](/api/resources/radar/subresources/post_quantum/) API:
+        * [`/post_quantum/tls/support`](/api/resources/radar/subresources/post_quantum/subresources/tls/methods/support/) - Tests whether a host supports post-quantum TLS key exchange.
+        * [`/post_quantum/origin/summary/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/summary/) - Returns origin post-quantum data summarized by key agreement algorithm.
+        * [`/post_quantum/origin/timeseries_groups/{dimension}`](/api/resources/radar/subresources/post_quantum/methods/timeseries_groups/) - Returns origin post-quantum timeseries data grouped by key agreement algorithm.
+      * Launched [Post-Quantum Encryption](https://radar.cloudflare.com/post-quantum) page.
+      * Launched [Key Transparency](https://radar.cloudflare.com/key-transparency) page.
+  - publish_date: "2026-02-25"
+    title: Add RPKI ASPA deployment insights
+    description: |-
+      * Added new [`ASPA`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/) API endpoints:
+        * [`/bgp/rpki/aspa/snapshot`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/snapshot/) - Retrieves current or historical ASPA objects.
+        * [`/bgp/rpki/aspa/changes`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/changes/) - Retrieves changes to ASPA objects over time.
+        * [`/bgp/rpki/aspa/timeseries`](/api/resources/radar/subresources/bgp/subresources/rpki/subresources/aspa/methods/timeseries/) - Retrieves ASPA object counts over time as a timeseries.
+      * Added ASPA deployment trend and objects count widgets to the [global routing page](https://radar.cloudflare.com/routing).
+      * Added ASPA deployment rate widget to country and region routing pages.
+      * Added ASPA-verified upstreams and change timeline to AS routing pages.
+  - publish_date: "2026-02-12"
+    title: Add content type dimension to AI Bots
+    description: |-
+      * Added new `content_type` dimension and filter to the AI Bots API:
+        * [`/ai/bots/summary/{dimension}`](/api/resources/radar/subresources/ai/subresources/bots/methods/summary_v2/)
+        * [`/ai/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ai/subresources/bots/methods/timeseries_groups/)
+      * Added new **Content Type Distribution** chart to the [AI Insights page](https://radar.cloudflare.com/ai-insights#content-type).
+      * Added content type chart to individual [bot information pages](https://radar.cloudflare.com/bots/directory) for AI crawlers.
+  - publish_date: "2025-12-16"
+    title: New client type dimension in Web Crawlers and Mixed Purpose entry
+    description: |-
+      * Added new Mixed Purpose entry to the `crawl_purpose` dimension of the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API, which as of this release includes Googlebot and Bingbot.
+      * Added new dimension `client_type` to the [Web Crawlers](/api/resources/radar/subresources/bots/subresources/web_crawlers/) API.
+        * Added new **HTML page requests by client type graph** to the [AI Insights page](https://radar.cloudflare.com/ai-insights#html-page-requests-by-client-type).
+  - publish_date: "2025-11-24"
+    title: Add HTTP origins insights
+    description: |-
+      * Added new [`Origins`](/api/resources/radar/subresources/origins/) API.
+      * Extended [`Annotations`](/api/resources/radar/subresources/annotations/) and [`Traffic Anomalies`](/api/resources/radar/subresources/traffic_anomalies/) APIs to support origin outages and anomalies.
+  - publish_date: "2025-10-27"
+    title: Add TLD insights
+    description: |-
+      * Added new dimensions `tld` and `tld_dns_magnitude` to the [DNS](/api/resources/radar/subresources/dns/) API.
+      * Added new endpoints [`/tlds`](/api/resources/radar/subresources/tlds/methods/list/) and [`/tlds/{tld}`](/api/resources/radar/subresources/tlds/methods/get/).
+  - publish_date: "2025-10-09"
+    title: Add CT log activity statistics
+    description: |-
+      * Added new CT log activity stats to the [Get Certificate Log Details](/api/resources/radar/subresources/ct/subresources/logs/methods/get/) API response.
+  - publish_date: "2025-10-06"
+    title: Add PQ encryption browser support check
+    description: |-
+      * Added a [post-quantum encryption browser support check](https://radar.cloudflare.com/adoption-and-usage#browser-support) to the PQ encryption card in the Adoption & Usage section.
+  - publish_date: "2025-09-29"
+    title: Add geolocation, ADM1 dimension to HTTP endpoints, and NetFlows endpoints
+    description: |-
+      * Added new [geolocation endpoints](/api/resources/radar/subresources/geolocations/).
+      * Added new ADM1 dimension to [`HTTP`](/api/resources/radar/subresources/http/) `summary` and `timeseries_groups` endpoints.
+      * Added new [`NetFlows`](/api/resources/radar/subresources/netflows/) summary by dimension endpoint [summary_v2](/api/resources/radar/subresources/netflows/methods/summary_v2/).
+      * Added new `geoId` filter to all [`HTTP`](/api/resources/radar/subresources/http/) and [`NetFlows`](/api/resources/radar/subresources/netflows/) endpoints.
+  - publish_date: "2025-09-22"
+    title: Add IRR AS-SET membership lookup endpoint
+    description: |-
+      * Added IRR AS-SET membership lookup endpoint
+        * [ `/entities/asns/{asn}/as_set` ](/api/resources/radar/subresources/entities/subresources/asns/methods/as_set/)
+  - publish_date: "2025-08-27"
+    title: Add industry and vertical to AI Bots and Web Crawlers, and bot kind to Bots
+    description: |-
+      * Added vertical and industry dimensions/filters to:
+        * [`/ai/bots/summary/{dimension}`](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/)
+        * [`/ai/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/)
+        * [`/bots/crawlers/summary/{dimension}`](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/summary/)
+        * [`/bots/crawlers/timeseries_groups/{dimension}`](/api/resources/radar/subresources/bots/subresources/web_crawlers/methods/timeseries_groups/)
+      * Added bot kind dimension/filter to:
+        * [`/bots/summary/{dimension}`](/api/resources/radar/subresources/bots/methods/summary/)
+        * [`/bots/timeseries_groups/{dimension}`](/api/resources/radar/subresources/bots/methods/timeseries_groups/)
+      * Added new `botKind` filter to:
+        * [`/bots/timeseries`](/api/resources/radar/subresources/bots/methods/timeseries/)
+      * Added new `kind` property/filter to:
+        * [`/bots`](/api/resources/radar/subresources/bots/methods/list/)
+        * [`/bots/{bot_slug}`](/api/resources/radar/subresources/bots/methods/get/)
+  - publish_date: "2025-08-14"
+    title: Add AI Bots crawl purpose
+    description: |-
+      * Added AI Bots crawl purpose dimension and filter to [summary](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/summary/) and [timeseries_groups](/api/resources/radar/subresources/ai/subresources/timeseries_groups/methods/timeseries_groups/) endpoints.
+  - publish_date: "2025-08-06"
+    title: Add Certificate Transparency (CT) endpoints
+    description: |-
+      * Added [CT endpoints](/api/resources/radar/subresources/ct/).
+  - publish_date: "2025-07-01"
+    title: Add Bots and Web Crawlers endpoints
+    description: |-
+      * Added new [bots endpoints](/api/resources/radar/subresources/bots/), replacing the deprecated verified bots
+      endpoints. Use the following replacements:
+        * `/verified_bots/top/bots` → `/bots/summary/bot`
+        * `/verified_bots/top/categories` → `/bots/summary/bot_category`
+      * Added [web crawlers endpoints](/api/resources/radar/subresources/bots/subresources/web_crawlers/).
+  - publish_date: "2025-03-20"
+    title: Endpoint deprecations and new BGP real-time routes endpoint
+    description: |-
+      * Deprecated endpoints for improved consistency (switch to the following):
+        * `/attacks/layer3/top/industry` → [`/attacks/layer3/summary/industry`](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/industry/)
+        * `/attacks/layer3/top/vertical` → [`/attacks/layer3/summary/vertical`](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/vertical/)
+        * `/attacks/layer7/top/industry` → [`/attacks/layer7/summary/industry`](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/industry/)
+        * `/attacks/layer7/top/vertical` → [`/attacks/layer7/summary/vertical`](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/vertical/)
+      * Added the [BGP real-time routes endpoint](/api/resources/radar/subresources/bgp/subresources/routes/methods/realtime/).
+  - publish_date: "2025-03-18"
+    title: Add leaked credential checks endpoints
+    description: |-
+      * Added [leaked credential checks endpoints](/api/resources/radar/subresources/leaked_credentials/).
+  - publish_date: "2025-02-27"
+    title: Add DNS endpoints
+    description: |-
+      * Added [DNS endpoints](/api/resources/radar/subresources/dns/).
+  - publish_date: "2025-02-04"
+    title: Add Internet services ranking, robots.txt, and AI inference endpoints
+    description: |-
+      * Added [Internet services ranking endpoints](/api/resources/radar/subresources/ranking/subresources/internet_services/).
+      * Added [robots.txt endpoints](/api/resources/radar/subresources/robots_txt/).
+      * Added [AI inference endpoints](/api/resources/radar/subresources/ai/subresources/inference/).
+  - publish_date: "2024-06-27"
+    title: Change TCP connection tampering API endpoints to TCP Resets Timeouts
+    description: |-
+      * Changed the connection tampering summary and timeseries API endpoints to
+      TCP resets timeouts [summary](/api/resources/radar/subresources/tcp_resets_timeouts/methods/summary/)
+      and [timeseries](/api/resources/radar/subresources/tcp_resets_timeouts/methods/timeseries_groups/),
+      respectively.
+  - publish_date: "2023-11-27"
+    title: Add more meta information's
+    description: |-
+      * Added meta.lastUpdated to all summaries and top endpoints (timeseries and timeseriesGroups already had this).
+      * Fixed meta.dateRange to return date ranges for all requested series.
+  - publish_date: "2023-11-16"
+    title: Add new layer 3 endpoints and layer 7 dimensions
+    description: |-
+      * Added layer 3 [top origin locations](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/top/subresources/locations/methods/origin/)
+        and [top target location](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/top/subresources/locations/methods/target/).
+      * Added layer 7 Summaries by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`.
+      * Added layer 7 Timeseries Groups by `http_method`, `http_version`, `ip_version`, `managed_rules`, `mitigation_product`, `industry`, `vertical`.
+      * Added layer 7 Top by `industry`, `vertical`.
+      * Deprecated layer 7 timeseries groups without dimension.
+        * To continue getting this data, switch to the new
+          [timeseries group by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/timeseries_groups/methods/mitigation_product/)
+          endpoint.
+      * Deprecated layer 7 summary without dimension.
+        * To continue getting this data, switch to the new
+          [summary by mitigation_product](/api/resources/radar/subresources/attacks/subresources/layer7/subresources/summary/methods/mitigation_product/)
+          endpoint.
+      * Added new [Error codes](/radar/get-started/error-codes/).
+  - publish_date: "2023-10-31"
+    title: Add new layer 3 direction parameter
+    description: |-
+      * Added a `direction` parameter to all layer 3 endpoints. Use together with `location` parameter to filter by origin or
+        target location [timeseries groups](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/timeseries_groups/methods/vector/).
+  - publish_date: "2023-09-08"
+    title: Add Connection Tampering endpoints
+    description: |-
+      * Added Connection Tampering [summary](/api/resources/radar/subresources/tcp_resets_timeouts/methods/summary/)
+        and [timeseries](/api/resources/radar/subresources/tcp_resets_timeouts/methods/timeseries_groups/) endpoints.
+  - publish_date: "2023-08-14"
+    title: Deprecate old layer 3 dataset
+    description: |-
+      * Added Regional Internet Registry (see field `source` in response)
+        to [get asn by id](/api/resources/radar/subresources/entities/subresources/asns/methods/get/)
+        and [get asn by ip](/api/resources/radar/subresources/entities/subresources/asns/methods/ip/) endpoints.
+      * Stopped collecting data in the old layer 3 data source.
+      * Updated layer 3
+        [timeseries](/api/resources/radar/subresources/attacks/subresources/layer3/methods/timeseries/) endpoint
+        to start using the new layer 3 data source by default, fetching the old data source now requires sending the parameter
+        `metric=bytes_old`.
+      * Deprecated layer 3 summary endpoint, this will stop receiving data after 2023-08-14.
+        * To continue getting this data, switch to the
+          new [timeseries group protocol](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/summary/methods/protocol/)
+          endpoint.
+      * Deprecated layer 3 timeseries groups endpoint, this will stop receiving data after 2023-08-14.
+        * To continue getting this data, switch to the
+          new [timeseries group protocol](/api/resources/radar/subresources/attacks/subresources/layer3/subresources/timeseries_groups/methods/protocol/)
+          endpoint.
+  - publish_date: "2023-07-31"
+    title: Fix HTTP timeseries endpoint URLs
+    description: |-
+      * Updated HTTP `timeseries` endpoints URLs
+        to [`timeseries_groups`](/api/resources/radar/subresources/http/subresources/timeseries_groups/)
+        due to consistency. Old timeseries endpoints are still available, but will soon be removed.
+  - publish_date: "2023-07-20"
+    title: Add URL Scanner endpoints
+    description: |-
+      * Added [URL Scanner endpoints](/api/resources/url_scanner/). For more information, refer to [URL Scanner](/radar/investigate/url-scanner/).
+  - publish_date: "2023-06-20"
+    title: Add Internet quality endpoints
+    description: |-
+      * Added [Internet quality endpoints](/api/resources/radar/subresources/quality/).
+  - publish_date: "2023-06-07"
+    title: Add BGP stats, pfx2as and moas endpoints
+    description: |-
+      * Added BGP [stats](/api/resources/radar/subresources/bgp/subresources/routes/methods/stats/),
+        [pfx2as](/api/resources/radar/subresources/bgp/subresources/routes/methods/pfx2as/)
+        and [moas](/api/resources/radar/subresources/bgp/subresources/routes/methods/moas/) endpoints.
+  - publish_date: "2023-05-10"
+    title: Added `IOS` as an option for the OS parameter in all HTTP
+    description: |-
+      * Added `IOS` as an option for the OS parameter in all HTTP
+        endpoints ([example](/api/resources/radar/subresources/http/subresources/summary/methods/bot_class/)).
+  - publish_date: "2023-03-20"
+    title: Add AS112 and email endpoints
+    description: |-
+      * Added [AS112 endpoints](/api/resources/radar/subresources/as112/).
+      * Added [email endpoints](/api/resources/radar/subresources/email/).
+  - publish_date: "2023-01-23"
+    title: Updated IPv6 calculation method
+    description: |-
+      * IPv6 percentage started to be calculated as (IPv6 requests / requests for dual-stacked content), where as before it
+        was calculated as (IPv6 requests / IPv4+IPv6 requests).
+  - publish_date: "2023-01-11"
+    title: Add new layer 3 dataset
+    description: |-
+      * Added new layer 3 data source and related endpoints.
+      * Updated layer 3
+        [timeseries](/api/resources/radar/subresources/attacks/subresources/layer3/methods/timeseries/) endpoint
+        to support fetching both current and new data sources. For retro-compatibility
+        reasons, fetching the new data source requires sending the parameter `metric=bytes` else the current data
+        source will be returned.
+      * Deprecated old layer 3 endpoints timeseries_groups and summary.
+        Users should upgrade to newer endpoints.

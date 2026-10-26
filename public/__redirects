@@ -1788,7 +1788,7 @@
 /reference-architecture/secure-application-delivery-design-guide/ /reference-architecture/design-guides/secure-application-delivery/ 301
 # radar
 /fundamentals/radar/glossary/ /radar/glossary/ 301
-/radar/release-notes/ /radar/changelog/ 301
+/radar/changelog/ /radar/release-notes/ 301
 
 # railgun
 /support/speed/optimization-delivery-railgun/railgun-faq/ /railgun/ 301
