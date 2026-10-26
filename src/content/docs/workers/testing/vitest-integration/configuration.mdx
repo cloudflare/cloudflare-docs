@@ -156,7 +156,7 @@ export default defineConfig({
 Options passed directly to `cloudflareTest()`.
 
 - `auxiliaryWorkers`: `{ buildOutput: { root: string; name?: string } }[]` optional
-  - Workers to run alongside the Worker under test when `config` is set, loaded from the build output of other projects with `buildOutputWorker()`. Refer to [APIs](#apis) for more information. Each Worker runs as built, and its bindings run locally. Its secrets come from the `.dev.vars` or `.env` files of the built project. Tail consumers in `cloudflare.config.ts` that target an auxiliary Worker are kept.
+  - Workers to run alongside the Worker under test when `config` is set, loaded from the build output of other projects with `buildOutputWorker()`. Refer to [APIs](#apis) for more information. Each Worker runs as built, and its bindings run locally. Its secrets come from `.dev.vars` or `.env` files in the root of the built project, in the mode of the build. That mode is usually `production`, so files such as `.dev.vars.production` take precedence. Tail consumers in `cloudflare.config.ts` that target an auxiliary Worker are kept.
 
 - `config`: `boolean | string` optional
   - Load `main`, [compatibility settings](/workers/configuration/compatibility-dates/), [bindings](/workers/runtime-apis/bindings/), triggers, and exports from a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file. Pass `true` to load `cloudflare.config.ts` from the project root, or pass a path to the file relative to the project root. You cannot use `config` together with `wrangler` or `miniflare`.
