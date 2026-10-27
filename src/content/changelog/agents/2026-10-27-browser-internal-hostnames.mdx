@@ -31,6 +31,8 @@ export class MyAgent extends Agent<Env> {
 				hosts: {
 					"preview.internal": {
 						description: "Your dev servers",
+						// What the model passes to browser.assignHost() to choose
+						// what this host serves. fetch receives it as its second argument.
 						target: z.object({ port: z.number().int().min(1024) }),
 						fetch: (request, { port }) => fetchSandboxPort(port, request),
 					},
@@ -46,7 +48,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-`browserTool` tells the model about each host. To check its dev server, the model points `preview.internal` at a port and opens the URL it gets back:
+`browserTool` tells the model about each host, including the schema of its `target`. Because `preview.internal` has a `target` schema, the model can choose which port it serves. To check its dev server, the model calls `browser.assignHost()` with a target that matches the schema, such as `{ port: 5173 }`, and opens the URL it gets back:
 
 ```js
 const { url } = await browser.assignHost({
@@ -60,7 +62,7 @@ await browser.cdp({
 });
 ```
 
-The target is checked against the schema and stored, so it lasts across turns, browser restarts, and redeploys.
+The target is checked against the schema and stored, so it lasts across turns, browser restarts, and redeploys. Each request to `http://preview.internal/` then calls the host's `fetch` function with `{ port: 5173 }`. A host without a `target`, such as `api.internal`, always serves the same thing.
 
 This release also simplifies `browserTool`. It runs the model's code in its own [Dynamic Worker](/dynamic-workers/) and no longer needs a `CodemodeRuntime` export. Refer to the [v0.31.0 upgrade notes](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) if you already use `browserTool`.
 
