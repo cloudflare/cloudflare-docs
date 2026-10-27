@@ -118,7 +118,7 @@ Lastly, it is worth mentioning that the Durable Object also has the Worker `Env`
 
 `Agent` uses `Lifecycle.install(this)` to install its platform-facing request, alarm, and hibernating WebSocket event handlers. Agent subclasses implement semantic callbacks such as `onStart()` and `onRequest()` instead of forwarding those platform events.
 
-The `Agent` class installs `State`, `Queue`, `Scheduler`, `Tasks`, `MCPClientManager`, and `WebSockets`, plus its internal dynamic-agent capability. Capabilities start before Agent startup. Selective capabilities run before catch-alls, such as `WebSockets`. Queues, schedules, and tasks share one Lifecycle-managed Durable Object alarm.
+The `Agent` class installs `State`, `Queue`, `Scheduler`, `Tasks`, `MCPClientManager`, and `WebSockets`, plus its internal dynamic-agent capability. Capabilities start before Agent startup. Selective capabilities run before catch-all capabilities, such as `WebSockets`. Queues, schedules, and tasks share one Lifecycle-managed Durable Object alarm.
 
 You can install additional capabilities through `this.lifecycle.use(capability)`. The same capability can also run on a class that directly extends `DurableObject`.
 

@@ -182,7 +182,7 @@ routeAgentRequest(request)
       └─ host onRequest()
 ```
 
-A capability declares `claims: "catch-all"` when it handles everything offered to a hook. Lifecycle always runs catch-alls after every selective capability. The `WebSockets` capability is a catch-all for upgrades, so other capabilities can claim their own upgrade routes first. Without a capability that accepts upgrades, Lifecycle declines WebSocket upgrades.
+A capability declares `claims: "catch-all"` when it handles everything offered to a hook. Lifecycle always runs catch-all capabilities after every selective capability. The `WebSockets` capability is a catch-all for upgrades, so other capabilities can claim their own upgrade routes first. Without a capability that accepts upgrades, Lifecycle declines WebSocket upgrades.
 
 There is no `next()` callback. A capability either handles a request or declines it.
 
