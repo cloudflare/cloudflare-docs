@@ -41,11 +41,26 @@ To stay on the `Agent` class and add another capability, such as the [Pi harness
 
 ```ts
 import { Agent } from "agents";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
+import { createAI } from "agents/models/pi-ai";
 
 export class Assistant extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
 	harness = new PiHarness({
-		/* model and tools */
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
 	constructor(ctx: DurableObjectState, env: Env) {

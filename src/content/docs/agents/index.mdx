@@ -22,16 +22,31 @@ To run an agent, pick a harness and install it on a Durable Object with the [Lif
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
 import { Lifecycle } from "agents/lifecycle";
 import { MCPClientManager } from "agents/mcp/client";
+import { createAI } from "agents/models/pi-ai";
 import { Scheduler } from "agents/schedules";
 
 export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+
 	readonly harness = new PiHarness({
-		/* model and tools */
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
-	readonly mcp = new MCPClientManager("assistant", "1.0.0", { env: this.env });
+	readonly mcp = new MCPClientManager("assistant", "1.0.0");
 	readonly scheduler = new Scheduler({ callbacks: {} });
 
 	readonly lifecycle = Lifecycle.install(this)

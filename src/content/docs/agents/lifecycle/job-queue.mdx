@@ -94,6 +94,8 @@ A capability can implement `onJobError(context, error)` to decide what happens a
 
 Before it runs any job, Lifecycle sets a backup alarm. If the isolate dies mid-run, that alarm wakes the object to resume the work.
 
+While the queue holds jobs, Lifecycle also sets a fallback alarm before startup runs, at the next job's time but at least 30 seconds out. If startup throws, that alarm retries it, so queued jobs are not stranded by a failed startup.
+
 ## How the alarm runs
 
 When the alarm fires, Lifecycle:

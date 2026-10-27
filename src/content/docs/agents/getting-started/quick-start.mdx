@@ -42,7 +42,7 @@ You do not need an API key. The agent uses [Workers AI](/workers-ai/) through th
    cd my-agent
    ```
 
-   <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai" />
+   <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
 
 </Steps>
 
@@ -93,15 +93,16 @@ export class Assistant extends DurableObject<Env> {
 	readonly registry = createRegistry();
 
 	readonly harness = new PiHarness({
-		harness: ({ storage, context }) => {
+		harness: ({ storage, context, onWake }) => {
 			const models = createModels();
 			models.setProvider(this.ai.provider);
-			return Harness.open(storage, { models, registry: this.registry }, context);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
 		},
-		defaults: {
-			model: this.ai("@cf/zai-org/glm-4.7-flash"),
-			thinkingLevel: "low",
-		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
 	readonly lifecycle = Lifecycle.install(this).use(this.harness);

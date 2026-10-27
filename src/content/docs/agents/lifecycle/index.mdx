@@ -14,6 +14,25 @@ import { PackageManagers, TypeScriptExample } from "~/components";
 
 Every agent on Cloudflare is a [harness](/agents/harnesses/) running on a [Durable Object](/durable-objects/). `Lifecycle` from `agents/lifecycle` is what keeps it running there. It runs startup, offers each request to the harness and the other installed [capabilities](/agents/capabilities/), and owns the object's durable job queue and its single alarm. That is how a harness wakes and finishes its work after eviction, deploys, and crashes.
 
+```mermaid
+flowchart TB
+    R["Request, WebSocket message, or alarm"] --> L
+    subgraph DO["Durable Object: one per user, conversation, or task"]
+        L["Lifecycle<br/>runs startup, routes each event,<br/>owns the job queue and the one alarm"]
+        L -->|"onStart, onRequest, onJob"| H["Harness, such as PiHarness<br/>runs the agent loop"]
+        L -->|"onStart, onRequest, onJob"| C["Capabilities, such as Scheduler,<br/>MCPClientManager, and WebSockets"]
+        H --- DB[("SQLite storage")]
+        C --- DB
+    end
+```
+
+The roles split like this:
+
+- **The Durable Object** is where the agent lives. It gives each agent an address, its own SQLite database, and one alarm.
+- **The Lifecycle** decides when code runs. It starts every installed capability once per wake, offers each request and WebSocket event to them in order, and runs due jobs when the alarm fires.
+- **The harness** runs the agent loop: the model calls, tool calls, and transcript. It stores its work in the object's database and queues jobs so the Lifecycle can wake it to finish.
+- **Capabilities** add everything else, such as schedules, MCP connections, and real-time clients. Each one is independent of the others and of the harness.
+
 `agents/lifecycle` is stable. You install the Lifecycle on a class that extends `DurableObject`. Most agents only need `Lifecycle.install(this)` and one `.use()` call for each capability. This section covers what the Lifecycle does underneath, and how to [build your own capability](/agents/lifecycle/build-a-capability/). The legacy [`Agent` class](/agents/agent-class/) installs the same Lifecycle for you.
 
 ## Install the Lifecycle
@@ -91,7 +110,7 @@ import { MCPClientManager } from "agents/mcp/client";
 import { Scheduler } from "agents/schedules";
 
 export class MyAgent extends DurableObject<Env> {
-	readonly mcp = new MCPClientManager("my-agent", "1.0.0", { env: this.env });
+	readonly mcp = new MCPClientManager("my-agent", "1.0.0");
 	readonly scheduler = new Scheduler({
 		callbacks: {
 			sendReminder: (payload: { message: string }) => {
@@ -149,7 +168,7 @@ Lifecycle starts on the first request, alarm, or WebSocket event of each in-memo
 2. The host runs `onStart()`.
 3. Lifecycle handles the event that woke the object.
 
-A warm object skips startup. If startup fails, the event fails and the next event tries again.
+A warm object skips startup. If startup fails, the event fails and the next event tries again. If the job queue holds jobs, a fallback alarm also retries startup, so queued work does not wait for a new request. For more information, refer to [Jobs and alarms](/agents/lifecycle/job-queue/#retries-and-failures).
 
 For an HTTP request, Lifecycle offers the request to each capability in registration order. The first capability that returns a `Response` handles it. A capability that returns `undefined` passes the request on. A request that no capability handles reaches the host's `onRequest()`.
 

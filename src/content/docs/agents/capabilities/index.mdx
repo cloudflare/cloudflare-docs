@@ -24,7 +24,7 @@ import { Scheduler } from "agents/schedules";
 import { WebSockets } from "agents/websockets";
 
 export class MyAgent extends DurableObject<Env> {
-	readonly mcp = new MCPClientManager("my-agent", "1.0.0", { env: this.env });
+	readonly mcp = new MCPClientManager("my-agent", "1.0.0");
 	readonly scheduler = new Scheduler({ callbacks: {} });
 	readonly webSockets = new WebSockets();
 
@@ -73,9 +73,7 @@ import { Lifecycle } from "agents/lifecycle";
 import { MCPClientManager } from "agents/mcp/client";
 
 export class ToolAgent extends DurableObject<Env> {
-	readonly mcp = new MCPClientManager("tool-agent", "1.0.0", {
-		env: this.env,
-	});
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0");
 	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
 }
 ```

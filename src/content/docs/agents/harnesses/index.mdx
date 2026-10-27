@@ -16,7 +16,7 @@ The harness does the turn-by-turn work around the model: building the prompt, lo
 
 Running an agent on Cloudflare takes three steps:
 
-1. **Pick a harness.** Install one of the [harnesses below](#choose-a-harness), such as the [Pi harness](/agents/harnesses/pi/), or [build your own](#build-your-own-harness).
+1. **Pick a harness.** Install a [harness](#choose-a-harness), such as the [Pi harness](/agents/harnesses/pi/), or [build your own](#build-your-own-harness).
 2. **Run it on a Durable Object.** Install the harness with the [Lifecycle](/agents/lifecycle/). The Lifecycle runs startup, routes requests, and owns the object's job queue and alarm, so the harness wakes and carries on after eviction, deploys, and crashes.
 3. **Plug in capabilities.** Add an [MCP client](/agents/capabilities/#mcp-client), a [scheduler](/agents/capabilities/#scheduler), [WebSockets](/agents/capabilities/#websockets), or any other [capability](/agents/capabilities/) the agent needs. Each one is a field and one more `.use()` call.
 
@@ -24,14 +24,29 @@ Running an agent on Cloudflare takes three steps:
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
 import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
 import { Scheduler } from "agents/schedules";
 
 export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+
 	// The harness: the agent loop.
 	readonly harness = new PiHarness({
-		/* model and tools */
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
 
 	// A capability plugged in next to it.
@@ -50,7 +65,7 @@ For a complete, runnable agent, refer to the [Quick start](/agents/getting-start
 
 ## Choose a harness
 
-Except for Project Think, every harness below is a capability: it installs on a plain Durable Object with `Lifecycle.use()`, next to any other capability, and keeps many sessions per object through `sessions` and `session(id)`. Each session takes durable, idempotent submissions that you can wait on or abort.
+Except for Project Think, every harness in this table is a capability: it installs on a plain Durable Object with `Lifecycle.use()`, next to any other capability, and keeps many sessions per object through `sessions` and `session(id)`. Each session takes durable, idempotent submissions that you can wait on or abort.
 
 | Harness                                               | Import                     | Status       | What runs the loop                                                       |
 | ----------------------------------------------------- | -------------------------- | ------------ | ------------------------------------------------------------------------ |
@@ -85,6 +100,8 @@ store.createSession({ id: "main" });
 store.enqueue({ session: "main", id: operationId, input: { text } });
 store.append("main", "messages", [{ data: message }]);
 ```
+
+For a complete harness built this way, refer to the [Codex harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex). It runs a turn loop derived from Codex, compiled to WebAssembly, as a capability on a plain Durable Object. The transcript lives in Sessions, operation events go to Streams, model and tool steps run as Tasks, and WebSockets serves the events to the browser.
 
 ## What a harness owns
 
