@@ -1,6 +1,6 @@
 ---
 pcx_content_type: configuration
-title: Block AI Bots
+title: AI Crawler and Agent access policies
 description: Configure how Cloudflare handles AI crawlers, agents, and training bots.
 products:
   - bots
@@ -9,14 +9,18 @@ tags:
   - Scraping
 sidebar:
   order: 6
-  label: Block AI Bots
+  label: AI Crawler and Agent access policies
 ---
 
 import { DashButton, Steps } from "~/components";
 
-## Configure AI bot policies
+:::note
+This feature was previously named **Configure AI bot policies**.
+:::
 
-AI bot policies let you control AI bot and agent traffic by behavior. You can set actions for Search, Agent, and Training traffic, and customize access for the top Personal Agents.
+## AI Crawler and Agent access policies
+
+AI Crawler and Agent access policies let you control AI crawler and agent traffic by behavior. You can set actions for Search, Agent, and Training traffic, and customize access for the top Personal Agents.
 
 ### Behaviors
 
@@ -49,14 +53,14 @@ To configure these policies for an existing zone:
   1. In the Cloudflare dashboard, go to **Security** > **Settings**.
 
      <DashButton url="/?to=/:account/:zone/security/settings" />
-  2. Filter by **Bot traffic**, then select **Configure AI bot policies**.
+  2. Filter by **Bot traffic**, then select **AI Crawler and Agent access policies**.
   3. Select an action for each behavior. For Agents, you can also granularly customize access for the top Personal Agents.
   4. Select **Save**.
 </Steps>
 
 ### Default policies for new domains
 
-For new domains, **Search**, **Agents**, and **Training** use **Allow (do not block)** by default. You can change these defaults after onboarding in **Security** > **Settings** > **Configure AI bot policies**.
+For new domains, **Search**, **Agents**, and **Training** use **Allow (do not block)** by default. You can change these defaults after onboarding in **Security** > **Settings** > **AI Crawler and Agent access policies**.
 
 Training actions also apply to mixed-purpose crawlers used for both Search and Training.
 
