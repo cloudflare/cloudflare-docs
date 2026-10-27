@@ -6,7 +6,6 @@ tags:
   - AI
 sidebar:
   order: 2
-  badge: Beta
 products:
   - agents
 ---
@@ -18,10 +17,6 @@ import {
 } from "~/components";
 
 `agents/models/pi-ai` is a [Pi AI](https://github.com/earendil-works/pi/tree/main/packages/ai) provider for Workers AI and AI Gateway. It has the same `createAI` factory and options as the [AI SDK provider](/agents/models/ai-sdk/), and returns Pi AI `Model` objects. Use it with Pi AI's `stream` and `complete`, with [Pi Durable](https://github.com/earendil-works/pi/tree/main/packages/durable), with the [Pi harness](/agents/harnesses/pi/), or with any framework built on a Pi AI `Models` registry.
-
-:::caution[Beta]
-This provider is in beta. Its API may change in a minor release.
-:::
 
 ## Install
 
