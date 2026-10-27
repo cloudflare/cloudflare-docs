@@ -1,6 +1,6 @@
 ---
-title: Agents SDK browser tool can now open sites your agent serves, with internal hostnames
-description: Give a Browser Run browser hostnames such as preview.internal that your agent serves, so the model can open a dev server, a workspace folder, or another Worker.
+title: Agents SDK browser tool can now preview sites your agent builds, without making them public
+description: Let an agent's browser open its own dev server, workspace folder, or another Worker at hostnames such as preview.internal, without putting any of them on the public Internet.
 products:
   - agents
   - browser-run
@@ -9,7 +9,9 @@ date: 2026-10-27
 
 import { TypeScriptExample } from "~/components";
 
-The [persistent browser](/agents/tools/browser/) in the [Cloudflare Agents SDK](/agents/) can now open sites that only your agent serves. Give a [Browser Run](/browser-run/) browser internal hostnames such as `preview.internal`, and its requests to them go to your agent instead of the Internet. The model can open a dev server in its sandbox, a folder in its workspace, or another Worker in the same browser it uses for the web, without exposing anything publicly.
+Agents that build websites need to check their work in a real browser. Until now, that meant putting the agent's dev server or preview build on a public URL so that a [Browser Run](/browser-run/) browser could load it, which also made it reachable by anyone on the Internet.
+
+With internal hostnames, the [persistent browser](/agents/tools/browser/) in the [Cloudflare Agents SDK](/agents/) can open sites that only your agent serves. Give the browser hostnames such as `preview.internal`, and its requests to them go to your agent instead of the Internet. The model can check a dev server in its sandbox, a folder in its workspace, or another Worker in the same browser it uses for the web, and nothing is exposed publicly.
 
 ![An animated diagram of three kinds of hostname: example.com goes out to the Internet; the model points preview.internal at port 5173 with browser.assignHost(), then the browser opens it and your agent serves it from the sandbox; and api.internal goes straight to another Worker, skipping your agent](~/assets/images/agents/browser-internal-hostnames.svg)
 
