@@ -131,7 +131,7 @@ Each Pi conversation gets its own active tab by default. Sessions, forks, and su
 
 Within a conversation, browser calls run sequentially. The model can use `sessionId: "active"` in its CDP commands to return to its active tab. To share a tab deliberately, pass the same `scope` string to the Pi tools.
 
-If a browser expires, closes, or crashes, the next use creates a replacement. The result's `notice` tells a returning scope that its previous browser state is gone. The tool runs against the new browser; it does not restore the old session. `notice` also tells the model when the page opened new tabs, or when another conversation closed its tab or is working in it too.
+If a browser expires, closes, or crashes, the next use creates a replacement. The result's `notice` tells a returning scope that its previous browser state is gone. The tool runs against the new browser. It does not restore the old session. `notice` also tells the model when the page opened new tabs, or when another conversation closed its tab or is working in it too.
 
 Pi does not automatically replay a browser call interrupted by eviction: repeating it could submit a form or click a button twice. The model receives an interrupted result and can decide how to continue. Stopping a conversation does not cancel a browser call already running. The call finishes or reaches `timeoutMs`, which defaults to 60 seconds.
 
@@ -190,7 +190,7 @@ try {
 
 ## Internal hostnames
 
-Internal hostnames give the browser sites that your agent serves instead of the internet, such as static assets in an R2 bucket, a folder in the agent's workspace, a dev server in its sandbox, or another Worker. The model opens them like any other page, for example to check a site it just built before you deploy it. Nothing is exposed publicly: only this browser can reach these hostnames.
+Internal hostnames give the browser sites that your agent serves instead of the Internet, such as static assets in an R2 bucket, a folder in the agent's workspace, a dev server in its sandbox, or another Worker. The model opens them like any other page, for example to check a site it just built before you deploy it. Nothing is exposed publicly: only this browser can reach these hostnames.
 
 Requests for an internal hostname do not leave Cloudflare. Browser Run sends them to your Worker through [outbound Workers](/browser-run/features/outbound-workers/), and the `Browser` runs the matching host's `fetch` function inside your Durable Object, so it can use the object's bindings and state.
 
@@ -459,7 +459,7 @@ The model cannot send these commands, because your application owns the browser 
 
 - `Browser.close`, `Browser.crash`, and `Browser.crashGpuProcess`. To close a tab, the model sends `Target.closeTarget`.
 - `Cloudflare.getLiveView` and `Cloudflare.handoff`.
-- `Target.sendMessageToTarget` and `Target.exposeDevToolsProtocol`, which could carry the commands above inside them.
+- `Target.sendMessageToTarget` and `Target.exposeDevToolsProtocol`, which could otherwise send the other refused commands.
 
 ## Read pages without a browser
 
