@@ -62,15 +62,15 @@ If a header is applied twice in the `_headers` file, the values are joined with 
 Rules are applied in the order they appear in the file.
 
 :::caution
-Joining works as intended for list-valued headers such as `X-Robots-Tag`. For a header that takes a single value, such as `Cache-Control`, joining two rules produces conflicting directives:
+Joining works as intended for list-valued headers such as `X-Robots-Tag`. For headers where repeated directives conflict, such as `Cache-Control`, joining two rules produces conflicting directives:
 
 ```txt
 Cache-Control: public, max-age=604800, public, max-age=0, s-maxage=86400
 ```
 
-[RFC 9111](https://www.rfc-editor.org/rfc/rfc9111) leaves two `max-age` values ambiguous, so implementations resolve it however they choose. Nothing errors and the asset still serves, which makes this easy to miss.
+When a directive such as `max-age` appears more than once, [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111#section-4.2.1) says caches should use the first value or treat the response as stale, so the result may not be what you intended. Nothing errors and the asset still serves, which makes this easy to miss.
 
-To give one file a different single-valued header from the rule that already covers it, [detach the header](#detach-a-header) and set it again.
+To give one file a different value from the rule that already covers it, [detach the header](#detach-a-header) and set it again.
 :::
 
 ### Detach a header
@@ -87,7 +87,7 @@ Because rules are applied in file order, `! ` removes only what earlier rules ha
   ! Content-Security-Policy
 ```
 
-Detaching and setting the header again is how one file takes a different value for a single-valued header:
+Detaching and setting the header again is how one file takes a different value for a header such as `Cache-Control`:
 
 ```txt
 /assets/*
