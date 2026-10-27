@@ -22,13 +22,13 @@ Every MCP client that connects to your server can register itself, so your `/aut
 
 Workers OAuth Provider handles the security of the consent flow. Your code renders the page.
 
-| API | What it does |
-| --- | --- |
-| `describeConsent(request)` | Returns what the page must show: `clientName`, `clientDomain` (the verified domain of a Client ID Metadata Document client), `redirectHost`, `redirectIsLoopback`, and `scope`. |
-| `beginConsent(request)` | Stores the authorization request on the server and returns a single-use `handle` for your form, plus `headers` to send with the page. The headers set a browser-bound `__Host-` cookie and block framing. |
-| `approveConsent(request, handle, options?)` | Checks the handle against the cookie and returns the stored authorization request. Pass `scope` with the scopes the user approved. |
-| `denyConsent(request, handle)` | Returns headers that redirect the user back to the client with `access_denied`. |
-| `isConsentRemembered(request, authRequest, remember)` | Returns `true` if the user already approved this client, redirect URI, and scopes. Pass `remember` to `approveConsent()` to record an approval. |
+| API                                                   | What it does                                                                                                                                                                                              |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `describeConsent(request)`                            | Returns what the page must show: `clientName`, `clientDomain` (the verified domain of a Client ID Metadata Document client), `redirectHost`, `redirectIsLoopback`, and `scope`.                           |
+| `beginConsent(request)`                               | Stores the authorization request on the server and returns a single-use `handle` for your form, plus `headers` to send with the page. The headers set a browser-bound `__Host-` cookie and block framing. |
+| `approveConsent(request, handle, options?)`           | Checks the handle against the cookie and returns the stored authorization request. Pass `scope` with the scopes the user approved.                                                                        |
+| `denyConsent(request, handle)`                        | Returns headers that redirect the user back to the client with `access_denied`.                                                                                                                           |
+| `isConsentRemembered(request, authRequest, remember)` | Returns `true` if the user already approved this client, redirect URI, and scopes. Pass `remember` to `approveConsent()` to record an approval.                                                           |
 
 <TypeScriptExample>
 
@@ -62,9 +62,11 @@ function consentPage(details: ConsentDescription, handle: string) {
 	return html`<!doctype html>
 		<h1>Allow ${details.clientName} to access your account?</h1>
 		<p>Access will be sent to <strong>${details.redirectHost}</strong>.</p>
-		${details.redirectIsLoopback
-			? html`<p>This sends access to an app on your computer.</p>`
-			: ""}
+		${
+			details.redirectIsLoopback
+				? html`<p>This sends access to an app on your computer.</p>`
+				: ""
+		}
 		<form method="post">
 			<input type="hidden" name="handle" value="${handle}" />
 			${details.scope.map(
@@ -82,7 +84,8 @@ function consentPage(details: ConsentDescription, handle: string) {
 async function authorize(request: Request, env: Env): Promise<Response> {
 	const oauth = authorizationServer.getOAuthApi(env);
 	const user = await getSignedInUser(request);
-	if (!user) return Response.redirect(new URL("/login", request.url).toString(), 302);
+	if (!user)
+		return Response.redirect(new URL("/login", request.url).toString(), 302);
 
 	if (request.method === "GET") {
 		const authRequest = await oauth.parseAuthRequest(request);
@@ -144,17 +147,17 @@ The form carries only the handle. The authorization request stays on the server,
 
 Refer to [Building a consent page](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/consent-page.md) for a complete page and for which errors to redirect back to the client and which to render on your page.
 
-## Signing in through a third-party provider
+## Sign in through a third-party provider
 
 If your server signs users in with GitHub, Google, or another provider, every MCP client reaches that provider through your one OAuth app. This is the [confused deputy problem](https://modelcontextprotocol.io/docs/2026-07-28/tutorials/security/security_best_practices#confused-deputy-problem): without per-client consent, an attacker's client can ride on a user's earlier approval at the provider.
 
 Ask for consent first, then hand the user to the provider:
 
-| API | What it does |
-| --- | --- |
+| API                                   | What it does                                                                                                                                                                                                              |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `beginUpstream(authRequest, options)` | Call after `approveConsent()`. Stores the authorization request and your `data` (for example, a PKCE verifier), and returns a `state` value for the provider redirect, bound to the user's browser by a `__Host-` cookie. |
-| `finishUpstream(request)` | Call in your callback. Checks `state` against the cookie and returns the original authorization request and your `data`. A provider code replayed in another browser is rejected. |
-| `tokenExchangeCallback` | An `OAuthAuthorizationServer` option that runs on token refresh. Refresh the provider's token there, and throw `OAuthError("invalid_grant")` when the provider has revoked access. |
+| `finishUpstream(request)`             | Call in your callback. Checks `state` against the cookie and returns the original authorization request and your `data`. A provider code replayed in another browser is rejected.                                         |
+| `tokenExchangeCallback`               | An `OAuthAuthorizationServer` option that runs on token refresh. Refresh the provider's token there, and throw `OAuthError("invalid_grant")` when the provider has revoked access.                                        |
 
 <TypeScriptExample>
 
@@ -228,7 +231,10 @@ async function authorize(request: Request, env: Env): Promise<Response> {
 
 	const github = new URL("https://github.com/login/oauth/authorize");
 	github.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
-	github.searchParams.set("redirect_uri", new URL("/callback", request.url).toString());
+	github.searchParams.set(
+		"redirect_uri",
+		new URL("/callback", request.url).toString(),
+	);
 	github.searchParams.set("scope", "read:user");
 	github.searchParams.set("state", state);
 	github.searchParams.set("code_challenge", await sha256(verifier));
@@ -239,26 +245,39 @@ async function authorize(request: Request, env: Env): Promise<Response> {
 
 async function callback(request: Request, env: Env): Promise<Response> {
 	const oauth = authorizationServer.getOAuthApi(env);
-	const { request: original, data, headers } =
-		await oauth.finishUpstream<{ verifier: string }>(request);
+	const {
+		request: original,
+		data,
+		headers,
+	} = await oauth.finishUpstream<{ verifier: string }>(request);
 
 	const code = new URL(request.url).searchParams.get("code");
-	if (!code) return new Response("GitHub did not return a code", { status: 400 });
+	if (!code)
+		return new Response("GitHub did not return a code", { status: 400 });
 
-	const tokenResponse = await fetch("https://github.com/login/oauth/access_token", {
-		method: "POST",
-		headers: { Accept: "application/json", "Content-Type": "application/json" },
-		body: JSON.stringify({
-			client_id: env.GITHUB_CLIENT_ID,
-			client_secret: env.GITHUB_CLIENT_SECRET,
-			code,
-			code_verifier: data.verifier,
-		}),
-	});
+	const tokenResponse = await fetch(
+		"https://github.com/login/oauth/access_token",
+		{
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				client_id: env.GITHUB_CLIENT_ID,
+				client_secret: env.GITHUB_CLIENT_SECRET,
+				code,
+				code_verifier: data.verifier,
+			}),
+		},
+	);
 	const { access_token } = await tokenResponse.json<{ access_token: string }>();
 
 	const userResponse = await fetch("https://api.github.com/user", {
-		headers: { Authorization: `Bearer ${access_token}`, "User-Agent": "my-mcp-server" },
+		headers: {
+			Authorization: `Bearer ${access_token}`,
+			"User-Agent": "my-mcp-server",
+		},
 	});
 	const user = await userResponse.json<{ id: number; login: string }>();
 

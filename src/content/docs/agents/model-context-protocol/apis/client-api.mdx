@@ -125,6 +125,35 @@ await this.addMcpServer("server", "https://mcp.example.com/mcp", {
 | `streamable-http` | HTTP with streaming                                 |
 | `sse`             | Server-Sent Events - legacy/compatibility transport |
 
+### RPC transport
+
+`addMcpServer()` can also connect to an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/) through its Durable Object binding instead of a URL. Messages travel over [Workers RPC](/workers/runtime-apis/bindings/service-bindings/rpc/), so the server needs no HTTP endpoint.
+
+:::caution[Use Streamable HTTP for new servers]
+The RPC transport is still supported, but it only connects to `McpAgent`, which is deprecated. There is no RPC transport for servers built with [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/). For new servers, serve them with `createMcpHandler` and connect with a URL over Streamable HTTP.
+:::
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env> {
+	async onStart() {
+		// env.MyMCP is the Durable Object binding for an McpAgent class
+		await this.addMcpServer("my-mcp", this.env.MyMCP, {
+			props: { userId: "user-123", role: "admin" },
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+- **No authentication.** The RPC transport has no OAuth flow. Pass user context in `props`. The `McpAgent` reads it as `this.props`.
+- **Restored after hibernation.** The binding name and props are stored, so the connection comes back without extra code.
+- **Deduplicated by name.** Calling `addMcpServer()` again with a name that already has an active RPC connection returns the existing connection, so it is safe to call in `onStart()`.
+
+For the server side, including bindings and the tool timeout, refer to [RPC transport](/agents/model-context-protocol/apis/agent-api/#rpc-transport) in the `McpAgent` reference.
+
 ### Custom headers
 
 For servers behind authentication (like Cloudflare Access) or using bearer tokens:
@@ -697,9 +726,19 @@ async addMcpServer(
   | { id: string; state: "authenticating"; authUrl: string }
   | { id: string; state: "ready" }
 >
+
+// RPC transport (Durable Object binding for an McpAgent)
+async addMcpServer(
+  serverName: string,
+  binding: DurableObjectNamespace<McpAgent>,
+  options?: {
+    id?: string;
+    props?: Record<string, unknown>;
+  }
+): Promise<{ id: string; state: "ready" }>
 ```
 
-#### Parameters
+#### Parameters (HTTP transport)
 
 - `serverName` (string, required) — Display name for the MCP server
 - `url` (string, required) — URL of the MCP server endpoint
@@ -714,6 +753,16 @@ async addMcpServer(
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
   - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/runtime/execution/retries/) for details on `RetryOptions`.
 
+#### Parameters (RPC transport)
+
+- `serverName` (string, required) — Display name for the MCP server
+- `binding` (`DurableObjectNamespace`, required) — Durable Object binding for an `McpAgent` class
+- `options` (object, optional):
+  - `id` — Optional stable, caller-supplied server ID. Refer to [Stable server IDs](#stable-server-ids)
+  - `props` — Data passed to the `McpAgent` and available as `this.props`, such as user context
+
+The RPC transport only connects to the deprecated `McpAgent`. Prefer the HTTP transport with a [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) server. Refer to [RPC transport](#rpc-transport).
+
 #### Returns
 
 A Promise that resolves to a discriminated union based on connection state:
@@ -722,7 +771,6 @@ A Promise that resolves to a discriminated union based on connection state:
   - `id` (string) — Unique identifier for this server connection
   - `state` (`"authenticating"`) — Server is waiting for OAuth authorization
   - `authUrl` (string) — OAuth authorization URL for user authentication
-
 - When `state` is `"ready"`:
   - `id` (string) — Unique identifier for this server connection
   - `state` (`"ready"`) — Server is fully connected and operational

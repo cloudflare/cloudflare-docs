@@ -26,14 +26,14 @@ Code Mode is experimental and may have breaking changes. Use caution in producti
 
 ## Choose a pattern
 
-| Pattern              | MCP tools          | Model-facing API                      | Use when                                                                 |
-| -------------------- | ------------------ | ------------------------------------- | ------------------------------------------------------------------------ |
-| Single code tool     | `code`             | Typed methods for every upstream tool | You already have an MCP server with a manageable set of tools.           |
-| Search and execute   | `search`, `execute` | OpenAPI document and request function | You have a large API whose complete schema should stay out of context.   |
+| Pattern            | MCP tools           | Model-facing API                      | Use when                                                               |
+| ------------------ | ------------------- | ------------------------------------- | ---------------------------------------------------------------------- |
+| Single code tool   | `code`              | Typed methods for every upstream tool | You already have an MCP server with a manageable set of tools.         |
+| Search and execute | `search`, `execute` | OpenAPI document and request function | You have a large API whose complete schema should stay out of context. |
 
 Use `codeMcpServer()` when an existing MCP server already defines the operations and schemas the model needs. Use `openApiMcpServer()` when a large OpenAPI catalog needs progressive discovery and a fixed model-context footprint.
 
-Both functions currently return an SDK v1 server. Serve it through the explicit legacy `createLegacyMcpHandler` API, as the examples below do.
+Both functions currently return an SDK v1 server. Serve it with `createLegacyMcpHandler`, as shown in [Wrap an existing MCP server](#wrap-an-existing-mcp-server) and [Publish a large API with search and execute](#publish-a-large-api-with-search-and-execute).
 
 ## Wrap an existing MCP server
 

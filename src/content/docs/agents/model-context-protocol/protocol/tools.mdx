@@ -28,7 +28,7 @@ The Agents SDK also includes the experimental `agents/experimental/webmcp` adapt
 	description="Bridge tools from a remote MCP server into Chrome's experimental WebMCP API."
 />
 
-## Defining tools
+## Define tools
 
 Use `server.registerTool()` to register a tool on a stateless `McpServer` instance. Each tool has a name, a description, an input schema defined with a schema library like [Zod](https://zod.dev) or [Valibot](https://valibot.dev), and a handler function.
 
@@ -200,7 +200,7 @@ export default {
 
 </TypeScriptExample>
 
-## Using tools with `createMcpHandler`
+## Serve tools with `createMcpHandler`
 
 For stateless MCP servers, define tools inside a factory function and pass the server to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/):
 
@@ -253,6 +253,7 @@ function createServer() {
 		"incrementCounter",
 		{ description: "Increment and return your counter" },
 		async () => {
+			// props are set by OAuthProvider. Without it, every caller shares "anonymous".
 			const userId = String(getMcpAuthContext()?.props.userId ?? "anonymous");
 			const count = Number((await env.COUNTERS.get(userId)) ?? 0) + 1;
 			await env.COUNTERS.put(userId, String(count));
@@ -276,7 +277,7 @@ export default {
 
 </TypeScriptExample>
 
-For data that needs transactions or per-user logic, call a Durable Object or an [Agent](/agents/) from the tool.
+To add `OAuthProvider` and per-user props, refer to [Authorization](/agents/model-context-protocol/protocol/authorization/). For data that needs transactions or per-user logic, call a Durable Object or an [Agent](/agents/) from the tool.
 
 ## Next steps
 

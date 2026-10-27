@@ -276,7 +276,7 @@ Get started with a remote MCP server that uses [Descope](https://www.descope.com
 
 For every option, refer to the [Workers OAuth Provider documentation](https://github.com/cloudflare/workers-oauth-provider#readme). If you run an existing `OAuthProvider` deployment, which combines both roles in one Worker, refer to the [1.x migration guide](https://github.com/cloudflare/workers-oauth-provider/blob/main/docs/migration-1.x.md).
 
-## Using authentication context in tools
+## Use authentication context in tools
 
 The `props` you passed to `completeAuthorization()` reach the resource server handler as `ctx.props`, and `createMcpHandler` exposes them to your server through `getMcpAuthContext()`. The verified token's scopes and client are on `ctx.auth` in the handler.
 
@@ -327,7 +327,9 @@ function createServer() {
 			if (!props.permissions.includes("admin")) {
 				return {
 					isError: true,
-					content: [{ type: "text", text: "Permission denied: requires admin" }],
+					content: [
+						{ type: "text", text: "Permission denied: requires admin" },
+					],
 				};
 			}
 			return {
