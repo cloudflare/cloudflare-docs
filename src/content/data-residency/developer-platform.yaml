@@ -1,0 +1,267 @@
+category: Developer Platform
+order: 3
+entries:
+  - product: Cloudflare Images
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Only when using a [Custom Domain](/images/optimization/hosted-images/serve-from-custom-domains/) set to a region.
+      storage:
+        status: not-supported
+        notes:
+          - Stored images have no jurisdiction setting.
+      cmb:
+        status: supported
+        impact:
+          - Logs and analytics are not available when Customer Metadata Boundary is set to EU.
+      gkm:
+        status: out-of-scope
+  - product: AI Gateway
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: not-supported
+        notes:
+          - Stored AI Gateway logs have no jurisdiction setting.
+      cmb:
+        status: supported
+        impact:
+          - AI Gateway [logs](/ai-gateway/observability/logging/) have no storage jurisdiction.
+      gkm:
+        status: not-supported
+  - product: AI Search
+    controls:
+      regional_services:
+        status: not-supported
+        notes:
+          - Only R2 Custom Domains are supported.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - "The following are exceptions and are supported: AI Gateway Analytics (GraphQL Analytics datasets) and Logs (Logpush), R2 Dashboard Metrics & Analytics, Workers AI GraphQL Analytics datasets like aiInferenceAdaptive."
+      gkm:
+        status: not-supported
+        notes:
+          - Only R2 Custom Domains and Custom Certificate are supported.
+  - product: AI Security for Apps
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: not-supported
+  - product: Cloudflare Pages
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: requirements
+        requirements:
+          - Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.
+  - product: Cloudflare D1
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: requirements
+        requirements:
+          - Set a [jurisdiction](/d1/configuration/data-location/#restrict-database-to-a-jurisdiction) (`eu`, `us`, or `fedramp`) when you create the database. You cannot add or change it afterward.
+        notes:
+          - The jurisdiction controls where the database runs and persists data. Workers can access it from anywhere.
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+    last_verified: "2026-10-15"
+    evidence:
+      - /d1/configuration/data-location/
+  - product: Durable Objects
+    controls:
+      regional_services:
+        status: supported
+        notes:
+          - Regional Services applies to the hostname that receives the request. Workers can reach a jurisdiction-restricted object from anywhere.
+      storage:
+        status: requirements
+        requirements:
+          - 'Create IDs from a [jurisdiction subnamespace](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction), for example `env.MY_DURABLE_OBJECT.jurisdiction("eu")`. Supported: `eu`, `us`, `fedramp`.'
+        impact:
+          - The `DurableObjectId` is logged outside the jurisdiction for billing and debugging.
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: out-of-scope
+    last_verified: "2026-10-15"
+    evidence:
+      - /durable-objects/reference/data-location/
+  - product: Email Routing
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Remote MCP Server
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Only when using Workers Routes & Domains.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: requirements
+        requirements:
+          - Only when using Workers Routes & Domains and Custom Certificate.
+  - product: R2
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
+      storage:
+        status: requirements
+        requirements:
+          - Set a [jurisdiction](/r2/reference/data-location/#jurisdictional-restrictions) (`eu`, `us`, or `fedramp`) when you create the bucket. Use a jurisdiction-aware binding or S3 endpoint.
+        impact:
+          - Location hints are best effort and do not restrict storage.
+          - Logpush cannot write directly to a bucket with a jurisdiction.
+      cmb:
+        status: supported
+        notes:
+          - R2 dashboard [metrics and analytics](/r2/platform/metrics-analytics/) are populated.
+      gkm:
+        status: requirements
+        requirements:
+          - Only when using a Custom Domain and a [Custom Certificate](/r2/reference/data-security/#encryption-in-transit) or [Keyless SSL](/ssl/keyless-ssl/).
+    last_verified: "2026-10-15"
+    evidence:
+      - /r2/reference/data-location/
+  - product: Smart Placement
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: out-of-scope
+  - product: Stream
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: not-supported
+        notes:
+          - No customer jurisdiction setting.
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: out-of-scope
+  - product: Vectorize
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: not-supported
+        notes:
+          - No customer jurisdiction setting.
+      cmb:
+        status: not-supported
+      gkm:
+        status: out-of-scope
+  - product: Workers (deployed on a Zone)
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary. Use Logpush instead.
+      gkm:
+        status: supported
+  - product: Workers AI
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Workers KV
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: requirements
+        requirements:
+          - Set a [jurisdiction](/kv/reference/data-location/#restrict-a-namespace-to-a-jurisdiction) (`eu`, `us`, or `fedramp`) when you create the namespace. You cannot add or change it afterward.
+        impact:
+          - The jurisdiction controls durable storage only. KV data can be cached outside the jurisdiction.
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+    last_verified: "2026-10-15"
+    evidence:
+      - /kv/reference/data-location/
+  - product: Workers.dev
+    controls:
+      regional_services:
+        status: not-supported
+        notes:
+          - Use a [custom domain](/workers/configuration/routing/custom-domains/) set to a region.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Workers [metrics and analytics](/workers/observability/metrics-and-analytics/) are not available outside the US. Use [Logpush](/logs/logpush/).
+        notes:
+          - Applies to the `*.workers.dev` subdomain, per the [Workers configuration guide](/data-localization/how-to/workers/#customer-metadata-boundary).
+      gkm:
+        status: not-supported
+    review: true
+  - product: Workers Analytics Engine (WAE)
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: out-of-scope

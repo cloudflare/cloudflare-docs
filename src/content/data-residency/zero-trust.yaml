@@ -1,0 +1,110 @@
+category: Zero Trust
+order: 6
+entries:
+  - product: Access
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Can be localized to US FedRAMP Moderate Domestic region only.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region. EU customers must use Logpush to retain logs.
+      gkm:
+        status: supported
+        impact:
+          - Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) is not yet localized.
+  - product: Browser Isolation
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Currently may only be used with US FedRAMP region.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: CASB
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: out-of-scope
+  - product: Cloudflare Tunnel
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from Regional Services. For public hostnames served through a tunnel, Regional Services is configured at the DNS record level and operates independently from the tunnel connector region. For incoming web requests, Regional Services only applies when you have [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) (services exposed to users through the tunnel). In that case, the region associated with the DNS record will apply.
+      storage:
+        status: unassessed
+      cmb:
+        status: out-of-scope
+      gkm:
+        status: out-of-scope
+  - product: Digital Experience
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Dashboard Analytics are empty when using CMB outside the US region. Use [Logpush](/logs/logpush/) instead.
+      gkm:
+        status: out-of-scope
+  - product: DLP
+    controls:
+      regional_services:
+        status: out-of-scope
+        notes:
+          - Uses Gateway HTTP and CASB.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - DLP is part of Gateway HTTP, however, [DLP detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) are not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: out-of-scope
+        notes:
+          - Uses Gateway HTTP and CASB.
+  - product: Gateway
+    controls:
+      regional_services:
+        status: supported
+        impact:
+          - Gateway HTTP (web traffic filtering) supports Regional Services. Gateway DNS (domain name filtering) does not yet support regionalization.
+          - ICMP proxy (forwarding network diagnostic traffic like ping) and Mesh proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) (an add-on that quarantines and scans suspicious files in an isolated environment) is incompatible with DLS.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
+      gkm:
+        status: supported
+        impact:
+          - You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
+  - product: Cloudflare One Client
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: out-of-scope

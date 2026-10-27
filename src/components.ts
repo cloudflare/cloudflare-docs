@@ -34,6 +34,7 @@ export { default as Type } from "./components/cf/Type.astro";
 export { default as WranglerConfig } from "./components/cf/WranglerConfig.astro";
 export { default as WranglerNamespace } from "./components/cf/WranglerNamespace.astro";
 export { default as Feature } from "./components/cf/Feature.astro";
+export { default as DataResidencyCatalog } from "./components/cf/DataResidencyCatalog.astro";
 export { default as Glossary } from "./components/cf/Glossary.astro";
 export { default as GlossaryTooltip } from "./components/cf/GlossaryTooltip.astro";
 export { default as LinkCard } from "./components/cf/LinkCard.astro";
