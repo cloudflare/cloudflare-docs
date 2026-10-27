@@ -12,7 +12,7 @@ import { WranglerConfig } from "~/components";
 
 ## Restrict Workflows to a jurisdiction
 
-Jurisdictions are used to create Workflows whose instances only run and store data within a region to comply with local regulations such as the [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+Jurisdictions are used to create Workflows whose instances only run and store data within a region to comply with data localization regulations such as [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
 
 Workers can still create and manage instances of a Workflow restricted to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Workflow instances themselves run and persist data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
 
