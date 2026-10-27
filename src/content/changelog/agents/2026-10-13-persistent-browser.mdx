@@ -10,7 +10,7 @@ The [Cloudflare Agents SDK](/agents/) now provides a `browserTool` that gives yo
 
 When you give `browserTool` to your agent, the model writes code that drives the browser through the [Chrome DevTools Protocol (CDP)](/browser-run/cdp/). Screenshots return as images that an image-capable model can inspect and your UI can display.
 
-To use `browserTool`, make sure you have [Agents SDK v0.28.0](https://github.com/cloudflare/agents/releases/tag/agents%400.28.0) or greater installed. Create a `Browser`, register it with your object's [Lifecycle](/agents/runtime/lifecycle/), and add the tool to a [Pi Durable](/agents/harnesses/pi/) [extension registry](/agents/harnesses/pi/extensions/) before opening the harness:
+To use `browserTool`, make sure you have [Agents SDK v0.28.0](https://github.com/cloudflare/agents/releases/tag/agents%400.28.0) or greater installed. Create a `Browser`, register it with your object's [Lifecycle](/agents/lifecycle/), and add the tool to a [Pi Durable](/agents/harnesses/pi/) [extension registry](/agents/harnesses/pi/extensions/) before opening the harness:
 
 <TypeScriptExample>
 

@@ -3,7 +3,8 @@ title: OpenCode
 description: Run OpenCode 2.0 in a plain Durable Object with the Agents SDK, Workers AI and AI Gateway models, bundled plugins, and durable sessions.
 pcx_content_type: overview
 sidebar:
-  order: 10
+  order: 5
+  badge: Experimental
 products:
   - agents
 reviewed: 2026-10-12
@@ -29,7 +30,7 @@ OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCode
 
 ## How it works
 
-`OpenCodeHarness` is a [Lifecycle capability](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md). The Lifecycle starts the capability and provides storage and a durable job queue.
+`OpenCodeHarness` is a [Lifecycle capability](/agents/lifecycle/build-a-capability/). The Lifecycle starts the capability and provides storage and a durable job queue.
 
 ```mermaid
 flowchart LR
@@ -339,4 +340,4 @@ export default Plugin.define({
 
 </TypeScriptExample>
 
-Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/runtime/execution/agent-skills/) for authoring guidance.
+Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/tools/agent-skills/) for authoring guidance.
