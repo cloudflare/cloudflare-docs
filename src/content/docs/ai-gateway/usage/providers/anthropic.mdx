@@ -78,6 +78,8 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1
 
 ### Anthropic SDK
 
+Set `x-api-key` explicitly when supplying your Anthropic key. SDK authentication headers can differ between versions. Setting `Authorization` to `null` removes the SDK-generated bearer header. Use `cf-aig-authorization` separately to authenticate to AI Gateway.
+
 <Details header="With Key in Request">
 <Tabs>
 <TabItem label="With Authenticated Gateway">
@@ -85,12 +87,15 @@ curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/anthropic/v1
 import Anthropic from "@anthropic-ai/sdk";
 
 const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
+const providerKey = "{ANTHROPIC_API_KEY}";
 
 const anthropic = new Anthropic({
-	apiKey: "{ANTHROPIC_API_KEY}",
+	apiKey: providerKey,
 	baseURL,
 	defaultHeaders: {
-		Authorization: `Bearer {cf_api_token}`,
+		"x-api-key": providerKey,
+		"cf-aig-authorization": "Bearer {CF_AIG_TOKEN}",
+		Authorization: null,
 	},
 });
 
@@ -106,10 +111,15 @@ const message = await anthropic.messages.create({
 import Anthropic from "@anthropic-ai/sdk";
 
 const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
+const providerKey = "{ANTHROPIC_API_KEY}";
 
 const anthropic = new Anthropic({
-	apiKey: "{ANTHROPIC_API_KEY}",
+	apiKey: providerKey,
 	baseURL,
+	defaultHeaders: {
+		"x-api-key": providerKey,
+		Authorization: null,
+	},
 });
 
 const message = await anthropic.messages.create({
@@ -128,10 +138,12 @@ import Anthropic from "@anthropic-ai/sdk";
 const baseURL = `https://gateway.ai.cloudflare.com/v1/{accountId}/{gatewayId}/anthropic`;
 
 const anthropic = new Anthropic({
-	apiKey: "placeholder", // Ignored by AI Gateway when using BYOK or Unified Billing, but the SDK requires a value.
+	apiKey: "placeholder",
 	baseURL,
 	defaultHeaders: {
-		Authorization: `Bearer {cf_api_token}`,
+		"cf-aig-authorization": "Bearer {CF_AIG_TOKEN}",
+		"x-api-key": null,
+		Authorization: null,
 	},
 });
 
@@ -143,7 +155,9 @@ const message = await anthropic.messages.create({
 ```
 
 <Aside type="note">
-When using BYOK or Unified Billing, do not set `x-api-key` in `defaultHeaders`. AI Gateway supplies the Anthropic key for you, and adding your own `x-api-key` header will cause the request to fail. The `apiKey` value in the example is a placeholder to satisfy the Anthropic SDK, which requires either the `apiKey` option or the `ANTHROPIC_API_KEY` environment variable to be set.
+The placeholder satisfies the SDK's credential configuration. The `null` headers remove SDK-generated provider credentials before sending the request. AI Gateway uses an applicable stored BYOK key, or falls back to Unified Billing when allowed. If **Require provider credentials** is on and no applicable stored key exists, the request returns [error `2044`](/ai-gateway/reference/troubleshooting/#400-provider-credentials-required-2044).
+
+Supplying a real key in `x-api-key` instead selects request-key authentication. This bypasses stored keys and Unified Billing.
 </Aside>
 </Details>
 
