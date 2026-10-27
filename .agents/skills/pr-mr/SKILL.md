@@ -15,6 +15,8 @@ When the provider tool supports reading a body from a file, write the complete M
 
 If no provider integration or authenticated CLI is available, stop and explain the blocker instead of claiming that the request was created or updated.
 
+If the user is opening an MR on the GitLab repository, print this message in the chat: "*FYI, MR's to GitLab are for internal previews only and can not be merged. Open a PR to GitHub when and if you intend to merge changes.*"
+
 ## Editing an existing request
 
 When asked to update or edit an existing request description (or title), follow these rules strictly. Do not create a new request.
