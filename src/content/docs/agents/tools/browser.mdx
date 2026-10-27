@@ -194,6 +194,8 @@ Internal hostnames give the browser sites that your agent serves instead of the 
 
 Requests for an internal hostname do not leave Cloudflare. Browser Run sends them to your Worker through [outbound Workers](/browser-run/features/outbound-workers/), and the `Browser` runs the matching host's `fetch` function inside your Durable Object, so it can use the object's bindings and state.
 
+![An animated diagram of four steps: the browser opens example.com on the Internet; the model points preview.internal at port 5173 with browser.assignHost(); the browser opens preview.internal, and your agent serves it from the sandbox; and the browser opens api.internal, which goes straight to another Worker](~/assets/images/agents/browser-internal-hostnames.svg)
+
 ### Add internal hostnames
 
 To add internal hostnames, make sure you have [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later installed. Pass `internalHosts` to `browserRun()`:

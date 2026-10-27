@@ -11,6 +11,8 @@ import { TypeScriptExample } from "~/components";
 
 The [persistent browser](/agents/tools/browser/) in the [Cloudflare Agents SDK](/agents/) can now open sites that only your agent serves. Give a [Browser Run](/browser-run/) browser internal hostnames such as `preview.internal`, and its requests to them go to your agent instead of the Internet. The model can open a dev server in its sandbox, a folder in its workspace, or another Worker in the same browser it uses for the web, without exposing anything publicly.
 
+![An animated diagram of four steps: the browser opens example.com on the Internet; the model points preview.internal at port 5173 with browser.assignHost(); the browser opens preview.internal, and your agent serves it from the sandbox; and the browser opens api.internal, which goes straight to another Worker](~/assets/images/agents/browser-internal-hostnames.svg)
+
 Each internal host has a `fetch` function that runs in your Durable Object, so it can use the object's bindings and state. A host can also send its requests straight to another Worker through a service binding. Add a `target` schema to a host, and the model chooses what it serves, such as which port or which folder.
 
 To use internal hostnames, make sure you have [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later installed, and pass `internalHosts` to `browserRun()`:
