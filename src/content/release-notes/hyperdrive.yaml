@@ -3,7 +3,7 @@ link: "/hyperdrive/platform/release-notes/"
 productName: Hyperdrive
 productLink: "/hyperdrive/"
 entries:
-  - publish_date: "2026-09-10"
+  - publish_date: "2026-10-27"
     title: Hyperdrive raises Workers Paid connection limit
     description: |-
       Customers on a Workers Paid plan can configure up to 1,500 origin database connections per Hyperdrive configuration.
