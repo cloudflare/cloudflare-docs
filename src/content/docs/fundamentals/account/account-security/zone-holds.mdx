@@ -35,9 +35,13 @@ To enable a zone hold:
 
 You also have the option to **Also prevent subdomains**, which prevents anyone in your organization from creating subdomains or custom hostnames related to your zone.
 
+:::note
+A zone hold also blocks operations such as adding a [Pages custom domain](/pages/configuration/custom-domains/) or custom hostname for a hostname under the hold, even within the same Cloudflare account. To configure a custom domain on a held zone or subdomain, temporarily [release the zone hold](#release-zone-holds) during setup.
+:::
+
 ## Release zone holds
 
-You may want to temporarily release a zone hold to allow another team to [register a subdomain](/dns/zone-setups/subdomain-setup/) in a separate Cloudflare account, such as `docs.example.com`.
+You may want to temporarily release a zone hold to allow another team to [register a subdomain](/dns/zone-setups/subdomain-setup/) in a separate Cloudflare account (such as `docs.example.com`), or to add a [Pages custom domain](/pages/configuration/custom-domains/) under a held domain.
 
 To release a zone hold:
 

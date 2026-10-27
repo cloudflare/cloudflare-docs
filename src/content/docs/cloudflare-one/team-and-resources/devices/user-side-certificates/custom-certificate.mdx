@@ -28,7 +28,7 @@ You can upload up to five custom root certificates. If your organization require
 :::caution
 Custom certificates are limited to use between your users and the Gateway proxy. Gateway connects to origin servers using publicly trusted certificates, similar to how a browser validates secure websites.
 
-If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/traffic-policies/http-policies/#untrusted-certificates) set to _Pass through_.
+If your users need to connect to self-signed origin servers, create an HTTP Allow policy for the origin server with the [untrusted certificate action](/cloudflare-one/traffic-controls/http-policies/#untrusted-certificates) set to _Pass through_.
 :::
 
 ## Generate a custom root CA
@@ -236,7 +236,7 @@ To use a custom root certificate you generated and uploaded to Cloudflare, refer
 
 ### Error 526: Invalid SSL certificate
 
-If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, refer to the [Error 526 documentation](/cloudflare-one/traffic-policies/troubleshooting/#error-526-invalid-ssl-certificate).
+If Gateway returns an **HTTP Response Code: 526** after deploying a custom certificate, refer to the [Error 526 documentation](/cloudflare-one/traffic-controls/troubleshooting/#error-526-invalid-ssl-certificate).
 
 ### Python 3.13+ SSL errors with the Cloudflare One Client
 

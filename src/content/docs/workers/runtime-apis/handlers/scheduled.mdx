@@ -14,11 +14,17 @@ When a Worker is invoked via a [Cron Trigger](/workers/configuration/cron-trigge
 
 :::note[Testing scheduled() handlers in local development]
 
-You can test the behavior of your `scheduled()` handler in local development by sending an HTTP request to `/cdn-cgi/handler/scheduled` to trigger the handler. Pass `?format=json` to return the structured scheduled handler result.
+Use [Local Explorer](/workers/local-development/local-explorer/#test-cron-triggers) to invoke your `scheduled()` handler with a configured or ad hoc cron expression. You can choose the scheduled time and inspect the structured result.
+
+Start your local development server with [`cf dev`](/cf/projects/#start-development), [`wrangler dev`](/workers/wrangler/commands/general/#dev), or the [Cloudflare Vite plugin](/workers/vite-plugin/). For version requirements and configuration, refer to [Test Cron Triggers](/workers/local-development/local-explorer/#test-cron-triggers).
+
+For scripted tests, use the port printed by your development server and send an HTTP request to `/cdn-cgi/local/scheduled`. Pass `?format=json` to return the structured scheduled handler result.
 
 ```sh
-curl "http://localhost:8787/cdn-cgi/handler/scheduled?format=json"
+curl "http://localhost:8787/cdn-cgi/local/scheduled?format=json"
 ```
+
+To target an exact Worker, use `POST /cdn-cgi/local/explorer/api/local/scheduled?worker=<WORKER_NAME>`. For request fields and an example, refer to [Test Cron Triggers locally](/workers/configuration/cron-triggers/#use-the-local-explorer-api).
 
 :::
 
@@ -69,16 +75,12 @@ class Default(WorkerEntrypoint):
 
 - `controller.cron` string
   - The value of the [Cron Trigger](/workers/configuration/cron-triggers/) that started the `ScheduledEvent`.
-
 - `controller.type` string
   - The type of controller. This will always return `"scheduled"`.
-
 - `controller.scheduledTime` number
   - The time the `ScheduledEvent` was scheduled to be executed in milliseconds since January 1, 1970, UTC. It can be parsed as <code>new Date(controller.scheduledTime)</code>.
-
 - `env` object
   - An object containing the bindings associated with your Worker using ES modules format, such as KV namespaces and Durable Objects.
-
 - `ctx` object
   - An object containing the context associated with your Worker using ES modules format. Currently, this object just contains the `waitUntil` function.
 

@@ -548,7 +548,7 @@
 		"name": ""
 	},
 	{
-		"deeplink": "/?to=/:account/integrations/identity-providers",
+		"deeplink": "/?to=/:account/one/integrations/identity-providers",
 		"name": "Identity providers"
 	},
 	{

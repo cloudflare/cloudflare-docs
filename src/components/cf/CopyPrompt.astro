@@ -1,0 +1,40 @@
+---
+// One-line "copy this prompt into your coding agent" call to action. Copy
+// behaviour is wired globally in scripts/copy-prompt.client.ts so it also
+// works inside changelog entries, whose render path drops hoisted scripts.
+import { z } from "astro/zod";
+import { buttonVariants } from "~/components/ui/button/variants";
+
+type Props = z.infer<typeof props>;
+
+const props = z
+	.object({
+		text: z.string().min(1),
+	})
+	.strict();
+
+const { text } = props.parse(Astro.props);
+---
+
+<div
+	class="not-prose border-primary/30 bg-primary/5 my-6 flex items-center gap-3 rounded-lg border p-3 sm:gap-4"
+	data-copy-prompt
+>
+	<p class="text-foreground m-0 min-w-0 flex-1 truncate">
+		<span data-copy-prompt-text>{text}</span>
+	</p>
+	<button
+		type="button"
+		class={buttonVariants({ variant: "primary", size: "base" })}
+	>
+		{/* Both labels share one grid cell so the button never changes width. */}
+		<span class="grid justify-items-center" aria-live="polite">
+			<span class="col-start-1 row-start-1" data-copy-prompt-idle>
+				Copy prompt
+			</span>
+			<span class="invisible col-start-1 row-start-1" data-copy-prompt-done>
+				Copied!
+			</span>
+		</span>
+	</button>
+</div>

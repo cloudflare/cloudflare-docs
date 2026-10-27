@@ -108,7 +108,16 @@ For user resources, you can only reference yourself, which is denoted as:`"com.c
 
 Add permission groups to the API token by specifying their `id` values. We recommend using `id` as the key for interacting with Cloudflare APIs; the permission `name` is cosmetic and subject to change. Permission groups are scoped to specific resources (user, account, or zone), so a permission group in a policy will only apply to the resource type it is scoped for.
 
-To fetch all available permission groups and their IDs, use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint:
+Use the permission-group endpoint for the token type you want to create:
+
+<Tabs>
+  <TabItem label="Account owned token">
+Use the [List permission groups](/api/resources/accounts/subresources/tokens/subresources/permission_groups/methods/list/) endpoint. To help ensure you are only adding permission groups which are available through your membership policy, reference the `is_selectable` parameter present in each permission group.
+
+<APIRequest path="/accounts/{account_id}/tokens/permission_groups" method="GET" />
+  </TabItem>
+  <TabItem label="User owned token">
+Use the [List permission groups](/api/resources/user/subresources/tokens/subresources/permission_groups/methods/list/) endpoint.
 
 <APIRequest path="/user/tokens/permission_groups" method="GET" />
 
@@ -135,6 +144,8 @@ To fetch all available permission groups and their IDs, use the [List permission
 	]
 }
 ```
+  </TabItem>
+</Tabs>
 
 ### 2. Define the restrictions
 

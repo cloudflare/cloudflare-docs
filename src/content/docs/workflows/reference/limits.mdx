@@ -41,7 +41,7 @@ Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows d
 | Maximum number of subrequests per Workflow instance                                           | 50/request                                                                                       | 10,000/request (default) / configurable up to 10 million                                                  |
 | Maximum number of retries per step                                                            | 10,000                                                                                           | 10,000                                                                                                    |
 
-[^2]: Workflow instance state and logs will be retained for 3 days on the Workers Free plan and for 30 days on the Workers Paid plan.
+[^2]: Workflow instance state and logs will be retained for 3 days on the Workers Free plan and for 30 days on the Workers Paid plan. You can retain instances for a shorter period by setting [`default_retention`](/workflows/build/workers-api/#default-instance-retention) on the Workflow binding, or [`retention`](/workflows/build/workers-api/#workflowinstancecreateoptions) on an individual instance.
 
 [^3]: A Workflow instance can run forever, as long as each step does not take more than the CPU time limit and the maximum number of steps per Workflow is not reached.
 

@@ -1,0 +1,69 @@
+---
+title: "WAF Release - 2026-09-22"
+description: Cloudflare WAF managed rulesets 2026-09-22 release
+date: 2026-09-22
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new threat detections to enhance protection against Server-Side Request Forgery (SSRF) attempts using non-standard IP notations or jar loopback payloads, alongside new defenses against Server-Side Template Injection (SSTI) targeting Jinja environments.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ca05d6c847834f75a317c33b5f21b651" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Cloud,Link-Local non-standard IP notation</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="40b93de7a8f848709c4ec3e60f0313d6" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Block jar HTTP loopback payload</td>
+			<td>Log</td>
+			<td>Block</td>
+            <td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="48dfa3e5bef84063914edfe175cd912a" />
+			</td>
+			<td>N/A</td>
+			<td>SSRF - Local non-standard IP notation</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="cd1de1fd21c443508f9073f2a1ba83f6" />
+			</td>
+			<td>N/A</td>
+			<td>SSTI - Jinja Dangerous Globals Chain</td>
+			<td>Log</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>

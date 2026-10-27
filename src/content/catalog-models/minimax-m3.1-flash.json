@@ -1,0 +1,1153 @@
+{
+	"model_id": "minimax/m3.1-flash",
+	"provider_id": "minimax",
+	"name": "MiniMax M3.1 Flash",
+	"description": "MiniMax M3.1 Flash is a fast, cost-efficient multimodal model for agentic tasks, coding, and computer use. It accepts text, image, and video input, always reasons before answering with adjustable effort, and has a 1M-token context window.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Agentic",
+		"Multimodal",
+		"Long Context",
+		"Cost-Efficient"
+	],
+	"context_length": 1000000,
+	"max_output_tokens": 131072,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.15,
+		"Output tokens (per 1M)": 0.6,
+		"Cached input tokens (per 1M)": 0.015,
+		"Cache creation tokens (per 1M)": 0.15
+	},
+	"examples": [
+		{
+			"name": "Simple Conversation",
+			"description": "Basic chat completion request",
+			"input": {
+				"max_completion_tokens": 4096,
+				"messages": [
+					{
+						"content": "What is the capital of France?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "The capital of France is **Paris**."
+			},
+			"raw_response": {
+				"id": "07281c95c43270e94164f5cfb0dea2db",
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"message": {
+							"content": "The capital of France is **Paris**.",
+							"role": "assistant",
+							"name": "MiniMax AI",
+							"audio_content": ""
+						}
+					}
+				],
+				"created": 1792600469,
+				"model": "MiniMax-M3.1-Flash",
+				"object": "chat.completion",
+				"usage": {
+					"total_tokens": 218,
+					"total_characters": 0,
+					"prompt_tokens": 209,
+					"completion_tokens": 9,
+					"prompt_tokens_details": {
+						"cached_tokens": 195
+					}
+				},
+				"input_sensitive": false,
+				"output_sensitive": false,
+				"input_sensitive_type": 0,
+				"output_sensitive_type": 0,
+				"output_sensitive_int": 0,
+				"base_resp": {
+					"status_code": 0,
+					"status_msg": ""
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m3.1-flash',\n  {\n    max_completion_tokens: 4096,\n    messages: [{ content: 'What is the capital of France?', role: 'user' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m3.1-flash\",\n  \"max_completion_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"What is the capital of France?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "With System Prompt",
+			"description": "Using a system prompt to guide behavior",
+			"input": {
+				"max_completion_tokens": 4096,
+				"messages": [
+					{
+						"content": "You are a helpful cooking assistant. Give concise recipes with metric measurements.",
+						"role": "system"
+					},
+					{
+						"content": "How do I make a simple pasta aglio e olio?",
+						"role": "user"
+					}
+				]
+			},
+			"output": {
+				"text": "## Simple Pasta Aglio e Olio  \n**Serves 2**\n\n### Ingredients\n- 200 g spaghetti or linguine\n- 4 garlic cloves, thinly sliced\n- 60 ml extra-virgin olive oil\n- \u00bd tsp red chili flakes\n- 10 g chopped fresh parsley\n- Salt, to taste\n- 60\u2013120 ml reserved pasta water\n- Parmesan, optional\n\n### Method\n1. Bring a large pot of well-salted water to the boil. Cook the pasta until just al dente. Before draining, reserve about 120 ml of pasta water.\n2. Heat the olive oil in a wide pan over medium-low heat. Add the garlic and chili flakes; cook gently for 1\u20132 minutes until fragrant, but **do not let the garlic brown**.\n3. Add the drained pasta and about 60 ml pasta water to the pan.\n4. Toss vigorously over medium heat for 1\u20132 minutes, adding more pasta water as needed, until the sauce is glossy and coats the pasta.\n5. Remove from the heat and stir in the parsley. Season with salt and serve with Parmesan if desired."
+			},
+			"raw_response": {
+				"id": "07281c96a53f7c86ab516eff17649567",
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"message": {
+							"content": "## Simple Pasta Aglio e Olio  \n**Serves 2**\n\n### Ingredients\n- 200 g spaghetti or linguine\n- 4 garlic cloves, thinly sliced\n- 60 ml extra-virgin olive oil\n- \u00bd tsp red chili flakes\n- 10 g chopped fresh parsley\n- Salt, to taste\n- 60\u2013120 ml reserved pasta water\n- Parmesan, optional\n\n### Method\n1. Bring a large pot of well-salted water to the boil. Cook the pasta until just al dente. Before draining, reserve about 120 ml of pasta water.\n2. Heat the olive oil in a wide pan over medium-low heat. Add the garlic and chili flakes; cook gently for 1\u20132 minutes until fragrant, but **do not let the garlic brown**.\n3. Add the drained pasta and about 60 ml pasta water to the pan.\n4. Toss vigorously over medium heat for 1\u20132 minutes, adding more pasta water as needed, until the sauce is glossy and coats the pasta.\n5. Remove from the heat and stir in the parsley. Season with salt and serve with Parmesan if desired.",
+							"role": "assistant",
+							"name": "MiniMax AI",
+							"audio_content": "",
+							"reasoning_content": "We need answer concise recipe metric measurements. Need perhaps servings, ingredients, steps. Simple pasta aglio e olio. We should not overcomplicate. Include spaghetti, garlic, olive oil, chili flakes, parsley, pasta water, salt, parmesan optional maybe classic doesn't include parmesan. Need technique emulsification. Metric. User asks how. We can give 2 servings.\n\nNeed be careful measurements. 200 g spaghetti, 4 garlic cloves thinly sliced, 4 tbsp EVOO maybe 60 mL, 1/2 tsp red pepper flakes, 8-10 g parsley, 60-120 mL reserved pasta water, salt. Procedure: boil salted water, reserve water. Warm oil and garlic gently 1-2 min, don't brown, chili. Add pasta and some water, toss vigorously over low-medium until glossy, add parsley and more water as needed. Avoid adding parmesan if wanting classic, but optional.\n\nCould mention don't fry garlic brown. Timing. Let's formulate concise."
+						}
+					}
+				],
+				"created": 1792600470,
+				"model": "MiniMax-M3.1-Flash",
+				"object": "chat.completion",
+				"usage": {
+					"total_tokens": 658,
+					"total_characters": 0,
+					"prompt_tokens": 223,
+					"completion_tokens": 435,
+					"completion_tokens_details": {
+						"reasoning_tokens": 203
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 188
+					}
+				},
+				"input_sensitive": false,
+				"output_sensitive": false,
+				"input_sensitive_type": 0,
+				"output_sensitive_type": 0,
+				"output_sensitive_int": 0,
+				"base_resp": {
+					"status_code": 0,
+					"status_msg": ""
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m3.1-flash',\n  {\n    max_completion_tokens: 4096,\n    messages: [\n      {\n        content:\n          'You are a helpful cooking assistant. Give concise recipes with metric measurements.',\n        role: 'system',\n      },\n      { content: 'How do I make a simple pasta aglio e olio?', role: 'user' },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m3.1-flash\",\n  \"max_completion_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"You are a helpful cooking assistant. Give concise recipes with metric measurements.\",\n      \"role\": \"system\"\n    },\n    {\n      \"content\": \"How do I make a simple pasta aglio e olio?\",\n      \"role\": \"user\"\n    }\n  ]\n}'"
+				}
+			]
+		},
+		{
+			"name": "Low Thinking Effort",
+			"description": "Lowering thinking depth for faster, cheaper answers",
+			"input": {
+				"max_completion_tokens": 4096,
+				"messages": [
+					{
+						"content": "Explain the difference between TCP and UDP in two sentences.",
+						"role": "user"
+					}
+				],
+				"reasoning_effort": "low"
+			},
+			"output": {
+				"text": "TCP is a connection-oriented protocol that provides reliable, ordered delivery through error checking, acknowledgments, and retransmission. UDP is connectionless and offers faster, lower-overhead communication without guaranteed delivery or ordering, making it suitable for real-time applications."
+			},
+			"raw_response": {
+				"id": "07281c9dfd1064ef56da8e879bf07450",
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"message": {
+							"content": "TCP is a connection-oriented protocol that provides reliable, ordered delivery through error checking, acknowledgments, and retransmission. UDP is connectionless and offers faster, lower-overhead communication without guaranteed delivery or ordering, making it suitable for real-time applications.",
+							"role": "assistant",
+							"name": "MiniMax AI",
+							"audio_content": ""
+						}
+					}
+				],
+				"created": 1792600477,
+				"model": "MiniMax-M3.1-Flash",
+				"object": "chat.completion",
+				"usage": {
+					"total_tokens": 263,
+					"total_characters": 0,
+					"prompt_tokens": 213,
+					"completion_tokens": 50,
+					"prompt_tokens_details": {
+						"cached_tokens": 195
+					}
+				},
+				"input_sensitive": false,
+				"output_sensitive": false,
+				"input_sensitive_type": 0,
+				"output_sensitive_type": 0,
+				"output_sensitive_int": 0,
+				"base_resp": {
+					"status_code": 0,
+					"status_msg": ""
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m3.1-flash',\n  {\n    max_completion_tokens: 4096,\n    messages: [\n      { content: 'Explain the difference between TCP and UDP in two sentences.', role: 'user' },\n    ],\n    reasoning_effort: 'low',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m3.1-flash\",\n  \"max_completion_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": \"Explain the difference between TCP and UDP in two sentences.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"reasoning_effort\": \"low\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "Image Understanding",
+			"description": "Describing an image from a URL",
+			"input": {
+				"max_completion_tokens": 4096,
+				"messages": [
+					{
+						"content": [
+							{
+								"text": "What does this image show?",
+								"type": "text"
+							},
+							{
+								"image_url": {
+									"url": "https://filecdn.minimax.chat/public/fe9d04da-f60e-444d-a2e0-18ae743add33.jpeg"
+								},
+								"type": "image_url"
+							}
+						],
+						"role": "user"
+					}
+				],
+				"reasoning_effort": "low"
+			},
+			"output": {
+				"text": "A warm, softly lit close-up portrait of a smiling young girl with brown hair and bangs, wearing a cream-colored lace-trimmed top against a blurred neutral background."
+			},
+			"raw_response": {
+				"id": "07281c9f9fc9055f25fb002db64cc7c3",
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"message": {
+							"content": "A warm, softly lit close-up portrait of a smiling young girl with brown hair and bangs, wearing a cream-colored lace-trimmed top against a blurred neutral background.",
+							"role": "assistant",
+							"name": "MiniMax AI",
+							"audio_content": "",
+							"reasoning_content": "We need answer image description. Child portrait. Need perhaps mention close-up, girl, brown hair bangs, white lace top, warm lighting, smile. Don't identify."
+						}
+					}
+				],
+				"created": 1792600479,
+				"model": "MiniMax-M3.1-Flash",
+				"object": "chat.completion",
+				"usage": {
+					"total_tokens": 1475,
+					"total_characters": 0,
+					"prompt_tokens": 1406,
+					"completion_tokens": 69,
+					"completion_tokens_details": {
+						"reasoning_tokens": 35
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 195
+					}
+				},
+				"input_sensitive": false,
+				"output_sensitive": false,
+				"input_sensitive_type": 0,
+				"output_sensitive_type": 0,
+				"output_sensitive_int": 0,
+				"base_resp": {
+					"status_code": 0,
+					"status_msg": ""
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m3.1-flash',\n  {\n    max_completion_tokens: 4096,\n    messages: [\n      {\n        content: [\n          { text: 'What does this image show?', type: 'text' },\n          {\n            image_url: {\n              url: 'https://filecdn.minimax.chat/public/fe9d04da-f60e-444d-a2e0-18ae743add33.jpeg',\n            },\n            type: 'image_url',\n          },\n        ],\n        role: 'user',\n      },\n    ],\n    reasoning_effort: 'low',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m3.1-flash\",\n  \"max_completion_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": [\n        {\n          \"text\": \"What does this image show?\",\n          \"type\": \"text\"\n        },\n        {\n          \"image_url\": {\n            \"url\": \"https://filecdn.minimax.chat/public/fe9d04da-f60e-444d-a2e0-18ae743add33.jpeg\"\n          },\n          \"type\": \"image_url\"\n        }\n      ],\n      \"role\": \"user\"\n    }\n  ],\n  \"reasoning_effort\": \"low\"\n}'"
+				}
+			]
+		},
+		{
+			"name": "Video Understanding",
+			"description": "Summarizing a video from a URL, sampled at one frame every two seconds",
+			"input": {
+				"max_completion_tokens": 4096,
+				"messages": [
+					{
+						"content": [
+							{
+								"text": "What is happening in this video?",
+								"type": "text"
+							},
+							{
+								"type": "video_url",
+								"video_url": {
+									"fps": 0.5,
+									"url": "https://filecdn.minimax.chat/public/ee8c1648-21f1-41b7-8397-65022d22ffe5.mp4"
+								}
+							}
+						],
+						"role": "user"
+					}
+				],
+				"reasoning_effort": "low"
+			},
+			"output": {
+				"text": "The video shows a tiger walking along a narrow elevated platform in an Olympic-themed stadium, with spectators in the stands. It then moves off the platform and splashes into the swimming pool below."
+			},
+			"raw_response": {
+				"id": "07281ca2d4bbbcb96da3e6cd298d41c5",
+				"choices": [
+					{
+						"finish_reason": "stop",
+						"index": 0,
+						"message": {
+							"content": "The video shows a tiger walking along a narrow elevated platform in an Olympic-themed stadium, with spectators in the stands. It then moves off the platform and splashes into the swimming pool below.",
+							"role": "assistant",
+							"name": "MiniMax AI",
+							"audio_content": "",
+							"reasoning_content": "We need answer describe video based on frames. Need infer sequence: tiger walking on raised platform at Olympics venue, then perhaps releases into pool? Need inspect frames. At 0 tiger on beam/platform, Olympics branding, spectators. 4 sec shows pool, splash at right maybe tiger jumped/swimming? Need articulate. Image has tiger walking across narrow platform, likely opening ceremony? Need not overclaim. Let's formulate: A tiger is led/walks along elevated runway over swimming pool in Olympic-branded stadium; then appears to leap/splash into pool? The second frame shows a dark animal shape entering water at far right, large splash. Could be tiger swimming. Let's answer cautiously."
+						}
+					}
+				],
+				"created": 1792600485,
+				"model": "MiniMax-M3.1-Flash",
+				"object": "chat.completion",
+				"usage": {
+					"total_tokens": 732,
+					"total_characters": 0,
+					"prompt_tokens": 555,
+					"completion_tokens": 177,
+					"completion_tokens_details": {
+						"reasoning_tokens": 139
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 195
+					}
+				},
+				"input_sensitive": false,
+				"output_sensitive": false,
+				"input_sensitive_type": 0,
+				"output_sensitive_type": 0,
+				"output_sensitive_int": 0,
+				"base_resp": {
+					"status_code": 0,
+					"status_msg": ""
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/m3.1-flash',\n  {\n    max_completion_tokens: 4096,\n    messages: [\n      {\n        content: [\n          { text: 'What is happening in this video?', type: 'text' },\n          {\n            type: 'video_url',\n            video_url: {\n              fps: 0.5,\n              url: 'https://filecdn.minimax.chat/public/ee8c1648-21f1-41b7-8397-65022d22ffe5.mp4',\n            },\n          },\n        ],\n        role: 'user',\n      },\n    ],\n    reasoning_effort: 'low',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/m3.1-flash\",\n  \"max_completion_tokens\": 4096,\n  \"messages\": [\n    {\n      \"content\": [\n        {\n          \"text\": \"What is happening in this video?\",\n          \"type\": \"text\"\n        },\n        {\n          \"type\": \"video_url\",\n          \"video_url\": {\n            \"fps\": 0.5,\n            \"url\": \"https://filecdn.minimax.chat/public/ee8c1648-21f1-41b7-8397-65022d22ffe5.mp4\"\n          }\n        }\n      ],\n      \"role\": \"user\"\n    }\n  ],\n  \"reasoning_effort\": \"low\"\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": "MiniMax's public API privacy policy (effective 2026-03-30) makes no zero-retention commitment.",
+	"external_info": "https://www.minimax.io/blog/minimax-m31f",
+	"terms": "https://www.minimaxi.com/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Function Calling": "Yes",
+		"Reasoning": "Yes (always-on, adjustable effort)",
+		"Vision": "Image and video input"
+	},
+	"request_formats": [
+		"chat-completions",
+		"anthropic-messages"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"input_tokens": 0.15,
+				"output_tokens": 0.6,
+				"input_cached_tokens": 0.015,
+				"input_cache_creation_tokens": 0.15
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-22 14:09:08",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"name": {
+										"type": "string"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"anyOf": [
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "text"
+																},
+																"text": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"type",
+																"text"
+															],
+															"additionalProperties": false
+														},
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "image_url"
+																},
+																"image_url": {
+																	"type": "object",
+																	"properties": {
+																		"url": {
+																			"type": "string"
+																		},
+																		"detail": {
+																			"type": "string",
+																			"enum": [
+																				"low",
+																				"default",
+																				"high"
+																			]
+																		},
+																		"max_long_side_pixel": {
+																			"type": "integer",
+																			"exclusiveMinimum": 0,
+																			"maximum": 9007199254740991
+																		}
+																	},
+																	"required": [
+																		"url"
+																	],
+																	"additionalProperties": false
+																}
+															},
+															"required": [
+																"type",
+																"image_url"
+															],
+															"additionalProperties": false
+														},
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "video_url"
+																},
+																"video_url": {
+																	"type": "object",
+																	"properties": {
+																		"url": {
+																			"type": "string"
+																		},
+																		"detail": {
+																			"type": "string",
+																			"enum": [
+																				"low",
+																				"default",
+																				"high"
+																			]
+																		},
+																		"fps": {
+																			"type": "number",
+																			"minimum": 0.2,
+																			"maximum": 5
+																		},
+																		"max_long_side_pixel": {
+																			"type": "integer",
+																			"exclusiveMinimum": 0,
+																			"maximum": 9007199254740991
+																		}
+																	},
+																	"required": [
+																		"url"
+																	],
+																	"additionalProperties": false
+																}
+															},
+															"required": [
+																"type",
+																"video_url"
+															],
+															"additionalProperties": false
+														}
+													]
+												}
+											}
+										]
+									},
+									"tool_calls": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string"
+												},
+												"type": {
+													"type": "string",
+													"const": "function"
+												},
+												"function": {
+													"type": "object",
+													"properties": {
+														"name": {
+															"type": "string"
+														},
+														"arguments": {
+															"type": "string"
+														}
+													},
+													"required": [
+														"name",
+														"arguments"
+													],
+													"additionalProperties": false
+												}
+											},
+											"required": [
+												"id",
+												"type",
+												"function"
+											],
+											"additionalProperties": false
+										}
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "function"
+									},
+									"function": {
+										"type": "object",
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"description": {
+												"type": "string"
+											},
+											"parameters": {}
+										},
+										"required": [
+											"name",
+											"description",
+											"parameters"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"function"
+								],
+								"additionalProperties": false
+							}
+						},
+						"tool_choice": {
+							"type": "string",
+							"enum": [
+								"none",
+								"auto"
+							]
+						},
+						"response_format": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "json_schema"
+								},
+								"json_schema": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string",
+											"maxLength": 64
+										},
+										"description": {
+											"type": "string"
+										},
+										"schema": {
+											"type": "object",
+											"properties": {
+												"type": {
+													"type": "string",
+													"const": "object"
+												},
+												"properties": {}
+											},
+											"required": [
+												"type",
+												"properties"
+											],
+											"additionalProperties": false
+										}
+									},
+									"required": [
+										"name",
+										"schema"
+									],
+									"additionalProperties": false
+								}
+							},
+							"required": [
+								"type",
+								"json_schema"
+							],
+							"additionalProperties": false
+						},
+						"mask_sensitive_info": {
+							"type": "boolean"
+						},
+						"thinking": {
+							"type": "object",
+							"properties": {
+								"type": {
+									"type": "string",
+									"const": "adaptive"
+								}
+							},
+							"required": [
+								"type"
+							],
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"type": "string",
+							"enum": [
+								"low",
+								"medium",
+								"high",
+								"xhigh",
+								"max"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": false,
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"user",
+											"assistant"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"type": {
+															"type": "string"
+														},
+														"text": {
+															"type": "string"
+														},
+														"source": {},
+														"cache_control": {
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "ephemeral"
+																},
+																"ttl": {
+																	"type": "string",
+																	"enum": [
+																		"5m",
+																		"1h"
+																	]
+																}
+															},
+															"required": [
+																"type"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"type"
+													],
+													"additionalProperties": {}
+												}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							}
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"system": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "text"
+											},
+											"text": {
+												"type": "string"
+											},
+											"cache_control": {
+												"type": "object",
+												"properties": {
+													"type": {
+														"type": "string",
+														"const": "ephemeral"
+													},
+													"ttl": {
+														"type": "string",
+														"enum": [
+															"5m",
+															"1h"
+														]
+													}
+												},
+												"required": [
+													"type"
+												],
+												"additionalProperties": false
+											}
+										},
+										"required": [
+											"type",
+											"text"
+										],
+										"additionalProperties": {}
+									}
+								}
+							]
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"top_k": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"metadata": {
+							"type": "object",
+							"propertyNames": {
+								"type": "string"
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"messages",
+						"max_tokens"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string",
+												"const": "assistant"
+											},
+											"content": {
+												"type": "string"
+											},
+											"tool_calls": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"id": {
+															"type": "string"
+														},
+														"type": {
+															"type": "string",
+															"const": "function"
+														},
+														"function": {
+															"type": "object",
+															"properties": {
+																"name": {
+																	"type": "string"
+																},
+																"arguments": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"name",
+																"arguments"
+															],
+															"additionalProperties": false
+														}
+													},
+													"required": [
+														"id",
+														"type",
+														"function"
+													],
+													"additionalProperties": false
+												}
+											}
+										},
+										"required": [
+											"role",
+											"content"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": "string",
+										"enum": [
+											"stop",
+											"length",
+											"tool_calls"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"enum": [
+								"chat.completion",
+								"chat.completion.chunk"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"total_tokens": {
+									"type": "number"
+								},
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"total_tokens",
+								"prompt_tokens",
+								"completion_tokens"
+							],
+							"additionalProperties": {}
+						},
+						"input_sensitive": {
+							"type": "boolean"
+						},
+						"output_sensitive": {
+							"type": "boolean"
+						},
+						"base_resp": {
+							"type": "object",
+							"properties": {
+								"status_code": {
+									"type": "number"
+								},
+								"status_msg": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"status_code",
+								"status_msg"
+							],
+							"additionalProperties": false
+						}
+					},
+					"required": [
+						"id",
+						"choices",
+						"created",
+						"model",
+						"object"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"type": {
+							"type": "string",
+							"const": "message"
+						},
+						"role": {
+							"type": "string",
+							"const": "assistant"
+						},
+						"content": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string"
+									},
+									"text": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"type"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"model": {
+							"type": "string"
+						},
+						"stop_reason": {
+							"type": [
+								"string",
+								"null"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"cache_creation_input_tokens": {
+									"type": [
+										"number",
+										"null"
+									]
+								},
+								"cache_read_input_tokens": {
+									"type": [
+										"number",
+										"null"
+									]
+								},
+								"speed": {
+									"type": [
+										"string",
+										"null"
+									]
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"type",
+						"role",
+						"content",
+						"model",
+						"stop_reason",
+						"usage"
+					],
+					"additionalProperties": {},
+					"title": "Messages"
+				}
+			]
+		}
+	}
+}

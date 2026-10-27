@@ -1,0 +1,38 @@
+---
+title: CopyPrompt
+styleGuide:
+  component: CopyPrompt
+description: Display a prompt that readers can copy into their AI coding agent.
+products:
+  - style-guide
+---
+
+import { CopyPrompt } from "~/components";
+
+The `CopyPrompt` component displays a one-line prompt next to a **Copy prompt** button. Use it when readers can complete a task by pasting a prompt into an AI coding agent, such as a quickstart that an agent can run for them.
+
+<CopyPrompt text="Build a Cloudflare Worker that returns Hello World, then deploy it with Wrangler." />
+
+## Import
+
+```mdx
+import { CopyPrompt } from "~/components";
+```
+
+## Usage
+
+```mdx
+import { CopyPrompt } from "~/components";
+
+<CopyPrompt text="Build a Cloudflare Worker that returns Hello World, then deploy it with Wrangler." />
+```
+
+The prompt displays on a single line and is truncated if it does not fit, but the full text is always copied. Keep prompts short so readers can see what they are copying. For longer prompts, use a [code block](/style-guide/style-and-grammar/formatting/code-block-guidelines/) with `txt` as the language instead.
+
+## `<CopyPrompt>` Props
+
+### `text`
+
+**type:** `string`
+
+The prompt to display. Selecting **Copy prompt** copies this text to the clipboard.

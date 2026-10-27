@@ -48,6 +48,7 @@ Two rules first:
 | A YouTube or Cloudflare Stream video                   | `YouTube` / `Stream`                     | —          |
 | A live statistic in prose                              | `PublicStats`                            | —          |
 | A copyable WAF/security rule ID                        | `RuleID`                                 | —          |
+| A short prompt for readers to paste into an AI agent   | `CopyPrompt`                             | —          |
 | Available notification types for a product             | `AvailableNotifications`                 | —          |
 | Pages framework build-preset details                   | `PagesBuildPreset`                       | —          |
 | An interactive IP-range subtraction calculator         | `SubtractIPCalculator`                   | —          |
@@ -116,6 +117,7 @@ Two rules first:
 - **`PublicStats`** — a live statistic (data centers, bandwidth) inline in prose.
 - **`DashButton`** — a button to a validated dashboard deeplink; use it for in-procedure dashboard navigation instead of a bare link.
 - **`RuleID`** — a copyable WAF/security rule ID.
+- **`CopyPrompt`** — a one-line prompt with a **Copy prompt** button, for readers to paste into an AI coding agent. Use a `txt` code block for prompts longer than a line.
 - **`AvailableNotifications`** — list a product's available notification types.
 - **`PagesBuildPreset`** — Pages framework build-preset details.
 - **`SubtractIPCalculator`** — interactive IP-range subtraction calculator (networking docs).

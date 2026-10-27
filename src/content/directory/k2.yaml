@@ -1,0 +1,13 @@
+id: FKFjPd
+name: K2
+
+entry:
+  title: K2
+  url: /k2/
+  group: Developer platform
+  additional_groups: [Storage]
+
+meta:
+  title: Cloudflare K2 docs
+  description: A durable event stream
+  author: "@cloudflare"

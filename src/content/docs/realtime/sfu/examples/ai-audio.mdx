@@ -1,0 +1,103 @@
+---
+title: AI audio pipelines
+description: Transcribe microphone audio and broadcast generated speech using Workers AI, Realtime SFU, and WebSocket media adapters.
+pcx_content_type: integration-guide
+sidebar:
+  order: 3
+products:
+  - realtime
+---
+
+import { LinkButton, PackageManagers, Steps } from "~/components";
+import AiAudioPipeline from "~/components/realtime/sfu/AiAudioPipeline.astro";
+
+Use the `ai-tts-stt` example to connect speech-to-text and text-to-speech services to WebRTC audio. A publisher can generate speech for browser listeners and send microphone audio for transcription.
+
+The application uses Workers AI, a Worker, Durable Objects, and Realtime SFU's WebSocket adapters. The browser uses WebRTC for audio and an application WebSocket for transcription results.
+
+<LinkButton href="https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt">
+	Open the example
+</LinkButton>
+
+The example is experimental. It keeps SFU and AI credentials on the server, but its publisher and cleanup operations are unauthenticated. Add application authentication, authorization, and resource controls before sharing a deployment publicly.
+
+## Follow the audio
+
+The application uses separate adapters for the two audio directions:
+
+<AiAudioPipeline />
+
+`TTSAdapter` and `STTAdapter` are application Durable Objects. They call Workers AI, manage application state, and convert audio to or from the SFU adapter's 48 kHz stereo PCM format.
+
+The SFU uses separate WebSocket ingest and egress adapters for the two audio directions. Transcripts use a separate application WebSocket. Refer to [WebSocket media formats](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#media-formats).
+
+## Requirements
+
+Use a Cloudflare account with Workers, Durable Objects, Workers AI access, and a [Realtime SFU app](/realtime/sfu/get-started/#create-your-first-app). The example also needs Node.js and a [Workers AI API token](/workers-ai/get-started/rest-api/#1-get-api-token-and-account-id) for that account. Use the Workers AI token template, or grant `Workers AI - Read` and `Workers AI - Edit` permissions.
+
+Deploy the Worker for end-to-end audio. The SFU needs a publicly reachable WebSocket endpoint; localhost development is useful for browser UI changes.
+
+## Run the example
+
+<Steps>
+
+1. **Prepare the checkout.** Run:
+
+   ```sh
+   git clone https://github.com/cloudflare/realtime-examples.git
+   cd realtime-examples/ai-tts-stt
+   ```
+
+   <PackageManagers type="install" />
+
+2. **Configure the application.** In the checked-in Wrangler configuration, set `CF_ACCOUNT` and `REALTIME_SFU_APP_ID` to your account and SFU app identifiers. Follow the [configuration guide](https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt#configuration) for the model and audio-processing configuration.
+
+   Add the backend secrets through Wrangler's interactive prompts:
+
+   <PackageManagers type="exec" pkg="wrangler" args="secret put CF_API_TOKEN" />
+   <PackageManagers
+    type="exec"
+    pkg="wrangler"
+    args="secret put REALTIME_SFU_BEARER_TOKEN"
+   />
+
+3. **Build and deploy.** Build the browser assets, then deploy the Worker:
+
+   <PackageManagers type="run" args="build:web" />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+4. **Connect a publisher and listener.** Choose an application session name, such as `audio-demo`. This is a name you choose, separate from an SFU-generated session ID.
+
+   Open `https://<WORKER_HOSTNAME>/audio-demo/publisher` and select **Publish Session**. In another tab, open `https://<WORKER_HOSTNAME>/audio-demo/player`. Select **Connect** and wait for the connection. Use the same application name in both URLs.
+
+5. **Generate speech.** In the publisher tab, enter text and select **Generate Speech**. Confirm that the listener plays the generated audio.
+
+6. **Transcribe speech.** In the publisher tab, select the **STT** tab, then **Start Mic**, and allow microphone access. Wait for the WebRTC connection to become connected, then select **Start Forwarding**. Speak and observe the returned transcript.
+
+</Steps>
+
+The example's [deployment and use guide](https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt#deploy-and-use) describes the controls and URL patterns in detail.
+
+<span id="adapt-and-operate"></span>
+
+## Stop and clean up
+
+To stop the example's flows, select **Stop Forwarding**, **Stop Mic**, and **Unpublish** as applicable. Review the example's [Stop the Session and Debug Cleanup instructions](https://github.com/cloudflare/realtime-examples/tree/main/ai-tts-stt#deploy-and-use) before deleting the backend or exposing administrative operations. Resource ownership and failure recovery need validation for your integration.
+
+## Adapt the example
+
+For a spoken tutor, connect finalized transcripts to your dialogue logic and send its responses to TTS. Add turn-taking, interruption handling, conversation state, and authorization for those actions. Keep SFU and AI credentials on the Worker as you adapt the application.
+
+<span id="learn-with-an-example"></span>
+
+## Inspect the implementation
+
+Follow the [TTS implementation guide](https://github.com/cloudflare/realtime-examples/blob/main/ai-tts-stt/TTSAdapter.md) for speech generation, conversion, and publication. The [STT implementation guide](https://github.com/cloudflare/realtime-examples/blob/main/ai-tts-stt/STTAdapter.md) covers microphone forwarding and transcript delivery.
+
+## Troubleshooting
+
+Use [adapter troubleshooting](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#troubleshooting) to diagnose endpoint and media-format failures.
+
+## Try another example
+
+For video processing, the [WebRTC-to-JPEG example](https://github.com/cloudflare/realtime-examples/tree/main/video-to-jpeg) demonstrates an SFU video track delivered as JPEG frames to a Worker.

@@ -1,0 +1,236 @@
+{
+	"model_id": "openai/gpt-image-2.5-flare",
+	"provider_id": "openai",
+	"name": "GPT Image 2.5 Flare",
+	"description": "OpenAI's fastest high-quality everyday image generation model. It accepts text and image inputs and produces images with low, medium, high, xhigh, max, and auto quality settings.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Cached input image tokens (per 1M)": 3,
+		"Cached input tokens (per 1M)": 1.25,
+		"Input image tokens (per 1M)": 8,
+		"Input tokens (per 1M)": 5,
+		"Output image tokens (per 1M)": 30
+	},
+	"examples": [
+		{
+			"name": "Commercial Product Scene",
+			"description": "Create a polished product scene with readable visual hierarchy",
+			"input": {
+				"prompt": "A premium studio product photograph of a translucent orange mechanical keyboard on a cobalt blue acrylic pedestal, a few keys glowing amber, crisp reflections, bold geometric shadows, clean commercial art direction, no logos or readable words",
+				"quality": "high",
+				"size": "1024x1024",
+				"output_format": "jpeg"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/commercial-product-scene.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/commercial-product-scene.jpg"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2.5-flare',\n  {\n    prompt:\n      'A premium studio product photograph of a translucent orange mechanical keyboard on a cobalt blue acrylic pedestal, a few keys glowing amber, crisp reflections, bold geometric shadows, clean commercial art direction, no logos or readable words',\n    quality: 'high',\n    size: '1024x1024',\n    output_format: 'jpeg',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-image-2.5-flare\",\n  \"input\": {\n    \"prompt\": \"A premium studio product photograph of a translucent orange mechanical keyboard on a cobalt blue acrylic pedestal, a few keys glowing amber, crisp reflections, bold geometric shadows, clean commercial art direction, no logos or readable words\",\n    \"quality\": \"high\",\n    \"size\": \"1024x1024\",\n    \"output_format\": \"jpeg\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Environmental Concept Frame",
+			"description": "Generate a wide environmental concept frame",
+			"input": {
+				"prompt": "A wide establishing shot of a hidden mountain library carved into basalt cliffs, tiny figures crossing rope bridges, waterfalls disappearing into mist, late afternoon sun, grounded fantasy concept art with realistic scale",
+				"quality": "xhigh",
+				"size": "1536x1024"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/environmental-concept-frame.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/environmental-concept-frame.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2.5-flare',\n  {\n    prompt:\n      'A wide establishing shot of a hidden mountain library carved into basalt cliffs, tiny figures crossing rope bridges, waterfalls disappearing into mist, late afternoon sun, grounded fantasy concept art with realistic scale',\n    quality: 'xhigh',\n    size: '1536x1024',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-image-2.5-flare\",\n  \"input\": {\n    \"prompt\": \"A wide establishing shot of a hidden mountain library carved into basalt cliffs, tiny figures crossing rope bridges, waterfalls disappearing into mist, late afternoon sun, grounded fantasy concept art with realistic scale\",\n    \"quality\": \"xhigh\",\n    \"size\": \"1536x1024\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Poster Reference Edit",
+			"description": "Transform a reference sketch into a finished illustration",
+			"input": {
+				"prompt": "Reimagine the reference as a vibrant risograph poster for a fictional night market. Keep the central market stall silhouette and hanging lantern arrangement, add layered coral, teal, and navy ink textures, imperfect registration, and a lively crowd rendered as abstract shapes",
+				"images": [
+					"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII="
+				],
+				"quality": "medium",
+				"output_format": "png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/poster-reference-edit.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/openai/gpt-image-2.5-flare/poster-reference-edit.png"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-image-2.5-flare',\n  {\n    prompt:\n      'Reimagine the reference as a vibrant risograph poster for a fictional night market. Keep the central market stall silhouette and hanging lantern arrangement, add layered coral, teal, and navy ink textures, imperfect registration, and a lively crowd rendered as abstract shapes',\n    images: [\n      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII=',\n    ],\n    quality: 'medium',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-image-2.5-flare\",\n  \"input\": {\n    \"prompt\": \"Reimagine the reference as a vibrant risograph poster for a fictional night market. Keep the central market stall silhouette and hanging lantern arrangement, add layered coral, teal, and navy ink textures, imperfect registration, and a lively crowd rendered as abstract shapes\",\n    \"images\": [\n      \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAnklEQVR42u2XQRLAIAgD8/839i/26qFCACm0ozPe1KwcQsAoXvgcAABxpwFowl4QWITHxW0LCBhxVngF4gKIirMQyBRnIJAtrkE8AuwWnyFEgKzfS1UA+3sWTju3BGAu7gKYIfBW+Q/AAQgBeMCkt1wVsLZjcwUYG2Z9wGLHZitWk1DEisubUYt2XB5IWkSyFqG0RSxvMZi0Gc1+Ox3fm00ZJ5mGVtkAAAAASUVORK5CYII=\"\n    ],\n    \"quality\": \"medium\",\n    \"output_format\": \"png\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developers.openai.com/api/docs/models/gpt-image-2.5-flare",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-image-2.5-flare.png",
+	"metadata": {
+		"Image Editing": "Yes",
+		"Output Formats": "png, webp, jpeg",
+		"Quality": "low, medium, high, xhigh, max, auto",
+		"Sizes": "1024x1024, 1024x1536, 1536x1024, auto"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_cached_image_tokens": 3,
+				"input_cached_tokens": 1.25,
+				"input_image_tokens": 8,
+				"input_tokens": 5,
+				"output_image_tokens": 30
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-10 23:35:14",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"description": "Text prompt describing the image to generate or edit"
+				},
+				"images": {
+					"description": "Input images for image editing, 1-16 entries. Each entry is base64-encoded (raw string or data:image/{png|jpeg|webp};base64,... URI).",
+					"maxItems": 16,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"quality": {
+					"description": "Quality of the generated image",
+					"type": "string",
+					"enum": [
+						"low",
+						"medium",
+						"high",
+						"xhigh",
+						"max",
+						"auto"
+					]
+				},
+				"size": {
+					"description": "Size of the generated image",
+					"type": "string",
+					"enum": [
+						"1024x1024",
+						"1024x1536",
+						"1536x1024",
+						"auto"
+					]
+				},
+				"background": {
+					"description": "Background transparency setting",
+					"type": "string",
+					"enum": [
+						"transparent",
+						"opaque",
+						"auto"
+					]
+				},
+				"output_format": {
+					"description": "Output format for the generated image",
+					"type": "string",
+					"enum": [
+						"png",
+						"webp",
+						"jpeg"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL to the generated image"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

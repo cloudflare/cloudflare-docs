@@ -11,6 +11,14 @@
 	"context_length": 1000000,
 	"max_output_tokens": 4096,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input <=512k (per 1M)": 0.3,
+		"Cached input <=512k (per 1M)": 0.06,
+		"Output <=512k (per 1M)": 1.2,
+		"Input >512k (per 1M)": 1.2,
+		"Cached input >512k (per 1M)": 0.24,
+		"Output >512k (per 1M)": 4.8
+	},
 	"examples": [
 		{
 			"name": "Simple Conversation",
@@ -343,6 +351,19 @@
 		"anthropic-messages"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"under_512k_per_1m_input_tokens": 0.3,
+				"under_512k_per_1m_input_cached_tokens": 0.06,
+				"under_512k_per_1m_output_tokens": 1.2,
+				"over_512k_per_1m_input_tokens": 1.2,
+				"over_512k_per_1m_input_cached_tokens": 0.24,
+				"over_512k_per_1m_output_tokens": 4.8
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-01 20:11:36",
 	"schema": {
@@ -899,13 +920,9 @@
 							"type": "string"
 						},
 						"stop_reason": {
-							"anyOf": [
-								{
-									"type": "string"
-								},
-								{
-									"type": "null"
-								}
+							"type": [
+								"string",
+								"null"
 							]
 						},
 						"usage": {

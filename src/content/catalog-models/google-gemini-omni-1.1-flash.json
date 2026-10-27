@@ -1,0 +1,253 @@
+{
+	"model_id": "google/gemini-omni-1.1-flash",
+	"provider_id": "google",
+	"name": "Gemini Omni Flash 1.1",
+	"description": "High-performance multimodal video generation and editing model with conversational controls and generated audio.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Audio",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input text tokens (per 1M)": 1.5,
+		"Input image tokens (per 1M)": 1.5,
+		"Input audio tokens (per 1M)": 1.5,
+		"Input video tokens (per 1M)": 1.5,
+		"output_text_tokens": 9,
+		"Reasoning tokens (per 1M)": 9,
+		"output_video_tokens": 17.5,
+		"Default (per second)": 1.5
+	},
+	"examples": [
+		{
+			"name": "Text to video",
+			"description": "Generate a landscape video from a text prompt",
+			"input": {
+				"text": "A marble rolling fast on a chain reaction style track, continuous smooth shot.",
+				"aspect_ratio": "16:9",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/text-to-video.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/text-to-video.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-1.1-flash',\n  {\n    text: 'A marble rolling fast on a chain reaction style track, continuous smooth shot.',\n    aspect_ratio: '16:9',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-1.1-flash\",\n  \"input\": {\n    \"text\": \"A marble rolling fast on a chain reaction style track, continuous smooth shot.\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Portrait city",
+			"description": "Generate a portrait-format cinematic city scene",
+			"input": {
+				"text": "A futuristic city with neon lights and flying cars, cinematic camera movement and atmospheric haze.",
+				"aspect_ratio": "9:16",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/portrait-city.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/portrait-city.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-1.1-flash',\n  {\n    text: 'A futuristic city with neon lights and flying cars, cinematic camera movement and atmospheric haze.',\n    aspect_ratio: '9:16',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-1.1-flash\",\n  \"input\": {\n    \"text\": \"A futuristic city with neon lights and flying cars, cinematic camera movement and atmospheric haze.\",\n    \"aspect_ratio\": \"9:16\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Mountain sunrise",
+			"description": "Generate a high-resolution landscape nature scene",
+			"input": {
+				"text": "A drone shot flying over a mountain landscape at sunrise, golden light reflecting across a misty valley.",
+				"aspect_ratio": "16:9",
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/mountain-sunrise.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/mountain-sunrise.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-1.1-flash',\n  {\n    text: 'A drone shot flying over a mountain landscape at sunrise, golden light reflecting across a misty valley.',\n    aspect_ratio: '16:9',\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-1.1-flash\",\n  \"input\": {\n    \"text\": \"A drone shot flying over a mountain landscape at sunrise, golden light reflecting across a misty valley.\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Chain reaction",
+			"description": "Generate a low-resolution landscape action scene",
+			"input": {
+				"text": "A marble rolling quickly along a wooden track, knocking through a playful chain reaction in one continuous shot.",
+				"aspect_ratio": "16:9",
+				"resolution": "360p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/chain-reaction.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/google/gemini-omni-1.1-flash/chain-reaction.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/gemini-omni-1.1-flash',\n  {\n    text: 'A marble rolling quickly along a wooden track, knocking through a playful chain reaction in one continuous shot.',\n    aspect_ratio: '16:9',\n    resolution: '360p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/gemini-omni-1.1-flash\",\n  \"input\": {\n    \"text\": \"A marble rolling quickly along a wooden track, knocking through a playful chain reaction in one continuous shot.\",\n    \"aspect_ratio\": \"16:9\",\n    \"resolution\": \"360p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": null,
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-omni-1.1-flash.png",
+	"metadata": {
+		"Audio Generation": "Yes",
+		"Input Modalities": "Text, image, audio, video",
+		"Resolutions": "360p, 720p, 1080p, 4k"
+	},
+	"request_formats": null,
+	"providers": null,
+	"banner": null,
+	"created_at": "2026-09-11 15:09:32",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"description": "Text prompt or editing instruction",
+					"type": "string"
+				},
+				"image": {
+					"description": "First-frame or primary reference image",
+					"type": "string"
+				},
+				"last_frame": {
+					"description": "Last-frame reference image",
+					"type": "string"
+				},
+				"reference_images": {
+					"maxItems": 10,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"video": {
+					"description": "Reference video for editing or extension",
+					"type": "string"
+				},
+				"audio": {
+					"description": "Reference audio input",
+					"type": "string"
+				},
+				"previous_interaction_id": {
+					"type": "string"
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16"
+					]
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"360p",
+						"720p",
+						"1080p",
+						"4k"
+					]
+				}
+			},
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"anyOf": [
+						{
+							"type": "string",
+							"pattern": "^data:.*"
+						},
+						{
+							"type": "string",
+							"format": "uri"
+						}
+					]
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

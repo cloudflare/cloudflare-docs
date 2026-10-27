@@ -2,7 +2,9 @@ import { WorkerEntrypoint } from "cloudflare:workers";
 import { generateRedirectsEvaluator } from "redirects-in-workers";
 import redirectsFileContents from "../dist/__redirects";
 import { markdownNotFound, requestsMarkdown } from "./markdown-404";
+import { unavailableModelRedirect } from "./unavailable-model";
 import { AI_CATALOG_BODY, AI_CATALOG_HEADERS } from "./ai-catalog";
+import { handleOg } from "./og/route";
 
 const redirectsEvaluator = generateRedirectsEvaluator(redirectsFileContents, {
 	maxLineLength: 10_000, // Usually 2_000
@@ -94,6 +96,10 @@ export default class extends WorkerEntrypoint<Env> {
 			return this.env.ASSETS.fetch(request);
 		}
 
+		if (pathname.endsWith("/og.png")) {
+			return handleOg(request, this.env, this.ctx);
+		}
+
 		if (pathname === "/.well-known/api-catalog") {
 			return new Response(API_CATALOG, {
 				headers: {
@@ -182,10 +188,12 @@ export default class extends WorkerEntrypoint<Env> {
 			}
 
 			try {
-				const forceTrailingSlashURL = new URL(
-					request.url.replace(/([^/])$/, "$1/"),
-					request.url,
-				);
+				// Append the slash to the path only. Doing it on the full URL string
+				// puts it after the query string, so rules never match.
+				const forceTrailingSlashURL = new URL(request.url);
+				if (!forceTrailingSlashURL.pathname.endsWith("/")) {
+					forceTrailingSlashURL.pathname += "/";
+				}
 				const redirect = await redirectsEvaluator(
 					new Request(forceTrailingSlashURL, request),
 					this.env.ASSETS,
@@ -211,6 +219,9 @@ export default class extends WorkerEntrypoint<Env> {
 			if (requestsMarkdown(request)) {
 				return markdownNotFound();
 			}
+
+			const modelRedirect = unavailableModelRedirect(pathname);
+			if (modelRedirect) return modelRedirect;
 
 			const section = new URL(response.url).pathname.split("/").at(1);
 

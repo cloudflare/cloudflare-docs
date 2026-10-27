@@ -165,6 +165,20 @@ For locally-managed tunnels only.
 
 Specifies the path to a <a href={props.configurationFileURL}>configuration file</a> in YAML format.
 
+### `disable-path-normalization`
+
+:::note
+Requires `cloudflared` version `2026.10.0` or later.
+:::
+
+| Syntax                                                                        | Default | Environment Variable                |
+| ----------------------------------------------------------------------------- | ------- | ----------------------------------- |
+| `cloudflared tunnel --disable-path-normalization=<BOOLEAN> run <UUID or NAME>` | `true`  | `TUNNEL_DISABLE_PATH_NORMALIZATION` |
+
+When `false`, normalizes URLs before matching ingress rules for tunnels requiring [Cloudflare Access](/cloudflare-one/access-controls/) validation. The URL path sent to your origin stays the same. Set `--disable-path-normalization=false` to turn on normalization.
+
+The default is `true` in version `2026.10.0`. For the planned default change, refer to the [URL normalization changelog](/changelog/post/2026-10-22-cloudflared-path-normalization/).
+
 ### `dns-resolver-addrs`
 
 :::note
@@ -260,6 +274,20 @@ This parameter does not apply when `cloudflared` runs on Windows, was installed 
 | `cloudflared tunnel --no-autoupdate run <UUID or NAME>` | `NO_AUTOUPDATE`      |
 
 Disables automatic `cloudflared` updates. To change the automatic update interval instead, refer to [`autoupdate-freq`](#autoupdate-freq). For manual update methods and options to minimize downtime, refer to [Update `cloudflared`](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/update-cloudflared/).
+
+### `output`
+
+:::note
+Requires `cloudflared` version 2025.6.1 or later.
+:::
+
+| Syntax                                                    | Default   | Environment variables                              |
+| --------------------------------------------------------- | --------- | -------------------------------------------------- |
+| `cloudflared tunnel --output <FORMAT> run <UUID or NAME>` | `default` | `TUNNEL_LOG_OUTPUT`<br/>`TUNNEL_MANAGEMENT_OUTPUT` |
+
+Specifies the console log format. Available values are `default` and `json`.
+
+The `json` value formats each log line as a JSON object. This format is useful for Kubernetes deployments and log collection systems that consume JSON.
 
 ### `origincert`
 

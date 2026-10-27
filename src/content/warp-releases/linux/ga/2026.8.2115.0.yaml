@@ -1,0 +1,25 @@
+releaseNotes: This hotfix addresses an issue building trusted certificate chains.
+version: 2026.8.2115.0
+releaseDate: 2026-10-20T00:55:37.997Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2026.8.2115.0
+packageSize: 74679528
+platformName: Linux
+linuxPlatforms:
+  noble-intel: 74679528
+  fedora44-intel: 77231763
+  jammy-intel: 74937866
+  fedora43-intel: 77207941
+  bookworm-intel: 74952714
+  almalinux9-intel: 77299875
+  trixie-intel: 74690756
+  almalinux10-intel: 77192097
+  resolute-intel: 74679294
+  jammy-arm: 76458206
+  noble-arm: 77079828
+  resolute-arm: 76801382
+  bookworm-arm: 76483050
+  trixie-arm: 76837846
+  almalinux9-arm: 79321532
+  almalinux10-arm: 79004671
+  fedora43-arm: 79001248
+  fedora44-arm: 79045383

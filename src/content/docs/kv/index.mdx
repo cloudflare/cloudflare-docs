@@ -77,6 +77,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "2025-02-04",
 	"observability": {
 		"enabled": true
@@ -174,7 +175,7 @@ Bindings allow your Workers to interact with resources on the Cloudflare develop
 
 <Feature header="Jurisdictions" href="/kv/reference/data-location/">
 
-Restrict a KV namespace to durably store data only within a specific jurisdiction to help meet compliance requirements. Currently in private beta.
+Restrict a KV namespace to durably store data only within a specific jurisdiction to help meet compliance requirements.
 
 </Feature>
 
