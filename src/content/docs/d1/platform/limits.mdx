@@ -20,19 +20,19 @@ The following table lists D1 account, database, and query limits:
 | [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                                         | 30 days (Workers Paid) / 7 days (Free)            |
 | Maximum Time Travel restore operations                                                                              | 10 restores per 10 minutes (per database)          |
 | Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#subrequests)) | 1000 (Workers Paid) / 50 (Free)                   |
-| Maximum number of columns per table or result set                                                                  | 100                                               |
+| Maximum number of columns per table or result set                                                                   | 100                                               |
 | Maximum number of rows per table                                                                                    | Unlimited (excluding per-database storage limits) |
 | Maximum string, `BLOB` or table row size                                                                            | 2,000,000 bytes (2 MB)                            |
 | Maximum SQL statement length                                                                                        | 100,000 bytes (100 KB)                            |
 | Maximum SQL expression tree depth                                                                                   | 100                                               |
 | Maximum terms in a compound `SELECT` statement                                                                      | 5                                                 |
-| Maximum instructions in a SQLite virtual machine program                                                           | 25,000                                            |
+| Maximum instructions in a SQLite virtual machine program                                                            | 25,000                                            |
 | Maximum bound parameters per query                                                                                  | 100                                               |
 | Maximum arguments per SQL function                                                                                  | 127                                               |
-| Maximum databases attached to one connection                                                                                          | 0                                                 |
+| Maximum databases attached to one connection                                                                        | 0                                                 |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                                            | 50 bytes                                          |
 | Maximum trigger nesting depth                                                                                       | 10                                                |
-| Maximum auxiliary SQLite worker threads per statement                                                              | 0                                                 |
+| Maximum auxiliary SQLite worker threads per statement                                                               | 0                                                 |
 | Maximum bindings per Workers script                                                                                 | Approximately 5,000 [^3]                          |
 | Maximum SQL query duration                                                                                          | 30 seconds [^4]                                   |
 | Maximum file import (`d1 execute`) size                                                                             | 5 GB [^5]                                         |
