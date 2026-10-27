@@ -638,11 +638,11 @@ const transport = new WebSocketChatTransport({
 
 </TypeScriptExample>
 
-Refer to [Non-React clients](/agents/communication-channels/chat/chat-agents/#non-react-clients) for the behaviors this transport does and does not cover.
+Refer to [Non-React clients](/agents/agent-class/communication-channels/chat/chat-agents/#non-react-clients) for the behaviors this transport does and does not cover.
 
 ## Agent-tool events
 
-If your chat UI renders retained child runs from [Agents as tools](/agents/runtime/execution/agent-tools/), use `useAgentToolEvents()` alongside `useAgent()` and `useAgentChat()`. The hook subscribes to the parent connection, replays retained child timelines, and groups runs by parent tool call ID.
+If your chat UI renders retained child runs from [Agents as tools](/agents/agent-class/agent-tools/), use `useAgentToolEvents()` alongside `useAgent()` and `useAgentChat()`. The hook subscribes to the parent connection, replays retained child timelines, and groups runs by parent tool call ID.
 
 <TypeScriptExample>
 
@@ -661,13 +661,13 @@ const agentTools = useAgentToolEvents({ agent });
 
 <LinkCard
 	title="Routing"
-	href="/agents/runtime/communication/routing/"
+	href="/agents/agent-class/routing/"
 	description="URL patterns and custom routing options."
 />
 
 <LinkCard
 	title="Callable methods"
-	href="/agents/runtime/lifecycle/callable-methods/"
+	href="/agents/agent-class/callable-methods/"
 	description="RPC over WebSocket for client-server method calls."
 />
 
