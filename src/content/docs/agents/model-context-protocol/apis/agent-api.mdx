@@ -10,7 +10,7 @@ products:
   - agents
 ---
 
-import { TypeScriptExample, LinkCard } from "~/components";
+import { TypeScriptExample, LinkCard, PackageManagers } from "~/components";
 
 `McpAgent` creates a stateful legacy MCP server backed by a Durable Object.
 
@@ -25,6 +25,10 @@ Keep importing the legacy server `McpServer` from `@modelcontextprotocol/sdk`. A
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for the feature mapping and dual-era rollout.
 
 :::
+
+`McpAgent` requires `@modelcontextprotocol/sdk`, which is an optional peer dependency of `agents`. Install the exact version used by your Agents release:
+
+<PackageManagers pkg="agents @modelcontextprotocol/sdk@1.32.1 zod" />
 
 <TypeScriptExample>
 
@@ -194,6 +198,8 @@ const eventStore = new DurableObjectEventStore(this.ctx.storage);
 ## RPC transport
 
 An Agent can connect to an `McpAgent` through its Durable Object binding instead of over HTTP. The Agent side, `addMcpServer(name, binding, options)`, is documented in [RPC transport](/agents/model-context-protocol/apis/client-api/#rpc-transport) on the MCP Client page. This section covers the `McpAgent` side.
+
+Only the Worker that defines the `McpAgent` needs `@modelcontextprotocol/sdk`. The Agent that connects to it does not.
 
 :::caution[Move to Streamable HTTP]
 The RPC transport is still supported but is not being developed further. There is no RPC transport for [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) servers. When you migrate the server, connect the Agent to it with a URL over Streamable HTTP.
