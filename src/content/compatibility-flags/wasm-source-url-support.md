@@ -29,12 +29,5 @@ at wasm://wasm/0543fef2:wasm-function[42]:0x1a2b
 If you parse stack traces, for example in a [Tail Worker](/workers/observability/logs/tail-workers/)
 or an error-tracking integration, update any patterns that match `wasm://wasm/`.
 
-Some modules keep the hash name even with this flag:
-
-- Modules compiled at runtime, for example with `WebAssembly.compile()` or
-  `new WebAssembly.Module()`.
-- WebAssembly bindings in Workers written in the service worker syntax.
-
-A Worker created with the [Worker Loader](/workers/runtime-apis/bindings/worker-loader/) follows
-its own compatibility flags. This includes a compiled `WebAssembly.Module` that its parent Worker
-passes to it.
+WebAssembly that your code compiles from bytes, for example with `new WebAssembly.Module(bytes)`,
+keeps the hash name, as do WebAssembly bindings in Workers that use the service worker syntax.
