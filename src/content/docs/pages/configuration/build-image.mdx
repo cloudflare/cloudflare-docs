@@ -97,7 +97,7 @@ The following features are not currently supported when using the v3 build syste
 
 - Specifying Node.js versions as codenames (for example, `hydrogen` or `lts/hydrogen`).
 - Detecting Yarn version from `yarn.lock` file version.
-- Detecting pnpm version detection based `pnpm-lock.yaml` file version.
+- Detecting pnpm version from `pnpm-lock.yaml` file version.
 - Detecting Node.js and package managers from `package.json` -> `"engines"`.
 - `pipenv` and `Pipfile` support.
 
@@ -106,6 +106,19 @@ The following features are not currently supported when using the v3 build syste
 Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) container.
 
 <PagesBuildEnvironment />
+
+### Trusted certificates
+
+Build commands use the CA certificates installed in the build image at `/etc/ssl/certs/ca-certificates.crt`. Pages sets the following environment variables so that runtimes with their own bundled CA certificates use them as well, including older versions you select with a [version override](/pages/configuration/build-image/#override-default-versions):
+
+| Environment variable | Value                                |
+| -------------------- | ------------------------------------ |
+| `SSL_CERT_FILE`      | `/etc/ssl/certs/ca-certificates.crt` |
+| `PIP_CERT`           | `/etc/ssl/certs/ca-certificates.crt` |
+| `REQUESTS_CA_BUNDLE` | `/etc/ssl/certs/ca-certificates.crt` |
+| `NODE_OPTIONS`       | `--use-openssl-ca`                   |
+
+If you set any of these variables as an [environment variable](/pages/configuration/build-configuration/#environment-variables) in your project, your value replaces the default. `--use-openssl-ca` is added to your own `NODE_OPTIONS`, unless it already contains `--use-openssl-ca` or `--use-bundled-ca`.
 
 
 ## Build Image Policy

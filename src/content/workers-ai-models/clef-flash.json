@@ -3,7 +3,7 @@
     "properties": [
         {
             "property_id": "context_window",
-            "value": "65536"
+            "value": "24576"
         },
         {
             "property_id": "info",
@@ -22,7 +22,7 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.09,
+                    "price": 0.038,
                     "currency": "USD"
                 }
             ]

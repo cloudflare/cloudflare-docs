@@ -37,7 +37,7 @@ Use this guide when a Mesh node or client device is offline, a Mesh IP does not 
 
 </Steps>
 
-Do not use `ping` as the only test. It requires the [ICMP Gateway proxy](/cloudflare-one/traffic-policies/proxy/), even when TCP or UDP traffic works.
+Do not use `ping` as the only test. It requires the [ICMP Gateway proxy](/cloudflare-one/traffic-controls/proxy/), even when TCP or UDP traffic works.
 
 ## Node or device shows offline
 
@@ -66,8 +66,8 @@ The connection to Cloudflare is healthy, but traffic may bypass the Mesh tunnel 
 
 1. Confirm both participants are enrolled in the same Cloudflare One account and use the destination's assigned Mesh IP. Check [Required account settings](/mesh/get-started/#required-account-settings), including unique device IPs and allowing Cloudflare One traffic to reach enrolled devices.
 2. On the source and destination, check the applied [device profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/). Mesh nodes must use Traffic and DNS mode. In Split Tunnels **Include mode**, include `100.96.0.0/12`. In **Exclude mode**, make sure neither that range nor a parent such as `100.64.0.0/10` is excluded. Use your custom device IP range if you changed the default.
-3. Confirm that the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) is on for the test protocol. ICMP is optional, but TCP or UDP proxying must be on for those services.
-4. Confirm the destination service listens on the Mesh IP or all interfaces and that its host firewall allows the source Mesh IP and port. Review [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) and [Network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network) for a blocked request.
+3. Confirm that the [Gateway proxy](/cloudflare-one/traffic-controls/proxy/) is on for the test protocol. ICMP is optional, but TCP or UDP proxying must be on for those services.
+4. Confirm the destination service listens on the Mesh IP or all interfaces and that its host firewall allows the source Mesh IP and port. Review [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/) and [Network logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#network) for a blocked request.
 
 </Steps>
 

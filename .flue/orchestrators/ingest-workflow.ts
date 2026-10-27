@@ -13,8 +13,7 @@
  * a clean PR, the follow-on review — run in the background.
  *
  * Steps:
- *   1. spam-filter — `runSpamFilter` dispatches the spam-filter agent and, on a
- *      confident spam verdict, labels/comments/closes the item (all in trusted
+ *   1. spam-filter — a direct Clef call and, on a confident spam verdict, labels/comments/closes the item (all in trusted
  *      TS). Any error is treated as "not spam" so a filter failure never blocks
  *      a legitimate review.
  *   2. kick-review — only when the item is a non-draft PR that survived the gate
@@ -22,12 +21,6 @@
  */
 import { WorkflowEntrypoint } from "cloudflare:workers";
 import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
-import SpamFilter, {
-	SPAM_VERDICT_DATA,
-	type SpamFilterInput,
-} from "../agents/spam-filter";
-import { agentStep } from "../lib/agents/agent-step";
-import { SMALL_AGENT_DURABILITY } from "../lib/agents/durability";
 import {
 	addLabels,
 	closeIssue,
@@ -36,13 +29,17 @@ import {
 	getPullRequest,
 	postComment,
 } from "../lib/github";
+import type { AiRunner } from "../lib/clef";
 import { startReview, type ReviewWorkflowParams } from "../lib/review/start";
+import { reviewMode, type ReviewRunEnv } from "../lib/review/run-context";
 import { truncateLogValue } from "../lib/github-webhook";
 import {
 	OFF_TOPIC_COMMENT,
 	SPAM_COMMENT,
-	SpamVerdictSchema,
+	evaluateItemSpam,
 	getGitHubContext,
+	isOffTopicCategory,
+	type ItemSpamVerdict,
 } from "../lib/spam-filter";
 
 /** Params carried in the Workflow instance payload (built by pipeline-entry). */
@@ -55,10 +52,18 @@ export interface IngestParams {
 	isDraft: boolean;
 	/** The triggering webhook action (for the draft gate). */
 	action?: string;
+	/**
+	 * Dev replay. In log mode it is a dry run (no GitHub writes); in comment
+	 * mode it acts for real. A replay never kicks a review.
+	 */
+	replay?: boolean;
 }
 
 interface IngestEnv {
 	REVIEW_ORCHESTRATOR: Workflow<ReviewWorkflowParams>;
+	AI: AiRunner;
+	DOCS_FLUE_REVIEW_MODE?: string;
+	DOCS_FLUE_AI_GATEWAY_ID?: string;
 	[key: string]: unknown;
 }
 
@@ -70,7 +75,10 @@ export class IngestWorkflow extends WorkflowEntrypoint<
 		event: Readonly<WorkflowEvent<IngestParams>>,
 		step: WorkflowStep,
 	): Promise<Record<string, unknown>> {
-		const { eventType, number, isPullRequest, isDraft, action } = event.payload;
+		const { eventType, number, isPullRequest, isDraft, action, replay } =
+			event.payload;
+		const mode = reviewMode(this.env as unknown as ReviewRunEnv);
+		const dryRun = replay === true && mode === "log";
 		const ghEnv = this.env as unknown as Record<string, string>;
 
 		// ── 1. Spam / off-topic gate ─────────────────────────────────────────────
@@ -86,6 +94,7 @@ export class IngestWorkflow extends WorkflowEntrypoint<
 				return null;
 			});
 		if (!context) {
+			if (replay) return { acted: true, closed: false, replay: true, mode };
 			if (isPullRequest && !(isDraft && action !== "ready_for_review")) {
 				await step.do("kick-review", async () => {
 					const token = await getInstallationToken(ghEnv);
@@ -103,22 +112,24 @@ export class IngestWorkflow extends WorkflowEntrypoint<
 			}
 			return { acted: true, closed: false, review: "skipped" };
 		}
-		const verdict = await agentStep(step, {
-			name: "spam-filter",
-			agent: SpamFilter,
-			id: `${event.instanceId}:spam:${number}`,
-			message:
-				"Evaluate this GitHub item for spam/off-topic and submit your verdict.",
-			initialData: {
-				eventType,
-				item: context.item,
-				diff: context.diff,
-			} satisfies SpamFilterInput,
-			dataName: SPAM_VERDICT_DATA,
-			schema: SpamVerdictSchema,
-			readTimeoutMs: SMALL_AGENT_DURABILITY.timeoutMs,
+		const verdict = await step.do<
+			{ ok: true; value: ItemSpamVerdict } | { ok: false; error: string }
+		>("spam-filter", async () => {
+			try {
+				const value = await evaluateItemSpam(
+					this.env.AI,
+					{ eventType, item: context.item, diff: context.diff },
+					this.env.DOCS_FLUE_AI_GATEWAY_ID,
+				);
+				return { ok: true, value };
+			} catch (error) {
+				return {
+					ok: false,
+					error: error instanceof Error ? error.message : String(error),
+				};
+			}
 		});
-		const gate = await step.do<{ closed: boolean }>(
+		const gate = await step.do<{ closed: boolean; wouldClose?: boolean }>(
 			"spam-verdict",
 			async () => {
 				if (!verdict.ok) {
@@ -148,9 +159,18 @@ export class IngestWorkflow extends WorkflowEntrypoint<
 				}
 				if (context.item.state !== "open") return { closed: false };
 
-				const isOffTopic = /support|wrong repo|feature/i.test(
-					verdict.value.reason,
-				);
+				const isOffTopic = isOffTopicCategory(verdict.value.category);
+				if (dryRun) {
+					console.log({
+						message: `${itemType} Would close (replay, log mode): ${itemLabel} (${verdict.value.confidence} confidence, ${verdict.value.category})`,
+						event: "spam_and_off_topic_filter_verdict",
+						eventType,
+						number: context.item.number,
+						...verdict.value,
+						action: "would_close",
+					});
+					return { closed: false, wouldClose: true };
+				}
 				const token = await getInstallationToken(ghEnv);
 				await addLabels(token, number, [
 					isOffTopic ? "off topic" : "spam",
@@ -187,6 +207,20 @@ export class IngestWorkflow extends WorkflowEntrypoint<
 				return { closed: true };
 			},
 		);
+
+		if (replay) {
+			return {
+				acted: true,
+				closed: gate.closed,
+				wouldClose: dryRun ? (gate.wouldClose ?? false) : gate.closed,
+				category: verdict.ok ? verdict.value.category : null,
+				probability: verdict.ok ? verdict.value.probability : null,
+				mode,
+				replay: true,
+				verdict: verdict.ok ? verdict.value : null,
+				error: verdict.ok ? undefined : verdict.error,
+			};
+		}
 
 		if (gate.closed) {
 			return { acted: true, closed: true };

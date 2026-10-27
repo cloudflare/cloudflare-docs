@@ -14,9 +14,12 @@ export interface LlmsTxtPage {
 	};
 }
 
-/** Minimal model shape needed to render a Workers AI model page link. */
-export interface WorkersAiModelPage {
-	name: string;
+/** Minimal model shape needed to render a model page link. */
+export interface ModelPage {
+	/** Link text. */
+	title: string;
+	/** URL segment(s) after the models base path, e.g. `openai/tts-1`. */
+	slug: string;
 	description: string;
 }
 
@@ -65,13 +68,16 @@ export function formatPage(
 	return e.data.description ? line.concat(`: ${e.data.description}`) : line;
 }
 
-/** Renders one generated Workers AI model page in the product llms.txt. */
-export function formatWorkersAiModel(
+/**
+ * Renders one generated model page line in a product llms.txt.
+ * `modelsPath` is the models index URL path, e.g. `/ai/models`.
+ */
+export function formatModel(
 	base: string,
-	model: WorkersAiModelPage,
+	modelsPath: string,
+	model: ModelPage,
 ): string {
-	const slug = model.name.split("/").at(-1)!;
 	const description = model.description.replace(/\s+/g, " ").trim();
-	const line = `- [${model.name}](${base}/workers-ai/models/${slug}/index.md)`;
+	const line = `- [${model.title}](${base}${modelsPath}/${model.slug}/index.md)`;
 	return description ? line.concat(`: ${description}`) : line;
 }

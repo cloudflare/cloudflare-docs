@@ -10,8 +10,10 @@ products:
   - containers
 ---
 
-import { GlossaryTooltip, ResourcesBySelector } from "~/components";
+import { ResourcesBySelector } from "~/components";
 
-Explore the following examples of Container functionality:
+Build with Containers using the `durable_object` scheduling policy. Each example configures a named image and starts it from a Durable Object with the [Container API](/containers/api/durable-object-container/).
+
+Start with [Stateless instances](/containers/examples/stateless/) for HTTP routing, or [Cron container](/containers/examples/cron/) for a scheduled task.
 
 <ResourcesBySelector directory="containers/examples/" types={["example"]} />

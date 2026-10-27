@@ -120,15 +120,17 @@ OpenFeature uses an evaluation context to pass user attributes to the flag provi
 
 Pass additional attributes alongside `targetingKey` to match [targeting rules](/flagship/targeting/). For example, you can include `plan`, `country`, or any custom attribute your rules reference.
 
-Use primitive context values such as strings, numbers, booleans, and `Date` objects. The provider rejects objects and arrays as invalid context.
+From version `0.6.0`, the provider accepts strings, finite numbers, booleans, `null`, nested objects, and arrays. It normalizes valid `Date` values to ISO 8601 strings, including within objects and arrays. Structured context works with both binding and HTTP evaluation.
+
+For HTTP evaluation, the provider uses `POST` with a JSON body when context includes objects, arrays, or `null`. Otherwise, it uses `GET` query parameters. Unsupported values, non-finite numbers, invalid dates, and cycles produce `INVALID_CONTEXT` errors.
 
 <TypeScriptExample>
 
 ```ts
 const value = await client.getBooleanValue("new-checkout", false, {
 	targetingKey: "user-42",
-	plan: "enterprise",
-	country: "US",
+	profile: { plan: "enterprise" },
+	tags: ["beta"],
 });
 ```
 

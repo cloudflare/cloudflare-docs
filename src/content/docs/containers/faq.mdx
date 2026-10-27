@@ -12,12 +12,14 @@ import { Render, WranglerConfig } from "~/components";
 
 ## How do Container logs work?
 
-To get logs in the Dashboard, including live tailing of logs, toggle `observability` to true
-in your Worker's wrangler config:
+To get logs in the Dashboard, including live tailing of logs, turn on observability in
+your Wrangler config.
+
+You can turn it on at the Worker level, which applies to containers by default:
 
 <WranglerConfig>
 
-```json
+```jsonc
 {
 	"observability": {
 		"enabled": true
@@ -27,13 +29,34 @@ in your Worker's wrangler config:
 
 </WranglerConfig>
 
-Logs are subject to the same [limits as Worker logs](/workers/observability/logs/workers-logs/#limits), which means that they are
-retained for 3 days on Free plans and 7 days on Paid plans.
+You can also configure observability per container:
 
-See [Workers Logs Pricing](/workers/observability/logs/workers-logs/#pricing) for details on cost.
+<WranglerConfig>
 
-If you are an Enterprise user, you are able to export container logs via [Logpush](/logs/logpush/)
-to your preferred destination.
+```jsonc
+{
+	"containers": [
+		{
+			"class_name": "MyContainer",
+			"image": "./Dockerfile",
+			"observability": {
+				"enabled": true
+			}
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+If a container sets `observability` in its container entry, it overrides the top-level
+`observability` setting for that container.
+
+Logs are subject to the same [limits as Workers Logs](/workers/observability/logs/workers-logs/#limits) and are retained for seven days.
+
+Beginning December 1, 2026, Container logs use [Cloudflare Observability pricing](/observability/pricing/).
+
+You can export container logs via [Logpush](/logs/logpush/) to your preferred destination.
 
 ## How are container instance locations selected?
 

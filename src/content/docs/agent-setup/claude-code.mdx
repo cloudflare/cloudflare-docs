@@ -44,10 +44,12 @@ import { LinkCard } from "~/components";
 
 	3. **Install the Cloudflare plugin**
 
-		In Claude Code, run these two slash commands. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
+		In Claude Code, run these two slash commands one at a time, waiting for the first to finish before running the second. This installs Cloudflare Skills and registers the Cloudflare MCP servers.
 
 		```txt
 		/plugin marketplace add cloudflare/skills
+		```
+		```txt
 		/plugin install cloudflare@cloudflare
 		```
 
@@ -71,7 +73,6 @@ import { LinkCard } from "~/components";
 <TipsList>
 
 - The Skills plugin includes a wrangler Skill — Claude knows when to reach for `npx wrangler deploy`, `wrangler d1 migrations apply`, and other CLI commands automatically.
-- Try the `/cloudflare:build-agent` slash command to scaffold a complete Agents SDK project, or `/cloudflare:build-mcp` for a remote MCP server.
 - The Cloudflare API MCP server uses Code Mode — Claude writes JavaScript against a TypeScript API to hit any of 2,500+ endpoints in ~1,000 tokens.
 - Claude Code works best from the root of your Workers project where `wrangler.jsonc` or `cloudflare.config.ts` lives — this is what the agent uses to understand your bindings.
 - Use `claude mcp list` to verify Cloudflare servers are connected. For CI/CD, skip OAuth by passing a Cloudflare API token as a bearer token instead.
@@ -125,9 +126,8 @@ import { LinkCard } from "~/components";
 
 <TroubleshootingList>
 	<TroubleshootingItem issue="MCP server connection fails or times out">
-		Run `claude mcp list` to verify the server is registered. Try removing and
-		re-adding: `claude mcp remove cloudflare` then re-add it. Ensure you have
-		`npx` and `mcp-remote` available.
+		Run `claude mcp list` to verify the server is registered. If you installed
+		the Cloudflare plugin, run `/reload-plugins` to reload its MCP configuration.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Claude cannot authenticate with Cloudflare">
 		The MCP server uses OAuth. When prompted, complete the authorization flow in
@@ -135,9 +135,7 @@ import { LinkCard } from "~/components";
 		bearer token instead.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
-		current documentation at runtime. If you prefer not to use the MCP server, point
-		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		Point the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
 		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
 		for a product-specific index.
 	</TroubleshootingItem>

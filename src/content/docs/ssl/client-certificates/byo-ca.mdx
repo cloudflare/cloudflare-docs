@@ -24,7 +24,7 @@ Bring your own CA (BYOCA) is especially useful if you already have mTLS implemen
 
 - This feature is only available on Enterprise accounts.
 - Each Enterprise account can upload up to five CAs. This quota does not apply to CAs uploaded through [Cloudflare Access](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/).
-- The CA certificate quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-policies/).
+- The CA certificate quota is shared across [API Shield](/api-shield/security/mtls/configure/), [Workers mTLS](/workers/runtime-apis/bindings/mtls/), and [Cloudflare Gateway](/cloudflare-one/traffic-controls/).
 - To increase this quota, contact your account team.
 
 :::note
@@ -56,6 +56,8 @@ Uploading the CA private key is only required if you wish to use [Zero Trust's b
 :::
 
 ## Set up mTLS with your CA
+
+If your client certificates are issued by an intermediate CA, upload the full CA chain (the Intermediate CA followed by the Root CA) in a single PEM file. Refer to [Upload the CA certificate, not a leaf certificate](/ssl/client-certificates/troubleshooting/#upload-the-ca-certificate-not-a-leaf-certificate).
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 

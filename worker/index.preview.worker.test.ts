@@ -56,6 +56,18 @@ describe("Preview anti-indexing", () => {
 			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
 		});
 
+		it("is present on unavailable model redirects", async () => {
+			const response = await SELF.fetch(
+				new Request("http://fakehost/workers-ai/models/retired-model/"),
+				{ redirect: "manual" },
+			);
+			expect(response.status).toBe(302);
+			expect(response.headers.get("Location")).toBe(
+				"/workers-ai/models/?unavailable=retired-model",
+			);
+			expect(response.headers.get("X-Robots-Tag")).toBe(ROBOTS_POLICY);
+		});
+
 		it("is present on JSON endpoints", async () => {
 			const response = await SELF.fetch(
 				new Request(
@@ -138,7 +150,7 @@ describe.each([
 	["changelog", "/changelog/post/2025-02-11-custom-errors-beta/"],
 	["docs", "/workers/tutorials/upload-assets-with-r2/"],
 ])("Preview %s OG images", (_, POST) => {
-	const PREVIEW = "https://my-branch.preview.developers.cloudflare.com";
+	const PREVIEW = "https://gh-my-branch.previews.developers.cloudflare.com";
 	const escapeRegExp = (value: string) =>
 		value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 

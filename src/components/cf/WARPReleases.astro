@@ -1,11 +1,13 @@
 ---
 // CF source: src/components/WARPReleases.astro (verbatim; upstream's
 // backtick-attribute `header=`...`` written as the `header={`...`}` form).
+// Releases are sorted by version instead of release date.
 import WARPRelease from "./WARPRelease.astro";
 import Details from "./Details.astro";
 import { getCollection } from "astro:content";
 import { z } from "astro/zod";
 import { sub } from "date-fns";
+import { compareWarpVersions } from "~/util/warp-version";
 
 type Props = z.infer<typeof props>;
 
@@ -21,8 +23,11 @@ const props = z.object({
 
 const { track } = props.parse(Astro.props);
 
-const sortByDate = (a: any, b: any) =>
-	b.releaseDate.getTime() - a.releaseDate.getTime();
+// Newest version first. Sorting by version rather than release date keeps a
+// backport (e.g. 2026.7.1384.0 shipped after 2026.8.2115.0) from being shown
+// as the latest release.
+const sortByVersion = (a: any, b: any) =>
+	compareWarpVersions(b.version, a.version);
 
 const entries = await getCollection("warp-releases", (release) => {
 	if (!release.id.startsWith(track)) return false;
@@ -38,7 +43,7 @@ const entries = await getCollection("warp-releases", (release) => {
 
 const releases = entries.map((x) => x.data);
 
-releases.sort(sortByDate);
+releases.sort(sortByVersion);
 
 const latestRelease = releases.at(0);
 
@@ -54,7 +59,7 @@ const platform = latestRelease.platformName;
 <Details header={`Previous version history (${releases.length - 1})`}>
 	{releases
 		.slice(1)
-		.sort(sortByDate)
+		.sort(sortByVersion)
 		.map((release) => (
 			<WARPRelease
 				header={`${platform} ${release.version}`}

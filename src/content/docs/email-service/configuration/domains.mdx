@@ -321,6 +321,10 @@ Removing a domain from Email Sending deletes the `cf-bounce` MX, SPF, DKIM, and 
 
 Disabling Email Routing on a domain stops processing incoming emails and removes every routing-related DNS record (MX, SPF, DKIM) that Email Service added to the root domain. If you plan to switch to a different email provider, [unlock the records](#locked-dns-records) and add the new provider's records before disabling Email Routing so that mail flow is not interrupted.
 
+:::note
+Unlocking an Email Service-created record and editing it to point to another provider does not remove its association with Email Service. The record will still be treated as managed by Email Service and will be deleted when you disable Email Routing.
+:::
+
 ### Transfer domain ownership
 
 1. The domain must remain in the same Cloudflare account.

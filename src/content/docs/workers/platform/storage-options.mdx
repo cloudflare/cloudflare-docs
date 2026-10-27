@@ -33,7 +33,7 @@ Storage options can also be used by your front-end application built with Cloudf
 
 There are three options for SQL-based databases available when building applications with Workers.
 
-- **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/) or [Neon](https://neon.tech/).
+- **Hyperdrive** if you have an existing Postgres or MySQL database, require large (1TB, 100TB or more) single databases, and/or want to use your existing database tools. You can also connect Hyperdrive to database platforms like [PlanetScale](https://planetscale.com/), [Neon](https://neon.tech/), or [Supabase](https://supabase.com).
 - **D1** for lightweight, serverless applications that are read-heavy, have global users that benefit from D1's [read replication](/d1/best-practices/read-replication/), and do not require you to manage and maintain a traditional RDBMS.
 - **Durable Objects** for stateful serverless workloads, per-user or per-customer SQL state, and building distributed systems (D1 and Queues are built on Durable Objects) where Durable Object's [strict serializability](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/) enables global ordering of requests and storage operations.
 
@@ -136,6 +136,24 @@ To get started with Queues:
 
 - [Set up your first queue](/queues/get-started/).
 - Learn more [about how Queues works](/queues/reference/how-queues-works/).
+
+### K2
+
+K2 is a durable event log. Producers write records to a stream, and K2 stores them for a configurable retention period. Consumers read records in batches through subscriptions, and each subscription reads every record independently.
+
+K2 is ideal for:
+
+- Moving large volumes of event data, with pricing based on data volume rather than the number of messages.
+- Delivering the same events to multiple independent consumers. For example, events from your applications can be read by an alerting system, a system that stores them durably, and a system that builds machine learning features.
+- Retaining events so that consumers can replay them, or so that a new consumer can read events produced before it was added.
+
+Use Queues when each message is a unit of work that needs to be completed, retried, and tracked individually. Use K2 when you produce and consume records in bulk, and what matters is that every record is processed rather than the state of any one record.
+
+To get started with K2:
+
+- [Create a stream](/k2/get-started/) and consume records from it.
+- Learn about [K2 concepts](/k2/concepts/), including streams, subscriptions, and leases.
+- Review K2 [Limits](/k2/platform/limits/).
 
 ### Hyperdrive
 

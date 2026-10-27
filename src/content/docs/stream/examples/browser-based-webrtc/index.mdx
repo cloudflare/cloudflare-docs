@@ -13,7 +13,7 @@ products:
 
 import { DashButton } from "~/components";
 
-This tutorial shows how to broadcast ultra-low latency live video from a browser to Cloudflare Stream using [WHIP](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html) and play it back in a browser using [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). Both the broadcaster and the player use the browser's built-in [WebRTC](/stream/webrtc-beta/) APIs — there are no libraries to install and no external applications.
+This tutorial shows how to broadcast ultra-low latency live video from a browser to Cloudflare Stream using [WHIP](https://www.ietf.org/archive/id/draft-ietf-wish-whip-16.html) and play it back in a browser using [WHEP](https://www.ietf.org/archive/id/draft-murillo-whep-01.html). Both the broadcaster and the player use the browser's built-in [WebRTC](/stream/webrtc/) APIs — there are no libraries to install and no external applications.
 
 By the end, you will have a basic HTML page that captures your camera and microphone, streams it to a live input, and plays the same stream back with sub-second latency. You should be able to complete this walkthrough in less than 15 minutes.
 
@@ -123,7 +123,7 @@ async function startBroadcast() {
 startBroadcast().catch(console.error);
 ```
 
-Once you call `startBroadcast()` and grant camera and microphone permission, the browser negotiates a connection and begins sending live video and audio to Cloudflare over WebRTC. You do not need to select a codec — the browser will negotiate a [supported codec](/stream/webrtc-beta/#supported-codecs) automatically.
+Once you call `startBroadcast()` and grant camera and microphone permission, the browser negotiates a connection and begins sending live video and audio to Cloudflare over WebRTC. You do not need to select a codec — the browser will negotiate a [supported codec](/stream/webrtc/#supported-codecs) automatically.
 
 This script does not cover selecting between multiple camera or audio sources and will use the default provided by the browser.
 
@@ -296,6 +296,6 @@ Common issues:
 
 ## Next steps
 
-- Review the [WebRTC reference](/stream/webrtc-beta/) for supported codecs, protocol conformance, and limitations.
-- Broadcast from other software with the [OBS and FFmpeg instructions](/stream/webrtc-beta/#step-2-go-live-using-whip).
-- Use a maintained [WHIP or WHEP client library](/stream/webrtc-beta/#supported-whip-and-whep-clients) instead of writing signaling yourself.
+- Review the [WebRTC reference](/stream/webrtc/) for supported codecs, protocol conformance, and limitations.
+- Broadcast from other software with the [OBS and FFmpeg instructions](/stream/webrtc/#step-2-go-live-using-whip).
+- Use a maintained [WHIP or WHEP client library](/stream/webrtc/#supported-whip-and-whep-clients) instead of writing signaling yourself.

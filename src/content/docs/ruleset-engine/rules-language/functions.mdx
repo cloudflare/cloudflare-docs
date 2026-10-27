@@ -176,6 +176,36 @@ Returns `true` when the source ends with a given substring. Returns `false` othe
 
 For example, if `http.request.uri.path` is `"/welcome.html"`, then `ends_with(http.request.uri.path, ".html")` will return `true`.
 
+### `hash_in_range`
+
+<code>hash_in_range(min <Type text="Integer" />, max <Type text="Integer" />, seed <Type text="Integer | Bytes | IP address" /> [, ...])</code>: <Type text="Integer" />
+
+Hashes seed fields into an integer from `min` to `max`. The range includes `min` but excludes `max`. Both bounds must be integer literals, with `max` greater than `min`. Seeds must be fields, not literal values.
+
+The function ignores missing (nil) seed values. If all seed values are missing, it returns nil. If every seed might be missing, use [`coalesce()`](#coalesce) for a fallback.
+
+All HTTP products support this function on all plans.
+
+The following expression selects approximately 10% of requests at random:
+
+```txt
+hash_in_range(0, 100, cf.random_seed) < 10
+```
+
+The [`cf.random_seed`](/ruleset-engine/rules-language/fields/reference/cf.random_seed/) field provides random bytes for every request. Because the field is always present, this example needs no fallback.
+
+With Cloudflare for SaaS, use [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) to control rollout progression. Define `rollout_pct` as a custom key for each hostname. Set its value to an integer from 0 to 100. The expression selects approximately that percentage of requests:
+
+```txt
+hash_in_range(0, 100, cf.random_seed) < coalesce(lookup_json_integer(cf.hostname.metadata, "rollout_pct"), 0)
+```
+
+If `rollout_pct` is missing, `coalesce()` supplies `0`. The rule then matches no requests.
+
+:::caution[Hash algorithm]
+The hash algorithm may change at any time without prior notice. Do not rely on a specific result for a fixed seed. Use `cf.random_seed` to get fresh random bytes for each request.
+:::
+
 ### `join`
 
 <code>join(items <Type text="Array<String>" />, separator <Type text="String" />)</code>: <Type text="String" />
@@ -552,6 +582,85 @@ to_string(ssl)                       will return "true"
 :::note
 You can only use the `to_string()` function in rewrite expressions of [Transform Rules](/rules/transform/) and target URL expressions of [dynamic URL redirects](/rules/url-forwarding/single-redirects/).
 :::
+
+### `trim`
+
+<code>trim(source <Type text="String | Bytes" />, trim_set <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String | Bytes" />
+
+Removes matching bytes from both ends of `source`. Bytes within the remaining value are unaffected.
+
+The `source` must be a field or a function result. It cannot be a literal value.
+
+By default, the function removes these ASCII whitespace bytes:
+
+- Tab (`\x09`)
+- Line feed (`\x0a`)
+- Vertical tab (`\x0b`)
+- Form feed (`\x0c`)
+- Carriage return (`\x0d`)
+- Space (`\x20`)
+
+The optional `trim_set` argument replaces the default whitespace set. It must be a constant string without duplicate bytes.
+
+The function matches individual bytes rather than substrings or Unicode characters.
+
+An empty `trim_set` string leaves `source` unchanged. Empty input, or input containing only matching bytes, returns an empty value.
+
+If `source` is nil, the function returns nil. For details, refer to [Missing values](/ruleset-engine/rules-language/values/#missing-values).
+
+All HTTP products support this function on all plans.
+
+For example, if `http.request.headers["x-label"][0]` is `"  hello world  "`, this expression returns `"hello world"`:
+
+```txt
+trim(http.request.headers["x-label"][0])
+```
+
+To remove surrounding slashes, provide a custom byte set. If `http.request.uri.path` is `"//blog/post//"`, this expression returns `"blog/post"`:
+
+```txt
+trim(http.request.uri.path, "/")
+```
+
+### `trim_end`
+
+<code>trim_end(source <Type text="String | Bytes" />, trim_set <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String | Bytes" />
+
+Removes matching bytes from the end of `source`. By default, it removes trailing ASCII whitespace.
+
+If `source` is nil, the function returns nil.
+
+All HTTP products support this function on all plans.
+
+The `source` must be a field or a function result. It cannot be a literal value. The optional `trim_set` argument must be a constant string without duplicate bytes.
+
+For default bytes and custom byte matching, refer to [`trim()`](#trim).
+
+For example, if `http.request.uri.path` is `"//blog/post//"`, this expression returns `"//blog/post"`:
+
+```txt
+trim_end(http.request.uri.path, "/")
+```
+
+### `trim_start`
+
+<code>trim_start(source <Type text="String | Bytes" />, trim_set <Type text="String" /> <MetaInfo text='optional' />)</code>: <Type text="String | Bytes" />
+
+Removes matching bytes from the start of `source`. By default, it removes leading ASCII whitespace.
+
+If `source` is nil, the function returns nil.
+
+All HTTP products support this function on all plans.
+
+The `source` must be a field or a function result. It cannot be a literal value. The optional `trim_set` argument must be a constant string without duplicate bytes.
+
+For default bytes and custom byte matching, refer to [`trim()`](#trim).
+
+For example, if `http.request.uri.path` is `"//blog/post//"`, this expression returns `"blog/post//"`:
+
+```txt
+trim_start(http.request.uri.path, "/")
+```
 
 ### `upper`
 

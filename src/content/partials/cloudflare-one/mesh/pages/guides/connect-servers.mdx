@@ -54,7 +54,7 @@ When a service runs on the node itself, you do not need a CIDR route, router cha
 
 On each destination server, confirm the service listens on the Mesh IP or on all interfaces. A service bound only to a separate local-network IP cannot accept connections to its Mesh IP. Allow the required port from the other server's Mesh IP in the host firewall, and check any cloud firewall or security group. You do not need to open an inbound Internet port.
 
-Confirm that the [Gateway proxy](/cloudflare-one/traffic-policies/proxy/) handles the service protocol and that any [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) permit the connection.
+Confirm that the [Gateway proxy](/cloudflare-one/traffic-controls/proxy/) handles the service protocol and that any [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/) permit the connection.
 
 ## Verify connectivity
 

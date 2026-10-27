@@ -1,0 +1,500 @@
+{
+	"model_id": "meta/muse-wonder-1.0",
+	"provider_id": "meta",
+	"name": "Muse Wonder 1.0",
+	"description": "Muse Wonder 1.0 is Meta's agentic and coding model for complex software engineering, multi-step tool loops, and long-context reasoning.",
+	"task": "Text Generation",
+	"tags": [
+		"Text Generation",
+		"Reasoning",
+		"Tool Calling",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 4,
+		"Cached input tokens (per 1M)": 0.2,
+		"Output tokens (per 1M)": 20
+	},
+	"examples": [
+		{
+			"name": "Zero-Downtime Database Migration Plan",
+			"description": "Plan a complex coding task with explicit phases, risks, and verification steps.",
+			"input": {
+				"input": "Plan the implementation of a production-safe database migration that splits a large tenants table into tenant metadata and tenant billing tables without downtime. Include discovery, dual-write, backfill, verification, cutover, rollback, and cleanup phases. For each phase, list the invariant to verify and the signal that should stop the rollout.",
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "# Production-Safe Split: `tenants` \u2192 `tenant_metadata` + `tenant_billing`\n\nUse the **expand \u2192 migrate \u2192 contract** pattern. The old `tenants` table remains the source of truth until cutover is proven, every step is feature-flagged, and nothing destructive happens until after a bake period.\n\n**Target shape (example):**\n- `tenant_metadata`: `tenant_id (PK, same IDs as today)`, name, slug, status, region, settings, `created_at`, `updated_at`\n- `tenant_billing`: `tenant_id (PK, FK \u2192 tenant_metadata)`, billing_email, payment_provider_customer_id, subscription_id, plan, currency, tax_id, billing_address, `created_at`, `updated_at`\n- Keep `tenant_id` identical to the existing `tenants.id` so existing foreign keys don't need to be rewritten.\n\n**Cross-cutting controls for all phases:** flags for `dual_write_enabled`, `read_new_pct`, `write_primary_new`; dashboards for write error rate, p99 latency, replica lag, dual-write failures, and row-diff counts; a named rollback owner; no phase transitions during month-end billing runs or peak traffic.\n\n---\n\n### Phase 0 \u2014 Discovery\n\n**Actions**\n- Inventory every column in `tenants` and classify it as metadata, billing, both, or dead. Resolve ambiguous columns (e.g., `plan`) to a single owner.\n- Inventory every reader/writer: application code, ORMs, background jobs, cron/Lambdas, BI/ETL, admin tooling, and downstream consumers (webhooks, invoices, data warehouse) using query logs (`pg_stat_statements` or equivalent).\n- Map foreign keys, triggers, unique constraints, and indexes referencing `tenants`.\n- Measure table size (rows, GB, growth rate), write TPS, hot tenants, NULL/duplicate rates in billing columns, and whether a reliable PK + `updated_at` cursor exists for resumable backfill.\n- Check compliance: billing fields may carry stricter access control, encryption, audit, and retention requirements once isolated.\n- Rehearse the full migration in staging with production-like volume and measure DDL/backfill timing.\n\n**Invariant to verify:** Every column is assigned to exactly one destination table, and every read/write path is known and owned.\n\n**Stop signal:** Any undocumented writer (stray script, forgotten job), a column with unclear ownership, or an external consumer you can't observe or update. Do not proceed on an incomplete inventory.\n\n---\n\n### Phase 1 \u2014 Expand (create new schema, change nothing else)\n\n**Actions**\n- Create `tenant_metadata` and `tenant_billing` empty, with indexes and constraints. In Postgres use `CREATE INDEX CONCURRENTLY` and add FKs as `NOT VALID` then `VALIDATE CONSTRAINT` to avoid long locks; in MySQL require `ALGORITHM=INPLACE, LOCK=NONE` or an online-schema-change tool.\n- Optionally create a compatibility view so old code can keep reading a joined shape later.\n- Deploy no application changes yet; old code runs untouched against `tenants`.\n\n**Invariant to verify:** Production behavior is unchanged \u2014 old application works exactly as before, new tables are empty, and DDL caused no lock waits or replica lag beyond baseline.\n\n**Stop signal:** Lock wait > a few seconds, replica lag spiking during DDL, or any regression in the existing test suite against the new schema. Drop the new tables and retry off-peak.\n\n---\n\n### Phase 2 \u2014 Dual-Write\n\n**Actions**\n- Deploy application code (flag off, then ramp 1% \u2192 100%) that writes to both `tenants` (still primary) and the new tables. Because both live in the same database, write them **in the same transaction** so they can't diverge on partial failure.\n- Make writes idempotent (`INSERT ... ON CONFLICT (tenant_id) DO UPDATE`) so retries are safe.\n- Reads still come only from `tenants`. Add metrics/alerts on dual-write failures.\n- Add a safety net: a reconciliation job (Phase 4) that catches anything dual-write misses.\n\n**Invariant to verify:** For every tenant created or updated since the flag was enabled, a corresponding row exists in both new tables, field-for-field identical to the mapped columns in `tenants`.\n\n**Stop signal:** Dual-write failure rate > ~0.05\u20130.1%, any duplicate-key or constraint errors, p99 write latency up >20% over baseline for 10 minutes, or rising mismatch counts. Turn the flag off \u2014 reads are unaffected, so this rollback is trivial.\n\n---\n\n### Phase 3 \u2014 Backfill (historical data)\n\n**Actions**\n- Copy existing rows in small keyset-paginated chunks (`WHERE id > :last_id ORDER BY id LIMIT 1000`), checkpointing `last_id` so the job is resumable.\n- Use idempotent upserts; only overwrite when the source `updated_at` is newer, so backfill never clobbers fresher dual-written data.\n- Throttle: pause automatically when replica lag, CPU, or I/O crosses thresholds; run heavier chunks off-peak. Estimate total duration from a staging dry run.\n\n**Invariant to verify:** For every completed ID range, destination row counts and per-range checksums match the source, and the job can restart from its checkpoint without loss or duplication.\n\n**Stop signal:** Replica lag > 5\u201310s sustained, DB CPU/IO saturation impacting production latency, or any checksum mismatch in a completed chunk. The job should self-pause; investigate before resuming.\n\n---\n\n### Phase 4 \u2014 Verification\n\n**Actions**\n- Continuous comparison job: row counts, aggregate/per-tenant hashes (e.g., hash of concatenated mapped columns), orphan checks (`tenant_billing` rows with no `tenant_metadata` row and vice versa), and random sampling of ~1% of tenants plus all recently written tenants.\n- **Shadow reads:** for a sample of live requests, read from the new tables and compare against the `tenants` result without serving it. Log mismatches.\n- Reconcile any diffs by replaying from `tenants` (still the source of truth), then re-verify.\n- Verify in-flight correctness: counts may differ momentarily due to writes in progress, so compare on a quiesced watermark (e.g., only rows with `updated_at` older than 5 minutes).\n\n**Invariant to verify:** Zero unexplained differences in billing fields, zero orphans, and shadow-read parity at 100% (billing data tolerates no \"close enough\") over at least several days including a peak period.\n\n**Stop signal:** Any persistent billing-field mismatch after replay, orphan rows, or shadow-read mismatch rate above zero for billing / >0.001% for metadata. Cutover is blocked until diffs are explained and fixed at the root cause.\n\n---\n\n### Phase 5 \u2014 Cutover\n\n**Actions**\n- Ramp reads to the new tables by flag: internal tenants \u2192 1% \u2192 5% \u2192 25% \u2192 50% \u2192 100%, holding each step long enough to watch error rate, p99, and shadow-diff metrics.\n- Then flip write primacy: new tables become the source of truth, but **keep reverse dual-writing back to `tenants`** for the entire bake period (recommend 2\u20134 weeks, spanning at least one full billing cycle).\n- Announce a change freeze on billing logic during cutover; staff support/on-call for billing anomalies.\n\n**Invariant to verify:** User-visible responses and billing operations (invoice generation, subscription changes) are identical to pre-cutover behavior, with no latency or error-budget regression at each ramp step.\n\n**Stop signal:** 5xx/error rate > baseline +0.1%, p99 regression >20%, any confirmed billing discrepancy or relevant support tickets, or mismatch alerts firing. Execute rollback (below) \u2014 it must take <5 minutes via flag flip.\n\n---\n\n### Phase 6 \u2014 Rollback (standing capability, rehearsed before cutover)\n\n**Actions**\n- Before cutover: rolling back = disable dual-write flag. Nothing else needed.\n- After read cutover: flip `read_new_pct` to 0. Safe because dual-write kept `tenants` current.\n- After write cutover: flip write primacy back to `tenants`. Safe **only** because reverse dual-write kept `tenants` up to date during the bake period.\n- Rehearse this in staging/game-day before Phase 5; test the actual flag flips and measure time-to-rollback.\n\n**Invariant to verify:** At all times during the bake period, `tenants` is complete and no more than a few seconds behind the new tables, so it can resume serving reads/writes with no data loss.\n\n**Stop signal (for forward progress):** Reverse-sync lag growing, a failed rollback rehearsal, or rollback time exceeding your SLO. If you cannot prove rollback works, you do not cut over.\n\n---\n\n### Phase 7 \u2014 Cleanup / Contract\n\n**Actions**\n- After the bake period (\u2265 one full billing cycle with zero rollbacks and zero diff alerts), confirm via query logs and application metrics that nothing has read the legacy billing columns for at least 14 days.\n- Take a verified backup/snapshot (and test a restore) of the pre-cleanup state; set a retention window (e.g., 90 days).\n- Remove dual-write code and flags, stop reverse sync, then drop the billing columns from the old table (or rename `tenants` \u2192 `tenant_metadata` and drop the now-redundant table) using online DDL. Keep a read-only archive copy until retention expires.\n\n**Invariant to verify:** No code path, job, report, or consumer touches the legacy columns, and a tested restore point exists.\n\n**Stop signal:** Any detected access to legacy columns, an unresolved data diff, a legal/audit hold, or an incomplete billing cycle. Delay cleanup \u2014 it is the only irreversible phase, so it is also the easiest to postpone.\n\n---\n\n### Quick-reference\n\n| Phase | Invariant | Stop signal |\n|---|---|---|\n| Discovery | All columns + all read/write paths inventoried | Unknown writer or ambiguous column ownership |\n| Expand | Old app unchanged; no locks/lag from DDL | Lock waits or replica lag during DDL |\n| Dual-write | New tables mirror `tenants` for all new writes | Dual-write failures >0.1%, p99 +20% |\n| Backfill | Completed ranges checksum-match; resumable | Replica lag >5\u201310s, any chunk mismatch |\n| Verification | Zero billing diffs, zero orphans, 100% shadow parity | Any persistent mismatch |\n| Cutover | Identical responses/billing; latency & errors flat | Errors +0.1%, billing discrepancy |\n| Rollback | `tenants` always \u2264 seconds behind; rollback <5 min | Failed rehearsal or reverse-sync lag |\n| Cleanup | Zero legacy-column access for 14+ days; tested backup | Any legacy access, audit hold, open billing cycle |\n\n**Key principles throughout:** same-database transactional dual-writes where possible, idempotency everywhere, throttled resumable backfill, billing fields held to a zero-mismatch standard, reversibility until the final cleanup, and phase gates tied to metrics \u2014 not to the calendar."
+			},
+			"raw_response": {
+				"id": "resp_6acd1aea89f8d9a1a0bb4e41",
+				"object": "response",
+				"created_at": 1791826666,
+				"model": "muse-wonder-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6acd1aea89f8d9a1a0bb4e41:rs_df76e31a-3059-442f-a013-dd266b1c6b5c",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_4bb9f7bb-7885-4cff-9d6e-05fd786f37f2",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "# Production-Safe Split: `tenants` \u2192 `tenant_metadata` + `tenant_billing`\n\nUse the **expand \u2192 migrate \u2192 contract** pattern. The old `tenants` table remains the source of truth until cutover is proven, every step is feature-flagged, and nothing destructive happens until after a bake period.\n\n**Target shape (example):**\n- `tenant_metadata`: `tenant_id (PK, same IDs as today)`, name, slug, status, region, settings, `created_at`, `updated_at`\n- `tenant_billing`: `tenant_id (PK, FK \u2192 tenant_metadata)`, billing_email, payment_provider_customer_id, subscription_id, plan, currency, tax_id, billing_address, `created_at`, `updated_at`\n- Keep `tenant_id` identical to the existing `tenants.id` so existing foreign keys don't need to be rewritten.\n\n**Cross-cutting controls for all phases:** flags for `dual_write_enabled`, `read_new_pct`, `write_primary_new`; dashboards for write error rate, p99 latency, replica lag, dual-write failures, and row-diff counts; a named rollback owner; no phase transitions during month-end billing runs or peak traffic.\n\n---\n\n### Phase 0 \u2014 Discovery\n\n**Actions**\n- Inventory every column in `tenants` and classify it as metadata, billing, both, or dead. Resolve ambiguous columns (e.g., `plan`) to a single owner.\n- Inventory every reader/writer: application code, ORMs, background jobs, cron/Lambdas, BI/ETL, admin tooling, and downstream consumers (webhooks, invoices, data warehouse) using query logs (`pg_stat_statements` or equivalent).\n- Map foreign keys, triggers, unique constraints, and indexes referencing `tenants`.\n- Measure table size (rows, GB, growth rate), write TPS, hot tenants, NULL/duplicate rates in billing columns, and whether a reliable PK + `updated_at` cursor exists for resumable backfill.\n- Check compliance: billing fields may carry stricter access control, encryption, audit, and retention requirements once isolated.\n- Rehearse the full migration in staging with production-like volume and measure DDL/backfill timing.\n\n**Invariant to verify:** Every column is assigned to exactly one destination table, and every read/write path is known and owned.\n\n**Stop signal:** Any undocumented writer (stray script, forgotten job), a column with unclear ownership, or an external consumer you can't observe or update. Do not proceed on an incomplete inventory.\n\n---\n\n### Phase 1 \u2014 Expand (create new schema, change nothing else)\n\n**Actions**\n- Create `tenant_metadata` and `tenant_billing` empty, with indexes and constraints. In Postgres use `CREATE INDEX CONCURRENTLY` and add FKs as `NOT VALID` then `VALIDATE CONSTRAINT` to avoid long locks; in MySQL require `ALGORITHM=INPLACE, LOCK=NONE` or an online-schema-change tool.\n- Optionally create a compatibility view so old code can keep reading a joined shape later.\n- Deploy no application changes yet; old code runs untouched against `tenants`.\n\n**Invariant to verify:** Production behavior is unchanged \u2014 old application works exactly as before, new tables are empty, and DDL caused no lock waits or replica lag beyond baseline.\n\n**Stop signal:** Lock wait > a few seconds, replica lag spiking during DDL, or any regression in the existing test suite against the new schema. Drop the new tables and retry off-peak.\n\n---\n\n### Phase 2 \u2014 Dual-Write\n\n**Actions**\n- Deploy application code (flag off, then ramp 1% \u2192 100%) that writes to both `tenants` (still primary) and the new tables. Because both live in the same database, write them **in the same transaction** so they can't diverge on partial failure.\n- Make writes idempotent (`INSERT ... ON CONFLICT (tenant_id) DO UPDATE`) so retries are safe.\n- Reads still come only from `tenants`. Add metrics/alerts on dual-write failures.\n- Add a safety net: a reconciliation job (Phase 4) that catches anything dual-write misses.\n\n**Invariant to verify:** For every tenant created or updated since the flag was enabled, a corresponding row exists in both new tables, field-for-field identical to the mapped columns in `tenants`.\n\n**Stop signal:** Dual-write failure rate > ~0.05\u20130.1%, any duplicate-key or constraint errors, p99 write latency up >20% over baseline for 10 minutes, or rising mismatch counts. Turn the flag off \u2014 reads are unaffected, so this rollback is trivial.\n\n---\n\n### Phase 3 \u2014 Backfill (historical data)\n\n**Actions**\n- Copy existing rows in small keyset-paginated chunks (`WHERE id > :last_id ORDER BY id LIMIT 1000`), checkpointing `last_id` so the job is resumable.\n- Use idempotent upserts; only overwrite when the source `updated_at` is newer, so backfill never clobbers fresher dual-written data.\n- Throttle: pause automatically when replica lag, CPU, or I/O crosses thresholds; run heavier chunks off-peak. Estimate total duration from a staging dry run.\n\n**Invariant to verify:** For every completed ID range, destination row counts and per-range checksums match the source, and the job can restart from its checkpoint without loss or duplication.\n\n**Stop signal:** Replica lag > 5\u201310s sustained, DB CPU/IO saturation impacting production latency, or any checksum mismatch in a completed chunk. The job should self-pause; investigate before resuming.\n\n---\n\n### Phase 4 \u2014 Verification\n\n**Actions**\n- Continuous comparison job: row counts, aggregate/per-tenant hashes (e.g., hash of concatenated mapped columns), orphan checks (`tenant_billing` rows with no `tenant_metadata` row and vice versa), and random sampling of ~1% of tenants plus all recently written tenants.\n- **Shadow reads:** for a sample of live requests, read from the new tables and compare against the `tenants` result without serving it. Log mismatches.\n- Reconcile any diffs by replaying from `tenants` (still the source of truth), then re-verify.\n- Verify in-flight correctness: counts may differ momentarily due to writes in progress, so compare on a quiesced watermark (e.g., only rows with `updated_at` older than 5 minutes).\n\n**Invariant to verify:** Zero unexplained differences in billing fields, zero orphans, and shadow-read parity at 100% (billing data tolerates no \"close enough\") over at least several days including a peak period.\n\n**Stop signal:** Any persistent billing-field mismatch after replay, orphan rows, or shadow-read mismatch rate above zero for billing / >0.001% for metadata. Cutover is blocked until diffs are explained and fixed at the root cause.\n\n---\n\n### Phase 5 \u2014 Cutover\n\n**Actions**\n- Ramp reads to the new tables by flag: internal tenants \u2192 1% \u2192 5% \u2192 25% \u2192 50% \u2192 100%, holding each step long enough to watch error rate, p99, and shadow-diff metrics.\n- Then flip write primacy: new tables become the source of truth, but **keep reverse dual-writing back to `tenants`** for the entire bake period (recommend 2\u20134 weeks, spanning at least one full billing cycle).\n- Announce a change freeze on billing logic during cutover; staff support/on-call for billing anomalies.\n\n**Invariant to verify:** User-visible responses and billing operations (invoice generation, subscription changes) are identical to pre-cutover behavior, with no latency or error-budget regression at each ramp step.\n\n**Stop signal:** 5xx/error rate > baseline +0.1%, p99 regression >20%, any confirmed billing discrepancy or relevant support tickets, or mismatch alerts firing. Execute rollback (below) \u2014 it must take <5 minutes via flag flip.\n\n---\n\n### Phase 6 \u2014 Rollback (standing capability, rehearsed before cutover)\n\n**Actions**\n- Before cutover: rolling back = disable dual-write flag. Nothing else needed.\n- After read cutover: flip `read_new_pct` to 0. Safe because dual-write kept `tenants` current.\n- After write cutover: flip write primacy back to `tenants`. Safe **only** because reverse dual-write kept `tenants` up to date during the bake period.\n- Rehearse this in staging/game-day before Phase 5; test the actual flag flips and measure time-to-rollback.\n\n**Invariant to verify:** At all times during the bake period, `tenants` is complete and no more than a few seconds behind the new tables, so it can resume serving reads/writes with no data loss.\n\n**Stop signal (for forward progress):** Reverse-sync lag growing, a failed rollback rehearsal, or rollback time exceeding your SLO. If you cannot prove rollback works, you do not cut over.\n\n---\n\n### Phase 7 \u2014 Cleanup / Contract\n\n**Actions**\n- After the bake period (\u2265 one full billing cycle with zero rollbacks and zero diff alerts), confirm via query logs and application metrics that nothing has read the legacy billing columns for at least 14 days.\n- Take a verified backup/snapshot (and test a restore) of the pre-cleanup state; set a retention window (e.g., 90 days).\n- Remove dual-write code and flags, stop reverse sync, then drop the billing columns from the old table (or rename `tenants` \u2192 `tenant_metadata` and drop the now-redundant table) using online DDL. Keep a read-only archive copy until retention expires.\n\n**Invariant to verify:** No code path, job, report, or consumer touches the legacy columns, and a tested restore point exists.\n\n**Stop signal:** Any detected access to legacy columns, an unresolved data diff, a legal/audit hold, or an incomplete billing cycle. Delay cleanup \u2014 it is the only irreversible phase, so it is also the easiest to postpone.\n\n---\n\n### Quick-reference\n\n| Phase | Invariant | Stop signal |\n|---|---|---|\n| Discovery | All columns + all read/write paths inventoried | Unknown writer or ambiguous column ownership |\n| Expand | Old app unchanged; no locks/lag from DDL | Lock waits or replica lag during DDL |\n| Dual-write | New tables mirror `tenants` for all new writes | Dual-write failures >0.1%, p99 +20% |\n| Backfill | Completed ranges checksum-match; resumable | Replica lag >5\u201310s, any chunk mismatch |\n| Verification | Zero billing diffs, zero orphans, 100% shadow parity | Any persistent mismatch |\n| Cutover | Identical responses/billing; latency & errors flat | Errors +0.1%, billing discrepancy |\n| Rollback | `tenants` always \u2264 seconds behind; rollback <5 min | Failed rehearsal or reverse-sync lag |\n| Cleanup | Zero legacy-column access for 14+ days; tested backup | Any legacy access, audit hold, open billing cycle |\n\n**Key principles throughout:** same-database transactional dual-writes where possible, idempotency everywhere, throttled resumable backfill, billing fields held to a zero-mismatch standard, reversibility until the final cleanup, and phase gates tied to metrics \u2014 not to the calendar.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 70,
+					"output_tokens": 4632,
+					"total_tokens": 4702,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 2282
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791826666,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 8192
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-wonder-1.0',\n  {\n    input:\n      'Plan the implementation of a production-safe database migration that splits a large tenants table into tenant metadata and tenant billing tables without downtime. Include discovery, dual-write, backfill, verification, cutover, rollback, and cleanup phases. For each phase, list the invariant to verify and the signal that should stop the rollout.',\n    max_output_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-wonder-1.0\",\n  \"input\": \"Plan the implementation of a production-safe database migration that splits a large tenants table into tenant metadata and tenant billing tables without downtime. Include discovery, dual-write, backfill, verification, cutover, rollback, and cleanup phases. For each phase, list the invariant to verify and the signal that should stop the rollout.\",\n  \"max_output_tokens\": 4096\n}'"
+				}
+			]
+		},
+		{
+			"name": "Distributed Job Queue Redesign",
+			"description": "Redesign a distributed job queue while making concurrency and failure semantics explicit.",
+			"input": {
+				"input": "Design a distributed job queue for a multi-tenant SaaS platform processing billing and notification jobs. It must preserve per-tenant ordering, support at-least-once delivery, tolerate worker crashes, allow replay for seven days, enforce tenant-specific concurrency limits, and prevent one tenant from starving others. Compare two architectures, recommend one, define the job state machine and idempotency contract, and list the metrics and alerts needed for rollout. Keep the answer under 700 words.",
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "## Architecture Comparison\n\n| Dimension | A: Partitioned Log (e.g., Kafka) | B: Virtual Per-Tenant Queues + Fair Scheduler |\n|---|---|---|\n| **Design** | Hash `tenant_id` to a partition; workers consume partitions. Ordering guaranteed per partition. | Jobs stored in a durable DB (e.g., Postgres, partitioned by tenant). A dispatcher leases jobs to stateless workers using weighted fair queuing. |\n| **Ordering** | Strong per partition, but a slow/poison job blocks unrelated tenants sharing that partition. Retries/delays break ordering. | Strong per tenant lane via monotonic sequence numbers; retries block only that lane. |\n| **Fairness & concurrency** | Hard: partition assignment is coarse, hot tenants skew partitions, per-tenant caps require extra machinery. | Native: dispatcher enforces per-tenant in-flight caps and round-robin/weighted scheduling. |\n| **Replay (7 days)** | Excellent: built-in retention and offset rewind. | Requires retaining terminal jobs for 7 days and a replay API (manageable). |\n| **Crash tolerance** | Offset committed only after success gives at-least-once. | Lease/visibility timeout with expiry and requeue gives at-least-once. |\n| **Scale / ops** | Very high throughput, mature ecosystem; but rebalancing pain and limited per-job control (no per-job delay/priority easily). | Throughput bounded by DB; needs sharding at high scale. Simpler per-job control, queries, and auditing. |\n\n## Recommendation: Architecture B\n\nBilling and notification workloads are moderate-throughput but correctness- and fairness-sensitive, so fine-grained control beats raw log throughput.\n\n**Components:**\n\n1. **Enqueue API + transactional outbox** \u2014 the job row is written in the same transaction as the business change, so jobs are never lost or phantom-created.\n2. **Ordering** \u2014 ordering key is `tenant_id + lane` (billing, notifications are separate lanes so notifications can't block charges). Each lane gets a monotonic sequence; the dispatcher only leases the lowest unacknowledged sequences. Within a lane, execution is effectively sequential; tenant concurrency applies *across* lanes/keys.\n3. **Fair dispatcher** \u2014 deficit round-robin / weighted fair queuing across tenants (weights by tier), with a hard per-tenant in-flight semaphore. Scheduling is work-conserving: idle tenants' capacity is usable by others, but a backlogged tenant always gets its guaranteed share within one scheduling round. Aging prevents low-weight tenants from waiting indefinitely. Separate worker pools for billing vs. notifications add a second isolation layer.\n4. **Crash tolerance** \u2014 workers hold a lease (e.g., 30\u201360s visibility timeout) extended by heartbeat. Ack is a compare-and-swap on a fencing `lease_token`, so a zombie worker whose lease expired cannot ack. On expiry, the job returns to READY with `attempts++`.\n5. **Replay** \u2014 terminal jobs (payload, result, attempt history) retained 7 days. Replay of a dead-lettered job resumes it at its original sequence position (the lane stays paused until it's replayed or explicitly skipped by an operator, preserving strict ordering). All replays are audit-logged.\n\n## Job State Machine\n\n```\nQUEUED \u2500\u2500lease\u2500\u2500\u25b6 IN_FLIGHT \u2500\u2500ack\u2500\u2500\u25b6 SUCCEEDED (terminal)\n  \u25b2                  \u2502\n  \u2502                  \u251c\u2500 failure, attempts < max \u2500\u25b6 RETRY_WAIT \u2500\u2500backoff\u2500\u2500\u25b6 QUEUED\n  \u2502                  \u251c\u2500 failure, attempts = max \u2500\u25b6 DEAD_LETTERED \u2500\u2500replay\u2500\u2500\u25b6 QUEUED\n  \u2514\u2500\u2500 lease expiry \u2500\u2500\u2518\nQUEUED/RETRY_WAIT \u2500\u2500cancel\u2500\u2500\u25b6 CANCELLED (terminal)\nDEAD_LETTERED \u2500\u2500operator skip\u2500\u2500\u25b6 SKIPPED (terminal)\n```\n\nRetries use exponential backoff with jitter. `SUCCEEDED`, `CANCELLED`, `SKIPPED` are terminal; jobs are purged after 7 days.\n\n## Idempotency Contract\n\n**Producer side:**\n- Every enqueue carries an `Idempotency-Key`. A unique constraint on `(tenant_id, idempotency_key)` means duplicate submissions return the original `job_id` instead of creating a second job. Same key with a different payload hash returns `409 Conflict`.\n\n**Worker side:**\n- Delivery is at-least-once, so handlers **must** be idempotent on the stable `job_id`/business key \u2014 never on `attempt_id`, which changes per delivery.\n- External side effects must propagate a stable idempotency key downstream (e.g., to the payment processor or email provider), or record the effect and the processed `job_id` in one local transaction.\n- Never ack before the effect is durably committed. Duplicate delivery of an already-succeeded job must be detected and acked as a no-op.\n- Replaying a *succeeded* job requires explicit operator override, since it intentionally re-executes the effect under a new job ID.\n\n## Metrics and Alerts for Rollout\n\n**Metrics (tagged by tenant, lane, job type):**\n- Queue depth and **age of oldest QUEUED job** per tenant/lane\n- Dispatch latency, execution duration (p50/p95/p99), success/retry/DLQ rates\n- Lease expirations (crash indicator), duplicate-delivery rate, in-flight vs. per-tenant cap (saturation)\n- Fairness lag: difference between a tenant's expected and actual share of dispatches while backlogged\n- Scheduler loop latency and DB lock contention\n\n**Alerts:**\n- Oldest billing job waiting > 5 min (notifications > 15 min) \u2014 SLO breach / starvation signal\n- Any billing job entering DLQ; DLQ rate spike for notifications\n- Lease-expiration rate spike \u2014 worker crashes or systemic slowness\n- A tenant backlogged but receiving near-zero dispatches over 10 min \u2014 fairness bug\n- Per-tenant saturation pinned at cap with growing depth \u2014 capacity or tenant abuse\n- Zero throughput with non-empty queues \u2014 dispatcher outage\n\n**Rollout:** ship behind a feature flag, canary with internal tenants, then low-risk tenants, with per-tenant kill switches and dashboards reviewed at each stage before ramping."
+			},
+			"raw_response": {
+				"id": "resp_6acd1a2a81d14cfab4cf439e",
+				"object": "response",
+				"created_at": 1791826474,
+				"model": "muse-wonder-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6acd1a2a81d14cfab4cf439e:rs_160b5532-14ce-4f16-a184-7999a91f1657",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_95200969-0423-4c84-9c08-199e9c46ecc2",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "## Architecture Comparison\n\n| Dimension | A: Partitioned Log (e.g., Kafka) | B: Virtual Per-Tenant Queues + Fair Scheduler |\n|---|---|---|\n| **Design** | Hash `tenant_id` to a partition; workers consume partitions. Ordering guaranteed per partition. | Jobs stored in a durable DB (e.g., Postgres, partitioned by tenant). A dispatcher leases jobs to stateless workers using weighted fair queuing. |\n| **Ordering** | Strong per partition, but a slow/poison job blocks unrelated tenants sharing that partition. Retries/delays break ordering. | Strong per tenant lane via monotonic sequence numbers; retries block only that lane. |\n| **Fairness & concurrency** | Hard: partition assignment is coarse, hot tenants skew partitions, per-tenant caps require extra machinery. | Native: dispatcher enforces per-tenant in-flight caps and round-robin/weighted scheduling. |\n| **Replay (7 days)** | Excellent: built-in retention and offset rewind. | Requires retaining terminal jobs for 7 days and a replay API (manageable). |\n| **Crash tolerance** | Offset committed only after success gives at-least-once. | Lease/visibility timeout with expiry and requeue gives at-least-once. |\n| **Scale / ops** | Very high throughput, mature ecosystem; but rebalancing pain and limited per-job control (no per-job delay/priority easily). | Throughput bounded by DB; needs sharding at high scale. Simpler per-job control, queries, and auditing. |\n\n## Recommendation: Architecture B\n\nBilling and notification workloads are moderate-throughput but correctness- and fairness-sensitive, so fine-grained control beats raw log throughput.\n\n**Components:**\n\n1. **Enqueue API + transactional outbox** \u2014 the job row is written in the same transaction as the business change, so jobs are never lost or phantom-created.\n2. **Ordering** \u2014 ordering key is `tenant_id + lane` (billing, notifications are separate lanes so notifications can't block charges). Each lane gets a monotonic sequence; the dispatcher only leases the lowest unacknowledged sequences. Within a lane, execution is effectively sequential; tenant concurrency applies *across* lanes/keys.\n3. **Fair dispatcher** \u2014 deficit round-robin / weighted fair queuing across tenants (weights by tier), with a hard per-tenant in-flight semaphore. Scheduling is work-conserving: idle tenants' capacity is usable by others, but a backlogged tenant always gets its guaranteed share within one scheduling round. Aging prevents low-weight tenants from waiting indefinitely. Separate worker pools for billing vs. notifications add a second isolation layer.\n4. **Crash tolerance** \u2014 workers hold a lease (e.g., 30\u201360s visibility timeout) extended by heartbeat. Ack is a compare-and-swap on a fencing `lease_token`, so a zombie worker whose lease expired cannot ack. On expiry, the job returns to READY with `attempts++`.\n5. **Replay** \u2014 terminal jobs (payload, result, attempt history) retained 7 days. Replay of a dead-lettered job resumes it at its original sequence position (the lane stays paused until it's replayed or explicitly skipped by an operator, preserving strict ordering). All replays are audit-logged.\n\n## Job State Machine\n\n```\nQUEUED \u2500\u2500lease\u2500\u2500\u25b6 IN_FLIGHT \u2500\u2500ack\u2500\u2500\u25b6 SUCCEEDED (terminal)\n  \u25b2                  \u2502\n  \u2502                  \u251c\u2500 failure, attempts < max \u2500\u25b6 RETRY_WAIT \u2500\u2500backoff\u2500\u2500\u25b6 QUEUED\n  \u2502                  \u251c\u2500 failure, attempts = max \u2500\u25b6 DEAD_LETTERED \u2500\u2500replay\u2500\u2500\u25b6 QUEUED\n  \u2514\u2500\u2500 lease expiry \u2500\u2500\u2518\nQUEUED/RETRY_WAIT \u2500\u2500cancel\u2500\u2500\u25b6 CANCELLED (terminal)\nDEAD_LETTERED \u2500\u2500operator skip\u2500\u2500\u25b6 SKIPPED (terminal)\n```\n\nRetries use exponential backoff with jitter. `SUCCEEDED`, `CANCELLED`, `SKIPPED` are terminal; jobs are purged after 7 days.\n\n## Idempotency Contract\n\n**Producer side:**\n- Every enqueue carries an `Idempotency-Key`. A unique constraint on `(tenant_id, idempotency_key)` means duplicate submissions return the original `job_id` instead of creating a second job. Same key with a different payload hash returns `409 Conflict`.\n\n**Worker side:**\n- Delivery is at-least-once, so handlers **must** be idempotent on the stable `job_id`/business key \u2014 never on `attempt_id`, which changes per delivery.\n- External side effects must propagate a stable idempotency key downstream (e.g., to the payment processor or email provider), or record the effect and the processed `job_id` in one local transaction.\n- Never ack before the effect is durably committed. Duplicate delivery of an already-succeeded job must be detected and acked as a no-op.\n- Replaying a *succeeded* job requires explicit operator override, since it intentionally re-executes the effect under a new job ID.\n\n## Metrics and Alerts for Rollout\n\n**Metrics (tagged by tenant, lane, job type):**\n- Queue depth and **age of oldest QUEUED job** per tenant/lane\n- Dispatch latency, execution duration (p50/p95/p99), success/retry/DLQ rates\n- Lease expirations (crash indicator), duplicate-delivery rate, in-flight vs. per-tenant cap (saturation)\n- Fairness lag: difference between a tenant's expected and actual share of dispatches while backlogged\n- Scheduler loop latency and DB lock contention\n\n**Alerts:**\n- Oldest billing job waiting > 5 min (notifications > 15 min) \u2014 SLO breach / starvation signal\n- Any billing job entering DLQ; DLQ rate spike for notifications\n- Lease-expiration rate spike \u2014 worker crashes or systemic slowness\n- A tenant backlogged but receiving near-zero dispatches over 10 min \u2014 fairness bug\n- Per-tenant saturation pinned at cap with growing depth \u2014 capacity or tenant abuse\n- Zero throughput with non-empty queues \u2014 dispatcher outage\n\n**Rollout:** ship behind a feature flag, canary with internal tenants, then low-risk tenants, with per-tenant kill switches and dashboards reviewed at each stage before ramping.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 103,
+					"output_tokens": 3276,
+					"total_tokens": 3379,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1975
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791826474,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 8192
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-wonder-1.0',\n  {\n    input:\n      'Design a distributed job queue for a multi-tenant SaaS platform processing billing and notification jobs. It must preserve per-tenant ordering, support at-least-once delivery, tolerate worker crashes, allow replay for seven days, enforce tenant-specific concurrency limits, and prevent one tenant from starving others. Compare two architectures, recommend one, define the job state machine and idempotency contract, and list the metrics and alerts needed for rollout.',\n    max_output_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-wonder-1.0\",\n  \"input\": \"Design a distributed job queue for a multi-tenant SaaS platform processing billing and notification jobs. It must preserve per-tenant ordering, support at-least-once delivery, tolerate worker crashes, allow replay for seven days, enforce tenant-specific concurrency limits, and prevent one tenant from starving others. Compare two architectures, recommend one, define the job state machine and idempotency contract, and list the metrics and alerts needed for rollout.\",\n  \"max_output_tokens\": 4096\n}'"
+				}
+			]
+		},
+		{
+			"name": "WebSocket Gateway Incident Debugging",
+			"description": "Diagnose a production incident and propose reversible investigation and mitigation steps.",
+			"input": {
+				"input": "A WebSocket gateway has a sudden increase in disconnects for one region. P99 handshake latency rose from 120 ms to 2.8 s, CPU is 38%, memory is stable, origin request latency is normal, and disconnects cluster around connections older than 90 seconds. No deploy occurred in the last eight hours. Analyze the evidence, rank the most likely hypotheses, specify the next five checks with expected interpretations, and propose a safe mitigation and rollback trigger. Separate facts from assumptions. Keep the answer under 700 words.",
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "## Facts (given)\n- Disconnects increased suddenly and are isolated to one region.\n- P99 handshake latency rose from 120 ms to 2.8 s.\n- Gateway CPU is 38%; memory is stable.\n- Origin request latency is normal.\n- Disconnects cluster around connections older than ~90 seconds.\n- No application deploy in the last 8 hours.\n\n## Assumptions / unknowns\n- Gateways sit behind some LB/NAT/firewall/proxy path, and clients/servers use WebSocket pings or app heartbeats. This needs verification.\n- CPU 38% is an aggregate; it could hide one hot/bad host.\n- We do not yet know close codes, AZ/host distribution, traffic volume, time since last frame, infra-change history, DNS/TLS/auth breakdown, or per-node limits.\n\n## Evidence read\nRegional isolation plus no deploy argues against a global application bug and toward regional infrastructure, network, config, or a subset of bad nodes. Normal CPU/memory and normal origin latency argue against simple saturation or origin slowness. The ~90-second clustering is the strongest clue: it suggests a lifetime/idle expiry or heartbeat failure. P99-only latency suggests a tail effect\u2014retries, queueing, packet loss, or some nodes/AZs\u2014rather than uniform slowdown.\n\n## Ranked hypotheses\n1. **Regional idle-timeout change/behavior in LB/NAT/firewall/proxy near 90 s.** Long-lived but idle connections are silently dropped or reset; reconnects then inflate handshake latency. \u201cNo deploy\u201d does not rule out infra/config/cloud changes.\n2. **One faulty AZ, gateway host, or LB target.** Packet loss, NIC errors, accept-queue overflow, or a bad NIC/driver causes some handshakes to retry and some established sessions to die.\n3. **Regional connection-state limit exhaustion:** conntrack, file descriptors, ephemeral ports, LB max connections, or per-target limits. This can hurt handshakes despite low CPU/memory.\n4. **Reconnect-storm amplification.** An initial drop source causes synchronized retries; TLS/auth/accept queues then raise P99 and trigger further disconnects. Likely secondary, not root cause.\n5. **Regional external path issue:** ISP/route/DNS/TLS-validation problem causing retransmits for a subset of clients. Explains handshake tail less well than the 90-second age pattern.\n\n## Next five checks, with interpretation\n1. **Slice disconnects by host/AZ/LB target, close code/reason, client network, connection age, and time since last frame/ping.**  \n   - Only idle connections die at ~90 s across all hosts: idle timeout.  \n   - One host/AZ dominates: drain candidate.  \n   - Mostly 1006/RST: network/middlebox; graceful closes point more to client/server logic.\n\n2. **Build an onset timeline and audit regional infra changes:** LB, NAT, firewall, security groups, DNS, certificates, autoscaling, kernel/config management, cloud incidents.  \n   - A change at onset strongly supports hypothesis 1/3.  \n   - No change shifts weight to bad node, limit growth, or external path.\n\n3. **Break handshake latency into TCP connect, TLS, HTTP Upgrade, and auth, by node/AZ.** Also check SYN backlog drops, retransmits, accept-queue overflow.  \n   - TCP/TLS tail on subset: network/bad node.  \n   - Upgrade/auth tail: gateway/auth path despite normal origin latency.\n\n4. **Inspect per-node and regional limits:** open FDs, conntrack count/drops, TIME_WAIT/ephemeral use, LB active connections, target connection errors, listen queues.  \n   - Near-limit or drops on subset confirms hypothesis 3.  \n   - Comfortably normal makes exhaustion less likely.\n\n5. **Run controlled probes:** maintain test WebSockets from inside the region and externally; send traffic every 30 s on one, stay idle on another, for 3\u20135 minutes; capture who sends FIN/RST.  \n   - Idle dies ~90 s, active survives: idle timeout confirmed.  \n   - Both die on one AZ/path: node/network fault.\n\n## Safe mitigation and rollback trigger\nIf a host/AZ is implicated, drain it first. If idle timeout is suspected, use existing config to reduce server heartbeat/keepalive to ~30 s, canaried to ~10% of regional connections, with jittered exponential reconnect backoff; optionally add temporary regional capacity to absorb reconnects. Avoid restarting all gateways or raising timeouts blindly\u2014both can worsen a reconnect storm.\n\n**Rollback trigger:** revert the heartbeat change and restore drained capacity if, within 10\u201315 minutes, canary disconnect rate or P99 handshake worsens \u226520% versus control, TLS/auth errors rise materially, or CPU exceeds ~70%. If there is no improvement after 15 minutes, roll back and escalate as a regional network/LB incident."
+			},
+			"raw_response": {
+				"id": "resp_6acd1a42cbbddaea654043e8",
+				"object": "response",
+				"created_at": 1791826498,
+				"model": "muse-wonder-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6acd1a42cbbddaea654043e8:rs_f52de40c-8b4d-4f4c-9342-0c5d2bdeb19b",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_ad1d1b0b-444e-4df8-bc4b-c42c68d283cc",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "## Facts (given)\n- Disconnects increased suddenly and are isolated to one region.\n- P99 handshake latency rose from 120 ms to 2.8 s.\n- Gateway CPU is 38%; memory is stable.\n- Origin request latency is normal.\n- Disconnects cluster around connections older than ~90 seconds.\n- No application deploy in the last 8 hours.\n\n## Assumptions / unknowns\n- Gateways sit behind some LB/NAT/firewall/proxy path, and clients/servers use WebSocket pings or app heartbeats. This needs verification.\n- CPU 38% is an aggregate; it could hide one hot/bad host.\n- We do not yet know close codes, AZ/host distribution, traffic volume, time since last frame, infra-change history, DNS/TLS/auth breakdown, or per-node limits.\n\n## Evidence read\nRegional isolation plus no deploy argues against a global application bug and toward regional infrastructure, network, config, or a subset of bad nodes. Normal CPU/memory and normal origin latency argue against simple saturation or origin slowness. The ~90-second clustering is the strongest clue: it suggests a lifetime/idle expiry or heartbeat failure. P99-only latency suggests a tail effect\u2014retries, queueing, packet loss, or some nodes/AZs\u2014rather than uniform slowdown.\n\n## Ranked hypotheses\n1. **Regional idle-timeout change/behavior in LB/NAT/firewall/proxy near 90 s.** Long-lived but idle connections are silently dropped or reset; reconnects then inflate handshake latency. \u201cNo deploy\u201d does not rule out infra/config/cloud changes.\n2. **One faulty AZ, gateway host, or LB target.** Packet loss, NIC errors, accept-queue overflow, or a bad NIC/driver causes some handshakes to retry and some established sessions to die.\n3. **Regional connection-state limit exhaustion:** conntrack, file descriptors, ephemeral ports, LB max connections, or per-target limits. This can hurt handshakes despite low CPU/memory.\n4. **Reconnect-storm amplification.** An initial drop source causes synchronized retries; TLS/auth/accept queues then raise P99 and trigger further disconnects. Likely secondary, not root cause.\n5. **Regional external path issue:** ISP/route/DNS/TLS-validation problem causing retransmits for a subset of clients. Explains handshake tail less well than the 90-second age pattern.\n\n## Next five checks, with interpretation\n1. **Slice disconnects by host/AZ/LB target, close code/reason, client network, connection age, and time since last frame/ping.**  \n   - Only idle connections die at ~90 s across all hosts: idle timeout.  \n   - One host/AZ dominates: drain candidate.  \n   - Mostly 1006/RST: network/middlebox; graceful closes point more to client/server logic.\n\n2. **Build an onset timeline and audit regional infra changes:** LB, NAT, firewall, security groups, DNS, certificates, autoscaling, kernel/config management, cloud incidents.  \n   - A change at onset strongly supports hypothesis 1/3.  \n   - No change shifts weight to bad node, limit growth, or external path.\n\n3. **Break handshake latency into TCP connect, TLS, HTTP Upgrade, and auth, by node/AZ.** Also check SYN backlog drops, retransmits, accept-queue overflow.  \n   - TCP/TLS tail on subset: network/bad node.  \n   - Upgrade/auth tail: gateway/auth path despite normal origin latency.\n\n4. **Inspect per-node and regional limits:** open FDs, conntrack count/drops, TIME_WAIT/ephemeral use, LB active connections, target connection errors, listen queues.  \n   - Near-limit or drops on subset confirms hypothesis 3.  \n   - Comfortably normal makes exhaustion less likely.\n\n5. **Run controlled probes:** maintain test WebSockets from inside the region and externally; send traffic every 30 s on one, stay idle on another, for 3\u20135 minutes; capture who sends FIN/RST.  \n   - Idle dies ~90 s, active survives: idle timeout confirmed.  \n   - Both die on one AZ/path: node/network fault.\n\n## Safe mitigation and rollback trigger\nIf a host/AZ is implicated, drain it first. If idle timeout is suspected, use existing config to reduce server heartbeat/keepalive to ~30 s, canaried to ~10% of regional connections, with jittered exponential reconnect backoff; optionally add temporary regional capacity to absorb reconnects. Avoid restarting all gateways or raising timeouts blindly\u2014both can worsen a reconnect storm.\n\n**Rollback trigger:** revert the heartbeat change and restore drained capacity if, within 10\u201315 minutes, canary disconnect rate or P99 handshake worsens \u226520% versus control, TLS/auth errors rise materially, or CPU exceeds ~70%. If there is no improvement after 15 minutes, roll back and escalate as a regional network/LB incident.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 115,
+					"output_tokens": 2976,
+					"total_tokens": 3091,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1946
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791826498,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 8192
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-wonder-1.0',\n  {\n    input:\n      'A WebSocket gateway has a sudden increase in disconnects for one region. P99 handshake latency rose from 120 ms to 2.8 s, CPU is 38%, memory is stable, origin request latency is normal, and disconnects cluster around connections older than 90 seconds. No deploy occurred in the last eight hours. Analyze the evidence, rank the most likely hypotheses, specify the next five checks with expected interpretations, and propose a safe mitigation and rollback trigger. Separate facts from assumptions.',\n    max_output_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-wonder-1.0\",\n  \"input\": \"A WebSocket gateway has a sudden increase in disconnects for one region. P99 handshake latency rose from 120 ms to 2.8 s, CPU is 38%, memory is stable, origin request latency is normal, and disconnects cluster around connections older than 90 seconds. No deploy occurred in the last eight hours. Analyze the evidence, rank the most likely hypotheses, specify the next five checks with expected interpretations, and propose a safe mitigation and rollback trigger. Separate facts from assumptions.\",\n  \"max_output_tokens\": 4096\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-Tenant Authorization Refactor",
+			"description": "Plan a staged authorization refactor with compatibility, test, and rollback guarantees.",
+			"input": {
+				"input": "Plan a zero-downtime migration from scattered role checks to a centralized policy engine in a multi-tenant API. Existing endpoints use inconsistent role names, some background jobs lack request context, and customer-specific exceptions are stored in configuration. Define the policy contract, inventory and shadow-evaluation phases, compatibility strategy, test matrix, observability, cutover criteria, and rollback plan. Identify the security invariants that must hold throughout the migration. Keep the answer under 700 words.",
+				"max_output_tokens": 8192
+			},
+			"output": {
+				"text": "# Zero-Downtime Migration Plan\n\n## Security invariants \u2014 hold in every phase\n- **Default-deny, fail-closed:** unknown role/action, missing context, engine timeout/error, or stale/malformed policy \u21d2 deny.\n- **Tenant isolation:** `resource.tenant_id` must be within the principal\u2019s verified tenant scope unless an explicit cross-tenant rule applies; never trust a client-supplied tenant ID alone.\n- **No privilege expansion:** role normalization or exception migration may never grant more than the legacy intent; resolve ambiguity to less privilege.\n- **Authentication \u2260 authorization:** the engine accepts only issuer-verified identity; it never parses raw credentials.\n- Every decision is auditable to principal, tenant, resource, and policy version; exceptions are scoped, owned, approved, and expiring\u2014no wildcard customer bypasses.\n\n## 1. Policy contract\nVersioned, deterministic, side-effect-free:\n\n`Evaluate(Principal, Tenant, Action, Resource, Context) \u2192 {decision: Allow|Deny, reason_code, policy_version, obligations[], decision_id}`\n\n- **Principal:** `subject_id`, type (`user|service|job`), verified `tenant_scope[]`, canonical roles, auth strength.\n- **Action/Resource:** canonical actions such as `invoice.read`; resource type, ID, owner tenant, sensitivity/ownership attributes.\n- **Context:** time, request/job ID, source. Background jobs carry a signed, expiring job envelope\u2014`tenant_id`, `initiated_by` or named `system_principal`, purpose, authorized scope. No envelope \u21d2 deny.\n\nPolicies are signed, immutable, versioned bundles, deployed atomically with local caching; evaluation performs no writes.\n\n## 2. Inventory\nStatically scan routes, middleware, AST/grep for role strings, and job handlers; supplement with runtime auth logs and owner review. Catalog for every endpoint/job: current check, legacy roles, tenant source, data sensitivity, and config-based customer exceptions. Normalize names explicitly, e.g. `Admin|ADMIN|tenant_admin \u2192 tenant.admin`; unmapped values deny in the new model. Convert each exception into a named policy rule with business justification, approver, and expiry.\n\n## 3. Shadow evaluation\nDeploy the engine behind flags with legacy checks still authoritative. Evaluate the same verified inputs, log only the would-be decision, and classify every divergence: intended normalization, legacy over-permission, legacy under-permission, missing attribute, or policy bug. Replay redacted production decision inputs after each fix. Cover a full business cycle, including month-end jobs.\n\n## 4. Compatibility strategy\nUse a strangler adapter at the auth boundary translating legacy claims to canonical roles; keep dual execution until bake-out completes. Gate enforcement by tenant \u00d7 endpoint \u00d7 policy version. Policies evolve additively\u2014new fields optional, prior schema versions supported. Dual-read config exceptions and their policy equivalents until equivalence is proven, then freeze config writes. No destructive data/schema changes during migration.\n\n## 5. Test matrix\n- **Roles/tenancy:** each canonical role and legacy alias; unknown/missing role; same-tenant allow/deny; token-vs-URL-vs-resource tenant mismatch; cross-tenant access (must deny).\n- **Principals/jobs:** interactive user, service token, job with valid/expired/replayed/missing signed envelope, retries and scheduler-triggered runs.\n- **Exceptions/failures:** active vs. expired exception, wrong tenant/resource scope; engine down/timeout, malformed or stale bundle, missing attributes\u2014all deny.\n- **Methods:** policy unit tests, contract tests per endpoint, integration tests, production replay, and property/fuzz tests asserting invariants\u2014especially, never allow cross-tenant access.\n\n## 6. Observability\nEmit structured audit events: `decision_id`, hashed subject, tenant, action, resource, legacy and new decisions, reason code, policy version, latency, enforcement mode. Dashboard and alert on decision/diff volume, deny-rate shifts, unknown roles/actions, engine errors, and p99 latency\u2014sliced by tenant, endpoint, version, and principal type. Alert on expiring exceptions and any shadow cross-tenant would-allow.\n\n## 7. Cutover criteria and rollout\nProceed only when: 100% of endpoints/jobs are inventoried; zero critical or unexplained divergences and <0.1% total divergence for 14 days including peak/batch windows; replay and the test matrix pass; added p99 latency is within budget (e.g., <10 ms cached); rollback has been rehearsed; security and service owners sign off.\n\nRoll out internal tenants \u2192 low-risk endpoints at 1% \u2192 10% \u2192 50% \u2192 100%, then higher-risk endpoints and jobs, baking each step. Once enforced, keep legacy in shadow briefly, then remove it in a separate release.\n\n## 8. Rollback\nA single flag per tenant/endpoint instantly returns authority to the frozen legacy path\u2014no deploy or data migration required. Alternatively, pin the previous signed policy bundle if the bug is policy-only. After cutover, an engine outage fails closed (deny) rather than auto-falling back; operators explicitly flip the flag if legacy rollback is safer. Retain legacy code, mappings, and audit data until the bake period ends."
+			},
+			"raw_response": {
+				"id": "resp_6acd1a6b1cc0e8cd73b14849",
+				"object": "response",
+				"created_at": 1791826539,
+				"model": "muse-wonder-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6acd1a6b1cc0e8cd73b14849:rs_1ec0edf9-e7f4-4458-a3b9-0ba182aa1df9",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_d0518550-0472-4883-89d4-52fd12e29a92",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "# Zero-Downtime Migration Plan\n\n## Security invariants \u2014 hold in every phase\n- **Default-deny, fail-closed:** unknown role/action, missing context, engine timeout/error, or stale/malformed policy \u21d2 deny.\n- **Tenant isolation:** `resource.tenant_id` must be within the principal\u2019s verified tenant scope unless an explicit cross-tenant rule applies; never trust a client-supplied tenant ID alone.\n- **No privilege expansion:** role normalization or exception migration may never grant more than the legacy intent; resolve ambiguity to less privilege.\n- **Authentication \u2260 authorization:** the engine accepts only issuer-verified identity; it never parses raw credentials.\n- Every decision is auditable to principal, tenant, resource, and policy version; exceptions are scoped, owned, approved, and expiring\u2014no wildcard customer bypasses.\n\n## 1. Policy contract\nVersioned, deterministic, side-effect-free:\n\n`Evaluate(Principal, Tenant, Action, Resource, Context) \u2192 {decision: Allow|Deny, reason_code, policy_version, obligations[], decision_id}`\n\n- **Principal:** `subject_id`, type (`user|service|job`), verified `tenant_scope[]`, canonical roles, auth strength.\n- **Action/Resource:** canonical actions such as `invoice.read`; resource type, ID, owner tenant, sensitivity/ownership attributes.\n- **Context:** time, request/job ID, source. Background jobs carry a signed, expiring job envelope\u2014`tenant_id`, `initiated_by` or named `system_principal`, purpose, authorized scope. No envelope \u21d2 deny.\n\nPolicies are signed, immutable, versioned bundles, deployed atomically with local caching; evaluation performs no writes.\n\n## 2. Inventory\nStatically scan routes, middleware, AST/grep for role strings, and job handlers; supplement with runtime auth logs and owner review. Catalog for every endpoint/job: current check, legacy roles, tenant source, data sensitivity, and config-based customer exceptions. Normalize names explicitly, e.g. `Admin|ADMIN|tenant_admin \u2192 tenant.admin`; unmapped values deny in the new model. Convert each exception into a named policy rule with business justification, approver, and expiry.\n\n## 3. Shadow evaluation\nDeploy the engine behind flags with legacy checks still authoritative. Evaluate the same verified inputs, log only the would-be decision, and classify every divergence: intended normalization, legacy over-permission, legacy under-permission, missing attribute, or policy bug. Replay redacted production decision inputs after each fix. Cover a full business cycle, including month-end jobs.\n\n## 4. Compatibility strategy\nUse a strangler adapter at the auth boundary translating legacy claims to canonical roles; keep dual execution until bake-out completes. Gate enforcement by tenant \u00d7 endpoint \u00d7 policy version. Policies evolve additively\u2014new fields optional, prior schema versions supported. Dual-read config exceptions and their policy equivalents until equivalence is proven, then freeze config writes. No destructive data/schema changes during migration.\n\n## 5. Test matrix\n- **Roles/tenancy:** each canonical role and legacy alias; unknown/missing role; same-tenant allow/deny; token-vs-URL-vs-resource tenant mismatch; cross-tenant access (must deny).\n- **Principals/jobs:** interactive user, service token, job with valid/expired/replayed/missing signed envelope, retries and scheduler-triggered runs.\n- **Exceptions/failures:** active vs. expired exception, wrong tenant/resource scope; engine down/timeout, malformed or stale bundle, missing attributes\u2014all deny.\n- **Methods:** policy unit tests, contract tests per endpoint, integration tests, production replay, and property/fuzz tests asserting invariants\u2014especially, never allow cross-tenant access.\n\n## 6. Observability\nEmit structured audit events: `decision_id`, hashed subject, tenant, action, resource, legacy and new decisions, reason code, policy version, latency, enforcement mode. Dashboard and alert on decision/diff volume, deny-rate shifts, unknown roles/actions, engine errors, and p99 latency\u2014sliced by tenant, endpoint, version, and principal type. Alert on expiring exceptions and any shadow cross-tenant would-allow.\n\n## 7. Cutover criteria and rollout\nProceed only when: 100% of endpoints/jobs are inventoried; zero critical or unexplained divergences and <0.1% total divergence for 14 days including peak/batch windows; replay and the test matrix pass; added p99 latency is within budget (e.g., <10 ms cached); rollback has been rehearsed; security and service owners sign off.\n\nRoll out internal tenants \u2192 low-risk endpoints at 1% \u2192 10% \u2192 50% \u2192 100%, then higher-risk endpoints and jobs, baking each step. Once enforced, keep legacy in shadow briefly, then remove it in a separate release.\n\n## 8. Rollback\nA single flag per tenant/endpoint instantly returns authority to the frozen legacy path\u2014no deploy or data migration required. Alternatively, pin the previous signed policy bundle if the bug is policy-only. After cutover, an engine outage fails closed (deny) rather than auto-falling back; operators explicitly flip the flag if legacy rollback is safer. Retain legacy code, mappings, and audit data until the bake period ends.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 100,
+					"output_tokens": 5951,
+					"total_tokens": 6051,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 4863
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791826539,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 8192
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-wonder-1.0',\n  {\n    input:\n      'Plan a zero-downtime migration from scattered role checks to a centralized policy engine in a multi-tenant API. Existing endpoints use inconsistent role names, some background jobs lack request context, and customer-specific exceptions are stored in configuration. Define the policy contract, inventory and shadow-evaluation phases, compatibility strategy, test matrix, observability, cutover criteria, and rollback plan. Identify the security invariants that must hold throughout the migration.',\n    max_output_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-wonder-1.0\",\n  \"input\": \"Plan a zero-downtime migration from scattered role checks to a centralized policy engine in a multi-tenant API. Existing endpoints use inconsistent role names, some background jobs lack request context, and customer-specific exceptions are stored in configuration. Define the policy contract, inventory and shadow-evaluation phases, compatibility strategy, test matrix, observability, cutover criteria, and rollback plan. Identify the security invariants that must hold throughout the migration.\",\n  \"max_output_tokens\": 4096\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://dev.meta.ai/docs/models",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Context Window": "1,048,576 tokens",
+		"Input Modalities": "Text, image, video, audio, PDF",
+		"Output Modalities": "Text"
+	},
+	"request_formats": [
+		"responses"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "meta",
+			"pricing": {
+				"input_tokens": 4,
+				"input_cached_tokens": 0.2,
+				"output_tokens": 20
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-12 22:52:50",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high",
+								"xhigh",
+								"max"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

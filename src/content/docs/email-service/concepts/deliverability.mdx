@@ -80,3 +80,17 @@ Each domain builds its own deliverability reputation with inbox providers. Use s
 - `yourdomain.com` for important account-related communications
 
 This way, if marketing emails generate higher complaint rates, your transactional email deliverability is not impacted. Each domain can be onboarded separately through [domain configuration](/email-service/configuration/domains/).
+
+### Build reputation for a new domain
+
+Inbox providers weight domain sending history heavily. A domain with low sending volume or no prior history has no positive reputation signal for providers to draw on. Providers treat new senders cautiously regardless of whether authentication passes.
+
+If your domain is new or has a low sending volume, inbox placement problems are common during an initial period while you build a sending history. New accounts also start with conservative sending limits that increase as your account builds a sending history. Refer to [Limits](/email-service/platform/limits/#daily-sending-limits).
+
+To build domain reputation:
+
+1. Start at a low, steady volume and increase gradually over several weeks.
+2. Send only to recipients who expect the message. High engagement (replies, clicks, and moving messages to the inbox) improves your reputation.
+3. Keep a consistent `From` address and sender name for each sending domain.
+4. Link only to your own domain in message bodies. Third-party redirect services and URL shorteners can lower your reputation score.
+5. Ask early recipients to move messages from junk to their inbox or mark them **Not Junk** or **Not Spam**. User actions are the strongest positive signal for most providers.

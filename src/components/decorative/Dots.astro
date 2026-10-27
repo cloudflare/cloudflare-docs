@@ -1,6 +1,5 @@
 ---
 // Dot-grid pattern fill. Shared by Separator, BackgroundLines, FullPageLines.
-import { nextDecorId } from "./_id";
 
 interface Props {
 	color?: string;
@@ -17,7 +16,11 @@ const {
 } = Astro.props;
 
 const r = 0.75;
-const patternId = nextDecorId("nb-dots");
+// Derived from props, not a build-wide counter: a counter shifts every later
+// page's HTML whenever a page is added or removed. Identical props produce an
+// identical pattern, so sharing an id on one page is harmless.
+const colorKey = color.replace(/[^a-zA-Z0-9]+/g, "-").replace(/^-|-$/g, "");
+const patternId = `nb-dots-${size}${stagger ? "-stagger" : ""}-${colorKey}`;
 const patternWidth = stagger ? size + r * 2 : size;
 const patternHeight = stagger ? size * 2 : size;
 ---

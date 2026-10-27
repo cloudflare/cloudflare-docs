@@ -20,7 +20,10 @@
 		{ "binding": "PRIVATE_ASSETS", "bucket_name": "cloudflare-docs-private" }
 	],
 	"previews": {
-		"r2_buckets": [{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" }]
+		"r2_buckets": [
+			{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" },
+			{ "binding": "PRIVATE_ASSETS", "bucket_name": "cloudflare-docs-private" }
+		]
 	},
 	"observability": {
 		"enabled": true

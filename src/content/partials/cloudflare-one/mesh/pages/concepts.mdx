@@ -31,7 +31,7 @@ The Mesh node and client device connect to Cloudflare independently, and each re
 
 </MeshParticipants>
 
-All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and identity controls can govern each connection. Connectivity and access are separate: a participant can be online while policy blocks its traffic.
+All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and identity controls can govern each connection. Connectivity and access are separate: a participant can be online while policy blocks its traffic.
 
 For setup instructions, refer to [Get started](/mesh/get-started/).
 
@@ -94,7 +94,7 @@ Common concepts map to Cloudflare Mesh as follows:
 | Mesh network or tailnet | Your Cloudflare account Mesh network                                                                                                                     |
 | Node or peer            | Mesh node or client device                                                                                                                               |
 | Subnet router           | Mesh node with a [CIDR route](/mesh/features/routes/)                                                                                                    |
-| Access control list     | [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/) and [device posture](/cloudflare-one/reusable-components/posture-checks/) |
+| Access control list     | [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/) and [device posture](/cloudflare-one/reusable-components/posture-checks/) |
 | Admin console           | [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/mesh) under **Networking** > **Mesh**                                                   |
 
 Unlike peer-to-peer products, Mesh traffic passes through Cloudflare. You manage policies, posture, and identity with Cloudflare One.

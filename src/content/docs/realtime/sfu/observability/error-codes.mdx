@@ -67,20 +67,20 @@ Match each media-close result to the requested `mid` on the session you modified
 
 ```json
 {
-  "requiresImmediateRenegotiation": false,
-  "tracks": [
-    { "mid": "0" },
-    {
-      "mid": "1",
-      "errorCode": "close_track_error",
-      "errorDescription": "Track doesn't exist or was already closed"
-    },
-    {
-      "mid": "2",
-      "errorCode": "internal_error",
-      "errorDescription": "Backend error"
-    }
-  ]
+	"requiresImmediateRenegotiation": false,
+	"tracks": [
+		{ "mid": "0" },
+		{
+			"mid": "1",
+			"errorCode": "close_track_error",
+			"errorDescription": "Track doesn't exist or was already closed"
+		},
+		{
+			"mid": "2",
+			"errorCode": "internal_error",
+			"errorDescription": "Backend error"
+		}
+	]
 }
 ```
 
@@ -92,12 +92,13 @@ A request-level error without item results does not establish resource absence. 
 
 These codes appear in the adapter operation's `tracks` results. The outer HTTP status reflects the batch outcome.
 
-| Code                              | Meaning and next action                                                                                                                                                                                         |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `websocket_localhost_not_allowed` | The endpoint names localhost. Supply a publicly reachable WebSocket endpoint. Retrying the same address cannot make it reachable from the SFU.                                                                  |
-| `websocket_handshake_failed`      | The endpoint did not complete the WebSocket upgrade. Check its WebSocket route, upgrade response, and authentication behavior before retrying the failed item.                                                  |
-| `websocket_connection_timeout`    | The WebSocket handshake timed out. Check endpoint availability, routing, and handshake processing. Supply the final endpoint URL because the adapter does not follow redirects.                                 |
-| `adapter_not_found`               | The adapter is absent or already closed. This explicit item result can satisfy cleanup for an adapter your application owns. Keep other failures pending. An outer HTTP `503` alone does not establish absence. |
+| Code                              | Meaning and next action                                                                                                                                                         |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `websocket_localhost_not_allowed` | The endpoint names localhost. Supply a publicly reachable WebSocket endpoint. Retrying the same address cannot make it reachable from the SFU.                                  |
+| `websocket_handshake_failed`      | The endpoint did not complete the WebSocket upgrade. Check its WebSocket route, upgrade response, and authentication behavior before retrying the failed item.                  |
+| `websocket_connection_timeout`    | The WebSocket handshake timed out. Check endpoint availability, routing, and handshake processing. Supply the final endpoint URL because the adapter does not follow redirects. |
+
+Already-closed adapters count as successful closes. Keep failed close items pending for retry. Refer to [adapter close results](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#close-adapter) for examples.
 
 For endpoint configuration, packet formats, and recovery, follow the [WebSocket adapter reference](/realtime/sfu/features/media-transport-adapters/websocket-adapter/).
 

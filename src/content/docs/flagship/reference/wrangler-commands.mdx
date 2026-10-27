@@ -224,6 +224,7 @@ Conditions compare attributes from the evaluation context with rule values. The 
 ```sh
 --rule "serve=on; when=plan equals pro"
 --rule "serve=on; when=country in [US,CA,UK]"
+--rule "serve=on; when=tags has beta"
 --rule "serve=off; when=email ends_with @example.com"
 --rule "serve=strict; when=score less_than 20"
 ```
@@ -248,7 +249,7 @@ Use `AND` and `OR` to combine conditions. `AND` has higher precedence than `OR`.
 --rule 'serve=on; when=country in ["US","CA"]'
 ```
 
-For `in` and `not_in`, pass a bracketed list. Wrangler rejects malformed lists, empty list items, unterminated quotes, and unbalanced brackets before sending the request.
+For `in` and `not_in`, pass a bracketed list. For `has` and `not_has`, pass the scalar array member to find. Wrangler rejects malformed lists, empty list items, unterminated quotes, and unbalanced brackets before sending the request.
 
 Use `--rule-json` for deeply nested logical groups or if you prefer to pass the API rule shape directly. Wrangler validates `--rule-json` against the Flagship rule schema and rejects unknown or conflicting fields.
 
@@ -578,13 +579,15 @@ wrangler flagship flags evaluate <APP_ID> premium-banner \
 
 Context values are sent to the evaluation endpoint as strings. Use the same attribute names that your targeting rules expect.
 
+JSON-looking `--context` values remain strings. Wrangler does not create nested objects or arrays from these values.
+
 Evaluation output includes:
 
-| Field     | Description                                                                      |
-| --------- | -------------------------------------------------------------------------------- |
-| `value`   | The flag value returned for the context.                                          |
-| `variant` | The variation selected for the context.                                           |
-| `reason`  | Why the value was returned: `TARGETING_MATCH`, `DEFAULT`, `DISABLED`, or `SPLIT`. |
+| Field     | Description                                                                                 |
+| --------- | ------------------------------------------------------------------------------------------- |
+| `value`   | The flag value returned for the context.                                                    |
+| `variant` | The variation selected for the context.                                                     |
+| `reason`  | Why the value was returned: `STATIC`, `TARGETING_MATCH`, `DEFAULT`, `DISABLED`, or `SPLIT`. |
 
 ## Audit changes
 

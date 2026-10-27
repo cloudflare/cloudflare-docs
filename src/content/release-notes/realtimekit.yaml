@@ -3,6 +3,15 @@ link: "/realtime/realtimekit/notice-board/"
 productName: RealtimeKit
 productLink: "/realtime/realtimekit"
 entries:
+  - publish_date: "2026-10-19"
+    title: Improved reconnection reliability
+    description: |-
+      **SDKs with fixes:** Web Core & Web UI Kit 2.0.3+
+
+      **Impacted SDKs:** Web Core & Web UI Kit 2.0.2 and below
+
+      Version 2.0.3 of Web Core and Web UI Kit includes significant reconnection optimizations. Upgrade both SDKs to version 2.0.3 or later to reduce meeting disruptions during network interruptions.
+
   - publish_date: "2026-01-30"
     title: Chat Pagination Overhaul
     description: |-

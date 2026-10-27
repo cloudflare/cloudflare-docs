@@ -60,10 +60,12 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
    - Click **Save** to save the state. You can always roll back to earlier versions from **Versions**.
    - Deploy the version to make it live.
 5. Call the route from your code.
-   - Use the [OpenAI compatible](/ai-gateway/usage/chat-completion/) endpoint (`/compat/chat/completions`), and use the route name in place of the model, for example, `dynamic/support`. See [Using a dynamic route](/ai-gateway/features/dynamic-routing/usage/) for examples.
+   - Use the route name in place of the model, for example, `dynamic/support`. See [Using a dynamic route](/ai-gateway/features/dynamic-routing/usage/) for examples.
 
 :::note
 
-The OpenAI-compatible endpoint is marked **Deprecated** for standard single-model chat completions, but it remains the required way to call dynamic routes. Dynamic routing is not currently available on the [REST API](/ai-gateway/usage/rest-api/).
+Dynamic routes accept the OpenAI chat completions request shape only. You can call them through the [REST API](/ai-gateway/usage/rest-api/) at `/ai/v1/chat/completions`, the [AI binding](/ai-gateway/usage/worker-binding-methods/) in a Worker, or the [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) at `/compat/chat/completions`. Other request formats, such as Anthropic Messages, return a `400` error.
+
+Dynamic routes are scoped to the gateway you created them on. On the REST API, set the `cf-aig-gateway-id` header to that gateway, otherwise the request resolves against your default gateway and returns a `404` error.
 
 :::

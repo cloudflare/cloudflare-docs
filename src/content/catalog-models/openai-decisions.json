@@ -1,0 +1,898 @@
+{
+	"model_id": "openai/decisions",
+	"provider_id": "openai",
+	"name": "Decisions",
+	"description": "Decisions uses GPT-6 Luna to evaluate shared text or image evidence against typed questions. It returns probabilities, fixed choices, or rubric scores for low-latency classification, routing, and prioritization workflows.",
+	"task": "Text Generation",
+	"tags": [
+		"Classification",
+		"Multimodal"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.1,
+		"Output tokens (per 1M)": 0
+	},
+	"examples": [
+		{
+			"name": "Check a condition",
+			"description": "Estimate whether a statement satisfies a condition",
+			"input": {
+				"input": "The customer reports that their card was charged twice for one order.",
+				"questions": [
+					{
+						"instructions": "Is this report about a billing problem?",
+						"name": "billing_issue",
+						"type": "predicate"
+					}
+				]
+			},
+			"output": {
+				"model": "gpt-6-luna",
+				"answers": [
+					{
+						"type": "predicate",
+						"name": "billing_issue",
+						"probability": 1
+					}
+				],
+				"usage": {
+					"input_tokens": 169,
+					"input_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0
+					},
+					"output_tokens": 0,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 169
+				}
+			},
+			"raw_response": {
+				"model": "gpt-6-luna",
+				"answers": [
+					{
+						"type": "predicate",
+						"name": "billing_issue",
+						"probability": 1
+					}
+				],
+				"usage": {
+					"input_tokens": 169,
+					"input_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0
+					},
+					"output_tokens": 0,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 169
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/decisions',\n  {\n    input: 'The customer reports that their card was charged twice for one order.',\n    questions: [\n      {\n        instructions: 'Is this report about a billing problem?',\n        name: 'billing_issue',\n        type: 'predicate',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/decisions\",\n  \"input\": {\n    \"input\": \"The customer reports that their card was charged twice for one order.\",\n    \"questions\": [\n      {\n        \"instructions\": \"Is this report about a billing problem?\",\n        \"name\": \"billing_issue\",\n        \"type\": \"predicate\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Select a category",
+			"description": "Route a customer request to one of several departments",
+			"input": {
+				"input": "My package was expected yesterday, but tracking has not updated.",
+				"questions": [
+					{
+						"choices": [
+							{
+								"description": "Payments, invoices, and refunds.",
+								"value": "billing"
+							},
+							{
+								"description": "Problems using the product.",
+								"value": "technical"
+							},
+							{
+								"description": "Delivery and tracking.",
+								"value": "shipping"
+							},
+							{
+								"description": "Requests outside these categories.",
+								"value": "other"
+							}
+						],
+						"instructions": "Which department should handle this request?",
+						"name": "department",
+						"type": "choice"
+					}
+				]
+			},
+			"output": {
+				"model": "gpt-6-luna",
+				"answers": [
+					{
+						"type": "choice",
+						"name": "department",
+						"choice": "shipping",
+						"probabilities": [
+							{
+								"value": "billing",
+								"probability": 0
+							},
+							{
+								"value": "technical",
+								"probability": 0.01
+							},
+							{
+								"value": "shipping",
+								"probability": 0.99
+							},
+							{
+								"value": "other",
+								"probability": 0
+							}
+						],
+						"confidence": 0.99
+					}
+				],
+				"usage": {
+					"input_tokens": 149,
+					"input_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0
+					},
+					"output_tokens": 0,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 149
+				}
+			},
+			"raw_response": {
+				"model": "gpt-6-luna",
+				"answers": [
+					{
+						"type": "choice",
+						"name": "department",
+						"choice": "shipping",
+						"probabilities": [
+							{
+								"value": "billing",
+								"probability": 0
+							},
+							{
+								"value": "technical",
+								"probability": 0.01
+							},
+							{
+								"value": "shipping",
+								"probability": 0.99
+							},
+							{
+								"value": "other",
+								"probability": 0
+							}
+						],
+						"confidence": 0.99
+					}
+				],
+				"usage": {
+					"input_tokens": 149,
+					"input_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0
+					},
+					"output_tokens": 0,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 149
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/decisions',\n  {\n    input: 'My package was expected yesterday, but tracking has not updated.',\n    questions: [\n      {\n        choices: [\n          { description: 'Payments, invoices, and refunds.', value: 'billing' },\n          { description: 'Problems using the product.', value: 'technical' },\n          { description: 'Delivery and tracking.', value: 'shipping' },\n          { description: 'Requests outside these categories.', value: 'other' },\n        ],\n        instructions: 'Which department should handle this request?',\n        name: 'department',\n        type: 'choice',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/decisions\",\n  \"input\": {\n    \"input\": \"My package was expected yesterday, but tracking has not updated.\",\n    \"questions\": [\n      {\n        \"choices\": [\n          {\n            \"description\": \"Payments, invoices, and refunds.\",\n            \"value\": \"billing\"\n          },\n          {\n            \"description\": \"Problems using the product.\",\n            \"value\": \"technical\"\n          },\n          {\n            \"description\": \"Delivery and tracking.\",\n            \"value\": \"shipping\"\n          },\n          {\n            \"description\": \"Requests outside these categories.\",\n            \"value\": \"other\"\n          }\n        ],\n        \"instructions\": \"Which department should handle this request?\",\n        \"name\": \"department\",\n        \"type\": \"choice\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Score against a rubric",
+			"description": "Score an issue against ordered severity levels",
+			"input": {
+				"input": "Export fails in Safari but works in Chrome.",
+				"questions": [
+					{
+						"instructions": "How severe is this issue?",
+						"levels": [
+							{
+								"description": "Appearance only; no lost functionality.",
+								"label": "Cosmetic"
+							},
+							{
+								"description": "A task fails, but another way works.",
+								"label": "Workaround available"
+							},
+							{
+								"description": "A task fails with no workaround.",
+								"label": "Fully blocked"
+							}
+						],
+						"name": "severity",
+						"type": "score"
+					}
+				]
+			},
+			"output": {
+				"model": "gpt-6-luna",
+				"answers": [
+					{
+						"type": "score",
+						"name": "severity",
+						"score": 0.99,
+						"probabilities": [
+							{
+								"value": 0,
+								"label": "Cosmetic",
+								"probability": 0.02
+							},
+							{
+								"value": 1,
+								"label": "Workaround available",
+								"probability": 0.97
+							},
+							{
+								"value": 2,
+								"label": "Fully blocked",
+								"probability": 0.01
+							}
+						],
+						"confidence": 0.96
+					}
+				],
+				"usage": {
+					"input_tokens": 146,
+					"input_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0
+					},
+					"output_tokens": 0,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 146
+				}
+			},
+			"raw_response": {
+				"model": "gpt-6-luna",
+				"answers": [
+					{
+						"type": "score",
+						"name": "severity",
+						"score": 0.99,
+						"probabilities": [
+							{
+								"value": 0,
+								"label": "Cosmetic",
+								"probability": 0.02
+							},
+							{
+								"value": 1,
+								"label": "Workaround available",
+								"probability": 0.97
+							},
+							{
+								"value": 2,
+								"label": "Fully blocked",
+								"probability": 0.01
+							}
+						],
+						"confidence": 0.96
+					}
+				],
+				"usage": {
+					"input_tokens": 146,
+					"input_tokens_details": {
+						"cached_tokens": 0,
+						"cache_write_tokens": 0
+					},
+					"output_tokens": 0,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 146
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/decisions',\n  {\n    input: 'Export fails in Safari but works in Chrome.',\n    questions: [\n      {\n        instructions: 'How severe is this issue?',\n        levels: [\n          { description: 'Appearance only; no lost functionality.', label: 'Cosmetic' },\n          { description: 'A task fails, but another way works.', label: 'Workaround available' },\n          { description: 'A task fails with no workaround.', label: 'Fully blocked' },\n        ],\n        name: 'severity',\n        type: 'score',\n      },\n    ],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/decisions\",\n  \"input\": {\n    \"input\": \"Export fails in Safari but works in Chrome.\",\n    \"questions\": [\n      {\n        \"instructions\": \"How severe is this issue?\",\n        \"levels\": [\n          {\n            \"description\": \"Appearance only; no lost functionality.\",\n            \"label\": \"Cosmetic\"\n          },\n          {\n            \"description\": \"A task fails, but another way works.\",\n            \"label\": \"Workaround available\"\n          },\n          {\n            \"description\": \"A task fails with no workaround.\",\n            \"label\": \"Fully blocked\"\n          }\n        ],\n        \"name\": \"severity\",\n        \"type\": \"score\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developers.openai.com/api/docs/guides/decisions",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": null,
+	"metadata": {
+		"API": "Decisions",
+		"Input modalities": "Text, image",
+		"Model": "GPT-6 Luna",
+		"Question types": "Predicate, choice, score",
+		"Relative latency": "About 10x faster than Responses API",
+		"Status": "Public beta"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 0.1,
+				"output_tokens": 0
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-26 15:29:08",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"const": "user"
+									},
+									"type": {
+										"type": "string",
+										"const": "message"
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "array",
+												"items": {
+													"oneOf": [
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "input_text"
+																},
+																"text": {
+																	"type": "string"
+																},
+																"prompt_cache_breakpoint": {
+																	"anyOf": [
+																		{
+																			"type": "object",
+																			"properties": {
+																				"mode": {
+																					"type": "string",
+																					"const": "explicit"
+																				}
+																			},
+																			"required": [
+																				"mode"
+																			],
+																			"additionalProperties": false
+																		},
+																		{
+																			"type": "null"
+																		}
+																	]
+																}
+															},
+															"required": [
+																"type",
+																"text"
+															],
+															"additionalProperties": false
+														},
+														{
+															"type": "object",
+															"properties": {
+																"type": {
+																	"type": "string",
+																	"const": "input_image"
+																},
+																"image_url": {
+																	"type": "string",
+																	"pattern": "^data:image\\/.*"
+																},
+																"detail": {
+																	"anyOf": [
+																		{
+																			"type": "string",
+																			"enum": [
+																				"low",
+																				"high",
+																				"auto",
+																				"original"
+																			]
+																		},
+																		{
+																			"type": "null"
+																		}
+																	]
+																},
+																"prompt_cache_breakpoint": {
+																	"anyOf": [
+																		{
+																			"type": "object",
+																			"properties": {
+																				"mode": {
+																					"type": "string",
+																					"const": "explicit"
+																				}
+																			},
+																			"required": [
+																				"mode"
+																			],
+																			"additionalProperties": false
+																		},
+																		{
+																			"type": "null"
+																		}
+																	]
+																}
+															},
+															"required": [
+																"type",
+																"image_url"
+															],
+															"additionalProperties": false
+														}
+													]
+												}
+											}
+										]
+									}
+								},
+								"required": [
+									"role",
+									"content"
+								],
+								"additionalProperties": false
+							}
+						}
+					]
+				},
+				"questions": {
+					"minItems": 1,
+					"maxItems": 200,
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"instructions": {
+										"type": "string"
+									},
+									"type": {
+										"type": "string",
+										"const": "predicate"
+									}
+								},
+								"required": [
+									"instructions",
+									"type"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"instructions": {
+										"type": "string"
+									},
+									"type": {
+										"type": "string",
+										"const": "choice"
+									},
+									"choices": {
+										"minItems": 2,
+										"maxItems": 255,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"value": {
+													"type": [
+														"string",
+														"boolean"
+													]
+												},
+												"description": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"value"
+											],
+											"additionalProperties": false
+										}
+									}
+								},
+								"required": [
+									"instructions",
+									"type",
+									"choices"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"instructions": {
+										"type": "string"
+									},
+									"type": {
+										"type": "string",
+										"const": "score"
+									},
+									"levels": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"label": {
+													"type": "string"
+												},
+												"description": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"label"
+											],
+											"additionalProperties": false
+										}
+									}
+								},
+								"required": [
+									"instructions",
+									"type",
+									"levels"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				},
+				"prompt_cache_key": {
+					"type": [
+						"string",
+						"null"
+					]
+				},
+				"prompt_cache_options": {
+					"anyOf": [
+						{
+							"type": "object",
+							"properties": {
+								"mode": {
+									"anyOf": [
+										{
+											"type": "string",
+											"enum": [
+												"implicit",
+												"explicit"
+											]
+										},
+										{
+											"type": "null"
+										}
+									]
+								},
+								"ttl": {
+									"type": "string",
+									"const": "30m"
+								}
+							},
+							"additionalProperties": false
+						},
+						{
+							"type": "null"
+						}
+					]
+				},
+				"safety_identifier": {
+					"type": [
+						"string",
+						"null"
+					]
+				}
+			},
+			"required": [
+				"input",
+				"questions"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"answers": {
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"type": {
+										"type": "string",
+										"const": "predicate"
+									},
+									"probability": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									}
+								},
+								"required": [
+									"name",
+									"type",
+									"probability"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"type": {
+										"type": "string",
+										"const": "choice"
+									},
+									"choice": {
+										"type": [
+											"string",
+											"boolean"
+										]
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									},
+									"probabilities": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"value": {
+													"type": [
+														"string",
+														"boolean"
+													]
+												},
+												"probability": {
+													"type": "number",
+													"minimum": 0,
+													"maximum": 1
+												}
+											},
+											"required": [
+												"value",
+												"probability"
+											],
+											"additionalProperties": false
+										}
+									}
+								},
+								"required": [
+									"name",
+									"type",
+									"choice",
+									"confidence",
+									"probabilities"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"type": {
+										"type": "string",
+										"const": "score"
+									},
+									"score": {
+										"type": "number"
+									},
+									"confidence": {
+										"type": "number",
+										"minimum": 0,
+										"maximum": 1
+									},
+									"probabilities": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"value": {
+													"type": "number"
+												},
+												"label": {
+													"type": "string"
+												},
+												"probability": {
+													"type": "number",
+													"minimum": 0,
+													"maximum": 1
+												}
+											},
+											"required": [
+												"value",
+												"label",
+												"probability"
+											],
+											"additionalProperties": false
+										}
+									}
+								},
+								"required": [
+									"name",
+									"type",
+									"score",
+									"confidence",
+									"probabilities"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"type": {
+										"type": "string",
+										"const": "refusal"
+									}
+								},
+								"required": [
+									"name",
+									"type"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				},
+				"model": {
+					"type": "string"
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"input_tokens_details": {
+							"type": "object",
+							"properties": {
+								"cache_write_tokens": {
+									"type": "number"
+								},
+								"cached_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"cache_write_tokens",
+								"cached_tokens"
+							],
+							"additionalProperties": false
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"output_tokens_details": {
+							"type": "object",
+							"properties": {
+								"reasoning_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"reasoning_tokens"
+							],
+							"additionalProperties": false
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"input_tokens_details",
+						"output_tokens",
+						"output_tokens_details",
+						"total_tokens"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"answers",
+				"model",
+				"usage"
+			],
+			"additionalProperties": false
+		}
+	}
+}

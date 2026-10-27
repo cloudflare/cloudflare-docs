@@ -175,7 +175,7 @@ export default {
 
 </TabItem> </Tabs>
 
-Specifying props dynamically is permitted in this case because the caller is the same Worker, and thus can be presumed to be trusted to specify any props. The ability to customize props is particularly useful when the resulting binding is to be passed to another Worker over RPC or used in the `env` of a [dynamically-loaded worker](/workers/runtime-apis/bindings/worker-loader/).
+Specifying props dynamically is permitted in this case because the caller is the same Worker, and thus can be presumed to be trusted to specify any props. The ability to customize props is particularly useful when the resulting binding is to be passed to another Worker over RPC or used in the `env` of a [dynamically-loaded worker](/dynamic-workers/).
 
 Note that `props` values specified in this way are allowed to contain any "persistently" serializable type. This includes all basic [structured cloneable data types](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). It also includes Service Bindings themselves: you can place a Service Binding into the `props` of another Service Binding.
 

@@ -31,6 +31,24 @@ describe("getTabs", () => {
 		]);
 	});
 
+	test("selects only the requested package managers", () => {
+		expect(
+			getTabs(
+				"dlx",
+				"create-foldkit-app@latest",
+				{
+					args: "--name my-foldkit-app",
+				},
+				["npm"],
+			),
+		).toEqual([
+			{
+				mgr: "npm",
+				cmd: "npx create-foldkit-app@latest --name my-foldkit-app",
+			},
+		]);
+	});
+
 	test("dev flag maps to -D (npm/yarn/pnpm) and -d (bun)", () => {
 		expect(
 			getTabs("add", "@types/pg", { dev: true }).map((t) => t.cmd),
