@@ -62,7 +62,7 @@ Given a request with model `openai/gpt-5.5` and an `agent_id` metadata value of 
 
 Windows follow a fixed global schedule rather than starting when you create the rule or matching calendar periods. For example, a 30-day window always lasts exactly 30 × 24 hours. It does not reset on the first day of the month or adjust for month length, time zones, or daylight saving time. Window boundaries are calculated from Unix epoch time.
 
-### Sliding (Default)
+### Sliding (default)
 
 Your available spending limit is recalculated continuously rather than resetting all at once. As the current window progresses, spend from the previous window gradually counts less toward your limit. For example, halfway through the window, approximately half of the previous window’s spend still counts, together with spend from the current window. This calculation assumes spend was distributed evenly across the previous window.
 
