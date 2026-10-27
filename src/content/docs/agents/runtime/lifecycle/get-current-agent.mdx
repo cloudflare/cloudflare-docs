@@ -193,11 +193,12 @@ Route the callback through a public method on the agent. Custom methods are wrap
 
 ```ts
 import { RpcTarget } from "cloudflare:workers";
+import { Agent, getCurrentAgent } from "agents";
 
 class HostCallbackBridge extends RpcTarget {
-	agent: MyMcpAgent;
+	agent: MyAgent;
 
-	constructor(agent: MyMcpAgent) {
+	constructor(agent: MyAgent) {
 		super();
 		this.agent = agent;
 	}
@@ -209,9 +210,9 @@ class HostCallbackBridge extends RpcTarget {
 	}
 }
 
-export class MyMcpAgent extends McpAgent {
+export class MyAgent extends Agent {
 	async handleSandboxCallback() {
-		const { agent } = getCurrentAgent<MyMcpAgent>();
+		const { agent } = getCurrentAgent<MyAgent>();
 		// `agent` is available again.
 	}
 }
@@ -220,8 +221,6 @@ export class MyMcpAgent extends McpAgent {
 </TypeScriptExample>
 
 Context restored this way has `connection`, `request`, and `email` unset. It is not tied to live client I/O.
-
-Server-initiated MCP requests (`elicitInput`, `createMessage`, and `listRoots`) on `McpAgent` do not require this indirection because the MCP transport retains its owning agent.
 
 ## API reference
 
