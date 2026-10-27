@@ -1,0 +1,47 @@
+src/content/directory/k2.yaml
+  s_76ad8b2ea376aa::t_583600bc19acc9 12
+src/content/docs/k2/get-started/index.mdx
+  s_76ad8b2ea376aa::t_924549fd1c1b3b 243
+  s_4f32735c2c017a::t_789c94503d0289 266,285
+src/content/docs/k2/index.mdx
+  s_76ad8b2ea376aa::t_15bcf1e9d51d3b 67-68
+  s_76ad8b2ea376aa::t_4332cd54e75bea 58-59
+src/content/docs/k2/concepts/index.mdx
+  s_76ad8b2ea376aa::t_3fb1dc252af9e4 59
+  s_76ad8b2ea376aa::t_867052b5f15696 27
+  s_76ad8b2ea376aa::t_1c1053cc076ad6 50
+  s_76ad8b2ea376aa::t_71188c3c614324 70,72,74-75
+  s_76ad8b2ea376aa::t_cc652c08289355 32-33
+  s_76ad8b2ea376aa::t_a912704c55aa91 40
+  s_4f32735c2c017a::t_1f03236575a2c4 15,19
+src/content/docs/k2/platform/limits.mdx
+  s_76ad8b2ea376aa::t_fb128d0bc990aa 46-47
+src/content/docs/k2/configuration/index.mdx
+  s_76ad8b2ea376aa::t_372dc50b5b1d9a 74-75
+src/content/docs/k2/features/consume.mdx
+  s_4f32735c2c017a::t_b89645618cdf61 13,15,126,129,144-145,158,196
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c89538978d55138b7481e7d8e58226fc6c87484f",
+  "prompts": {},
+  "sessions": {
+    "s_4f32735c2c017a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0de47-3717-7b81-aff0-e24f5ccd0211",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_76ad8b2ea376aa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f310453a6ffe772Bz4uTEvazXh",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    }
+  }
+}

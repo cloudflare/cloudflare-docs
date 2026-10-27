@@ -1,0 +1,25 @@
+src/content/docs/workers/ci-cd/index.mdx
+  s_c4a2528dde84b4::t_98b1776daa7c4b 28-29
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_c4a2528dde84b4::t_fef4362a4a4965 17-18
+src/content/docs/workers/ci-cd/builds/build-branches.mdx
+  s_c4a2528dde84b4::t_bd76179181b5ce 13
+src/content/docs/workers/previews/examples.mdx
+  s_c4a2528dde84b4::t_17ff13527e635f 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1c8d724dd278ab066acf7dd9c23b01dde5f904c5",
+  "prompts": {},
+  "sessions": {
+    "s_c4a2528dde84b4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0c7ef39dffedgsGM4j2dRhbJO",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}
