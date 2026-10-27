@@ -792,6 +792,7 @@
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
 # Durable Objects
+/durable-objects/reference/durable-object-gradual-deployments/ /workers/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects 301
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/api/websockets/ /durable-objects/best-practices/websockets/ 301

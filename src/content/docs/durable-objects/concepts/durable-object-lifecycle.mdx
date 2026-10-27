@@ -103,7 +103,7 @@ It is important to ensure that any services using Durable Objects are designed t
 
 [Deploying a new Worker version](/workers/versions-and-deployments/) is not delayed by a code update strategy — the deployment itself completes immediately. What a code update strategy controls is when each already-active Durable Object adopts that new version.
 
-A `deferred` code update strategy lets an active Durable Object keep serving requests, storage operations, and Hibernation API WebSockets on its current code until it hibernates, instead of shutting it down immediately. If the object is still active when `max_delay` is reached, Cloudflare shuts it down and applies the update.
+A `deferred` code update strategy gives an active Durable Object time to hibernate before it adopts new code. The object can continue serving requests, storage operations, and Hibernation API WebSockets on its current code. If the object is still active when `max_delay` is reached, it resets and adopts the new code. Deferral is best effort: it does not guarantee that every operation finishes, and the object can reset earlier.
 
 Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) to configure a code update strategy and understand how it interacts with gradual deployments.
 
