@@ -16,7 +16,7 @@ Agent Skills are on-demand instructions, resources, and scripts. A skill source 
 Agent Skills are experimental, and script execution in particular is early. The API may change in a future release.
 :::
 
-The skills engine lives in `agents/skills` and is framework-agnostic, so any agent (including a plain [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) `onChatMessage`) can build a `SkillRegistry`. [`@cloudflare/think`](/agents/harnesses/think/) re-exports it as the `skills` namespace and wires `getSkills()` into the turn automatically.
+The skills engine lives in `agents/skills` and is framework-agnostic, so any agent (including a plain [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) `onChatMessage`) can build a `SkillRegistry`. [`@cloudflare/think`](/agents/harnesses/think/) re-exports it as the `skills` namespace and wires `getSkills()` into the turn automatically.
 
 ## Using skills with Think
 
