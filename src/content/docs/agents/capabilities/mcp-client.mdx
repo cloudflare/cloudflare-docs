@@ -28,9 +28,7 @@ import { Lifecycle } from "agents/lifecycle";
 import { MCPClientManager } from "agents/mcp/client";
 
 export class ToolAgent extends DurableObject<Env> {
-	readonly mcp = new MCPClientManager("tool-agent", "1.0.0", {
-		env: this.env,
-	});
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0");
 	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
 }
 ```
@@ -39,7 +37,6 @@ export class ToolAgent extends DurableObject<Env> {
 
 | Option               | Description                                                                                               |
 | -------------------- | --------------------------------------------------------------------------------------------------------- |
-| `env`                | The Worker's bindings. Required to reconnect to MCP servers reached over Durable Object RPC after a wake. |
 | `createAuthProvider` | Builds the OAuth provider for a stored HTTP server. Use it to replace the default provider.               |
 
 ## Add a server
@@ -54,9 +51,7 @@ import { Lifecycle } from "agents/lifecycle";
 import { MCPClientManager } from "agents/mcp/client";
 
 export class ToolAgent extends DurableObject<Env> {
-	readonly mcp = new MCPClientManager("tool-agent", "1.0.0", {
-		env: this.env,
-	});
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0");
 	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
 
 	async onRequest(request: Request): Promise<Response> {
