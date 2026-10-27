@@ -4,7 +4,7 @@ description: The Agents SDK Lifecycle, Scheduler, State, WebSockets, and MCP cli
 products:
   - agents
   - durable-objects
-date: 2026-10-13
+date: 2026-10-27
 ---
 
 import { TypeScriptExample } from "~/components";
@@ -15,16 +15,31 @@ To run an agent on Cloudflare, pick a [harness](/agents/harnesses/), the loop ar
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
 import { PiHarness } from "agents/harness/pi";
 import { Lifecycle } from "agents/lifecycle";
 import { MCPClientManager } from "agents/mcp/client";
+import { createAI } from "agents/models/pi-ai";
 import { Scheduler } from "agents/schedules";
 
 export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+
 	readonly harness = new PiHarness({
-		/* model and tools */
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
-	readonly mcp = new MCPClientManager("assistant", "1.0.0", { env: this.env });
+	readonly mcp = new MCPClientManager("assistant", "1.0.0");
 	readonly scheduler = new Scheduler({ callbacks: {} });
 
 	readonly lifecycle = Lifecycle.install(this)
@@ -36,7 +51,7 @@ export class Assistant extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-In `agents@0.28.0`, `Lifecycle` is stable, along with the `Scheduler`, `State`, `WebSockets`, and `MCPClientManager` capabilities. The Lifecycle runs startup, routes requests, and owns the object's durable job queue and its single alarm, so the harness and its capabilities never overwrite each other's alarms, and their work resumes after eviction, deploys, and crashes.
+In `agents@0.28.0`, `Lifecycle` is stable, along with the `Scheduler`, `State`, `WebSockets`, and `MCPClientManager` capabilities. The Lifecycle runs startup, routes requests, and owns the object's durable job queue and its single alarm, so the harness and its capabilities never overwrite each other's alarms, and their work resumes after eviction, deploys, and crashes. For a diagram of how the Durable Object, the Lifecycle, the harness, and capabilities fit together, refer to [Lifecycle](/agents/lifecycle/).
 
 You can pick from these harnesses:
 
@@ -47,7 +62,7 @@ You can pick from these harnesses:
 | [Container harness](/agents/harnesses/container/), which runs Claude Code or Codex                  | `agents/harness/container` | Experimental |
 | [OpenCode](/agents/harnesses/opencode/)                                                             | `agents/harness/opencode`  | Experimental |
 
-To build your own, combine [Sessions](/agents/capabilities/sessions/), [Streams](/agents/capabilities/streams/), and [Tasks](/agents/capabilities/tasks/), or keep an outside agent's sessions in `HarnessStore` from `agents/harness/store`.
+To build your own, combine [Sessions](/agents/capabilities/sessions/), [Streams](/agents/capabilities/streams/), and [Tasks](/agents/capabilities/tasks/), or keep an outside agent's sessions in `HarnessStore` from `agents/harness/store`. The [Codex harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex) builds a harness this way: a turn loop derived from Codex, compiled to WebAssembly, running on Sessions, Streams, and Tasks.
 
 These capabilities ship in the `agents` package:
 
