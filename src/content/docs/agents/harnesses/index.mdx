@@ -70,14 +70,11 @@ Except for Project Think, every harness in this table is a capability: it instal
 | Harness                                               | Import                     | Status       | What runs the loop                                                       |
 | ----------------------------------------------------- | -------------------------- | ------------ | ------------------------------------------------------------------------ |
 | [Pi](/agents/harnesses/pi/)                           | `agents/harness/pi`        | Beta         | [Pi Durable](https://earendil.com/posts/pi-durable/)                     |
-| [AI SDK harness](/agents/harnesses/ai-sdk/)           | `agents/harness/ai-sdk`    | Experimental | The AI SDK's `streamText`                                                |
 | [Container harness](/agents/harnesses/container/)     | `agents/harness/container` | Experimental | Claude Code, Codex, or another agent CLI in a Cloudflare Container       |
 | [OpenCode](/agents/harnesses/opencode/)               | `agents/harness/opencode`  | Experimental | [OpenCode](https://opencode.ai/) 2.0, inside the Durable Object          |
 | [Project Think](/agents/harnesses/think/)             | `@cloudflare/think`        | Experimental | Think's agent loop, as a class that extends the `Agent` class            |
 
 Use **Pi** when you want Pi Durable to own the agent loop, transcript, and recovery, including steering a running turn. You choose how clients reach it, such as HTTP, WebSockets, or RPC. Start here if you are not sure.
-
-Use the **AI SDK harness** when you want a thin `streamText` loop with sessions and a queue of operations, and nothing more.
 
 Use the **Container harness** when you want a coding agent CLI with a real filesystem and shell. The CLI runs in a container that stops when idle, while the Durable Object keeps the sessions.
 
