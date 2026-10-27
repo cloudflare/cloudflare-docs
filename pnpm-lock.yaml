@@ -51,8 +51,8 @@ importers:
         specifier: 0.27.0
         version: 0.27.0
       '@cloudflare/nimbus-docs':
-        specifier: 0.18.1
-        version: 0.18.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(astro@7.4.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)
+        specifier: 0.19.1
+        version: 0.19.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(astro@7.4.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)
       '@cloudflare/vitest-plugin':
         specifier: 1.4.5
         version: 1.4.5(@cloudflare/workers-types@5.20261019.1)(@types/node@26.6.5)(vitest@5.0.5(@types/node@26.6.5)(happy-dom@21.0.3)(vite@8.3.4(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)))
@@ -747,15 +747,9 @@ packages:
   '@chevrotain/types@11.1.2':
     resolution: {integrity: sha512-U+HFai5+zmJCkK86QsaJtoITlboZHBqrVketcO2ROv865xfCMSFpELQoz1GkX5GzME8pTa+3kbKrZHQtI0gdbw==}
 
-  '@clack/core@0.4.1':
-    resolution: {integrity: sha512-Pxhij4UXg8KSr7rPek6Zowm+5M22rbd2g1nfojHJkxp5YkFqiZ2+YLEM/XGVIzvGOcM0nqjIFxrpDwWRZYWYjA==}
-
   '@clack/core@1.5.1':
     resolution: {integrity: sha512-iHTrHA8MtVuLl2TfZySmcKv1qO2PoyC9Z7pfSDozEuV5vtY3/wcOPKJXlqJ5Oq2Cx5DDGQGAMVx6HZfRRoVEbQ==}
     engines: {node: '>= 20.12.0'}
-
-  '@clack/prompts@0.9.1':
-    resolution: {integrity: sha512-JIpyaboYZeWYlyP0H+OoPPxd6nqueG/CmN6ixBiNFsIDHREevjIf0n0Ohh5gr5C8pEDknzgvz+pIJ8dMhzWIeg==}
 
   '@clack/prompts@1.8.1':
     resolution: {integrity: sha512-dlT1m5e/0yUL0kRNcQn7yGLVThkgbB0Ga/1AmfDDC/8ik6AIiSf2QLQO2zPYvefsHP0aFgxO93cVLCCfDp7kzQ==}
@@ -778,19 +772,26 @@ packages:
     resolution: {integrity: sha512-jxQYkj8dSIzc0cD6cMMNdOc1UVjqSqu8BZdor5s8cGjW2I8BjODt/kWPVdY+u9zj3ms75Q5qaZgnxUad83+eAg==}
     engines: {node: '>=22.0.0'}
 
-  '@cloudflare/nimbus-docs@0.18.1':
-    resolution: {integrity: sha512-le4ZOV+r3RAYx+k3XjwpnLPpfoxwjnQbavVe+31/mg++23SgQMVVuTTHcJpNPgk1yiAW+Doj+HOP6Nc0PbpRUQ==}
+  '@cloudflare/nimbus-docs@0.19.1':
+    resolution: {integrity: sha512-wjuPB3By2bq4DgPwMyE7/irvGTa/ZdjlxeoW6Vnh+Rj+yt1h8p8YxSiXQbo19rdoEfP+U4v6ZHOjw88Njf2hxg==}
     engines: {node: '>=22.12.0'}
     hasBin: true
     peerDependencies:
+      '@modelcontextprotocol/server': '>=2.3.0 <3.0.0'
       '@readme/httpsnippet': '>=10.0.0'
+      '@resvg/resvg-js': '>=2.6.2 <3.0.0'
       '@scalar/openapi-parser': '>=0.10.0 <1.0.0'
       astro: '>=7.2.6 <8.0.0'
       openapi-sampler: '>=1.5.0'
       react: '>=19.0.0'
       react-dom: '>=19.0.0'
+      satori: '>=0.26.0 <0.27.0'
     peerDependenciesMeta:
+      '@modelcontextprotocol/server':
+        optional: true
       '@readme/httpsnippet':
+        optional: true
+      '@resvg/resvg-js':
         optional: true
       '@scalar/openapi-parser':
         optional: true
@@ -799,6 +800,8 @@ packages:
       react:
         optional: true
       react-dom:
+        optional: true
+      satori:
         optional: true
 
   '@cloudflare/runtime-types@0.1.1':
@@ -6440,20 +6443,9 @@ snapshots:
 
   '@chevrotain/types@11.1.2': {}
 
-  '@clack/core@0.4.1':
-    dependencies:
-      picocolors: 1.1.1
-      sisteransi: 1.0.5
-
   '@clack/core@1.5.1':
     dependencies:
       fast-wrap-ansi: 0.2.2
-      sisteransi: 1.0.5
-
-  '@clack/prompts@0.9.1':
-    dependencies:
-      '@clack/core': 0.4.1
-      picocolors: 1.1.1
       sisteransi: 1.0.5
 
   '@clack/prompts@1.8.1':
@@ -6479,19 +6471,19 @@ snapshots:
 
   '@cloudflare/kv-asset-handler@0.5.0': {}
 
-  '@cloudflare/nimbus-docs@0.18.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(astro@7.4.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)':
+  '@cloudflare/nimbus-docs@0.19.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(astro@7.4.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))(esbuild@0.28.2)(jiti@2.7.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(supports-color@10.2.2)(tsx@4.23.15)':
     dependencies:
       '@astrojs/markdown-satteri': 0.4.4
       '@astrojs/mdx': 8.0.3(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@astrojs/markdown-satteri@0.4.4)(astro@7.4.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1))
       '@astrojs/sitemap': 3.7.2
-      '@clack/prompts': 0.9.1
+      '@clack/prompts': 1.8.1
       '@fontsource/stix-two-math': 5.3.0
       '@iconify/tools': 5.0.14
       '@iconify/types': 2.0.0
       '@iconify/utils': 3.1.7
       '@scalar/json-magic': 0.12.20
       '@shikijs/transformers': 4.4.3
-      '@shikijs/types': 4.4.3
+      '@shikijs/types': 4.5.0
       '@vercel/detect-agent': 1.2.3
       astro: 7.4.1(@astrojs/markdown-remark@7.3.2(supports-color@10.2.2))(@types/node@26.6.5)(esbuild@0.28.2)(jiti@2.7.0)(tsx@4.23.15)(yaml@2.9.1)
       clsx: 2.1.1
@@ -6518,7 +6510,7 @@ snapshots:
       remark-lint-unordered-list-marker-style: 4.0.1
       satteri: 0.10.5
       semver: 7.8.5
-      shiki: 4.4.3
+      shiki: 4.5.0
       tailwind-merge: 3.7.0
       temml: 0.14.0
       typescript: 5.9.3
