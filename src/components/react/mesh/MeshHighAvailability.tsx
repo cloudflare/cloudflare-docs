@@ -15,17 +15,37 @@ import { LabeledButton, Toolbar } from "../container/Transport";
 import type { DiagramFallbackProps } from "../container/DiagramFallback";
 import { PacketPulse } from "./PacketPulse";
 
+type Replica = "a" | "b";
+type Point = { x: number; y: number };
+
 const VIEW_W = 340;
-const VIEW_H = 372;
+const VIEW_H = 368;
 const CLIENT = makeRect(110, 12, 120, 38);
-const CLOUDFLARE = makeRect(100, 84, 140, 40);
-const NODE = makeRect(18, 158, 304, 112);
-const REPLICA_A = makeRect(36, 198, 122, 40);
-const REPLICA_B = makeRect(182, 198, 122, 40);
-const DATABASE = makeRect(110, 318, 120, 40);
+const CLOUDFLARE = makeRect(80, 84, 180, 40);
+const NODE = makeRect(18, 158, 304, 118);
+const REPLICA_A = makeRect(29, 206, 122, 40);
+const REPLICA_B = makeRect(189, 206, 122, 40);
+const DATABASE = makeRect(80, 316, 180, 40);
 const BEAT_MS = 900;
 
-type Replica = "a" | "b";
+// Every link is vertical so captions can sit in the clear space between
+// them. Uplinks drop straight from Cloudflare onto each replica's centre;
+// downlinks leave each replica near its inner corner, leaving room for the
+// status caption on the outer side.
+type Link = { from: Point; to: Point };
+const vertical = (x: number, fromY: number, toY: number): Link => ({
+	from: { x, y: fromY },
+	to: { x, y: toY },
+});
+const UPLINK: Record<Replica, Link> = {
+	a: vertical(REPLICA_A.cx, CLOUDFLARE.b, REPLICA_A.t),
+	b: vertical(REPLICA_B.cx, CLOUDFLARE.b, REPLICA_B.t),
+};
+const DOWNLINK: Record<Replica, Link> = {
+	a: vertical(140, REPLICA_A.b, DATABASE.t),
+	b: vertical(200, REPLICA_B.b, DATABASE.t),
+};
+
 type Phase =
 	| "idle"
 	| "request-to-cloudflare"
@@ -129,24 +149,13 @@ function HighAvailabilityBody() {
 		}
 	};
 
-	const target = targetReplica === "b" ? REPLICA_B : REPLICA_A;
-	const targetFraction = targetReplica === "b" ? 0.7 : 0.3;
-	const requestToCloudflare = line(CLIENT, "bottom", CLOUDFLARE, "top");
-	const requestToReplica = line(
-		CLOUDFLARE,
-		"bottom",
-		target,
-		"top",
-		targetFraction,
-	);
-	const requestToDatabase = line(
-		target,
-		"bottom",
-		DATABASE,
-		"top",
-		0.5,
-		targetFraction,
-	);
+	const target: Replica = targetReplica ?? "a";
+	const requestToCloudflare = path({
+		from: edgePoint(CLIENT, "bottom"),
+		to: edgePoint(CLOUDFLARE, "top"),
+	});
+	const requestToReplica = path(UPLINK[target]);
+	const requestToDatabase = path(DOWNLINK[target]);
 
 	return (
 		<WeldCanvas
@@ -181,6 +190,12 @@ function HighAvailabilityBody() {
 				</Toolbar>
 			}
 		>
+			{/* Drawn first so the links into each replica stay visible on top. */}
+			<WeldedCard rect={NODE} dashed muted flat notches={{}} />
+			{/* Centred between the two uplinks. */}
+			<Caption x={NODE.cx} y={186} anchor="middle">
+				Mesh node #123
+			</Caption>
 			<Connector
 				from={edgePoint(CLIENT, "bottom")}
 				to={edgePoint(CLOUDFLARE, "top")}
@@ -188,59 +203,25 @@ function HighAvailabilityBody() {
 				active={phase === "failed" || phase === "complete"}
 				ghost={phase !== "failed" && phase !== "complete"}
 			/>
-			<Connector
-				from={edgePoint(CLOUDFLARE, "bottom", 0.3)}
-				to={edgePoint(REPLICA_A, "top")}
-				straight
-				active={activeReplica === "a"}
-				ghost={activeReplica !== "a"}
-			/>
-			<Connector
-				from={edgePoint(CLOUDFLARE, "bottom", 0.7)}
-				to={edgePoint(REPLICA_B, "top")}
-				straight
-				active={activeReplica === "b"}
-				ghost={activeReplica !== "b"}
-			/>
-			<Connector
-				from={edgePoint(REPLICA_A, "bottom")}
-				to={edgePoint(DATABASE, "top", 0.3)}
-				straight
-				active={activeReplica === "a"}
-				ghost={activeReplica !== "a"}
-			/>
-			<Connector
-				from={edgePoint(REPLICA_B, "bottom")}
-				to={edgePoint(DATABASE, "top", 0.7)}
-				straight
-				active={activeReplica === "b"}
-				ghost={activeReplica !== "b"}
-			/>
-			{phase === "request-to-replica" && targetReplica && (
-				<Connector
-					from={edgePoint(CLOUDFLARE, "bottom", targetFraction)}
-					to={edgePoint(target, "top")}
-					straight
-					active
-					arrowhead
-				/>
-			)}
-			{phase === "request-to-database" && targetReplica && (
-				<Connector
-					from={edgePoint(target, "bottom")}
-					to={edgePoint(DATABASE, "top", targetFraction)}
-					straight
-					active
-					arrowhead
-				/>
-			)}
+			{(["a", "b"] as const).map((replica) => (
+				<g key={replica}>
+					<Connector
+						{...UPLINK[replica]}
+						straight
+						active={activeReplica === replica}
+						ghost={activeReplica !== replica}
+					/>
+					<Connector
+						{...DOWNLINK[replica]}
+						straight
+						active={activeReplica === replica}
+						ghost={activeReplica !== replica}
+					/>
+				</g>
+			))}
 
 			<LabelCard rect={CLIENT} label="Client" active fontSize={10} />
 			<LabelCard rect={CLOUDFLARE} label="Cloudflare" active fontSize={10} />
-			<WeldedCard rect={NODE} dashed muted flat notches={{}} />
-			<Caption x={NODE.cx} y={177} anchor="middle">
-				Mesh node #123 · Route 10.0.0.0/24
-			</Caption>
 			<LabelCard
 				rect={REPLICA_A}
 				label="Replica A"
@@ -255,18 +236,16 @@ function HighAvailabilityBody() {
 				ghost={!hasReplicaB}
 				fontSize={10}
 			/>
-			<Caption x={REPLICA_A.cx} y={254} anchor="middle">
+			{/* Status captions sit on the outer side of each downlink. */}
+			<Caption x={REPLICA_A.l} y={262}>
 				{!aOnline ? "Offline" : activeReplica === "a" ? "Active" : "Standby"}
 			</Caption>
-			<Caption x={REPLICA_B.cx} y={254} anchor="middle">
+			<Caption x={REPLICA_B.r} y={262} anchor="end">
 				{!hasReplicaB
-					? "Not registered"
+					? "Not added"
 					: activeReplica === "b"
 						? "Active"
 						: "Standby"}
-			</Caption>
-			<Caption x={DATABASE.cx} y={298} anchor="middle">
-				{phase === "failed" ? "Unreachable" : "Private network"}
 			</Caption>
 			<LabelCard
 				rect={DATABASE}
@@ -315,15 +294,6 @@ function FailureMark({ x, y }: { x: number; y: number }) {
 	);
 }
 
-function line(
-	from: typeof CLIENT,
-	fromSide: "top" | "bottom",
-	to: typeof CLIENT,
-	toSide: "top" | "bottom",
-	fromFraction = 0.5,
-	toFraction = 0.5,
-) {
-	const a = edgePoint(from, fromSide, fromFraction);
-	const b = edgePoint(to, toSide, toFraction);
-	return `M ${a.x} ${a.y} L ${b.x} ${b.y}`;
+function path({ from, to }: Link) {
+	return `M ${from.x} ${from.y} L ${to.x} ${to.y}`;
 }

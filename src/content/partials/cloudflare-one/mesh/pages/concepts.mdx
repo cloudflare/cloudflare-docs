@@ -3,7 +3,6 @@
 ---
 
 import { CardGrid, Details, LinkCard } from "~/components";
-import MeshBidirectional from "~/components/react/mesh/MeshBidirectional";
 import MeshHighAvailability from "~/components/react/mesh/MeshHighAvailability";
 import MeshParticipants from "~/components/react/mesh/MeshParticipants";
 import MeshRoutes from "~/components/react/mesh/MeshRoutes";
@@ -18,45 +17,23 @@ Participants can be Linux servers, laptops, phones, or desktops. They communicat
 
 _Connect each participant to Cloudflare with the same client._
 
-Every participant runs the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). The client establishes an encrypted connection to Cloudflare and keeps that connection available for Mesh traffic.
+Every participant runs the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), which keeps an encrypted connection to Cloudflare open for Mesh traffic. A **Mesh node** runs the client in headless mode on a Linux server, virtual machine, or container. A **client device** runs the same software with a user interface on a laptop, phone, or desktop.
 
-A **Mesh node** runs the client in headless mode on a Linux server, virtual machine, or container. A **client device** runs the same software with a user interface on a laptop, phone, or desktop.
+<span id="mesh-ips"></span>
+
+Cloudflare assigns each participant a Mesh IP from `100.96.0.0/12`, a [carrier-grade NAT range](https://datatracker.ietf.org/doc/html/rfc6598) that avoids common private ranges such as `10.0.0.0/8`. Other Cloudflare One documentation calls these [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/), and you can configure a custom subnet if the default conflicts with your network.
+
+Any participant can start traffic to another participant's Mesh IP, so device-to-device, device-to-server, and server-to-server connections all work. Client-to-client connectivity does not require a Mesh node.
 
 <MeshParticipants client:visible>
 
-The Mesh node and client device connect to Cloudflare independently. Cloudflare assigns each participant a private Mesh IP and places both in your account's Mesh network.
+The Mesh node and client device connect to Cloudflare independently, and each receives a private Mesh IP in your account's Mesh network.
 
 </MeshParticipants>
 
-Client-to-client connectivity does not require a Mesh node. Deploy a node when you want to connect a server, route a private network, or provide a headless gateway.
+All traffic passes through Cloudflare, so [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and identity controls can govern each connection. Connectivity and access are separate: a participant can be online while policy blocks its traffic.
 
 For setup instructions, refer to [Get started](/mesh/get-started/).
-
-## Mesh IPs identify participants
-
-_Reach any participant through a stable private address._
-
-Cloudflare assigns each participant an address from `100.96.0.0/12`. Other Cloudflare One documentation calls these addresses [device IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/).
-
-The default range uses [carrier-grade NAT address space](https://datatracker.ietf.org/doc/html/rfc6598). This avoids common private ranges such as `10.0.0.0/8`. You can [configure a custom subnet](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) if the default range conflicts with your network.
-
-View Mesh IPs on the [Mesh overview page](https://dash.cloudflare.com/?to=/:account/mesh) or a participant details page.
-
-## Traffic can start from either participant
-
-_Create bidirectional private connectivity between services and devices._
-
-Any participant can initiate traffic to another participant's Mesh IP. This supports device-to-device, device-to-server, and server-to-server connections.
-
-<MeshBidirectional client:visible>
-
-The laptop sends a request over its existing Mesh connection. Cloudflare applies configured controls, carries the request to the server, and returns the response. The server can initiate the same flow in reverse.
-
-</MeshBidirectional>
-
-All traffic passes through Cloudflare. [Gateway network policies](/cloudflare-one/traffic-policies/network-policies/), [device posture checks](/cloudflare-one/reusable-components/posture-checks/), and identity controls can govern each connection.
-
-Connectivity and access are separate. A participant can be online while policy blocks its traffic.
 
 ## Routes extend Mesh to private networks
 
@@ -69,33 +46,29 @@ A Mesh node is directly reachable through its own Mesh IP. A route makes resourc
 
 <MeshRoutes client:visible>
 
-Without a matching route, the client and Mesh node remain connected but Cloudflare cannot forward a request for `10.0.0.50`. A CIDR route maps `10.0.0.0/24` to the node, which forwards request and return traffic between Cloudflare and the database.
+Without a matching route, Cloudflare drops the request for `10.0.0.50`. A CIDR route for `10.0.0.0/24` sends it through the Mesh node to the database.
 
 </MeshRoutes>
 
-Return traffic must also route through the Mesh node. For configuration requirements, refer to [Routes](/mesh/features/routes/).
+Return traffic must also route through the Mesh node. For more information, refer to [Routes](/mesh/features/routes/).
 
 ## Node identity and high availability
 
 _Keep routed networks available when a node host fails._
 
-A Mesh node has a stable identity in your Cloudflare account. For high availability, multiple Linux hosts can register as replicas of that node and advertise the same routes.
-
-One replica is active while the others remain on standby. If the active replica disconnects, Cloudflare promotes a standby for inbound traffic to the advertised CIDR routes.
+A Mesh node has a stable identity in your Cloudflare account. Multiple Linux hosts can register as replicas of that node and advertise the same routes. One replica is active while the others stay on standby. If the active replica disconnects, Cloudflare promotes a standby for traffic to the advertised CIDR routes.
 
 <MeshHighAvailability client:visible>
 
-Both hosts share one Mesh node identity and advertise the route to the same private database. Try stopping replica A before adding replica B: the database request fails because no replica is available. Add replica B and retry to see Cloudflare send the request through the newly active replica. When replica A returns, it remains on standby while replica B stays active.
+Two replicas share one Mesh node identity. Stop replica A with no standby and the request fails; add replica B and Cloudflare sends the request through it instead.
 
 </MeshHighAvailability>
 
-High availability protects routed prefixes, not direct access to a replica's Mesh IP. Each replica keeps its own Mesh IP. For requirements and failover behavior, refer to [High availability](/mesh/features/high-availability/).
+High availability protects routed prefixes, not direct access to a replica's Mesh IP. For more information, refer to [High availability](/mesh/features/high-availability/).
 
 ## Protocol requirement
 
-Cloudflare Mesh uses the MASQUE protocol by default. Hostname routes, IPv6 CIDR routes, and high availability require [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol).
-
-If a Mesh node device profile uses WireGuard, those capabilities do not work. Direct participant connectivity and IPv4 CIDR routes remain available.
+Mesh uses the [MASQUE](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol) protocol by default. Hostname routes, IPv6 CIDR routes, and high availability require MASQUE. If a Mesh node device profile uses WireGuard, only direct participant connectivity and IPv4 CIDR routes work.
 
 <span id="mesh-vs-tunnel"></span>
 
@@ -110,9 +83,7 @@ Mesh and [Cloudflare Tunnel](/tunnel/) both connect private infrastructure to Cl
 | **Connector**        | Cloudflare One Client                                       | `cloudflared`                                           |
 | **Primary use**      | Private connectivity between devices, servers, and networks | Publishing applications or routing to private resources |
 
-Use Mesh when participants need private IP connectivity in either direction. Mesh also suits stable, long-lived connections such as database replication, remote administration, and enterprise resource planning systems.
-
-Use Tunnel when you want to publish specific applications or route clients to resources behind an outbound-only connector.
+Use Mesh when participants need private IP connectivity in either direction, including long-lived connections such as database replication and remote administration. Use Tunnel to publish specific applications or route clients to resources behind an outbound-only connector.
 
 <Details header="Coming from another mesh networking product?">
 

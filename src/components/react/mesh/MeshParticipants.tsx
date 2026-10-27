@@ -15,12 +15,24 @@ import type { DiagramFallbackProps } from "../container/DiagramFallback";
 import { PacketPulse } from "./PacketPulse";
 
 const VIEW_W = 340;
-const VIEW_H = 260;
-const NETWORK = makeRect(14, 18, 312, 218);
+const VIEW_H = 236;
+const NETWORK = makeRect(14, 18, 312, 194);
 const NODE = makeRect(30, 52, 124, 42);
 const DEVICE = makeRect(186, 52, 124, 42);
 const CLOUDFLARE = makeRect(108, 150, 124, 42);
 const BEAT_MS = 900;
+
+// Connectors leave each card from its inner bottom corner and run almost
+// vertically to Cloudflare, so the IP captions centred under each card stay
+// clear of the lines.
+const NODE_LINK = {
+	from: edgePoint(NODE, "bottom", 0.92),
+	to: edgePoint(CLOUDFLARE, "top", 0.28),
+};
+const DEVICE_LINK = {
+	from: edgePoint(DEVICE, "bottom", 0.08),
+	to: edgePoint(CLOUDFLARE, "top", 0.72),
+};
 
 type Phase =
 	| "idle"
@@ -117,7 +129,7 @@ function ParticipantsBody() {
 			</Caption>
 
 			<path
-				d={`M ${NODE.cx} ${NODE.b} L ${CLOUDFLARE.cx - 34} ${CLOUDFLARE.t}`}
+				d={line(NODE_LINK)}
 				fill="none"
 				strokeWidth={nodeConnected || phase === "node-connecting" ? 1.75 : 1.25}
 				className={
@@ -127,7 +139,7 @@ function ParticipantsBody() {
 				}
 			/>
 			<path
-				d={`M ${DEVICE.cx} ${DEVICE.b} L ${CLOUDFLARE.cx + 34} ${CLOUDFLARE.t}`}
+				d={line(DEVICE_LINK)}
 				fill="none"
 				strokeWidth={
 					deviceConnected || phase === "device-connecting" ? 1.75 : 1.25
@@ -173,20 +185,17 @@ function ParticipantsBody() {
 			>
 				100.96.0.10
 			</Caption>
-			<Caption x={NETWORK.cx} y={216} anchor="middle">
-				Private Mesh IPs
-			</Caption>
 			{phase === "node-connecting" && !ctx.reducedMotion && (
 				<PacketPulse
 					key={`${runId}-${phase}`}
-					path={line(NODE, CLOUDFLARE, 0.23)}
+					path={line(NODE_LINK)}
 					ms={BEAT_MS}
 				/>
 			)}
 			{phase === "device-connecting" && !ctx.reducedMotion && (
 				<PacketPulse
 					key={`${runId}-${phase}`}
-					path={line(DEVICE, CLOUDFLARE, 0.77)}
+					path={line(DEVICE_LINK)}
 					ms={BEAT_MS}
 				/>
 			)}
@@ -194,8 +203,6 @@ function ParticipantsBody() {
 	);
 }
 
-function line(from: typeof NODE, to: typeof CLOUDFLARE, toFraction: number) {
-	const a = edgePoint(from, "bottom");
-	const b = edgePoint(to, "top", toFraction);
-	return `M ${a.x} ${a.y} L ${b.x} ${b.y}`;
+function line({ from, to }: typeof NODE_LINK) {
+	return `M ${from.x} ${from.y} L ${to.x} ${to.y}`;
 }

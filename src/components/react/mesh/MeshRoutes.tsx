@@ -19,8 +19,9 @@ const VIEW_H = 350;
 const CLIENT = makeRect(110, 16, 120, 40);
 const CLOUDFLARE = makeRect(100, 104, 140, 40);
 const NODE = makeRect(100, 202, 140, 40);
-const DATABASE = makeRect(110, 294, 120, 40);
+const DATABASE = makeRect(80, 294, 180, 40);
 const BEAT_MS = 850;
+const CAPTION_X = VIEW_W / 2 + 10;
 
 type Phase =
 	| "idle"
@@ -174,7 +175,6 @@ function RoutesBody() {
 					to={edgePoint(segment.to, segment.toSide)}
 					straight
 					active
-					arrowhead
 				/>
 			)}
 
@@ -192,17 +192,11 @@ function RoutesBody() {
 				active={phase === "complete"}
 				fontSize={10}
 			/>
-			<Caption x={VIEW_W / 2} y={178} anchor="middle">
-				{phase === "blocked"
-					? "Dropped · no matching route"
-					: hasRoute
-						? "Route 10.0.0.0/24"
-						: "No matching route"}
+			{/* Sits beside the vertical connector (x = VIEW_W / 2). */}
+			<Caption x={CAPTION_X} y={177}>
+				{hasRoute ? "Route 10.0.0.0/24" : "No matching route"}
 			</Caption>
-			<Caption x={VIEW_W / 2} y={274} anchor="middle">
-				Private network
-			</Caption>
-			{phase === "blocked" && <FailureMark x={VIEW_W / 2} y={166} />}
+			{phase === "blocked" && <FailureMark x={VIEW_W / 2} y={173} />}
 			{path && !ctx.reducedMotion && (
 				<PacketPulse key={`${runId}-${phase}`} path={path} ms={BEAT_MS} />
 			)}
