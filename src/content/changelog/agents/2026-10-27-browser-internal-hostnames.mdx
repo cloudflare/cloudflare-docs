@@ -1,0 +1,67 @@
+---
+title: Agents SDK browser tool can now open sites your agent serves, with internal hostnames
+description: Give a Browser Run browser hostnames such as preview.internal that your agent serves, so the model can open a dev server, a workspace folder, or another Worker.
+date: 2026-10-27
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [persistent browser](/agents/tools/browser/) in the [Cloudflare Agents SDK](/agents/) can now open sites that only your agent serves. Give a [Browser Run](/browser-run/) browser internal hostnames such as `preview.internal`, and its requests to them go to your agent instead of the Internet. The model can open a dev server in its sandbox, a folder in its workspace, or another Worker in the same browser it uses for the web, without exposing anything publicly.
+
+Each internal host has a `fetch` function that runs in your Durable Object, so it can use the object's bindings and state. A host can also send its requests straight to another Worker through a service binding. Add a `target` schema to a host, and the model chooses what it serves, such as which port or which folder.
+
+To use internal hostnames, make sure you have [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later installed, and pass `internalHosts` to `browserRun()`:
+
+<TypeScriptExample>
+
+```ts
+import { Browser, browserRun } from "agents/browser";
+import { z } from "zod";
+// Your own code: reach a port on your sandbox and return its Response.
+import { fetchSandboxPort } from "./hosts";
+
+// Browser Run calls back into your Worker through this entrypoint.
+export { InternalHostRouter } from "agents/browser";
+
+export class MyAgent extends Agent<Env> {
+	browser = new Browser({
+		provider: browserRun(this.env.BROWSER, {
+			internalHosts: {
+				router: this.ctx.exports.InternalHostRouter,
+				hosts: {
+					"preview.internal": {
+						description: "Your dev servers",
+						target: z.object({ port: z.number().int().min(1024) }),
+						fetch: (request, { port }) => fetchSandboxPort(port, request),
+					},
+					"api.internal": { worker: this.env.API },
+				},
+			},
+		}),
+	});
+
+	// ...
+}
+```
+
+</TypeScriptExample>
+
+`browserTool` tells the model about each host. To check its dev server, the model points `preview.internal` at a port and opens the URL it gets back:
+
+```js
+const { url } = await browser.assignHost({
+	host: "preview.internal",
+	target: { port: 5173 },
+});
+await browser.cdp({
+	method: "Page.navigate",
+	params: { url },
+	sessionId: "active",
+});
+```
+
+The target is checked against the schema and stored, so it lasts across turns, browser restarts, and redeploys.
+
+This release also simplifies `browserTool`. It runs the model's code in its own [Dynamic Worker](/dynamic-workers/) and no longer needs a `CodemodeRuntime` export. Refer to the [v0.31.0 upgrade notes](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) if you already use `browserTool`.
+
+For the complete example, limits, and security guidance, refer to [Internal hostnames](/agents/tools/browser/#internal-hostnames).
