@@ -10,6 +10,8 @@ products:
 
 import { Render } from "~/components";
 
+The following table lists D1 account, database, and query limits:
+
 | Feature                                                                                                             | Limit                                             |
 | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
 | Databases per account                                                                                               | 50,000 (Workers Paid) [^1] / 10 (Free)            |
@@ -27,7 +29,7 @@ import { Render } from "~/components";
 | Maximum instructions in a SQLite virtual machine program                                                           | 25,000                                            |
 | Maximum bound parameters per query                                                                                  | 100                                               |
 | Maximum arguments per SQL function                                                                                  | 127                                               |
-| Maximum attached databases                                                                                          | 0                                                 |
+| Maximum databases attached to one connection                                                                                          | 0                                                 |
 | Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                                            | 50 bytes                                          |
 | Maximum trigger nesting depth                                                                                       | 10                                                |
 | Maximum auxiliary SQLite worker threads per statement                                                              | 0                                                 |
