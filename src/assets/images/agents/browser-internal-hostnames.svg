@@ -141,35 +141,31 @@
     <text style="fill:var(--ih-muted)" x="858" y="484" text-anchor="middle" font-size="12.5">service binding</text>
   </g>
   <g class="motion">
+    <text style="fill:var(--ih-text)" x="36" y="49" font-size="14.5" font-weight="700" opacity="0">A public site
+      <animate attributeName="opacity" dur="27.0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.0370;0.0519;0.2222;0.2370;1.0000"/>
+    </text>
     <g opacity="0">
-      <circle style="fill:var(--ih-accent)" cx="46" cy="44" r="10"/>
-      <text style="fill:var(--ih-on_accent)" x="46" y="48.5" text-anchor="middle" font-size="12.5" font-weight="700">1</text>
-      <text style="fill:var(--ih-text)" x="64" y="49" font-size="14.5" font-weight="700">A public site</text>
       <text style="fill:var(--ih-muted)" x="36" y="72" font-size="12.5">Chrome opens <tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">example.com</tspan>,</text>
       <text style="fill:var(--ih-muted)" x="36" y="90" font-size="12.5">and it goes out to the Internet</text>
       <animate attributeName="opacity" dur="27.0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.0370;0.0519;0.2222;0.2370;1.0000"/>
     </g>
+    <text style="fill:var(--ih-text)" x="36" y="49" font-size="14.5" font-weight="700" opacity="0">An internal host
+      <animate attributeName="opacity" dur="27.0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.2370;0.2519;0.6148;0.6296;1.0000"/>
+    </text>
     <g opacity="0">
-      <circle style="fill:var(--ih-accent)" cx="46" cy="44" r="10"/>
-      <text style="fill:var(--ih-on_accent)" x="46" y="48.5" text-anchor="middle" font-size="12.5" font-weight="700">2</text>
-      <text style="fill:var(--ih-text)" x="64" y="49" font-size="14.5" font-weight="700">The model picks a target</text>
-      <text style="fill:var(--ih-muted)" x="36" y="72" font-size="12.5"><tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">browser.assignHost()</tspan> points</text>
-      <text style="fill:var(--ih-muted)" x="36" y="90" font-size="12.5"><tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">preview.internal</tspan> at port 5173</text>
+      <text style="fill:var(--ih-muted)" x="36" y="72" font-size="12.5">The model points <tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">preview.internal</tspan></text>
+      <text style="fill:var(--ih-muted)" x="36" y="90" font-size="12.5">at port 5173 with <tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">assignHost()</tspan></text>
       <animate attributeName="opacity" dur="27.0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.2370;0.2519;0.3852;0.4000;1.0000"/>
     </g>
     <g opacity="0">
-      <circle style="fill:var(--ih-accent)" cx="46" cy="44" r="10"/>
-      <text style="fill:var(--ih-on_accent)" x="46" y="48.5" text-anchor="middle" font-size="12.5" font-weight="700">3</text>
-      <text style="fill:var(--ih-text)" x="64" y="49" font-size="14.5" font-weight="700">An internal host</text>
-      <text style="fill:var(--ih-muted)" x="36" y="72" font-size="12.5">Chrome opens <tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">preview.internal</tspan>,</text>
-      <text style="fill:var(--ih-muted)" x="36" y="90" font-size="12.5">and your agent serves it</text>
-      <text style="fill:var(--ih-muted)" x="36" y="108" font-size="12.5">from the sandbox</text>
+      <text style="fill:var(--ih-muted)" x="36" y="72" font-size="12.5">Then Chrome opens it, and your</text>
+      <text style="fill:var(--ih-muted)" x="36" y="90" font-size="12.5">agent serves it from the sandbox</text>
       <animate attributeName="opacity" dur="27.0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.4000;0.4148;0.6148;0.6296;1.0000"/>
     </g>
+    <text style="fill:var(--ih-text)" x="36" y="49" font-size="14.5" font-weight="700" opacity="0">A Worker host
+      <animate attributeName="opacity" dur="27.0s" repeatCount="indefinite" values="0;0;1;1;0;0" keyTimes="0.0000;0.6296;0.6444;0.8000;0.8148;1.0000"/>
+    </text>
     <g opacity="0">
-      <circle style="fill:var(--ih-accent)" cx="46" cy="44" r="10"/>
-      <text style="fill:var(--ih-on_accent)" x="46" y="48.5" text-anchor="middle" font-size="12.5" font-weight="700">4</text>
-      <text style="fill:var(--ih-text)" x="64" y="49" font-size="14.5" font-weight="700">A Worker host</text>
       <text style="fill:var(--ih-muted)" x="36" y="72" font-size="12.5">Chrome opens <tspan font-family="'SF Mono', Menlo, Consolas, monospace" font-size="12">api.internal</tspan>,</text>
       <text style="fill:var(--ih-muted)" x="36" y="90" font-size="12.5">and it goes straight to another</text>
       <text style="fill:var(--ih-muted)" x="36" y="108" font-size="12.5">Worker, skipping your agent</text>
