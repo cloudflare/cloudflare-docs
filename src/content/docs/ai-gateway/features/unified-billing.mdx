@@ -71,7 +71,7 @@ For third-party providers supported by Unified Billing, AI Gateway recognizes th
 | Anthropic | Messages (`/anthropic/v1/messages`) | `x-api-key: <PROVIDER_API_KEY>` |
 | Anthropic | Chat completions (`/anthropic/v1/chat/completions`) | `Authorization: Bearer <PROVIDER_API_KEY>` |
 | Google AI Studio | Native `:generateContent`, `:streamGenerateContent`, and `:embedContent` | `key` URL query parameter |
-| Google AI Studio | Chat completions and OpenAI-compatible embeddings | `Authorization: Bearer <PROVIDER_API_KEY>` |
+| Google AI Studio | Chat completions | `Authorization: Bearer <PROVIDER_API_KEY>` |
 | Google AI Studio | Other endpoints | `x-goog-api-key: <PROVIDER_API_KEY>` |
 | Google Vertex AI | Provider-native endpoints | `Authorization: Bearer <ACCESS_TOKEN>` or [service account credentials](/ai-gateway/usage/providers/vertex/) in `Authorization` |
 | OpenAI, Groq, and xAI | Provider-native endpoints | `Authorization: Bearer <PROVIDER_API_KEY>` |
