@@ -56,6 +56,20 @@ Given a request with model `openai/gpt-5.5` and an `agent_id` metadata value of 
 | Specific model only        | `model`: filter by value `openai/gpt-5.5`                        | Only applies to `openai/gpt-5.5` requests      |
 | Per-agent, per-model       | `agent_id` metadata: split by value, `model`: split by value     | Separate bucket per agent+model combination    |
 
+## Window techniques
+
+### Time windows
+
+Windows follow a fixed global schedule rather than starting when you create the rule or matching calendar periods. For example, a 30-day window always lasts exactly 30 × 24 hours. It does not reset on the first day of the month or adjust for month length, time zones, or daylight saving time. Window boundaries are calculated from Unix epoch time.
+
+### Sliding (Default)
+
+Your available spending limit is recalculated continuously rather than resetting all at once. As the current window progresses, spend from the previous window gradually counts less toward your limit. For example, halfway through the window, approximately half of the previous window’s spend still counts, together with spend from the current window. This calculation assumes spend was distributed evenly across the previous window.
+
+### Fixed
+
+Your full spending limit becomes available at the start of each new window, and only spend within that window counts toward the limit. Because windows are counted independently, you could spend the full limit near the end of one window and again at the beginning of the next. 
+
 ## Configure spend limits
 
 Spend limits are configured for each gateway through the dashboard or the API. In the dashboard, select your gateway, then go to **Settings** > **Spend limits**. You can define up to 20 rules per gateway.
