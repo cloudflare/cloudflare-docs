@@ -39,7 +39,7 @@ The following [Think](/agents/harnesses/think/) agent gives the model one tool, 
 import { Think } from "@cloudflare/think";
 import { routeAgentRequest } from "agents";
 import { tool } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
 
 const MAX_OUTPUT_CHARS = 10_000;
@@ -59,7 +59,7 @@ export class CodeAgent extends Think<Env> {
 	}
 
 	getModel() {
-		return createWorkersAI({ binding: this.env.AI })(
+		return createAI({ binding: this.env.AI })(
 			"@cf/moonshotai/kimi-k2.6",
 		);
 	}
@@ -89,7 +89,7 @@ export class CodeAgent extends Think<Env> {
 	private async runCommand(command: string) {
 		const container = this.ctx.container;
 		if (!container) {
-			throw new Error("The container binding is not configured");
+			throw new Error("No container is configured");
 		}
 
 		if (!container.running) {
@@ -196,7 +196,7 @@ Files in the sandbox last while the container runs. When the container stops, th
 
 Use agent state for user-visible progress and small metadata, such as the ID of the latest snapshot.
 
-For long-running sandbox work, pair the sandbox with [durable execution with fibers](/agents/runtime/execution/durable-execution/) or [Workflows](/agents/runtime/execution/run-workflows/) so the agent can recover or report progress if work outlives a single request.
+For long-running sandbox work, pair the sandbox with [durable execution with fibers](/agents/agent-class/durable-execution/) or [Workflows](/agents/agent-class/run-workflows/) so the agent can recover or report progress if work outlives a single request.
 
 ## Security considerations
 

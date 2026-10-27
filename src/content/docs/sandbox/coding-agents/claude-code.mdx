@@ -36,7 +36,7 @@ Run [Claude Code](https://code.claude.com/docs/en/overview) in a Linux sandbox t
    	&& apt-get install -y --no-install-recommends bash ca-certificates git ripgrep \
    	&& rm -rf /var/lib/apt/lists/*
 
-   RUN npm install --global @anthropic-ai/claude-code@2.1.280
+   RUN npm install --global @anthropic-ai/claude-code@2.1.308
 
    COPY --from=docker.io/cloudflare/sandbox:1.0.1 /usr/local/bin/sandbox-shim /usr/local/bin/sandbox-shim
 

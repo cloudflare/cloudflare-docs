@@ -65,9 +65,9 @@ You will learn how to:
    cd sandbox-code-interpreter
    ```
 
-3. Install the [AI SDK](https://ai-sdk.dev/), the [Workers AI provider](/workers-ai/configuration/ai-sdk/), and [Zod](https://zod.dev/):
+3. Install the [Agents SDK](/agents/), the [AI SDK](https://ai-sdk.dev/), and [Zod](https://zod.dev/). The Worker calls Workers AI with [`createAI`](/agents/models/ai-sdk/) from `agents/models/ai-sdk`:
 
-   <PackageManagers pkg="ai workers-ai-provider zod" />
+   <PackageManagers pkg="agents ai @ai-sdk/provider zod" />
 
 4. Replace `wrangler.jsonc` to add a Workers AI binding and a Worker Loader binding:
 
@@ -192,7 +192,7 @@ Replace `src/index.ts`. The Worker gives the model a `runJavaScript` tool and re
 
 ```ts
 import { generateText, isStepCount, tool } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
 import { runJavaScript, type Output } from "./sandbox";
 
@@ -223,12 +223,12 @@ export default {
 			);
 		}
 
-		const workersai = createWorkersAI({ binding: env.AI });
+		const ai = createAI({ binding: env.AI });
 		const runs: Run[] = [];
 
 		try {
 			const result = await generateText({
-				model: workersai(model),
+				model: ai(model),
 				instructions,
 				prompt: body.data.question,
 				tools: {

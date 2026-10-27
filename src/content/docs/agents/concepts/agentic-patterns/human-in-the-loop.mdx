@@ -334,7 +334,7 @@ Configure the user-facing handlers in `onStart()`:
 
 ```ts
 import { Agent } from "agents";
-import type { ElicitRequest, ElicitResult } from "agents/mcp";
+import type { ElicitRequest, ElicitResult } from "agents/mcp/client";
 
 export class MyAgent extends Agent<Env> {
 	onStart() {
@@ -360,7 +360,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-For the complete form, URL, and browser forwarding patterns, refer to [MCP client elicitation](/agents/model-context-protocol/apis/client-api/#elicitation). For the server-side request API, refer to [McpAgent elicitation](/agents/model-context-protocol/apis/agent-api/#elicitation).
+For the complete form, URL, and browser forwarding patterns, refer to [MCP client elicitation](/agents/model-context-protocol/apis/client-api/#elicitation). For the server side, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler).
 
 ## Durable Code Mode approvals
 
@@ -576,7 +576,7 @@ class MultiApprovalAgent extends Agent<Env, State> {
 
 <LinkCard
 	title="Run Workflows"
-	href="/agents/runtime/execution/run-workflows/"
+	href="/agents/agent-class/run-workflows/"
 	description="Complete waitForApproval() API reference."
 />
 
@@ -588,7 +588,7 @@ class MultiApprovalAgent extends Agent<Env, State> {
 
 <LinkCard
 	title="MCP servers"
-	href="/agents/model-context-protocol/apis/agent-api/"
+	href="/agents/model-context-protocol/apis/handler-api/"
 	description="Request form or URL elicitation from an MCP server."
 />
 

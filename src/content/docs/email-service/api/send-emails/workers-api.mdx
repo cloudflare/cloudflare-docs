@@ -191,6 +191,7 @@ The following error codes may be returned when sending emails:
 | `E_SENDER_NOT_VERIFIED`         | Sender domain not verified                  | Attempting to send from unverified domain                                                  |
 | `E_RECIPIENT_NOT_ALLOWED`       | Recipient not in allowed list               | Recipient address not in `allowed_destination_addresses`                                   |
 | `E_RECIPIENT_SUPPRESSED`        | Suppressed recipient while dropping is off  | At least one recipient is suppressed and **Drop suppressed recipients** is off             |
+| `E_ACCOUNT_SUSPENDED`           | Email Sending is paused for the account     | Account paused because of poor sending reputation                                          |
 | `E_SENDER_DOMAIN_NOT_AVAILABLE` | Domain not available for sending            | Domain not onboarded to Email Service                                                      |
 | `E_CONTENT_TOO_LARGE`           | Email content exceeds size limit            | Total message size exceeds the maximum                                                     |
 | `E_DELIVERY_FAILED`             | Could not deliver the email                 | SMTP delivery failure, recipient server rejection                                          |

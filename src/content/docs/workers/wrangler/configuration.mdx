@@ -1227,6 +1227,10 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
   - `success_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that complete successfully or are terminated, as a duration string such as `"3 days"` or a whole number of milliseconds.
   - `error_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that end in an errored state, as a duration string such as `"7 days"` or a whole number of milliseconds.
   - Retention is capped at the [retention limit](/workflows/reference/limits/) for your account.
+- `jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction that the instances of this Workflow run and store data in. Valid values: `"eu"`, `"fedramp"`, `"us"`. Refer to [Data location](/workflows/reference/data-location/).
+  - Set when the Workflow is created, and cannot be changed afterwards. Cannot be combined with `script_name`.
+  - Requires Wrangler 4.152.0 or above.
 
 Example:
 
@@ -1266,6 +1270,9 @@ Each Workflow entry in `exports` is keyed by the name of a class that extends `W
   - One or more cron schedules that create new instances of this Workflow automatically. Refer to [Schedule a Workflow directly](/workflows/build/trigger-workflows/#schedule-a-workflow-directly).
 - `default_retention` <Type text="object" /> <MetaInfo text="optional" />
   - How long to retain the state of instances of this Workflow after they finish. Accepts the same `success_retention` and `error_retention` fields as the [`workflows` binding](#workflows).
+- `jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
+  - The jurisdiction that the instances of this Workflow run and store data in. Accepts the same values as the [`workflows` binding](#workflows).
+  - Requires Wrangler 4.152.0 or above.
 
 A Workflow can be declared both as a `workflows` binding and as an export. Both declarations must use the same class, and cannot set the same field to different values.
 
@@ -1884,10 +1891,13 @@ In many cases, this allows you to work provide just enough of an API to make a d
 
 [Source maps](/workers/observability/source-maps/) translate compiled and minified code back to the original code that you wrote. Source maps are combined with the stack trace returned by the JavaScript runtime to present you with a stack trace.
 
-Enable source map uploads for JavaScript and TypeScript Workers. Frameworks and custom builds must also [generate maps](/workers/observability/source-maps/#frameworks-and-custom-builds).
+Source maps are uploaded by default for JavaScript and TypeScript Workers. Frameworks and custom builds must also [generate maps](/workers/observability/source-maps/#frameworks-and-custom-builds).
 
-- `upload_source_maps` <Type text="boolean" />
-  - When `upload_source_maps` is set to `true`, Wrangler will automatically generate and upload source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy) or [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload).
+- `upload_source_maps` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Controls whether Wrangler generates and uploads source map files when you run [`wrangler deploy`](/workers/wrangler/commands/general/#deploy), [`wrangler versions upload`](/workers/wrangler/commands/general/#versions-upload), or [`wrangler preview`](/workers/wrangler/commands/workers/#preview).
+  - When unset, Wrangler uploads source maps and skips any it cannot resolve. This is the default from Wrangler 4.150.0. Earlier versions only upload source maps when this is set to `true`.
+  - When set to `true`, Wrangler fails the upload if a source map cannot be resolved.
+  - When set to `false`, Wrangler does not upload source maps.
 
 Example:
 
@@ -1895,7 +1905,7 @@ Example:
 
 ```jsonc
 {
-	"upload_source_maps": true,
+	"upload_source_maps": false,
 }
 ```
 

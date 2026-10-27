@@ -14,3 +14,12 @@ linuxPlatforms:
   trixie-intel: 74690756
   almalinux10-intel: 77192097
   resolute-intel: 74679294
+  jammy-arm: 76458206
+  noble-arm: 77079828
+  resolute-arm: 76801382
+  bookworm-arm: 76483050
+  trixie-arm: 76837846
+  almalinux9-arm: 79321532
+  almalinux10-arm: 79004671
+  fedora43-arm: 79001248
+  fedora44-arm: 79045383

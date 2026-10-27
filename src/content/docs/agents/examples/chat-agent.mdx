@@ -35,7 +35,7 @@ Select **"Hello World" Worker** when prompted. Then install the dependencies:
 
 ```sh
 cd chat-agent
-npm install agents @cloudflare/ai-chat ai workers-ai-provider zod
+npm install agents @cloudflare/ai-chat ai @ai-sdk/provider zod
 ```
 
 ## 2. Configure Wrangler
@@ -76,7 +76,7 @@ Create `src/server.ts`. This is where your agent lives:
 ```ts
 import { AIChatAgent } from "@cloudflare/ai-chat";
 import { routeAgentRequest } from "agents";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import {
 	streamText,
 	convertToModelMessages,
@@ -88,10 +88,10 @@ import { z } from "zod";
 
 export class ChatAgent extends AIChatAgent {
 	async onChatMessage() {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: workersai("@cf/meta/llama-4-scout-17b-16e-instruct"),
+			model: ai("@cf/meta/llama-4-scout-17b-16e-instruct"),
 			system:
 				"You are a helpful assistant. You can check the weather, " +
 				"get the user's timezone, and run calculations.",
@@ -349,19 +349,19 @@ Your chat agent has:
 
 <LinkCard
 	title="Chat agents API reference"
-	href="/agents/communication-channels/chat/chat-agents/"
+	href="/agents/agent-class/communication-channels/chat/chat-agents/"
 	description="Full reference for AIChatAgent and useAgentChat — providers, storage, advanced patterns."
 />
 
 <LinkCard
 	title="Store and sync state"
-	href="/agents/runtime/lifecycle/state/"
+	href="/agents/agent-class/state/"
 	description="Add real-time state beyond chat messages."
 />
 
 <LinkCard
 	title="Callable methods"
-	href="/agents/runtime/lifecycle/callable-methods/"
+	href="/agents/agent-class/callable-methods/"
 	description="Expose agent methods as typed RPC for your client."
 />
 

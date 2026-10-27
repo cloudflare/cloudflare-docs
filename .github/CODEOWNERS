@@ -59,6 +59,7 @@ package.json @cloudflare/content-engineering
 
 # agents
 
+/src/components/cf/AgentsPlatformDiagram.astro @irvinebroque @fredkschott @cloudflare/ai-agents
 /public/icons/agents @cloudflare/ai-agents @cloudflare/dev-plat-leads @cloudflare/product-owners
 /src/content/docs/agents/ @irvinebroque @rita3ko @cloudflare/ai-agents @cloudflare/dev-plat-leads @cloudflare/product-owners
 /src/content/partials/agents/ @irvinebroque @rita3ko @thomasgauvin @vy-ton @cloudflare/product-owners
@@ -1093,7 +1094,7 @@ package.json @cloudflare/content-engineering
 /public/workers/prompts/ @jahands @MattieTK @Maximo-Guk @cloudflare/product-owners
 /src/assets/images/workers/ @GregBrimble @irvinebroque @MattieTK @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/assets/images/workers/ci-cd/builds/ @GregBrimble @irvinebroque @MattieTK @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/compatibility-flags/ @GregBrimble @irvinebroque @MattieTK @mikenomitch @cloudflare/product-owners
+/src/content/compatibility-flags/ @GregBrimble @irvinebroque @MattieTK @mikenomitch @cloudflare/workers-runtime-1 @cloudflare/product-owners
 /src/content/docs/workers/ @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/ @aninibread @ericclemmons @GregBrimble @irvinebroque @MattieTK @vy-ton @yomna-shousha @cloudflare/product-owners
 /src/content/docs/workers/ci-cd/builds/ @aninibread @ericclemmons @GregBrimble @irvinebroque @MattieTK @scottbuscemi @vy-ton @yomna-shousha @cloudflare/product-owners
