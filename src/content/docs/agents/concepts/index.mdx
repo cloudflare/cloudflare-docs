@@ -1,15 +1,26 @@
 ---
-pcx_content_type: reference
+pcx_content_type: navigation
 title: Concepts
-description: Understand the core concepts behind Cloudflare Agents, including state, tools, workflows, and memory.
+description: The building blocks of an agent on Cloudflare, explained independently of any one implementation.
 sidebar:
-  order: 2
-  group:
-    hideIndex: true
+  order: 3
 products:
   - agents
 ---
 
-import { DirectoryListing } from "~/components";
+These pages explain the building blocks of an agent on Cloudflare. Each page describes one idea, then links to the pages that implement it.
 
-<DirectoryListing />
+Read them in order if you are new to agents:
+
+1. [What are agents?](/agents/concepts/what-are-agents/): what an agent is, and how it differs from a workflow or a co-pilot.
+2. [Harnesses](/agents/concepts/harnesses/): the agent loop, and the unit of compute.
+3. [Runtime](/agents/concepts/runtime/): the Durable Object, the Lifecycle, and capabilities.
+4. [Models](/agents/concepts/models/): how an agent reaches a model.
+5. [Tools](/agents/concepts/tools/): what a model can call, and how each tool is backed.
+6. [Workspace](/agents/concepts/workspace/): the agent's durable files and the runtimes that work on them.
+7. [Skills](/agents/concepts/skills/): instructions and resources the agent loads on demand.
+8. [Memory](/agents/concepts/memory/): conversation history and context.
+9. [Channels](/agents/concepts/channels/): how people and systems reach an agent.
+10. [Durable execution](/agents/concepts/durable-execution/): how work survives eviction, deploys, and crashes.
+11. [Workflows](/agents/concepts/workflows/): when to hand work to Cloudflare Workflows.
+12. [Agentic patterns](/agents/concepts/agentic-patterns/): common designs, including human-in-the-loop and long-running agents.

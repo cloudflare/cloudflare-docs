@@ -1,0 +1,93 @@
+---
+title: Workspace
+description: A workspace is an agent's durable working directory, provided by Cloudflare Computer. Understand where its files live, how code runs on them, and how harnesses use it.
+pcx_content_type: concept
+sidebar:
+  order: 6
+products:
+  - agents
+---
+
+import { LinkCard, TypeScriptExample } from "~/components";
+
+A workspace is an agent's working directory. The agent reads and writes files in it, runs code against those files, and keeps them between turns. A coding agent keeps a repository there. A research agent keeps notes and downloaded pages. Every agent keeps its [skills](/agents/concepts/skills/) there.
+
+On Cloudflare, [Cloudflare Computer](https://github.com/cloudflare/computer) provides the workspace. You create a `Workspace` from `@cloudflare/computer`.
+
+## Files live in the Durable Object
+
+A `Workspace` stores its files in the Durable Object's own SQLite database. The files survive restarts, evictions, and deploys, and they belong to one agent instance. There is no separate storage service to configure.
+
+`workspace.fs` works like `node:fs/promises`, with methods such as `readFile`, `writeFile`, `mkdir`, `readdir`, `rm`, and `grep`.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+
+export class Assistant extends DurableObject<Env> {
+	readonly workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [new WorkerJavaScriptBackend({ loader: this.env.LOADER })],
+	});
+
+	async saveNote(text: string) {
+		await this.workspace.fs.writeFile("/workspace/notes.md", text);
+		return this.workspace.fs.readdir("/workspace");
+	}
+}
+```
+
+</TypeScriptExample>
+
+A workspace can also mount read-only files. An `R2Bucket` mount shows the contents of an R2 bucket. A `WorkerBundle` mount shows files that ship inside your Worker, such as skills or templates, and updates them on each deploy.
+
+## Code runs next to the files
+
+`workspace.runtime.exec()` runs code against the workspace files. The code runs in a runtime, called a backend, that you register on the workspace.
+
+Cloudflare Computer has three backends. All of them work on the same files:
+
+| Backend                   | Runs                                                                                                                                                                                 | Status       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ |
+| `WorkerJavaScriptBackend` | A JavaScript module in a fresh, isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/), with the workspace as `node:fs/promises` and host modules such as `ws:git` | Stable       |
+| `WorkerShellBackend`      | Shell commands in a Dynamic Worker, through a bash interpreter written in JavaScript                                                                                                 | Experimental |
+| `ContainerBackend`        | Shell commands in a [Container](/containers/), with a full Linux userland. The workspace files are mounted as a real filesystem.                                                     | Experimental |
+
+The Dynamic Worker backends start in milliseconds and need a Worker Loader binding. Use the container backend when the agent needs real binaries, such as a compiler or `pandoc`.
+
+A workspace without a backend still has its files. Add a backend only when the agent needs to run code.
+
+## A plain field, not a capability
+
+A `Workspace` is a plain field on the Durable Object. You do not attach it with `lifecycle.use()`, and it does not need the Lifecycle. It takes the object's storage in its constructor, and the agent and its tools call it directly.
+
+Because it is a plain field, any harness can use the same workspace. The harness gives the model tools that work on it.
+
+## How harnesses use the workspace
+
+- **The model sees tools.** Cloudflare Computer ships tools that work on a workspace, such as `read`, `write`, `edit`, `find`, `grep`, and `exec`. Each tool has an adapter for each harness: `@cloudflare/computer/tools/pi-ai` for the Pi harness, and `@cloudflare/computer/tools/ai-sdk` for the AI SDK and Think.
+- **The harness connects the workspace.** Each harness page explains how to connect a workspace, and with it, skills.
+- **Think has one built in.** `this.workspace` in Think is a Cloudflare Computer `Workspace`, and Think adds the workspace tools to every turn.
+
+## Related resources
+
+<LinkCard
+	title="File system tools"
+	href="/agents/tools/filesystem/"
+	description="Install a Workspace and give the model file tools for each harness."
+/>
+
+<LinkCard
+	title="Skills"
+	href="/agents/concepts/skills/"
+	description="Store skills as files on the workspace, and let the harness load them."
+/>
+
+<LinkCard
+	title="Think tools"
+	href="/agents/harnesses/think/tools/"
+	description="Use the workspace tools that Think adds for you."
+/>

@@ -1,0 +1,116 @@
+---
+title: Memory
+pcx_content_type: concept
+description: How agents store and recall information, including conversation history, context in the system prompt, long-term memory, and compaction.
+tags:
+  - AI
+sidebar:
+  order: 8
+products:
+  - agents
+---
+
+import { LinkCard } from "~/components";
+
+Agents need memory to be useful over time. Without it, every conversation starts from zero. The agent forgets who the user is, what it learned, and what it was doing.
+
+An agent on Cloudflare keeps its memory in its Durable Object, so memory survives restarts and belongs to one agent instance. There are two kinds:
+
+- **Conversation history**: the messages and tool calls that make up a conversation.
+- **Context**: what the model reads in its system prompt on every turn, such as its identity, facts it learned about the user, and its skills.
+
+The two are separate. An agent can have a prompt without a transcript, or a transcript without a prompt.
+
+## Conversation history
+
+The [harness](/agents/concepts/harnesses/) stores the conversation history for you, in the object's SQLite database:
+
+- The [Pi harness](/agents/harnesses/pi/) stores each Pi session's transcript. Read it with `harness.messages()`. Each session is a separate conversation, and you can fork a session or reset it with a handoff note.
+- [Think](/agents/harnesses/think/) stores each chat's messages, and streams them to clients.
+
+Because the history lives on the server, a client sends only the new message. The harness builds the prompt from what it stored.
+
+A conversation is a session in the harness. One agent instance can hold many sessions, such as one per chat thread. Use separate agent instances when conversations belong to different users.
+
+## Context
+
+Context is the part of the prompt that is not the conversation. It usually has:
+
+- **Read-only instructions**, such as the agent's role and rules.
+- **Writable memory**, such as facts about the user that the model updates with a tool.
+- **Searchable knowledge**, where the prompt holds a summary and the model searches for details with a tool.
+- **A skill catalog**, where the prompt lists each [skill](/agents/concepts/skills/) by name and description.
+
+Long-term memory does not need a special store. An agent can keep notes as files on its [workspace](/agents/concepts/workspace/), or as rows in its SQLite database, and read them back with a tool.
+
+### Context blocks
+
+`ContextBlocks` from `agents/context` assembles the system prompt from labelled blocks. Each block has a provider, and what the provider can do decides which tool the model gets for it:
+
+| Provider               | Block behavior                                           | Tool for the model |
+| ---------------------- | -------------------------------------------------------- | ------------------ |
+| `get()`                | Read-only text, such as the agent's identity             | None               |
+| `get()` and `set()`    | Writable memory the model updates, such as user facts    | `set_context`      |
+| `get()` and `search()` | A summary in the prompt, and full-text search on request | `search_context`   |
+
+```ts
+import { ContextBlocks } from "agents/context";
+
+const context = new ContextBlocks([
+	{
+		label: "soul",
+		provider: { get: async () => "You are a helpful assistant." },
+	},
+	{
+		label: "memory",
+		description: "Facts learned about the user",
+		maxTokens: 1_100,
+		provider: memoryProvider,
+	},
+]);
+
+const system = await context.freezeSystemPrompt();
+const tools = await context.tools();
+```
+
+Each block renders with a header that shows its label, its description, how much of its `maxTokens` budget it uses, and a marker such as `[readonly]` or `[writable]`. The markers and budgets tell the model what it can do with each block, so it can manage its own memory.
+
+`agents/context` includes two durable providers that store their data in the object's SQLite database. `AgentContextProvider` stores a writable block, and `AgentSearchProvider` backs a searchable block with a full-text index. Think builds its system prompt from context blocks.
+
+:::caution[Experimental]
+`agents/context` is experimental. Its API may change between releases.
+:::
+
+## Keep the prompt stable
+
+Model providers cache the start of a request. If the system prompt changes between turns, the cache misses, and every turn pays for the full prompt again.
+
+`freezeSystemPrompt()` renders the prompt once and returns the same string on every later call. A write to a block goes to its provider at once, but it does not change the frozen prompt until you call `refreshSystemPrompt()`. Store the frozen prompt, so a restarted agent reuses the exact prompt the model already cached.
+
+For a block that changes while the prompt is frozen, such as the current date, set `whenChanged: "remind"`. `reminder()` then returns the new value for you to send after the cached part, for example at the end of the latest user message.
+
+## Compaction
+
+Long conversations eventually exceed the model's context window. Compaction replaces older messages with a summary when the harness builds the prompt. The original messages stay in storage, so you can still show them to the user.
+
+Refresh the system prompt after a compaction, so the prompt and the summarized history agree.
+
+## Related resources
+
+<LinkCard
+	title="Pi harness"
+	href="/agents/harnesses/pi/"
+	description="Work with Pi sessions, transcripts, forks, and resets."
+/>
+
+<LinkCard
+	title="Think configuration"
+	href="/agents/harnesses/think/configuration/"
+	description="Configure Think's session, context, and compaction."
+/>
+
+<LinkCard
+	title="Skills"
+	href="/agents/concepts/skills/"
+	description="Give an agent instructions and resources that it loads on demand."
+/>

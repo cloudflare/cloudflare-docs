@@ -1,0 +1,102 @@
+---
+title: Runtime
+description: An agent runs on a Durable Object with the Lifecycle installed and capabilities attached. Understand each part and the kinds of capabilities.
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - agents
+---
+
+import { LinkCard, TypeScriptExample } from "~/components";
+
+The runtime is where an agent lives. It has three parts:
+
+- A **Durable Object**, which is the agent instance.
+- The **Lifecycle**, which runs the object's startup, requests, and background work.
+- **Capabilities**, which add features to the object, one at a time.
+
+## The Durable Object
+
+Each agent instance is a [Durable Object](/durable-objects/). A Durable Object has:
+
+- A name that addresses it from anywhere, such as a user ID or a conversation ID.
+- Its own SQLite database, which survives restarts.
+- One alarm, which wakes it at a set time.
+- WebSockets that stay connected while it hibernates.
+
+You run one instance per user, conversation, or task. An idle instance leaves memory and costs close to nothing. A request, a WebSocket message, or the alarm wakes it again.
+
+## The Lifecycle
+
+The `Lifecycle` from `agents/lifecycle` takes over the object's `fetch`, `alarm`, and WebSocket handlers. You install it once, in a field:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { Scheduler } from "agents/schedules";
+
+export class Assistant extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("assistant", "1.0.0");
+	readonly scheduler = new Scheduler({ callbacks: {} });
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.mcp)
+		.use(this.scheduler);
+}
+```
+
+</TypeScriptExample>
+
+The Lifecycle does three things:
+
+- **Startup.** It starts each capability, then calls your `onStart()` hook, once per time the object loads.
+- **Routing.** It offers each request to the capabilities in order. The first capability that returns a response handles it. A request that no capability claims reaches your `onRequest()` hook.
+- **Durable work.** It owns one job queue in SQLite and the object's single alarm. Every capability shares them. For more information, refer to [Durable execution](/agents/concepts/durable-execution/).
+
+The Lifecycle needs a named object and SQLite storage. Address objects with `getByName()` or `idFromName()`.
+
+## Capabilities
+
+A capability is a self-contained feature that you attach with `lifecycle.use()`. Each capability stores its own tables in the object's database, and runs only the hooks it needs. Capabilities do not depend on each other, so you install only the ones your agent uses.
+
+### How a capability claims traffic
+
+- **Selective** (the default): the capability handles only the requests it recognizes, and passes the rest on.
+- **Catch-all**: the capability handles every request that reaches it. It runs after every selective capability. `WebSockets` is a catch-all for WebSocket upgrades.
+
+### What a capability does
+
+| Role               | Capabilities                                                                                             |
+| ------------------ | -------------------------------------------------------------------------------------------------------- |
+| Connections        | [`State`](/agents/runtime/capabilities/state/), [`WebSockets`](/agents/runtime/capabilities/websockets/) |
+| Durable work       | [`Scheduler`](/agents/runtime/capabilities/scheduler/)                                                   |
+| External resources | [`MCPClientManager`](/agents/runtime/capabilities/mcp-client/)                                           |
+| Harnesses          | [`PiHarness`](/agents/harnesses/pi/)                                                                     |
+| Your own           | A class that extends `LifecycleCapability`                                                               |
+
+The SDK also has experimental capabilities, whose APIs may change: `Queue` and `Tasks` for background work, `Sessions` and `Streams` for harness storage, `RoutedAgents` for routing between agents, and `Browser` for a persistent browser.
+
+A harness is a capability like the others. It gets the same storage, startup, and job queue. For more information, refer to [Harnesses](/agents/concepts/harnesses/).
+
+To write your own capability, refer to [Build a capability](/agents/runtime/lifecycle/build-a-capability/).
+
+## On the `Agent` class
+
+The [`Agent` class](/agents/agent-class/) is a preset of this runtime. It is a Durable Object with the Lifecycle and a set of capabilities already installed, such as `Scheduler`, `State`, `WebSockets`, and `MCPClientManager`. Its methods, such as `this.schedule()` and `this.setState()`, call those capabilities. It also adds APIs that exist only on `Agent`, such as `@callable()` methods and fibers.
+
+## Related resources
+
+<LinkCard
+	title="Lifecycle"
+	href="/agents/runtime/lifecycle/"
+	description="Install the Lifecycle and use its hooks, routing, and job queue."
+/>
+
+<LinkCard
+	title="Capabilities"
+	href="/agents/runtime/capabilities/"
+	description="Add state, WebSockets, schedules, and MCP clients to an agent."
+/>

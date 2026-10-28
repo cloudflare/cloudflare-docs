@@ -1,0 +1,78 @@
+---
+title: Models
+description: How an agent reaches a model on Cloudflare, who decides when to call it, and why a stateful agent changes how you use models.
+pcx_content_type: concept
+tags:
+  - AI
+sidebar:
+  order: 4
+products:
+  - agents
+---
+
+import { LinkCard } from "~/components";
+
+A model is the reasoning part of an agent. It reads the prompt and decides what to say, or which tool to call next. An agent can use one model or several.
+
+## How an agent reaches a model
+
+An agent reaches models through a provider. The Agents SDK has one provider factory, `createAI`, for each agent framework:
+
+- `agents/models/pi-ai` for the [Pi harness](/agents/harnesses/pi/).
+- `agents/models/ai-sdk` for the [AI SDK](https://ai-sdk.dev/), Think, and the `Agent` class.
+
+Both providers use the Worker's `AI` binding. One provider serves every model, named by a string:
+
+```ts
+ai("@cf/zai-org/glm-5.3-flash"); // a Workers AI model
+ai("anthropic/claude-opus-5.5"); // a model from the AI Gateway catalog
+ai("dynamic/support"); // an AI Gateway dynamic route
+```
+
+[Workers AI](/workers-ai/) models run on Cloudflare. Third-party models run through [AI Gateway](/ai-gateway/), which holds the vendor credentials, so your agent needs no vendor keys. AI Gateway also adds caching, logging, retries, and fallback between models.
+
+## The harness calls the model
+
+In an agent, you do not call the model on each turn yourself. The [harness](/agents/concepts/harnesses/) decides when to call it, how many times, and what to send. You choose:
+
+- The default model, such as the `defaults.model` option of the Pi harness.
+- The model per session or per task, such as a cheaper model for summaries.
+- The tools and context the harness sends with each call.
+
+To call a model outside a harness, such as in a one-off summary, use the provider directly with the framework's own functions, such as `generateText()` from the AI SDK.
+
+## A stateful agent changes how you use models
+
+A stateless Worker rebuilds its context on every request. An agent keeps state in its Durable Object, which changes how you use a model:
+
+- **History stays on the server.** The client sends only the new message. The harness reads the transcript from the object's database and builds the prompt. For more information, refer to [Memory](/agents/concepts/memory/).
+- **Long calls survive disconnects.** A reasoning model can take minutes. The agent keeps running after the client disconnects, stores the answer, and delivers it when the client reconnects.
+- **The agent calls the model on its own.** A schedule, a webhook, or an email can start a turn when no user is connected. For more information, refer to [Durable execution](/agents/concepts/durable-execution/).
+- **Interrupted calls recover.** If the object is evicted during a turn, the harness resumes the turn when the object wakes. The Pi harness does this for you.
+
+## Control cost
+
+- **Keep the prompt prefix stable.** Model providers cache the start of a request. A system prompt that changes on every turn misses that cache.
+- **Summarize old turns.** Long transcripts grow past the context window. Harnesses can compact older messages into a summary.
+- **Cache in AI Gateway.** Identical requests from many agents can share one cached response.
+- **Use a smaller model where it is enough.** Route simple steps, such as classification, to a cheaper model.
+
+## Related resources
+
+<LinkCard
+	title="Models"
+	href="/agents/models/"
+	description="Set up createAI for Workers AI and AI Gateway models."
+/>
+
+<LinkCard
+	title="Pi harness"
+	href="/agents/harnesses/pi/"
+	description="Choose a default model and a model per session."
+/>
+
+<LinkCard
+	title="Using AI models with the Agent class"
+	href="/agents/agent-class/using-ai-models/"
+	description="Call models from an Agent class with the AI SDK and other providers."
+/>
