@@ -10,6 +10,10 @@ import { FileTree, WranglerConfig } from "~/components";
 
 Set `assets.base_path` to serve static assets from a URL subpath. The files remain at the root of `assets.directory`.
 
+:::note
+This option requires Wrangler 4.148.0 or later. With [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), use `worker.assets.basePath` and `cf` 1.0.0-beta.13 or later. Your build configuration supplies the asset directory.
+:::
+
 For example, use this asset directory to serve a blog:
 
 <FileTree>
