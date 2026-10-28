@@ -1,0 +1,42 @@
+---
+title: Serve Workers Static Assets from a URL path prefix
+description: Serve Workers Static Assets from a URL path prefix using Wrangler or cloudflare.config.ts.
+products:
+  - workers
+  - cf
+date: 2026-10-28
+---
+
+import { WranglerConfig } from "~/components";
+
+Workers Static Assets can now serve assets from a URL path prefix without changing their directory structure. Set `assets.base_path` in Wrangler, or `worker.assets.basePath` in `cloudflare.config.ts`.
+
+Use [Wrangler 4.148.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.148.0) or later. With `cloudflare.config.ts`, use [`cf` 1.0.0-beta.13](https://github.com/cloudflare/cf/releases/tag/cf%401.0.0-beta.13) or later.
+
+For example, this configuration serves your built assets from `/blog/`:
+
+<WranglerConfig
+	cfConfig={`import { defineConfig } from "cf/config";
+
+export default defineConfig({
+  worker: {
+    name: "blog",
+    compatibilityDate: "$today",
+    assets: {
+      basePath: "/blog",
+    },
+  },
+});`}
+>
+
+```toml
+[assets]
+directory = "./dist"
+base_path = "/blog"
+```
+
+</WranglerConfig>
+
+With Wrangler, `assets.directory` selects the directory to serve. With [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), your build configuration supplies the assets.
+
+To configure the option, refer to [Serving a subdirectory](/workers/static-assets/routing/advanced/serving-a-subdirectory/).
