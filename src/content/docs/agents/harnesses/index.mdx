@@ -16,7 +16,7 @@ To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which 
 
 ## How harnesses fit
 
-SDK harness integrations sit on top of the Agents SDK runtime:
+Harnesses sit on top of the Agents SDK runtime:
 
 - **The runtime** coordinates [startup and durable jobs](/agents/runtime/lifecycle/), [routing](/agents/runtime/routing/), and the [capabilities](/agents/runtime/capabilities/) you install. These can add WebSocket connections, shared state, scheduling, and MCP connections. Use [observability](/agents/runtime/observability/) to trace model calls and inspect runtime events.
 - **The harness** gives the agent behavior: model calls, prompt construction, tool selection, stream handling, memory strategy, and lifecycle hooks.
