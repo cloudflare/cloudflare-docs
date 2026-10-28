@@ -228,7 +228,7 @@ Desktop and CLI clients can choose an available local callback port at runtime. 
 
 Only the port can change. The scheme (`http` or `https`), host, path, and query must match the registered URI exactly. For example, a client registered with `http://127.0.0.1:3000/callback` can authorize with `http://127.0.0.1:49152/callback`, but not `http://localhost:49152/callback` or a different callback path. Non-loopback redirect URIs still require an exact registered match.
 
-Public clients must use Proof Key for Code Exchange (PKCE) with `S256`. When the callback port differs from the registered port, the client must send the exact authorization-time `redirect_uri` when exchanging the authorization code for tokens. Omitting it or sending a different URI causes the exchange to fail.
+To use the port exception, public clients must use Proof Key for Code Exchange (PKCE) with `S256`. The port must remain the same between authorization and token exchange — the client must send the exact authorization-time `redirect_uri` when exchanging the authorization code for tokens. Omitting it or sending a different URI causes the exchange to fail.
 
 Managed OAuth still checks the application's [Dynamic Client Registration settings](#managed-oauth-settings). This port exception does not bypass those settings or register a different callback host.
 

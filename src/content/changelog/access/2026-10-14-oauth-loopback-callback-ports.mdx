@@ -21,6 +21,6 @@ can authorize with:
 http://127.0.0.1:49152/callback
 ```
 
-Only the port can change. The scheme, host, path, and query must match exactly. The exception applies to `127.0.0.1`, `[::1]`, and explicitly registered `localhost` callbacks. Public clients must use PKCE with `S256`. If the port changes, the token exchange must include the exact `redirect_uri` used during authorization.
+Only the port can change. The scheme, host, path, and query must match exactly. The exception applies to `127.0.0.1`, `[::1]`, and explicitly registered `localhost` callbacks. To use the port exception, public clients must use PKCE with `S256`. The port must remain the same between authorization and token exchange — the token exchange must include the exact `redirect_uri` used during authorization.
 
 For matching rules and application settings, refer to [Loopback callback ports](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/#loopback-callback-ports).
