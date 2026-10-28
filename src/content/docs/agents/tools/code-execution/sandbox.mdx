@@ -1,8 +1,9 @@
 ---
-title: Sandbox
-pcx_content_type: concept
+title: Run Linux commands in a sandbox
+pcx_content_type: how-to
 sidebar:
-  order: 1
+  order: 2
+  label: Run Linux commands
 description: Give an agent a Linux sandbox to run shell commands, scripts, and tests.
 products:
   - agents
@@ -12,7 +13,7 @@ import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
 Give an agent a Linux sandbox for shell commands, language runtimes, package installation, and project files that last across turns. The sandbox is a [Container](/containers/) attached to the agent. The agent gives the model a tool that runs commands in the sandbox.
 
-To share persistent files between shell commands and the agent's file tools, follow [Run Linux commands against persistent files](/agents/tools/files-and-code/run-linux/). That guide uses an experimental execution backend. The example on this page uses container-local files.
+To share persistent files between shell commands and the agent's file tools, follow [Run Linux commands against persistent files](/agents/tools/code-execution/persistent-files/). That guide uses an experimental execution backend. The example on this page uses container-local files.
 
 Use a sandbox when an agent needs to:
 
@@ -61,9 +62,7 @@ export class CodeAgent extends Think<Env> {
 	}
 
 	getModel() {
-		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
-		);
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
 	}
 
 	getSystemPrompt() {

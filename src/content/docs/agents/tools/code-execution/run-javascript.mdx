@@ -3,7 +3,7 @@ title: Run JavaScript against persistent files
 description: Run JavaScript modules against your agent's workspace files in a Dynamic Worker, with configurable access and recovery after restarts.
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 1
   label: Run JavaScript
 products:
   - agents
@@ -11,7 +11,7 @@ products:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Run JavaScript that reads or changes the same files as your agent's file tools. First, [add a workspace to your Durable Object](/agents/tools/files-and-code/persistent-files/#add-a-workspace-to-a-durable-object).
+Run JavaScript that reads or changes the same files as your agent's file tools. First, [add a workspace to your Durable Object](/agents/tools/persistent-files/#add-a-workspace-to-a-durable-object).
 
 ## Add a JavaScript backend
 
@@ -146,7 +146,7 @@ export default async function ({ ids }) {
 }
 ```
 
-Always validate input to your module functions, because it comes directly from the model. Computer also includes prebuilt host modules for Git, [Artifacts](/artifacts/), and the agent's own tools. For more information, refer to [Host modules](/agents/tools/files-and-code/reference/#host-modules) in the API reference.
+Always validate input to your module functions, because it comes directly from the model. Computer also includes prebuilt host modules for Git, [Artifacts](/artifacts/), and the agent's own tools. For more information, refer to [Host modules](/agents/tools/persistent-files/reference/#host-modules) in the API reference.
 
 ## Resume runs after a restart
 
@@ -267,9 +267,9 @@ These limitations apply to the experimental release and may change in future rel
 
 ## Limits and access
 
-- This backend runs ECMAScript modules. For shell commands or native binaries, [run Linux commands](/agents/tools/files-and-code/run-linux/).
+- This backend runs ECMAScript modules. For shell commands or native binaries, [run Linux commands](/agents/tools/code-execution/persistent-files/).
 - Each run is bounded in CPU time, wall-clock time, output size, and file operations. Completed runs are kept for 60 minutes by default.
 
 Code that the JavaScript backend runs cannot read the environment variables, bindings, or storage of the agent. It reaches only the files under `root`, the modules you configure, and the network when you pass a `globalOutbound`. Host modules run with the full access of the agent, so expose only the functions that model-written code needs.
 
-For file durability and storage limits, refer to [Understand what persists](/agents/tools/files-and-code/persistence/).
+For file durability and storage limits, refer to [Understand what persists](/agents/tools/persistent-files/persistence/). For execution methods and options, refer to [`workspace.runtime`](/agents/tools/persistent-files/reference/#workspaceruntime).

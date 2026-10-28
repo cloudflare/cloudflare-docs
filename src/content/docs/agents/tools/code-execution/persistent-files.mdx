@@ -4,7 +4,7 @@ description: Run Linux tools against your agent's files and save their changes i
 pcx_content_type: how-to
 sidebar:
   order: 3
-  label: Run Linux commands
+  label: Use persistent files in Linux
 products:
   - agents
   - containers
@@ -23,7 +23,7 @@ Run shell commands, native binaries, and package managers against the same persi
 The container backend and its `computerd` daemon are for experiments and prototypes, not production use. Their APIs may change in any release. Refer to the [Computer component status](https://github.com/cloudflare/computer/tree/main/packages/computer#status).
 :::
 
-The workspace stores files in Durable Object SQLite storage and exposes them at `/workspace` inside the container. No R2 bucket is required. For the synchronization diagram and storage boundaries, refer to [Understand what persists](/agents/tools/files-and-code/persistence/).
+The workspace stores files in Durable Object SQLite storage and exposes them at `/workspace` inside the container. No R2 bucket is required. For the synchronization diagram and storage boundaries, refer to [Understand what persists](/agents/tools/persistent-files/persistence/).
 
 ## Before you begin
 
@@ -214,13 +214,13 @@ Repeat the requests against the deployment URL. This example uses one workspace 
 
 ## Use the workspace in an agent
 
-Pass the workspace to the existing [workspace file tools](/agents/tools/files-and-code/persistent-files/#give-the-model-file-tools). A workspace with an execution backend also offers the model an `exec` tool.
+Pass the workspace to the existing [workspace file tools](/agents/tools/persistent-files/#give-the-model-file-tools). A workspace with an execution backend also offers the model an `exec` tool.
 
 The backend starts lazily on its first execution. With multiple backends, pass `backend: "linux"` to select this one; otherwise, the first registered backend is the default.
 
 ## Check file synchronization
 
-Check both the command's exit code and `result.sync.status`, as the example does. A `pending` result still needs synchronization. Refer to [Check container synchronization](/agents/tools/files-and-code/persistence/#check-container-synchronization) before retrying a command that may already have changed files.
+Check both the command's exit code and `result.sync.status`, as the example does. A `pending` result still needs synchronization. Refer to [Check container synchronization](/agents/tools/persistent-files/persistence/#check-container-synchronization) before retrying a command that may already have changed files.
 
 Calls made directly through `ctx.container.exec()` do not use Computer's synchronization around commands. Use `workspace.runtime.exec()` when commands need the shared workspace.
 

@@ -3,7 +3,11 @@ title: Give an agent persistent files
 description: Store notes, drafts, and generated files across turns and restarts, and give your agent tools to read and edit them.
 pcx_content_type: how-to
 sidebar:
-  order: 1
+  order: 0
+  label: Get started
+  group:
+    label: Persistent files
+    hideIndex: false
 products:
   - agents
 ---
@@ -15,6 +19,8 @@ import {
 } from "~/components";
 
 Keep an agent's notes, drafts, and generated files across turns and restarts. Cloudflare Computer provides a `Workspace` stored in the SQLite database of a Durable Object.
+
+The workspace and its file tools are stable. You can use them without an execution backend.
 
 Use this guide in an existing [Worker project](/workers/get-started/).
 
@@ -128,7 +134,7 @@ await fs.rm("/workspace/notes", { recursive: true });
 
 </TypeScriptExample>
 
-For every file operation, refer to [`workspace.fs`](/agents/tools/files-and-code/reference/#workspacefs) in the API reference.
+For every file operation, refer to [`workspace.fs`](/agents/tools/persistent-files/reference/#workspacefs) in the API reference.
 
 ## Give the model file tools
 
@@ -332,6 +338,6 @@ Every user who talks to the same agent instance shares its workspace. Give each 
 
 ## Next steps
 
-- [Run JavaScript against those files](/agents/tools/files-and-code/run-javascript/).
-- [Run Linux commands against those files](/agents/tools/files-and-code/run-linux/).
-- [Understand what persists](/agents/tools/files-and-code/persistence/).
+- [Run JavaScript against those files](/agents/tools/code-execution/run-javascript/).
+- [Run Linux commands against those files](/agents/tools/code-execution/persistent-files/).
+- [Understand what persists](/agents/tools/persistent-files/persistence/).
