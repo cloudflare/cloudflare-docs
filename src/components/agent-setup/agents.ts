@@ -162,6 +162,38 @@ export const AGENTS: AgentData[] = [
 		},
 	},
 	{
+		name: "Pi",
+		vendor: "Earendil",
+		slug: "pi",
+		icon: "pi",
+		description:
+			"Minimal, extensible agent harness that you can make your own. Made by Earendil.",
+		capabilities: {
+			ide: false,
+			terminal: true,
+			standalone: true,
+			cloud: false,
+			extension: false,
+			open_source: true,
+		},
+		features: [
+			"Multi-provider models and subscriptions",
+			"Built-in MCP with Code Mode",
+			"Context management",
+			"Self-extensible",
+		],
+		pricing_model: "byok",
+		model_flexibility: "multi_provider",
+		context_approach: "project_memory",
+		links: {
+			skills: "https://github.com/cloudflare/skills",
+			mcp_server: "https://github.com/cloudflare/mcp",
+			mcp_server_domain: "https://github.com/cloudflare/mcp-server-cloudflare",
+			docs: "https://pi.dev/docs/latest",
+			website: "https://pi.dev",
+		},
+	},
+	{
 		name: "Vibe",
 		vendor: "Mistral AI",
 		slug: "vibe",
