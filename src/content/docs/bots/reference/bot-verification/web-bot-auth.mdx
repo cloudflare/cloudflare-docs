@@ -69,8 +69,8 @@ This directory should follow the definition from [draft-meunier-http-message-sig
      | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
      | `tag`                          | This should be equal to `http-message-signatures-directory`.                                                                                                                                      |
      | `keyid`                        | JWK thumbprint of the corresponding key in your directory.                                                                                                                                        |
-     | `created`                      | This should be equal to a `Unix` timestamp associated with when the message was sent by your application.                                                                                         |
-     | `expires`                      | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message.                                                                        |
+     | `created`                      | This should be equal to a `Unix` timestamp associated with when the message was sent by your application. Cloudflare rejects the signature if `created` is more than five minutes (300 seconds) old when Cloudflare fetches your directory.                                                                                         |
+     | `expires`                      | This should be equal to a `Unix` timestamp associated with when Cloudflare should no longer attempt to verify the message. Cloudflare treats the signature as expired at `expires` or five minutes after `created`, whichever comes first.                                                                        |
      | `@authority`                   | This should be equal to the value of the Host header sent by the request. You should set the [`req` component parameter](https://datatracker.ietf.org/doc/html/rfc9421#content-request-response). |
 
    The following example shows the annotated request and response with required headers against `https://example.com`. The value of `Signature` here is purely for illustrative purposes, and not the actual generated signature.
@@ -101,6 +101,24 @@ Cloudflare will ignore all other key types and key parameters except those conta
 :::
 
 You can use the Cloudflare-developed [`http-signature-directory` CLI tool](https://crates.io/crates/http-signature-directory) to assist you in validating your directory.
+
+:::caution[Signature freshness]
+Cloudflare only accepts key directory signatures created less than five minutes (300 seconds) before Cloudflare fetches your directory. This limit reduces the risk of replay and applies even if your `expires` timestamp is further in the future.
+
+A static, pre-signed directory response that is regenerated every few hours will fail validation, even though the signature is cryptographically valid and has not expired.
+:::
+
+#### Recommended: sign each response when it is served
+
+Cloudflare recommends per-request signing: generate a new signature each time your server serves `/.well-known/http-message-signatures-directory`. Because `created` always reflects the time the response was served, the signature always meets the freshness requirement.
+
+#### Alternative: renew a static signature
+
+You can also renew a pre-generated signature on a schedule. This approach requires additional configuration to avoid serving stale signatures:
+
+- Re-sign the directory response every one to two minutes. Do not wait until close to the five-minute limit.
+- Make sure no CDN or proxy caches `/.well-known/http-message-signatures-directory`. Serve the response with `Cache-Control: no-store`.
+- Keep your server clock synchronized, for example by using NTP, so that `created` reflects the actual time.
 
 ## 3. Register your bot and key directory
 
