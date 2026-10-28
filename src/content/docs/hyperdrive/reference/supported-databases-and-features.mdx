@@ -77,7 +77,7 @@ Hyperdrive supports the following [authentication modes](https://www.postgresql.
 Hyperdrive does not support the following PostgreSQL features:
 
 - SQL-level management of prepared statements, such as using `PREPARE`, `DISCARD`, `DEALLOCATE`, or `EXECUTE`.
-- Session-level advisory locks, such as `pg_advisory_lock` ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)). Hyperdrive does not reject these commands, but a session-level lock can remain held by a pooled connection after your client disconnects, blocking other clients. Use transaction-level advisory locks within an explicit transaction instead. Refer to [Pooling mode](/hyperdrive/concepts/how-hyperdrive-works/#pooling-mode).
+- Session-level advisory locks: `pg_advisory_lock`, `pg_advisory_lock_shared`, `pg_try_advisory_lock`, and `pg_try_advisory_lock_shared` ([PostgreSQL documentation](https://www.postgresql.org/docs/current/explicit-locking.html#ADVISORY-LOCKS)). Hyperdrive does not reject these commands, but a session-level lock can remain held by a pooled connection after your client disconnects, blocking other clients. Use transaction-level advisory locks within an explicit transaction instead. Refer to [Pooling mode](/hyperdrive/concepts/how-hyperdrive-works/#pooling-mode).
 - `LISTEN` and `NOTIFY`.
 - `PREPARE` and `DEALLOCATE`.
 - Any modification to per-session state not explicitly documented as supported elsewhere.
