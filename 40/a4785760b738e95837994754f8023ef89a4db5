@@ -1,0 +1,19 @@
+src/content/partials/d1/d1-do-supported-sqlite-extensions.mdx
+  s_ecb4e0fe3b5ec9::t_7fef141547457a 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "40a4785760b738e95837994754f8023ef89a4db5",
+  "prompts": {},
+  "sessions": {
+    "s_ecb4e0fe3b5ec9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e81a1abb3ffejuVDyW7WkGytE8",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+src/content/changelog/agents/2026-10-27-codex-harness.mdx
+  s_ad7fef383a5af1::t_89d6f91bfacd8e 1-62
+src/content/docs/agents/harnesses/codex.mdx
+  s_ff92bfaedba286::t_8a381115c0b9f0 1-156
+src/content/docs/agents/harnesses/index.mdx
+  s_ff92bfaedba286::t_2fe3b47b86239d 15,34-35,50-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "07ecb169cfb39bbc3deae180728dc6d89d21c6f8",
+  "prompts": {},
+  "sessions": {
+    "s_ad7fef383a5af1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1800b-cd85-7cc0-99ef-97659ef79bff",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    },
+    "s_ff92bfaedba286": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18007-b879-79d3-9960-f50804a13fd6",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
