@@ -139,13 +139,14 @@ Set `keepAliveMs`, `recording`, and hostname `guardrails` on `browserRun(binding
 
 ### Use another harness
 
-The same `Browser` instance works with the AI SDK and TanStack AI adapters.
+Internal hostnames are a capability of the browser, independent of your agent harness. The Agents SDK provides browser-tool adapters for Pi Durable, AI SDK, and TanStack AI. To connect another harness, implement a tool with `browser.session()`. No prebuilt adapter is required.
 
-| Harness     | Import                                          | Usage                                                               |
-| ----------- | ----------------------------------------------- | ------------------------------------------------------------------- |
-| Pi Durable  | `browserTool` from `agents/browser/pi`          | Install in a Pi registry extension's `tools` array.                 |
-| AI SDK      | `browserTool` from `agents/browser/ai-sdk`      | Add to the `tools` object passed to `generateText` or `streamText`. |
-| TanStack AI | `browserTool` from `agents/browser/tanstack-ai` | Add to the `tools` array passed to `chat`.                          |
+| Harness         | Import                                          | Usage                                                                        |
+| --------------- | ----------------------------------------------- | ---------------------------------------------------------------------------- |
+| Pi Durable      | `browserTool` from `agents/browser/pi`          | Install in a Pi registry extension's `tools` array.                          |
+| AI SDK          | `browserTool` from `agents/browser/ai-sdk`      | Add to the `tools` object passed to `generateText` or `streamText`.          |
+| TanStack AI     | `browserTool` from `agents/browser/tanstack-ai` | Add to the `tools` array passed to `chat`.                                   |
+| Other harnesses | `Browser` from `agents/browser`                 | Implement a tool using `browser.session()`; no prebuilt adapter is required. |
 
 For example, create an AI SDK tool inside your Durable Object:
 
@@ -168,7 +169,7 @@ const tools = {
 
 Unlike Pi, the AI SDK and TanStack AI adapters share one active tab when `scope` is omitted. Pass your conversation identifier to give each conversation its own active tab. The AI SDK adapter exposes screenshots to your UI and sends the model a text summary. TanStack AI omits screenshots and directs the model to read page content instead.
 
-For a custom harness, or to drive the browser from your own code, call `browser.session({ scope })`. It returns the connection that `browserTool` is built on, with the same `sessionId: "active"` handling. Close it when you are done to save the scope's active tab and get a report of what happened to the browser:
+For a harness without a prebuilt adapter, or to drive the browser from your own code, call `browser.session({ scope })`. This works whether you use an existing framework or write your own harness. It returns the connection that `browserTool` is built on, with the same `sessionId: "active"` handling. Close it when you are done to save the scope's active tab and get a report of what happened to the browser:
 
 <TypeScriptExample>
 
@@ -190,7 +191,9 @@ try {
 
 ## Internal hostnames
 
-Internal hostnames give the browser sites that your agent serves instead of the Internet, such as static assets in an R2 bucket, a folder in the agent's workspace, a dev server in its sandbox, or another Worker. The model opens them like any other page, for example to check a site it just built before you deploy it. Nothing is exposed publicly: only this browser can reach these hostnames.
+Agents that build websites need to check their work in a real browser. Internal hostnames let your agent's browser preview a dev server running in a container without exposing that server to the public Internet.
+
+Internal hostnames give the browser sites that your agent serves instead of the Internet, such as static assets in an R2 bucket, a folder in the agent's workspace, a dev server in its sandbox, or another Worker. Only this browser can reach these hostnames.
 
 Requests for an internal hostname do not leave Cloudflare. Browser Run sends them to your Worker through [outbound Workers](/browser-run/features/outbound-workers/), and the `Browser` runs the matching host's `fetch` function inside your Durable Object, so it can use the object's bindings and state.
 
@@ -198,7 +201,7 @@ Requests for an internal hostname do not leave Cloudflare. Browser Run sends the
 
 ### Add internal hostnames
 
-To add internal hostnames, make sure you have [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later installed. Pass `internalHosts` to `browserRun()`:
+To add internal hostnames, make sure you have [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later installed. Pass `internalHosts` to `browserRun()`. This configuration works with the [browser-tool adapters or a tool you implement using `browser.session()`](#use-another-harness):
 
 <TypeScriptExample filename="src/index.ts">
 

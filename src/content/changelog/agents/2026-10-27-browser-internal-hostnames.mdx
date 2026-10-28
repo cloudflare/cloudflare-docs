@@ -1,6 +1,6 @@
 ---
-title: Agents SDK browser tool can now preview sites your agent builds, without making them public
-description: Let an agent's browser open its own dev server, workspace folder, or another Worker at hostnames such as preview.internal, without putting any of them on the public Internet.
+title: "Agents SDK: Preview sites without exposing your dev server"
+description: Preview your agent's dev server through internal hostnames without exposing it to the public Internet. No prebuilt harness adapter is required.
 products:
   - agents
   - browser-run
@@ -9,7 +9,7 @@ date: 2026-10-27
 
 import { TypeScriptExample } from "~/components";
 
-Agents that build websites need to check their work in a real browser. Until now, that meant putting the agent's dev server or preview build on a public URL so that a [Browser Run](/browser-run/) browser could load it, which also made it reachable by anyone on the Internet.
+Agents that build websites need to check their work in a real browser. Internal hostnames let your agent's browser preview a dev server running in a container without exposing that server to the public Internet.
 
 With internal hostnames, the [persistent browser](/agents/tools/browser/) in the [Cloudflare Agents SDK](/agents/) can open sites that only your agent serves. Give the browser hostnames such as `preview.internal`, and its requests to them go to your agent instead of the Internet. The model can check a dev server in its sandbox, a folder in its workspace, or another Worker in the same browser it uses for the web, and nothing is exposed publicly.
 
@@ -17,12 +17,25 @@ With internal hostnames, the [persistent browser](/agents/tools/browser/) in the
 
 Each internal host has a `fetch` function that runs in your Durable Object, so it can use the object's bindings and state. A host can also send its requests straight to another Worker through a service binding. Add a `target` schema to a host, and the model chooses what it serves, such as which port or which folder.
 
-To use internal hostnames, make sure you have [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later installed, and pass `internalHosts` to `browserRun()`:
+Internal hostnames are a capability of the browser, independent of your agent harness. Use the built-in adapters for Pi Durable, AI SDK, and TanStack AI, or connect another harness by implementing a tool with [`browser.session()`](/agents/tools/browser/#use-another-harness). No prebuilt adapter is required.
+
+This example adds a private dev-server preview to a [Pi Durable agent](/agents/tools/browser/#use-it-with-pi-durable). Start with that guide's packages, bindings, and request handler, and install [Agents SDK v0.31.0](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) or later. The example has three parts:
+
+- **Browser configuration:** `internalHosts` defines how the browser reaches the dev server.
+- **Durable Object wiring:** Lifecycle and `fetchInternalHost()` connect the browser to your application.
+- **Harness integration:** `browserTool` from `agents/browser/pi` registers the tool with Pi.
 
 <TypeScriptExample>
 
 ```ts
-import { Browser, browserRun } from "agents/browser";
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { Browser, browserRun, type InternalHostMessage } from "agents/browser";
+import { browserTool } from "agents/browser/pi";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
 import { z } from "zod";
 // Your own code: reach a port on your sandbox and return its Response.
 import { fetchSandboxPort } from "./hosts";
@@ -30,7 +43,10 @@ import { fetchSandboxPort } from "./hosts";
 // Browser Run calls back into your Worker through this entrypoint.
 export { InternalHostRouter } from "agents/browser";
 
-export class MyAgent extends Agent<Env> {
+export class BrowserAssistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
 	browser = new Browser({
 		provider: browserRun(this.env.BROWSER, {
 			internalHosts: {
@@ -43,17 +59,47 @@ export class MyAgent extends Agent<Env> {
 						target: z.object({ port: z.number().int().min(1024) }),
 						fetch: (request, { port }) => fetchSandboxPort(port, request),
 					},
-					"api.internal": { worker: this.env.API },
 				},
 			},
 		}),
 	});
 
-	// ...
+	harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			this.registry.install({
+				name: "browser",
+				tools: [
+					browserTool({ browser: this.browser, loader: this.env.LOADER }),
+				],
+			});
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.browser).use(this.harness);
+
+	// InternalHostRouter calls this method to reach your Browser.
+	fetchInternalHost(message: InternalHostMessage) {
+		return this.browser.fetchInternalHost(message);
+	}
+
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
+	}
 }
 ```
 
 </TypeScriptExample>
+
+To use another harness, keep the browser configuration. Choose a [browser-tool adapter](/agents/tools/browser/#use-another-harness) if one is available, or implement a tool using `browser.session()`.
 
 `browserTool` tells the model about each host, including the schema of its `target`. Because `preview.internal` has a `target` schema, the model can choose which port it serves. To check its dev server, the model calls `browser.assignHost()` with a target that matches the schema, such as `{ port: 5173 }`, and opens the URL it gets back:
 
@@ -69,7 +115,7 @@ await browser.cdp({
 });
 ```
 
-The target is checked against the schema and stored, so it lasts across turns, browser restarts, and redeploys. Each request to `http://preview.internal/` then calls the host's `fetch` function with `{ port: 5173 }`. A host without a `target`, such as `api.internal`, always serves the same thing.
+The target is checked against the schema and stored, so it lasts across turns, browser restarts, and redeploys. Each request to `http://preview.internal/` then calls the host's `fetch` function with `{ port: 5173 }`.
 
 This release also simplifies `browserTool`. It runs the model's code in its own [Dynamic Worker](/dynamic-workers/) and no longer needs a `CodemodeRuntime` export. Refer to the [v0.31.0 upgrade notes](https://github.com/cloudflare/agents/releases/tag/agents%400.31.0) if you already use `browserTool`.
 
