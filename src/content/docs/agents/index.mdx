@@ -11,7 +11,12 @@ head:
     content: Agents
 ---
 
-import { PackageManagers, RelatedProduct } from "~/components";
+import {
+	CardGrid,
+	LinkCard,
+	PackageManagers,
+	RelatedProduct,
+} from "~/components";
 import AgentsPlatformDiagram from "~/components/cf/AgentsPlatformDiagram.astro";
 
 Build and host Agents on Cloudflare, connect chat, voice, email, Slack, and webhooks to a durable agent runtime with Browser, Sandbox, AI Search, MCP, Payments, and other MCP tools.
@@ -27,11 +32,22 @@ Agents on Cloudflare are composed from four parts:
 - **Communication channels** define how users and systems reach your agent, such as [chat](/agents/agent-class/communication-channels/chat/), [voice](/agents/agent-class/communication-channels/voice/), [email](/agents/agent-class/communication-channels/email/), [Slack](/agents/agent-class/communication-channels/slack/), [webhooks](/agents/agent-class/communication-channels/webhooks/), and other event sources.
 - **The agent harness** defines the loop: how the agent calls models, selects tools, handles tool results, streams responses, and decides whether to continue. Use the [Pi harness](/agents/harnesses/pi/) to run Pi Durable in a Durable Object, or build your own loop directly on the [Agents SDK runtime](/agents/agent-class/).
 - **The Agents SDK runtime** provides durable infrastructure: the [`Agent` class](/agents/agent-class/internals/), [state](/agents/agent-class/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/agent-class/routing/), [WebSockets](/agents/agent-class/websockets/), [scheduling](/agents/agent-class/schedule-tasks/), [fibers](/agents/agent-class/durable-execution/), and [observability](/agents/runtime/operations/observability/).
-- **Tools** give the agent capabilities: [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/code-execution/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), and [payments](/agents/tools/payments/). [Code Mode](/agents/tools/codemode/) lets models discover and orchestrate multiple tools by writing code.
+- **Tools** give the agent capabilities: [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/sandboxes-and-workspaces/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), and [payments](/agents/tools/payments/). [Code Mode](/agents/tools/codemode/) lets models discover and orchestrate multiple tools by writing code.
+
+<CardGrid>
+	<LinkCard
+		title="Sandboxes and workspaces"
+		href="/agents/sandboxes-and-workspaces/"
+		description="Give your agent persistent files and an isolated environment to run code."
+	/>
+	<LinkCard
+		title="Code Mode"
+		href="/agents/tools/codemode/"
+		description="Let your agent combine tool calls by writing code."
+	/>
+</CardGrid>
 
 ### Get started
-
-Give your agent [persistent files](/agents/tools/persistent-files/) to read and edit, or add [code execution](/agents/tools/code-execution/) for JavaScript and Linux commands. Combine them when code needs to work with the agent's saved files.
 
 Build your agent with the [Pi harness](/agents/harnesses/pi/). [Pi Durable](https://earendil.com/posts/pi-durable/) runs the agent loop, including the transcript, model calls, tools, and retries, inside a Durable Object. `PiHarness` from the Agents SDK stores Pi's state in the object's SQLite database and resumes the run after an eviction. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
 

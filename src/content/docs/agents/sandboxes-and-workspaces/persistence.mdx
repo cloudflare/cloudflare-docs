@@ -1,9 +1,9 @@
 ---
-title: Understand what persists
+title: How persistence works
 description: Understand where agent workspace files are stored, how Linux commands synchronize changes, and what survives a restart.
 pcx_content_type: concept
 sidebar:
-  order: 1
+  order: 5
 products:
   - agents
   - containers
@@ -21,7 +21,7 @@ Each agent instance has its own workspace; users who share an instance share its
 
 The JavaScript backend runs code in a Dynamic Worker. Its `node:fs/promises` module accesses the same durable workspace, without a separate container filesystem to synchronize.
 
-A Durable Object restart interrupts JavaScript that is still running. File persistence does not resume that execution. To configure the experimental restart and replay policies, refer to [Resume runs after a restart](/agents/tools/code-execution/run-javascript/#resume-runs-after-a-restart).
+A Durable Object restart interrupts JavaScript that is still running. File persistence does not resume that execution. To configure the experimental restart and replay policies, refer to [Resume runs after a restart](/agents/sandboxes-and-workspaces/run-javascript/#resume-runs-after-a-restart).
 
 ## Linux execution
 
@@ -60,10 +60,10 @@ Check both the command's exit code and `result.sync.status`. A command can succe
 | `"complete"`         | Post-command synchronization completed.                                    |
 | `"pending"`          | Synchronization is incomplete. The command may already have changed files. |
 
-Before retrying the command, refer to [Resume an incomplete sync](https://github.com/cloudflare/computer/tree/main/packages/computer#resuming-an-incomplete-sync). The [container backend guide](/agents/tools/code-execution/persistent-files/) checks the command and synchronization results in a complete example.
+Before retrying the command, refer to [Resume an incomplete sync](https://github.com/cloudflare/computer/tree/main/packages/computer#resuming-an-incomplete-sync). The [container backend guide](/agents/sandboxes-and-workspaces/computer-container-backend/) checks the command and synchronization results in a complete example.
 
 ## Storage limits
 
 - Workspace files share their Durable Object's [storage limits](/durable-objects/platform/limits/).
 - The container's synchronized workspace copy is held in memory. Keep workspaces sized for an agent's working files.
-- Keep rebuildable dependencies, such as `node_modules`, on container-local disk with the backend's `ignore` option. Refer to [Configure Linux tools](/agents/tools/code-execution/persistent-files/#configure-linux-tools).
+- Keep rebuildable dependencies, such as `node_modules`, on container-local disk with the backend's `ignore` option. Refer to [Configure Linux tools](/agents/sandboxes-and-workspaces/computer-container-backend/#configure-linux-tools).

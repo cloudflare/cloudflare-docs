@@ -3,13 +3,13 @@ title: Workspace API reference
 description: Look up workspace configuration, file operations, execution methods, and tool adapters for persistent files and code execution.
 pcx_content_type: reference
 sidebar:
-  order: 2
+  order: 6
   label: Workspace API reference
 products:
   - agents
 ---
 
-Use these APIs after [adding a workspace](/agents/tools/persistent-files/). They are provided by `@cloudflare/computer`.
+Use these APIs after [adding a workspace](/agents/sandboxes-and-workspaces/persistent-files/). They are provided by `@cloudflare/computer`.
 
 ## `Workspace`
 
@@ -76,7 +76,7 @@ Failed operations reject with an error whose `code` is a POSIX error code, such 
 
 The result contains `status` (`"completed"`, `"failed"`, or `"cancelled"`), `exitCode`, `stdout`, `stderr`, and `value`, the return value of a JavaScript module. When output is too long, `truncated` names the workspace file that holds all of it.
 
-Container results also include `sync`, which reports whether file changes have reached durable storage. Refer to [Check container synchronization](/agents/tools/persistent-files/persistence/#check-container-synchronization).
+Container results also include `sync`, which reports whether file changes have reached durable storage. Refer to [Check container synchronization](/agents/sandboxes-and-workspaces/persistence/#check-container-synchronization).
 
 Declare handles from `exec()` with `using` so they are disposed when they go out of scope.
 

@@ -4,6 +4,7 @@ description: Create a Code Mode runtime with connectors, direct host APIs, durab
 pcx_content_type: how-to
 sidebar:
   order: 1
+  label: Create a durable runtime
 products:
   - agents
 ---
@@ -138,7 +139,7 @@ You need an existing Agents SDK application with a Durable Object and Vite. The 
 
    The `name()` result becomes the sandbox global, in this case `notes`. `requiresApproval: true` pauses before `createNote` executes. The optional `revert` function lets `runtime.rollback()` compensate for an applied call.
 
-   Use `McpConnector` for MCP tools or `OpenApiConnector` for OpenAPI operations. For MCP-specific setup, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
+   Use `McpConnector` for MCP tools or `OpenApiConnector` for OpenAPI operations. For MCP-specific setup, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/integrations/mcp/).
 
 5. Import the connector and create a runtime in your Agent:
 

@@ -240,14 +240,26 @@
 /aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
 
 # agents
-/agents/tools/computer-container/ /agents/tools/code-execution/persistent-files/ 301
-/agents/tools/files-and-code/ /agents/tools/code-execution/ 301
-/agents/tools/files-and-code/persistent-files/ /agents/tools/persistent-files/ 301
-/agents/tools/files-and-code/persistence/ /agents/tools/persistent-files/persistence/ 301
-/agents/tools/files-and-code/reference/ /agents/tools/persistent-files/reference/ 301
-/agents/tools/files-and-code/run-javascript/ /agents/tools/code-execution/run-javascript/ 301
-/agents/tools/files-and-code/run-linux/ /agents/tools/code-execution/persistent-files/ 301
-/agents/tools/sandbox/ /agents/tools/code-execution/sandbox/ 301
+/agents/tools/code-execution/ /agents/sandboxes-and-workspaces/ 301
+/agents/tools/code-execution/sandbox/ /agents/sandboxes-and-workspaces/sandbox/ 301
+/agents/tools/persistent-files/ /agents/sandboxes-and-workspaces/persistent-files/ 301
+/agents/tools/code-execution/run-javascript/ /agents/sandboxes-and-workspaces/run-javascript/ 301
+/agents/tools/code-execution/persistent-files/ /agents/sandboxes-and-workspaces/computer-container-backend/ 301
+/agents/tools/persistent-files/persistence/ /agents/sandboxes-and-workspaces/persistence/ 301
+/agents/tools/persistent-files/reference/ /agents/sandboxes-and-workspaces/reference/ 301
+/agents/tools/codemode/ai-sdk/ /agents/tools/codemode/integrations/ai-sdk/ 301
+/agents/tools/codemode/tanstack-ai/ /agents/tools/codemode/integrations/tanstack-ai/ 301
+/agents/tools/codemode/browser/ /agents/tools/codemode/integrations/browser/ 301
+/agents/tools/codemode/mcp/ /agents/tools/codemode/integrations/mcp/ 301
+/agents/tools/codemode/openapi/ /agents/tools/codemode/integrations/openapi/ 301
+/agents/tools/computer-container/ /agents/sandboxes-and-workspaces/computer-container-backend/ 301
+/agents/tools/files-and-code/ /agents/sandboxes-and-workspaces/ 301
+/agents/tools/files-and-code/persistent-files/ /agents/sandboxes-and-workspaces/persistent-files/ 301
+/agents/tools/files-and-code/persistence/ /agents/sandboxes-and-workspaces/persistence/ 301
+/agents/tools/files-and-code/reference/ /agents/sandboxes-and-workspaces/reference/ 301
+/agents/tools/files-and-code/run-javascript/ /agents/sandboxes-and-workspaces/run-javascript/ 301
+/agents/tools/files-and-code/run-linux/ /agents/sandboxes-and-workspaces/computer-container-backend/ 301
+/agents/tools/sandbox/ /agents/sandboxes-and-workspaces/sandbox/ 301
 /agents/communication-channels/ /agents/agent-class/communication-channels/ 301
 /agents/communication-channels/chat/ /agents/agent-class/communication-channels/chat/ 301
 /agents/communication-channels/chat/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301
