@@ -1,0 +1,72 @@
+---
+title: Agents docs now start from a Durable Object, the Lifecycle, and capabilities
+description: The Agents SDK documentation now describes an agent as a Durable Object with the Lifecycle installed and capabilities attached to it. A harness, such as Pi, is the capability that runs the agent loop.
+products:
+  - agents
+  - durable-objects
+date: 2026-10-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Agents documentation](/agents/) now starts from the core of the Agents SDK: a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/runtime/lifecycle/) installed, and [capabilities](/agents/runtime/capabilities/) attached to it with `.use()`. A [harness](/agents/harnesses/) is one kind of capability. It is a pre-built agent loop, and the Agents SDK exists to make harnesses run well on Cloudflare.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { createAI } from "agents/models/pi-ai";
+import { Scheduler } from "agents/schedules";
+
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+	readonly mcp = new MCPClientManager("assistant", "1.0.0");
+	readonly scheduler = new Scheduler({ callbacks: {} });
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.mcp)
+		.use(this.scheduler);
+}
+```
+
+</TypeScriptExample>
+
+The Lifecycle runs startup, routes requests and WebSocket events to capabilities, and owns the object's durable job queue and its single alarm. Work resumes after eviction, deploys, and crashes. `Lifecycle` has been stable since `agents@0.28.0`, along with these capabilities:
+
+| Capability                                                       | Import              |
+| ---------------------------------------------------------------- | ------------------- |
+| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client/)  | `agents/mcp/client` |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)           | `agents/schedules`  |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)         | `agents/websockets` |
+| [`State`](/agents/runtime/capabilities/state/)                   | `agents/state`      |
+
+What changed in the docs:
+
+- **Runtime** documents every Lifecycle API, including the job queue, routing, and the [capability API](/agents/runtime/lifecycle/capability-api/) for [building your own capability](/agents/runtime/lifecycle/build-a-capability/). Browsers and other clients connect with the [client SDK](/agents/runtime/client/).
+- **Harnesses** start with the [Pi harness](/agents/harnesses/pi/). [OpenCode](/agents/harnesses/opencode/) is experimental. To write your own loop on the experimental Sessions, Streams, and Tasks capabilities, refer to [Build your own harness](/agents/harnesses/build-your-own/).
+- **Concepts** explain the building blocks of an agent, including [harnesses](/agents/concepts/harnesses/), the [runtime](/agents/concepts/runtime/), [workspaces](/agents/concepts/workspace/) from Cloudflare Computer, and [skills](/agents/concepts/skills/).
+- **Tools** list which harnesses each tool supports. The [workspace tools](/agents/tools/workspace/) give a model a durable file system from Cloudflare Computer.
+- **The [`Agent` class](/agents/agent-class/)** is documented as its own section. It is a preset: a Durable Object with the Lifecycle and seven capabilities installed, plus APIs such as `@callable()` methods, chat, voice, and email.
+- **[Platform](/agents/platform/)** holds configuration, limits, and observability.
+
+To build your first agent, refer to the [quick start](/agents/getting-started/quick-start/). To add the Lifecycle to a Durable Object you already have, refer to [Add to an existing project](/agents/getting-started/add-to-existing-project/).
