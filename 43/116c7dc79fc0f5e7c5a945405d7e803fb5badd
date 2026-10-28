@@ -1,0 +1,23 @@
+src/content/changelog/agents/2026-10-20-createai-model-providers.mdx
+  s_fe1cefa783649c::t_7ff20efbc4a7da 7,15
+src/content/docs/agents/harnesses/pi/index.mdx
+  s_fe1cefa783649c::t_600d25f3b39880 54
+src/content/docs/agents/models/pi-ai.mdx
+  s_fe1cefa783649c::t_03b8c4fd256213 28,121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "43116c7dc79fc0f5e7c5a945405d7e803fb5badd",
+  "prompts": {},
+  "sessions": {
+    "s_fe1cefa783649c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a13a91-70a8-75d9-987f-b2d26c7ae4fc",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

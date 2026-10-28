@@ -1,0 +1,23 @@
+src/content/changelog/workers/2026-10-17-module-registry-default.mdx
+  s_8dc1824e9d212d::t_435ab8613ff130 2-3,11,35,58
+src/content/compatibility-flags/new-module-registry.md
+  s_8dc1824e9d212d::t_92cb8ff15eef75 3-4,9
+src/content/docs/workers/wrangler/bundling.mdx
+  s_8dc1824e9d212d::t_3e689c11f0cfa8 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ae19e0c6790d1ed3b524d982385d50657e8dd5d0",
+  "prompts": {},
+  "sessions": {
+    "s_8dc1824e9d212d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a16655-234d-7d90-8eaa-339e4e4b5c7d",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

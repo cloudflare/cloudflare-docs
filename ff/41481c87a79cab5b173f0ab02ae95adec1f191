@@ -1,0 +1,21 @@
+src/content/docs/ai-gateway/integrations/pi-ai.mdx
+  s_9052ae3a3bfc59::t_5bc198eb44b351 1-128
+src/content/docs/workers-ai/configuration/pi-ai.mdx
+  s_9052ae3a3bfc59::t_55e05c4bf6922c 1-123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ff41481c87a79cab5b173f0ab02ae95adec1f191",
+  "prompts": {},
+  "sessions": {
+    "s_9052ae3a3bfc59": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a12ffa-4429-7344-8f32-b55fe04f5889",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
