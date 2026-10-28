@@ -1,0 +1,11 @@
+---
+title: Workers Builds keeps build history for 90 days
+description: Workers Builds now removes completed builds from build history after 90 days.
+products:
+  - workers
+date: 2026-10-28
+---
+
+[Workers Builds](/workers/ci-cd/builds/) now keeps your build history for 90 days. Each completed build, along with its build logs, is removed 90 days after it finishes. Older builds no longer appear in the dashboard or the [Workers Builds API](/workers/ci-cd/builds/api-reference/).
+
+Your Workers stay as they are. Versions and deployments created by a build remain in your Worker's [version history](/workers/versions-and-deployments/), your build configuration is unchanged, and pull request comments posted by Workers Builds remain on GitHub and GitLab.
