@@ -80,37 +80,16 @@ To set the version of npm, yarn, pnpm, or Bun, add the [`packageManager`](https:
 
 #### pnpm version selection
 
-Workers Builds runs pnpm through [Corepack](https://github.com/nodejs/corepack), which selects the pnpm version before installing your dependencies.
-
-With the default Corepack settings, version selection follows this order:
+Workers Builds runs pnpm through [Corepack](https://github.com/nodejs/corepack). With the default Corepack settings, version selection follows this order:
 
 1. The top-level `packageManager` field in `package.json`.
 2. `devEngines.packageManager` in `package.json`, when it specifies `pnpm` and a version.
 3. The `PNPM_VERSION` build variable.
 4. The build image's default pnpm version.
 
-`PNPM_VERSION` sets Corepack's fallback version. It does not override a version requirement in `packageManager` or `devEngines.packageManager`. If you set multiple version requirements, keep them consistent.
+Project version requirements take precedence over `PNPM_VERSION`. Use an exact version to keep builds consistent. A version range in `devEngines.packageManager` can select different releases across builds. The pnpm version recorded in `pnpm-lock.yaml` does not pin the version Corepack runs.
 
-Corepack accepts version ranges in `devEngines.packageManager.version`. It first checks its cache for a matching version. If none exists, it downloads the highest matching version from the registry. A range can therefore select a newer pnpm release on a later build.
-
-Workers Builds checks for `pnpm-lock.yaml` to select pnpm for dependency installation. Neither Workers Builds nor Corepack reads `lockfileVersion` or `packageManagerDependencies` to select the pnpm version. pnpm also skips its own version switching when Corepack launches it. A pnpm version in `packageManagerDependencies` therefore does not pin the version that runs in this environment.
-
-To pin the version, use an exact `packageManager` value, such as `pnpm@12.14.0`, or an exact `devEngines.packageManager.version`:
-
-```json title="package.json"
-{
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.14.0"
-    }
-  }
-}
-```
-
-:::note[Detected and running versions]
-The `Detected the following tools from environment` log line reports the build system's tool selection before Corepack runs. This detection reads `packageManager` and `PNPM_VERSION`, but does not read `devEngines.packageManager`. For example, it can report `pnpm@9.10.0` while Corepack selects pnpm 12 from your `devEngines.packageManager` range. Check pnpm's install output for the version that ran.
-:::
+The `Detected the following tools from environment` log line reports tool selection before Corepack applies `devEngines.packageManager`. Check pnpm's install output for the version that actually ran.
 
 ### Skip dependency install
 
