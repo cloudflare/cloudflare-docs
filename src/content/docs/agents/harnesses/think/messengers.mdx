@@ -61,21 +61,23 @@ If one Think agent owns multiple Telegram bots, give each provider a distinct Ch
 <TypeScriptExample>
 
 ```ts
-getMessengers() {
-	return {
-		support: telegramMessenger({
-			adapterName: "support-telegram",
-			token: this.env.SUPPORT_TELEGRAM_BOT_TOKEN,
-			userName: "support_bot",
-			secretToken: this.env.SUPPORT_TELEGRAM_WEBHOOK_SECRET_TOKEN,
-		}),
-		sales: telegramMessenger({
-			adapterName: "sales-telegram",
-			token: this.env.SALES_TELEGRAM_BOT_TOKEN,
-			userName: "sales_bot",
-			secretToken: this.env.SALES_TELEGRAM_WEBHOOK_SECRET_TOKEN,
-		}),
-	};
+export class SupportAgent extends Think<Env> {
+	getMessengers() {
+		return {
+			support: telegramMessenger({
+				adapterName: "support-telegram",
+				token: this.env.SUPPORT_TELEGRAM_BOT_TOKEN,
+				userName: "support_bot",
+				secretToken: this.env.SUPPORT_TELEGRAM_WEBHOOK_SECRET_TOKEN,
+			}),
+			sales: telegramMessenger({
+				adapterName: "sales-telegram",
+				token: this.env.SALES_TELEGRAM_BOT_TOKEN,
+				userName: "sales_bot",
+				secretToken: this.env.SALES_TELEGRAM_WEBHOOK_SECRET_TOKEN,
+			}),
+		};
+	}
 }
 ```
 
