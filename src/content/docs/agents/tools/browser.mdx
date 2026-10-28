@@ -1,6 +1,6 @@
 ---
 title: Browser
-description: Give your agent a browser that remembers tabs, cookies, and logins between turns, and can open sites your agent serves itself. Use it with Pi Durable, the AI SDK, or another harness.
+description: Give your agent a browser that remembers tabs, cookies, and logins between turns, and can open sites your agent serves itself. Use it with Think, Pi Durable, the AI SDK, or another harness.
 pcx_content_type: concept
 sidebar:
   order: 3
@@ -9,6 +9,7 @@ products:
 ---
 
 import {
+	Aside,
 	PackageManagers,
 	LinkCard,
 	TypeScriptExample,
@@ -18,6 +19,12 @@ import {
 Give your agent a browser it can return to on later turns. [Browser Run](/browser-run/) keeps the remote browser open, so your agent can continue from the same page with its tabs, cookies, and login session intact while the browser session remains alive.
 
 Use browser tools to interact with websites, inspect pages rendered with JavaScript, or capture screenshots. With [internal hostnames](#internal-hostnames), the browser can also open sites that only your agent serves, such as a dev server in its sandbox or a folder in its workspace.
+
+<Aside type="caution">
+
+The `Browser` capability behind this tool is experimental. Its API may change in any release. The tool adapters, `browserTool` from `agents/browser/pi`, `agents/browser/ai-sdk`, and `agents/browser/tanstack-ai`, depend on it.
+
+</Aside>
 
 ## Return to the same browser
 
@@ -125,6 +132,44 @@ curl http://localhost:8787 --data 'Take a screenshot of the page you already ope
 
 The second turn can use the existing tab. Pi stores a returned screenshot as an image in the tool result. An image-capable model can see it, and a UI can display it from the transcript. This example's HTTP response only returns the final text; refer to [Pi event streaming](/agents/harnesses/pi/#stream-events-to-clients) to build a UI.
 
+### Use it with Think
+
+[Think](/agents/harnesses/think/) uses AI SDK tools. The `Agent` class that Think extends already has a Lifecycle, so install the `Browser` with `this.lifecycle.use()` in the constructor, and return the AI SDK `browserTool` from `getTools()`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { Think } from "@cloudflare/think";
+import { Browser, browserRun } from "agents/browser";
+import { browserTool } from "agents/browser/ai-sdk";
+import { createAI } from "agents/models/ai-sdk";
+
+export class BrowserAssistant extends Think<Env> {
+	browser = new Browser({ provider: browserRun(this.env.BROWSER) });
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.browser);
+	}
+
+	getModel() {
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
+	}
+
+	getTools() {
+		return {
+			browser: browserTool({ browser: this.browser, loader: this.env.LOADER }),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+Install `agents` and `@cloudflare/codemode` alongside `@cloudflare/think`, and add the same `ai`, `browser`, and `worker_loaders` bindings as in the Pi example. The AI SDK adapter shares one active tab across conversations unless you pass `scope`. Refer to [Use another harness](#use-another-harness).
+
+The legacy Think browser tools in `@cloudflare/think/tools/browser` are deprecated. Refer to [Legacy browser tools](#legacy-browser-tools).
+
 ### Tabs, logins, and interruptions
 
 Each Pi conversation gets its own active tab by default. Sessions, forks, and subagents can work on different pages, but cookies and logins remain shared within the `Browser`. A tab scope is not a separate browser profile. Use separate browsers when users need separate login sessions.
@@ -139,10 +184,11 @@ Set `keepAliveMs`, `recording`, and hostname `guardrails` on `browserRun(binding
 
 ### Use another harness
 
-Internal hostnames are a capability of the browser, independent of your agent harness. The Agents SDK provides browser-tool adapters for Pi Durable, AI SDK, and TanStack AI. To connect another harness, implement a tool with `browser.session()`. No prebuilt adapter is required.
+Internal hostnames are a capability of the browser, independent of your agent harness. The Agents SDK provides browser-tool adapters for Pi Durable, AI SDK (which Think uses), and TanStack AI. To connect another harness, implement a tool with `browser.session()`. No prebuilt adapter is required.
 
 | Harness         | Import                                          | Usage                                                                        |
 | --------------- | ----------------------------------------------- | ---------------------------------------------------------------------------- |
+| Think           | `browserTool` from `agents/browser/ai-sdk`      | Return from `getTools()`. Refer to [Use it with Think](#use-it-with-think).  |
 | Pi Durable      | `browserTool` from `agents/browser/pi`          | Install in a Pi registry extension's `tools` array.                          |
 | AI SDK          | `browserTool` from `agents/browser/ai-sdk`      | Add to the `tools` object passed to `generateText` or `streamText`.          |
 | TanStack AI     | `browserTool` from `agents/browser/tanstack-ai` | Add to the `tools` array passed to `chat`.                                   |

@@ -21,50 +21,93 @@ Use MCP when you want an agent to:
 
 To build an MCP server instead, refer to [Model Context Protocol (MCP)](/agents/model-context-protocol/).
 
+## Which harnesses can use MCP tools
+
+The MCP client turns a server's tools into tools a model can call through one adapter:
+
+| Harness or library                | How to use MCP tools                                                                                 |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [Think](/agents/harnesses/think/) | Automatic. Think merges `this.mcp.getAITools()` into every turn unless `includeMcpTools` is `false`. |
+| AI SDK                            | Pass `mcp.getAITools()` to `generateText()` or `streamText()`.                                       |
+| [Pi](/agents/harnesses/pi/)       | No adapter. Wrap `mcp.listTools()` and `mcp.callTool()` in your own `ToolRegistration` objects.      |
+| TanStack AI                       | No adapter. Wrap `mcp.listTools()` and `mcp.callTool()` in your own server tools.                    |
+
+`getAITools()` is the only tool adapter. It returns an AI SDK `ToolSet`.
+
 ## Basic pattern
 
-Call `addMcpServer()` to connect to a remote MCP server, then pass `this.mcp.getAITools()` to the AI SDK.
+`MCPClientManager` from `agents/mcp/client` is a capability. Install it on a Durable Object with [Lifecycle](/agents/runtime/lifecycle/), connect to a remote MCP server, then pass `this.mcp.getAITools()` to the AI SDK:
 
 <TypeScriptExample>
 
 ```ts
-import { Agent } from "agents";
-import { generateText } from "ai";
+import { DurableObject } from "cloudflare:workers";
+import { generateText, stepCountIs } from "ai";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
 import { createAI } from "agents/models/ai-sdk";
 
-export class ToolAgent extends Agent<Env> {
-	async onStart() {
-		await this.addMcpServer("github", "https://mcp.github.com/mcp");
+export class ToolAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0");
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+
+	async addServer(url: string, callbackUrl: string) {
+		await this.lifecycle.start();
+		await this.mcp.registerServer("docs", { name: "docs", url, callbackUrl });
+		const connection = await this.mcp.connectToServer("docs");
+		if (connection.state === "authenticating") {
+			// Send the user to connection.authUrl to finish OAuth.
+			return { authUrl: connection.authUrl };
+		}
+		await this.mcp.discoverIfConnected("docs");
+		return { state: connection.state };
 	}
 
-	async onRequest(request: Request) {
+	async ask(prompt: string) {
+		await this.lifecycle.start();
 		const ai = createAI({ binding: this.env.AI });
-
-		const response = await generateText({
+		const { text } = await generateText({
 			model: ai("@cf/zai-org/glm-4.7-flash"),
-			prompt: "Use available tools to summarize the latest issue activity.",
+			prompt,
 			tools: this.mcp.getAITools(),
+			stopWhen: stepCountIs(10),
 		});
-
-		return new Response(response.text);
+		return text;
 	}
 }
 ```
 
 </TypeScriptExample>
 
-If the server requires OAuth, `addMcpServer()` returns an authentication state and authorization URL. The connection is persisted in the agent's [SQL storage](/agents/agent-class/state/).
+`registerServer()` saves the server in the Durable Object's storage, and the manager reconnects to it when the object starts again. If the server requires OAuth, `connectToServer()` returns `authenticating` with an authorization URL. Route the callback URL to the same Durable Object, and the manager completes the flow.
+
+Methods called through Durable Object RPC bypass `fetch`, so they call `await this.lifecycle.start()` before they use the manager. For connections, OAuth, elicitation, resources, and prompts, refer to the [MCP client capability](/agents/runtime/capabilities/mcp-client/).
+
+### On the `Agent` class
+
+The `Agent` class installs the same capability at `this.mcp`, and adds `this.addMcpServer(name, url, options)`, which registers and connects in one call:
+
+<TypeScriptExample>
+
+```ts
+await this.addMcpServer("github", "https://mcp.github.com/mcp");
+const tools = this.mcp.getAITools();
+```
+
+</TypeScriptExample>
 
 ## Configuration
 
 For public MCP servers, no binding configuration is required. Store server URLs, API tokens, or OAuth settings as environment variables or secrets.
 
-For MCP servers that require bearer tokens or Cloudflare Access headers, pass custom transport headers when connecting.
+For MCP servers that require bearer tokens or Cloudflare Access headers, pass custom transport headers when you register the server.
 
 <TypeScriptExample>
 
 ```ts
-await this.addMcpServer("internal", this.env.MCP_SERVER_URL, {
+await this.mcp.registerServer("internal", {
+	name: "internal",
+	url: this.env.MCP_SERVER_URL,
 	transport: {
 		headers: {
 			Authorization: `Bearer ${this.env.MCP_TOKEN}`,
@@ -80,9 +123,9 @@ await this.addMcpServer("internal", this.env.MCP_SERVER_URL, {
 ## Related resources
 
 <LinkCard
-	title="McpClient API"
-	href="/agents/model-context-protocol/apis/client-api/"
-	description="Connect Agents to external MCP servers and use their tools, resources, and prompts."
+	title="MCP client capability"
+	href="/agents/runtime/capabilities/mcp-client/"
+	description="Connect a Durable Object to external MCP servers and use their tools, resources, and prompts."
 />
 
 <LinkCard

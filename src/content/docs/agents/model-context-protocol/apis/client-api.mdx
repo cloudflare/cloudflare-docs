@@ -1,6 +1,6 @@
 ---
-title: MCP Client
-description: Connect Agents to external MCP servers to use their tools, resources, and prompts over the Model Context Protocol.
+title: MCP client on the Agent class
+description: Connect an Agent to external MCP servers with addMcpServer() to use their tools, resources, and prompts over the Model Context Protocol.
 pcx_content_type: reference
 tags:
   - MCP
@@ -27,7 +27,9 @@ The MCP client capability lets your agent:
 
 :::note
 
-This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
+This page covers the MCP client methods of the [`Agent` class](/agents/agent-class/), such as `addMcpServer()`. The client itself is the `MCPClientManager` capability, which also runs on a plain Durable Object. Refer to the [MCP client capability](/agents/runtime/capabilities/mcp-client/).
+
+To create your own MCP server, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
 :::
 
@@ -1031,206 +1033,15 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
-## Advanced: MCPClientManager
+## Use `MCPClientManager` directly
 
-For fine-grained control, use `this.mcp` directly:
+`this.mcp` is an `MCPClientManager` from `agents/mcp/client`, a Lifecycle capability. The `Agent` class installs it, and `addMcpServer()`, `removeMcpServer()`, and `getMcpServers()` wrap its methods. Call `this.mcp` directly when you need control over each step: register a server with `registerServer()`, connect with `connectToServer()`, discover its capabilities with `discoverIfConnected()`, and subscribe to `onServerStateChanged`.
 
-### Step-by-step connection
-
-<TypeScriptExample>
-
-```ts
-// 1. Register the server (saves to storage and creates in-memory connection)
-const id = "my-server";
-await this.mcp.registerServer(id, {
-	url: "https://mcp.example.com/mcp",
-	name: "My Server",
-	callbackUrl: "https://my-worker.workers.dev/agents/my-agent/default/callback",
-	transport: { type: "auto" },
-});
-
-// 2. Connect (initializes transport, handles OAuth if needed)
-const connectResult = await this.mcp.connectToServer(id);
-
-if (connectResult.state === "failed") {
-	console.error("Connection failed:", connectResult.error);
-	return;
-}
-
-if (connectResult.state === "authenticating") {
-	console.log("OAuth required:", connectResult.authUrl);
-	return;
-}
-
-// 3. Discover capabilities (transitions from "connected" to "ready")
-if (connectResult.state === "connected") {
-	const discoverResult = await this.mcp.discoverIfConnected(id);
-
-	if (!discoverResult?.success) {
-		console.error("Discovery failed:", discoverResult?.error);
-	}
-}
-```
-
-</TypeScriptExample>
-
-### Event subscription
-
-<TypeScriptExample>
-
-```ts
-// Listen for state changes (onServerStateChanged is an Event<void>)
-const disposable = this.mcp.onServerStateChanged(() => {
-	console.log("MCP server state changed");
-	this.broadcastMcpServers(); // Notify connected clients
-});
-
-// Clean up the subscription when no longer needed
-// disposable.dispose();
-```
-
-</TypeScriptExample>
+The same capability runs on a plain Durable Object, without the `Agent` class. For its full API, including step-by-step connections, events, lifecycle methods, `listTools()`, and `getAITools()` filters, refer to the [MCP client capability](/agents/runtime/capabilities/mcp-client/).
 
 :::note
 MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/agent-class/protocol-messages/) returned `false`.
 :::
-
-### Lifecycle methods
-
-#### `this.mcp.registerServer()`
-
-Register a server without immediately connecting.
-
-```ts
-async registerServer(
-  id: string,
-  options: {
-    url: string;
-    name: string;
-    callbackUrl: string;
-    clientOptions?: ClientOptions;
-    transportOptions?: TransportOptions;
-  }
-): Promise<string>
-```
-
-#### `this.mcp.connectToServer()`
-
-Establish a connection to a previously registered server.
-
-```ts
-async connectToServer(id: string): Promise<MCPConnectionResult>
-
-type MCPConnectionResult =
-  | { state: "failed"; error: string }
-  | { state: "authenticating"; authUrl: string }
-  | { state: "connected" }
-```
-
-#### `this.mcp.discoverIfConnected()`
-
-Check server capabilities if a connection is active.
-
-```ts
-async discoverIfConnected(
-  serverId: string,
-  options?: { timeoutMs?: number }
-): Promise<MCPDiscoverResult | undefined>
-
-type MCPDiscoverResult = {
-  success: boolean;
-  state: MCPConnectionState;
-  error?: string;
-}
-```
-
-#### `this.mcp.waitForConnections()`
-
-Wait for all in-flight MCP connection and discovery operations to settle. This is useful when you need `this.mcp.getAITools()` to return the full set of tools immediately after the agent wakes from hibernation.
-
-```ts
-// Wait indefinitely
-await this.mcp.waitForConnections();
-
-// Wait with a timeout (milliseconds)
-await this.mcp.waitForConnections({ timeout: 10_000 });
-```
-
-:::note
-`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/agent-class/communication-channels/chat/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
-:::
-
-#### `this.mcp.closeConnection()`
-
-Close the connection to a specific server while keeping it registered.
-
-```ts
-async closeConnection(id: string): Promise<void>
-```
-
-#### `this.mcp.closeAllConnections()`
-
-Close all active server connections while preserving registrations.
-
-```ts
-async closeAllConnections(): Promise<void>
-```
-
-#### `this.mcp.listTools()`
-
-Get raw MCP tool records without converting their schemas to Zod.
-
-```ts
-listTools(filter?: MCPServerFilter): Array<Tool & { serverId: string }>
-```
-
-Use this method for catalog discovery and inspection. Pass an `MCPServerFilter` to limit the returned tools to specific connections.
-
-#### `this.mcp.getAITools()`
-
-Get all discovered MCP tools in a format compatible with the AI SDK.
-
-```ts
-getAITools(filter?: MCPServerFilter): ToolSet
-```
-
-Tools are automatically namespaced by server ID to prevent conflicts when multiple MCP servers expose tools with the same name.
-
-`getAITools()` reuses converted schemas for the current catalog on each live connection. It converts schemas again after discovery replaces the catalog or the live connection changes. Each call returns fresh tool records and execute functions. Use `this.mcp.listTools()` when you only need the raw catalog.
-
-Pass an `MCPServerFilter` to scope the returned tools to a subset of connected servers:
-
-<TypeScriptExample>
-
-```ts
-// Tools from a specific server only
-const githubTools = this.mcp.getAITools({ serverId: "github" });
-
-// Tools from multiple servers
-const tools = this.mcp.getAITools({ serverId: ["github", "notion"] });
-
-// Tools from servers matching a name
-const tools = this.mcp.getAITools({ serverName: "GitHub" });
-
-// Only tools from servers that are ready
-const tools = this.mcp.getAITools({ state: "ready" });
-```
-
-</TypeScriptExample>
-
-The filter type is available from `agents/mcp/client`:
-
-```ts
-import type { MCPServerFilter } from "agents/mcp/client";
-
-type MCPServerFilter = {
-	serverId?: string | string[];
-	serverName?: string | string[];
-	state?: MCPConnectionState | MCPConnectionState[];
-};
-```
-
-All specified filter criteria are AND'd together. The same filter parameter is accepted by `listTools()`, `listPrompts()`, `listResources()`, and `listResourceTemplates()`.
 
 ## Error handling
 
@@ -1260,6 +1071,12 @@ export class MyAgent extends Agent {
 </TypeScriptExample>
 
 ## Next steps
+
+<LinkCard
+	title="MCP client capability"
+	href="/agents/runtime/capabilities/mcp-client/"
+	description="Use MCPClientManager on any Durable Object."
+/>
 
 <LinkCard
 	title="Creating MCP servers"
