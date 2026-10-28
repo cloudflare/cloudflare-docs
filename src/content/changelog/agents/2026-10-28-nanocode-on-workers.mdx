@@ -1,15 +1,53 @@
 ---
 title: Run the Nanocode agent harness on Cloudflare Workers
-description: Run Nanocode with its own Durable Object host and learn where optional Agents SDK capabilities fit.
+description: Embed a coding agent in your application with Nanocode's Rust/WebAssembly engine, Workers AI, and durable sessions.
 date: 2026-10-28
 ---
 
-The [Agents harnesses documentation](/agents/harnesses/) now includes [Nanocode](/agents/harnesses/nanocode/), a Rust/WebAssembly agent runtime with Codex and Claude backends.
+import { TypeScriptExample } from "~/components";
 
-Nanocode runs on Durable Objects through its own Cloudflare host. It provides session storage, recovery alarms, and client streaming without requiring Agents SDK.
+[Nanocode](https://github.com/gakonst/nanocode) is an open-source harness for embedding coding agents in your application. It handles model calls, tool execution, and session history. Use it to build a code-review bot or a coding assistant that reads and edits project files.
 
-The guide includes architecture diagrams, a TypeScript example that submits a turn using Workers AI, and recovery boundaries. It also shows where a separate SDK Agent can add schedules, email, and application state.
+Its Rust engine runs as [WebAssembly](/workers/runtime-apis/webassembly/) inside a [Durable Object](/durable-objects/). Nanocode saves turn progress and tool results in SQLite, and uses alarms to resume pending work after an interruption. Its Cloudflare host runs independently of Agents SDK.
 
-This documents an existing upstream runtime. It does not add an Agents SDK harness export or change SDK behavior.
+Nanocode supports Codex and Claude backends. The example below uses its Codex backend with [Workers AI](/workers-ai/) model `glm-5.3`.
 
-Start with [Nanocode on Workers](/agents/harnesses/nanocode/) and the [upstream Workers guide](https://nanocode.xyz/docs/guides/workers).
+After configuring the [reference Worker](https://github.com/gakonst/nanocode-worker) for Workers AI and loading your project files into its workspace, submit a review from your backend:
+
+<TypeScriptExample>
+
+```ts
+export async function reviewCode(origin: string, token: string) {
+	const response = await fetch(new URL("/sessions/auth-review/turns", origin), {
+		method: "POST",
+		headers: {
+			authorization: `Bearer ${token}`,
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({
+			request_id: "auth-review-1",
+			prompt: "Read src/auth.ts, check for login bugs, and write review.md.",
+			provider: "codex",
+			model: "glm-5.3",
+			thinking: "low",
+		}),
+	});
+
+	if (!response.ok) {
+		throw new Error(`Review submission failed: ${response.status}`);
+	}
+	return response.json();
+}
+```
+
+</TypeScriptExample>
+
+Pass your deployment origin and its bearer token. HTTP `202` means the review is pending. Once the turn is stored:
+
+- **Retry the request:** Send the same request ID and input to retrieve the existing turn. Use a new ID for a new review.
+- **Return to the result:** Read `GET /sessions/auth-review/turns/auth-review-1` with the same bearer token.
+- **Reconnect your UI:** Resume the session's event stream from the last processed cursor to replay recorded progress.
+
+Recovery reuses committed tool results. A tool interrupted before recording its result has an unknown outcome, so external side effects still need reconciliation.
+
+Follow [Nanocode on Workers](/agents/harnesses/nanocode/) for deployment, authentication, event streaming, and recovery details.
