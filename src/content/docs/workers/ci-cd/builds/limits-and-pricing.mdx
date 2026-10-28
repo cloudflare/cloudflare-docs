@@ -21,7 +21,7 @@ Workers Builds has the following limits.
 | **Disk space**        | 20 GB           | 20 GB                                      |
 | **Environment variables**  | 64              | 64                                        |
 | **Size per environment variable**  | 5 KB            | 5 KB                                       |
-| **Build history retention** | 90 days         | 90 days                                    |
+| **Build and build log retention** | 90 days   | 90 days                                    |
 
 ## Definitions
 
@@ -34,4 +34,4 @@ Workers Builds has the following limits.
 - **Disk space**: The amount of disk space available to your build.
 - **Environment variables**: The number of custom environment variables you can configure per Worker.
 - **Size per environment variable**: The maximum size for each individual environment variable.
-- **Build history retention**: How long a completed build and its logs stay in build history after the build finishes.
+- **Build and build log retention**: How long a build and its build logs are retained after the build finishes. Versions and deployments created by the build are not removed, and you can still [roll back](/workers/versions-and-deployments/rollbacks/) to them.
