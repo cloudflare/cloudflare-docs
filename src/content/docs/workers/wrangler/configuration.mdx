@@ -398,14 +398,20 @@ Example:
 
 ## Observability
 
-The [Observability](/workers/observability/logs/workers-logs) setting allows you to automatically ingest, store, filter, and analyze logging data emitted from Cloudflare Workers directly from your Cloudflare Worker's dashboard.
+The `observability` setting configures [Workers Logs](/workers/observability/logs/workers-logs/), [Traces](/workers/observability/traces/), and [Issues](/workers/observability/issues/). Enablement, storage in Cloudflare, and export to external destinations are separate choices. Refer to [Configure observability](/workers/observability/configuration/) for examples and API updates that preserve the current Worker version.
 
 - `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Shorthand for `logs.enabled`. When set to `true` on a Worker, logs for the Worker are persisted. Defaults to `true` for all new Workers.
+  - Shorthand for enabling logs when `logs.enabled` is not set. An explicit `logs.enabled` value takes precedence. Newly created Workers enable logs by default; set this field explicitly when managing existing Workers. This flag does not override explicitly configured traces or Issues, or the separate `logpush` and `tail_consumers` settings.
 - `logs.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Whether logs for the Worker are persisted.
+  - Whether Workers Logs is enabled. Use `logs.persist` to control storage and `logs.destinations` to configure export.
+- `logs.persist` and `traces.persist` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether Cloudflare stores the enabled signal. Defaults to `true`. Setting this to `false` does not turn off export.
+- `logs.destinations` and `traces.destinations` <Type text="string[]" /> <MetaInfo text="optional" />
+  - Names of configured [OpenTelemetry destinations](/workers/observability/opentelemetry-export/) to export the enabled signal to. An empty array removes export destinations without turning off Cloudflare storage.
+- `traces.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether Workers Traces is enabled. Set this explicitly to configure tracing independently of logs.
 - `head_sampling_rate` <Type text="number" /> <MetaInfo text="optional" />
-  - A number between 0 and 1, where 0 indicates zero out of one hundred requests are logged, and 1 indicates every request is logged. If `head_sampling_rate` is unspecified, it is configured to a default value of 1 (100%). Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
+  - The default sampling rate, between 0 and 1, where 0 collects no requests and 1 collects every request. Defaults to 1 (100%). Set `logs.head_sampling_rate` or `traces.head_sampling_rate` to override it for that signal. Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
 
 Example:
 

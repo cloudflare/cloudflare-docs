@@ -1,0 +1,151 @@
+---
+title: Configure observability
+description: Choose how Workers collects, stores, and exports telemetry, and update observability settings without uploading a new Worker version.
+pcx_content_type: configuration
+sidebar:
+  order: 1
+products:
+  - workers
+---
+
+import { APIRequest, Steps, WranglerConfig } from "~/components";
+
+Workers observability settings control which telemetry Cloudflare collects from your Worker, whether Cloudflare stores it, and where it is exported. You can manage these settings in your [Wrangler configuration](/workers/wrangler/configuration/#observability) or update a deployed Worker through the API.
+
+## Choose what to collect and where to send it
+
+Logs, traces, and Issues have separate enablement settings. For logs and traces, storage and export are also separate choices.
+
+| Setting                                                                   | Purpose                                                                                                                         |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `observability.logs.enabled`                                              | Enable [Workers Logs](/workers/observability/logs/workers-logs/).                                                               |
+| `observability.traces.enabled`                                            | Enable [Workers Traces](/workers/observability/traces/).                                                                        |
+| `observability.issues.enabled`                                            | Enable [Issues](/workers/observability/issues/) to detect and group failures.                                                   |
+| `observability.logs.persist` and `observability.traces.persist`           | Store the enabled signal in Cloudflare. Both default to `true`.                                                                 |
+| `observability.logs.destinations` and `observability.traces.destinations` | Export the enabled signal to named [OpenTelemetry destinations](/workers/observability/opentelemetry-export/).                  |
+| `logpush`                                                                 | Send events from this Worker to [Workers Logpush](/workers/observability/logs/logpush/). A Logpush job must also be configured. |
+| `tail_consumers`                                                          | Send events to the configured [Tail Workers](/workers/observability/logs/tail-workers/).                                        |
+
+For example, to store logs in Cloudflare and export traces without storing them in Cloudflare, configure:
+
+<WranglerConfig>
+
+```toml
+[observability.logs]
+enabled = true
+persist = true
+
+[observability.traces]
+enabled = true
+persist = false
+destinations = ["tracing-destination-name"]
+```
+
+</WranglerConfig>
+
+[Create the destination](/observability/export/opentelemetry/) before deploying this configuration. Use `head_sampling_rate` within `logs` or `traces` to control the fraction of requests collected for that signal.
+
+Setting `persist` to `false` stops Cloudflare storage for that signal but leaves export configured. Setting `destinations` to `[]` removes OpenTelemetry destinations but leaves persistence configured. Neither setting changes Logpush or Tail Workers.
+
+### Enablement and precedence
+
+In Wrangler, `observability.enabled` is shorthand for enabling logs when `observability.logs.enabled` is not set. An explicit signal-level `enabled` value takes precedence over the root setting for that signal. Configure `logs.enabled` and `traces.enabled` explicitly when you want different behavior for each signal.
+
+The root flag is not a switch for every observability feature: Issues, Logpush, and Tail Workers have their own settings. To turn off logs and traces, set their `enabled` fields to `false` and also set the root `observability.enabled` to `false` if it is present.
+
+## Update a deployed Worker through the API
+
+The `/accounts/{account_id}/workers/scripts/{script_name}/script-settings` endpoint updates script-level settings shared across [Worker versions](/workers/versions-and-deployments/). It does not upload code, change bindings, create a Worker version, or create a new deployment. The existing deployment's execution configuration is updated to apply the settings.
+
+Use `/script-settings` for the procedure below. The separate `/settings` endpoint updates both script and version settings and can create a new version and deployment.
+
+### Read current settings
+
+Use an [API token](/fundamentals/api/get-started/create-token/) with **Workers Scripts Read** permission to read settings, or **Workers Scripts Write** permission to read and update them. Set `ACCOUNT_ID` to your [account ID](/fundamentals/account/find-account-and-zone-ids/) and `SCRIPT_NAME` to the deployed Worker's name. For a Wrangler environment, use that environment's deployed Worker name.
+
+<APIRequest
+	path="/accounts/{account_id}/workers/scripts/{script_name}/script-settings"
+	method="GET"
+/>
+
+Check that the response succeeds before using its `result`. The result includes `logpush`, `tags`, `tail_consumers`, and `observability`, even when a value is `null`:
+
+- `tail_consumers: null` means no customer Tail Workers are configured. It does not mean Workers Logs, Traces, Issues, or Logpush are disabled.
+- `observability: null` represents the disabled default configuration. Disabling observability can produce this value instead of an object containing explicit `false` flags.
+- `tags: null` means the Worker has no tags.
+
+Do not treat a missing property as equivalent to `null` when checking these settings.
+
+### Apply changes
+
+This endpoint preserves omitted or `null` top-level fields. Arrays and the observability object have replacement semantics:
+
+| PATCH input                                 | Effect                                                                                                                           |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Omit a top-level field, or set it to `null` | Keep that setting unchanged.                                                                                                     |
+| `"logpush": false`                          | Turn off Logpush for this Worker.                                                                                                |
+| `"tail_consumers": []`                      | Remove all customer Tail Workers.                                                                                                |
+| `"tags": []`                                | Remove all tags.                                                                                                                 |
+| An `observability` object                   | Replace the entire observability configuration. Omitted nested fields use defaults, rather than retaining their previous values. |
+
+To change part of an existing observability configuration:
+
+<Steps>
+
+1. Read the current settings with the GET request above.
+2. Construct the complete desired `observability` object, retaining any sampling, persistence, destinations, or other settings you want to keep. If the current value is `null`, start with the settings you want to enable.
+3. PATCH that object to `/script-settings`. Include other top-level fields only if you also want to change them.
+4. Read the settings again with GET and compare the returned configuration with your intended settings. The API normalizes defaults, so the response may not reproduce the request exactly.
+
+</Steps>
+
+For example, the following request configures stored logs with 10% sampling, disables traces and Issues, and leaves Logpush, Tail Workers, and tags unchanged. It replaces any existing observability destinations and other observability preferences.
+
+<APIRequest
+	path="/accounts/{account_id}/workers/scripts/{script_name}/script-settings"
+	method="PATCH"
+	json={{
+		observability: {
+			enabled: true,
+			logs: {
+				enabled: true,
+				head_sampling_rate: 0.1,
+				invocation_logs: true,
+				persist: true,
+				destinations: [],
+			},
+			traces: { enabled: false },
+			issues: { enabled: false },
+		},
+	}}
+/>
+
+Keep your deployment configuration in sync with API changes. A later deployment can replace these settings with the values in your Wrangler or Cloudflare CLI configuration.
+
+### Reset the telemetry settings
+
+To turn off Workers Logs, Traces, Issues, Logpush, and customer Tail Workers together, send:
+
+<APIRequest
+	path="/accounts/{account_id}/workers/scripts/{script_name}/script-settings"
+	method="PATCH"
+	json={{
+		logpush: false,
+		tail_consumers: [],
+		observability: { enabled: false },
+	}}
+/>
+
+This replaces the observability configuration, including its sampling and export preferences. It leaves tags unchanged.
+
+After a successful update, run the GET request again. These selected fields in `result` should be:
+
+```json
+{
+	"logpush": false,
+	"tail_consumers": null,
+	"observability": null
+}
+```
+
+The response also includes `tags`; it is omitted from this excerpt. These settings control new telemetry from the listed features. They do not delete retained data or stop exports implemented directly in your application code.

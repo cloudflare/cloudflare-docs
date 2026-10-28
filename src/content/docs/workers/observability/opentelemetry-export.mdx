@@ -58,6 +58,8 @@ Add your destination names to your Wrangler configuration. Each name must match 
 By default, `persist` is `true`. Logs and traces are exported and stored in Cloudflare. Beginning December 1, 2026, persisted data contributes to [Cloudflare Observability ingestion and storage usage](/observability/pricing/). Set `persist` to `false` if you only need data in your external destination.
 :::
 
+Setting `persist` to `false` does not turn off export. Setting `destinations` to `[]` removes OpenTelemetry destinations but does not turn off Cloudflare storage. For signal enablement and API updates that preserve the current Worker version, refer to [Configure observability](/workers/observability/configuration/).
+
 Redeploy your Worker after updating its Wrangler configuration. Events may take several minutes to reach your destination.
 
 ## Known limitations

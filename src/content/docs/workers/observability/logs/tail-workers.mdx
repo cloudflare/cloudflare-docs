@@ -10,7 +10,7 @@ products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { APIRequest, WranglerConfig } from "~/components";
 
 A Tail Worker receives information about the execution of other Workers (known as producer Workers), such as HTTP statuses, data passed to `console.log()` or uncaught exceptions. Tail Workers can process logs for alerts, debugging, or analytics.
 
@@ -113,6 +113,30 @@ The following Worker code is an example of what the `events` object may look lik
 Workers added to the `tail_consumers` array must have a `tail()` handler defined.
 
 :::
+
+## Remove Tail Workers
+
+To remove all Tail Workers from a producer Worker, set `tail_consumers` to an empty array in the producer's Wrangler configuration and deploy it:
+
+<WranglerConfig>
+
+```toml
+tail_consumers = []
+```
+
+</WranglerConfig>
+
+To update the deployed Worker's settings without creating a new version or deployment, use the script settings API:
+
+<APIRequest
+	path="/accounts/{account_id}/workers/scripts/{script_name}/script-settings"
+	method="PATCH"
+	json={{ tail_consumers: [] }}
+/>
+
+For this endpoint, omitting `tail_consumers` or sending `null` leaves existing consumers unchanged. Sending `[]` removes them all. To remove only one consumer, send the complete list of consumers you want to keep.
+
+[Read the settings again](/workers/observability/configuration/#read-current-settings) after the update. A successful GET returns `tail_consumers: null` when no customer Tail Workers are configured. This does not disable Workers Logs, Traces, Issues, or Logpush, which have [separate settings](/workers/observability/configuration/). Keep your deployment configuration in sync with API changes.
 
 ## Use Analytics Engine for aggregated metrics
 
