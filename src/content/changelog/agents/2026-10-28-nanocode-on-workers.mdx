@@ -1,0 +1,15 @@
+---
+title: New guide for Nanocode on Cloudflare Workers
+description: Run Nanocode with its own Durable Object host and learn where optional Agents SDK capabilities fit.
+date: 2026-10-28
+---
+
+The [Agents harnesses documentation](/agents/harnesses/) now includes [Nanocode](/agents/harnesses/nanocode/), a Rust/WebAssembly agent runtime with Codex and Claude backends.
+
+Nanocode runs on Durable Objects through its own Cloudflare host. It provides session storage, recovery alarms, and client streaming without requiring Agents SDK.
+
+The guide includes architecture diagrams, a TypeScript example that submits a turn using Workers AI, and recovery boundaries. It also shows where a separate SDK Agent can add schedules, email, and application state.
+
+This documents an existing upstream runtime. It does not add an Agents SDK harness export or change SDK behavior.
+
+Start with [Nanocode on Workers](/agents/harnesses/nanocode/) and the [upstream Workers guide](https://nanocode.xyz/docs/guides/workers).

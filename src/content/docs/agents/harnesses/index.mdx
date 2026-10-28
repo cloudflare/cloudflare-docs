@@ -14,9 +14,11 @@ It is responsible for the turn-by-turn work around the model: building the promp
 
 To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), or build the loop yourself on top of the [Agents SDK runtime](/agents/agent-class/).
 
+[Nanocode](/agents/harnesses/nanocode/) is another option. It runs on Durable Objects through its own Cloudflare host, without requiring Agents SDK.
+
 ## How harnesses fit
 
-Harnesses sit on top of the Agents SDK runtime:
+SDK harness integrations sit on top of the Agents SDK runtime:
 
 - **The runtime** gives the agent durable infrastructure: the [`Agent` class](/agents/agent-class/internals/), [state](/agents/agent-class/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/agent-class/routing/), [WebSockets](/agents/agent-class/websockets/), [scheduling](/agents/agent-class/schedule-tasks/), [fibers](/agents/agent-class/durable-execution/), and [observability](/agents/runtime/operations/observability/).
 - **The harness** gives the agent behavior: model calls, prompt construction, tool selection, stream handling, memory strategy, and lifecycle hooks.
@@ -31,6 +33,8 @@ Use a build-your-own harness when you need full control over the model call, mes
 
 Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and plugin system. `OpenCodeHarness` runs [OpenCode's Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object.
 
+Use Nanocode when you want its Rust/WebAssembly engine, Codex and Claude backends, and native Cloudflare host. Nanocode owns session storage, recovery alarms, and client streaming. Add SDK capabilities through your application when needed.
+
 ## Current harnesses
 
 <LinkCard
@@ -43,6 +47,12 @@ Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and pl
 	title="OpenCode (experimental)"
 	href="/agents/harnesses/opencode/"
 	description="Run OpenCode 2.0 in a plain Durable Object, with Workers AI models, bundled plugins, and durable sessions."
+/>
+
+<LinkCard
+	title="Nanocode"
+	href="/agents/harnesses/nanocode/"
+	description="Run Nanocode with its own Durable Object host. Agents SDK is optional."
 />
 
 ## What a harness usually owns
