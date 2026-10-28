@@ -40,7 +40,7 @@ Every tool entry point requires `zod`. What else you need depends on how your ag
 
 - **[Think](/agents/harnesses/think/)** includes the workspace tools. Install `@cloudflare/computer` alongside it.
 - **[AI SDK](https://ai-sdk.dev/)** tools also require `ai`.
-- **[Pi](/agents/harnesses/pi/)** and **[TanStack AI](https://tanstack.com/ai)** tools need nothing beyond `zod`. Your agent brings its own library.
+- **[Pi](/agents/harnesses/pi/)**, **[OpenCode](/agents/harnesses/opencode/)**, and **[TanStack AI](https://tanstack.com/ai)** tools need nothing beyond `zod`. Your agent brings its own library.
 
 Your Worker needs the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/).
 
@@ -163,12 +163,13 @@ Each tool returns bounded output. `read`, `ls`, `find`, and `grep` page through 
 
 Computer has one adapter per agent library. Each adapter builds the same tools from the same options:
 
-| Harness or library | Entry point                              | Function                |
-| ------------------ | ---------------------------------------- | ----------------------- |
-| Think              | Built in                                 | None                    |
-| Pi                 | `@cloudflare/computer/tools/pi-ai`       | `createPiTools()`       |
-| AI SDK             | `@cloudflare/computer/tools/ai-sdk`      | `createAITools()`       |
-| TanStack AI        | `@cloudflare/computer/tools/tanstack-ai` | `createTanStackTools()` |
+| Harness or library | Entry point                              | Function                      |
+| ------------------ | ---------------------------------------- | ----------------------------- |
+| Think              | Built in                                 | None                          |
+| Pi                 | `@cloudflare/computer/tools/pi-ai`       | `createPiTools()`             |
+| OpenCode           | `@cloudflare/computer/tools/pi-ai`       | `createPiTools()` in a plugin |
+| AI SDK             | `@cloudflare/computer/tools/ai-sdk`      | `createAITools()`             |
+| TanStack AI        | `@cloudflare/computer/tools/tanstack-ai` | `createTanStackTools()`       |
 
 Each entry point loads only `zod` and its own code, so importing one never pulls in another library.
 
@@ -226,6 +227,72 @@ this.registry.install({
 </TypeScriptExample>
 
 `execute` validates the arguments against the schema of the tool and reports failures as `isError` results, so the model can retry.
+
+### OpenCode
+
+:::caution[Experimental]
+The OpenCode harness is experimental. Its API may change in any release.
+:::
+
+[OpenCode](/agents/harnesses/opencode/) receives tools through plugins. The following plugin replaces the OpenCode tools that need a local file system with the workspace tools:
+
+<TypeScriptExample filename="src/workspace-plugin.ts">
+
+```ts
+import type { Workspace } from "@cloudflare/computer";
+import { createPiTools } from "@cloudflare/computer/tools/pi-ai";
+import type { Plugin } from "@opencode/plugin";
+
+// OpenCode tools that need a local file system or process.
+const LOCAL_TOOLS = ["read", "write", "edit", "patch", "glob", "grep", "shell"];
+
+export function workspacePlugin(workspace: Workspace): Plugin.Plugin {
+	const { tools, execute } = createPiTools({ workspace });
+	return {
+		id: "workspace",
+		async setup(ctx) {
+			await ctx.tool.transform((editor) => {
+				for (const id of LOCAL_TOOLS) editor.remove(id);
+				for (const tool of tools) {
+					editor.add({
+						name: tool.name,
+						description: tool.description,
+						input: tool.parameters,
+						// Offer each tool by name instead of through OpenCode's code mode.
+						options: { codemode: false },
+						async execute(input, context) {
+							const { content, isError } = await execute(
+								{ id: context.id, name: tool.name, arguments: input },
+								{ abortSignal: context.signal },
+							);
+							const text = content
+								.map((part) => (part.type === "text" ? part.text : ""))
+								.join("\n");
+							if (isError) throw new Error(text || `${tool.name} failed`);
+							return { content: text };
+						},
+					});
+				}
+			});
+		},
+	};
+}
+```
+
+</TypeScriptExample>
+
+Add the plugin to the `plugins` array that you pass to `OpenCodeWorkerd.create()` in the harness factory:
+
+<TypeScriptExample>
+
+```ts
+OpenCodeWorkerd.create({
+	storage,
+	plugins: [this.ai.plugin, workspacePlugin(this.workspace)],
+});
+```
+
+</TypeScriptExample>
 
 ### AI SDK
 
