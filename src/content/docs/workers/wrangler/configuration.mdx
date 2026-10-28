@@ -411,7 +411,7 @@ The `observability` setting configures [Workers Logs](/workers/observability/log
 - `traces.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Workers Traces is enabled. Set this explicitly to configure tracing independently of logs.
 - `head_sampling_rate` <Type text="number" /> <MetaInfo text="optional" />
-  - The default sampling rate, between 0 and 1, where 0 collects no requests and 1 collects every request. Defaults to 1 (100%). Set `logs.head_sampling_rate` or `traces.head_sampling_rate` to override it for that signal. Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
+  - The default log sampling rate, between 0 and 1, where 0 collects no requests and 1 collects every request. Defaults to 1 (100%). Set `logs.head_sampling_rate` and `traces.head_sampling_rate` explicitly to choose a rate for each signal. Read more about [head-based sampling](/workers/observability/logs/workers-logs/#head-based-sampling).
 
 Example:
 

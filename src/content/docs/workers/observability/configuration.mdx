@@ -33,17 +33,19 @@ For example, to store logs in Cloudflare and export traces without storing them 
 ```toml
 [observability.logs]
 enabled = true
+head_sampling_rate = 1
 persist = true
 
 [observability.traces]
 enabled = true
+head_sampling_rate = 1
 persist = false
 destinations = ["tracing-destination-name"]
 ```
 
 </WranglerConfig>
 
-[Create the destination](/observability/export/opentelemetry/) before deploying this configuration. Use `head_sampling_rate` within `logs` or `traces` to control the fraction of requests collected for that signal.
+[Create the destination](/observability/export/opentelemetry/) before deploying this configuration. Set `head_sampling_rate` within `logs` and `traces` to choose the sampling rate for each signal. A value of `1` samples 100% of requests; `0.1` samples 10%.
 
 Setting `persist` to `false` stops Cloudflare storage for that signal but leaves export configured. Setting `destinations` to `[]` removes OpenTelemetry destinations but leaves persistence configured. Neither setting changes Logpush or Tail Workers.
 
