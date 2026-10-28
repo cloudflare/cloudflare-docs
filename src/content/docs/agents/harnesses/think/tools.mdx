@@ -555,16 +555,19 @@ For an allowlist that changes per tenant or per turn, call `createFetchTools()` 
 <TypeScriptExample>
 
 ```ts
+import { Think } from "@cloudflare/think";
 import { createFetchTools } from "@cloudflare/think/tools/fetch";
 
-getTools() {
-	const tenant = this.getConfig<{ docsOrigin: string }>();
-	return {
-		...createFetchTools({
-			allowlist: tenant ? [`${tenant.docsOrigin}/**`] : [],
-			workspace: this.workspace,
-		}),
-	};
+export class MyAgent extends Think<Env> {
+	getTools() {
+		const tenant = this.getConfig<{ docsOrigin: string }>();
+		return {
+			...createFetchTools({
+				allowlist: tenant ? [`${tenant.docsOrigin}/**`] : [],
+				workspace: this.workspace,
+			}),
+		};
+	}
 }
 ```
 
