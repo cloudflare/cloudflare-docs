@@ -3,14 +3,14 @@ title: Cross-domain authentication
 description: Authenticate WebSocket connections to Cloudflare Agents across domains using signed tokens.
 pcx_content_type: how-to
 sidebar:
-  order: 13
+  order: 4
 products:
   - agents
 ---
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-When your Agents are deployed, to keep things secure, send a token from the client, then verify it on the server. This guide covers authentication patterns for WebSocket connections to agents.
+When your agents are deployed, send a token from the client and verify it on the server. This guide covers authentication patterns for WebSocket connections to agents.
 
 ## WebSocket authentication
 
@@ -188,7 +188,62 @@ function AsyncCrossDomainAuth() {
 
 ## Server-side verification
 
-On the server side, verify the token in the `onConnect` handler:
+Verify the token in your Worker, before the request reaches the Durable Object. `routeAgentRequest()` calls `onBeforeConnect` for every WebSocket upgrade it routes. Return a `Response` to reject the connection, or a `Request` to forward a modified request. This works for any Durable Object that `routeAgentRequest()` can route to, including one that installs the [Lifecycle](/agents/runtime/lifecycle/) directly:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { routeAgentRequest } from "agents";
+
+declare function verifyJWT(
+	token: string,
+	secret: string,
+): Promise<{ sub: string; exp: number }>;
+
+async function verifyToken(
+	token: string | null,
+	secret: string,
+): Promise<string | null> {
+	if (!token) return null;
+	try {
+		const payload = await verifyJWT(token, secret);
+		return payload.exp > Date.now() / 1000 ? payload.sub : null;
+	} catch {
+		return null;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env, {
+				onBeforeConnect: async (req) => {
+					const url = new URL(req.url);
+					const userId = await verifyToken(
+						url.searchParams.get("token"),
+						env.JWT_SECRET,
+					);
+					if (!userId) {
+						return new Response("Unauthorized", { status: 401 });
+					}
+					// Forward the verified user to the Durable Object
+					const forwarded = new Request(req);
+					forwarded.headers.set("x-user-id", userId);
+					return forwarded;
+				},
+			})) ?? new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`verifyJWT` stands in for your JWT library. The second argument to `onBeforeConnect` holds the matched `className` and instance `name`. Use them to check that the token is scoped to the agent the client is connecting to. For plain HTTP requests, use `onBeforeRequest` in the same way.
+
+### On the `Agent` class
+
+An `Agent` can also verify the token in its `onConnect` handler, and store the result on the connection state:
 
 <TypeScriptExample>
 
@@ -241,28 +296,23 @@ export class SecureAgent extends Agent {
 ## Best practices
 
 1. **Use short-lived tokens** - Tokens in URLs may be logged. Keep expiration times short (minutes, not hours).
-
 2. **Scope tokens appropriately** - Include the agent name or instance in the token claims to prevent token reuse across agents.
-
-3. **Validate on every connection** - Always verify tokens in `onConnect`, not just once.
-
+3. **Validate on every connection** - Verify the token on every WebSocket upgrade, in `onBeforeConnect` or `onConnect`, not just once.
 4. **Use HTTPS** - Always use secure WebSocket connections (`wss://`) in production.
-
 5. **Rotate secrets** - Regularly rotate your JWT signing keys or token secrets.
-
 6. **Log authentication failures** - Track failed authentication attempts for security monitoring.
 
 ## Next steps
 
 <LinkCard
 	title="Routing"
-	href="/agents/agent-class/routing/"
+	href="/agents/runtime/lifecycle/routing/"
 	description="Routing and authentication hooks."
 />
 
 <LinkCard
 	title="WebSockets"
-	href="/agents/agent-class/websockets/"
+	href="/agents/runtime/capabilities/websockets/"
 	description="Real-time bidirectional communication."
 />
 
@@ -273,7 +323,7 @@ export class SecureAgent extends Agent {
 />
 
 <LinkCard
-	title="Agents API"
-	href="/agents/agent-class/"
-	description="Complete API reference for the Agents SDK."
+	title="Client SDK"
+	href="/agents/runtime/client/"
+	description="Connect to agents with useAgent and AgentClient."
 />

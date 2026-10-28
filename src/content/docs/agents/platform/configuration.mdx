@@ -3,7 +3,7 @@ title: Configuration
 description: Configure Wrangler bindings, environment variables, and type generation for a project using the Agents SDK.
 pcx_content_type: concept
 sidebar:
-  order: 3
+  order: 1
 products:
   - agents
 ---
@@ -16,15 +16,15 @@ import {
 	DashButton,
 } from "~/components";
 
-This guide covers everything you need to configure agents for local development and production deployment, including Wrangler configuration file setup, type generation, environment variables, and the Cloudflare dashboard.
+An agent runs in a [Durable Object](/durable-objects/). The configuration is the same whether the class installs the [Lifecycle](/agents/runtime/lifecycle/) directly or extends the `Agent` class. This guide covers the Wrangler configuration file, TypeScript and Vite setup, type generation, environment variables, and deployment.
 
 ## Project structure
 
-The typical file structure for an Agent project created from `npm create cloudflare@latest agents-starter -- --template cloudflare/agents-starter` follows:
+The typical file structure for a project created from `npm create cloudflare@latest agents-starter -- --template cloudflare/agents-starter` follows:
 
 <FileTree>
 	- src/
-		- index.ts your Agent definition
+		- index.ts your Durable Object classes and Worker
 	- public/
 		- index.html
 	- test/
@@ -33,7 +33,7 @@ The typical file structure for an Agent project created from `npm create cloudfl
 	- tsconfig.json
 	- vitest.config.mts
 	- worker-configuration.d.ts
-	- wrangler.jsonc your Workers and Agent configuration
+	- wrangler.jsonc your Worker and Durable Object configuration
 </FileTree>
 
 ## Wrangler configuration file
@@ -57,7 +57,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 		"binding": "ASSETS",
 	},
 
-	// Durable Object bindings for agents
+	// One Durable Object binding per agent class
 	"durable_objects": {
 		"bindings": [
 			{
@@ -71,7 +71,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 		],
 	},
 
-  // Provision storage for each agent class
+	// Declare each agent class with SQLite storage
 	"exports": {
 		"MyAgent": {
 			"type": "durable-object",
@@ -101,7 +101,7 @@ The `wrangler.jsonc` file configures your Cloudflare Worker and its bindings. He
 
 #### `compatibility_flags`
 
-The `nodejs_compat` flag is required for agents:
+The `agents` package requires the `nodejs_compat` flag:
 
 <WranglerConfig>
 
@@ -113,7 +113,7 @@ The `nodejs_compat` flag is required for agents:
 
 </WranglerConfig>
 
-This enables Node.js compatibility mode, which agents depend on for crypto, streams, and other Node.js APIs.
+This enables Node.js compatibility mode. The Agents SDK uses it for crypto, streams, and `node:diagnostics_channel`.
 
 #### `durable_objects.bindings`
 
@@ -167,7 +167,7 @@ This is useful when you want environment variable-style naming (`COUNTER_DO`) bu
 
 #### `exports`
 
-The `exports` field declares each Agent class your Worker exports and the storage backend Cloudflare should use for it:
+The `exports` field declares each Durable Object class your Worker exports and the storage backend Cloudflare should use for it:
 
 <WranglerConfig>
 
@@ -184,12 +184,14 @@ The `exports` field declares each Agent class your Worker exports and the storag
 
 </WranglerConfig>
 
-| Field     | Description                                                       |
-| --------- | ----------------------------------------------------------------- |
-| `type`    | The kind of export. Always `"durable-object"` for an Agent.       |
-| `storage` | The storage backend. Use `"sqlite"` for new Agents (recommended). |
+| Field     | Description                                                 |
+| --------- | ----------------------------------------------------------- |
+| `type`    | The kind of export. Always `"durable-object"` for an agent. |
+| `storage` | The storage backend. Use `"sqlite"`.                        |
 
-For details on renaming, deleting, or transferring Agent classes, refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
+The Lifecycle stores its job queue in the Durable Object's SQLite database, and so do capabilities such as `State` and `Scheduler`. Declare every class that installs the Lifecycle, or extends `Agent`, with `"storage": "sqlite"`.
+
+For details on renaming, deleting, or transferring Durable Object classes, refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/). Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/).
 
 #### `assets`
 
@@ -245,7 +247,7 @@ For Workers AI integration:
 
 </WranglerConfig>
 
-Access in your agent:
+Access it from `this.env` inside your Durable Object:
 
 <TypeScriptExample>
 
@@ -259,7 +261,7 @@ const response = await this.env.AI.run("@cf/meta/llama-3-8b-instruct", {
 
 ## TypeScript configuration
 
-The Agents SDK ships a shared `tsconfig.json` that sets all the compiler options needed for agents projects — including the `ES2021` target required for `@callable()` decorators, strict mode, bundler module resolution, and Workers types.
+The Agents SDK ships a shared `tsconfig.json` that sets the compiler options for agents projects, including strict mode, bundler module resolution, Workers types, and the `ES2021` target that the `Agent` class's `@callable()` decorator needs.
 
 Extend it in your `tsconfig.json`:
 
@@ -304,12 +306,12 @@ You can override individual options as needed:
 ```
 
 :::caution
-Do not set `"experimentalDecorators": true`. The Agents SDK uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
+Do not set `"experimentalDecorators": true`. The `Agent` class uses [TC39 standard decorators](https://github.com/tc39/proposal-decorators), not TypeScript legacy decorators. Enabling `experimentalDecorators` applies an incompatible transform that silently breaks `@callable()` at runtime.
 :::
 
 ## Vite configuration
 
-The Agents SDK provides a Vite plugin that handles TC39 decorator transforms. Vite 8 uses Oxc for transpilation, which does not yet support TC39 decorators — without this plugin, `@callable()` and other decorators will fail at runtime.
+The Agents SDK provides a Vite plugin that handles TC39 decorator transforms. Vite 8 uses Oxc for transpilation, which does not yet support TC39 decorators. Without this plugin, decorators such as the `Agent` class's `@callable()` fail at runtime.
 
 Add the plugin to your `vite.config.ts`:
 
@@ -432,13 +434,18 @@ GITHUB_WEBHOOK_SECRET=whsec_...
 DATABASE_URL=postgres://...
 ```
 
-Access in your agent:
+Read them from `this.env` inside your Durable Object:
 
-<TypeScriptExample>
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-class MyAgent extends Agent {
-	async onStart() {
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	onStart() {
 		const apiKey = this.env.OPENAI_API_KEY;
 	}
 }
@@ -552,8 +559,8 @@ Durable Object state is persisted locally in `.wrangler/state/`:
 - .wrangler/
   - state/
     - v3/
-      - d1/
-        - miniflare-D1DatabaseObject/
+      - do/
+        - my-agent-app-MyAgent/
           - ... (SQLite files)
 </FileTree>
 
@@ -576,11 +583,11 @@ npx wrangler dev --persist-to=""
 You can inspect agent state directly:
 
 ```sh
-# Find the SQLite file
-ls .wrangler/state/v3/d1/
+# Find the SQLite files for each class
+ls .wrangler/state/v3/do/
 
-# Open with sqlite3
-sqlite3 .wrangler/state/v3/d1/miniflare-D1DatabaseObject/*.sqlite
+# Open one object's database with sqlite3
+sqlite3 .wrangler/state/v3/do/my-agent-app-MyAgent/<object-id>.sqlite
 ```
 
 ## Dashboard setup
@@ -638,7 +645,7 @@ This:
 
 1. Bundles your code
 2. Uploads to Cloudflare
-3. Provisions the Agent's Durable Object namespace storage
+3. Provisions storage for each Durable Object class in `exports`
 4. Makes it live on `*.workers.dev`
 
 ### Custom domain
@@ -787,9 +794,9 @@ To explicitly separate:
 
 </WranglerConfig>
 
-## Agent class lifecycle
+## Durable Object class changes
 
-Each Agent maps to a Durable Object class. You manage the lifecycle of those classes (create, rename, delete, transfer) through the [`exports`](/durable-objects/reference/durable-objects-migrations/) field of your Wrangler configuration file.
+Each agent class is a Durable Object class. You create, rename, delete, and transfer those classes through the [`exports`](/durable-objects/reference/durable-objects-migrations/) field of your Wrangler configuration file.
 
 ### Adding a new agent
 
@@ -857,11 +864,11 @@ This permanently deletes all data for that class.
 
 :::
 
-### Class lifecycle best practices
+### Best practices for class changes
 
-1. **Keep `exports` in sync with your code.** Every Agent class your Worker exports needs an entry.
+1. **Keep `exports` in sync with your code.** Every Durable Object class your Worker exports needs an entry.
 2. **Use tombstones, not silent removal.** When retiring a class, leave a `deleted` / `renamed` / `transferred` tombstone in `exports` so Cloudflare reconciles the change explicitly.
-3. **Test locally first.** Lifecycle changes apply on `wrangler deploy`.
+3. **Test locally first.** Class changes apply on `wrangler deploy`.
 4. **Back up production data** before renaming or deleting.
 
 Existing Workers using the legacy `migrations` array continue to work — refer to [Durable Object class migrations (legacy)](/durable-objects/reference/durable-object-class-migrations-legacy/) for the legacy reference, or [Migrate from the legacy `migrations` flow](/durable-objects/reference/durable-objects-migrations/#migrate-from-the-legacy-migrations-flow) to move to `exports`.
@@ -938,19 +945,19 @@ Consider converting to the declarative [`exports`](/durable-objects/reference/du
 ## Next steps
 
 <LinkCard
-	title="Agents API"
-	href="/agents/agent-class/"
-	description="Complete API reference for the Agents SDK."
+	title="Lifecycle"
+	href="/agents/runtime/lifecycle/"
+	description="Run capabilities inside any Durable Object."
 />
 
 <LinkCard
 	title="Routing"
-	href="/agents/agent-class/routing/"
+	href="/agents/runtime/lifecycle/routing/"
 	description="Route requests to your agent instances."
 />
 
 <LinkCard
-	title="Schedule tasks"
-	href="/agents/agent-class/schedule-tasks/"
-	description="Background processing with delayed and cron-based tasks."
+	title="Scheduler"
+	href="/agents/runtime/capabilities/scheduler/"
+	description="Run work later, on an interval, or on a cron schedule."
 />
