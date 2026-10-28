@@ -167,7 +167,7 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
   | jq '.result[] | {build_uuid, status, branch, created_at}'
 ```
 
-The response includes `build_uuid` for each build, which you need for getting logs or canceling builds.
+The response includes `build_uuid` for each build, which you need for getting logs or canceling builds. Builds older than 90 days are not returned. Refer to [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
 
 ### Get build logs
 
@@ -182,6 +182,8 @@ Use the [`GET /builds/builds/{uuid}/logs`](/api/resources/workers_builds/subreso
 curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/logs" \
   --header "Authorization: Bearer <API_TOKEN>"
 ```
+
+Build logs are retained for 90 days after the build finishes. To keep them longer, save the response from this endpoint.
 
 ### Cancel a running build
 
