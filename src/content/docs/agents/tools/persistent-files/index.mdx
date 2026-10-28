@@ -165,6 +165,24 @@ For more information, refer to [Built-in workspace tools](/agents/harnesses/thin
 
 `createAITools()` from `@cloudflare/computer/tools/ai-sdk` returns an AI SDK `ToolSet` for a workspace. Pass it to `generateText()`, `streamText()`, or the `getTools()` method of an agent.
 
+The following example uses [Workers AI](/workers-ai/) through the Agents SDK. Install both packages:
+
+<PackageManagers pkg="ai agents" />
+
+Add a Workers AI binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
+```
+
+</WranglerConfig>
+
 <TypeScriptExample>
 
 ```ts
