@@ -7,9 +7,13 @@ products:
 date: "2026-10-23"
 ---
 
+import { DashButton } from "~/components";
+
 The Cloudflare dashboard now includes a **Data Localization Suite** Overview: a read-only view of every data localization setting on your account. Previously, you had to check DNS Records, Address Maps, Spectrum, Logs, and Edge Certificates one by one to see where your traffic, logs, and keys are kept. The Overview puts them all on one page.
 
 To find it, go to **Application Security** > **Data Localization Suite**, or search for "DLS" in the dashboard.
+
+<DashButton url="/?to=/:account/dls/overview" buttonName="Data Localization Suite Overview" />
 
 The Overview has a tab for each product:
 
