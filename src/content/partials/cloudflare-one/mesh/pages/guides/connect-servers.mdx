@@ -4,7 +4,7 @@
 
 import { DashButton, Render, Steps } from "~/components";
 
-Install one Cloudflare Mesh node on each Linux server. Each server receives a private Mesh IP, so it can reach services on the other server through Cloudflare. Neither server needs a public inbound port.
+Install one Cloudflare Mesh node on each Linux server. Each server receives a private Mesh IP, so it can reach services on the other server through Cloudflare. Neither server needs a public IP address or a service exposed to the public Internet.
 
 This setup reaches services running **on the nodes themselves**. To connect hosts behind the nodes instead, follow [Connect two sites](/mesh/guides/connect-sites/).
 
@@ -52,7 +52,7 @@ When a service runs on the node itself, you do not need a CIDR route, router cha
 
 ## Allow service traffic
 
-On each destination server, confirm the service listens on the Mesh IP or on all interfaces. A service bound only to a separate local-network IP cannot accept connections to its Mesh IP. Allow the required port from the other server's Mesh IP in the host firewall, and check any cloud firewall or security group. You do not need to open an inbound Internet port.
+On each destination server, confirm the service listens on the Mesh IP or on all interfaces. A service bound only to a separate local-network IP cannot accept connections to its Mesh IP. Allow the required port from the other server's Mesh IP in the host firewall, and check any cloud firewall or security group. Scope these rules to Mesh IPs instead of opening the port to the public Internet.
 
 Confirm that the [Gateway proxy](/cloudflare-one/traffic-controls/proxy/) handles the service protocol and that any [Gateway network policies](/cloudflare-one/traffic-controls/network-policies/) permit the connection.
 
