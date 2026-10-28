@@ -6,6 +6,75 @@ products:
   - support
 ---
 
-Due to the way routing on [Cloudflare's Anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works, requests may be sent to data center locations that are not necessarily the closest geographically. We are continuously adding capacity to our global network and enhancing our automated traffic engineering systems to intelligently manage congestion and other network events. While we always strive to provide the best possible performance by serving traffic from the closest location, our top priority is reliability. 
+Due to the way routing on [Cloudflare's anycast network](https://www.cloudflare.com/learning/cdn/glossary/anycast-network/) works, requests may be sent to data centers that are not the closest geographically. Cloudflare continuously adds capacity to its global network and improves its automated traffic engineering systems to manage congestion and other network events. Cloudflare aims to serve traffic from the closest location for the best performance, but reliability takes priority.
 
-In instances where performance and reliability are in conflict, our systems are designed to prioritize a stable connection over a local one.
+When performance and reliability conflict, Cloudflare's systems prioritize a stable connection over a local one.
+
+## Frequently asked questions
+
+### How do I check which data center is serving my traffic?
+
+Visit `https://<YOUR_DOMAIN>/cdn-cgi/trace` in a browser and note the `colo` field in the output. You can also check the [`cf-ray`](/fundamentals/reference/http-headers/#cf-ray) response header. The three-letter code at the end of the value identifies the data center that processed the request. Both use the [IATA code](https://en.wikipedia.org/wiki/IATA_airport_code) of a nearby major airport. For more details, refer to [Identify the Cloudflare data center serving your request](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#identify-the-cloudflare-data-center-serving-your-request).
+
+### Can I choose or pin the data center that serves my traffic?
+
+No. Cloudflare uses anycast to announce the same IP addresses from many data centers at the same time. Cloudflare does not pick a data center for each visitor. The visitor's Internet service provider (ISP) decides which Cloudflare data center receives the request, based on its own routing and peering policies. These policies do not always favor the geographically closest location. For example, an ISP may send traffic to a distant city where it has a direct connection with Cloudflare instead of a nearby one where it does not.
+
+Cloudflare's traffic engineering can influence these paths across the network as a whole, but it cannot direct individual visitors to a specific data center. Data center selection cannot be configured per zone, per account, or by support request.
+
+### Why do consecutive requests or tests show different data centers?
+
+This is expected behavior. Because data center selection depends on network conditions at the time of each request, consecutive requests from the same visitor may be served by different data centers, and tests performed from different networks, locations, or at different times will often show different results. This variability is normal for anycast routing and does not indicate a problem with your zone or a misconfiguration.
+
+Each data center keeps its own cache, so a response cached in one data center can return `MISS` when the next request is served by another. [Tiered Cache](/cache/how-to/tiered-cache/) reduces how often these misses reach your origin.
+
+If requests are failing or consistently slow, refer to [Gathering information for troubleshooting sites](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/) for the details support needs to investigate.
+
+### Why is another domain on Cloudflare served from a data center closer to me than mine?
+
+The set of data centers that can serve a given domain varies between Cloudflare customers. Seeing another domain served from a closer data center does not indicate a problem with your zone, and it does not mean your traffic is being misrouted.
+
+### Why did the data center serving my traffic change?
+
+Data center selection is not fixed. It can change due to scheduled or unscheduled maintenance at a data center, changes in Internet routing between your visitors' networks and Cloudflare, network congestion, and Cloudflare's automated traffic engineering, which shifts traffic between locations to keep performance and reliability balanced.
+
+To check whether a specific data center is affected by maintenance or a service disruption, refer to the [Cloudflare status page](https://www.cloudflarestatus.com). For more information on maintenance that may affect customers, refer to [Disruptive maintenance](/support/disruptive-maintenance/).
+
+### Visitors on a specific ISP reach a distant data center. What can I do?
+
+Because the visitor's ISP controls how its traffic reaches Cloudflare, you cannot change this routing from your zone settings. It only changes if the ISP or Cloudflare adjusts routing or peering between the two networks.
+
+If visitors on a specific network consistently reach a distant data center and see degraded performance, contact Cloudflare Support with the following information from an affected visitor:
+
+- The visitor's ISP and, if known, its autonomous system number (ASN).
+- The output of `https://<YOUR_DOMAIN>/cdn-cgi/trace`.
+- A [traceroute](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-traceroute) and an [MTR](/support/troubleshooting/general-troubleshooting/gathering-information-for-troubleshooting-sites/#perform-a-mtr) to your domain.
+- The `cf-ray` values and timestamps of affected requests.
+
+Support can review the network path and raise it with Cloudflare's network team where appropriate. A routing change is not guaranteed, because it depends on the ISP's routing policies. Affected visitors can also report the issue to their ISP.
+
+If visitors on a specific network cannot reach Cloudflare and their requests time out without a `cf-ray` header, refer to [Potential ISP blocking of Cloudflare IP addresses](/support/troubleshooting/general-troubleshooting/potential-isp-blocking/).
+
+### My traceroute shows traffic entering Cloudflare in one city, but the cf-ray value shows another. Why?
+
+Traffic can enter Cloudflare's network at one location and be processed at another. A traceroute ending at a nearby Cloudflare location shows where the traffic entered the network, while the three-letter code at the end of [`cf-ray`](/fundamentals/reference/http-headers/#cf-ray) identifies the data center that processed the request. These are not always the same location, and traffic entering near a visitor does not guarantee that it is processed at the nearest data center.
+
+If you compare `cf-ray` values in your origin server logs with the values visitors receive, the codes may also differ when [Argo Smart Routing](/argo-smart-routing/) or [Tiered Cache](/cache/how-to/tiered-cache/) is enabled. With these features, requests can travel across Cloudflare's network before reaching your origin, and the `cf-ray` header sent to your origin identifies the data center that connected to your origin, not the data center that received the visitor's request.
+
+### Do IPv4 and IPv6 requests use the same data center?
+
+Not necessarily. Data center selection depends on network routing, and IPv4 and IPv6 traffic can take different paths from the same visitor. IPv4 and IPv6 requests may therefore be served from different data centers, and latency can differ between the two protocols. This is expected anycast behavior and does not indicate a problem with your zone.
+
+### Does the serving data center affect visitor geolocation?
+
+No. Cloudflare determines a visitor's location from the visitor's IP address, not from the data center that serves the request. The [`CF-IPCountry`](/fundamentals/reference/http-headers/#cf-ipcountry) header and geolocation fields used in rules, such as `ip.src.country`, reflect the visitor's location even when a distant data center serves the request.
+
+### Why are visitors in mainland China served from data centers outside China?
+
+Cloudflare's global network does not include data centers in mainland China, so visitors there are served from data centers outside the country. Traffic that crosses China's network boundaries often has higher latency and lower reliability.
+
+To serve visitors from data centers inside mainland China, Enterprise customers can subscribe to the [Cloudflare China Network](/china-network/). The China Network requires a valid [ICP filing or license](/china-network/concepts/icp/) for each domain.
+
+### I need my traffic processed in a specific region. What options do I have?
+
+Anycast data center selection cannot be pinned to a specific location. If you have compliance or data residency requirements, Enterprise customers can use [Regional Services](/data-localization/regional-services/), part of the [Data Localization Suite](/data-localization/). Regional Services accepts traffic at any Cloudflare data center but decrypts and processes it only in data centers within the region you choose.

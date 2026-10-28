@@ -1,0 +1,45 @@
+---
+title: "Control which hostnames Browser Run sessions can access"
+description: Browser Run guardrails restrict HTTP and HTTPS requests by hostname.
+products:
+  - browser-run
+date: 2026-09-14
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Browser Run](/browser-run/) now supports [guardrails](/browser-run/features/guardrails/), which limit a browser session's HTTP and HTTPS requests to permitted hostnames.
+
+Use guardrails when you need to:
+
+- Keep a browser workflow limited to a specific website and its subdomains.
+- Load only known third-party APIs, scripts, images, and fonts.
+- Generate a screenshot or PDF from HTML you provide while preventing it from loading external content.
+
+Set guardrails when starting a session with Puppeteer, Playwright, or the REST API. With a browser binding named `MYBROWSER`, pass `guardrails` when launching Puppeteer:
+
+<TypeScriptExample>
+
+```ts
+import puppeteer from "@cloudflare/puppeteer";
+
+interface Env {
+	MYBROWSER: Fetcher;
+}
+
+export async function startGuardedSession(env: Env) {
+	return puppeteer.launch(env.MYBROWSER, {
+		guardrails: {
+			allowedDomains: ["example.com", "*.example.com"],
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+In addition to session guardrails, Browser Run now supports a read-only mode for [Live View](/browser-run/features/live-view/). Live View lets you watch and interact with an active Browser Run session in real time. A read-only link lets someone watch without clicking, typing, navigating, or running JavaScript.
+
+To create a read-only link, set `{ mode: "readonly" }` when generating the Live View URL. This setting affects only the person using that link. The session's hostname restrictions remain unchanged.
+
+Refer to the [guardrails documentation](/browser-run/features/guardrails/) for more information.

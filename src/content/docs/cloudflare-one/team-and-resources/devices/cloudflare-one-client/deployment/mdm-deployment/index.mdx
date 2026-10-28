@@ -76,8 +76,12 @@ IdentifyingNumber                      Name                  LocalPackage
 2. You can then use the LocalPackage output in the uninstall command. For example,
 
 ```powershell
-msiexec /x C:\WINDOWS\Installer\<WARP_RELEASE>.msi /quiet
+msiexec /x "<LOCAL_PACKAGE_PATH>" /quiet
 ```
+
+:::note
+If [uninstall protection](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/uninstall-protection/) is turned on, add `UNINSTALL_TOKEN="<ACCOUNT_WIDE_UNINSTALL_TOKEN>"` to the command. Silent uninstalls, upgrades, and downgrades fail without a valid token.
+:::
 
 ### Update MDM parameters
 
@@ -91,6 +95,10 @@ The on-disk configuration of the Windows client can be changed at any time by mo
 	<false/>
 </dict>
 ```
+
+:::note
+If [uninstall protection](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/uninstall-protection/) is turned on, the client blocks changes to `mdm.xml`. [Unlock the client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/uninstall-protection/#unlock-the-client-with-warp-cli) with `warp-cli uninstall-protection unlock` first.
+:::
 
 Changes to this file are processed immediately by the Cloudflare One Client.
 
@@ -121,19 +129,14 @@ If you do not wish to use a management tool, you can manually place an `mdm.xml`
 #### `plist` file
 
 1. [Download](/cloudflare-one/static/mdm/com.cloudflare.warp.plist) an example `com.cloudflare.warp.plist` file.
-
 2. Replace `your-team-name` with your Cloudflare One <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
-
 3. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/).
 
 #### `mobileconfig` file
 
 1. [Download](/cloudflare-one/static/mdm/CloudflareWARP.mobileconfig) an example `.mobileconfig` file.
-
 2. Replace `your-team-name` with your Cloudflare One <GlossaryTooltip term="team name">team name</GlossaryTooltip>.
-
 3. Run `uuidgen` from your macOS Terminal. This will generate a value for `PayloadUUID`, which you can use to replace the default value used for `PayloadUUID`.
-
 4. Modify the file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/).
 
 ### Place an unmanaged `mdm.xml` file

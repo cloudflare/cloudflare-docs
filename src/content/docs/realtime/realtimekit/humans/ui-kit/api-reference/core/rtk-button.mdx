@@ -1,0 +1,56 @@
+---
+pcx_content_type: navigation
+title: rtk-button
+description: API reference for rtk-button component (Web Components (HTML) Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-button/rtk-button.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A button that follows RTK Design System.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `disabled` | `boolean` | ✅ | - | Where the button is disabled or not |
+| `kind` | `ButtonKind` | ✅ | - | Button type |
+| `reverse` | `boolean` | ✅ | - | Whether to reverse order of children |
+| `size` | `Size` | ✅ | - | Size |
+| `type` | `HTMLButtonElement['type']` | ✅ | - | Button type |
+| `variant` | `ButtonVariant` | ✅ | - | Button variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-button></rtk-button>
+```
+
+### With Properties
+
+```html
+<rtk-button
+ size="md">
+</rtk-button>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-button");
+
+  el.disabled = true;
+  el.reverse = true;
+</script>
+```

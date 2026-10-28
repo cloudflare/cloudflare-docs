@@ -1,9 +1,8 @@
 ---
-params:
-  - conditional?
+{}
 ---
 
-import { Details, Render, DashButton } from "~/components";
+import { DashButton } from "~/components";
 
 1. In the Cloudflare dashboard, go to the **Internal DNS** page.
 
@@ -12,13 +11,6 @@ import { Details, Render, DashButton } from "~/components";
 2. Go to **Internal DNS Views**.
 3. Select **Create a view**.
 4. Give your view a descriptive name.
-
-{ props.conditional === "get-started-detail" && (
-
-<Details header="DNS view configuration conditions">
-	<Render file="internal-dns-view-conditions" product="dns" />
-</Details>
-) }
 
 5. Select **Manage zones** to add zones to your view. Select the internal zones that should be used to resolve queries sent by Gateway resolver to this view.
 6. Choose **Save** to confirm.

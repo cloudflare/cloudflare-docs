@@ -1,0 +1,94 @@
+---
+pcx_content_type: how-to
+description: Connect authentik to Cloudflare Access as a SAML 2.0 identity provider.
+products:
+  - cloudflare-one
+title: authentik (SAML)
+tags:
+  - SAML
+---
+
+import { DashButton, Render, Steps } from "~/components";
+
+Connect authentik to Cloudflare Access with Security Assertion Markup Language (SAML) 2.0.
+
+## Prerequisites
+
+- An authentik account with administrator access
+- A Cloudflare account with Zero Trust access
+- A publicly accessible authentik deployment with a trusted TLS certificate
+
+## 1. Create an application in authentik
+
+Your Cloudflare Access team name is part of the Assertion Consumer Service (ACS) URL. Locate your team name before you configure authentik.
+
+<Render file="find-team-name" product="cloudflare-one" />
+
+<Steps>
+1. Log in to authentik as an administrator and open the Admin interface.
+2. Go to **Applications** > **Applications** and select **New Application**.
+3. Enter the application details and select **Next**.
+4. For the provider type, select **SAML Provider**.
+5. Configure the provider:
+   1. Enter a provider name and select an authorization flow.
+   2. For **ACS URL**, enter:
+
+      ```txt
+      https://<YOUR_TEAM_NAME>.cloudflareaccess.com/cdn-cgi/access/callback
+      ```
+
+   3. For **Audience**, enter the same Cloudflare Access callback URL.
+   4. Select a **Signing Certificate** and keep **Sign assertions** turned on.
+   5. For **Service Provider Binding**, select _Post_.
+   6. For **Default NameID Policy**, select _Email address_.
+6. Select **Create Application**.
+</Steps>
+
+For more information about authentik provider settings, refer to [Create a SAML provider](https://docs.goauthentik.io/add-secure-apps/providers/saml/create-saml-provider/).
+
+## 2. Get the authentik provider details
+
+<Steps>
+1. In the authentik Admin interface, go to **Applications** > **Providers**.
+2. Select the SAML provider that you created for Cloudflare Access.
+3. Record the following values. Replace `<AUTHENTIK_DOMAIN>` with your authentik hostname and `<APPLICATION_SLUG>` with the associated application slug.
+
+   | Cloudflare field | authentik value |
+   | --- | --- |
+   | Single Sign-On URL | `https://<AUTHENTIK_DOMAIN>/application/saml/<APPLICATION_SLUG>/` |
+   | IdP Entity ID or Issuer URL | `https://<AUTHENTIK_DOMAIN>/application/saml/<APPLICATION_SLUG>/metadata/` |
+
+4. Under **Download signing certificate**, select **Download**. Save the certificate for the Cloudflare configuration.
+</Steps>
+
+The metadata tab also contains the SAML endpoint, entity ID, and signing certificate. For more information, refer to [SAML Provider](https://docs.goauthentik.io/add-secure-apps/providers/saml/).
+
+## 3. Add authentik to Cloudflare Access
+
+<Steps>
+1. In Cloudflare Zero Trust, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/one/integrations/identity-providers" zeroTrust />
+
+2. Select **Add new identity provider** > **SAML**.
+3. Enter a name for the identity provider.
+4. Enter the **Single Sign-On URL** and **IdP Entity ID or Issuer URL** from authentik.
+5. For **Signing certificate**, paste the certificate downloaded from authentik.
+6. Select **Save**.
+</Steps>
+
+:::caution
+Access cannot verify SAML responses after the authentik signing certificate expires or changes. Update the certificate in Cloudflare Access before you rotate it in authentik.
+:::
+
+## 4. Test the integration
+
+<Steps>
+1. In Cloudflare Zero Trust, go to **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/one/integrations/identity-providers" zeroTrust />
+
+2. Find the authentik identity provider and select **Test**.
+3. Complete the authentik login flow.
+4. Verify that Cloudflare displays a successful test result and the expected email address.
+</Steps>

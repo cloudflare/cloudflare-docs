@@ -6,7 +6,12 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
+import {
+	TypeScriptExample,
+	WranglerConfig,
+	LinkCard,
+	PackageManagers,
+} from "~/components";
 
 Agents can send and receive email with Cloudflare [Email Service](/email-service/api/route-emails/email-handler/). This guide shows how to send outbound email with the Workers binding, route inbound mail into Agents, and handle follow-up replies securely.
 
@@ -486,22 +491,9 @@ When your agent sends emails and expects replies, use secure reply routing to pr
 
 ### Setup
 
-1. Add a secret to your Worker:
+1. Store the signing key as a Wrangler secret. Do not put it in `vars` or commit it to source control:
 
-   <WranglerConfig>
-
-   ```toml
-   [vars]
-   EMAIL_SECRET = "change-me-in-production"
-   ```
-
-   </WranglerConfig>
-
-   For production, use Wrangler secrets instead:
-
-   ```sh
-   npx wrangler secret put EMAIL_SECRET
-   ```
+   <PackageManagers type="exec" pkg="wrangler" args="secret put EMAIL_SECRET" />
 
 2. Use the combined resolver pattern:
 
@@ -756,18 +748,18 @@ Useful when sending emails through external services while maintaining secure re
 
 <LinkCard
 	title="HTTP and SSE"
-	href="/agents/runtime/communication/http-sse/"
+	href="/agents/agent-class/http-sse/"
 	description="Handle HTTP requests in your Agent."
 />
 
 <LinkCard
 	title="Webhooks"
-	href="/agents/communication-channels/webhooks/"
+	href="/agents/agent-class/communication-channels/webhooks/"
 	description="Receive events from external services."
 />
 
 <LinkCard
 	title="Agents API"
-	href="/agents/runtime/agents-api/"
+	href="/agents/agent-class/"
 	description="Complete API reference for the Agents SDK."
 />

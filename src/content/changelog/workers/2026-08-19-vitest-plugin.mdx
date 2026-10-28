@@ -1,0 +1,25 @@
+---
+title: "@cloudflare/vitest-pool-workers is now @cloudflare/vitest-plugin"
+description: The Workers Vitest integration package has been renamed for version 1.
+products:
+  - workers
+date: 2026-08-19
+---
+
+import { PackageManagers } from "~/components";
+
+Version 1 of the Workers Vitest integration is published as [`@cloudflare/vitest-plugin`](https://www.npmjs.com/package/@cloudflare/vitest-plugin). The package was formerly named `@cloudflare/vitest-pool-workers`.
+
+The Vitest configuration API is unchanged. Existing projects must update the dependency name, package imports, and TypeScript `types` entries.
+
+To migrate automatically, run:
+
+<PackageManagers
+	type="exec"
+	pkg="@cloudflare/codemods"
+	args="vitest:pool-workers-to-vitest-plugin"
+/>
+
+The codemod updates your dependency, imports, and test TypeScript configuration. For manual migration steps, refer to [Migrate to Vitest plugin](/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin/).
+
+For outbound request mocks in Workers tests, use the [`@msw/cloudflare`](https://github.com/mswjs/cloudflare) integration. Refer to [Mock outbound requests](/workers/testing/vitest-integration/mock-outbound-requests/).

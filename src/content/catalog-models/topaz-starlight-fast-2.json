@@ -1,0 +1,208 @@
+{
+	"model_id": "topaz/starlight-fast-2",
+	"provider_id": "topaz",
+	"name": "Starlight Fast 2",
+	"description": "Topaz Labs Starlight Fast 2 (slf-2) enhances and upscales source video to 1080p or 4K with faster processing than Starlight Precise. It is designed for video restoration workflows where turnaround time is important.",
+	"task": "video-to-video",
+	"tags": [
+		"Video Enhancement",
+		"Upscaling",
+		"Restoration",
+		"Video-to-Video"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per provider unit": 0.12
+	},
+	"examples": [
+		{
+			"name": "Fast Video Enhancement",
+			"description": "Quickly enhance the first 121 frames of a source MP4.",
+			"input": {
+				"end_index": 120,
+				"frame_count": 150,
+				"frame_rate": 29.97,
+				"source_container": "mp4",
+				"source_height": 360,
+				"source_width": 640,
+				"start_index": 0,
+				"target_resolution": "1920x1080",
+				"upscaling_factor": 2,
+				"video_uri": "https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/topaz/starlight-fast-2/fast-video-enhancement.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/topaz/starlight-fast-2/fast-video-enhancement.mp4"
+				},
+				"gatewayMetadata": {
+					"keySource": "Unified"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/starlight-fast-2',\n  {\n    end_index: 120,\n    frame_count: 150,\n    frame_rate: 29.97,\n    source_container: 'mp4',\n    source_height: 360,\n    source_width: 640,\n    start_index: 0,\n    target_resolution: '1920x1080',\n    upscaling_factor: 2,\n    video_uri:\n      'https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/starlight-fast-2\",\n  \"input\": {\n    \"end_index\": 120,\n    \"frame_count\": 150,\n    \"frame_rate\": 29.97,\n    \"source_container\": \"mp4\",\n    \"source_height\": 360,\n    \"source_width\": 640,\n    \"start_index\": 0,\n    \"target_resolution\": \"1920x1080\",\n    \"upscaling_factor\": 2,\n    \"video_uri\": \"https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developer.topazlabs.com/",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Max Source Size": "500 MB",
+		"Resolutions": "1920x1080, 3840x2160",
+		"Segment Rendering": "Start and end frame",
+		"Upscaling Factor": "1-8x"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "topaz",
+			"pricing": {
+				"units": 0.12
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-12 15:21:38",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video_uri": {
+					"type": "string",
+					"format": "uri",
+					"description": "HTTPS URI of the source video to enhance"
+				},
+				"source_container": {
+					"type": "string",
+					"enum": [
+						"3gp",
+						"avi",
+						"dv",
+						"flv",
+						"m1v",
+						"m2t",
+						"m2ts",
+						"m2v",
+						"m4v",
+						"mkv",
+						"mov",
+						"mp4",
+						"mpeg",
+						"mpg",
+						"mts",
+						"mxf",
+						"ser",
+						"ts",
+						"vob",
+						"webm",
+						"wmv"
+					],
+					"description": "Container format of the source video"
+				},
+				"source_width": {
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"description": "Width of the source video in pixels"
+				},
+				"source_height": {
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"description": "Height of the source video in pixels"
+				},
+				"frame_count": {
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"description": "Total frame count of the source video (used by Topaz for credit estimation)"
+				},
+				"frame_rate": {
+					"type": "number",
+					"exclusiveMinimum": 0,
+					"description": "Frame rate of the source video in frames per second (e.g. 29.97)"
+				},
+				"target_resolution": {
+					"default": "1920x1080",
+					"description": "Target output resolution",
+					"type": "string",
+					"enum": [
+						"1920x1080",
+						"3840x2160"
+					]
+				},
+				"upscaling_factor": {
+					"default": 1,
+					"description": "Output resolution multiplier relative to the source video",
+					"type": "number",
+					"minimum": 1,
+					"maximum": 8
+				},
+				"start_index": {
+					"default": 0,
+					"description": "First source frame to process",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 9007199254740991
+				},
+				"end_index": {
+					"default": 1000000,
+					"description": "Last source frame to process",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 9007199254740991
+				}
+			},
+			"required": [
+				"video_uri",
+				"source_container",
+				"source_width",
+				"source_height",
+				"frame_count",
+				"frame_rate",
+				"target_resolution",
+				"upscaling_factor",
+				"start_index",
+				"end_index"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL to the enhanced video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

@@ -1,0 +1,23 @@
+---
+title: Cloudflare Registrar API beta now supports domain transfers
+description: Initiate and monitor domain transfers into Cloudflare Registrar
+products:
+  - registrar
+date: 2026-09-30
+---
+
+Cloudflare Registrar API beta now supports domain transfers.
+
+You can now use the Cloudflare API to:
+
+- Initiate a supported domain transfer into Cloudflare Registrar.
+- Poll transfer status through a dedicated status endpoint.
+
+Before starting a transfer, the domain must already have a zone in your Cloudflare account, DNSSEC must be disabled, and most extensions require an authorization or EPP code from the current registrar.
+
+Transfers are asynchronous and typically take 1 to 10 days to complete, so clients should poll the transfer status endpoint to track workflow progress.
+
+For transfer initiation and status details, refer to:
+
+- [Initiate Transfer API reference](https://developers.cloudflare.com/api/resources/registrar/subresources/transfer_in/methods/create/)
+- [Get Transfer Status API reference](https://developers.cloudflare.com/api/resources/registrar/subresources/transfer_in_status/methods/get/)

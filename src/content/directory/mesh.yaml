@@ -4,7 +4,7 @@ name: Cloudflare Mesh
 entry:
   title: Cloudflare Mesh
   group: Cloudflare One
-  url: /cloudflare-one/networks/connectors/cloudflare-mesh/
+  url: /mesh/
 
 meta:
   description: Connect services and devices with post-quantum encrypted mesh networking

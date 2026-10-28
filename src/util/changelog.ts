@@ -17,9 +17,10 @@ import {
 	getEntry,
 	type CollectionEntry,
 } from "astro:content";
-import { config } from "virtual:nimbus/config";
 import { entryToString } from "~/util/container";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
+import { absolutizeUrls } from "~/util/rss";
+import { compareWarpVersions } from "~/util/warp-version";
 import { sub } from "date-fns";
 
 export const slugifyArea = (value: string) =>
@@ -48,15 +49,8 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 	// Versions up to and including 2026.3.566.1 render as "WARP client";
 	// newer versions render as "Cloudflare One Client".
-	const isLegacyVersion = (ver: string): boolean => {
-		const legacyThreshold = [2026, 3, 566, 1];
-		const parts = ver.split(".").map(Number);
-		for (let i = 0; i < legacyThreshold.length; i++) {
-			if ((parts[i] ?? 0) < legacyThreshold[i]) return true;
-			if ((parts[i] ?? 0) > legacyThreshold[i]) return false;
-		}
-		return true;
-	};
+	const isLegacyVersion = (ver: string): boolean =>
+		compareWarpVersions(ver, "2026.3.566.1") <= 0;
 
 	return releases.map((release) => {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
@@ -94,9 +88,7 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				publish_future_dated_entry: false,
 			},
 			rendered: {
-				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
-					async: false,
-				}),
+				html: renderMarkdown([prefix, releaseNotes].join("\n\n")),
 			},
 		};
 	});
@@ -164,18 +156,6 @@ export const changelogProductIds: string[] = [
 		),
 	),
 ];
-
-const SITE_ORIGIN = new URL(config.site).origin;
-
-// Rewrite root-relative URLs (href="/..", src="/..") to absolute so feed
-// readers resolve them. Leaves protocol-relative (`//`) and absolute URLs
-// untouched.
-function absolutizeUrls(html: string): string {
-	return html.replace(
-		/\b(href|src)="\/(?!\/)/g,
-		(_match, attr) => `${attr}="${SITE_ORIGIN}/`,
-	);
-}
 
 type GetRSSItemsOptions = {
 	notes: Array<CollectionEntry<"changelog">>;

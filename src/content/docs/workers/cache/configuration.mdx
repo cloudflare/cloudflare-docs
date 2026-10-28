@@ -14,7 +14,7 @@ This is **your Worker's cache** — configured through your Worker's code and Wr
 
 - The `cache.enabled` flag in your Wrangler configuration, which turns caching on or off. You can override it [per entrypoint](#per-entrypoint-caching) and control [cross-version behavior](#cross-version-caching).
 - The `Cache-Control` (and `cdn-cache-control`, `cloudflare-cdn-cache-control`) headers your Worker sets on its responses, per [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111).
-- The optional `Cache-Tag` response header for bulk purging, and [`ctx.cache.purge()`](/workers/cache/purge/) for programmatic invalidation.
+- The optional `Cache-Tag` response header for bulk purging or invalidation, and [`ctx.cache.purge()`](/workers/cache/purge/) and [`ctx.cache.invalidate()`](/workers/cache/purge/#invalidate-cached-responses) to purge or invalidate from code.
 
 That is the entire configuration surface.
 
@@ -32,6 +32,7 @@ Add a `cache` block to your Wrangler configuration:
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": {
 		"enabled": true,
@@ -55,6 +56,7 @@ To turn caching off, set `cache.enabled` to `false` (or remove the `cache` block
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": {
 		"enabled": false,
@@ -80,6 +82,7 @@ Requires Wrangler 4.107.0 or above.
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": {
 		"enabled": true,
@@ -134,6 +137,7 @@ If you want to maximize cache hit rate and are willing to accept slower rollouts
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": {
 		"enabled": true,
@@ -158,6 +162,7 @@ The `cache` block can be set at the top level and overridden per [environment](/
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": {
 		"enabled": false,

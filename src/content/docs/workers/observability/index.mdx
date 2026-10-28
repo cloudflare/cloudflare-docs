@@ -44,6 +44,10 @@ Logs are essential for troubleshooting and understanding your application's beha
 
 [Tracing](/workers/observability/traces/) gives you end-to-end visibility into the life of a request as it travels through your Workers application and connected services. With automatic instrumentation, Cloudflare captures telemetry data for fetch calls, binding operations (KV, R2, Durable Objects), and handler invocations - no code changes required.
 
+## Issues
+
+[Issues](/workers/observability/issues/) detects and groups recurring Worker failures. Investigate each occurrence and route issues to coding agents, webhooks, chat services, or incident-management tools.
+
 ## Metrics and analytics
 
 [Metrics and analytics](/workers/observability/metrics-and-analytics/) let you monitor your Worker's health with built-in metrics including request counts, error rates, CPU time, wall time, and execution duration. View metrics per Worker or aggregated across all Workers on a zone.
@@ -54,7 +58,7 @@ The [Query Builder](/workers/observability/query-builder/) helps you write struc
 
 ## Exporting data
 
-[Export OpenTelemetry-compliant traces and logs](/workers/observability/exporting-opentelemetry-data/) from Workers to your existing observability stack. Workers supports exporting to any destination with an OTLP endpoint, including Honeycomb, Grafana Cloud, Axiom, and Sentry.
+[Configure OpenTelemetry export](/workers/observability/opentelemetry-export/) for Workers logs and traces. Workers can export to any [supported OpenTelemetry destination](/observability/export/opentelemetry/).
 
 ## Debugging
 
@@ -75,6 +79,11 @@ The [Query Builder](/workers/observability/query-builder/) helps you write struc
 		description="Use Chrome DevTools for breakpoints, CPU profiling, and memory debugging during local development."
 	/>
 	<LinkCard
+		title="Profiling in production"
+		href="/workers/observability/profiling-in-production/"
+		description="Capture CPU and allocation profiles for deployed Workers and Durable Objects."
+	/>
+	<LinkCard
 		title="Local observability"
 		href="/workers/local-development/local-explorer/"
 		description="Capture traces, spans, and logs from your Workers locally."
@@ -86,8 +95,8 @@ The [Query Builder](/workers/observability/query-builder/) helps you write struc
 <CardGrid>
 	<LinkCard
 		title="MCP server"
-		href="https://github.com/cloudflare/mcp-server-cloudflare/tree/main/apps/workers-observability"
-		description="Query Workers observability data using the Model Context Protocol."
+		href="/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server"
+		description="Query Workers observability data with the Cloudflare API MCP server."
 	/>
 	<LinkCard
 		title="Third-party integrations"

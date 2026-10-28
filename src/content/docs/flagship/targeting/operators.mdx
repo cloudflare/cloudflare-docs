@@ -1,30 +1,32 @@
 ---
 pcx_content_type: reference
 title: Operators
-description: Reference for the 11 comparison operators available in Flagship targeting rule conditions, including equality, comparison, string, and array operators.
+description: Reference for the 13 comparison operators available in Flagship targeting rule conditions, including equality, comparison, string, and array operators.
 sidebar:
   order: 1
 products:
   - flagship
 ---
 
-Flagship supports 11 comparison operators for targeting rule conditions. Each operator compares an attribute from the [evaluation context](/flagship/concepts/#evaluation-context) against a specified value.
+Flagship supports 13 comparison operators for targeting rule conditions. Each operator compares an attribute from the [evaluation context](/flagship/concepts/#evaluation-context) against a specified value.
 
 ## Operator reference
 
-| Operator                 | Description                                                                          | Example                                                | Value type                |
-| ------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------------------ | ------------------------- |
-| `equals`                 | Returns true if the attribute value matches the specified value.                     | `country equals "US"`                                  | String                    |
-| `not_equals`             | Returns true if the attribute value does not match the specified value.              | `plan not_equals "free"`                               | String                    |
-| `greater_than`           | Returns true if the attribute value is greater than the specified value.             | `age greater_than 18`                                  | Number, ISO 8601 datetime |
-| `less_than`              | Returns true if the attribute value is less than the specified value.                | `loginCount less_than 5`                               | Number, ISO 8601 datetime |
-| `greater_than_or_equals` | Returns true if the attribute value is greater than or equal to the specified value. | `score greater_than_or_equals 90`                      | Number, ISO 8601 datetime |
-| `less_than_or_equals`    | Returns true if the attribute value is less than or equal to the specified value.    | `createdAt less_than_or_equals "2025-01-01T00:00:00Z"` | Number, ISO 8601 datetime |
-| `contains`               | Returns true if the attribute value contains the specified substring.                | `email contains "@cloudflare.com"`                     | String                    |
-| `starts_with`            | Returns true if the attribute value starts with the specified prefix.                | `path starts_with "/api/v2"`                           | String                    |
-| `ends_with`              | Returns true if the attribute value ends with the specified suffix.                  | `domain ends_with ".dev"`                              | String                    |
-| `in`                     | Returns true if the attribute value is in the specified array.                       | `country in ["US", "CA", "UK"]`                        | Array                     |
-| `not_in`                 | Returns true if the attribute value is not in the specified array.                   | `userId not_in ["blocked-1", "blocked-2"]`             | Array                     |
+| Operator                 | Description                                                                          | Example                                    | Rule value type           |
+| ------------------------ | ------------------------------------------------------------------------------------ | ------------------------------------------ | ------------------------- |
+| `equals`                 | Returns true if the attribute matches the specified scalar.                          | `country equals "US"`                      | Scalar                    |
+| `not_equals`             | Returns true if the attribute differs from the specified scalar.                     | `plan not_equals "free"`                   | Scalar                    |
+| `greater_than`           | Returns true if the attribute value is greater than the specified value.             | `age greater_than 18`                      | Number, ISO 8601 datetime |
+| `less_than`              | Returns true if the attribute value is less than the specified value.                | `loginCount less_than 5`                   | Number, ISO 8601 datetime |
+| `greater_than_or_equals` | Returns true if the attribute value is greater than or equal to the specified value. | `score greater_than_or_equals 90`          | Number, ISO 8601 datetime |
+| `less_than_or_equals`    | Returns true if the attribute value is less than or equal to the specified value.    | `createdAt less_than_or_equals <DATETIME>` | Number, ISO 8601 datetime |
+| `contains`               | Returns true if the attribute value contains the specified substring.                | `email contains "@cloudflare.com"`         | String                    |
+| `starts_with`            | Returns true if the attribute value starts with the specified prefix.                | `path starts_with "/api/v2"`               | String                    |
+| `ends_with`              | Returns true if the attribute value ends with the specified suffix.                  | `domain ends_with ".dev"`                  | String                    |
+| `in`                     | Returns true if the scalar attribute is in the specified array.                      | `country in ["US", "CA", "UK"]`            | Array                     |
+| `not_in`                 | Returns true if the scalar attribute is not in the specified array.                  | `userId not_in ["blocked-1", "blocked-2"]` | Array                     |
+| `has`                    | Returns true if the array attribute contains the specified scalar.                   | `tags has "beta"`                          | Scalar                    |
+| `not_has`                | Returns true if the array attribute does not contain the specified scalar.           | `roles not_has "contractor"`               | Scalar                    |
 
 ## Operator categories
 
@@ -32,13 +34,13 @@ Flagship supports 11 comparison operators for targeting rule conditions. Each op
 
 `equals`, `not_equals`
 
-Use these operators for exact string matching. The comparison is case-sensitive.
+Use these operators for exact scalar matching. String comparisons are case-sensitive.
 
 ### Comparison operators
 
 `greater_than`, `less_than`, `greater_than_or_equals`, `less_than_or_equals`
 
-These operators work with numeric values and ISO 8601 datetime strings. When comparing datetimes, provide the value in ISO 8601 format (for example, `"2025-01-01T00:00:00Z"`).
+These operators work with numeric values and ISO 8601 datetime strings. Provide datetime values in ISO 8601 format.
 
 ### String operators
 
@@ -48,6 +50,16 @@ These operators perform substring matching against the attribute value. All stri
 
 ### Array operators
 
-`in`, `not_in`
+`in`, `not_in`, `has`, `not_has`
 
-The value must be an array. Flagship checks whether the attribute value is a member of the specified array.
+For `in` and `not_in`, the rule value must be an array. Flagship checks whether a scalar attribute belongs to that array.
+
+For `has` and `not_has`, the context attribute must be an array. Flagship checks whether that array contains the rule's scalar value.
+
+## Context value behavior
+
+Missing attributes never match, including with negative operators. A `null` attribute only matches `not_equals` and `not_in` conditions.
+
+Arrays support `has` and `not_has`. Object and array attributes do not act as scalar operands for other operators.
+
+Dot-separated attributes can traverse up to five object segments. A literal top-level key takes precedence over nested traversal.

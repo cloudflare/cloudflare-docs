@@ -3,15 +3,38 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+/workers/observability/exporting-opentelemetry-data/ /observability/export/opentelemetry/ 301
+/workers/observability/exporting-opentelemetry-data/honeycomb/ /observability/export/opentelemetry/honeycomb/ 301
+/workers/observability/exporting-opentelemetry-data/grafana-cloud/ /observability/export/opentelemetry/grafana-cloud/ 301
+/workers/observability/exporting-opentelemetry-data/axiom/ /observability/export/opentelemetry/axiom/ 301
+/workers/observability/exporting-opentelemetry-data/sentry/ /observability/export/opentelemetry/sentry/ 301
+/workers/observability/exporting-opentelemetry-data/posthog/ /observability/export/opentelemetry/posthog/ 301
 
 # ProductFeatures component removed
 /dns/reference/all-features/ /dns/ 301
 /ssl/reference/all-features/ /ssl/ 301
 /cache/plans/ /cache/ 301
-/style-guide/components/product-features/ /style-guide/components/ 301
+/style-guide/components/product-features/ /style-guide/build-the-page/components/ 301
 
-# Sandbox (claude-managed-agents moved to tutorials)
-/sandbox/claude-managed-agents/ /sandbox/tutorials/claude-managed-agents/ 301
+# Sandbox (claude-managed-agents moved to coding agents)
+/sandbox/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
+
+# Deprecated product-specific MCP servers (replaced by the Cloudflare API MCP server)
+/ai-gateway/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/ai-search/mcp-server/ /ai-search/api/search/mcp/ 301
+/analytics/graphql-api/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/dns/reference/analytics-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/logs/auditlogs-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/logs/logpush-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/workers/ci-cd/builds/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+/workers/observability/mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
+
+# Workers Previews
+/workers/previews/automation-examples/ /workers/previews/examples/ 301
+
+# Build Output reference pages removed
+/cf/projects/build-output/ /cf/projects/#build 301
+/workers/build-output/ /cf/projects/#build 301
 
 # Blocked Content (Security center restructuring)
 /security-center/blocked-content/ /fundamentals/reference/report-abuse/blocked-content/ 301
@@ -22,11 +45,25 @@
 # Custom Dashboards (moved from log-explorer to analytics)
 /log-explorer/custom-dashboards/ /analytics/custom-dashboards/ 301
 
+# Log Explorer (moved into Observability Logs)
+/log-explorer/ /observability/logs/log-explorer/ 301
+/log-explorer/api/ /observability/logs/log-explorer/api/ 301
+/log-explorer/changelog/ /observability/logs/log-explorer/changelog/ 301
+/log-explorer/example-queries/ /observability/logs/log-explorer/example-queries/ 301
+/log-explorer/faq/ /observability/logs/log-explorer/faq/ 301
+/log-explorer/log-search/ /observability/logs/log-explorer/log-search/ 301
+/log-explorer/manage-datasets/ /observability/logs/log-explorer/manage-datasets/ 301
+/log-explorer/pricing/ /observability/logs/log-explorer/pricing/ 301
+/log-explorer/sql-queries/ /observability/logs/log-explorer/sql-queries/ 301
+
 # Solutions (moved from use-cases/application-security/bots/)
 /use-cases/application-security/bots/stop-malicious-bots/ /use-cases/solutions/stop-malicious-bots/ 301
 
 # Privacy Proxy
 /privacy-proxy/reference/observability/ /privacy-proxy/reference/metrics/opentelemetry/ 301
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/ /ohttp-relay/ 301
 
 # billing restructure
 /billing/create-billing-profile/ /billing/get-started/create-billing-profile/ 301
@@ -54,18 +91,16 @@
 /cloudflare-one/identity/ /cloudflare-one/integrations/identity-providers/ 301
 /cloudflare-one/applications/ /cloudflare-one/access-controls/applications/http-apps/ 301
 /cloudflare-one/connections/ /cloudflare-one/ 301
-/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
-/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
-/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
-/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/settings/detection-settings/trusted-domains/ 301
-/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
+/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
+/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-to-warp/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/peer-to-peer/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/routes/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-internet/ /cloudflare-one/networks/connectors/cloudflare-mesh/routes/ 301
-/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/tips/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/user-to-site/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/site-to-internet/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/warp-connector/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
 /learning-paths/replace-vpn/connect-private-network/warp-connector/ /learning-paths/replace-vpn/connect-private-network/cloudflare-mesh/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/rdp/rdp-device-client/ 301
 /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-warp-to-tunnel/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-device-client/ 301
@@ -75,7 +110,6 @@
 /workers/runtime-apis/bindings/worker-loader/ /dynamic-workers/ 301
 /dynamic-workers/examples/dynamic-workflows/ /dynamic-workers/usage/dynamic-workflows/ 301
 /docs/ /directory/ 301
-/mesh/ /cloudflare-one/networks/connectors/cloudflare-mesh/ 302
 /support/ai/ / 301
 /products/ /directory/ 301
 /zero-trust/ /products/?product-group=Cloudflare+One 301
@@ -89,6 +123,8 @@
 
 # changelog
 /changelog/rss.xml /changelog/rss/index.xml 301
+/changelog/product/cloudflare-challenges/ /changelog/product/bots/ 301
+/changelog/rss/cloudflare-challenges.xml /changelog/rss/bots.xml 301
 /api-shield/changelog/index.xml /changelog/rss/api-shield.xml 301
 /cache/changelog/index.xml /changelog/rss/cache.xml 301
 /cloudflare-one/changelog/index.xml /changelog/rss/cloudflare-one.xml 301
@@ -204,69 +240,98 @@
 /aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
 
 # agents
+/agents/communication-channels/ /agents/agent-class/communication-channels/ 301
+/agents/communication-channels/chat/ /agents/agent-class/communication-channels/chat/ 301
+/agents/communication-channels/chat/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301
+/agents/communication-channels/chat/chat-agents/ /agents/agent-class/communication-channels/chat/chat-agents/ 301
+/agents/communication-channels/chat/client-sdk/ /agents/agent-class/communication-channels/chat/client-sdk/ 301
+/agents/communication-channels/email/ /agents/agent-class/communication-channels/email/ 301
+/agents/communication-channels/slack/ /agents/agent-class/communication-channels/slack/ 301
+/agents/communication-channels/voice/ /agents/agent-class/communication-channels/voice/ 301
+/agents/communication-channels/webhooks/ /agents/agent-class/communication-channels/webhooks/ 301
+/agents/communication-channels/webhooks/push-notifications/ /agents/agent-class/communication-channels/webhooks/push-notifications/ 301
+/agents/runtime/agents-api/ /agents/agent-class/ 301
+/agents/runtime/communication/ /agents/agent-class/ 301
+/agents/runtime/communication/chat-sdk/ /agents/agent-class/communication-channels/chat-sdk/ 301
+/agents/runtime/communication/http-sse/ /agents/agent-class/http-sse/ 301
+/agents/runtime/communication/protocol-messages/ /agents/agent-class/protocol-messages/ 301
+/agents/runtime/communication/readonly-connections/ /agents/agent-class/readonly-connections/ 301
+/agents/runtime/communication/routing/ /agents/agent-class/routing/ 301
+/agents/runtime/communication/websockets/ /agents/agent-class/websockets/ 301
+/agents/runtime/execution/agent-tools/ /agents/agent-class/agent-tools/ 301
+/agents/runtime/execution/durable-execution/ /agents/agent-class/durable-execution/ 301
+/agents/runtime/execution/queue-tasks/ /agents/agent-class/queue-tasks/ 301
+/agents/runtime/execution/retries/ /agents/agent-class/retries/ 301
+/agents/runtime/execution/run-workflows/ /agents/agent-class/run-workflows/ 301
+/agents/runtime/execution/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
+/agents/runtime/execution/sub-agents/ /agents/agent-class/sub-agents/ 301
+/agents/runtime/lifecycle/agent-class/ /agents/agent-class/internals/ 301
+/agents/runtime/lifecycle/callable-methods/ /agents/agent-class/callable-methods/ 301
+/agents/runtime/lifecycle/state/ /agents/agent-class/state/ 301
+/agents/runtime/operations/using-ai-models/ /agents/agent-class/using-ai-models/ 301
 /agents/api-reference/think/ /agents/harnesses/think/ 301
 /agents/think/ /agents/harnesses/think/ 301
 /agents/build/prompts/ /workers/get-started/prompting/ 301
 /agents/getting-started/build-a-chat-agent/ /agents/examples/chat-agent/ 301
 /agents/examples/browse-the-web/ /agents/tools/browser/ 301
-/agents/examples/manage-and-sync-state/ /agents/runtime/lifecycle/state/ 301
+/agents/examples/manage-and-sync-state/ /agents/agent-class/state/ 301
 /agents/examples/rag/ /agents/tools/ai-search/ 301
 /agents/tools/rag/ /agents/tools/ai-search/ 301
-/agents/examples/run-workflows/ /agents/runtime/execution/run-workflows/ 301
-/agents/examples/schedule-tasks/ /agents/runtime/execution/schedule-tasks/ 301
-/agents/examples/using-ai-models/ /agents/runtime/operations/using-ai-models/ 301
-/agents/examples/websockets/ /agents/runtime/communication/websockets/ 301
-/agents/examples/sdk/ /agents/runtime/agents-api/ 301
+/agents/examples/run-workflows/ /agents/agent-class/run-workflows/ 301
+/agents/examples/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
+/agents/examples/using-ai-models/ /agents/agent-class/using-ai-models/ 301
+/agents/examples/websockets/ /agents/agent-class/websockets/ 301
+/agents/examples/sdk/ /agents/agent-class/ 301
 /agents/examples/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
 /agents/api-reference/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
-/agents/api-reference/sdk/ /agents/runtime/agents-api/ 301
+/agents/api-reference/sdk/ /agents/agent-class/ 301
 /agents/guides/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
 /agents/capabilities/mcp-server/ /agents/model-context-protocol/ 301
 /agents/model-context-protocol/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
 /agents/model-context-protocol/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
 /agents/model-context-protocol/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
-/agents/api-reference/calling-agents/ /agents/runtime/communication/routing/ 301
+/agents/api-reference/calling-agents/ /agents/agent-class/routing/ 301
 /agents/community-mcp-server/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/community-mcp-server/ 301
 /agents/patterns/ /agents/concepts/agentic-patterns/ 301
 /agents/concepts/patterns/ /agents/concepts/agentic-patterns/ 301
 /agents/concepts/anthropic-agent-patterns/ /agents/concepts/agentic-patterns/ 301
 /agents/concepts/human-in-the-loop/ /agents/concepts/agentic-patterns/human-in-the-loop/ 301
 /agents/concepts/long-running-agents/ /agents/concepts/agentic-patterns/long-running-agents/ 301
-/agents/api-reference/agents-api/ /agents/runtime/agents-api/ 301
+/agents/api-reference/agents-api/ /agents/agent-class/ 301
 /agents/api-reference/ /agents/runtime/ 301
-/agents/api-reference/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
-/agents/runtime/execution/chat-sdk/ /agents/runtime/communication/chat-sdk/ 301
-/agents/api-reference/agent-tools/ /agents/runtime/execution/agent-tools/ 301
+/agents/api-reference/chat-sdk/ /agents/agent-class/communication-channels/chat-sdk/ 301
+/agents/runtime/execution/chat-sdk/ /agents/agent-class/communication-channels/chat-sdk/ 301
+/agents/api-reference/agent-tools/ /agents/agent-class/agent-tools/ 301
 /agents/api-reference/browse-the-web/ /agents/tools/browser/ 301
-/agents/api-reference/callable-methods/ /agents/runtime/lifecycle/callable-methods/ 301
-/agents/api-reference/chat-agents/ /agents/communication-channels/chat/chat-agents/ 301
-/agents/api-reference/client-sdk/ /agents/communication-channels/chat/client-sdk/ 301
+/agents/api-reference/callable-methods/ /agents/agent-class/callable-methods/ 301
+/agents/api-reference/chat-agents/ /agents/agent-class/communication-channels/chat/chat-agents/ 301
+/agents/api-reference/client-sdk/ /agents/agent-class/communication-channels/chat/client-sdk/ 301
 /agents/api-reference/codemode/ /agents/tools/codemode/api-reference/ 301
 /agents/api-reference/configuration/ /agents/runtime/operations/configuration/ 301
-/agents/api-reference/durable-execution/ /agents/runtime/execution/durable-execution/ 301
-/agents/api-reference/email/ /agents/communication-channels/email/ 301
+/agents/api-reference/durable-execution/ /agents/agent-class/durable-execution/ 301
+/agents/api-reference/email/ /agents/agent-class/communication-channels/email/ 301
 /agents/api-reference/get-current-agent/ /agents/runtime/lifecycle/get-current-agent/ 301
-/agents/api-reference/http-sse/ /agents/runtime/communication/http-sse/ 301
+/agents/api-reference/http-sse/ /agents/agent-class/http-sse/ 301
 /agents/api-reference/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
 /agents/api-reference/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
 /agents/api-reference/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
 /agents/api-reference/observability/ /agents/runtime/operations/observability/ 301
-/agents/api-reference/protocol-messages/ /agents/runtime/communication/protocol-messages/ 301
-/agents/api-reference/queue-tasks/ /agents/runtime/execution/queue-tasks/ 301
+/agents/api-reference/protocol-messages/ /agents/agent-class/protocol-messages/ 301
+/agents/api-reference/queue-tasks/ /agents/agent-class/queue-tasks/ 301
 /agents/api-reference/rag/ /agents/tools/ai-search/ 301
-/agents/api-reference/readonly-connections/ /agents/runtime/communication/readonly-connections/ 301
-/agents/api-reference/retries/ /agents/runtime/execution/retries/ 301
-/agents/api-reference/routing/ /agents/runtime/communication/routing/ 301
-/agents/api-reference/run-workflows/ /agents/runtime/execution/run-workflows/ 301
-/agents/api-reference/schedule-tasks/ /agents/runtime/execution/schedule-tasks/ 301
+/agents/api-reference/readonly-connections/ /agents/agent-class/readonly-connections/ 301
+/agents/api-reference/retries/ /agents/agent-class/retries/ 301
+/agents/api-reference/routing/ /agents/agent-class/routing/ 301
+/agents/api-reference/run-workflows/ /agents/agent-class/run-workflows/ 301
+/agents/api-reference/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
 /agents/api-reference/sessions/ /agents/runtime/lifecycle/sessions/ 301
-/agents/api-reference/store-and-sync-state/ /agents/runtime/lifecycle/state/ 301
-/agents/api-reference/sub-agents/ /agents/runtime/execution/sub-agents/ 301
-/agents/api-reference/using-ai-models/ /agents/runtime/operations/using-ai-models/ 301
-/agents/api-reference/voice/ /agents/communication-channels/voice/ 301
-/agents/api-reference/websockets/ /agents/runtime/communication/websockets/ 301
+/agents/api-reference/store-and-sync-state/ /agents/agent-class/state/ 301
+/agents/api-reference/sub-agents/ /agents/agent-class/sub-agents/ 301
+/agents/api-reference/using-ai-models/ /agents/agent-class/using-ai-models/ 301
+/agents/api-reference/voice/ /agents/agent-class/communication-channels/voice/ 301
+/agents/api-reference/websockets/ /agents/agent-class/websockets/ 301
 /agents/guides/anthropic-agent-patterns/ /agents/concepts/agentic-patterns/ 301
-/agents/guides/autonomous-responses/ /agents/communication-channels/chat/autonomous-responses/ 301
+/agents/guides/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301
 /agents/guides/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/guides/build-mcp-client/ /agents/model-context-protocol/guides/build-mcp-client/ 301
 /agents/guides/chatgpt-app/ /workers/demos/chatgpt-app/ 301
@@ -275,14 +340,16 @@
 /agents/guides/cross-domain-authentication/ /agents/runtime/operations/cross-domain-authentication/ 301
 /agents/guides/human-in-the-loop/ /agents/concepts/agentic-patterns/human-in-the-loop/ 301
 /agents/guides/oauth-mcp-client/ /agents/model-context-protocol/guides/oauth-mcp-client/ 301
-/agents/guides/push-notifications/ /agents/communication-channels/webhooks/push-notifications/ 301
+/agents/guides/push-notifications/ /agents/agent-class/communication-channels/webhooks/push-notifications/ 301
 /agents/guides/remote-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
 /agents/guides/securing-mcp-server/ /agents/model-context-protocol/guides/securing-mcp-server/ 301
 /agents/guides/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/guides/test-remote-mcp-server/ /agents/model-context-protocol/guides/test-remote-mcp-server/ 301
-/agents/guides/webhooks/ /agents/communication-channels/webhooks/ 301
+/agents/guides/webhooks/ /agents/agent-class/communication-channels/webhooks/ 301
 /agents/model-context-protocol/authorization/ /agents/model-context-protocol/protocol/authorization/ 301
 /agents/model-context-protocol/protocol/codemode/ /agents/tools/codemode/ 301
+/agents/model-context-protocol/codemode/ /agents/model-context-protocol/guides/build-codemode-mcp-server/ 301
+/agents/model-context-protocol/guides/build-codemode-openapi-mcp-server/ /agents/model-context-protocol/guides/build-codemode-mcp-server/ 301
 /agents/model-context-protocol/governance/ /agents/model-context-protocol/protocol/governance/ 301
 /agents/model-context-protocol/mcp-portal/ /agents/model-context-protocol/cloudflare/mcp-portal/ 301
 /agents/model-context-protocol/mcp-servers-for-cloudflare/ /agents/model-context-protocol/cloudflare/servers-for-cloudflare/ 301
@@ -297,23 +364,23 @@
 /agents/agentic-payments/x402/pay-with-tool-plugins/ /agents/tools/payments/x402/pay-with-tool-plugins/ 301
 /agents/agentic-payments/mpp/ /agents/tools/payments/mpp/ 301
 /agents/guides/ /agents/model-context-protocol/guides/ 301
-/agents/concepts/agent-class/ /agents/runtime/lifecycle/agent-class/ 301
+/agents/concepts/agent-class/ /agents/agent-class/internals/ 301
 /agents/concepts/memory/ /agents/concepts/conversation-state-and-memory/ 301
 /agents/getting-started/prompting/ /workers/get-started/prompting/ 301
 /agents/platform/prompting/ /workers/get-started/prompting/ 301
 /agents/platform/prompt.txt/ /workers/prompt.txt 301
-/agents/channels/chat/ /agents/communication-channels/chat/ 301
-/agents/channels/chat/chat-agents/ /agents/communication-channels/chat/chat-agents/ 301
-/agents/channels/chat/client-sdk/ /agents/communication-channels/chat/client-sdk/ 301
-/agents/channels/chat/autonomous-responses/ /agents/communication-channels/chat/autonomous-responses/ 301
+/agents/channels/chat/ /agents/agent-class/communication-channels/chat/ 301
+/agents/channels/chat/chat-agents/ /agents/agent-class/communication-channels/chat/chat-agents/ 301
+/agents/channels/chat/client-sdk/ /agents/agent-class/communication-channels/chat/client-sdk/ 301
+/agents/channels/chat/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301
 /agents/channels/chat/chatgpt-app/ /workers/demos/chatgpt-app/ 301
-/agents/channels/voice/ /agents/communication-channels/voice/ 301
+/agents/channels/voice/ /agents/agent-class/communication-channels/voice/ 301
 /agents/channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
-/agents/channels/email/ /agents/communication-channels/email/ 301
-/agents/channels/slack/ /agents/communication-channels/slack/ 301
+/agents/channels/email/ /agents/agent-class/communication-channels/email/ 301
+/agents/channels/slack/ /agents/agent-class/communication-channels/slack/ 301
 /agents/channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
-/agents/channels/webhooks/ /agents/communication-channels/webhooks/ 301
-/agents/channels/webhooks/push-notifications/ /agents/communication-channels/webhooks/push-notifications/ 301
+/agents/channels/webhooks/ /agents/agent-class/communication-channels/webhooks/ 301
+/agents/channels/webhooks/push-notifications/ /agents/agent-class/communication-channels/webhooks/push-notifications/ 301
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
@@ -388,7 +455,7 @@
 /analytics/graphql-api/tutorials/build-your-own-analytics/ /analytics/graphql-api/tutorials/ 301
 /analytics/graphql-api/tutorials/export-graphql-to-csv/ /analytics/graphql-api/tutorials/ 301
 /analytics/analytics-integrations/google-cloud/ /analytics/analytics-integrations/ 301
-/analytics/dashboards/ /log-explorer/custom-dashboards/ 301
+/analytics/dashboards/ /analytics/custom-dashboards/ 301
 /analytics/analytics-integrations/looker/ /analytics/analytics-integrations/ 301
 /analytics/network-analytics/reference/network-analytics-v1/ /analytics/graphql-api/migration-guides/network-analytics-v2/ 301
 
@@ -443,6 +510,7 @@
 /ai-search/configuration/retrieval/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
 
 # bots
+/bots/attribution-business-insights/ /bots/business-insights/ 301
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
 /bots/about/plans/bm-subscription/ /bots/plans/bm-subscription/ 301
@@ -557,26 +625,49 @@
 
 # Cloudflare Calls
 /calls/turn/overview/ /realtime/turn/ 301
-/realtime/limits/ /realtime/sfu/limits/ 302
-/realtime/sessions-tracks/ /realtime/sfu/sessions-tracks/ 302
+/realtime/sfu/introduction/ /realtime/sfu/concepts/architecture/ 301
+/realtime/sfu/calls-vs-sfus/ /realtime/sfu/concepts/architecture/#managed-sfu-infrastructure 301
+/realtime/sfu/example-architecture/ /realtime/sfu/concepts/architecture/ 301
+/realtime/sfu/sessions-tracks/ /realtime/sfu/concepts/sessions-tracks/ 301
+/realtime/sfu/https-api/ /realtime/sfu/api/ 301
+/realtime/sfu/datachannels/ /realtime/sfu/features/datachannels/ 301
+/realtime/sfu/simulcast/ /realtime/sfu/features/simulcast/ 301
+/realtime/sfu/media-transport-adapters/ /realtime/sfu/features/media-transport-adapters/ 301
+/realtime/sfu/media-transport-adapters/websocket-adapter/ /realtime/sfu/features/media-transport-adapters/websocket-adapter/ 301
+/realtime/sfu/demos/ /realtime/sfu/examples/ 301
+/realtime/sfu/pricing/ /realtime/sfu/platform/pricing/ 301
+/realtime/sfu/limits/ /realtime/sfu/platform/limits/ 301
+/realtime/sfu/changelog/ /realtime/sfu/platform/changelog/ 301
+/realtime/limits/ /realtime/sfu/platform/limits/ 302
+/realtime/sessions-tracks/ /realtime/sfu/concepts/sessions-tracks/ 302
 /realtime/get-started/ /realtime/sfu/get-started/ 302
-/realtime/calls-vs-sfus/ /realtime/sfu/calls-vs-sfus/ 302
-/realtime/https-api/ /realtime/sfu/https-api/ 302
-/realtime/datachannels/ /realtime/sfu/datachannels/ 302
-/realtime/simulcast/ /realtime/sfu/simulcast/ 302
-/realtime/demos/ /realtime/sfu/demos/ 302
-/realtime/example-architecture/ /realtime/sfu/example-architecture/ 302
-/realtime/pricing/ /realtime/sfu/pricing/ 302
-/realtime/changelog/ /realtime/sfu/changelog/ 302
+/realtime/calls-vs-sfus/ /realtime/sfu/concepts/architecture/ 302
+/realtime/https-api/ /realtime/sfu/api/ 302
+/realtime/datachannels/ /realtime/sfu/features/datachannels/ 302
+/realtime/simulcast/ /realtime/sfu/features/simulcast/ 302
+/realtime/demos/ /realtime/sfu/examples/ 302
+/realtime/example-architecture/ /realtime/sfu/concepts/architecture/ 302
+/realtime/pricing/ /realtime/sfu/platform/pricing/ 302
+/realtime/changelog/ /realtime/sfu/platform/changelog/ 302
 /realtime/realtimekit/get-started/ /realtime/realtimekit/quickstart/ 302
 /realtime/realtimekit/core/ai/ /realtime/realtimekit/ai/ 302
-/realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/core/remote-participants/ 302
-/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/ui-kit/state-management/ 302
-/realtime/realtimekit/core/video-background/ /realtime/realtimekit/core/video-effects/ 302
+/realtime/realtimekit/core/remote-participant/ /realtime/realtimekit/humans/core/remote-participants/ 302
+/realtime/realtimekit/ui-kit/meeting-lifecycle/ /realtime/realtimekit/humans/ui-kit/state-management/ 302
+/realtime/realtimekit/core/video-background/ /realtime/realtimekit/humans/core/video-effects/ 302
 /realtime/realtimekit/voice-meetings/ /realtime/realtimekit/audio-calls/ 302
-/realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/core/manage-participants-in-a-session/ 302
-/realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/core/api-reference/rtkparticipants/ 301
+/realtime/realtimekit/core/manage-other-participants-in-a-session/ /realtime/realtimekit/humans/core/manage-participants-in-a-session/ 302
+/realtime/realtimekit/core/api-reference/rtkparticipantmap/ /realtime/realtimekit/humans/core/api-reference/rtkparticipants/ 301
+/realtime/realtimekit/sdk-selection/ /realtime/realtimekit/humans/sdk-selection/ 301
 /realtime/realtimekit/getting-started/ /realtime/realtimekit/quickstart/ 302
+/realtime/realtimekit/pricing/ /realtime/realtimekit/platform/pricing/ 301
+/realtime/realtimekit/limits/ /realtime/realtimekit/platform/limits/ 301
+/realtime/realtimekit/data-retention/ /realtime/realtimekit/platform/data-retention/ 301
+/realtime/realtimekit/network-allowlist/ /realtime/realtimekit/platform/network-allowlist/ 301
+/realtime/realtimekit/legal/ /realtime/realtimekit/platform/legal/ 301
+/realtime/realtimekit/legal/3rdparty/ /realtime/realtimekit/platform/legal/3rdparty/ 301
+/realtime/realtimekit/collaborative-stores/ /realtime/realtimekit/collaboration/meeting-key-value-store/ 301
+/realtime/realtimekit/broadcast-apis/ /realtime/realtimekit/collaboration/message-broadcast/ 301
+/realtime/realtimekit/collaborative-stores/broadcast/ /realtime/realtimekit/collaboration/message-broadcast/ 301
 /realtime/introduction/ /realtime/realtimekit/introduction/ 302
 /realtime/agents/ /realtime/ 301
 /realtime/agents/getting-started/ /realtime/ 301
@@ -619,24 +710,123 @@
 /network-interconnect/express-cni/create-interconnects/ /network-interconnect/ 301
 /network-interconnect/express-cni/ /network-interconnect/ 301
 /network-interconnect/pni-and-peering/ /network-interconnect/ 301
-/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
-/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
-/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/static/cni-locations-05-may-2026.pdf 301
+/network-interconnect/static/cni-locations-04-08-2025.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-05-may-2026.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-30-10-2025.pdf /network-interconnect/locations/ 301
+/network-interconnect/static/cni-locations-31-mar-2026.pdf /network-interconnect/locations/ 301
 
 # Constellation
 /constellation/ /workers-ai/ 301
 # Containers
 /containers/beta-info/ /containers/faq/ 301
-/containers/image-management/ /containers/platform-details/image-management/ 301
-/containers/scaling-and-routing/ /containers/platform-details/scaling-and-routing/ 301
-/containers/architecture/ /containers/platform-details/architecture/ 301
-/containers/durable-object-methods/ /containers/platform-details/durable-object-methods/ 301
-/containers/container-package/ /containers/container-class/ 301
-/containers/platform-details/ /containers/platform-details/architecture/ 301
+# Containers API
+/containers/container-package/ /containers/api/container-class/ 301
+/containers/durable-object-methods/ /containers/api/durable-object-container/ 301
+/containers/container-class/ /containers/api/container-class/ 301
+/containers/reference/container-class/ /containers/api/container-class/ 301
+/containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301
+/durable-objects/api/container/ /containers/api/durable-object-container/ 301
+# Containers IA rework: loose pages folded into core sections
+/containers/local-dev/ /containers/guides/local-dev/ 301
+/containers/deploy/ /containers/guides/deploy/ 301
+/containers/execute-commands/ /containers/guides/execute-commands/ 301
+/containers/ssh/ /containers/guides/ssh/ 301
+/containers/pricing/ /containers/platform/pricing/ 301
+/containers/image-management/ /containers/guides/image-management/ 301
+/containers/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/architecture/ /containers/concepts/architecture/ 301
+# Containers IA rework: platform-details/ dissolved into core sections
+/containers/platform-details/architecture/ /containers/concepts/architecture/ 301
+/containers/platform-details/placement/ /containers/concepts/placement/ 301
+/containers/platform-details/outbound-traffic/ /containers/configuration/outbound-traffic/ 301
+/containers/platform-details/workers-connections/ /containers/configuration/workers-connections/ 301
+/containers/platform-details/environment-variables/ /containers/configuration/environment-variables/ 301
+/containers/platform-details/rollouts/ /containers/configuration/rollouts/ 301
+/containers/platform-details/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/platform-details/limits/ /containers/platform/limits/ 301
+/containers/platform-details/image-management/ /containers/guides/image-management/ 301
+/containers/platform-details/durable-object-methods/ /containers/api/durable-object-container/ 301
+/containers/platform-details/ /containers/concepts/architecture/ 301
+# Containers IA rework: Configuration section + Local Development to Guides + Wrangler pages to Reference
+/containers/guides/outbound-traffic/ /containers/configuration/outbound-traffic/ 301
+/containers/reference/local-dev/ /containers/guides/local-dev/ 301
+/containers/reference/environment-variables/ /containers/configuration/environment-variables/ 301
+/containers/reference/scaling-and-routing/ /containers/configuration/scaling-and-routing/ 301
+/containers/reference/rollouts/ /containers/configuration/rollouts/ 301
+/containers/concepts/workers-connections/ /containers/configuration/workers-connections/ 301
+/containers/wrangler-configuration/ /containers/reference/wrangler-configuration/ 301
+/containers/wrangler-commands/ /containers/reference/wrangler-commands/ 301
+# Cloudflare Tunnel IA rework
+/tunnel/setup/ /tunnel/get-started/ 301
+/tunnel/routing/ /tunnel/concepts/routing/ 301
+/tunnel/monitoring/ /tunnel/observability/ 301
+/tunnel/changelog/ /tunnel/platform/changelog/ 301
+/tunnel/downloads/system-requirements/ /tunnel/platform/system-requirements/ 301
+/tunnel/downloads/update-cloudflared/ /tunnel/guides/update-cloudflared/ 301
+/tunnel/deployment-guides/ /tunnel/guides/ 301
+/tunnel/deployment-guides/ansible/ /tunnel/guides/ansible/ 301
+/tunnel/deployment-guides/aws/ /tunnel/guides/aws/ 301
+/tunnel/deployment-guides/azure/ /tunnel/guides/azure/ 301
+/tunnel/deployment-guides/google-cloud-platform/ /tunnel/guides/google-cloud-platform/ 301
+/tunnel/deployment-guides/kubernetes/ /tunnel/guides/kubernetes/ 301
+/tunnel/deployment-guides/terraform/ /tunnel/guides/terraform/ 301
+/tunnel/advanced/ /tunnel/reference/ 301
+/tunnel/advanced/granular-permissions/ /tunnel/guides/granular-permissions/ 301
+/tunnel/advanced/origin-parameters/ /tunnel/reference/origin-parameters/ 301
+/tunnel/advanced/run-parameters/ /tunnel/reference/run-parameters/ 301
+/tunnel/advanced/tunnel-tokens/ /tunnel/reference/tunnel-tokens/ 301
+/tunnel/advanced/local-management/ /tunnel/features/locally-managed-tunnels/ 301
+/tunnel/advanced/local-management/create-local-tunnel/ /tunnel/features/locally-managed-tunnels/create-local-tunnel/ 301
+/tunnel/advanced/local-management/configuration-file/ /tunnel/features/locally-managed-tunnels/configuration-file/ 301
+/tunnel/advanced/local-management/local-tunnel-terms/ /tunnel/features/locally-managed-tunnels/local-tunnel-terms/ 301
+/tunnel/advanced/local-management/tunnel-permissions/ /tunnel/features/locally-managed-tunnels/tunnel-permissions/ 301
+/tunnel/advanced/local-management/tunnel-useful-commands/ /tunnel/features/locally-managed-tunnels/tunnel-useful-commands/ 301
+/tunnel/advanced/local-management/as-a-service/ /tunnel/features/locally-managed-tunnels/as-a-service/ 301
+/tunnel/advanced/local-management/as-a-service/linux/ /tunnel/features/locally-managed-tunnels/as-a-service/linux/ 301
+/tunnel/advanced/local-management/as-a-service/macos/ /tunnel/features/locally-managed-tunnels/as-a-service/macos/ 301
+/tunnel/advanced/local-management/as-a-service/windows/ /tunnel/features/locally-managed-tunnels/as-a-service/windows/ 301
+# Cloudflare Mesh obsolete paths
+/cloudflare-one/networks/connectors/cloudflare-mesh/client-devices/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/connect-client-devices/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/containers/ /cloudflare-one/networks/connectors/cloudflare-mesh/guides/run-mesh-in-containers/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/routes/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/high-availability/ /cloudflare-one/networks/connectors/cloudflare-mesh/features/high-availability/ 301
+/cloudflare-one/networks/connectors/cloudflare-mesh/tips/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
+# Workers VPC IA rework
+/workers-vpc/reference/limits/ /workers-vpc/platform/limits/ 301
+/workers-vpc/reference/pricing/ /workers-vpc/platform/pricing/ 301
 # Sandbox
-/sandbox/platform/beta-info/ /sandbox/platform/ 301
-/sandbox/guides/openai-agents-sdk/ /sandbox/tutorials/openai-agents/ 301
-/sandbox/guides/production-deployment/ /sandbox/guides/preview-urls-custom-domain/ 301
+/sandbox/platform/beta-info/ /sandbox/sdk/platform/ 301
+/sandbox/guides/openai-agents-sdk/ /sandbox/sdk/tutorials/openai-agents/ 301
+/sandbox/guides/openai-agents-api/ /sandbox/coding-agents/openai-agents-api/ 301
+/sandbox/guides/production-deployment/ /sandbox/sdk/guides/preview-urls-custom-domain/ 301
+/sandbox/guides/2026-deprecation/ /sandbox/sdk/migrate/ 301
+/sandbox/sdk/guides/2026-deprecation/ /sandbox/sdk/migrate/ 301
+/sandbox/1-0-preview/migrate/ /sandbox/sdk/migrate/ 301
+/changelog/post/2026-08-07-sandbox-sdk-1-0-preview/ /changelog/post/2026-09-30-sandbox-sdk-1-0/ 301
+/sandbox/tutorials/ /sandbox/sdk/tutorials/ 301
+/sandbox/concepts/architecture/ /sandbox/sdk/concepts/architecture/ 301
+/sandbox/concepts/backup-restore/ /sandbox/sdk/concepts/backup-restore/ 301
+/sandbox/concepts/containers/ /sandbox/sdk/concepts/containers/ 301
+/sandbox/concepts/preview-urls/ /sandbox/sdk/concepts/preview-urls/ 301
+/sandbox/concepts/sandboxes/ /sandbox/sdk/concepts/sandboxes/ 301
+/sandbox/concepts/sessions/ /sandbox/sdk/concepts/sessions/ 301
+/sandbox/concepts/terminal/ /sandbox/sdk/concepts/terminal/ 301
+/sandbox/tutorials/ai-code-executor/ /sandbox/sdk/tutorials/ai-code-executor/ 301
+/sandbox/tutorials/analyze-data-with-ai/ /sandbox/sdk/tutorials/analyze-data-with-ai/ 301
+/sandbox/tutorials/automated-testing-pipeline/ /sandbox/sdk/tutorials/automated-testing-pipeline/ 301
+/sandbox/tutorials/claude-code/ /sandbox/get-started/build-a-coding-agent-runner/ 301
+/sandbox/sdk/tutorials/claude-code/ /sandbox/get-started/build-a-coding-agent-runner/ 301
+/sandbox/tutorials/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
+/sandbox/sdk/tutorials/claude-managed-agents/ /sandbox/coding-agents/claude-managed-agents/ 301
+/sandbox/tutorials/code-review-bot/ /sandbox/sdk/tutorials/code-review-bot/ 301
+/sandbox/tutorials/cursor-cloud-agents/ /sandbox/coding-agents/cursor/ 301
+/sandbox/sdk/tutorials/cursor-cloud-agents/ /sandbox/coding-agents/cursor/ 301
+/sandbox/tutorials/devin-outposts/ /sandbox/coding-agents/devin/ 301
+/sandbox/sdk/tutorials/devin-outposts/ /sandbox/coding-agents/devin/ 301
+/sandbox/tutorials/openai-agents/ /sandbox/sdk/tutorials/openai-agents/ 301
+/sandbox/tutorials/openai-agents-api/ /sandbox/coding-agents/openai-agents-api/ 301
+/sandbox/tutorials/persistent-storage/ /sandbox/sdk/tutorials/persistent-storage/ 301
+/sandbox/tutorials/workers-ai-code-interpreter/ /sandbox/sdk/tutorials/workers-ai-code-interpreter/ 301
 # D1
 /d1/client-api/ /d1/worker-api/ 301
 /d1/build-with-d1/d1-client-api/ /d1/worker-api/ 301
@@ -687,6 +877,7 @@
 /d1/configuration/remote-development/ /d1/best-practices/remote-development/ 301
 /d1/reference/database-commands/ /d1/sql-api/sql-statements/ 301
 /d1/reference/sql-statements/ /d1/sql-api/sql-statements/ 301
+/changelog/post/2026-08-07-us-jurisdiction/ /changelog/post/2026-10-02-us-jurisdiction/ 301
 
 # Data Localization Suite
 /data-localization/regional-services/get-started/ /data-localization/regional-services/regional-hostnames/ 301
@@ -804,6 +995,14 @@
 /durable-objects/what-are-durable-objects/ /durable-objects/concepts/what-are-durable-objects/ 301
 /durable-objects/observability/graphql-analytics/ /durable-objects/observability/metrics-and-analytics/ 301
 
+# Email Service information architecture
+/email-service/local-development/ /email-service/observability/local-development/ 301
+/email-service/local-development/sending/ /email-service/observability/local-development/sending/ 301
+/email-service/local-development/routing/ /email-service/observability/local-development/routing/ 301
+/email-service/platform/email-routing-rest-api/ /email-service/api/email-routing-rest-api/ 301
+/email-service/platform/email-sending-rest-api/ /email-service/api/email-sending-rest-api/ 301
+/email-service/platform/event-subscriptions/ /email-service/reference/event-subscriptions/ 301
+
 # Email Routing -> Email Service (product merged)
 # Top-level
 /email-routing/ /email-service/ 301
@@ -834,7 +1033,7 @@
 /email-routing/email-workers/reply-email-workers/ /email-service/api/route-emails/email-handler/#reply-to-emails 301
 /email-routing/email-workers/send-email-workers/ /email-service/api/send-emails/workers-api/ 301
 /email-routing/email-workers/runtime-api/ /email-service/api/route-emails/email-handler/ 301
-/email-routing/email-workers/local-development/ /email-service/local-development/routing/ 301
+/email-routing/email-workers/local-development/ /email-service/observability/local-development/routing/ 301
 
 # Troubleshooting
 /email-routing/troubleshooting/ /email-service/reference/troubleshooting/ 301
@@ -1105,10 +1304,10 @@
 /images/cloudflare-images/serve-images/ /images/optimization/hosted-images/serve-uploaded-images/ 301
 /images/cloudflare-images/serve-images/adaptive-images-format/ /images/optimization/hosted-images/serve-uploaded-images/ 301
 /images/cloudflare-images/serve-images/browser-ttl/ /images/optimization/hosted-images/browser-ttl/ 301
-/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
-/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
-/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
-/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/cloudflare-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
 /images/cloudflare-images/transform/ /images/optimization/transformations/overview/ 301
 /images/cloudflare-images/transform/blur-images/ /images/optimization/hosted-images/blur-variants/ 301
 /images/cloudflare-images/transform/delete-images/ /images/storage/manage-images/delete-images/ 301
@@ -1168,10 +1367,14 @@
 /images/upload-images/upload-dashboard/ /images/storage/upload-images/methods/ 301
 /images/upload-images/upload-file-worker/ /images/storage/upload-images/upload-file-worker/ 301
 /images/upload-images/upload-url/ /images/storage/upload-images/upload-url/ 301
-/images/upload-images/sourcing-kit/ /images/storage/upload-images/sourcing-kit/ 301
-/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/sourcing-kit/credentials/ 301
-/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/sourcing-kit/edit/ 301
-/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/sourcing-kit/enable/ 301
+/images/upload-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/upload-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/upload-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
+/images/storage/upload-images/sourcing-kit/ /images/storage/upload-images/import-from-s3/ 301
+/images/storage/upload-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
+/images/storage/upload-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
+/images/storage/upload-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
 
 # learning-paths
 /learning-paths/modules/cybersafe/cybersafe-account-creation/ /learning-paths/cybersafe/account-creation/ 301
@@ -1349,7 +1552,7 @@
 
 # Non-slashed version is being used in the Cloudflare dashboard
 /logs/reference/logpush-api-configuration/examples/example-logpush-curl/ /logs/logpush/examples/example-logpush-curl/ 301
-/logs/log-explorer/ /log-explorer/log-search/ 301
+/logs/log-explorer/ /observability/logs/log-explorer/log-search/ 301
 /logs/reference/glossary/ /logs/glossary/ 301
 /logs/about/ /logs/logpush/ 301
 /logs/tutorials/ /logs/logpush/ 301
@@ -1377,11 +1580,13 @@
 # CF1 changelog page
 /cloudflare-one/changelog/magic-firewall/ /cloudflare-one/changelog/cloudflare-network-firewall/ 301
 # CF1 MSP page moved under tiered-policies
-/cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-policies/tiered-policies/tenant-api/ 301
+/cloudflare-one/traffic-policies/managed-service-providers/ /cloudflare-one/traffic-controls/tiered-policies/tenant-api/ 301
 # CF1 package protection renamed to package registry security
-/cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-policies/http-policies/package-registry-security/ 301
+/cloudflare-one/traffic-policies/http-policies/package-protection/ /cloudflare-one/traffic-controls/http-policies/package-registry-security/ 301
 # CF1 packet filtering overview rename
-/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/ 301
+/cloudflare-one/traffic-policies/packet-filtering/magic-firewall-overview/ /cloudflare-one/traffic-controls/packet-filtering/network-firewall-overview/ 301
+# CF1 Audit SSH retired
+/cloudflare-one/traffic-policies/network-policies/ssh-logging/ /cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/ 301
 # cross-product magic-firewall slug renames
 /learning-paths/data-center-protection/enable-magic-firewall/ /learning-paths/data-center-protection/enable-network-firewall/ 301
 /analytics/graphql-api/tutorials/querying-magic-firewall-samples/ /analytics/graphql-api/tutorials/querying-network-firewall-samples/ 301
@@ -1493,6 +1698,11 @@
 /pages/how-to/deploy-a-jekyll-site/ /pages/framework-guides/deploy-a-jekyll-site/ 301
 /pages/how-to/deploy-a-nextjs-site/ /workers/framework-guides/web-apps/nextjs 301
 /pages/framework-guides/deploy-a-svelte-site/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
+/pages/framework-guides/astro/ /pages/framework-guides/deploy-an-astro-site/ 301
+/pages/framework-guides/react/ /pages/framework-guides/deploy-a-react-site/ 301
+/pages/framework-guides/svelte/ /pages/framework-guides/deploy-a-svelte-kit-site/ 301
+/pages/framework-guides/vue/ /pages/framework-guides/deploy-a-vue-site/ 301
+/pages/framework-guides/deploy-a-vite3-project/ /pages/framework-guides/ 301
 /pages/how-to/deploy-anything/ /pages/framework-guides/deploy-anything/ 301
 /pages/how-to/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
 /pages/framework-guides/deploy-a-react-application/ /pages/framework-guides/deploy-a-react-site/ 301
@@ -1571,8 +1781,9 @@
 /page-shield/reference/page-shield-api/ /client-side-security/reference/api/ 301
 
 # pipelines
-/pipelines/concepts/how-pipelines-work/ /pipelines/ 301
-/pipelines/platform/wrangler-commands/ /pipelines/reference/wrangler-commands/ 301
+/pipelines/concepts/how-pipelines-work/ /basin-pipelines/ 301
+/pipelines/platform/wrangler-commands/ /basin-pipelines/reference/wrangler-commands/ 301
+/pipelines/ /basin-pipelines/ 301
 # queues
 /queues/configuration/ /queues/configuration/configure-queues/ 301
 /queues/javascript-apis/ /queues/configuration/javascript-apis/ 301
@@ -1653,6 +1864,7 @@
 /ruleset-engine/rules-language/fields/http-request-header/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-body/ /ruleset-engine/rules-language/fields/reference/ 301
 /ruleset-engine/rules-language/fields/http-request-response/ /ruleset-engine/rules-language/fields/reference/ 301
+/ruleset-engine/rules-language/fields/reference/cf.tls_ciphers_sha1/ /ruleset-engine/rules-language/fields/reference/cf.tls_client_ciphers_sha1/ 301
 /ruleset-engine/rules-language/fields/magic-firewall/ /cloudflare-network-firewall/reference/network-firewall-fields/ 301
 # security center
 /security-center/indicator-feeds/getting-started/ /security-center/indicator-feeds/ 301
@@ -1770,7 +1982,8 @@
 /stream/viewing-videos/using-the-player-api/ /stream/viewing-videos/using-the-stream-player/using-the-player-api/ 301
 /stream/platform/changelog/ /stream/changelog/ 301
 /stream/platform/changelog/index.xml /stream/changelog/index.xml 301
-/stream/platform/webrtc-beta/ /stream/webrtc-beta/ 301
+/stream/platform/webrtc-beta/ /stream/webrtc/ 301
+/stream/webrtc-beta/ /stream/webrtc/ 301
 /stream/reference/faq/ /stream/faq/ 301
 /stream/platform/ /stream/changelog/ 301
 /stream/reference/ /stream/faq/ 301
@@ -1786,16 +1999,31 @@
 /docs-guide/manage-content/redirects/process/ /style-guide/how-we-docs/redirects/ 301
 /docs-guide/manage-content/metadata/ /style-guide/how-we-docs/metadata/ 301
 /docs-guide/manage-content/metadata/process/ /style-guide/how-we-docs/metadata/ 301
-/style-guide/components/asides/ /style-guide/formatting/notes-and-other-notation-types/ 301
-/style-guide/components/checkbox/ /style-guide/formatting/structure/lists/ 301
-/style-guide/components/code/ /style-guide/formatting/code-block-guidelines/ 301
-/style-guide/components/compatibility-flag/ /style-guide/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/asides/ /style-guide/style-and-grammar/formatting/notes-and-other-notation-types/ 301
+/style-guide/components/checkbox/ /style-guide/style-and-grammar/formatting/structure/lists/ 301
+/style-guide/components/code/ /style-guide/style-and-grammar/formatting/code-block-guidelines/ 301
+/style-guide/components/compatibility-flag/ /style-guide/style-and-grammar/formatting/notes-and-other-notation-types/ 301
 /style-guide/components/flex/ /style-guide/how-we-docs/image-maintenance/ 301
-/style-guide/components/footnotes/ /style-guide/formatting/footnotes/ 301
-/style-guide/components/github-code/ /style-guide/components/index/ 301
-/style-guide/components/last-reviewed/ /style-guide/frontmatter/custom-properties/#reviewed 301
-/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/diagrams/#mermaid-diagrams 301
-/style-guide/components/workers-templates/ /style-guide/components/index/ 301
+/style-guide/components/footnotes/ /style-guide/style-and-grammar/formatting/footnotes/ 301
+/style-guide/components/github-code/ /style-guide/build-the-page/components/ 301
+/style-guide/components/last-reviewed/ /style-guide/build-the-page/frontmatter/custom-properties/#reviewed 301
+/style-guide/components/mermaid/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/#mermaid-diagrams 301
+/style-guide/components/workers-templates/ /style-guide/build-the-page/components/ 301
+/style-guide/documentation-content-strategy/content-types/reference-architecture-diagram/ /style-guide/documentation-content-strategy/content-types/reference-architecture/#reference-architecture-diagrams 301
+/style-guide/documentation-content-strategy/content-types/solution-guide/ /style-guide/documentation-content-strategy/content-types/how-to/ 301
+/style-guide/documentation-content-strategy/content-types/implementation-guide/ /style-guide/documentation-content-strategy/content-types/how-to/ 301
+/style-guide/documentation-content-strategy/content-types/select-content-type/ /style-guide/documentation-content-strategy/content-types/ 301
+/style-guide/documentation-content-strategy/component-attributes/context/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/introduction/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/intended-audience/ /style-guide/documentation-content-strategy/component-attributes/introductions/ 301
+/style-guide/documentation-content-strategy/component-attributes/screenshots/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/diagrams/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/reference-diagram/ /style-guide/documentation-content-strategy/component-attributes/images-and-diagrams/ 301
+/style-guide/documentation-content-strategy/component-attributes/tables/ /style-guide/style-and-grammar/formatting/structure/tables/ 301
+/style-guide/documentation-content-strategy/component-attributes/links/ /style-guide/style-and-grammar/formatting/structure/links/ 301
+/style-guide/documentation-content-strategy/writing-guidelines/ /style-guide/style-and-grammar/voice-and-tone/ 301
+/style-guide/documentation-content-strategy/accessibility/ /style-guide/style-and-grammar/accessibility/ 301
+/style-guide/how-we-docs/reviews/ /style-guide/contributions/#content-reviews 301
 /style-guide/ai-tooling/ /docs-for-agents/ 301
 
 # support
@@ -1943,7 +2171,8 @@
 /r2/platform/pricing/ /r2/pricing/ 301
 /r2/examples/aws-cli/ /r2/examples/aws/aws-cli/ 301
 /r2/examples/aws-sdk-go/ /r2/examples/aws/aws-sdk-go/ 301
-/r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js/ 301
+/r2/examples/aws-sdk-js/ /r2/examples/aws/aws-sdk-js-v3/ 301
+/r2/examples/aws/aws-sdk-js/ /r2/examples/aws/aws-sdk-js-v3/ 301
 /r2/examples/aws-sdk-js-v3/ /r2/examples/aws/aws-sdk-js-v3/ 301
 /r2/examples/aws-sdk-php/ /r2/examples/aws/aws-sdk-php/ 301
 /r2/examples/aws-sdk-ruby/ /r2/examples/aws/aws-sdk-ruby/ 301
@@ -1961,11 +2190,22 @@
 /r2/examples/upload-logs-event-notifications/ /r2/tutorials/upload-logs-event-notifications/ 301
 /r2/examples/demo-worker/ /r2/api/workers/workers-api-usage/ 301
 /r2/objects/multipart-objects/ /r2/objects/upload-objects/ 301
-/r2/sql/platform/troubleshooting/ /r2-sql/troubleshooting/ 301
+/r2/sql/platform/troubleshooting/ /basin-sql/troubleshooting/ 301
+/r2/data-catalog/ /basin-catalog/ 301
+/r2-data-catalog/ /basin-catalog/ 301
 
 # r2 sql
-/r2-sql/platform/wrangler-commands/ /r2-sql/reference/wrangler-commands/ 301
-/r2-sql/sql-reference/limitations/ /r2-sql/reference/limitations-best-practices/ 301
+/r2-sql/platform/wrangler-commands/ /basin-sql/reference/wrangler-commands/ 301
+/r2-sql/sql-reference/limitations/ /basin-sql/reference/limitations-best-practices/ 301
+/r2-sql/ /basin-sql/ 301
+
+# Basin changelog product routes
+/changelog/product/pipelines/ /changelog/product/basin-pipelines/ 301
+/changelog/product/r2-data-catalog/ /changelog/product/basin-catalog/ 301
+/changelog/product/r2-sql/ /changelog/product/basin-sql/ 301
+/changelog/rss/pipelines.xml /changelog/rss/basin-pipelines.xml 301
+/changelog/rss/r2-data-catalog.xml /changelog/rss/basin-catalog.xml 301
+/changelog/rss/r2-sql.xml /changelog/rss/basin-sql.xml 301
 # time-services_redirects
 /time-services/nts/usage/ /time-services/nts/ 301
 # tenant
@@ -2236,12 +2476,12 @@
 /workers/runtime-apis/webassembly/rust/crates/ /workers/languages/rust/crates 301
 /workers/learning/debugging-workers/ /workers/observability/ 301
 /workers/observability/debug-workers/ /workers/observability/ 301
-/workers/learning/logging-workers/ /workers/observability/logging/ 301
-/workers/observability/log-from-workers/ /workers/observability/logging/ 301
-/workers/platform/logpush/ /workers/observability/logging/logpush/ 301
-/workers/observability/logpush/ /workers/observability/logging/logpush/ 301
-/workers/platform/tail-workers/ /workers/observability/logging/tail-workers/ 301
-/workers/observability/tail-workers/ /workers/observability/logging/tail-workers/ 301
+/workers/learning/logging-workers/ /workers/observability/logs/ 301
+/workers/observability/log-from-workers/ /workers/observability/logs/ 301
+/workers/platform/logpush/ /workers/observability/logs/logpush/ 301
+/workers/observability/logpush/ /workers/observability/logs/logpush/ 301
+/workers/platform/tail-workers/ /workers/observability/logs/tail-workers/ 301
+/workers/observability/tail-workers/ /workers/observability/logs/tail-workers/ 301
 /workers/learning/metrics-and-analytics/ /workers/observability/metrics-and-analytics/ 301
 /workers/learning/integrations/databases/ /workers/databases/connecting-to-databases/ 301
 /workers/learning/how-routing-works/ /workers/configuration/routing/ 301
@@ -2298,7 +2538,8 @@
 /workers/observability/local-development-and-testing/ /workers/local-development/ 301
 /workers/observability/sentry-integration/ /workers/observability/integrations/sentry 301
 /workers/configuration/deployments/ /workers/versions-and-deployments/ 301
-/workers/configuration/previews/ /workers/versions-and-deployments/preview-urls/ 301
+/workers/configuration/previews/ /workers/versions-and-deployments/version-urls/ 301
+/workers/versions-and-deployments/preview-urls/ /workers/versions-and-deployments/version-urls/ 301
 /workers/configuration/versions-and-deployments/ /workers/versions-and-deployments/ 301
 /workers/configuration/versions-and-deployments/gradual-deployments/ /workers/versions-and-deployments/gradual-deployments/ 301
 /workers/configuration/versions-and-deployments/version-overrides/ /workers/versions-and-deployments/version-overrides/ 301
@@ -2348,7 +2589,7 @@
 /workers/tutorials/store-data-with-fauna/ https://fauna.com/blog/the-future-of-fauna 301
 /workers/tutorials/live-cursors-with-nextjs-rpc-do/ /resources/ 301
 /workers/tutorials/automated-analytics-reporting/ /resources/ 301
-/workers/ai/ /agent-lee/ 301
+/workers/ai/ /workers-ai/ 301
 /cloudflare-agent/ /agent-lee/ 301
 /workers/development-testing/ /workers/local-development/ 301
 /workers/development-testing/bindings-per-env/ /workers/local-development/bindings-per-env/ 301
@@ -2540,7 +2781,7 @@
 /argo-tunnel/reference/arguments/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/reference/service/ /cloudflare-one/connections/connect-networks/configure-tunnels/ 301
 /argo-tunnel/create-tunnel/ /cloudflare-one/connections/connect-networks/get-started/ 301
-/argo-tunnel/trycloudflare/ /cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/ 301
+/argo-tunnel/trycloudflare/ /tunnel/get-started/quick-tunnels/ 301
 /argo-tunnel/quickstart/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /argo-tunnel/downloads/ /cloudflare-one/connections/connect-networks/downloads/ 301
 /argo-tunnel/faq/ /cloudflare-one/faq/cloudflare-tunnels-faq/ 301
@@ -2561,11 +2802,34 @@
 /email-security/reporting/search/detection-search/ /email-security/reporting/search/ 301
 /email-security/setup/api-deployment/ /email-security/setup/post-delivery-deployment/api/ 301
 
+/cloudflare-one/email-security/email-monitoring/download-report/ /cloudflare-one/email-security/monitoring/download-report/ 301
+/cloudflare-one/email-security/settings/configure-text-add-ons/ /cloudflare-one/email-security/settings/detection-settings/configure-text-add-ons/ 301
+/cloudflare-one/email-security/settings/invalid-submissions/ /cloudflare-one/email-security/submissions/invalid-submissions/ 301
+/cloudflare-one/email-security/settings/trusted-domains/ /cloudflare-one/email-security/policies/inbound/trusted-domains/ 301
+/cloudflare-one/email-security/settings/detection-settings/allow-policies/ /cloudflare-one/email-security/policies/inbound/allow-policies/ 301
+/cloudflare-one/email-security/settings/detection-settings/blocked-senders/ /cloudflare-one/email-security/policies/inbound/blocked-senders/ 301
+/cloudflare-one/email-security/settings/detection-settings/blocked-content/ /cloudflare-one/email-security/policies/inbound/blocked-content/ 301
+/cloudflare-one/email-security/settings/domain-management/ /cloudflare-one/email-security/settings/domains-and-directories/ 301
+/cloudflare-one/email-security/settings/detection-settings/trusted-domains/ /cloudflare-one/email-security/policies/inbound/trusted-domains/ 301
+/cloudflare-one/email-security/outbound-dlp/ /cloudflare-one/email-security/policies/outbound/outbound-dlp/ 301
+/cloudflare-one/email-security/settings/auto-moves/ /cloudflare-one/email-security/settings/detection-settings/auto-moves/ 301
+/cloudflare-one/email-security/directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/ 301
+/cloudflare-one/email-security/directories/manage-es-directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-es-directories/ 301
+/cloudflare-one/email-security/directories/manage-integrated-directories/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/ 301
+/cloudflare-one/email-security/directories/manage-integrated-directories/manage-groups-directory/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/manage-groups-directory/ 301
+/cloudflare-one/email-security/directories/manage-integrated-directories/manage-users-directory/ /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/manage-users-directory/ 301
+/cloudflare-one/email-security/settings/domain-management/domain/ /cloudflare-one/email-security/settings/domains-and-directories/domains/ 301
+/cloudflare-one/email-security/settings/phish-submissions/ /cloudflare-one/email-security/settings/submission-settings/ 301
+/cloudflare-one/email-security/settings/phish-submissions/phishnet-365/ /cloudflare-one/email-security/settings/submission-settings/phishnet-365/ 301
+/cloudflare-one/email-security/settings/phish-submissions/phishnet-google-workspace/ /cloudflare-one/email-security/settings/submission-settings/phishnet-google-workspace/ 301
+/cloudflare-one/email-security/settings/phish-submissions/submission-addresses/ /cloudflare-one/email-security/settings/submission-settings/submission-addresses/ 301
+/cloudflare-one/email-security/monitoring/search-email/ /cloudflare-one/email-security/investigation/search-email/ 301
+
 # cloudflare-one
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/local-management/ingress/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/ 301
 /cloudflare-one/email-security/setup/post-delivery-deployment/bcc-journaling/journaling-setup/manage-domains/ /cloudflare-one/email-security/setup/manage-domains/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/ 301
-/cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/networks/connectors/cloudflare-mesh/tips/ 301
+/cloudflare-one/connections/connect-networks/private-net/warp-connector/vpc-deployments/ /cloudflare-one/networks/connectors/cloudflare-mesh/best-practices/ 301
 /cloudflare-one/connections/connect-networks/private-net/cloudflared/load-balancing/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-availability/ 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/remote/ /cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/ 301
 /cloudflare-one/connections/connect-apps/configuration/configuration-file/ingress/ /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/configuration-file/ 301
@@ -2599,10 +2863,10 @@
 /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas/ /cloudflare-one/applications/configure-apps/saas-apps/salesforce-saas-saml/ 301
 /cloudflare-one/connections/connect-apps/routing-to-tunnel/kubernetes/ /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/kubernetes/ 301
 /cloudflare-one/connections/connect-apps/configuration/ports-and-ips/ /cloudflare-one/connections/connect-networks/configure-tunnels/tunnel-with-firewall/ 301
-/cloudflare-one/team-and-resources/devices/agentless/pac-files/ /cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/ 301
-/cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/ 301
+/cloudflare-one/team-and-resources/devices/agentless/pac-files/ /cloudflare-one/traffic-controls/proxy-endpoints/ 301
+/cloudflare-one/connections/connect-devices/agentless/dns-over-https/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/ 301
 /cloudflare-one/policies/gateway/dns-policies/scheduled-dns-policies/ /cloudflare-one/policies/gateway/timed-policies/#scheduled-policies 301
-/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/ 301
+/cloudflare-one/connections/connect-devices/agentless/dns-over-tls/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/ 301
 /cloudflare-one/connections/connect-devices/warp/control-proxy/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/ 301
 /cloudflare-one/policies/filtering/dns-policies/dns-categories/ /cloudflare-one/policies/gateway/domain-categories/ 301
 /cloudflare-one/identity/devices/access-integrations/azure-ad/ /cloudflare-one/tutorials/azuread-conditional-access/ 301
@@ -2634,12 +2898,12 @@
 /cloudflare-one/identity/users/groups/ /cloudflare-one/policies/access/groups/ 301
 /cloudflare-one/analytics/private-network-discovery/ /cloudflare-one/insights/analytics/shadow-it-discovery/#private-network-origins 301
 /cloudflare-one/api-terraform/gateway-api-examples/ /cloudflare-one/policies/gateway/ 301
-/cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/settings/phish-submissions/ 301
+/cloudflare-one/email-security/phish-submissions/ /cloudflare-one/email-security/settings/submission-settings/ 301
 /cloudflare-one/tutorials/google-workspace-saas/ /cloudflare-one/applications/configure-apps/saas-apps/google-workspace-saas/ 301
 /cloudflare-one/tutorials/block-football-users/ /cloudflare-one/policies/gateway/http-policies/common-policies/#check-user-identity 301
 /cloudflare-one/tutorials/review-gateway-block/ /cloudflare-one/insights/logs/dashboard-logs/gateway-logs/ 301
 /cloudflare-one/tutorials/many-cfd-one-tunnel/ /cloudflare-one/connections/connect-networks/deployment-guides/kubernetes/ 301
-/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-policies/get-started/dns/ 301
+/cloudflare-one/tutorials/secure-dns-devices/ /cloudflare-one/traffic-controls/get-started/dns/ 301
 /cloudflare-one/tutorials/migrate-lb-tunnel/ /cloudflare-one/connections/connect-networks/ 301
 /cloudflare-one/tutorials/credentials-only/ /cloudflare-one/connections/connect-networks/get-started/ 301
 /cloudflare-one/tutorials/user-diagnostics/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
@@ -2690,14 +2954,15 @@
 
 # Specific redirects for old paths (must come before catch-all redirects)
 /cloudflare-one/applications/configure-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
+/cloudflare-one/access-controls/applications/http-apps/dash-sso-apps/ /fundamentals/manage-members/dashboard-sso/ 301
 /cloudflare-one/applications/scan-apps/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/connections/connect-apps/configuration/arguments/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/ /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/ 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/install-cert-with-warp/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
 /cloudflare-one/connections/connect-apps/configuration/config/ /cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/ 301
 /cloudflare-one/connections/connect-devices/warp/install-cloudflare-cert/ /cloudflare-one/team-and-resources/devices/user-side-certificates/automated-deployment/ 301
-/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-policies/packet-filtering/add-policies/ 301
-/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/add-rules/ /cloudflare-one/traffic-controls/packet-filtering/add-policies/ 301
+/cloudflare-one/traffic-policies/packet-filtering/create-rate-limiting-rules/ /cloudflare-one/traffic-controls/packet-filtering/create-rate-limiting-policies/ 301
 /cloudflare-one/connections/connect-networks/locations/configuring-a-location/ /cloudflare-one/team-and-resources/devices/agentless/dns/locations/ 301
 /cloudflare-one/identity/authorization-cookie/cors/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/ 301
 /cloudflare-one/identity/devices/access-integrations/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
@@ -2711,15 +2976,15 @@
 /cloudflare-one/data-loss-prevention/saas-apps-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/policies/data-loss-prevention/exact-data-match/ /cloudflare-one/data-loss-prevention/detection-entries/#exact-data-match 301
 /cloudflare-one/policies/filtering/configuring-block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
-/cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-policies/dns-policies/#safe-search 301
+/cloudflare-one/policies/filtering/dns-policies/safesearch/ /cloudflare-one/traffic-controls/dns-policies/#safe-search 301
 /cloudflare-one/policies/gateway/block-page/ /cloudflare-one/reusable-components/custom-pages/gateway-block-page/ 301
 /cloudflare-one/policies/lists/ /cloudflare-one/reusable-components/lists/ 301
 /cloudflare-one/technical-limitations/ /cloudflare-one/account-limits/ 301
-/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-policies/get-started/dns/ 301
-/cloudflare-one/traffic-policies/initial-setup/ /cloudflare-one/traffic-policies/get-started/ 301
-/cloudflare-one/traffic-policies/initial-setup/dns/ /cloudflare-one/traffic-policies/get-started/dns/ 301
-/cloudflare-one/traffic-policies/initial-setup/http/ /cloudflare-one/traffic-policies/get-started/http/ 301
-/cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-policies/get-started/network/ 301
+/cloudflare-one/tutorials/secure-dns-network/ /cloudflare-one/traffic-controls/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/ /cloudflare-one/traffic-controls/get-started/ 301
+/cloudflare-one/traffic-policies/initial-setup/dns/ /cloudflare-one/traffic-controls/get-started/dns/ 301
+/cloudflare-one/traffic-policies/initial-setup/http/ /cloudflare-one/traffic-controls/get-started/http/ 301
+/cloudflare-one/traffic-policies/initial-setup/network/ /cloudflare-one/traffic-controls/get-started/network/ 301
 
 # More specific redirects from nav revamp (before catch-alls)
 /cloudflare-one/identity/devices/access-integrations/tanium/ /cloudflare-one/reusable-components/posture-checks/client-checks/tanium/ 301
@@ -2727,6 +2992,7 @@
 /cloudflare-one/identity/authorization-cookie/validating-json/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/ 301
 /cloudflare-one/identity/authorization-cookie/ /cloudflare-one/access-controls/applications/http-apps/authorization-cookie/ 301
 /cloudflare-one/applications/casb/manage-findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
+/cloudflare-one/integrations/cloud-and-saas/findings/ /cloudflare-one/cloud-and-saas-findings/manage-findings/ 301
 /cloudflare-one/applications/casb/casb-dlp/ /cloudflare-one/cloud-and-saas-findings/casb-dlp/ 301
 /cloudflare-one/applications/casb/ /cloudflare-one/cloud-and-saas-findings/ 301
 /cloudflare-one/applications/app-launcher/ /cloudflare-one/access-controls/access-settings/app-launcher/ 301
@@ -2741,7 +3007,7 @@
 /cloudflare-one/identity/mutual-tls-authentication/ /cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/ 301
 /cloudflare-one/identity/service-tokens/ /cloudflare-one/access-controls/service-credentials/service-tokens/ 301
 /cloudflare-one/identity/one-time-pin/ /cloudflare-one/integrations/identity-providers/one-time-pin/ 301
-/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-policies/enable-ids/ 301
+/cloudflare-one/traffic-policies/ids/ /cloudflare-one/traffic-controls/enable-ids/ 301
 
 # Catch-all redirects (must come last)
 /cloudflare-one/faq/troubleshooting/ /cloudflare-one/troubleshooting/ 301
@@ -2757,11 +3023,28 @@
 /cloudflare-one/insights/logs/use-logpush-with-ids/ /cloudflare-one/insights/logs/logpush/ids-logs/ 301
 /cloudflare-one/insights/logs/filter-views/ /cloudflare-one/insights/logs/logpush/network-firewall-log-filters/ 301
 /cloudflare-one/remote-browser-isolation/canvas-rendering/ /cloudflare-one/remote-browser-isolation/canvas-remoting/ 301
+/cloudflare-one/networks/resolvers-and-proxies/ /cloudflare-one/traffic-controls/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/ /cloudflare-one/traffic-controls/resolver-endpoints/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/locations/ /cloudflare-one/traffic-controls/resolver-endpoints/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/locations/dns-resolver-ips/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-resolver-ips/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-tls/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-tls/ 301
+/cloudflare-one/networks/resolvers-and-proxies/dns/dns-over-https/ /cloudflare-one/traffic-controls/resolver-endpoints/dns-over-https/ 301
+/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/ /cloudflare-one/traffic-controls/proxy-endpoints/ 301
+/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/configure-pac-file-on-device/ /cloudflare-one/traffic-controls/proxy-endpoints/configure-pac-file-on-device/ 301
+/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/best-practices/ /cloudflare-one/traffic-controls/proxy-endpoints/best-practices/ 301
+/cloudflare-one/traffic-policies/ /cloudflare-one/traffic-controls/ 301
+
+# Agent setup (Windsurf rebranded to Devin Desktop)
+/agent-setup/windsurf/ /agent-setup/devin/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
+/cloudflare-one/traffic-policies/* /cloudflare-one/traffic-controls/:splat 301
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
+
+# Cloudflare OHTTP Relay (formerly Privacy Gateway)
+/privacy-gateway/* /ohttp-relay/:splat 301
 
 # Agent Skills legacy discovery path
 /.well-known/skills/* /.well-known/agent-skills/:splat 301
@@ -2789,6 +3072,12 @@
 /browser-rendering/rest-api/* /browser-run/quick-actions/:splat 301
 /browser-rendering/quick-actions-rest-api/* /browser-run/quick-actions/:splat 301
 /browser-rendering/* /browser-run/:splat 301
+/sandbox/1-0-preview/* /sandbox/ 301
+/sandbox/api/* /sandbox/sdk/api/:splat 301
+/sandbox/configuration/* /sandbox/sdk/configuration/:splat 301
+/sandbox/bridge/* /sandbox/sdk/bridge/:splat 301
+/sandbox/guides/* /sandbox/sdk/guides/:splat 301
+/sandbox/platform/* /sandbox/sdk/platform/:splat 301
 /*/sitemap.xml /sitemap-index.xml 301
 /api-security/* /api-shield/:splat 301
 /api-shield/products/* /api-shield/security/:splat 301
@@ -2832,6 +3121,7 @@
 
 # Cloudflare One / Zero Trust
 /access/configuring-identity-providers/* /cloudflare-one/integrations/identity-providers/:splat 301
+/cloudflare-one/email-security/directories/manage-ms-directories/* /cloudflare-one/email-security/settings/domains-and-directories/directories/manage-integrated-directories/:splat 301
 /cloudflare-one/connections/connect-networks/install-and-setup/tunnel-guide/local/as-a-service/* /cloudflare-one/connections/connect-networks/configure-tunnels/local-management/as-a-service/:splat 301
 /cloudflare-one/connections/connect-apps/install-and-setup/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
 /cloudflare-one/connections/connect-networks/deploy-tunnels/deployment-guides/* /cloudflare-one/connections/connect-networks/deployment-guides/:splat 301
@@ -2846,7 +3136,6 @@
 /cloudflare-one/connections/connect-devices/warp/exclude-traffic/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/:splat 301
 /cloudflare-one/connections/connect-devices/warp/user-side-certificates/* /cloudflare-one/connections/connect-devices/user-side-certificates/:splat 301
 /cloudflare-one/connections/connect-devices/warp/warp-settings/* /cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/:splat 301
-/cloudflare-one/email-security/directories/manage-ms-directories/* /cloudflare-one/email-security/directories/manage-integrated-directories/:splat 301
 /cloudflare-one/examples/* /cloudflare-one/api-terraform/access-api-examples/:splat 301
 /cloudflare-one/faq/teams-* /cloudflare-one/faq/:splat 301
 /cloudflare-one/insights/risk-score/* /cloudflare-one/team-and-resources/users/risk-score/:splat 301
@@ -2874,7 +3163,7 @@
 /cloudflare-one/policies/access/* /cloudflare-one/access-controls/policies/:splat 301
 /cloudflare-one/policies/browser-isolation/* /cloudflare-one/remote-browser-isolation/:splat 301
 /cloudflare-one/policies/data-loss-prevention/* /cloudflare-one/data-loss-prevention/:splat 301
-/cloudflare-one/policies/gateway/* /cloudflare-one/traffic-policies/:splat 301
+/cloudflare-one/policies/gateway/* /cloudflare-one/traffic-controls/:splat 301
 /cloudflare-one/team-and-resources/devices/agentless/dns/* /cloudflare-one/networks/resolvers-and-proxies/dns/:splat 301
 /cloudflare-one/api-terraform/access-api-examples/* /api/resources/zero_trust/subresources/access/subresources/policies/ 301
 
@@ -2883,7 +3172,7 @@
 /cloudflare-one/email-security/detection-settings/* /cloudflare-one/email-security/settings/detection-settings/:splat 301
 /cloudflare-one/email-security/email-monitoring/* /cloudflare-one/email-security/monitoring/:splat 301
 /cloudflare-one/email-security/phish-guard/* /cloudflare-one/email-security/phishguard/:splat 301
-/cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/phish-submissions/:splat 301
+/cloudflare-one/insights/email-monitoring/phish-submissions/* /cloudflare-one/email-security/settings/submission-settings/:splat 301
 
 # Learning paths
 /learning-paths/modules/get-started/onboarding/* /learning-paths/get-started-free/onboarding/:splat 301
@@ -2957,6 +3246,10 @@
 # Calls
 /calls/* /realtime/:splat 301
 
+# RealtimeKit SDK docs moved under Human participant
+/realtime/realtimekit/ui-kit/* /realtime/realtimekit/humans/ui-kit/:splat 301
+/realtime/realtimekit/core/* /realtime/realtimekit/humans/core/:splat 301
+
 # Magic Firewall renamed to Cloudflare Network Firewall
 /magic-firewall/* /cloudflare-network-firewall/:splat 301
 
@@ -3002,6 +3295,7 @@
 /ai-gateway/models/* /ai/models/:splat 301
 
 # Changelog (individual entry route moved to /post/)
+/changelog/product/cloudflare-challenges/* /changelog/product/bots/ 301
 /changelog/2024-* /changelog/post/2024-:splat 301
 /changelog/2025-* /changelog/post/2025-:splat 301
 /changelog/2026-* /changelog/post/2026-:splat 301
@@ -3013,4 +3307,14 @@
 /bots/concepts/bot/signed-agents/* /bots/concepts/bot/verified-bots/ 301
 
 # R2 Data Catalog promoted to a top-level product (was nested under R2)
-/r2/data-catalog/* /r2-data-catalog/:splat 301
+/r2/data-catalog/* /basin-catalog/:splat 301
+/r2-data-catalog/* /basin-catalog/:splat 301
+
+# Basin product route migrations
+/pipelines/* /basin-pipelines/:splat 301
+/r2-sql/* /basin-sql/:splat 301
+
+/style-guide/formatting/* /style-guide/style-and-grammar/formatting/:splat 301
+/style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
+/style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
+/style-guide/components/* /style-guide/build-the-page/components/:splat 301

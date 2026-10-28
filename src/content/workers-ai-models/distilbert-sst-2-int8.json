@@ -1,22 +1,12 @@
 {
-    "id": "eaf31752-a074-441f-8b70-d593255d2811",
-    "source": 1,
     "name": "@cf/huggingface/distilbert-sst-2-int8",
-    "description": "Distilled BERT model that was finetuned on SST-2 for sentiment classification",
-    "task": {
-        "id": "19606750-23ed-4371-aab2-c20349b53a60",
-        "name": "Text Classification",
-        "description": "Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes."
-    },
-    "created_at": "2023-09-25 19:21:11.898",
-    "tags": [],
     "properties": [
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.026,
+                    "price": 0.0263,
                     "currency": "USD"
                 }
             ]
@@ -26,6 +16,16 @@
             "value": "https://huggingface.co/Intel/distilbert-base-uncased-finetuned-sst-2-english-int8-static"
         }
     ],
+    "id": "eaf31752-a074-441f-8b70-d593255d2811",
+    "source": 1,
+    "description": "Distilled BERT model that was finetuned on SST-2 for sentiment classification",
+    "task": {
+        "id": "19606750-23ed-4371-aab2-c20349b53a60",
+        "name": "Text Classification",
+        "description": "Sentiment analysis or text classification is a common NLP task that classifies a text input into labels or classes."
+    },
+    "created_at": "2023-09-25 19:21:11.898",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -58,5 +58,6 @@
                 }
             }
         }
-    }
+    },
+    "deprecated": false
 }

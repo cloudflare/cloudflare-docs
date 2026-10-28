@@ -1,18 +1,10 @@
 ---
-params:
-  - conditional?
+{}
 ---
 
-import { Details, Render, APIRequest } from "~/components";
+import { Details, APIRequest } from "~/components";
 
 1. Use the [Create Zone](/api/resources/zones/methods/create/) endpoint to create an [internal zone](/dns/internal-dns/internal-zones/). Specify your account ID and set the `type` to `internal`.
-
-{ props.conditional === "get-started-detail" && (
-
-<Details header="Internal zone configuration conditions">
-	<Render file="internal-zones-conditions" product="dns" />
-</Details>
-) }
 
 <Details header="Example">
 	<APIRequest

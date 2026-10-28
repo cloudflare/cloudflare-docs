@@ -13,7 +13,11 @@ tags:
   - SPA
 ---
 
-Cloudflare Web Analytics can automatically track user interactions on Single Page Applications (SPAs) by overriding the History API's `pushState` function and listening to the `onpopstate` event. Note that hash-based routers are not supported.
+Cloudflare Web Analytics automatically tracks user interactions on Single Page Applications (SPAs) via one of the following three methods, depending on which is supported:
+
+1. Using the [Soft Navigations API](https://developer.chrome.com/docs/web-platform/soft-navigations)
+2. Listening on `navigate` events via the [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API)
+3. By patching the [History API](https://developer.mozilla.org/en-US/docs/Web/API/History_API)'s `pushState` function and listening to the `onpopstate` event
 
 ## Disable SPA measurement
 
@@ -21,19 +25,21 @@ If you want to disable the automatic tracking for SPAs, you can do so by adding 
 
 ```html
 <script
-  defer
+  type="module"
   src="https://static.cloudflareinsights.com/beacon.min.js"
-  data-cf-beacon=' {"token": "42e216b9090ru59384ygu891dce9eecde", "spa": false} '
+  data-cf-beacon='{"token": "...", "spa": false}'
 ></script>
 ```
 
+Note: this requires using [the manual embedding approach](/web-analytics/get-started/#sites-not-proxied-through-cloudflare).
+
 ### Google Tag Manager (GTM)
 
-If you are using Google Tag Manager (GTM), you can disable SPA tracking by passing the spa option via the query string in the script URL:
+If you are using Google Tag Manager (GTM), you can disable SPA tracking by passing the `spa=false` option via the query string in the script URL:
 
 ```html
 <script
-  defer
-  src="https://static.cloudflareinsights.com/beacon.min.js?token=42e216b9090ru59384ygu891dce9eecde&spa=false"
+  type="module"
+  src="https://static.cloudflareinsights.com/beacon.min.js?token=...&spa=false"
 ></script>
 ```

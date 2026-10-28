@@ -1,8 +1,8 @@
 # Choosing Components by Intent
 
-Start from the content you have and pick the component that presents it correctly. This file is about _when_ and _why_ to reach for each component. For props, syntax, and full examples, read `.agents/references/components.md`. The authoritative live list with rendered examples is at https://developers.cloudflare.com/style-guide/components/.
+Start from the content you have and pick the component that presents it correctly. This file is about _when_ and _why_ to reach for each component. For props, syntax, and full examples, read `.agents/references/components.md`. The authoritative live list with rendered examples is at https://developers.cloudflare.com/style-guide/build-the-page/components/.
 
-This covers the components in the synced catalog (`.agents/references/components.md`). Diagram, homepage, and layout-internal exports from `~/components` are omitted as non-authoring tools. A few utility components documented only in the live style guide (for example, the icon components and `RSSButton`) sit outside this list — check https://developers.cloudflare.com/style-guide/components/ if you need one that is not here.
+This covers the components in the synced catalog (`.agents/references/components.md`). Diagram, homepage, and layout-internal exports from `~/components` are omitted as non-authoring tools. A few utility components documented only in the live style guide (for example, the icon components and `RSSButton`) sit outside this list — check https://developers.cloudflare.com/style-guide/build-the-page/components/ if you need one that is not here.
 
 Two rules first:
 
@@ -48,6 +48,7 @@ Two rules first:
 | A YouTube or Cloudflare Stream video                   | `YouTube` / `Stream`                     | —          |
 | A live statistic in prose                              | `PublicStats`                            | —          |
 | A copyable WAF/security rule ID                        | `RuleID`                                 | —          |
+| A short prompt for readers to paste into an AI agent   | `CopyPrompt`                             | —          |
 | Available notification types for a product             | `AvailableNotifications`                 | —          |
 | Pages framework build-preset details                   | `PagesBuildPreset`                       | —          |
 | An interactive IP-range subtraction calculator         | `SubtractIPCalculator`                   | —          |
@@ -116,6 +117,7 @@ Two rules first:
 - **`PublicStats`** — a live statistic (data centers, bandwidth) inline in prose.
 - **`DashButton`** — a button to a validated dashboard deeplink; use it for in-procedure dashboard navigation instead of a bare link.
 - **`RuleID`** — a copyable WAF/security rule ID.
+- **`CopyPrompt`** — a one-line prompt with a **Copy prompt** button, for readers to paste into an AI coding agent. Use a `txt` code block for prompts longer than a line.
 - **`AvailableNotifications`** — list a product's available notification types.
 - **`PagesBuildPreset`** — Pages framework build-preset details.
 - **`SubtractIPCalculator`** — interactive IP-range subtraction calculator (networking docs).

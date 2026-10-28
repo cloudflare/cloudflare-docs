@@ -23,16 +23,14 @@ const {
 		className,
 	]}
 >
-	{
-		showPrompt && (
-			<span
-				class="bg-background text-primary border-border flex shrink-0 items-center border-r px-3 font-mono text-sm leading-none select-none"
-				aria-hidden="true"
-			>
-				$
-			</span>
-		)
-	}
+	{showPrompt && (
+		<span
+			class="bg-background text-primary border-border flex shrink-0 items-center border-r px-3 font-mono text-sm leading-none select-none"
+			aria-hidden="true"
+		>
+			$
+		</span>
+	)}
 
 	<code
 		id={id}
@@ -56,9 +54,7 @@ const {
 			viewBox="0 0 256 256"
 			aria-hidden="true"
 		>
-			<path
-				d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"
-			></path>
+			<path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-48H176V88a8,8,0,0,0-8-8H96V48H208Z"></path>
 		</svg>
 		<svg
 			class="cmd-copy-done"
@@ -69,9 +65,7 @@ const {
 			viewBox="0 0 256 256"
 			aria-hidden="true"
 		>
-			<path
-				d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"
-			></path>
+			<path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34Z"></path>
 		</svg>
 	</button>
 </div>

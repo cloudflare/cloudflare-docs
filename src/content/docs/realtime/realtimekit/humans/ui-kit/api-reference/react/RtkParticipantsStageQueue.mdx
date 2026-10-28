@@ -1,0 +1,60 @@
+---
+pcx_content_type: navigation
+title: RtkParticipantsStageQueue
+description: API reference for RtkParticipantsStageQueue component (React Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-participants-stage-queue/rtk-participants-stage-queue.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+Displays participants who have requested access to the stage. The list includes
+ controls for accepting or denying their requests.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `size` | `Size1` | ✅ | - | Size |
+| `t` | `RtkI18n1` | ❌ | `useLanguage()` | Language |
+| `view` | `ParticipantsViewMode` | ✅ | - | View mode for participants list |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkParticipantsStageQueue } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkParticipantsStageQueue />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkParticipantsStageQueue } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkParticipantsStageQueue
+      meeting={meeting}
+      size="md"
+      view={participantsviewmode}
+    />
+  );
+}
+```
+

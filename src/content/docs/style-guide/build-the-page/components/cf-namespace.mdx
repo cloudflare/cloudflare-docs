@@ -1,0 +1,32 @@
+---
+title: CfNamespace
+styleGuide:
+  component: CfNamespace
+description: Display Cloudflare CLI namespace documentation.
+products:
+  - style-guide
+---
+
+import { Type, MetaInfo } from "~/components";
+
+The `CfNamespace` component documents every visible command in a Cloudflare CLI namespace using metadata from the version of `cf` installed in the [`cloudflare-docs` repository](https://github.com/cloudflare/cloudflare-docs/blob/production/package.json).
+
+## Import
+
+```mdx
+import { CfNamespace } from "~/components";
+```
+
+## Usage
+
+```mdx
+import { CfNamespace } from "~/components";
+
+<CfNamespace namespace="hyperdrive" />
+```
+
+## Arguments
+
+`namespace` <Type text="string" /> <MetaInfo text="required" /> is the namespace without the `cf` prefix, such as `hyperdrive`.
+
+`headingLevel` <Type text="number" /> <MetaInfo text="(default: 2) optional" /> sets the heading level for each command name.

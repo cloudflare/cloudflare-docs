@@ -1,0 +1,900 @@
+{
+	"model_id": "meta/muse-spark-1.1",
+	"provider_id": "meta",
+	"name": "Muse Spark 1.1",
+	"description": "Muse Spark 1.1 is Meta's agentic and coding model for multi-step tool loops, software engineering assistants, and long-context reasoning.",
+	"task": "Text Generation",
+	"tags": [
+		"Text Generation",
+		"Reasoning",
+		"Tool Calling",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 1.25,
+		"Cached input tokens (per 1M)": 0.16,
+		"Output tokens (per 1M)": 4.25
+	},
+	"examples": [
+		{
+			"name": "Async Race Condition Review",
+			"description": "Diagnose an async JavaScript bug, explain the race condition, and provide a minimal corrected version.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a pragmatic senior JavaScript reviewer. Prefer small, production-safe fixes and explain the root cause before the patch."
+					},
+					{
+						"role": "user",
+						"content": "Review this function:\n\nasync function processOnce(queue) {\n  if (queue.length === 0) return;\n  const item = queue.shift();\n  await save(item);\n  if (queue.length > 0) processOnce(queue);\n}\n\nTwo requests can call processOnce(queue) at the same time. What can go wrong, and how would you fix it without changing the save() function? Include a concise corrected implementation."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "This is a concurrent drain + fire-and-forget bug.\n\n### Root cause\n\nJS is single-threaded, but `await` yields to the event loop. You have shared mutable state `queue` with no mutual exclusion.\n\nIf A and B call `processOnce(queue)` at the same time:\n\n1.  A: `queue.length > 0` -> true\n2.  A: `shift()` -> item1, `await save(item1)` -> **yields**\n3.  B: `queue.length > 0` -> still true, `shift()` -> item2, `await save(item2)` -> **now `save()` is running in parallel**. If `save()` must be serial / order dependent, you break it. `shift()` can also return `undefined` if B empties it first.\n4.  `if(queue.length > 0) processOnce(queue)` is **not awaited**. Caller resolves early, queue is still draining. Rejections are lost and caller thinks it's done.\n\n### Fix\n\nSerialize draining. One drain loop at a time, `while` not recursion, and piggyback concurrent callers onto the same promise + re-check for items enqueued in the gap.\n\nDon't change `save()`. Just guard it:\n\n```js\nlet drainPromise = null;\n\nasync function processOnce(queue) {\n  if (drainPromise) return drainPromise;\n\n  drainPromise = (async () => {\n    while (queue.length > 0) {\n      const item = queue.shift();\n      await save(item);\n    }\n  })().finally(() => {\n    drainPromise = null;\n    // items pushed between last shift() and clearing the flag\n    if (queue.length > 0) return processOnce(queue);\n  });\n\n  return drainPromise;\n}\n```\n\nWhat this changes:\n\n* `drainPromise` lock prevents 2 concurrent drain loops.\n* `while` loop + `await save()` guarantees serial saves.\n* Concurrent callers return the same promise, so they properly await completion.\n* `finally` re-check prevents losing items enqueued right after the loop ends."
+			},
+			"raw_response": {
+				"id": "resp_6ac7afe7b1edff27f7904b24",
+				"object": "response",
+				"created_at": 1791471590,
+				"model": "muse-spark-1.1",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7afe7b1edff27f7904b24:rs_d69dde63-919d-49f4-9c17-65b594289afb",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_ce37fe35-31f4-4a9c-aea7-3f2ee96186e5",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "This is a concurrent drain + fire-and-forget bug.\n\n### Root cause\n\nJS is single-threaded, but `await` yields to the event loop. You have shared mutable state `queue` with no mutual exclusion.\n\nIf A and B call `processOnce(queue)` at the same time:\n\n1.  A: `queue.length > 0` -> true\n2.  A: `shift()` -> item1, `await save(item1)` -> **yields**\n3.  B: `queue.length > 0` -> still true, `shift()` -> item2, `await save(item2)` -> **now `save()` is running in parallel**. If `save()` must be serial / order dependent, you break it. `shift()` can also return `undefined` if B empties it first.\n4.  `if(queue.length > 0) processOnce(queue)` is **not awaited**. Caller resolves early, queue is still draining. Rejections are lost and caller thinks it's done.\n\n### Fix\n\nSerialize draining. One drain loop at a time, `while` not recursion, and piggyback concurrent callers onto the same promise + re-check for items enqueued in the gap.\n\nDon't change `save()`. Just guard it:\n\n```js\nlet drainPromise = null;\n\nasync function processOnce(queue) {\n  if (drainPromise) return drainPromise;\n\n  drainPromise = (async () => {\n    while (queue.length > 0) {\n      const item = queue.shift();\n      await save(item);\n    }\n  })().finally(() => {\n    drainPromise = null;\n    // items pushed between last shift() and clearing the flag\n    if (queue.length > 0) return processOnce(queue);\n  });\n\n  return drainPromise;\n}\n```\n\nWhat this changes:\n\n* `drainPromise` lock prevents 2 concurrent drain loops.\n* `while` loop + `await save()` guarantees serial saves.\n* Concurrent callers return the same promise, so they properly await completion.\n* `finally` re-check prevents losing items enqueued right after the loop ends.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 134,
+					"output_tokens": 2852,
+					"total_tokens": 2986,
+					"input_tokens_details": {
+						"cached_tokens": 113
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 2409
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471591,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.1',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a pragmatic senior JavaScript reviewer. Prefer small, production-safe fixes and explain the root cause before the patch.',\n      },\n      {\n        role: 'user',\n        content:\n          'Review this function:\\n\\nasync function processOnce(queue) {\\n  if (queue.length === 0) return;\\n  const item = queue.shift();\\n  await save(item);\\n  if (queue.length > 0) processOnce(queue);\\n}\\n\\nTwo requests can call processOnce(queue) at the same time. What can go wrong, and how would you fix it without changing the save() function? Include a concise corrected implementation.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.1\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a pragmatic senior JavaScript reviewer. Prefer small, production-safe fixes and explain the root cause before the patch.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Review this function:\\n\\nasync function processOnce(queue) {\\n  if (queue.length === 0) return;\\n  const item = queue.shift();\\n  await save(item);\\n  if (queue.length > 0) processOnce(queue);\\n}\\n\\nTwo requests can call processOnce(queue) at the same time. What can go wrong, and how would you fix it without changing the save() function? Include a concise corrected implementation.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "SQL Correctness Review",
+			"description": "Review a SQL query for correctness and performance, then propose a safer replacement.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a database engineer. Be precise about semantics, indexes, and concurrency. Do not assume schema details that are not provided."
+					},
+					{
+						"role": "user",
+						"content": "A payments table has columns id, account_id, status, amount_cents, created_at, and settled_at. Review this query used to calculate an account's settled balance: SELECT SUM(amount_cents) FROM payments WHERE account_id = ? AND status = 'settled' OR status = 'refunded' AND created_at >= ?; Identify the correctness bug, give the corrected query, and suggest one useful index. Keep the answer under 400 words."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "Operator precedence bug. `AND` binds tighter than `OR`, so your query is parsed as:\n\n```sql\n(account_id = ? AND status = 'settled')\nOR \n(status = 'refunded' AND created_at >= ?)\n```\n\nFailures:\n1.  Leaks data across accounts - all `refunded` rows for any account after `?` are summed into this account.\n2.  Drops the `created_at` filter for `settled` rows, and drops `account_id` filter for `refunded`.\n\n### Corrected query\n\nIf you intend to filter both statuses by date:\n\n```sql\nSELECT COALESCE(SUM(amount_cents),0) FROM payments\nWHERE account_id = ?\n  AND status IN ('settled','refunded')\n  AND created_at >= ?;\n```\n\nIf you intended date filter only for refunded:\n\n```sql\nSELECT COALESCE(SUM(amount_cents),0) FROM payments\nWHERE account_id = ?\n  AND (status = 'settled' OR (status = 'refunded' AND created_at >= ?));\n```\n\nNote: For a *settled* balance, you likely want `settled_at >= ?`, not `created_at`.\n\n### Index\n\nComposite to support equality on `account_id`, equality/IN on `status`, range on `created_at`, covering `amount_cents`:\n\n```sql\nCREATE INDEX idx_payments_acct_status_created \nON payments (account_id, status, created_at) INCLUDE (amount_cents);\n```\n\nThis allows an index-only scan per account without touching the heap."
+			},
+			"raw_response": {
+				"id": "resp_6ac7aff0b2536166015f4c31",
+				"object": "response",
+				"created_at": 1791471600,
+				"model": "muse-spark-1.1",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7aff0b2536166015f4c31:rs_bd77c866-9452-4cf2-84d6-3052aa3f613f",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_58de9d22-820f-49a1-aecd-ff8c43ae16a3",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Operator precedence bug. `AND` binds tighter than `OR`, so your query is parsed as:\n\n```sql\n(account_id = ? AND status = 'settled')\nOR \n(status = 'refunded' AND created_at >= ?)\n```\n\nFailures:\n1.  Leaks data across accounts - all `refunded` rows for any account after `?` are summed into this account.\n2.  Drops the `created_at` filter for `settled` rows, and drops `account_id` filter for `refunded`.\n\n### Corrected query\n\nIf you intend to filter both statuses by date:\n\n```sql\nSELECT COALESCE(SUM(amount_cents),0) FROM payments\nWHERE account_id = ?\n  AND status IN ('settled','refunded')\n  AND created_at >= ?;\n```\n\nIf you intended date filter only for refunded:\n\n```sql\nSELECT COALESCE(SUM(amount_cents),0) FROM payments\nWHERE account_id = ?\n  AND (status = 'settled' OR (status = 'refunded' AND created_at >= ?));\n```\n\nNote: For a *settled* balance, you likely want `settled_at >= ?`, not `created_at`.\n\n### Index\n\nComposite to support equality on `account_id`, equality/IN on `status`, range on `created_at`, covering `amount_cents`:\n\n```sql\nCREATE INDEX idx_payments_acct_status_created \nON payments (account_id, status, created_at) INCLUDE (amount_cents);\n```\n\nThis allows an index-only scan per account without touching the heap.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 143,
+					"output_tokens": 1578,
+					"total_tokens": 1721,
+					"input_tokens_details": {
+						"cached_tokens": 113
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1249
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471600,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.1',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a database engineer. Be precise about semantics, indexes, and concurrency. Do not assume schema details that are not provided.',\n      },\n      {\n        role: 'user',\n        content:\n          \"A payments table has columns id, account_id, status, amount_cents, created_at, and settled_at. Review this query used to calculate an account's settled balance: SELECT SUM(amount_cents) FROM payments WHERE account_id = ? AND status = 'settled' OR status = 'refunded' AND created_at >= ?; Identify the correctness bug, give the corrected query, and suggest one useful index. Keep the answer under 400 words.\",\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.1\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a database engineer. Be precise about semantics, indexes, and concurrency. Do not assume schema details that are not provided.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"A payments table has columns id, account_id, status, amount_cents, created_at, and settled_at. Review this query used to calculate an account'\\''s settled balance: SELECT SUM(amount_cents) FROM payments WHERE account_id = ? AND status = '\\''settled'\\'' OR status = '\\''refunded'\\'' AND created_at >= ?; Identify the correctness bug, give the corrected query, and suggest one useful index. Keep the answer under 400 words.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "TypeScript Utility Refactor",
+			"description": "Turn an unreliable JavaScript helper into a typed, testable implementation with explicit edge-case behavior.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a TypeScript library maintainer. Prefer small APIs, explicit types, and tests that document behavior."
+					},
+					{
+						"role": "user",
+						"content": "Refactor this helper into TypeScript:\n\nfunction groupBy(items, key) {\n  return items.reduce((out, item) => {\n    (out[item[key]] ||= []).push(item);\n    return out;\n  }, {});\n}\n\nProvide a generic type-safe version and three focused tests covering an empty input, a missing key value, and two items sharing a key. State your chosen behavior for missing keys."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "Here's a small, strict version. It fixes the original bug where `item[key] === undefined` silently created a `\"undefined\"` bucket.\n\n### Generic implementation\n\n**Chosen behavior for missing keys:** If `item[key]` is `null` or `undefined`, the item is **skipped** and not included in any group. Rationale: avoids polluting the result with a coerced `\"undefined\"` key. If you need to keep them, normalize before calling.\n\n```ts\n// groupBy.ts\ntype PropertyKey = string | number | symbol;\n\n// Only allow keys whose value can be a property key (or optional version)\ntype GroupableKeys<T> = {\n  [K in keyof T]: T[K] extends PropertyKey | null | undefined ? K : never\n}[keyof T];\n\nexport function groupBy<T, K extends GroupableKeys<T>>(\n  items: readonly T[],\n  key: K\n): Record<string, T[]> {\n  const out: Record<string, T[]> = {};\n\n  for (const item of items) {\n    const raw = item[key];\n    if (raw == null) continue; // <-- explicit missing-key policy\n\n    const groupKey = String(raw as PropertyKey);\n    (out[groupKey] ??= []).push(item);\n  }\n\n  return out;\n}\n```\n\n> Typed to `Record<string, T[]>` intentionally. If you want literal key inference you can change the return to `Record<Extract<T[K], PropertyKey> & {}, T[]>` but for a library this is more ergonomic and doesn't lie about runtime `String()` coercion.\n\n### Tests that document behavior\n\n```ts\n// groupBy.test.ts\nimport { describe, it, expect } from 'vitest';\nimport { groupBy } from './groupBy';\n\ntype Item = { cat?: string; id: number };\n\ndescribe('groupBy', () => {\n  it('empty input -> empty object', () => {\n    expect(groupBy([] as Item[], 'cat')).toEqual({});\n  });\n\n  it('missing key value -> item skipped', () => {\n    const items: Item[] = [\n      { cat: 'a', id: 1 },\n      { id: 2 }, // cat is missing\n      { cat: undefined, id: 3 }, // cat is explicitly undefined\n    ];\n\n    const result = groupBy(items, 'cat');\n\n    // only 'a' group exists, no \"undefined\" bucket\n    expect(result).toEqual({\n      a: [{ cat: 'a', id: 1 }],\n    });\n    expect(Object.keys(result)).not.toContain('undefined');\n  });\n\n  it('two items sharing a key -> grouped together', () => {\n    const items: Item[] = [\n      { cat: 'x', id: 1 },\n      { cat: 'x', id: 2 },\n      { cat: 'y', id: 3 },\n    ];\n\n    const result = groupBy(items, 'cat');\n\n    expect(result).toEqual({\n      x: [\n        { cat: 'x', id: 1 },\n        { cat: 'x', id: 2 },\n      ],\n      y: [{ cat: 'y', id: 3 }],\n    });\n  });\n});\n```"
+			},
+			"raw_response": {
+				"id": "resp_6ac7b0009eadac3fd3fd4b77",
+				"object": "response",
+				"created_at": 1791471616,
+				"model": "muse-spark-1.1",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b0009eadac3fd3fd4b77:rs_70691cf1-3099-4eaf-8a65-6c9811ee8913",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_20968e1e-1419-4226-89cb-2c6497d11b9e",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Here's a small, strict version. It fixes the original bug where `item[key] === undefined` silently created a `\"undefined\"` bucket.\n\n### Generic implementation\n\n**Chosen behavior for missing keys:** If `item[key]` is `null` or `undefined`, the item is **skipped** and not included in any group. Rationale: avoids polluting the result with a coerced `\"undefined\"` key. If you need to keep them, normalize before calling.\n\n```ts\n// groupBy.ts\ntype PropertyKey = string | number | symbol;\n\n// Only allow keys whose value can be a property key (or optional version)\ntype GroupableKeys<T> = {\n  [K in keyof T]: T[K] extends PropertyKey | null | undefined ? K : never\n}[keyof T];\n\nexport function groupBy<T, K extends GroupableKeys<T>>(\n  items: readonly T[],\n  key: K\n): Record<string, T[]> {\n  const out: Record<string, T[]> = {};\n\n  for (const item of items) {\n    const raw = item[key];\n    if (raw == null) continue; // <-- explicit missing-key policy\n\n    const groupKey = String(raw as PropertyKey);\n    (out[groupKey] ??= []).push(item);\n  }\n\n  return out;\n}\n```\n\n> Typed to `Record<string, T[]>` intentionally. If you want literal key inference you can change the return to `Record<Extract<T[K], PropertyKey> & {}, T[]>` but for a library this is more ergonomic and doesn't lie about runtime `String()` coercion.\n\n### Tests that document behavior\n\n```ts\n// groupBy.test.ts\nimport { describe, it, expect } from 'vitest';\nimport { groupBy } from './groupBy';\n\ntype Item = { cat?: string; id: number };\n\ndescribe('groupBy', () => {\n  it('empty input -> empty object', () => {\n    expect(groupBy([] as Item[], 'cat')).toEqual({});\n  });\n\n  it('missing key value -> item skipped', () => {\n    const items: Item[] = [\n      { cat: 'a', id: 1 },\n      { id: 2 }, // cat is missing\n      { cat: undefined, id: 3 }, // cat is explicitly undefined\n    ];\n\n    const result = groupBy(items, 'cat');\n\n    // only 'a' group exists, no \"undefined\" bucket\n    expect(result).toEqual({\n      a: [{ cat: 'a', id: 1 }],\n    });\n    expect(Object.keys(result)).not.toContain('undefined');\n  });\n\n  it('two items sharing a key -> grouped together', () => {\n    const items: Item[] = [\n      { cat: 'x', id: 1 },\n      { cat: 'x', id: 2 },\n      { cat: 'y', id: 3 },\n    ];\n\n    const result = groupBy(items, 'cat');\n\n    expect(result).toEqual({\n      x: [\n        { cat: 'x', id: 1 },\n        { cat: 'x', id: 2 },\n      ],\n      y: [{ cat: 'y', id: 3 }],\n    });\n  });\n});\n```",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 127,
+					"output_tokens": 3158,
+					"total_tokens": 3285,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 2479
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471616,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.1',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are a TypeScript library maintainer. Prefer small APIs, explicit types, and tests that document behavior.',\n      },\n      {\n        role: 'user',\n        content:\n          'Refactor this helper into TypeScript:\\n\\nfunction groupBy(items, key) {\\n  return items.reduce((out, item) => {\\n    (out[item[key]] ||= []).push(item);\\n    return out;\\n  }, {});\\n}\\n\\nProvide a generic type-safe version and three focused tests covering an empty input, a missing key value, and two items sharing a key. State your chosen behavior for missing keys.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.1\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a TypeScript library maintainer. Prefer small APIs, explicit types, and tests that document behavior.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Refactor this helper into TypeScript:\\n\\nfunction groupBy(items, key) {\\n  return items.reduce((out, item) => {\\n    (out[item[key]] ||= []).push(item);\\n    return out;\\n  }, {});\\n}\\n\\nProvide a generic type-safe version and three focused tests covering an empty input, a missing key value, and two items sharing a key. State your chosen behavior for missing keys.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Production Incident Triage",
+			"description": "Triage a production incident from sparse symptoms and produce an ordered investigation plan.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are an incident commander. Separate facts from hypotheses, prioritize customer impact, and give reversible next steps before risky remediation."
+					},
+					{
+						"role": "user",
+						"content": "At 14:05 UTC, API p95 latency rose from 180 ms to 2.4 s for one region. Error rate is 0.8%, database CPU is 45%, cache hit rate fell from 92% to 61%, and deploys have been quiet for six hours. A single endpoint is responsible for 70% of the extra latency. Write an incident update, list the three highest-value checks in order, and propose a safe mitigation."
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "### INCIDENT UPDATE #1 - 14:20 UTC - API Latency Elevation [Single Region]\n\n**Status:** Investigating - SEV2\n**Impact:** Customers served from `us-east-1 [example]` experiencing API p95 of 2.4s vs normal 180ms since 14:05 UTC. p50 stable. Error rate still low at 0.8% but we are seeing timeouts. Other regions healthy.\n**Scope:** ~70% of added latency is isolated to a single endpoint: `GET /v1/<hot-endpoint>`\n\n**FACTS:**\n* 14:05 UTC start, sustained. Single region only.\n* p95: 180ms -> 2.4s. Error rate: 0.8%\n* Cache hit rate: 92% -> 61% in that region at same time.\n* DB CPU 45% [normal], no saturation.\n* No deploys for 6 hours to API or infra.\n* One endpoint accounts for 70% of the latency increase.\n\n**WORKING HYPOTHESES [Unconfirmed - Do not act on alone]:**\n* Cache tier degradation / node loss in that region causing miss storm -> origin overload for that endpoint.\n* Data / traffic shape change for that endpoint causing key cardinality blow-up / cache stampede.\n* Regional capacity issue - client pool saturation, instance brownout, network partition to cache.\n\n**NOT doing right now:** Cache flush, DB failover/restart, new deploy/rollback. All are high-risk and destructive to evidence.\n\n---\n### Top 3 Checks - In Priority Order\n\n**1. Cache Tier Health in Affected Region - Highest signal**\nOwner: Cache / SRE. Timebox: 5 min.\n* Are all cache nodes members? Any node down/evicted at 14:05?\n* Memory pressure, evictions/sec, OOMs, CPU, client connections, network errors.\n* Client-side errors from API to cache, not just server-side.\n\n**2. Hot Endpoint Traffic Analysis**\nOwner: Backend. Timebox: 5 min.\n* Traces for `/v1/<hot-endpoint>`: QPS change at 14:05? Tenant / customer spike?\n* Cache key pattern: Hit rate per key, new keys per second, payload size. Is there a single hot key or key explosion?\n* Origin latency without cache - is the DB / downstream for this endpoint spiking?\n\n**3. Regional Serving Health**\nOwner: SRE\n* Pod/instance count, crash loops, autoscaler events, CPU throttling/GC for API fleet in that region at 14:05.\n* Service mesh / load balancer latency between API and cache tier.\n* Breakdown of that 0.8% errors: 504 vs 500 vs 429?\n\n### Safe, Reversible Mitigation Proposed\n\nGoal: Protect customers while preserving evidence.\n\n**Proposal: Traffic shed + regional shift:**\n1.  Put a **temporal rate limit / load shed** on `GET /v1/<hot-endpoint>` in affected region only - e.g., 50% of normal limit, return 429 with Retry-After. Protects other endpoints.\n2.  **Shift 50% of API traffic out of affected region** to healthy regions via Global LB weight change. 1-click reversible.\n3.  Enable request coalescing + stale-while-revalidate for that endpoint if feature-flag exists.\n\n**Why safe:** No data loss, no restarts, instantly reversible via config/LB. Directly addresses symptom - cache miss storm - without touching DB/cache.\n\n**Rollback:** Revert LB weight + remove rate limit.\n\nNext update in 20 minutes or upon completion of check #1.\n\nPlease attach cache and endpoint dashboards in thread."
+			},
+			"raw_response": {
+				"id": "resp_6ac7b01785cd56aad50246a5",
+				"object": "response",
+				"created_at": 1791471639,
+				"model": "muse-spark-1.1",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b01785cd56aad50246a5:rs_322771d5-5cdd-4e2d-a99d-9f26fb95b8a9",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_f39c4926-6745-4033-90d7-961b45acd92b",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "### INCIDENT UPDATE #1 - 14:20 UTC - API Latency Elevation [Single Region]\n\n**Status:** Investigating - SEV2\n**Impact:** Customers served from `us-east-1 [example]` experiencing API p95 of 2.4s vs normal 180ms since 14:05 UTC. p50 stable. Error rate still low at 0.8% but we are seeing timeouts. Other regions healthy.\n**Scope:** ~70% of added latency is isolated to a single endpoint: `GET /v1/<hot-endpoint>`\n\n**FACTS:**\n* 14:05 UTC start, sustained. Single region only.\n* p95: 180ms -> 2.4s. Error rate: 0.8%\n* Cache hit rate: 92% -> 61% in that region at same time.\n* DB CPU 45% [normal], no saturation.\n* No deploys for 6 hours to API or infra.\n* One endpoint accounts for 70% of the latency increase.\n\n**WORKING HYPOTHESES [Unconfirmed - Do not act on alone]:**\n* Cache tier degradation / node loss in that region causing miss storm -> origin overload for that endpoint.\n* Data / traffic shape change for that endpoint causing key cardinality blow-up / cache stampede.\n* Regional capacity issue - client pool saturation, instance brownout, network partition to cache.\n\n**NOT doing right now:** Cache flush, DB failover/restart, new deploy/rollback. All are high-risk and destructive to evidence.\n\n---\n### Top 3 Checks - In Priority Order\n\n**1. Cache Tier Health in Affected Region - Highest signal**\nOwner: Cache / SRE. Timebox: 5 min.\n* Are all cache nodes members? Any node down/evicted at 14:05?\n* Memory pressure, evictions/sec, OOMs, CPU, client connections, network errors.\n* Client-side errors from API to cache, not just server-side.\n\n**2. Hot Endpoint Traffic Analysis**\nOwner: Backend. Timebox: 5 min.\n* Traces for `/v1/<hot-endpoint>`: QPS change at 14:05? Tenant / customer spike?\n* Cache key pattern: Hit rate per key, new keys per second, payload size. Is there a single hot key or key explosion?\n* Origin latency without cache - is the DB / downstream for this endpoint spiking?\n\n**3. Regional Serving Health**\nOwner: SRE\n* Pod/instance count, crash loops, autoscaler events, CPU throttling/GC for API fleet in that region at 14:05.\n* Service mesh / load balancer latency between API and cache tier.\n* Breakdown of that 0.8% errors: 504 vs 500 vs 429?\n\n### Safe, Reversible Mitigation Proposed\n\nGoal: Protect customers while preserving evidence.\n\n**Proposal: Traffic shed + regional shift:**\n1.  Put a **temporal rate limit / load shed** on `GET /v1/<hot-endpoint>` in affected region only - e.g., 50% of normal limit, return 429 with Retry-After. Protects other endpoints.\n2.  **Shift 50% of API traffic out of affected region** to healthy regions via Global LB weight change. 1-click reversible.\n3.  Enable request coalescing + stale-while-revalidate for that endpoint if feature-flag exists.\n\n**Why safe:** No data loss, no restarts, instantly reversible via config/LB. Directly addresses symptom - cache miss storm - without touching DB/cache.\n\n**Rollback:** Revert LB weight + remove rate limit.\n\nNext update in 20 minutes or upon completion of check #1.\n\nPlease attach cache and endpoint dashboards in thread.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 146,
+					"output_tokens": 2500,
+					"total_tokens": 2646,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1714
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471639,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.1',\n  {\n    messages: [\n      {\n        role: 'system',\n        content:\n          'You are an incident commander. Separate facts from hypotheses, prioritize customer impact, and give reversible next steps before risky remediation.',\n      },\n      {\n        role: 'user',\n        content:\n          'At 14:05 UTC, API p95 latency rose from 180 ms to 2.4 s for one region. Error rate is 0.8%, database CPU is 45%, cache hit rate fell from 92% to 61%, and deploys have been quiet for six hours. A single endpoint is responsible for 70% of the extra latency. Write an incident update, list the three highest-value checks in order, and propose a safe mitigation.',\n      },\n    ],\n    max_completion_tokens: 4096,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.1\",\n  \"input\": {\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are an incident commander. Separate facts from hypotheses, prioritize customer impact, and give reversible next steps before risky remediation.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"At 14:05 UTC, API p95 latency rose from 180 ms to 2.4 s for one region. Error rate is 0.8%, database CPU is 45%, cache hit rate fell from 92% to 61%, and deploys have been quiet for six hours. A single endpoint is responsible for 70% of the extra latency. Write an incident update, list the three highest-value checks in order, and propose a safe mitigation.\"\n      }\n    ],\n    \"max_completion_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search Grounding",
+			"description": "Use Meta's Responses API web search grounding to answer a current-events question with citations.",
+			"input": {
+				"input": "What is the latest major technology news today? Cite the sources.",
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				]
+			},
+			"output": {
+				"text": "Got it \u2014 you want today\u2019s major tech headlines with sources. I\u2019ll pull the latest from October 8 and verify the top stories."
+			},
+			"raw_response": {
+				"id": "resp_6ac7b0173b4b3903c1914984",
+				"object": "response",
+				"created_at": 1791471639,
+				"model": "muse-spark-1.1",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b0173b4b3903c1914984:rs_4cb6db0b-4ac9-4786-8fc1-d448358e2317",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_4bc20bd7-7650-465e-9a9e-ecb58e38b16d",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Got it \u2014 you want today\u2019s major tech headlines with sources. I\u2019ll pull the latest from October 8 and verify the top stories.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_9345dd9b-7234-4e0c-a576-b98a32283cc5",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "latest major technology news today October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_0fbf1dcd-212c-4e2b-8d1e-da68d686a4ee",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "top technology headlines today"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_43240af6-97be-4ef3-9fb4-8ad53b4a40f2",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "breaking tech news October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_bf3ee591-c908-4e45-b400-aea7d24fda29",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "major tech news today Wall Street Journal NYTimes Bloomberg"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_22a2bb67-1e1d-49f0-b8b4-4f809ae09b1b",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Google OpenAI Apple news October 8"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b0173b4b3903c1914984:rs_7daa6a64-a490-4064-bc3d-4a0f5ab86650",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_804551ed-7be5-4670-8f58-1913d4656e50",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "The Verge tech news October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_e354cf9c-bf87-416d-910e-636fe80b44f8",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "TechCrunch headlines October 8 2026"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b0173b4b3903c1914984:rs_b8ffbebf-ce96-47ac-9823-7455a4f5a408",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_c3c4da30-d286-432f-a60c-bfce20ca5d7e",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "I\u2019m seeing early signals like Google\u2019s SynthID rollout today \u2014 let me dig deeper into the major outlets to finalize the top stories.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_34cb8e12-7f7a-4f0d-a1bf-bbfced64f594",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Reuters technology news today October 8"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_1d8eb5fa-cadf-459b-b950-2a665bb1c76e",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Bloomberg technology news October 8 2026 AI"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_732b9e15-5131-4df6-86e2-bb01fc03aa47",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Microsoft Google Amazon tech announcement October 8 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_9f5bc14b-3970-42e4-aaa3-e3d72247602d",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://nokiamob.net/2026/10/08/google-opens-synthid-detector-to-everyone-heres-what-it-actually-checks/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_b200e4a3-1c14-43d5-9161-1aefab2f0434",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://winbuzzer.com/2026/10/08/google-opens-synthid-ai-watermark-checker-to-everyone-xcxwbn/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_bdc61c33-248d-4023-933f-41744138fa9b",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://kelofm.com/2026/10/08/tencent-mulls-5-billion-bond-sale-to-push-ai-ambitions-bloomberg-news-reports/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_5f4b1af6-14be-43db-b742-50ad5dbb3ff0",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.tradingview.com/news/coinmarketcal:16307c967094b:0-arcium-confidential-ai-removes-the-cpu-enclave-08-oct-2026/"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_8d2aea46-4bc9-4180-8ad4-d627006dedca",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://mspoweruser.com/hr/heres-your-reminder-that-today-october-8-is-the-last-day-microsoft-supports-windows-11-21h2/"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b0173b4b3903c1914984:rs_e958b0b2-1277-4682-97b9-ae809a897a76",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_cc1d22f5-d4e9-406c-b0dc-aec40cf9447e",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Apple announces October 13 event home hub HomePod mini Apple TV"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_c5a6ebbc-a369-4117-bf73-2955b9375902",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.macrumors.com/2026/10/04/apple-event-reportedly-planned-for-october-13/"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6ac7b0173b4b3903c1914984:rs_11eae94f-32d9-4ea4-8712-3606c0b3b9d9",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_397cf2c5-50f7-4b76-88ae-bf3ea2b79bf7",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Based on today's coverage **October 8, 2026**, the major technology headlines are:\n\n### 1. Google opens AI watermark detector to everyone\nGoogle made its SynthID Detector available globally in English today.\n\n*   Google has made SynthID Detector available worldwide in English. The tool lets people check images, videos and audio files for hidden AI watermarks\n*   Coverage: It recognizes supported Google, OpenAI, NVIDIA and Kakao watermarks, with Apple detection coming later\n*   The standalone detector is available globally in English as of October 7\n\nThe tool is seen as a major step for AI transparency, with checks for invisible watermarks identifying supported AI-generated or edited media.\n\n### 2. Tencent mulling $5B bond sale to fund AI push\nChinese tech giant Tencent is raising debt to fund AI infrastructure:\n\n> Tencent is considering raising up to $5 billion via an offshore bond sale, Bloomberg News reported on Thursday\n\n### 3. Apple reportedly planning smart-home event Oct. 13\nPer *Bloomberg*'s Mark Gurman:\n\n*   Apple plans to unveil an all-new smart home hub, a new HomePod mini, and a new Apple TV 4K on Tuesday, October 13\n*   Apple is planning to hold an event that day \n*   Earlier Gurman reporting also noted Apple plans to unveil an all-new home hub, a new HomePod mini, and a new Apple TV 4K\n\n### 4. Confidential AI - Arcium removes CPU enclave\nIn enterprise AI infrastructure:\n\n> Arcium removes the CPU enclave from its Confidential AI stack on October 8, 2026, replacing the CPU trusted execution environment with GPU session keys\n\n### 5. Wi-Fi 8 hardware hits market early\nNext-gen networking:\n\n> ASUS started shipping the ROG Rapture GT-BN98, a gaming router, on 6th October 2026\n\n### 6. Other headlines trending today\n*   **Microsoft AI PCs:** Microsoft releases new Nvidia-chip AI PCs with revamped Windows 11\n*   **Social / Mobile:** Clark Reid Tech Report notes: Facebook Plans \u2018Community Notes\u2019; Samsung\u2019s Z Fold 8 is Sold Out Temporarily\n*   **Climate tech:** Tata Power partners with Norway\u2019s Ocean Sun to bring innovative membrane-based floating solar technology to India \u2014 October 8, 2026",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"url": "https://nokiamob.net/2026/10/08/google-opens-synthid-detector-to-everyone-heres-what-it-actually-checks/",
+										"start_index": 278,
+										"end_index": 360,
+										"title": "Google\u2019s SynthID AI Detector is now public"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://winbuzzer.com/2026/10/08/google-opens-synthid-ai-watermark-checker-to-everyone-xcxwbn/",
+										"start_index": 361,
+										"end_index": 477,
+										"title": "Google Opens SynthID\u2019s AI Watermark Checker to Everyone"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://winbuzzer.com/2026/10/08/google-opens-synthid-ai-watermark-checker-to-everyone-xcxwbn/",
+										"start_index": 478,
+										"end_index": 554,
+										"title": "Google Opens SynthID\u2019s AI Watermark Checker to Everyone"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://winbuzzer.com/2026/10/08/google-opens-synthid-ai-watermark-checker-to-everyone-xcxwbn/",
+										"start_index": 556,
+										"end_index": 697,
+										"title": "Google Opens SynthID\u2019s AI Watermark Checker to Everyone"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://kelofm.com/2026/10/08/tencent-mulls-5-billion-bond-sale-to-push-ai-ambitions-bloomberg-news-reports/",
+										"start_index": 824,
+										"end_index": 936,
+										"title": "Tencent mulls $5 billion bond sale to push AI ambitions, Bloomberg News reports"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.macrumors.com/2026/10/04/apple-event-reportedly-planned-for-october-13/",
+										"start_index": 1028,
+										"end_index": 1145,
+										"title": "Apple Event Reportedly Planned for October 13"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.macrumors.com/2026/10/04/apple-event-reportedly-planned-for-october-13/",
+										"start_index": 1146,
+										"end_index": 1193,
+										"title": "Apple Event Reportedly Planned for October 13"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.tradingview.com/news/coinmarketcal:16307c967094b:0-arcium-confidential-ai-removes-the-cpu-enclave-08-oct-2026/",
+										"start_index": 1407,
+										"end_index": 1560,
+										"title": "Arcium: Confidential AI removes the CPU enclave - 08 Oct 2026"
+									}
+								],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 116463,
+					"output_tokens": 3278,
+					"total_tokens": 119741,
+					"input_tokens_details": {
+						"cached_tokens": 93972
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1445
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "auto",
+				"reasoning": {
+					"effort": "high"
+				},
+				"background": false,
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1791471660,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-spark-1.1',\n  {\n    input: 'What is the latest major technology news today? Cite the sources.',\n    tools: [{ type: 'web_search' }],\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-spark-1.1\",\n  \"input\": {\n    \"input\": \"What is the latest major technology news today? Cite the sources.\",\n    \"tools\": [{\"type\": \"web_search\"}]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://dev.meta.ai/docs/models",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/meta/muse-spark-1.1.png",
+	"metadata": {
+		"Context Window": "1,048,576 tokens",
+		"Input Modalities": "Text, image, video, audio, PDF",
+		"Output Modalities": "Text"
+	},
+	"request_formats": [
+		"responses"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "meta",
+			"pricing": {
+				"input_tokens": 1.25,
+				"input_cached_tokens": 0.16,
+				"output_tokens": 4.25
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-12 01:26:21",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"input": {
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {}
+						}
+					]
+				},
+				"instructions": {
+					"type": "string"
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_output_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"text": {
+					"type": "object",
+					"properties": {
+						"format": {}
+					},
+					"additionalProperties": {}
+				},
+				"reasoning": {
+					"type": "object",
+					"properties": {
+						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
+							"type": "string",
+							"enum": [
+								"none",
+								"low",
+								"medium",
+								"high",
+								"xhigh",
+								"max"
+							]
+						}
+					},
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"input"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string",
+					"const": "response"
+				},
+				"created_at": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"output": {
+					"type": "array",
+					"items": {}
+				},
+				"output_text": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"in_progress",
+						"completed",
+						"failed",
+						"incomplete"
+					]
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"input_tokens": {
+							"type": "number"
+						},
+						"output_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"input_tokens",
+						"output_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created_at",
+				"model",
+				"output"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

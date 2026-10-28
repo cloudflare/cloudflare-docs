@@ -11,15 +11,9 @@ description: Learn how to configure your Enterprise zone with Render.
 
 import { Render } from "~/components";
 
-<Render
-	file="provider-guide-intro"
-	product="cloudflare-for-platforms"
-	params={{
-		providerName: "Render",
-		providerUrl: "https://render.com",
-		providerAssets: "web services and static sites",
-	}}
-/>
+Cloudflare partners with [Render](https://render.com) to provide Render customers’ web services and static sites with Cloudflare’s performance and security benefits.
+
+If you use Render and also have a Cloudflare plan, you can use your own Cloudflare zone to proxy web traffic to your zone first, then Render's (the SaaS Provider) zone second. This configuration option is called [O2O](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/).
 
 ## Benefits
 
@@ -35,7 +29,7 @@ For additional detail about how traffic routes when O2O is enabled, refer to [Ho
 
 ## Enable
 
-Render customers can enable O2O on any Cloudflare zone plan. Cloudflare support for O2O setups is only available for Enterprise customers.
+Render customers can enable O2O on any Cloudflare zone plan.
 
 To enable O2O for a specific hostname within a Cloudflare zone, [create](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) a Proxied `CNAME` DNS record with your Render site name as the target. Render's domain addition setup will walk you through other validation steps.
 

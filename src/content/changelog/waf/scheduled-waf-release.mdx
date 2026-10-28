@@ -1,7 +1,37 @@
 ---
-title: WAF Release - Scheduled changes for 2026-08-18
-description: WAF managed ruleset changes scheduled for 2026-8-18
-date: 2026-08-11
+title: WAF Release - Scheduled changes for 2026-10-19
+description: WAF managed ruleset changes scheduled for 2026-10-19
+date: 2026-10-12
 publish_future_dated_entry: true
-hidden: true
 ---
+
+import { RuleID } from "~/components";
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Announcement Date</th>
+			<th>Release Date</th>
+			<th>Release Behavior</th>
+			<th>Legacy Rule ID</th>
+			<th>Rule ID</th>
+			<th>Description</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>2026-10-12</td>
+			<td>2026-10-19</td>
+			<td>Log</td>
+			<td>N/A</td>
+			<td>
+				<RuleID id="d60e605ed36842df9ca0232f5ea9966d" />
+			</td>
+			<td>Broken Access Control - Directory Traversal (Beta)</td>
+			<td>
+			  This rule will be merged into the original rule "Broken Access Control - Directory Traversal" (ID:{" "}<RuleID id="f2445b9131214302a11477a2cb14ded8" />).
+			</td>
+		</tr>	
+	</tbody>
+</table>

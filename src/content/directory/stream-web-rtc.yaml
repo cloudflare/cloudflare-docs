@@ -3,10 +3,10 @@ name: stream-web-rtc
 
 entry:
   title: WebRTC
-  url: /stream/webrtc-beta/
+  url: /stream/webrtc/
   show: false
 
 meta:
   title: Cloudflare WebRTC docs
-  description: WebRTC provides sub-second latency live streaming using WHIP and playback using WHEP to unlimited concurrent viewers.
+  description: WebRTC provides ultra-low latency live streaming using WHIP and playback using WHEP to thousands of concurrent viewers.
   author: "@cloudflare"

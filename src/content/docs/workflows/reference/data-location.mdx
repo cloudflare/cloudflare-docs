@@ -1,0 +1,61 @@
+---
+title: Data location
+description: Restrict a Workflow to a jurisdiction to control where its instances run and store data.
+pcx_content_type: concept
+sidebar:
+  order: 6
+products:
+  - workflows
+---
+
+import { WranglerConfig } from "~/components";
+
+## Restrict Workflows to a jurisdiction
+
+Jurisdictions are used to create Workflows whose instances only run and store data within a region to comply with data localization regulations such as [GDPR](https://gdpr-info.eu/) or [FedRAMP](https://blog.cloudflare.com/cloudflare-achieves-fedramp-authorization/).
+
+Workers can still create and manage instances of a Workflow restricted to a jurisdiction from anywhere in the world. The jurisdiction constraint only controls where the Workflow instances themselves run and persist data. Consider using [Regional Services](/data-localization/regional-services/) to control the regions from which Cloudflare responds to requests.
+
+:::note[Settings]
+
+A Workflow's settings are stored outside of the specified jurisdiction.
+
+:::
+
+To restrict a Workflow to a jurisdiction, set `jurisdiction` on its `workflows` binding in your [Wrangler configuration file](/workers/wrangler/configuration/#workflows):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"jurisdiction": "eu",
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+You can also set `jurisdiction` on a Workflow declared in [`exports`](/workflows/build/workers-api/#declare-workflows-in-exports). When you run `wrangler deploy`, Wrangler creates the Workflow in that jurisdiction. Setting a jurisdiction requires Wrangler 4.152.0 or above.
+
+- A Workflow's jurisdiction is set when the Workflow is created, and cannot be changed afterwards. If an existing Workflow has a different jurisdiction, `wrangler deploy` and `wrangler versions upload` stop before uploading your Worker.
+- To use a different jurisdiction, give the Workflow a new name, or delete the existing Workflow first. Deleting a Workflow also deletes its instances.
+- If you remove `jurisdiction` from your configuration, the Workflow keeps its existing jurisdiction.
+- `jurisdiction` cannot be combined with `script_name`. To bind to a Workflow defined in another Worker, set `jurisdiction` on the Worker that defines the Workflow.
+- [Local development](/workflows/build/local-development/) ignores `jurisdiction`.
+- [`wrangler workflows describe`](/workers/wrangler/commands/workflows/#workflows-describe) shows the jurisdiction of a Workflow.
+
+### Supported locations
+
+The following jurisdictions are supported:
+
+| Parameter | Location                      |
+| --------- | ----------------------------- |
+| eu        | The European Union            |
+| us        | The United States             |
+| fedramp   | FedRAMP-Moderate data centers |

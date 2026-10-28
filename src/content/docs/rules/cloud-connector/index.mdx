@@ -13,11 +13,12 @@ tags:
   - AWS
   - Azure
   - GCP
+  - OCI
 ---
 
 import { ProductAvailabilityText, Render } from "~/components";
 
-Cloud Connector <ProductAvailabilityText product="cloud-connector" /> allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, and Azure. With Cloud Connector, you can manage traffic to cloud-hosted content through the same Cloudflare dashboard you use for the rest of your website, without having to configure additional rules.
+Cloud Connector <ProductAvailabilityText product="cloud-connector" /> allows you to route matching incoming traffic from your website to a public cloud provider that you define: [Cloudflare R2](/r2/) object storage or an external provider such as AWS, Google Cloud, Microsoft Azure, and Oracle Cloud. With Cloud Connector, you can manage traffic to cloud-hosted content through the same Cloudflare dashboard you use for the rest of your website, without having to configure additional rules.
 
 <Render
 	file="rules-requirements"
@@ -48,7 +49,6 @@ Cloud Connector will perform the following configurations automatically, dependi
 Cloud Connector will not apply any of the following configurations:
 
 - **Cache content served from storage bucket**: To define custom cache behavior — like when to cache returned objects and for [how long](/cache/how-to/cache-rules/settings/#edge-ttl) — you will need to create a [cache rule](/cache/how-to/cache-rules/). For an example rule configuration, refer to [Cache Level (Cache Everything)](/cache/how-to/cache-rules/examples/cache-everything/).
-
 - **Create URL rewrites**: To adjust the URL structure from what your website visitors use to obtain a resource and the folder structure being used in the storage bucket, you will need to create a [URL rewrite](/rules/transform/url-rewrite/). For example, you could create a URL rewrite to remove the `/files` prefix from URI paths before routing the request to your object storage bucket. For an example configuration, refer to [Rewrite path for object storage bucket](/rules/transform/examples/rewrite-path-object-storage/).
 
 :::

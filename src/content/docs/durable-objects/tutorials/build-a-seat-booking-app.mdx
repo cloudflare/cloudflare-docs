@@ -41,10 +41,10 @@ Let's get started!
 2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
 
 <Details header="Node.js version manager">
-	Use a Node version manager like [Volta](https://volta.sh/) or
-	[nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change
-	Node.js versions. [Wrangler](/workers/wrangler/install-and-update/), discussed
-	later in this guide, requires a Node version of `16.17.0` or later.
+	<Render file="nodejs-version-manager" product="workers" />
+
+	For supported Node.js versions, refer to the
+	[Wrangler system requirements](/workers/wrangler/install-and-update/#install-wrangler).
 </Details>
 
 ## 1. Create a new project
@@ -60,10 +60,9 @@ Create a new Worker project to create and deploy your app.
     />
 
     <Render
-    	file="c3-post-run-steps"
+    	file="c3-post-run-steps-hello-world"
     	product="workers"
     	params={{
-    		category: "hello-world",
     		type: "Worker + Durable Objects",
     		lang: "TypeScript",
     	}}
