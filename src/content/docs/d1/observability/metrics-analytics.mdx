@@ -162,7 +162,7 @@ Run `wrangler d1 insights --help` to view current options.
 
 :::
 
-`wrangler d1 insights` reads from the GraphQL Analytics API, so the API token you use needs the **Account Analytics: Read** permission.
+`wrangler d1 insights` reads data from the GraphQL Analytics API. If you use an API token, the token must have the **Account Analytics Read** permission.
 
 Pass a database name to get the top queries for that database. Leave out the database name to run account-wide and get the top queries across every D1 database in your account:
 
@@ -353,24 +353,4 @@ The quantity `queryEfficiency` measures how efficient your query was. It is calc
 Generally, you should try to get `queryEfficiency` as close to `1` as possible. Refer to [Use indexes](/d1/best-practices/use-indexes/) for more information on efficient querying.
 :::
 
-## Why is my database slow?
-
-Slow queries are usually queries that read far more rows than they return. Use `wrangler d1 insights` to find them, then add an index:
-
-1. Find the databases and queries that do the most work across your account:
-
-   ```sh
-   npx wrangler d1 insights --sort-by=reads --time-period=7d --json
-   ```
-
-   Each result includes a `databaseId`, so you can see which database each query belongs to.
-
-2. Drill into the database you want to fix. You can pass the `databaseId` from the previous step in place of the database name:
-
-   ```sh
-   npx wrangler d1 insights <database_id> --sort-by=reads --time-period=7d --json
-   ```
-
-3. Look for queries with a high `avgRowsRead` and a `queryEfficiency` far below `1`. These queries scan many rows to return a few, which usually means a column in the `WHERE`, `JOIN` or `ORDER BY` clause has no index. [Add an index](/d1/best-practices/use-indexes/) for that column, then run the command again to check that `avgRowsRead` has dropped and `queryEfficiency` is closer to `1`.
-
-Insights are aggregated over the `--time-period` you choose, so queries run before you added the index still count towards the totals. Use a shorter `--time-period`, such as `1h`, to check the effect of a change.
+To find the databases and queries that cost the most in your account, and to learn how to fix them, refer to [Find slow and expensive queries](/d1/observability/find-expensive-queries/).
