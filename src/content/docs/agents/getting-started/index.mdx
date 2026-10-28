@@ -1,6 +1,6 @@
 ---
 title: Getting started
-description: Start building Agents on Cloudflare that maintain state, make decisions, and execute workflows.
+description: Start building Agents on Cloudflare with a harness, a Durable Object, and the Agents SDK lifecycle.
 pcx_content_type: overview
 sidebar:
   order: 1
@@ -12,26 +12,26 @@ products:
 
 import { DirectoryListing, LinkCard } from "~/components";
 
-Start building agents that can remember context, communicate with users, and act on their own. Pick the path that matches what you want to build first.
+An agent on Cloudflare is a Durable Object with the Agents SDK lifecycle installed. The lifecycle starts the capabilities you add to it, such as state, WebSockets, scheduling, and an agent harness. Pick the path that matches where you are starting from.
 
 ## Choose a path
 
 <LinkCard
-	title="Quick start"
-	href="/agents/getting-started/quick-start/"
-	description="Build a small stateful counter agent and learn the core Agent, state, and client SDK model."
-/>
-
-<LinkCard
 	title="Build an AI agent with the Pi harness"
 	href="/agents/harnesses/pi/"
-	description="Run Pi Durable in a Durable Object, with a model loop, tools, sessions, and recovery after eviction."
+	description="Run the Pi agent loop durably in a Durable Object, with tools, sessions, and recovery after eviction."
 />
 
 <LinkCard
-	title="Add Agents to an existing project"
+	title="Quick start"
+	href="/agents/getting-started/quick-start/"
+	description="Build a counter on a Durable Object with the lifecycle, durable state, and WebSockets."
+/>
+
+<LinkCard
+	title="Add to an existing project"
 	href="/agents/getting-started/add-to-existing-project/"
-	description="Install the Agents SDK into an existing Workers application and wire up routing."
+	description="Install the lifecycle on a Durable Object in a Workers project you already have."
 />
 
 <LinkCard

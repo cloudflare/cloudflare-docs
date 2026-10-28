@@ -1,6 +1,6 @@
 ---
 title: Build Agents on Cloudflare
-description: Build and host AI agents on Cloudflare. Start with the Pi harness, which runs a durable model loop with tools in a Durable Object, and add state, real-time connections, and scheduled tasks with the Agents SDK.
+description: Build and host AI agents on Cloudflare. Run an agent harness in a Durable Object, add capabilities such as state, WebSockets, and scheduling with the Agents SDK lifecycle, and give the agent tools.
 pcx_content_type: overview
 tags:
   - AI
@@ -11,7 +11,11 @@ head:
     content: Agents
 ---
 
-import { PackageManagers, RelatedProduct } from "~/components";
+import {
+	PackageManagers,
+	RelatedProduct,
+	TypeScriptExample,
+} from "~/components";
 import AgentsPlatformDiagram from "~/components/cf/AgentsPlatformDiagram.astro";
 
 Build and host Agents on Cloudflare, connect chat, voice, email, Slack, and webhooks to a durable agent runtime with Browser, Sandbox, AI Search, MCP, Payments, and other MCP tools.
@@ -24,20 +28,68 @@ Deploy once and Cloudflare runs your agents across its global network, scaling t
 
 Agents on Cloudflare are composed from four parts:
 
+- **The brain is the agent harness.** The harness defines the loop: how the agent calls models, selects tools, handles tool results, streams responses, and decides whether to continue. The harness normally runs in a [Durable Object](/durable-objects/). Use a pre-built harness such as the [Pi harness](/agents/harnesses/pi/), or write your own loop.
+- **The agent runtime is a Durable Object, the lifecycle, and capabilities.** The Agents SDK gives you helpers that make Durable Objects easier to work with. The [lifecycle](/agents/runtime/lifecycle/) runs inside your Durable Object and starts the capabilities you add to it: [state](/agents/agent-class/state/), [WebSockets](/agents/agent-class/websockets/), [routing](/agents/agent-class/routing/), [scheduling](/agents/agent-class/schedule-tasks/), [MCP clients](/agents/model-context-protocol/guides/build-mcp-client/), and [observability](/agents/runtime/operations/observability/). A harness is a capability too.
+- **Tools** let the agent act. The Agents SDK includes [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), [payments](/agents/tools/payments/), and [Code Mode](/agents/tools/codemode/). For a durable filesystem, shell, code execution, and git, we recommend a workspace from [Cloudflare Computer](https://github.com/cloudflare/computer) (documentation coming soon).
 - **Communication channels** define how users and systems reach your agent, such as [chat](/agents/agent-class/communication-channels/chat/), [voice](/agents/agent-class/communication-channels/voice/), [email](/agents/agent-class/communication-channels/email/), [Slack](/agents/agent-class/communication-channels/slack/), [webhooks](/agents/agent-class/communication-channels/webhooks/), and other event sources.
-- **The agent harness** defines the loop: how the agent calls models, selects tools, handles tool results, streams responses, and decides whether to continue. Use the [Pi harness](/agents/harnesses/pi/) to run Pi Durable in a Durable Object, or build your own loop directly on the [Agents SDK runtime](/agents/agent-class/).
-- **The Agents SDK runtime** provides durable infrastructure: the [`Agent` class](/agents/agent-class/internals/), [state](/agents/agent-class/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/agent-class/routing/), [WebSockets](/agents/agent-class/websockets/), [scheduling](/agents/agent-class/schedule-tasks/), [fibers](/agents/agent-class/durable-execution/), and [observability](/agents/runtime/operations/observability/).
-- **Tools** give the agent capabilities: [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), and [payments](/agents/tools/payments/). [Code Mode](/agents/tools/codemode/) lets models discover and orchestrate multiple tools by writing code.
+
+Here is a Durable Object with a lifecycle, two capabilities, and a Cloudflare Computer workspace:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { Lifecycle } from "agents/lifecycle";
+import { Scheduler } from "agents/schedules";
+import { WebSockets } from "agents/websockets";
+
+export class MyAgent extends DurableObject<Env> {
+	// Tools: a durable filesystem in the object's SQLite database
+	readonly workspace = new Workspace({ storage: this.ctx.storage });
+
+	// Capabilities: real-time connections and durable schedules
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onMessage: async (connection, message) => {
+				await this.workspace.fs.writeFile("/notes.md", String(message));
+				connection.send("saved");
+			},
+		},
+	});
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			cleanup: () => this.workspace.fs.rm("/notes.md", { force: true }),
+		},
+	});
+
+	// Runtime: the lifecycle starts each capability and handles the
+	// object's fetch, alarm, and WebSocket events
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.webSockets)
+		.use(this.scheduler);
+
+	onStart(): void {
+		// Runs each time the object starts, before it handles any work
+	}
+}
+```
+
+</TypeScriptExample>
+
+To add the brain, install a harness on the same lifecycle with `.use(this.harness)`.
 
 ### Get started
 
-Build your agent with the [Pi harness](/agents/harnesses/pi/). [Pi Durable](https://earendil.com/posts/pi-durable/) runs the agent loop, including the transcript, model calls, tools, and retries, inside a Durable Object. `PiHarness` from the Agents SDK stores Pi's state in the object's SQLite database and resumes the run after an eviction. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
+Build your agent with a pre-built harness. The [Pi harness](/agents/harnesses/pi/) runs the [Pi](https://pi.dev/) agent loop durably in a Durable Object. It uses the lifecycle's job queue to schedule future work, so a run continues after the object is evicted. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
 
 <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
 
-The [Pi harness guide](/agents/harnesses/pi/) builds a first agent in one file. To start from a complete app with a browser UI, a durable filesystem, and code execution, deploy the Pi harness example:
+To start from a complete app with a browser UI, a Cloudflare Computer workspace, and code execution, deploy the Pi harness example:
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
+
+To learn the runtime first, follow the [Quick start](/agents/getting-started/quick-start/). To add the lifecycle to a Worker you already have, refer to [Add to an existing project](/agents/getting-started/add-to-existing-project/).
 
 ### Example agents
 
