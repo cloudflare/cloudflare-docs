@@ -3,7 +3,7 @@ title: Add to an existing project
 description: Add the Agents SDK lifecycle to a Durable Object in an existing Cloudflare Workers project, then add capabilities such as state, WebSockets, and scheduling.
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 3
 products:
   - agents
 ---
@@ -223,14 +223,13 @@ await notes.remindLater("Stand-up", 60);
 
 Other capabilities install the same way:
 
-| Capability                                                                    | Import              | What it adds                                                                        |
-| ----------------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| [`State`](/agents/agent-class/state/)                                         | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
-| [`WebSockets`](/agents/agent-class/websockets/)                               | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
-| [`Scheduler`](/agents/agent-class/schedule-tasks/)                            | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
-| [`Queue`](/agents/agent-class/queue-tasks/)                                   | `agents/queue`      | Background work that runs in order, with retries.                                   |
-| [`MCPClientManager`](/agents/model-context-protocol/guides/build-mcp-client/) | `agents/mcp/client` | Connections to remote MCP servers.                                                  |
-| [`PiHarness`](/agents/harnesses/pi/)                                          | `agents/harness/pi` | The Pi agent loop, with durable sessions.                                           |
+| Capability                                                            | Import              | What it adds                                                                        |
+| --------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
+| [`State`](/agents/agent-class/state/)                                 | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
+| [`WebSockets`](/agents/agent-class/websockets/)                       | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
+| [`Scheduler`](/agents/agent-class/schedule-tasks/)                    | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
+| [`MCPClientManager`](/agents/model-context-protocol/apis/client-api/) | `agents/mcp/client` | Connections to remote MCP servers.                                                  |
+| [`PiHarness`](/agents/harnesses/pi/)                                  | `agents/harness/pi` | The Pi agent loop, with durable sessions.                                           |
 
 Capabilities run in the order you add them. To write your own, refer to [Lifecycle](/agents/runtime/lifecycle/).
 

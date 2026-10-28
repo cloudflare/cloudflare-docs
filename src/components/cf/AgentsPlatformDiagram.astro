@@ -27,19 +27,27 @@ const channels = [
 	},
 ];
 
-const runtime = [
+const capabilities = [
 	{ label: "State", href: "/agents/agent-class/state/" },
-	{ label: "Sessions", href: "/agents/runtime/lifecycle/sessions/" },
-	{ label: "Routing", href: "/agents/agent-class/routing/" },
 	{ label: "WebSockets", href: "/agents/agent-class/websockets/" },
-	{ label: "Scheduling", href: "/agents/agent-class/schedule-tasks/" },
-	{ label: "Fibers", href: "/agents/agent-class/durable-execution/" },
+	{ label: "Scheduler", href: "/agents/agent-class/schedule-tasks/" },
+	{
+		label: "MCP client",
+		href: "/agents/model-context-protocol/apis/client-api/",
+	},
 ];
 
 const tools = [
+	{
+		type: "Workspace",
+		name: "Cloudflare Computer",
+		href: "/agents/tools/filesystem/",
+	},
 	{ type: "Sandbox", name: "Bash/Shell", href: "/agents/tools/sandbox/" },
-	{ type: "MCP", name: "Servers", href: "/agents/tools/mcp/" },
 	{ type: "Browser", name: "CDP", href: "/agents/tools/browser/" },
+	{ type: "Web fetch", name: "Fetch", href: "/agents/tools/web-fetch/" },
+	{ type: "Web search", name: "Search", href: "/agents/tools/web-search/" },
+	{ type: "MCP", name: "Servers", href: "/agents/tools/mcp/" },
 	{ type: "AI Search", name: "Retrieval", href: "/agents/tools/ai-search/" },
 	{ type: "Payments", name: "x402 · MPP", href: "/agents/tools/payments/" },
 ];
@@ -82,37 +90,40 @@ const tools = [
 			<div class="agent-card-inner">
 				<header class="agent-header">
 					<span class="agent-icon" aria-hidden="true">
-						A
+						DO
 					</span>
-					<div class="agent-title">Agent</div>
+					<div class="agent-title">Durable Object</div>
 					<span class="status-dot" aria-label="Active"></span>
 				</header>
 
-				<div class="agent-section harness-section">
+				<div class="agent-section runtime-section">
 					<div class="agent-section-copy">
-						<div class="section-title">Agent harness</div>
-						<p>Controls planning, tool use, and response flow.</p>
+						<div class="section-title">Lifecycle and capabilities</div>
+						<p>
+							The Lifecycle runs in the Durable Object and starts each
+							capability you add.
+						</p>
 					</div>
-					<div class="section-row">
-						<a href="/agents/harnesses/pi/">Pi harness</a>
-						<a href="/agents/agent-class/">Build-your-own agent</a>
+					<a class="agent-class" href="/agents/runtime/lifecycle/">
+						Lifecycle
+					</a>
+					<div class="runtime-list">
+						{capabilities.map((item) => (
+							<a href={item.href}>{item.label}</a>
+						))}
 					</div>
 				</div>
 
-				<div class="agent-section runtime-section">
+				<div class="agent-section harness-section">
 					<div class="agent-section-copy">
-						<div class="section-title">Agents SDK runtime</div>
+						<div class="section-title">Harness</div>
 						<p>
-							Durable identity, state, connections, scheduling, and recovery.
+							A capability that runs the agent loop: models, tools, and
+							responses.
 						</p>
 					</div>
-					<a class="agent-class" href="/agents/agent-class/">
-						Agent class
-					</a>
-					<div class="runtime-list">
-						{runtime.map((item) => (
-							<a href={item.href}>{item.label}</a>
-						))}
+					<div class="section-row">
+						<a href="/agents/harnesses/pi/">Pi harness</a>
 					</div>
 				</div>
 			</div>
