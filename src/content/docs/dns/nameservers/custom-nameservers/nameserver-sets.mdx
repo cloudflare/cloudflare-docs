@@ -10,7 +10,7 @@ sidebar:
 description: Create standard or Advanced Custom Nameserver sets and assign them to zones in your account.
 ---
 
-import { APIRequest, Steps } from "~/components";
+import { APIRequest, DashButton, Steps } from "~/components";
 
 A nameserver set is an account-level group of two to five custom nameserver names, together with the IP addresses that Cloudflare assigns to those names. You create a set once and then assign it to zones in the same account. Each set has a name to identify it.
 
@@ -18,7 +18,7 @@ Nameserver sets are a separate configuration from [zone](/dns/nameservers/custom
 
 ## Availability
 
-Nameserver sets are in beta and available to Enterprise customers through the API only.
+Nameserver sets are in beta and available to Enterprise customers via API or on the dashboard.
 
 To use a nameserver set, a zone must be in the same account as the set.
 
@@ -62,7 +62,11 @@ Set names must be unique within an account.
 
 ## Create a nameserver set
 
-To create a set, use the [Create Custom Nameserver Set](/api/resources/dns/subresources/settings/subresources/account/subresources/nameserver_sets/methods/create/) endpoint.
+In the Cloudflare dashboard, create and manage sets under **Nameserver sets** on the account **DNS Settings** page.
+
+<DashButton url="/?to=/:account/configurations/dns-settings" />
+
+To create a set via API, use the [Create Custom Nameserver Set](/api/resources/dns/subresources/settings/subresources/account/subresources/nameserver_sets/methods/create/) endpoint.
 
 Include a top-level `name` to identify the set. Each nameserver name in `nameservers` must be unique within the set and lowercase. Internationalized domain names must use Punycode.
 
@@ -209,7 +213,11 @@ Cloudflare does not create these records for you, even if the nameserver names b
 
 ## Assign a nameserver set to a zone
 
-To assign a set to a zone, use the [Update DNS Settings for a Zone](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint:
+In the Cloudflare dashboard, assign a set under **Nameserver sets** on the zone **DNS Settings** page.
+
+<DashButton url="/?to=/:account/:zone/dns/settings" />
+
+To assign a set via API, use the [Update DNS Settings for a Zone](/api/resources/dns/subresources/settings/subresources/zone/methods/edit/) endpoint:
 
 <APIRequest
 	path="/zones/{zone_id}/dns_settings"

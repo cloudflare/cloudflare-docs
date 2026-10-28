@@ -5,6 +5,11 @@
 		"parent": ["Rules"]
 	},
 	{
+		"deeplink": "/?to=/:account/configurations/dns-settings",
+		"name": "DNS Settings",
+		"parent": ["Manage account", "Configurations"]
+	},
+	{
 		"deeplink": "/?to=/:account/tunnels",
 		"name": "Tunnels",
 		"parent": ["Networking"]
