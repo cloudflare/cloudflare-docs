@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-28-browser-internal-hostnames.mdx
+  s_ad7fef383a5af1::t_34b51ca4fb39e4 2,7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d43174f937026ccbe29651a78d9af4b4c3fe2818",
+  "prompts": {},
+  "sessions": {
+    "s_ad7fef383a5af1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1800b-cd85-7cc0-99ef-97659ef79bff",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
