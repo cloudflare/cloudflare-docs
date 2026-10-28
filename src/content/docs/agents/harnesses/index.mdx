@@ -31,7 +31,7 @@ Use a build-your-own harness when you need full control over the model call, mes
 
 Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and plugin system. `OpenCodeHarness` runs [OpenCode's Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object.
 
-Use Nanocode when you want its Rust/WebAssembly engine, Codex and Claude backends, and native Cloudflare host. Nanocode owns session storage, recovery alarms, and client streaming. Add SDK capabilities through your application when needed.
+Use Nanocode to embed a coding agent that follows Codex or Claude Code prompt and tool conventions. Nanocode runs its own Rust/WebAssembly runtime in a Durable Object and provides session storage, recovery alarms, and client streaming.
 
 ## Current harnesses
 

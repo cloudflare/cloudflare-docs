@@ -10,7 +10,7 @@ import { TypeScriptExample } from "~/components";
 
 Its Rust engine runs as [WebAssembly](/workers/runtime-apis/webassembly/) inside a [Durable Object](/durable-objects/). Nanocode saves turn progress and tool results in SQLite, and uses alarms to resume pending work after an interruption. Its Cloudflare host runs independently of Agents SDK.
 
-Nanocode supports Codex and Claude backends. The example below uses its Codex backend with [Workers AI](/workers-ai/) model `glm-5.3`.
+Nanocode implements Codex and Claude Code prompt and tool conventions. The example below selects its `codex` harness implementation with [Workers AI](/workers-ai/) model `glm-5.3`.
 
 After configuring the [reference Worker](https://github.com/gakonst/nanocode-worker) for Workers AI and loading your project files into its workspace, submit a review from your backend:
 
