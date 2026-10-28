@@ -17,7 +17,7 @@ The harness combines Agents SDK capabilities for durable execution:
 - `Streams` stores ordered events for replay after reconnecting.
 - `Workspace` provides tools to read and write persistent files.
 
-The example uses Kimi K2.7 Code through Workers AI. Configure its model with [`createAI`](/agents/models/ai-sdk/) and install the capabilities on a Durable Object:
+For example, use OpenAI's GPT-5.4 through AI Gateway. Configure the model with [`createAI`](/agents/models/ai-sdk/) and install the capabilities on a Durable Object:
 
 <TypeScriptExample>
 
@@ -42,9 +42,7 @@ export class Coder extends DurableObject<Env> {
 		streams: this.streams,
 		sessions: this.sessions,
 		workspace: this.workspace,
-		model: createAI({ binding: this.env.AI, id: "default" })(
-			"@cf/moonshotai/kimi-k2.7-code",
-		),
+		model: createAI({ binding: this.env.AI, id: "default" })("openai/gpt-5.4"),
 	});
 
 	lifecycle = Lifecycle.install(this)
@@ -56,6 +54,8 @@ export class Coder extends DurableObject<Env> {
 ```
 
 </TypeScriptExample>
+
+To use this model, configure the `default` gateway with [Unified Billing](/ai-gateway/features/unified-billing/) or a [stored OpenAI API key](/ai-gateway/configuration/bring-your-own-keys/).
 
 `CodexHarness` lives in the example and depends on internal SDK APIs. Start from the [complete example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex), which includes the harness source, Rust/Wasm build instructions, and a browser chat interface.
 
