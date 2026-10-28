@@ -1103,6 +1103,8 @@ To bind Analytics Engine datasets to your Worker, assign an array of the below o
   - The binding name used to refer to the dataset.
 - `dataset` <Type text="string" /> <MetaInfo text="optional" />
   - The dataset name to write to. This will default to the same name as the binding if it is not supplied.
+- `remote` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Whether the binding should write to the remote dataset during local development. Data points are discarded locally by default. Refer to [remote bindings](/workers/local-development/#remote-bindings).
 
 Example:
 
