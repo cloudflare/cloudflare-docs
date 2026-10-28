@@ -1,0 +1,25 @@
+---
+title: View your data localization settings in one dashboard page
+description: The new Data Localization Suite Overview shows your Regional Services, Customer Metadata Boundary, and Geo Key Manager settings on one page.
+products:
+  - data-localization
+date: "2026-10-23"
+---
+
+import { DashButton } from "~/components";
+
+The Cloudflare dashboard now includes a **Data Localization Suite** Overview: a read-only view of every data localization setting on your account. Previously, you had to check DNS Records, Address Maps, Spectrum, Logs, and Edge Certificates one by one to see where your traffic, logs, and keys are kept. The Overview puts them all on one page.
+
+To find it, go to **Application Security** > **Data Localization Suite**, or search for "DLS" in the dashboard.
+
+<DashButton url="/?to=/:account/dls/overview" buttonName="Data Localization Suite Overview" />
+
+The Overview has a tab for each product:
+
+- **Regional Services**: regionalized hostnames (filter by region or zone), regionalized IP bindings, and regionalized Spectrum applications, each with its region.
+- **Customer Metadata Boundary**: whether the boundary is on, the region (US or EU), and whether out-of-region access is allowed.
+- **Geo Key Manager**: every custom certificate with a geo policy, with its hostname, zone, region, and status.
+
+Each item links to the dashboard page where you change its setting, and each tab links to the product's documentation. If a product is not enabled on your account, the Overview tells you so.
+
+To learn more, refer to the [Data Localization Suite documentation](/data-localization/).
