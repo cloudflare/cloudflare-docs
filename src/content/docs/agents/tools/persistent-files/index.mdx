@@ -18,9 +18,18 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Keep an agent's notes, drafts, and generated files across turns and restarts. Cloudflare Computer provides a `Workspace` stored in the SQLite database of a Durable Object.
+[Cloudflare Computer](https://github.com/cloudflare/computer) gives an agent a persistent working directory backed by SQLite, with tools such as `read`, `write`, `edit`, and `grep`.
 
-The workspace and its file tools are stable. You can use them without an execution backend.
+An optional `exec` tool lets the agent run [JavaScript](/agents/tools/code-execution/run-javascript/) or [shell commands](/agents/tools/code-execution/persistent-files/) against those files.
+
+Use a file system when an agent needs to:
+
+- Keep notes, drafts, plans, or generated files across turns and restarts.
+- Read, search, and edit text files with tools built for a model.
+- Run JavaScript against files without starting a container.
+- Access skills, source files, and other documents without loading them all into its context window.
+
+The workspace and its file tools are stable.
 
 Use this guide in an existing [Worker project](/workers/get-started/).
 
