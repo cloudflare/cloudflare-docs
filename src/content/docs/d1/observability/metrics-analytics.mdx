@@ -162,14 +162,33 @@ Run `wrangler d1 insights --help` to view current options.
 
 :::
 
-| Option             | Description                                                                                                      |
-| ------------------ | ---------------------------------------------------------------------------------------------------------------- |
-| `--timePeriod`     | Fetch data from now to the provided time period (default: `1d`).                                                 |
-| `--sort-type`      | The operation you want to sort insights by. Select between `sum` and `avg` (default: `sum`).                     |
-| `--sort-by`        | The field you want to sort insights by. Select between `time`, `reads`, `writes`, and `count` (default: `time`). |
-| `--sort-direction` | The sort direction. Select between `ASC` and `DESC` (default: `DESC`).                                           |
-| `--json`           | A boolean value to specify whether to return the result as clean JSON (default: `false`).                        |
-| `--limit`          | The maximum number of queries to be fetched.                                                                     |
+`wrangler d1 insights` reads from the GraphQL Analytics API and the D1 API, so the API token you use needs both the **Account Analytics: Read** and **D1: Read** permissions.
+
+Pass a database name to get the top queries for that database. Leave out the database name to run account-wide and get the top queries across every D1 database in your account:
+
+```sh
+# Top queries for one database
+npx wrangler d1 insights <database_name>
+
+# Top queries across every D1 database in the account
+npx wrangler d1 insights
+```
+
+When run account-wide, each result also includes the following fields, so you can tell which database a query belongs to:
+
+| Field          | Description                                                                   |
+| -------------- | ----------------------------------------------------------------------------- |
+| `databaseId`   | The ID of the database that ran the query.                                    |
+| `databaseName` | The current name of the database, or `null` if the database has been deleted. |
+
+| Option             | Description                                                                                                                 |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
+| `--time-period`    | Fetch data from now to the provided time period, for example `30m`, `12h` or `7d` (default: `1d`, maximum: `31d`).          |
+| `--sort-type`      | The operation you want to sort insights by. Select between `sum` and `avg` (default: `sum`).                                |
+| `--sort-by`        | The field you want to sort insights by. Select between `time`, `reads`, `writes`, and `count` (default: `time`).            |
+| `--sort-direction` | The sort direction. Select between `ASC` and `DESC` (default: `DESC`).                                                      |
+| `--json`           | A boolean value to specify whether to return the result as clean JSON (default: `false`).                                   |
+| `--limit`          | The maximum number of queries to be fetched. When run account-wide, this limit applies across all databases (default: `5`). |
 
 <Details header="To find top 3 queries by execution count:">
 
@@ -282,7 +301,7 @@ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=
 <Details header="To find top 10 queries by rows written in last 7 days:">
 
 ```sh
-npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limit=10 --timePeriod=7d
+npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limit=10 --time-period=7d
 ```
 
 ```sh output
@@ -338,3 +357,25 @@ The quantity `queryEfficiency` measures how efficient your query was. It is calc
 
 Generally, you should try to get `queryEfficiency` as close to `1` as possible. Refer to [Use indexes](/d1/best-practices/use-indexes/) for more information on efficient querying.
 :::
+
+## Why is my database slow?
+
+Slow queries are usually queries that read far more rows than they return. Use `wrangler d1 insights` to find them, then add an index:
+
+1. Find the databases and queries that do the most work across your account:
+
+   ```sh
+   npx wrangler d1 insights --sort-by=reads --time-period=7d --json
+   ```
+
+   Each result includes `databaseId` and `databaseName`, so you can see which database each query belongs to.
+
+2. Drill into the database you want to fix:
+
+   ```sh
+   npx wrangler d1 insights <database_name> --sort-by=reads --time-period=7d --json
+   ```
+
+3. Look for queries with a high `avgRowsRead` and a `queryEfficiency` far below `1`. These queries scan many rows to return a few, which usually means a column in the `WHERE`, `JOIN` or `ORDER BY` clause has no index. [Add an index](/d1/best-practices/use-indexes/) for that column, then run the command again to check that `avgRowsRead` has dropped and `queryEfficiency` is closer to `1`.
+
+Insights are aggregated over the `--time-period` you choose, so queries run before you added the index still count towards the totals. Use a shorter `--time-period`, such as `1h`, to check the effect of a change.
