@@ -401,7 +401,7 @@ Example:
 The `observability` setting configures [Workers Logs](/workers/observability/logs/workers-logs/), [Traces](/workers/observability/traces/), and [Issues](/workers/observability/issues/). Enablement, storage in Cloudflare, and export to external destinations are separate choices. Refer to [Configure observability](/workers/observability/configuration/) for examples and API updates that preserve the current Worker version.
 
 - `enabled` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Shorthand for enabling logs when `logs.enabled` is not set. An explicit `logs.enabled` value takes precedence. Newly created Workers enable logs by default; set this field explicitly when managing existing Workers. This flag does not override explicitly configured traces or Issues, or the separate `logpush` and `tail_consumers` settings.
+  - Shorthand for enabling logs when `logs.enabled` is not set. An explicit `logs.enabled` value takes precedence. Set the desired enablement explicitly in your deployment configuration. API PATCH requests preserve omitted top-level settings. This flag does not override explicitly configured traces or Issues, or the separate `logpush` and `tail_consumers` settings.
 - `logs.enabled` <Type text="boolean" /> <MetaInfo text="optional" />
   - Whether Workers Logs is enabled. Use `logs.persist` to control storage and `logs.destinations` to configure export.
 - `logs.persist` and `traces.persist` <Type text="boolean" /> <MetaInfo text="optional" />
