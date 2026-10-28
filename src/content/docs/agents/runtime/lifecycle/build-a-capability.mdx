@@ -34,7 +34,11 @@ import {
 } from "agents/lifecycle";
 
 class HealthCheck implements DurableObjectCapability {
-	constructor(private readonly storage: DurableObjectStorage) {}
+	readonly storage: DurableObjectStorage;
+
+	constructor(storage: DurableObjectStorage) {
+		this.storage = storage;
+	}
 
 	onStart(): void {
 		this.storage.sql.exec(
