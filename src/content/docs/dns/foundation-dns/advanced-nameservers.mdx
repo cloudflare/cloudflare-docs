@@ -84,10 +84,10 @@ Advanced nameservers try to keep the same nameserver set (`blue`, `gold`, or `or
 - A directly descending zone in the same or another account already uses the same set.
 - The zone was previously deleted from Cloudflare and re-added.
 
-Cloudflare cannot change the Advanced nameservers [automatically assigned](/dns/nameservers/nameserver-options/#assignment-method) to a zone, such as `blue.foundationdns.com`. To use the same nameservers across zones, use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/) or assign the same [nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/) (beta) to each zone. To keep Advanced anycast network groups, use an [Advanced Custom Nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/#advanced-custom-nameserver-set).
+Cloudflare cannot change the Advanced nameservers [automatically assigned](/dns/nameservers/nameserver-options/#assignment-method) to a zone, such as `blue.foundationdns.com`. To use the same nameservers across zones, use [account custom nameservers](/dns/nameservers/custom-nameservers/account-custom-nameservers/) or assign the same [nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/) to each zone. To keep Advanced anycast network groups, use an [Advanced Custom Nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/#advanced-custom-nameserver-set).
 
 ## Custom Nameserver compatibility
 
-Advanced Custom Nameserver sets are available in beta to Enterprise customers. These sets use custom nameserver names (for example, `ns1.example.com`) and distribute addresses across Advanced anycast network groups. To create one, refer to [Advanced Custom Nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/#advanced-custom-nameserver-set).
+Advanced Custom Nameserver sets are available to Enterprise customers. These sets use custom nameserver names (for example, `ns1.example.com`) and distribute addresses across Advanced anycast network groups. To create one, refer to [Advanced Custom Nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/#advanced-custom-nameserver-set).
 
 Legacy [tenant](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/), [account](/dns/nameservers/custom-nameservers/account-custom-nameservers/), or [zone](/dns/nameservers/custom-nameservers/zone-custom-nameservers/)-level Custom Nameservers are not compatible with Advanced Nameservers.
