@@ -9,7 +9,7 @@ sidebar:
   order: 9
 ---
 
-import { DashButton } from "~/components";
+import { APIRequest, DashButton } from "~/components";
 
 Every time you change your Worker's code or configuration, Workers creates a **version**. A **deployment** determines which version(s) are actively serving traffic.
 
@@ -50,6 +50,44 @@ Wrangler allows you to view the 100 most recent versions and deployments. Refer 
    <DashButton url="/?to=/:account/workers-and-pages" />
 
 2. Select your Worker > **Deployments**.
+
+## Retrieve a version's code
+
+Use a full version UUID to review an exact version. A deployment ID identifies a deployment, which can contain multiple versions. The `latest` version is the most recently created version, not necessarily the version serving traffic.
+
+Create an API token with `Content Read-Only` at the [Individual Workers scope](/workers/authorization/workers/#grant-access-to-all-or-selected-workers), limited to the Worker you want to review. These reads retrieve uploaded code without executing the Worker.
+
+### Code and configuration
+
+Use [Get Worker Version](/api/resources/workers/subresources/beta/subresources/workers/subresources/versions/methods/get/) with `include=modules`:
+
+<APIRequest
+	path="/accounts/{account_id}/workers/workers/{worker_id}/versions/{version_id}"
+	method="GET"
+	parameters={{ include: "modules" }}
+	roles="Individual Workers Content Read-Only"
+/>
+
+Set `WORKER_ID` to the Worker ID or name, and `VERSION_ID` to its full version UUID. This also works for versions uploaded through the Workers Scripts API.
+
+The response includes configuration, plaintext binding values, and available author metadata. `include=modules` adds module content. It does not restrict the response to code. Secret bindings contain their name and type, but omit the secret value. Asset configuration omits the upload JWT.
+
+Uploaded sourcemaps are not returned by this endpoint. For service-worker-format versions, source is returned in `main_script_base64`, even without `include=modules`. Reading that source requires content-read permission.
+
+### Code without configuration
+
+The legacy Workers Scripts content endpoint can download an exact version without the version's configuration or author JSON. Set `WORKER_NAME` to the Worker name and `VERSION_ID` to the full version UUID:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/scripts/$WORKER_NAME/content/v2?deployment=$VERSION_ID&omit=sourcemaps" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Despite its historical name, `deployment` selects a **version**, not a deployment. It accepts a full version UUID or integer version number. UUID prefixes and `latest` are not supported by this parameter. Omit `deployment` to download the Worker's current script content.
+
+Module-format Workers return `multipart/form-data`, with each module as a separate part. Service-worker-format Workers return a JavaScript body. Assets-only versions without script content return HTTP `204`.
+
+`omit=sourcemaps` excludes uploaded sourcemaps. The response can include content headers such as `ETag` and `CF-ENTRYPOINT`. It has no JSON metadata envelope and does not echo the version UUID. Keep the requested UUID alongside the downloaded content if your review requires both.
 
 ## Next steps
 

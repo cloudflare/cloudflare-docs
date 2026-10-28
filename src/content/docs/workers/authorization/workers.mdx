@@ -53,6 +53,14 @@ Members and User Groups are for people who need dashboard or user-based access. 
 
 API tokens use the same Workers roles and scopes as members and User Groups, but they have their own permissions. A token can only perform actions allowed by the Workers role and scope assigned to that token.
 
+## Read-only code review
+
+For an agent or reviewer that needs one Worker's code, grant `Content Read-Only` at the Individual Workers scope and select that Worker. The API token permission is named `Individual Workers Content Read-Only`.
+
+This role permits both content and metadata reads. It does not restrict version responses to code. Version reads can return settings, plaintext binding values, and available author metadata, while omitting secret values and asset upload JWTs.
+
+Choose the endpoint according to the data your reviewer needs. Refer to [Retrieve a version's code](/workers/versions-and-deployments/#retrieve-a-versions-code) for full version responses and downloads without configuration JSON.
+
 ## Routes and Custom Domains
 
 To add, update, or remove Routes or Custom Domains, you need `Editor` access to the Worker and `Workers Routes Write` permission for every affected zone.
