@@ -1,0 +1,46 @@
+---
+title: The Temporal API is now available in Workers
+description: Workers now support Temporal, the modern JavaScript API for dates, times, and time zones.
+products:
+  - workers
+date: 2026-12-01
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Workers now support the [Temporal API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal), the modern JavaScript standard for dates and times. You can convert between time zones, do calendar-correct date arithmetic, and work with plain dates and times, without bundling a date library such as Moment.js, Luxon, or date-fns.
+
+Temporal is turned on for Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-12-01` or later. To use it with an earlier compatibility date, add the [`temporal`](/workers/configuration/compatibility-flags/#enable-the-temporal-api) compatibility flag:
+
+<WranglerConfig>
+
+```toml
+compatibility_flags = ["temporal"]
+```
+
+</WranglerConfig>
+
+This example shows the time a meeting starts in the visitor's time zone, using the time zone Cloudflare detects for the request:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request): Promise<Response> {
+		const timeZone = request.cf?.timezone ?? "UTC";
+
+		const meeting = Temporal.ZonedDateTime.from(
+			"2026-12-15T09:30[America/New_York]",
+		);
+		const local = meeting.withTimeZone(timeZone);
+
+		return new Response(
+			`The meeting starts at ${local.toPlainTime()} on ${local.toPlainDate()} (${timeZone}).`,
+		);
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
+For the full API, refer to the [Temporal documentation on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal).
