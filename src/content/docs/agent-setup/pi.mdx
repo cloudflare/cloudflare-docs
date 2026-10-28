@@ -1,0 +1,147 @@
+---
+title: Pi + Cloudflare
+description: "Minimal, extensible terminal coding agent with built-in MCP, Skills, and support for many model providers. Made by Earendil."
+template: splash
+pcx_content_type: how-to
+products:
+  - agent-setup
+---
+
+import { Steps } from "~/components";
+import AgentHeader from "~/components/agent-setup/AgentHeader.astro";
+import PlatformAccess from "~/components/agent-setup/PlatformAccessSection.astro";
+import ExamplePromptsList from "~/components/agent-setup/ExamplePromptsList.astro";
+import RandomPrompt from "~/components/agent-setup/RandomPrompt.astro";
+import TipsList from "~/components/agent-setup/TipsList.astro";
+import FAQList from "~/components/agent-setup/FAQList.astro";
+import FAQItem from "~/components/agent-setup/FAQItem.astro";
+import TroubleshootingList from "~/components/agent-setup/TroubleshootingList.astro";
+import TroubleshootingItem from "~/components/agent-setup/TroubleshootingItem.astro";
+import BuildAgentsCallout from "~/components/agent-setup/BuildAgentsCallout.astro";
+import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
+
+<AgentHeader slug="pi" />
+
+## Quick start
+
+<Steps>
+	1. **Install Pi**
+
+		Install Pi on macOS or Linux. For Windows, npm, or Nix options, refer to the [Pi quickstart](https://pi.dev/docs/latest/quickstart).
+
+		```bash
+		curl -fsSL https://pi.dev/install.sh | sh
+		```
+
+	2. **Install Cloudflare Skills**
+
+		```bash
+		npx skills add https://github.com/cloudflare/skills
+		```
+
+	3. **Add the Cloudflare MCP server**
+
+		Register the Cloudflare MCP server in `~/.pi/agent/mcp.json`, then sign in through OAuth. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
+
+		```bash
+		pi mcp add cloudflare --url https://mcp.cloudflare.com/mcp
+		pi mcp login cloudflare
+		```
+
+	4. **Launch Pi**
+
+		Start Pi from the root of your project, where `wrangler.jsonc` or `cloudflare.config.ts` lives (if either exists). If you have not connected a model provider yet, run `/login` inside Pi to connect a subscription or API key.
+
+		```bash
+		pi
+		```
+
+	5. **Try a prompt**
+
+		For example:
+
+		<RandomPrompt />
+</Steps>
+
+## Cloudflare platform access
+
+<PlatformAccess />
+
+## Example prompts
+
+<ExamplePromptsList />
+
+## Tips
+
+<TipsList>
+
+- The Cloudflare API MCP server uses Code Mode. Pi writes JavaScript against a typed API to reach any of 2,500+ endpoints in ~1,000 tokens.
+- Pi calls MCP tools from its own `codemode` tool by default. To declare the Cloudflare tools to the model directly, add the server with `--exposure direct`.
+- Use `/mcp` inside Pi to check the connection, sign in, reconnect, or turn the Cloudflare server on or off. Run `/reload` after changing `mcp.json` outside a session.
+- Pi has built-in providers for [Workers AI](https://pi.dev/docs/latest/providers#cloudflare-workers-ai) and [AI Gateway](/ai-gateway/integrations/coding-agents/pi/), so you can keep the whole workflow on Cloudflare.
+
+</TipsList>
+
+## FAQ
+
+<FAQList>
+	<FAQItem question="Should I use Skills, the MCP server, a CLI, or all of them?">
+		All three. Skills provide persistent Cloudflare expertise so Pi knows when
+		to reach for Durable Objects vs KV, how to structure a Workers project, and
+		when to call CLI vs API. The Cloudflare API MCP server handles platform
+		operations (DNS, WAF, Zero Trust, R2 buckets). Wrangler handles local dev,
+		deploys, and Workers-specific commands. The bundled `wrangler` Skill teaches
+		Pi which to use. For tasks across the whole Cloudflare API, Pi can also use
+		the [Cloudflare CLI](/cf/), `cf`.
+	</FAQItem>
+	<FAQItem question="Can Pi use the Cloudflare CLI?">
+		Yes. The [Cloudflare CLI](/cf/), `cf`, is in beta and covers the whole
+		Cloudflare API and prints JSON output. Install it with `npm install -g cf`,
+		sign in with `cf auth login`, and tell Pi to prefer it in `AGENTS.md` or
+		`~/.pi/agent/AGENTS.md`. Refer to [Use cf with AI agents](/cf/agents/).
+	</FAQItem>
+	<FAQItem question="How do I connect Pi to my Cloudflare account?">
+		Run `pi mcp login cloudflare`, or run `/mcp login cloudflare` inside Pi. Pi
+		opens the Cloudflare authorization page in your browser, where you choose
+		permissions.
+	</FAQItem>
+	<FAQItem question="Can I use Workers AI as the model provider in Pi?">
+		Yes. Pi has built-in Cloudflare Workers AI and Cloudflare AI Gateway
+		providers. Set `CLOUDFLARE_API_KEY` and `CLOUDFLARE_ACCOUNT_ID`, or run
+		`/login` inside Pi. To route another provider through AI Gateway, refer to
+		[Pi with AI Gateway](/ai-gateway/integrations/coding-agents/pi/).
+	</FAQItem>
+	<FAQItem question="Is Pi open source?">
+		Yes. Pi is open source under the MIT license and available at
+		[github.com/earendil-works/pi](https://github.com/earendil-works/pi).
+	</FAQItem>
+</FAQList>
+
+## Troubleshooting
+
+<TroubleshootingList>
+	<TroubleshootingItem issue="MCP server connection fails">
+		Run `pi mcp list` to connect to every configured server and print its
+		state and errors. Inside Pi, `/mcp` shows the full connection error. Pi
+		requires a streamable HTTP endpoint, so use `https://mcp.cloudflare.com/mcp`
+		rather than an `/sse` URL.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="MCP server authentication fails">
+		Run `pi mcp logout cloudflare`, then `pi mcp login cloudflare` and complete
+		the OAuth flow in your browser. If the browser runs on another machine,
+		such as over SSH, paste the redirected URL into Pi when prompted.
+	</TroubleshootingItem>
+	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
+		Point the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
+		for a product-specific index.
+	</TroubleshootingItem>
+</TroubleshootingList>
+
+## Build agents on Cloudflare
+
+<BuildAgentsCallout />
+
+## Other agents
+
+<OtherAgents currentSlug="pi" />
