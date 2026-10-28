@@ -12,7 +12,7 @@ description: Create standard or Advanced Custom Nameserver sets and assign them 
 
 import { APIRequest, Steps } from "~/components";
 
-A nameserver set is an account-level group of two to five custom nameserver names, together with the IP addresses that Cloudflare assigns to those names. You create a set once and then assign it to zones in the same account.
+A nameserver set is an account-level group of two to five custom nameserver names, together with the IP addresses that Cloudflare assigns to those names. You create a set once and then assign it to zones in the same account. Each set has a name to identify it.
 
 Nameserver sets are a separate configuration from [zone](/dns/nameservers/custom-nameservers/zone-custom-nameservers/), [account](/dns/nameservers/custom-nameservers/account-custom-nameservers/), and [tenant](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/) custom nameservers. A zone uses either a nameserver set or one of those configurations, never both. Existing configurations cannot be converted into nameserver sets.
 
@@ -28,7 +28,7 @@ To use a nameserver set, a zone must be in the same account as the set.
 - Each nameserver set is either standard or Advanced.
 - Nameserver names can belong to any domain, even a domain that does not exist as a zone in Cloudflare.
 - The same nameserver name can be used in more than one set within your account.
-- Sets are immutable. You can create and delete a set, but you cannot change one.
+- Sets are immutable. You can create and delete a set, but you cannot change one. Only the name can be changed later.
 - Cloudflare does not create or update DNS records for a nameserver set. You manage the required `A`, `AAAA`, and `NS` records, plus glue where DNS requires it.
 - Currently, nameserver sets cannot yet be used as a [DNS zone default](/dns/additional-options/dns-zone-defaults/) for new zones.
 
@@ -54,11 +54,17 @@ The following limits apply to nameserver sets:
 
 All nameserver names in an Advanced set must use the same `ip_count` value.
 
+### Set names
+
+The top-level `name` is a label for the set. Choose a name that helps you find or identify the set later.
+
+Set names must be unique within an account.
+
 ## Create a nameserver set
 
 To create a set, use the [Create Custom Nameserver Set](/api/resources/dns/subresources/settings/subresources/account/subresources/nameserver_sets/methods/create/) endpoint.
 
-Each name in a set must be unique and lowercase. Internationalized domain names must use Punycode.
+Include a top-level `name` to identify the set. Each nameserver name in `nameservers` must be unique within the set and lowercase. Internationalized domain names must use Punycode.
 
 ### Standard nameserver set
 
@@ -68,6 +74,7 @@ Omit `advanced` or set it to `false` to create a standard nameserver set. Standa
 	path="/accounts/{account_id}/dns_settings/nameserver_sets"
 	method="POST"
 	json={{
+		name: "Production",
 		ip_set: 1,
 		nameservers: [
 			{ name: "ns1.example.com" },
@@ -76,12 +83,13 @@ Omit `advanced` or set it to `false` to create a standard nameserver set. Standa
 	}}
 />
 
-The response contains the set ID and the addresses assigned to each nameserver name:
+The response contains the set ID, set name, and addresses assigned to each nameserver name:
 
 ```json
 {
 	"result": {
 		"id": "0e1f2a3b4c5d6e7f8091a2b3c4d5e6f7",
+		"name": "Production",
 		"advanced": false,
 		"ip_set": 1,
 		"nameservers": [
@@ -114,6 +122,7 @@ Every nameserver name in the request must have the same `ip_count`. Cloudflare c
 	path="/accounts/{account_id}/dns_settings/nameserver_sets"
 	method="POST"
 	json={{
+		name: "Production Advanced",
 		advanced: true,
 		ip_set: 1,
 		nameservers: [
@@ -130,6 +139,7 @@ Advanced set responses include an anycast group for each address:
 {
 	"result": {
 		"id": "1f2a3b4c5d6e7f8091a2b3c4d5e6f708",
+		"name": "Production Advanced",
 		"advanced": true,
 		"ip_set": 1,
 		"nameservers": [
@@ -170,6 +180,20 @@ Groups `a` and `b` are advertised from two separate sets of data centers that do
 An account cannot contain two sets with exactly the same nameserver names and addresses.
 
 To [list the sets in your account](/api/resources/dns/subresources/settings/subresources/account/subresources/nameserver_sets/methods/list/), send a `GET` request to the same endpoint, using the `page` and `per_page` query parameters to page through the results. To [retrieve a single set](/api/resources/dns/subresources/settings/subresources/account/subresources/nameserver_sets/methods/get/), add its ID to the path.
+
+## Rename a nameserver set
+
+To rename a set, send a `PATCH` request to `/accounts/{account_id}/dns_settings/nameserver_sets/{nameserver_set_id}` with only the new `name`:
+
+<APIRequest
+	path="/accounts/{account_id}/dns_settings/nameserver_sets/{nameserver_set_id}"
+	method="PATCH"
+	json={{ name: "Production primary" }}
+/>
+
+Choose a [set name](#set-names) that is unique within your account. Only the top-level `name` field can be updated.
+
+Renaming a set does not affect DNS resolution or require DNS record or delegation changes.
 
 ## Prepare nameserver address records
 
