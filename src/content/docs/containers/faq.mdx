@@ -138,7 +138,7 @@ You can also use [FUSE](/containers/examples/r2-fuse-mount/) to persist disk
 to R2 or other object storage backends. Though you should not expect native
 SSD-like performance while using FUSE.
 
-For an agent's working files, follow [Run Linux commands against persistent files](/agents/tools/code-execution/persistent-files/). The experimental backend mounts a workspace backed by Durable Object SQLite storage. It synchronizes workspace files around commands; it does not persist the container's entire disk. No R2 bucket is required. Refer to [Understand what persists](/agents/tools/persistent-files/persistence/) for the storage boundaries.
+For an agent's working files, follow [Use Cloudflare Computer's container backend](/agents/tools/code-execution/persistent-files/). The experimental backend mounts a workspace backed by Durable Object SQLite storage. It synchronizes workspace files around commands; it does not persist the container's entire disk. No R2 bucket is required. Refer to [Understand what persists](/agents/tools/persistent-files/persistence/) for the storage boundaries.
 
 ## What happens if I run out of memory?
 

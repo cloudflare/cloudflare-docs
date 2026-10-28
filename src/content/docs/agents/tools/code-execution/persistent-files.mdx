@@ -1,10 +1,10 @@
 ---
-title: Run Linux commands against persistent files
+title: Use Cloudflare Computer's container backend
 description: Run Linux tools against your agent's files and save their changes in Durable Object storage, using the experimental Computer container backend.
 pcx_content_type: how-to
 sidebar:
   order: 3
-  label: Use persistent files in Linux
+  label: Computer container backend
 products:
   - agents
   - containers
@@ -17,7 +17,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Run shell commands, native binaries, and package managers against the same persistent files that your agent reads and writes. This guide uses Cloudflare Computer's experimental `ContainerBackend`.
+Run shell commands, native binaries, and package managers against the same persistent files that your agent reads and writes. This guide uses the experimental container backend in the `@cloudflare/computer` package.
 
 :::caution[Experimental]
 The container backend and its `computerd` daemon are for experiments and prototypes, not production use. Their APIs may change in any release. Refer to the [Computer component status](https://github.com/cloudflare/computer/tree/main/packages/computer#status).
