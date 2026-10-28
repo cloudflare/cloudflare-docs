@@ -700,6 +700,8 @@ The `auth_credentials` field accepts two forms:
 
 Use the account endpoint to retrieve daily or monthly MCP tool-call counts across the account:
 
+By default, these counts include only successful tool calls. To include errors and cached calls, set `response_status=all`. Use `error` or `cached` to count either status separately.
+
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/analytics/tool-calls/timeseries?granularity=daily&aggregate=false&tz=utc&days=30"
 	method="GET"
@@ -708,14 +710,15 @@ Use the account endpoint to retrieve daily or monthly MCP tool-call counts acros
 
 The same query parameters apply to each endpoint:
 
-| Parameter     | Values and behavior                                                                                                                                                         |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `granularity` | `daily` or `monthly`. Defaults to `daily`.                                                                                                                                   |
-| `aggregate`   | `true` or `false`. Defaults to `false`. Set to `true` to request aggregated counts.                                                                                          |
-| `tz`          | `utc`, `Z`, or a fixed `+HH:MM` or `-HH:MM` offset. Defaults to `utc`. Offsets range from `-12:00` through `+14:00`; `+14:00` and `-12:00` are the limits. The offset is used for local-day bucketing and does not account for daylight saving time changes within the window. |
-| `days`        | An integer from `1` to `179`. For daily results, this sets the trailing window and defaults to `7`. It is ignored when `granularity=monthly`.                               |
+| Parameter         | Values and behavior                                                                                                                                                                                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `granularity`     | `daily` or `monthly`. Defaults to `daily`.                                                                                                                                                                                                                                     |
+| `aggregate`       | `true` or `false`. Defaults to `false`. Set to `true` to request aggregated counts.                                                                                                                                                                                            |
+| `tz`              | `utc`, `Z`, or a fixed `+HH:MM` or `-HH:MM` offset. Defaults to `utc`. Offsets range from `-12:00` through `+14:00`; `+14:00` and `-12:00` are the limits. The offset is used for local-day bucketing and does not account for daylight saving time changes within the window. |
+| `days`            | An integer from `1` to `179`. For daily results, this sets the trailing window and defaults to `7`. It is ignored when `granularity=monthly`.                                                                                                                                  |
+| `response_status` | `success`, `error`, `cached`, or `all`. Defaults to `success`. Set to `all` to include every status. Invalid values, including an empty value, return `400`.                                                                                                                   |
 
-The response `result` includes the selected `granularity`, `aggregate`, and `tz`, the `start` and `end` of the window as epoch milliseconds, a `series` of `day` and `count` values, and the `total` count. The window includes `start` and excludes `end`. Daily `day` values use `YYYY-MM-DD` in the requested timezone offset.
+The response `result` includes the selected `granularity`, `aggregate`, `tz`, and `response_status`, the `start` and `end` of the window as epoch milliseconds, a `series` of `day` and `count` values, and the `total` count. The window includes `start` and excludes `end`. Daily `day` values use `YYYY-MM-DD` in the requested timezone offset.
 
 Use a scoped endpoint to limit the counts:
 
