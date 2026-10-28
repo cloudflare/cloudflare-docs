@@ -22,7 +22,7 @@ Each data residency control has its own region list. A country available for Reg
 | [Regional Services](/data-localization/regional-services/)          | Request processing      | 35, listed below                    |
 | [Storage jurisdictions](/data-localization/compatibility/#controls) | Stored data             | EU, US, FedRAMP. Varies by product. |
 | [Customer Metadata Boundary](/data-localization/metadata-boundary/) | Logs and analytics      | EU, US                              |
-| [Geo Key Manager](/data-localization/geo-key-manager/)              | TLS private keys        | 11, listed below                    |
+| [Geo Key Manager](/data-localization/geo-key-manager/)              | TLS private keys        | 12, listed below                    |
 
 <Aside type="caution" title="Processing is not storage">
 
@@ -56,7 +56,7 @@ Regional Services restricts which data centers can decrypt and service your HTTP
 | ISO 27001 Certified European Union                                                     | EU data centers that hold ISO 27001 certification.                                          |
 | [IRAP](https://www.cloudflare.com/cloudflare-for-government/australia/irap/) Protected | IRAP-assessed data centers, **including locations outside Australia**.                      |
 
-**Not a location.** Cloudflare Green Energy restricts traffic to data centers committed to powering their operations with [renewable energy](https://www.cloudflare.com/impact/). It carries no geographic guarantee, so it does not satisfy a data residency requirement on its own.
+**Attribute-based regions.** Cloudflare Green Energy restricts traffic to data centers committed to powering their operations with [renewable energy](https://www.cloudflare.com/impact/). It carries no geographic guarantee, so it does not satisfy a data residency requirement on its own.
 
 Two notes on country regions:
 
@@ -91,9 +91,9 @@ For every other Regional Services region, including the United Kingdom and Switz
 
 ## Geo Key Manager
 
-Geo Key Manager restricts which data centers can use your TLS private keys to decrypt traffic. Eleven regions are available, in two groups.
+Geo Key Manager restricts which data centers can use your TLS private keys to decrypt traffic. Twelve regions are available, in two groups.
 
-**Available to all accounts:** European Union, United States of America.
+**Available to all accounts:** European Union, United States of America, [Highest security data centers](/ssl/edge-certificates/geokey-manager/supported-options/#highest-security-data-centers).
 
 **Available with the current [Geo Key Manager](/ssl/edge-certificates/geokey-manager/)**, which added country-level control: Australia, Canada, FedRAMP Moderate Compliant (Domestic), Germany, India, Japan, Singapore, South Korea, United Kingdom.
 

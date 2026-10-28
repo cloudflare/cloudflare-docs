@@ -6,7 +6,7 @@ entries:
       regional_services:
         status: supported
       storage:
-        status: unassessed
+        status: out-of-scope
       cmb:
         status: supported
       gkm:
@@ -14,13 +14,13 @@ entries:
   - product: Cache Reserve
     controls:
       regional_services:
-        status: unassessed
-        notes:
-          - Previously marked compatible with caveats, without documented conditions.
+        status: requirements
+        requirements:
+          - Contact your account team. Cloudflare configures the Cache Reserve storage location with you.
       storage:
-        status: not-supported
-        notes:
-          - You cannot yet specify a region for Cache Reserve object storage.
+        status: requirements
+        requirements:
+          - Contact your account team. Cloudflare configures the Cache Reserve storage location with you. By default, Cache Reserve stores data close to your origin server.
       cmb:
         status: supported
       gkm:
@@ -32,7 +32,7 @@ entries:
         impact:
           - If you use [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) (where Cloudflare sends your DNS records to non-Cloudflare nameservers), those transfers will include global Cloudflare IP addresses rather than region-specific ones. This means Regional Services will not function correctly when end users receive DNS answers from non-Cloudflare nameservers.
       storage:
-        status: unassessed
+        status: out-of-scope
       cmb:
         status: supported
       gkm:
@@ -42,7 +42,7 @@ entries:
       regional_services:
         status: not-supported
       storage:
-        status: unassessed
+        status: out-of-scope
       cmb:
         status: out-of-scope
       gkm:
@@ -54,7 +54,7 @@ entries:
         requirements:
           - Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/optimization/transformations/rewrite-rules/) within the same zone.
       storage:
-        status: unassessed
+        status: out-of-scope
       cmb:
         status: supported
         impact:
@@ -66,7 +66,7 @@ entries:
       regional_services:
         status: supported
       storage:
-        status: unassessed
+        status: out-of-scope
       cmb:
         status: supported
         impact:
