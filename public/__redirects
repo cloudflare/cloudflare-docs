@@ -2146,6 +2146,7 @@
 
 
 # r2
+/r2/get-started/local-development/ /r2/local-development/ 301
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
 /r2/platform/s3-compatibility/tokens/ /r2/api/tokens/ 301
 /r2/api/s3/tokens/ /r2/api/tokens/ 301

@@ -1,0 +1,344 @@
+---
+title: Local development
+description: Develop with local R2 buckets or remote bindings, seed and inspect test data, and access local public and S3-compatible endpoints.
+pcx_content_type: how-to
+sidebar:
+  order: 7
+products:
+  - r2
+---
+
+import {
+	Details,
+	PackageManagers,
+	Steps,
+	WranglerConfig,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+} from "~/components";
+
+Develop and test applications against R2 with [Wrangler](/workers/wrangler/) or the [Cloudflare Vite plugin](/workers/vite-plugin/). Both run your Worker locally and support local R2 simulations and remote bindings.
+
+Local buckets also provide HTTP endpoints for public objects and S3-compatible clients. You can use these endpoints from applications outside Workers.
+
+## Choose local or remote buckets
+
+By default, R2 bindings use [Miniflare](/workers/testing/miniflare/) to simulate buckets on your machine. Local buckets start empty and store their data separately from deployed buckets. Operations on these local buckets do not affect data or billing in your Cloudflare account.
+
+To use a real R2 bucket while your Worker runs locally, [configure a remote binding](#connect-to-a-remote-bucket). Reads, writes, and deletes then operate on that bucket, with normal R2 charges. Use a dedicated development bucket to keep test data separate from production.
+
+Remote bindings affect individual bindings. They differ from [`wrangler dev --remote`](/workers/local-development/#wrangler-dev---remote-legacy), which runs your Worker on Cloudflare. For most development, use local execution with local or remote bindings.
+
+## Prerequisites
+
+Use an existing Worker project with [Wrangler](/workers/get-started/guide/) or the [Cloudflare Vite plugin](/workers/vite-plugin/get-started/). Use the latest version of your development tool. For help choosing, refer to [Wrangler and Vite](/workers/local-development/wrangler-vs-vite/).
+
+Applications that only use S3 still need a Worker development server to host the local bucket. If you do not have a Worker project, create the minimal project described here. You do not need to deploy it or create a remote bucket to use local R2.
+
+<Details header="Create a minimal Wrangler project">
+
+<Steps>
+1. Create a project directory and open it:
+
+   ```sh
+   mkdir -p r2-local/src
+   cd r2-local
+   ```
+
+2. Install Wrangler:
+
+   <PackageManagers pkg="wrangler@latest" />
+
+3. Create `src/index.ts` as the Worker entry point:
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   export default {
+     fetch(): Response {
+       return new Response("R2 local development server");
+     },
+   };
+   ```
+
+   </TypeScriptExample>
+
+4. Create a Wrangler configuration file in the project directory:
+
+   <WranglerConfig>
+
+   ```toml
+   name = "r2-local"
+   main = "src/index.ts"
+   compatibility_date = "$today"
+   ```
+
+   </WranglerConfig>
+</Steps>
+
+</Details>
+
+## Start a local development session
+
+<Steps>
+1. In your Worker project, add an [R2 binding](/workers/wrangler/configuration/#r2-buckets) to the existing Wrangler configuration file:
+
+   <WranglerConfig removeSchema>
+
+   ```toml
+   [[r2_buckets]]
+   binding = "BUCKET"
+   bucket_name = "my-bucket"
+   ```
+
+   </WranglerConfig>
+
+   Keep your existing Worker entry point and other project settings. The local bucket is available on `env.BUCKET` through the [R2 Workers API](/r2/api/workers/workers-api-reference/).
+
+2. Start your project's development server:
+
+   <Tabs>
+   <TabItem label="Wrangler">
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+   </TabItem>
+   <TabItem label="Vite plugin">
+
+   <PackageManagers type="exec" pkg="vite" args="" />
+
+   </TabItem>
+   </Tabs>
+
+   If your project uses the [Cloudflare CLI](/cf/projects/) with `cloudflare.config.ts`, `cf dev` starts the development server configured for your project.
+
+3. Check that the server lists your R2 binding in local mode. Keep it running while you follow the local examples.
+</Steps>
+
+Use the server address printed in your terminal. The examples use Wrangler's default, `http://localhost:8787`. For Vite, the default is `http://localhost:5173`; substitute your actual address in HTTP requests and S3 client configuration.
+
+## Connect to a remote bucket
+
+To access existing R2 data from a locally running Worker, use a [remote binding](/workers/local-development/#remote-bindings).
+
+<Steps>
+1. [Create a dedicated development bucket](/r2/buckets/create-buckets/), or select an existing bucket for testing. [Authenticate Wrangler](/workers/wrangler/commands/general/#login) with an account that can access it.
+
+2. Add the binding to a development environment in your Wrangler configuration. Replace `my-bucket-development` with the name of your deployed development bucket:
+
+   <WranglerConfig removeSchema>
+
+   ```toml
+   [[env.development.r2_buckets]]
+   binding = "BUCKET"
+   bucket_name = "my-bucket-development"
+   remote = true
+   ```
+
+   </WranglerConfig>
+
+   Bindings are [not inherited by named environments](/workers/wrangler/environments/#non-inheritable-keys-and-environments). Include any other bindings your Worker needs in this environment.
+
+3. Start the development server using that environment:
+
+   <Tabs>
+   <TabItem label="Wrangler">
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev --env development" />
+
+   </TabItem>
+   <TabItem label="Vite plugin">
+
+   Set `CLOUDFLARE_ENV=development` when starting Vite. Refer to [Cloudflare environments](/workers/vite-plugin/reference/cloudflare-environments/) for configuration instructions.
+
+   </TabItem>
+   </Tabs>
+
+4. Check that the server lists the R2 binding in remote mode. Calls to `env.BUCKET` now access the deployed development bucket.
+</Steps>
+
+Writes and deletes change the remote bucket's data, and [normal R2 charges](/r2/pricing/) apply. The local public and S3 endpoints described on this page do not serve remote bindings.
+
+To return to local simulation, stop the server and start it without the development environment. With Wrangler, `wrangler dev --env development --local` also temporarily overrides remote bindings. For Vite, set [`remoteBindings: false`](/workers/vite-plugin/reference/api/#interface-pluginconfig) in the Cloudflare plugin options to turn off remote connections.
+
+## Populate a local bucket
+
+The following examples use the local `my-bucket` binding. A newly created local bucket is empty; data from a remote bucket is not copied into it.
+
+<Steps>
+1. In a second terminal, open the same Worker project directory and create a test file:
+
+   ```sh
+   echo 'Hello, R2!' > hello.txt
+   ```
+
+2. Upload the file with [`wrangler r2 object put`](/workers/wrangler/commands/r2/#r2-object-put) and the `--local` flag:
+
+   <PackageManagers type="exec" pkg="wrangler" args="r2 object put my-bucket/hello.txt --file=./hello.txt --local" />
+</Steps>
+
+Use [`wrangler r2 object get`](/workers/wrangler/commands/r2/#r2-object-get) and [`wrangler r2 object delete`](/workers/wrangler/commands/r2/#r2-object-delete) with the same `--local` flag to read and remove local objects. Without `--local`, these commands act on the remote bucket.
+
+### Inspect objects in Local Explorer
+
+Open `/cdn-cgi/local/explorer` on your development server to list local R2 objects, view metadata, upload files, or delete objects. Verify that `hello.txt` appears in `my-bucket` after the upload.
+
+[Local Explorer](/workers/local-development/local-explorer/) requires Wrangler 4.118.0 or later, or Cloudflare Vite plugin 1.50.0 or later.
+
+## Persist and reset local data
+
+By default, Wrangler and the Vite plugin persist local objects across sessions in `.wrangler/state`. To change the directory, use Wrangler's [`--persist-to`](/workers/wrangler/commands/general/#dev) flag or the Vite plugin's [`persistState`](/workers/vite-plugin/reference/api/#interface-pluginconfig) option.
+
+Commands that populate local data must use the **same persistence directory** as the development server. For example, if you start Wrangler with `--persist-to ./local-state`, upload to that directory too:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="r2 object put my-bucket/hello.txt --file=./hello.txt --local --persist-to ./local-state"
+/>
+
+This also applies when Vite uses a custom `persistState.path`. For instructions on sharing state between tools and clearing local data, refer to [Where local data gets stored](/workers/local-development/local-data/#where-local-data-gets-stored).
+
+## Serve objects publicly
+
+Every local bucket is served over HTTP at the following path on the development server:
+
+```txt
+/cdn-cgi/local/r2/public/<BUCKET_ID>/<KEY>
+```
+
+`<BUCKET_ID>` is the bucket's `bucket_name`. When `bucket_name` is not set, it is the binding name instead.
+
+With Wrangler, this endpoint requires version 4.100.0 or later. It needs no additional bucket configuration. To read the object added in [Populate a local bucket](#populate-a-local-bucket):
+
+```sh
+curl http://localhost:8787/cdn-cgi/local/r2/public/my-bucket/hello.txt
+```
+
+The endpoint simulates a [public bucket](/r2/buckets/public-buckets/). It accepts `GET` and `HEAD` requests, and honors the `Range` and conditional request headers. Stored HTTP metadata, such as `Content-Type`, is returned with the object.
+
+Requests using any other method return `401`. Buckets configured with `remote = true` are not served. This endpoint does not enable public access to a deployed bucket.
+
+## Serve buckets over the S3 API
+
+:::note[Experimental]
+
+The local S3-compatible endpoint is experimental and may change. With Wrangler, it requires version 4.115.0 or later. For Vite projects, use the latest Cloudflare Vite plugin.
+
+:::
+
+Buckets can be served over an S3-compatible API, which lets you point existing S3 clients at a local bucket. Use this to develop against R2 with the AWS SDKs, the AWS CLI, or any other tool that speaks S3, without connecting to a real bucket.
+
+### Configure a bucket
+
+Unlike the public endpoint, the S3 endpoint is opt-in. Add [`local_dev.experimental_s3_credentials`](/workers/wrangler/configuration/#r2-buckets) to the existing local bucket binding to serve it:
+
+<WranglerConfig removeSchema>
+
+```toml
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "my-bucket"
+
+[r2_buckets.local_dev.experimental_s3_credentials]
+accessKeyId = "local-access-key-id"
+secretAccessKey = "local-secret-access-key"
+```
+
+</WranglerConfig>
+
+Both `accessKeyId` and `secretAccessKey` are required. Their values are arbitrary strings that you choose. They are not [R2 API tokens](/r2/api/tokens/), and they grant no access to production buckets.
+
+Requests are authenticated with AWS Signature Version 4, using either the `Authorization` header or [presigned URL](/r2/api/s3/presigned-urls/) query parameters. Buckets configured with `remote = true` are not served, and their local credentials are ignored.
+
+Remote bindings apply to Workers API calls such as `env.BUCKET.get()`. They do not forward this local S3 endpoint to a deployed bucket. To use an S3 client with a real R2 bucket, configure the [R2 S3 endpoint and API credentials](/r2/get-started/s3/#2-generate-api-credentials) instead.
+
+### Connect an S3 client
+
+The bucket is served at the following path on the development server:
+
+```txt
+/cdn-cgi/local/r2/s3
+```
+
+Use the address printed by your development server for the endpoint origin. The examples use `http://localhost:8787`; Vite defaults to `http://localhost:5173`.
+
+Set the client's region to `auto` and turn on path-style addressing, so that the client appends the bucket to the endpoint. As with the public endpoint, the bucket is addressed by its `bucket_name`, or by the binding name when `bucket_name` is not set.
+
+<Tabs>
+<TabItem label="AWS SDK for JavaScript">
+
+Install the SDK in the application that will access the local bucket:
+
+<PackageManagers pkg="@aws-sdk/client-s3@latest" />
+
+<TypeScriptExample>
+
+```ts
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+
+const S3 = new S3Client({
+	region: "auto",
+	endpoint: "http://localhost:8787/cdn-cgi/local/r2/s3",
+	credentials: {
+		accessKeyId: "local-access-key-id",
+		secretAccessKey: "local-secret-access-key",
+	},
+	forcePathStyle: true,
+});
+
+const object = await S3.send(
+	new GetObjectCommand({ Bucket: "my-bucket", Key: "hello.txt" }),
+);
+console.log(await object.Body?.transformToString());
+```
+
+</TypeScriptExample>
+
+</TabItem>
+<TabItem label="AWS CLI">
+
+Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html), then run:
+
+```sh
+AWS_ACCESS_KEY_ID=local-access-key-id \
+AWS_SECRET_ACCESS_KEY=local-secret-access-key \
+aws s3api get-object \
+  --endpoint-url http://localhost:8787/cdn-cgi/local/r2/s3 \
+  --region auto \
+  --bucket my-bucket \
+  --key hello.txt \
+  downloaded-hello.txt
+```
+
+</TabItem>
+</Tabs>
+
+### Supported operations
+
+The endpoint implements the following operations:
+
+| Type      | Operations                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Bucket    | [ListBuckets](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListBuckets.html), [HeadBucket](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadBucket.html), [ListObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjects.html), [ListObjectsV2](https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html), [GetBucketLocation](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketLocation.html), [GetBucketEncryption](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketEncryption.html) |
+| Object    | [GetObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetObject.html), [HeadObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_HeadObject.html), [PutObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutObject.html), [CopyObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html), [DeleteObject](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObject.html), [DeleteObjects](https://docs.aws.amazon.com/AmazonS3/latest/API/API_DeleteObjects.html)                                     |
+| Multipart | [CreateMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CreateMultipartUpload.html), [UploadPart](https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPart.html), [UploadPartCopy](https://docs.aws.amazon.com/AmazonS3/latest/API/API_UploadPartCopy.html), [CompleteMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_CompleteMultipartUpload.html), [AbortMultipartUpload](https://docs.aws.amazon.com/AmazonS3/latest/API/API_AbortMultipartUpload.html)                                                  |
+
+For the full set of operations R2 supports, refer to [S3 API compatibility](/r2/api/s3/api/).
+
+`ListBuckets` returns only the buckets that share the credentials the request was signed with.
+
+### Limitations
+
+Although the local endpoint tries to match R2's production behavior, it does not support all of the same S3 operations and features. For example:
+
+- Server-side encryption with customer-provided keys (SSE-C) is rejected rather than applied.
+- The `x-amz-storage-class` header accepts `STANDARD` only. Local buckets do not store a [storage class](/r2/buckets/storage-classes/), so `STANDARD_IA` is rejected.
+- Cross-origin requests are always allowed. Production buckets answer preflight requests according to their [CORS configuration](/r2/buckets/cors/).
+
+## Related resources
+
+- [Workers Vitest integration](/workers/testing/vitest-integration/) and [R2 testing examples](/workers/testing/vitest-integration/recipes/) for automated tests.
+- [S3 API compatibility](/r2/api/s3/api/) for the operations R2 supports in production.
+- [Public buckets](/r2/buckets/public-buckets/) to expose deployed bucket contents over HTTP.

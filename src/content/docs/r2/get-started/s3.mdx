@@ -12,6 +12,8 @@ import { LinkCard, PackageManagers, Render, Tabs, TabItem, Steps } from "~/compo
 
 R2 provides support for a [S3-compatible API](/r2/api/s3/api/), which means you can use any S3 SDK, library, or tool to interact with your buckets. If you have existing code that works with S3, you can use it with R2 by changing the endpoint URL.
 
+To develop without accessing a deployed bucket, use the [local S3-compatible endpoint](/r2/local-development/#serve-buckets-over-the-s3-api).
+
 ## 1. Create a bucket
 
 <Render file="create-bucket-steps" product="r2" />

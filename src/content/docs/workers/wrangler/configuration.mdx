@@ -995,10 +995,21 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the R2 bucket.
-- `bucket_name` <Type text="string" /> <MetaInfo text="required" />
+- `bucket_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of this R2 bucket.
 - `jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `remote` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Connect this binding to the deployed bucket during local development. Defaults to `false`. Refer to [R2 remote bindings](/r2/local-development/#connect-to-a-remote-bucket).
+- `local_dev` <Type text="object" /> <MetaInfo text="optional" />
+  - Settings that apply only to local development.
+  - `experimental_s3_credentials` <Type text="object" /> <MetaInfo text="optional" />
+    - Serve this local bucket through the experimental S3-compatible endpoint at `/cdn-cgi/local/r2/s3`. Requires Wrangler 4.115.0 or later. Ignored when `remote` is `true`.
+    - `accessKeyId` <Type text="string" /> <MetaInfo text="required" />
+      - An access key ID you choose for local AWS Signature Version 4 authentication.
+    - `secretAccessKey` <Type text="string" /> <MetaInfo text="required" />
+      - A secret access key you choose for local AWS Signature Version 4 authentication. These local credentials do not grant access to deployed R2 buckets.
+    - Refer to [Serve buckets over the S3 API](/r2/local-development/#serve-buckets-over-the-s3-api) for configuration and client examples.
 - `preview_bucket_name` <Type text="string" /> <MetaInfo text="optional" />
   - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/local-development/#remote-bindings)).
 
