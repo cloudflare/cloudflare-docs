@@ -138,6 +138,8 @@ You can also use [FUSE](/containers/examples/r2-fuse-mount/) to persist disk
 to R2 or other object storage backends. Though you should not expect native
 SSD-like performance while using FUSE.
 
+For an agent's working files, the experimental [Cloudflare Computer container backend](/agents/tools/computer-container/) mounts a workspace backed by Durable Object SQLite storage. It synchronizes workspace files around commands; it does not persist the container's entire disk. No R2 bucket is required.
+
 ## What happens if I run out of memory?
 
 If you run out of memory, your instance will throw an Out of Memory (OOM) error and

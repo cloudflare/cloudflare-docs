@@ -1,9 +1,10 @@
 ---
-title: File system
+title: Cloudflare Computer
 pcx_content_type: concept
 sidebar:
   order: 0
-description: Give an agent a virtual file system stored in its Durable Object, with file tools for the model and an optional JavaScript runtime.
+  label: Computer file system
+description: Give an agent durable files and tools with Cloudflare Computer. Run JavaScript or connect an experimental Linux container backend.
 products:
   - agents
 ---
@@ -28,7 +29,15 @@ Use a file system when an agent needs to:
 
 A `Workspace` lives inside a Durable Object and keeps every file in the SQLite storage of that object. Files remain after the Durable Object is evicted or restarted, with no external storage to configure.
 
-`workspace.fs` reads, writes, lists, searches, and deletes files. `workspace.runtime` runs code against the same files through an execution backend. Computer includes a JavaScript runtime, as well as an experimental container-based runtime for running shell commands.
+`workspace.fs` reads, writes, lists, searches, and deletes files. Add an execution backend to run code against those files:
+
+| You need to | Use |
+| --- | --- |
+| Read, write, and search durable files | `Workspace` without a backend |
+| Run JavaScript modules against workspace files | [`WorkerJavaScriptBackend`](#run-javascript-in-the-workspace) |
+| Run shell commands, native binaries, or package managers against workspace files | [`ContainerBackend`](/agents/tools/computer-container/) — experimental |
+
+The container backend mounts the workspace at `/workspace` and synchronizes changes with the Durable Object. Follow [Run shell commands with Cloudflare Computer](/agents/tools/computer-container/) for the image, configuration, and code.
 
 ## Install
 
@@ -590,7 +599,7 @@ These limitations apply to the experimental release and may change in future rel
 ## Limits
 
 - Each workspace shares the storage of its Durable Object. For storage limits, refer to [Durable Objects limits](/durable-objects/platform/limits/). Size workspaces for an agent's working files, not for full monorepos or large dependency trees.
-- The JavaScript backend runs ECMAScript modules, not shell commands or native binaries. When an agent needs a Linux environment, use a [sandbox](/agents/tools/sandbox/).
+- The JavaScript backend runs ECMAScript modules, not shell commands or native binaries. Use the experimental [Computer container backend](/agents/tools/computer-container/) for Linux commands that share workspace files, or a [sandbox](/agents/tools/sandbox/) for commands that use container-local files.
 - Each JavaScript run is bounded in CPU time, wall-clock time, output size, and the number and size of file operations. Completed runs are kept for 60 minutes by default.
 
 ## Security considerations
