@@ -101,6 +101,20 @@ Because RealtimeKit rejects the participant before they enter the meeting stage,
 
 </Details>
 
+<Details header="What happens to a participant already in a meeting when their auth token expires?">
+
+The participant stays connected. RealtimeKit does not disconnect a participant when their token's `expires_on` time passes. The participant remains in the meeting until they leave or are removed.
+
+To remove a participant from an active session, [revoke their token](/realtime/realtimekit/concepts/participant/#revoke-tokens) or [delete the participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/).
+
+</Details>
+
+<Details header="Does the SDK check the auth token again when it reconnects?">
+
+Yes. Any socket reconnect, such as after a network drop, reuses the same token. If the token has expired, RealtimeKit rejects the connection with a `401` error.
+
+</Details>
+
 <Details header="Can a participant with a valid auth token join an inactive meeting?">
 
 No. A participant cannot join a meeting with an `INACTIVE` status, even if their auth token is valid and has not expired.
