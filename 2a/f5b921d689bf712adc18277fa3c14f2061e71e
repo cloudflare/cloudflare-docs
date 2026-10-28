@@ -1,0 +1,55 @@
+public/__redirects
+  s_6ca65135f6cb8f::t_4a1a86c638d17a 261-262,287
+src/content/docs/agent-lee/index.mdx
+  s_6ca65135f6cb8f::t_2e0cce7af9bbc3 169-175
+src/content/docs/agents/concepts/agentic-patterns/human-in-the-loop.mdx
+  s_6ca65135f6cb8f::t_87e01608076735 337,363,591
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_6ca65135f6cb8f::t_f686fce03a9cd0 30,573,575,702,1217-1218
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_6ca65135f6cb8f::t_0bb8d44fea955d 3-4,15,17,21,23,133,170,181,266,268,270,272-274,276,278-283,285-289,334,336-339,341-351
+src/content/docs/agents/model-context-protocol/guides/remote-mcp-server.mdx
+  s_6ca65135f6cb8f::t_e1c8aab70a5033 20,22,24,181-185,187,191-195,203
+src/content/docs/agents/model-context-protocol/guides/securing-mcp-server.mdx
+  s_6ca65135f6cb8f::t_93ed58f9a750c2 27-30,37-41
+src/content/docs/agents/model-context-protocol/protocol/authorization.mdx
+  s_6ca65135f6cb8f::t_effa769127b979 45,48-49,52-57,149-153,190,193-194,206,208,213,228,231-233,235-238,240-247,249-251,253-258,260-264,266-267,269-270,274
+src/content/docs/agents/model-context-protocol/protocol/tools.mdx
+  s_6ca65135f6cb8f::t_994debf6a3c670 17,21,28,175,177,182-183,185-196,201-202
+src/content/docs/agents/model-context-protocol/protocol/transport.mdx
+  s_6ca65135f6cb8f::t_305b116c9c1903 21,28,80,85-86,89-91,94,100,102,104
+src/content/docs/agents/runtime/lifecycle/get-current-agent.mdx
+  s_6ca65135f6cb8f::t_fe9eadd32f579a 196,199,201,213,215
+src/content/docs/agents/tools/payments/mpp/accept-payments.mdx
+  s_6ca65135f6cb8f::t_70fc91cd14e20d 92,100,124,130-160,163-167
+src/content/docs/agents/tools/payments/x402/charge-for-mcp-tools.mdx
+  s_6ca65135f6cb8f::t_1b4efe7bc86c2b 11,18-19,30-31,36-57,59-66,80
+src/content/docs/workers/demos/chatgpt-app.mdx
+  s_4822886279d293::t_81649228389c90 70,315,317,337,343,362,374-376,380-381,707,718,724,743
+src/content/partials/agents/next-steps.mdx
+  s_6ca65135f6cb8f::t_3da36ec8789b86 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2af5b921d689bf712adc18277fa3c14f2061e71e",
+  "prompts": {},
+  "sessions": {
+    "s_4822886279d293": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15687-abd1-7441-bf74-32b94636c01a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_6ca65135f6cb8f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15b50-b2f2-7189-bdc9-f33f3f5fadc2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

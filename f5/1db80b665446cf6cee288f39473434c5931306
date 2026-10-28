@@ -1,0 +1,19 @@
+src/content/docs/workers/configuration/routing/routes.mdx
+  s_e0e763fa9ff048::t_8d01f24577c9b1 206-208
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f51db80b665446cf6cee288f39473434c5931306",
+  "prompts": {},
+  "sessions": {
+    "s_e0e763fa9ff048": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14ad7-e602-7c12-a958-72d26eeafa78",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
