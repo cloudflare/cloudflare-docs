@@ -8,48 +8,11 @@ products:
 date: 2026-07-22
 ---
 
-import { TypeScriptExample } from "~/components";
-
 SQLite-backed Durable Objects and D1 databases now support the [R\*Tree module](https://www.sqlite.org/rtree.html). An R\*Tree is an index for spatial and range queries. For example, given a query rectangle, it returns every entry that overlaps or falls inside that rectangle without scanning the whole table.
 
 The R\*Tree suits any query that filters on the minimum and maximum values of one to five dimensions: which delivery zones cover a coordinate, which events were active during a time window, or which objects a camera can see in 3D space. Previously, these queries required a full table scan or a manually maintained index such as a geohash column.
 
-The example below shows how to create a geospatial index and query it with an ordinary `WHERE` clause:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export class DeliveryZones extends DurableObject {
-	constructor(ctx: DurableObjectState, env: Env) {
-		super(ctx, env);
-
-		// Two dimensions: five columns, plus an auxiliary column for the name.
-		ctx.storage.sql.exec(`
-			CREATE VIRTUAL TABLE IF NOT EXISTS delivery_zones USING rtree(
-				id, minLng, maxLng, minLat, maxLat, +name
-			);
-		`);
-	}
-
-	zonesCovering(lng: number, lat: number) {
-		return this.ctx.storage.sql
-			.exec(
-				`SELECT id, name FROM delivery_zones
-				 WHERE minLng <= ? AND maxLng >= ?
-					 AND minLat <= ? AND maxLat >= ?`,
-				lng,
-				lng,
-				lat,
-				lat,
-			)
-			.toArray();
-	}
-}
-```
-
-</TypeScriptExample>
+Create the index as a virtual table, then query it with an ordinary `WHERE` clause. For a worked example, refer to [Use the R\*Tree module](/durable-objects/examples/use-sqlite-rtree/).
 
 **Limits:**
 
@@ -59,4 +22,4 @@ export class DeliveryZones extends DurableObject {
 
 This works the same way in local development with `wrangler dev` as it does in production. Run `npm update wrangler` to ensure you are on a version with this support.
 
-For more information, refer to [Spatial indexes with R\*Tree](/durable-objects/best-practices/access-durable-objects-storage/#spatial-indexes-with-rtree).
+For the list of supported extensions, refer to [Supported SQLite extensions](/durable-objects/api/sqlite-storage-api/#supported-sqlite-extensions).
