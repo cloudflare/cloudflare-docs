@@ -16,12 +16,18 @@ You can profile memory usage with snapshots in DevTools. Memory snapshots let yo
 memory usage, see how much memory is allocated to different data types, and get details on specific
 objects in memory.
 
+Taking a heap snapshot triggers garbage collection and shows objects that remain reachable. A snapshot does not measure peak memory usage during execution.
+
 To identify allocating code in a deployed Worker, [capture a Heap profile in production](/workers/observability/profiling-in-production/). Unlike a DevTools snapshot, this profile measures allocations, not retained memory.
 
 When using DevTools to profile memory, it may be difficult to replicate specific behavior you are
 seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
 are similar to requests in production. This might mean sending a large volume of requests, making requests
 to specific routes, or using production-like data with the [--remote flag](/workers/local-development/#remote-bindings).
+
+For local memory comparisons, run your workload in [workerd](/workers/local-development/). Measurements from a standalone Node.js process are not directly interchangeable. Isolate-wide measurements can include [multiple Durable Objects sharing the same isolate](/durable-objects/observability/metrics-and-analytics/#memory-usage).
+
+You can also [query heap usage programmatically through the Workers Vitest inspector](/workers/testing/vitest-integration/debugging/#open-inspector-with-vitest).
 
 ## Taking a snapshot
 

@@ -31,6 +31,8 @@ Storage isolation is per test file. Each test file gets its own storage environm
 
 By default, test files run concurrently. To make test files share the same storage (for example, for integration tests that depend on shared state), use the Vitest flags `--max-workers=1 --no-isolate`.
 
+The plugin adds `no_handle_cross_request_promise_resolution` to the test runner Worker because the runner relies on promises resolving across request boundaries. This can differ from deployed Workers where `handle_cross_request_promise_resolution` is enabled, including by default for compatibility dates from `2024-10-14`. This override does not apply to auxiliary Workers.
+
 ## Modules
 
 Each Worker has its own module cache. As Workers are reused between test runs, their module caches are also reused. Vitest invalidates parts of the module cache at the start of each test run based on changed files.

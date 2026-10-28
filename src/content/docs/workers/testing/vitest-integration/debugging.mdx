@@ -19,6 +19,8 @@ To start debugging, run Vitest with the following command and attach a debugger 
 vitest --inspect --no-file-parallelism
 ```
 
+When using `@cloudflare/vitest-plugin`, this inspector connects to workerd. [Chrome DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) clients can capture heap snapshots and query the selected isolate's JavaScript heap usage with [`Runtime.getHeapUsage`](https://chromedevtools.github.io/devtools-protocol/tot/Runtime/#method-getHeapUsage). This measures current heap usage, not peak or total Worker memory. The protocol marks `Runtime.getHeapUsage` and the `HeapProfiler` domain as experimental.
+
 ## Customize the inspector port
 
 By default, the inspector will be opened on port `9229`. If you need to use a different port (for example, `3456`), you can run the following command:
