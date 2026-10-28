@@ -199,12 +199,13 @@ Cloudflare dashboard SSO does not support:
 - Multiple Zero Trust domain policies. If another domain policy is required, you can create another SSO connector. This will create a second policy for that new domain in your SSO application.
 - Deleting the auto-generated Zero Trust `allow email domain` policy. If this policy is deleted, your organization's administrators cannot access the Cloudflare dashboard.
 
-## IdP Initiated Login
+## IdP-initiated SSO
 
-Step-by-step guides are currently available for Okta and Entra ID. Similar configurations are possible with other identity providers that support custom SSO endpoints.
+IdP-initiated login is supported for Cloudflare dashboard SSO, with configuration available via your identity provider (IdP).
 
-<details>
-<summary>Okta</summary>
+Step-by-step guides are currently available for Okta and Entra ID, and similar configurations are possible with other identity providers that support custom SSO endpoints.
+
+### Okta
 
 Configure an identity provider (IdP)-initiated single sign-on (SSO) session using Cloudflare Zero Trust and Okta.
 
@@ -236,10 +237,7 @@ If you use only one IdP (for example, Okta) for Cloudflare SSO and want users to
 3. Disable **Accept all available identity providers** and ensure only Okta is selected as the login method.
 4. Enable **Apply instant authentication** to allow users to skip identity provider selection.
 
-</details>
-
-<details>
-<summary>Entra ID</summary>
+### Entra ID
 
 Configure an identity provider (IdP)-initiated single sign-on (SSO) session using Cloudflare Zero Trust and Microsoft Entra ID (formerly Azure AD).
 
@@ -271,8 +269,6 @@ If you use only one IdP (for example, Entra ID) for Cloudflare SSO and want user
 2. Go to **Authentication**.
 3. Disable **Accept all available identity providers** and ensure only Entra ID is selected as the login method.
 4. Enable **Apply instant authentication** to allow users to skip identity provider selection.
-
-</details>
 
 ## Bypass dashboard SSO
 
