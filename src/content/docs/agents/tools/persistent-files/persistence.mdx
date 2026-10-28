@@ -9,13 +9,13 @@ products:
   - containers
 ---
 
-Workspace files and the processes that use them have different lifetimes. Saving a file does not keep the process that wrote it running.
+Workspace files persist across turns and Durable Object restarts. Cloudflare Computer stores them in the Durable Object's SQLite database.
 
 ## Workspace files
 
-A Cloudflare Computer `Workspace` stores its files in the SQLite database of a Durable Object. Files remain after the object is evicted or restarted. No R2 bucket is required.
+The agent's file tools and your code use `workspace.fs` to read and write these files. No R2 bucket is required.
 
-The agent's file tools and your code use `workspace.fs` to read and write these files. Each agent instance has its own workspace; users who share an instance share its files.
+Each agent instance has its own workspace; users who share an instance share its files.
 
 ## JavaScript execution
 
