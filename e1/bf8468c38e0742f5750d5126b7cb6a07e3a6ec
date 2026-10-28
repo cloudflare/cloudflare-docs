@@ -1,0 +1,21 @@
+src/components/config-explorer/config-reference.generated.ts
+  s_5190bcc727cfff::t_b0dc9ee96b7a35 4,130,133,135-158,542-575
+src/content/partials/hyperdrive/pooling-mode.mdx
+  s_5190bcc727cfff::t_3f3949bd0f8a4b 11-14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e1bf8468c38e0742f5750d5126b7cb6a07e3a6ec",
+  "prompts": {},
+  "sessions": {
+    "s_5190bcc727cfff": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e80dfd120ffeIGjFWwIOL0jME9",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}
