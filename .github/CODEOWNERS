@@ -241,10 +241,10 @@ package.json @cloudflare/content-engineering
 
 # china-network
 
-/src/content/docs/china-network/ @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/assets/images/china-network/ @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/content/directory/china-network.yaml @cloudflare/appsec-reviewers @cloudflare/product-owners
-/src/icons/china-network.svg @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/docs/china-network/ @cf-jian @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/assets/images/china-network/ @cf-jian @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/content/directory/china-network.yaml @cf-jian @cloudflare/appsec-reviewers @cloudflare/product-owners
+/src/icons/china-network.svg @cf-jian @cloudflare/appsec-reviewers @cloudflare/product-owners
 
 # client-ip-geolocation
 # Needs CODEOWNERS
