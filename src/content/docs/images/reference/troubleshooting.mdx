@@ -81,7 +81,7 @@ If the origin server sends an `Etag` HTTP header, the resized images will have a
 
 ### Purge when using URL rewrite rules
 
-If you use [URL rewrite rules](/images/optimization/transformations/rewrite-rules/) to send image requests through `/cdn-cgi/image/`, rewrite rules are also evaluated on purge requests. This can cause a single-file purge to return a success response without clearing the cached image.
+If you use [URL rewrite rules](/images/optimization/transformations/rewrite-rules/) to send image requests through `/cdn-cgi/image/`, rewrite rules are also evaluated on purge requests. This can cause a [single-file purge](/cache/how-to/purge-cache/purge-by-single-file/) to return a success response without clearing the cached image.
 
 To resolve this, exclude purge requests from the rewrite rule by adding the following to the rule expression:
 
@@ -89,5 +89,6 @@ To resolve this, exclude purge requests from the rewrite rule by adding the foll
 and (not (http.request.method eq "PURGE"))
 ```
 
-
 If you cannot modify your rewrite rules, [purge by prefix](/cache/how-to/purge-cache/purge_by_prefix/) and [purge by cache tag](/cache/how-to/purge-cache/purge-by-tags/) are alternatives.
+
+For related guidance on purging URLs that a Transform Rule modifies, refer to [Purge by single file](/cache/how-to/purge-cache/purge-by-single-file/#additional-notes).
