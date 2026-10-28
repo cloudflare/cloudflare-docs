@@ -128,5 +128,10 @@
 		"deeplink": "/?to=/:account/one/cloud-workload-security/tenant-structures",
 		"name": "Tenant structures",
 		"parent": ["Cloud Workload Security", "Policy reference"]
+	},
+	{
+		"deeplink": "/?to=/:account/dls/overview",
+		"name": "Data Localization Suite",
+		"parent": ["Application Security"]
 	}
 ]
