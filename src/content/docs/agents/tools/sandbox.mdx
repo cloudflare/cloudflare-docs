@@ -12,7 +12,7 @@ import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
 Give an agent a Linux sandbox for shell commands, language runtimes, package installation, and project files that last across turns. The sandbox is a [Container](/containers/) attached to the agent. The agent gives the model a tool that runs commands in the sandbox.
 
-Need commands to share the agent's durable [Computer workspace](/agents/tools/filesystem/)? Use the experimental [Computer container backend](/agents/tools/computer-container/). The example on this page uses container-local files instead.
+To share persistent files between shell commands and the agent's file tools, follow [Run Linux commands against persistent files](/agents/tools/files-and-code/run-linux/). That guide uses an experimental execution backend. The example on this page uses container-local files.
 
 Use a sandbox when an agent needs to:
 

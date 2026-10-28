@@ -1,10 +1,10 @@
 ---
-title: Run shell commands with Cloudflare Computer
-description: Run Linux commands against a Cloudflare Computer workspace and persist their file changes in Durable Object SQLite storage.
+title: Run Linux commands against persistent files
+description: Run Linux tools against your agent's files and save their changes in Durable Object storage, using the experimental Computer container backend.
 pcx_content_type: how-to
 sidebar:
-  order: 0.5
-  label: Computer container backend
+  order: 3
+  label: Run Linux commands
 products:
   - agents
   - containers
@@ -17,29 +17,13 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Use Computer's `ContainerBackend` to run Linux commands against the same durable files that your agent reads and writes.
+Run shell commands, native binaries, and package managers against the same persistent files that your agent reads and writes. This guide uses Cloudflare Computer's experimental `ContainerBackend`.
 
 :::caution[Experimental]
 The container backend and its `computerd` daemon are for experiments and prototypes, not production use. Their APIs may change in any release. Refer to the [Computer component status](https://github.com/cloudflare/computer/tree/main/packages/computer#status).
 :::
 
-## How files move
-
-A [Computer workspace](/agents/tools/filesystem/) stores files in Durable Object SQLite storage. Inside the container, `computerd` exposes a copy at `/workspace` through Filesystem in Userspace (FUSE). No R2 bucket is required.
-
-```mermaid
-flowchart TB
-  subgraph DO[Durable Object]
-    Agent[Agent file tools] <--> Files[Workspace files in SQLite]
-  end
-  subgraph Container[Linux container]
-    Mount["/workspace — FUSE mount"] <--> Shell[Shell commands]
-  end
-  Files -->|Push before command| Mount
-  Mount -->|Pull after command| Files
-```
-
-`workspace.runtime.exec()` synchronizes files before and after a command. The container's remaining filesystem stays local to that container.
+The workspace stores files in Durable Object SQLite storage and exposes them at `/workspace` inside the container. No R2 bucket is required. For the synchronization diagram and storage boundaries, refer to [Understand what persists](/agents/tools/files-and-code/persistence/).
 
 ## Before you begin
 
@@ -230,21 +214,13 @@ Repeat the requests against the deployment URL. This example uses one workspace 
 
 ## Use the workspace in an agent
 
-Pass the workspace to the existing [Computer file-tool adapters](/agents/tools/filesystem/#give-the-model-file-tools). A workspace with an execution backend also offers the model an `exec` tool.
+Pass the workspace to the existing [workspace file tools](/agents/tools/files-and-code/persistent-files/#give-the-model-file-tools). A workspace with an execution backend also offers the model an `exec` tool.
 
 The backend starts lazily on its first execution. With multiple backends, pass `backend: "linux"` to select this one; otherwise, the first registered backend is the default.
 
-## Know what persists
+## Check file synchronization
 
-| Files or state                               | Stored in the Durable Object?   |
-| -------------------------------------------- | ------------------------------- |
-| Files written through `workspace.fs`         | Yes                             |
-| Container changes under `/workspace`         | After synchronization completes |
-| Container files outside `/workspace`         | No                              |
-| Container-created files excluded by `ignore` | No                              |
-| Running Linux processes                      | No                              |
-
-Check both the command's exit code and `result.sync.status`. A result with `sync.status: "pending"` still needs synchronization. Refer to [Resume an incomplete sync](https://github.com/cloudflare/computer/tree/main/packages/computer#resuming-an-incomplete-sync) before retrying a command that may already have changed files.
+Check both the command's exit code and `result.sync.status`, as the example does. A `pending` result still needs synchronization. Refer to [Check container synchronization](/agents/tools/files-and-code/persistence/#check-container-synchronization) before retrying a command that may already have changed files.
 
 Calls made directly through `ctx.container.exec()` do not use Computer's synchronization around commands. Use `workspace.runtime.exec()` when commands need the shared workspace.
 

@@ -1,0 +1,101 @@
+---
+title: Workspace API reference
+description: Look up workspace configuration, file operations, execution methods, and tool adapters for persistent files and code execution.
+pcx_content_type: reference
+sidebar:
+  order: 5
+  label: API reference
+products:
+  - agents
+---
+
+Use these APIs after [adding a workspace](/agents/tools/files-and-code/persistent-files/). They are provided by `@cloudflare/computer`.
+
+## `Workspace`
+
+`new Workspace(options)` from `@cloudflare/computer` creates a workspace. It accepts the following options:
+
+| Option               | Description                                                                                                    |
+| -------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `storage`            | Required. The storage of the Durable Object, `this.ctx.storage`.                                               |
+| `backends`           | Execution backends, such as `WorkerJavaScriptBackend`. The first backend is the default.                       |
+| `mounts`             | Read-only content mounted at a path, from an R2 bucket (`R2Bucket()`) or the Worker bundle (`WorkerBundle()`). |
+| `git`                | A Git client from `createGitClient()` in `@cloudflare/computer/git`, which turns on `workspace.git`.           |
+| `defaultGitIdentity` | The `{ name, email }` that Git commits use.                                                                    |
+| `artifacts`          | An [Artifacts](/artifacts/) binding, as `{ binding }`.                                                         |
+| `output`             | Where long command output is saved, and how much `result()` keeps.                                             |
+
+## `workspace.fs`
+
+Every path is absolute. Every method returns a promise.
+
+| Method                                | Description                                                                                                                                           |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `readFile(path, encoding?)`           | Reads a file. Returns a string with `"utf8"`, or a `ReadableStream` without an encoding. Accepts `{ byteOffset, byteLength }` to read part of a file. |
+| `writeFile(path, content, options?)`  | Writes a string, `Uint8Array`, or `ReadableStream`. Set `options.mode` for permissions.                                                               |
+| `mkdir(path, options?)`               | Creates a directory. Set `recursive: true` to create parents.                                                                                         |
+| `readdir(path)`                       | Lists a directory as entries with `name`, `parentPath`, `isFile`, and `isDirectory`.                                                                  |
+| `stat(path)`                          | Returns `name`, `mode`, `mtime`, `size`, `isFile`, and `isDirectory`, following symbolic links.                                                       |
+| `lstat(path)`                         | Like `stat`, but reports a symbolic link itself, with `isSymbolicLink`.                                                                               |
+| `rm(path, options?)`                  | Removes a file or directory. Set `recursive: true` for a non-empty directory, and `force: true` to ignore a missing path.                             |
+| `rename(oldPath, newPath)`            | Moves a file, directory, or symbolic link in one transaction.                                                                                         |
+| `symlink(target, path)`               | Creates a symbolic link at `path` that points to `target`.                                                                                            |
+| `readlink(path)`                      | Returns the target of a symbolic link.                                                                                                                |
+| `chmod(path, mode)`                   | Changes the permission bits of a path.                                                                                                                |
+| `find(directory, pattern?, options?)` | Finds paths that match a glob, relative to `directory`. Accepts `exclude`, `limit`, and `offset`.                                                     |
+| `ls(prefix)`                          | Lists every file at or under `prefix`.                                                                                                                |
+| `grep(pattern, path, options?)`       | Searches file contents. Accepts `regex`, `ignoreCase`, `context`, `include`, `exclude`, `limit`, and `offset`.                                        |
+
+Failed operations reject with an error whose `code` is a POSIX error code, such as `ENOENT` for a missing path.
+
+## `workspace.runtime`
+
+| Method                                  | Description                                                                                          |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `exec(source, options?)`                | Runs `source` on a backend and returns a handle. Call `result()` on the handle for the final result. |
+| `getExec(id, options?)`                 | Reattaches to a run by ID.                                                                           |
+| `killExec(id, options?)`                | Stops a run.                                                                                         |
+| `disposeExec(id, options?)`             | Discards a completed run.                                                                            |
+| `backends()`                            | Lists the backends and the description that each gives to the model.                                 |
+| `recover()`                             | Resumes interrupted runs. Call it from an alarm. Experimental.                                       |
+| `pending()`                             | Lists the host module calls that are waiting for an answer. Experimental.                            |
+| `respond(id, callId, answer, options?)` | Answers a waiting call. Experimental.                                                                |
+
+`exec()` accepts the following options:
+
+| Option        | Description                                                                           |
+| ------------- | ------------------------------------------------------------------------------------- |
+| `backend`     | The backend ID to run on. Defaults to the first backend.                              |
+| `input`       | JSON-compatible data passed to the default export of a JavaScript module.             |
+| `encoding`    | Set to `"utf8"` to receive `stdout` and `stderr` as strings instead of bytes.         |
+| `cwd`         | The working directory, and the base for relative imports.                             |
+| `env`         | Environment variables for this run, available to JavaScript as `process.env`.         |
+| `stdin`       | Standard input, as a string or `Uint8Array`.                                          |
+| `timeoutMs`   | How long the run can take, up to the backend's `maxTimeoutMs`.                        |
+| `onInterrupt` | What happens to this run if a restart interrupts it. Overrides the backend's default. |
+
+The result contains `status` (`"completed"`, `"failed"`, or `"cancelled"`), `exitCode`, `stdout`, `stderr`, and `value`, the return value of a JavaScript module. When output is too long, `truncated` names the workspace file that holds all of it.
+
+Container results also include `sync`, which reports whether file changes have reached durable storage. Refer to [Check container synchronization](/agents/tools/files-and-code/persistence/#check-container-synchronization).
+
+Declare handles from `exec()` with `using` so they are disposed when they go out of scope.
+
+## Tool functions
+
+| Function                | Entry point                              | Returns                                                 |
+| ----------------------- | ---------------------------------------- | ------------------------------------------------------- |
+| `createAITools()`       | `@cloudflare/computer/tools/ai-sdk`      | An AI SDK `ToolSet`.                                    |
+| `createPiTools()`       | `@cloudflare/computer/tools/pi-ai`       | Pi AI tool declarations and an `execute` function.      |
+| `createTanStackTools()` | `@cloudflare/computer/tools/tanstack-ai` | A list of [TanStack AI](https://tanstack.com/ai) tools. |
+
+## Host modules
+
+Pass these to the `modules` option of `WorkerJavaScriptBackend`:
+
+| Function                  | Entry point                              | Module         | Description                                                                                                                    |
+| ------------------------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `createGitModule()`       | `@cloudflare/computer/modules/git`       | `ws:git`       | Git operations on the workspace. Requires the `git` workspace option. Pass `{ allowNetwork: true }` to clone, fetch, and push. |
+| `createArtifactsModule()` | `@cloudflare/computer/modules/artifacts` | `ws:artifacts` | [Artifacts](/artifacts/) repositories. Requires the `artifacts` workspace option.                                              |
+| `createToolBindings()`    | `@cloudflare/computer/modules/tools`     | `ws:tools`     | The agent's own tools, callable from code. Build the bindings with `forAISDKTools()` or `forPiTools()`.                        |
+
+For package exports and additional examples, refer to the [Computer package documentation](https://github.com/cloudflare/computer/tree/main/packages/computer).

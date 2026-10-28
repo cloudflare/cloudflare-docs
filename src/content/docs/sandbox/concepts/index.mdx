@@ -64,7 +64,7 @@ With a Dynamic Worker, you write each method and decide what it returns. When ge
 
 ## Use both in one application
 
-[Cloudflare Computer](/agents/tools/filesystem/) gives an agent a durable workspace with pluggable execution backends. Its experimental [container backend](/agents/tools/computer-container/) lets Linux commands share those files with the agent's file tools.
+An agent can also [keep persistent files and run code against them](/agents/tools/files-and-code/). To share those files between Linux commands and the agent's file tools, follow [Run Linux commands against persistent files](/agents/tools/files-and-code/run-linux/). That guide uses Cloudflare Computer's experimental container backend.
 
 A coding agent can answer questions about a repository through scoped methods in a Dynamic Worker. When the agent proposes a patch, the same Worker starts a Container and runs the test suite of the repository.
 

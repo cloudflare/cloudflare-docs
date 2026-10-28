@@ -240,6 +240,7 @@
 /aegis/analytics/ /smart-shield/configuration/dedicated-egress-ips/ips-utilization/ 301
 
 # agents
+/agents/tools/computer-container/ /agents/tools/files-and-code/run-linux/ 301
 /agents/communication-channels/ /agents/agent-class/communication-channels/ 301
 /agents/communication-channels/chat/ /agents/agent-class/communication-channels/chat/ 301
 /agents/communication-channels/chat/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301

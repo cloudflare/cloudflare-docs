@@ -31,7 +31,7 @@ Agents on Cloudflare are composed from four parts:
 
 ### Get started
 
-For durable files and code execution, use a [Cloudflare Computer workspace](/agents/tools/filesystem/). Its experimental [container backend](/agents/tools/computer-container/) runs Linux commands against the same files.
+Give your agent [persistent files and code execution](/agents/tools/files-and-code/). Start with file tools, then add JavaScript or Linux commands that operate on the same files.
 
 Build your agent with the [Pi harness](/agents/harnesses/pi/). [Pi Durable](https://earendil.com/posts/pi-durable/) runs the agent loop, including the transcript, model calls, tools, and retries, inside a Durable Object. `PiHarness` from the Agents SDK stores Pi's state in the object's SQLite database and resumes the run after an eviction. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
 
