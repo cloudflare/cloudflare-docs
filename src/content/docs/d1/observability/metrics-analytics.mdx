@@ -162,7 +162,7 @@ Run `wrangler d1 insights --help` to view current options.
 
 :::
 
-`wrangler d1 insights` reads from the GraphQL Analytics API and the D1 API, so the API token you use needs both the **Account Analytics: Read** and **D1: Read** permissions.
+`wrangler d1 insights` reads from the GraphQL Analytics API, so the API token you use needs the **Account Analytics: Read** permission.
 
 Pass a database name to get the top queries for that database. Leave out the database name to run account-wide and get the top queries across every D1 database in your account:
 
@@ -174,12 +174,7 @@ npx wrangler d1 insights <database_name>
 npx wrangler d1 insights
 ```
 
-When run account-wide, each result also includes the following fields, so you can tell which database a query belongs to:
-
-| Field          | Description                                                                   |
-| -------------- | ----------------------------------------------------------------------------- |
-| `databaseId`   | The ID of the database that ran the query.                                    |
-| `databaseName` | The current name of the database, or `null` if the database has been deleted. |
+When run account-wide, each result also includes a `databaseId` field with the ID of the database that ran the query. To find the name of that database, run `npx wrangler d1 info <database_id>`.
 
 | Option             | Description                                                                                                                 |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------- |
@@ -368,12 +363,12 @@ Slow queries are usually queries that read far more rows than they return. Use `
    npx wrangler d1 insights --sort-by=reads --time-period=7d --json
    ```
 
-   Each result includes `databaseId` and `databaseName`, so you can see which database each query belongs to.
+   Each result includes a `databaseId`, so you can see which database each query belongs to.
 
-2. Drill into the database you want to fix:
+2. Drill into the database you want to fix. You can pass the `databaseId` from the previous step in place of the database name:
 
    ```sh
-   npx wrangler d1 insights <database_name> --sort-by=reads --time-period=7d --json
+   npx wrangler d1 insights <database_id> --sort-by=reads --time-period=7d --json
    ```
 
 3. Look for queries with a high `avgRowsRead` and a `queryEfficiency` far below `1`. These queries scan many rows to return a few, which usually means a column in the `WHERE`, `JOIN` or `ORDER BY` clause has no index. [Add an index](/d1/best-practices/use-indexes/) for that column, then run the command again to check that `avgRowsRead` has dropped and `queryEfficiency` is closer to `1`.
