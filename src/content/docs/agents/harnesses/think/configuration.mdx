@@ -1,7 +1,7 @@
 ---
 title: Configuration
 pcx_content_type: reference
-description: Configuration overrides, dynamic runtime configuration, Session integration, and package exports for the Think chat agent framework.
+description: Configuration overrides, dynamic runtime configuration, and package exports for the Think chat agent framework.
 sidebar:
   order: 3
 products:
@@ -20,13 +20,22 @@ Think is configured by overriding methods and properties on your `Think` subclas
 | `getSystemPrompt()`        | `"You are a helpful assistant."` | System prompt (fallback when no context blocks)                                                                                                                                                                                                                                     |
 | `getTools()`               | `{}`                             | AI SDK `ToolSet` for the agentic loop                                                                                                                                                                                                                                               |
 | `getScheduledTasks()`      | `{}`                             | Code-declared recurring prompts or handlers — refer to [Scheduled tasks](/agents/harnesses/think/scheduled-tasks/)                                                                                                                                                                  |
+| `getScheduledTasksScope()` | `"root"`                         | Which instances arm the declared tasks: `"root"` (the top-level agent only) or `"all"` (sub-agents too)                                                                                                                                                                             |
 | `getDefaultTimezone()`     | `undefined`                      | Default timezone for wall-clock scheduled tasks                                                                                                                                                                                                                                     |
 | `getMessengers()`          | `{}`                             | Messenger ingress and delivery declarations — refer to [Messengers](/agents/harnesses/think/messengers/)                                                                                                                                                                            |
+| `getActions()`             | `{}`                             | Server actions with idempotency, approvals, and authorization — refer to [Actions](/agents/harnesses/think/actions/)                                                                                                                                                                |
+| `configureChannels()`      | `{}`                             | Per-channel policy beyond the implicit `web` channel — refer to [Channels](/agents/harnesses/think/channels/)                                                                                                                                                                       |
 | `maxSteps`                 | `10`                             | Max tool-call rounds per turn                                                                                                                                                                                                                                                       |
 | `sendReasoning`            | `true`                           | Send reasoning chunks to chat clients                                                                                                                                                                                                                                               |
-| `configureSession()`       | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/concepts/memory/)                                                                                                                                                                           |
-| `getSkills()`              | `[]`                             | Return Agent Skills sources for on-demand skill activation — refer to [Agent Skills](/agents/harnesses/think/tools/)                                                                                                                                                       |
-| `getSkillScriptRunner()`   | `null`                           | Enable the optional `run_skill_script` tool                                                                                                                                                                                                                                         |
+| `configureSession()`       | identity                         | Configure compaction and search on the conversation — refer to [Memory and context](/agents/harnesses/think/memory-and-context/)                                                                                                                                                    |
+| `configureContext()`       | `[]`                             | Declare context blocks for the system prompt — refer to [Memory and context](/agents/harnesses/think/memory-and-context/)                                                                                                                                                           |
+| `hydrationByteBudget`      | 32 MiB                           | Byte budget for loading the transcript at startup                                                                                                                                                                                                                                   |
+| `mediaEviction`            | `true`                           | Move aged media out of the conversation and into a workspace file. `false` keeps it in the conversation                                                                                                                                                                             |
+| `truncationStep`           | `8`                              | Move the read-time truncation cutoff once every this many messages. `1` cuts every turn — refer to [Memory and context](/agents/harnesses/think/memory-and-context/#prompt-caching)                                                                                                 |
+| `getSkills()`              | `[]`                             | Return Agent Skills sources for on-demand skill activation — refer to [Load skills from the workspace](/agents/harnesses/think/tools/#load-skills-from-the-workspace)                                                                                                               |
+| `skillWorkspace`           | `false`                          | Write skills to the workspace as files. `{}` turns it on with defaults                                                                                                                                                                                                              |
+| `getSkillScriptRunner()`   | `null`                           | Enable the optional `run_skill_script` tool (experimental)                                                                                                                                                                                                                          |
+| `fetchTools`               | `false`                          | Turn on the allowlisted, read-only fetch tools — refer to [Fetch tool](/agents/harnesses/think/tools/#fetch-tool)                                                                                                                                                                   |
 | `messageConcurrency`       | `"queue"`                        | How overlapping submits behave — refer to [Client tools](/agents/harnesses/think/client-tools/#message-concurrency)                                                                                                                                                                 |
 | `includeMcpTools`          | `true`                           | Convert connected MCP tools to AI SDK tools and add them to model turns. Refer to [MCP tools](/agents/harnesses/think/tools/#mcp-tools)                                                                                                                                             |
 | `waitForMcpConnections`    | `false`                          | Wait for MCP servers before inference                                                                                                                                                                                                                                               |
@@ -59,10 +68,10 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-| Method                      | Description                                                   |
-| --------------------------- | ------------------------------------------------------------- |
-| `configure<T>(config: T)`   | Persist a typed configuration object                          |
-| `getConfig<T>(): T \| null` | Read the persisted configuration, or null if never configured |
+| Method                    | Description                                                            |
+| ------------------------- | ---------------------------------------------------------------------- |
+| `configure<T>(config: T)` | Persist a typed configuration object                                   |
+| `getConfig<T>()`          | Read the persisted configuration as `T`, or `null` if never configured |
 
 Expose configuration to the client via `@callable`:
 
@@ -85,50 +94,22 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-## Session integration
+## Memory and context
 
-Think stores conversations in a [Session](/agents/concepts/memory/) — the storage layer that holds your messages and gives the model writable memory. Two concepts come up here: **context blocks** are labelled sections of the system prompt the model can read and update (for example, a `memory` block of facts about the user), and **compaction** summarizes older messages so long conversations stay within the model's context window. Override `configureSession` to add persistent memory, compaction, search, and skills:
-
-<TypeScriptExample>
-
-```ts
-import { Think, Session } from "@cloudflare/think";
-
-export class MyAgent extends Think<Env> {
-	getModel() {
-		/* ... */
-	}
-
-	configureSession(session: Session) {
-		return session
-			.withContext("soul", {
-				provider: { get: async () => "You are a helpful coding assistant." },
-			})
-			.withContext("memory", {
-				description: "Important facts learned during conversation.",
-				maxTokens: 2000,
-			})
-			.withCachedPrompt();
-	}
-}
-```
-
-</TypeScriptExample>
-
-When `configureSession` adds context blocks, Think builds the system prompt from those blocks instead of using `getSystemPrompt()`. Think's `this.messages` getter reads directly from Session's tree-structured storage.
-
-For the full Session API — context blocks, compaction, search, skills, and multi-session support — refer to the [Sessions documentation](/agents/concepts/memory/).
+Think stores the conversation and builds the system prompt for you. `configureSession()` sets compaction and search, and `configureContext()` declares the context blocks of the system prompt, such as a `memory` block the model can write to. Refer to [Memory and context](/agents/harnesses/think/memory-and-context/).
 
 ## Package exports
 
 | Export                                  | Description                                                  |
 | --------------------------------------- | ------------------------------------------------------------ |
 | `@cloudflare/think`                     | `Think`, `Session`, `skills` namespace                       |
+| `@cloudflare/think/react`               | `useAgentChat` for Think agents                              |
+| `@cloudflare/think/tools/fetch`         | `createFetchTools()` — allowlisted, read-only HTTP fetches   |
 | `@cloudflare/think/messengers`          | Messenger contracts, Chat SDK bridge, state agent, delivery  |
 | `@cloudflare/think/messengers/telegram` | Telegram messenger provider and delivery helpers             |
 | `@cloudflare/think/workflows`           | `ThinkWorkflow`, `step.prompt()` — Workflow prompts          |
 | `@cloudflare/think/tools/execute`       | `createExecuteTool()` — deprecated Code Mode execution tool  |
-| `@cloudflare/think/tools/browser`       | `createBrowserTools()` — Chrome DevTools Protocol tools      |
+| `@cloudflare/think/tools/browser`       | `createBrowserTools()` — deprecated browser tools            |
 | `@cloudflare/think/tools/extensions`    | `createExtensionTools()` — LLM-driven extension loading      |
 | `@cloudflare/think/extensions`          | `ExtensionManager`, `HostBridgeLoopback` — extension runtime |
 
@@ -139,7 +120,7 @@ Peer dependencies you provide:
 | Package                  | Required | Notes                            |
 | ------------------------ | -------- | -------------------------------- |
 | `agents`                 | yes      | Cloudflare Agents SDK            |
-| `ai`                     | yes      | AI SDK v6                        |
+| `ai`                     | yes      | AI SDK v6 or v7                  |
 | `zod`                    | yes      | Schema validation (v4)           |
 | `@cloudflare/computer`   | yes      | Workspace and workspace tools    |
 | `@chat-adapter/telegram` | optional | Required for Telegram messengers |
@@ -150,4 +131,4 @@ Bundled with `@cloudflare/think`:
 | ---------------------- | ---------------------------------------- |
 | `@cloudflare/codemode` | Code execution for `createExecuteTool()` |
 
-The Agent Skills engine and its script runner live in [`agents/skills`](/agents/harnesses/think/tools/), so skill scripts pull `@cloudflare/worker-bundler` and `just-bash` through `agents`, not Think.
+The Agent Skills engine and its script runner live in `agents/skills`, so skill scripts pull `@cloudflare/worker-bundler` and `just-bash` through `agents`, not Think.

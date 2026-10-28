@@ -3,18 +3,26 @@ title: OpenCode
 description: Run OpenCode 2.0 in a plain Durable Object with the Agents SDK, Workers AI and AI Gateway models, bundled plugins, and durable sessions.
 pcx_content_type: overview
 sidebar:
-  order: 10
+  order: 4
+  badge: Experimental
 products:
   - agents
 reviewed: 2026-10-12
 ---
 
 import {
+	Aside,
 	CopyPromptButton,
 	PackageManagers,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
+
+<Aside type="caution" title="Experimental">
+
+`OpenCodeHarness` (`agents/harness/opencode`) and the `agents/models/opencode` provider are experimental. Their APIs may change in any release. For a harness on a stable API, use the [Pi harness](/agents/harnesses/pi/).
+
+</Aside>
 
 [OpenCode](https://opencode.ai/v2/docs/build/sdk/) is an extensible agent harness. The Agents SDK's `OpenCodeHarness` runs its Workerd SDK inside a plain Durable Object. Refer to [OpenCode's Cloudflare SDK documentation](https://opencode.ai/v2/docs/build/sdk/cloudflare/) for the embedded host API.
 
@@ -29,7 +37,7 @@ OpenCode owns the agent loop, transcript, tools, and session recovery. `OpenCode
 
 ## How it works
 
-`OpenCodeHarness` is a [Lifecycle capability](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md). The Lifecycle starts the capability and provides storage and a durable job queue.
+`OpenCodeHarness` is a [Lifecycle capability](/agents/runtime/lifecycle/). The Lifecycle starts the capability and provides storage and a durable job queue.
 
 ```mermaid
 flowchart LR
@@ -63,7 +71,7 @@ Install the Agents SDK and OpenCode packages:
 
 <PackageManagers pkg="agents@latest @opencode/sdk@2 @opencode/plugin@2" />
 
-Use the latest `agents` release. The OpenCode packages are optional peer dependencies, required by this integration, with a supported range of `^2.0.24`.
+This page is written for Agents SDK 0.31.0. The OpenCode packages are optional peer dependencies of `agents`, required by this integration, with a supported range of `^2.0.24`.
 
 Add the `AI` binding, a SQLite-backed Durable Object, and `nodejs_compat` to your Wrangler configuration:
 
@@ -278,6 +286,14 @@ For OpenCode's own events, durable and replayable, use `session.log()`. Save the
 
 Both hold the host open. Call `stream.stop()` when you no longer need a stream, and stop `log()` with an `AbortSignal`. Open them again after the object restarts. The [example's WebSocket adapter](https://github.com/cloudflare/agents/blob/main/examples/next/harnesses/opencode/src/sockets.ts) shows snapshots, event forwarding, and reattachment after startup.
 
+## Connect a workspace
+
+OpenCode's Workers profile has no local filesystem or process, which is why the plugin above removes OpenCode's `read`, `write`, `edit`, `patch`, `glob`, `grep`, and `shell` tools. To give OpenCode files and code execution, connect a `Workspace` from [Cloudflare Computer](/agents/concepts/workspace/) (`@cloudflare/computer`) and add its tools through a plugin.
+
+`createPiTools()` from `@cloudflare/computer/tools/pi-ai` returns the workspace tools as JSON Schema declarations with one `execute` function, which a plugin can register with `tools.add()`. The [OpenCode harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode) does this in `src/workspace.ts`: it stores the workspace in the same Durable Object, runs JavaScript with `WorkerJavaScriptBackend`, adds git, and replaces OpenCode's local tools with the workspace's `read`, `write`, `edit`, `delete`, `ls`, `find`, `grep`, and `exec`.
+
+Skills are files too. To load a skill into OpenCode, register it through a plugin, as in [Add an Agent Skill](#add-an-agent-skill).
+
 ## Add plugins
 
 Bundle plugins with the Worker and pass them in the factory's `plugins` array alongside `this.ai.plugin` and `workerTools`. Do not rely on runtime loading of local plugin files or npm packages.
@@ -339,4 +355,4 @@ export default Plugin.define({
 
 </TypeScriptExample>
 
-Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/harnesses/think/tools/) for authoring guidance.
+Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/concepts/skills/) for authoring guidance.

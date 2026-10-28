@@ -1,16 +1,16 @@
 ---
 title: Tools
 pcx_content_type: reference
-description: Built-in workspace tools, custom tools, approvals, MCP tools, code execution, browser tools, and extensions for Think agents.
+description: Connect a workspace, and use built-in workspace tools, skills, custom tools, approvals, MCP tools, the fetch tool, code execution, and extensions in Think agents.
 sidebar:
   order: 4
 products:
   - agents
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { Aside, TypeScriptExample, WranglerConfig } from "~/components";
 
-Think provides built-in workspace file tools on every turn, plus integration points for custom tools, code execution, and dynamic extensions.
+Think provides built-in workspace file tools on every turn, plus integration points for skills, custom tools, web fetches, code execution, and dynamic extensions.
 
 ## Tool merge order
 
@@ -19,16 +19,26 @@ On every turn, Think merges tools from multiple sources. Later sources override 
 1. **Workspace tools** — `read`, `ls`, `find`, `grep`, `write`, `edit`, `delete`, plus `exec` and `publish` when configured (built-in)
 2. **`getTools()`** — your custom server-side tools
 3. **Extension tools** — tools from loaded extensions (prefixed by extension name)
-4. **Session tools** — `set_context`, `load_context`, `search_context` (from `configureSession`)
-5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Agent Skills](/agents/harnesses/think/tools/))
+4. **Context tools** — `set_context`, `load_context`, `search_context` (from `configureContext()` and `configureSession()`, refer to [Memory and context](/agents/harnesses/think/memory-and-context/))
+5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Load skills from the workspace](#load-skills-from-the-workspace))
 6. **MCP tools** — from connected MCP servers when `includeMcpTools` is `true`
 7. **Client tools** — from the browser (refer to [Client tools](/agents/harnesses/think/client-tools/))
 
 Tools belong to the agent running the turn. For parent-child orchestration, use [Agents as tools](/agents/agent-class/agent-tools/) instead of passing one-off tools through `chat()`.
 
+## Connect a workspace
+
+Every Think agent is connected to a workspace. `this.workspace` is a `Workspace` from [Cloudflare Computer](/agents/concepts/workspace/) (`@cloudflare/computer`), stored in the Durable Object's SQLite database. The default workspace is a filesystem with no execution backend. Override `workspace` to add a backend for `exec`, git, or read-only mounts.
+
+What Think does with the workspace:
+
+- It gives the model the [built-in workspace tools](#built-in-workspace-tools) on every turn.
+- It can write [skills](#load-skills-from-the-workspace) to the workspace as files, under `/workspace/.agents/skills`.
+- It stores media that has aged out of the conversation under `/workspace/attachments/evicted/`, and large responses from the [fetch tool](#fetch-tool) under `/workspace/fetched/`.
+
 ## Built-in workspace tools
 
-Every Think agent gets `this.workspace`, a `Workspace` from [`@cloudflare/computer`](https://github.com/cloudflare/computer) stored in the Durable Object's SQLite. Think adds Computer's AI SDK tools to every turn with no configuration.
+Think adds Computer's AI SDK tools for `this.workspace` to every turn with no configuration.
 
 | Tool      | Description                                                                         |
 | --------- | ----------------------------------------------------------------------------------- |
@@ -96,7 +106,7 @@ binding = "LOADER"
 
 </WranglerConfig>
 
-Computer also ships a `just-bash` shell backend that runs in Dynamic Workers, and a container backend with a full Linux userland. Refer to the [Computer README](https://github.com/cloudflare/computer/tree/main/packages/computer#choosing-a-backend) for each backend's bindings.
+Computer also ships two experimental backends: a `just-bash` shell backend that runs in Dynamic Workers, and a container backend with a full Linux userland. Refer to the [Computer README](https://github.com/cloudflare/computer/tree/main/packages/computer#choosing-a-backend) for each backend's bindings.
 
 ### Call the agent's tools from code
 
@@ -150,6 +160,84 @@ The upgrade also changes the tools:
 - `workspaceBash`, `createWorkspaceTools`, and `@cloudflare/think/tools/workspace` are removed, with no replacement. To change a built-in tool, return a tool with the same name from `getTools()`. To hide tools for a turn, return `activeTools` from `beforeTurn`.
 
 Refer to [Upgrading to a Computer workspace](https://github.com/cloudflare/agents/blob/main/docs/think/index.md#upgrading-to-a-computer-workspace) for the full list.
+
+## Load skills from the workspace
+
+A [skill](/agents/concepts/skills/) is a folder with a `SKILL.md` file and any references, templates, or scripts it needs. Think lists the available skills in the system prompt and loads a skill's instructions only when the model activates it, so skills do not cost context until they are needed.
+
+Return skill sources from `getSkills()`. Bundle a `skills` folder next to your agent with the Agents Vite plugin, and import it as `agents:skills`:
+
+```ts title="vite.config.ts"
+import { cloudflare } from "@cloudflare/vite-plugin";
+import agents from "agents/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+	plugins: [agents(), cloudflare()],
+});
+```
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { createAI } from "agents/models/ai-sdk";
+import bundledSkills from "agents:skills";
+
+export class MyAgent extends Think<Env> {
+	override workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({
+				id: "js",
+				loader: this.env.LOADER,
+				access: "read-write",
+			}),
+		],
+	});
+
+	// Write each skill to /workspace/.agents/skills.
+	skillWorkspace = {};
+
+	getModel() {
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
+	}
+
+	getSkills() {
+		return [
+			bundledSkills,
+			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
+		];
+	}
+
+	getSkillScriptRunner() {
+		return skills.runner({
+			loader: this.env.LOADER,
+			workspaceInstance: this.workspace,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+`agents:skills` resolves to the `./skills` folder next to the importing file, with one child folder per skill. Use `agents:skills/<folder>` for a differently named folder. Without the Vite plugin, build a source with `skills.fromManifest()`. Sources apply in order: the first source to list a skill name wins, and a later duplicate, or a source that fails to load, is skipped with a logged warning.
+
+When skills are available, Think adds three tools:
+
+| Tool                  | Purpose                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `activate_skill`      | Load a skill's instructions and the list of its bundled files.                     |
+| `read_skill_resource` | Read a bundled file by `{ name, path }` or `skill-name/path`.                      |
+| `run_skill_script`    | Run a bundled script. Only present when `getSkillScriptRunner()` returns a runner. |
+
+`skillWorkspace` puts the skills on the workspace as files. It is off by default, and `{}` turns it on. Each `SKILL.md` is written under `/workspace/.agents/skills/<name>/`, and bundled files are copied when the model first asks for them. Files that already exist in the workspace are kept, and they take over: if the model or your code edits a skill in the workspace, later activations read the edited version. Pass `{ root: "/some/other/dir" }` to write the skills somewhere else.
+
+`skills.runner()` is experimental. It runs JavaScript, TypeScript, Python, and Bash scripts from a skill's `scripts/` folder, and needs a Worker Loader binding. Scripts get read-only access to the workspace by default. Network access, tools, and workspace writes are opt-in, and the default timeout is 30 seconds.
+
+Skills are not always-on instructions. Put behavior that should apply on every turn in a context block from [`configureContext()`](/agents/harnesses/think/memory-and-context/). Once `getSkills()` returns a source, Think builds the system prompt from context blocks, and an overridden `getSystemPrompt()` is no longer used.
 
 ## Custom tools
 
@@ -417,34 +505,113 @@ await runtime.saveSnippet("name", { executionId }); // promote a script for reus
 
 </TypeScriptExample>
 
-## Browser tools
+## Fetch tool
 
-Give your agent access to the Chrome DevTools Protocol (CDP) for web page inspection, scraping, screenshots, and debugging. Requires `@cloudflare/codemode` and a Browser Run binding.
+The fetch tool gives the model a read-only way to read web pages and internal APIs. It is off by default. Set the `fetchTools` property to turn it on:
 
 <TypeScriptExample>
 
 ```ts
 import { Think } from "@cloudflare/think";
-import { createBrowserTools } from "@cloudflare/think/tools/browser";
+import { createAI } from "agents/models/ai-sdk";
+
+export class DocsAgent extends Think<Env> {
+	getModel() {
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
+	}
+
+	fetchTools = {
+		allowlist: ["https://developers.cloudflare.com/**"],
+		bindings: {
+			docsApi: {
+				binding: this.env.DOCS_API,
+				description: "Internal docs search API.",
+				allowlist: ["/v1/docs/**"],
+				headers: { "x-agent": "think" },
+			},
+		},
+	};
+}
+```
+
+</TypeScriptExample>
+
+Think adds a `fetch_url` tool when you set a public `allowlist`, and one `fetch_<name>` tool for each entry in `bindings`, such as `fetch_docsApi` for a [service binding](/workers/runtime-apis/bindings/service-bindings/). Each binding has its own path allowlist and fixed headers, which the model cannot see or change.
+
+The tool is built to be safe to hand to a model:
+
+- **Read-only.** It only sends `GET` requests. For changes, use an [action](/agents/harnesses/think/actions/) with approval.
+- **Allowlisted.** Every request must match the allowlist after the URL is normalized. `fetch_url` blocks private, loopback, link-local, and `*.internal` targets even if the allowlist allows them.
+- **Bounded.** `maxBytes` caps the download and `maxModelChars` truncates the text the model sees. With `response: "workspace"`, or `spillToWorkspace: true`, large or binary bodies are written to a workspace file under `/workspace/fetched/` instead of the transcript.
+- **Header-safe.** The model can only set headers in `modelHeaderAllowlist` (by default `accept`, `accept-language`, and `range`).
+- **Redirect-safe.** By default a redirect is followed only when the final URL is still allowlisted. Binding targets never follow cross-origin redirects.
+
+In an allowlist, a bare origin such as `https://example.com` matches that origin and every path under it. `**` matches any characters, including `/`, and `*` matches any character except `/`. Matching ignores the query string and fragment.
+
+Results are values, not exceptions. A failed request returns `{ ok: false, code, message }`, where `code` is one of `disallowed_url`, `disallowed_redirect`, `timeout`, `aborted`, `non_2xx`, `unsupported_content_type`, `invalid_json`, `too_large`, or `request_failed`.
+
+For an allowlist that changes per tenant or per turn, call `createFetchTools()` from `@cloudflare/think/tools/fetch` in `getTools()` instead. It takes the same options, and runs on every turn:
+
+<TypeScriptExample>
+
+```ts
+import { createFetchTools } from "@cloudflare/think/tools/fetch";
+
+getTools() {
+	const tenant = this.getConfig<{ docsOrigin: string }>();
+	return {
+		...createFetchTools({
+			allowlist: tenant ? [`${tenant.docsOrigin}/**`] : [],
+			workspace: this.workspace,
+		}),
+	};
+}
+```
+
+</TypeScriptExample>
+
+To block or replace a fetch for one call, use [`beforeToolCall`](/agents/harnesses/think/lifecycle-hooks/). For a stateless fetch tool that works with any AI SDK agent, refer to [Web fetch](/agents/tools/web-fetch/).
+
+## Browser tools
+
+<Aside type="caution" title="Experimental">
+
+The browser tool is built on the `Browser` capability from `agents/browser`, which is experimental. Its API may change in any release.
+
+</Aside>
+
+`browserTool` from `agents/browser/ai-sdk` gives the model a persistent browser that it drives with the Chrome DevTools Protocol (CDP). Tabs, cookies, and logins carry over from one turn to the next. Install a `Browser` on the agent's Lifecycle, and return the tool from `getTools()`:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import { Browser, browserRun } from "agents/browser";
+import { browserTool } from "agents/browser/ai-sdk";
 
 export class MyAgent extends Think<Env> {
+	readonly browser = new Browser({ provider: browserRun(this.env.BROWSER) });
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.browser);
+	}
+
 	getModel() {
 		/* ... */
 	}
 
 	getTools() {
 		return {
-			...createBrowserTools({
-				ctx: this.ctx,
-				browser: this.env.BROWSER,
-				loader: this.env.LOADER,
-			}),
+			browser: browserTool({ browser: this.browser, loader: this.env.LOADER }),
 		};
 	}
 }
 ```
 
 </TypeScriptExample>
+
+It needs a Browser Run binding, a Worker Loader binding, and `@cloudflare/codemode` installed:
 
 <WranglerConfig>
 
@@ -458,41 +625,9 @@ binding = "LOADER"
 
 </WranglerConfig>
 
-This adds the durable CDP tool plus stateless [Quick Action](/agents/tools/browser/#quick-actions) tools when a `browser` binding is present:
+For how the browser behaves, internal hostnames, Live View, and recording, refer to [Browse the web](/agents/tools/browser/).
 
-| Tool               | Description                                                                             |
-| ------------------ | --------------------------------------------------------------------------------------- |
-| `browser_execute`  | Run JavaScript against a live browser over CDP (screenshots, DOM reads, JS evaluation). |
-| `browser_markdown` | Read a page or raw HTML as Markdown.                                                    |
-| `browser_extract`  | Extract structured data from a page with AI.                                            |
-| `browser_links`    | List links on a page.                                                                   |
-| `browser_scrape`   | Scrape specific elements by CSS selector.                                               |
-
-Pass `quickActions: false` to keep only `browser_execute`, or pass `quickActions: { actions, maxChars, options }` to configure the stateless tools. The Quick Action tools share the `browser` binding, need no Worker Loader, and resolve `ctx` from the current Agent automatically. To use only the stateless tools, import `createQuickActionTools` from `@cloudflare/think/tools/browser`.
-
-The tool is backed by a Code Mode runtime with the `cdp` connector: the model writes async arrow functions that run in a sandboxed Worker isolate, with `cdp.send()`, `cdp.attachToTarget()`, `cdp.spec()` (the live, normalized protocol description), session helpers (`cdp.startSession()`, `cdp.sessionInfo()`, `cdp.closeSession()`), and debug-log helpers. Executions are recorded for abort-and-replay, so browser sessions survive approval pauses.
-
-By default each execution gets a fresh browser session (`one-shot`), torn down when the run ends. Pass `session: { mode: "dynamic" }` to let the model promote a session with `cdp.startSession()` so later executions continue in the same browser, or `session: { mode: "reuse", key }` for a named long-lived session. Stale sessions are reclaimed by the connector's `sweep()` — call it from a scheduled task.
-
-:::note
-The simplest setup is the unified execute tool in [Code execution tool](#code-execution-tool): `createExecuteTool(this)` already includes `cdp.*` alongside `tools.*` when `env.BROWSER` is bound — one tool, one durable history. Use `createBrowserTools` when you want a separate, browser-only tool.
-:::
-
-For a custom Chrome endpoint, pass `cdpUrl` instead of `browser`:
-
-<TypeScriptExample>
-
-```ts
-createBrowserTools({
-	ctx: this.ctx,
-	cdpUrl: "http://localhost:9222",
-	loader: this.env.LOADER,
-});
-```
-
-</TypeScriptExample>
-
-For the full CDP connector API, refer to [Browse the web](/agents/tools/browser/).
+`createBrowserTools()` and `createQuickActionTools()` from `@cloudflare/think/tools/browser` are deprecated. They keep working, but will not change. To read a page without a browser, use the [fetch tool](#fetch-tool).
 
 ## Extensions
 

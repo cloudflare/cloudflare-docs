@@ -1,7 +1,7 @@
 ---
 title: Lifecycle hooks
 pcx_content_type: reference
-description: Hooks at each stage of a Think chat turn — beforeTurn, beforeStep, beforeToolCall, afterToolCall, onStepFinish, onChunk, onChatResponse, and onChatError.
+description: Hooks at each stage of a Think chat turn — beforeTurn, beforeStep, beforeToolCall, afterToolCall, onStepEnd, onChunk, onChatResponse, and onChatError.
 sidebar:
   order: 5
 products:
@@ -21,7 +21,7 @@ Think owns the `streamText` call and provides hooks at each stage of the chat tu
 | `beforeStep(ctx)`                | Before each model step                                      | `StepConfig` or void              | yes   |
 | `beforeToolCall(ctx)`            | Before a server-side tool executes                          | `ToolCallDecision` or void        | yes   |
 | `afterToolCall(ctx)`             | After a tool outcome is known                               | void                              | yes   |
-| `onStepFinish(ctx)`              | After each step completes                                   | void                              | yes   |
+| `onStepEnd(ctx)`                 | After each step completes                                   | void                              | yes   |
 | `onChunk(ctx)`                   | Per streaming chunk                                         | void                              | yes   |
 | `onChatResponse(result)`         | After turn completes and message is persisted               | void                              | yes   |
 | `onChatError(error, ctx?)`       | On error during a turn                                      | error to propagate                | no    |
@@ -41,7 +41,7 @@ flowchart TD
         chunk --> btc["beforeToolCall()"]
         btc --> exec["tool executes"]
         exec --> atc["afterToolCall()"]
-        atc --> sf["onStepFinish()"]
+        atc --> sf["onStepEnd()"]
         sf -->|"more steps"| bs
     end
 
@@ -225,12 +225,12 @@ afterToolCall(ctx: ToolCallResultContext) {
 
 For blocked and substituted tool calls, `success` is `true` because the model receives a valid tool result. Only thrown errors from the original tool execution surface as `success: false`.
 
-## onStepFinish
+## onStepEnd
 
-Called after each step completes in the agentic loop. `StepContext` is the AI SDK's step-finish event, so it includes the full step record: generated text, reasoning, files, sources, typed tool calls and results, usage, warnings, request and response metadata, and provider metadata.
+Called after each step completes in the agentic loop. It replaces `onStepFinish`, which still works but is deprecated. `StepContext` is the AI SDK's step-finish event, so it includes the full step record: generated text, reasoning, files, sources, typed tool calls and results, usage, warnings, request and response metadata, and provider metadata.
 
 ```ts
-onStepFinish(ctx: StepContext) {
+onStepEnd(ctx: StepContext) {
 	console.log(
 		`Step ${ctx.stepNumber} (${ctx.finishReason}): ` +
 			`${ctx.usage.inputTokens}in/${ctx.usage.outputTokens}out`,
