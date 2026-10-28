@@ -12,7 +12,7 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), or build the loop yourself on top of the [Agents SDK runtime](/agents/agent-class/).
+To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also use [OpenCode](/agents/harnesses/opencode/), run the [Codex agent loop](/agents/harnesses/codex/), or build the loop yourself on top of the [Agents SDK runtime](/agents/agent-class/).
 
 ## How harnesses fit
 
@@ -31,6 +31,8 @@ Use a build-your-own harness when you need full control over the model call, mes
 
 Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and plugin system. `OpenCodeHarness` runs [OpenCode's Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object.
 
+Use Codex (experimental) to run its Rust/WebAssembly agent loop directly in a Durable Object. The [Codex example](/agents/harnesses/codex/) combines the loop with Agents SDK storage, recovery, and file tools.
+
 ## Current harnesses
 
 <LinkCard
@@ -43,6 +45,12 @@ Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and pl
 	title="OpenCode (experimental)"
 	href="/agents/harnesses/opencode/"
 	description="Run OpenCode 2.0 in a plain Durable Object, with Workers AI models, bundled plugins, and durable sessions."
+/>
+
+<LinkCard
+	title="Codex (experimental)"
+	href="/agents/harnesses/codex/"
+	description="Run the Codex agent loop as WebAssembly in a Durable Object, with persistent conversations, files, and event replay."
 />
 
 ## What a harness usually owns
