@@ -73,7 +73,7 @@ That is it. Think handles the WebSocket chat protocol, message persistence, the 
 
 ```ts
 import { useAgent } from "agents/react";
-import { useAgentChat } from "@cloudflare/ai-chat/react";
+import { useAgentChat } from "@cloudflare/think/react";
 
 function Chat() {
 	const agent = useAgent({ agent: "MyAgent" });
@@ -155,7 +155,7 @@ Both Think and [`AIChatAgent`](/agents/agent-class/communication-channels/chat/c
 
 **AIChatAgent** is a protocol adapter. You override `onChatMessage` and are responsible for calling `streamText`, wiring tools, converting messages, and returning a `Response`. AIChatAgent handles the plumbing — message persistence, streaming, abort, resume — but the LLM call is entirely your concern.
 
-**Think** is an opinionated framework. It makes decisions for you: `getModel()` returns the model, `getSystemPrompt()` or `configureSession()` sets the prompt, `getTools()` returns tools. The default `onChatMessage` runs the complete agentic loop. You override individual pieces, not the whole pipeline.
+**Think** is an opinionated framework. It makes decisions for you: `getModel()` returns the model, `getSystemPrompt()` or `configureContext()` sets the prompt, `getTools()` returns tools. The default `onChatMessage` runs the complete agentic loop. You override individual pieces, not the whole pipeline.
 
 | Concern                | AIChatAgent                                                      | Think                                                               |
 | ---------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------- |
@@ -335,7 +335,7 @@ Use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) outside 
 	<LinkCard
 		title="Lifecycle hooks"
 		href="/agents/harnesses/think/lifecycle-hooks/"
-		description="beforeTurn, beforeStep, onStepFinish, onChatResponse, and more."
+		description="beforeTurn, beforeStep, onStepEnd, onChatResponse, and more."
 	/>
 	<LinkCard
 		title="Client tools"

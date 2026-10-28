@@ -37,7 +37,7 @@ npm init -y
 Install dependencies:
 
 ```sh
-npm install @cloudflare/think @cloudflare/computer @cloudflare/ai-chat agents ai zod @ai-sdk/provider react react-dom
+npm install @cloudflare/think @cloudflare/computer agents ai zod @ai-sdk/provider @ai-sdk/react react react-dom
 npm install -D wrangler @cloudflare/vite-plugin @cloudflare/workers-types @vitejs/plugin-react @tailwindcss/vite tailwindcss typescript vite
 ```
 
@@ -106,9 +106,7 @@ import { routeAgentRequest } from "agents";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
-		);
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
 	}
 
 	getSystemPrompt() {
@@ -146,7 +144,7 @@ Create `src/client.tsx`:
 ```ts
 import { createRoot } from "react-dom/client";
 import { useAgent } from "agents/react";
-import { useAgentChat } from "@cloudflare/ai-chat/react";
+import { useAgentChat } from "@cloudflare/think/react";
 
 function Chat() {
 	const agent = useAgent({ agent: "MyAgent" });
@@ -219,40 +217,42 @@ Open the browser and send a message. The agent responds with streaming text, and
 
 ## 6. Add persistent memory
 
-Override `configureSession` to give the model writable memory that survives restarts:
+Override `configureContext` to give the model writable memory that survives restarts:
 
 <TypeScriptExample>
 
 ```ts
+import type { ContextConfig } from "agents/context";
+
 export class MyAgent extends Think<Env> {
 	getModel(): LanguageModel {
-		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
-		);
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
 	}
 
-	configureSession(session: Session) {
-		return session
-			.withContext("soul", {
+	configureContext(): ContextConfig[] {
+		return [
+			{
+				label: "soul",
 				provider: {
 					get: async () =>
 						"You are a helpful assistant. Remember important facts about the user.",
 				},
-			})
-			.withContext("memory", {
+			},
+			{
+				label: "memory",
 				description: "Important facts about the user and conversation.",
 				maxTokens: 2000,
-			})
-			.withCachedPrompt();
+			},
+		];
 	}
 }
 ```
 
 </TypeScriptExample>
 
-Now the model sees a `MEMORY` section in its system prompt and gets a `set_context` tool to update it. Facts written to memory persist in SQLite and survive Durable Object hibernation and restarts.
+Now the model sees a `MEMORY` section in its system prompt and gets a `set_context` tool to update it. A block declared without a `provider` is stored in the agent's SQLite database, so facts written to memory survive Durable Object hibernation and restarts.
 
-When you use `configureSession`, the system prompt is built from context blocks rather than `getSystemPrompt()`. The `"soul"` block above acts as the system identity — it is read-only and always appears first. The `"memory"` block is writable, and the model proactively updates it when it learns something useful.
+When you declare context blocks, the system prompt is built from those blocks rather than `getSystemPrompt()`. The `"soul"` block above acts as the system identity — it is read-only and always appears first. The `"memory"` block is writable, and the model proactively updates it when it learns something useful. Think persists the frozen system prompt, so a Durable Object that wakes from hibernation reuses the same prompt.
 
 Refer to the [Sessions documentation](/agents/runtime/lifecycle/sessions/) for context blocks, compaction, search, skills, and multi-session support.
 
@@ -270,7 +270,7 @@ export class MyAgent extends Think<Env> {
 	getModel(): LanguageModel {
 		/* ... */
 	}
-	configureSession(session: Session) {
+	configureContext(): ContextConfig[] {
 		/* ... */
 	}
 
@@ -300,7 +300,7 @@ Think merges tools from multiple sources automatically. On every turn, the model
 1. **Workspace tools** — read, ls, find, grep, write, edit, delete, plus exec when the Workspace has a backend (built-in)
 2. **Your tools** — from `getTools()`
 3. **Extension tools** — from loaded extensions
-4. **Session tools** — set_context, load_context, search_context (from `configureSession`)
+4. **Context tools** — set_context, search_context (from `configureContext`)
 5. **Skill tools** — activate_skill, read_skill_resource, and optional run_skill_script (from `getSkills()`)
 6. **MCP tools** — from connected MCP servers (if any)
 7. **Client tools** — from the browser (if any)
