@@ -1,0 +1,334 @@
+---
+title: Client SDK
+description: Connect to a Durable Object agent from browsers and other runtimes with useAgent, AgentClient, and agentFetch, including state sync, method calls, and readonly connections.
+pcx_content_type: reference
+sidebar:
+  order: 3
+  label: Client
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+The client SDK connects browsers and other JavaScript runtimes to an agent. It works with any Durable Object that installs the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability, including the [`Agent` class](/agents/agent-class/).
+
+| Client        | Import          | Use it for                                                   |
+| ------------- | --------------- | ------------------------------------------------------------ |
+| `useAgent`    | `agents/react`  | A React hook with reconnection, state, and method calls      |
+| `AgentClient` | `agents/client` | The same connection as a class, for any JavaScript runtime   |
+| `agentFetch`  | `agents/client` | One HTTP request to an agent, without a WebSocket connection |
+
+## Prepare the agent
+
+The clients reach your object through [`routeAgentRequest()`](/agents/runtime/lifecycle/routing/), which maps `/agents/{class}/{name}` to the object called `{name}` in the binding for `{class}`. The server features each client feature needs are:
+
+| Client feature                      | Server setup                                                                                |
+| ----------------------------------- | ------------------------------------------------------------------------------------------- |
+| Connect, `ready`, and identity      | Install `WebSockets`. Identity frames are on by default                                     |
+| `state` and `setState()`            | Pass a [`State`](/agents/runtime/capabilities/state/) as the `state` option of `WebSockets` |
+| `call()` and `stub`                 | Pass an `RpcTarget` as the `callables` option of `WebSockets`                               |
+| Refuse `setState()` from some users | Use the `readonly` option of `WebSockets`                                                   |
+| `agentFetch()`                      | Implement `onRequest()` on the object                                                       |
+
+This agent sets up all of them:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { routeAgentRequest } from "agents/routing";
+import { State } from "agents/state";
+import { WebSockets } from "agents/websockets";
+
+export type GameState = { score: number; players: string[] };
+
+class GameMethods extends RpcTarget {
+	readonly game: State<GameState>;
+
+	constructor(game: State<GameState>) {
+		super();
+		this.game = game;
+	}
+
+	addPoints(points: number): number {
+		const current = this.game.get() ?? { score: 0, players: [] };
+		const next = { ...current, score: current.score + points };
+		this.game.set(next);
+		return next.score;
+	}
+}
+
+export class GameAgent extends DurableObject<Env> {
+	readonly game: State<GameState> = new State<GameState>({
+		initialState: { score: 0, players: [] },
+		onChanged: (_state, source) => this.webSockets.broadcastState(source),
+	});
+	readonly webSockets: WebSockets = new WebSockets({
+		state: this.game,
+		callables: new GameMethods(this.game),
+		readonly: (_connection, ctx) =>
+			new URL(ctx.request.url).searchParams.get("role") === "spectator",
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.game)
+		.use(this.webSockets);
+
+	onRequest(): Response {
+		return Response.json(this.game.get());
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Authenticate users in the Worker before you route the request. A query parameter such as `role=spectator` is only safe to trust after your Worker has checked it. For more information, refer to [Cross-domain authentication](/agents/runtime/operations/cross-domain-authentication/).
+
+## Connect from React
+
+<TypeScriptExample filename="src/game.tsx">
+
+```tsx
+import { useAgent } from "agents/react";
+import type { GameState } from "./server";
+
+export function Game({ gameId }: { gameId: string }) {
+	const agent = useAgent<GameState>({
+		agent: "GameAgent",
+		name: gameId,
+		onStateUpdate: (state, source) => {
+			console.log(`State from ${source}:`, state);
+		},
+		onStateUpdateError: (error) => console.warn(error),
+	});
+
+	const addPoints = async () => {
+		const score = await agent.call<number>("addPoints", [10]);
+		console.log("New score:", score);
+	};
+
+	return (
+		<div>
+			<p>Score: {agent.state?.score ?? 0}</p>
+			<button onClick={addPoints}>+10</button>
+			<button onClick={() => agent.setState({ score: 0, players: [] })}>
+				Reset
+			</button>
+		</div>
+	);
+}
+```
+
+</TypeScriptExample>
+
+The hook connects when the component mounts, reconnects with backoff after a drop, and closes on unmount. A state update re-renders the component.
+
+## Connect from any runtime
+
+`AgentClient` opens the same connection without React. It works in browsers, Node.js, Deno, and Bun:
+
+<TypeScriptExample>
+
+```ts
+import { AgentClient } from "agents/client";
+import type { GameState } from "./server";
+
+const client = new AgentClient<unknown, GameState>({
+	agent: "GameAgent",
+	name: "game-123",
+	host: "my-worker.my-subdomain.workers.dev",
+	onStateUpdate: (state, source) => {
+		console.log(`State from ${source}:`, state);
+	},
+	onConnectionError: (error) => {
+		console.error(`Stopped reconnecting: ${error.code} ${error.reason}`);
+	},
+});
+
+await client.ready;
+console.log("Connected to", client.name, client.state);
+
+const score = await client.call<number>("addPoints", [5], { timeout: 5_000 });
+console.log("Score:", score);
+
+client.close();
+```
+
+</TypeScriptExample>
+
+`AgentClient` is a [PartySocket](https://docs.partykit.io/reference/partysocket-api/), so it also supports `addEventListener()` for `open`, `close`, `error`, and `message` events, and `send()` for your own messages.
+
+## Address an agent
+
+| Option     | Description                                                                                                                       |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `agent`    | The binding name of the Durable Object class. It is converted to kebab case for the URL, so `GameAgent` becomes `game-agent`      |
+| `name`     | The object name. Defaults to `"default"`                                                                                          |
+| `host`     | The Worker host. `useAgent` defaults to the current origin. `AgentClient` and `agentFetch` require it                             |
+| `path`     | Extra path appended to the URL, such as `"settings"` for `/agents/game-agent/game-123/settings`                                   |
+| `basePath` | A full path that replaces `/agents/{agent}/{name}`. Your Worker routes it, and the client learns the name from the identity frame |
+| `query`    | Query parameters sent with the upgrade, or an async function that returns them                                                    |
+
+When the agent sends its identity, `onIdentity(name, agent)` runs. If a reconnect reaches a different object, for example because `basePath` resolved to another name, `onIdentityChange(oldName, newName, oldAgent, newAgent)` runs.
+
+### Send auth tokens
+
+Pass an async `query` function to `useAgent` to fetch a token before each connection:
+
+<TypeScriptExample>
+
+```tsx
+import { useAgent } from "agents/react";
+
+declare function getAuthToken(): Promise<string>;
+
+export function useGame(userId: string) {
+	return useAgent({
+		agent: "GameAgent",
+		name: userId,
+		query: async () => ({ token: await getAuthToken() }),
+		queryDeps: [userId],
+		cacheTtl: 55 * 60 * 1000,
+	});
+}
+```
+
+</TypeScriptExample>
+
+The result is cached until `queryDeps` change, `cacheTtl` expires (five minutes by default), or the connection closes. A reconnect after a drop always fetches a fresh token.
+
+## Sync state
+
+When the agent's `WebSockets` capability has a `state`, the client receives the current value after the identity frame:
+
+- `state` holds the latest value, or `undefined` before the first one arrives.
+- `ready` resolves once the identity frame and the initial state have arrived. It resets when the connection closes.
+- `identified` is `true` after `ready` resolves.
+- `setState(value)` sends a new value. The agent validates it, stores it, and broadcasts it to the other clients.
+- `onStateUpdate(state, source)` runs for each new value. `source` is `"server"` for a value the agent sent, or `"client"` for your own `setState()`.
+- `onStateUpdateError(error)` runs when the agent refuses a `setState()`, for example on a readonly connection or when validation fails.
+
+## Call methods
+
+`call(method, args?, options?)` calls a method on the agent's `callables` target, or a `@callable()` method on an `Agent`. It returns a promise of the result and rejects with the error the method threw.
+
+```ts
+const score = await agent.call<number>("addPoints", [10]);
+```
+
+`stub` is a proxy for the same calls: `agent.stub.addPoints(10)`. To type `stub` and `call()` against an `Agent` subclass, pass the class as the type parameter, such as `useAgent<MyAgent>()`.
+
+Non-streaming calls time out after 30 seconds by default. Set `defaultCallTimeout` on the client, or `timeout` per call, and use `0` to turn the timeout off. A call made while the client is disconnected waits in a buffer and is sent on reconnect.
+
+A streaming method sends chunks before its result. Pass stream callbacks to receive them:
+
+<TypeScriptExample>
+
+```ts
+import { AgentClient } from "agents/client";
+
+declare const client: AgentClient;
+
+await client.call("generate", ["Write a haiku"], {
+	timeout: 60_000,
+	stream: {
+		onChunk: (chunk) => console.log(chunk),
+		onDone: (result) => console.log("Done", result),
+		onError: (error) => console.error(error),
+	},
+});
+```
+
+</TypeScriptExample>
+
+Streaming calls have no default timeout. On the `Agent` class, mark a method with `@callable({ streaming: true })` to stream. For more information, refer to [Callable methods](/agents/agent-class/callable-methods/).
+
+## Readonly connections
+
+When the agent marks a connection readonly, the client still receives state and can call methods. Its `setState()` calls are refused, and `onStateUpdateError` runs. For the server side, refer to [Readonly connections](/agents/runtime/capabilities/websockets/#readonly-connections).
+
+Methods on a `callables` target are not covered by `readonly`. Check the caller inside the method when it changes data.
+
+## Reconnection and errors
+
+The client reconnects with exponential backoff until the agent closes the connection with a terminal code: `1008`, or `4000` to `4999`. It also stops when `shouldReconnectOnClose(event)` returns `false` or when `maxRetries` is spent.
+
+When the client stops reconnecting, `onConnectionError` receives an `AgentConnectionError` with the `code`, `reason`, and `wasClean` of the close. `useAgent` also returns it as `connectionError`. `isTerminalCloseEvent(event)` from `agents/client` tells you whether a close code is terminal.
+
+## Send HTTP requests
+
+`agentFetch(options, init?)` sends one HTTP request to the agent's `onRequest()`. It takes the same `agent`, `name`, `host`, `path`, and `basePath` options, plus the standard `RequestInit`:
+
+<TypeScriptExample>
+
+```ts
+import { agentFetch } from "agents/client";
+
+const response = await agentFetch({
+	agent: "GameAgent",
+	name: "game-123",
+	host: "my-worker.my-subdomain.workers.dev",
+});
+const state = await response.json();
+
+await agentFetch(
+	{
+		agent: "GameAgent",
+		name: "game-123",
+		host: "my-worker.my-subdomain.workers.dev",
+	},
+	{ method: "POST", body: JSON.stringify({ action: "reset" }) },
+);
+console.log(state);
+```
+
+</TypeScriptExample>
+
+Use `agentFetch` for one-off or server-to-server requests. Use `useAgent` or `AgentClient` for real-time updates, state sync, and many method calls. `AgentClient.fetch()` is deprecated and throws. Use `agentFetch()` instead.
+
+## Reference
+
+`useAgent` returns, and `AgentClient` has, these members:
+
+| Member                          | Description                                                    |
+| ------------------------------- | -------------------------------------------------------------- |
+| `agent`                         | The agent class in kebab case                                  |
+| `name`                          | The object name                                                |
+| `state`                         | The latest synced state, or `undefined`                        |
+| `ready`                         | A promise that resolves when identity and initial state arrive |
+| `identified`                    | Whether `ready` has resolved for the current connection        |
+| `connectionError`               | The `AgentConnectionError` after reconnection stops, or `null` |
+| `setState(state)`               | Sends a state update                                           |
+| `call(method, args?, options?)` | Calls a method on the agent                                    |
+| `stub`                          | A proxy that calls methods on the agent                        |
+| `send(data)`                    | Sends a raw WebSocket message                                  |
+| `close()`                       | Closes the connection                                          |
+| `reconnect()`                   | Closes and reopens the connection                              |
+
+`useAgent` also returns `getHttpUrl()`, the HTTP URL of the agent, and `path`, the address of the connected object.
+
+Callbacks shared by both clients:
+
+| Callback             | When it runs                           |
+| -------------------- | -------------------------------------- |
+| `onStateUpdate`      | The synced state changes               |
+| `onStateUpdateError` | The agent refuses a state update       |
+| `onIdentity`         | The agent sends its identity           |
+| `onIdentityChange`   | A reconnect reaches a different object |
+| `onConnectionError`  | The client stops reconnecting          |
+
+`useAgent` also takes `onOpen`, `onClose`, `onError`, and `onMessage` for the underlying WebSocket events. On `AgentClient`, use `addEventListener()` instead.
+
+## On the Agent class
+
+An [`Agent`](/agents/agent-class/) works with the same clients. Its `@callable()` methods are what `call()` and `stub` reach, and it also sends MCP server updates to `useAgent({ onMcpUpdate })`. For chat UIs on `AIChatAgent` or Think, `useAgentChat` builds on `useAgent`. For more information, refer to [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/).

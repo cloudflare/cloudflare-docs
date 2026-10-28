@@ -1,0 +1,373 @@
+---
+title: WebSockets
+description: Accept hibernating WebSocket connections on a Durable Object, serve methods to useAgent clients, and tag, broadcast to, and restrict connections with the WebSockets capability.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Lifecycle](/agents/runtime/lifecycle/) does not accept WebSocket connections on its own. `WebSockets` from `agents/websockets` is the capability that does. It accepts upgrades, lets idle connections hibernate, and speaks the Agents protocol, so a plain Durable Object works with `useAgent` and `AgentClient` from the [client SDK](/agents/runtime/client/).
+
+## Install the capability
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { routeAgentRequest } from "agents/routing";
+import { WebSockets } from "agents/websockets";
+
+export class RoomAgent extends DurableObject<Env> {
+	readonly webSockets: WebSockets = new WebSockets({
+		handlers: {
+			onConnect: (connection) => {
+				connection.send(JSON.stringify({ type: "welcome", id: connection.id }));
+			},
+			onMessage: (connection, message) => {
+				for (const other of this.webSockets.getConnections()) {
+					if (other.id !== connection.id) other.send(message);
+				}
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`routeAgentRequest()` sends `/agents/room-agent/{name}` to the `RoomAgent` object called `{name}`. Authenticate the request before you route it. For more information, refer to [Route requests](/agents/runtime/lifecycle/routing/).
+
+`WebSockets` claims every upgrade, even without handlers. It is the only catch-all capability, so the Lifecycle offers each upgrade to the other capabilities first. Without `WebSockets`, the Lifecycle declines upgrades. Plain HTTP requests still reach your `onRequest()`.
+
+## Options
+
+| Option              | Description                                                                                                            |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `handlers`          | Connection handlers: `onConnect`, `onMessage`, `onClose`, and `onError`                                                |
+| `callables`         | An `RpcTarget` whose methods clients call with `agent.call()` and `agent.stub`                                         |
+| `state`             | A [`State`](/agents/runtime/capabilities/state/) capability to sync with clients                                       |
+| `getConnectionTags` | `(connection, ctx) => string[]`. Labels each connection when it is accepted                                            |
+| `readonly`          | `(connection, ctx) => boolean`. Decides whether a connection may change the synced state                               |
+| `protocol`          | `true` (default), `false`, or `(connection, ctx) => boolean`. Decides whether a connection gets Agents protocol frames |
+
+In every function, `ctx.request` is the upgrade request.
+
+## Handle connections
+
+The handlers run inside your object's invocation context, so [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) returns your object and the connection:
+
+| Handler                                       | When it runs                                                        |
+| --------------------------------------------- | ------------------------------------------------------------------- |
+| `onConnect(connection, ctx)`                  | After the upgrade is accepted. `ctx.request` is the upgrade request |
+| `onMessage(connection, message)`              | For each message that is not an Agents protocol frame               |
+| `onClose(connection, code, reason, wasClean)` | When the connection closes                                          |
+| `onError(connection, error)`                  | When the connection fails mid-session                               |
+
+A message wakes a hibernated object. The constructor and Lifecycle startup run again before `onMessage`. Keep anything you need after a wake in storage or on the connection.
+
+### Connections
+
+A `Connection` is a `WebSocket` with these extra fields:
+
+| Field             | Description                                                                                   |
+| ----------------- | --------------------------------------------------------------------------------------------- |
+| `id`              | The connection ID                                                                             |
+| `uri`             | The URL of the upgrade request                                                                |
+| `tags`            | The connection's tags. The ID is always the first tag                                         |
+| `state`           | A small value stored on this connection. It survives hibernation                              |
+| `setState(value)` | Replaces `state`. Pass a function to update it from the previous value, or `null` to clear it |
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+type Visitor = { joinedAt: number };
+
+export class LobbyAgent extends DurableObject<Env> {
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onConnect: (connection) => {
+				connection.setState({ joinedAt: Date.now() });
+			},
+			onClose: (connection) => {
+				const visitor = connection.state as Visitor | null;
+				console.log(
+					`${connection.id} stayed ${Date.now() - (visitor?.joinedAt ?? 0)} ms`,
+				);
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+`connection.setState()` is not synced to other clients. To share one value with every client, use the [`State`](/agents/runtime/capabilities/state/) capability.
+
+### Find connections
+
+| Method                 | Description                                                |
+| ---------------------- | ---------------------------------------------------------- |
+| `getConnections(tag?)` | Iterates over every open connection, or those with one tag |
+| `getConnection(id)`    | Returns one connection by ID, or `undefined`               |
+
+### Tag connections
+
+Pass `getConnectionTags` to label each connection when it is accepted. Then send to one group with `getConnections(tag)`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+export class ChatRoom extends DurableObject<Env> {
+	readonly webSockets: WebSockets = new WebSockets({
+		getConnectionTags: (_connection, ctx) => {
+			const room = new URL(ctx.request.url).searchParams.get("room");
+			return room ? [`room:${room}`] : [];
+		},
+		handlers: {
+			onMessage: (_connection, message) => {
+				for (const peer of this.webSockets.getConnections("room:general")) {
+					peer.send(message);
+				}
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+### Share connections with another handler set
+
+`use(handlers)` adds another set of handlers to the same connections, for example for a protocol of your own. Added handlers run before the configured ones. An added `onMessage` can return `true` to claim a message, so later handlers do not see it:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+export class EchoAgent extends DurableObject<Env> {
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onMessage: (connection, message) => connection.send(message),
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		// Runs before the configured handlers. Return true to claim a message.
+		this.webSockets.use({
+			onMessage: (connection, message) => {
+				if (message !== "ping") return false;
+				connection.send("pong");
+				return true;
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Serve methods to clients
+
+Pass an `RpcTarget` as `callables`. Its methods are what clients call with `agent.call("method")` or `agent.stub.method()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+class CounterMethods extends RpcTarget {
+	readonly storage: DurableObjectStorage;
+
+	constructor(storage: DurableObjectStorage) {
+		super();
+		this.storage = storage;
+	}
+
+	async increment(): Promise<number> {
+		const count = ((await this.storage.get<number>("count")) ?? 0) + 1;
+		await this.storage.put("count", count);
+		return count;
+	}
+}
+
+export class CounterAgent extends DurableObject<Env> {
+	readonly webSockets = new WebSockets({
+		callables: new CounterMethods(this.ctx.storage),
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+Every method declared on the target's class is callable. Instance properties are not, and the constructor throws if the class declares a method named `then`. Calls travel as JSON `rpc` frames and run inside your object's invocation context, with the calling connection in scope. Treat the arguments as untrusted input, because any connected client can call these methods.
+
+Call the method from React:
+
+```tsx
+import { useAgent } from "agents/react";
+
+export function Counter() {
+	const agent = useAgent({ agent: "CounterAgent", name: "demo" });
+	const increment = async () => {
+		const count = await agent.call<number>("increment");
+		console.log(count);
+	};
+	return <button onClick={increment}>+1</button>;
+}
+```
+
+## Sync state
+
+Pass a [`State`](/agents/runtime/capabilities/state/) capability as `state` to sync one value with `useAgent().state`. On connect, each client receives its identity frame and then the current value. When a client calls `setState()`, the change goes through the state's validator before it is stored. For an example, refer to [Sync state with clients](/agents/runtime/capabilities/state/#sync-state-with-clients).
+
+`WebSockets` does not broadcast changes on its own. Call `broadcastState(source)` from the state's `onChanged` hook. It sends the new value to every connection except `source`, which already has it.
+
+## Readonly connections
+
+A readonly connection can still receive state and call methods, but its `setState()` calls are refused. The client gets a `cf_agent_state_error` frame and its `onStateUpdateError` callback runs.
+
+Decide when the connection is accepted with the `readonly` option, or change it later with `setReadonly()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { State } from "agents/state";
+import { WebSockets } from "agents/websockets";
+
+type Board = { cards: string[] };
+
+export class BoardAgent extends DurableObject<Env> {
+	readonly board: State<Board> = new State<Board>({
+		initialState: { cards: [] },
+		onChanged: (_state, source) => this.webSockets.broadcastState(source),
+	});
+	readonly webSockets: WebSockets = new WebSockets({
+		state: this.board,
+		readonly: (_connection, ctx) =>
+			new URL(ctx.request.url).searchParams.get("mode") === "view",
+		protocol: (_connection, ctx) =>
+			new URL(ctx.request.url).searchParams.get("client") !== "sensor",
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.board)
+		.use(this.webSockets);
+
+	// Called over RPC from the Worker after it checks the user's role.
+	async promote(connectionId: string): Promise<boolean> {
+		await this.lifecycle.start();
+		const connection = this.webSockets.getConnection(connectionId);
+		if (!connection) return false;
+		this.webSockets.setReadonly(connection, false);
+		return this.webSockets.isReadonly(connection) === false;
+	}
+}
+```
+
+</TypeScriptExample>
+
+Do not trust a query parameter on its own to decide who can write. Verify the user in your Worker before you route the request.
+
+## Control the protocol per connection
+
+By default, every connection gets the Agents protocol frames: an identity frame on connect, then the current state when `state` is set, then state broadcasts. Clients such as `useAgent` wait for the identity frame before `ready` resolves.
+
+Set `protocol` to a function to turn the frames off for some connections, such as binary-only clients. A connection without the protocol still sends and receives your own messages and can call methods. In the previous example, connections with `?client=sensor` get no protocol frames.
+
+Set `protocol: false` to drive the connect sequence yourself. Then send the frames with `sendConnectFrames()`, and apply state frames from clients with `applyStateFrame()`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { State } from "agents/state";
+import { WebSockets } from "agents/websockets";
+
+type Presence = { online: number };
+
+export class PresenceAgent extends DurableObject<Env> {
+	readonly presence: State<Presence> = new State<Presence>({
+		initialState: { online: 0 },
+		onChanged: (_state, source) => this.webSockets.broadcastState(source),
+	});
+	readonly webSockets: WebSockets = new WebSockets({
+		state: this.presence,
+		protocol: false,
+		handlers: {
+			onConnect: (connection) => {
+				// Send identity and the current state when you choose.
+				this.webSockets.sendConnectFrames(connection);
+			},
+			onMessage: (connection, message) => {
+				if (typeof message !== "string") return;
+				const frame: unknown = JSON.parse(message);
+				if (this.webSockets.applyStateFrame(connection, frame)) return;
+				connection.send(message);
+			},
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.presence)
+		.use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+## Methods
+
+| Method                                     | Description                                                                                                  |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| `getConnections(tag?)`                     | Iterates over open connections, optionally by tag                                                            |
+| `getConnection(id)`                        | Returns one open connection, or `undefined`                                                                  |
+| `use(handlers)`                            | Adds a handler set that runs before the configured handlers                                                  |
+| `broadcastState(except?)`                  | Sends the current state to every protocol-enabled connection except `except`                                 |
+| `sendConnectFrames(connection, identity?)` | Sends the identity frame, then the current state when one is stored                                          |
+| `sendIdentity(connection, identity?)`      | Sends the identity frame alone. `identity` defaults to the object's name and its class name in kebab case    |
+| `sendState(connection)`                    | Sends the current state to one connection                                                                    |
+| `applyStateFrame(connection, frame)`       | Applies a client's state frame, refusing readonly connections. Returns `true` when `frame` was a state frame |
+| `isReadonly(connection)`                   | Returns whether the connection is readonly                                                                   |
+| `setReadonly(connection, readonly?)`       | Marks a connection readonly, or writable again with `false`                                                  |
+| `isProtocolEnabled(connection)`            | Returns whether protocol frames reach the connection                                                         |
+| `setProtocolEnabled(connection, enabled)`  | Turns protocol frames on or off for one connection                                                           |
+
+None of the send methods send anything to a connection without the protocol. When the object is destroyed, `WebSockets` closes every open connection with code `1001`.
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) installs `WebSockets` and calls its own `onConnect()`, `onMessage()`, `onClose()`, and `onError()` methods. Its `@callable()` methods are its client interface, instead of a `callables` target. For more information, refer to [WebSockets](/agents/agent-class/websockets/), [Callable methods](/agents/agent-class/callable-methods/), and [Readonly connections](/agents/agent-class/readonly-connections/).

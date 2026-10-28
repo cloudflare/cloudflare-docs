@@ -1,0 +1,176 @@
+---
+title: Capabilities
+description: Add features to a Durable Object one capability at a time with lifecycle.use(). Capabilities connect clients, schedule work, reach MCP servers, and run harnesses.
+pcx_content_type: concept
+sidebar:
+  order: 2
+  group:
+    hideIndex: false
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+An agent built with the Agents SDK is a Durable Object with a [Lifecycle](/agents/runtime/lifecycle/) and a set of capabilities. The Lifecycle owns startup, the alarm, and request dispatch. A capability is one feature, such as WebSocket connections, a scheduler, or an MCP client, that you attach to the Lifecycle with `lifecycle.use()`.
+
+Each capability owns its own tables in the Durable Object's SQLite database, exposes a focused API, and implements only the Lifecycle hooks it needs. A [harness](/agents/harnesses/) is a capability too. It runs a whole agent loop.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+import { createAI } from "agents/models/pi-ai";
+import { Scheduler } from "agents/schedules";
+import { State } from "agents/state";
+import { WebSockets } from "agents/websockets";
+
+type Settings = { model: string };
+
+export class MyAgent extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+	readonly mcp = new MCPClientManager("my-agent", "1.0.0");
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			dailySummary: async () => {
+				await this.harness.prompt("Summarize what happened today.");
+			},
+		},
+	});
+	readonly settings: State<Settings> = new State<Settings>({
+		initialState: { model: "@cf/zai-org/glm-5.3-flash" },
+		onChanged: (_state, source) => this.webSockets.broadcastState(source),
+	});
+	readonly webSockets: WebSockets = new WebSockets({ state: this.settings });
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.mcp)
+		.use(this.scheduler)
+		.use(this.settings)
+		.use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
+
+The capabilities share the object's storage and its one alarm, but they do not depend on each other. Pass what a capability needs, such as callbacks or another capability, to its constructor.
+
+## Available capabilities
+
+The following capabilities ship with the `agents` package:
+
+| Capability                                                     | Import              | Role               | Status | What it does                                                             |
+| -------------------------------------------------------------- | ------------------- | ------------------ | ------ | ------------------------------------------------------------------------ |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)       | `agents/websockets` | Connections        | Stable | Accepts hibernating WebSocket connections and serves methods to clients  |
+| [`State`](/agents/runtime/capabilities/state/)                 | `agents/state`      | Connections        | Stable | Stores one validated value and syncs it to clients through `WebSockets`  |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)         | `agents/schedules`  | Durable work       | Stable | Runs callbacks after a delay, at a date, on a cron, or on an interval    |
+| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client/) | `agents/mcp/client` | External resources | Stable | Connects to MCP servers and keeps the connections across restarts        |
+| [`PiHarness`](/agents/harnesses/pi/)                           | `agents/harness/pi` | Harnesses          | Beta   | Runs the Pi agent loop, with tools, retries, and recovery after eviction |
+
+### Experimental capabilities
+
+The `agents` package also ships these experimental capabilities. Their APIs may change between releases, so they have no reference pages:
+
+- `Queue` (`agents/queue`, experimental): runs background callbacks one at a time, in push order.
+- `RoutedAgents` (`agents/routing`, experimental): keeps a catalog of independent agents and forwards requests to them.
+- `Browser` (`agents/browser`, experimental): keeps one persistent Browser Run session open for the agent.
+- `Sessions` (`agents/sessions`, experimental): stores conversation history as a tree of messages.
+- `Streams` (`agents/streams`, experimental): stores incremental output that clients can replay and follow.
+- `Tasks` (`agents/tasks`, experimental): runs replayable background work with journaled steps.
+
+`Sessions`, `Streams`, and `Tasks` are the building blocks for writing your own harness.
+
+To connect a browser or another runtime to an agent that installs `WebSockets`, use the [client SDK](/agents/runtime/client/). To write a capability of your own, refer to [Build a capability](/agents/runtime/lifecycle/build-a-capability/).
+
+## Capability types
+
+Capabilities differ in two ways: how they claim incoming traffic, and what role they play.
+
+### How a capability claims traffic
+
+The Lifecycle offers each request and WebSocket upgrade to the installed capabilities before your own `onRequest()` runs. A capability's `claims` property decides what it answers:
+
+| `claims`                | Behavior                                                                                                               | Example                                            |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `"selective"` (default) | Answers only the requests it recognizes, and passes on everything else                                                 | `MCPClientManager` answers its OAuth callback URLs |
+| `"catch-all"`           | Answers everything offered to the hooks it implements. The Lifecycle offers traffic to it after every other capability | `WebSockets` accepts every WebSocket upgrade       |
+
+The Lifecycle refuses a second catch-all capability for the same hook. `WebSockets` is the only catch-all capability in the SDK. It handles upgrades only, so plain HTTP requests still reach `onRequest()`.
+
+### Roles
+
+| Role                   | What the capability does                                                                               | Capabilities                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------ |
+| **Connections**        | Accepts clients and keeps them in sync with the object                                                 | `WebSockets`, `State`                |
+| **Durable work**       | Stores future work as Lifecycle jobs, so every capability shares one alarm. The work survives eviction | `Scheduler`                          |
+| **External resources** | Holds a connection to something outside the Durable Object and stores enough to reconnect after a wake | `MCPClientManager`                   |
+| **Harnesses**          | Runs a whole agent loop. It stores the transcript and queues jobs to resume a turn after eviction      | [`PiHarness`](/agents/harnesses/pi/) |
+
+## How capabilities run
+
+- **Install before startup.** Call `use()` in a field initializer or in the constructor. The Lifecycle starts on the first request, alarm, or WebSocket message, and `use()` throws after that.
+- **Install each capability once.** Each capability has a stable ID, such as `"scheduler"` or `"mcp"`. The ID namespaces its jobs and events, and `use()` throws on a duplicate.
+- **Declare fields before the Lifecycle.** Class fields initialize in order. Declare each capability field before the `lifecycle` field that installs it.
+- **Startup order.** At startup, the Lifecycle runs each capability's `onStart()` in install order, with a catch-all capability last. Then it runs your own `onStart()`.
+- **Host context.** Capability hooks run without an ambient agent, so [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) returns nothing there. Callbacks you register, such as `Scheduler` callbacks and `WebSockets` handlers, run inside your object's context, where `getCurrentAgent()` returns your object.
+- **RPC.** Native Durable Object RPC bypasses `fetch()`, so it does not start the Lifecycle. Call `await this.lifecycle.start()` at the top of an RPC method that uses a capability.
+
+For the full contract between the Lifecycle and a capability, refer to the [Capability API reference](/agents/runtime/lifecycle/capability-api/).
+
+## On the Agent class
+
+The [`Agent` class](/agents/agent-class/) is a preset: a Durable Object with the Lifecycle and seven capabilities already installed, including `Scheduler`, `State`, `WebSockets`, and `MCPClientManager`. Its methods, such as `this.schedule()`, `this.setState()`, and `this.addMcpServer()`, call those capabilities.
+
+To add another capability to an `Agent`, such as a harness, call `this.lifecycle.use()` in its constructor. Do not install a second copy of a capability the `Agent` already has, because `use()` throws on a duplicate ID.
+
+<TypeScriptExample>
+
+```ts
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { Agent } from "agents";
+import { PiHarness } from "agents/harness/pi";
+import { createAI } from "agents/models/pi-ai";
+
+export class MyAgent extends Agent<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: createRegistry(), onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+}
+```
+
+</TypeScriptExample>
