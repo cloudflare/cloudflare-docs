@@ -1,0 +1,37 @@
+src/content/docs/workers/observability/configuration.mdx
+  s_ad7fef383a5af1::t_08c5b57401fb34 1-151
+src/content/docs/workers/observability/index.mdx
+  s_ad7fef383a5af1::t_95cc02c6d65820 16-17
+src/content/docs/workers/observability/issues/index.mdx
+  s_ad7fef383a5af1::t_f19b898d749ef0 42
+src/content/docs/workers/observability/logs/logpush.mdx
+  s_ad7fef383a5af1::t_d14cc5146a1df2 86-87
+src/content/docs/workers/observability/logs/tail-workers.mdx
+  s_ad7fef383a5af1::t_48a8667574a016 13,117-140
+src/content/docs/workers/observability/logs/workers-logs.mdx
+  s_ad7fef383a5af1::t_51ae51fc4d3275 33-34
+src/content/docs/workers/observability/opentelemetry-export.mdx
+  s_ad7fef383a5af1::t_b70d7404fdf3d3 61-62
+src/content/docs/workers/observability/traces/index.mdx
+  s_ad7fef383a5af1::t_4f79a0db4566f6 65-66
+src/content/docs/workers/versions-and-deployments/index.mdx
+  s_ad7fef383a5af1::t_a3bf746ec08c1b 14,20-22
+src/content/docs/workers/wrangler/configuration.mdx
+  s_ad7fef383a5af1::t_b7ae8d02e92407 401,404,406-412,414
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cf12c3bfd31064a28b08c5663f04fbf9762fa6ce",
+  "prompts": {},
+  "sessions": {
+    "s_ad7fef383a5af1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1800b-cd85-7cc0-99ef-97659ef79bff",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
