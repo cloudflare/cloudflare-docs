@@ -21,7 +21,7 @@ The `413 Payload Too Large` status code often occurs when clients attempt to upl
 
 ### Cloudflare-specific information
 
-The upload limit for the Cloudflare API depends on your plan. If you exceed this limit, your API call will receive a `413 Request Entity Too Large` error.
+For incoming requests to a domain proxied through Cloudflare, the upload limit depends on the domain's plan. Requests exceeding this limit receive a `413 Request Entity Too Large` error.
 
 |  | Free | Pro | Business | Enterprise |
 | - | - | - | - | - |
@@ -30,4 +30,15 @@ The upload limit for the Cloudflare API depends on your plan. If you exceed this
 
 Keep in mind, customers can adjust the **Maximum Upload Size** from the zone's **Network** page. Enterprise customers can self-serve any value up to 5 GB; uploads larger than 5 GB require additional configuration — contact your account team. Setting the limit below the size of an incoming request causes a `413`.
 
-If you require a larger upload, break up requests into smaller chunks, change your DNS record to [DNS-only](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/manage/change-plan/).
+For uploads to a proxied domain, use smaller, separate requests if your application supports them, change your DNS record to [DNS-only](/dns/proxy-status/#dns-only-records), or [upgrade your plan](/billing/manage/change-plan/).
+
+### Outbound uploads from Containers and Durable Objects
+
+Cloudflare limits each HTTP request body sent to an external service by a Durable Object or through a Container outbound handler to **100 MiB by default**. Increasing **Maximum Upload Size** for your application's domain does not increase this limit.
+
+Check which request returned `413`: the incoming upload to your application or the outbound upload to another service. The destination service can also reject oversized requests.
+
+For the applicable limits, upload guidance, and how to request an increase, refer to:
+
+- [Containers outbound HTTP request body size](/containers/platform/limits/#outbound-http-request-body-size).
+- [Durable Objects outbound HTTP request body size](/durable-objects/platform/limits/#outbound-http-request-body-size).

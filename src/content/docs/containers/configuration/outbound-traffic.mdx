@@ -414,6 +414,16 @@ this.ctx.container.interceptOutboundHttps("*", worker);
 
 The `Container` class calls these methods automatically when you use the functions shown above. You can also call them directly for cases the class does not cover.
 
+## Troubleshoot outbound uploads
+
+An HTTP upload forwarded through an outbound handler can fail with `413 Payload Too Large` when its request body exceeds the [100 MiB default outbound limit](/containers/platform/limits/#outbound-http-request-body-size). Increasing **Maximum Upload Size** for your application's custom domain does not increase this limit.
+
+Identify whether the failure occurs on the incoming request to your application or the outbound request to the destination. Check the destination's limits as well. Compare the complete request body size with each applicable limit.
+
+If the destination supports multipart or resumable uploads, send smaller parts in separate requests. If you need a larger individual request, [contact Cloudflare with the upload details](/containers/platform/limits/#outbound-http-request-body-size).
+
+The error `Can't read from request stream after responding with an exception.` can accompany an upload failure. It can also occur after unrelated exceptions. Check earlier errors and the response status to identify the cause.
+
 ## Local development
 
 `wrangler dev` supports outbound interception. A sidecar process is spawned inside the container's network namespace. It applies `TPROXY` rules to route matching traffic to the local Workerd instance, mirroring production behavior.

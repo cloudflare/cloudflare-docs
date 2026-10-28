@@ -1,0 +1,23 @@
+---
+{}
+---
+
+| Limit | Default |
+| --- | --- |
+| Outbound HTTP request body size | 100 MiB (104,857,600 bytes) |
+
+This limit applies to each request body, including encoding and multipart form fields. It does not limit the total size of a file uploaded through separate requests. The destination service can impose additional limits.
+
+The **Maximum Upload Size** setting for your application's custom domain does not control this limit. A larger upload accepted by your domain can still be rejected when your Container or Durable Object sends it to another service.
+
+For larger uploads, use the destination's multipart or resumable upload API. Keep each request body below the limit. If you already use multipart uploads, reduce the part size. Streaming, HTTP chunked transfer encoding, and `multipart/form-data` do not bypass the limit on a single request body.
+
+To request a higher outbound limit, contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/). Specify that the request concerns outbound HTTP uploads from Containers or Durable Objects. Increases are subject to review.
+
+Include the following information:
+
+- The account ID and Worker name for the affected workload.
+- The Container instance ID or Durable Object namespace and ID.
+- The destination hostname.
+- The failing request body size in bytes and the requested limit.
+- The failure timestamp, relevant error logs, and a minimal reproduction.
