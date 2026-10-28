@@ -12,7 +12,7 @@ head:
     content: Data residency controls and product compatibility
 ---
 
-import { DataResidencyCatalog } from "~/components";
+import { Aside, DataResidencyCatalog } from "~/components";
 
 Use this reference to check whether the products in your architecture can keep each kind of data in a region, and what you must configure for that to hold. Each control covers a different part of your data. A product can be supported by one control and outside the scope of another.
 
@@ -25,7 +25,11 @@ Use this reference to check whether the products in your architecture can keep e
 | [Customer Metadata Boundary](/data-localization/metadata-boundary/) | Where logs and analytics about your traffic ("Customer Logs") are stored. Regions: EU or US.                        | Per account.                                      | Content you store. Coverage varies by dataset.                                                              |
 | [Geo Key Manager](/data-localization/geo-key-manager/)              | Which data centers can use your TLS private keys to decrypt traffic.                                                | Per certificate.                                  | Keys for certificates Cloudflare manages for you, such as Cloudflare for SaaS custom hostname certificates. |
 
+<Aside type="note">
+
 Storage jurisdictions are a feature of each storage product, not part of the Data Localization Suite add-on. They appear here because they are the only control that constrains stored content.
+
+</Aside>
 
 Each control has its own list of regions. For example, a processing region in Japan does not place logs or stored content in Japan. Refer to [Region support](/data-localization/region-support/).
 
