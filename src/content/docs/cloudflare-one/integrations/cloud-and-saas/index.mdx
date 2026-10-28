@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { DashButton, DirectoryListing, Steps } from "~/components";
+import { DashButton, DirectoryListing, Steps, TabItem, Tabs } from "~/components";
 
 You can integrate cloud environments and SaaS applications with [Cloudflare CASB](/cloudflare-one/cloud-and-saas-findings/). Once you have added an integration, you can [view and manage findings](/cloudflare-one/cloud-and-saas-findings/manage-findings/).
 
@@ -20,7 +20,7 @@ The workflow pages for managing findings and webhooks appear first, followed by 
 
 ## Create an integration
 
-### Create an integration manually
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Steps>
 
@@ -35,22 +35,31 @@ The workflow pages for managing findings and webhooks appear first, followed by 
 
 </Steps>
 
-### Create an integration with Terraform
+</TabItem> <TabItem label="Terraform (v5)">
 
-Terraform supports only integrations that do not use OAuth. Use version 5 of the Cloudflare Terraform provider. Version 4 is not supported.
+Terraform supports only integrations that do not use OAuth. The `cloudflare_zero_trust_casb_integration` resource requires version 5.27.0 or later of the [Cloudflare Terraform provider](/terraform/). Version 4 is not supported.
 
-Use the [`cloudflare_zero_trust_casb_integration`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_casb_integration) resource to create a CASB integration:
+<Steps>
 
-```tf
-resource "cloudflare_zero_trust_casb_integration" "google_cloud_platform" {
-  account_id = var.cloudflare_account_id
-  name       = "Google Cloud Platform"
-  paused     = false
+1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token):
+   - `Zero Trust Write`
 
-  google_cloud_platform = {
-    google_cloud_platform_service_account = {
-      service_account_key_json = file("service-account-key.json")
-    }
-  }
-}
-```
+2. Create an integration using the [`cloudflare_zero_trust_casb_integration`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_casb_integration) resource. The following example creates a Google Cloud Platform integration:
+
+   ```tf
+   resource "cloudflare_zero_trust_casb_integration" "google_cloud_platform" {
+     account_id = var.cloudflare_account_id
+     name       = "Google Cloud Platform"
+     paused     = false
+
+     google_cloud_platform = {
+       google_cloud_platform_service_account = {
+         service_account_key_json = file("service-account-key.json")
+       }
+     }
+   }
+   ```
+
+</Steps>
+
+</TabItem> </Tabs>

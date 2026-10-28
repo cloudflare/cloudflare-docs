@@ -1,12 +1,12 @@
 ---
 title: Create CASB integrations with Terraform
-description: Cloudflare CASB now supports creating non-OAuth integrations with version 5 of the Cloudflare Terraform provider.
+description: Cloudflare CASB now supports creating non-OAuth integrations with version 5.27.0 or later of the Cloudflare Terraform provider.
 products:
   - casb
 date: 2026-10-07
 ---
 
-You can now create Cloudflare CASB integrations using the Cloudflare Terraform provider. This lets you manage supported integrations alongside your other infrastructure-as-code.
+You can now create Cloudflare CASB integrations using the [Cloudflare Terraform provider](/terraform/). This lets you manage supported integrations alongside your other infrastructure-as-code.
 
 The following example creates a Google Cloud Platform integration:
 
@@ -24,6 +24,6 @@ resource "cloudflare_zero_trust_casb_integration" "google_cloud_platform" {
 }
 ```
 
-Version 4 of the provider and integrations that use OAuth are not supported.
+The `cloudflare_zero_trust_casb_integration` resource requires provider version 5.27.0 or later. Version 4 of the provider and integrations that use OAuth are not supported.
 
 For setup instructions and integration guides, refer to [Cloud and SaaS integrations](/cloudflare-one/integrations/cloud-and-saas/).
