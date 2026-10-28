@@ -1,0 +1,653 @@
+{
+	"model_id": "openai/gpt-6.1-terra",
+	"provider_id": "openai",
+	"name": "GPT-6.1 Terra",
+	"description": "GPT-6.1 Terra is OpenAI's fast, efficient model for visual reasoning, precise computer use, and clear, natural writing. Use it to match product photos to catalog entries, interpret technical drawings, act on application screens, or draft and revise text. Tool calling requires the Responses API.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning",
+		"Multimodal",
+		"Computer Use",
+		"Writing"
+	],
+	"context_length": 1050000,
+	"max_output_tokens": 128000,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Short-context input (per 1M)": 1,
+		"Short-context cached input (per 1M)": 0.05,
+		"Short-context cache write (per 1M)": 1.25,
+		"Short-context output (per 1M)": 5,
+		"Long-context input (per 1M)": 2,
+		"Long-context cached input (per 1M)": 0.1,
+		"Long-context cache write (per 1M)": 2.5,
+		"Long-context output (per 1M)": 7.5
+	},
+	"examples": [
+		{
+			"name": "Catalog Matching",
+			"description": "Use reasoning to compare a product description with catalog entries",
+			"input": {
+				"input": "Match this product to the best catalog entry: a blue insulated stainless-steel bottle with a screw cap and a 750 ml capacity. Catalog: A: blue plastic sports bottle, 750 ml; B: blue insulated stainless-steel bottle, 750 ml; C: silver insulated stainless-steel bottle, 500 ml. Return the entry letter and one sentence explaining the match.",
+				"max_output_tokens": 512,
+				"reasoning": {
+					"effort": "high"
+				}
+			},
+			"output": {
+				"text": "**B** \u2014 it matches the blue color, insulated stainless-steel construction, and 750 ml capacity."
+			},
+			"raw_response": {
+				"id": "resp_0acdd97eb3c98a2b006adf9b32809487d18cea64c95e19ba89",
+				"object": "response",
+				"created_at": 1793039154,
+				"status": "completed",
+				"access_programs": {
+					"cyber": "standard"
+				},
+				"background": false,
+				"billing": {
+					"payer": "developer"
+				},
+				"completed_at": 1793039155,
+				"error": null,
+				"frequency_penalty": 0,
+				"incomplete_details": null,
+				"instructions": null,
+				"max_output_tokens": 512,
+				"max_tool_calls": null,
+				"model": "gpt-6.1-terra",
+				"moderation": null,
+				"output": [
+					{
+						"id": "msg_0acdd97eb3c98a2b006adf9b331a5087d1ac4b592c306e418f",
+						"type": "message",
+						"status": "completed",
+						"content": [
+							{
+								"type": "output_text",
+								"annotations": [],
+								"logprobs": [],
+								"text": "**B** \u2014 it matches the blue color, insulated stainless-steel construction, and 750 ml capacity."
+							}
+						],
+						"phase": "final_answer",
+						"role": "assistant"
+					}
+				],
+				"parallel_tool_calls": true,
+				"presence_penalty": 0,
+				"previous_response_id": null,
+				"prompt_cache_key": null,
+				"prompt_cache_retention": "24h",
+				"reasoning": {
+					"context": "all_turns",
+					"effort": "high",
+					"mode": "standard",
+					"summary": null
+				},
+				"safety_identifier": null,
+				"service_tier": "default",
+				"store": true,
+				"temperature": 1,
+				"text": {
+					"format": {
+						"type": "text"
+					},
+					"verbosity": "medium"
+				},
+				"tool_choice": "auto",
+				"tool_usage": {
+					"image_gen": {
+						"input_tokens": 0,
+						"input_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"output_tokens": 0,
+						"output_tokens_details": {
+							"image_tokens": 0,
+							"text_tokens": 0
+						},
+						"total_tokens": 0
+					},
+					"web_search": {
+						"num_requests": 0
+					}
+				},
+				"tools": [],
+				"top_logprobs": 0,
+				"top_p": 0.98,
+				"truncation": "disabled",
+				"usage": {
+					"input_tokens": 83,
+					"input_tokens_details": {
+						"cache_write_tokens": 0,
+						"cached_tokens": 0
+					},
+					"output_tokens": 26,
+					"output_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"total_tokens": 109
+				},
+				"user": null,
+				"metadata": {}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.1-terra',\n  {\n    input:\n      'Match this product to the best catalog entry: a blue insulated stainless-steel bottle with a screw cap and a 750 ml capacity. Catalog: A: blue plastic sports bottle, 750 ml; B: blue insulated stainless-steel bottle, 750 ml; C: silver insulated stainless-steel bottle, 500 ml. Return the entry letter and one sentence explaining the match.',\n    max_output_tokens: 512,\n    reasoning: { effort: 'high' },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/responses \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.1-terra\",\n  \"input\": \"Match this product to the best catalog entry: a blue insulated stainless-steel bottle with a screw cap and a 750 ml capacity. Catalog: A: blue plastic sports bottle, 750 ml; B: blue insulated stainless-steel bottle, 750 ml; C: silver insulated stainless-steel bottle, 500 ml. Return the entry letter and one sentence explaining the match.\",\n  \"max_output_tokens\": 512,\n  \"reasoning\": {\n    \"effort\": \"high\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Clear Writing",
+			"description": "Revise customer-facing text through Chat Completions",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Rewrite this delivery update in a clear, friendly tone, keeping it under 40 words: Your shipment has experienced an unforeseen logistical delay. We anticipate dispatch within two business days and will provide tracking information upon fulfillment."
+					}
+				],
+				"max_completion_tokens": 256,
+				"reasoning_effort": "none"
+			},
+			"output": {
+				"text": "Your shipment is slightly delayed, but we expect to dispatch it within two business days. We\u2019ll send you tracking information as soon as it\u2019s on its way."
+			},
+			"raw_response": {
+				"id": "resp_0c11f8df88dbcabd006adfa1295b2087d1bc7cabf9e0226961",
+				"object": "chat.completion",
+				"created": 1793040682,
+				"model": "gpt-6.1-terra",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "Your shipment is slightly delayed, but we expect to dispatch it within two business days. We\u2019ll send you tracking information as soon as it\u2019s on its way.",
+							"refusal": null
+						},
+						"finish_reason": "stop",
+						"logprobs": null
+					}
+				],
+				"usage": {
+					"prompt_tokens": 48,
+					"completion_tokens": 36,
+					"total_tokens": 84,
+					"completion_tokens_details": {
+						"reasoning_tokens": 0
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'openai/gpt-6.1-terra',\n  {\n    messages: [\n      {\n        role: 'user',\n        content:\n          'Rewrite this delivery update in a clear, friendly tone, keeping it under 40 words: Your shipment has experienced an unforeseen logistical delay. We anticipate dispatch within two business days and will provide tracking information upon fulfillment.',\n      },\n    ],\n    max_completion_tokens: 256,\n    reasoning_effort: 'none',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"openai/gpt-6.1-terra\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Rewrite this delivery update in a clear, friendly tone, keeping it under 40 words: Your shipment has experienced an unforeseen logistical delay. We anticipate dispatch within two business days and will provide tracking information upon fulfillment.\"\n    }\n  ],\n  \"max_completion_tokens\": 256,\n  \"reasoning_effort\": \"none\"\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+	"terms": "https://openai.com/policies/",
+	"cover_image_url": null,
+	"metadata": {
+		"API": "Responses, Chat Completions",
+		"Architecture": "Transformer",
+		"Input modalities": "Text, image",
+		"Knowledge cutoff": "June 1, 2026",
+		"Reasoning effort": "none, low, medium (default), high, xhigh, max",
+		"Tool calling": "Responses API only"
+	},
+	"request_formats": [
+		"responses",
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"long_context_threshold_tokens": 272000,
+				"short_context_input_tokens": 1,
+				"short_context_input_cached_tokens": 0.05,
+				"short_context_input_cache_creation_tokens": 1.25,
+				"short_context_output_tokens": 5,
+				"long_context_input_tokens": 2,
+				"long_context_input_cached_tokens": 0.1,
+				"long_context_input_cache_creation_tokens": 2.5,
+				"long_context_output_tokens": 7.5
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-27 19:52:54",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high",
+										"xhigh",
+										"max"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}
