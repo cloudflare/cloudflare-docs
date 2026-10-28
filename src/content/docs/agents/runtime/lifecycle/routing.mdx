@@ -1,0 +1,213 @@
+---
+title: Routing
+description: Route HTTP and WebSocket requests to a named Durable Object with routeAgentRequest(), and learn how the Lifecycle offers each request to its capabilities.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+Routing happens in two places. In your Worker, `routeAgentRequest()` maps a URL to a named Durable Object. Inside the Durable Object, the [Lifecycle](/agents/runtime/lifecycle/) offers the request to each installed capability, then to your `onRequest()` hook.
+
+```txt
+routeAgentRequest(request, env)
+└─ stub.fetch(request)                     Worker: pick the object by URL
+   └─ Lifecycle fetch                      Durable Object
+      ├─ startup (cold objects only)
+      ├─ selective capabilities, in registration order
+      ├─ catch-all capability, if any
+      │  └─ the first Response handles the request
+      └─ host onRequest()
+```
+
+## Route requests from a Worker
+
+`routeAgentRequest()` works with any Durable Object that installs the Lifecycle. Import it from `agents/routing` or from `agents`:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents/routing";
+
+export { MyAgent } from "./my-agent";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The default URL shape is `/agents/:binding/:name`:
+
+- `:binding` is the Durable Object binding name from `env`, in kebab case. The binding `MyAgent` becomes `my-agent`, and `MY_AGENT` becomes `my-agent`.
+- `:name` is the object's name. The router calls `idFromName(name)`, so the object can read it as `lifecycle.name`.
+
+A request to `/agents/my-agent/alice/settings` reaches the `MyAgent` object named `alice`. The full URL, including `/settings`, reaches `onRequest()`.
+
+`routeAgentRequest()` returns:
+
+- `null` when the path does not match the prefix, so your Worker can handle other routes.
+- A `400` response when the path matches the prefix but no Durable Object binding matches `:binding`.
+- The object's response otherwise.
+
+`routeAgentRequest()` handles both HTTP requests and WebSocket upgrades.
+
+## Routing options
+
+Pass options as the third argument. Their type is `AgentOptions`, exported from `agents/routing`:
+
+| Option            | Type                                                | Description                                                                                                                     |
+| ----------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `prefix`          | `string`                                            | URL prefix before the binding and name. Defaults to `agents`. Can contain several segments, such as `api/agents`.               |
+| `props`           | `object`                                            | JSON-serializable values passed to `onStart(props)` when the request starts the object.                                         |
+| `cors`            | `boolean \| HeadersInit`                           | `true` adds permissive CORS headers. A headers object sets your own. Matched `OPTIONS` preflight requests are answered for you. |
+| `jurisdiction`    | `DurableObjectJurisdiction`                         | Create the object in a [jurisdiction](/durable-objects/reference/data-location/), such as `"eu"`.                               |
+| `locationHint`    | `DurableObjectLocationHint`                         | Hint where to create the object, such as `"enam"`.                                                                              |
+| `routingRetry`    | `false \| RoutingRetryOptions`                     | Retry transient Durable Object errors. Enabled by default.                                                                      |
+| `onBeforeConnect` | `(request, route) => Response \| Request \| void` | Runs before a WebSocket upgrade is forwarded.                                                                                   |
+| `onBeforeRequest` | `(request, route) => Response \| Request \| void` | Runs before an HTTP request is forwarded.                                                                                       |
+
+CORS headers are not added to WebSocket upgrade responses.
+
+### Authenticate before the object
+
+`onBeforeConnect` and `onBeforeRequest` run in the Worker, before the request reaches the Durable Object. Return a `Response` to reject the request, return a new `Request` to replace it, or return nothing to forward it unchanged. The `route` argument holds the matched `className` (the binding name) and `name`:
+
+<TypeScriptExample>
+
+```ts
+import { routeAgentRequest } from "agents/routing";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env, {
+				cors: true,
+				onBeforeConnect: (req, route) => {
+					const token = new URL(req.url).searchParams.get("token");
+					if (!token) return new Response("Unauthorized", { status: 401 });
+				},
+				onBeforeRequest: (req, route) => {
+					if (!req.headers.get("Authorization")) {
+						return new Response("Unauthorized", { status: 401 });
+					}
+				},
+			})) ?? new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+A response from `onBeforeRequest` still gets the CORS headers.
+
+### Pass props to startup
+
+`props` reach the capabilities' `onStart()` hooks and the host `onStart(props)`. They only apply when the request starts a cold object. A warm object has already run startup and ignores them.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { routeAgentRequest } from "agents/routing";
+
+type Props = { userId: string };
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install<Env, Props>(this);
+
+	onStart(props?: Props): void {
+		console.log(`Started for ${props?.userId}`);
+	}
+}
+
+async function getUserId(request: Request): Promise<string> {
+	return request.headers.get("x-user-id") ?? "anonymous";
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const userId = await getUserId(request);
+		return (
+			(await routeAgentRequest(request, env, {
+				props: { userId },
+				locationHint: "enam",
+				routingRetry: { maxAttempts: 5 },
+			})) ?? new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+### Retry transient errors
+
+`routingRetry` retries Durable Object errors that the platform marks as retryable and not overloaded. It uses exponential backoff with jitter. Its type is `RoutingRetryOptions`:
+
+| Field         | Default | Description                                                    |
+| ------------- | ------- | -------------------------------------------------------------- |
+| `maxAttempts` | `3`     | Attempts, including the first                                  |
+| `baseDelayMs` | `100`   | Base delay for the backoff                                     |
+| `maxDelayMs`  | `800`   | Maximum delay between attempts                                 |
+| `onRetry`     | —       | Called before each retry with the error and the attempt number |
+
+Pass `routingRetry: false` to disable retries.
+
+## Call a named object directly
+
+You do not need `routeAgentRequest()` to reach an object. Get a stub by name and call `fetch()` or an RPC method:
+
+<TypeScriptExample>
+
+```ts
+const stub = env.MyAgent.getByName("alice");
+const response = await stub.fetch(request);
+```
+
+</TypeScriptExample>
+
+`fetch()` passes through the Lifecycle and starts the object. RPC methods do not, so call `await this.lifecycle.start()` at the top of an RPC method that needs started capabilities. For more information, refer to [Call your agent over RPC](/agents/runtime/lifecycle/#call-your-agent-over-rpc).
+
+`getAgentByName()` from `agents` also returns a started stub, but it only works with the `Agent` class. For a plain Durable Object, use `getByName()`.
+
+## Capability order
+
+Inside the object, the Lifecycle offers each HTTP request to the capabilities that implement `onRequest()`, and each WebSocket upgrade to the capabilities that implement `onWebSocketUpgrade()`. The first capability that returns a `Response` handles it. A capability that returns `undefined` passes it on. There is no `next()` callback, so a capability cannot wrap or observe a later response.
+
+A capability declares how it claims traffic with `claims`:
+
+| Value                   | Behavior                                                                                                                        |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `"selective"` (default) | Handles only the routes it recognizes, and returns `undefined` for the rest. Runs in registration order.                        |
+| `"catch-all"`           | Handles everything offered to the hooks it implements. Always runs after every selective capability, whenever it was installed. |
+
+Only one catch-all can exist for each hook. `use()` throws when you install a second catch-all for `onRequest()` or for `onWebSocketUpgrade()`, because it could never be reached. A catch-all for HTTP and a catch-all for upgrades can coexist.
+
+`WebSockets` is a catch-all for upgrades and does not implement `onRequest()`. That means selective capabilities can claim their own upgrade routes first, and HTTP requests still reach the host's `onRequest()`.
+
+### What reaches the host
+
+| Event                              | Handled by                                                                                          |
+| ---------------------------------- | --------------------------------------------------------------------------------------------------- |
+| HTTP request                       | The first capability that returns a `Response`, otherwise the host's `onRequest()`, otherwise `404` |
+| WebSocket upgrade                  | The first capability that returns a `Response`, otherwise `404`                                     |
+| WebSocket message, close, or error | The first capability whose hook returns `true`, otherwise ignored                                   |
+| Alarm                              | Due jobs, then the host's `onAlarm()`                                                               |
+
+The host never receives WebSocket events directly. To accept WebSocket clients, install the [`WebSockets` capability](/agents/agent-class/websockets/), or write a capability that owns its sockets. For more information, refer to [Own WebSocket connections](/agents/runtime/lifecycle/capability-api/#own-websocket-connections).
+
+## On the `Agent` class
+
+`routeAgentRequest()` works the same way for the `Agent` class. The `Agent` class adds `getAgentByName()`, nested `/sub/` routes for sub-agents, and client-side routing options. For more information, refer to [Routing on the Agent class](/agents/agent-class/routing/).
