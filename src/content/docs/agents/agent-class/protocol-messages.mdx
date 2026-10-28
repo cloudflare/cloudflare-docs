@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
+This page covers protocol messages on the [`Agent` class](/agents/agent-class/). The `Agent` class sends identity and state frames through the [`WebSockets`](/agents/runtime/capabilities/websockets/) and [`State`](/agents/runtime/capabilities/state/) capabilities, which also run on a plain Durable Object with the `protocol` option. The MCP server list frame is specific to the `Agent` class.
+
 When a WebSocket client connects to an Agent, the framework automatically sends several JSON text frames — identity, state, and MCP server lists. You can suppress these per-connection protocol messages for clients that cannot handle them.
 
 ## Overview

@@ -20,6 +20,8 @@ import {
 	PackageManagers,
 } from "~/components";
 
+This page shows how to call models from an agent built on the [`Agent` class](/agents/agent-class/). For the model providers in the Agents SDK, which work with any harness or Durable Object, refer to [Models](/agents/models/).
+
 Agents can call AI models from any provider. [Workers AI](/workers-ai/) is built in and requires no API keys. You can also use [OpenAI](https://platform.openai.com/docs/quickstart?language=javascript), [Anthropic](https://docs.anthropic.com/en/api/client-sdks#typescript), [Google Gemini](https://ai.google.dev/gemini-api/docs/openai), or any service that exposes an OpenAI-compatible API.
 
 The [AI SDK](https://ai-sdk.dev/docs/introduction) provides a unified interface across all of these providers, and is what `AIChatAgent` and the starter template use under the hood. You can also use the model routing features in [AI Gateway](/ai-gateway/) to route across providers, eval responses, and manage rate limits.

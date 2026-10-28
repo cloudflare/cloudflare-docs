@@ -10,13 +10,13 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
-Agents as tools let one chat agent dispatch another chat-capable sub-agent as part of its work. The child is a real sub-agent with its own Durable Object storage, messages, tools, resumable stream, and drill-in URL. The parent keeps a small run registry so clients can render the child timeline, replay it after refresh, and clean it up later.
+Agents as tools are an [`Agent` class](/agents/agent-class/) feature. They let one chat agent dispatch another chat-capable agent as part of its work. The child is a real [dynamic agent](/agents/agent-class/sub-agents/) with its own Durable Object storage, messages, tools, resumable stream, and drill-in URL. The parent keeps a small run registry so clients can render the child timeline, replay it after refresh, and clean it up later.
 
 Agents as tools support `@cloudflare/think` agents and `AIChatAgent` subclasses. `AIChatAgent` children run headlessly through `saveMessages()`, so they should use server-side tools. Browser-provided client tools are not available during an agent-tool turn unless you model that interaction as server-side state or a separate parent-mediated workflow.
 
-## Agents as tools vs sub-agent RPC
+## Agents as tools vs dynamic agent RPC
 
-Use `subAgent(...).chat()` when parent code needs direct streaming RPC to a specific child and your code owns forwarding, cancellation, and replay policy.
+Use `(await this.dynamicAgents.get(Child, name)).chat()` when parent code needs direct streaming RPC to a specific child and your code owns forwarding, cancellation, and replay policy.
 
 Use `agentTool()` or `runAgentTool()` when a parent model or workflow delegates work to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in. For Think-specific turn choices, refer to [Choose a turn API](/agents/harnesses/think/#choose-a-turn-api).
 
@@ -509,7 +509,7 @@ Raw `diagnostics_channel` subscribers should use the channel name `agents:agent_
 ## Related
 
 <LinkCard
-	title="Sub-agents"
+	title="Dynamic agents"
 	href="/agents/agent-class/sub-agents/"
 	description="Spawn child agents with isolated storage, typed RPC, and nested client routing."
 />

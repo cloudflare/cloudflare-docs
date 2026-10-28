@@ -1,9 +1,9 @@
 ---
 title: Agent class
-description: Reference for the Agent base class, its hooks, SQL storage, and error handling in the Agents SDK.
+description: The Agent class is a preset, a Durable Object with the Lifecycle and seven capabilities installed, plus APIs such as callable methods, fibers, Workflows, and email.
 pcx_content_type: reference
 sidebar:
-  order: 8
+  order: 12
   group:
     hideIndex: false
 products:
@@ -12,16 +12,9 @@ products:
 
 import { Render, LinkCard } from "~/components";
 
-This page provides an overview of the Agents SDK. For detailed documentation on each feature, refer to the linked reference pages.
+The `Agent` class is a preset. It is a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/runtime/lifecycle/) and seven capabilities installed. Extend it when you want those capabilities wired together, or when you need an API that only the `Agent` class has, such as `@callable()` methods, fibers, Workflows, email, voice, or [chat agents](/agents/agent-class/communication-channels/chat/) with `AIChatAgent`. [Think](/agents/harnesses/think/) also extends `Agent`.
 
-## Overview
-
-The Agents SDK provides two main APIs:
-
-| API                           | Description                                                                      |
-| ----------------------------- | -------------------------------------------------------------------------------- |
-| **Server-side** `Agent` class | Encapsulates agent logic: connections, state, methods, AI models, error handling |
-| **Client-side** SDK           | `AgentClient`, `useAgent`, and `useAgentChat` for connecting from browsers       |
+The capabilities the `Agent` class installs also run on a plain `DurableObject`. To compose only the capabilities you need, refer to [Lifecycle](/agents/runtime/lifecycle/) and [Capabilities](/agents/runtime/capabilities/).
 
 :::note
 
@@ -29,7 +22,80 @@ Agents require [Cloudflare Durable Objects](/durable-objects/). Refer to [Config
 
 :::
 
-## Agent class
+## What the Agent class installs
+
+`Agent` extends `DurableObject`, installs a `Lifecycle` on `this.lifecycle`, and calls `this.lifecycle.use()` for each capability below in its constructor. Each `Agent` method on the left calls the capability on the right.
+
+| Agent API (on `this`)                                                                                                                                          | Capability                                                     |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| `lifecycle`, `onStart()`, `onRequest()`, `fetch()`, `alarm()`                                                                                                  | [`Lifecycle`](/agents/runtime/lifecycle/)                      |
+| `schedule()`, `scheduleEvery()`, `getScheduleById()`, `listSchedules()`, `cancelSchedule()`, `scheduler`                                                       | [`Scheduler`](/agents/runtime/capabilities/scheduler/)         |
+| `queue()`, `dequeue()`, `dequeueAll()`, `dequeueAllByCallback()`, `getQueue()`, `getQueues()`                                                                  | `Queue`                                                        |
+| `mcp`, `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`                                                                                                | [`MCPClientManager`](/agents/runtime/capabilities/mcp-client/) |
+| `state`, `initialState`, `setState()`, `validateStateChange()`, `onStateChanged()`                                                                             | [`State`](/agents/runtime/capabilities/state/)                 |
+| `onConnect()`, `onMessage()`, `onClose()`, `onError()`, `broadcast()`, `getConnection()`, `getConnections()`, `getConnectionTags()`, `setConnectionReadonly()` | [`WebSockets`](/agents/runtime/capabilities/websockets/)       |
+| `tasks`, `taskDefinitions`                                                                                                                                     | `Tasks`                                                        |
+| `dynamicAgents`, `parentAgent()`, `parentPath`, `selfPath`, `onBeforeSubAgent()`                                                                               | Dynamic agents                                                 |
+
+`Queue`, `Tasks`, and dynamic agents are installed by the `Agent` class, but are not documented as standalone capabilities. Use them through the `Agent` methods. For dynamic agents, refer to [Dynamic agents](/agents/agent-class/sub-agents/).
+
+### APIs that only the Agent class has
+
+These APIs are implemented by the `Agent` class itself, not by a capability. They are not available on a plain Durable Object.
+
+| Feature           | Agent API                                                                                                             | Documentation                                                    |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Callable methods  | `@callable()`, `getCallableMethods()`                                                                                 | [Callable methods](/agents/agent-class/callable-methods/)        |
+| Durable execution | `runFiber()`, `startFiber()`, `stash()`, `onFiberRecovered()`, `keepAlive()`, `keepAliveWhile()`                      | [Durable execution](/agents/agent-class/durable-execution/)      |
+| Workflows         | `runWorkflow()`, `sendWorkflowEvent()`, `approveWorkflow()`, `getWorkflow()`, `onWorkflowProgress()`, `AgentWorkflow` | [Run Workflows](/agents/agent-class/run-workflows/)              |
+| Retries           | `retry()`                                                                                                             | [Retries](/agents/agent-class/retries/)                          |
+| Email             | `onEmail()`, `sendEmail()`, `replyToEmail()`, `routeAgentEmail()`                                                     | [Email](/agents/agent-class/communication-channels/email/)       |
+| Agents as tools   | `runAgentTool()`, `hasAgentToolRun()`, `clearAgentToolRuns()`, `agentTool()`                                          | [Agents as tools](/agents/agent-class/agent-tools/)              |
+| SQL               | `` this.sql`...` ``                                                                                                   | [SQL API](#sql-api)                                              |
+| HTTP and SSE      | `onRequest()` with streamed responses                                                                                 | [HTTP and SSE](/agents/agent-class/http-sse/)                    |
+| Instance          | `name`, `destroy()`, static `options`                                                                                 | [Agent class internals](/agents/agent-class/internals/)          |
+| Chat agents       | `AIChatAgent` from `@cloudflare/ai-chat`                                                                              | [Chat agents](/agents/agent-class/communication-channels/chat/)  |
+| Chat SDK          | `ChatSdkStateAgent`, `createChatSdkState()`                                                                           | [Chat SDK](/agents/agent-class/communication-channels/chat-sdk/) |
+| Voice             | `withVoice()`, `withVoiceInput()` from `agents/voice`                                                                 | [Voice](/agents/agent-class/communication-channels/voice/)       |
+
+`getCurrentAgent()` works on the `Agent` class and on any Durable Object with a Lifecycle. On the `Agent` class, custom methods are wrapped automatically, so `getCurrentAgent()` works inside them. Refer to [getCurrentAgent()](/agents/runtime/lifecycle/get-current-agent/).
+
+### Add another capability
+
+To add a capability to an `Agent`, such as the [Pi harness](/agents/harnesses/pi/), install it on `this.lifecycle` in the constructor:
+
+```ts
+import { Agent } from "agents";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { createAI } from "agents/models/pi-ai";
+
+export class Assistant extends Agent<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		this.lifecycle.use(this.harness);
+	}
+}
+```
+
+## Define an Agent
 
 An Agent is a class that extends the base `Agent` class:
 
@@ -54,7 +120,7 @@ Each Agent can have millions of instances. Each instance is a separate micro-ser
 
 <Render file="unique-agents" product="agents" />
 
-## Lifecycle
+## Hooks
 
 ```mermaid
 flowchart TD
@@ -65,51 +131,28 @@ flowchart TD
     E --> F["onClose"]
 ```
 
-| Method                                        | When it runs                                                                                                                                                                                    |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Method                                        | When it runs                                                                                                                                                                          |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `onStart(props?)`                             | When the instance starts, or wakes from hibernation. Receives optional [initialization props](/agents/agent-class/routing/#props) passed via `getAgentByName` or `routeAgentRequest`. |
-| `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                           |
-| `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                                      |
-| `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                             |
-| `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                                   |
-| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                              |
-| `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                                         |
-| `onStateChanged(state, source)`               | When state changes (from server or client)                                                                                                                                                      |
+| `onRequest(request)`                          | For each HTTP request to the instance                                                                                                                                                 |
+| `onConnect(connection, ctx)`                  | When a WebSocket connection is established                                                                                                                                            |
+| `onMessage(connection, message)`              | For each WebSocket message received                                                                                                                                                   |
+| `onError(connection, error)`                  | When a WebSocket error occurs                                                                                                                                                         |
+| `onClose(connection, code, reason, wasClean)` | When a WebSocket connection closes                                                                                                                                                    |
+| `onEmail(email)`                              | When an email is routed to the instance                                                                                                                                               |
+| `onStateChanged(state, source)`               | When state changes (from server or client)                                                                                                                                            |
+
+The `Agent` class owns the Durable Object's `fetch()`, `alarm()`, and WebSocket handlers and forwards them into the Lifecycle. Do not override `alarm()` or call `ctx.storage.setAlarm()` from Agent code. Use `this.schedule()` instead.
 
 ## Core properties
 
-| Property     | Type               | Description                            |
-| ------------ | ------------------ | -------------------------------------- |
-| `this.env`   | `Env`              | Environment variables and bindings     |
-| `this.ctx`   | `ExecutionContext` | Execution context for the request      |
-| `this.state` | `State`            | Current persisted state                |
-| `this.sql`   | Function           | Execute SQL queries on embedded SQLite |
-
-## Server-side API reference
-
-| Feature                  | Methods                                                                                          | Documentation                                                                          |
-| ------------------------ | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| **State**                | `setState()`, `onStateChanged()`, `initialState`                                                 | [Store and sync state](/agents/agent-class/state/)                               |
-| **Callable methods**     | `@callable()` decorator                                                                          | [Callable methods](/agents/agent-class/callable-methods/)                        |
-| **Scheduling**           | `schedule()`, `scheduleEvery()`, `getScheduleById()`, `listSchedules()`                          | [Schedule tasks](/agents/agent-class/schedule-tasks/)                            |
-| **Durable execution**    | `runFiber()`, `startFiber()`, `stash()`, `onFiberRecovered()`, `keepAlive()`, `keepAliveWhile()` | [Durable execution](/agents/agent-class/durable-execution/)                      |
-| **Queue**                | `queue()`, `dequeue()`, `dequeueAll()`, `getQueue()`                                             | [Queue tasks](/agents/agent-class/queue-tasks/)                                  |
-| **WebSockets**           | `onConnect()`, `onMessage()`, `onClose()`, `broadcast()`                                         | [WebSockets](/agents/agent-class/websockets/)                                |
-| **HTTP/SSE**             | `onRequest()`                                                                                    | [HTTP and SSE](/agents/agent-class/http-sse/)                                |
-| **Email**                | `onEmail()`, `replyToEmail()`                                                                    | [Email routing](/agents/agent-class/communication-channels/email/)                                 |
-| **Workflows**            | `runWorkflow()`, `waitForApproval()`                                                             | [Run Workflows](/agents/agent-class/run-workflows/)                              |
-| **MCP Client**           | `addMcpServer()`, `removeMcpServer()`, `getMcpServers()`                                         | [MCP Client API](/agents/model-context-protocol/apis/client-api/)                      |
-| **AI Models**            | Workers AI, OpenAI, Anthropic bindings                                                           | [Using AI models](/agents/agent-class/using-ai-models/)                         |
-| **Protocol messages**    | `shouldSendProtocolMessages()`, `isConnectionProtocolEnabled()`                                  | [Protocol messages](/agents/agent-class/protocol-messages/)                  |
-| **Context**              | `getCurrentAgent()`                                                                              | [getCurrentAgent()](/agents/runtime/lifecycle/get-current-agent/)                      |
-| **Tracing**              | `wrapAISDK()`                                                                                    | [Tracing](/agents/platform/observability/tracing/)                           |
-| **Diagnostics channels** | `subscribe()`, diagnostics channels                                                              | [Diagnostics channels](/agents/platform/observability/diagnostics-channels/) |
-| **Sub-agents**           | `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`                                              | [Sub-agents](/agents/agent-class/sub-agents/)                                    |
-| **Agents as tools**      | `runAgentTool()`, `clearAgentToolRuns()`, `hasAgentToolRun()`                                    | [Agents as tools](/agents/agent-class/agent-tools/)                              |
-| **Agent Skills**         | `skills` registry, bundled skill sources, script runners                                         | [Agent Skills](/agents/harnesses/think/tools/)                                |
-| **Sessions**             | `Session.create()`, context blocks, compaction, search                                           | [Sessions](/agents/concepts/memory/)                                        |
-| **Think**                | `Think` base class, workspace tools, lifecycle hooks, extensions                                 | [Think](/agents/harnesses/think/)                                                      |
-| **Chat SDK**             | `createChatSdkState()`, `ChatSdkStateAgent`                                                      | [Chat SDK](/agents/agent-class/communication-channels/chat-sdk/)                                    |
+| Property     | Type                 | Description                            |
+| ------------ | -------------------- | -------------------------------------- |
+| `this.env`   | `Env`                | Environment variables and bindings     |
+| `this.ctx`   | `DurableObjectState` | Durable Object state and storage       |
+| `this.name`  | `string`             | The instance name                      |
+| `this.state` | `State`              | Current persisted state                |
+| `this.sql`   | Function             | Execute SQL queries on embedded SQLite |
 
 ## SQL API
 
@@ -126,21 +169,11 @@ this.sql`INSERT INTO users (id, name) VALUES (${id}, ${name})`;
 const users = this.sql<User>`SELECT * FROM users WHERE id = ${id}`;
 ```
 
-For state that needs to sync with clients, use the [State API](/agents/agent-class/state/) instead.
+On a plain Durable Object, use [`ctx.storage.sql`](/durable-objects/api/sqlite-storage-api/) directly. For state that needs to sync with clients, use the [State API](/agents/agent-class/state/) instead.
 
-## Client-side API reference
+## Connect from a client
 
-| Feature               | Methods                | Documentation                                                                               |
-| --------------------- | ---------------------- | ------------------------------------------------------------------------------------------- |
-| **WebSocket client**  | `AgentClient`          | [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/)                               |
-| **HTTP client**       | `agentFetch()`         | [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/#http-requests-with-agentfetch) |
-| **React hook**        | `useAgent()`           | [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/#react)                         |
-| **Chat hook**         | `useAgentChat()`       | [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/)                               |
-| **Agent tool events** | `useAgentToolEvents()` | [Agents as tools](/agents/agent-class/agent-tools/#render-child-timelines-in-react)   |
-
-Module-level helper exports include `agentTool()` from `agents/agent-tools`, which converts a Think or `AIChatAgent` subclass into an AI SDK tool definition.
-
-### Quick example
+Clients connect to an Agent with `useAgent()` from `agents/react` or `AgentClient` from `agents/client`, and call it over HTTP with `agentFetch()`. The same client works with any Durable Object that installs the `WebSockets` capability. Refer to [Client SDK](/agents/runtime/client/).
 
 ```ts
 import { useAgent } from "agents/react";
@@ -160,28 +193,7 @@ function App() {
 }
 ```
 
-## Chat agents
-
-For AI chat applications, extend `AIChatAgent` instead of `Agent`:
-
-```ts
-import { AIChatAgent } from "@cloudflare/ai-chat";
-
-class ChatAgent extends AIChatAgent {
-	async onChatMessage(onFinish) {
-		// this.messages contains the conversation history
-		// Return a streaming response
-	}
-}
-```
-
-Features include:
-
-- Built-in message persistence
-- Automatic resumable streaming (reconnect mid-stream)
-- Works with `useAgentChat` React hook
-
-Refer to [Build a chat agent](/agents/examples/chat-agent/) for a complete tutorial.
+For chat UIs, `useAgentChat()` from `@cloudflare/ai-chat/react` connects to an `AIChatAgent`. Refer to [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/).
 
 ## Routing
 
@@ -199,7 +211,7 @@ import { routeAgentRequest } from "agents";
 export default {
 	async fetch(request: Request, env: Env) {
 		return (
-			routeAgentRequest(request, env) ||
+			(await routeAgentRequest(request, env)) ??
 			new Response("Not found", { status: 404 })
 		);
 	},
@@ -211,21 +223,21 @@ Refer to [Routing](/agents/agent-class/routing/) for custom paths, CORS, and ins
 ## Next steps
 
 <LinkCard
-	title="Quick start"
-	href="/agents/getting-started/quick-start/"
-	description="Build your first agent in about 10 minutes."
+	title="Get started with the Agent class"
+	href="/agents/agent-class/get-started/"
+	description="Build a counter agent with synced state in about 10 minutes."
+/>
+
+<LinkCard
+	title="Agent class internals"
+	href="/agents/agent-class/internals/"
+	description="How the Agent class composes the Lifecycle and its capabilities."
 />
 
 <LinkCard
 	title="Configuration"
 	href="/agents/platform/configuration/"
 	description="Learn about wrangler.jsonc setup and deployment."
-/>
-
-<LinkCard
-	title="WebSockets"
-	href="/agents/agent-class/websockets/"
-	description="Real-time bidirectional communication with clients."
 />
 
 <LinkCard

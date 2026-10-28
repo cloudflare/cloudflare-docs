@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
+This page covers scheduling on the [`Agent` class](/agents/agent-class/): `this.schedule()`, `this.scheduleEvery()`, and the methods that inspect and cancel schedules. The `Agent` class implements them with the [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability, which also runs on a plain Durable Object. On the `Agent` class, a callback name resolves to a method on your agent. For the capability API, refer to [Scheduler](/agents/runtime/capabilities/scheduler/).
+
 Schedule tasks to run in the future — whether that is seconds from now, at a specific date/time, or on a recurring cron schedule. Scheduled tasks survive agent restarts and are persisted to SQLite.
 
 Scheduled tasks can do anything a request or message from a user can: make requests, query databases, send emails, read and write state. Scheduled tasks can invoke any regular method on your Agent.
@@ -563,94 +565,6 @@ class TemporaryAgent extends Agent {
 
 When `destroy()` is called from within a scheduled task, the Agent SDK defers the destruction to ensure the scheduled callback completes successfully. The Agent instance will be evicted immediately after the callback finishes executing.
 
-:::
-
-## AI-assisted scheduling
-
-The SDK includes utilities for parsing natural language scheduling requests with AI.
-
-### `getSchedulePrompt()`
-
-Returns a system prompt for parsing natural language into scheduling parameters:
-
-<TypeScriptExample>
-
-```ts
-import { getSchedulePrompt, scheduleSchema } from "agents/schedules/parser";
-import { generateObject } from "ai";
-import { openai } from "@ai-sdk/openai";
-
-class SmartScheduler extends Agent {
-	async parseScheduleRequest(userInput: string) {
-		const result = await generateObject({
-			model: openai("gpt-4o"),
-			system: getSchedulePrompt({ date: new Date() }),
-			prompt: userInput,
-			schema: scheduleSchema,
-		});
-
-		return result.object;
-	}
-
-	async handleUserRequest(input: string) {
-		// Parse: "remind me to call mom tomorrow at 3pm"
-		const parsed = await this.parseScheduleRequest(input);
-
-		// parsed = {
-		//   description: "call mom",
-		//   when: {
-		//     type: "scheduled",
-		//     date: "2025-01-30T15:00:00Z"
-		//   }
-		// }
-
-		if (parsed.when.type === "scheduled" && parsed.when.date) {
-			await this.schedule(new Date(parsed.when.date), "sendReminder", {
-				message: parsed.description,
-			});
-		} else if (parsed.when.type === "delayed" && parsed.when.delayInSeconds) {
-			await this.schedule(parsed.when.delayInSeconds, "sendReminder", {
-				message: parsed.description,
-			});
-		} else if (parsed.when.type === "cron" && parsed.when.cron) {
-			await this.schedule(parsed.when.cron, "sendReminder", {
-				message: parsed.description,
-			});
-		}
-	}
-
-	async sendReminder(payload: { message: string }) {
-		console.log(`Reminder: ${payload.message}`);
-	}
-}
-```
-
-</TypeScriptExample>
-
-### `scheduleSchema`
-
-A Zod schema for validating parsed scheduling data. Uses a discriminated union on `when.type` so each variant only contains the fields it needs:
-
-<TypeScriptExample>
-
-```ts
-import { scheduleSchema } from "agents/schedules/parser";
-
-// The schema is a discriminated union:
-// {
-//   description: string,
-//   when:
-//     | { type: "scheduled", date: string }       // ISO 8601 date string
-//     | { type: "delayed", delayInSeconds: number }
-//     | { type: "cron", cron: string }
-//     | { type: "no-schedule" }
-// }
-```
-
-</TypeScriptExample>
-
-:::note
-Dates are returned as ISO 8601 strings (not `Date` objects) for compatibility with both Zod v3 and v4 JSON schema generation.
 :::
 
 ## Scheduling vs Queue vs Workflows

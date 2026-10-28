@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
+`@callable()` methods are an [`Agent` class](/agents/agent-class/) feature. On a plain Durable Object, expose methods to clients with the `callables` option of the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability instead.
+
 Callable methods let clients invoke agent methods over WebSocket using RPC (Remote Procedure Call). Mark methods with `@callable()` to expose them to external clients like browsers, mobile apps, or other services.
 
 ## Overview

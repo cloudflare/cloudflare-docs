@@ -14,6 +14,8 @@ import {
 	PackageManagers,
 } from "~/components";
 
+`AIChatAgent` from `@cloudflare/ai-chat` extends the [`Agent` class](/agents/agent-class/). It adds a chat loop with message persistence and resumable streaming on top of the `Agent` capabilities.
+
 Build AI-powered chat interfaces with `AIChatAgent` and `useAgentChat`. Messages are automatically persisted to SQLite, streams resume on disconnect, and tool calls work across server and client.
 
 ## Overview

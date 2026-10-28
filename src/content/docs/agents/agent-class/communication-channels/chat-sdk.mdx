@@ -15,6 +15,8 @@ import {
 	WranglerConfig,
 } from "~/components";
 
+`ChatSdkStateAgent` and `createChatSdkState()` run on the [`Agent` class](/agents/agent-class/).
+
 Use `agents/chat-sdk` when you run the [Chat SDK](https://chat-sdk.dev/) inside an Agent. The first integration helper is a Chat SDK `StateAdapter` that stores state in Agents sub-agents.
 
 The adapter stores Chat SDK subscriptions, locks, queues, dedupe keys, thread state, channel state, callback metadata, transcript lists, and thread history in Durable Object SQLite. Each state shard is a `ChatSdkStateAgent` sub-agent under your ingress Agent.
@@ -82,7 +84,7 @@ tag = "v1"
 
 </WranglerConfig>
 
-Export `ChatSdkStateAgent` from your Worker entry point so sub-agent routing can resolve it. When `createChatSdkState()` is called inside an Agent lifecycle method or request handler, it uses the current Agent as the parent and creates state shards with `this.subAgent()`.
+Export `ChatSdkStateAgent` from your Worker entry point so sub-agent routing can resolve it. When `createChatSdkState()` is called inside an Agent lifecycle method or request handler, it uses the current Agent as the parent and creates state shards as dynamic agents of that parent.
 
 ## State sharding
 
@@ -161,7 +163,7 @@ Options:
 | Option     | Description                                                                                                                       |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `agent`    | Optional custom subclass of `ChatSdkStateAgent`. Defaults to `ChatSdkStateAgent`.                                                 |
-| `parent`   | Optional parent Agent that will call `subAgent()` to create state shards. Defaults to the current Agent from `getCurrentAgent()`. |
+| `parent`   | Optional parent Agent that creates state shards as [dynamic agents](/agents/agent-class/sub-agents/). Defaults to the current Agent from `getCurrentAgent()`. |
 | `name`     | Default shard name for keys that cannot be mapped. Defaults to `default`.                                                         |
 | `shardKey` | Maps Chat SDK thread IDs and lock keys to a shard name.                                                                           |
 | `keyShard` | Maps generic Chat SDK cache or list keys to a shard name.                                                                         |

@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
+This page covers state on the [`Agent` class](/agents/agent-class/): `initialState`, `this.state`, `this.setState()`, and the `onStateChanged()` and `validateStateChange()` hooks. The `Agent` class implements them with the [`State`](/agents/runtime/capabilities/state/) capability, which also runs on a plain Durable Object. For the capability API, refer to [State](/agents/runtime/capabilities/state/).
+
 Agents provide built-in state management with automatic persistence and real-time synchronization across all connected clients.
 
 ## Overview
@@ -508,137 +510,6 @@ Providing a type parameter does not validate that the result matches your type d
 :::
 
 The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sqlite-storage-api/#sql-api). You can use the same SQL queries with the Agent's database. Create tables and query data, just as you would with Durable Objects or [D1](/d1/).
-
-## Best practices
-
-### Keep state small
-
-State is broadcast to all clients on every change. For large data:
-
-```ts
-// Bad - storing large arrays in state
-initialState = {
-  allMessages: [] // Could grow to thousands of items
-};
-
-// Good - store in SQL, keep state light
-initialState = {
-  messageCount: 0,
-  lastMessageId: null
-};
-
-// Query SQL for full data
-async getMessages(limit = 50) {
-  return this.sql`SELECT * FROM messages ORDER BY created_at DESC LIMIT ${limit}`;
-}
-```
-
-### Optimistic updates
-
-For responsive UIs, update client state immediately:
-
-<TypeScriptExample>
-
-```ts
-// Client-side
-function sendMessage(text: string) {
-	const optimisticMessage = {
-		id: crypto.randomUUID(),
-		text,
-		pending: true,
-	};
-
-	// Update immediately
-	agent.setState({
-		...agent.state,
-		messages: [...agent.state.messages, optimisticMessage],
-	});
-
-	// Server will confirm/update
-}
-
-// Server-side
-class MyAgent extends Agent<Env, { messages: Message[] }> {
-	onStateChanged(state: GameState, source: Connection | "server") {
-		if (source === "server") return;
-
-		const pendingMessages = state.messages.filter((m) => m.pending);
-		for (const msg of pendingMessages) {
-			// Validate and confirm
-			this.setState({
-				...state,
-				messages: state.messages.map((m) =>
-					m.id === msg.id ? { ...m, pending: false, timestamp: Date.now() } : m,
-				),
-			});
-		}
-	}
-}
-```
-
-</TypeScriptExample>
-
-### State vs SQL
-
-| Use State For                      | Use SQL For       |
-| ---------------------------------- | ----------------- |
-| UI state (loading, selected items) | Historical data   |
-| Real-time counters                 | Large collections |
-| Active session data                | Relationships     |
-| Configuration                      | Queryable data    |
-
-<TypeScriptExample>
-
-```ts
-export class ChatAgent extends Agent {
-	// State: current UI state
-	initialState = {
-		typing: [],
-		unreadCount: 0,
-		activeUsers: [],
-	};
-
-	// SQL: message history
-	async getMessages(limit = 100) {
-		return this.sql`
-      SELECT * FROM messages
-      ORDER BY created_at DESC
-      LIMIT ${limit}
-    `;
-	}
-
-	async saveMessage(message: Message) {
-		this.sql`
-      INSERT INTO messages (id, text, user_id, created_at)
-      VALUES (${message.id}, ${message.text}, ${message.userId}, ${Date.now()})
-    `;
-		// Update state for real-time UI
-		this.setState({
-			...this.state,
-			unreadCount: this.state.unreadCount + 1,
-		});
-	}
-}
-```
-
-</TypeScriptExample>
-
-### Avoid infinite loops
-
-Be careful not to trigger state updates in response to your own updates:
-
-```ts
-// Bad - infinite loop
-onStateChanged(state: State) {
-  this.setState({ ...state, lastUpdated: Date.now() });
-}
-
-// Good - check source
-onStateChanged(state: State, source: Connection | "server") {
-  if (source === "server") return; // Do not react to own updates
-  this.setState({ ...state, lastUpdated: Date.now() });
-}
-```
 
 ## Use Agent state as model context
 

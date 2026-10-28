@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
+This page covers WebSocket hooks on the [`Agent` class](/agents/agent-class/). The `Agent` class implements them with the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability, which also runs on a plain Durable Object. For the capability API, including hibernation, tags, and binary messages on a plain Durable Object, refer to [WebSockets](/agents/runtime/capabilities/websockets/).
+
 Agents support WebSocket connections for real-time, bi-directional communication. This page covers server-side WebSocket handling. For client-side connection, refer to the [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
 
 ## Lifecycle hooks
@@ -363,147 +365,6 @@ export class MyAgent extends Agent<Env, { counter: number }> {
 
 		// Lost after hibernation
 		this.localCounter++;
-	}
-}
-```
-
-</TypeScriptExample>
-
-## Common patterns
-
-### Presence tracking
-
-Track who is online using per-connection state. Connection state is automatically cleaned up when users disconnect:
-
-<TypeScriptExample>
-
-```ts
-type UserState = {
-	name: string;
-	joinedAt: number;
-	lastSeen: number;
-};
-
-export class PresenceAgent extends Agent {
-	onConnect(connection: Connection<UserState>, ctx: ConnectionContext) {
-		const url = new URL(ctx.request.url);
-		const name = url.searchParams.get("name") || "Anonymous";
-
-		connection.setState({
-			name,
-			joinedAt: Date.now(),
-			lastSeen: Date.now(),
-		});
-
-		// Send current presence to new user
-		connection.send(
-			JSON.stringify({
-				type: "presence",
-				users: this.getPresence(),
-			}),
-		);
-
-		// Notify others that someone joined
-		this.broadcastPresence();
-	}
-
-	onClose(connection: Connection) {
-		// No manual cleanup needed - connection state is automatically gone
-		this.broadcastPresence();
-	}
-
-	onMessage(connection: Connection<UserState>, message: WSMessage) {
-		if (message === "ping") {
-			connection.setState((prev) => ({
-				...prev!,
-				lastSeen: Date.now(),
-			}));
-			connection.send("pong");
-		}
-	}
-
-	private getPresence() {
-		const users: Record<string, { name: string; lastSeen: number }> = {};
-		for (const conn of this.getConnections<UserState>()) {
-			if (conn.state) {
-				users[conn.id] = {
-					name: conn.state.name,
-					lastSeen: conn.state.lastSeen,
-				};
-			}
-		}
-		return users;
-	}
-
-	private broadcastPresence() {
-		this.broadcast(
-			JSON.stringify({
-				type: "presence",
-				users: this.getPresence(),
-			}),
-		);
-	}
-}
-```
-
-</TypeScriptExample>
-
-### Chat room with broadcast
-
-<TypeScriptExample>
-
-```ts
-type Message = {
-	type: "message" | "join" | "leave";
-	user: string;
-	text?: string;
-	timestamp: number;
-};
-
-export class ChatRoom extends Agent {
-	onConnect(connection: Connection, ctx: ConnectionContext) {
-		const url = new URL(ctx.request.url);
-		const username = url.searchParams.get("username") || "Anonymous";
-
-		connection.setState({ username });
-
-		// Notify others
-		this.broadcast(
-			JSON.stringify({
-				type: "join",
-				user: username,
-				timestamp: Date.now(),
-			} satisfies Message),
-			[connection.id], // Do not send to the joining user
-		);
-	}
-
-	onMessage(connection: Connection, message: WSMessage) {
-		if (typeof message !== "string") return;
-
-		const { username } = connection.state as { username: string };
-
-		this.broadcast(
-			JSON.stringify({
-				type: "message",
-				user: username,
-				text: message,
-				timestamp: Date.now(),
-			} satisfies Message),
-		);
-	}
-
-	onClose(connection: Connection) {
-		const { username } = (connection.state as { username: string }) || {};
-		if (username) {
-			this.broadcast(
-				JSON.stringify({
-					type: "leave",
-					user: username,
-					timestamp: Date.now(),
-				} satisfies Message),
-			);
-		}
 	}
 }
 ```

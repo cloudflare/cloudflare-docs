@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
+`AgentWorkflow` and `this.runWorkflow()` are [`Agent` class](/agents/agent-class/) features. `AgentWorkflow` calls back into the `Agent` instance that started it.
+
 Integrate [Cloudflare Workflows](/workflows/) with Agents for durable, multi-step background processing while Agents handle real-time communication.
 
 :::note[Agents vs. Workflows]
@@ -267,19 +269,19 @@ const instanceId = await this.runWorkflow(
 
 Sub-agents can call `this.runWorkflow()` directly. The workflow is tracked in the originating sub-agent's SQLite database, and `this.agent` inside `AgentWorkflow` routes back to that same sub-agent for RPC calls, callbacks, state updates, and broadcasts.
 
-Parent agents do not automatically list or control workflows that a sub-agent starts. `SubAgentStub<T>` only exposes user-defined methods, not inherited `Agent` methods such as `approveWorkflow()` or `getWorkflow()`. To control a child-started workflow from the parent, define small wrapper methods on the child and call those wrappers through the sub-agent stub.
+Parent agents do not automatically list or control workflows that a sub-agent starts. The child stub only exposes user-defined methods, not inherited `Agent` methods such as `approveWorkflow()` or `getWorkflow()`. To control a child-started workflow from the parent, define small wrapper methods on the child and call those wrappers through the sub-agent stub.
 
 <TypeScriptExample>
 
 ```ts
 export class ParentAgent extends Agent {
 	async startChildWorkflow(childName: string, task: string) {
-		const child = await this.subAgent(ChildAgent, childName);
+		const child = await this.dynamicAgents.get(ChildAgent, childName);
 		return child.startWorkflow(task);
 	}
 
 	async approveChildWorkflow(childName: string, workflowId: string) {
-		const child = await this.subAgent(ChildAgent, childName);
+		const child = await this.dynamicAgents.get(ChildAgent, childName);
 		return child.approveChildWorkflow(workflowId);
 	}
 }
