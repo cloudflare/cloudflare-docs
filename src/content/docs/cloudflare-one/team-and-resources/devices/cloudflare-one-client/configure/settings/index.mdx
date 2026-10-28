@@ -280,6 +280,29 @@ On MDM deployments, you must also include the `auto_connect` parameter with at l
 
 When `Enabled`, users can log out from your Zero Trust organization by selecting **Logout from Zero Trust** in the Cloudflare One Client UI. The **Logout from Zero Trust** button is only available for devices that were [enrolled manually](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/). Devices that enrolled using an <GlossaryTooltip term="MDM file">MDM file</GlossaryTooltip> are always prevented from leaving your Zero Trust organization.
 
+On Windows, [Device Management Protection](#device-management-protection) prevents users from logging out, even when this setting is `Enabled`.
+
+### Device Management Protection <Badge text="Beta" variant="caution" size="small" />
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| All modes                                                                                         | All plans                                                     |
+
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2026.9.0.0             |
+| macOS    | ❌           |                        |
+| Linux    | ❌           |                        |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
+
+</Details>
+
+When `Enabled`, protects the Cloudflare One Client against unauthorized modification or uninstallation. Users must provide an administrator-generated code to uninstall, upgrade, or downgrade the client. Users also cannot log out of your Zero Trust organization. For more information, refer to [Uninstall protection](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/uninstall-protection/).
+
 ### Allow updates
 
 <Details header="Feature availability">
