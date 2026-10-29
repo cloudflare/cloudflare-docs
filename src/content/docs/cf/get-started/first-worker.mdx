@@ -13,6 +13,7 @@ products:
 import {
 	AnnotatedConfigExplorer,
 	FileTree,
+	PackageManagers,
 	Steps,
 	TypeScriptExample,
 } from "~/components";
@@ -48,21 +49,27 @@ these files:
 			- index.d.ts
 	- src/
 		- index.ts
+	- test/
+		- index.test.ts
 	- .gitignore
 	- cloudflare.config.ts
 	- package.json
 	- tsconfig.json
 	- vite.config.ts
+	- vitest.config.ts
 </FileTree>
 
 - `src/index.ts` is the Worker.
 - `cloudflare.config.ts` describes the Worker in TypeScript.
-- `vite.config.ts` adds the [Cloudflare Vite plugin](/workers/vite-plugin/),
+- `vite.config.ts` configures [Vite+](https://viteplus.dev) checks and adds the [Cloudflare Vite plugin](/workers/vite-plugin/),
   which runs your code in the Workers runtime during development and builds
   it for deployment.
 - `package.json` has `dev`, `build`, and `deploy` scripts that run the
   matching `cf` commands. It lists `cf` and the Vite plugin 2.0 beta
   (`@cloudflare/vite-plugin@beta`), which `cf` uses, but not Wrangler.
+  It also installs Vite+ locally for checks, formatting, and tests.
+- `vitest.config.ts` configures tests to run in the Workers runtime.
+  `test/index.test.ts` checks the Worker response using its `WORLD` binding.
 - `.cloudflare/types/index.d.ts` holds generated binding and runtime types. The
   Vite plugin updates it when you run `cf dev` or `cf build`. The generated
   `.gitignore` excludes `.cloudflare/`.
@@ -124,7 +131,26 @@ development server picks up the change without a restart.
 In this project, `cf dev` does not accept options such as `--port`. To change
 the port, set `server.port` in `vite.config.ts`.
 
-## 3. Deploy
+## 3. Check and test
+
+Check formatting, lint rules, and TypeScript types:
+
+<PackageManagers type="run" args="check" />
+
+This command generates Worker types before running `vp check`. To format your
+files, run the `format` script.
+
+Run the generated Workers-runtime test once:
+
+<PackageManagers type="exec" pkg="vp" args="test run" />
+
+Vite+ is installed with your project dependencies. A global `vp` installation
+is optional. Keep the Vite alias and Vitest override aligned when you update
+Vite+. Refer to [Vite+ dependency alignment](https://viteplus.dev/guide/local-cli).
+
+Continue to use `cf dev`, `cf build`, and `cf deploy` for this project.
+
+## 4. Deploy
 
 <Steps>
 1. If you have not signed in yet, sign in:

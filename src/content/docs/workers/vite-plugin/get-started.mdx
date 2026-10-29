@@ -97,3 +97,19 @@ A request to this Worker will return **'Running in Cloudflare-Workers!'**, demon
 ## Dev, build, preview and deploy
 
 You can now start the Vite development server (`npm run dev`), build the application (`npm run build`), preview the built application (`npm run preview`), and deploy to Cloudflare (`npm run deploy`).
+
+## Use Vite+
+
+[Vite+](https://viteplus.dev) combines Vite with formatting, linting, type
+checking, and testing. The Cloudflare Vite plugin also works with Vite+.
+
+For an existing project, follow the [Vite+ migration guide](https://viteplus.dev/guide/migrate).
+Keep the Vite alias and Vitest override aligned with your Vite+ release.
+Use `defineConfig` from `vite-plus` in your Vite configuration.
+
+Keep your framework's scripts and Cloudflare deployment command. For example,
+`vp run build` runs a project's `build` script, while `vp build` runs Vite
+without additional steps from that script. Adopting Vite+ does not require
+converting a Wrangler configuration to `cloudflare.config.ts`.
+
+For a new project with `cf`, follow [Deploy your first Worker](/cf/get-started/first-worker/).
