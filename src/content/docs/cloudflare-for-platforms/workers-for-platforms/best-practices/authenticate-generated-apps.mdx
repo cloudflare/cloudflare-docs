@@ -42,7 +42,7 @@ Choose checks according to what needs protection:
 | -------------------------------------------------- | -------------------------------------------- |
 | The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#authenticate-before-invoking-the-app) |
 | Routes mix public and private access               | [Platform-owned method/path policy](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#publish-code-and-route-policy-together) |
-| Routes are unknown, but data permissions are known | [Platform-owned data operations](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#authorize-the-protected-operation) |
+| Routes are unknown, but data permissions are known | [Platform-owned data operations](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#protect-data-even-when-generated-routes-change) |
 | Routing and policy must stay together              | [Registered handlers with access metadata](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
 | Public code needs fewer privileges                 | [Separate Workers with different capabilities](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
 | App libraries call HTTP APIs                       | [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [`globalOutbound` gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests) |
@@ -206,7 +206,9 @@ return app.getEntrypoint(undefined, { props: { identity } }).fetch(appRequest);
 
 For a wholly private app, require membership on every request. For mixed-access apps, use the route policy to select public exceptions.
 
-## Authorize the protected operation
+## Protect data even when generated routes change
+
+A route check can require Bob to sign in, but it cannot prevent app code from requesting Alice's report. Keep permission checks inside the platform operations that read private data, so every new route uses the same checks.
 
 A generated app can omit `checkAuth()` or ignore its result. Give it an operation that performs authorization and data access together.
 
