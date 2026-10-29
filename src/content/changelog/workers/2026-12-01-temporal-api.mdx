@@ -10,7 +10,7 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 Workers now support the [Temporal API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Temporal), the modern JavaScript standard for dates and times. You can convert between time zones, do calendar-correct date arithmetic, and work with plain dates and times, without bundling a date library such as Moment.js, Luxon, or date-fns.
 
-Temporal is turned on for Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-12-01` or later. To use it with an earlier compatibility date, add the [`temporal`](/workers/configuration/compatibility-flags/#enable-the-temporal-api) compatibility flag:
+Temporal will be turned on for Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-12-01` or later. To use it with an earlier compatibility date, add the [`temporal`](/workers/configuration/compatibility-flags/#enable-the-temporal-api) compatibility flag:
 
 <WranglerConfig>
 
