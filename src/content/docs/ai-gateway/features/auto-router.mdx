@@ -47,7 +47,7 @@ curl -i -X POST "https://gateway.ai.cloudflare.com/v1/$CLOUDFLARE_ACCOUNT_ID/$CL
 The response headers show which model Auto Router selected:
 
 ```txt output
-cf-aig-routed-model: openai/gpt-5.6-luna
+cf-aig-routed-model: openai/gpt-6-luna
 cf-aig-routing-reason: cost_optimal_within_pool
 cf-aig-routing-decision-id: 91e0b970-33f0-4921-b8dc-127412e7b103
 ```
@@ -108,12 +108,12 @@ By default, Auto Router selects from a set of [default models](#default-models).
 
 The response includes headers that describe the routing decision. These headers can help you identify the selected model, understand why it was selected, and correlate the request with AI Gateway logs for support and diagnostics:
 
-| Header                       | Description                                                                 |
-| ---------------------------- | --------------------------------------------------------------------------- |
-| `cf-aig-routed-model`        | The model that served the request, for example `anthropic/claude-sonnet-5`. |
-| `cf-aig-routing-reason`      | Why that model was selected. Refer to [Routing reasons](#routing-reasons).  |
-| `cf-aig-routing-decision-id` | The routing decision identifier.                                            |
-| `cf-aig-request-id`          | The request identifier.                                                     |
+| Header                       | Description                                                                   |
+| ---------------------------- | ----------------------------------------------------------------------------- |
+| `cf-aig-routed-model`        | The model that served the request, for example `anthropic/claude-sonnet-5.5`. |
+| `cf-aig-routing-reason`      | Why that model was selected. Refer to [Routing reasons](#routing-reasons).    |
+| `cf-aig-routing-decision-id` | The routing decision identifier.                                              |
+| `cf-aig-request-id`          | The request identifier.                                                       |
 
 ### Routing reasons
 
@@ -138,15 +138,16 @@ Auto Router selects from a pool of models managed by Cloudflare. The pool may ch
 
 By default, Auto Router selects from the following models. To provide your own set of models, use the [`cf-aig-allowed-models` or `cf-aig-allowed-providers` header](#headers).
 
-| Model                       | Provider    |
-| --------------------------- | ----------- |
-| `anthropic/claude-fable-5`  | `anthropic` |
-| `anthropic/claude-opus-5`   | `anthropic` |
-| `anthropic/claude-sonnet-5` | `anthropic` |
-| `openai/gpt-5.6-luna`       | `openai`    |
-| `openai/gpt-5.6-sol`        | `openai`    |
-| `openai/gpt-5.6-terra`      | `openai`    |
-| `xai/grok-4.5`              | `xai`       |
+| Model                                    | Provider     |
+| ---------------------------------------- | ------------ |
+| `@cf/deepseek-ai/deepseek-v4-flash-0731` | `workers-ai` |
+| `anthropic/claude-haiku-5.5`             | `anthropic`  |
+| `anthropic/claude-opus-5.5`              | `anthropic`  |
+| `anthropic/claude-sonnet-5.5`            | `anthropic`  |
+| `moonshotai/kimi-k3`                     | `workers-ai` |
+| `openai/gpt-6-luna`                      | `openai`     |
+| `openai/gpt-6.1-sol`                     | `openai`     |
+| `xai/grok-4.7`                           | `xai`        |
 
 ### Additional models
 
@@ -154,28 +155,33 @@ Auto Router only selects these models when they match `cf-aig-allowed-models` or
 
 <Details header="Additional models">
 
-| Model                                    | Provider     |
-| ---------------------------------------- | ------------ |
-| `@cf/deepseek-ai/deepseek-v4-flash-0731` | `workers-ai` |
-| `@cf/deepseek-ai/deepseek-v4-pro-0813`   | `workers-ai` |
-| `@cf/google/gemma-4-26b-a4b-it`          | `workers-ai` |
-| `@cf/moonshotai/kimi-k2.7-code`          | `workers-ai` |
-| `@cf/openai/gpt-oss-20b`                 | `workers-ai` |
-| `@cf/qwen/qwen3.8-27b`                   | `workers-ai` |
-| `@cf/zai-org/glm-5.2`                    | `workers-ai` |
-| `alibaba/qwen3.8-max`                    | `alibaba`    |
-| `anthropic/claude-fable-5.1`             | `anthropic`  |
-| `anthropic/claude-opus-4.8`              | `anthropic`  |
-| `anthropic/claude-opus-5.5`              | `anthropic`  |
-| `anthropic/claude-sonnet-4.6`            | `anthropic`  |
-| `fireworks/glm-5.3`                      | `fireworks`  |
-| `fireworks/glm-5.3-flash`                | `fireworks`  |
-| `minimax/m3`                             | `minimax`    |
-| `openai/gpt-5.5`                         | `openai`     |
-| `openai/gpt-6-astra`                     | `openai`     |
-| `openai/gpt-6-luna`                      | `openai`     |
-| `openai/gpt-6-sol`                       | `openai`     |
-| `xai/grok-4.6`                           | `xai`        |
+| Model                                  | Provider           |
+| -------------------------------------- | ------------------ |
+| `@cf/deepseek-ai/deepseek-v4-pro-0813` | `workers-ai`       |
+| `@cf/google/gemma-4-26b-a4b-it`        | `workers-ai`       |
+| `@cf/moonshotai/kimi-k2.7-code`        | `workers-ai`       |
+| `@cf/openai/gpt-oss-20b`               | `workers-ai`       |
+| `@cf/qwen/qwen3.8-27b`                 | `workers-ai`       |
+| `@cf/zai-org/glm-5.2`                  | `workers-ai`       |
+| `alibaba/qwen3.8-max`                  | `alibaba`          |
+| `anthropic/claude-fable-5`             | `anthropic`        |
+| `anthropic/claude-fable-5.1`           | `anthropic`        |
+| `anthropic/claude-opus-4.8`            | `anthropic`        |
+| `anthropic/claude-opus-5`              | `anthropic`        |
+| `anthropic/claude-sonnet-4.6`          | `anthropic`        |
+| `anthropic/claude-sonnet-5`            | `anthropic`        |
+| `fireworks/glm-5.3`                    | `fireworks`        |
+| `fireworks/glm-5.3-flash`              | `fireworks`        |
+| `google/gemini-3.8-flash`              | `google-vertex-ai` |
+| `minimax/m3`                           | `minimax`          |
+| `openai/gpt-5.5`                       | `openai`           |
+| `openai/gpt-5.6-luna`                  | `openai`           |
+| `openai/gpt-5.6-sol`                   | `openai`           |
+| `openai/gpt-5.6-terra`                 | `openai`           |
+| `openai/gpt-6-astra`                   | `openai`           |
+| `openai/gpt-6-sol`                     | `openai`           |
+| `xai/grok-4.5`                         | `xai`              |
+| `xai/grok-4.6`                         | `xai`              |
 
 </Details>
 
