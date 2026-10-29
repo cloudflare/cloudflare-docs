@@ -16,6 +16,19 @@ Your account must have a Zero Trust subscription. The Zero Trust Free plan is su
 
 You need permission to manage the resources you change. The proxy also needs a Cloudflare API credential for the same account. Refer to [API connection and authentication](/cloudflare-one/cloud-workload-security/configuration/#api-connection-and-authentication) for API token and Global API Key setup.
 
+## Supported cloud providers
+
+The CWS Beta supports Cloudflare and Amazon Web Services (AWS). Microsoft Azure and Google Cloud are not supported in this Beta.
+
+Use these application names in workload and policy filters:
+
+| Cloud provider | `application.name` value |
+|---|---|
+| Cloudflare | `Cloudflare` |
+| Amazon Web Services | `AWS` |
+
+Use **Visual Builder** to select available services and operations for each application. For filter examples, refer to [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/).
+
 ## Limits
 
 CWS applies these standard resource and relationship limits.
@@ -56,15 +69,45 @@ The following limits apply to individual resources and relationships:
 
 ## Proxy deployment options
 
-You run the CWS proxy in your environment. Choose a location that your cloud API clients can reach, and install the `cws-proxy` package using APT or DNF.
+Run the CWS proxy in infrastructure you control, including a cloud-hosted Linux virtual machine (VM). You do not need an on-premises network or data center.
+
+Choose a location that your cloud API clients can reach. Install the `cws-proxy` package using APT or DNF.
+
+The proxy package requires Linux. Clients can use other operating systems if their tools support HTTP CONNECT and trust the proxy's certificate authority (CA) certificate.
+
+In every pattern, the proxy loads its deployment configuration from Cloudflare. Each diagram shows the allowed request path, with blocked requests stopping at the proxy.
 
 ### Local machine
 
-Run the proxy and client on the same Linux machine or Linux virtual machine (VM) to test a guardrail. Follow [Set up the proxy locally](/cloudflare-one/cloud-workload-security/get-started/#set-up-the-proxy-locally) for the empty-R2-bucket walkthrough.
+Run the proxy and client on the same Linux machine or VM to test a guardrail. The VM can run on your computer or in your cloud environment.
+
+```mermaid
+flowchart TD
+    accTitle: CWS proxy and client on one Linux host
+    accDescr: A CLI client and CWS proxy run on the same Linux host, which can be a local machine or a cloud VM. The client connects through loopback. The proxy forwards allowed requests to Cloudflare or AWS APIs.
+
+    subgraph Host["Your Linux machine or VM"]
+        Client["CLI client"] -->|127.0.0.1:8080| Proxy["CWS proxy"]
+    end
+    Proxy -->|Allowed requests| Provider["Cloudflare or AWS APIs"]
+```
+
+Follow [Set up the proxy locally](/cloudflare-one/cloud-workload-security/get-started/#set-up-the-proxy-locally) for the empty-R2-bucket walkthrough.
 
 ### CI/CD runner
 
 Run the proxy alongside jobs in a continuous integration and continuous delivery (CI/CD) pipeline. This applies guardrails to cloud API requests made by applications and deployment scripts.
+
+```mermaid
+flowchart TD
+    accTitle: CWS proxy on a CI/CD runner
+    accDescr: A pipeline job and CWS proxy run on the same Linux CI/CD runner. The job sends API requests to the proxy, which forwards allowed requests to Cloudflare or AWS APIs.
+
+    subgraph Runner["Your Linux CI/CD runner"]
+        Job["Pipeline job<br/>Deployment script or CLI"] -->|API requests| Proxy["CWS proxy"]
+    end
+    Proxy -->|Allowed requests| Provider["Cloudflare or AWS APIs"]
+```
 
 For this pattern, the runner needs:
 
@@ -76,13 +119,39 @@ Manage proxy startup and cleanup through your runner's process or service lifecy
 
 ### Application host or container
 
-Run the installed proxy as a managed process on a Linux VM or application host. For containers, use a Linux environment with APT or DNF and provide the proxy's configuration, credentials, and CA files.
+Run the proxy as a managed process on a Linux VM in your cloud infrastructure or another application host. For containers, use a Linux environment with APT or DNF and provide the proxy's configuration, credentials, and CA files.
+
+```mermaid
+flowchart TD
+    accTitle: CWS proxy alongside an application
+    accDescr: An application and CWS proxy run as processes or containers on a customer-controlled Linux application host, such as a cloud VM. The application connects to a reachable proxy endpoint. The proxy forwards allowed requests to Cloudflare or AWS APIs.
+
+    subgraph Host["Your Linux application host or cloud VM"]
+        Application["Application<br/>Process or container"] -->|Proxy connection| Proxy["CWS proxy<br/>Process or container"]
+    end
+    Proxy -->|Allowed requests| Provider["Cloudflare or AWS APIs"]
+```
 
 Configure your application to use the proxy through its supported proxy and CA trust settings. Keep the proxy running while the application makes cloud API requests.
 
 ### Shared proxy host
 
-Run a proxy on a host reachable by multiple applications or pipeline jobs. Set `proxy.listen_addr` to a private IP address and port on that host, then configure clients with the corresponding proxy URL.
+Run a proxy on a Linux host reachable by multiple applications or pipeline jobs. For example, use a VM in your cloud network. Set `proxy.listen_addr` to a private IP address and port on that host, then configure clients with the corresponding proxy URL.
+
+```mermaid
+flowchart TD
+    accTitle: Shared CWS proxy in a customer cloud network
+    accDescr: Applications and pipeline jobs connect to a shared CWS proxy on a Linux VM in the customer's cloud network. The proxy forwards allowed requests to Cloudflare or AWS APIs.
+
+    subgraph Network["Your cloud network"]
+        Applications["Application hosts"] -->|Proxy connection| Proxy
+        Jobs["Pipeline runners"] -->|Proxy connection| Proxy
+        subgraph Host["Shared Linux VM"]
+            Proxy["CWS proxy"]
+        end
+    end
+    Proxy -->|Allowed requests| Provider["Cloudflare or AWS APIs"]
+```
 
 Restrict network access to the intended clients. Each client needs the CA certificate for trust. Keep the matching private key on the proxy host.
 

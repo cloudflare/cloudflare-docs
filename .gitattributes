@@ -25,3 +25,7 @@ __redirects text eol=lf
 .editorconfig text eol=lf
 .gitattributes text eol=lf
 .prettierignore text eol=lf
+
+# Preserve upstream whitespace and line endings in the generated license notice.
+# Distinguish its plain-text section separators from Git conflict markers.
+public/cloudflare-one/cloud-workload-security/legal/third-party-licenses.txt -text -whitespace conflict-marker-size=32

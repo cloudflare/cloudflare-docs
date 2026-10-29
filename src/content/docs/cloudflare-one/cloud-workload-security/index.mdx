@@ -14,9 +14,27 @@ import { LinkButton } from "~/components";
 
 Cloud Workload Security (CWS) helps you prevent risky cloud changes. Apply policy controls to API requests before they reach your cloud provider.
 
+The Beta supports Cloudflare and Amazon Web Services (AWS). Refer to [Supported cloud providers](/cloudflare-one/cloud-workload-security/platform/#supported-cloud-providers) for availability.
+
 :::note[Zero Trust subscription required]
 Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-create-a-zero-trust-organization). The Zero Trust Free plan is sufficient.
 :::
+
+Run the CWS proxy in your cloud infrastructure or another environment you control. Manage policies in Cloudflare, then route client requests through the proxy:
+
+```mermaid
+flowchart TD
+    accTitle: Cloud Workload Security architecture
+    accDescr: API clients send requests through a CWS proxy in the customer's environment, which can be cloud infrastructure. The proxy loads deployment configuration from Cloudflare CWS, forwards allowed requests to Cloudflare or AWS APIs, and returns block responses to clients for denied requests.
+
+    Config["Cloudflare CWS<br/>Policies and deployments"]
+    subgraph Environment["Your environment"]
+        Client["API client"] -->|API requests| Proxy["CWS proxy<br/>Policy evaluation"]
+        Proxy -->|Block response| Client
+    end
+    Config -.->|Deployment configuration| Proxy
+    Proxy -->|Allowed requests| Provider["Cloudflare or AWS APIs"]
+```
 
 Use CWS to:
 
@@ -63,7 +81,7 @@ A [deployment](/cloudflare-one/cloud-workload-security/get-started/#create-a-dep
 
 ### Proxies
 
-A [CWS proxy](/cloudflare-one/cloud-workload-security/get-started/#set-up-the-proxy-locally) is the process that enforces a deployment's configuration. Run it in your environment using a deployment ID and Cloudflare API credential. Route client API requests through it to apply your controls. The proxy refreshes its configuration and records request decisions.
+A [CWS proxy](/cloudflare-one/cloud-workload-security/get-started/#set-up-the-proxy-locally) is the process that enforces a deployment's configuration. Run it on a Linux host using a deployment ID and Cloudflare API credential. The host can run in your cloud infrastructure, a pipeline runner, or a local environment. Route client API requests through it to apply your controls. The proxy refreshes its configuration and records request decisions.
 
 ### Domain ACLs
 
@@ -71,7 +89,7 @@ A [domain access control list (ACL)](/cloudflare-one/cloud-workload-security/gui
 
 ### Basic Auth credentials
 
-A [Basic Auth credential](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#create-a-basic-auth-credential) identifies a client using the proxy. It has a username and uses password secrets for authentication. Workload and policy filters can match this identity.
+A [Basic Auth credential](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#create-a-basic-auth-credential) identifies a client using the proxy. It has a username and uses password secrets for authentication. Filters and Rego checks can match its authenticated [credential ID or username](/cloudflare-one/cloud-workload-security/reference/policy-input/#basic-auth-identity).
 
 These credentials are separate from the proxy's Cloudflare API credential and the client's cloud-provider credentials.
 
@@ -102,6 +120,7 @@ Include the matching workload in each policy set. Attach both policy sets to the
 ## Next steps
 
 - [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/) to define workloads and attach policy sets.
+- [Policy input](/cloudflare-one/cloud-workload-security/reference/policy-input/) to look up request, application, and credential fields available to Rego.
 - [Manage traffic scope](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/) to configure domain access control lists and Basic Auth credentials.
 - [Manage policy reference resources](/cloudflare-one/cloud-workload-security/guides/policy-reference/) to reuse Rego code, metadata, and cloud hierarchies.
 - [Proxy configuration](/cloudflare-one/cloud-workload-security/configuration/) to choose authentication, connection, and caching settings.

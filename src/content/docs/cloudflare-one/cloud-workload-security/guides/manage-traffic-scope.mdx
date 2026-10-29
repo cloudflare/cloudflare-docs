@@ -68,6 +68,24 @@ Basic Auth credentials are separate from the Cloudflare API token used in your p
 
 The username is read-only after creation. Open the credential to manage its secrets.
 
+## Attach credentials to a deployment
+
+Attach a credential to the deployment loaded by your proxy. Configure the client to send the username and an active secret using HTTP proxy Basic Auth (`Proxy-Authorization`).
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Cloud Workload Security** > **Deployments** and open the deployment.
+
+   <DashButton url="/?to=/:account/one/cloud-workload-security/deployments" />
+
+2. In **Basic Auth Credentials**, select **Attach credential**. Choose the credentials and select **Attach credentials**.
+
+3. Select **Save**. Allow the proxy's deployment configuration to refresh before testing the client.
+</Steps>
+
+Policies can reference the matched credential through `input.auth.basic_auth.id` or `input.auth.basic_auth.username`. Workload and policy filters use the same names without `input.`. Refer to [Basic Auth identity](/cloudflare-one/cloud-workload-security/reference/policy-input/#basic-auth-identity) for field behavior and an enforcing policy example.
+
+The username can be an email address, but CWS does not automatically supply a user's email. Refer to [Email addresses](/cloudflare-one/cloud-workload-security/reference/policy-input/#email-addresses) for the distinction between client identity and proxy API authentication.
+
 ## Rotate a secret
 
 Use this procedure for a credential your clients already use.
