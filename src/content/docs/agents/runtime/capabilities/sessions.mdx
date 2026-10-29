@@ -10,13 +10,15 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
+`Sessions` is the session store that underpins the [Think harness](/agents/harnesses/think/). You can also use it to store the conversation when you [build your own harness](/agents/runtime/capabilities/build-a-capability/).
+
 :::caution[Experimental]
 Everything exported from `agents/sessions` may change between releases.
 :::
 
 `Sessions` from `agents/sessions` stores conversation history in the Durable Object's SQLite database. Messages form a tree, so a conversation can branch. Reads stream, so a long history does not have to fit in memory. Compaction replaces old messages with a summary at read time without deleting them, and full-text search finds messages by their text.
 
-`Sessions` needs no alarm. Think and `AIChatAgent` store their messages with it.
+`Sessions` needs no alarm. `AIChatAgent` also stores its messages with it.
 
 ## Install the capability
 
