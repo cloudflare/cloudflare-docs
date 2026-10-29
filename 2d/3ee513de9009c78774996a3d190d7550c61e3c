@@ -1,0 +1,31 @@
+src/content/docs/agents/harnesses/think/skills.mdx
+  s_8c61cebfb660ba::t_44243f6318002b 126-127
+src/content/docs/agents/tools/computer/container-backend.mdx
+  s_8c61cebfb660ba::t_42079da53860d1 14
+src/content/docs/agents/tools/computer/index.mdx
+  s_8c61cebfb660ba::t_eaeb99c8b54eb6 50-59
+src/content/docs/agents/tools/computer/javascript-backend.mdx
+  s_8c61cebfb660ba::t_d3ee9b99dfe8ac 204
+src/content/docs/agents/tools/computer/modules.mdx
+  s_8c61cebfb660ba::t_63adeaffe3d944 179-185,300
+src/content/docs/agents/tools/computer/run-code.mdx
+  s_8c61cebfb660ba::t_2279f6cfc56202 17-21,23,162
+src/content/docs/agents/tools/computer/shell-backend.mdx
+  s_8c61cebfb660ba::t_4c8f3e8386b20c 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2d3ee513de9009c78774996a3d190d7550c61e3c",
+  "prompts": {},
+  "sessions": {
+    "s_8c61cebfb660ba": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a18361-e005-76f3-8720-a46b0f3293ea",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
