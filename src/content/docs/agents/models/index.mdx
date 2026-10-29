@@ -33,7 +33,7 @@ Both take the same options, route through the same gateway, and handle Workers A
 Name a model with a string, or pass a model object built by the vendor's own package:
 
 ```ts
-ai("@cf/zai-org/glm-4.7-flash"); // Workers AI
+ai("@cf/zai-org/glm-5.3-flash"); // Workers AI
 ai("anthropic/claude-opus-5.5"); // AI Gateway catalog
 ai("dynamic/support"); // AI Gateway dynamic route
 ai(anthropic("claude-opus-5-5")); // the vendor's own model object
@@ -84,9 +84,30 @@ const ai = createAI({
 
 ## Call models from a Durable Object
 
-An agent is a [Durable Object](/durable-objects/). You can call models from any of its methods: [`fetch`](/durable-objects/api/base/) for HTTP requests, [`alarm`](/durable-objects/api/alarms/) for scheduled work, [`webSocketMessage`](/durable-objects/best-practices/websockets/) for WebSocket messages, or your own RPC methods.
+An agent is a [Durable Object](/durable-objects/) with the Agents SDK [Lifecycle](https://github.com/cloudflare/agents/blob/main/docs/agents/lifecycle.md) installed. `Lifecycle.install(this)` installs the platform `fetch`, `alarm`, and WebSocket handlers, and calls your `onStart()`, `onRequest()`, and `onAlarm()` callbacks instead. You can call models from any of these callbacks, from a [WebSocket handler](#stream-over-websockets), or from your own RPC methods.
 
-A Durable Object can call models on its own, without a client waiting, and can handle responses that take minutes (or longer) to finish. The examples below show only the Durable Object class. To bind it and send it requests from your Worker, refer to [Get started with Durable Objects](/durable-objects/get-started/).
+A Durable Object can call models on its own, without a client waiting, and can handle responses that take minutes (or longer) to finish.
+
+To reach the Durable Object from your Worker, route requests with `routeAgentRequest()`. The default URL shape is `/agents/:binding/:name`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { routeAgentRequest } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The examples below show only the Durable Object class. To add the Durable Object binding to your Wrangler configuration, refer to [Get started with Durable Objects](/durable-objects/get-started/).
 
 ### Generate text with the AI SDK
 
@@ -96,6 +117,7 @@ A Durable Object can call models on its own, without a client waiting, and can h
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 import { generateText } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 
@@ -104,7 +126,9 @@ interface Env {
 }
 
 export class MyAgent extends DurableObject<Env> {
-	async fetch(request: Request): Promise<Response> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(request: Request): Promise<Response> {
 		const ai = createAI({ binding: this.env.AI });
 		const { text } = await generateText({
 			model: ai("anthropic/claude-opus-5.5"),
@@ -118,7 +142,7 @@ export class MyAgent extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-To use a different model, change the string, such as `ai("openai/gpt-5.5")` or `ai("@cf/zai-org/glm-4.7-flash")`, or pass the vendor's own model object, such as `ai(openai("gpt-5.5"))`. All of these route through AI Gateway, so you do not need a vendor API key in your Worker.
+To use a different model, change the string, such as `ai("openai/gpt-5.5")` or `ai("@cf/zai-org/glm-5.3-flash")`, or pass the vendor's own model object, such as `ai(openai("gpt-5.5"))`. All of these route through AI Gateway, so you do not need a vendor API key in your Worker.
 
 You can also use any other AI SDK provider directly, without `createAI`. The call then goes straight to the vendor, with your own API key, and skips AI Gateway:
 
@@ -128,6 +152,7 @@ You can also use any other AI SDK provider directly, without `createAI`. The cal
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
 
@@ -136,7 +161,9 @@ interface Env {
 }
 
 export class MyAgent extends DurableObject<Env> {
-	async fetch(request: Request): Promise<Response> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(request: Request): Promise<Response> {
 		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 		const { text } = await generateText({
 			model: openai("gpt-5.5"),
@@ -152,12 +179,14 @@ export class MyAgent extends DurableObject<Env> {
 
 ### Stream over WebSockets {/* long-running-model-requests */}
 
-Reasoning models can take some time to both generate a response _and_ stream it back to the client. Instead of buffering the entire response, stream it back over a [WebSocket](/durable-objects/best-practices/websockets/):
+Reasoning models can take some time to both generate a response _and_ stream it back to the client. Instead of buffering the entire response, stream it back over a WebSocket. Install the `WebSockets` capability to accept upgrades and handle messages; without it, the Lifecycle declines WebSocket upgrades:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { Lifecycle, type Connection } from "agents/lifecycle";
+import { WebSockets, type WebSocketMessage } from "agents/websockets";
 import { streamText } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 
@@ -166,13 +195,15 @@ interface Env {
 }
 
 export class MyAgent extends DurableObject<Env> {
-	async fetch(request: Request): Promise<Response> {
-		const { 0: client, 1: server } = new WebSocketPair();
-		this.ctx.acceptWebSocket(server);
-		return new Response(null, { status: 101, webSocket: client });
-	}
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onMessage: (connection, message) => this.reply(connection, message),
+		},
+	});
 
-	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+
+	async reply(connection: Connection, message: WebSocketMessage) {
 		const { prompt } = JSON.parse(message as string);
 
 		try {
@@ -184,13 +215,13 @@ export class MyAgent extends DurableObject<Env> {
 
 			for await (const chunk of result.textStream) {
 				if (chunk) {
-					ws.send(JSON.stringify({ type: "chunk", content: chunk }));
+					connection.send(JSON.stringify({ type: "chunk", content: chunk }));
 				}
 			}
 
-			ws.send(JSON.stringify({ type: "done" }));
+			connection.send(JSON.stringify({ type: "done" }));
 		} catch (error) {
-			ws.send(JSON.stringify({ type: "error", error: String(error) }));
+			connection.send(JSON.stringify({ type: "error", error: String(error) }));
 		}
 	}
 }
@@ -210,14 +241,17 @@ Set `stream: true` to avoid buffering and delaying responses, especially for lar
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 
 interface Env {
 	AI: Ai;
 }
 
 export class MyAgent extends DurableObject<Env> {
-	async fetch(request: Request): Promise<Response> {
-		const stream = await this.env.AI.run("@cf/zai-org/glm-4.7-flash", {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(request: Request): Promise<Response> {
+		const stream = await this.env.AI.run("@cf/zai-org/glm-5.3-flash", {
 			messages: [
 				{
 					role: "user",
@@ -242,15 +276,18 @@ To send the call through [AI Gateway](/ai-gateway/), pass a [`gateway` option](/
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 
 interface Env {
 	AI: Ai;
 }
 
 export class MyAgent extends DurableObject<Env> {
-	async fetch(request: Request): Promise<Response> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(request: Request): Promise<Response> {
 		const response = await this.env.AI.run(
-			"@cf/zai-org/glm-4.7-flash",
+			"@cf/zai-org/glm-5.3-flash",
 			{
 				messages: [
 					{
@@ -287,6 +324,7 @@ Stream the response back over HTTP with Server-Sent Events (SSE) from `fetch`, o
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 import { OpenAI } from "openai";
 
 interface Env {
@@ -294,7 +332,9 @@ interface Env {
 }
 
 export class MyAgent extends DurableObject<Env> {
-	async fetch(request: Request): Promise<Response> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(request: Request): Promise<Response> {
 		const client = new OpenAI({
 			apiKey: this.env.GEMINI_API_KEY,
 			baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
