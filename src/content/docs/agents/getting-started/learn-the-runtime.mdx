@@ -10,6 +10,7 @@ products:
 
 import {
 	PackageManagers,
+	Render,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
@@ -72,8 +73,8 @@ Add a SQLite-backed Durable Object to your Wrangler configuration file:
 
 - `name` in the binding becomes the property on `env`, for example `env.Counter`.
 - `class_name` must match the exported class name.
-- `exports` declares the class with `"storage": "sqlite"`, which gives each object the SQLite database that the Lifecycle and its capabilities store data in. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).
-- The `agents` package requires the `nodejs_compat` flag.
+
+<Render file="durable-object-config" product="agents" />
 
 ## Write the agent
 

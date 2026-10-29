@@ -10,6 +10,7 @@ products:
 
 import {
 	PackageManagers,
+	Render,
 	Steps,
 	TypeScriptExample,
 	WranglerConfig,
@@ -87,12 +88,12 @@ Add a `lifecycle` field to the class with `Lifecycle.install(this)`. The Lifecyc
 
 The Lifecycle only installs a handler the class does not already define. If your class keeps its own `fetch()` or `alarm()`, those run instead, and the Lifecycle never starts. Move that code into the Lifecycle's hooks:
 
-| Existing code                                                | Move it to                                                                                                           |
-| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Setup in the constructor, such as `blockConcurrencyWhile()`  | `onStart()`. It runs once each time the object starts, and the Lifecycle holds other events until it finishes.       |
-| `fetch(request)`                                             | `onRequest(request)`. It receives every request that no capability handled.                                          |
+| Existing code                                                | Move it to                                                                                                                                                      |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Setup in the constructor, such as `blockConcurrencyWhile()`  | `onStart()`. It runs once each time the object starts, and the Lifecycle holds other events until it finishes.                                                  |
+| `fetch(request)`                                             | `onRequest(request)`. It receives every request that no capability handled.                                                                                     |
 | `alarm()` and `ctx.storage.setAlarm()`                       | The [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability, or `onAlarm()`. The Lifecycle owns the object's alarm and re-arms it from its job queue. |
-| `webSocketMessage()`, `webSocketClose()`, `webSocketError()` | The handlers of the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability.                                                                         |
+| `webSocketMessage()`, `webSocketClose()`, `webSocketError()` | The handlers of the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability.                                                                        |
 
 For example, here is a Durable Object that stores notes:
 
@@ -174,7 +175,9 @@ export class Notes extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-[RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) do not go through `fetch`, so the Lifecycle does not start the object for them. If an RPC method depends on setup in `onStart()`, call `await this.lifecycle.start()` first. Concurrent calls share one startup, and calls after startup return immediately. Capability methods, such as `scheduler.set()`, start the Lifecycle themselves.
+<Render file="rpc-start" product="agents" />
+
+Concurrent calls share one startup, and calls after startup return immediately. Capability methods, such as `scheduler.set()`, start the Lifecycle themselves.
 
 ## 4. Add capabilities
 
@@ -223,13 +226,13 @@ await notes.remindLater("Stand-up", 60);
 
 Other capabilities install the same way:
 
-| Capability                                                            | Import              | What it adds                                                                        |
-| --------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| [`State`](/agents/runtime/capabilities/state/)                                 | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
-| [`WebSockets`](/agents/runtime/capabilities/websockets/)                       | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
-| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                    | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
+| Capability                                                             | Import              | What it adds                                                                        |
+| ---------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
+| [`State`](/agents/runtime/capabilities/state/)                         | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)               | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                 | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
 | [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) | `agents/mcp/client` | Connections to remote MCP servers.                                                  |
-| [`PiHarness`](/agents/harnesses/pi/)                                  | `agents/harness/pi` | The Pi agent loop, with durable sessions.                                           |
+| [`PiHarness`](/agents/harnesses/pi/)                                   | `agents/harness/pi` | The Pi agent loop, with durable sessions.                                           |
 
 Capabilities run in the order you add them. To write your own, refer to [Lifecycle](/agents/runtime/lifecycle/).
 

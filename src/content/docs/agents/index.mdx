@@ -11,10 +11,7 @@ head:
     content: Agents
 ---
 
-import {
-	PackageManagers,
-	RelatedProduct,
-} from "~/components";
+import { RelatedProduct, Render } from "~/components";
 import AgentsPlatformDiagram from "~/components/cf/AgentsPlatformDiagram.astro";
 
 Build and host AI agents on Cloudflare. Connect chat, voice, email, Slack, and webhooks to a durable agent, and give it tools such as a workspace, a browser, web search, MCP servers, and payments.
@@ -38,7 +35,7 @@ Agents publish structured events, such as state changes, schedules, and MCP conn
 
 Build your first agent with the Pi harness. The [Pi harness](/agents/harnesses/pi/) runs the [Pi](https://pi.dev/) agent loop durably in a Durable Object. It uses the Lifecycle's job queue to schedule future work, so a run continues after the object is evicted. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
 
-<PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
+<Render file="pi-install" product="agents" />
 
 To start from a complete app with a browser UI, a Cloudflare Computer workspace, and code execution, deploy the Pi harness example:
 

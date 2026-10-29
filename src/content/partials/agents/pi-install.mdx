@@ -1,0 +1,12 @@
+---
+params:
+  - extra?
+---
+
+import { PackageManagers } from "~/components";
+
+<PackageManagers
+	pkg={`agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord${props.extra ? ` ${props.extra}` : ""}`}
+/>
+
+The Pi packages are optional peer dependencies of `agents`, at `~1.4.0`. Pi Durable is experimental and its API can change in minor releases, so each `agents` release supports one Pi minor version. Install the versions your package manager resolves for `agents`.
