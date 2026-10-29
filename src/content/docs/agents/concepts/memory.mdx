@@ -1,0 +1,82 @@
+---
+title: Context and memory
+pcx_content_type: concept
+description: Context is what an agent keeps in mind across turns, a scratchpad it reads and writes. Learn the kinds of context, how they relate to skills, and how changes reach the model without breaking the prompt cache.
+tags:
+  - AI
+sidebar:
+  order: 5
+products:
+  - agents
+---
+
+A [session](/agents/concepts/sessions/) records what was said. Context is what the agent keeps in mind while it talks: who it is, what it has learned about the user, what it is in the middle of doing. Think of it as a scratchpad next to the transcript. The agent reads it on every turn, and it can write to parts of it.
+
+The two are related but different. The transcript only grows, and old parts of it get summarized away. Context is current. When the agent learns that the user deploys on Fridays, that fact belongs in context, where it stays readable after compaction has turned the conversation it came from into one paragraph.
+
+## Blocks
+
+Context is made of labelled blocks. Each block appears in the agent's system prompt as its own section, so the model can tell its instructions from its notes. What sets blocks apart is who can change them.
+
+| Block      | Who changes it | What the model sees                      | Typical use                                      |
+| ---------- | -------------- | ---------------------------------------- | ------------------------------------------------ |
+| Read-only  | You            | The full text                            | Identity, instructions, project conventions      |
+| Writable   | The agent      | The full text and how much space is left | Facts about the user, a task list, working notes |
+| Searchable | The agent, you | A summary, such as an entry count        | A knowledge base too large for the prompt        |
+
+A read-only block is the classic system prompt. It can come from your code, a file in R2, or an API, so you can change an agent's instructions without redeploying it.
+
+A writable block is the scratchpad proper. The agent gets a tool to replace or append to it, and the block has a token budget. Showing the model how full a block is lets it decide when to tidy its own notes, the way a person rewrites a todo list that has grown too long.
+
+A searchable block is for knowledge that does not fit. The prompt carries only a summary, and the agent searches for the entries it needs. How the search works is up to you: full-text search in the agent's own storage, vectors in [Vectorize](/vectorize/), or an external service.
+
+## Context and skills
+
+[Agent Skills](/agents/runtime/execution/agent-skills/) follow the same idea for instructions. The prompt carries a catalog of skill names and descriptions, and the agent loads a skill's full text only when a task calls for it. A large library of instructions then costs a few lines per skill until one is needed.
+
+The difference is direction and form. Skills are written by you, follow the [Agent Skills specification](https://agentskills.io), and can bring resources and scripts with them. Context blocks have no spec. They are plain text, and the agent writes many of them itself. A useful rule: if you would put it in a `SKILL.md` file, it is a skill; if the agent would jot it down, it is context.
+
+## How context reaches the model
+
+The system prompt sits at the start of every request, so it sits at the start of the [prompt cache](/agents/concepts/sessions/#prompt-caching-shapes-the-session). If the prompt changed every time a block did, every turn would start cold. Context avoids that by never rewriting what the model has already been sent.
+
+When a conversation starts, the agent renders its blocks into a system prompt and keeps that exact text. Every later request opens with it. Writing to a block saves the new value right away, but the system prompt stays as it was.
+
+Some changes the model should know about before the next refresh: today's date, the state of a workspace, a block another process updated. For those, the change goes after the cached prefix, as a short note next to the user message of the turn that noticed it. The session records which message carried the note, so every later request repeats it in the same place. The note is sent once and never moves, and each request still extends the one before it.
+
+```txt
+system:    snapshot of the blocks (unchanged for the whole conversation)
+user:      What should I work on?
+assistant: ...
+user:      What day is it?
+           + note: environment changed, "Today is Tuesday."
+assistant: It is Tuesday.
+user:      Thanks
+```
+
+Changes the agent makes itself need no note. The tool call that wrote the block is already in the transcript, so the model knows what it wrote.
+
+A refresh renders the blocks again and records a new snapshot. That is the one deliberate cache miss. It fits best where the cache is already gone, which is why agents refresh their context when a session is compacted.
+
+## Where context lives
+
+Block values live in the agent's storage or in whatever backs the block, outside the transcript. The session records only what the model was shown and where: the snapshot each stretch of the conversation started with, and each note delivered after it. The value is the agent's memory. The record is the history of what the model knew.
+
+That split lets you edit the memory directly without touching the conversation, and lets the conversation be replayed, branched, or compacted without losing the memory.
+
+## Choosing where information goes
+
+| Information                                     | Where it belongs                                   |
+| ----------------------------------------------- | -------------------------------------------------- |
+| What the user and the agent said                | The [session](/agents/concepts/sessions/)          |
+| Who the agent is and how it behaves             | A read-only block                                  |
+| What the agent learned and wants to keep        | A writable block                                   |
+| A large collection the agent looks things up in | A searchable block                                 |
+| Reusable instructions loaded only when needed   | A [skill](/agents/runtime/execution/agent-skills/) |
+| Application data a client displays and edits    | [Agent state](/agents/agent-class/state/)          |
+
+## Related
+
+- [Sessions](/agents/concepts/sessions/) covers the transcript, branching, compaction, and prompt caching.
+- [Agent Skills](/agents/runtime/execution/agent-skills/) is the reference for on-demand instructions.
+- [Think](/agents/harnesses/think/) declares context blocks for you and delivers their changes each turn.
