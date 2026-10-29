@@ -88,7 +88,7 @@ The SDK also has experimental harnesses that run Think's loop as a capability, a
 
 ## Build your own
 
-A harness is a Lifecycle capability. To write your own loop, extend `LifecycleCapability`, store the transcript in the object's SQLite database, and push a job to the Lifecycle's queue whenever work must continue after an eviction. For more information, refer to [Build a capability](/agents/runtime/lifecycle/build-a-capability/).
+A harness is a Lifecycle capability. To write your own loop, extend `LifecycleCapability`, store the transcript in the object's SQLite database, and push a job to the Lifecycle's queue whenever work must continue after an eviction. For a guide, refer to [Build your own harness](/agents/harnesses/build-your-own/). For the capability API, refer to [Build a capability](/agents/runtime/lifecycle/build-a-capability/).
 
 The SDK has experimental building blocks for this: `Sessions` stores the transcript, `Streams` stores output while it streams, and `Tasks` runs replayable steps.
 
