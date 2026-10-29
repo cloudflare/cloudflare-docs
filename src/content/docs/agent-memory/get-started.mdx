@@ -18,7 +18,7 @@ import {
 
 Add Agent Memory to an agent so it can recall durable context across conversations.
 
-This guide uses the [Agents SDK](/agents/) and its [Session API](/agents/runtime/lifecycle/sessions/) to expose memory recall as a model-callable tool. The same pattern applies if you use another agent framework: store memories with `ingest()` or `remember()`, expose `recall()` through one of your agent's tools, and use the system prompt to tell the model when to search memory.
+This guide uses the [Agents SDK](/agents/) to expose memory recall as a model-callable tool. The same pattern applies if you use another agent framework: store memories with `ingest()` or `remember()`, expose `recall()` through one of your agent's tools, and use the system prompt to tell the model when to search memory.
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ cd memory-agent
 
 Install the dependencies used by this guide:
 
-<PackageManagers pkg="agents ai @ai-sdk/provider" />
+<PackageManagers pkg="agents ai @ai-sdk/provider zod" />
 
 ## 2. Create a namespace
 
@@ -67,7 +67,7 @@ You will use the namespace name, `my-agent`, in your Worker binding.
 
 ## 3. Configure bindings
 
-Add an `agent_memory` binding to your Wrangler configuration. If you use the Agents SDK, also register your agent Durable Object.
+Add an `agent_memory` binding to your Wrangler configuration, and register your agent's Durable Object.
 
 <WranglerConfig>
 
@@ -104,57 +104,57 @@ Generate local TypeScript types for your bindings:
 
 The model cannot use memory just because your application has a memory binding. You need to expose recall through a tool and instruct the model when to call it.
 
-With the Agents SDK [Session API](/agents/runtime/lifecycle/sessions/), add a searchable context provider. Session turns the provider's `search()` method into a `search_context` tool for the model.
+This guide builds the agent on a Durable Object with the Agents SDK [Lifecycle](/agents/runtime/lifecycle/). The [`Sessions`](/agents/runtime/capabilities/sessions/) capability stores the conversation. `agents/sessions` is experimental, so its API may change between releases.
 
-Create `src/server.ts` and add the recall setup:
+Create `src/server.ts`. It defines the system prompt and a `search_memory` tool that calls `recall()`:
 
 <TypeScriptExample filename="src/server.ts">
 
 ```ts
-import { Agent, routeAgentRequest } from "agents";
-import { Session } from "agents/experimental/memory/session";
+import { DurableObject } from "cloudflare:workers";
+import { tool } from "ai";
+import { z } from "zod";
+import { Lifecycle } from "agents/lifecycle";
+import { routeAgentRequest } from "agents/routing";
+import { Sessions } from "agents/sessions";
 
-const INSTRUCTIONS = "You are a helpful assistant.";
+const SYSTEM_PROMPT = `You are a helpful assistant.
 
-const MEMORY_CONTEXT = `Long-term memory is available through the search_context tool.
+Long-term memory is available through the search_memory tool.
 
 MEMORY POLICY
-- Search memory with search_context when the user asks what you know or remember about them.
+- Search memory with search_memory when the user asks what you know or remember about them.
 - Search memory when the request depends on prior sessions, preferences, project state, conventions, decisions, or long-running tasks.
 - Phrase memory searches as concise topics, not questions.
 - Do not search memory to repeat something the user just said in the current conversation.
-- When search_context returns results, always incorporate them into your response. The results are real memories from previous conversations.
+- When search_memory returns results, always incorporate them into your response. The results are real memories from previous conversations.
 - Treat recalled memories as helpful context, not guaranteed truth. If a memory is important for an irreversible action, confirm with the user.`;
 
 const MEMORY_PROFILE_NAME = "demo-user";
 
-type ChatAgentState = {
-	cursor: number;
-	nextIngestAt: number | null;
-};
+export class ChatAgent extends DurableObject<Env> {
+	readonly sessions = new Sessions();
+	readonly lifecycle = Lifecycle.install(this).use(this.sessions);
+	readonly session = this.sessions.session();
 
-export class ChatAgent extends Agent<Env, ChatAgentState> {
-	initialState: ChatAgentState = { cursor: 0, nextIngestAt: null };
-
-	session = Session.create(this)
-		.withContext("instructions", {
-			provider: { get: async () => INSTRUCTIONS },
-		})
-		.withContext("memory", {
-			description:
-				"Searchable durable memory: facts, events, instructions, and tasks from prior conversations.",
-			provider: {
-				get: async () => MEMORY_CONTEXT,
-				search: async (query: string) => {
+	memoryTools() {
+		return {
+			search_memory: tool({
+				description:
+					"Search durable memory: facts, events, instructions, and tasks from prior conversations.",
+				inputSchema: z.object({
+					query: z.string().describe("A concise topic to search for"),
+				}),
+				execute: async ({ query }) => {
 					const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
 					const { answer } = await profile.recall(query, {
 						responseLength: "short",
 					});
 					return answer || "No relevant memories found.";
 				},
-			},
-		})
-		.withCachedPrompt();
+			}),
+		};
+	}
 }
 
 export default {
@@ -169,26 +169,36 @@ export default {
 
 </TypeScriptExample>
 
-The system prompt is as important as the tool. It tells the model when to call `search_context`, when not to call it, and how to treat recalled memory.
+The system prompt is as important as the tool. It tells the model when to call `search_memory`, when not to call it, and how to treat recalled memory. The prompt is the same on every turn, so the model provider can keep it in its prompt cache.
 
 ## 5. Extract memories from conversation
 
-Next, give your agent a way to add durable memories. In a chat agent, the usual path is to store the conversation in Session, then call `ingest()` after the user goes idle.
+Next, give your agent a way to add durable memories. In a chat agent, the usual path is to store the conversation in a session, then call `ingest()` after the user goes idle. The [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability runs the ingest later, even if the Durable Object is evicted in the meantime.
 
-Change the `agents` import and add the AI SDK imports. Keep the `Session` import from step 4.
+Replace the imports at the top of `src/server.ts`:
 
 <TypeScriptExample filename="src/server.ts">
 
 ```ts
-import { Agent, getAgentByName, routeAgentRequest } from "agents";
-import { convertToModelMessages, generateText, stepCountIs } from "ai";
-import type { UIMessage } from "ai";
+import { DurableObject } from "cloudflare:workers";
+import {
+	convertToModelMessages,
+	generateText,
+	stepCountIs,
+	tool,
+	type UIMessage,
+} from "ai";
+import { z } from "zod";
+import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/ai-sdk";
+import { routeAgentRequest } from "agents/routing";
+import { Scheduler } from "agents/schedules";
+import { Sessions } from "agents/sessions";
 ```
 
 </TypeScriptExample>
 
-Add the ingestion delay near the top of the file, below the imports:
+Add the ingestion delay near the top of the file, after the imports:
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -198,103 +208,94 @@ const MEMORY_INGEST_DELAY_SECONDS = 10;
 
 </TypeScriptExample>
 
-Then update `ChatAgent` with the following shape. The comment marks where to keep the Session setup from step 4.
+Then update `ChatAgent` with the following shape. The comment marks where to keep `memoryTools()` from step 4.
 
 <TypeScriptExample filename="src/server.ts">
 
 ```ts
-export class ChatAgent extends Agent<Env, ChatAgentState> {
-	initialState: ChatAgentState = { cursor: 0, nextIngestAt: null };
+export class ChatAgent extends DurableObject<Env> {
+	readonly sessions = new Sessions();
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			ingestMemory: () => this.runIngest(),
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.sessions)
+		.use(this.scheduler);
+	readonly session = this.sessions.session();
 
-	// Keep the `session = Session.create(this)` setup from step 4 here.
+	// Keep `memoryTools()` from step 4 here.
 
 	async chat(message: string): Promise<string> {
-		const userMessage: UIMessage = {
+		// RPC calls do not start the Lifecycle on their own.
+		await this.lifecycle.start();
+
+		await this.session.appendMessage({
 			id: `user-${crypto.randomUUID()}`,
 			role: "user",
 			parts: [{ type: "text", text: message }],
-		};
-		await this.session.appendMessage(userMessage);
+		});
 
 		await this.scheduleIngest();
 
 		const ai = createAI({ binding: this.env.AI });
 		const result = await generateText({
-			model: ai("@cf/zai-org/glm-4.7-flash"),
-			system: await this.session.freezeSystemPrompt(),
+			model: ai("@cf/zai-org/glm-5.3-flash"),
+			system: SYSTEM_PROMPT,
 			messages: await convertToModelMessages(
 				(await this.session.getHistory()) as UIMessage[],
 			),
-			tools: await this.session.tools(),
+			tools: this.memoryTools(),
 			stopWhen: stepCountIs(5),
 		});
 
-		const assistantMessage: UIMessage = {
+		await this.session.appendMessage({
 			id: `assistant-${crypto.randomUUID()}`,
 			role: "assistant",
 			parts: [{ type: "text", text: result.text }],
-		};
-		await this.session.appendMessage(assistantMessage);
+		});
 
 		return result.text;
 	}
 
-	async ingestScheduledMemory() {
-		await this.runIngest();
-	}
-
 	private async scheduleIngest() {
-		await this.cancelPendingIngest();
-		await this.schedule(
-			MEMORY_INGEST_DELAY_SECONDS,
-			"ingestScheduledMemory",
-			{},
-		);
-		this.setState({
-			...this.state,
-			nextIngestAt: Date.now() + MEMORY_INGEST_DELAY_SECONDS * 1000,
-		});
-	}
-
-	private async cancelPendingIngest() {
-		const pending = await this.listSchedules();
-		for (const schedule of pending) {
-			if (schedule.callback === "ingestScheduledMemory") {
-				await this.cancelSchedule(schedule.id);
+		// Replace any pending ingest, so it runs once the user goes idle.
+		for (const schedule of await this.scheduler.list()) {
+			if (schedule.callback === "ingestMemory") {
+				await this.scheduler.cancel(schedule.id);
 			}
 		}
+		await this.scheduler.set(MEMORY_INGEST_DELAY_SECONDS, "ingestMemory");
 	}
 
 	private async runIngest(): Promise<{ ingested: number }> {
-		const history = (await this.session.getHistory()) as UIMessage[];
+		const cursor = (await this.ctx.storage.get<number>("ingestCursor")) ?? 0;
+		const history = await this.session.getHistory();
 		const messages = history
-			.slice(this.state.cursor)
+			.slice(cursor)
 			.filter(
 				(message) => message.role === "user" || message.role === "assistant",
 			)
 			.map((message) => ({
-				role: message.role,
+				role: message.role as "user" | "assistant",
 				content: message.parts
-					.map((part) => (part.type === "text" ? part.text : ""))
+					.map((part) =>
+						part.type === "text" && typeof part.text === "string"
+							? part.text
+							: "",
+					)
 					.filter(Boolean)
 					.join("\n\n"),
 			}))
 			.filter((message) => message.content);
 
-		if (messages.length === 0) {
-			this.setState({ ...this.state, nextIngestAt: null });
-			return { ingested: 0 };
+		if (messages.length > 0) {
+			const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
+			await profile.ingest(messages, { sessionId: this.lifecycle.name });
 		}
 
-		const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
-		await profile.ingest(messages, { sessionId: this.name });
-
-		this.setState({
-			...this.state,
-			cursor: history.length,
-			nextIngestAt: null,
-		});
-
+		await this.ctx.storage.put("ingestCursor", history.length);
 		return { ingested: messages.length };
 	}
 }
@@ -302,7 +303,7 @@ export class ChatAgent extends Agent<Env, ChatAgentState> {
 
 </TypeScriptExample>
 
-Replace the default export with a small test endpoint. Each `conversationId` maps to a separate Agent instance with its own Session history.
+Replace the default export with a small test endpoint. Each `conversationId` maps to a separate Durable Object with its own session history. The Worker calls `chat()` over [RPC](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/):
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -321,7 +322,7 @@ export default {
 				return Response.json({ error: "Missing message" }, { status: 400 });
 			}
 
-			const agent = await getAgentByName(env.ChatAgent, conversationId);
+			const agent = env.ChatAgent.getByName(conversationId);
 			const response = await agent.chat(message);
 			return Response.json({ response });
 		}
@@ -338,11 +339,11 @@ export default {
 
 The ingestion path is `scheduleIngest()` and `runIngest()`. Each user message cancels the previous pending ingest and schedules a new one, so Agent Memory processes the conversation after the user goes idle instead of after every agent turn.
 
-`runIngest()` uses a cursor so each batch only includes messages that have not already been ingested. The `sessionId` groups memories by conversation inside the shared memory profile.
+`runIngest()` keeps a cursor in the Durable Object's storage, so each batch only includes messages that have not already been ingested. The `sessionId` groups memories by conversation inside the shared memory profile.
 
 This demo uses one Agent Memory profile, `demo-user`, across multiple conversations. In production, choose profile names that match your application scope, such as users, teams, tenants, or organizations.
 
-You can also call the ingestion logic from a Session compaction hook. The important constraint is to ingest in batches at natural checkpoints, not after every agent turn. In production, choose an ingest delay that matches your application's user experience.
+You can also run the ingestion logic when a session is compacted. The important constraint is to ingest in batches at natural checkpoints, not after every agent turn. In production, choose an ingest delay that matches your application's user experience.
 
 ## 6. (Optional) Store explicit memories when needed
 
@@ -368,7 +369,7 @@ curl -X POST "http://localhost:8787/chat" \
 
 Wait at least 30 seconds before sending the next request. The code schedules ingestion to run 10 seconds after the user goes idle, and Agent Memory then needs additional time to extract, classify, and index the memories before they are available for recall.
 
-Ask a different conversation a question that depends on durable memory. This request uses a different Session history but the same Agent Memory profile.
+Ask a different conversation a question that depends on durable memory. This request uses a different session history but the same Agent Memory profile.
 
 ```bash
 curl -X POST "http://localhost:8787/chat" \
@@ -376,7 +377,7 @@ curl -X POST "http://localhost:8787/chat" \
   -d '{"conversationId":"second-chat","message":"What do you know or remember about me and my preferences?"}'
 ```
 
-The model should call `search_context`, receive recalled memory from Agent Memory, and use that context in its response. The second conversation has no shared Session history with the first, so any knowledge of user preferences comes from Agent Memory.
+The model should call `search_memory`, receive recalled memory from Agent Memory, and use that context in its response. The second conversation has no shared session history with the first, so any knowledge of user preferences comes from Agent Memory.
 
 ## Next steps
 

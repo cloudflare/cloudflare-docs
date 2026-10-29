@@ -210,7 +210,7 @@ class MyAgent extends Agent<Env, { count: number }> {
 }
 ```
 
-State is stored in the `cf_agents_state` SQL table. State messages are sent with `type: "cf_agent_state"` (both from the client and the server). Since `agents` provides [JS and React clients](/agents/agent-class/state/#synchronizing-state), real-time state updates are available out of the box.
+State is stored in the `cf_agents_state` SQL table. State messages are sent with `type: "cf_agent_state"` (both from the client and the server). Since `agents` provides [JS and React clients](/agents/agent-class/state/#sync-with-clients), real-time state updates are available out of the box.
 
 ### `this.sql`
 

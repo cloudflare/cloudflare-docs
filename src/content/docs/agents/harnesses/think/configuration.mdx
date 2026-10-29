@@ -24,7 +24,7 @@ Think is configured by overriding methods and properties on your `Think` subclas
 | `getMessengers()`          | `{}`                             | Messenger ingress and delivery declarations — refer to [Messengers](/agents/harnesses/think/messengers/)                                                                                                                                                                            |
 | `maxSteps`                 | `10`                             | Max tool-call rounds per turn                                                                                                                                                                                                                                                       |
 | `sendReasoning`            | `true`                           | Send reasoning chunks to chat clients                                                                                                                                                                                                                                               |
-| `configureSession()`       | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/runtime/lifecycle/sessions/)                                                                                                                                                                           |
+| `configureSession()`       | identity                         | Add context blocks, compaction, search, skills — refer to [Sessions](/agents/runtime/capabilities/sessions/)                                                                                                                                                                           |
 | `getSkills()`              | `[]`                             | Return Agent Skills sources for on-demand skill activation — refer to [Agent Skills](/agents/runtime/execution/agent-skills/)                                                                                                                                                       |
 | `getSkillScriptRunner()`   | `null`                           | Enable the optional `run_skill_script` tool                                                                                                                                                                                                                                         |
 | `messageConcurrency`       | `"queue"`                        | How overlapping submits behave — refer to [Client tools](/agents/harnesses/think/client-tools/#message-concurrency)                                                                                                                                                                 |
@@ -87,7 +87,7 @@ export class MyAgent extends Think<Env> {
 
 ## Session integration
 
-Think stores conversations in a [Session](/agents/runtime/lifecycle/sessions/) — the storage layer that holds your messages and gives the model writable memory. Two concepts come up here: **context blocks** are labelled sections of the system prompt the model can read and update (for example, a `memory` block of facts about the user), and **compaction** summarizes older messages so long conversations stay within the model's context window. Override `configureSession` to add persistent memory, compaction, search, and skills:
+Think stores conversations in a [Session](/agents/runtime/capabilities/sessions/) — the storage layer that holds your messages and gives the model writable memory. Two concepts come up here: **context blocks** are labelled sections of the system prompt the model can read and update (for example, a `memory` block of facts about the user), and **compaction** summarizes older messages so long conversations stay within the model's context window. Override `configureSession` to add persistent memory, compaction, search, and skills:
 
 <TypeScriptExample>
 
@@ -117,7 +117,7 @@ export class MyAgent extends Think<Env> {
 
 When `configureSession` adds context blocks, Think builds the system prompt from those blocks instead of using `getSystemPrompt()`. Think's `this.messages` getter reads directly from Session's tree-structured storage.
 
-For the full Session API — context blocks, compaction, search, skills, and multi-session support — refer to the [Sessions documentation](/agents/runtime/lifecycle/sessions/).
+For the full Session API — context blocks, compaction, search, skills, and multi-session support — refer to the [Sessions documentation](/agents/runtime/capabilities/sessions/).
 
 ## Package exports
 
