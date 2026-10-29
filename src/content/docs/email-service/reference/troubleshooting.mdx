@@ -298,46 +298,13 @@ Not every failure results in a suppression. Email Service creates automatic entr
 
 ## Conflicts with external mail providers
 
-### MX conflict with an external mail provider
+### Onboarding fails with "Non-Cloudflare MX records exist"
 
-Email Routing and any third-party mail provider — such as Google Workspace, Microsoft 365, or Zoho Mail — cannot be active simultaneously on the same domain. Both require control of the domain's `MX` records, and only one set can be authoritative at a time. If both are configured, email delivery will be unpredictable.
+When you enable Email Routing on a domain that already has `MX` records from another provider (such as Google Workspace, Microsoft 365, or Zoho Mail), onboarding fails with error 2008, "Non-Cloudflare MX records exist". Email Routing requires exclusive control of the root domain `MX` records.
 
-:::note
-This limitation applies to **Email Routing** (inbound) only. Email Sending (outbound) uses records on the `cf-bounce.<yourdomain>` subdomain and does not conflict with your existing provider's `MX`, `SPF`, or `DKIM` records. You can enable Email Sending on a domain that uses Google Workspace or any other external mail provider without modifying your existing DNS records.
-:::
+To switch your domain to Email Routing, refer to [Move to Email Routing from another provider](/email-service/configuration/domains/#move-to-email-routing-from-another-provider).
 
-**To switch to Email Routing from an external provider:**
-
-1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing** and configure your routing rules and destination addresses before switching. Refer to [Get started with Email Routing](/email-service/get-started/) for setup steps.
-
-   <DashButton url="/?to=/:account/email-service/routing" />
-
-2. In **DNS** > **Records**, delete your provider's `MX` records, `SPF` `TXT` record, and DKIM `TXT` records. The exact record names vary by provider:
-
-   | Provider | MX records | SPF record | DKIM record name |
-   | --- | --- | --- | --- |
-   | Google Workspace | Point to `*.google.com` (for example, `aspmx.l.google.com`) | `v=spf1 include:_spf.google.com ~all` | `google._domainkey.<yourdomain>` |
-   | Microsoft 365 | Point to `*.mail.protection.outlook.com` | `v=spf1 include:spf.protection.outlook.com ~all` | `selector1._domainkey.<yourdomain>`, `selector2._domainkey.<yourdomain>` |
-   | Zoho Mail | Point to `*.zoho.com` (for example, `mx.zoho.com`) | `v=spf1 include:zoho.com ~all` | `zoho._domainkey.<yourdomain>` |
-
-   This causes an inbound mail interruption during DNS propagation, which can take up to 48 hours.
-
-3. Enable Email Routing for your domain. Cloudflare automatically adds the required `MX` and `SPF` records.
-
-### Use a subdomain to keep your existing mail provider
-
-If you want Email Routing on a specific subdomain while keeping your existing provider active on the root domain, onboard the subdomain to Email Routing instead of the root domain. Your root domain `MX`, `SPF`, and `DKIM` records are not affected.
-
-For example, to receive email at `support@tickets.example.com` while keeping Google Workspace active for `@example.com`:
-
-1. In the Cloudflare dashboard, go to **Compute** > **Email Service** > **Email Routing**.
-
-   <DashButton url="/?to=/:account/email-service/routing" />
-
-2. When prompted to enter a domain, enter the subdomain (for example, `tickets.example.com`) instead of the root domain.
-3. Add only the Cloudflare `MX` and `SPF` records for the subdomain in **DNS** > **Records**.
-
-This approach works with any root domain mail provider.
+To use Email Routing on a subdomain while keeping your existing provider on the root domain, refer to [Configure subdomains](/email-service/configuration/subdomains/). Your root domain `MX` records are not affected.
 
 ## Testing tools
 
