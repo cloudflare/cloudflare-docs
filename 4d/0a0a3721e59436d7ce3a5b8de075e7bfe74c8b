@@ -1,0 +1,19 @@
+src/content/docs/agents/harnesses/index.mdx
+  s_41fd4d89757fb4::t_67dda8f414e874 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4d0a0a3721e59436d7ce3a5b8de075e7bfe74c8b",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

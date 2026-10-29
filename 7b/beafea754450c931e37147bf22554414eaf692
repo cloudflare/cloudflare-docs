@@ -1,0 +1,23 @@
+src/content/docs/agents/agent-class/communication-channels/voice.mdx
+  s_ddffa3277869c1::t_dec6d359b723dc 24,26-45,61,75,94,202,381,418,487,524,598
+src/content/docs/agents/examples/voice-agent.mdx
+  s_ddffa3277869c1::t_56eb8a3f0b9671 37,42,95,170
+src/content/docs/ai-search/how-to/talk-to-your-knowledge-base.mdx
+  s_ddffa3277869c1::t_6c87a580c4050b 21,27,34,52,54,56,124,205,296
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7bbeafea754450c931e37147bf22554414eaf692",
+  "prompts": {},
+  "sessions": {
+    "s_ddffa3277869c1": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1889f-fdac-74e2-9ba5-414b1e623bff",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

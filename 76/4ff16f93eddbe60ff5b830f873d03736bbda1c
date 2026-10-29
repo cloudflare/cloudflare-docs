@@ -1,0 +1,23 @@
+src/content/docs/logs/logpush/examples/example-logpush-curl.mdx
+  s_069592b0db6850::t_813275bb4451d6 51
+src/content/docs/logs/logpush/logpush-job/enable-destinations/aws-s3.mdx
+  s_069592b0db6850::t_225c999e078be7 14,16,29,95-183
+src/content/docs/logs/logpush/logpush-job/logpush-ownership-challenge.mdx
+  s_069592b0db6850::t_74bebbc0f2ad3d 21,43,47,66-67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "764ff16f93eddbe60ff5b830f873d03736bbda1c",
+  "prompts": {},
+  "sessions": {
+    "s_069592b0db6850": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cab346c0-ce0f-4ffa-8961-240409254b01",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}
