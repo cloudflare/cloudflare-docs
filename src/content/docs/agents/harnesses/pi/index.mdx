@@ -175,7 +175,7 @@ For more information on creating and configuring extensions, including skills an
 
 ## Connect a workspace
 
-A workspace gives Pi a durable filesystem, code execution, and skills. It is a `Workspace` from [Cloudflare Computer](/agents/concepts/workspace/) (`@cloudflare/computer`). It stores its files in the same Durable Object's SQLite database, next to Pi's own tables, so the files survive eviction just like the transcript.
+A workspace gives Pi a durable filesystem and code execution. It is a `Workspace` from [Cloudflare Computer](/agents/concepts/workspace/) (`@cloudflare/computer`). It stores its files in the same Durable Object's SQLite database, next to Pi's own tables, so the files survive eviction just like the transcript.
 
 Install Computer:
 
@@ -282,67 +282,6 @@ Reads, searches, whole-file writes, and deletes are safe to run twice, so the ex
 
 The [Pi harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi) uses the same pattern, and adds git to the workspace.
 
-### Load skills from the workspace
-
-A [skill](/agents/concepts/skills/) is a folder with a `SKILL.md` file and any references, templates, or scripts it needs. Skills are files on the workspace: the model reads them with the same tools it uses for any other file, and runs their scripts with `exec`.
-
-Two pieces load skills into Pi:
-
-- `SkillRegistry` from `agents/skills` writes each skill into the workspace, under `/workspace/.agents/skills/<name>/`. Files that already exist are kept, so edits made in the workspace survive the next startup.
-- `skills(sources)` from `agents/harness/pi` lists the skills in a `skills` section of the system prompt, and adds two tools: `activate_skill`, which returns a skill's instructions, and `read_skill_resource`, which reads a file bundled with a skill.
-
-Keep the skills in a `skills` folder next to your agent, one folder per skill, and bundle them with the Agents Vite plugin:
-
-```ts title="vite.config.ts"
-import { cloudflare } from "@cloudflare/vite-plugin";
-import agents from "agents/vite";
-import { defineConfig } from "vite";
-
-export default defineConfig({
-	plugins: [agents(), cloudflare()],
-});
-```
-
-`import skills from "agents:skills"` then resolves to the `./skills` folder next to the importing file. Use `agents:skills/<folder>` for a differently named folder. Write the skills to the workspace and install the extension in the `harness` factory, which can be `async`:
-
-<TypeScriptExample filename="src/index.ts">
-
-```ts
-import { skills } from "agents/harness/pi";
-import { SkillRegistry } from "agents/skills";
-import bundledSkills from "agents:skills";
-
-export class Assistant extends DurableObject<Env> {
-	// ...ai, registry, and workspace as above
-
-	readonly harness = new PiHarness({
-		harness: async ({ storage, context, onWake }) => {
-			// Write the skills to /workspace/.agents/skills as files.
-			await new SkillRegistry([bundledSkills]).seedWorkspace(this.workspace);
-			// List the skills in the prompt and add the activation tools.
-			this.registry.install(await skills([bundledSkills]));
-			this.registry.install({
-				name: "workspace",
-				tools: workspaceTools(this.workspace),
-			});
-			const models = createModels();
-			models.setProvider(this.ai.provider);
-			return Harness.open(
-				storage,
-				{ models, registry: this.registry, onWake },
-				context,
-			);
-		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
-	});
-}
-```
-
-</TypeScriptExample>
-
-The `agents:skills` import is typed by declarations that ship with `agents`. They load with any import from the `agents` package root, such as `routeAgentRequest`.
-
-`activate_skill` and `read_skill_resource` read from the sources you pass to `skills()`, not from the workspace copy. If the model edits a skill's files in the workspace, those edits change what it reads with `read`, not what `activate_skill` returns. To serve skills from R2 instead of the Worker bundle, pass `r2(bucket, { prefix })` from `agents/skills` as another source.
 
 ## Send prompts
 
