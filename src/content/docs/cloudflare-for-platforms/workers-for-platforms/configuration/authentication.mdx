@@ -1,10 +1,9 @@
 ---
-title: Authenticate and authorize generated apps
-description: Enforce route policies before generated code runs, and protect data through scoped capabilities on Workers for Platforms and Dynamic Workers.
+title: Authentication and authorization
+description: Enforce route policies and data permissions outside customer app code with Workers for Platforms and Dynamic Workers.
 pcx_content_type: design-guide
 sidebar:
   order: 4
-  label: Authentication and authorization
 products:
   - cloudflare-for-platforms
   - dynamic-workers
@@ -12,11 +11,11 @@ products:
 
 import { Tabs, TabItem, TypeScriptExample } from "~/components";
 
-Your customers can use artificial intelligence (AI) to generate apps. Each app may need both public and private endpoints.
+When you build a platform that runs customer apps, you need to control who can use each app and which data they can access. An app may have both public and private endpoints.
 
-Your platform cannot predict every route those apps will introduce. Generated code may also omit authentication or authorization checks.
+Customers can add routes and change app code independently of your platform. Keep access rules in platform-owned code, so they do not depend on every app implementing authentication and authorization correctly.
 
-Enforce access in code your platform controls:
+Enforce access at two points:
 
 - **Before the app runs:** require a list of public and private routes when the app is published. Validate that list and enforce its rules before invoking app code.
 - **When the app accesses data:** check permissions inside platform-owned operations. Signing in must not let Bob read Alice's private report.
@@ -27,7 +26,7 @@ This guide implements these checks with Workers for Platforms and Dynamic Worker
 flowchart TB
   Request --> Gate[Platform Worker<br/>Authenticate and check route]
   Gate -->|Denied| Reject[Return 401, 403, or 404<br/>App does not run]
-  Gate -->|Allowed| App[Generated app]
+  Gate -->|Allowed| App[Customer app]
   App --> Capability[Platform capability<br/>Check access to this record]
   Capability --> Data[(Private data)]
 ```
@@ -40,11 +39,11 @@ Choose checks according to what needs protection:
 
 | Requirement                                        | Enforcement point                            |
 | -------------------------------------------------- | -------------------------------------------- |
-| The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/cloudflare-for-platforms/workers-for-platforms/configuration/authenticate-generated-apps/#authenticate-before-invoking-the-app) |
-| Routes mix public and private access               | [Platform-owned method/path policy](/cloudflare-for-platforms/workers-for-platforms/configuration/authenticate-generated-apps/#publish-code-and-route-policy-together) |
-| Routes are unknown, but data permissions are known | [Platform-owned data operations](/cloudflare-for-platforms/workers-for-platforms/configuration/authenticate-generated-apps/#protect-data-even-when-generated-routes-change) |
-| Routing and policy must stay together              | [Registered handlers with access metadata](/cloudflare-for-platforms/workers-for-platforms/configuration/authenticate-generated-apps/#adapt-the-pattern) |
-| Public code needs fewer privileges                 | [Separate Workers with different capabilities](/cloudflare-for-platforms/workers-for-platforms/configuration/authenticate-generated-apps/#adapt-the-pattern) |
+| The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#authenticate-before-invoking-the-app) |
+| Routes mix public and private access               | [Platform-owned method/path policy](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#publish-code-and-route-policy-together) |
+| Routes are unknown, but data permissions are known | [Platform-owned data operations](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#protect-data-even-when-routes-change) |
+| Routing and policy must stay together              | [Registered handlers with access metadata](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#adapt-the-pattern) |
+| Public code needs fewer privileges                 | [Separate Workers with different capabilities](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#adapt-the-pattern) |
 | App libraries call HTTP APIs                       | [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [`globalOutbound` gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests) |
 
 Combine route checks with data-operation checks for mixed-access apps.
@@ -61,7 +60,7 @@ Your platform does not need to predict every future route. Require each app to d
 ]
 ```
 
-This manifest is a policy format your platform implements. Workers does not infer intended access from generated code.
+This manifest is a policy format your platform implements. Workers does not infer intended access from app code.
 
 ```mermaid
 flowchart LR
@@ -134,7 +133,7 @@ Implement `authenticate(request)` in `auth.ts` using your existing identity prov
 - Return a verified identity, or `null` when credentials are absent.
 - Reject invalid credentials rather than trust caller-supplied identity headers.
 
-Resolve `deployment` from your platform's app registry. Its tenant, routes, code, and script name must not come from the generated app.
+Resolve `deployment` from your platform's app registry. Its tenant, routes, code, and script name must not come from app code.
 
 Place this gate in the platform request handler:
 
@@ -206,17 +205,17 @@ return app.getEntrypoint(undefined, { props: { identity } }).fetch(appRequest);
 
 For a wholly private app, require membership on every request. For mixed-access apps, use the route policy to select public exceptions.
 
-## Protect data even when generated routes change
+## Protect data even when routes change
 
 A route check can require Bob to sign in, but it cannot prevent app code from requesting Alice's report. Keep permission checks inside the platform operations that read private data, so every new route uses the same checks.
 
-A generated app can omit `checkAuth()` or ignore its result. Give it an operation that performs authorization and data access together.
+An app can omit `checkAuth()` or ignore its result. Give it an operation that performs authorization and data access together.
 
 ```mermaid
 sequenceDiagram
   participant Caller as Bob
   participant Platform
-  participant App as Generated app
+  participant App as Customer app
   participant Reports as Platform Reports capability
   Caller->>Platform: Request with Bob's session
   Platform->>App: Capability scoped to Bob
@@ -293,7 +292,7 @@ return app.getEntrypoint(undefined, { props: { reports } }).fetch(appRequest);
 </TabItem>
 </Tabs>
 
-The generated app calls the capability through [RPC](/workers/runtime-apis/rpc/):
+The customer app calls the capability through [RPC](/workers/runtime-apis/rpc/):
 
 <TypeScriptExample filename="app.ts">
 ```ts
