@@ -87,13 +87,12 @@ Capabilities share the object's storage and its one alarm, but they do not depen
 
 These capabilities ship with the `agents` package and are stable:
 
-| Capability                                                             | Import              | What it does                                                                |
-| ---------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------- |
-| [`WebSockets`](/agents/runtime/capabilities/websockets/)               | `agents/websockets` | Accepts hibernating WebSocket connections from `useAgent` and other clients |
-| [Callables](/agents/runtime/capabilities/callables/)                   | `agents/websockets` | Lets connected clients call methods on the object                           |
-| [`State`](/agents/runtime/capabilities/state/)                         | `agents/state`      | Stores one validated value and syncs it to clients through `WebSockets`     |
-| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                 | `agents/schedules`  | Runs callbacks after a delay, at a date, on a cron, or on an interval       |
-| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) | `agents/mcp/client` | Connects to MCP servers and keeps the connections across restarts           |
+| Capability                                                             | Import              | What it does                                                                                  |
+| ---------------------------------------------------------------------- | ------------------- | --------------------------------------------------------------------------------------------- |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)               | `agents/websockets` | Accepts WebSocket connections from `useAgent` and other clients, and serves callables to them |
+| [`State`](/agents/runtime/capabilities/state/)                         | `agents/state`      | Stores one validated value and syncs it to clients through `WebSockets`                       |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                 | `agents/schedules`  | Runs callbacks after a delay, at a date, on a cron, or on an interval                         |
+| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) | `agents/mcp/client` | Connects to MCP servers and keeps the connections across restarts                             |
 
 These capabilities are experimental. Their APIs may change between releases:
 
@@ -114,7 +113,7 @@ To write a capability of your own, refer to [Build a capability](/agents/runtime
 
 Every capability is optional. Install only the ones your agent uses:
 
-- **Clients connect to the agent.** Install [`WebSockets`](/agents/runtime/capabilities/websockets/). Add [Callables](/agents/runtime/capabilities/callables/) to let clients call methods, and [`State`](/agents/runtime/capabilities/state/) to sync a value to them.
+- **Clients connect to the agent.** Install [`WebSockets`](/agents/runtime/capabilities/websockets/), and pass it [callables](/agents/runtime/capabilities/websockets/#callables) to let clients call methods. Add [`State`](/agents/runtime/capabilities/state/) to sync a value to them.
 - **The agent does work later.** Install [`Scheduler`](/agents/runtime/capabilities/scheduler/).
 - **The agent uses MCP tools.** Install [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/).
 

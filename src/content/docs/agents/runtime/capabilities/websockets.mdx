@@ -56,14 +56,14 @@ export default {
 
 ## Options
 
-| Option              | Description                                                                                                                    |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `handlers`          | Connection handlers: `onConnect`, `onMessage`, `onClose`, and `onError`                                                        |
-| `callables`         | An `RpcTarget` whose methods clients call. For more information, refer to [Callables](/agents/runtime/capabilities/callables/) |
-| `state`             | A [`State`](/agents/runtime/capabilities/state/) capability to sync with clients                                               |
-| `getConnectionTags` | `(connection, ctx) => string[]`. Labels each connection when it is accepted                                                    |
-| `readonly`          | `(connection, ctx) => boolean`. Decides whether a connection may change the synced state                                       |
-| `protocol`          | `true` (default), `false`, or `(connection, ctx) => boolean`. Decides whether a connection gets Agents protocol frames         |
+| Option              | Description                                                                                                            |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `handlers`          | Connection handlers: `onConnect`, `onMessage`, `onClose`, and `onError`                                                |
+| `callables`         | An `RpcTarget` whose methods clients call. For more information, refer to [Callables](#callables)                      |
+| `state`             | A [`State`](/agents/runtime/capabilities/state/) capability to sync with clients                                       |
+| `getConnectionTags` | `(connection, ctx) => string[]`. Labels each connection when it is accepted                                            |
+| `readonly`          | `(connection, ctx) => boolean`. Decides whether a connection may change the synced state                               |
+| `protocol`          | `true` (default), `false`, or `(connection, ctx) => boolean`. Decides whether a connection gets Agents protocol frames |
 
 In every function, `ctx.request` is the upgrade request.
 
@@ -196,13 +196,221 @@ export class EchoAgent extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-## Serve methods to clients
+## Callables
 
-Pass an `RpcTarget` as `callables` to let clients call methods on the object with `agent.call()` and `agent.stub`. For more information, refer to [Callables](/agents/runtime/capabilities/callables/).
+Callables let your frontend call functions on your agent. You declare the methods on an `RpcTarget`, and a React app calls them through a typed stub, as if they were local async functions:
+
+```ts
+const todo = await todos.add("Milk"); // runs on the Durable Object
+```
+
+Use callables for the actions a client takes, such as adding an item, approving a step, or starting a task. The call travels over the client's existing WebSocket connection, so you do not need a separate HTTP API.
+
+Pass the `RpcTarget` to `WebSockets` as the `callables` option. Clients call it with `agent.stub` or `agent.call()` from `useAgent` and `AgentClient`.
+
+### Declare callables
+
+Every method declared on the target's class is callable. Pass the object to the target's constructor when the methods need it:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+type Todo = { id: string; text: string; done: boolean };
+
+export class TodoCallables extends RpcTarget {
+	readonly #list: TodoList;
+
+	constructor(list: TodoList) {
+		super();
+		this.#list = list;
+	}
+
+	add(text: string): Todo {
+		if (typeof text !== "string" || text.length === 0 || text.length > 200) {
+			throw new Error("text must be 1-200 characters");
+		}
+		return this.#list.add(text);
+	}
+
+	list(): Todo[] {
+		return this.#list.all();
+	}
+}
+
+export class TodoList extends DurableObject<Env> {
+	readonly webSockets = new WebSockets({
+		callables: new TodoCallables(this),
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+
+	onStart(): void {
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS todos (id TEXT PRIMARY KEY, text TEXT NOT NULL, done INTEGER NOT NULL)",
+		);
+	}
+
+	add(text: string): Todo {
+		const todo = { id: crypto.randomUUID(), text, done: false };
+		this.ctx.storage.sql.exec(
+			"INSERT INTO todos (id, text, done) VALUES (?, ?, 0)",
+			todo.id,
+			todo.text,
+		);
+		return todo;
+	}
+
+	all(): Todo[] {
+		return this.ctx.storage.sql
+			.exec<{ id: string; text: string; done: number }>(
+				"SELECT id, text, done FROM todos",
+			)
+			.toArray()
+			.map((row) => ({ ...row, done: row.done === 1 }));
+	}
+}
+```
+
+</TypeScriptExample>
+
+The target is the complete remote interface. Clients can only call methods declared on its class, not the Durable Object's own methods, so you decide exactly what is exposed:
+
+- Only methods on the class prototype are callable. Instance properties, including arrow functions assigned to fields, are not.
+- The constructor and methods inherited from `Object` or `RpcTarget` are never callable.
+- `WebSockets` throws when the class declares a method named `then`.
+
+Any connected client can call any of these methods. Treat every argument as untrusted input, and check who is calling before the request reaches the object. For more information, refer to [Authentication](/agents/runtime/routing/authentication/).
+
+### Call from a client
+
+Type `agent.stub` with `AgentStub` from `agents/client` and your callables class. Each method becomes an async function with the same arguments and return type:
+
+```tsx
+import type { AgentStub } from "agents/client";
+import { useAgent } from "agents/react";
+import type { TodoCallables } from "./server";
+
+export function Todos() {
+	const agent = useAgent({ agent: "TodoList", name: "groceries" });
+	const todos = agent.stub as AgentStub<TodoCallables>;
+
+	const add = async () => {
+		const todo = await todos.add("Milk");
+		console.log(todo.id);
+	};
+
+	return <button onClick={add}>Add milk</button>;
+}
+```
+
+Export `TodoCallables` from your server file so the client can import its type. `import type` brings in only the type, not the server code.
+
+`agent.call()` takes the method name and an array of arguments, without types:
+
+```ts
+const todo = await agent.call("add", ["Milk"]);
+```
+
+`AgentClient` from `agents/client` has the same `call()` and `stub`. Non-streaming calls time out after 30 seconds by default. Pass `{ timeout }` as the third argument to `call()` to change it for one call, or set `defaultCallTimeout` on the client. A timeout of `0` turns it off.
+
+When a method throws, the client's promise rejects with the error message. When a method does not exist, it rejects with `Method <name> does not exist`.
+
+### Stream results
+
+Return a `ReadableStream` to send results as they are produced. Each chunk reaches the client as soon as it is read:
+
+<TypeScriptExample>
+
+```ts
+import { RpcTarget } from "cloudflare:workers";
+
+class CountdownCallables extends RpcTarget {
+	countdown(from: number): ReadableStream<number> {
+		const start = Math.min(Math.max(Math.trunc(from), 1), 10);
+		return new ReadableStream<number>({
+			start(controller) {
+				for (let n = start; n >= 0; n--) controller.enqueue(n);
+				controller.close();
+			},
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Pass stream callbacks to `call()` to read the chunks:
+
+```ts
+await agent.call("countdown", [3], {
+	stream: {
+		onChunk: (chunk) => console.log(chunk),
+		onDone: () => console.log("done"),
+		onError: (error) => console.error(error),
+	},
+});
+```
+
+Streaming calls have no default timeout.
+
+### Context
+
+Each call runs inside your object's invocation context, with the calling connection in scope. [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) returns your object and the connection, so a method can reply to the caller or broadcast to everyone:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, RpcTarget } from "cloudflare:workers";
+import { getCurrentAgent, Lifecycle } from "agents/lifecycle";
+import { WebSockets } from "agents/websockets";
+
+class RoomCallables extends RpcTarget {
+	readonly #room: Room;
+
+	constructor(room: Room) {
+		super();
+		this.#room = room;
+	}
+
+	say(text: string): void {
+		const { connection } = getCurrentAgent();
+		for (const peer of this.#room.webSockets.getConnections()) {
+			if (peer.id !== connection?.id) peer.send(text);
+		}
+	}
+}
+
+export class Room extends DurableObject<Env> {
+	readonly webSockets: WebSockets = new WebSockets({
+		callables: new RoomCallables(this),
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+}
+```
+
+</TypeScriptExample>
 
 ## Transports
 
-`useAgent` and `AgentClient` connect over a hibernating WebSocket by default. Clients can also connect over [Cap'n Web](https://github.com/cloudflare/capnweb) with `transport: "capnweb"`. Every handler runs for both, and both appear in `getConnections()`. A Cap'n Web connection does not hibernate, so it keeps the object in memory while it is open. For more information, refer to [Transports](/agents/runtime/capabilities/callables/#transports).
+The client chooses how its connection travels with the `transport` option:
+
+| Transport                  | How calls travel                                                               | Hibernates | Results                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- |
+| `"cf-websocket"` (default) | JSON `rpc` frames over a hibernating WebSocket                                 | Yes        | Must be JSON-serializable. A `ReadableStream` streams. An `RpcTarget` result is an error.                   |
+| `"capnweb"`                | Native methods on a [Cap'n Web](https://github.com/cloudflare/capnweb) session | No         | An `RpcTarget` result arrives as a live stub the client can keep calling. Streams and pipelined calls work. |
+
+```ts
+const agent = useAgent({
+	agent: "TodoList",
+	name: "groceries",
+	transport: "capnweb",
+});
+```
+
+The same `callables` target serves both transports, and handlers such as `onConnect` and `onMessage` run for both. A Cap'n Web connection does not hibernate: it keeps the object in memory while it is open, and the client reconnects after an eviction. Use the default transport unless you need results passed by reference.
 
 ## Sync state
 
