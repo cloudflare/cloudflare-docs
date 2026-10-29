@@ -23,6 +23,8 @@ With bindings, each User Worker can extend functionality to:
 - **Connect to private networks** with [VPC Services](/workers-vpc/configuration/vpc-services/), [VPC Networks](/workers-vpc/configuration/vpc-networks/), and [Hyperdrive](/hyperdrive/)
 - **Collect metrics** with [Analytics Engine](/analytics/analytics-engine/)
 
+For an example that checks both tenant and record ownership, refer to [Authorize the protected operation](/workers/best-practices/authenticate-generated-apps/#authorize-the-protected-operation).
+
 #### Resource isolation
 
 Each User Worker can only access the bindings that are explicitly attached to it. For complete isolation, you can create and attach a unique resource (like a D1 database or KV namespace) to every User Worker.

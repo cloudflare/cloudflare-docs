@@ -1,0 +1,328 @@
+---
+title: Authenticate and authorize generated apps
+description: Enforce route policies before generated code runs, and protect data through scoped capabilities on Workers for Platforms and Dynamic Workers.
+pcx_content_type: design-guide
+sidebar:
+  order: 2
+products:
+  - workers
+  - cloudflare-for-platforms
+  - dynamic-workers
+---
+
+import { Tabs, TabItem, TypeScriptExample } from "~/components";
+
+Generated apps can add routes without adding authentication checks. Enforce access in platform-owned code, before invoking the app.
+
+For apps with public routes, also authorize sensitive data operations. A public route must not grant unrestricted database access.
+
+```mermaid
+flowchart TB
+  Request --> Gate[Platform Worker<br/>Authenticate and check route]
+  Gate -->|Denied| Reject[Return 401, 403, or 404<br/>App does not run]
+  Gate -->|Allowed| App[Generated app]
+  App --> Capability[Platform capability<br/>Check access to this record]
+  Capability --> Data[(Private data)]
+```
+
+Authentication establishes identity. Authorization determines which routes, actions, and records that identity can access.
+
+## Choose where to enforce access
+
+Choose checks according to what needs protection:
+
+| Requirement                                        | Enforcement point                            |
+| -------------------------------------------------- | -------------------------------------------- |
+| The whole app requires sign-in                     | Dispatch or loader Worker, before invocation |
+| Routes mix public and private access               | Platform-owned method/path policy            |
+| Routes are unknown, but data permissions are known | Platform-owned data operations               |
+| Routing and policy must stay together              | Registered handlers with access metadata     |
+| Public code needs fewer privileges                 | Separate Workers with different capabilities |
+| App libraries call HTTP APIs                       | Outbound Worker or `globalOutbound` gateway  |
+
+Combine route checks with data-operation checks for mixed-access apps.
+
+## Publish code and route policy together
+
+Your platform does not need to predict every future route. Require each app to declare its routes when it publishes:
+
+```json title="routes.json"
+[
+	{ "method": "GET", "path": "/", "access": "public" },
+	{ "method": "GET", "path": "/profile", "access": "member" },
+	{ "method": "GET", "path": "/admin", "access": "reports:admin" }
+]
+```
+
+This manifest is a policy format your platform implements. Workers does not infer intended access from generated code.
+
+```mermaid
+flowchart LR
+  Upload[Customer submits code + policy] --> Validate[Platform validates policy]
+  Validate --> Release[Version code + policy together]
+  Release --> Publish[Publish the matching release]
+```
+
+The platform owns these publication rules:
+
+- Match the tenant to the authenticated app owner.
+- Reject duplicate or ambiguous routes.
+- Restrict which routes can become public.
+- Prevent changes that weaken required permissions.
+- Keep code and policy versions consistent during rollouts.
+
+For Workers for Platforms, upload a new script name first. Then switch the dispatch Worker to that script and its matching policy.
+
+### Deny undeclared routes
+
+Match both method and path. A new route stays inaccessible until the platform accepts its policy.
+
+<TypeScriptExample filename="policy.ts">
+```ts
+export type Identity = {
+	userId: string;
+	tenant: string;
+	permissions: string[];
+};
+
+export type Route = {
+	method: string;
+	path: string;
+	access: "public" | "member" | "reports:admin";
+};
+
+export function checkRoute(
+	request: Request,
+	routes: Route[],
+	tenant: string,
+	identity: Identity | null,
+): Response | null {
+	const path = new URL(request.url).pathname;
+	const route = routes.find(
+		(route) => route.method === request.method && route.path === path,
+	);
+	if (!route) return new Response("Route not published", { status: 404 });
+	if (route.access === "public") return null;
+	if (!identity) return new Response("Sign in", { status: 401 });
+	if (
+		identity.tenant !== tenant ||
+		(route.access !== "member" && !identity.permissions.includes(route.access))
+	) {
+		return new Response("Forbidden", { status: 403 });
+	}
+	return null;
+}
+```
+</TypeScriptExample>
+
+Here, `member` means membership in the app tenant. Add an app-membership check if only some tenant members may enter.
+
+Use one path interpretation across the gate and app. This example matches exact URL paths; it grants no wildcard access.
+
+## Authenticate before invoking the app
+
+Implement `authenticate(request)` in `auth.ts` using your existing identity provider or session service. This integration must:
+
+- Verify the session or token, including expiry and intended audience.
+- Return a verified identity, or `null` when credentials are absent.
+- Reject invalid credentials rather than trust caller-supplied identity headers.
+
+Resolve `deployment` from your platform's app registry. Its tenant, routes, code, and script name must not come from the generated app.
+
+Place this gate in the platform request handler:
+
+<TypeScriptExample filename="gateway.ts">
+```ts
+import { checkRoute, type Identity } from "./policy";
+import { authenticate } from "./auth";
+
+let identity: Identity | null;
+try {
+	identity = await authenticate(request);
+} catch {
+	return new Response("Invalid session", { status: 401 });
+}
+
+const denied = checkRoute(
+	request,
+	deployment.routes,
+	deployment.tenant,
+	identity,
+);
+if (denied) return denied;
+
+// Forward only what this GET-only example needs. Keep session credentials out.
+const appRequest = new Request(request.url, { method: "GET" });
+```
+
+</TypeScriptExample>
+
+Invoke the app only after the gate succeeds:
+
+<Tabs>
+<TabItem label="Workers for Platforms">
+
+Use the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/):
+
+<TypeScriptExample filename="gateway.ts">
+```ts
+const app = env.DISPATCHER.get(deployment.scriptName, {
+	props: { identity },
+});
+return app.fetch(appRequest);
+```
+</TypeScriptExample>
+
+All app ingress must pass through the dispatch Worker.
+
+</TabItem>
+<TabItem label="Dynamic Workers">
+
+Authenticate in the parent Worker before calling the [Worker Loader](/dynamic-workers/api-reference/):
+
+<TypeScriptExample filename="gateway.ts">
+```ts
+const app = env.LOADER.load({
+	compatibilityDate: "$today",
+	mainModule: "app.js",
+	modules: { "app.js": deployment.code },
+	globalOutbound: null,
+});
+return app.getEntrypoint(undefined, { props: { identity } }).fetch(appRequest);
+```
+</TypeScriptExample>
+
+`load()` creates a fresh Worker. With `get()`, keep code and configuration identical for each cache ID; do not cache one visitor's credentials for other visitors.
+
+</TabItem>
+</Tabs>
+
+For a wholly private app, require membership on every request. For mixed-access apps, use the route policy to select public exceptions.
+
+## Authorize the protected operation
+
+A generated app can omit `checkAuth()` or ignore its result. Give it an operation that performs authorization and data access together.
+
+```mermaid
+sequenceDiagram
+  participant Caller as Bob
+  participant Platform
+  participant App as Generated app
+  participant Reports as Platform Reports capability
+  Caller->>Platform: Request with Bob's session
+  Platform->>App: Capability scoped to Bob
+  App->>Reports: read("alice")
+  Reports-->>App: 404 — record does not belong to Bob
+  App-->>Caller: 404
+```
+
+Keep the data and implementation in the platform Worker. This example uses synthetic records:
+
+<TypeScriptExample filename="gateway.ts">
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+const records = [
+	{ id: "alice", tenant: "acme", owner: "alice", text: "Alice's report" },
+	{ id: "bob", tenant: "acme", owner: "bob", text: "Bob's report" },
+];
+
+type Scope = { identity: Identity | null; tenant: string };
+
+export class Reports extends WorkerEntrypoint<Cloudflare.Env, Scope> {
+	read(id: string) {
+		const { identity, tenant } = this.ctx.props;
+		if (!identity) return { status: 401, error: "Sign in" };
+		if (
+			identity.tenant !== tenant ||
+			!identity.permissions.includes("reports:read")
+		) {
+			return { status: 403, error: "Forbidden" };
+		}
+		const report = records.find(
+			(record) =>
+				record.id === id &&
+				record.tenant === tenant &&
+				record.owner === identity.userId,
+		);
+		if (!report) return { status: 404, error: "Report not found" };
+		return { status: 200, report: { text: report.text } };
+	}
+}
+```
+</TypeScriptExample>
+
+Create the capability using verified platform context. The app can choose a record ID, but cannot choose the capability's identity:
+
+<TypeScriptExample filename="gateway.ts">
+```ts
+const reports = ctx.exports.Reports({
+	props: { identity, tenant: deployment.tenant },
+});
+```
+</TypeScriptExample>
+
+Pass the capability with the invocation:
+
+<Tabs>
+<TabItem label="Workers for Platforms">
+<TypeScriptExample filename="gateway.ts">
+```ts
+const app = env.DISPATCHER.get(deployment.scriptName, {
+	props: { reports },
+});
+return app.fetch(appRequest);
+```
+</TypeScriptExample>
+</TabItem>
+<TabItem label="Dynamic Workers">
+<TypeScriptExample filename="gateway.ts">
+```ts
+return app.getEntrypoint(undefined, { props: { reports } }).fetch(appRequest);
+```
+</TypeScriptExample>
+</TabItem>
+</Tabs>
+
+The generated app calls the capability through [RPC](/workers/runtime-apis/rpc/):
+
+<TypeScriptExample filename="app.ts">
+```ts
+const result = await this.ctx.props.reports.read(reportId);
+return Response.json(result, { status: result.status });
+```
+</TypeScriptExample>
+
+Do not also give the app unrestricted database access. [Upload-time bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) remain available to every invocation.
+
+Block unrestricted network access, or mediate it through [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [Dynamic Workers egress controls](/dynamic-workers/usage/egress-control/). Otherwise, another data-access path could bypass the capability.
+
+## Adapt the pattern
+
+Use these variations when the app interface requires them:
+
+| Pattern               | Example                                                                     | Why                                                                                                       |
+| --------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Registered handlers   | `{ method: "GET", path: "/profile", access: "member", handler: "profile" }` | Select policy and handler from the same platform-owned entry. A handler name does not grant data access.  |
+| Public app shell      | Public HTML; protected report reads through `reports.read(id)`              | The platform can protect data without enumerating every frontend route.                                   |
+| Separate components   | Public Worker receives `{}`; private Worker receives `{ reports }`          | Public code has no private capability. Keep their storage separate too.                                   |
+| Outbound HTTP gateway | Allow `GET https://reports.internal/reports/:id`, then check record access  | Existing HTTP clients can use the same authorization model. Ignore identity headers supplied by app code. |
+
+If the outbound gateway injects credentials, authorize the destination and operation first. Hiding a token does not limit what that token can do.
+
+## Verify the boundary
+
+Test both responses and whether generated code executed:
+
+| Request                                                    | Expected response    | App executes                                      |
+| ---------------------------------------------------------- | -------------------- | ------------------------------------------------- |
+| Anonymous request to a declared public route               | `200`                | Yes                                               |
+| Anonymous request to a member route                        | `401`                | No                                                |
+| Wrong tenant or missing route permission                   | `403`                | No                                                |
+| Undeclared route or method                                 | `404`                | No                                                |
+| Bob's public app requests Alice's record through RPC       | `404`                | Yes; the platform denies the read                 |
+| App sends a forged identity header to the outbound gateway | No additional access | Yes; the gateway uses its platform-bound identity |
+
+Route policy cannot prove that an approved public endpoint returns only public information. Capabilities protect new operations; they cannot retract data already returned to app code.
+
+Per-request props do not erase a reused Worker's module state. If visitors must be isolated from data the app previously received, also isolate execution and persistent storage across those visitors.

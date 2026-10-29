@@ -18,6 +18,8 @@ A [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-
 You can also create a dispatch Worker from the Cloudflare dashboard. Go to **Workers for Platforms**, select your namespace, and click **Create** > **Dispatch Worker**. The dashboard provides templates for path-based and subdomain-based routing.
 :::
 
+For apps with public and private routes, refer to [Authenticate and authorize generated apps](/workers/best-practices/authenticate-generated-apps/). The guide combines route policies with scoped data access.
+
 #### Why use a dynamic dispatch Worker?
 
 - **Scale**: Route requests to millions of hostnames to different Workers, without defining [Workers Routes](/workers/configuration/routing/routes/) configuration for each one
