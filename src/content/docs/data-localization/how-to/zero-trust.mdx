@@ -74,7 +74,7 @@ You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/
 
 Processing region for Gateway supports [predefined and custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) that do not use [EDM, custom wordlists, document entries, or AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/), or [pattern entries with custom functions](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/). [AI context analysis and OCR](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) are also unsupported.
 
-Feature availability in dedicated FedRAMP environments may differ from the limitations above. Contact your account team for current FedRAMP feature support.
+Feature availability in dedicated FedRAMP environments may differ from these Gateway limitations. Contact your account team for current FedRAMP feature support.
 
 ### Egress traffic
 
@@ -86,7 +86,7 @@ Use [dedicated egress IPs](/cloudflare-one/traffic-controls/egress-policies/dedi
 
 The following connection locations are separate from processing region:
 
-- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) connects globally by default. The `--region us` option restricts tunnel connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers; no `--region` flag is required.
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) connects globally by default. The `--region us` option restricts tunnel connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers. No `--region` flag is required.
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#environment) connects to the global environment by default. The `fedramp_high` setting connects the client to the FedRAMP High environment.
 - [Direct CNI](/network-interconnect/) terminates a physical connection at the facility selected during provisioning. This is a physical topology choice that is made by the customer.
 
@@ -104,7 +104,7 @@ The Access team domain supports processing in the FedRAMP Moderate Compliant (Do
 
 A public application hostname can use any managed region available for Regional Hostnames. Configure the region on the proxied DNS hostname using one of the documented [ways to use Regional Services](/data-localization/regional-services/#ways-to-use-regional-services).
 
-For a private application hostname reached through Cloudflare Tunnel, the [`cloudflared --region us` setting](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) restricts the connector's Cloudflare connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers; no `--region` flag is required. The Tunnel region setting is configured separately from the processing region for eligible Gateway HTTP traffic.
+For a private application hostname reached through Cloudflare Tunnel, the [`cloudflared --region us` setting](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) restricts the connector's Cloudflare connections to data centers in the United States. In FedRAMP High environments, the tunnel token routes `cloudflared` to FedRAMP data centers and no `--region` flag is required. The Tunnel region setting is configured separately from the processing region for eligible Gateway HTTP traffic.
 
 ### Log region
 
