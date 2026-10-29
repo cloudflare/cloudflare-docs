@@ -1,0 +1,151 @@
+---
+title: Memory and context
+pcx_content_type: concept
+description: How a Think agent stores its conversation and builds its system prompt, with context blocks, compaction, search, media eviction, and prompt caching.
+sidebar:
+  order: 3.5
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+Think splits memory into two parts:
+
+- **The conversation.** Think stores every message in the agent's SQLite database, as a tree, so regenerated answers are kept as branches. `configureSession()` sets how long conversations are compacted and searched.
+- **The system prompt.** Think builds the system prompt from context blocks: labelled sections such as a fixed identity, or a `memory` block the model can write to. `configureContext()` declares them.
+
+For the general idea of agent memory, refer to [Memory](/agents/concepts/memory/).
+
+## Declare context blocks
+
+Override `configureContext()` and return the blocks, in the order they appear in the prompt:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import type { ContextConfig } from "agents/context";
+
+export class MyAgent extends Think<Env> {
+	getModel() {
+		/* ... */
+	}
+
+	configureContext(): ContextConfig[] {
+		return [
+			{ label: "soul", provider: { get: async () => "You are helpful." } },
+			{ label: "memory", description: "Learned facts", maxTokens: 2_000 },
+		];
+	}
+}
+```
+
+</TypeScriptExample>
+
+- A block with a `provider` reads its text from the provider. The `soul` block above is read-only.
+- A block without a `provider` is stored in the agent's SQLite database, and the model can write to it with the `set_context` tool. The `memory` block above keeps up to 2,000 tokens of facts across hibernation and restarts.
+- `maxTokens` caps a block's size, and `description` tells the model what belongs in it.
+
+`ContextConfig` comes from `agents/context`, an experimental library that builds the prompt from blocks. The assembled blocks are available as `this.context` once the agent has started.
+
+Once you declare context blocks, Think builds the system prompt from blocks and no longer uses `getSystemPrompt()`. The prompt is frozen and stored, so after a cold start the model gets the exact prompt it saw before, and the provider's prompt cache still applies.
+
+## Compact long conversations
+
+Compaction replaces a span of older messages with a summary, so a long conversation stays inside the model's context window. Think keeps the original messages, and applies the summary when it reads the conversation. Override `configureSession()` to set a compaction function and a threshold:
+
+<TypeScriptExample>
+
+```ts
+import { Think, Session } from "@cloudflare/think";
+import { createCompactFunction } from "agents/sessions";
+import { generateText } from "ai";
+
+export class MyAgent extends Think<Env> {
+	getModel() {
+		/* ... */
+	}
+
+	configureSession(session: Session) {
+		return session
+			.onCompaction(
+				createCompactFunction({
+					summarize: async (prompt) => {
+						const { text } = await generateText({
+							model: this.getModel(),
+							prompt,
+						});
+						return text;
+					},
+					keepRecentTokens: 20_000,
+				}),
+			)
+			.compactAfter(100_000);
+	}
+}
+```
+
+</TypeScriptExample>
+
+`compactAfter()` checks the size after each message is added. Set it well above the size of a summary plus the recent messages it keeps, or a compacted conversation that is still over the threshold compacts again on every message. `createCompactFunction()` comes from `agents/sessions`, which is experimental.
+
+Compaction runs between turns. A single long, tool-heavy turn can still overflow the context window. To recover from that mid-turn, refer to [Context-window overflow recovery](/agents/harnesses/think/recovery/#context-window-overflow-recovery).
+
+Annotate a `configureSession()` override with the `Session` type from `@cloudflare/think`.
+
+## Message storage
+
+Think stores messages, not files. A message larger than one SQLite row is split across rows and put back together when it is read, so no message is too large to store and nothing is truncated. The real limit is the Durable Object's storage, so bound untrusted input in your application. Keep files in the [workspace](/agents/harnesses/think/tools/#connect-a-workspace), and put a reference to a file in the message.
+
+At startup, Think loads a recent window of the conversation, bounded by `hydrationByteBudget` (32 MiB by default). The budget counts each row's stored bytes plus the attachment bytes it loads, so it bounds memory use, not storage.
+
+## Media eviction
+
+Sending an image the model has already seen back on every later turn costs tokens for nothing. Once a message is older than `mediaEviction.keepRecentMessages` (8 by default), Think moves its media out of the conversation and leaves a marker in its place:
+
+```txt
+[evicted image/png, 812004 bytes; preserved at /workspace/attachments/evicted/msg_01H8-0.png]
+```
+
+The bytes are written to the workspace at that path, with their real type. The workspace `read` tool can read images, so when the model needs the image again, it reads the path from the marker. Eviction is visible to the model on purpose.
+
+Set `mediaEviction = false` to keep aged media in the conversation.
+
+## Prompt caching
+
+Model providers cache a prompt up to the first byte that differs from an earlier request. Think keeps the start of the prompt stable: the system prompt is frozen, and each turn's first request extends the previous one, unless one of these rewrites the history:
+
+| Mechanism            | What it rewrites                                                                   | How often the prompt prefix changes         |
+| -------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------- |
+| Read-time truncation | Tool outputs over 500 characters and text over 10,000 characters in older messages | Once every 8 messages (about every 4 turns) |
+| Media eviction       | An aged file part becomes a marker                                                 | With the read-time truncation cutoff        |
+| Compaction           | A span of older turns becomes one summary                                          | Once per compaction                         |
+
+Read-time truncation keeps at least the 4 most recent messages whole, and moves its cutoff in steps of `truncationStep` messages (8 by default). A cutoff that moved on every turn would rewrite the end of the cached prefix on every turn, which costs more than it saves. For a model with a small context window, cut more often:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+
+export class SmallModelAgent extends Think<Env> {
+	truncationStep = 1;
+}
+```
+
+</TypeScriptExample>
+
+Set `truncationStep` to `Infinity` to turn read-time truncation off. Pair that with compaction, so the context stays bounded.
+
+## Upgrade from Think 0.17
+
+Agents written for Think 0.17 configured context blocks in `configureSession()` with `withContext()` and `withCachedPrompt()`. That chain still works, but it is deprecated. Move the blocks into `configureContext()`, and read them from `this.context`. Blocks from both are merged, `configureContext()` first.
+
+The upgrade also migrates storage the first time each agent wakes, and the migration cannot be rolled back. Refer to [Upgrading from 0.17](https://github.com/cloudflare/agents/blob/main/docs/think/index.md#upgrading-from-017) before you deploy.
+
+## Related resources
+
+- [Configuration](/agents/harnesses/think/configuration/): every Think override, including `configureSession()` and `configureContext()`.
+- [Durable recovery](/agents/harnesses/think/recovery/): chat recovery and context-window overflow recovery.
+- [Tools](/agents/harnesses/think/tools/): the workspace and the context tools the model uses.
