@@ -14,11 +14,9 @@ import { TypeScriptExample } from "~/components";
 The `Streams` capability is experimental. Everything exported from `agents/streams` may change between releases.
 :::
 
-`Streams` from `agents/streams` stores incremental output in the Durable Object's SQLite database. Each stream is an ordered log of chunks with a cursor. A reader replays the chunks from any position, then follows new chunks as they are appended, until the stream ends.
+`Streams` keeps a reply that is still being written, such as model tokens, so nobody loses it. If a user refreshes the page or drops their connection mid-reply, they reconnect and pick up where they left off, instead of losing the reply or starting over. If the Durable Object restarts mid-reply, the chunks already written are kept, and the reply can continue from there. The [Think harness](/agents/harnesses/think/) streams its replies this way.
 
-Readers do not depend on the producer. A client that disconnects reconnects and continues from its cursor. A producer that dies leaves exactly the chunks it appended, so a new producer can resume from the stream's cursor.
-
-`Streams` needs no alarm.
+`Streams` from `agents/streams` stores each stream as an ordered log of chunks in the Durable Object's SQLite database. A reader replays the chunks from any position, then follows new chunks as they are appended, until the stream ends.
 
 ## Install the capability
 
