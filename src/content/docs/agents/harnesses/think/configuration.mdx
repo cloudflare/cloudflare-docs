@@ -60,10 +60,10 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-| Method                      | Description                                                   |
-| --------------------------- | ------------------------------------------------------------- |
-| `configure<T>(config: T)`   | Persist a typed configuration object                          |
-| `getConfig<T>(): T \| null` | Read the persisted configuration, or null if never configured |
+| Method                       | Description                                                   |
+| ---------------------------- | ------------------------------------------------------------- |
+| `configure<T>(config: T)`    | Persist a typed configuration object                          |
+| `getConfig<T>(): T \\| null` | Read the persisted configuration, or null if never configured |
 
 Expose configuration to the client via `@callable`:
 

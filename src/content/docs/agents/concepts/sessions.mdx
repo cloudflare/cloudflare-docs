@@ -1,0 +1,77 @@
+---
+title: Sessions
+pcx_content_type: concept
+description: A session is the durable record of one conversation. Learn how the transcript forms a tree, how compaction shortens what the model sees without deleting anything, and why prompt caching shapes both.
+tags:
+  - AI
+sidebar:
+  order: 3
+products:
+  - agents
+---
+
+A session is the record of one conversation: every message the user sent, every reply, and every tool call and result, in order. An agent keeps it in its own storage, so the conversation survives hibernation, eviction, and deploys. When the agent wakes up, the history is already there.
+
+The session answers one question: what happened? It does not decide what the agent should remember about the user or what instructions it follows. That is [context and memory](/agents/concepts/memory/), a separate concept that sits next to the session.
+
+## The transcript is a tree
+
+Each message points to the message before it. Most of the time that makes a straight line. When a user regenerates a reply or edits an earlier message, the new message points to the same parent as the old one, and the conversation branches.
+
+```txt
+user: Plan a trip to Lisbon
+└─ assistant: Here is a 3-day plan...
+   └─ user: Make it 5 days
+      ├─ assistant: Here is a 5-day plan...        (first attempt)
+      └─ assistant: A 5-day plan, slower pace...   (regenerated, latest)
+```
+
+Nothing is overwritten. The first attempt is still stored, and a client can show both. The active branch is the path from the first message to the latest leaf, and that path is what the model sees. Pick another leaf and you get another conversation from the same history.
+
+## The record and the request
+
+The session stores everything. The model never gets everything.
+
+Each time the agent calls a model, it builds a request from one branch of the transcript: a system prompt, then the messages on that path. That request is a projection of the record, not a copy of it. It can replace old messages with a summary, shorten large tool outputs, or swap images from older turns for a placeholder, while the stored messages stay as they were.
+
+Keeping the two apart is what lets a conversation outgrow the model's context window without losing anything. The record is for audit, search, branching, and showing the conversation to people. The request is for the model, and it only has to fit the model.
+
+## Compaction
+
+A long conversation eventually needs a shorter request. Compaction summarizes a range of older messages and stores the summary as an overlay on that range. When the agent reads the branch, the overlay stands in for the messages it covers.
+
+```txt
+Stored:     [1] [2] [3] [4] [5] [6] [7] [8] [9]
+Projected:  [1] [2] [summary of 3-6]   [7] [8] [9]
+```
+
+The original messages stay in storage, so search and branching still see them. The first few messages and the most recent ones stay verbatim: the opening says what the conversation is about, and the tail is what the model needs to answer next. A later compaction updates the existing summary instead of starting again, and the range never splits a tool call from its result.
+
+Compaction costs something every time it runs, which the next section explains. Good compaction is rare and large, not frequent and small.
+
+## Prompt caching shapes the session
+
+Model providers cache the beginning of a request. When a request starts with exactly the same bytes as the previous one, the provider skips the work for that prefix, and the call is faster and cheaper. On a long conversation, most of every request is that shared prefix.
+
+A session that only grows at the end keeps that cache warm. Each turn adds messages after the last one, so each request extends the request before it. Anything that changes earlier bytes breaks the cache from that point on:
+
+- changing the system prompt
+- compacting a range into a summary
+- shortening or removing an earlier message in the projection
+
+None of these are wrong. Some are necessary. But each one should happen deliberately and seldom, and the projection should produce the same bytes for the same history every time. This rule is also why context changes, such as an updated memory, are delivered after the cached prefix instead of rewriting the system prompt. [Context and memory](/agents/concepts/memory/) explains how.
+
+## Search
+
+Because the record keeps every message, an agent can search its own history: what did the user say about the deployment last week? Search covers messages that compaction has summarized, because the originals are still stored.
+
+## One conversation, one session
+
+A session holds one conversation. For chat applications, give each conversation its own agent instance, so conversations hibernate, scale, and fail independently. Use more than one session inside an agent when one conversation has drafts or side threads of its own.
+
+Harnesses differ in who owns the session. [Think](/agents/harnesses/think/) and `AIChatAgent` store their transcripts in the [Sessions capability](/agents/runtime/capabilities/sessions/). [Pi](/agents/harnesses/pi/) and [OpenCode](/agents/harnesses/opencode/) keep their own. If you build your own loop, the Sessions capability gives you the tree, compaction, and search described here.
+
+## Related
+
+- [Context and memory](/agents/concepts/memory/) covers what the agent keeps in mind across turns.
+- [Sessions capability](/agents/runtime/capabilities/sessions/) is the API reference for storing a session in a Durable Object.

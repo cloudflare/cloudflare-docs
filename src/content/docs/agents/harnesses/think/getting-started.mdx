@@ -252,7 +252,7 @@ export class MyAgent extends Think<Env> {
 
 Now the model sees a `MEMORY` section in its system prompt and gets a `set_context` tool to update it. A block declared without a `provider` is stored in the agent's SQLite database, so facts written to memory survive Durable Object hibernation and restarts.
 
-When you declare context blocks, the system prompt is built from those blocks rather than `getSystemPrompt()`. The `"soul"` block above acts as the system identity — it is read-only and always appears first. The `"memory"` block is writable, and the model proactively updates it when it learns something useful. Think persists the frozen system prompt, so a Durable Object that wakes from hibernation reuses the same prompt.
+When you declare context blocks, the system prompt is built from those blocks rather than `getSystemPrompt()`. The `"soul"` block above acts as the system identity — it is read-only and always appears first. The `"memory"` block is writable, and the model proactively updates it when it learns something useful. Think records the system prompt in the conversation, so a Durable Object that wakes from hibernation sends the same prompt and keeps the provider's prompt cache. Refer to [Context and memory](/agents/concepts/memory/).
 
 Refer to the [Sessions documentation](/agents/runtime/capabilities/sessions/) for context blocks, compaction, search, skills, and multi-session support.
 
