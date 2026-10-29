@@ -185,57 +185,54 @@ When run account-wide, each result also includes a `databaseId` field with the I
 | `--json`           | A boolean value to specify whether to return the result as clean JSON (default: `false`).                                   |
 | `--limit`          | The maximum number of queries to be fetched. When run account-wide, this limit applies across all databases (default: `5`). |
 
-<Details header="To find top 3 queries by execution count:">
+<Details header="To find the top 3 queries across all databases in your account by execution count:">
 
 ```sh
-npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=count --limit=3
+npx wrangler d1 insights --sort-type=sum --sort-by=count --limit=3 --json
 ```
 
 ```sh output
- ⛅️ wrangler 3.95.0
--------------------
-
--------------------
-🚧 `wrangler d1 insights` is an experimental command.
-🚧 Flags for this command, their descriptions, and output may change between wrangler versions.
--------------------
-
 [
   {
-    "query": "SELECT tbl_name as name,\n                   (SELECT ncol FROM pragma_table_list(tbl_name)) as num_columns\n            FROM sqlite_master\n            WHERE TYPE = \"table\"\n              AND tbl_name NOT LIKE \"sqlite_%\"\n              AND tbl_name NOT LIKE \"d1_%\"\n              AND tbl_name NOT LIKE \"_cf_%\"\n            ORDER BY tbl_name ASC;",
-    "avgRowsRead": 2,
-    "totalRowsRead": 4,
+    "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+    "avgRowsRead": 1244521,
+    "totalRowsRead": 11040145791,
     "avgRowsWritten": 0,
     "totalRowsWritten": 0,
-    "avgDurationMs": 0.49505,
-    "totalDurationMs": 0.9901,
-    "numberOfTimesRun": 2,
-    "queryEfficiency": 0
+    "avgDurationMs": 259.2086358584151,
+    "totalDurationMs": 2299439.8087000004,
+    "numberOfTimesRun": 8871,
+    "queryEfficiency": 1.6070439952399358e-05,
+    "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
   },
   {
-    "query": "SELECT * FROM Customers",
-    "avgRowsRead": 4,
-    "totalRowsRead": 4,
+    "query": "SELECT * FROM \"Order\" WHERE OrderDate BETWEEN ? AND ?",
+    "avgRowsRead": 16818,
+    "totalRowsRead": 148553394,
     "avgRowsWritten": 0,
     "totalRowsWritten": 0,
-    "avgDurationMs": 0.1873,
-    "totalDurationMs": 0.1873,
-    "numberOfTimesRun": 1,
-    "queryEfficiency": 1
+    "avgDurationMs": 5.4971649382995595,
+    "totalDurationMs": 48556.45790000001,
+    "numberOfTimesRun": 8833,
+    "queryEfficiency": 0.019146152931383043,
+    "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15"
   },
   {
-    "query": "SELECT * From Customers",
-    "avgRowsRead": 0,
-    "totalRowsRead": 0,
+    "query": "SELECT * FROM Customer WHERE Id = ?",
+    "avgRowsRead": 1,
+    "totalRowsRead": 8714,
     "avgRowsWritten": 0,
     "totalRowsWritten": 0,
-    "avgDurationMs": 1.0225,
-    "totalDurationMs": 1.0225,
-    "numberOfTimesRun": 1,
-    "queryEfficiency": 0
+    "avgDurationMs": 0.318006288730778,
+    "totalDurationMs": 2771.1067999999996,
+    "numberOfTimesRun": 8714,
+    "queryEfficiency": 1,
+    "databaseId": "b5d18e3a-6f29-4c04-8e7b-1a9c2d5f7e60"
   }
 ]
 ```
+
+Each result includes the `databaseId` of the database that ran the query.
 
 </Details>
 

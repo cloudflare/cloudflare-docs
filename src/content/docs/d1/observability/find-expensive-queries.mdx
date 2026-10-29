@@ -16,15 +16,10 @@ To find these databases and queries, use `wrangler d1 insights` or the [`cf sql 
 
 If you use an API token, the token must have the **Account Analytics Read** permission. Both commands return JSON, so an AI agent can run them and read the results.
 
-The SQL API has two D1 datasets:
-
-| Dataset                   | Contents                                                                                                                                              |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `events.d1BackendRequest` | One row for each request to a database, with the columns `databaseId`, `rowsRead`, `rowsWritten`, `readQueries`, `writeQueries`, and `queryBatchTimeMs`. |
-| `events.d1Queries`        | One row for each query, with the columns `databaseId`, `query`, `queryDurationMs`, `rowsRead`, `rowsReturned`, `rowsWritten`, and `error`.            |
+The SQL examples use the `events.d1Queries` dataset. This dataset has one row for each D1 query, with the columns `databaseId`, `query`, `queryDurationMs`, `rowsRead`, `rowsReturned`, `rowsWritten`, and `error`. The value of `error` is an empty string when the query is successful.
 
 :::note
-The D1 datasets are sampled. The SQL API applies the sample weights to `COUNT`, `SUM`, and `AVG` automatically. Do not multiply values by `sampleInterval`. For more information, refer to [Adaptive sampling](/analytics/sql-api/sql-reference/functions/#adaptive-sampling).
+The `events.d1Queries` dataset is sampled. The SQL API applies the sample weights to `COUNT`, `SUM`, and `AVG` automatically. Do not multiply values by `sampleInterval`. Give `sampleInterval` as the weight only to functions that have a weight argument, such as `quantileWeighted`. For more information, refer to [Adaptive sampling](/analytics/sql-api/sql-reference/functions/#adaptive-sampling).
 :::
 
 ## Find the most expensive databases
@@ -45,21 +40,22 @@ npx wrangler d1 insights --sort-by=reads --time-period=7d --limit=20 --json
 
 ```sh
 npx cf sql query --scope-account <account_id> "
-SELECT
-  databaseId,
-  COUNT(*) AS requests,
-  SUM(rowsRead) AS totalRowsRead,
-  SUM(rowsWritten) AS totalRowsWritten,
-  SUM(queryBatchTimeMs) AS totalDurationMs
-FROM events.d1BackendRequest
-WHERE timestamp >= NOW() - INTERVAL '7' DAY
-GROUP BY databaseId
-ORDER BY totalRowsRead DESC
-LIMIT 10
+  SELECT
+    databaseId,
+    COUNT(*) AS numberOfTimesRun,
+    SUM(rowsRead) AS totalRowsRead,
+    SUM(rowsWritten) AS totalRowsWritten,
+    AVG(queryDurationMs) AS avgDurationMs
+  FROM events.d1Queries
+  WHERE timestamp >= NOW() - INTERVAL '7' DAY
+    AND error = ''
+  GROUP BY databaseId
+  ORDER BY totalRowsRead DESC
+  LIMIT 10
 "
 ```
 
-To find the databases that write the most rows, change `ORDER BY` to `totalRowsWritten`. To find the databases that are busy for the most time, change `ORDER BY` to `totalDurationMs`.
+To find the databases that write the most rows, change `ORDER BY` to `totalRowsWritten`. To find the slowest databases, change `ORDER BY` to `avgDurationMs`.
 
 </TabItem>
 </Tabs>
@@ -77,30 +73,94 @@ To get the name of a database, run `npx wrangler d1 info <database_id>`. To find
    npx wrangler d1 insights --sort-by=reads --time-period=7d --json
    ```
 
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   [
+     {
+       "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+       "avgRowsRead": 1244521,
+       "totalRowsRead": 75268630080,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 283.471346125992,
+       "totalDurationMs": 17144347.013699997,
+       "numberOfTimesRun": 60480,
+       "queryEfficiency": 1.6070439952399358e-05,
+       "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+     },
+     {
+       "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+       "avgRowsRead": 1244521,
+       "totalRowsRead": 74719796319,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 257.3288101250854,
+       "totalDurationMs": 15449764.431100003,
+       "numberOfTimesRun": 60039,
+       "queryEfficiency": 1.6070439952399358e-05,
+       "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15"
+     }
+   ]
+   ```
+
    </TabItem>
    <TabItem label="Cloudflare CLI">
 
    ```sh
    npx cf sql query --scope-account <account_id> "
-   SELECT
-     databaseId,
-     query,
-     COUNT(*) AS numberOfTimesRun,
-     SUM(rowsRead) AS totalRowsRead,
-     AVG(rowsRead) AS avgRowsRead,
-     if(SUM(rowsRead) = 0, 0, SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
-   FROM events.d1Queries
-   WHERE timestamp >= NOW() - INTERVAL '7' DAY
-   GROUP BY databaseId, query
-   ORDER BY totalRowsRead DESC
-   LIMIT 5
+     SELECT
+       databaseId,
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsRead) AS totalRowsRead,
+       AVG(rowsRead) AS avgRowsRead,
+       if(SUM(rowsRead) = 0, 0.0,
+          SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '7' DAY
+       AND error = ''
+     GROUP BY databaseId, query
+     ORDER BY totalRowsRead DESC
+     LIMIT 5
    "
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   {
+     "data": [
+       {
+         "avgRowsRead": 1244521,
+         "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47",
+         "numberOfTimesRun": 60558,
+         "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+         "queryEfficiency": 1.6070439952399358e-05,
+         "totalRowsRead": 75365702718
+       },
+       {
+         "avgRowsRead": 1244521,
+         "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15",
+         "numberOfTimesRun": 60111,
+         "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+         "queryEfficiency": 1.6070439952399358e-05,
+         "totalRowsRead": 74809401831
+       }
+     ],
+     "rows": 5,
+     "statistics": {
+       "elapsed_ms": 156,
+       "rows_read": 11153623,
+       "bytes_read": 3732357193
+     }
+   }
    ```
 
    </TabItem>
    </Tabs>
 
-   Each result includes the `databaseId` of the database that ran the query.
+   Each result includes the `databaseId` of the database that ran the query. In the example output, the same `JOIN` query runs on more than one database.
 
 2. Get the top queries for the database that you want to fix. Use the `databaseId` from step 1, or from [Find the most expensive databases](#find-the-most-expensive-databases):
 
@@ -116,18 +176,22 @@ To get the name of a database, run `npx wrangler d1 info <database_id>`. To find
 
    ```sh
    npx cf sql query --scope-account <account_id> "
-   SELECT
-     query,
-     COUNT(*) AS numberOfTimesRun,
-     SUM(rowsRead) AS totalRowsRead,
-     AVG(rowsRead) AS avgRowsRead,
-     if(SUM(rowsRead) = 0, 0, SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
-   FROM events.d1Queries
-   WHERE timestamp >= NOW() - INTERVAL '7' DAY
-     AND databaseId = '<database_id>'
-   GROUP BY query
-   ORDER BY totalRowsRead DESC
-   LIMIT 5
+     SELECT
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsRead) AS totalRowsRead,
+       AVG(rowsRead) AS avgRowsRead,
+       AVG(queryDurationMs) AS avgDurationMs,
+       quantileWeighted(0.95)(queryDurationMs, sampleInterval) AS p95DurationMs,
+       if(SUM(rowsRead) = 0, 0.0,
+          SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '7' DAY
+       AND databaseId = '<database_id>'
+       AND error = ''
+     GROUP BY query
+     ORDER BY totalRowsRead DESC
+     LIMIT 5
    "
    ```
 
@@ -136,17 +200,52 @@ To get the name of a database, run `npx wrangler d1 info <database_id>`. To find
 
 3. Find the queries with a high `avgRowsRead` and a `queryEfficiency` much lower than `1`. These queries read many rows to return a small number of rows. Usually, a column in the `WHERE`, `JOIN`, or `ORDER BY` clause does not have an index.
 
-4. Add an index for that column. To find the correct fix for each query pattern, refer to [Indexes and your bill](/d1/best-practices/use-indexes/#indexes-and-your-bill).
+   In the example output in step 1, the `JOIN` query reads 1,244,521 rows each time it runs, and its `queryEfficiency` is approximately `0.000016`. The `OrderDetail.OrderId` column in the `JOIN` clause does not have an index.
 
-5. Make sure that D1 uses the new index. Put `EXPLAIN QUERY PLAN` in front of the query and run it:
+4. Find the index that fixes the query. To find the correct fix for each query pattern, refer to [Indexes and your bill](/d1/best-practices/use-indexes/#indexes-and-your-bill). For the example query, add an index on the `OrderId` column of the `OrderDetail` table.
+
+5. Create a [migration](/d1/reference/migrations/) for the index. The database must be in your [Wrangler configuration file](/d1/get-started/#3-bind-your-worker-to-your-d1-database):
+
+   ```sh
+   npx wrangler d1 migrations create <database_name> add_orderdetail_orderid_index
+   ```
+
+   ```sh output
+   ✅ Successfully created Migration '0001_add_orderdetail_orderid_index.sql'!
+   ```
+
+   The number at the start of the file name depends on the migrations that you already have.
+
+6. Add the `CREATE INDEX` statement to the new migration file:
+
+   ```sql title="migrations/0001_add_orderdetail_orderid_index.sql"
+   -- Migration number: 0001 	 2026-10-29T15:42:06.092Z
+   CREATE INDEX IF NOT EXISTS idx_orderdetail_orderid ON OrderDetail (OrderId);
+   ```
+
+7. Apply the migration to your remote database:
+
+   ```sh
+   npx wrangler d1 migrations apply <database_name> --remote
+   ```
+
+   ```sh output
+   ┌────────────────────────────────────────┬────────┐
+   │ name                                   │ status │
+   ├────────────────────────────────────────┼────────┤
+   │ 0001_add_orderdetail_orderid_index.sql │ ✅     │
+   └────────────────────────────────────────┴────────┘
+   ```
+
+8. Make sure that D1 uses the new index. Put `EXPLAIN QUERY PLAN` in front of the query and run it:
 
    ```sh
    npx wrangler d1 execute <database_name> --remote --command="EXPLAIN QUERY PLAN <query>"
    ```
 
-   The output should show `SEARCH ... USING INDEX`, not `SCAN`. For more information, refer to [Test an index](/d1/best-practices/use-indexes/#test-an-index).
+   The line for the table that you added the index to should show `SEARCH ... USING INDEX`, not `SCAN`. For the example query, `SCAN OrderDetail` changes to `SEARCH OrderDetail USING INDEX idx_orderdetail_orderid (OrderId=?)`. For more information, refer to [Test an index](/d1/best-practices/use-indexes/#test-an-index).
 
-6. Make sure that the number of rows read decreases. Run the command from step 2 again with a shorter time period, such as `--time-period=1h` or `INTERVAL '1' HOUR`.
+9. Make sure that the number of rows read decreases. Run the command from step 2 again with a shorter time period, such as `--time-period=1h` or `INTERVAL '1' HOUR`.
 
    The results include all the queries in the time period. Queries that ran before you added the index increase the totals of a long time period.
 
@@ -168,19 +267,19 @@ A read query that runs many times often returns the same data each time. If you 
 
    ```sh
    npx cf sql query --scope-account <account_id> "
-   SELECT
-     databaseId,
-     query,
-     COUNT(*) AS numberOfTimesRun,
-     SUM(rowsRead) AS totalRowsRead,
-     AVG(queryDurationMs) AS avgDurationMs
-   FROM events.d1Queries
-   WHERE timestamp >= NOW() - INTERVAL '1' DAY
-     AND rowsWritten = 0
-     AND error = ''
-   GROUP BY databaseId, query
-   ORDER BY numberOfTimesRun DESC
-   LIMIT 5
+     SELECT
+       databaseId,
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsRead) AS totalRowsRead,
+       AVG(queryDurationMs) AS avgDurationMs
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '1' DAY
+       AND rowsWritten = 0
+       AND error = ''
+     GROUP BY databaseId, query
+     ORDER BY numberOfTimesRun DESC
+     LIMIT 5
    "
    ```
 
