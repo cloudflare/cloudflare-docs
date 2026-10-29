@@ -163,4 +163,76 @@ To refuse state changes from some connections, use [readonly connections](/agent
 
 ## On the Agent class
 
-The [`Agent` class](/agents/agent-class/) installs a `State` and a `WebSockets` wired together. Its `initialState`, `this.state`, `this.setState()`, `validateStateChange()`, and `onStateChanged()` call them, and it broadcasts each change for you. For more information, refer to [Store and sync state](/agents/agent-class/state/).
+The [`Agent` class](/agents/agent-class/) installs a `State` and a `WebSockets` wired together. Its `initialState`, `this.state`, `this.setState()`, `validateStateChange()`, and `onStateChanged()` call them, and it broadcasts each change for you. For more information, refer to [Store and sync state](/agents/runtime/capabilities/state/).
+
+### Plan as state
+
+A structured plan in state lets a long-running Agent recover from any interruption: after a restart, it reads `plan.currentStep` and continues. Clients also see which steps are done. Each step runs in its own scheduled callback, so the agent can hibernate between steps:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+type PlanStep = {
+	id: string;
+	description: string;
+	status: "pending" | "complete" | "failed";
+	result?: unknown;
+};
+
+type Plan = {
+	goal: string;
+	steps: PlanStep[];
+	currentStep: number;
+};
+
+type ProjectState = { plan: Plan | null };
+
+export class ProjectManager extends Agent<Env, ProjectState> {
+	initialState: ProjectState = { plan: null };
+
+	async createPlan(goal: string, steps: { id: string; description: string }[]) {
+		this.setState({
+			plan: {
+				goal,
+				steps: steps.map((s) => ({ ...s, status: "pending" })),
+				currentStep: 0,
+			},
+		});
+		await this.schedule(0, "executeNextStep");
+	}
+
+	async executeNextStep() {
+		const { plan } = this.state;
+		if (!plan || plan.currentStep >= plan.steps.length) return;
+
+		const step = plan.steps[plan.currentStep];
+		try {
+			const result = await this.keepAliveWhile(() => this.runStep(step));
+			this.updateStep(step.id, { status: "complete", result }, 1);
+			await this.schedule(0, "executeNextStep");
+		} catch {
+			this.updateStep(step.id, { status: "failed" }, 0);
+		}
+	}
+
+	private updateStep(id: string, change: Partial<PlanStep>, advance: number) {
+		const plan = this.state.plan!;
+		this.setState({
+			plan: {
+				...plan,
+				steps: plan.steps.map((s) => (s.id === id ? { ...s, ...change } : s)),
+				currentStep: plan.currentStep + advance,
+			},
+		});
+	}
+
+	private async runStep(step: PlanStep): Promise<unknown> {
+		// Call a model or a tool for this step.
+		return `Done: ${step.description}`;
+	}
+}
+```
+
+</TypeScriptExample>

@@ -332,3 +332,42 @@ Callbacks shared by both clients:
 ## On the Agent class
 
 An [`Agent`](/agents/agent-class/) works with the same clients. Its `@callable()` methods are what `call()` and `stub` reach, and it also sends MCP server updates to `useAgent({ onMcpUpdate })`. For chat UIs on `AIChatAgent` or Think, `useAgentChat` builds on `useAgent`. For more information, refer to [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/).
+
+For example, an Agent that keeps the Workflow approvals waiting on a person in its state can render them as a list, and approve or reject each one through `stub`:
+
+```tsx
+import { useAgent } from "agents/react";
+import type { ExpenseAgent, ExpenseState } from "./server";
+
+export function PendingApprovals() {
+	const agent = useAgent<ExpenseAgent, ExpenseState>({
+		agent: "ExpenseAgent",
+		name: "main",
+	});
+
+	if (!agent.state?.pendingApprovals.length) {
+		return <p>No pending approvals</p>;
+	}
+
+	return (
+		<ul>
+			{agent.state.pendingApprovals.map((item) => (
+				<li key={item.workflowId}>
+					<h3>${item.amount}</h3>
+					<p>
+						{item.description}, requested by {item.requestedBy}
+					</p>
+					<button onClick={() => agent.stub.approve(item.workflowId, "admin")}>
+						Approve
+					</button>
+					<button onClick={() => agent.stub.reject(item.workflowId, "Declined")}>
+						Reject
+					</button>
+				</li>
+			))}
+		</ul>
+	);
+}
+```
+
+For the server side, refer to [Run Workflows](/agents/agent-class/run-workflows/).

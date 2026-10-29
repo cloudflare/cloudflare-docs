@@ -194,4 +194,184 @@ The scheduler publishes `schedule:create`, `schedule:execute`, `schedule:retry`,
 
 ## On the Agent class
 
-The [`Agent` class](/agents/agent-class/) installs a `Scheduler`. Its `this.schedule()`, `this.scheduleEvery()`, `this.getSchedule()`, `this.listSchedules()`, and `this.cancelSchedule()` methods call it, and callback names resolve to methods on the Agent. For more information, refer to [Schedule tasks](/agents/agent-class/schedule-tasks/).
+The [`Agent` class](/agents/agent-class/) installs a `Scheduler`. Its `this.schedule()`, `this.scheduleEvery()`, `this.getSchedule()`, `this.listSchedules()`, and `this.cancelSchedule()` methods call it, and callback names resolve to methods on the Agent. For more information, refer to [Schedule tasks](/agents/runtime/capabilities/scheduler/).
+
+### Remind and escalate
+
+Schedule follow-ups when work starts, and check in each callback whether they are still needed. This Agent reminds an approver after four hours and escalates after 24 hours if the approval [Workflow](/agents/agent-class/run-workflows/) is still waiting. A number as the first argument is a delay in seconds.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+type Expense = { amount: number; description: string; requestedBy: string };
+type Reminder = { workflowId: string };
+
+export class ExpenseAgent extends Agent<Env> {
+	@callable()
+	async submitForApproval(expense: Expense): Promise<string> {
+		const workflowId = await this.runWorkflow("EXPENSE_WORKFLOW", expense);
+
+		// A number is a delay in seconds: remind after 4 hours, escalate after 24.
+		await this.schedule(4 * 60 * 60, "sendReminder", { workflowId });
+		await this.schedule(24 * 60 * 60, "escalateApproval", { workflowId });
+
+		return workflowId;
+	}
+
+	async sendReminder({ workflowId }: Reminder) {
+		if (await this.isWaiting(workflowId)) {
+			console.log(`Reminder: ${workflowId} still needs approval`);
+		}
+	}
+
+	async escalateApproval({ workflowId }: Reminder) {
+		if (await this.isWaiting(workflowId)) {
+			console.log(`Escalating ${workflowId} to a manager`);
+		}
+	}
+
+	private async isWaiting(workflowId: string): Promise<boolean> {
+		const { status } = await this.getWorkflowStatus(
+			"EXPENSE_WORKFLOW",
+			workflowId,
+		);
+		return status === "waiting";
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Poll an external job
+
+When a service has no callback, schedule a check, and have each check schedule the next one until the job finishes. The agent hibernates between checks:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+type Job = { taskId: string; jobId: string; attempt: number };
+type VideoState = { jobs: Record<string, "running" | "complete" | "failed"> };
+
+export class VideoAgent extends Agent<Env, VideoState> {
+	initialState: VideoState = { jobs: {} };
+
+	async startVideoGeneration(taskId: string, prompt: string) {
+		const response = await fetch("https://video-api.example.com/generate", {
+			method: "POST",
+			body: JSON.stringify({ prompt }),
+		});
+		const { jobId } = await response.json<{ jobId: string }>();
+		this.setJob(taskId, "running");
+
+		await this.schedule(60, "pollExternalJob", { taskId, jobId, attempt: 1 });
+	}
+
+	async pollExternalJob(job: Job) {
+		const response = await fetch(
+			`https://video-api.example.com/status/${job.jobId}`,
+		);
+		const { state } = await response.json<{ state: string }>();
+
+		if (state === "complete" || state === "failed") {
+			this.setJob(job.taskId, state);
+			return;
+		}
+
+		// Back off by a minute per attempt, up to ten minutes.
+		const nextDelay = Math.min(60 * job.attempt, 600);
+		await this.schedule(nextDelay, "pollExternalJob", {
+			...job,
+			attempt: job.attempt + 1,
+		});
+	}
+
+	private setJob(taskId: string, status: VideoState["jobs"][string]) {
+		this.setState({ jobs: { ...this.state.jobs, [taskId]: status } });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Recurring work and housekeeping
+
+An agent that lives for months schedules its own rhythm in `onStart()`: daily deadline checks, a periodic sync, and nightly housekeeping that archives old rows. Cron and interval schedules are idempotent, so this does not add rows on every wake. When the agent's purpose is complete, cancel its schedules. To delete everything the agent stores, including its schedules, call `this.destroy()`.
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+type Task = {
+	id: string;
+	title: string;
+	status: "pending" | "complete";
+	dueDate?: number;
+	completedAt?: number;
+};
+
+type ProjectState = {
+	status: "active" | "complete";
+	tasks: Task[];
+};
+
+const DAY = 24 * 60 * 60 * 1000;
+
+export class ProjectManager extends Agent<Env, ProjectState> {
+	initialState: ProjectState = { status: "active", tasks: [] };
+
+	async onStart() {
+		this.sql`CREATE TABLE IF NOT EXISTS archived_tasks (id TEXT PRIMARY KEY, data TEXT)`;
+
+		// Cron and interval schedules are idempotent, so each wake reuses them.
+		await this.schedule("0 9 * * *", "checkDeadlines");
+		await this.schedule("0 0 * * *", "housekeeping");
+		await this.scheduleEvery(30 * 60, "syncProgress");
+	}
+
+	async checkDeadlines() {
+		const overdue = this.state.tasks.filter(
+			(t) => t.status !== "complete" && (t.dueDate ?? Infinity) < Date.now(),
+		);
+		if (overdue.length > 0) {
+			this.broadcast(JSON.stringify({ type: "overdue", tasks: overdue }));
+		}
+	}
+
+	async syncProgress() {
+		// Check external systems and update task statuses.
+	}
+
+	async housekeeping() {
+		const cutoff = Date.now() - 30 * DAY;
+		const toArchive = this.state.tasks.filter(
+			(t) => t.status === "complete" && (t.completedAt ?? 0) < cutoff,
+		);
+		for (const task of toArchive) {
+			this.sql`INSERT OR REPLACE INTO archived_tasks (id, data) VALUES (${task.id}, ${JSON.stringify(task)})`;
+		}
+		this.setState({
+			...this.state,
+			tasks: this.state.tasks.filter((t) => !toArchive.includes(t)),
+		});
+
+		this.deleteWorkflows({
+			status: ["complete", "errored"],
+			createdBefore: new Date(Date.now() - 7 * DAY),
+		});
+	}
+
+	async completeProject() {
+		for (const schedule of await this.listSchedules()) {
+			await this.cancelSchedule(schedule.id);
+		}
+		this.setState({ ...this.state, status: "complete" });
+	}
+}
+```
+
+</TypeScriptExample>
