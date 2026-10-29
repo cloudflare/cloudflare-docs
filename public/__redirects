@@ -253,7 +253,7 @@
 /agents/runtime/agents-api/ /agents/agent-class/ 301
 /agents/runtime/communication/ /agents/agent-class/ 301
 /agents/runtime/communication/chat-sdk/ /agents/agent-class/communication-channels/chat-sdk/ 301
-/agents/runtime/communication/http-sse/ /agents/agent-class/http-sse/ 301
+/agents/runtime/communication/http-sse/ /agents/runtime/routing/http-sse/ 301
 /agents/runtime/communication/protocol-messages/ /agents/agent-class/protocol-messages/ 301
 /agents/runtime/communication/readonly-connections/ /agents/agent-class/readonly-connections/ 301
 /agents/runtime/communication/routing/ /agents/agent-class/routing/ 301
@@ -269,6 +269,7 @@
 /agents/runtime/lifecycle/callable-methods/ /agents/agent-class/callable-methods/ 301
 /agents/runtime/lifecycle/state/ /agents/agent-class/state/ 301
 /agents/runtime/lifecycle/sessions/ /agents/runtime/capabilities/sessions/ 301
+/agents/agent-class/http-sse/ /agents/runtime/routing/http-sse/ 301
 /agents/runtime/operations/ /agents/runtime/ 301
 /agents/runtime/operations/configuration/ /agents/runtime/routing/ 301
 /agents/runtime/operations/cross-domain-authentication/ /agents/runtime/routing/authentication/ 301
@@ -319,7 +320,7 @@
 /agents/api-reference/durable-execution/ /agents/agent-class/durable-execution/ 301
 /agents/api-reference/email/ /agents/agent-class/communication-channels/email/ 301
 /agents/api-reference/get-current-agent/ /agents/runtime/lifecycle/get-current-agent/ 301
-/agents/api-reference/http-sse/ /agents/agent-class/http-sse/ 301
+/agents/api-reference/http-sse/ /agents/runtime/routing/http-sse/ 301
 /agents/api-reference/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
 /agents/api-reference/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
 /agents/api-reference/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
