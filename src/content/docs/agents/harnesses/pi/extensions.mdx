@@ -1,7 +1,7 @@
 ---
 title: Extensions
 pcx_content_type: concept
-description: Add tools and system prompt sections to a PiHarness with Pi Durable extensions, such as the skills extension the Agents SDK ships.
+description: Add tools, system prompt sections, and skills to a PiHarness with Pi Durable extensions.
 sidebar:
   order: 1
 products:
@@ -127,9 +127,9 @@ this.registry.install({
 });
 ```
 
-## Example: the skills extension
+## Add skills
 
-The Agents SDK ships one ready-made extension. `skills(sources)` from `agents/harness/pi` returns an extension named `agents.skills` with both parts an extension can have: two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills by name and description. It reads its sources before it returns, so install it in an `async` factory:
+`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/runtime/execution/agent-skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. It has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
 
 ```ts
 import { skills } from "agents/harness/pi";
@@ -155,7 +155,7 @@ harness = new PiHarness({
 });
 ```
 
-The model reads a skill's instructions and resources through the two tools. The extension does not run skill scripts.
+The tools match the ones [Think](/agents/harnesses/think/) offers, so a skill written for one works in the other. The model can read a skill's instructions and resources. Skill scripts do not run.
 
 ## Use more of Pi Durable
 

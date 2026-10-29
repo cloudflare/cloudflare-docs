@@ -49,7 +49,7 @@ export class MyAgent extends Think<Env> {
 
 `ContextConfig` comes from `agents/context`, an experimental library that builds the prompt from blocks. The assembled blocks are available as `this.context` once the agent has started.
 
-Once you declare context blocks, or return a source from `getSkills()`, Think builds the system prompt from blocks and no longer uses `getSystemPrompt()`. The prompt is frozen and stored, so after a cold start the model gets the exact prompt it saw before, and the provider's prompt cache still applies.
+Once you declare context blocks, Think builds the system prompt from blocks and no longer uses `getSystemPrompt()`. The prompt is frozen and stored, so after a cold start the model gets the exact prompt it saw before, and the provider's prompt cache still applies.
 
 ## Compact long conversations
 
@@ -148,4 +148,4 @@ The upgrade also migrates storage the first time each agent wakes, and the migra
 
 - [Configuration](/agents/harnesses/think/configuration/): every Think override, including `configureSession()` and `configureContext()`.
 - [Durable recovery](/agents/harnesses/think/recovery/): chat recovery and context-window overflow recovery.
-- [Tools](/agents/harnesses/think/tools/): the workspace, skills, and the context tools the model uses.
+- [Tools](/agents/harnesses/think/tools/): the workspace and the context tools the model uses.

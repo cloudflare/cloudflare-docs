@@ -1,7 +1,7 @@
 ---
 title: Tools
 pcx_content_type: reference
-description: Connect a workspace, and use built-in workspace tools, skills, custom tools, approvals, MCP tools, the fetch tool, code execution, and extensions in Think agents.
+description: Connect a workspace, and use built-in workspace tools, custom tools, approvals, MCP tools, the fetch tool, code execution, and extensions in Think agents.
 sidebar:
   order: 4
 products:
@@ -10,7 +10,7 @@ products:
 
 import { Aside, TypeScriptExample, WranglerConfig } from "~/components";
 
-Think provides built-in workspace file tools on every turn, plus integration points for skills, custom tools, web fetches, code execution, and dynamic extensions.
+Think provides built-in workspace file tools on every turn, plus integration points for custom tools, web fetches, code execution, and dynamic extensions.
 
 ## Tool merge order
 
@@ -20,7 +20,7 @@ On every turn, Think merges tools from multiple sources. Later sources override 
 2. **`getTools()`** — your custom server-side tools
 3. **Extension tools** — tools from loaded extensions (prefixed by extension name)
 4. **Context tools** — `set_context`, `load_context`, `search_context` (from `configureContext()` and `configureSession()`, refer to [Memory and context](/agents/harnesses/think/memory-and-context/))
-5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Load skills from the workspace](#load-skills-from-the-workspace))
+5. **Skill tools** — `activate_skill`, `read_skill_resource`, `run_skill_script` (from `getSkills()`, refer to [Agent Skills](/agents/runtime/execution/agent-skills/))
 6. **MCP tools** — from connected MCP servers when `includeMcpTools` is `true`
 7. **Client tools** — from the browser (refer to [Client tools](/agents/harnesses/think/client-tools/))
 
@@ -33,7 +33,6 @@ Every Think agent is connected to a workspace. `this.workspace` is a `Workspace`
 What Think does with the workspace:
 
 - It gives the model the [built-in workspace tools](#built-in-workspace-tools) on every turn.
-- It can write [skills](#load-skills-from-the-workspace) to the workspace as files, under `/workspace/.agents/skills`.
 - It stores media that has aged out of the conversation under `/workspace/attachments/evicted/`, and large responses from the [fetch tool](#fetch-tool) under `/workspace/fetched/`.
 
 ## Built-in workspace tools
@@ -160,84 +159,6 @@ The upgrade also changes the tools:
 - `workspaceBash`, `createWorkspaceTools`, and `@cloudflare/think/tools/workspace` are removed, with no replacement. To change a built-in tool, return a tool with the same name from `getTools()`. To hide tools for a turn, return `activeTools` from `beforeTurn`.
 
 Refer to [Upgrading to a Computer workspace](https://github.com/cloudflare/agents/blob/main/docs/think/index.md#upgrading-to-a-computer-workspace) for the full list.
-
-## Load skills from the workspace
-
-A [skill](/agents/concepts/skills/) is a folder with a `SKILL.md` file and any references, templates, or scripts it needs. Think lists the available skills in the system prompt and loads a skill's instructions only when the model activates it, so skills do not cost context until they are needed.
-
-Return skill sources from `getSkills()`. Bundle a `skills` folder next to your agent with the Agents Vite plugin, and import it as `agents:skills`:
-
-```ts title="vite.config.ts"
-import { cloudflare } from "@cloudflare/vite-plugin";
-import agents from "agents/vite";
-import { defineConfig } from "vite";
-
-export default defineConfig({
-	plugins: [agents(), cloudflare()],
-});
-```
-
-<TypeScriptExample>
-
-```ts
-import { Think, skills } from "@cloudflare/think";
-import { Workspace } from "@cloudflare/computer";
-import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
-import { createAI } from "agents/models/ai-sdk";
-import bundledSkills from "agents:skills";
-
-export class MyAgent extends Think<Env> {
-	override workspace = new Workspace({
-		storage: this.ctx.storage,
-		backends: [
-			new WorkerJavaScriptBackend({
-				id: "js",
-				loader: this.env.LOADER,
-				access: "read-write",
-			}),
-		],
-	});
-
-	// Write each skill to /workspace/.agents/skills.
-	skillWorkspace = {};
-
-	getModel() {
-		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
-	}
-
-	getSkills() {
-		return [
-			bundledSkills,
-			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
-		];
-	}
-
-	getSkillScriptRunner() {
-		return skills.runner({
-			loader: this.env.LOADER,
-			workspaceInstance: this.workspace,
-		});
-	}
-}
-```
-
-</TypeScriptExample>
-
-`agents:skills` resolves to the `./skills` folder next to the importing file, with one child folder per skill. Use `agents:skills/<folder>` for a differently named folder. Without the Vite plugin, build a source with `skills.fromManifest()`. Sources apply in order: the first source to list a skill name wins, and a later duplicate, or a source that fails to load, is skipped with a logged warning.
-
-When skills are available, Think adds three tools:
-
-| Tool                  | Purpose                                                                            |
-| --------------------- | ---------------------------------------------------------------------------------- |
-| `activate_skill`      | Load a skill's instructions and the list of its bundled files.                     |
-| `read_skill_resource` | Read a bundled file by `{ name, path }` or `skill-name/path`.                      |
-| `run_skill_script`    | Run a bundled script. Only present when `getSkillScriptRunner()` returns a runner. |
-
-`skillWorkspace` puts the skills on the workspace as files. It is off by default, and `{}` turns it on. Each `SKILL.md` is written under `/workspace/.agents/skills/<name>/`, and bundled files are copied when the model first asks for them. Files that already exist in the workspace are kept, and they take over: if the model or your code edits a skill in the workspace, later activations read the edited version. Pass `{ root: "/some/other/dir" }` to write the skills somewhere else.
-
-`skills.runner()` is experimental. It runs JavaScript, TypeScript, Python, and Bash scripts from a skill's `scripts/` folder, and needs a Worker Loader binding. Scripts get read-only access to the workspace by default. Network access, tools, and workspace writes are opt-in, and the default timeout is 30 seconds.
-
-Skills are not always-on instructions. Put behavior that should apply on every turn in a context block from [`configureContext()`](/agents/harnesses/think/memory-and-context/). Once `getSkills()` returns a source, Think builds the system prompt from context blocks, and an overridden `getSystemPrompt()` is no longer used.
 
 ## Custom tools
 

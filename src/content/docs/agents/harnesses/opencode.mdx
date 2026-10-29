@@ -292,8 +292,6 @@ OpenCode's Workers profile has no local filesystem or process, which is why the 
 
 `createPiTools()` from `@cloudflare/computer/tools/pi-ai` returns the workspace tools as JSON Schema declarations with one `execute` function, which a plugin can register with `tools.add()`. The [OpenCode harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/opencode) does this in `src/workspace.ts`: it stores the workspace in the same Durable Object, runs JavaScript with `WorkerJavaScriptBackend`, adds git, and replaces OpenCode's local tools with the workspace's `read`, `write`, `edit`, `delete`, `ls`, `find`, `grep`, and `exec`.
 
-Skills are files too. To load a skill into OpenCode, register it through a plugin, as in [Add an Agent Skill](#add-an-agent-skill).
-
 ## Add plugins
 
 Bundle plugins with the Worker and pass them in the factory's `plugins` array alongside `this.ai.plugin` and `workerTools`. Do not rely on runtime loading of local plugin files or npm packages.
@@ -355,4 +353,4 @@ export default Plugin.define({
 
 </TypeScriptExample>
 
-Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/concepts/skills/) for authoring guidance.
+Import this plugin and add it to `plugins`. The `content` supplies instructions without reading a local file at runtime. Refer to [OpenCode skills](https://opencode.ai/v2/docs/build/plugins/#skills) for registration and [Agent Skills](/agents/runtime/execution/agent-skills/) for authoring guidance.
