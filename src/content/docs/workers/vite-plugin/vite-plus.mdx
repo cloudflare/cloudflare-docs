@@ -1,0 +1,25 @@
+---
+title: Vite+ on Workers
+description: Use Vite+ with the Cloudflare Vite plugin for new Workers and Vite-based apps, or adopt it in an existing project.
+pcx_content_type: integration-guide
+sidebar:
+  order: 3
+products:
+  - workers
+---
+
+[Vite+](https://viteplus.dev/) combines Vite with formatting, linting, type checking, and testing. Use Vite+ with the [Cloudflare Vite plugin](/workers/vite-plugin/) for new Workers and supported Vite-based apps.
+
+The plugin runs your Worker code in the Workers runtime during development. Vite+ provides the project toolchain through the `vp` command.
+
+## Start a new project
+
+To create a standalone Worker with `cf init`, follow [Deploy your first Worker](/cf/get-started/first-worker/). Use the generated Vite+ scripts for checks, formatting, and tests alongside `cf dev`, `cf build`, and `cf deploy`.
+
+For a framework application, start with the appropriate [framework guide](/workers/framework-guides/). Preserve framework-specific build steps when adopting Vite+.
+
+## Adopt Vite+ in an existing project
+
+Follow the [Vite+ migration guide](https://viteplus.dev/guide/migrate) for requirements and migration steps. If your project does not yet use the Cloudflare Vite plugin, follow the [plugin setup guide](/workers/vite-plugin/get-started/).
+
+Keep your framework scripts and Cloudflare deployment command. Adopting Vite+ does not require changing your Cloudflare configuration format. Preserve existing toolchains during unrelated changes.

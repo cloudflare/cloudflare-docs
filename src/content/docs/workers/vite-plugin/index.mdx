@@ -3,7 +3,7 @@ pcx_content_type: overview
 title: Vite plugin
 sidebar:
   order: 17
-description: A full-featured integration between Vite and the Workers runtime
+description: Integrate Vite and Vite+ with the Workers runtime using the Cloudflare Vite plugin.
 products:
   - workers
 ---
@@ -12,6 +12,8 @@ import { Render } from "~/components";
 
 The Cloudflare Vite plugin enables a full-featured integration between [Vite](https://vite.dev/) and the [Workers runtime](/workers/runtime-apis/).
 Your Worker code runs inside a local [`workerd`](https://github.com/cloudflare/workerd) process, which closely matches the runtime APIs and behavior of deployed Workers.
+
+For new Workers and supported Vite-based apps, use [Vite+ on Workers](/workers/vite-plugin/vite-plus/) for development, builds, formatting, linting, type checking, and testing.
 
 <Render file="local-development-security" product="workers" />
 
