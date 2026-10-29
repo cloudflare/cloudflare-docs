@@ -206,7 +206,7 @@ Only one catch-all can exist for each hook. `use()` throws when you install a se
 | WebSocket message, close, or error | The first capability whose hook returns `true`, otherwise ignored                                   |
 | Alarm                              | Due jobs, then the host's `onAlarm()`                                                               |
 
-The host never receives WebSocket events directly. To accept WebSocket clients, install the [`WebSockets` capability](/agents/agent-class/websockets/), or write a capability that owns its sockets. For more information, refer to [Own WebSocket connections](/agents/runtime/lifecycle/capability-api/#own-websocket-connections).
+The host never receives WebSocket events directly. To accept WebSocket clients, install the [`WebSockets` capability](/agents/runtime/capabilities/websockets/), or write a capability that owns its sockets. For more information, refer to [Own WebSocket connections](/agents/runtime/lifecycle/capability-api/#own-websocket-connections).
 
 ## On the `Agent` class
 

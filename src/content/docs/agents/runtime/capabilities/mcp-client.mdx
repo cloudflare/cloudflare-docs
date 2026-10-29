@@ -285,7 +285,7 @@ The manager stores servers in the `cf_agents_mcp_servers` table. The default OAu
 
 ## On the Agent class
 
-The [`Agent` class](/agents/agent-class/) installs `MCPClientManager` as `this.mcp`. Its `addMcpServer()` method runs the register, connect, and discover steps in one call and builds the callback URL for you. `removeMcpServer()` and `getMcpServers()` wrap the manager too, and the Agent sends the server list to its clients for `useAgent({ onMcpUpdate })`. For more information, refer to [McpClient](/agents/runtime/capabilities/mcp-client/).
+The [`Agent` class](/agents/agent-class/) installs `MCPClientManager` as `this.mcp`. Its `addMcpServer()` method runs the register, connect, and discover steps in one call and builds the callback URL for you. `removeMcpServer()` and `getMcpServers()` wrap the manager too, and the Agent sends the server list to its clients for `useAgent({ onMcpUpdate })`. For more information, refer to [McpClient](/agents/model-context-protocol/apis/client-api/).
 
 On an Agent, configure elicitation handlers on `this.mcp` in `onStart()`. Forward each request to the user, and resolve with their answer. Form mode collects structured input that is not sensitive. URL mode asks the user to open a separate flow, such as an authorization or a payment page.
 

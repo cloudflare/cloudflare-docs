@@ -277,4 +277,4 @@ The job queue emits these best-effort events on the `agents:lifecycle` [diagnost
 
 ## On the `Agent` class
 
-The `Agent` class uses the same job queue. Its `schedule()` and `scheduleEvery()` methods push jobs through its `Scheduler` capability, and a deferred `destroy()` pushes an `exclusive` job. Set `maxAlarmMemoryLimitStrikes` on an `Agent` through its static `options`. For more information, refer to [Schedule tasks](/agents/agent-class/schedule-tasks/).
+The `Agent` class uses the same job queue. Its `schedule()` and `scheduleEvery()` methods push jobs through its `Scheduler` capability, and a deferred `destroy()` pushes an `exclusive` job. Set `maxAlarmMemoryLimitStrikes` on an `Agent` through its static `options`. For more information, refer to [Schedule tasks](/agents/runtime/capabilities/scheduler/).

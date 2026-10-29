@@ -71,12 +71,12 @@ Each capability has its own export path and owns its own tables. The stable capa
 
 | Capability         | Import              | What it adds                                                                        |
 | ------------------ | ------------------- | ----------------------------------------------------------------------------------- |
-| `MCPClientManager` | `agents/mcp/client` | [Connections to MCP servers](/agents/model-context-protocol/apis/client-api/)       |
+| `MCPClientManager` | `agents/mcp/client` | [Connections to MCP servers](/agents/runtime/capabilities/mcp-client/)       |
 | `PiHarness`        | `agents/harness/pi` | [The Pi agent loop](/agents/harnesses/pi/)                                          |
-| `Scheduler`        | `agents/schedules`  | [Delayed, dated, cron, and interval callbacks](/agents/agent-class/schedule-tasks/) |
-| `State`            | `agents/state`      | [Shared state that syncs to clients](/agents/agent-class/state/)                    |
-| `WebSockets`       | `agents/websockets` | [Real-time client connections](/agents/agent-class/websockets/)                     |
+| `Scheduler`        | `agents/schedules`  | [Delayed, dated, cron, and interval callbacks](/agents/runtime/capabilities/scheduler/) |
+| `State`            | `agents/state`      | [Shared state that syncs to clients](/agents/runtime/capabilities/state/)                    |
+| `WebSockets`       | `agents/websockets` | [Real-time client connections](/agents/runtime/capabilities/websockets/)                     |
 
 ## Client
 
-`useAgent()` from `agents/react` and `AgentClient` from `agents/client` connect to any Durable Object that installs the `WebSockets` capability, including a plain `DurableObject`. For more information, refer to [WebSockets](/agents/agent-class/websockets/).
+`useAgent()` from `agents/react` and `AgentClient` from `agents/client` connect to any Durable Object that installs the `WebSockets` capability, including a plain `DurableObject`. For more information, refer to [WebSockets](/agents/runtime/capabilities/websockets/).

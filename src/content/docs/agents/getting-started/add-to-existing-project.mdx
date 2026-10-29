@@ -225,10 +225,10 @@ Other capabilities install the same way:
 
 | Capability                                                            | Import              | What it adds                                                                        |
 | --------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
-| [`State`](/agents/agent-class/state/)                                 | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
-| [`WebSockets`](/agents/agent-class/websockets/)                       | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
-| [`Scheduler`](/agents/agent-class/schedule-tasks/)                    | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
-| [`MCPClientManager`](/agents/model-context-protocol/apis/client-api/) | `agents/mcp/client` | Connections to remote MCP servers.                                                  |
+| [`State`](/agents/runtime/capabilities/state/)                                 | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)                       | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                    | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
+| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client/) | `agents/mcp/client` | Connections to remote MCP servers.                                                  |
 | [`PiHarness`](/agents/harnesses/pi/)                                  | `agents/harness/pi` | The Pi agent loop, with durable sessions.                                           |
 
 Capabilities run in the order you add them. To write your own, refer to [Lifecycle](/agents/runtime/lifecycle/).

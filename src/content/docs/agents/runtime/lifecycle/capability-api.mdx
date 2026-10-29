@@ -264,7 +264,7 @@ export class EchoSockets extends LifecycleCapability {
 
 </TypeScriptExample>
 
-`EchoSockets` can sit beside the `WebSockets` capability. `WebSockets` is a catch-all for upgrades, so the Lifecycle offers each upgrade to `EchoSockets` first, whatever the install order. For most real-time clients, use the [`WebSockets` capability](/agents/agent-class/websockets/) instead.
+`EchoSockets` can sit beside the `WebSockets` capability. `WebSockets` is a catch-all for upgrades, so the Lifecycle offers each upgrade to `EchoSockets` first, whatever the install order. For most real-time clients, use the [`WebSockets` capability](/agents/runtime/capabilities/websockets/) instead.
 
 ## Job types
 
@@ -288,7 +288,7 @@ The job types are described on [Jobs and alarms](/agents/runtime/lifecycle/job-q
 | `ConnectionSetStateFn<T>` | `(prevState: ConnectionState<T>) => T`, an updater for `connection.setState()`.                                                           |
 | `WSMessage`               | `string \| ArrayBuffer \| ArrayBufferView`.                                                                                             |
 
-For how connections work, refer to [WebSockets](/agents/agent-class/websockets/).
+For how connections work, refer to [WebSockets](/agents/runtime/capabilities/websockets/).
 
 ## `getCurrentAgent()` types
 
