@@ -1,15 +1,14 @@
 ---
 title: Authentication and authorization
-description: Enforce route policies and data permissions outside customer app code with Workers for Platforms and Dynamic Workers.
+description: Authenticate requests in a dispatch Worker and authorize data access outside customer app code with Workers for Platforms.
 pcx_content_type: design-guide
 sidebar:
   order: 4
 products:
   - cloudflare-for-platforms
-  - dynamic-workers
 ---
 
-import { Tabs, TabItem, TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 When you build a platform that runs customer apps, you need to control who can use each app and which data they can access. An app may have both public and private endpoints.
 
@@ -20,13 +19,13 @@ Enforce access at two points:
 - **Before the app runs:** require a list of public and private routes when the app is published. Validate that list and enforce its rules before invoking app code.
 - **When the app accesses data:** check permissions inside platform-owned operations. Signing in must not let Bob read Alice's private report.
 
-This guide implements these checks with Workers for Platforms and Dynamic Workers.
+With Workers for Platforms, check requests in the dispatch Worker and pass scoped data operations to user Workers.
 
 ```mermaid
 flowchart TB
-  Request --> Gate[Platform Worker<br/>Authenticate and check route]
+  Request --> Gate[Dispatch Worker<br/>Authenticate and check route]
   Gate -->|Denied| Reject[Return 401, 403, or 404<br/>App does not run]
-  Gate -->|Allowed| App[Customer app]
+  Gate -->|Allowed| App[User Worker]
   App --> Capability[Platform capability<br/>Check access to this record]
   Capability --> Data[(Private data)]
 ```
@@ -39,12 +38,12 @@ Choose checks according to what needs protection:
 
 | Requirement                                        | Enforcement point                            |
 | -------------------------------------------------- | -------------------------------------------- |
-| The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#authenticate-before-invoking-the-app) |
+| The whole app requires sign-in                     | [Dispatch Worker, before invocation](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#authenticate-before-invoking-the-app) |
 | Routes mix public and private access               | [Platform-owned method/path policy](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#publish-code-and-route-policy-together) |
 | Routes are unknown, but data permissions are known | [Platform-owned data operations](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#protect-data-even-when-routes-change) |
 | Routing and policy must stay together              | [Registered handlers with access metadata](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#adapt-the-pattern) |
 | Public code needs fewer privileges                 | [Separate Workers with different capabilities](/cloudflare-for-platforms/workers-for-platforms/configuration/authentication/#adapt-the-pattern) |
-| App libraries call HTTP APIs                       | [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [`globalOutbound` gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests) |
+| App libraries call HTTP APIs                       | [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) |
 
 Combine route checks with data-operation checks for mixed-access apps.
 
@@ -77,49 +76,13 @@ The platform owns these publication rules:
 - Prevent changes that weaken required permissions.
 - Keep code and policy versions consistent during rollouts.
 
-For Workers for Platforms, upload a new script name first. Then switch the dispatch Worker to that script and its matching policy.
+Upload a new script name first. Then switch the dispatch Worker to that script and its matching policy.
 
 ### Deny undeclared routes
 
 Match both method and path. A new route stays inaccessible until the platform accepts its policy.
 
-<TypeScriptExample filename="policy.ts">
-```ts
-export type Identity = {
-	userId: string;
-	tenant: string;
-	permissions: string[];
-};
-
-export type Route = {
-	method: string;
-	path: string;
-	access: "public" | "member" | "reports:admin";
-};
-
-export function checkRoute(
-	request: Request,
-	routes: Route[],
-	tenant: string,
-	identity: Identity | null,
-): Response | null {
-	const path = new URL(request.url).pathname;
-	const route = routes.find(
-		(route) => route.method === request.method && route.path === path,
-	);
-	if (!route) return new Response("Route not published", { status: 404 });
-	if (route.access === "public") return null;
-	if (!identity) return new Response("Sign in", { status: 401 });
-	if (
-		identity.tenant !== tenant ||
-		(route.access !== "member" && !identity.permissions.includes(route.access))
-	) {
-		return new Response("Forbidden", { status: 403 });
-	}
-	return null;
-}
-```
-</TypeScriptExample>
+<Render file="platform-auth-route-policy" product="workers" />
 
 Here, `member` means membership in the app tenant. Add an app-membership check if only some tenant members may enter.
 
@@ -133,9 +96,9 @@ Implement `authenticate(request)` in `auth.ts` using your existing identity prov
 - Return a verified identity, or `null` when credentials are absent.
 - Reject invalid credentials rather than trust caller-supplied identity headers.
 
-Resolve `deployment` from your platform's app registry. Its tenant, routes, code, and script name must not come from app code.
+Resolve `deployment` from your platform's app registry. Its tenant, routes, and script name must not come from app code.
 
-Place this gate in the platform request handler:
+Place this gate in the dispatch Worker request handler:
 
 <TypeScriptExample filename="gateway.ts">
 ```ts
@@ -163,12 +126,7 @@ const appRequest = new Request(request.url, { method: "GET" });
 
 </TypeScriptExample>
 
-Invoke the app only after the gate succeeds:
-
-<Tabs>
-<TabItem label="Workers for Platforms">
-
-Use the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/):
+After the gate succeeds, invoke the app through the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/):
 
 <TypeScriptExample filename="gateway.ts">
 ```ts
@@ -181,28 +139,6 @@ return app.fetch(appRequest);
 
 All app ingress must pass through the dispatch Worker.
 
-</TabItem>
-<TabItem label="Dynamic Workers">
-
-Authenticate in the parent Worker before calling the [Worker Loader](/dynamic-workers/api-reference/):
-
-<TypeScriptExample filename="gateway.ts">
-```ts
-const app = env.LOADER.load({
-	compatibilityDate: "$today",
-	mainModule: "app.js",
-	modules: { "app.js": deployment.code },
-	globalOutbound: null,
-});
-return app.getEntrypoint(undefined, { props: { identity } }).fetch(appRequest);
-```
-</TypeScriptExample>
-
-`load()` creates a fresh Worker. With `get()`, keep code and configuration identical for each cache ID; do not cache one visitor's credentials for other visitors.
-
-</TabItem>
-</Tabs>
-
 For a wholly private app, require membership on every request. For mixed-access apps, use the route policy to select public exceptions.
 
 ## Protect data even when routes change
@@ -214,8 +150,8 @@ An app can omit `checkAuth()` or ignore its result. Give it an operation that pe
 ```mermaid
 sequenceDiagram
   participant Caller as Bob
-  participant Platform
-  participant App as Customer app
+  participant Platform as Dispatch Worker
+  participant App as User Worker
   participant Reports as Platform Reports capability
   Caller->>Platform: Request with Bob's session
   Platform->>App: Capability scoped to Bob
@@ -224,41 +160,9 @@ sequenceDiagram
   App-->>Caller: 404
 ```
 
-Keep the data and implementation in the platform Worker. This example uses synthetic records:
+Keep the data and implementation in the dispatch Worker. This example uses synthetic records:
 
-<TypeScriptExample filename="gateway.ts">
-```ts
-import { WorkerEntrypoint } from "cloudflare:workers";
-
-const records = [
-	{ id: "alice", tenant: "acme", owner: "alice", text: "Alice's report" },
-	{ id: "bob", tenant: "acme", owner: "bob", text: "Bob's report" },
-];
-
-type Scope = { identity: Identity | null; tenant: string };
-
-export class Reports extends WorkerEntrypoint<Cloudflare.Env, Scope> {
-	read(id: string) {
-		const { identity, tenant } = this.ctx.props;
-		if (!identity) return { status: 401, error: "Sign in" };
-		if (
-			identity.tenant !== tenant ||
-			!identity.permissions.includes("reports:read")
-		) {
-			return { status: 403, error: "Forbidden" };
-		}
-		const report = records.find(
-			(record) =>
-				record.id === id &&
-				record.tenant === tenant &&
-				record.owner === identity.userId,
-		);
-		if (!report) return { status: 404, error: "Report not found" };
-		return { status: 200, report: { text: report.text } };
-	}
-}
-```
-</TypeScriptExample>
+<Render file="platform-auth-reports" product="workers" />
 
 Create the capability using verified platform context. The app can choose a record ID, but cannot choose the capability's identity:
 
@@ -272,8 +176,6 @@ const reports = ctx.exports.Reports({
 
 Pass the capability with the invocation:
 
-<Tabs>
-<TabItem label="Workers for Platforms">
 <TypeScriptExample filename="gateway.ts">
 ```ts
 const app = env.DISPATCHER.get(deployment.scriptName, {
@@ -282,15 +184,6 @@ const app = env.DISPATCHER.get(deployment.scriptName, {
 return app.fetch(appRequest);
 ```
 </TypeScriptExample>
-</TabItem>
-<TabItem label="Dynamic Workers">
-<TypeScriptExample filename="gateway.ts">
-```ts
-return app.getEntrypoint(undefined, { props: { reports } }).fetch(appRequest);
-```
-</TypeScriptExample>
-</TabItem>
-</Tabs>
 
 The customer app calls the capability through [RPC](/workers/runtime-apis/rpc/):
 
@@ -301,7 +194,7 @@ return Response.json(result, { status: result.status });
 ```
 </TypeScriptExample>
 
-Block unrestricted network access, or mediate it through [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [Dynamic Workers egress controls](/dynamic-workers/usage/egress-control/). Otherwise, another data-access path could bypass the capability.
+Use [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to restrict network access to authorized destinations and operations. Otherwise, another data-access path could bypass the capability.
 
 ## Adapt the pattern
 
