@@ -10,7 +10,7 @@ products:
 
 import { LinkCard, TypeScriptExample } from "~/components";
 
-A workspace is an agent's working directory. The agent reads and writes files in it, runs code against those files, and keeps them between turns. A coding agent keeps a repository there. A research agent keeps notes and downloaded pages. Every agent keeps its [skills](/agents/concepts/skills/) there.
+A workspace is an agent's working directory. The agent reads and writes files in it, runs code against those files, and keeps them between turns. A coding agent keeps a repository there. A research agent keeps notes and downloaded pages.
 
 On Cloudflare, [Cloudflare Computer](https://github.com/cloudflare/computer) provides the workspace. You create a `Workspace` from `@cloudflare/computer`.
 
@@ -42,7 +42,7 @@ export class Assistant extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-A workspace can also mount read-only files. An `R2Bucket` mount shows the contents of an R2 bucket. A `WorkerBundle` mount shows files that ship inside your Worker, such as skills or templates, and updates them on each deploy.
+A workspace can also mount read-only files. An `R2Bucket` mount shows the contents of an R2 bucket. A `WorkerBundle` mount shows files that ship inside your Worker, such as templates or reference documents, and updates them on each deploy.
 
 ## Code runs next to the files
 
@@ -78,12 +78,6 @@ Because it is a plain field, any harness can use the same workspace. The harness
 	title="File system tools"
 	href="/agents/tools/filesystem/"
 	description="Install a Workspace and give the model file tools for each harness."
-/>
-
-<LinkCard
-	title="Skills"
-	href="/agents/concepts/skills/"
-	description="Mount skills on the workspace, and let the model read them with the workspace tools."
 />
 
 <LinkCard

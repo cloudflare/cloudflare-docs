@@ -17,7 +17,7 @@ Agents need memory to be useful over time. Without it, every conversation starts
 An agent on Cloudflare keeps its memory in its Durable Object, so memory survives restarts and belongs to one agent instance. There are two kinds:
 
 - **Conversation history**: the messages and tool calls that make up a conversation.
-- **Context**: what the model reads in its system prompt on every turn, such as its identity, facts it learned about the user, and its skills.
+- **Context**: what the model reads in its system prompt on every turn, such as its identity and facts it learned about the user.
 
 The two are separate. An agent can have a prompt without a transcript, or a transcript without a prompt.
 
@@ -39,7 +39,6 @@ Context is the part of the prompt that is not the conversation. It usually has:
 - **Read-only instructions**, such as the agent's role and rules.
 - **Writable memory**, such as facts about the user that the model updates with a tool.
 - **Searchable knowledge**, where the prompt holds a summary and the model searches for details with a tool.
-- **A skill catalog**, where the prompt lists each [skill](/agents/concepts/skills/) by name and description.
 
 Long-term memory does not need a special store. An agent can keep notes as files on its [workspace](/agents/concepts/workspace/), or as rows in its SQLite database, and read them back with a tool.
 
@@ -107,10 +106,4 @@ Refresh the system prompt after a compaction, so the prompt and the summarized h
 	title="Think configuration"
 	href="/agents/harnesses/think/configuration/"
 	description="Configure Think's session, context, and compaction."
-/>
-
-<LinkCard
-	title="Skills"
-	href="/agents/concepts/skills/"
-	description="Give an agent instructions and resources that it loads on demand."
 />
