@@ -268,7 +268,8 @@
 /agents/runtime/lifecycle/agent-class/ /agents/agent-class/internals/ 301
 /agents/runtime/lifecycle/callable-methods/ /agents/agent-class/callable-methods/ 301
 /agents/runtime/lifecycle/state/ /agents/agent-class/state/ 301
-/agents/runtime/operations/using-ai-models/ /agents/agent-class/using-ai-models/ 301
+/agents/runtime/operations/using-ai-models/ /agents/models/ 301
+/agents/agent-class/using-ai-models/ /agents/models/ 301
 /agents/api-reference/think/ /agents/harnesses/think/ 301
 /agents/think/ /agents/harnesses/think/ 301
 /agents/build/prompts/ /workers/get-started/prompting/ 301
@@ -279,7 +280,7 @@
 /agents/tools/rag/ /agents/tools/ai-search/ 301
 /agents/examples/run-workflows/ /agents/agent-class/run-workflows/ 301
 /agents/examples/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
-/agents/examples/using-ai-models/ /agents/agent-class/using-ai-models/ 301
+/agents/examples/using-ai-models/ /agents/models/ 301
 /agents/examples/websockets/ /agents/agent-class/websockets/ 301
 /agents/examples/sdk/ /agents/agent-class/ 301
 /agents/examples/build-mcp-server/ /agents/model-context-protocol/guides/remote-mcp-server/ 301
@@ -327,7 +328,7 @@
 /agents/api-reference/sessions/ /agents/runtime/lifecycle/sessions/ 301
 /agents/api-reference/store-and-sync-state/ /agents/agent-class/state/ 301
 /agents/api-reference/sub-agents/ /agents/agent-class/sub-agents/ 301
-/agents/api-reference/using-ai-models/ /agents/agent-class/using-ai-models/ 301
+/agents/api-reference/using-ai-models/ /agents/models/ 301
 /agents/api-reference/voice/ /agents/agent-class/communication-channels/voice/ 301
 /agents/api-reference/websockets/ /agents/agent-class/websockets/ 301
 /agents/guides/anthropic-agent-patterns/ /agents/concepts/agentic-patterns/ 301

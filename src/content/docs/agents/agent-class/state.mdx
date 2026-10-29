@@ -642,7 +642,7 @@ onStateChanged(state: State, source: Connection | "server") {
 
 ## Use Agent state as model context
 
-You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/agent-class/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
+You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
 
 For example, you can use an Agent's built-in SQL database to pull history, query a model with it, and append to that history ahead of the next call to the model:
 
