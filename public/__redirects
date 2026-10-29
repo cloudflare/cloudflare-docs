@@ -307,7 +307,7 @@
 /agents/api-reference/chat-agents/ /agents/agent-class/communication-channels/chat/chat-agents/ 301
 /agents/api-reference/client-sdk/ /agents/agent-class/communication-channels/chat/client-sdk/ 301
 /agents/api-reference/codemode/ /agents/tools/codemode/api-reference/ 301
-/agents/api-reference/configuration/ /agents/runtime/operations/configuration/ 301
+/agents/api-reference/configuration/ /agents/platform/configuration/ 301
 /agents/api-reference/durable-execution/ /agents/agent-class/durable-execution/ 301
 /agents/api-reference/email/ /agents/agent-class/communication-channels/email/ 301
 /agents/api-reference/get-current-agent/ /agents/runtime/lifecycle/get-current-agent/ 301
@@ -315,7 +315,7 @@
 /agents/api-reference/mcp-agent-api/ /agents/model-context-protocol/apis/agent-api/ 301
 /agents/api-reference/mcp-client-api/ /agents/model-context-protocol/apis/client-api/ 301
 /agents/api-reference/mcp-handler-api/ /agents/model-context-protocol/apis/handler-api/ 301
-/agents/api-reference/observability/ /agents/runtime/operations/observability/ 301
+/agents/api-reference/observability/ /agents/platform/observability/ 301
 /agents/api-reference/protocol-messages/ /agents/agent-class/protocol-messages/ 301
 /agents/api-reference/queue-tasks/ /agents/agent-class/queue-tasks/ 301
 /agents/api-reference/rag/ /agents/tools/ai-search/ 301
@@ -337,7 +337,7 @@
 /agents/guides/chatgpt-app/ /workers/demos/chatgpt-app/ 301
 /agents/communication-channels/chat/chatgpt-app/ /workers/demos/chatgpt-app/ 301
 /agents/guides/connect-mcp-client/ /agents/model-context-protocol/guides/connect-mcp-client/ 301
-/agents/guides/cross-domain-authentication/ /agents/runtime/operations/cross-domain-authentication/ 301
+/agents/guides/cross-domain-authentication/ /agents/platform/cross-domain-authentication/ 301
 /agents/guides/human-in-the-loop/ /agents/concepts/agentic-patterns/human-in-the-loop/ 301
 /agents/guides/oauth-mcp-client/ /agents/model-context-protocol/guides/oauth-mcp-client/ 301
 /agents/guides/push-notifications/ /agents/agent-class/communication-channels/webhooks/push-notifications/ 301
@@ -388,6 +388,12 @@
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
+/agents/runtime/operations/ /agents/platform/ 301
+/agents/runtime/operations/configuration/ /agents/platform/configuration/ 301
+/agents/runtime/operations/cross-domain-authentication/ /agents/platform/cross-domain-authentication/ 301
+/agents/runtime/operations/observability/ /agents/platform/observability/ 301
+/agents/runtime/operations/observability/diagnostics-channels/ /agents/platform/observability/diagnostics-channels/ 301
+/agents/runtime/operations/observability/tracing/ /agents/platform/observability/tracing/ 301
 
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301

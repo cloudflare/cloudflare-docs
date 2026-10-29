@@ -147,7 +147,7 @@ export default defineConfig({
 
 If your project does not use Vite, the `tsconfig.json` change alone is sufficient — your bundler must support TC39 decorators (stage 3, version `2023-11`).
 
-For more details, refer to the [TypeScript configuration](/agents/runtime/operations/configuration/#typescript-configuration) and [Vite configuration](/agents/runtime/operations/configuration/#vite-configuration) reference.
+For more details, refer to the [TypeScript configuration](/agents/platform/configuration/#typescript-configuration) and [Vite configuration](/agents/platform/configuration/#vite-configuration) reference.
 
 ## 5. Export the Agent class
 
@@ -272,7 +272,7 @@ npx wrangler types
 
 This creates a type definition file with all your bindings typed, including your agent Durable Object namespaces. The `Agent` class defaults to using the generated `Env` type, so you do not need to pass it as a type parameter — `extends Agent` is sufficient unless you need to pass a second type parameter for state (for example, `Agent<Env, CounterState>`).
 
-Refer to [Configuration](/agents/runtime/operations/configuration/#generating-types) for more details on type generation.
+Refer to [Configuration](/agents/platform/configuration/#generating-types) for more details on type generation.
 
 ## 8. Connect from the frontend
 
