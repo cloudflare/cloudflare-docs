@@ -114,15 +114,18 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 ---
 
-## Cloudflare One
+## Zero Trust
 
-Cloudflare One compatibility depends on the DLS control, traffic path, on-ramp, and dataset. The following table summarizes current support. Refer to [Data localization for Cloudflare One](/data-localization/how-to/zero-trust/) for supported regions, configuration, and product-specific behavior.
-
-| DLS control | Current Cloudflare One coverage |
-| - | - |
-| **Geo Key Manager** | For an Access-protected application that uses a supported custom certificate, Geo Key Manager can restrict where Cloudflare stores the private TLS key for the protected application hostname. Customer-provided Gateway certificates cannot be restricted to a specific region. Refer to [Geo Key Manager](/data-localization/how-to/zero-trust/#geo-key-manager) and [Gateway limitations](/data-localization/how-to/zero-trust/#gateway-limitations). |
-| **Regional Services** | Gateway decrypts eligible HTTPS traffic and performs HTTP inspection within the selected region when traffic is sent through supported on-ramps. The Access team domain supports FedRAMP Moderate Compliant (Domestic). Browser Isolation supports the US FedRAMP region. Refer to [Regional Services for Gateway](/data-localization/how-to/zero-trust/#regional-services-for-gateway), [Access](/data-localization/how-to/zero-trust/#access), and [Browser Isolation](/data-localization/how-to/zero-trust/#browser-isolation). Separately, Cloudflare Tunnel connects globally by default or can restrict connections to US data centers. In FedRAMP High environments, Cloudflare Tunnel automatically connects to FedRAMP data centers. Cloudflare One Client supports global and FedRAMP High connections, and Direct CNI terminates at its provisioned facility. Refer to [on-ramp and egress locations](/data-localization/how-to/zero-trust/#on-ramp-and-egress-locations). |
-| **Customer Metadata Boundary** | CMB stores supported Customer Logs in the United States or European Union, with coverage varying by dataset. Refer to [Customer Metadata Boundary for Cloudflare One](/data-localization/how-to/zero-trust/#customer-metadata-boundary) for details. |
+| Product               | Geo Key Manager | Regional Services | Customer Metadata Boundary |
+| --------------------- | --------------- | ----------------- | -------------------------- |
+| Access                | 🚧 [^14]        | 🚧 [^15]          | ✅ [^16]                   |
+| Browser Isolation     | ⚫️             | 🚧 [^17]          | ✅                         |
+| CASB                  | ⚫️             | ⚫️               | ✘                          |
+| Cloudflare Tunnel     | ⚫️             | 🚧 [^18]          | ⚫️                        |
+| Digital Experience    | ⚫️             | ⚫️               | 🚧 [^49]                   |
+| DLP                   | ⚫️ [^19]       | ⚫️ [^19]         | 🚧 [^31]                   |
+| Gateway               | 🚧 [^20]        | 🚧 [^21]          | 🚧 [^22]                   |
+| Cloudflare One Client | ⚫️             | ⚫️               | 🚧 [^1]                    |
 
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 
@@ -146,6 +149,24 @@ Cloudflare One compatibility depends on the DLS control, traffic path, on-ramp, 
 
 [^13]: Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your account team if you need another dataset.
 
+[^14]: Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) is not yet localized.
+
+[^15]: Can be localized to US FedRAMP Moderate Domestic region only.
+
+[^16]: Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region. EU customers must use Logpush to retain logs.
+
+[^17]: Currently may only be used with US FedRAMP region.
+
+[^18]: The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from Regional Services. For public hostnames served through a tunnel, Regional Services is configured at the DNS record level and operates independently from the tunnel connector region. For incoming web requests, Regional Services only applies when you have [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) (services exposed to users through the tunnel). In that case, the region associated with the DNS record will apply.
+
+[^19]: Uses Gateway HTTP and CASB.
+
+[^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
+
+[^21]: Gateway HTTP (web traffic filtering) supports Regional Services. Gateway DNS (domain name filtering) does not yet support regionalization. <br/> ICMP proxy (forwarding network diagnostic traffic like ping) and Mesh proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) (an add-on that quarantines and scans suspicious files in an isolated environment) is incompatible with DLS.
+
+[^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
+
 [^23]: Currently, customers do not have the ability to choose the location of the Cloudflare-managed R2 bucket for Log Explorer.
 
 [^26]: You can use Static IP/BYOIP with Regionalized Spectrum Applications. You can also regionalize BYOIP prefixes at the IP layer with [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/).
@@ -157,6 +178,8 @@ Cloudflare One compatibility depends on the DLS control, traffic path, on-ramp, 
 [^29]: You cannot yet specify region location for object storage itself.
 
 [^30]: Regular/Generic and Custom Tiered Cache work with Customer Metadata Boundary (CMB). Smart Tiered Caching (where Cloudflare automatically selects intermediate cache data centers) does not work with CMB. <br/> With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
+
+[^31]: DLP is part of Gateway HTTP, however, [DLP detection entries](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/) are not available outside US region when using Customer Metadata Boundary.
 
 [^33]: If you use [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) (where Cloudflare sends your DNS records to non-Cloudflare nameservers), those transfers will include global Cloudflare IP addresses rather than region-specific ones. This means Regional Services will not function correctly when end users receive DNS answers from non-Cloudflare nameservers.
 
@@ -189,5 +212,7 @@ Cloudflare One compatibility depends on the DLS control, traffic path, on-ramp, 
 [^47]: Only R2 Custom Domains are supported.
 
 [^48]: The following are exceptions and are supported: AI Gateway Analytics (GraphQL Analytics datasets) and Logs (Logpush), R2 Dashboard Metrics & Analytics, Workers AI GraphQL Analytics datasets like aiInferenceAdaptive.
+
+[^49]: Dashboard Analytics are empty when using CMB outside the US region. Use [Logpush](/logs/logpush/) instead.
 
 [^50]: Email and webhook notifications for DDoS and WAF events may not fire reliably when Customer Metadata Boundary is set to `eu`. This behavior is intermittent and under investigation. If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism.
