@@ -12,7 +12,7 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
+To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), run Claude Code or Codex with the [Container harness](/agents/harnesses/container/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
 
 ## How harnesses fit
 
@@ -23,7 +23,7 @@ Harnesses sit on top of the Agents SDK runtime:
 
 The runtime answers “where does this agent live and how does it stay durable?” The harness answers “what does this agent do on each turn?”
 
-Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
+Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. The Container harness stores the CLI's transcript and session files in the Durable Object. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
 
 ## Choose an approach
 
@@ -32,6 +32,8 @@ Use Pi when you want [Pi Durable](https://earendil.com/posts/pi-durable/) to own
 Use a build-your-own harness when you need full control over the model call, message format, tool loop, or UI protocol. This is the right approach when you want to compose low-level APIs directly from the Agents SDK.
 
 Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and plugin system. `OpenCodeHarness` runs [OpenCode's Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object.
+
+Use the Container harness (experimental) when you want a CLI agent, such as Claude Code or Codex, with its own tools and plugins. The CLI runs in a [Container](/containers/). `ContainerHarness` drives it from a Durable Object, which keeps the session and the credentials. For how this differs from a harness that runs in the Durable Object, refer to [Brains and hands](/agents/concepts/brains-and-hands/).
 
 ## Current harnesses
 
@@ -45,6 +47,12 @@ Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and pl
 	title="OpenCode (experimental)"
 	href="/agents/harnesses/opencode/"
 	description="Run OpenCode 2.0 in a plain Durable Object, with Workers AI models, bundled plugins, and durable sessions."
+/>
+
+<LinkCard
+	title="Container (experimental)"
+	href="/agents/harnesses/container/"
+	description="Run Claude Code or Codex in a Container, driven from a Durable Object that keeps the session and the credentials."
 />
 
 ## What a harness usually owns

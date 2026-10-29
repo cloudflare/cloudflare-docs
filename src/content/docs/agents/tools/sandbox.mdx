@@ -23,6 +23,8 @@ Use a sandbox when an agent needs to:
 If the code that the model writes only calls methods that you define, such as methods that read or update your data, use [Code Mode](/agents/tools/codemode/) instead. Code Mode runs the code in a Dynamic Worker, which starts faster than a container. For more information, refer to [Choose a sandbox environment](/sandbox/concepts/).
 :::
 
+This page keeps the agent loop in the Durable Object and uses the container as a tool. To run a CLI agent such as Claude Code or Codex inside the container instead, use the [Container harness](/agents/harnesses/container/). For the trade-offs, refer to [Brains and hands](/agents/concepts/brains-and-hands/).
+
 ## How it works
 
 Attaching a container to the [Durable Object](/durable-objects/) of an agent gives the agent a sandbox through `this.ctx.container`. Agents with different names get separate sandboxes, and every turn sent to the same agent reaches the same sandbox.
