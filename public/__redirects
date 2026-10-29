@@ -384,9 +384,8 @@
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
-/agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
-/agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
-/agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
+/agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp/charge-for-http-content/ 301
+/agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp/charge-for-http-content/ 301
 /agents/concepts/calling-llms/ /agents/concepts/models/ 301
 /agents/concepts/conversation-state-and-memory/ /agents/concepts/memory/ 301
 /agents/runtime/execution/ /agents/concepts/durable-execution/ 301
@@ -398,6 +397,8 @@
 /agents/runtime/operations/observability/ /agents/platform/observability/ 301
 /agents/runtime/operations/observability/diagnostics-channels/ /agents/platform/observability/diagnostics-channels/ 301
 /agents/runtime/operations/observability/tracing/ /agents/platform/observability/tracing/ 301
+/agents/tools/filesystem/ /agents/tools/workspace/ 301
+/agents/tools/payments/mpp-charge-for-http-content/ /agents/tools/payments/mpp/charge-for-http-content/ 301
 
 # ai-audit
 /ai-audit/features/detect-ai-crawlers/ /ai-crawl-control/features/analyze-ai-crawlers/ 301

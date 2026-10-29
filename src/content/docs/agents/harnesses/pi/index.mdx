@@ -278,7 +278,7 @@ export class Assistant extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-Reads, searches, whole-file writes, and deletes are safe to run twice, so the example marks them `replay: "safe"`. An `edit` would fail to find text it already replaced, and `exec` runs arbitrary code, so Pi gives the model an interrupted result for those instead of running them again. For each tool's arguments and the other options of `createPiTools()`, refer to [Filesystem tools](/agents/tools/filesystem/).
+Reads, searches, whole-file writes, and deletes are safe to run twice, so the example marks them `replay: "safe"`. An `edit` would fail to find text it already replaced, and `exec` runs arbitrary code, so Pi gives the model an interrupted result for those instead of running them again. For each tool's arguments and the other options of `createPiTools()`, refer to [Filesystem tools](/agents/tools/workspace/).
 
 The [Pi harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi) uses the same pattern, and adds git to the workspace.
 
