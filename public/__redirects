@@ -388,7 +388,8 @@
 /agents/agent-class/sub-agents/ /agents/agent-class/dynamic-agents/ 301
 /agents/concepts/calling-llms/ /agents/concepts/models/ 301
 /agents/concepts/conversation-state-and-memory/ /agents/concepts/memory/ 301
-/agents/runtime/execution/ /agents/concepts/durable-execution/ 301
+/agents/concepts/durable-execution/ /agents/concepts/durable-agents/ 301
+/agents/runtime/execution/ /agents/concepts/durable-agents/ 301
 /agents/runtime/execution/agent-skills/ /agents/harnesses/think/tools/ 301
 /agents/runtime/lifecycle/sessions/ /agents/concepts/memory/ 301
 /agents/runtime/operations/ /agents/platform/ 301
