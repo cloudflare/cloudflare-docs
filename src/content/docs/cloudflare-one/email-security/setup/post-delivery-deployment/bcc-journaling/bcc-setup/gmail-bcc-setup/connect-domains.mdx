@@ -19,7 +19,8 @@ On the **Set up Email security** page:
 3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>. Then, select **Continue**. Configuring the hop count will determine where you want Cloudflare to sit in the email processing chain.
 4. (**Optional**, select **Skip for now** to skip this step) **Move messages**: Refer to [Auto-moves](/cloudflare-one/email-security/settings/detection-settings/auto-moves/) to configure auto-moves. Then, select **Continue**.
 5. **Select your processing location**: Configure where you want Cloudflare to process your email. **Global** will be the default option. If you choose **Global**, `<account tag>@CF-emailsecurity.com` will be your regional service address. Once you have chosen your processing location, select **Continue**. Refer to [Regional processing](/cloudflare-one/email-security/reference/regional-processing/) to learn more.
-6. **Review details**: Review your connected domains and service addresses. Then, select **Go to domains.**
+6. (**Optional**) **Domain verification**: Shown only if you entered manual domains. Copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours. Domains connected from an active Cloudflare zone or a [Cloudflare One integration](/cloudflare-one/email-security/reference/verify-domain-ownership/#verification-methods) are verified automatically. Then, select **Continue**.
+7. **Review details**: Review your connected domains and service addresses. Then, select **Go to domains.**
 
 Your domains are now added successfully.
 
@@ -36,11 +37,12 @@ To add additional domains:
 3. **Connect domains**: Select the domains you want to add, then select **Next**.
 4. (Optional) Select **Add manual domains**: Enter additional domains manually, then select **Next**.
 5. (Optional) Select **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>.
-6. **Review details**: Review your selected domains, then use the following email to configure the service address with your third-party email provider:
+6. (Optional) Select **Domain verification**: Shown only if you entered manual domains. Copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours. Then, select **Next**.
+7. **Review details**: Review your selected domains, then use the following email to configure the service address with your third-party email provider:
    ```txt
    <account tag>@CF-emailsecurity.com
    ```
-7. Select **Save**.
+8. Select **Save**.
 
 <Render
 	file="email-security/post-verification-setup"
