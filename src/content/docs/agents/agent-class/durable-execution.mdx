@@ -352,6 +352,62 @@ await this.runFiber("research", async (ctx) => {
 });
 ```
 
+### Store a continuation note
+
+When the model was mid-task, the original prompt and reasoning are gone after a recovery. Before a long wait, stash a short note of what the agent was doing and what to do with the result. On recovery, build a focused prompt from the note instead of replaying the whole conversation:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import type { FiberRecoveryContext } from "agents";
+
+type Continuation = {
+	task: string;
+	onSuccess: string;
+	onFailure: string;
+	taskId: string;
+};
+
+export class ProjectManager extends Agent<Env> {
+	async runChecks(taskId: string) {
+		await this.runFiber(`ci:${taskId}`, async (ctx) => {
+			ctx.stash({
+				task: "Waiting for CI results",
+				onSuccess: "Mark the task complete, and move to the next step",
+				onFailure: "Notify the team, and retry in one hour",
+				taskId,
+			} satisfies Continuation);
+
+			await this.waitForCI(taskId);
+		});
+	}
+
+	async onFiberRecovered(ctx: FiberRecoveryContext) {
+		if (!ctx.name.startsWith("ci:") || !ctx.snapshot) return;
+		const note = ctx.snapshot as Continuation;
+
+		// Build a short prompt from the note instead of replaying everything.
+		const prompt = [
+			`You were: ${note.task} (task ${note.taskId}).`,
+			`On success: ${note.onSuccess}.`,
+			`On failure: ${note.onFailure}.`,
+		].join("\n");
+		await this.continueWithModel(prompt);
+	}
+
+	private async waitForCI(taskId: string): Promise<void> {
+		console.log(`Waiting for CI on ${taskId}`);
+	}
+
+	private async continueWithModel(prompt: string): Promise<void> {
+		console.log(prompt);
+	}
+}
+```
+
+</TypeScriptExample>
+
 ### this.stash vs ctx.stash
 
 Both do the same thing. `ctx.stash()` uses a direct closure over the fiber ID. `this.stash()` uses `AsyncLocalStorage` to find the currently executing fiber — it works correctly even with concurrent fibers, since each fiber's ALS context is independent.

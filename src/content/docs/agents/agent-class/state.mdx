@@ -511,6 +511,45 @@ Providing a type parameter does not validate that the result matches your type d
 
 The SQL API exposed to an Agent is similar to the one [within Durable Objects](/durable-objects/api/sqlite-storage-api/#sql-api). You can use the same SQL queries with the Agent's database. Create tables and query data, just as you would with Durable Objects or [D1](/d1/).
 
+### Keep an audit trail
+
+Use `this.sql` for records that only grow, such as who approved what and when. This Agent writes each decision before it approves the [Workflow](/agents/agent-class/run-workflows/):
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+export class ExpenseAgent extends Agent<Env> {
+	async onStart() {
+		this.sql`
+			CREATE TABLE IF NOT EXISTS approval_audit (
+				id INTEGER PRIMARY KEY AUTOINCREMENT,
+				workflow_id TEXT NOT NULL,
+				decision TEXT NOT NULL CHECK(decision IN ('approved', 'rejected')),
+				decided_by TEXT NOT NULL,
+				decided_at INTEGER NOT NULL,
+				reason TEXT
+			)
+		`;
+	}
+
+	@callable()
+	async approve(workflowId: string, userId: string, reason?: string) {
+		this.sql`
+			INSERT INTO approval_audit (workflow_id, decision, decided_by, decided_at, reason)
+			VALUES (${workflowId}, 'approved', ${userId}, ${Date.now()}, ${reason ?? null})
+		`;
+		await this.approveWorkflow(workflowId, {
+			reason: reason ?? "Approved",
+			metadata: { approvedBy: userId },
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
 ## Use Agent state as model context
 
 You can combine the state and SQL APIs in your Agent with its ability to [call AI models](/agents/agent-class/using-ai-models/) to include historical context within your prompts to a model. Modern Large Language Models (LLMs) often have very large context windows (up to millions of tokens), which allows you to pull relevant context into your prompt directly.
