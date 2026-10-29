@@ -1,6 +1,6 @@
 ---
 title: Web search
-description: Give your agent a web search tool backed by the Cloudflare Web Search API. Use Pi Durable, AI SDK, TanStack AI, or your own harness.
+description: Give your agent a web search tool backed by the Cloudflare Web Search API. Use Think, Pi Durable, AI SDK, TanStack AI, or your own harness.
 pcx_content_type: integration-guide
 sidebar:
   order: 3
@@ -17,7 +17,7 @@ import {
 
 Give your agent a `web_search` tool to find pages on the Internet. The tool calls the [Cloudflare Web Search API](/web-search/) through [AI Gateway](/ai-gateway/), via the Workers AI binding.
 
-The `web_search` tool works with any harness. The Agents SDK provides built-in adapters for [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. If you're using a different harness, or need to use the `web_search` tool without calling a model, use the search sources and renderer in [`agents/websearch`](https://github.com/cloudflare/agents/tree/main/packages/agents/src/web/search).
+The `web_search` tool works with any harness. The Agents SDK provides built-in adapters for [Pi Durable](/agents/harnesses/pi/), the AI SDK (which [Think](/agents/harnesses/think/) uses), and TanStack AI. If you're using a different harness, or need to use the `web_search` tool without calling a model, use the search sources and renderer in [`agents/websearch`](https://github.com/cloudflare/agents/tree/main/packages/agents/src/web/search).
 
 ## When to use it
 
@@ -36,7 +36,7 @@ You could call the Web Search API from a tool of your own. The `web_search` tool
 - **You control the cost.** The model chooses only the query and a result count, up to the limit you set. Your application chooses the provider, gateway, and billing. Multiple search providers are supported, including Ceramic.ai, Exa, and Linkup. Refer to [Providers](/web-search/providers/) for the full list.
 - **The model gets a short list and your application gets everything.** The model reads titles, URLs, and trimmed descriptions, so a search uses a few kilobytes of context. Your application receives the full API response.
 - **Failures tell the model what to do next.** The model is guided to fix its query, retry, or continue without search. Your application receives a structured error.
-- **One tool for every harness.** The same options work with Pi Durable, AI SDK, and TanStack AI, and the same search sources work without a model.
+- **One tool for every harness.** The same options work with Think, Pi Durable, AI SDK, and TanStack AI, and the same search sources work without a model.
 
 ## Add the tool to your harness
 
@@ -67,6 +67,36 @@ These examples require Agents SDK 0.27.0 or later and an existing harness. For a
 4. Register the tool with your harness using one of the examples that follow.
 
 </Steps>
+
+### Think
+
+[Think](/agents/harnesses/think/) uses AI SDK tools. Return the AI SDK adapter from `getTools()`, and Think adds it to every turn. This example gives a research agent both `web_search` and `web_fetch`:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import { createAI } from "agents/models/ai-sdk";
+import { webFetchTool } from "agents/webfetch/ai-sdk";
+import { webSearchTool } from "agents/websearch/ai-sdk";
+
+export class ResearchAgent extends Think<Env> {
+	getModel() {
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
+	}
+
+	getTools() {
+		return {
+			web_search: webSearchTool({ binding: this.env.AI }),
+			web_fetch: webFetchTool({ binding: this.env.AI }),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+The [AI SDK](#ai-sdk) notes that follow also apply to Think.
 
 ### Pi Durable
 

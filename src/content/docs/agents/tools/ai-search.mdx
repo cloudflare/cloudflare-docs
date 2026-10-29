@@ -1,6 +1,6 @@
 ---
 title: AI Search
-description: Give agents retrieval capabilities with Cloudflare AI Search.
+description: Give an agent a search tool over your content with Cloudflare AI Search, for the AI SDK, Think, or Pi.
 pcx_content_type: concept
 sidebar:
   order: 4
@@ -10,7 +10,9 @@ products:
 
 import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
 
-Agents can use [AI Search](/ai-search/) to retrieve relevant information from indexed content and use it to augment [calls to AI models](/agents/agent-class/using-ai-models/). AI Search manages the retrieval pipeline for you, including indexing, search, and optional chat completions over your content.
+Agents can use [AI Search](/ai-search/) to retrieve relevant information from indexed content and use it to augment [calls to AI models](/agents/models/). AI Search manages the retrieval pipeline for you, including indexing, search, and optional chat completions over your content.
+
+The Agents SDK has no prebuilt AI Search tool. AI Search is a Workers binding, so a tool is a few lines that call `search()` on an instance. It is stateless: it needs no Durable Object storage and no capability.
 
 Use AI Search when you want an agent to:
 
@@ -19,36 +21,95 @@ Use AI Search when you want an agent to:
 - Use managed indexing instead of building retrieval infrastructure yourself.
 - Query content from an R2 bucket, website, or uploaded files.
 
-## Basic pattern
+## Give the model a search tool
 
-Bind AI Search to your Worker, then query an instance from an agent method.
+Bind AI Search to your Worker, then wrap a query in a tool. The model decides when to search and what to search for.
+
+### AI SDK
+
+Define the tool with `tool()` from the AI SDK, and pass it to `generateText()` or `streamText()`. In a [Think](/agents/harnesses/think/) agent, return the same tool from `getTools()`.
 
 <TypeScriptExample>
 
 ```ts
-import { Agent, callable } from "agents";
+import { DurableObject } from "cloudflare:workers";
+import { generateText, stepCountIs, tool } from "ai";
+import { createAI } from "agents/models/ai-sdk";
+import { z } from "zod";
 
-type Env = {
-	AI_SEARCH: AiSearchNamespace;
-};
+export class DocsAgent extends DurableObject<Env> {
+	searchDocs = tool({
+		description:
+			"Search the product documentation. Returns the most relevant passages.",
+		inputSchema: z.object({ query: z.string() }),
+		execute: async ({ query }) => {
+			const instance = this.env.AI_SEARCH.get("docs");
+			const { chunks } = await instance.search({
+				query,
+				ai_search_options: { retrieval: { max_num_results: 5 } },
+			});
+			return chunks.map((chunk) => ({
+				source: chunk.item.key,
+				text: chunk.text,
+			}));
+		},
+	});
 
-export class SearchAgent extends Agent<Env> {
-	@callable()
-	async searchKnowledge(query: string) {
-		const instance = this.env.AI_SEARCH.get("my-instance");
-
-		const results = await instance.search({
-			messages: [{ role: "user", content: query }],
+	async ask(question: string) {
+		const ai = createAI({ binding: this.env.AI });
+		const { text } = await generateText({
+			model: ai("@cf/zai-org/glm-4.7-flash"),
+			system: "Answer from the documentation. Cite the source of each fact.",
+			prompt: question,
+			tools: { search_docs: this.searchDocs },
+			stopWhen: stepCountIs(5),
 		});
-
-		return results;
+		return text;
 	}
 }
 ```
 
 </TypeScriptExample>
 
-For answer generation, use `chatCompletions()` to retrieve relevant content and generate a response in one call.
+### Pi
+
+For the [Pi harness](/agents/harnesses/pi/), define the tool as a `ToolRegistration` and install it in an [extension](/agents/harnesses/pi/extensions/):
+
+<TypeScriptExample filename="src/search-docs.ts">
+
+```ts
+import { Type } from "@earendil-works/pi-ai";
+import type { ToolRegistration } from "@earendil-works/pi-durable";
+
+const SearchDocs = Type.Object({ query: Type.String() });
+
+export function searchDocsTool(
+	aiSearch: AiSearchNamespace,
+): ToolRegistration<typeof SearchDocs> {
+	return {
+		name: "search_docs",
+		description:
+			"Search the product documentation. Returns the most relevant passages.",
+		parameters: SearchDocs,
+		replay: "safe",
+		async execute({ query }) {
+			const { chunks } = await aiSearch.get("docs").search({ query });
+			const text = chunks
+				.map((chunk) => `${chunk.item.key}\n${chunk.text}`)
+				.join("\n\n");
+			return { output: [{ type: "text", text }] };
+		},
+	};
+}
+```
+
+</TypeScriptExample>
+
+Searching does not change anything, so the tool is marked `replay: "safe"`. Pi reruns it if an eviction interrupts the call.
+
+## Generate an answer in one call
+
+To retrieve relevant content and generate a response in one call, without a tool, use `chatCompletions()`:
 
 <TypeScriptExample>
 
