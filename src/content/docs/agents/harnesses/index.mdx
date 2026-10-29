@@ -10,6 +10,8 @@ import { LinkCard } from "~/components";
 
 A harness is the loop that makes an agent behave like an agent instead of a single model call.
 
+For what a harness does and how to choose one, refer to [Harnesses](/agents/concepts/harnesses/) in Concepts.
+
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
 To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
