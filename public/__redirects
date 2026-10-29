@@ -268,6 +268,7 @@
 /agents/runtime/lifecycle/agent-class/ /agents/agent-class/internals/ 301
 /agents/runtime/lifecycle/callable-methods/ /agents/agent-class/callable-methods/ 301
 /agents/runtime/lifecycle/state/ /agents/agent-class/state/ 301
+/agents/runtime/lifecycle/sessions/ /agents/runtime/capabilities/sessions/ 301
 /agents/runtime/operations/using-ai-models/ /agents/agent-class/using-ai-models/ 301
 /agents/api-reference/think/ /agents/harnesses/think/ 301
 /agents/think/ /agents/harnesses/think/ 301
@@ -324,7 +325,7 @@
 /agents/api-reference/routing/ /agents/agent-class/routing/ 301
 /agents/api-reference/run-workflows/ /agents/agent-class/run-workflows/ 301
 /agents/api-reference/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
-/agents/api-reference/sessions/ /agents/runtime/lifecycle/sessions/ 301
+/agents/api-reference/sessions/ /agents/runtime/capabilities/sessions/ 301
 /agents/api-reference/store-and-sync-state/ /agents/agent-class/state/ 301
 /agents/api-reference/sub-agents/ /agents/agent-class/sub-agents/ 301
 /agents/api-reference/using-ai-models/ /agents/agent-class/using-ai-models/ 301

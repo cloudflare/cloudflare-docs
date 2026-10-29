@@ -1,14 +1,94 @@
 ---
 title: Runtime
-pcx_content_type: navigation
+description: The Agents SDK runtime is a Durable Object with the Lifecycle installed, a Worker that routes requests to it, and the capabilities you attach to it.
+pcx_content_type: overview
 sidebar:
   order: 6
   group:
-    hideIndex: true
+    hideIndex: false
+products:
+  - agents
 ---
 
-import { DirectoryListing } from "~/components";
+import { TypeScriptExample } from "~/components";
 
-The runtime powers your agent — state, communication, execution, and operations.
+Every agent built with the Agents SDK runs on a [Durable Object](/durable-objects/). The runtime is what you add to that Durable Object so an agent can keep working across requests, evictions, deploys, and crashes:
 
-<DirectoryListing />
+- **[Lifecycle](/agents/runtime/lifecycle/)** (`agents/lifecycle`) runs startup, dispatches each request and WebSocket event, and owns a durable job queue and the object's single alarm.
+- **[Routing](/agents/runtime/routing/)** (`agents/routing`) sends requests from your Worker to the right named object.
+- **[Capabilities](/agents/runtime/capabilities/)** are features you attach with `lifecycle.use()`, such as WebSocket clients, shared state, a scheduler, and MCP connections.
+
+```txt
+Client ──HTTP or WebSocket──▶ Worker: routeAgentRequest()
+                                 │
+                                 ▼
+                     Durable Object, one per name
+                     ├─ Lifecycle: startup, dispatch, jobs, alarm
+                     ├─ Capabilities: WebSockets, State, Scheduler, ...
+                     └─ SQLite storage
+```
+
+You compose these parts on a plain `DurableObject`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { routeAgentRequest } from "agents/routing";
+import { Scheduler } from "agents/schedules";
+import { WebSockets } from "agents/websockets";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly scheduler = new Scheduler({ callbacks: {} });
+	readonly webSockets = new WebSockets();
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.scheduler)
+		.use(this.webSockets);
+
+	onRequest(request: Request): Response {
+		return new Response(`Hello from ${this.lifecycle.name}`);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The [`Agent` class](/agents/agent-class/) is a preset of the same runtime: a Durable Object with the Lifecycle and several capabilities already installed.
+
+## Lifecycle
+
+- [Lifecycle](/agents/runtime/lifecycle/) explains what the Lifecycle provides and how to install it.
+- [Jobs and alarms](/agents/runtime/lifecycle/job-queue/) describes the durable job queue.
+- [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) reads the current object, request, and connection from shared code.
+- [Lifecycle API](/agents/runtime/lifecycle/api-reference/) is the complete reference for `agents/lifecycle`.
+
+## Routing
+
+- [Routing](/agents/runtime/routing/) covers `routeAgentRequest()`, the URL shape, and naming agents.
+- [Routing options](/agents/runtime/routing/options/) covers CORS, placement, startup props, and retries.
+- [Authentication](/agents/runtime/routing/authentication/) checks callers before a request reaches the object.
+- [Custom routing](/agents/runtime/routing/custom-routing/) reaches objects with your own URLs, or over RPC.
+
+## Capabilities
+
+| Capability                                                             | Import              | What it adds                                 | Status       |
+| ---------------------------------------------------------------------- | ------------------- | -------------------------------------------- | ------------ |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)               | `agents/websockets` | Real-time client connections                 | Stable       |
+| [Callables](/agents/runtime/capabilities/callables/)                   | `agents/websockets` | Methods that clients call                    | Stable       |
+| [`State`](/agents/runtime/capabilities/state/)                         | `agents/state`      | Shared state that syncs to clients           | Stable       |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                 | `agents/schedules`  | Delayed, dated, cron, and interval callbacks | Stable       |
+| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) | `agents/mcp/client` | Connections to MCP servers                   | Stable       |
+| [`Streams`](/agents/runtime/capabilities/streams/)                     | `agents/streams`    | Durable incremental output                   | Experimental |
+| [`Sessions`](/agents/runtime/capabilities/sessions/)                   | `agents/sessions`   | Durable conversation history                 | Experimental |
+
+To write your own, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).

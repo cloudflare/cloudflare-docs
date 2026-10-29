@@ -1,0 +1,280 @@
+---
+title: Jobs and alarms
+description: Push durable jobs onto the Lifecycle job queue, handle them with onJob(), and control retries, rescheduling, long-running work, and memory-limit protection.
+pcx_content_type: reference
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+A Durable Object has one [alarm](/durable-objects/api/alarms/). The [Lifecycle](/agents/runtime/lifecycle/) owns that alarm and sets it from a durable queue of jobs. The queue is the `cf_agents_jobs` table in the object's SQLite database. `Scheduler` and `PiHarness` store their future work as jobs, so they share the one alarm without overwriting each other.
+
+A job names a function, a due time, and an optional payload. When the job is due, the alarm wakes the object, and the Lifecycle calls the `onJob()` hook of the job's owner. The owner is the host or the capability that pushed the job.
+
+## Push a job from the host
+
+Push a job through `lifecycle.jobs` and handle it in the host's `onJob()` hook:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	Lifecycle,
+	type LifecycleJobContext,
+	type LifecycleJobOutcome,
+} from "agents/lifecycle";
+
+export class CleanupAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	onStart(): void {
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS sessions (id TEXT PRIMARY KEY, expires_at INTEGER NOT NULL)",
+		);
+	}
+
+	async onRequest(): Promise<Response> {
+		await this.lifecycle.jobs.push({
+			id: "cleanup",
+			fn: "deleteExpired",
+			time: Date.now() + 60_000,
+			retry: { maxAttempts: 5 },
+		});
+		return new Response("Cleanup scheduled", { status: 202 });
+	}
+
+	onJob({ job }: LifecycleJobContext): LifecycleJobOutcome {
+		if (job.fn !== "deleteExpired") return;
+		this.ctx.storage.sql.exec(
+			"DELETE FROM sessions WHERE expires_at < ?",
+			Date.now(),
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The job is durable once `push()` resolves. If the object is evicted, the alarm wakes it when the job is due. A capability pushes jobs the same way, through `this.lifecycle.jobs`. For more information, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
+
+## Push options
+
+`push()` accepts these options and resolves to the stored `LifecycleJob`:
+
+| Option               | Type           | Description                                                                                                                                            |
+| -------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `fn`                 | `string`       | Required. The function name your `onJob()` dispatches on.                                                                                              |
+| `time`               | `number`       | Required. Due time in Unix milliseconds. A time in the past runs at the next alarm.                                                                    |
+| `payload`            | `unknown`      | JSON-serializable value passed to `onJob()` as `job.payload`.                                                                                          |
+| `id`                 | `string`       | Stable job ID. Pushing an existing ID replaces that job. The Lifecycle generates an ID when you omit it.                                               |
+| `retry`              | `RetryOptions` | Retry policy for failed runs. For more information, refer to [Retries and failures](#retries-and-failures).                                            |
+| `singleflight`       | `boolean`      | Skip the job while a previous run of it is still in progress.                                                                                          |
+| `hungTimeoutSeconds` | `number`       | Seconds before an in-progress single-flight run counts as hung, and before a slow run logs a warning. Defaults to `30`.                                |
+| `exclusive`          | `boolean`      | While this job is pending, set the alarm for it alone, so other jobs cannot wake the object. The `Agent` class uses this for deferred destruction.     |
+| `recoveryLoop`       | `boolean`      | Mark the job as part of a recovery loop that could exhaust memory. For more information, refer to [Memory-limit protection](#memory-limit-protection). |
+
+Give a job a stable `id` when you push it more than once, so a new push replaces the pending job instead of adding another one. When 10 or more due jobs from one owner run in a single alarm, the Lifecycle logs a warning and emits a `job:backlog_warning` event, because this usually means a job is pushed repeatedly without a stable ID.
+
+Job IDs share one table. Each owner can only read, replace, or cancel its own jobs. Pushing an ID that another owner already uses throws an error.
+
+## Manage jobs
+
+`lifecycle.jobs` is a `LifecycleJobs` object. A capability's `this.lifecycle.jobs` has the same methods, scoped to that capability:
+
+| Method                 | Returns                     | Description                                                         |
+| ---------------------- | --------------------------- | ------------------------------------------------------------------- |
+| `push(options)`        | `Promise<LifecycleJob>`     | Push or replace one job.                                            |
+| `cancel(id)`           | `Promise<boolean>`          | Delete one job. Resolves to `false` when no job matched.            |
+| `reschedule(id, time)` | `Promise<boolean>`          | Change one job's due time. Resolves to `false` when no job matched. |
+| `get(id)`              | `LifecycleJob \| undefined` | Read one job.                                                       |
+| `list()`               | `LifecycleJob[]`            | List the owner's jobs, ordered by due time.                         |
+| `rearm()`              | `Promise<void>`             | Set the alarm again from the queue without changing it.             |
+
+Every change to the queue sets the alarm again, so you rarely call `rearm()`. Use it to recover a lost alarm for jobs that already exist. For example, `Scheduler` calls it after an idempotent `set()` finds an existing schedule and pushes nothing.
+
+### The `LifecycleJob` shape
+
+`onJob()` receives the job as `context.job`:
+
+| Field          | Type                        | Description                                                      |
+| -------------- | --------------------------- | ---------------------------------------------------------------- |
+| `id`           | `string`                    | Job ID. Stays the same across reschedules.                       |
+| `capability`   | `string`                    | Owning capability ID, or `"host"` for host jobs.                 |
+| `fn`           | `string`                    | Function name.                                                   |
+| `time`         | `number`                    | Due time in Unix milliseconds.                                   |
+| `payload`      | `unknown`                   | Payload after a JSON round trip.                                 |
+| `retry`        | `RetryOptions \| undefined` | Retry policy given at push time.                                 |
+| `singleflight` | `boolean`                   | Whether the job skips while a previous run is in progress.       |
+| `exclusive`    | `boolean`                   | Whether the alarm is set for this job alone while it is pending. |
+| `recoveryLoop` | `boolean`                   | Whether the memory-limit breaker governs the job.                |
+| `createdAt`    | `number`                    | Creation time in Unix seconds.                                   |
+
+`context.attempt` is the attempt number within the current alarm, starting at `1`.
+
+## Control what happens after a job runs
+
+The value `onJob()` returns, its `LifecycleJobOutcome`, decides what happens to the job:
+
+| Return value             | Result                                                     |
+| ------------------------ | ---------------------------------------------------------- |
+| Nothing                  | The job completes, and the Lifecycle deletes it.           |
+| `{ rescheduleAt: time }` | The job stays in the queue until `time`.                   |
+| `"yield"`                | The job stays due, and the object wakes again immediately. |
+
+Return `{ rescheduleAt }` for recurring work, such as a poll every five minutes. Return `"yield"` to split a long job into smaller pieces.
+
+If code pushes or reschedules the same job ID while the job is running, the newer change wins. The Lifecycle discards the return value of the run that was in progress.
+
+## Retries and failures
+
+When `onJob()` throws, the Lifecycle retries it in the same alarm, with exponential backoff, up to `retry.maxAttempts`. `RetryOptions` has these fields:
+
+| Field         | Default | Description                    |
+| ------------- | ------- | ------------------------------ |
+| `maxAttempts` | `3`     | Attempts, including the first  |
+| `baseDelayMs` | `100`   | Base delay for the backoff     |
+| `maxDelayMs`  | `3000`  | Maximum delay between attempts |
+
+After the last attempt fails:
+
+- A capability's `onJobError(context, error)` hook decides what happens. Its return value works like an `onJob()` outcome. Without the hook, the job completes.
+- A host job completes. The host has no `onJobError()` hook, so derive host jobs from durable state and push them again when needed.
+
+Platform failures do not use up attempts. When a deploy replaces the isolate or the object hits its memory limit, the Lifecycle keeps the job and lets a fresh invocation run it.
+
+A job whose owner is no longer installed, or whose owner has no `onJob()` hook, is logged and deleted.
+
+## How the alarm runs
+
+When the alarm fires, the Lifecycle:
+
+1. Sets a fallback alarm, while the queue holds jobs, at the next job's time but at least 30 seconds out. If startup throws or the isolate dies during startup, this alarm retries it.
+2. Runs startup, if the object is cold.
+3. Sets a backup alarm 30 seconds out, if any job is due. If the isolate dies while jobs run, this alarm wakes the object to resume them.
+4. Runs every due job in due-time order, one at a time.
+5. Runs the host's `onAlarm()`.
+6. Sets the alarm for the next due job.
+
+A startup that pushes or reschedules jobs and then throws, from an alarm or a request, also sets the fallback alarm, so those jobs keep a wake.
+
+Do not call `ctx.storage.setAlarm()` on an object that uses the Lifecycle. It would replace the alarm the Lifecycle manages. Push a job instead. `lifecycle.rearmAlarm()` sets the alarm from the queue on demand, and `lifecycle.disableAlarms()` turns the alarm off for good during teardown.
+
+## Run long work
+
+The Lifecycle awaits each job before it starts the next one. A slow `onJob()` delays every other job on the object. When a run takes longer than `hungTimeoutSeconds`, the Lifecycle logs a warning and emits a `job:slow_dispatch` event.
+
+For long work, use a heartbeat. Start the work without awaiting it, hand it to `trackAlarmWork()`, and return `{ rescheduleAt }` so the job runs again soon. Each heartbeat keeps the work alive. After an eviction, the next heartbeat finds no running work and starts it again from storage:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	Lifecycle,
+	type LifecycleJobContext,
+	type LifecycleJobOutcome,
+} from "agents/lifecycle";
+
+const HEARTBEAT_MS = 30_000;
+
+export class ImportAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+	#running: Promise<void> | undefined;
+
+	async startImport(): Promise<void> {
+		await this.lifecycle.start();
+		await this.ctx.storage.put("import:pending", true);
+		await this.lifecycle.jobs.push({
+			id: "import",
+			fn: "import",
+			time: Date.now(),
+			recoveryLoop: true,
+		});
+	}
+
+	async onJob({ job }: LifecycleJobContext): Promise<LifecycleJobOutcome> {
+		if (job.fn !== "import") return;
+		if (!(await this.ctx.storage.get("import:pending"))) return;
+
+		// Start the loop if this wake has none, for example after an eviction.
+		this.#running ??= this.#runImport().finally(() => {
+			this.#running = undefined;
+		});
+		this.lifecycle.trackAlarmWork(this.#running);
+		return { rescheduleAt: Date.now() + HEARTBEAT_MS };
+	}
+
+	async #runImport(): Promise<void> {
+		// Resume from the last checkpoint in storage, then clear the flag.
+		await this.ctx.storage.delete("import:pending");
+	}
+}
+```
+
+</TypeScriptExample>
+
+`trackAlarmWork(promise)` keeps the handed-off work inside the current alarm's memory-limit protection. If that work later hits the memory limit, the Lifecycle counts it against the job that started it. `trackAlarmWork()` returns `true` when called during an alarm, and `false`, tracking nothing, otherwise. Capabilities call `this.lifecycle.trackAlarmWork()`. `PiHarness` runs its agent loop this way.
+
+## Memory-limit protection
+
+Work that exhausts the isolate's memory resets the object. The platform then retries the alarm, which can run the same work and reset the object again, forever. The Lifecycle breaks this loop with a circuit breaker:
+
+1. It counts consecutive alarms that end in a memory-limit reset. A clean alarm resets the count.
+2. On each reset below the limit, it delays the job that was running, and every pending job pushed with `recoveryLoop: true`. The delay is 30 seconds for each reset so far, up to five minutes.
+3. On the reset that reaches the limit, it seals: it deletes the running job and every `recoveryLoop` job. Other jobs are not affected.
+4. It calls each capability's `onMemoryLimit()` hook, then the host's `onAlarmMemoryLimit()` hook, and emits an `alarm:memory_limit_reset` event.
+
+Mark a job with `recoveryLoop` when it resumes work that could run out of memory again, such as an agent loop replaying a large transcript. `Scheduler` and `PiHarness` mark their recovery jobs this way.
+
+The limit defaults to three resets. Set it with the `maxAlarmMemoryLimitStrikes` option, and implement `onAlarmMemoryLimit()` to record a failure in your own state:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle, type MemoryLimitContext } from "agents/lifecycle";
+
+export class MyAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this, {
+		maxAlarmMemoryLimitStrikes: 5,
+	});
+
+	async onAlarmMemoryLimit({
+		sealed,
+		executing,
+	}: MemoryLimitContext): Promise<void> {
+		if (sealed && executing) {
+			await this.ctx.storage.put(`failed:${executing.id}`, Date.now());
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+Both hooks run after the Lifecycle has already delayed or deleted the jobs, just before the isolate resets. Keep their writes small. `MemoryLimitContext` has these fields:
+
+| Field                    | Type                                       | Description                                                        |
+| ------------------------ | ------------------------------------------ | ------------------------------------------------------------------ |
+| `sealed`                 | `boolean`                                  | Whether this reset reached the limit and deleted the recovery jobs |
+| `nextTime`               | `number \| undefined`                      | When the delayed jobs run again, for a reset below the limit       |
+| `executing`              | `LifecycleJob \| undefined`                | The job that was running, if the reset happened during a job       |
+| `purgedRecoveryLoopJobs` | `ReadonlyArray<LifecycleJob> \| undefined` | The `recoveryLoop` jobs deleted when this reset sealed             |
+
+## Events
+
+The job queue emits these best-effort events on the `agents:lifecycle` [diagnostics channel](/agents/runtime/operations/observability/diagnostics-channels/):
+
+| Event                      | When                                                               |
+| -------------------------- | ------------------------------------------------------------------ |
+| `job:backlog_warning`      | One owner has 10 or more due jobs in a single alarm                |
+| `job:slow_dispatch`        | One `onJob()` call runs longer than the job's `hungTimeoutSeconds` |
+| `alarm:memory_limit_reset` | An alarm ends in a memory-limit reset                              |
+
+## On the `Agent` class
+
+The `Agent` class uses the same job queue. Its `schedule()` and `scheduleEvery()` methods push jobs through its `Scheduler` capability, and a deferred `destroy()` pushes an `exclusive` job. Set `maxAlarmMemoryLimitStrikes` on an `Agent` through its static `options`. For more information, refer to [Schedule tasks](/agents/runtime/capabilities/scheduler/).
