@@ -14,7 +14,7 @@ import { TypeScriptExample, LinkCard, WranglerConfig } from "~/components";
 
 Agents need memory to be useful over time. Without it, every conversation starts from zero. The agent forgets who the user is, what it learned, and what it was doing. Memory is what turns a stateless LLM call into a persistent, context-aware agent.
 
-The [Session API](/agents/runtime/capabilities/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, search, and load).
+The [Session API](/agents/runtime/capabilities/sessions/) provides the memory layer for agents built on the Cloudflare Agents SDK. It manages two kinds of memory: **conversation history** (the messages and tool calls that make up a session) and **context memory** (persistent blocks injected into the system prompt that the agent can read, write, and search).
 
 Use this page when you need more than simple synced state or flat chat history. For small UI state, use [Store and sync state](/agents/agent-class/state/). For basic chat persistence, `AIChatAgent` stores messages for you. For opinionated long-term memory, Think builds on Session and context blocks.
 
@@ -204,182 +204,17 @@ The agent gets a `search_context` tool for querying and a `set_context` tool for
 
 This is the right choice when the agent needs to find specific pieces of information from a large collection, rather than loading entire documents.
 
-### Loadable context (Skills)
+### On-demand skills
 
-Skills are large pieces of context (complete documents, reference guides, runbooks, templates) that the agent can discover and load on demand. Think of them as reference material on a shelf: the agent sees a list of titles and descriptions, picks what is relevant to the current task, loads it, uses it, and unloads it when done.
+Some context is too large to keep in every prompt: runbooks, reference guides, templates, and scripts. [Agent Skills](/agents/skills/) cover this case. The agent sees a short catalog of skill names and descriptions, and loads a full skill with the `activate_skill` tool only when a task needs it.
 
-Unlike searchable context where the agent retrieves small chunks from a larger collection, skills are designed to be loaded whole. When an agent loads a skill, it gets the entire document in its context window.
-
-Skills are backed by the `SkillProvider` interface. A skill provider has three methods:
-
-- **`get()`** returns a metadata listing (titles and descriptions) that appears in the system prompt
-- **`load(key)`** fetches the full content of a specific skill
-- **`set(key, content, description?)`** writes or updates a skill entry (optional)
-
-The system prompt shows available skills as a listing. The `[loadable]` tag tells the LLM that these entries are not inline. It needs to use a tool to access the full content:
-
-```txt
-══════════════════════════════════════════════
-SKILLS [loadable]
-══════════════════════════════════════════════
-- api-ref: API Reference documentation
-- style-guide: Company style guide
-- deploy-checklist: Production deployment checklist
-```
-
-The agent sees the titles, decides which skill is relevant to the current task, and uses `load_context` to pull the full content into its working context. When it is done, it uses `unload_context` to free the space. When the skill provider implements `set()`, the agent can also write back, updating existing skills or creating new ones.
-
-```txt
-Agent sees: "- deploy-checklist: Production deployment checklist"
-User asks: "Walk me through a production deployment"
-Agent calls: load_context({ block: "skills", key: "deploy-checklist" })
-→ Full checklist content is loaded into the agent's working context
-```
-
-#### R2-backed skills
-
-The built-in `R2SkillProvider` stores skills in a Cloudflare R2 bucket. Each skill is an R2 object with optional custom metadata for descriptions.
-
-<TypeScriptExample>
-
-```ts
-import { Session, R2SkillProvider } from "agents/experimental/memory/session";
-
-const session = Session.create(this)
-	.withContext("soul", {
-		provider: {
-			get: async () =>
-				[
-					"You are a helpful assistant with access to skills.",
-					"When a user asks you to do something, check the SKILLS section",
-					"for a relevant skill and use load_context to load it.",
-				].join("\n"),
-		},
-	})
-	.withContext("memory", {
-		description: "Learned facts",
-		maxTokens: 1100,
-	})
-	.withContext("skills", {
-		provider: new R2SkillProvider(env.SKILLS_BUCKET, { prefix: "skills/" }),
-	})
-	.withCachedPrompt();
-```
-
-</TypeScriptExample>
-
-The `prefix` option scopes the provider to a subdirectory in the bucket. Skill keys in the metadata listing are shown without the prefix, so `skills/api-ref` becomes `api-ref` in the system prompt.
-
-Use `keys` to allowlist specific prefix-relative skills for `get()` and `load()`:
-
-<TypeScriptExample>
-
-```ts
-new R2SkillProvider(env.SKILLS_BUCKET, {
-	prefix: "skills/",
-	keys: ["deploy-checklist", "api-ref"],
-});
-```
-
-</TypeScriptExample>
-
-Add an R2 bucket binding to your Wrangler configuration:
-
-<WranglerConfig>
-
-```jsonc
-{
-  "r2_buckets": [
-    {
-      "binding": "SKILLS_BUCKET",
-      "bucket_name": "my-agent-skills"
-    }
-  ]
-}
-```
-
-</WranglerConfig>
-
-Skills are regular R2 objects. Upload them through any R2 interface (the Wrangler CLI, the dashboard, or the Workers API):
-
-```sh
-# Upload a skill from a file
-wrangler r2 object put my-agent-skills/skills/style-guide --file ./docs/style-guide.md --content-type text/markdown
-```
-
-To add descriptions (shown in the metadata listing), set custom metadata on the R2 object:
-
-<TypeScriptExample>
-
-```ts
-await env.SKILLS_BUCKET.put("skills/api-ref", content, {
-	customMetadata: { description: "API Reference documentation" },
-});
-```
-
-</TypeScriptExample>
-
-#### Custom skill providers
-
-You can back skills with any storage by implementing the `SkillProvider` interface:
-
-<TypeScriptExample>
-
-```ts
-import type { SkillProvider } from "agents/experimental/memory/session";
-
-class DatabaseSkillProvider implements SkillProvider {
-	private db: D1Database;
-
-	constructor(db: D1Database) {
-		this.db = db;
-	}
-
-	async get(): Promise<string | null> {
-		const rows = await this.db
-			.prepare("SELECT key, description FROM skills ORDER BY key")
-			.all();
-		if (rows.results.length === 0) return null;
-		return rows.results
-			.map((r) => `- ${r.key}${r.description ? `: ${r.description}` : ""}`)
-			.join("\n");
-	}
-
-	async load(key: string): Promise<string | null> {
-		const row = await this.db
-			.prepare("SELECT content FROM skills WHERE key = ?")
-			.bind(key)
-			.first();
-		return row ? (row.content as string) : null;
-	}
-
-	async set(key: string, content: string, description?: string): Promise<void> {
-		await this.db
-			.prepare(
-				"INSERT INTO skills (key, content, description) VALUES (?, ?, ?) " +
-					"ON CONFLICT(key) DO UPDATE SET content = ?, description = ?",
-			)
-			.bind(key, content, description ?? null, content, description ?? null)
-			.run();
-	}
-}
-```
-
-</TypeScriptExample>
-
-The Session detects the `load()` method via duck-typing and generates the appropriate tools automatically.
-
-#### Skills vs other memory types
+Refer to [Agent Skills](/agents/concepts/agent-skills/) for how the format works. Skills are files, not memory blocks. Store them in the agent's [Computer Workspace](/agents/skills/sources/computer/), in [R2](/agents/skills/sources/r2/), or [in code](/agents/skills/sources/code/).
 
 | Aspect               | Skills                              | Writable context         | Searchable context                 |
 | -------------------- | ----------------------------------- | ------------------------ | ---------------------------------- |
-| **In system prompt** | Metadata listing only               | Full content             | Summary count                      |
-| **Access pattern**   | Load whole document by key          | Always visible           | Search by query                    |
-| **Best for**         | Large documents, reference material | Short notes, preferences | Large collections of small entries |
-| **Context cost**     | Low (until loaded)                  | Proportional to content  | Low (until searched)               |
-| **Agent writes?**    | Optional (if `set` implemented)     | Yes (via `set_context`)  | Yes (via `set_context`)            |
-
-The key distinction: skills are **lazy**. They cost nearly nothing in the system prompt until the agent decides it needs one. This makes them ideal for large reference material where only a subset is relevant to any given conversation.
+| **In system prompt** | Names and descriptions only         | Full content             | Entry count only                   |
+| **Loaded**           | Whole skill, on demand              | Always                   | Top matching chunks, on demand     |
+| **Best for**         | Procedures, references, scripts     | Facts, preferences       | Large knowledge bases              |
 
 ## How agents interact with memory
 
@@ -407,9 +242,7 @@ The Session generates tools dynamically based on what provider types are present
 
 | Tool                 | Generated when                              | What it does                                                                                                              |
 | -------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| **`set_context`**    | Any writable, skill, or search block exists | Writes content to a named block. For writable blocks, replaces or appends. For skill/search blocks, writes a keyed entry. |
-| **`load_context`**   | Any skill block exists                      | Loads full content of a document by key into the agent's context.                                                         |
-| **`unload_context`** | Any skill block exists                      | Frees context space by removing a previously loaded document. The document remains available for re-loading.              |
+| **`set_context`**    | Any writable or search block exists         | Writes content to a named block. For writable blocks, replaces or appends. For search blocks, writes a keyed entry.       |
 | **`search_context`** | Any search block exists                     | Full-text search within a searchable block. Returns the top results ranked by relevance.                                  |
 | **`session_search`** | Using `SessionManager`                      | Searches across all sessions (cross-conversation search).                                                                 |
 
@@ -437,15 +270,9 @@ User's project uses React and TypeScript.
 KNOWLEDGE (Searchable knowledge base) [searchable]
 ══════════════════════════════════════════════
 12 entries indexed.
-
-══════════════════════════════════════════════
-SKILLS [loadable]
-══════════════════════════════════════════════
-- api-ref: API Reference documentation
-- style-guide: Company style guide
 ```
 
-The tags (`[readonly]`, `[writable]`, `[searchable]`, `[loadable]`) tell the LLM what kind of interaction is possible with each block. Token budgets show the agent how much space remains in writable blocks, helping it manage its own memory.
+The tags (`[readonly]`, `[writable]`, `[searchable]`) tell the LLM what kind of interaction is possible with each block. Token budgets show the agent how much space remains in writable blocks, helping it manage its own memory.
 
 ## Gotchas
 
