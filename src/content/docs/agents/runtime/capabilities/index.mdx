@@ -48,20 +48,25 @@ Both capabilities schedule through Lifecycle without overwriting each other's al
 
 ## Choose capabilities
 
-Start with what your application needs:
+Capabilities add features to your agent. Before installing one, check what your harness or base class already provides.
 
-- **Browser clients connect to the agent.** Install [`WebSockets`](/agents/runtime/capabilities/websockets/). Add [`State`](/agents/runtime/capabilities/state/) to synchronize a value with clients.
-- **The agent runs a callback later.** Install [`Scheduler`](/agents/runtime/capabilities/scheduler/) for delayed or recurring work.
-- **The agent uses MCP tools.** Install [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/).
+| Your starting point                                                                                                | What it already provides                                                      | What you configure                                                                        |
+| ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| [Pi](/agents/harnesses/pi/) or [OpenCode](/agents/harnesses/opencode/)                                             | The agent loop, conversation storage, and recovery                            | Use the harness's session and tool APIs. Add capabilities for other application features. |
+| [`Agent`](/agents/agent-class/)                                                                                    | WebSockets, shared state, scheduling, and MCP connections                     | Use the existing `Agent` APIs.                                                            |
+| [Think](/agents/harnesses/think/) or [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) | The capabilities provided by `Agent`, plus conversation storage and streaming | Use the framework's conversation APIs.                                                    |
+| Plain Durable Object                                                                                               | The capabilities you explicitly install                                       | Choose the features your application needs.                                               |
 
-Check what your starting point already provides before installing a capability:
+For features your starting point does not provide, use these capabilities:
 
-| Starting point                                                                                                     | What to add yourself                                                                                                                                               |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [Pi](/agents/harnesses/pi/) or [OpenCode](/agents/harnesses/opencode/)                                             | Choose a client transport and optional features such as scheduling or MCP connections. The harness owns its conversation storage and output; use its session APIs. |
-| [Think](/agents/harnesses/think/) or [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) | Start with the framework's APIs. These classes already install `Sessions` and `Streams`, as well as the capabilities provided by `Agent`.                          |
-| [`Agent`](/agents/agent-class/)                                                                                    | `Scheduler`, `State`, `WebSockets`, and `MCPClientManager` are already installed. Add other capabilities only when needed.                                         |
-| Your own loop on a plain Durable Object                                                                            | Choose each feature yourself. Consider `Sessions` for conversation history and `Streams` for replayable output, or use your own storage.                           |
+| You want to…                                            | Use                                                                                                                                                                                                      |
+| ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Connect browser clients to the agent                    | [`WebSockets`](/agents/runtime/capabilities/websockets/)                                                                                                                                                 |
+| Keep a shared value synchronized with connected clients | [`State`](/agents/runtime/capabilities/state/) with `WebSockets`                                                                                                                                         |
+| Run a callback later or on a recurring schedule         | [`Scheduler`](/agents/runtime/capabilities/scheduler/)                                                                                                                                                   |
+| Manage MCP connections through the runtime              | [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/). Check your harness's MCP integration first, such as [OpenCode's MCP plugins](/agents/harnesses/opencode/#connect-an-mcp-server). |
+
+If you are writing your own agent loop, consider [`Sessions`](/agents/runtime/capabilities/sessions/) for conversation history and [`Streams`](/agents/runtime/capabilities/streams/) for replayable output. Pi and OpenCode manage their own conversation storage. Think and `AIChatAgent` already install `Sessions` and `Streams`.
 
 For guidance on conversation storage, refer to [Choose a session store](/agents/runtime/capabilities/sessions/#choose-a-session-store).
 
