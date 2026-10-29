@@ -1,9 +1,9 @@
 ---
-title: File system
-pcx_content_type: concept
+title: Workspace
+pcx_content_type: how-to
 sidebar:
-  order: 0
-description: Give an agent a virtual file system stored in its Durable Object, with file tools for the model and an optional JavaScript runtime.
+  order: 1
+description: Give the model file tools for a Cloudflare Computer workspace stored in its Durable Object, with adapters for Think, Pi, the AI SDK, and TanStack AI, and runtimes that run code against the same files.
 products:
   - agents
 ---
@@ -15,20 +15,22 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-[Cloudflare Computer](https://github.com/cloudflare/computer) gives an agent a persistent working directory backed by SQLite, along with the standard set of tools for working with the file system, including `read`, `write`, `edit`, and `grep`. An optional `exec` tool lets the agent manipulate the file system and run tools programmatically.
+A workspace is a persistent working directory for an agent, provided by [Cloudflare Computer](https://github.com/cloudflare/computer) (`@cloudflare/computer`). Its files live in the SQLite storage of the agent's Durable Object. This page covers the tools the model uses to work in a workspace: `read`, `write`, `edit`, `grep`, and the others, plus an optional `exec` tool that runs code against the same files.
 
-Use a file system when an agent needs to:
+For what a workspace is and how it fits into an agent, refer to [Workspace](/agents/concepts/workspace/). To connect a workspace to a harness, refer to the harness page: [Think](/agents/harnesses/think/) has one built in, and the [Pi harness](/agents/harnesses/pi/) takes the tools through an extension.
+
+Give the model workspace tools when an agent needs to:
 
 - Keep notes, drafts, plans, or generated files across turns and restarts.
 - Read, search, and edit text files with tools built for a model.
 - Write and run JavaScript against files, without starting a container.
 - Provide skills, source files, and other external documents to the agent without filling its context window.
 
-## How it works
+## How it is backed
 
-A `Workspace` lives inside a Durable Object and keeps every file in the SQLite storage of that object. Files remain after the Durable Object is evicted or restarted, with no external storage to configure.
+A `Workspace` is a plain field on a Durable Object, not a Lifecycle capability. It needs only the object's `storage`, and keeps every file there. Files remain after the Durable Object is evicted or restarted, with no external storage to configure.
 
-`workspace.fs` reads, writes, lists, searches, and deletes files. `workspace.runtime` runs code against the same files through an execution backend. Computer includes a JavaScript runtime, as well as an experimental container-based runtime for running shell commands.
+`workspace.fs` reads, writes, lists, searches, and deletes files. `workspace.runtime` runs code against the same files through an execution backend: a [JavaScript runtime](#run-javascript-in-the-workspace), or an experimental [shell or container](#run-shell-commands). The tools for the model are built on these two objects.
 
 ## Install
 
@@ -38,7 +40,7 @@ Every tool entry point requires `zod`. What else you need depends on how your ag
 
 - **[Think](/agents/harnesses/think/)** includes the workspace tools. Install `@cloudflare/computer` alongside it.
 - **[AI SDK](https://ai-sdk.dev/)** tools also require `ai`.
-- **[Pi](/agents/harnesses/pi/)** and **[OpenCode](/agents/harnesses/opencode/)** use the Pi AI tools, which need nothing beyond `zod`.
+- **[Pi](/agents/harnesses/pi/)**, **[OpenCode](/agents/harnesses/opencode/)**, and **[TanStack AI](https://tanstack.com/ai)** tools need nothing beyond `zod`. Your agent brings its own library.
 
 Your Worker needs the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/).
 
@@ -139,71 +141,47 @@ await fs.rm("/workspace/notes", { recursive: true });
 
 For every file operation, refer to [`workspace.fs`](#workspacefs) in the API reference.
 
-## Give the model file tools
+## The tools the model sees
 
-Computer builds one set of file tools for a workspace, with adapters for different agent libraries:
+Computer builds one set of file tools for a workspace:
 
-| Tool     | What it does                                                                     |
-| -------- | -------------------------------------------------------------------------------- |
-| `read`   | Reads a text file by line, or passes an image or PDF to a model that accepts it. |
-| `ls`     | Lists one directory, page by page.                                               |
-| `find`   | Finds paths with `*`, `**`, and `?` globs.                                       |
-| `grep`   | Searches file contents with a regular expression or a fixed string.              |
-| `write`  | Writes a whole file.                                                             |
-| `edit`   | Replaces targeted text in a file and returns a diff.                             |
-| `delete` | Deletes a file or directory.                                                     |
-| `exec`   | Runs code on an execution backend. Present only when the workspace has one.      |
+| Tool      | What it does                                                                                 |
+| --------- | -------------------------------------------------------------------------------------------- |
+| `read`    | Reads a text file by line, or passes an image or PDF to a model that accepts it.             |
+| `ls`      | Lists one directory, page by page.                                                           |
+| `find`    | Finds paths with `*`, `**`, and `?` globs.                                                   |
+| `grep`    | Searches file contents with a regular expression or a fixed string.                          |
+| `write`   | Writes a whole file.                                                                         |
+| `edit`    | Replaces targeted text in a file and returns a diff.                                         |
+| `delete`  | Deletes a file or directory.                                                                 |
+| `exec`    | Runs code on an execution backend. Present only when the workspace has one.                  |
+| `publish` | Shares a workspace file through a presigned URL. Present only when the workspace has assets. |
 
-:::note[Harnesses]
-[Think](#think) adds these tools to every turn with no configuration. The [Pi](#pi) and [OpenCode](#opencode) harnesses take the Pi AI tools through a small adapter. Any other agent built on the [AI SDK](#ai-sdk) can use `createAITools()`.
-:::
+Each tool returns bounded output. `read`, `ls`, `find`, and `grep` page through large results, and `edit` returns a diff of what it changed.
+
+## Add the tools to your harness
+
+Computer has one adapter per agent library. Each adapter builds the same tools from the same options:
+
+| Harness or library | Entry point                              | Function                      |
+| ------------------ | ---------------------------------------- | ----------------------------- |
+| Think              | Built in                                 | None                          |
+| Pi                 | `@cloudflare/computer/tools/pi-ai`       | `createPiTools()`             |
+| OpenCode           | `@cloudflare/computer/tools/pi-ai`       | `createPiTools()` in a plugin |
+| AI SDK             | `@cloudflare/computer/tools/ai-sdk`      | `createAITools()`             |
+| TanStack AI        | `@cloudflare/computer/tools/tanstack-ai` | `createTanStackTools()`       |
+
+Each entry point loads only `zod` and its own code, so importing one never pulls in another library.
 
 ### Think
 
-Every [Think](/agents/harnesses/think/) agent has a Computer `Workspace` at `this.workspace`, and Think adds the workspace tools to every turn. To change the workspace, override `workspace`. A custom tool from `getTools()` with the same name as a workspace tool replaces it.
+Every [Think](/agents/harnesses/think/) agent has a Computer `Workspace` at `this.workspace`, and Think adds the workspace tools to every turn with no configuration. To change the workspace, override `workspace`. A custom tool from `getTools()` with the same name as a workspace tool replaces it.
 
 For more information, refer to [Built-in workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools).
 
-### AI SDK
-
-`createAITools()` from `@cloudflare/computer/tools/ai-sdk` returns an AI SDK `ToolSet` for a workspace. Pass it to `generateText()`, `streamText()`, or the `getTools()` method of an agent.
-
-<TypeScriptExample>
-
-```ts
-import { Workspace } from "@cloudflare/computer";
-import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
-import { generateText, stepCountIs } from "ai";
-import { DurableObject } from "cloudflare:workers";
-import { createAI } from "agents/models/ai-sdk";
-
-export class WriterAgent extends DurableObject<Env> {
-	workspace = new Workspace({ storage: this.ctx.storage });
-
-	async write(prompt: string) {
-		const { text } = await generateText({
-			model: createAI({ binding: this.env.AI })(
-				"@cf/moonshotai/kimi-k2.6",
-			),
-			system:
-				"You are a writing assistant. Keep drafts and notes as files under /workspace.",
-			prompt,
-			tools: createAITools({
-				workspace: this.workspace,
-				read: { maxBytes: 32 * 1024, maxLines: 800 },
-			}),
-			stopWhen: stepCountIs(20),
-		});
-		return text;
-	}
-}
-```
-
-</TypeScriptExample>
-
 ### Pi
 
-`createPiTools()` from `@cloudflare/computer/tools/pi-ai` returns Pi AI tool declarations and one `execute` function that runs a call by name. [Pi Durable](/agents/harnesses/pi/) runs the agent loop itself and expects each tool to carry its own `execute`, so pair them up as `ToolRegistration` objects:
+`createPiTools()` returns Pi AI tool declarations and one `execute` function that runs a call by name. [Pi Durable](/agents/harnesses/pi/) runs the agent loop itself and expects each tool to carry its own `execute`, so pair them up as `ToolRegistration` objects:
 
 <TypeScriptExample filename="src/workspace-tools.ts">
 
@@ -251,6 +229,10 @@ this.registry.install({
 `execute` validates the arguments against the schema of the tool and reports failures as `isError` results, so the model can retry.
 
 ### OpenCode
+
+:::caution[Experimental]
+The OpenCode harness is experimental. Its API may change in any release.
+:::
 
 [OpenCode](/agents/harnesses/opencode/) receives tools through plugins. The following plugin replaces the OpenCode tools that need a local file system with the workspace tools:
 
@@ -312,6 +294,73 @@ OpenCodeWorkerd.create({
 
 </TypeScriptExample>
 
+### AI SDK
+
+`createAITools()` returns an AI SDK `ToolSet` for a workspace. Pass it to `generateText()` or `streamText()`:
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
+import { generateText, stepCountIs } from "ai";
+import { DurableObject } from "cloudflare:workers";
+import { createAI } from "agents/models/ai-sdk";
+
+export class WriterAgent extends DurableObject<Env> {
+	workspace = new Workspace({ storage: this.ctx.storage });
+
+	async write(prompt: string) {
+		const { text } = await generateText({
+			model: createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6"),
+			system:
+				"You are a writing assistant. Keep drafts and notes as files under /workspace.",
+			prompt,
+			tools: createAITools({
+				workspace: this.workspace,
+				read: { maxBytes: 32 * 1024, maxLines: 800 },
+			}),
+			stopWhen: stepCountIs(20),
+		});
+		return text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+### TanStack AI
+
+`createTanStackTools()` returns a list of [TanStack AI](https://tanstack.com/ai) server tools for `chat()`. Set `approve` to pause tools for approval. `"mutating"` selects every tool that changes the workspace:
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { createTanStackTools } from "@cloudflare/computer/tools/tanstack-ai";
+import { chat, type ModelMessage } from "@tanstack/ai";
+import { DurableObject } from "cloudflare:workers";
+
+export class WriterAgent extends DurableObject<Env> {
+	workspace = new Workspace({ storage: this.ctx.storage });
+
+	write(messages: ModelMessage[]) {
+		return chat({
+			adapter, // Your TanStack AI provider adapter.
+			messages,
+			tools: createTanStackTools({
+				workspace: this.workspace,
+				approve: "mutating",
+			}),
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Pass `format: "object"` to get the tools as an object keyed by name instead of a list.
+
 ### Configure the tools
 
 `createAITools()`, `createPiTools()`, and `createTanStackTools()` accept the same options:
@@ -356,7 +405,7 @@ export class NotesAgent extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-In a Think agent, set the same `Workspace` as `override workspace`. Once the workspace has a backend, every tool adapter includes `exec`.
+In a Think agent, set the same `Workspace` as `override workspace`. Once the workspace has a backend, every tool adapter includes `exec`, and the model can run code with it.
 
 The backend needs a [Worker Loader binding](/dynamic-workers/):
 
@@ -424,18 +473,18 @@ const { exitCode, value, stdout, stderr } = await run.result();
 
 `WorkerJavaScriptBackend` accepts the following common options:
 
-| Option             | Default               | Description                                                                                       |
-| ------------------ | --------------------- | ------------------------------------------------------------------------------------------------- |
-| `loader`           | Required              | The Worker Loader binding.                                                                        |
-| `id`               | `"worker-javascript"` | The backend ID that `exec` and `runtime.exec()` use to select this backend.                       |
-| `root`             | `/workspace`          | The directory that code can access. Paths outside it are rejected.                                |
-| `access`           | `"read-write"`        | Set to `"read"` to let code read files but not change them.                                       |
-| `defaultTimeoutMs` | `60000`               | How long a run can take when the caller does not set a timeout.                                   |
-| `maxTimeoutMs`     | `180000`              | The longest timeout that a caller can request.                                                    |
-| `globalOutbound`   | `null`                | A `Fetcher` that receives every outbound request from the code. `null` blocks network access.     |
-| `modules`          | —                     | Extra modules that code can import, such as bundled libraries or functions that run in the agent. |
-| `onInterrupt`      | `"fail"`              | What happens to runs that a restart interrupts. Refer to [Resume runs after a restart](#resume-runs-after-a-restart). |
-| `onWait`           | —                     | Called when a host module call starts waiting for an answer. |
+| Option             | Default               | Description                                                                                                                         |
+| ------------------ | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `loader`           | Required              | The Worker Loader binding.                                                                                                          |
+| `id`               | `"worker-javascript"` | The backend ID that `exec` and `runtime.exec()` use to select this backend.                                                         |
+| `root`             | `/workspace`          | The directory that code can access. Paths outside it are rejected.                                                                  |
+| `access`           | `"read-write"`        | Set to `"read"` to let code read files but not change them.                                                                         |
+| `defaultTimeoutMs` | `60000`               | How long a run can take when the caller does not set a timeout.                                                                     |
+| `maxTimeoutMs`     | `180000`              | The longest timeout that a caller can request.                                                                                      |
+| `globalOutbound`   | `null`                | A `Fetcher` that receives every outbound request from the code. `null` blocks network access.                                       |
+| `modules`          | —                     | Extra modules that code can import, such as bundled libraries or functions that run in the agent.                                   |
+| `onInterrupt`      | `"fail"`              | What happens to runs that a restart interrupts. Experimental. Refer to [Resume runs after a restart](#resume-runs-after-a-restart). |
+| `onWait`           | —                     | Called when a host module call starts waiting for an answer. Experimental.                                                          |
 
 ### Give code access to your own functions
 
@@ -587,10 +636,146 @@ These limitations apply to the experimental release and may change in future rel
 - Interrupted runs restart four at a time, because a Durable Object can run up to ten Dynamic Workers at once.
 - Until a run finishes, its journal uses Durable Object storage of roughly the size of every response, plus the code of the run.
 
+## Run shell commands
+
+Two more backends run shell commands instead of JavaScript modules. For a shell backend, `exec` and `workspace.runtime.exec()` take a command line, such as `grep -r TODO /workspace`. Both backends are experimental in `@cloudflare/computer` 0.8.0: their APIs may change in any release, and they are not yet suitable for production use.
+
+| Backend                                        | Import                                            | Runs                                                                | Status       |
+| ---------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------- | ------------ |
+| [JavaScript](#run-javascript-in-the-workspace) | `@cloudflare/computer/backends/worker-javascript` | ECMAScript modules in a new Dynamic Worker                          | Stable       |
+| [Worker shell](#worker-shell)                  | `@cloudflare/computer/backends/worker-shell`      | A bash-like shell with a fixed set of commands, in a Dynamic Worker | Experimental |
+| [Container](#container)                        | `@cloudflare/computer/backends/container`         | Real binaries, `npm`, and `node` in a Linux container               | Experimental |
+
+A workspace can have several backends. Give each one an `id`. `exec()` uses the first backend unless the caller names another with the `backend` option, and the model chooses between them from the descriptions in the `exec` tool. To change what the model reads about each backend, pass `exec` to the tool adapter, for example `exec: { shell: { description: "Try this first." } }`.
+
+### Worker shell
+
+:::note[Experimental]
+`WorkerShellBackend` and the shell command groups are experimental.
+:::
+
+`WorkerShellBackend` runs a [just-bash](https://github.com/vercel-labs/just-bash) shell in a [Dynamic Worker](/dynamic-workers/). It starts fast and needs no container. It has `cat`, `grep`, `sed`, `awk`, `find`, and other text commands, plus a built-in `git` when the workspace has Git. It cannot run `npm`, `node`, or other binaries. Every file operation goes back to the same Durable Object, so there is no second copy of the files.
+
+Install `just-bash` alongside `@cloudflare/computer`. Optional commands come in groups that you import from `@cloudflare/computer/shell/*` and pass to `commands`: `curl`, `html-to-markdown`, `python`, `sqlite`, `js-exec`, `yq`, `file`, `xan`, and `jq`. A group you do not import is left out of your bundle.
+
+The shell reaches the workspace through the Durable Object's binding, so create the workspace with `withWorkspace()`, and export `WorkspaceServiceProxy` from your Worker:
+
+<TypeScriptExample>
+
+```ts
+import { withWorkspace, WorkspaceServiceProxy } from "@cloudflare/computer";
+import { WorkerShellBackend } from "@cloudflare/computer/backends/worker-shell";
+import curl from "@cloudflare/computer/shell/curl";
+import jq from "@cloudflare/computer/shell/jq";
+import { DurableObject } from "cloudflare:workers";
+
+// The shell reaches the workspace back through this entrypoint.
+export { WorkspaceServiceProxy };
+
+export class ShellAgent extends withWorkspace(
+	class extends DurableObject<Env> {},
+	(self) => {
+		const { ctx, env } = self as unknown as {
+			ctx: DurableObjectState;
+			env: Env;
+		};
+		return {
+			storage: ctx.storage,
+			backends: [
+				new WorkerShellBackend({
+					loader: env.LOADER,
+					workspace: { binding: "ShellAgent", id: ctx.id.toString() },
+					ctx,
+					commands: [curl, jq],
+				}),
+			],
+		};
+	},
+) {}
+```
+
+</TypeScriptExample>
+
+The backend needs a Worker Loader binding and the `experimental` compatibility flag:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_flags": ["nodejs_compat", "experimental"],
+	"worker_loaders": [{ "binding": "LOADER" }]
+}
+```
+
+</WranglerConfig>
+
+From your Worker, reach the workspace with `getWorkspace()` and run a command:
+
+<TypeScriptExample>
+
+```ts
+using ws = await getWorkspace(env.ShellAgent.getByName("user-123"));
+using run = await ws.runtime.exec("wc -l /workspace/notes/todo.md", {
+	encoding: "utf8",
+});
+const { stdout, exitCode } = await run.result();
+```
+
+</TypeScriptExample>
+
+### Container
+
+:::note[Experimental]
+`ContainerBackend` and `withWorkspaceContainer()` are experimental.
+:::
+
+`ContainerBackend` runs shell commands in a [Cloudflare Container](/containers/) with a full Linux userland, network access, and real binaries such as `npm` and `node`. The container runs Computer's `computerd` daemon, which keeps its own copy of the files and syncs it with the workspace before and after each command. It starts more slowly than the other backends.
+
+The Durable Object schedules the container itself, so its `containers` entry in the Wrangler configuration sets `scheduling_policy: "durable_object"` and an `images` map. Add `withWorkspaceContainer()` to the Durable Object class and pass `ContainerBackend` to the workspace. For a complete project, including the container image, refer to the [container example](https://github.com/cloudflare/computer/tree/main/examples/container).
+
+The container's files are held in memory and reached through FUSE, so heavy I/O, such as a large `npm install`, is slower than on a native disk. Size workspaces for an agent's working files. To run your own container without a workspace, refer to [Sandbox](/agents/tools/sandbox/).
+
+## Git, mounts, and sharing files
+
+A workspace can also work with Git repositories, show read-only content, and share files. Each is a workspace option, so the tools and `exec` see the result as ordinary files.
+
+- **Git.** Pass `git: createGitClient()` from `@cloudflare/computer/git` to turn on `workspace.git`, a Git client that works on the workspace files with no backend. It can clone, add, commit, and push. Set `defaultGitIdentity` for commits. To give model-written code Git, add the `ws:git` [host module](#host-modules).
+- **Read-only mounts.** Pass `mounts` to show content at a path without copying it into storage. `R2Bucket(bucket)` mounts an R2 bucket. `WorkerBundle()` mounts files that ship inside your Worker, such as templates or reference documents, and refreshes them when a deploy changes them. Writes under a mount fail with `EROFS`.
+- **Assets.** Pass `assets: createAssets(...)` from `@cloudflare/computer/assets` to upload a workspace file to R2 and share it through a presigned URL. The tool adapters then add the `publish` tool.
+- **Artifacts.** Pass an [Artifacts](/artifacts/) binding as `artifacts: { binding }` to work with Artifacts repositories. `createArtifact()` from `@cloudflare/computer/artifacts` wraps the same binding for your own code.
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { createGitClient } from "@cloudflare/computer/git";
+
+// A field on the Durable Object class:
+workspace = new Workspace({
+	storage: this.ctx.storage,
+	git: createGitClient(),
+	defaultGitIdentity: { name: "Agent", email: "agent@example.com" },
+});
+
+// In a method of the same class:
+await this.workspace.git.clone({ url: "https://github.com/example/repo.git" });
+await this.workspace.fs.writeFile("/workspace/notes.md", "# Notes\n");
+await this.workspace.git.add({ paths: ["notes.md"] });
+await this.workspace.git.commit({ message: "Add notes" });
+```
+
+</TypeScriptExample>
+
+For the full interfaces, refer to the [Computer README](https://github.com/cloudflare/computer/tree/main/packages/computer).
+
+## Upgrade from `@cloudflare/shell`
+
+`@cloudflare/shell` is deprecated. Its `Workspace` is replaced by the Computer `Workspace`. Computer stores files in different tables, so data does not move on its own. To keep an existing workspace, copy its files with the script in [Migrating from `@cloudflare/shell` to `@cloudflare/computer`](https://github.com/cloudflare/agents/blob/main/docs/shell/migrating-to-computer.md). For the changes to Think's built-in tools, refer to [Upgrade from `@cloudflare/shell`](/agents/harnesses/think/tools/#upgrade-from-cloudflareshell).
+
 ## Limits
 
 - Each workspace shares the storage of its Durable Object. For storage limits, refer to [Durable Objects limits](/durable-objects/platform/limits/). Size workspaces for an agent's working files, not for full monorepos or large dependency trees.
-- The JavaScript backend runs ECMAScript modules, not shell commands or native binaries. When an agent needs a Linux environment, use a [sandbox](/agents/tools/sandbox/).
+- The JavaScript backend runs ECMAScript modules, not shell commands or native binaries. When an agent needs a Linux environment, use the experimental [container backend](#container) or a [sandbox](/agents/tools/sandbox/).
 - Each JavaScript run is bounded in CPU time, wall-clock time, output size, and the number and size of file operations. Completed runs are kept for 60 minutes by default.
 
 ## Security considerations
@@ -615,6 +800,7 @@ Every user who talks to the same agent instance shares its workspace. Give each 
 | `git`                | A Git client from `createGitClient()` in `@cloudflare/computer/git`, which turns on `workspace.git`.           |
 | `defaultGitIdentity` | The `{ name, email }` that Git commits use.                                                                    |
 | `artifacts`          | An [Artifacts](/artifacts/) binding, as `{ binding }`.                                                         |
+| `assets`             | An assets client from `createAssets()` in `@cloudflare/computer/assets`, which adds the `publish` tool.        |
 | `output`             | Where long command output is saved, and how much `result()` keeps.                                             |
 
 ### `workspace.fs`
@@ -642,29 +828,29 @@ Failed operations reject with an error whose `code` is a POSIX error code, such 
 
 ### `workspace.runtime`
 
-| Method                      | Description                                                                                          |
-| --------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `exec(source, options?)`    | Runs `source` on a backend and returns a handle. Call `result()` on the handle for the final result. |
-| `getExec(id, options?)`     | Reattaches to a run by ID.                                                                           |
-| `killExec(id, options?)`    | Stops a run.                                                                                         |
-| `disposeExec(id, options?)` | Discards a completed run.                                                                            |
-| `backends()`                | Lists the backends and the description that each gives to the model.                                 |
-| `recover()`                 | Resumes interrupted runs. Call it from an alarm. Experimental. |
-| `pending()`                 | Lists the host module calls that are waiting for an answer. Experimental. |
-| `respond(id, callId, answer, options?)` | Answers a waiting call. Experimental. |
+| Method                                  | Description                                                                                          |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `exec(source, options?)`                | Runs `source` on a backend and returns a handle. Call `result()` on the handle for the final result. |
+| `getExec(id, options?)`                 | Reattaches to a run by ID.                                                                           |
+| `killExec(id, options?)`                | Stops a run.                                                                                         |
+| `disposeExec(id, options?)`             | Discards a completed run.                                                                            |
+| `backends()`                            | Lists the backends and the description that each gives to the model.                                 |
+| `recover()`                             | Resumes interrupted runs. Call it from an alarm. Experimental.                                       |
+| `pending()`                             | Lists the host module calls that are waiting for an answer. Experimental.                            |
+| `respond(id, callId, answer, options?)` | Answers a waiting call. Experimental.                                                                |
 
 `exec()` accepts the following options:
 
-| Option      | Description                                                                   |
-| ----------- | ----------------------------------------------------------------------------- |
-| `backend`   | The backend ID to run on. Defaults to the first backend.                      |
-| `input`     | JSON-compatible data passed to the default export of a JavaScript module.     |
-| `encoding`  | Set to `"utf8"` to receive `stdout` and `stderr` as strings instead of bytes. |
-| `cwd`       | The working directory, and the base for relative imports.                     |
-| `env`       | Environment variables for this run, available to JavaScript as `process.env`. |
-| `stdin`     | Standard input, as a string or `Uint8Array`.                                  |
-| `timeoutMs` | How long the run can take, up to the backend's `maxTimeoutMs`.                |
-| `onInterrupt` | What happens to this run if a restart interrupts it. Overrides the backend's default. |
+| Option        | Description                                                                                         |
+| ------------- | --------------------------------------------------------------------------------------------------- |
+| `backend`     | The backend ID to run on. Defaults to the first backend.                                            |
+| `input`       | JSON-compatible data passed to the default export of a JavaScript module.                           |
+| `encoding`    | Set to `"utf8"` to receive `stdout` and `stderr` as strings instead of bytes.                       |
+| `cwd`         | The working directory, and the base for relative imports.                                           |
+| `env`         | Environment variables for this run, available to JavaScript as `process.env`.                       |
+| `stdin`       | Standard input, as a string or `Uint8Array`.                                                        |
+| `timeoutMs`   | How long the run can take, up to the backend's `maxTimeoutMs`.                                      |
+| `onInterrupt` | What happens to this run if a restart interrupts it. Overrides the backend's default. Experimental. |
 
 The result contains `status` (`"completed"`, `"failed"`, or `"cancelled"`), `exitCode`, `stdout`, `stderr`, and `value`, the return value of a JavaScript module. When output is too long, `truncated` names the workspace file that holds all of it.
 
@@ -686,6 +872,7 @@ Pass these to the `modules` option of `WorkerJavaScriptBackend`:
 | ------------------------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
 | `createGitModule()`       | `@cloudflare/computer/modules/git`       | `ws:git`       | Git operations on the workspace. Requires the `git` workspace option. Pass `{ allowNetwork: true }` to clone, fetch, and push. |
 | `createArtifactsModule()` | `@cloudflare/computer/modules/artifacts` | `ws:artifacts` | [Artifacts](/artifacts/) repositories. Requires the `artifacts` workspace option.                                              |
+| `createAssetsModule()`    | `@cloudflare/computer/modules/assets`    | `ws:assets`    | Publishes a workspace file through a presigned URL. Requires the `assets` workspace option.                                    |
 | `createToolBindings()`    | `@cloudflare/computer/modules/tools`     | `ws:tools`     | The agent's own tools, callable from code. Build the bindings with `forAISDKTools()` or `forPiTools()`.                        |
 
 For the full interfaces, refer to the [Computer design documentation](https://github.com/cloudflare/computer/tree/main/docs).
@@ -702,6 +889,12 @@ For the full interfaces, refer to the [Computer design documentation](https://gi
 	title="Sandbox"
 	href="/agents/tools/sandbox/"
 	description="Give an agent a Linux sandbox to run shell commands, scripts, and tests."
+/>
+
+<LinkCard
+	title="Workspace concept"
+	href="/agents/concepts/workspace/"
+	description="What a workspace is, and how files relate to the code an agent runs."
 />
 
 <LinkCard

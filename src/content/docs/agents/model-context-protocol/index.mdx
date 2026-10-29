@@ -1,6 +1,6 @@
 ---
 title: Model Context Protocol (MCP)
-description: Build and deploy remote MCP servers on Cloudflare to connect AI agents with external tools and services.
+description: Build and deploy remote MCP servers on Cloudflare, and connect agents to external MCP servers as clients.
 pcx_content_type: navigation
 tags:
   - MCP
@@ -10,7 +10,7 @@ products:
   - agents
 ---
 
-You can build and deploy [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers on Cloudflare.
+You can build and deploy [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers on Cloudflare, and connect agents to MCP servers as clients.
 
 ## What is the Model Context Protocol (MCP)?
 
@@ -35,6 +35,9 @@ The MCP standard supports two modes of operation:
 - **Use granular authorization**: Protect your server with OAuth, and give each operation its own scopes. When a token lacks a scope, return an `insufficientScope()` challenge so the client asks the user to approve it (step-up authorization) instead of requesting every scope up front. Refer to [Authorization](/agents/model-context-protocol/protocol/authorization/).
 - **Declare accurate input and output schemas**: Strict MCP clients validate tool calls against `inputSchema` and tool results against `outputSchema`, and reject tools whose results do not match. Define both schemas for every tool, and return `structuredContent` that matches `outputSchema`. Refer to [Tools](/agents/model-context-protocol/protocol/tools/).
 
-### Get Started
+## Build a server or connect as a client
 
-Go to the [Getting Started](/agents/model-context-protocol/guides/remote-mcp-server/) guide to learn how to build and deploy your first remote MCP server to Cloudflare.
+An agent can take either side of an MCP connection.
+
+- **Build an MCP server.** Expose your own tools to MCP clients with [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/), a stateless Worker handler. To build and deploy your first remote MCP server, refer to [Build a remote MCP server](/agents/model-context-protocol/guides/remote-mcp-server/). [`McpAgent`](/agents/model-context-protocol/apis/agent-api/) is deprecated and documented as a reference for existing servers.
+- **Connect to MCP servers.** Give an agent the tools of other MCP servers with the [MCP client capability](/agents/runtime/capabilities/mcp-client-manager/), `MCPClientManager`. It runs on any Durable Object. To pass the tools to a model, refer to [MCP tools](/agents/tools/mcp/). The [`Agent` class](/agents/model-context-protocol/apis/client-api/) adds `addMcpServer()` on top of the same capability.

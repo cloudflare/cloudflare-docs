@@ -1,14 +1,44 @@
 ---
 title: Tools
 pcx_content_type: navigation
+description: The tools the Agents SDK provides for models, how each one is backed, and the adapters for Think, Pi, the AI SDK, and TanStack AI.
 sidebar:
-  order: 4
+  order: 7
   group:
-    hideIndex: true
+    hideIndex: false
+products:
+  - agents
 ---
 
 import { DirectoryListing } from "~/components";
 
-Tools give agents capabilities such as [searching the web](/agents/tools/web-search/), [reading webpages and documents](/agents/tools/web-fetch/), browsing the web, processing payments, and running code. Agents can call tools in different ways. Use [Code Mode](/agents/tools/codemode/) to let models discover and orchestrate multiple tools by writing code, or use direct tool calls for simple actions.
+Tools give a model actions it can take, such as [searching the web](/agents/tools/web-search/), [reading webpages and documents](/agents/tools/web-fetch/), working with files in a [workspace](/agents/tools/workspace/), and running code. For what a tool is and how a model calls one, refer to [Tools](/agents/concepts/tools/) in Concepts.
+
+Each tool has a core that does not depend on an agent library, plus one adapter for each library that can call it. Use the adapter for your harness, or call the core from your own tool handler.
+
+## Tools and adapters
+
+| Tool                                             | How it is backed                                                                           | Think                          | Pi                                      | AI SDK                              | TanStack AI                              |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------ | --------------------------------------- | ----------------------------------- | ---------------------------------------- |
+| [Web search](/agents/tools/web-search/)          | Stateless. Needs only the `AI` binding.                                                    | AI SDK adapter in `getTools()` | `agents/websearch/pi`                   | `agents/websearch/ai-sdk`           | `agents/websearch/tanstack-ai`           |
+| [Web fetch](/agents/tools/web-fetch/)            | Stateless. Needs only the `AI` binding.                                                    | AI SDK adapter in `getTools()` | `agents/webfetch/pi`                    | `agents/webfetch/ai-sdk`            | `agents/webfetch/tanstack-ai`            |
+| [Browser](/agents/tools/browser/) (experimental) | The `Browser` capability, experimental. The browser runs in [Browser Run](/browser-run/).  | AI SDK adapter in `getTools()` | `agents/browser/pi`                     | `agents/browser/ai-sdk`             | `agents/browser/tanstack-ai`             |
+| [Workspace](/agents/tools/workspace/)            | A Cloudflare Computer `Workspace`, a plain field on the Durable Object over its storage.   | Built in                       | `@cloudflare/computer/tools/pi-ai`      | `@cloudflare/computer/tools/ai-sdk` | `@cloudflare/computer/tools/tanstack-ai` |
+| [Code Mode](/agents/tools/codemode/)             | Stateless executor in a Dynamic Worker. The durable runtime is a Durable Object facet.     | AI SDK adapter in `getTools()` | None. Pi Durable has its own code mode. | `@cloudflare/codemode/ai`           | `@cloudflare/codemode/tanstack-ai`       |
+| [MCP](/agents/tools/mcp/)                        | The [MCP client](/agents/runtime/capabilities/mcp-client-manager/) capability, `MCPClientManager`. | Automatic                      | None                                    | `mcp.getAITools()`                  | None                                     |
+| [AI Search](/agents/tools/ai-search/)            | Stateless. Calls an AI Search binding.                                                     | Your own AI SDK tool           | Your own `ToolRegistration`             | Your own `tool()`                   | Your own server tool                     |
+| [Sandbox](/agents/tools/sandbox/)                | A Cloudflare Container on the Durable Object.                                              | Your own tool                  | Your own tool                           | Your own tool                       | Your own tool                            |
+
+How a tool is backed decides what it needs from your agent:
+
+- **Stateless** tools need only bindings. They work in any Worker, with or without a Durable Object.
+- **Workspace** tools need a Durable Object with SQLite storage. The `Workspace` is a field you create on the object. It is not attached with `lifecycle.use()`.
+- **Capability-backed** tools, MCP and Browser, need the capability installed on the object's [Lifecycle](/agents/runtime/lifecycle/) with `lifecycle.use()`. The capability owns the state, such as MCP server connections or the open browser session.
+
+[Think](/agents/harnesses/think/) uses AI SDK tools, so every AI SDK adapter works in a Think agent's `getTools()`. Where a tool has no adapter for your harness, wrap its core functions in your harness's tool interface. Each tool page shows how.
+
+[Payments](/agents/tools/payments/) are not a model tool. They wrap MCP servers, MCP clients, and HTTP endpoints with x402 and MPP payment flows.
+
+## All tools
 
 <DirectoryListing />
