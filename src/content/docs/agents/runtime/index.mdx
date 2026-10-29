@@ -17,6 +17,7 @@ Every agent built with the Agents SDK runs on a [Durable Object](/durable-object
 - **[Lifecycle](/agents/runtime/lifecycle/)** (`agents/lifecycle`) runs startup, dispatches each request and WebSocket event, and owns a durable job queue and the object's single alarm.
 - **[Routing](/agents/runtime/routing/)** (`agents/routing`) sends requests from your Worker to the right named object.
 - **[Capabilities](/agents/runtime/capabilities/)** are features you attach with `lifecycle.use()`, such as WebSocket clients, shared state, a scheduler, and MCP connections.
+- **[Observability](/agents/runtime/observability/)** traces model calls and publishes events from the Lifecycle and its capabilities.
 
 ```txt
 Client ──HTTP or WebSocket──▶ Worker: routeAgentRequest()
@@ -91,3 +92,8 @@ The [`Agent` class](/agents/agent-class/) is a preset of the same runtime: a Dur
 | [`Sessions`](/agents/runtime/capabilities/sessions/)                   | `agents/sessions`   | Durable conversation history                 | Experimental |
 
 To write your own, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
+
+## Observability
+
+- [Tracing](/agents/runtime/observability/tracing/) records model calls, tool runs, and approvals as Workers traces.
+- [Diagnostics channels](/agents/runtime/observability/diagnostics-channels/) publish structured events from the Lifecycle, its capabilities, and the `Agent` class.

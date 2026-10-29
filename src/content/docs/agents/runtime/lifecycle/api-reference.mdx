@@ -195,7 +195,7 @@ These are the Durable Object's `ctx.acceptWebSocket()` and `ctx.getWebSockets()`
 | `type`    | `string`  | Event name, such as `uptime:check`                   |
 | `payload` | `unknown` | Event data                                           |
 
-Both `source` and `type` must be non-empty. Events emitted before startup finishes are held until it does. On a plain Durable Object, the Lifecycle publishes each event to an `agents:*` [diagnostics channel](/agents/runtime/operations/observability/diagnostics-channels/) chosen by the prefix of `type`. Unknown prefixes go to `agents:lifecycle`. The published message adds the host class name as `agent`, the object `name`, and a `timestamp`.
+Both `source` and `type` must be non-empty. Events emitted before startup finishes are held until it does. On a plain Durable Object, the Lifecycle publishes each event to an `agents:*` [diagnostics channel](/agents/runtime/observability/diagnostics-channels/) chosen by the prefix of `type`. Unknown prefixes go to `agents:lifecycle`. The published message adds the host class name as `agent`, the object `name`, and a `timestamp`.
 
 ### `LifecycleRoutes`
 

@@ -539,7 +539,7 @@ const response = await routeAgentRequest(request, env, {
 
 </TypeScriptExample>
 
-These hooks are useful for authentication and validation. Refer to [Cross-domain authentication](/agents/runtime/operations/cross-domain-authentication/) for detailed examples.
+These hooks are useful for authentication and validation. Refer to [Authentication](/agents/runtime/routing/authentication/) for detailed examples.
 
 ## Server-side agent access
 
@@ -792,7 +792,7 @@ export default app;
 
 </TypeScriptExample>
 
-For WebSocket authentication patterns (tokens in URLs, JWT refresh), refer to [Cross-domain authentication](/agents/runtime/operations/cross-domain-authentication/).
+For WebSocket authentication patterns, such as a token in the URL, refer to [Authentication](/agents/runtime/routing/authentication/).
 
 ## Troubleshooting
 
@@ -908,8 +908,8 @@ class SecureAgent extends Agent {
 />
 
 <LinkCard
-	title="Cross-domain authentication"
-	href="/agents/runtime/operations/cross-domain-authentication/"
+	title="Authentication"
+	href="/agents/runtime/routing/authentication/"
 	description="WebSocket authentication patterns."
 />
 
@@ -919,8 +919,3 @@ class SecureAgent extends Agent {
 	description="RPC from clients over WebSocket."
 />
 
-<LinkCard
-	title="Configuration"
-	href="/agents/runtime/operations/configuration/"
-	description="Set up agent bindings in wrangler.jsonc."
-/>
