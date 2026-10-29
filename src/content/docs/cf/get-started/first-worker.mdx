@@ -13,7 +13,6 @@ products:
 import {
 	AnnotatedConfigExplorer,
 	FileTree,
-	PackageManagers,
 	Steps,
 	TypeScriptExample,
 } from "~/components";
@@ -131,26 +130,7 @@ development server picks up the change without a restart.
 In this project, `cf dev` does not accept options such as `--port`. To change
 the port, set `server.port` in `vite.config.ts`.
 
-## 3. Check and test
-
-Check formatting, lint rules, and TypeScript types:
-
-<PackageManagers type="run" args="check" />
-
-This command generates Worker types before running `vp check`. To format your
-files, run the `format` script.
-
-Run the generated Workers-runtime test once:
-
-<PackageManagers type="exec" pkg="vp" args="test run" />
-
-Vite+ is installed with your project dependencies. A global `vp` installation
-is optional. Keep the Vite alias and Vitest override aligned when you update
-Vite+. Refer to [Vite+ dependency alignment](https://viteplus.dev/guide/local-cli).
-
-Continue to use `cf dev`, `cf build`, and `cf deploy` for this project.
-
-## 4. Deploy
+## 3. Deploy
 
 <Steps>
 1. If you have not signed in yet, sign in:
