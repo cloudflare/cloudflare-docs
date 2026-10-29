@@ -1,0 +1,107 @@
+---
+title: Harnesses
+description: A harness is the agent loop around the model, and the unit of compute for an agent on Cloudflare.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { LinkCard, TypeScriptExample } from "~/components";
+
+A harness is the loop that turns a model into an agent. A single model call answers one prompt. A harness keeps calling the model until the task is done.
+
+On each turn, the harness:
+
+- Builds the prompt from the system instructions, the transcript, and any context.
+- Calls the model.
+- Runs the tools the model asks for, and returns their results to the model.
+- Stores the transcript, so the next turn starts where the last one ended.
+- Retries failed calls and recovers work that an eviction cut short.
+
+## The unit of compute
+
+A harness is the unit of compute for an agent. You do not write the loop for each agent. You pick a harness, give it a model and tools, and send it work. The harness decides how many model calls and tool calls the work needs.
+
+The Agents SDK exists to make harnesses run well on Cloudflare. It hosts a harness in a [Durable Object](/durable-objects/), stores the harness's state in the object's SQLite database, and wakes the harness after an eviction.
+
+## A harness is a capability
+
+On Cloudflare, a harness is one kind of [capability](/agents/concepts/runtime/). You install it on the Durable Object's Lifecycle with `.use()`, like any other capability:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async ask(prompt: string) {
+		return (await this.harness.prompt(prompt)).text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+The harness and the runtime split the work:
+
+| The harness owns                                       | The runtime owns                                                 |
+| ------------------------------------------------------ | ---------------------------------------------------------------- |
+| The transcript and its sessions                        | Startup, request routing, and WebSockets                         |
+| Model calls, tool calls, and retries                   | The SQLite database the harness stores its state in              |
+| Which input runs next, and which input steers the turn | The job queue and the alarm that wake the harness after eviction |
+| Recovery of interrupted tool calls                     | Other capabilities, such as schedules and MCP clients            |
+
+The harness never sets its own timers. It pushes a job to the Lifecycle's [job queue](/agents/concepts/durable-execution/), so the object can hibernate between steps and still wake on time.
+
+## Choose a harness
+
+- **[Pi harness](/agents/harnesses/pi/)**: runs [Pi Durable](https://github.com/earendil-works/pi/tree/main/packages/durable) in a Durable Object. Pi owns the transcript, the inbox of follow-ups, tool calls, retries, and crash recovery. Start new agents here.
+- **[Think](/agents/harnesses/think/)**: an opinionated chat agent with memory, workspace tools, and streaming built in. Think is a class that extends the `Agent` class, so its loop comes with the `Agent` class preset.
+- **[OpenCode](/agents/harnesses/opencode/)** (experimental): runs OpenCode's sessions, tools, and plugins in a Durable Object.
+
+The SDK also has experimental harnesses that run Think's loop as a capability, and that drive an agent CLI, such as Claude Code or Codex, in a [Container](/containers/).
+
+## Build your own
+
+A harness is a Lifecycle capability. To write your own loop, extend `LifecycleCapability`, store the transcript in the object's SQLite database, and push a job to the Lifecycle's queue whenever work must continue after an eviction. For more information, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
+
+The SDK has experimental building blocks for this: `Sessions` stores the transcript, `Streams` stores output while it streams, and `Tasks` runs replayable steps.
+
+## Related resources
+
+<LinkCard
+	title="Harnesses"
+	href="/agents/harnesses/"
+	description="Set up the Pi harness or Think."
+/>
+
+<LinkCard
+	title="Runtime"
+	href="/agents/concepts/runtime/"
+	description="Understand the Durable Object, the Lifecycle, and capabilities."
+/>

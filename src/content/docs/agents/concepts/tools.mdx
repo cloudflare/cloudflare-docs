@@ -1,79 +1,95 @@
 ---
 title: Tools
-description: Understand how tools are exposed to models, where tools execute, and how MCP connects external tools to Cloudflare Agents.
+description: Understand what a tool is, how each tool is backed, how tools reach each harness, and where tools run.
 pcx_content_type: concept
 sidebar:
-  order: 4
+  order: 5
 products:
   - agents
 ---
 
-Tools let models retrieve information, process data, and perform actions. Each tool defines an interface that describes its inputs, outputs, and behavior.
+import { LinkCard } from "~/components";
 
-A travel agent might use tools to search flights, check hotel rates, process payments, and send confirmation emails. The tool interface lets the model understand when and how to use each capability.
+A tool is something a model can call. It lets the model look up information, change data, or act in the world. Each tool has a name, a description, and an input schema. The model reads them to decide when to call the tool and with which arguments.
 
-Tool design involves three independent choices:
+A travel agent might use tools to search flights, check hotel rates, take payments, and send confirmation emails.
 
-1. **Model interface** — expose tools as direct tool calls or through Code Mode.
-2. **Execution location** — run tool implementations in a Worker, browser, or another Agent.
-3. **Tool source** — define tools in the application or connect to externally hosted tools through Model Context Protocol (MCP).
+The harness runs the loop around tool calls. The model asks for a call, the harness runs the tool, and the harness returns the result to the model. The model then decides what to do next.
 
-For example, browser tools can be exposed directly or through Code Mode. An MCP tool can also be exposed through either model interface.
+## How a tool is backed
 
-## Choose the model interface
+A tool needs something to do its work. On Cloudflare, a tool is backed in one of three ways:
 
-Direct tool calls and Code Mode define how the model sees and invokes tools. They do not determine where the underlying tool implementations run.
+| Backing       | What it means                                                                                                 | Examples                                                                                            |
+| ------------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Stateless     | The tool keeps nothing between calls. It calls an API and returns the result.                                 | [Web fetch](/agents/tools/web-fetch/), [web search](/agents/tools/web-search/)                      |
+| A plain field | The tool works on an object you create in a field of the Durable Object. It is not a Lifecycle capability.    | The [workspace](/agents/concepts/workspace/) file tools: read, write, edit, find, and `exec`        |
+| A capability  | The tool works on a capability you attach with `lifecycle.use()`. The capability keeps state and connections. | [MCP](/agents/tools/mcp/) tools, through the [MCP client](/agents/runtime/capabilities/mcp-client-manager/) |
 
-| Interface         | How it works                                                                                                       | Use when                                                                                                 |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| Direct tool calls | The model receives individual tool definitions. Each result returns to the model before it chooses the next call. | The task is simple and uses a small, known tool set.                                                     |
-| Code Mode         | The model receives one code tool and writes code against typed tool interfaces.                                   | The task needs composition, dependent calls, filtering, branching, repeatable logic, or tool discovery. |
+The backing tells you what to install. A stateless tool needs only its import. A tool on a plain field needs the field. A tool on a capability needs the capability on the Lifecycle.
 
-### Direct tool calls
+## How a tool reaches each harness
 
-Most tool examples use direct tool calls, even when they do not name the pattern. You define each tool and pass its schema to the model. The model selects a tool, your application executes it, and the result returns to the model.
+Each harness has its own tool format. The Agents SDK and Cloudflare Computer ship one adapter per format, so the same tool works with each harness:
 
-The model sees each intermediate result before choosing another tool. This makes the execution path easy to inspect. However, dependent operations require repeated model turns and consume context with intermediate data.
+| Harness or framework | How you add tools                                        | Example adapter               |
+| -------------------- | -------------------------------------------------------- | ----------------------------- |
+| Pi harness           | A Pi extension on the harness registry                   | `agents/webfetch/pi`          |
+| Think                | `getTools()`, plus the built-in workspace tools          | `agents/webfetch/ai-sdk`      |
+| AI SDK               | The `tools` option of `streamText()` or `generateText()` | `agents/webfetch/ai-sdk`      |
+| TanStack AI          | The `tools` option of `chat()`                           | `agents/webfetch/tanstack-ai` |
 
-### Code Mode
+Each tool page shows the adapter for each harness. For the full list of tools, refer to [Tools](/agents/tools/).
 
-[Code Mode](/agents/tools/codemode/) gives the model one code-execution tool. The model writes JavaScript that calls typed tools, passes results between them, and applies control flow.
+## Direct tool calls or Code Mode
 
-The generated code can filter large responses and return only the final value the model needs. Intermediate results stay inside the sandbox instead of entering the model context after every operation. This makes Code Mode more efficient for composed workflows and large tool catalogs.
+How the model sees tools is another separate choice:
 
-Code Mode also supports progressive discovery. The model can search available connectors and request detailed types only for the methods it needs. Successful programs can be saved as reusable snippets.
+| Interface         | How it works                                                                                               | Use when                                                                                    |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Direct tool calls | The model receives each tool definition. Each result returns to the model before it chooses the next call. | The task is simple and uses a small, known set of tools.                                    |
+| Code Mode         | The model receives one code tool, and writes JavaScript that calls typed tool interfaces.                  | The task needs composition, dependent calls, filtering, branching, or a large tool catalog. |
 
-For runtime behavior, approvals, replay, and snippets, refer to [How Code Mode works](/agents/tools/codemode/how-it-works/).
+With direct calls, every intermediate result enters the model's context, and each dependent call costs a model turn. With [Code Mode](/agents/tools/codemode/), the generated code passes results between tools in a sandbox, and returns only the final value. The model can also search the available tools and request types only for the ones it needs.
 
-## Choose where tools run
+Any tool can be exposed either way, whatever backs it. For more information, refer to [How Code Mode works](/agents/tools/codemode/how-it-works/).
 
-Execution location describes where a tool implementation runs. It is independent from the model interface. Tools in each location can be exposed directly or through Code Mode.
+## Where a tool runs
 
-| Location      | Use when                                                                       | Start here                                                                            |
-| ------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| Worker        | The tool calls an API, queries SQL, or uses server-side bindings and secrets.  | [Server-side tools](/agents/agent-class/communication-channels/chat/chat-agents/#server-side-tools) |
-| Browser       | The tool needs geolocation, clipboard, local storage, or other browser APIs.   | [Client-side tools](/agents/agent-class/communication-channels/chat/chat-agents/#client-side-tools) |
-| Another Agent | A chat-capable Agent should execute as a retained, streaming tool.              | [Agents as tools](/agents/agent-class/agent-tools/)                              |
+Where a tool runs is a separate choice from how it is backed:
 
-With direct tool calls, the model calls the tool and the framework routes execution to the configured location.
-
-With Code Mode, generated code runs in a sandbox. Calls from that code cross the sandbox boundary to the underlying tool implementation. Server tools can execute in the host Worker, browser-owned tools can execute in the parent page, and Agent tools can delegate work to another Agent.
+- **In the agent.** Most tools run in the Durable Object. They can use bindings, secrets, and the object's database.
+- **In the browser.** A client tool has no server implementation. The client runs it and sends back the result, so the tool can use browser APIs such as geolocation. For an example, refer to [Think client tools](/agents/harnesses/think/client-tools/).
+- **In another service.** An MCP tool runs on the MCP server that hosts it. The agent only sends the call and receives the result.
 
 ## Connect external tools with MCP
 
-The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) standardizes how AI applications discover and invoke externally hosted tools. MCP describes the source and transport of a tool, not how the model must invoke it.
+The [Model Context Protocol (MCP)](https://modelcontextprotocol.io/introduction) is a standard for discovering and calling tools that other services host. An agent connects to MCP servers with the [MCP client](/agents/runtime/capabilities/mcp-client-manager/) capability, then passes the servers' tools to its harness. For more information, refer to [MCP tools](/agents/tools/mcp/).
 
-An Agent can expose MCP tools through either model interface:
-
-- Pass MCP tools directly to a model with the [Agents MCP client](/agents/tools/mcp/).
-- Expose MCP tools inside Code Mode for composition and progressive discovery with [MCP connectors](/agents/tools/codemode/mcp/).
-
-An MCP server can also expose Code Mode itself. For example, it can present one `code` tool or separate `search` and `execute` tools. For these server-side patterns, refer to [Build a Code Mode MCP server](/agents/model-context-protocol/guides/build-codemode-mcp-server/).
+MCP tools can also be exposed inside Code Mode, through [MCP connectors](/agents/tools/codemode/mcp/). To expose your own tools to other agents, build an [MCP server](/agents/model-context-protocol/).
 
 ## Control side effects
 
-Approval policy is also independent from execution location and tool source. Any tool that modifies external state may require user approval.
+A tool that changes external state, such as a payment or a deletion, may need a person to approve it first. For more information, refer to [Human-in-the-loop](/agents/concepts/agentic-patterns/human-in-the-loop/).
 
-Direct tools can use the standard [human-in-the-loop approval pattern](/agents/concepts/agentic-patterns/human-in-the-loop/).
+Harnesses also decide what happens when an eviction interrupts a tool call. The Pi harness runs a call again only if the tool is marked replay-safe. Otherwise, it tells the model that the call was interrupted.
 
-The durable Code Mode runtime can pause generated code before an annotated connector method executes. Approval replays completed calls from the execution log, applies the approved action, and continues the same program.
+## Related resources
+
+<LinkCard
+	title="Tools"
+	href="/agents/tools/"
+	description="Browse the tools for web fetch, web search, files, MCP, and payments."
+/>
+
+<LinkCard
+	title="Pi harness extensions"
+	href="/agents/harnesses/pi/extensions/"
+	description="Add tools and prompt sections to the Pi harness."
+/>
+
+<LinkCard
+	title="Think tools"
+	href="/agents/harnesses/think/tools/"
+	description="Add custom tools, workspace tools, and MCP tools to Think."
+/>

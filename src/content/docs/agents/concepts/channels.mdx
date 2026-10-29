@@ -1,0 +1,80 @@
+---
+title: Channels
+description: A channel is how people and systems reach an agent, such as a browser over WebSockets, HTTP, chat, email, or webhooks.
+pcx_content_type: concept
+sidebar:
+  order: 9
+products:
+  - agents
+---
+
+import { Aside, LinkCard } from "~/components";
+
+A channel is how people and systems reach an agent. A person might chat with an agent in a browser, send it an email, or message it from a chat app. A system might call it from a webhook or from another Worker.
+
+The harness does not depend on the channel. The same agent can serve several channels, and keep one memory across all of them.
+
+## What every channel does
+
+Whatever the interface, a channel does the same four jobs:
+
+- **Routes** each inbound event to the right agent instance, by name.
+- **Identifies** the sender, so the agent knows who is asking.
+- **Submits** the input to the harness as a new turn, or as an answer to a turn that is waiting.
+- **Delivers** the response back to the sender, as a stream or as one message.
+
+The agent instance is the authorization boundary. Anyone a channel routes to an instance can act on every conversation in it. Authenticate the sender before you route the event, for example in the Worker that receives it.
+
+## Reach any agent
+
+These channels work on any Durable Object with the Lifecycle, with any harness:
+
+| Channel     | How it works                                                                                                                                                                                                                                                                     |
+| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WebSockets  | The [`WebSockets`](/agents/runtime/capabilities/websockets/) capability accepts connections. The [client SDK](/agents/agent-class/communication-channels/chat/client-sdk/) connects from React with `useAgent`, or from any JavaScript runtime with `AgentClient`. Connections stay open while the agent hibernates. |
+| HTTP        | `routeAgentRequest()` routes a request to the agent named in the URL. The agent answers in its `onRequest()` hook.                                                                                                                                                               |
+| Workers RPC | Another Worker gets the agent by name with `getByName()`, and calls its methods directly.                                                                                                                                                                                        |
+
+A webhook is an HTTP request. A scheduled job is a channel too: the agent starts a turn itself, with no user connected.
+
+## Channels on Think and the `Agent` class
+
+Think and the `Agent` class add channels of their own:
+
+- [Think channels](/agents/harnesses/think/channels/) set a policy per channel, such as which tools a channel may use. [Think messengers](/agents/harnesses/think/messengers/) receive and reply to messages from chat apps.
+- On the `Agent` class, [`AIChatAgent`](/agents/agent-class/communication-channels/chat/) serves a chat UI, and [email](/agents/agent-class/communication-channels/email/), [voice](/agents/agent-class/communication-channels/voice/), and [webhooks](/agents/agent-class/communication-channels/webhooks/) each have their own APIs.
+
+## One agent, many channels
+
+<Aside type="caution">
+	`agents/experimental/channels` is experimental. Its API may change in any
+	release.
+</Aside>
+
+`agents/experimental/channels` is a capability that serves a harness through several channels at once, such as the web, Slack, Telegram, and email. It works with any harness that implements the SDK's shared harness interface. Each harness session becomes one conversation, which can appear on several surfaces, such as a web page and a Slack thread.
+
+A gateway in the Worker is the trust boundary. It decides who sent each event, then routes the event to the agent instance. For a working app, refer to the [Channels example](https://github.com/cloudflare/agents/tree/main/examples/next/channels).
+
+## Approvals and questions
+
+Some turns stop to wait for a person, such as a tool call that needs approval. The channel shows the question, and sends the answer back to the harness. The turn then continues where it stopped. For more information, refer to [Human-in-the-loop](/agents/concepts/agentic-patterns/human-in-the-loop/).
+
+## Related resources
+
+<LinkCard
+	title="WebSockets"
+	href="/agents/runtime/capabilities/websockets/"
+	description="Accept real-time connections on any agent."
+/>
+
+<LinkCard
+	title="Client SDK"
+	href="/agents/agent-class/communication-channels/chat/client-sdk/"
+	description="Connect to an agent from React or any JavaScript runtime."
+/>
+
+<LinkCard
+	title="Channels on the Agent class"
+	href="/agents/agent-class/communication-channels/"
+	description="Serve chat, email, and webhooks from an Agent class."
+/>
