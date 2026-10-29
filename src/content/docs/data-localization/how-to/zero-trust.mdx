@@ -1,5 +1,5 @@
 ---
-title: Zero Trust
+title: Data residency for Cloudflare One
 pcx_content_type: how-to
 description: Configure data localization controls for Cloudflare One traffic, private keys, and supported logs.
 products:
@@ -16,27 +16,28 @@ sidebar:
 
 | Control | What it controls | Current availability |
 | - | - | - |
-| [Regional Services for Gateway](#regional-services-for-gateway) | Where Gateway decrypts HTTPS traffic and performs HTTP inspection | Available for [supported on-ramps and regions](#regional-services-for-gateway) |
-| [Cloudflare Tunnel region](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) | Where `cloudflared` establishes its tunnel connections | Global or United States; in FedRAMP High environments, Cloudflare Tunnel automatically connects to FedRAMP data centers |
-| [Cloudflare One Client environment](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#environment) | Which Cloudflare environment the client connects to | Global or the FedRAMP High environment |
-| [Customer Metadata Boundary (CMB)](#customer-metadata-boundary) | Where Cloudflare stores supported Customer Logs | European Union and United States for selected datasets |
-| [Access with Regional Services](#access) | Where Cloudflare processes reverse proxy requests for Access-protected applications | The Access team domain supports FedRAMP Moderate Compliant (Domestic). Public application hostnames can use managed regions available for Regional Hostnames |
-| [Browser Isolation for FedRAMP accounts](#browser-isolation) | Where Cloudflare processes supported Browser Isolation traffic | US FedRAMP region only |
+| [Processing region (Regional Services for Gateway)](#processing-region-for-gateway) | Where Gateway decrypts HTTPS traffic and performs HTTP inspection | Available for [supported on-ramps and regions](#processing-region-for-gateway) |
+| [Connection locations](#connection-locations) | Where `cloudflared`, the Cloudflare One Client, and Direct CNI connect | Global, United States, or FedRAMP High |
+| [Processing region for Access](#access) | Where Cloudflare processes reverse proxy requests for Access-protected applications | Team domain: FedRAMP Moderate Compliant (Domestic). Public hostnames: any managed region available for Regional Hostnames |
+| [Processing region for Browser Isolation](#browser-isolation) | Where Cloudflare processes supported Browser Isolation traffic | US FedRAMP region only |
+| [Log region (Customer Metadata Boundary)](#log-region) | Where Cloudflare stores supported Customer Logs | European Union and United States for selected datasets |
 | [Email Security regional processing](/cloudflare-one/email-security/reference/regional-processing/) | Where Email Security examines messages for supported deployment types | Refer to the [Email Security documentation](/cloudflare-one/email-security/reference/regional-processing/) |
 
-This guide describes the current scope of Cloudflare One data localization controls.
+This guide describes the current scope of Cloudflare One data residency controls.
 
 ## FedRAMP environments
 
 Customers that require a FedRAMP-authorized Cloudflare One deployment should use the applicable [Cloudflare One FedRAMP environment](https://www.cloudflare.com/cloudflare-for-government/). Product and feature availability varies between FedRAMP environments. Contact your account team to select and configure the appropriate environment.
 
-## Regional Services for Gateway
+## Processing region for Gateway
 
-Regional Services controls where Cloudflare Gateway decrypts HTTPS traffic and performs HTTP inspection. Gateway HTTP inspection requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/). Regional Services for Gateway does not apply to Gateway DNS or network policy processing.
+Processing region (Regional Services for Gateway) controls where Cloudflare Gateway decrypts HTTPS traffic and performs HTTP inspection. Gateway HTTP inspection requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/). Processing region for Gateway does not apply to Gateway DNS or network policy processing.
 
-Regional Services for Gateway is configured at the Cloudflare One account level. The selected region applies to Gateway HTTP traffic from supported on-ramps for the account.
+Processing region for Gateway is configured at the Cloudflare One account level. The selected region applies to Gateway HTTP traffic from supported on-ramps for the account.
 
-Cloudflare One supports this behavior for traffic sent to Gateway through these on-ramps:
+### Supported on-ramps
+
+Cloudflare One applies this behavior to traffic sent to Gateway through these on-ramps:
 
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) in [Traffic and DNS mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#traffic-and-dns-mode-default)
 - [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/)
@@ -44,9 +45,15 @@ Cloudflare One supports this behavior for traffic sent to Gateway through these 
 
 Cloudflare WAN requires [unified routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing-mode) for this support.
 
+### Connection termination is separate from inspection location
+
 These on-ramps create a connection that may terminate at a Cloudflare data center outside the selected region (for example, Cloudflare One Client creates a MASQUE tunnel that may terminate outside the region). HTTPS traffic carried inside the connection remains encrypted until Gateway forwards it to the selected region for TLS decryption and HTTP inspection.
 
-Regional Services for Gateway is available in these regions:
+For connection termination locations, refer to [Connection locations](#connection-locations).
+
+### Available regions
+
+Processing region for Gateway is available in these regions:
 
 - European Union
 - Exclusive of Hong Kong and Macau
@@ -63,27 +70,25 @@ Refer to [Region support](/data-localization/region-support/) for region definit
 
 You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway, but the certificate cannot be restricted to a specific region.
 
-The following limitations apply to Regional Services for Gateway outside dedicated FedRAMP environments. 
+[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) is incompatible with Processing region for Gateway.
 
-Regional Services for Gateway supports [predefined and custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) that do not use [EDM, custom wordlists, document entries, or AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/), or [pattern entries with custom functions](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/). [AI context analysis and OCR](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) are also unsupported.
+Processing region for Gateway supports [predefined and custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) that do not use [EDM, custom wordlists, document entries, or AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/), or [pattern entries with custom functions](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/). [AI context analysis and OCR](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) are also unsupported.
 
-[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) is incompatible with Regional Services for Gateway.  
-
-Regional Services for Gateway does not control where [Browser Isolation](/cloudflare-one/remote-browser-isolation/) are run.
-
-### On-ramp and egress locations
-
-The following is separate from Regional Services processing:
-
-- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) connects globally by default. The `--region us` option restricts tunnel connections to data centers in the United States. In FedRAMP High environments, Cloudflare Tunnel automatically connects to FedRAMP data centers.
-- [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#environment) connects to the global environment by default. The `fedramp_high` setting connects the client to the FedRAMP High environment.
-- [Direct CNI](/network-interconnect/) terminates a physical connection at the facility selected during provisioning. This is a physical topology choice that is made by the customer.
+Feature availability in dedicated FedRAMP environments may differ from the limitations above. Contact your account team for current FedRAMP feature support.
 
 ### Egress traffic
 
 Regional Services and egress policies are separate controls. Regional Services controls where Gateway decrypts HTTPS traffic and performs HTTP inspection. Dedicated egress IPs provide predictable, account-specific source IP addresses after traffic leaves Gateway for its destination. Customers can use them for origin allowlisting or to associate Gateway traffic with a selected IP geolocation.
 
 Use [dedicated egress IPs](/cloudflare-one/traffic-controls/egress-policies/dedicated-egress-ips/) and [Gateway egress policies](/cloudflare-one/traffic-controls/egress-policies/) to select these source IP addresses for Gateway traffic.
+
+## Connection locations
+
+The following connection locations are separate from processing region:
+
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) connects globally by default. The `--region us` option restricts tunnel connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers; no `--region` flag is required.
+- [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#environment) connects to the global environment by default. The `fedramp_high` setting connects the client to the FedRAMP High environment.
+- [Direct CNI](/network-interconnect/) terminates a physical connection at the facility selected during provisioning. This is a physical topology choice that is made by the customer.
 
 ## Access
 
@@ -93,33 +98,39 @@ Cloudflare Access uses different connection paths depending on the application t
 2. For a public application, the user connects to the protected application hostname, such as `app.example.com`, to access the application.
 3. For a private application, the user reaches the application's private IP or hostname through the Cloudflare One Client, Cloudflare WAN, or Browser Isolation. Cloudflare evaluates the Access application policies before allowing traffic to reach the application.
 
-### Regional Services
+### Processing region
 
-The Access team domain supports Regional Services in the FedRAMP Moderate Compliant (Domestic) region. Contact your account team to configure the Access team domain as regionalized.
+The Access team domain supports processing in the FedRAMP Moderate Compliant (Domestic) region. Contact your account team to configure the Access team domain as regionalized.
 
 A public application hostname can use any managed region available for Regional Hostnames. Configure the region on the proxied DNS hostname using one of the documented [ways to use Regional Services](/data-localization/regional-services/#ways-to-use-regional-services).
 
-For a private application hostname reached through Cloudflare Tunnel, the [`cloudflared --region us` setting](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) restricts the connector's Cloudflare connections to data centers in the United States. In FedRAMP High environments, Cloudflare Tunnel automatically connects to FedRAMP data centers. The Tunnel region setting is configured separately from Regional Services for eligible Gateway HTTP traffic.
+For a private application hostname reached through Cloudflare Tunnel, the [`cloudflared --region us` setting](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) restricts the connector's Cloudflare connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers; no `--region` flag is required. The Tunnel region setting is configured separately from the processing region for eligible Gateway HTTP traffic.
 
-When CMB is set to the European Union, Access does not store Access User Logs and the dashboard appears empty. Use [Logpush](/logs/logpush/) to retain these logs. For more information, refer to [Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/).
+### Log region
+
+When Customer Metadata Boundary is set to the European Union, Access does not store Access User Logs and the dashboard appears empty. Use [Logpush](/logs/logpush/) to retain these logs. For more information, refer to [Log region](#log-region).
 
 ### Geo Key Manager
 
-If the protected application hostname uses a supported custom certificate, [configure Geo Key Manager](/ssl/edge-certificates/geokey-manager/setup/) to restrict where Cloudflare stores the private TLS key for that hostname.
+If the protected application hostname uses a supported custom certificate, [configure Geo Key Manager](/ssl/edge-certificates/geokey-manager/setup/) to restrict where Cloudflare stores the private TLS key for that hostname. This setting applies to the hostname's TLS certificate, not to Cloudflare One.
 
 ## Browser Isolation
 
-Browser Isolation supports Regional Services in the US FedRAMP region. Contact your account team to set up a FedRAMP account.
+Processing region does not control where [Browser Isolation](/cloudflare-one/remote-browser-isolation/) sessions run. Browser Isolation supports regional processing only in the US FedRAMP region. Contact your account team to set up a FedRAMP account.
 
-## Customer Metadata Boundary
+## CASB
 
-[Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/) is an account-level setting that stores supported Customer Logs in the European Union or United States. It is configured independently from Regional Services.
+CASB does not support regional processing through Regional Services or regional log storage through Customer Metadata Boundary.
+
+## Log region
+
+[Customer Metadata Boundary](/data-localization/metadata-boundary/) is an account-level setting that stores supported Customer Logs in the European Union or United States. It is configured independently from the processing region.
 
 Support varies by dataset. In the [CMB-supported Logpush dataset list](/data-localization/metadata-boundary/logpush-datasets/), Respects CMB indicates whether the dataset's logs are stored only in the selected region. If a dataset is unavailable in the selected CMB region, Logpush does not deliver data for that dataset.
 
-Refer to the current lists of [CMB-supported Logpush datasets](/data-localization/metadata-boundary/logpush-datasets/) and [CMB-supported GraphQL datasets](/data-localization/metadata-boundary/graphql-datasets/) for current coverage.
+For datasets marked as respecting CMB, Cloudflare stores the logs and initiates Logpush delivery from the selected CMB region to a destination you control. CMB does not restrict the destination's location.
 
-## Additional log controls
+Refer to the current lists of [CMB-supported Logpush datasets](/data-localization/metadata-boundary/logpush-datasets/) and [CMB-supported GraphQL datasets](/data-localization/metadata-boundary/graphql-datasets/) for coverage.
 
 Some Cloudflare One products provide additional product-specific controls for reducing or protecting logged data.
 
@@ -127,7 +138,7 @@ Some Cloudflare One products provide additional product-specific controls for re
 
 Use Gateway logging controls to [exclude supported personally identifiable information fields](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/manage-pii/) or [select which events appear in Cloudflare One activity logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/#selective-logging).
 
-Gateway activity logs are unavailable in the dashboard when CMB is enabled. Enterprise users can still export logs through [Logpush](/cloudflare-one/insights/logs/logpush/).
+Gateway activity logs are unavailable in the dashboard when Customer Metadata Boundary is enabled. Enterprise users can still export logs through [Logpush](/cloudflare-one/insights/logs/logpush/).
 
 ### DLP payload and AI prompt logging
 
