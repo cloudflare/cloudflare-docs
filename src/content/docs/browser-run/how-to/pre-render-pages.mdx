@@ -28,7 +28,7 @@ In this tutorial, you will:
 - Add a Browser Run binding to a Worker
 - Create a minimal pre-rendering endpoint
 - Restrict which hostnames the Worker can render
-- Test the endpoint locally with remote mode
+- Test the endpoint locally
 
 ## Prerequisites
 
@@ -165,11 +165,11 @@ The `waitUntil: "networkidle2"` option waits until the page has no more than two
 
 <Steps>
 
-1. Start your Worker in remote mode:
+1. Start your Worker locally:
 
-   <PackageManagers type="exec" pkg="wrangler" args="dev --remote" />
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-   The `.quickAction()` method is not yet supported in local development mode. Use `wrangler dev --remote` when testing Browser Run Quick Actions locally.
+   Wrangler runs the `.quickAction()` call against a Chrome instance on your machine.
 
 2. In another terminal, request a rendered page:
 
