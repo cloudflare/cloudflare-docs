@@ -1,0 +1,21 @@
+src/content/docs/email-service/api/route-emails/email-handler.mdx
+  s_a4dd43476ac9ea::t_ac308d4e35764d 120-127
+src/content/docs/email-service/reference/postmaster.mdx
+  s_a4dd43476ac9ea::t_43d39b2d4686f6 55,59-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dcc9c15925a3f8518bc66768ee32026eac7aeb16",
+  "prompts": {},
+  "sessions": {
+    "s_a4dd43476ac9ea": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a189ab-d539-7c53-ba21-8adeac637b37",
+        "model": "unknown"
+      },
+      "human_author": "Timo Wilhelm <twilhelm@cloudflare.com>"
+    }
+  }
+}
