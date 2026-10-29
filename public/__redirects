@@ -3010,6 +3010,8 @@
 /cloudflare-one/applications/app-library/ /cloudflare-one/team-and-resources/app-library/ 301
 /cloudflare-one/applications/block-page/ /cloudflare-one/reusable-components/custom-pages/access-block-page/ 301
 /cloudflare-one/applications/login-page/ /cloudflare-one/reusable-components/custom-pages/access-login-page/ 301
+/cloudflare-one/reusable-components/custom-pages/dynamic-pages/ /cloudflare-one/reusable-components/custom-pages/access-custom-pages/ 301
+/cloudflare-one/reusable-components/custom-pages/page-templates/ /cloudflare-one/reusable-components/custom-pages/access-custom-pages/ 301
 /cloudflare-one/applications/bookmarks/ /cloudflare-one/access-controls/applications/bookmarks/ 301
 /cloudflare-one/identity/users/session-management/ /cloudflare-one/access-controls/access-settings/session-management/ 301
 /cloudflare-one/identity/users/seat-management/ /cloudflare-one/team-and-resources/users/seat-management/ 301
