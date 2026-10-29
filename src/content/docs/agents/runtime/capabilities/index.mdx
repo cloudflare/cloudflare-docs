@@ -50,7 +50,7 @@ Both capabilities schedule through Lifecycle without overwriting each other's al
 
 Start with what your application needs:
 
-- **Browser clients connect to the agent.** Install [`WebSockets`](/agents/runtime/capabilities/websockets/). Configure its [callables](/agents/runtime/capabilities/websockets/#callables) to expose actions such as stopping a run. Add [`State`](/agents/runtime/capabilities/state/) to synchronize a value with clients.
+- **Browser clients connect to the agent.** Install [`WebSockets`](/agents/runtime/capabilities/websockets/). Add [`State`](/agents/runtime/capabilities/state/) to synchronize a value with clients.
 - **The agent runs a callback later.** Install [`Scheduler`](/agents/runtime/capabilities/scheduler/) for delayed or recurring work.
 - **The agent uses MCP tools.** Install [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/).
 
