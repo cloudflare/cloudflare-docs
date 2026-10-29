@@ -198,78 +198,78 @@ export class EchoAgent extends DurableObject<Env> {
 
 ## Callables
 
-Callables let your frontend call functions on your agent. You declare the methods on an `RpcTarget`, and a React app calls them through a typed stub, as if they were local async functions:
+Use callables to let your application's interface invoke actions on an agent. For example, a **Stop** button can call a server method that cancels a run. The client sends arguments over its existing connection and receives the method's result or error.
 
-```ts
-const todo = await todos.add("Milk"); // runs on the Durable Object
-```
+Declare these actions on an `RpcTarget` and pass it to `WebSockets` as `callables`. Clients invoke them through `agent.stub` or `agent.call()` from `useAgent` and `AgentClient`.
 
-Use callables for the actions a client takes, such as adding an item, approving a step, or starting a task. The call travels over the client's existing WebSocket connection, so you do not need a separate HTTP API.
+### Choose a callable
 
-Pass the `RpcTarget` to `WebSockets` as the `callables` option. Clients call it with `agent.stub` or `agent.call()` from `useAgent` and `AgentClient`.
+- Use a callable for an action initiated by an application client, such as stopping a run or changing an agent's settings.
+- Use a [tool](/agents/concepts/tools/) for an action the model can choose to invoke.
+- Use [Durable Object RPC](/agents/runtime/routing/custom-routing/#call-an-object-over-rpc) when another Worker calls your object directly.
 
 ### Declare callables
 
-Every method declared on the target's class is callable. Pass the object to the target's constructor when the methods need it:
+This example adds a `stopRun()` callable to the [Pi agent](/agents/harnesses/pi/#create-the-agent). Use that guide's package installation and bindings. Keep [authentication in the routing Worker](/agents/runtime/routing/authentication/), so each user can connect only to their own agent. All sessions in this example's object belong to that user.
+
+`stopRun()` is an application-defined method. It validates the session ID, then asks Pi to abort that session's running work and withdraw queued inputs. It does not undo completed actions.
 
 <TypeScriptExample filename="src/server.ts">
 
 ```ts
 import { DurableObject, RpcTarget } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
 import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
 import { WebSockets } from "agents/websockets";
 
-type Todo = { id: string; text: string; done: boolean };
+export class RunCallables extends RpcTarget {
+	readonly #harness: PiHarness;
 
-export class TodoCallables extends RpcTarget {
-	readonly #list: TodoList;
-
-	constructor(list: TodoList) {
+	constructor(harness: PiHarness) {
 		super();
-		this.#list = list;
+		this.#harness = harness;
 	}
 
-	add(text: string): Todo {
-		if (typeof text !== "string" || text.length === 0 || text.length > 200) {
-			throw new Error("text must be 1-200 characters");
+	async stopRun(sessionId: string): Promise<void> {
+		if (
+			typeof sessionId !== "string" ||
+			!/^[1-9]\d{0,15}$/.test(sessionId) ||
+			!Number.isSafeInteger(Number(sessionId))
+		) {
+			throw new Error("sessionId must be a positive integer string");
 		}
-		return this.#list.add(text);
-	}
-
-	list(): Todo[] {
-		return this.#list.all();
+		await this.#harness.session(sessionId).abort();
 	}
 }
 
-export class TodoList extends DurableObject<Env> {
-	readonly webSockets = new WebSockets({
-		callables: new TodoCallables(this),
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
 	});
-	readonly lifecycle = Lifecycle.install(this).use(this.webSockets);
+	readonly webSockets = new WebSockets({
+		callables: new RunCallables(this.harness),
+	});
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.webSockets);
 
-	onStart(): void {
-		this.ctx.storage.sql.exec(
-			"CREATE TABLE IF NOT EXISTS todos (id TEXT PRIMARY KEY, text TEXT NOT NULL, done INTEGER NOT NULL)",
-		);
-	}
-
-	add(text: string): Todo {
-		const todo = { id: crypto.randomUUID(), text, done: false };
-		this.ctx.storage.sql.exec(
-			"INSERT INTO todos (id, text, done) VALUES (?, ?, 0)",
-			todo.id,
-			todo.text,
-		);
-		return todo;
-	}
-
-	all(): Todo[] {
-		return this.ctx.storage.sql
-			.exec<{ id: string; text: string; done: number }>(
-				"SELECT id, text, done FROM todos",
-			)
-			.toArray()
-			.map((row) => ({ ...row, done: row.done === 1 }));
+	async ask(prompt: string) {
+		const { text } = await this.harness.prompt(prompt);
+		return text;
 	}
 }
 ```
@@ -289,29 +289,54 @@ Any connected client can call any of these methods. Treat every argument as untr
 Type `agent.stub` with `AgentStub` from `agents/client` and your callables class. Each method becomes an async function with the same arguments and return type:
 
 ```tsx
+import { useState } from "react";
 import type { AgentStub } from "agents/client";
 import { useAgent } from "agents/react";
-import type { TodoCallables } from "./server";
+import type { RunCallables } from "./server";
 
-export function Todos() {
-	const agent = useAgent({ agent: "TodoList", name: "groceries" });
-	const todos = agent.stub as AgentStub<TodoCallables>;
+type StopRunButtonProps = { agentName: string; sessionId: string };
 
-	const add = async () => {
-		const todo = await todos.add("Milk");
-		console.log(todo.id);
+export function StopRunButton({ agentName, sessionId }: StopRunButtonProps) {
+	const agent = useAgent({ agent: "Assistant", name: agentName });
+	const runs = agent.stub as AgentStub<RunCallables>;
+	const [pending, setPending] = useState(false);
+	const [status, setStatus] = useState("");
+
+	const stop = async () => {
+		setPending(true);
+		setStatus("");
+		try {
+			await agent.ready;
+			await runs.stopRun(sessionId);
+			setStatus("Stop requested.");
+		} catch (error) {
+			setStatus(
+				error instanceof Error ? error.message : "Could not stop the run.",
+			);
+		} finally {
+			setPending(false);
+		}
 	};
 
-	return <button onClick={add}>Add milk</button>;
+	return (
+		<>
+			<button onClick={stop} disabled={pending}>
+				{pending ? "Stopping…" : "Stop"}
+			</button>
+			<p role="status">{status}</p>
+		</>
+	);
 }
 ```
 
-Export `TodoCallables` from your server file so the client can import its type. `import type` brings in only the type, not the server code.
+Pass the authorized agent name and the session ID returned by Pi to `StopRunButton`. Export `RunCallables` from your server file so the client can import its type. `import type` includes only the type, keeping server code out of the client bundle.
+
+`AgentStub<RunCallables>` describes the remote interface to TypeScript. Runtime argument validation still happens in `stopRun()`.
 
 `agent.call()` takes the method name and an array of arguments, without types:
 
 ```ts
-const todo = await agent.call("add", ["Milk"]);
+await agent.call("stopRun", [sessionId]);
 ```
 
 `AgentClient` from `agents/client` has the same `call()` and `stub`. Non-streaming calls time out after 30 seconds by default. Pass `{ timeout }` as the third argument to `call()` to change it for one call, or set `defaultCallTimeout` on the client. A timeout of `0` turns it off.
@@ -395,7 +420,7 @@ export class Room extends DurableObject<Env> {
 
 ## Transports
 
-The client chooses how its connection travels with the `transport` option:
+The client chooses how calls travel with its `transport` option:
 
 | Transport                  | How calls travel                                                               | Hibernates | Results                                                                                                     |
 | -------------------------- | ------------------------------------------------------------------------------ | ---------- | ----------------------------------------------------------------------------------------------------------- |
@@ -404,8 +429,8 @@ The client chooses how its connection travels with the `transport` option:
 
 ```ts
 const agent = useAgent({
-	agent: "TodoList",
-	name: "groceries",
+	agent: "Assistant",
+	name: agentName,
 	transport: "capnweb",
 });
 ```
