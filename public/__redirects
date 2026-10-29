@@ -264,7 +264,7 @@
 /agents/runtime/execution/retries/ /agents/agent-class/retries/ 301
 /agents/runtime/execution/run-workflows/ /agents/agent-class/run-workflows/ 301
 /agents/runtime/execution/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
-/agents/runtime/execution/sub-agents/ /agents/agent-class/sub-agents/ 301
+/agents/runtime/execution/sub-agents/ /agents/agent-class/dynamic-agents/ 301
 /agents/runtime/lifecycle/agent-class/ /agents/agent-class/internals/ 301
 /agents/runtime/lifecycle/callable-methods/ /agents/agent-class/callable-methods/ 301
 /agents/runtime/lifecycle/state/ /agents/agent-class/state/ 301
@@ -326,7 +326,7 @@
 /agents/api-reference/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
 /agents/api-reference/sessions/ /agents/concepts/memory/ 301
 /agents/api-reference/store-and-sync-state/ /agents/agent-class/state/ 301
-/agents/api-reference/sub-agents/ /agents/agent-class/sub-agents/ 301
+/agents/api-reference/sub-agents/ /agents/agent-class/dynamic-agents/ 301
 /agents/api-reference/using-ai-models/ /agents/agent-class/using-ai-models/ 301
 /agents/api-reference/voice/ /agents/agent-class/communication-channels/voice/ 301
 /agents/api-reference/websockets/ /agents/agent-class/websockets/ 301
@@ -386,6 +386,7 @@
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp/charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp/charge-for-http-content/ 301
+/agents/agent-class/sub-agents/ /agents/agent-class/dynamic-agents/ 301
 /agents/concepts/calling-llms/ /agents/concepts/models/ 301
 /agents/concepts/conversation-state-and-memory/ /agents/concepts/memory/ 301
 /agents/runtime/execution/ /agents/concepts/durable-execution/ 301
