@@ -54,7 +54,7 @@ The Lifecycle does three things:
 
 - **Startup.** It starts each capability, then calls your `onStart()` hook, once per time the object loads.
 - **Routing.** It offers each request to the capabilities in order. The first capability that returns a response handles it. A request that no capability claims reaches your `onRequest()` hook.
-- **Durable work.** It owns one job queue in SQLite and the object's single alarm. Every capability shares them. For more information, refer to [Durable execution](/agents/concepts/durable-execution/).
+- **Durable work.** It owns one job queue in SQLite and the object's single alarm. Every capability shares them. For more information, refer to [Durable agents](/agents/concepts/durable-agents/).
 
 The Lifecycle needs a named object and SQLite storage. Address objects with `getByName()` or `idFromName()`.
 

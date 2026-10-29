@@ -47,7 +47,7 @@ A stateless Worker rebuilds its context on every request. An agent keeps state i
 
 - **History stays on the server.** The client sends only the new message. The harness reads the transcript from the object's database and builds the prompt. For more information, refer to [Memory](/agents/concepts/memory/).
 - **Long calls survive disconnects.** A reasoning model can take minutes. The agent keeps running after the client disconnects, stores the answer, and delivers it when the client reconnects.
-- **The agent calls the model on its own.** A schedule, a webhook, or an email can start a turn when no user is connected. For more information, refer to [Durable execution](/agents/concepts/durable-execution/).
+- **The agent calls the model on its own.** A schedule, a webhook, or an email can start a turn when no user is connected. For more information, refer to [Durable agents](/agents/concepts/durable-agents/).
 - **Interrupted calls recover.** If the object is evicted during a turn, the harness resumes the turn when the object wakes. The Pi harness does this for you.
 
 ## Control cost
