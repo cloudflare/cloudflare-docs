@@ -1,0 +1,350 @@
+---
+title: Dynamic agents
+pcx_content_type: reference
+description: Run child agents with their own isolate and SQLite database under a parent Agent using this.dynamicAgents, formerly called sub-agents.
+tags:
+  - AI
+sidebar:
+  order: 14
+  label: Dynamic agents (sub-agents)
+products:
+  - agents
+---
+
+import { TypeScriptExample, LinkCard } from "~/components";
+
+Dynamic agents are child agents that a parent [`Agent`](/agents/agent-class/) creates, supervises, and owns. Each child runs in its own isolate with its own SQLite database, but lives inside the parent's Durable Object: the parent spawns it, can abort or delete it, and is the only way to reach it. Inside the parent, a child is a typed RPC stub reached through `this.dynamicAgents`. Clients reach a child through a nested URL.
+
+Dynamic agents are an `Agent` class feature. The `Agent` class installs them as one of its built-in capabilities, and they are not available on a plain Durable Object.
+
+:::caution[Experimental]
+
+`this.dynamicAgents` is experimental. Its API may change before it is stable.
+
+:::
+
+Use dynamic agents for code whose class or lifecycle the parent owns:
+
+- Dynamically-loaded or AI-generated code that has no Wrangler binding.
+- Per-run tool agents with isolated scratch state, supervised abort, and cleanup.
+- Sandboxed components that need isolated storage plus supervised abort and restart.
+
+Do not use dynamic agents to model an open-ended set of independent peers, such as many chats, documents, or sessions per user. Give each of those its own top-level Durable Object, and address it with `getAgentByName()`. Refer to [When to use dynamic agents](#when-to-use-dynamic-agents).
+
+To dispatch a chat-capable child agent during a single turn and render its progress inline, use [Agents as tools](/agents/agent-class/agent-tools/). Agents as tools are built on dynamic agents.
+
+:::note[Renamed from sub-agents]
+
+Dynamic agents were previously called sub-agents. The `subAgent()`, `abortSubAgent()`, `deleteSubAgent()`, `hasSubAgent()`, and `listSubAgents()` methods still work, but are deprecated and call `this.dynamicAgents`. The `/sub/` URL segment, `useAgent({ sub })`, and the `onBeforeSubAgent()` hook are unchanged.
+
+| Deprecated                       | Replacement                            |
+| -------------------------------- | -------------------------------------- |
+| `this.subAgent(Cls, name)`       | `this.dynamicAgents.get(Cls, name)`    |
+| `this.abortSubAgent(Cls, name)`  | `this.dynamicAgents.abort(Cls, name)`  |
+| `this.deleteSubAgent(Cls, name)` | `this.dynamicAgents.delete(Cls, name)` |
+| `this.hasSubAgent(Cls, name)`    | `this.dynamicAgents.has(Cls, name)`    |
+| `this.listSubAgents(Cls?)`       | `this.dynamicAgents.list(Cls?)`        |
+
+:::
+
+## Quick start
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+export class Supervisor extends Agent<Env> {
+	@callable()
+	async runJob(runId: string, input: string) {
+		// Spawn (or reattach to) an isolated child for this run.
+		const runner = await this.dynamicAgents.get(JobRunner, runId);
+		return runner.execute(input);
+	}
+
+	@callable()
+	cancelJob(runId: string) {
+		// Stop the child immediately. Its storage survives.
+		this.dynamicAgents.abort(JobRunner, runId, new Error("cancelled"));
+	}
+
+	@callable()
+	async cleanupJob(runId: string) {
+		// Wipe the child's storage and registry entry.
+		await this.dynamicAgents.delete(JobRunner, runId);
+	}
+
+	async recordProgress(runId: string, message: string) {
+		console.log(runId, message);
+	}
+}
+
+export class JobRunner extends Agent<Env> {
+	async execute(input: string) {
+		// Runs in the child's own isolate. this.sql is the child's own database.
+		const supervisor = await this.parentAgent(Supervisor);
+		await supervisor.recordProgress(this.name, "started");
+		return input.toUpperCase();
+	}
+}
+```
+
+</TypeScriptExample>
+
+Export both classes from your Worker entry point. Only the parent needs a Durable Object binding.
+
+Connect a client to the child with `useAgent()` and a `sub` chain:
+
+```tsx
+import { useAgent } from "agents/react";
+
+const runner = useAgent({
+	agent: "Supervisor",
+	name: userId,
+	sub: [{ agent: "JobRunner", name: runId }],
+});
+```
+
+The child connection URL is `/agents/supervisor/{userId}/sub/job-runner/{runId}`.
+
+## How dynamic agents work
+
+```txt
+Supervisor (Durable Object, "user-123")
+- owns the registry and lifecycle of its children
+- runs onBeforeSubAgent() on every incoming /sub/ request
+- owns the one physical alarm and the WebSockets
+  ├── JobRunner ("run-a")   own isolate, own SQLite
+  ├── JobRunner ("run-b")   own isolate, own SQLite
+  └── CodemodeRuntime       own isolate, own SQLite
+```
+
+Dynamic agents are built on Durable Object facets:
+
+- **Separate isolate, same machine.** Each child runs in its own isolate, colocated with the parent for cheap RPC. The whole tree shares the parent's placement.
+- **Own SQLite database.** A child's storage is invisible to its siblings and to the parent's SQL.
+- **No independent alarms.** The top-level parent owns the one alarm. The SDK routes scheduled callbacks back into children.
+- **Supervised lifecycle.** The parent can abort a child (storage survives), delete it (storage wiped), or restart the same storage under a different class.
+- **Independent hibernation.** A child hibernates and restarts independently of its parent.
+- **Private addressability.** A child is reachable only through its parent.
+- **Bounded nesting.** Trees are limited to four levels, including the root.
+
+## Server API
+
+### `this.dynamicAgents.get(Cls, name)`
+
+Gets or creates a child. The first call for a class and name spawns the child and runs its `onStart()`. Later calls return the same child. Returns a typed RPC stub: every public method on the child class is callable and returns a `Promise`.
+
+```ts
+const runner = await this.dynamicAgents.get(JobRunner, "run-abc");
+await runner.execute("input");
+```
+
+The child class must:
+
+- Extend `Agent`.
+- Be exported from the Worker entry point, so `ctx.exports[Cls.name]` can find it.
+- Not have a class name that kebab-cases to `sub`, because `/sub/` separates URL segments.
+
+The child does not need its own entry in `new_sqlite_classes` unless it is also bound as a top-level Durable Object. The parent must be bound as a Durable Object namespace, and your bundler must keep class names. If esbuild minifies identifiers, set `keepNames: true`.
+
+### `this.dynamicAgents.abort(Cls, name, reason?)`
+
+Stops a running child immediately without wiping its storage. Pending RPC calls receive `reason` as an error. Aborting also aborts the child's own children. The child restarts on the next `get()`.
+
+```ts
+this.dynamicAgents.abort(JobRunner, "run-abc", new Error("quota exceeded"));
+```
+
+### `this.dynamicAgents.delete(Cls, name)`
+
+Aborts a running child, cancels its schedules, permanently wipes its storage, and removes its registry entry. Also deletes the child's own children. Safe to call for a child that does not exist.
+
+```ts
+await this.dynamicAgents.delete(JobRunner, "run-abc");
+```
+
+### `this.dynamicAgents.has(Cls | className, name)`
+
+Returns `true` if the parent has spawned the child and not deleted it. Backed by a SQLite registry in the parent's storage.
+
+### `this.dynamicAgents.list(Cls?)`
+
+Lists spawned children, optionally filtered by class. Returns `{ className, name, createdAt }` rows in creation order.
+
+```ts
+const runs = this.dynamicAgents.list(JobRunner);
+```
+
+### `onBeforeSubAgent(request, { className, name })`
+
+Override this hook on the parent to gate, change, or reject incoming `/sub/` requests before the child wakes. Return:
+
+| Return value | Effect                                                    |
+| ------------ | --------------------------------------------------------- |
+| `void`       | Forward the original request to the child                 |
+| `Request`    | Forward this request instead                              |
+| `Response`   | Send this response to the client without waking the child |
+
+<TypeScriptExample>
+
+```ts
+export class Supervisor extends Agent<Env> {
+	override async onBeforeSubAgent(
+		_request: Request,
+		{ className, name }: { className: string; name: string },
+	) {
+		// Only allow clients to reach children this agent created.
+		if (!this.dynamicAgents.has(className, name)) {
+			return new Response(`${className} "${name}" not found`, {
+				status: 404,
+			});
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+The hook receives the original request, including the `/sub/{class}/{name}` segment. The child always sees the path after that segment. If you return a changed `Request` for a WebSocket upgrade, keep the `Upgrade` and `Sec-WebSocket-*` headers.
+
+When the hook returns a `Response` for a WebSocket upgrade, the SDK accepts the socket and closes it immediately. A `4xx` status closes with code `4000 + status`, which `useAgent` and `AgentClient` treat as terminal. Any other status closes with `1011`, which clients retry.
+
+### `this.parentPath` and `this.selfPath`
+
+Root-first ancestor chains. `parentPath` lists the ancestors. `selfPath` adds the current agent. A top-level agent has `parentPath` equal to `[]`, and the direct parent is `parentPath.at(-1)`.
+
+```ts
+// Inside a JobRunner spawned by a Supervisor:
+this.parentPath;
+// [{ className: "Supervisor", name: "user-123" }]
+```
+
+### `this.parentAgent(Cls)`
+
+Returns a typed stub for the direct parent. It checks that `Cls` matches the recorded parent class. To reach a grandparent that is a top-level Durable Object, call `getAgentByName()` with the name from `this.parentPath`.
+
+`parentAgent()` supports RPC methods and normal HTTP `fetch()` calls, but not WebSocket upgrades, and it does not run `onBeforeSubAgent()`. For WebSocket connections into a child, use the external `/sub/` URL.
+
+## Client and Worker routing
+
+### `useAgent({ sub })`
+
+Add a `sub` chain to any `useAgent()` call to connect to a child. `agent` and `name` identify the top-level agent, and `sub` is a root-first array of `{ agent, name }` hops. Every other `useAgent` feature works as usual, including state sync, `stub` calls, and `useAgentChat()`. For the client API, refer to [Client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
+
+### Direct HTTP and WebSocket URLs
+
+Use `buildAgentPath()` to build the URL path for a child, and `buildAgentUrl()` to add a public origin, for example when you register a callback URL with an external system:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, buildAgentPath, buildAgentUrl } from "agents";
+
+const path = buildAgentPath(
+	[
+		{ className: "Supervisor", name: "user-123" },
+		{ className: "JobRunner", name: "run-abc" },
+	],
+	{ leafPath: "/callbacks/job" },
+);
+// /agents/supervisor/user-123/sub/job-runner/run-abc/callbacks/job
+
+export class JobRunner extends Agent<Env> {
+	callbackUrl() {
+		return buildAgentUrl(this.env.PUBLIC_ORIGIN, this.selfPath, {
+			leafPath: "/callbacks/job",
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+The Worker must pass the request to `routeAgentRequest()`. Each ancestor's `onBeforeSubAgent()` runs before the child receives the request, and the child sees only the `leafPath`. If the root binding name differs from its class name, pass `rootBinding`. If you use a custom routing prefix, pass the same `prefix` to `buildAgentPath()` and `routeAgentRequest()`.
+
+### Custom routing
+
+If your fetch handler parses its own URLs, use `routeSubAgentRequest()` to forward a request into a child from a parent stub:
+
+<TypeScriptExample>
+
+```ts
+import { getAgentByName, routeSubAgentRequest } from "agents";
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const url = new URL(request.url);
+		const match = url.pathname.match(/^\/api\/u\/([^/]+)(\/.*)$/);
+		if (!match) return new Response("Not found", { status: 404 });
+
+		const [, userId, rest] = match;
+		const parent = await getAgentByName(env.Supervisor, userId);
+		return routeSubAgentRequest(request, parent, { fromPath: rest });
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+`fromPath` is any path that contains the child segment, such as `/sub/job-runner/run-abc/...`.
+
+### External typed RPC
+
+From outside the parent, use `getSubAgentByName()` for a typed RPC stub:
+
+```ts
+import { getAgentByName, getSubAgentByName } from "agents";
+
+const supervisor = await getAgentByName(env.Supervisor, userId);
+const runner = await getSubAgentByName(supervisor, JobRunner, runId);
+await runner.execute("hi");
+```
+
+The stub supports method calls only. Its `fetch()` throws, so use `routeSubAgentRequest()` for HTTP and WebSocket requests.
+
+## Scheduling and durable work
+
+Children can use `this.schedule()`, `this.scheduleEvery()`, `this.cancelSchedule()`, `this.getScheduleById()`, and `this.listSchedules()`. The top-level parent owns the physical alarm, stores the child's path with each schedule, and runs the callback with the child as `this`. Schedule methods are scoped to the calling child. The deprecated synchronous `getSchedule()` and `getSchedules()` throw inside a child.
+
+`keepAlive()`, `keepAliveWhile()`, and [`runFiber()`](/agents/agent-class/durable-execution/) also work in children. Fiber rows live in the child's own database.
+
+Children can start [Workflows](/agents/agent-class/run-workflows/) with `this.runWorkflow()`. Workflow tracking is local to the child, and the parent does not list or control child-started workflows. To control them from the parent, add wrapper methods on the child.
+
+Calling `this.destroy()` in a child cancels its schedules, removes it from the parent's registry, and wipes its storage. It aborts the child's isolate, so treat it as fire-and-forget.
+
+`this.broadcast()` and state broadcasts in a child go to that child's own WebSocket clients. The parent owns the native sockets, so every frame for a child connection wakes the parent.
+
+## When to use dynamic agents
+
+A dynamic agent is a child whose code or lifecycle the parent supervises. An independent peer that you address by name should be its own top-level Durable Object.
+
+| Situation                                                                          | Dynamic agents?                                                   |
+| ---------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| Dynamically-loaded or AI-generated code needs durable, isolated storage            | Yes                                                               |
+| Per-run tool agents with isolated state, supervised abort, and cleanup             | Yes. Refer to [Agents as tools](/agents/agent-class/agent-tools/) |
+| A component needs isolated storage and independent abort, colocated with the agent | Yes                                                               |
+| Many chats, documents, or sessions per user                                        | No. Use one top-level Durable Object each and a per-user index    |
+| Children need independent placement, scaling, or alarms                            | No. Use top-level Durable Objects                                 |
+| Many busy WebSocket sessions                                                       | No. Every frame wakes the one parent                              |
+
+## Examples
+
+<LinkCard
+	title="Dynamic agents example"
+	href="https://github.com/cloudflare/agents/tree/main/examples/next/dynamic-agents"
+	description="A supervisor that loads user-submitted code with Worker Loader and runs it as children with isolated storage."
+/>
+
+<LinkCard
+	title="Agents as tools example"
+	href="https://github.com/cloudflare/agents/tree/main/examples/agents-as-tools"
+	description="Per-run child agents used as tools, with inline streaming."
+/>
+
+## Related
+
+- [Agents as tools](/agents/agent-class/agent-tools/) — run Think or `AIChatAgent` children as retained, streaming tools
+- [Think](/agents/harnesses/think/) — `chat()` method for streaming AI turns through child agents
+- [Callable methods](/agents/agent-class/callable-methods/) — `@callable()` methods work unchanged on children
+- [Schedule tasks](/agents/agent-class/schedule-tasks/) — scheduling for top-level agents and children

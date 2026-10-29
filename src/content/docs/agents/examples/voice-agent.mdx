@@ -18,7 +18,11 @@ import {
 	LinkCard,
 } from "~/components";
 
-Build a voice agent that listens to users, thinks with an LLM, and speaks back — all in real-time over WebSocket. <InlineBadge preset="beta" />
+:::note
+This example builds on the [`Agent` class](/agents/agent-class/), the preset that installs the Lifecycle and its capabilities on a Durable Object.
+:::
+
+Build a voice agent that listens to users, thinks with an LLM, and speaks back — all in real-time over WebSocket. <InlineBadge text="Experimental" variant="caution" />
 
 By the end of this guide you will have:
 
@@ -39,7 +43,7 @@ Scaffold a new Workers project with Vite and React, then add the voice dependenc
 ```sh
 npm create cloudflare@latest voice-agent -- --template cloudflare/agents-starter
 cd voice-agent
-npm install @cloudflare/voice
+npm install agents
 ```
 
 The starter gives you a working Vite + React + Cloudflare Workers setup. You will replace the server and client code in the following steps.
@@ -92,7 +96,7 @@ import {
 	WorkersAIFluxSTT,
 	WorkersAITTS,
 	type VoiceTurnContext,
-} from "@cloudflare/voice";
+} from "agents/voice";
 import { streamText, tool, stepCountIs } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
@@ -167,7 +171,7 @@ Key points:
 Replace `src/client.tsx` with a React component using the `useVoiceAgent` hook. The hook manages the WebSocket connection, mic capture, audio playback, and interrupt detection.
 
 ```tsx
-import { useVoiceAgent } from "@cloudflare/voice/react";
+import { useVoiceAgent } from "agents/voice/react";
 
 function App() {
 	const {

@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, LinkCard } from "~/components";
 
+The patterns on this page use [`Agent` class](/agents/agent-class/) APIs: routing, state, `@callable()` methods, and scheduling.
+
 Receive webhook events from external services and route them to dedicated agent instances. Each webhook source (repository, customer, device) can have its own agent with isolated state, persistent storage, and real-time client connections.
 
 ## Quick start
@@ -519,6 +521,53 @@ return Response.json(
 </TypeScriptExample>
 
 If the webhook owns application side effects around a turn, such as restoring a provider thread and posting a visible reply, use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) around that job. Managed fibers retain status, dedupe provider retries, and let `onFiberRecovered()` or `resolveFiber()` record the app-level recovery outcome.
+
+### Wait for a callback
+
+For work that takes minutes or hours, such as a CI run, give the external service a callback URL that routes back to the same agent, and let the agent hibernate. The callback wakes it:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+type ProjectState = { pipelines: Record<string, "running" | "passed" | "failed"> };
+
+export class ProjectManager extends Agent<Env, ProjectState> {
+	initialState: ProjectState = { pipelines: {} };
+
+	async startCIPipeline(taskId: string) {
+		// The agent's own URL, as routed by routeAgentRequest().
+		const callbackUrl = `${this.env.PUBLIC_URL}/agents/project-manager/${this.name}/ci-callback?taskId=${taskId}`;
+
+		await fetch("https://ci.example.com/api/pipelines", {
+			method: "POST",
+			body: JSON.stringify({ repo: "org/project", callback_url: callbackUrl }),
+		});
+		this.setPipeline(taskId, "running");
+	}
+
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		const taskId = url.searchParams.get("taskId");
+		if (url.pathname.endsWith("/ci-callback") && taskId) {
+			// Verify the request the way your CI provider documents.
+			const { status } = await request.json<{ status: string }>();
+			this.setPipeline(taskId, status === "success" ? "passed" : "failed");
+			return new Response("OK");
+		}
+		return new Response("Not found", { status: 404 });
+	}
+
+	private setPipeline(taskId: string, status: ProjectState["pipelines"][string]) {
+		this.setState({ pipelines: { ...this.state.pipelines, [taskId]: status } });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Set `PUBLIC_URL` to the URL of your Worker. The path matches the default `routeAgentRequest()` routing, `/agents/{class}/{name}`.
 
 ### Multi-provider routing
 

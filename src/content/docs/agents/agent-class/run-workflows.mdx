@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
+`AgentWorkflow` and `this.runWorkflow()` are [`Agent` class](/agents/agent-class/) features. `AgentWorkflow` calls back into the `Agent` instance that started it.
+
 Integrate [Cloudflare Workflows](/workflows/) with Agents for durable, multi-step background processing while Agents handle real-time communication.
 
 :::note[Agents vs. Workflows]
@@ -267,19 +269,19 @@ const instanceId = await this.runWorkflow(
 
 Sub-agents can call `this.runWorkflow()` directly. The workflow is tracked in the originating sub-agent's SQLite database, and `this.agent` inside `AgentWorkflow` routes back to that same sub-agent for RPC calls, callbacks, state updates, and broadcasts.
 
-Parent agents do not automatically list or control workflows that a sub-agent starts. `SubAgentStub<T>` only exposes user-defined methods, not inherited `Agent` methods such as `approveWorkflow()` or `getWorkflow()`. To control a child-started workflow from the parent, define small wrapper methods on the child and call those wrappers through the sub-agent stub.
+Parent agents do not automatically list or control workflows that a sub-agent starts. The child stub only exposes user-defined methods, not inherited `Agent` methods such as `approveWorkflow()` or `getWorkflow()`. To control a child-started workflow from the parent, define small wrapper methods on the child and call those wrappers through the sub-agent stub.
 
 <TypeScriptExample>
 
 ```ts
 export class ParentAgent extends Agent {
 	async startChildWorkflow(childName: string, task: string) {
-		const child = await this.subAgent(ChildAgent, childName);
+		const child = await this.dynamicAgents.get(ChildAgent, childName);
 		return child.startWorkflow(task);
 	}
 
 	async approveChildWorkflow(childName: string, workflowId: string) {
-		const child = await this.subAgent(ChildAgent, childName);
+		const child = await this.dynamicAgents.get(ChildAgent, childName);
 		return child.approveChildWorkflow(workflowId);
 	}
 }
@@ -661,6 +663,220 @@ class MyAgent extends Agent {
 
 	async handleRejection(instanceId: string, reason: string) {
 		await this.rejectWorkflow(instanceId, { reason });
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Track pending approvals in state
+
+Keep the approvals that wait on a person in state, so connected clients can list them. The workflow reports progress before it waits, and `onWorkflowProgress()` adds the entry. For a React list that approves or rejects each one, refer to the [client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+type PendingApproval = {
+	workflowId: string;
+	description: string;
+	requestedAt: number;
+};
+
+type ExpenseState = { pendingApprovals: PendingApproval[] };
+
+export class ExpenseAgent extends Agent<Env, ExpenseState> {
+	initialState: ExpenseState = { pendingApprovals: [] };
+
+	@callable()
+	async approve(workflowId: string, approvedBy: string): Promise<void> {
+		await this.approveWorkflow(workflowId, {
+			reason: "Expense approved",
+			metadata: { approvedBy, approvedAt: Date.now() },
+		});
+		this.removePending(workflowId);
+	}
+
+	@callable()
+	async reject(workflowId: string, reason: string): Promise<void> {
+		await this.rejectWorkflow(workflowId, { reason });
+		this.removePending(workflowId);
+	}
+
+	// The workflow reports progress before it waits, so clients can list it.
+	async onWorkflowProgress(
+		workflowName: string,
+		workflowId: string,
+		progress: unknown,
+	): Promise<void> {
+		const p = progress as { step?: string; status?: string; message?: string };
+		if (p.step === "approval" && p.status === "pending") {
+			this.setState({
+				pendingApprovals: [
+					...this.state.pendingApprovals,
+					{ workflowId, description: p.message ?? "", requestedAt: Date.now() },
+				],
+			});
+		}
+	}
+
+	private removePending(workflowId: string) {
+		this.setState({
+			pendingApprovals: this.state.pendingApprovals.filter(
+				(p) => p.workflowId !== workflowId,
+			),
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Approval timeouts
+
+When the `timeout` passes without an answer, `waitForApproval()` throws, and the Workflow instance fails unless you catch the error. A rejection throws `WorkflowRejectedError`. Catch the timeout to escalate or reject automatically:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import { AgentWorkflow, WorkflowRejectedError } from "agents/workflows";
+import type { AgentWorkflowEvent, AgentWorkflowStep } from "agents/workflows";
+
+type Expense = { amount: number };
+
+export class ExpenseAgent extends Agent<Env> {}
+
+export class ExpenseWorkflow extends AgentWorkflow<ExpenseAgent, Expense> {
+	async run(event: AgentWorkflowEvent<Expense>, step: AgentWorkflowStep) {
+		await this.reportProgress({
+			step: "approval",
+			status: "pending",
+			message: `Awaiting approval for $${event.payload.amount}`,
+		});
+
+		try {
+			const approval = await this.waitForApproval<{ approvedBy: string }>(
+				step,
+				{ timeout: "7 days" },
+			);
+			console.log(`Approved by ${approval?.approvedBy}`);
+		} catch (error) {
+			if (error instanceof WorkflowRejectedError) throw error;
+			// The wait timed out. Escalate, or reject automatically.
+			await step.reportError("Approval timed out");
+			throw new Error("Approval timed out");
+		}
+
+		const result = await step.do("process", async () => ({
+			expenseId: crypto.randomUUID(),
+		}));
+		await step.reportComplete(result);
+		return result;
+	}
+}
+```
+
+</TypeScriptExample>
+
+To remind the approver before the timeout, schedule a reminder with the [Scheduler](/agents/runtime/capabilities/scheduler/).
+
+### Multiple approvers
+
+For sensitive operations, collect several approvals in state, and approve the Workflow once enough people have agreed:
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+type MultiApproval = {
+	workflowId: string;
+	requiredApprovals: number;
+	approvals: Array<{ userId: string; approvedAt: number }>;
+};
+
+type State = { pending: MultiApproval[] };
+
+export class MultiApprovalAgent extends Agent<Env, State> {
+	initialState: State = { pending: [] };
+
+	@callable()
+	async approveMulti(workflowId: string, userId: string): Promise<boolean> {
+		const item = this.state.pending.find((p) => p.workflowId === workflowId);
+		if (!item) throw new Error("Approval not found");
+		if (item.approvals.some((a) => a.userId === userId)) {
+			throw new Error("Already approved by this user");
+		}
+
+		const approvals = [...item.approvals, { userId, approvedAt: Date.now() }];
+		if (approvals.length >= item.requiredApprovals) {
+			await this.approveWorkflow(workflowId, { metadata: { approvals } });
+			this.setState({
+				pending: this.state.pending.filter((p) => p.workflowId !== workflowId),
+			});
+			return true;
+		}
+
+		this.setState({
+			pending: this.state.pending.map((p) =>
+				p.workflowId === workflowId ? { ...p, approvals } : p,
+			),
+		});
+		return false;
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Delegate work to a Workflow
+
+A multi-step process, such as a deployment, needs each step to retry on its own. Start a Workflow for it, store the instance ID with the task, and match the ID when the Workflow reports back:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+
+type Task = {
+	id: string;
+	status: "pending" | "in_progress" | "complete" | "blocked";
+	workflowId?: string;
+};
+
+type ProjectState = { tasks: Task[] };
+
+export class ProjectManager extends Agent<Env, ProjectState> {
+	initialState: ProjectState = { tasks: [] };
+
+	async startDeployment(taskId: string) {
+		const workflowId = await this.runWorkflow("DEPLOY_WORKFLOW", {
+			taskId,
+			environment: "production",
+		});
+		this.updateTask(taskId, { status: "in_progress", workflowId });
+	}
+
+	async onWorkflowComplete(
+		workflowName: string,
+		workflowId: string,
+		result?: unknown,
+	) {
+		const task = this.state.tasks.find((t) => t.workflowId === workflowId);
+		if (task) this.updateTask(task.id, { status: "complete" });
+	}
+
+	async onWorkflowError(workflowName: string, workflowId: string, error: string) {
+		const task = this.state.tasks.find((t) => t.workflowId === workflowId);
+		if (task) this.updateTask(task.id, { status: "blocked" });
+	}
+
+	private updateTask(id: string, change: Partial<Task>) {
+		this.setState({
+			tasks: this.state.tasks.map((t) => (t.id === id ? { ...t, ...change } : t)),
+		});
 	}
 }
 ```

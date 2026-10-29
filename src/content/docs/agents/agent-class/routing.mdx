@@ -10,6 +10,8 @@ products:
 
 import { TypeScriptExample, WranglerConfig, LinkCard } from "~/components";
 
+This page covers routing requests to instances of the [`Agent` class](/agents/agent-class/). `routeAgentRequest()` and `getAgentByName()` also route to a plain Durable Object that installs the [Lifecycle](/agents/runtime/lifecycle/). For routing on the Lifecycle, refer to [Routing](/agents/runtime/routing/).
+
 This guide explains how requests are routed to agents, how naming works, and patterns for organizing your agents.
 
 ## How routing works
@@ -100,7 +102,7 @@ buildAgentUrl("https://app.example.com", address, {
 
 Inside an Agent, `this.selfPath` provides the required root-first identity. If the root Durable Object binding name differs from its class name, pass the binding name as `rootBinding`. The pathname supports both HTTP requests and WebSocket connections.
 
-For a custom route prefix, pass the same `prefix` to `buildAgentPath()` and `routeAgentRequest()`. Refer to [Sub-agents](/agents/agent-class/sub-agents/#direct-http-and-websocket-urls) for callback and webhook examples.
+For a custom route prefix, pass the same `prefix` to `buildAgentPath()` and `routeAgentRequest()`. Refer to [Sub-agents](/agents/agent-class/dynamic-agents/#direct-http-and-websocket-urls) for callback and webhook examples.
 
 ## Instance naming patterns
 

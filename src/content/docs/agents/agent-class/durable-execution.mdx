@@ -10,6 +10,8 @@ products:
   - agents
 ---
 
+Fibers are an [`Agent` class](/agents/agent-class/) feature. For the concept, refer to [Durable execution](/agents/concepts/durable-execution/).
+
 Run work that survives Durable Object eviction. `runFiber()` registers a task in SQLite, keeps the agent alive during execution, lets you checkpoint intermediate state with `stash()`, and calls `onFiberRecovered()` on the next activation if the agent was evicted mid-task.
 
 Use `startFiber()` when a caller needs to durably accept background work, return quickly, safely dedupe retries, inspect status later, or cancel a running job.
@@ -350,6 +352,62 @@ await this.runFiber("research", async (ctx) => {
 });
 ```
 
+### Store a continuation note
+
+When the model was mid-task, the original prompt and reasoning are gone after a recovery. Before a long wait, stash a short note of what the agent was doing and what to do with the result. On recovery, build a focused prompt from the note instead of replaying the whole conversation:
+
+<TypeScriptExample>
+
+```ts
+import { Agent } from "agents";
+import type { FiberRecoveryContext } from "agents";
+
+type Continuation = {
+	task: string;
+	onSuccess: string;
+	onFailure: string;
+	taskId: string;
+};
+
+export class ProjectManager extends Agent<Env> {
+	async runChecks(taskId: string) {
+		await this.runFiber(`ci:${taskId}`, async (ctx) => {
+			ctx.stash({
+				task: "Waiting for CI results",
+				onSuccess: "Mark the task complete, and move to the next step",
+				onFailure: "Notify the team, and retry in one hour",
+				taskId,
+			} satisfies Continuation);
+
+			await this.waitForCI(taskId);
+		});
+	}
+
+	async onFiberRecovered(ctx: FiberRecoveryContext) {
+		if (!ctx.name.startsWith("ci:") || !ctx.snapshot) return;
+		const note = ctx.snapshot as Continuation;
+
+		// Build a short prompt from the note instead of replaying everything.
+		const prompt = [
+			`You were: ${note.task} (task ${note.taskId}).`,
+			`On success: ${note.onSuccess}.`,
+			`On failure: ${note.onFailure}.`,
+		].join("\n");
+		await this.continueWithModel(prompt);
+	}
+
+	private async waitForCI(taskId: string): Promise<void> {
+		console.log(`Waiting for CI on ${taskId}`);
+	}
+
+	private async continueWithModel(prompt: string): Promise<void> {
+		console.log(prompt);
+	}
+}
+```
+
+</TypeScriptExample>
+
 ### this.stash vs ctx.stash
 
 Both do the same thing. `ctx.stash()` uses a direct closure over the fiber ID. `this.stash()` uses `AsyncLocalStorage` to find the currently executing fiber — it works correctly even with concurrent fibers, since each fiber's ALS context is independent.
@@ -496,6 +554,6 @@ Run an async function while keeping the DO alive. Heartbeat starts before `fn` a
 
 - [Long-running agents](/agents/concepts/agentic-patterns/long-running-agents/) — how fibers compose with schedules, plans, and async operations
 - [Schedule tasks](/agents/agent-class/schedule-tasks/) — `keepAlive` details and the alarm system
-- [Sub-agents](/agents/agent-class/sub-agents/) — durable execution and schedules inside sub-agents
+- [Sub-agents](/agents/agent-class/dynamic-agents/) — durable execution and schedules inside sub-agents
 - [Workflows](/agents/agent-class/run-workflows/) — durable multi-step execution outside the agent
 - [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/) — `chatRecovery` and `onChatRecovery`
