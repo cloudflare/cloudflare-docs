@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-The [Lifecycle](/agents/runtime/lifecycle/) does not accept WebSocket connections on its own. `WebSockets` from `agents/websockets` is the capability that does. It accepts upgrades, lets idle connections hibernate, and speaks the Agents protocol, so a plain Durable Object works with `useAgent` and `AgentClient` from the [client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
+`WebSockets` from `agents/websockets` is a capability that makes WebSocket connections to a Durable Object simple. It accepts upgrades, lets idle connections hibernate, tracks and tags connections, and speaks the Agents protocol. That lets a plain Durable Object work with `useAgent` and `AgentClient` from the [client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
 
 ## Install the capability
 
