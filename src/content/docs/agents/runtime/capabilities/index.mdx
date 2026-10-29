@@ -24,7 +24,7 @@ Lifecycle coordinates startup, event dispatch, and a durable job queue. Capabili
 - **Schedule work as jobs.** A job records work to run later. Lifecycle stores it in SQLite, sets the alarm, and calls the capability's `onJob()` hook when it is due.
 - **Handle matching requests.** For example, `MCPClientManager` handles its OAuth callback URL before the request reaches your `onRequest()`.
 
-Each capability implements only the hooks it needs. For example, `Sessions` stores conversation history without scheduling jobs.
+Each capability implements only the hooks it needs.
 
 This example combines a Pi harness and a scheduler in one object:
 
