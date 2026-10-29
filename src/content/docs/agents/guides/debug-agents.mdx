@@ -1,0 +1,475 @@
+---
+title: Debug agents on Cloudflare
+description: Find out why an agent misbehaves. Run it locally, read its logs and events, inspect its SQLite storage and job queue, and diagnose the most common failures.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+An agent built with the Agents SDK is a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/runtime/lifecycle/) installed. Most problems come down to one of three questions:
+
+- Did the request reach the right object, and did that object start?
+- What does the object have in storage, and which jobs are waiting on its alarm?
+- What happened when the alarm fired, or when the object was evicted or redeployed?
+
+This guide shows how to answer each question, locally and in production, then walks through the failures that come up most often.
+
+## Run the agent locally
+
+Start the local development server with [`wrangler dev`](/workers/wrangler/commands/workers/#dev), or with `vite dev` if your project uses the Cloudflare Vite plugin:
+
+```sh
+npx wrangler dev
+```
+
+Local development runs the same runtime as production, including Durable Objects, SQLite storage, alarms, and hibernating WebSockets. `console.log()` output from your Worker and your Durable Objects prints in the terminal. To pause on a line, attach a debugger. For more information, refer to [Breakpoints](/workers/observability/dev-tools/breakpoints/).
+
+### Address the right object
+
+Every agent instance is one Durable Object, addressed by name. With [`routeAgentRequest()`](/agents/runtime/lifecycle/routing/), the URL picks the object:
+
+```txt
+/agents/:binding/:name
+```
+
+`:binding` is the Durable Object binding name in kebab case, and `:name` is the object's name. To talk to the `MyAgent` object named `alice` while debugging, send requests to `http://localhost:8787/agents/my-agent/alice`. The same name always reaches the same object, with the same storage. A new name gives you a fresh object, which is often the quickest way to rule out stale state.
+
+Inside the object, `this.lifecycle.name` is the name and `this.ctx.id.toString()` is the object's ID. Log both when you need to match a log line to an object.
+
+### Reset local state
+
+Local Durable Object storage persists in `.wrangler/state/` between runs. To start from empty storage, delete it, or run with no persistence:
+
+```sh
+rm -rf .wrangler/state
+npx wrangler dev --persist-to=""
+```
+
+For more information, refer to [Local development](/agents/platform/configuration/#local-development).
+
+## Read logs
+
+The Lifecycle logs every error it catches, prefixed with the class and the object name, such as `Error in MyAgent:alice fetch:`. The job queue logs warnings for slow, hung, and dropped jobs. These lines, and your own `console.log()` calls, reach the same places as any other Worker log.
+
+### Stream logs with `wrangler tail`
+
+[`wrangler tail`](/workers/wrangler/commands/workers/#tail) streams live logs from a deployed Worker, including the logs of its Durable Objects:
+
+```sh
+npx wrangler tail --format pretty
+npx wrangler tail --status error
+npx wrangler tail --search "MyAgent:alice"
+```
+
+For more information, refer to [Real-time logs](/workers/observability/logs/real-time-logs/).
+
+### Keep logs with Workers Logs
+
+Real-time logs only show what happens while you watch. Enable [Workers Logs](/workers/observability/logs/workers-logs/) to store and query logs after the fact, which is what you need for an alarm that failed at 3 AM:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+	},
+}
+```
+
+</WranglerConfig>
+
+Then open the **Observability** tab of your Worker in the Cloudflare dashboard, and search for the object name or a log prefix.
+
+## Subscribe to diagnostics events
+
+The Lifecycle and its capabilities publish structured events to [diagnostics channels](/agents/platform/observability/diagnostics-channels/). Each event carries the class (`agent`), the object (`name`), the capability that emitted it (`source`), a `type`, and a `payload`. These events tell you more than logs about what the job queue and the capabilities did:
+
+| Channel            | Events to look for                                                             |
+| ------------------ | ------------------------------------------------------------------------------ |
+| `agents:lifecycle` | `job:slow_dispatch`, `job:backlog_warning`, `alarm:memory_limit_reset`         |
+| `agents:schedule`  | `schedule:execute`, `schedule:retry`, `schedule:error`, `schedule:duplicate_warning` |
+| `agents:rpc`       | `rpc:error` for methods that clients call over the `WebSockets` capability     |
+| `agents:mcp`       | `mcp:client:connect`, `mcp:client:discover`, and `mcp:client:close` with their `error` |
+
+Events from your own capabilities, and from `PiHarness`, land on `agents:lifecycle`.
+
+While you debug locally, print every event by subscribing at the top of your Worker's entry module. Durable Objects run in the same isolate, so this sees their events too:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { subscribe } from "node:diagnostics_channel";
+
+for (const channel of [
+	"agents:lifecycle",
+	"agents:schedule",
+	"agents:rpc",
+	"agents:mcp",
+]) {
+	subscribe(channel, (message) => {
+		console.log(channel, JSON.stringify(message));
+	});
+}
+```
+
+</TypeScriptExample>
+
+This needs the `nodejs_compat` compatibility flag. In production, you do not need subscription code. Every diagnostics channel event is forwarded to [Tail Workers](/workers/observability/logs/tail-workers/), so attach a Tail Worker and read `event.diagnosticsChannelEvents`. For more information, refer to [Tail Workers (production)](/agents/platform/observability/diagnostics-channels/#tail-workers-production).
+
+## Trace model calls
+
+Logs and events tell you what the runtime did. Traces tell you what the agent did on each turn: which model it called, which tools ran, and how long each step took. Enable [Workers traces](/workers/observability/traces/) and open the **Agents** tab in the dashboard.
+
+The Lifecycle does not create agent spans on its own. Think instruments turns automatically. On a Durable Object that installs the Lifecycle directly, wrap your model calls or add custom spans. For more information, refer to [Tracing](/agents/platform/observability/tracing/).
+
+## Inspect storage and the job queue
+
+Each object has its own SQLite database. Everything that must survive an eviction lives there:
+
+| Data                       | Where                                                                 |
+| -------------------------- | --------------------------------------------------------------------- |
+| Lifecycle jobs             | The `cf_agents_jobs` table. `Scheduler` stores every schedule as a job |
+| `State`                    | The `cf_agents_state` table                                            |
+| MCP server connections     | The `cf_agents_mcp_servers` table                                      |
+| Pi transcripts and tasks   | Tables whose names start with `pi_`                                   |
+| The alarm                  | `ctx.storage.getAlarm()`. The Lifecycle sets it from the job queue     |
+
+### Add an inspect method
+
+The quickest way to see an object's state is an RPC method that returns it. This one returns the object's identity, whether it started, its alarm, every row of the job queue, and the scheduler's view of its schedules:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { routeAgentRequest } from "agents/routing";
+import { Scheduler } from "agents/schedules";
+
+type JobRow = {
+	id: string;
+	capability: string;
+	fn: string;
+	time: number;
+	running: number;
+	recovery_loop: number;
+};
+
+export class MyAgent extends DurableObject<Env> {
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			sendReminder: (payload: { message: string }) =>
+				console.log(payload.message),
+		},
+	});
+	readonly lifecycle = Lifecycle.install(this).use(this.scheduler);
+
+	// An RPC method, so it starts the Lifecycle itself.
+	async inspect() {
+		await this.lifecycle.start();
+		// Listing host jobs also creates the job table if no job was ever pushed.
+		this.lifecycle.jobs.list();
+		const jobs = this.lifecycle.sql<JobRow>`
+			SELECT id, capability, fn, time, running, recovery_loop
+			FROM cf_agents_jobs ORDER BY time
+		`;
+		const alarm = await this.ctx.storage.getAlarm();
+		return {
+			name: this.lifecycle.name,
+			id: this.ctx.id.toString(),
+			started: this.lifecycle.isStarted(),
+			alarm: alarm === null ? null : new Date(alarm).toISOString(),
+			jobs: jobs.map((job) => ({
+				...job,
+				time: new Date(job.time).toISOString(),
+			})),
+			schedules: await this.scheduler.list(),
+		};
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const match = new URL(request.url).pathname.match(/^\/debug\/([^/]+)$/);
+		if (match) {
+			if (
+				request.headers.get("Authorization") !== `Bearer ${env.DEBUG_TOKEN}`
+			) {
+				return new Response("Unauthorized", { status: 401 });
+			}
+			const agents = env.MyAgent as DurableObjectNamespace<MyAgent>;
+			const stub = agents.getByName(decodeURIComponent(match[1]));
+			return Response.json(await stub.inspect());
+		}
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Protect the route. The response shows everything the object has queued, including payloads you choose to add. Here a `DEBUG_TOKEN` secret guards it.
+
+Read the result like this:
+
+- `capability` is the job's owner: `host` for jobs your class pushed, `scheduler` for schedules, `pi-harness` for the Pi wake-up job, or the ID of your own capability.
+- `time` is when the job is due. A job due in the past runs at the next alarm.
+- `running` is `1` while a run is in progress, or after a run was cut off before it finished.
+- `recovery_loop` is `1` for jobs that the memory-limit breaker can delay or delete.
+- `alarm` should be no later than the earliest job's `time`. If jobs exist and `alarm` is `null`, the object has no wake. Refer to [Alarms that never fire](#alarms-that-never-fire).
+
+`lifecycle.sql` is a tagged template over the object's database, so you can add any other table you want to see. For more information, refer to [Query SQLite](/agents/runtime/lifecycle/#query-sqlite).
+
+### Open the database directly
+
+Locally, each object's database is a SQLite file under `.wrangler/state/v3/do/`, named after the object's ID. Use the `id` from the inspect method to find it:
+
+```sh
+ls .wrangler/state/v3/do/
+sqlite3 .wrangler/state/v3/do/my-agent-app-MyAgent/<object-id>.sqlite \
+  "SELECT id, capability, fn, datetime(time / 1000, 'unixepoch') FROM cf_agents_jobs"
+```
+
+Open the file while `wrangler dev` is stopped, or read it without writing to it.
+
+In production, use [Data Studio](/durable-objects/observability/data-studio/) in the Cloudflare dashboard. Select the Durable Object namespace, then enter the object's name. Data Studio queries the live object, so treat writes there as writes to production.
+
+## Common failures
+
+### Startup throws or takes too long
+
+The Lifecycle runs startup inside [`blockConcurrencyWhile()`](/durable-objects/api/state/#blockconcurrencywhile): each capability's `onStart()`, then yours. Nothing else reaches the object until startup finishes.
+
+- **Startup throws.** The event that woke the object fails. An HTTP request gets a `500` response with the stack trace, and a WebSocket upgrade gets a socket that sends the stack as an `error` frame and closes with code `1011`. The next event tries startup again. While the job queue holds jobs, a fallback alarm also retries startup every 30 seconds or more, so a startup bug shows up as the same error repeating in your logs.
+- **Startup takes longer than 30 seconds.** The runtime resets the object. A common cause is awaiting a slow network call, such as an external API or a model, in `onStart()`.
+
+Keep startup to local work, such as creating tables. Move slow work into a job with a stable ID, which runs after startup with retries:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	Lifecycle,
+	type LifecycleJobContext,
+	type LifecycleJobOutcome,
+} from "agents/lifecycle";
+
+type Doc = { id: string; body: string };
+
+export class DocsAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onStart(): Promise<void> {
+		// Fast: local SQLite only.
+		this.lifecycle
+			.sql`CREATE TABLE IF NOT EXISTS docs (id TEXT PRIMARY KEY, body TEXT NOT NULL)`;
+		const [{ count }] = this.lifecycle.sql<{ count: number }>`
+			SELECT COUNT(*) AS count FROM docs
+		`;
+		// Slow work goes in a job with a stable ID, not in startup.
+		if (count === 0) {
+			await this.lifecycle.jobs.push({
+				id: "load-docs",
+				fn: "loadDocs",
+				time: Date.now(),
+				retry: { maxAttempts: 5 },
+			});
+		}
+	}
+
+	async onJob({ job }: LifecycleJobContext): Promise<LifecycleJobOutcome> {
+		if (job.fn !== "loadDocs") return;
+		const response = await fetch("https://example.com/docs.json");
+		const docs = await response.json<Doc[]>();
+		for (const doc of docs) {
+			// INSERT OR REPLACE makes a second run harmless.
+			this.lifecycle.sql`
+				INSERT OR REPLACE INTO docs (id, body) VALUES (${doc.id}, ${doc.body})
+			`;
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+A capability that you write has one more trap. If a public method starts work that `onStart()` also awaits, such as opening a store, and an RPC call reaches that method before startup, `onStart()` waits on work that the startup gate is holding back. Startup then times out. Call `await this.lifecycle.ready()` at the top of such a method. For more information, refer to [Wait for startup in public methods](/agents/runtime/lifecycle/build-a-capability/#wait-for-startup-in-public-methods).
+
+Diagnostics events emitted during a startup that fails are dropped, so rely on logs for startup failures.
+
+### RPC calls run before startup
+
+RPC methods do not pass through `fetch`, so the Lifecycle does not start the object for them. A method that reads a field your `onStart()` sets sees `undefined`, and a method that calls into a capability may run before that capability has loaded its state.
+
+Call `await this.lifecycle.start()` at the top of every RPC method that needs a started object. Capability methods such as `scheduler.set()` and every `PiHarness` method wait for startup on their own. For more information, refer to [Call your agent over RPC](/agents/runtime/lifecycle/#call-your-agent-over-rpc).
+
+### The object has no name
+
+Startup fails with an error that starts with `MyAgent could not determine its Durable Object name`. The Lifecycle needs the object's name, and the runtime only exposes it for objects addressed with `idFromName()` or `getByName()`.
+
+Check how you created the stub. IDs from `newUniqueId()` and `idFromString()` have no name, and neither do names longer than 1,024 bytes. Locally, update Wrangler and use a current `compatibility_date`. For more information, refer to [Object names](/agents/runtime/lifecycle/#object-names).
+
+### Work is lost on eviction or deploy
+
+An idle object is evicted from memory, and a deploy resets every running object, with the error `Durable Object reset because its code was updated.` Anything that lived only in memory is gone: class fields, timers from `setTimeout()`, and promises nothing awaited. The constructor and startup run again on the next event.
+
+Look for in-memory work that outlives the request that started it. Fix it in one of these ways:
+
+- Write the state to SQLite and read it back in `onStart()`.
+- Push a job for future work instead of setting a timer. Jobs are durable once `push()` resolves.
+- For long work, use a heartbeat job and `trackAlarmWork()`, so the next heartbeat restarts the work from storage after an eviction. For more information, refer to [Run long work](/agents/runtime/lifecycle/job-queue/#run-long-work).
+
+A deploy or memory-limit reset does not use up a job's retry attempts. The Lifecycle keeps the job, and a fresh invocation runs it.
+
+### Alarms that never fire
+
+A Durable Object has one alarm, and the Lifecycle sets it from the job queue. Use the inspect method to compare the alarm with the jobs, then check for these causes:
+
+- **Your code set or deleted the alarm.** `ctx.storage.setAlarm()` and `ctx.storage.deleteAlarm()` replace the alarm the Lifecycle manages. Push a job instead. To recover the alarm for jobs that already exist, call `await this.lifecycle.rearmAlarm()`.
+- **Your class defines `alarm()`.** `Lifecycle.install()` leaves an existing `alarm()` method in place, so jobs never run. Remove the method and use the `onAlarm()` hook instead.
+- **Teardown disabled alarms.** After `lifecycle.disableAlarms()`, the Lifecycle never sets the alarm again for that instance.
+- **An exclusive job is pending.** While a job pushed with `exclusive: true` waits, the alarm is set for it alone.
+- **The job has no handler.** The Lifecycle logs `No installed capability or host handler for job` and deletes the job. This happens when the owning capability is no longer installed, its ID changed, or a host job was pushed from a class without `onJob()`.
+- **The schedule callback is missing.** `Scheduler` logs `callback <name> not found` when a callback is not in its `callbacks` map. Register every callback unconditionally, in the field initializer.
+
+### Alarms that retry forever
+
+The platform retries an alarm handler that throws, up to six times. The Lifecycle adds its own wakes on top, so the same failure can repeat for much longer:
+
+- **Startup keeps failing.** While jobs are queued, the fallback alarm retries startup every 30 seconds or more until you fix it. Find the startup error in your logs.
+- **A job never finishes.** A job that returns `"yield"` or `{ rescheduleAt }` on every run stays in the queue for good. Check that it makes progress and eventually returns nothing.
+- **A job is pushed without a stable ID.** Each push adds a new job. When one owner has 10 or more due jobs in one alarm, the Lifecycle logs a warning and emits `job:backlog_warning`. Give the job a stable `id`, so a new push replaces the pending one.
+- **A schedule is created on every wake.** A delayed or dated schedule created in `onStart()` adds a row on every wake, and `Scheduler` logs a warning that starts with `Scheduling "<callback>" during startup`. Pass `{ idempotent: true }`, or use a cron or interval schedule.
+- **A job is slow.** Jobs run one at a time, so a slow `onJob()` delays every other job on the object. After `hungTimeoutSeconds`, 30 by default, the Lifecycle logs a warning and emits `job:slow_dispatch`.
+
+Retries inside one alarm are capped by the job's `retry.maxAttempts`. For more information, refer to [Retries and failures](/agents/runtime/lifecycle/job-queue/#retries-and-failures) and [How the alarm runs](/agents/runtime/lifecycle/job-queue/#how-the-alarm-runs).
+
+### Jobs run twice
+
+Jobs run at least once. The Lifecycle deletes a job after `onJob()` returns, so a crash, an eviction, or a deploy during a run leaves the job in the queue, and it runs again. A run that throws is retried in the same alarm. Schedules are jobs, so the same applies to `Scheduler` callbacks.
+
+Make each job safe to repeat:
+
+- Write results with statements that can run twice, such as `INSERT OR REPLACE` or an `UPDATE` keyed by ID.
+- Record progress in storage, and skip steps that already finished.
+- Pass an idempotency key to external APIs that charge, send, or create something. Derive it from the job's `id` and `time`, which stay the same when a run is repeated.
+
+### The memory-limit breaker trips
+
+When an alarm exhausts the isolate's memory, the object resets, and the platform retries the alarm, which could run out of memory again. The Lifecycle counts these resets and logs each one:
+
+```txt
+Alarm hit a Durable Object memory-limit reset (strike 1/3, will retry with backoff). Breaking the platform alarm-retry loop (#1825).
+```
+
+Below the limit, it delays the job that was running, and every job pushed with `recoveryLoop: true`. At the limit, three resets by default, it seals: it deletes those jobs and logs `sealing recovery`. Each reset also emits `alarm:memory_limit_reset` with `strikes`, `limit`, and `sealed`.
+
+If you see these lines, find what holds memory in the job that was running, such as a large transcript loaded at once or a buffer that grows without bound. Implement `onAlarmMemoryLimit()` to record the failure, so a sealed job does not disappear silently. For more information, refer to [Memory-limit protection](/agents/runtime/lifecycle/job-queue/#memory-limit-protection).
+
+### WebSocket connections fail or reach the wrong handler
+
+Work from the Worker inward:
+
+1. **The URL does not match a binding.** `routeAgentRequest()` returns `400 Invalid request` and logs `does not match any Durable Object binding`. The URL segment is the kebab-case form of the binding name, not the class name. `MyAgent` and `MY_AGENT` both become `my-agent`, and `AIAgent` becomes `a-i-agent`. The client's `agent` option is converted the same way.
+2. **The prefix does not match.** `routeAgentRequest()` returns `null` for a path outside its prefix, `agents` by default. The client always connects under `/agents/`, so if you change `prefix` on the server, set `basePath` on the client.
+3. **Nothing claims the upgrade.** Without the `WebSockets` capability, the Lifecycle answers upgrades with `404` and the message `WebSocket upgrades are not enabled on this Durable Object`. The host never receives WebSocket events directly, so install [`WebSockets`](/agents/runtime/capabilities/websockets/).
+4. **Another capability claims it first.** `WebSockets` is a catch-all, so it always runs after every selective capability, whatever order you install them in. A selective capability that returns a `Response` for an upgrade takes that connection. Check what each of your own capabilities returns from `onWebSocketUpgrade()`. Installing a second catch-all for upgrades throws at `use()`.
+5. **Your class handles the socket itself.** If your class defines `webSocketMessage()`, `webSocketClose()`, or `webSocketError()`, the Lifecycle leaves that method in place and capabilities never see those events. A socket accepted with `ctx.acceptWebSocket()` in your own code belongs to no capability, so the Lifecycle ignores its messages.
+
+An error thrown during the upgrade reaches the client as an `error` frame with the stack trace, then a close with code `1011` and the reason `Uncaught exception during session setup`. Check the browser's network panel for that frame. For more information, refer to [Capability order](/agents/runtime/lifecycle/routing/#capability-order).
+
+## Debug a Pi harness run
+
+`PiHarness` keeps everything about a run in Pi's own tables, and drives it with one Lifecycle job. In the inspect output, that job has the ID `pi-wake` and the owner `pi-harness`. While Pi works, the job's heartbeat fires every 30 seconds. When Pi has nothing to do, the job completes.
+
+To see what Pi is doing, expose its state, and pass `onReport` to `Harness.open()` so Pi reports failures it handles on its own:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{
+					models,
+					registry: this.registry,
+					onWake,
+					onReport: (error, info) => console.error("pi:", info, error),
+				},
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	// Every PiHarness call waits for startup, so this RPC method needs no start().
+	async debugPi() {
+		return {
+			sessions: await this.harness.sessions.list(),
+			pending: await this.harness.pending(),
+			lastEntries: (await this.harness.messages()).slice(-5),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+What to read from it:
+
+- **`sessions`** lists every session, and whether it is `busy`.
+- **`pending`** lists submissions Pi has not finished, as `queued`, `running`, or `parked`. A `parked` submission means Pi's restart limit stopped a task that kept crashing the object. Fix the cause, then call `session.retry()`.
+- **`lastEntries`** shows the end of the active transcript, so you can see the last model answer or tool result.
+- **`onReport`** receives Pi's reports, such as `task_faulted`, `task_parked`, and `session_failed`.
+
+To find out why one submission ended without an answer, call `harness.wait(operationId)`. An `unanswered` result carries a `reason`, such as `model_error` or `no_model`.
+
+Watch the logs for two `PiHarness` messages:
+
+- `pi wake job "pi-wake" failed after N attempts; retrying with backoff`: Pi could not open, often because the `harness` factory throws. The harness retries with a backoff that doubles up to 10 minutes, and emits `pi:wake_error` on `agents:lifecycle`.
+- `the harness factory did not pass onWake to Harness.open`: pass `onWake` on, or Pi's timers keep the object in memory while a task sleeps.
+
+To follow a run live, stream `session.events()` to a client. For more information, refer to [Stream events to clients](/agents/harnesses/pi/#stream-events-to-clients) and [Recovery](/agents/harnesses/pi/#recovery).
+
+## On the `Agent` class
+
+The `Agent` class is a preset of the same Lifecycle and capabilities, so everything in this guide applies to it. It also has its own tools:
+
+- `getAgentByName()` from `agents` returns a stub, and the `Agent` class starts the Lifecycle before its public `async` RPC methods run. You do not call `lifecycle.start()`.
+- `this.sql` queries the object's database. The `Agent` class keeps its own data in tables whose names start with `cf_agents_`.
+- `this.listSchedules()` and `this.getScheduleById()` return its schedules. For more information, refer to [Schedule tasks](/agents/agent-class/schedule-tasks/).
+- Override `onError()` to log connection and server errors in one place. Without it, the `Agent` class logs them and suggests an override.
+- Replace the `observability` property to send every event to your own logger. For more information, refer to [On the `Agent` class](/agents/platform/observability/diagnostics-channels/#on-the-agent-class) in Diagnostics channels.
+
+## Related resources
+
+- [Lifecycle](/agents/runtime/lifecycle/) explains startup, object names, and teardown.
+- [Jobs and alarms](/agents/runtime/lifecycle/job-queue/) describes the job queue, retries, and memory-limit protection.
+- [Routing](/agents/runtime/lifecycle/routing/) covers how requests reach an object and its capabilities.
+- [Diagnostics channels](/agents/platform/observability/diagnostics-channels/) lists every event.
+- [Durable Objects troubleshooting](/durable-objects/observability/troubleshooting/) lists platform errors, such as overloaded objects and storage timeouts.
