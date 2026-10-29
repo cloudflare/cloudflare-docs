@@ -8,9 +8,9 @@ products:
   - d1
 ---
 
-import { Tabs, TabItem } from "~/components";
+import { Steps, Tabs, TabItem } from "~/components";
 
-A small number of databases and queries usually cause most of the rows read and written in an account. These rows are what you pay for, and these queries make your databases slow. A query is usually slow when it reads many more rows than it returns. A read query that runs many times also puts load on a database.
+A small number of databases and queries usually cause most of the rows read and written in an account. These rows are what you pay for, and these queries make your databases slow. A query is usually slow when it reads many more rows than it returns. A read query that runs many times also puts load on a database. Many small queries that your Worker sends one after another also make a request slow, because each query is a separate round trip to D1.
 
 To find these databases and queries, use `wrangler d1 insights` or the [`cf sql query`](/analytics/sql-api/get-started/#use-the-cloudflare-cli) command of the Cloudflare CLI. `wrangler d1 insights` returns the top queries from the GraphQL Analytics API. For all its options, refer to [Query `insights`](/d1/observability/metrics-analytics/#query-insights). `cf sql query` sends SQL to the [SQL API](/analytics/sql-api/). You can change the SQL in the examples to get different results.
 
@@ -64,6 +64,7 @@ To get the name of a database, run `npx wrangler d1 info <database_id>`. To find
 
 ## Find queries that need an index
 
+<Steps>
 1. Find the queries that read the most rows in your account during the last 7 days:
 
    <Tabs syncKey="d1Insights">
@@ -182,7 +183,7 @@ To get the name of a database, run `npx wrangler d1 info <database_id>`. To find
        SUM(rowsRead) AS totalRowsRead,
        AVG(rowsRead) AS avgRowsRead,
        AVG(queryDurationMs) AS avgDurationMs,
-       quantileWeighted(0.95)(queryDurationMs, sampleInterval) AS p95DurationMs,
+       quantileWeighted(0.95, queryDurationMs, sampleInterval) AS p95DurationMs,
        if(SUM(rowsRead) = 0, 0.0,
           SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
      FROM events.d1Queries
@@ -248,11 +249,13 @@ To get the name of a database, run `npx wrangler d1 info <database_id>`. To find
 9. Make sure that the number of rows read decreases. Run the command from step 2 again with a shorter time period, such as `--time-period=1h` or `INTERVAL '1' HOUR`.
 
    The results include all the queries in the time period. Queries that ran before you added the index increase the totals of a long time period.
+</Steps>
 
 ## Find queries to cache
 
 A read query that runs many times often returns the same data each time. If you keep the result in a cache, your Worker does not send the query to D1 each time. This decreases the load on your database and the number of rows read.
 
+<Steps>
 1. Find the queries that run the most in your account during the last day:
 
    <Tabs syncKey="d1Insights">
@@ -260,6 +263,37 @@ A read query that runs many times often returns the same data each time. If you 
 
    ```sh
    npx wrangler d1 insights --sort-by=count --time-period=1d --json
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   [
+     {
+       "query": "SELECT * FROM Customer WHERE Id = ?",
+       "avgRowsRead": 1,
+       "totalRowsRead": 41876,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 0.312,
+       "totalDurationMs": 13065.312,
+       "numberOfTimesRun": 41876,
+       "queryEfficiency": 1,
+       "databaseId": "b5d18e3a-6f29-4c04-8e7b-1a9c2d5f7e60"
+     },
+     {
+       "query": "SELECT * FROM Category",
+       "avgRowsRead": 8,
+       "totalRowsRead": 191232,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 0.274,
+       "totalDurationMs": 6549.696,
+       "numberOfTimesRun": 23904,
+       "queryEfficiency": 1,
+       "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15"
+     }
+   ]
    ```
 
    </TabItem>
@@ -283,6 +317,35 @@ A read query that runs many times often returns the same data each time. If you 
    "
    ```
 
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   {
+     "data": [
+       {
+         "avgDurationMs": 0.3118,
+         "databaseId": "b5d18e3a-6f29-4c04-8e7b-1a9c2d5f7e60",
+         "numberOfTimesRun": 41903,
+         "query": "SELECT * FROM Customer WHERE Id = ?",
+         "totalRowsRead": 41903
+       },
+       {
+         "avgDurationMs": 0.2741,
+         "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15",
+         "numberOfTimesRun": 23911,
+         "query": "SELECT * FROM Category",
+         "totalRowsRead": 191288
+       }
+     ],
+     "rows": 5,
+     "statistics": {
+       "elapsed_ms": 98,
+       "rows_read": 1593847,
+       "bytes_read": 512730114
+     }
+   }
+   ```
+
    </TabItem>
    </Tabs>
 
@@ -290,6 +353,110 @@ A read query that runs many times often returns the same data each time. If you 
 
 2. Find the queries with a high `numberOfTimesRun` that return the same data each time. Cache the result if the data does not change frequently, or if your application can show data that is a short time old.
 
-3. Keep the result in [Workers KV](/kv/) or the [Cache API](/workers/runtime-apis/cache/). Set an expiration time that agrees with how frequently the data changes.
+   In the example output, `SELECT * FROM Category` runs approximately 24,000 times a day and returns the same 8 rows each time. The categories almost never change, so this query is a good query to cache. Its `queryEfficiency` is already `1`, so an index does not decrease its rows read.
+
+3. Keep the result in [Workers KV](/kv/) or the [Cache API](/workers/runtime-apis/cache/). Set an expiration time that agrees with how frequently the data changes. For more information about how to use the cache from a Worker, refer to [Customize cache behavior with Workers](/cache/interaction-cloudflare-products/workers/).
+</Steps>
 
 If a query must always return the newest data, do not cache it.
+
+## Find queries to batch
+
+Each time your Worker calls `run()`, `all()`, `first()`, or `raw()` on a statement, it sends a separate request to D1 and waits for the response. If your Worker sends many queries one after another in the same request, such as an `INSERT` for each item in a list, the round trips add up. To send many statements to D1 in one round trip, use [`batch()`](/d1/worker-api/d1-database/#batch).
+
+<Steps>
+1. Find the write queries that write the most rows in your account during the last day:
+
+   <Tabs syncKey="d1Insights">
+   <TabItem label="Wrangler">
+
+   ```sh
+   npx wrangler d1 insights --sort-by=writes --time-period=1d --json
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   [
+     {
+       "query": "INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
+       "avgRowsRead": 0,
+       "totalRowsRead": 0,
+       "avgRowsWritten": 3,
+       "totalRowsWritten": 64818,
+       "avgDurationMs": 0.41,
+       "totalDurationMs": 8858.46,
+       "numberOfTimesRun": 21606,
+       "queryEfficiency": 0,
+       "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+     },
+     {
+       "query": "INSERT INTO \"Order\" (Id, CustomerId, EmployeeId, OrderDate, ShipVia, Freight) VALUES (?, ?, ?, ?, ?, ?)",
+       "avgRowsRead": 0,
+       "totalRowsRead": 0,
+       "avgRowsWritten": 1,
+       "totalRowsWritten": 6987,
+       "avgDurationMs": 0.38,
+       "totalDurationMs": 2655.06,
+       "numberOfTimesRun": 6987,
+       "queryEfficiency": 0,
+       "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+     }
+   ]
+   ```
+
+   </TabItem>
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf sql query --scope-account <account_id> "
+     SELECT
+       databaseId,
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsWritten) AS totalRowsWritten,
+       AVG(rowsWritten) AS avgRowsWritten
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '1' DAY
+       AND rowsWritten > 0
+       AND error = ''
+     GROUP BY databaseId, query
+     ORDER BY totalRowsWritten DESC
+     LIMIT 5
+   "
+   ```
+
+   </TabItem>
+   </Tabs>
+
+2. Find the write queries with a high `numberOfTimesRun` and a small `avgRowsWritten`. Each time these queries run, they insert or update only one row of a table. The value of `avgRowsWritten` includes the rows written to the indexes of the table, so a query that inserts one row into a table with two indexes has an `avgRowsWritten` of `3`.
+
+   In the example output, the `OrderDetail` `INSERT` query runs 21,606 times a day, and the `Order` `INSERT` query runs 6,987 times a day. Each order has approximately three order details, and the Worker inserts each order detail with a separate query. The `avgRowsWritten` of the `OrderDetail` query is `3` because the table has two indexes: the index of its primary key, and the `idx_orderdetail_orderid` index from [Find queries that need an index](#find-queries-that-need-an-index).
+
+3. In your Worker code, find the places that run these queries in a loop, or that run many queries one after another in the same request. Put the statements in one `batch()` call:
+
+   ```ts
+   // Before: one round trip to D1 for each order detail
+   for (const detail of details) {
+   	await env.DB.prepare(
+   		"INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
+   	)
+   		.bind(detail.id, orderId, detail.productId, detail.unitPrice, detail.quantity, detail.discount)
+   		.run();
+   }
+
+   // After: one round trip to D1 for all the order details
+   const insertDetail = env.DB.prepare(
+   	"INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
+   );
+   await env.DB.batch(
+   	details.map((detail) =>
+   		insertDetail.bind(detail.id, orderId, detail.productId, detail.unitPrice, detail.quantity, detail.discount),
+   	),
+   );
+   ```
+
+   The statements in a batch run in one [SQL transaction](https://www.sqlite.org/lang_transaction.html). If one statement fails, D1 rolls back all the statements in the batch. You can also batch read queries that do not depend on the results of other queries in the same request.
+</Steps>
+
+`batch()` decreases the number of round trips, not the number of rows read or written. Each statement in a batch is still a separate query in the analytics data.

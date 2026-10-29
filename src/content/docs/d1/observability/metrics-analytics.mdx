@@ -164,11 +164,11 @@ Run `wrangler d1 insights --help` to view current options.
 
 `wrangler d1 insights` reads data from the GraphQL Analytics API. If you use an API token, the token must have the **Account Analytics Read** permission.
 
-Pass a database name to get the top queries for that database. Leave out the database name to run account-wide and get the top queries across every D1 database in your account:
+Pass a database name, binding, or ID to get the top queries for that database. Leave it out to run account-wide and get the top queries across every D1 database in your account:
 
 ```sh
 # Top queries for one database
-npx wrangler d1 insights <database_name>
+npx wrangler d1 insights <database_name_or_id>
 
 # Top queries across every D1 database in the account
 npx wrangler d1 insights
@@ -290,57 +290,54 @@ npx wrangler d1 insights <database_name> --sort-type=avg --sort-by=time --limit=
 
 </Details>
 
-<Details header="To find top 10 queries by rows written in last 7 days:">
+<Details header="To find the top 3 queries across all databases in your account by rows written in the last 7 days:">
 
 ```sh
-npx wrangler d1 insights <database_name> --sort-type=sum --sort-by=writes --limit=10 --time-period=7d
+npx wrangler d1 insights --sort-type=sum --sort-by=writes --limit=3 --time-period=7d --json
 ```
 
 ```sh output
-⛅️ wrangler 3.95.0
--------------------
-
--------------------
-🚧 `wrangler d1 insights` is an experimental command.
-🚧 Flags for this command, their descriptions, and output may change between wrangler versions.
--------------------
-
 [
   {
-    "query": "SELECT * FROM Customers",
-    "avgRowsRead": 4,
-    "totalRowsRead": 4,
-    "avgRowsWritten": 0,
-    "totalRowsWritten": 0,
-    "avgDurationMs": 0.1873,
-    "totalDurationMs": 0.1873,
-    "numberOfTimesRun": 1,
-    "queryEfficiency": 1
-  },
-  {
-    "query": "SELECT * From Customers",
+    "query": "INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
     "avgRowsRead": 0,
     "totalRowsRead": 0,
-    "avgRowsWritten": 0,
-    "totalRowsWritten": 0,
-    "avgDurationMs": 1.0225,
-    "totalDurationMs": 1.0225,
-    "numberOfTimesRun": 1,
-    "queryEfficiency": 0
+    "avgRowsWritten": 3,
+    "totalRowsWritten": 453720,
+    "avgDurationMs": 0.41,
+    "totalDurationMs": 62008.4,
+    "numberOfTimesRun": 151240,
+    "queryEfficiency": 0,
+    "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
   },
   {
-    "query": "SELECT tbl_name as name,\n                   (SELECT ncol FROM pragma_table_list(tbl_name)) as num_columns\n            FROM sqlite_master\n            WHERE TYPE = \"table\"\n              AND tbl_name NOT LIKE \"sqlite_%\"\n              AND tbl_name NOT LIKE \"d1_%\"\n              AND tbl_name NOT LIKE \"_cf_%\"\n            ORDER BY tbl_name ASC;",
-    "avgRowsRead": 2,
-    "totalRowsRead": 4,
-    "avgRowsWritten": 0,
-    "totalRowsWritten": 0,
-    "avgDurationMs": 0.49505,
-    "totalDurationMs": 0.9901,
-    "numberOfTimesRun": 2,
-    "queryEfficiency": 0
+    "query": "INSERT INTO \"Order\" (Id, CustomerId, EmployeeId, OrderDate, ShipVia, Freight) VALUES (?, ?, ?, ?, ?, ?)",
+    "avgRowsRead": 0,
+    "totalRowsRead": 0,
+    "avgRowsWritten": 1,
+    "totalRowsWritten": 48906,
+    "avgDurationMs": 0.38,
+    "totalDurationMs": 18584.28,
+    "numberOfTimesRun": 48906,
+    "queryEfficiency": 0,
+    "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+  },
+  {
+    "query": "UPDATE Product SET UnitsInStock = UnitsInStock - ? WHERE Id = ?",
+    "avgRowsRead": 1,
+    "totalRowsRead": 37118,
+    "avgRowsWritten": 1,
+    "totalRowsWritten": 37118,
+    "avgDurationMs": 0.29,
+    "totalDurationMs": 10764.22,
+    "numberOfTimesRun": 37118,
+    "queryEfficiency": 0,
+    "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15"
   }
 ]
 ```
+
+Each result includes the `databaseId` of the database that ran the query.
 
 </Details>
 
