@@ -32,12 +32,12 @@ You do not need anything else. The agent provisions its own AI Search instance t
 
 ## How it works
 
-The agent uses [Code Mode](/agents/tools/codemode/), a tool-use pattern where the model writes a small program that calls your tools instead of requesting each call separately. A **durable runtime** records every call the program makes, pauses before sensitive calls so a human can approve them, and can compensate applied calls by running a `revert`. That durable state lives in the Agent's Durable Object, so an approval can wait across requests and hibernation.
+The agent uses [Code Mode](/agents/concepts/code-mode/), a tool-use pattern where the model writes a small program that calls your tools instead of requesting each call separately. A **durable runtime** records every call the program makes, pauses before sensitive calls so a human can approve them, and can compensate applied calls by running a `revert`. That durable state lives in the Agent's Durable Object, so an approval can wait across requests and hibernation.
 
 You expose AI Search to the runtime through a **connector**: a plain class that turns AI Search operations into methods the model can call. This tutorial gives the model a read-only `search` method and a `saveDocument` method that requires approval.
 
 :::caution
-Code Mode is experimental and may introduce breaking changes. Use caution in production.
+This tutorial uses the durable runtime from the [legacy Code Mode API](/agents/runtime/code-mode/legacy/), which is feature-frozen. It keeps working but gets no new features or fixes. For new agents, use [Computer](/agents/runtime/code-mode/computer/), where a host module can [pause for approval](/agents/runtime/code-mode/computer/#ask-for-approval).
 :::
 
 ## 1. Create a Worker project
@@ -445,9 +445,9 @@ Your agent can now:
 ## Next steps
 
 <LinkCard
-	title="Create a durable Code Mode runtime"
-	href="/agents/tools/codemode/durable-runtime/"
-	description="The full runtime API: rejection, execution history, and reusable snippets."
+	title="Legacy Code Mode API"
+	href="/agents/runtime/code-mode/legacy/"
+	description="The frozen durable runtime used in this tutorial, and what replaces it."
 />
 
 <LinkCard

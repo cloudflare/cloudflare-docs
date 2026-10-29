@@ -488,7 +488,7 @@ const { exitCode, value, stdout, stderr } = await run.result();
 
 ### Give code access to your own functions
 
-Custom modules can be registered under the `codemode:` namespace. Use these modules to give the model access to your application logic or file system tools, or to perform external actions.
+Custom modules can be registered under the `codemode:` namespace. Use these modules to give the model access to your application logic or file system tools, or to perform external actions. For more ways to supply tools as modules, including MCP tools and HTTP APIs, refer to [Run code with Computer](/agents/runtime/code-mode/computer/).
 
 <TypeScriptExample>
 
@@ -874,6 +874,7 @@ Pass these to the `modules` option of `CodemodeBackend`:
 | `createArtifactsModule()` | `@cloudflare/computer/modules/artifacts` | `codemode:artifacts` | [Artifacts](/artifacts/) repositories. Requires the `artifacts` workspace option.                                              |
 | `createAssetsModule()`    | `@cloudflare/computer/modules/assets`    | `codemode:assets`    | Publishes a workspace file through a presigned URL. Requires the `assets` workspace option.                                    |
 | `createToolBindings()`    | `@cloudflare/computer/modules/tools`     | `codemode:tools`     | The agent's own tools, callable from code. Build the bindings with `forAISDKTools()` or `forPiTools()`.                        |
+| `createContainerModule()` | `@cloudflare/computer/modules/container` | `codemode:container` | Shell commands in the workspace's container backend.                                                                           |
 
 For the full interfaces, refer to the [Computer design documentation](https://github.com/cloudflare/computer/tree/main/docs).
 

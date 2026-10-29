@@ -26,9 +26,9 @@ When deployed to Cloudflare, properly configured Dynamic Workers can run code yo
 
 ## Code Mode
 
-A primary use case for Dynamic Worker Loaders is [Code Mode](/agents/tools/codemode/) in the [Agents SDK](/agents/). Code Mode converts your tools into typed TypeScript APIs and gives the LLM a single "write code" tool. The generated code runs in an isolated Worker sandbox, which lets AI agents chain multiple tool calls in one execution and reduces round-trips through the model.
+A primary use case for Dynamic Worker Loaders is [Code Mode](/agents/concepts/code-mode/) in the [Agents SDK](/agents/). The model writes code instead of calling tools one at a time, and the code runs in an isolated Worker sandbox. This lets AI agents chain multiple tool calls in one execution and reduces round-trips through the model.
 
-Code Mode makes [AI SDK tools](/agents/tools/codemode/ai-sdk/), tools from an [MCP client connection](/agents/tools/codemode/mcp/), and [OpenAPI operations](/agents/tools/codemode/openapi/) available to model-written code.
+With [Cloudflare Computer](/agents/runtime/code-mode/computer/), you supply the agent's tools, tools from MCP servers, and your own functions to model-written code as modules.
 
 ## Basic usage
 

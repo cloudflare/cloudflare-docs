@@ -1,0 +1,306 @@
+---
+title: Run code with Computer
+description: Give the model an exec tool with Cloudflare Computer, and supply your functions, the agent's tools, MCP servers, and APIs to its code as codemode:* modules.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+[Cloudflare Computer](https://github.com/cloudflare/computer) is the recommended way to add [Code Mode](/agents/concepts/code-mode/) to an agent. It gives the model an `exec` tool that runs JavaScript in a [Dynamic Worker](/dynamic-workers/). You decide what that code can reach by passing it modules. Each module is imported under a `codemode:` name, and its functions run in your agent.
+
+Computer runs code with `WorkerJavaScriptBackend` from [`@cloudflare/codemode`](/agents/runtime/code-mode/executor/), and adds a persistent file system, the model-facing tools, and prebuilt modules. For the file system and file tools, refer to [File system](/agents/tools/filesystem/).
+
+## Install
+
+<PackageManagers pkg="@cloudflare/computer zod" />
+
+The AI SDK tools also need `ai`. Your Worker needs the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/) and a [Worker Loader binding](/dynamic-workers/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+## Give the model an exec tool
+
+Create a `Workspace` with a `WorkerJavaScriptBackend`, and pass its tools to the model. Once the workspace has a backend, the tools include `exec`:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/ai-sdk";
+import { generateText, stepCountIs } from "ai";
+
+export class OrdersAgent extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({
+				loader: this.env.LOADER,
+				modules: {
+					"codemode:orders": {
+						lookup: ([orderId]) => this.lookUpOrder(String(orderId)),
+					},
+				},
+			}),
+		],
+	});
+
+	async onRequest(request: Request): Promise<Response> {
+		const { text } = await generateText({
+			model: createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6"),
+			prompt: await request.text(),
+			tools: createAITools({ workspace: this.workspace }),
+			stopWhen: stepCountIs(10),
+		});
+		return new Response(text);
+	}
+
+	async lookUpOrder(orderId: string) {
+		const row = this.ctx.storage.sql
+			.exec("SELECT id, status, total FROM orders WHERE id = ?", orderId)
+			.toArray()[0];
+		return row ?? null;
+	}
+}
+```
+
+</TypeScriptExample>
+
+The `exec` tool describes the backend to the model, including the modules its code can import. The model can then write code like this without more instructions:
+
+```js
+import { lookup } from "codemode:orders";
+
+export default async function () {
+	const ids = ["A-100", "A-101", "A-102"];
+	const orders = await Promise.all(ids.map((id) => lookup(id)));
+	return orders.filter((order) => order?.status === "late");
+}
+```
+
+The module must have a default export. Its return value is the result of the run, and it must be JSON-compatible. Call `node:fs` and modules inside the default export, not at the top level. The Workers runtime allows no I/O while a module loads.
+
+## Supply your own functions
+
+A host module is an object of functions under a `codemode:` name. Each function receives the arguments from the code as an array, and a context object:
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	modules: {
+		"codemode:billing": {
+			refund: ([orderId], { callId }) =>
+				this.refund(String(orderId), { idempotencyKey: callId }),
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+The context includes `callId`, a stable ID you can pass on as an idempotency key, and `signal`, which aborts when the run ends. Arguments and return values must be JSON-compatible plain data.
+
+The arguments come from model-written code, so validate them as you would any user input. A host module runs with the full access of your agent. Expose only the functions the code needs.
+
+## Supply the agent's tools
+
+`codemode:tools` exposes tools that the agent already has, each under its own name. Build it with `createToolBindings()`, and an adapter for your tool format:
+
+<TypeScriptExample>
+
+```ts
+import { createToolBindings } from "@cloudflare/computer/modules/tools";
+import { forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
+import { myTools } from "./tools"; // An AI SDK ToolSet
+
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	modules: {
+		"codemode:tools": createToolBindings(forAISDKTools(() => myTools)),
+	},
+});
+```
+
+</TypeScriptExample>
+
+Each export takes the same argument object the model would pass, and resolves to `{ text, details, isError }`:
+
+```js
+import { getWeather } from "codemode:tools";
+
+export default async function ({ cities }) {
+	const reports = [];
+	for (const city of cities) {
+		const { text, isError } = await getWeather({ city });
+		if (!isError) reports.push(text);
+	}
+	return reports;
+}
+```
+
+`forAISDKTools()` checks arguments against each tool's `inputSchema`, as the AI SDK checks a model's call. For [Pi](/agents/harnesses/pi/) tools, use `forPiTools()` from `@cloudflare/computer/tools/pi-ai`. Pass a function of tools, not a fixed list, so a call always reaches the agent's current tools.
+
+`codemode:tools` leaves out tools that need approval and tools that run in the browser, because nothing can approve or run them from code. It also leaves out `exec` itself.
+
+## Supply MCP tools
+
+Tools from MCP servers reach the code the same way. Connect servers with the [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) capability, and pass its tools to `forAISDKTools()`:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { createToolBindings } from "@cloudflare/computer/modules/tools";
+import { forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
+import { Lifecycle } from "agents/lifecycle";
+import { MCPClientManager } from "agents/mcp/client";
+
+export class ResearchAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("research-agent", "1.0.0");
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({
+				loader: this.env.LOADER,
+				modules: {
+					"codemode:tools": createToolBindings(
+						forAISDKTools(() => this.mcp.getAITools()),
+					),
+				},
+			}),
+		],
+	});
+}
+```
+
+</TypeScriptExample>
+
+One program can now call tools from every connected server, and return only what the model needs. To combine MCP tools with your own, return both from the function: `forAISDKTools(() => ({ ...myTools, ...this.mcp.getAITools() }))`.
+
+## Supply an API
+
+To let code call an HTTP API, write a host module that holds the credentials and makes the request. The code never sees the token:
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	modules: {
+		"codemode:github": {
+			get: async ([path]) => {
+				if (typeof path !== "string" || !path.startsWith("/repos/")) {
+					throw new Error("Only /repos/ paths are allowed.");
+				}
+				const response = await fetch(`https://api.github.com${path}`, {
+					headers: {
+						Authorization: `Bearer ${this.env.GITHUB_TOKEN}`,
+						"User-Agent": "orders-agent",
+					},
+				});
+				return response.json();
+			},
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+Code that runs in the Dynamic Worker has no network access by default. To let it call the network directly, pass a `Fetcher` as `globalOutbound`, which receives every request the code makes.
+
+## Prebuilt modules
+
+Computer includes these modules. Pass them in `modules`:
+
+| Module               | Function                  | Entry point                              | What code can do                                                      |
+| -------------------- | ------------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
+| `codemode:tools`     | `createToolBindings()`    | `@cloudflare/computer/modules/tools`     | Call the agent's tools.                                               |
+| `codemode:git`       | `createGitModule()`       | `@cloudflare/computer/modules/git`       | Run Git operations on the workspace. Requires the `git` workspace option. |
+| `codemode:artifacts` | `createArtifactsModule()` | `@cloudflare/computer/modules/artifacts` | Use [Artifacts](/artifacts/) repositories.                            |
+| `codemode:container` | `createContainerModule()` | `@cloudflare/computer/modules/container` | Run shell commands in the workspace's container backend.              |
+
+## Call a container from code
+
+Some work needs a shell. Add a container backend to the workspace next to the JavaScript backend, and give the JavaScript backend the `codemode:container` module. The model keeps one `exec` tool, and its code can run commands when it needs to:
+
+```js
+import { exec } from "codemode:container";
+
+export default async function () {
+	const { exitCode, stdout, stderr } = await exec("npm test", {
+		cwd: "/workspace/app",
+	});
+	return { passed: exitCode === 0, stdout, stderr };
+}
+```
+
+The container shares the workspace files. For the setup, refer to [`codemode:container`](https://github.com/cloudflare/computer/blob/main/docs/17_isolate_javascript.md#codemodecontainer) in the Computer documentation.
+
+## Ask for approval
+
+A host module function can pause a run until a person answers, for example to approve a payment. The code calls the function as usual, and gets the result once the answer arrives. This needs `onInterrupt: "replay"`, so the run can resume from a journal:
+
+<TypeScriptExample>
+
+```ts
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	onInterrupt: "replay",
+	modules: {
+		"codemode:billing": {
+			refund: async ([orderId], ctx) => {
+				const { approved } = await ctx.interrupt<{ approved: boolean }>({
+					orderId,
+				});
+				if (!approved) throw new Error("The refund was rejected.");
+				return this.refund(String(orderId), { idempotencyKey: ctx.callId });
+			},
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+List waiting calls with `workspace.runtime.pending()`, and answer one with `workspace.runtime.respond()`. For the details and current limits, refer to [Wait for an answer](/agents/tools/filesystem/#wait-for-an-answer).
+
+## Use Computer with a harness
+
+- [Think](/agents/harnesses/think/) has a workspace at `this.workspace` and adds `exec` once the workspace has a backend. Refer to [Call the agent's tools from code](/agents/harnesses/think/tools/#call-the-agents-tools-from-code).
+- [Pi](/agents/harnesses/pi/) takes the workspace tools from `createPiTools()`. Build `codemode:tools` with `forPiTools()`. Refer to [File system](/agents/tools/filesystem/#pi).
+
+## Related resources
+
+- [File system](/agents/tools/filesystem/): the workspace, file tools, backend options, and resuming runs after a restart.
+- [Use the executor](/agents/runtime/code-mode/executor/): run code without a workspace.
+- [Computer documentation](https://github.com/cloudflare/computer/tree/main/docs): the full interfaces of every module.
