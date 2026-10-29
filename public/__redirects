@@ -3331,3 +3331,57 @@
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
+
+# [CF1] Dashboard route → docs redirects (unified /one/ dashboard, added 2026-10-29)
+# access-controls
+/cloudflare-one/access-controls/apps/ /cloudflare-one/access-controls/applications/ 301
+/cloudflare-one/access-controls/overview/ /cloudflare-one/access-controls/ 301
+/cloudflare-one/access-controls/settings/ /cloudflare-one/access-controls/access-settings/ 301
+/cloudflare-one/access-controls/targets/ /cloudflare-one/access-controls/ 301
+# browser-isolation (dashboard) → remote-browser-isolation (docs)
+/cloudflare-one/browser-isolation/overview/ /cloudflare-one/remote-browser-isolation/ 301
+/cloudflare-one/browser-isolation/settings/ /cloudflare-one/remote-browser-isolation/ 301
+# cloud-saas-findings (dashboard) → cloud-and-saas-findings (docs)
+/cloudflare-one/cloud-saas-findings/overview/ /cloudflare-one/cloud-and-saas-findings/ 301
+/cloudflare-one/cloud-saas-findings/posture/ /cloudflare-one/cloud-and-saas-findings/ 301
+/cloudflare-one/cloud-saas-findings/content/ /cloudflare-one/cloud-and-saas-findings/ 301
+/cloudflare-one/cloud-saas-findings/policies/ /cloudflare-one/cloud-and-saas-findings/policies/ 301
+# cloud-workload-security (no sub-pages in docs yet)
+/cloudflare-one/cloud-workload-security/credentials/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/deployments/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/domain-acls/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/policies/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/policy-sets/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/rego-metadata/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/rego-modules/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/tenant-structures/ /cloudflare-one/cloud-workload-security/ 301
+/cloudflare-one/cloud-workload-security/workloads/ /cloudflare-one/cloud-workload-security/ 301
+# dlp (dashboard) → data-loss-prevention (docs)
+/cloudflare-one/dlp/overview/ /cloudflare-one/data-loss-prevention/ 301
+/cloudflare-one/dlp/profiles/ /cloudflare-one/data-loss-prevention/dlp-profiles/ 301
+/cloudflare-one/dlp/data-classification/ /cloudflare-one/data-loss-prevention/data-classification/ 301
+/cloudflare-one/dlp/detection-entries/ /cloudflare-one/data-loss-prevention/detection-entries/ 301
+/cloudflare-one/dlp/settings/ /cloudflare-one/data-loss-prevention/dlp-settings/ 301
+/cloudflare-one/dlp/test-scan/ /cloudflare-one/data-loss-prevention/test-scan/ 301
+/cloudflare-one/dlp/validators/ /cloudflare-one/data-loss-prevention/ 301
+# email-security
+/cloudflare-one/email-security/overview/ /cloudflare-one/email-security/ 301
+# insights
+/cloudflare-one/insights/overview/ /cloudflare-one/insights/ 301
+/cloudflare-one/insights/dashboards/ /cloudflare-one/insights/analytics/ 301
+# integrations
+/cloudflare-one/integrations/webhooks/ /cloudflare-one/integrations/ 301
+# overview + settings (no standalone docs pages)
+/cloudflare-one/overview/ /cloudflare-one/ 301
+/cloudflare-one/settings/ /cloudflare-one/ 301
+# reusable-components
+/cloudflare-one/reusable-components/custom-functions/ /cloudflare-one/reusable-components/ 301
+# team-resources (dashboard) → team-and-resources (docs)
+/cloudflare-one/team-resources/application-library/ /cloudflare-one/team-and-resources/app-library/ 301
+/cloudflare-one/team-resources/devices/ /cloudflare-one/team-and-resources/devices/ 301
+/cloudflare-one/team-resources/users/ /cloudflare-one/team-and-resources/users/ 301
+# traffic-controls (sub-pages without docs equivalents)
+/cloudflare-one/traffic-controls/overview/ /cloudflare-one/traffic-controls/ 301
+/cloudflare-one/traffic-controls/policies/ /cloudflare-one/traffic-controls/ 301
+/cloudflare-one/traffic-controls/resolvers-proxies/ /cloudflare-one/traffic-controls/ 301
+/cloudflare-one/traffic-controls/traffic-settings/ /cloudflare-one/traffic-controls/ 301
