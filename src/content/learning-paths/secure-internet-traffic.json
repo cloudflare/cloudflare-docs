@@ -1,7 +1,0 @@
-{
-	"title": "Secure your Internet traffic and SaaS apps",
-	"path": "/learning-paths/secure-internet-traffic/concepts/",
-	"pcx_content_type": "learning-path",
-	"description": "Provide your users and networks with a secure, performant, and flexible path to the Internet.",
-	"products": ["dns", "gateway", "casb", "dlp", "browser-isolation"]
-}

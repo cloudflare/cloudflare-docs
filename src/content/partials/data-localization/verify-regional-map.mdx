@@ -1,5 +1,0 @@
----
-{}
----
-
-To verify that your regional map is being applied correctly, check the `IngressColoName` field in your [Zero Trust Network Session logs](/logs/logpush/logpush-job/datasets/account/zero_trust_network_sessions/#ingresscoloname). This field shows the name of the Cloudflare data center where traffic ingressed. Since regionalization is applied upstream from Gateway, the ingress data center will be located within your configured regional map, confirming that traffic is being processed in the correct region.

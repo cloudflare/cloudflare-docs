@@ -1,9 +1,0 @@
----
-{}
----
-
-:::caution[Terraform provider v4 precedence limitation]
-To avoid conflicts, version 4 of the Terraform Cloudflare provider applies a hash calculation to policy precedence. For example, a precedence of `1000` may become `1000901`. This can cause errors when reordering policies. To avoid this issue, manually set the precedence of policies created with Terraform using the [Update a Zero Trust Gateway rule](/api/resources/zero_trust/subresources/gateway/subresources/rules/methods/update/) endpoint.
-
-To ensure your precedence is set correctly, Cloudflare recommends [upgrading your Terraform provider to version 5](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/guides/version-5-upgrade).
-:::

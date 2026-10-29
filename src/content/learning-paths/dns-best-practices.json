@@ -1,7 +1,0 @@
-{
-	"title": "Migrate DNS from an on-premise BIND solution to Cloudflare",
-	"path": "/learning-paths/dns-best-practices/concepts/",
-	"description": "Learn the best practices for migrating DNS from an on-premise BIND solution to Cloudflare",
-	"pcx_content_type": "learning-path",
-	"products": ["dns"]
-}

@@ -1,8 +1,0 @@
----
-{}
----
-
-| Description                                                                                                          | 2xx response codes     | 4xx, 5xx response codes                                             |
-| -------------------------------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------------------------------- |
-| If all successful requests lack a configured session identifier, Cloudflare applies the label:                       | `cf-risk-missing-auth` | Requests with these response codes are not used to apply the label. |
-| If some successful requests contain a configured session identifier and some lack one, Cloudflare applies the label: | `cf-risk-mixed-auth`   | Requests with these response codes are not used to apply the label. |

@@ -1,8 +1,0 @@
-stages:
-  - build
-  - review
-  - deploy
-
-include:
-  - component: $CI_SERVER_FQDN/$COMPONENT_0
-  - component: $CI_SERVER_FQDN/$COMPONENT_1

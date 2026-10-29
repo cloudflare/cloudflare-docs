@@ -1,5 +1,0 @@
-productName: Style Guide
-entries:
-  - term: example
-    general_definition: |-
-      Hello, world! You can use **Markdown** features inside of your `tooltips`.

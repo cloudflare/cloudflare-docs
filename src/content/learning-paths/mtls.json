@@ -1,7 +1,0 @@
-{
-	"title": "mTLS at Cloudflare",
-	"path": "/learning-paths/mtls/concepts/",
-	"description": "Safeguard APIs and Devices on Cloudflare's network.",
-	"pcx_content_type": "learning-path",
-	"products": ["api-shield", "access", "ssl"]
-}

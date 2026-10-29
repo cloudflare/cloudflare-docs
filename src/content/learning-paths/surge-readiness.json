@@ -1,7 +1,0 @@
-{
-	"title": "Prepare for surges or spikes in web traffic",
-	"path": "/learning-paths/surge-readiness/concepts/",
-	"pcx_content_type": "learning-path",
-	"description": "Learn how to protect your website for potential surges or spikes in web traffic.",
-	"products": ["cache", "waf"]
-}

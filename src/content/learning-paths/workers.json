@@ -1,8 +1,0 @@
-{
-	"title": "Build applications with Cloudflare Workers",
-	"uid": "workers-intro",
-	"path": "/learning-paths/workers/concepts/",
-	"pcx_content_type": "learning-path",
-	"description": "Deploy serverless code, globally with exceptional performance, reliability, and scale.",
-	"products": ["workers"]
-}

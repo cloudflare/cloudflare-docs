@@ -1,7 +1,0 @@
----
-{}
----
-
-By default, Cloudflare first tries to match a request path against a static asset path, which is based on the file structure of the uploaded asset directory. This is either the directory specified by `assets.directory` in your Wrangler config or, in the case of the [Cloudflare Vite plugin](/workers/vite-plugin/), the output directory of the client build. Failing that, we invoke a Worker if one is present. If there is no Worker, or the Worker then uses the asset binding, Cloudflare will fallback to the behaviour set by [`not_found_handling`](/workers/static-assets/#routing-behavior).
-
-Refer to the [routing documentation](/workers/static-assets/routing/) for more information about how routing works with static assets, and how to customize this behavior.
