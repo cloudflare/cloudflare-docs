@@ -8,7 +8,7 @@ products:
   - agents
 ---
 
-import { TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
 `routeAgentRequest()` is optional. Any request that reaches a Lifecycle Durable Object through `fetch()` goes through the [Lifecycle](/agents/runtime/lifecycle/), however your Worker found the object. Use custom routing when you want your own URLs, or when the server, not the client, decides which object a request goes to.
 
@@ -146,6 +146,8 @@ export default {
 
 </TypeScriptExample>
 
-RPC calls do not pass through `fetch()`, so they do not start the Lifecycle. Call `await this.lifecycle.start()` at the top of each RPC method that uses capabilities or anything `onStart()` sets up. The props you pass to `start()` only apply if this call starts the object. For more information, refer to [Start the Lifecycle](/agents/runtime/lifecycle/#start-the-lifecycle).
+<Render file="rpc-start" product="agents" />
+
+The props you pass to `start()` only apply if this call starts the object. For more information, refer to [Start the Lifecycle](/agents/runtime/lifecycle/#start-the-lifecycle).
 
 `getAgentByName()` from `agents` starts the object for you, but it only works with the `Agent` class. On a plain Durable Object, use `getByName()` and `lifecycle.start()`.

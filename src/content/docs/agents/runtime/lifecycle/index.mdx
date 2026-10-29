@@ -10,7 +10,7 @@ products:
   - agents
 ---
 
-import { PackageManagers, TypeScriptExample } from "~/components";
+import { PackageManagers, Render, TypeScriptExample } from "~/components";
 
 `Lifecycle` from `agents/lifecycle` coordinates startup and incoming events for a [Durable Object](/durable-objects/). It also stores pending jobs in SQLite and manages the object's single alarm. Multiple features can schedule work without replacing each other's wake-up time.
 
@@ -133,7 +133,9 @@ Startup runs inside `blockConcurrencyWhile()`, so no other event reaches the obj
 
 ### Start from an RPC method
 
-Public methods on a Durable Object are [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/). RPC calls do not pass through `fetch`, so the Lifecycle does not start the object for them. Call `lifecycle.start()` at the top of an RPC method that needs started capabilities, or anything `onStart()` sets up:
+Public methods on a Durable Object are [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/).
+
+<Render file="rpc-start" product="agents" />
 
 <TypeScriptExample>
 

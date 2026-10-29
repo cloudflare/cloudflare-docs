@@ -9,8 +9,8 @@ products:
 ---
 
 import {
-	PackageManagers,
 	LinkCard,
+	Render,
 	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
@@ -29,7 +29,11 @@ The browser runs outside your agent's Durable Object. The object saves its sessi
 
 Start with a [Pi Durable agent](/agents/harnesses/pi/). Install the Agents SDK alongside the Pi packages:
 
-<PackageManagers pkg="agents @cloudflare/codemode @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
+<Render
+	file="pi-install"
+	product="agents"
+	params={{ extra: "@cloudflare/codemode" }}
+/>
 
 This example installs a `Browser` and `PiHarness` on a plain Durable Object. Pi chooses when to call the browser tool. [Lifecycle](/agents/runtime/lifecycle/) starts both components and provides their storage.
 

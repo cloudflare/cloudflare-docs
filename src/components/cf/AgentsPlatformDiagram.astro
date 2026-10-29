@@ -27,19 +27,27 @@ const channels = [
 	},
 ];
 
-const runtime = [
-	{ label: "State", href: "/agents/agent-class/state/" },
-	{ label: "Sessions", href: "/agents/runtime/capabilities/sessions/" },
-	{ label: "Routing", href: "/agents/agent-class/routing/" },
-	{ label: "WebSockets", href: "/agents/agent-class/websockets/" },
-	{ label: "Scheduling", href: "/agents/agent-class/schedule-tasks/" },
-	{ label: "Fibers", href: "/agents/agent-class/durable-execution/" },
+const capabilities = [
+	{ label: "State", href: "/agents/runtime/capabilities/state/" },
+	{ label: "WebSockets", href: "/agents/runtime/capabilities/websockets/" },
+	{ label: "Scheduler", href: "/agents/runtime/capabilities/scheduler/" },
+	{
+		label: "MCP client",
+		href: "/agents/runtime/capabilities/mcp-client-manager/",
+	},
 ];
 
 const tools = [
+	{
+		type: "Workspace",
+		name: "Cloudflare Computer",
+		href: "/agents/tools/filesystem/",
+	},
 	{ type: "Sandbox", name: "Bash/Shell", href: "/agents/tools/sandbox/" },
-	{ type: "MCP", name: "Servers", href: "/agents/tools/mcp/" },
 	{ type: "Browser", name: "CDP", href: "/agents/tools/browser/" },
+	{ type: "Web fetch", name: "Fetch", href: "/agents/tools/web-fetch/" },
+	{ type: "Web search", name: "Search", href: "/agents/tools/web-search/" },
+	{ type: "MCP servers", name: "Servers", href: "/agents/tools/mcp/" },
 	{ type: "AI Search", name: "Retrieval", href: "/agents/tools/ai-search/" },
 	{ type: "Payments", name: "x402 · MPP", href: "/agents/tools/payments/" },
 ];
@@ -82,37 +90,38 @@ const tools = [
 			<div class="agent-card-inner">
 				<header class="agent-header">
 					<span class="agent-icon" aria-hidden="true">
-						A
+						DO
 					</span>
-					<div class="agent-title">Agent</div>
+					<div class="agent-title">Durable Object</div>
 					<span class="status-dot" aria-label="Active"></span>
 				</header>
 
-				<div class="agent-section harness-section">
+				<div class="agent-section runtime-section">
 					<div class="agent-section-copy">
-						<div class="section-title">Agent harness</div>
-						<p>Controls planning, tool use, and response flow.</p>
+						<div class="section-title">Runtime</div>
+						<p>
+							The Lifecycle provides hooks for Capabilities to schedule durable
+							work.
+						</p>
 					</div>
-					<div class="section-row">
-						<a href="/agents/harnesses/pi/">Pi harness</a>
-						<a href="/agents/agent-class/">Build-your-own agent</a>
+					<a class="agent-class" href="/agents/runtime/lifecycle/">
+						Lifecycle
+					</a>
+					<div class="runtime-list">
+						{capabilities.map((item) => (
+							<a href={item.href}>{item.label}</a>
+						))}
 					</div>
 				</div>
 
-				<div class="agent-section runtime-section">
+				<div class="agent-section harness-section">
 					<div class="agent-section-copy">
-						<div class="section-title">Agents SDK runtime</div>
-						<p>
-							Durable identity, state, connections, scheduling, and recovery.
-						</p>
+						<div class="section-title">Harnesses</div>
 					</div>
-					<a class="agent-class" href="/agents/agent-class/">
-						Agent class
-					</a>
-					<div class="runtime-list">
-						{runtime.map((item) => (
-							<a href={item.href}>{item.label}</a>
-						))}
+					<div class="section-row harness-row">
+						<a href="/agents/harnesses/pi/">Pi</a>
+						<a href="/agents/harnesses/opencode/">OpenCode</a>
+						<a href="/agents/harnesses/think/">Think</a>
 					</div>
 				</div>
 			</div>
@@ -348,10 +357,14 @@ const tools = [
 		min-width: 0;
 		margin: 0;
 		flex: 1;
+		overflow: hidden;
 		color: var(--map-text);
-		font-size: 20px;
+		font-size: 16px;
 		font-weight: 600;
 		font-variation-settings: "opsz" 24;
+		line-height: 1.2;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.agent-icon {
@@ -363,11 +376,13 @@ const tools = [
 		border-radius: 8px;
 		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
 		color: var(--map-brand);
-		font-size: 17px;
+		flex-shrink: 0;
+		font-size: 13px;
 		font-weight: 600;
 	}
 
 	.status-dot {
+		flex-shrink: 0;
 		width: 14px;
 		height: 14px;
 		border: 3px solid
@@ -401,6 +416,10 @@ const tools = [
 		color: var(--map-text);
 		font-size: 12px;
 		font-weight: 500;
+	}
+
+	.harness-row {
+		grid-template-columns: 1fr 1.5fr 1fr;
 	}
 
 	.agent-class {
