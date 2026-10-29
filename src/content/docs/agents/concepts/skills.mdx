@@ -8,7 +8,7 @@ products:
   - agents
 ---
 
-import { LinkCard, TypeScriptExample } from "~/components";
+import { LinkCard } from "~/components";
 
 A skill is a set of instructions and resources for one kind of task, such as writing release notes or reviewing a pull request. The model loads a skill only when a task needs it. An agent can have many skills without making every prompt longer.
 
@@ -55,49 +55,11 @@ The model reads the catalog, and calls `activate_skill` when a task matches a de
 
 | Harness                                        | How to connect skills                                      |
 | ---------------------------------------------- | ---------------------------------------------------------- |
-| [Pi harness](/agents/harnesses/pi/extensions/) | Install the `skills()` extension from `agents/harness/pi`. |
 | [Think](/agents/harnesses/think/)              | Return skill sources from `getSkills()`.                   |
 
 ## Bundle skills with the Vite plugin
 
 The `agents()` Vite plugin from `agents/vite` compiles a skills directory into your Worker. Import `agents:skills`, and the plugin turns the `skills` directory next to the importing file into a skill source. It reads each `SKILL.md`, parses its frontmatter, and embeds the resources in the bundle.
-
-<TypeScriptExample>
-
-```ts
-/// <reference types="agents" />
-import { DurableObject } from "cloudflare:workers";
-import { createModels } from "@earendil-works/pi-ai/models";
-import { createRegistry, Harness } from "@earendil-works/pi-durable";
-import { PiHarness, skills } from "agents/harness/pi";
-import { Lifecycle } from "agents/lifecycle";
-import { createAI } from "agents/models/pi-ai";
-import bundledSkills from "agents:skills"; // the ./skills directory next to this file
-
-export class Assistant extends DurableObject<Env> {
-	ai = createAI({ binding: this.env.AI });
-	registry = createRegistry();
-
-	harness = new PiHarness({
-		harness: async ({ storage, context, onWake }) => {
-			const models = createModels();
-			models.setProvider(this.ai.provider);
-			// Adds activate_skill, read_skill_resource, and the skill catalog
-			this.registry.install(await skills([bundledSkills]));
-			return Harness.open(
-				storage,
-				{ models, registry: this.registry, onWake },
-				context,
-			);
-		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
-	});
-
-	lifecycle = Lifecycle.install(this).use(this.harness);
-}
-```
-
-</TypeScriptExample>
 
 Embedded resources count toward your Worker's size limit. For large assets, store the skills in R2 and use the `r2()` source from `agents/skills` instead.
 
@@ -109,11 +71,6 @@ Embedded resources count toward your Worker's size limit. For large assets, stor
 
 ## Related resources
 
-<LinkCard
-	title="Pi harness extensions"
-	href="/agents/harnesses/pi/extensions/"
-	description="Install the skills extension on the Pi harness."
-/>
 
 <LinkCard
 	title="Workspace"
