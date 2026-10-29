@@ -324,7 +324,7 @@
 /agents/api-reference/routing/ /agents/agent-class/routing/ 301
 /agents/api-reference/run-workflows/ /agents/agent-class/run-workflows/ 301
 /agents/api-reference/schedule-tasks/ /agents/agent-class/schedule-tasks/ 301
-/agents/api-reference/sessions/ /agents/concepts/conversation-state-and-memory/ 301
+/agents/api-reference/sessions/ /agents/concepts/memory/ 301
 /agents/api-reference/store-and-sync-state/ /agents/agent-class/state/ 301
 /agents/api-reference/sub-agents/ /agents/agent-class/sub-agents/ 301
 /agents/api-reference/using-ai-models/ /agents/agent-class/using-ai-models/ 301
@@ -365,7 +365,6 @@
 /agents/agentic-payments/mpp/ /agents/tools/payments/mpp/ 301
 /agents/guides/ /agents/model-context-protocol/guides/ 301
 /agents/concepts/agent-class/ /agents/agent-class/internals/ 301
-/agents/concepts/memory/ /agents/concepts/conversation-state-and-memory/ 301
 /agents/getting-started/prompting/ /workers/get-started/prompting/ 301
 /agents/platform/prompting/ /workers/get-started/prompting/ 301
 /agents/platform/prompt.txt/ /workers/prompt.txt 301
@@ -388,7 +387,11 @@
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/agentic-payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
-/agents/runtime/lifecycle/sessions/ /agents/concepts/conversation-state-and-memory/ 301
+/agents/concepts/calling-llms/ /agents/concepts/models/ 301
+/agents/concepts/conversation-state-and-memory/ /agents/concepts/memory/ 301
+/agents/runtime/execution/ /agents/concepts/durable-execution/ 301
+/agents/runtime/execution/agent-skills/ /agents/harnesses/think/tools/ 301
+/agents/runtime/lifecycle/sessions/ /agents/concepts/memory/ 301
 /agents/runtime/operations/ /agents/platform/ 301
 /agents/runtime/operations/configuration/ /agents/platform/configuration/ 301
 /agents/runtime/operations/cross-domain-authentication/ /agents/platform/cross-domain-authentication/ 301

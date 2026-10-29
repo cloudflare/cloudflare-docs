@@ -52,7 +52,7 @@ Cloudflare Computer has three backends. All of them work on the same files:
 
 | Backend                   | Runs                                                                                                                                                                                 | Status       |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ |
-| `WorkerJavaScriptBackend` | A JavaScript module in a fresh, isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/), with the workspace as `node:fs/promises` and host modules such as `ws:git` | Stable       |
+| `WorkerJavaScriptBackend` | A JavaScript module in a fresh, isolated [Dynamic Worker](/dynamic-workers/), with the workspace as `node:fs/promises` and host modules such as `ws:git` | Stable       |
 | `WorkerShellBackend`      | Shell commands in a Dynamic Worker, through a bash interpreter written in JavaScript                                                                                                 | Experimental |
 | `ContainerBackend`        | Shell commands in a [Container](/containers/), with a full Linux userland. The workspace files are mounted as a real filesystem.                                                     | Experimental |
 
