@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-`Sessions` stores conversation history for [Think](/agents/harnesses/think/) and [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/). You can also install it when you build your own agent loop on a Durable Object.
+`Sessions` is the session store that underpins the [Think harness](/agents/harnesses/think/). You can also use it to store the conversation when you [build your own harness](/agents/runtime/capabilities/build-a-capability/).
 
 :::caution[Experimental]
 The `Sessions` capability is experimental. Everything exported from `agents/sessions` may change between releases.
@@ -32,7 +32,7 @@ Your harness determines which conversation APIs to use:
 
 ## Install the capability
 
-For a plain Durable Object, construct `Sessions` and register it with Lifecycle. `Sessions` stores data without using the object's alarm:
+For a plain Durable Object, construct `Sessions` and register it with Lifecycle:
 
 <TypeScriptExample filename="src/index.ts">
 
