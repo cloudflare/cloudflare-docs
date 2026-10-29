@@ -15,15 +15,15 @@ Use `getScheduledTasks()` when code should create recurring Think turns or deter
 <TypeScriptExample>
 
 ```ts
-import { Think, defineScheduledTasks } from "@cloudflare/think";
+import { Think, type ThinkScheduledTasks } from "@cloudflare/think";
 
 export class DigestAgent extends Think<Env> {
 	getDefaultTimezone() {
 		return "Europe/London";
 	}
 
-	getScheduledTasks() {
-		return defineScheduledTasks({
+	getScheduledTasks(): ThinkScheduledTasks {
+		return {
 			weeklyCommitReport: {
 				schedule: "every week on monday at 09:00",
 				prompt:
@@ -50,7 +50,7 @@ export class DigestAgent extends Think<Env> {
 					});
 				},
 			},
-		});
+		};
 	}
 }
 ```
