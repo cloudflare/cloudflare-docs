@@ -28,12 +28,12 @@ const channels = [
 ];
 
 const capabilities = [
-	{ label: "State", href: "/agents/agent-class/state/" },
-	{ label: "WebSockets", href: "/agents/agent-class/websockets/" },
-	{ label: "Scheduler", href: "/agents/agent-class/schedule-tasks/" },
+	{ label: "State", href: "/agents/runtime/capabilities/state/" },
+	{ label: "WebSockets", href: "/agents/runtime/capabilities/websockets/" },
+	{ label: "Scheduler", href: "/agents/runtime/capabilities/scheduler/" },
 	{
 		label: "MCP client",
-		href: "/agents/model-context-protocol/apis/client-api/",
+		href: "/agents/runtime/capabilities/mcp-client-manager/",
 	},
 ];
 
@@ -143,10 +143,7 @@ const tools = [
 			</div>
 		</section>
 
-		<a
-			class="observability-card"
-			href="/agents/runtime/operations/observability/"
-		>
+		<a class="observability-card" href="/agents/runtime/observability/">
 			<span class="observability-title">Observability</span>
 			<span class="observability-copy">Logs · metrics · traces</span>
 		</a>

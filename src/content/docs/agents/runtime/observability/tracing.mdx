@@ -41,7 +41,7 @@ Select an agent to see its traces. Each trace includes its duration, token break
 
 There are two ways to follow what an agent did: **Session replay** and **Trace**.
 
-**Session replay** shows the recorded conversation across turns, including messages, reasoning, tool calls, and subagent activity. What appears depends on your [payload recording settings](/agents/runtime/operations/observability/tracing/#payload-privacy).
+**Session replay** shows the recorded conversation across turns, including messages, reasoning, tool calls, and subagent activity. What appears depends on your [payload recording settings](/agents/runtime/observability/tracing/#payload-privacy).
 
 ![Session replay showing messages, reasoning, and subagent tool calls](~/assets/images/workers-observability/agent_tracing_session_replay.png)
 
@@ -78,7 +78,7 @@ Do not derive the agent name from a request, conversation, or user identifier. T
 
 ### Payload privacy
 
-Message and tool payloads can contain personally identifiable information. Only record payloads that are safe to store. Each integration controls payload recording differently, so configure it in the relevant [Framework setup](/agents/runtime/operations/observability/tracing/#framework-setup) section.
+Message and tool payloads can contain personally identifiable information. Only record payloads that are safe to store. Each integration controls payload recording differently, so configure it in the relevant [Framework setup](/agents/runtime/observability/tracing/#framework-setup) section.
 
 Think and `wrapAISDK()` use `storeMessages` to record input and output messages on `chat` spans. They use `storeTools` to record arguments and results on `execute_tool` spans.
 
@@ -86,9 +86,11 @@ Think and `wrapAISDK()` use `storeMessages` to record input and output messages 
 
 Tracing and payload controls depend on the integration. Think and Flue instrument turns automatically. Direct AI SDK calls and custom harnesses need additional setup.
 
+The [Lifecycle](/agents/runtime/lifecycle/) does not create agent spans by itself. On a Durable Object that installs the Lifecycle directly, trace model calls with [`wrapAISDK()`](#ai-sdk) or the [Workers custom spans API](#custom-harnesses).
+
 ### Think
 
-Think automatically instruments your agent and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
+Think automatically instruments your agent and emits the [standard span structure](/agents/runtime/observability/tracing/#trace-structure). No additional tracing setup is required.
 
 #### Store payloads
 
@@ -109,7 +111,7 @@ export class MyAgent extends Think<Env> {
 
 ### Flue
 
-[Flue v2+](https://flueframework.com/blog/flue-2/) also automatically instruments your agent and emits the [standard span structure](/agents/runtime/operations/observability/tracing/#trace-structure). No additional tracing setup is required.
+[Flue v2+](https://flueframework.com/blog/flue-2/) also automatically instruments your agent and emits the [standard span structure](/agents/runtime/observability/tracing/#trace-structure). No additional tracing setup is required.
 
 #### Exclude payloads
 
@@ -143,7 +145,7 @@ const tracedAI = wrapAISDK(ai);
 
 `wrapAISDK()` supports AI SDK v6 and v7. It instruments `generateText`, `streamText`, `generateObject`, and `streamObject`, creating the `invoke_agent` parent before model and tool work begins.
 
-Unlike Think, a direct AI SDK call has no Agent instance from which to infer dashboard identity. Supply the [agent identity fields](/agents/runtime/operations/observability/tracing/#agent-identity) on each call.
+Unlike Think, a direct AI SDK call has no Agent instance from which to infer dashboard identity. Supply the [agent identity fields](/agents/runtime/observability/tracing/#agent-identity) on each call.
 
 Only include context that is safe to store. Do not include credentials, tokens, user input, or other secrets.
 
@@ -267,18 +269,12 @@ Beginning December 1, 2026, agent traces contribute to account-level ingestion a
 
 <LinkCard
 	title="Diagnostics channels"
-	href="/agents/runtime/operations/observability/diagnostics-channels/"
+	href="/agents/runtime/observability/diagnostics-channels/"
 	description="Subscribe to structured agent events for state changes, schedules, workflows, and more."
 />
 
 <LinkCard
-	title="Configuration"
-	href="/agents/runtime/operations/configuration/"
-	description="wrangler.jsonc setup and deployment."
-/>
-
-<LinkCard
-	title="Agents API"
-	href="/agents/agent-class/"
-	description="Complete API reference for the Agents SDK."
+	title="Lifecycle"
+	href="/agents/runtime/lifecycle/"
+	description="Run capabilities inside any Durable Object."
 />

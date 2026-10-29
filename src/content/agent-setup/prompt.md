@@ -105,7 +105,7 @@ Install it globally:
 npm install -g cf
 ```
 
-Add this line to the user-level instructions file for your agent, such as `~/.claude/CLAUDE.md` for Claude Code, `~/.codex/AGENTS.md` for Codex, or `~/.config/opencode/AGENTS.md` for OpenCode:
+Add this line to the user-level instructions file for your agent, such as `~/.claude/CLAUDE.md` for Claude Code, `~/.codex/AGENTS.md` for Codex, `~/.pi/agent/AGENTS.md` for Pi, or `~/.config/opencode/AGENTS.md` for OpenCode:
 
 ```
 When interacting with Cloudflare, use the cf CLI unless the project has a Wrangler configuration file.
@@ -165,6 +165,7 @@ For MCP setup guides and troubleshooting, refer to each agent's official documen
 - Cursor: `https://cursor.com/docs/mcp`
 - Devin Desktop: `https://docs.devin.ai/desktop/cascade/mcp`
 - OpenCode: `https://opencode.ai/docs/mcp-servers/`
+- Pi: `https://pi.dev/docs/latest/mcp`
 - GitHub Copilot (VS Code): `https://code.visualstudio.com/docs/copilot/customization/mcp-servers`
 - Vibe: `https://docs.mistral.ai/vibe/code/cli/mcp-servers`
 - Droid: `https://docs.factory.ai/cli/configuration/mcp`
