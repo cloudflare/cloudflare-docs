@@ -33,7 +33,7 @@ Agents on Cloudflare are composed from four parts:
 - **Tools** let the agent act. For a durable file system and code execution, give the agent a [workspace](/agents/tools/filesystem/) from Cloudflare Computer. The Agents SDK also includes [web fetch](/agents/tools/web-fetch/), [web search](/agents/tools/web-search/), [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), [payments](/agents/tools/payments/), and [Code Mode](/agents/tools/codemode/).
 - **Communication channels** define how users and systems reach your agent, such as [chat](/agents/agent-class/communication-channels/chat/), [voice](/agents/agent-class/communication-channels/voice/), [email](/agents/agent-class/communication-channels/email/), [Slack](/agents/agent-class/communication-channels/slack/), [webhooks](/agents/agent-class/communication-channels/webhooks/), and other event sources. These guides use the [`Agent` class](/agents/agent-class/), a preset Durable Object with the lifecycle and a set of capabilities already installed.
 
-Agents publish structured events, such as state changes, schedules, and MCP connections, that you can use for [observability](/agents/runtime/operations/observability/).
+Agents publish structured events, such as state changes, schedules, and MCP connections, that you can use for [observability](/agents/platform/observability/).
 
 Here is a Durable Object with the lifecycle, two capabilities, and a Cloudflare Computer workspace. It uses the `agents` and `@cloudflare/computer` packages:
 

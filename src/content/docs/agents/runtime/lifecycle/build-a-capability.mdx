@@ -186,7 +186,7 @@ A capability that owns connections or requests can pass them as the second argum
 
 ### Emit events
 
-`this.lifecycle.events.emit(type, payload)` publishes a best-effort event under the capability's ID. On a plain Durable Object, events go to the `agents:*` [diagnostics channels](/agents/runtime/operations/observability/diagnostics-channels/). The channel depends on the prefix of the event type. For example, `schedule:` events go to `agents:schedule`. A type with a prefix the SDK does not recognize, such as `uptime:check`, goes to `agents:lifecycle`.
+`this.lifecycle.events.emit(type, payload)` publishes a best-effort event under the capability's ID. On a plain Durable Object, events go to the `agents:*` [diagnostics channels](/agents/platform/observability/diagnostics-channels/). The channel depends on the prefix of the event type. For example, `schedule:` events go to `agents:schedule`. A type with a prefix the SDK does not recognize, such as `uptime:check`, goes to `agents:lifecycle`.
 
 Events emitted during startup are held until startup finishes. They are telemetry, not a durable outbox. If delivery is part of your business logic, store an outbox in the capability's own table.
 
