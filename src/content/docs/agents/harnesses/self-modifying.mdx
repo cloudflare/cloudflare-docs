@@ -11,7 +11,7 @@ products:
 
 import { PackageManagers, Steps } from "~/components";
 
-The [self-modifying harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/self-modifying) lets an agent edit its own TypeScript loop and custom tools. Source files persist in a [Cloudflare Computer Workspace](/agents/tools/filesystem/). A Durable Object coordinates turns and revisions, while fresh [Dynamic Workers](/dynamic-workers/) execute the editable code.
+The [self-modifying harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/self-modifying) lets an agent edit its own TypeScript loop and custom tools. Source files persist in a [Cloudflare Computer Workspace](/agents/tools/workspace/). A Durable Object coordinates turns and revisions, while fresh [Dynamic Workers](/dynamic-workers/) execute the editable code.
 
 `SelfModifyingHarness` is local to this experimental example. It uses internal SDK APIs and is not an exported Agents SDK harness.
 

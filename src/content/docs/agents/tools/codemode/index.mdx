@@ -57,6 +57,8 @@ Use direct tool calls for simple tasks with a small, fixed tool set. Use Code Mo
 
 Code Mode provides surfaces for agent runtimes, AI frameworks, browsers, and Model Context Protocol (MCP) systems.
 
+`@cloudflare/codemode` has tool adapters for the AI SDK (`@cloudflare/codemode/ai`) and TanStack AI (`@cloudflare/codemode/tanstack-ai`). In a [Think](/agents/harnesses/think/) agent, return the AI SDK tool from `getTools()`. There is no adapter for the [Pi harness](/agents/harnesses/pi/): Pi Durable has its own code mode tool in `@earendil-works/pi-durable/codemode`.
+
 <CardGrid>
 	<LinkCard
 		title="Durable runtime"

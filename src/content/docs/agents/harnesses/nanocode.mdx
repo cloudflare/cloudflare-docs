@@ -104,7 +104,7 @@ Refer to [Nanocode durability](https://nanocode.xyz/docs/guides/durability).
 
 ## Workspaces
 
-Nanocode uses its own host adapters for workspace and tool operations. Its Cloudflare host does not include an `@cloudflare/computer` integration. To use Computer, implement an adapter that maps those operations to a [Workspace](/agents/tools/filesystem/) in the session's Durable Object, or call a separate object that owns one.
+Nanocode uses its own host adapters for workspace and tool operations. Its Cloudflare host does not include an `@cloudflare/computer` integration. To use Computer, implement an adapter that maps those operations to a [Workspace](/agents/tools/workspace/) in the session's Durable Object, or call a separate object that owns one.
 
 Persistent session state does not preserve an external sandbox's files or processes. Choose and configure that backend's persistence separately.
 

@@ -21,7 +21,7 @@ A Durable Agent is a [Durable Object](/durable-objects/) with the Agents SDK [Li
 In this guide, you build an agent that:
 
 - runs the [Pi harness](/agents/harnesses/pi/) in a Durable Object,
-- works on files in a [Cloudflare Computer workspace](/agents/tools/filesystem/), stored in the same object,
+- works on files in a [Cloudflare Computer workspace](/agents/tools/workspace/), stored in the same object,
 - talks to clients through the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability.
 
 You do not need an API key. The agent uses [Workers AI](/workers-ai/) through the `AI` binding.
@@ -198,7 +198,7 @@ The transcript lives in the `demo` instance's database. A request to `/agents/as
 
 ## Give the agent a workspace
 
-A [Cloudflare Computer](/agents/tools/filesystem/) `Workspace` is a durable filesystem. It stores its files in the same Durable Object's SQLite database, next to Pi's transcript, so the files survive eviction too.
+A [Cloudflare Computer](/agents/tools/workspace/) `Workspace` is a durable filesystem. It stores its files in the same Durable Object's SQLite database, next to Pi's transcript, so the files survive eviction too.
 
 `createPiTools()` turns the workspace into tools the model can call: `read`, `ls`, `find`, `grep`, `write`, `edit`, and `delete`. Install them in Pi's registry when the harness opens:
 
@@ -256,7 +256,7 @@ curl -X POST http://localhost:8787/agents/assistant/demo \
   -d "Write a haiku about Durable Objects to haiku.md, then list the files."
 ```
 
-Pi calls `write`, then `ls`, and answers with what it found. The file stays in the `demo` agent's workspace for the next prompt. For the other workspace options, such as running JavaScript, refer to [Filesystem tools](/agents/tools/filesystem/).
+Pi calls `write`, then `ls`, and answers with what it found. The file stays in the `demo` agent's workspace for the next prompt. For the other workspace options, such as running JavaScript, refer to [Filesystem tools](/agents/tools/workspace/).
 
 ## Connect over WebSockets
 
