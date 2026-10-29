@@ -69,7 +69,7 @@ Because it is a plain field, any harness can use the same workspace. The harness
 ## How harnesses use the workspace
 
 - **The model sees tools.** Cloudflare Computer ships tools that work on a workspace, such as `read`, `write`, `edit`, `find`, `grep`, and `exec`. Each tool has an adapter for each harness: `@cloudflare/computer/tools/pi-ai` for the Pi harness, and `@cloudflare/computer/tools/ai-sdk` for the AI SDK and Think.
-- **The harness connects the workspace.** Each harness page explains how to connect a workspace, and with it, skills.
+- **The harness connects the workspace.** Each harness page explains how to connect a workspace.
 - **Think has one built in.** `this.workspace` in Think is a Cloudflare Computer `Workspace`, and Think adds the workspace tools to every turn.
 
 ## Related resources
@@ -83,7 +83,7 @@ Because it is a plain field, any harness can use the same workspace. The harness
 <LinkCard
 	title="Skills"
 	href="/agents/concepts/skills/"
-	description="Store skills as files on the workspace, and let the harness load them."
+	description="Mount skills on the workspace, and let the model read them with the workspace tools."
 />
 
 <LinkCard

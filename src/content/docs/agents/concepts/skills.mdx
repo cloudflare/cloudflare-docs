@@ -1,6 +1,6 @@
 ---
 title: Skills
-description: Skills are files on an agent's workspace that hold instructions and resources. The harness lists them in the prompt, and the model loads one when a task needs it.
+description: Skills are folders of instructions and resources on an agent's Cloudflare Computer workspace. The model finds and reads them with the workspace tools when a task needs them.
 pcx_content_type: concept
 sidebar:
   order: 7
@@ -8,18 +8,18 @@ products:
   - agents
 ---
 
-import { LinkCard } from "~/components";
+import { LinkCard, TypeScriptExample } from "~/components";
 
-A skill is a set of instructions and resources for one kind of task, such as writing release notes or reviewing a pull request. The model loads a skill only when a task needs it. An agent can have many skills without making every prompt longer.
+A skill is a set of instructions and resources for one kind of task, such as writing release notes or reviewing a pull request. The model reads a skill only when a task needs it, so an agent can have many skills without making every prompt longer.
 
-## A skill is a directory of files
+## A skill is a folder of files
 
-A skill is a directory with a `SKILL.md` file and optional resources:
+A skill is a folder with a `SKILL.md` file and optional resources:
 
 ```txt
-skills/release-notes/SKILL.md
-skills/release-notes/references/style-guide.md
-skills/release-notes/assets/template.md
+/workspace/.agents/skills/release-notes/SKILL.md
+/workspace/.agents/skills/release-notes/references/style-guide.md
+/workspace/.agents/skills/release-notes/assets/template.md
 ```
 
 `SKILL.md` starts with frontmatter that names the skill and says when to use it. The rest of the file holds the instructions:
@@ -37,31 +37,37 @@ Skills follow the [Agent Skills](https://agentskills.io/) format, so skills writ
 
 ## Skills live on the workspace
 
-Skills are files, so they live on the agent's [workspace](/agents/concepts/workspace/), under `/workspace/.agents/skills/`. Every harness uses them the same way, and the agent can read and edit them like any other file.
+Skills are a property of the agent's [workspace](/agents/concepts/workspace/). By convention, each skill is a folder under `/workspace/.agents/skills/`. The model finds and reads skills with the same workspace tools it uses for any other file, such as `find`, `grep`, and `read`. Tell the model in the system prompt where its skills are, and to read the matching `SKILL.md` before a task.
 
-There are two ways to put skills on the workspace:
+There are three ways to put skills on the workspace:
 
-- **Ship them with your Worker.** A `WorkerBundle` mount from Cloudflare Computer shows the files from your Worker bundle, read-only, and updates them on each deploy.
-- **Project them from a skill source.** Think copies its skills onto its workspace when you set `skillWorkspace`. Edits on the workspace then change later activations.
+- **Ship them with your Worker.** A `WorkerBundle` mount shows files that ship inside your Worker, read-only, and replaces them when a deploy changes them.
+- **Mount an R2 bucket.** An `R2Bucket` mount shows the skills stored in a bucket, read-only. Use it for large skills, or to update skills without a deploy.
+- **Write them.** Write files with `workspace.fs`, or let the agent write its own skills.
 
-## The harness loads skills
+For example, with the `computerBundle()` Vite plugin from `@cloudflare/computer/vite`, mount the `src/skills` folder of your project:
 
-The harness reads the skills and does two things:
+<TypeScriptExample>
 
-1. It adds a catalog of skill names and descriptions to the system prompt.
-2. It gives the model tools to load a skill. `activate_skill` returns the instructions and the list of resources. `read_skill_resource` returns one resource.
+```ts
+/// <reference types="@cloudflare/computer/vite/client" />
+import { WorkerBundle, Workspace } from "@cloudflare/computer";
+import { DurableObject } from "cloudflare:workers";
+import skills from "computer:bundle/src/skills";
 
-The model reads the catalog, and calls `activate_skill` when a task matches a description. Only then do the instructions enter the context.
+export class MyAgent extends DurableObject<Env> {
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		mounts: { "/workspace/.agents/skills": WorkerBundle(skills) },
+	});
+}
+```
 
-| Harness                                        | How to connect skills                                      |
-| ---------------------------------------------- | ---------------------------------------------------------- |
-| [Think](/agents/harnesses/think/)              | Return skill sources from `getSkills()`.                   |
+</TypeScriptExample>
 
-## Bundle skills with the Vite plugin
+Writes under a mount fail with `EROFS`, so the model cannot change mounted skills.
 
-The `agents()` Vite plugin from `agents/vite` compiles a skills directory into your Worker. Import `agents:skills`, and the plugin turns the `skills` directory next to the importing file into a skill source. It reads each `SKILL.md`, parses its frontmatter, and embeds the resources in the bundle.
-
-Embedded resources count toward your Worker's size limit. For large assets, store the skills in R2 and use the `r2()` source from `agents/skills` instead.
+Harnesses can also load skills in their own ways. For example, [Think](/agents/harnesses/think/) has its own skills support.
 
 ## Skills, tools, and the system prompt
 
@@ -70,7 +76,6 @@ Embedded resources count toward your Worker's size limit. For large assets, stor
 - Use a **tool** for an action the model takes, such as calling an API.
 
 ## Related resources
-
 
 <LinkCard
 	title="Workspace"
