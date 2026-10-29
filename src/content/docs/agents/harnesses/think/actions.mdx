@@ -157,7 +157,7 @@ await agent.rejectExecution(executionId, "Not this release");
 
 </TypeScriptExample>
 
-`approveExecution()` runs `execute` once and auto-continues the turn even if no client is connected; `rejectExecution()` resolves the action without running it. `pendingApprovals()` merges parked actions and paused [Codemode](/agents/tools/codemode/) executions, so a single approval UI can drive both. (`durable-pause` requires an `approval` policy — an action that would never park is rejected at definition time.)
+`approveExecution()` runs `execute` once and auto-continues the turn even if no client is connected; `rejectExecution()` resolves the action without running it. `pendingApprovals()` merges parked actions and paused executions from the legacy [Code Mode runtime](/agents/runtime/code-mode/legacy/), so a single approval UI can drive both. (`durable-pause` requires an `approval` policy — an action that would never park is rejected at definition time.)
 
 Both approval-gated and durable-pause parts carry a stable `ActionApprovalDescriptor` (`{ requestId, toolCallId, action, summary, input, permissions, risk, kind }`) so your UI has everything it needs to render the prompt.
 

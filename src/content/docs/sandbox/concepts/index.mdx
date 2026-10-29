@@ -46,7 +46,7 @@ When code only needs to call methods that you define, such as a script against a
 
 For example, your Worker can pass a `listPullRequests()` method that works for one repository and keeps the API token. Generated code can filter the pull requests, but it cannot reach another repository or read the token. For more information, refer to [Bindings](/dynamic-workers/usage/bindings/).
 
-[Code Mode](/agents/tools/codemode/) uses this for agents. The model writes JavaScript against typed methods, a Dynamic Worker runs it, and only the result returns to the model context.
+[Code Mode](/agents/concepts/code-mode/) uses this for agents. The model writes JavaScript against typed methods, a Dynamic Worker runs it, and only the result returns to the model context.
 
 `load()` creates a new Dynamic Worker. `get()` with a stable ID lets the runtime reuse a warm Dynamic Worker when the same code runs again. To give a generated application its own storage, use [Durable Object facets](/dynamic-workers/usage/durable-object-facets/). That storage does not give the application access to your other resources.
 

@@ -22,7 +22,7 @@ Use the supplied adapters with [Think](/agents/harnesses/think/), [Pi Durable](/
 | --------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `activate_skill`      | Returns a skill's instructions, its folder when it has one, and the list of files bundled with it.            |
 | `read_skill_resource` | Returns one bundled file, by `{ name, path }` or a qualified path such as `release-notes/references/guide.md`. |
-| `run_skill_script`    | Runs a bundled script. Only added when you set the experimental [script runner](/agents/skills/execution/#script-runner). |
+| `run_skill_script`    | Runs a bundled script. Only added when you set the experimental [script runner](/agents/runtime/code-mode/skill-scripts/#script-runner). |
 
 The tools only appear when at least one skill is available. `name` is limited to the skills in the catalog. Binary files are returned as base64.
 
@@ -118,7 +118,7 @@ const result = streamText({
 
 Load the catalog again to pick up changed skills, and build the tools from the new catalog. `catalog.fingerprint` changes whenever the catalog prompt changes, so compare it to decide when to rebuild a cached system prompt.
 
-To add `run_skill_script`, pass a runner from `agents/skills/runner`: `createSkillTools(catalog, { scriptRunner: runner({ loader: env.LOADER }) })`. Refer to [Execution](/agents/skills/execution/).
+To add `run_skill_script`, pass a runner from `agents/skills/runner`: `createSkillTools(catalog, { scriptRunner: runner({ loader: env.LOADER }) })`. Refer to [Run skill scripts](/agents/runtime/code-mode/skill-scripts/).
 
 ### Other harnesses
 
@@ -180,5 +180,5 @@ Tool failures, such as an unknown skill or a missing file, are returned to the m
 
 - [Agent Skills concepts](/agents/concepts/agent-skills/): the open format and progressive disclosure
 - [Agent Skills](/agents/skills/): sources and validation in the Agents SDK
-- [Execution](/agents/skills/execution/): run skill scripts
+- [Run skill scripts](/agents/runtime/code-mode/skill-scripts/): run bundled scripts in a Workspace or with the script runner
 - [File system](/agents/tools/filesystem/): give the agent a Workspace to store skills in

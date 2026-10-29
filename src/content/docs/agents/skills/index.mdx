@@ -88,7 +88,7 @@ When at least one skill is available, the agent gets these tools:
 | --------------------- | ----------------------------------------------------------------------------- |
 | `activate_skill`      | Load a skill's instructions and its list of resources                         |
 | `read_skill_resource` | Read a resource by `{ name, path }` or a qualified path such as `name/path`   |
-| `run_skill_script`    | Run a bundled script, when a [script runner](/agents/skills/execution/) is set |
+| `run_skill_script`    | Run a bundled script, when a [script runner](/agents/runtime/code-mode/skill-scripts/) is set |
 
 The catalog is added to the system prompt as its own context block, below your `getSystemPrompt()` instructions. When a skill changes mid-conversation, Think does not rebuild the system prompt, so the model provider's prompt cache stays warm. The new catalog reaches the model as a reminder on the next turn and moves into the system prompt at the next compaction or history clear.
 

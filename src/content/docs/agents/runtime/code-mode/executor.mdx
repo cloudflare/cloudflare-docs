@@ -1,0 +1,192 @@
+---
+title: Use the executor
+description: Run model-written JavaScript in a Dynamic Worker with WorkerJavaScriptBackend from @cloudflare/codemode, against your own storage and host modules.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { PackageManagers, TypeScriptExample, WranglerConfig } from "~/components";
+
+`WorkerJavaScriptBackend` from `@cloudflare/codemode` is the executor behind [Code Mode](/agents/concepts/code-mode/). It runs one ECMAScript module in a fresh [Dynamic Worker](/dynamic-workers/). The code reads files through `node:fs` and imports host modules, whose functions run in your Durable Object.
+
+[Computer](/agents/runtime/code-mode/computer/) runs its code on this executor and connects it for you. Use the executor directly when you have your own file storage or tool layer, or when you are building your own code tool. You give up the workspace file system, the model-facing `exec` tool, and the prebuilt `codemode:*` modules.
+
+## Install
+
+<PackageManagers pkg="@cloudflare/codemode" />
+
+Add a [Worker Loader binding](/dynamic-workers/):
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+## Connect the executor
+
+The executor runs nothing until it connects. `connect()` takes two things from your Durable Object:
+
+- `db` is SQLite storage for execution records and their output. The executor creates tables named `workspace_runtime_*`.
+- `fs` is the file system that code sees through `node:fs`, as a `WorkspaceRuntimeFilesystem`. The package does not include one. Implement the interface over your own storage, or use a Computer `Workspace`, which has a SQLite-backed file system.
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import {
+	WorkerJavaScriptBackend,
+	type WorkspaceModuleBackendHandle,
+	type WorkspaceRuntimeDatabase,
+	type WorkspaceRuntimeFilesystem,
+} from "@cloudflare/codemode";
+import { Lifecycle } from "agents/lifecycle";
+import { lookUpForecast } from "./weather";
+import { files } from "./files"; // Your WorkspaceRuntimeFilesystem
+
+export class Runner extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+	#executor?: WorkspaceModuleBackendHandle;
+
+	async onStart() {
+		this.#executor = await new WorkerJavaScriptBackend({
+			loader: this.env.LOADER,
+			modules: {
+				"codemode:weather": {
+					forecast: ([city]) => lookUpForecast(String(city)),
+				},
+			},
+		}).connect({ db: sqlDatabase(this.ctx.storage), fs: files });
+	}
+
+	async onRequest(request: Request): Promise<Response> {
+		const execution = await this.#executor!.exec({
+			source: await request.text(),
+			input: { city: "Lisbon" },
+		});
+
+		let stdout = "";
+		let result: unknown;
+		for await (const event of execution.events) {
+			if (event.name === "stdout") stdout += new TextDecoder().decode(event.value);
+			if (event.name === "exit") result = event.result;
+		}
+		return Response.json({ result, stdout });
+	}
+}
+
+// ctx.storage.sql returns BLOB columns as ArrayBuffer. The executor expects Uint8Array.
+function sqlDatabase(storage: DurableObjectStorage): WorkspaceRuntimeDatabase {
+	function all<Row extends object>(query: string, ...bindings: unknown[]): Row[] {
+		return storage.sql
+			.exec(query, ...bindings)
+			.toArray()
+			.map((row) => {
+				const out: Record<string, unknown> = {};
+				for (const [key, value] of Object.entries(row)) {
+					out[key] = value instanceof ArrayBuffer ? new Uint8Array(value) : value;
+				}
+				return out as Row;
+			});
+	}
+	return {
+		run: (query, ...bindings) => void storage.sql.exec(query, ...bindings),
+		all,
+		one: (query, ...bindings) => all(query, ...bindings)[0],
+		transactionSync: (closure) => storage.transactionSync(closure),
+	};
+}
+```
+
+</TypeScriptExample>
+
+Connect once per Durable Object, and reuse the handle. Connecting marks any execution that was still running as failed, because its Dynamic Worker is gone.
+
+## What the code looks like
+
+The source is an ECMAScript module. Its default export is called with `input`, and its return value is the result:
+
+```js
+import { readFile } from "node:fs/promises";
+import { forecast } from "codemode:weather";
+
+export default async function ({ city }) {
+	const notes = await readFile("/workspace/notes.txt", "utf8");
+	return { notes, forecast: await forecast(city) };
+}
+```
+
+Call `node:fs` and host modules inside the default export. The Workers runtime allows no I/O while a module loads, so a call at the top level fails the run. The result and host module arguments must be JSON-compatible plain data.
+
+Every path is confined to `root`, which is `/workspace` by default.
+
+## Events
+
+`exec()` returns an execution with an `events` stream:
+
+| Event    | Fields                                                           |
+| -------- | ---------------------------------------------------------------- |
+| `stdout` | `value`, the bytes the code wrote with `console.log()`           |
+| `stderr` | `value`, the bytes the code wrote with `console.error()`         |
+| `exit`   | `code`, the exit code, and `result`, the default export's return |
+
+Finished executions stay in SQLite for 60 minutes, up to 100 of them. Call `getExec({ id })` to read an execution's events again, `killExec({ id })` to stop one, and `disposeExec({ id })` to remove it.
+
+## Modules
+
+The `modules` option maps a specifier to one of three things:
+
+- **A string of JavaScript.** It is bundled into the isolate, for example `"tar-stream": TAR_STREAM_BUNDLE`.
+- **An object of functions.** This is a host module, under a `codemode:` name. Each function runs in your Durable Object. It receives the code's arguments as an array, and a context with `signal`, `deadline`, `access`, and `resolvePath`.
+- **A factory.** It builds the functions when the executor connects. It receives every field you passed to `connect()` except `db` and `fs`, so a module can use services that only exist at that time.
+
+<TypeScriptExample>
+
+```ts
+const backend = new WorkerJavaScriptBackend({
+	loader: env.LOADER,
+	modules: {
+		"codemode:greeter": ({ greeting }: { greeting: string }) => ({
+			greet: ([name]) => `${greeting}, ${String(name)}`,
+		}),
+	},
+});
+
+await backend.connect({ db, fs, greeting: "Hello" });
+```
+
+</TypeScriptExample>
+
+Computer's prebuilt modules, such as `codemode:git` and `codemode:tools`, are factories like this. A Computer `Workspace` passes its Git client and runtime when it connects.
+
+To describe the modules to a model, read `backend.description`. It lists every module, including each factory's description.
+
+## Options
+
+| Option             | Default         | Description                                                                         |
+| ------------------ | --------------- | ----------------------------------------------------------------------------------- |
+| `loader`           | Required        | The Worker Loader binding.                                                          |
+| `root`             | `/workspace`    | The directory code can access.                                                      |
+| `access`           | `"read-write"`  | Set to `"read"` to stop code from changing files.                                   |
+| `modules`          | None            | Modules code can import.                                                            |
+| `defaultTimeoutMs` | `60000`         | How long a run can take when the caller does not set a timeout.                     |
+| `maxTimeoutMs`     | `180000`        | The longest timeout a caller can request.                                           |
+| `maxCpuMs`         | `maxTimeoutMs`  | The most CPU time one run can use.                                                  |
+| `globalOutbound`   | `null`          | A `Fetcher` that receives every outbound request. `null` blocks network access.     |
+
+The executor also limits the size of source, input, output, results, and host calls. Every option is documented on `WorkerJavaScriptBackendOptions`.
+
+## Related resources
+
+- [Run code with Computer](/agents/runtime/code-mode/computer/): the same executor, with a workspace and an `exec` tool.
+- [`@cloudflare/codemode` on GitHub](https://github.com/cloudflare/agents/tree/main/packages/codemode): source and documentation.
+- [Dynamic Workers](/dynamic-workers/): the isolates that run each execution.

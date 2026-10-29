@@ -3,7 +3,7 @@ title: Human-in-the-loop patterns
 pcx_content_type: how-to
 sidebar:
   order: 2
-description: Implement human-in-the-loop functionality using Workflow approvals, durable Code Mode approvals, and MCP elicitation.
+description: Implement human-in-the-loop functionality using Workflow approvals, Code Mode approvals, and MCP elicitation.
 products:
   - agents
 ---
@@ -31,7 +31,7 @@ Choose the pattern based on who introduces the pause and where it occurs:
 | ---------------------- | ------------------------------------------ | --------------------------- | ----------------------- | ------------------------------------------- |
 | **MCP elicitation**    | MCP request handled by your Agent client   | MCP server developer        | Minutes                 | `configureElicitationHandlers()`            |
 | **Workflow approval**  | Durable application task or tool operation | Agent application developer | Months or years         | `waitForApproval()`                         |
-| **Code Mode approval** | Connector call in model-generated code     | Code Mode Agent developer   | Until configured expiry | `requiresApproval`, `approve()`, `reject()` |
+| **Code Mode approval** | Host module call in model-generated code   | Code Mode Agent developer   | Until answered          | `ctx.interrupt()`, `runtime.respond()`      |
 
 ## Workflow-based approval
 
@@ -362,107 +362,36 @@ export class MyAgent extends Agent<Env> {
 
 For the complete form, URL, and browser forwarding patterns, refer to [MCP client elicitation](/agents/model-context-protocol/apis/client-api/#elicitation). For the server side, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler).
 
-## Durable Code Mode approvals
+## Code Mode approvals
 
-Use the [durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) for coding agents and other Agents that use the Code Mode pattern. Mark a connector method with `requiresApproval: true` to pause model-generated code before it invokes the underlying tool.
-
-The following example marks a GitHub MCP tool as approval-gated, adds the connector to a durable runtime, and exposes methods that a UI can use to inspect, approve, or reject the pending action:
+When an agent uses [Code Mode](/agents/concepts/code-mode/), the model's code calls your tools through host modules. With [Computer](/agents/runtime/code-mode/computer/), a host module function can pause the run until a person answers. The code calls the function as usual and gets its result once the answer arrives.
 
 <TypeScriptExample>
 
 ```ts
-import { AIChatAgent } from "@cloudflare/ai-chat";
-import {
-	createCodemodeRuntime,
-	DynamicWorkerExecutor,
-	McpConnector,
-	type CodemodeRuntimeHandle,
-	type ConnectorTool,
-	type McpConnectionLike,
-	type PendingAction,
-} from "@cloudflare/codemode";
-import { callable } from "agents";
-import { convertToModelMessages, stepCountIs, streamText } from "ai";
-import { model } from "./model";
-
-class GitHubConnector extends McpConnector<Env> {
-	private connection: McpConnectionLike;
-
-	constructor(
-		ctx: DurableObjectState,
-		env: Env,
-		connection: McpConnectionLike,
-	) {
-		super(ctx, env);
-		this.connection = connection;
-	}
-
-	override name() {
-		return "github";
-	}
-
-	protected override createConnection() {
-		return this.connection;
-	}
-
-	protected override tool(name: string, tool: ConnectorTool): ConnectorTool {
-		if (name === "create_issue") {
-			return { ...tool, requiresApproval: true };
-		}
-		return tool;
-	}
-}
-
-export class CodingAgent extends AIChatAgent<Env> {
-	private runtime(): CodemodeRuntimeHandle {
-		const server = this.mcp
-			.listServers()
-			.find((item) => item.name === "GitHub");
-		if (!server) throw new Error("GitHub MCP server is not registered.");
-
-		const connection = this.mcp.mcpConnections[server.id];
-		if (!connection) throw new Error("GitHub MCP connection is unavailable.");
-
-		return createCodemodeRuntime({
-			ctx: this.ctx,
-			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
-			connectors: [new GitHubConnector(this.ctx, this.env, connection)],
-		});
-	}
-
-	async onChatMessage() {
-		const result = streamText({
-			model,
-			messages: await convertToModelMessages(this.messages),
-			tools: { codemode: this.runtime().tool() },
-			stopWhen: stepCountIs(10),
-		});
-
-		return result.toUIMessageStreamResponse();
-	}
-
-	@callable()
-	async pendingApprovals(): Promise<PendingAction[]> {
-		return this.runtime().pending();
-	}
-
-	@callable()
-	async approveExecution(executionId: string) {
-		return this.runtime().approve({ executionId });
-	}
-
-	@callable()
-	async rejectExecution(executionId: string, seq: number): Promise<boolean> {
-		return this.runtime().reject({ executionId, seq });
-	}
-}
+new WorkerJavaScriptBackend({
+	loader: this.env.LOADER,
+	onInterrupt: "replay",
+	modules: {
+		"codemode:github": {
+			createIssue: async ([repo, title], ctx) => {
+				const { approved } = await ctx.interrupt<{ approved: boolean }>({
+					repo,
+					title,
+				});
+				if (!approved) throw new Error("The issue was rejected.");
+				return this.createIssue(String(repo), String(title), {
+					idempotencyKey: ctx.callId,
+				});
+			},
+		},
+	},
+});
 ```
 
 </TypeScriptExample>
 
-When generated code calls `github.create_issue()`, the runtime records the pending method and arguments, then pauses before the MCP tool executes. Approval starts another pass with the same source code and execution ID. Previously completed calls replay from the durable log, the approved call executes, and the generated code continues.
-
-Pending approvals and execution history survive request completion and Durable Object hibernation. For the execution and replay model, refer to [Approvals through abort and replay](/agents/tools/codemode/how-it-works/#approvals-through-abort-and-replay).
+A UI lists the waiting calls with `workspace.runtime.pending()` and answers one with `workspace.runtime.respond()`. The run survives restarts while it waits. On approval, it replays from a journal to the waiting call, and continues. For the details and current limits, refer to [Ask for approval](/agents/runtime/code-mode/computer/#ask-for-approval).
 
 ## Build Workflow approval UIs
 
@@ -593,7 +522,7 @@ class MultiApprovalAgent extends Agent<Env, State> {
 />
 
 <LinkCard
-	title="Durable Code Mode runtime"
-	href="/agents/tools/codemode/durable-runtime/"
-	description="Pause model-generated code for approval before connector calls."
+	title="Run code with Computer"
+	href="/agents/runtime/code-mode/computer/"
+	description="Pause model-generated code for approval inside a host module call."
 />

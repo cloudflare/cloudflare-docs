@@ -18,6 +18,7 @@ Every agent built with the Agents SDK runs on a [Durable Object](/durable-object
 - **[Routing](/agents/runtime/routing/)** (`agents/routing`) sends requests from your Worker to the right named object.
 - **[Capabilities](/agents/runtime/capabilities/)** are features you attach with `lifecycle.use()`, such as WebSocket clients, shared state, a scheduler, and MCP connections.
 - **[Observability](/agents/runtime/observability/)** traces model calls and publishes events from the Lifecycle and its capabilities.
+- **[Code Mode](/agents/runtime/code-mode/)** runs code that the model writes, in a sandbox, with your tools supplied as modules.
 
 ```mermaid
 flowchart LR
@@ -125,3 +126,10 @@ To write your own capability, refer to [Build a capability](/agents/runtime/capa
 
 - [Tracing](/agents/runtime/observability/tracing/) records model calls, tool runs, and approvals as Workers traces.
 - [Diagnostics channels](/agents/runtime/observability/diagnostics-channels/) publish structured events from the Lifecycle, its capabilities, and the `Agent` class.
+
+## Code Mode
+
+- [Code Mode](/agents/runtime/code-mode/) compares the ways to run model-written code.
+- [Run code with Computer](/agents/runtime/code-mode/computer/) gives the model an `exec` tool, and supplies your tools as modules.
+- [Use the executor](/agents/runtime/code-mode/executor/) runs code with `WorkerJavaScriptBackend` from `@cloudflare/codemode`.
+- [Run skill scripts](/agents/runtime/code-mode/skill-scripts/) runs the scripts bundled with Agent Skills.

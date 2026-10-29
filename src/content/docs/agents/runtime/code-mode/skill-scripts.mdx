@@ -1,5 +1,5 @@
 ---
-title: Execution
+title: Run skill scripts
 pcx_content_type: reference
 description: Run Agent Skills scripts with a Computer Workspace backend, or with the experimental skill script runner.
 sidebar:
@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-[Agent Skills](/agents/skills/) can bundle scripts under `scripts/`. An agent runs them in one of two ways:
+[Agent Skills](/agents/skills/) can bundle scripts under `scripts/`. Running one is a form of [Code Mode](/agents/concepts/code-mode/), because a sandbox runs code that the model chose. An agent runs skill scripts in one of two ways:
 
 | Where the skill lives                                  | How scripts run                                               |
 | ------------------------------------------------------ | ------------------------------------------------------------- |
@@ -141,4 +141,5 @@ Scripts get no network access and no tools unless you grant them. Relative paths
 ## Related
 
 - [Think tools](/agents/harnesses/think/tools/): how skill tools merge with workspace, custom, MCP, and client tools
+- [Run code with Computer](/agents/runtime/code-mode/computer/): give the model an `exec` tool, and your tools as modules
 - [Sandbox](/agents/tools/sandbox/): run code in a container
