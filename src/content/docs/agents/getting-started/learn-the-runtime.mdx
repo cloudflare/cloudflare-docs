@@ -3,7 +3,7 @@ title: Learn the runtime
 pcx_content_type: get-started
 sidebar:
   order: 2
-description: Learn the runtime under every agent. Build a counter on a Durable Object with the Agents SDK lifecycle, add durable state and WebSockets, then connect a client that stays in sync.
+description: Learn the runtime under every agent. Build a counter on a Durable Object with the Agents SDK Lifecycle, add durable state and WebSockets, then connect a client that stays in sync.
 products:
   - agents
 ---
@@ -15,9 +15,9 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-An agent on Cloudflare runs in a [Durable Object](/durable-objects/). The Agents SDK [lifecycle](/agents/runtime/lifecycle/) runs inside that Durable Object and starts the capabilities you add to it. A harness, such as the Pi harness in the [Quick start](/agents/getting-started/quick-start/), is one of those capabilities.
+An agent on Cloudflare runs in a [Durable Object](/durable-objects/). The Agents SDK [Lifecycle](/agents/runtime/lifecycle/) runs inside that Durable Object and starts the capabilities you add to it. A harness, such as the Pi harness in [Build your first Durable Agent](/agents/getting-started/build-your-first-durable-agent/), is one of those capabilities.
 
-This guide leaves the harness out so you can see the runtime on its own. You build a counter on a Durable Object and add two capabilities, `State` and `WebSockets`. Then you call it over HTTP and connect a client that stays in sync over WebSockets. Everything here works the same way on an object that also runs a harness.
+This guide leaves the harness out so you can see the runtime on its own. You build a counter on a Durable Object and add two capabilities, [`State`](/agents/runtime/capabilities/state/) and [`WebSockets`](/agents/runtime/capabilities/websockets/). Then you call it over HTTP and connect a client that stays in sync over WebSockets. Everything here works the same way on an object that also runs a harness.
 
 ## Prerequisites
 
@@ -72,7 +72,7 @@ Add a SQLite-backed Durable Object to your Wrangler configuration file:
 
 - `name` in the binding becomes the property on `env`, for example `env.Counter`.
 - `class_name` must match the exported class name.
-- `exports` declares the class with `"storage": "sqlite"`, which gives each object the SQLite database that the lifecycle and its capabilities store data in. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).
+- `exports` declares the class with `"storage": "sqlite"`, which gives each object the SQLite database that the Lifecycle and its capabilities store data in. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).
 - The `agents` package requires the `nodejs_compat` flag.
 
 ## Write the agent
@@ -156,8 +156,8 @@ export default {
 Here is what each part does:
 
 - `Counter` extends the platform `DurableObject`. Each named instance is one agent, with its own SQLite database.
-- `State` stores one JSON value in that database. `get()` reads it and `set()` writes it. `onChanged` runs after every change, and here it sends the new value to every connected client.
-- `WebSockets` accepts WebSocket connections. With `state`, each client receives the current value when it connects and every time it changes. `callables` lists the methods clients can call.
+- [`State`](/agents/runtime/capabilities/state/) stores one JSON value in that database. `get()` reads it and `set()` writes it. `onChanged` runs after every change, and here it sends the new value to every connected client.
+- [`WebSockets`](/agents/runtime/capabilities/websockets/) accepts WebSocket connections. With `state`, each client receives the current value when it connects and every time it changes. `callables` lists the methods clients can call.
 - `Lifecycle.install(this)` takes over the object's `fetch`, `alarm`, and WebSocket handlers, and `.use()` adds each capability. Do not define `fetch()` or `alarm()` on the class yourself. Use `onRequest()`, `onStart()`, and `onAlarm()` instead.
 - `onRequest()` handles HTTP requests that no capability handled. A `POST` increments the counter, and a `GET` returns the state.
 - `routeAgentRequest()` sends requests for `/agents/counter/:name` to the `Counter` instance called `:name`.
@@ -253,7 +253,7 @@ export function CounterView() {
 }
 ```
 
-Clients can also replace the state directly with `agent.setState()`. To check or refuse those changes, pass `validateStateChange` to `State`, or mark connections read-only with the `readonly` option on `WebSockets`.
+Clients can also replace the state directly with `agent.setState()`. To check or refuse those changes, pass `validateStateChange` to [`State`](/agents/runtime/capabilities/state/), or mark connections read-only with the `readonly` option on [`WebSockets`](/agents/runtime/capabilities/websockets/).
 
 ## How it works
 
@@ -265,9 +265,9 @@ flowchart LR
 ```
 
 - **One agent per name.** `/agents/counter/demo` and `/agents/counter/other` are two Durable Object instances, each with its own database.
-- **Durable state.** `State` writes every change to SQLite, so the count survives restarts, deploys, and eviction from memory.
+- **Durable state.** [`State`](/agents/runtime/capabilities/state/) writes every change to SQLite, so the count survives restarts, deploys, and eviction from memory.
 - **Real-time sync.** Every client connected to the same agent receives each change.
-- **Hibernation.** WebSocket connections use the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/), so an idle agent leaves memory while its clients stay connected. When a message arrives, the lifecycle starts again before it handles the message.
+- **Hibernation.** WebSocket connections use the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/), so an idle agent leaves memory while its clients stay connected. When a message arrives, the Lifecycle starts again before it handles the message.
 
 ## Deploy to Cloudflare
 
@@ -287,17 +287,17 @@ Your agent is now running on Cloudflare's global network. To call it, replace `l
 
 ### The object cannot determine its name
 
-The lifecycle needs the Durable Object's name. Address the object with `getByName()`, `idFromName()`, or `routeAgentRequest()`. Objects created with `newUniqueId()` or `idFromString()` do not have a name.
+The Lifecycle needs the Durable Object's name. Address the object with `getByName()`, `idFromName()`, or `routeAgentRequest()`. Objects created with `newUniqueId()` or `idFromString()` do not have a name.
 
 ### `onRequest()` or a capability never runs
 
-Remove any `fetch()`, `alarm()`, `webSocketMessage()`, `webSocketClose()`, or `webSocketError()` method from the class. The lifecycle only installs a handler that the class does not already define.
+Remove any `fetch()`, `alarm()`, `webSocketMessage()`, `webSocketClose()`, or `webSocketError()` method from the class. The Lifecycle only installs a handler that the class does not already define.
 
 ## Next steps
 
-- [Quick start](/agents/getting-started/quick-start/): run the Pi harness on the same lifecycle.
+- [Build your first Durable Agent](/agents/getting-started/build-your-first-durable-agent/): run the Pi harness on the same lifecycle.
 - [Pi harness](/agents/harnesses/pi/): add tools, sessions, and a browser UI to a Pi agent.
-- [Add to an existing project](/agents/getting-started/add-to-existing-project/): add the lifecycle to a Durable Object you already have.
+- [Add to an existing project](/agents/getting-started/add-to-existing-project/): add the Lifecycle to a Durable Object you already have.
 - [Lifecycle](/agents/runtime/lifecycle/): the request path, the job queue, and how to write your own capability.
 - [Scheduler](/agents/runtime/capabilities/scheduler/): run work later, on an interval, or on a cron schedule.
 - [Testing your Agents](/agents/getting-started/testing-your-agent/): write tests with Vitest and the Workers test pool.

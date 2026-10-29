@@ -1,6 +1,6 @@
 ---
 title: Add to an existing project
-description: Add the Agents SDK lifecycle to a Durable Object in an existing Cloudflare Workers project, then add capabilities such as state, WebSockets, and scheduling.
+description: Add the Agents SDK Lifecycle to a Durable Object in an existing Cloudflare Workers project, then add capabilities such as state, WebSockets, and scheduling.
 pcx_content_type: how-to
 sidebar:
   order: 3
@@ -17,15 +17,15 @@ import {
 
 Any Cloudflare Workers project can host an agent. Add a [Durable Object](/durable-objects/), or use one you already have, and install the Agents SDK [lifecycle](/agents/runtime/lifecycle/) on it. Then add the capabilities you need from the Agents SDK, such as state, WebSockets, scheduling, MCP clients, or a [harness](/agents/harnesses/).
 
-You do not need to change your Worker's existing routes or rewrite your Durable Object as a subclass of a framework class. The lifecycle runs inside your `DurableObject` class.
+You do not need to change your Worker's existing routes or rewrite your Durable Object as a subclass of a framework class. The Lifecycle runs inside your `DurableObject` class.
 
-If you are starting a new project, follow the [Quick start](/agents/getting-started/quick-start/) instead.
+If you are starting a new project, follow [Build your first Durable Agent](/agents/getting-started/build-your-first-durable-agent/) instead.
 
 ## Prerequisites
 
 - A Workers project with a [Wrangler configuration file](/workers/wrangler/configuration/).
-- A Durable Object class with [SQLite storage](/durable-objects/api/sqlite-storage-api/), or a new one. The lifecycle keeps its job queue in SQLite, so it does not run on a [KV-backed Durable Object](/durable-objects/api/legacy-kv-storage-api/).
-- Objects addressed by name, with `getByName()` or `idFromName()`. The lifecycle reads the object's name from `ctx.id.name`, which objects created with `newUniqueId()` or `idFromString()` do not have.
+- A Durable Object class with [SQLite storage](/durable-objects/api/sqlite-storage-api/), or a new one. The Lifecycle keeps its job queue in SQLite, so it does not run on a [KV-backed Durable Object](/durable-objects/api/legacy-kv-storage-api/).
+- Objects addressed by name, with `getByName()` or `idFromName()`. The Lifecycle reads the object's name from `ctx.id.name`, which objects created with `newUniqueId()` or `idFromString()` do not have.
 
 ## 1. Install the Agents SDK
 
@@ -81,18 +81,18 @@ If your Worker uses the legacy `migrations` array, add a new migration with a ne
 
 Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/) for details. Export the class from your Worker's main module, then run `npx wrangler types` to update the `Env` interface.
 
-## 3. Install the lifecycle
+## 3. Install the Lifecycle
 
-Add a `lifecycle` field to the class with `Lifecycle.install(this)`. The lifecycle installs the object's `fetch`, `alarm`, and WebSocket handlers, starts the object once before it handles any work, and passes each request to your code.
+Add a `lifecycle` field to the class with `Lifecycle.install(this)`. The Lifecycle installs the object's `fetch`, `alarm`, and WebSocket handlers, starts the object once before it handles any work, and passes each request to your code.
 
-The lifecycle only installs a handler the class does not already define. If your class keeps its own `fetch()` or `alarm()`, those run instead, and the lifecycle never starts. Move that code into the lifecycle's hooks:
+The Lifecycle only installs a handler the class does not already define. If your class keeps its own `fetch()` or `alarm()`, those run instead, and the Lifecycle never starts. Move that code into the Lifecycle's hooks:
 
 | Existing code                                                | Move it to                                                                                                           |
 | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
-| Setup in the constructor, such as `blockConcurrencyWhile()`  | `onStart()`. It runs once each time the object starts, and the lifecycle holds other events until it finishes.       |
+| Setup in the constructor, such as `blockConcurrencyWhile()`  | `onStart()`. It runs once each time the object starts, and the Lifecycle holds other events until it finishes.       |
 | `fetch(request)`                                             | `onRequest(request)`. It receives every request that no capability handled.                                          |
-| `alarm()` and `ctx.storage.setAlarm()`                       | The `Scheduler` capability, or `onAlarm()`. The lifecycle owns the object's alarm and re-arms it from its job queue. |
-| `webSocketMessage()`, `webSocketClose()`, `webSocketError()` | The handlers of the `WebSockets` capability.                                                                         |
+| `alarm()` and `ctx.storage.setAlarm()`                       | The [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability, or `onAlarm()`. The Lifecycle owns the object's alarm and re-arms it from its job queue. |
+| `webSocketMessage()`, `webSocketClose()`, `webSocketError()` | The handlers of the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability.                                                                         |
 
 For example, here is a Durable Object that stores notes:
 
@@ -133,7 +133,7 @@ export class Notes extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-With the lifecycle installed, the constructor setup moves to `onStart()` and `fetch()` becomes `onRequest()`:
+With the Lifecycle installed, the constructor setup moves to `onStart()` and `fetch()` becomes `onRequest()`:
 
 <TypeScriptExample filename="src/notes.ts">
 
@@ -174,11 +174,11 @@ export class Notes extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-[RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) do not go through `fetch`, so the lifecycle does not start the object for them. If an RPC method depends on setup in `onStart()`, call `await this.lifecycle.start()` first. Concurrent calls share one startup, and calls after startup return immediately. Capability methods, such as `scheduler.set()`, start the lifecycle themselves.
+[RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) do not go through `fetch`, so the Lifecycle does not start the object for them. If an RPC method depends on setup in `onStart()`, call `await this.lifecycle.start()` first. Concurrent calls share one startup, and calls after startup return immediately. Capability methods, such as `scheduler.set()`, start the Lifecycle themselves.
 
 ## 4. Add capabilities
 
-Each capability is a class from the Agents SDK. Create it as a field and add it to the lifecycle with `.use()`. This example adds the `Scheduler` capability, so the object can add a note later:
+Each capability is a class from the Agents SDK. Create it as a field and add it to the Lifecycle with `.use()`. This example adds the [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability, so the object can add a note later:
 
 <TypeScriptExample filename="src/notes.ts">
 
@@ -208,7 +208,7 @@ export class Notes extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-The lifecycle stores the schedule in its job queue in SQLite and sets the object's alarm. When the alarm fires, the lifecycle starts the object if it was evicted, and runs `remind`.
+The Lifecycle stores the schedule in its job queue in SQLite and sets the object's alarm. When the alarm fires, the Lifecycle starts the object if it was evicted, and runs `remind`.
 
 Call `remindLater()` over RPC from your Worker:
 
@@ -235,7 +235,7 @@ Capabilities run in the order you add them. To write your own, refer to [Lifecyc
 
 ## 5. Route requests to the Durable Object
 
-Your Worker can keep sending requests to the object the way it does now, for example with `env.NOTES.getByName(name).fetch(request)`. The lifecycle handles requests and WebSocket upgrades from any stub.
+Your Worker can keep sending requests to the object the way it does now, for example with `env.NOTES.getByName(name).fetch(request)`. The Lifecycle handles requests and WebSocket upgrades from any stub.
 
 To use the Agents SDK clients, `useAgent` from `agents/react` and `AgentClient` from `agents/client`, serve the object at `/agents/{binding}/{name}` with `routeAgentRequest()`. Call it before your existing routes:
 
@@ -297,13 +297,13 @@ If your Worker serves [static assets](/workers/static-assets/), requests that ma
 npx wrangler deploy
 ```
 
-Your existing Durable Objects keep their data. The lifecycle and the Agents SDK capabilities add their own tables to the object's SQLite database, with names that start with `cf_agents_`, and their own storage keys, which start with `cf_agents:`. Harnesses use their own prefix, such as `pi_` for the Pi harness. None of them touch your tables.
+Your existing Durable Objects keep their data. The Lifecycle and the Agents SDK capabilities add their own tables to the object's SQLite database, with names that start with `cf_agents_`, and their own storage keys, which start with `cf_agents:`. Harnesses use their own prefix, such as `pi_` for the Pi harness. None of them touch your tables.
 
 ## Troubleshooting
 
 ### `onStart()`, `onRequest()`, or a capability never runs
 
-Remove `fetch()`, `alarm()`, `webSocketMessage()`, `webSocketClose()`, and `webSocketError()` from the class. The lifecycle does not replace a handler the class already defines.
+Remove `fetch()`, `alarm()`, `webSocketMessage()`, `webSocketClose()`, and `webSocketError()` from the class. The Lifecycle does not replace a handler the class already defines.
 
 ### The object cannot determine its name
 
@@ -311,7 +311,7 @@ Address the object with `getByName()` or `idFromName()`. Objects created with `n
 
 ### Scheduled work stops running
 
-Do not call `ctx.storage.setAlarm()` or `ctx.storage.deleteAlarm()` yourself. The lifecycle owns the object's alarm, and setting it directly can cancel the lifecycle's next wake-up. Use the `Scheduler` capability or `lifecycle.jobs` instead.
+Do not call `ctx.storage.setAlarm()` or `ctx.storage.deleteAlarm()` yourself. The Lifecycle owns the object's alarm, and setting it directly can cancel the Lifecycle's next wake-up. Use the [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability or `lifecycle.jobs` instead.
 
 ## Next steps
 

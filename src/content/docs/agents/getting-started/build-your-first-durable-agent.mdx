@@ -1,0 +1,414 @@
+---
+title: Build your first Durable Agent
+pcx_content_type: get-started
+sidebar:
+  order: 1
+description: Build your first agent on Cloudflare. Run the Pi harness in a Durable Object with the Lifecycle, give it a Cloudflare Computer workspace, connect to it over WebSockets, and deploy it.
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+A Durable Agent is a [Durable Object](/durable-objects/) with the Agents SDK [Lifecycle](/agents/runtime/lifecycle/) installed. The Lifecycle starts the [capabilities](/agents/runtime/capabilities/) you add to the object. The most important one is the harness: the agent loop that calls the model, runs tools, and decides when the agent is done.
+
+In this guide, you build an agent that:
+
+- runs the [Pi harness](/agents/harnesses/pi/) in a Durable Object,
+- works on files in a [Cloudflare Computer workspace](/agents/tools/filesystem/), stored in the same object,
+- talks to clients through the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability.
+
+You do not need an API key. The agent uses [Workers AI](/workers-ai/) through the `AI` binding.
+
+## Prerequisites
+
+- A [Cloudflare account](https://dash.cloudflare.com/sign-up)
+- Node.js 22.19 or later
+
+## Create a project
+
+<Steps>
+
+1. Create a Worker project:
+
+   <PackageManagers
+   	type="create"
+   	pkg="cloudflare@latest"
+   	args="my-agent --type=hello-world --lang=ts"
+   />
+
+2. Go to the project directory and install the Agents SDK, the Pi packages, and Cloudflare Computer:
+
+   ```sh
+   cd my-agent
+   ```
+
+   <PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord @cloudflare/computer" />
+
+   The Pi packages are optional peer dependencies of `agents`. Each `agents` release supports one Pi minor version, so install the versions your package manager resolves for `agents`.
+
+</Steps>
+
+## Configure Wrangler
+
+Add the `AI` binding and a SQLite-backed Durable Object to your Wrangler configuration file:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "my-agent",
+	"main": "src/index.ts",
+	"upload_source_maps": true,
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"ai": {
+		"binding": "AI",
+	},
+	"durable_objects": {
+		"bindings": [{ "name": "Assistant", "class_name": "Assistant" }],
+	},
+	"exports": {
+		"Assistant": { "type": "durable-object", "storage": "sqlite" },
+	},
+}
+```
+
+</WranglerConfig>
+
+- `ai` adds the [Workers AI](/workers-ai/) binding as `env.AI`.
+- `exports` declares the class with `"storage": "sqlite"`. The Lifecycle, the harness, and the workspace store their data in each object's SQLite database. Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).
+- The `agents` package requires the `nodejs_compat` flag.
+
+## Run a harness on a Durable Object
+
+Replace `src/index.ts` with an `Assistant` Durable Object that runs the Pi harness:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+import { routeAgentRequest } from "agents/routing";
+
+export class Assistant extends DurableObject<Env> {
+	// Workers AI models, through the AI binding
+	readonly ai = createAI({ binding: this.env.AI });
+	// Pi's tools and prompt sections. Create one per object.
+	readonly registry = createRegistry();
+
+	// The harness: the Pi agent loop, stored in this object's database
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	// The Lifecycle starts the harness inside the Durable Object
+	readonly lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return Response.json(await this.harness.messages());
+		}
+		const { status, text } = await this.harness.prompt(await request.text());
+		return Response.json({ status, text });
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Here is what each part does:
+
+- `Assistant` extends the platform `DurableObject`. Each named instance is one agent, with its own SQLite database.
+- `PiHarness` is the harness. It runs the [Pi](https://pi.dev/) agent loop, stores the transcript in the object's database, and keeps a run going after the object is evicted from memory.
+- `createAI()` from `agents/models/pi-ai` connects Pi to Workers AI. `defaults.model` is the model a new session starts with.
+- `Lifecycle.install(this)` takes over the object's `fetch` and `alarm` handlers, and `.use(this.harness)` adds the harness. Do not define `fetch()` or `alarm()` on the class yourself.
+- `onRequest()` handles HTTP requests that no capability handled. A `POST` sends a prompt and waits for the answer. A `GET` returns the transcript.
+- `routeAgentRequest()` sends requests for `/agents/assistant/:name` to the `Assistant` instance called `:name`. For more information, refer to [Routing](/agents/runtime/routing/).
+
+Generate types for the `Env` interface:
+
+```sh
+npx wrangler types
+```
+
+## Run the agent locally
+
+<Steps>
+
+1. Start the development server:
+
+   ```sh
+   npx wrangler dev
+   ```
+
+   The `AI` binding always runs remotely, so Wrangler asks you to log in the first time.
+
+2. In another terminal, send the agent called `demo` a prompt:
+
+   ```sh
+   curl -X POST http://localhost:8787/agents/assistant/demo \
+     -d "What is 47 times 19? Reply with the number only."
+   ```
+
+   ```json output
+   { "status": "done", "text": "893" }
+   ```
+
+   `status` is `done` when the model answered, and `unanswered` when the run failed or was stopped.
+
+3. Read the transcript:
+
+   ```sh
+   curl http://localhost:8787/agents/assistant/demo
+   ```
+
+</Steps>
+
+The transcript lives in the `demo` instance's database. A request to `/agents/assistant/another-name` reaches a different agent, with an empty transcript.
+
+## Give the agent a workspace
+
+A [Cloudflare Computer](/agents/tools/filesystem/) `Workspace` is a durable filesystem. It stores its files in the same Durable Object's SQLite database, next to Pi's transcript, so the files survive eviction too.
+
+`createPiTools()` turns the workspace into tools the model can call: `read`, `ls`, `find`, `grep`, `write`, `edit`, and `delete`. Install them in Pi's registry when the harness opens:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+// ...
+import { Workspace } from "@cloudflare/computer";
+import { createPiTools } from "@cloudflare/computer/tools/pi-ai";
+
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+
+	// A durable filesystem in the object's SQLite database
+	readonly workspace = new Workspace({ storage: this.ctx.storage });
+
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const { tools, execute } = createPiTools({ workspace: this.workspace });
+			this.registry.install({
+				name: "workspace",
+				tools: tools.map((tool) => ({
+					...tool,
+					async execute(args, api, ctx) {
+						const { content, isError } = await execute(
+							{ id: api.callId, name: tool.name, arguments: args },
+							{ abortSignal: ctx.abortSignal },
+						);
+						return { output: content, isError };
+					},
+				})),
+			});
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	// lifecycle and onRequest() are unchanged
+}
+```
+
+</TypeScriptExample>
+
+Ask the agent to use it:
+
+```sh
+curl -X POST http://localhost:8787/agents/assistant/demo \
+  -d "Write a haiku about Durable Objects to haiku.md, then list the files."
+```
+
+Pi calls `write`, then `ls`, and answers with what it found. The file stays in the `demo` agent's workspace for the next prompt. For the other workspace options, such as running JavaScript, refer to [Filesystem tools](/agents/tools/filesystem/).
+
+## Connect over WebSockets
+
+So far you have talked to the agent over HTTP, one request at a time. The [`WebSockets`](/agents/runtime/capabilities/websockets/) capability keeps a connection open, so a browser or another client can send prompts and get replies as they happen. Idle connections hibernate, so an open connection does not keep the object in memory.
+
+Add a [`WebSockets`](/agents/runtime/capabilities/websockets/) field and install it after the harness:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+// ...
+import { WebSockets } from "agents/websockets";
+
+export class Assistant extends DurableObject<Env> {
+	// ai, registry, workspace, and harness are unchanged
+
+	// Clients send prompts and get replies over WebSockets
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onMessage: async (connection, message) => {
+				const { text } = await this.harness.prompt(String(message));
+				connection.send(text ?? "");
+			},
+		},
+	});
+
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.webSockets);
+
+	// onRequest() is unchanged
+}
+```
+
+</TypeScriptExample>
+
+`WebSockets` accepts every WebSocket upgrade. HTTP requests still reach `onRequest()`, so the `curl` commands keep working.
+
+Connect with [`wscat`](https://github.com/websockets/wscat) and type a prompt:
+
+```sh
+npx wscat -c ws://localhost:8787/agents/assistant/demo
+```
+
+```txt output
+Connected (press CTRL+C to quit)
+< {"type":"cf_agent_identity","name":"demo","agent":"assistant"}
+> What is in haiku.md?
+< ...
+```
+
+The first frame is the agent's identity, which clients such as `useAgent` and `AgentClient` read for you. For a React client, refer to the [client SDK](/agents/agent-class/communication-channels/chat/client-sdk/).
+
+Here is the complete agent:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { createPiTools } from "@cloudflare/computer/tools/pi-ai";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+import { routeAgentRequest } from "agents/routing";
+import { WebSockets } from "agents/websockets";
+
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly registry = createRegistry();
+
+	// Tools: a durable filesystem in the object's SQLite database
+	readonly workspace = new Workspace({ storage: this.ctx.storage });
+
+	// Harness: the Pi agent loop, with the workspace as its tools
+	readonly harness = new PiHarness({
+		harness: ({ storage, context, onWake }) => {
+			const { tools, execute } = createPiTools({ workspace: this.workspace });
+			this.registry.install({
+				name: "workspace",
+				tools: tools.map((tool) => ({
+					...tool,
+					async execute(args, api, ctx) {
+						const { content, isError } = await execute(
+							{ id: api.callId, name: tool.name, arguments: args },
+							{ abortSignal: ctx.abortSignal },
+						);
+						return { output: content, isError };
+					},
+				})),
+			});
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+	});
+
+	// Capability: clients send prompts and get replies over WebSockets
+	readonly webSockets = new WebSockets({
+		handlers: {
+			onMessage: async (connection, message) => {
+				const { text } = await this.harness.prompt(String(message));
+				connection.send(text ?? "");
+			},
+		},
+	});
+
+	// Runtime: the Lifecycle starts the harness and the capabilities, and
+	// handles the object's fetch, alarm, and WebSocket events
+	readonly lifecycle = Lifecycle.install(this)
+		.use(this.harness)
+		.use(this.webSockets);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return Response.json(await this.harness.messages());
+		}
+		const { status, text } = await this.harness.prompt(await request.text());
+		return Response.json({ status, text });
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+## Deploy to Cloudflare
+
+```sh
+npx wrangler deploy
+```
+
+Your agent is now running on Cloudflare's global network at `https://my-agent.<YOUR_SUBDOMAIN>.workers.dev/agents/assistant/demo`.
+
+Anyone who knows that URL can talk to your agent. Before you share it, check who is calling in your Worker. For more information, refer to [Authentication](/agents/runtime/routing/authentication/).
+
+## Next steps
+
+- [Pi harness](/agents/harnesses/pi/): stream events to clients, work with several sessions, and recover after eviction.
+- [Pi extensions](/agents/harnesses/pi/extensions/): give the model more tools and system prompt sections.
+- [`Scheduler`](/agents/runtime/capabilities/scheduler/): run the agent on a schedule, such as a plan every morning.
+- [Capabilities](/agents/runtime/capabilities/): everything else you can add to the Durable Object.

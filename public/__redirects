@@ -282,6 +282,7 @@
 /agents/think/ /agents/harnesses/think/ 301
 /agents/build/prompts/ /workers/get-started/prompting/ 301
 /agents/getting-started/build-a-chat-agent/ /agents/examples/chat-agent/ 301
+/agents/getting-started/quick-start/ /agents/getting-started/build-your-first-durable-agent/ 301
 /agents/examples/browse-the-web/ /agents/tools/browser/ 301
 /agents/examples/manage-and-sync-state/ /agents/agent-class/state/ 301
 /agents/examples/rag/ /agents/tools/ai-search/ 301
