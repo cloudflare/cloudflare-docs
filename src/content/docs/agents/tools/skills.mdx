@@ -134,6 +134,7 @@ import {
 	workspace,
 } from "agents/skills";
 
+// `computerWorkspace` is a Workspace from @cloudflare/computer.
 const catalog = await loadSkillCatalog([workspace(computerWorkspace)]);
 
 for (const diagnostic of catalog.diagnostics) {
