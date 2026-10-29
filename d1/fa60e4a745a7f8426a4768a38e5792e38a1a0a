@@ -1,0 +1,23 @@
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_dde8d185bd747c::t_9348a937e57bad 211
+src/content/docs/agents/skills/index.mdx
+  s_dde8d185bd747c::t_d30e35f073a7e0 18-19
+src/content/docs/agents/tools/skills.mdx
+  s_dde8d185bd747c::t_b64e2d735df02a 1-179
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d1fa60e4a745a7f8426a4768a38e5792e38a1a0a",
+  "prompts": {},
+  "sessions": {
+    "s_dde8d185bd747c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1877c-5b8b-7283-9f59-80a151595166",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
