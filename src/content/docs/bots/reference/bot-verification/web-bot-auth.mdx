@@ -102,24 +102,6 @@ Cloudflare will ignore all other key types and key parameters except those conta
 
 You can use the Cloudflare-developed [`http-signature-directory` CLI tool](https://crates.io/crates/http-signature-directory) to assist you in validating your directory.
 
-:::caution[Signature freshness]
-Cloudflare only accepts key directory signatures created less than five minutes (300 seconds) before Cloudflare fetches your directory. This limit reduces the risk of replay and applies even if your `expires` timestamp is further in the future.
-
-A static, pre-signed directory response that is regenerated every few hours will fail validation, even though the signature is cryptographically valid and has not expired.
-:::
-
-#### Recommended: sign each response when it is served
-
-Cloudflare recommends per-request signing: generate a new signature each time your server serves `/.well-known/http-message-signatures-directory`. Because `created` always reflects the time the response was served, the signature always meets the freshness requirement.
-
-#### Alternative: renew a static signature
-
-You can also renew a pre-generated signature on a schedule. This approach requires additional configuration to avoid serving stale signatures:
-
-- Re-sign the directory response every one to two minutes. Do not wait until close to the five-minute limit.
-- Make sure no CDN or proxy caches `/.well-known/http-message-signatures-directory`. Serve the response with `Cache-Control: no-store`.
-- Keep your server clock synchronized, for example by using NTP, so that `created` reflects the actual time.
-
 ## 3. Register your bot and key directory
 
 You need to register your bot and its key directory to add your bot to the list of verified bots.
