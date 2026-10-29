@@ -1,0 +1,21 @@
+---
+title: Evaluate Flagship flags locally
+description: Flagship bindings now evaluate flags against a local flag store during local development, so you can develop offline and test flag changes without touching your remote app.
+products:
+  - flagship
+date: 2026-11-02
+---
+
+[Flagship](/flagship/) bindings now evaluate flags against a local flag store during local development, instead of calling your remote app. You can develop offline and test flag changes without affecting production. This applies to [`wrangler dev`](/workers/wrangler/commands/general/#dev), the [Cloudflare Vite plugin](/workers/vite-plugin/), the [Vitest integration](/workers/testing/vitest-integration/), and [`cf dev`](/cf/projects/#start-development).
+
+The local store starts empty, so evaluations return the default value you pass in code. Add and manage local flags in any of these ways:
+
+- **Wrangler** — Add `--local` to `wrangler flagship flags` commands, such as `create`, `update`, and `evaluate`. To copy all flags from your remote app, run `npx wrangler flagship flags pull <APP_ID>`.
+- **Local Explorer** — Create, edit, toggle, and evaluate flags in [Local Explorer](/workers/local-development/local-explorer/) while your dev server runs.
+- **`cf` CLI** — Add `--local` to [`cf flagship` commands](/flagship/configuration/#use-the-cf-cli).
+
+To keep evaluating against your remote app instead, set [`remote: true`](/flagship/configuration/#use-the-remote-app-instead) on the binding.
+
+The local flag store requires Wrangler v4.135.0 or `@cloudflare/vite-plugin` v1.56.0 or later. Flagship in Local Explorer requires Wrangler v4.148.0 or `@cloudflare/vite-plugin` v1.63.0 or later.
+
+Refer to [Flagship local development](/flagship/configuration/#local-development) for details.
