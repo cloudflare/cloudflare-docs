@@ -82,11 +82,11 @@ const ai = createAI({
 });
 ```
 
-## Call models from an Agent
+## Call models from a Durable Object
 
-You can call models from any method within an Agent, including from HTTP requests using the [`onRequest`](/agents/agent-class/) handler, when a [scheduled task](/agents/agent-class/schedule-tasks/) runs, when handling a WebSocket message in the [`onMessage`](/agents/agent-class/websockets/) handler, or from any of your own methods.
+An agent is a [Durable Object](/durable-objects/). You can call models from any of its methods: [`fetch`](/durable-objects/api/base/) for HTTP requests, [`alarm`](/durable-objects/api/alarms/) for scheduled work, [`webSocketMessage`](/durable-objects/best-practices/websockets/) for WebSocket messages, or your own RPC methods.
 
-Agents can call AI models on their own — autonomously — and can handle long-running responses that take minutes (or longer) to respond in full. If a client disconnects mid-stream, the Agent keeps running and can catch the client up when it reconnects.
+A Durable Object can call models on its own, without a client waiting, and can handle responses that take minutes (or longer) to finish. The examples below show only the Durable Object class. To bind it and send it requests from your Worker, refer to [Get started with Durable Objects](/durable-objects/get-started/).
 
 ### Generate text with the AI SDK
 
@@ -95,7 +95,7 @@ Agents can call AI models on their own — autonomously — and can handle long-
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 import { generateText } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 
@@ -103,11 +103,11 @@ interface Env {
 	AI: Ai;
 }
 
-export class MyAgent extends Agent<Env> {
-	async onRequest(request: Request): Promise<Response> {
+export class MyAgent extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
 		const ai = createAI({ binding: this.env.AI });
 		const { text } = await generateText({
-			model: ai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("anthropic/claude-opus-5.5"),
 			prompt: "Build me an AI agent on Cloudflare Workers",
 		});
 
@@ -118,7 +118,7 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-To call another vendor, change the model string to a catalog id such as `ai("openai/gpt-5.5")`, or pass the vendor's own model object, such as `ai(openai("gpt-5.5"))`. Both route through AI Gateway, so you do not need a vendor API key in your Worker.
+To use a different model, change the string, such as `ai("openai/gpt-5.5")` or `ai("@cf/zai-org/glm-4.7-flash")`, or pass the vendor's own model object, such as `ai(openai("gpt-5.5"))`. All of these route through AI Gateway, so you do not need a vendor API key in your Worker.
 
 You can also use any other AI SDK provider directly, without `createAI`. The call then goes straight to the vendor, with your own API key, and skips AI Gateway:
 
@@ -127,14 +127,19 @@ You can also use any other AI SDK provider directly, without `createAI`. The cal
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { createOpenAI } from "@ai-sdk/openai";
 
-export class MyAgent extends Agent {
-	async onRequest(request: Request): Promise<Response> {
+interface Env {
+	OPENAI_API_KEY: string;
+}
+
+export class MyAgent extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const openai = createOpenAI({ apiKey: this.env.OPENAI_API_KEY });
 		const { text } = await generateText({
-			model: openai("gpt-4o"),
+			model: openai("gpt-5.5"),
 			prompt: "Build me an AI agent on Cloudflare Workers",
 		});
 
@@ -147,12 +152,12 @@ export class MyAgent extends Agent {
 
 ### Stream over WebSockets {/* long-running-model-requests */}
 
-Modern reasoning models can take some time to both generate a response _and_ stream the response back to the client. Instead of buffering the entire response, you can stream it back over [WebSockets](/agents/agent-class/websockets/).
+Reasoning models can take some time to both generate a response _and_ stream it back to the client. Instead of buffering the entire response, stream it back over a [WebSocket](/durable-objects/best-practices/websockets/):
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 import { streamText } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 
@@ -160,33 +165,32 @@ interface Env {
 	AI: Ai;
 }
 
-export class MyAgent extends Agent<Env> {
-	async onConnect(connection: Connection, ctx: ConnectionContext) {
-		//
+export class MyAgent extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const { 0: client, 1: server } = new WebSocketPair();
+		this.ctx.acceptWebSocket(server);
+		return new Response(null, { status: 101, webSocket: client });
 	}
 
-	async onMessage(connection: Connection, message: WSMessage) {
-		let msg = JSON.parse(message);
-		await this.queryReasoningModel(connection, msg.prompt);
-	}
+	async webSocketMessage(ws: WebSocket, message: string | ArrayBuffer) {
+		const { prompt } = JSON.parse(message as string);
 
-	async queryReasoningModel(connection: Connection, userPrompt: string) {
 		try {
 			const ai = createAI({ binding: this.env.AI });
 			const result = streamText({
-				model: ai("@cf/zai-org/glm-4.7-flash"),
-				prompt: userPrompt,
+				model: ai("anthropic/claude-opus-5.5"),
+				prompt,
 			});
 
 			for await (const chunk of result.textStream) {
 				if (chunk) {
-					connection.send(JSON.stringify({ type: "chunk", content: chunk }));
+					ws.send(JSON.stringify({ type: "chunk", content: chunk }));
 				}
 			}
 
-			connection.send(JSON.stringify({ type: "done" }));
+			ws.send(JSON.stringify({ type: "done" }));
 		} catch (error) {
-			connection.send(JSON.stringify({ type: "error", error: error }));
+			ws.send(JSON.stringify({ type: "error", error: String(error) }));
 		}
 	}
 }
@@ -194,32 +198,34 @@ export class MyAgent extends Agent<Env> {
 
 </TypeScriptExample>
 
-You can also persist AI model responses back to [Agent state](/agents/agent-class/state/) using `this.setState`. If a user disconnects, read the message history back and send it to the user when they reconnect.
+To survive a dropped connection, save each response with the [SQLite storage API](/durable-objects/api/sqlite-storage-api/) on `this.ctx.storage`. When the client reconnects, read the message history back and send it.
 
 ## Call the AI binding directly
 
-You do not need a provider to call a model. You can call `env.AI.run()` from your Agent with any of the [Workers AI models](/workers-ai/models/). No API keys are required. Refer to [Workers AI bindings](/workers-ai/configuration/bindings/) for the full binding API.
+You do not need a provider to call a model. You can call `env.AI.run()` with any of the [Workers AI models](/workers-ai/models/). No API keys are required. Refer to [Workers AI bindings](/workers-ai/configuration/bindings/) for the full binding API.
 
 Set `stream: true` to avoid buffering and delaying responses, especially for larger models or reasoning models:
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 
 interface Env {
 	AI: Ai;
 }
 
-export class MyAgent extends Agent<Env> {
-	async onRequest(request: Request) {
-		const stream = await this.env.AI.run(
-			"@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
-			{
-				prompt: "Build me a Cloudflare Worker that returns JSON.",
-				stream: true,
-			},
-		);
+export class MyAgent extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		const stream = await this.env.AI.run("@cf/zai-org/glm-4.7-flash", {
+			messages: [
+				{
+					role: "user",
+					content: "Build me a Cloudflare Worker that returns JSON.",
+				},
+			],
+			stream: true,
+		});
 
 		return new Response(stream, {
 			headers: { "content-type": "text/event-stream" },
@@ -235,18 +241,23 @@ To send the call through [AI Gateway](/ai-gateway/), pass a [`gateway` option](/
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 
 interface Env {
 	AI: Ai;
 }
 
-export class MyAgent extends Agent<Env> {
-	async onRequest(request: Request) {
+export class MyAgent extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
 		const response = await this.env.AI.run(
-			"@cf/deepseek-ai/deepseek-r1-distill-qwen-32b",
+			"@cf/zai-org/glm-4.7-flash",
 			{
-				prompt: "Build me a Cloudflare Worker that returns JSON.",
+				messages: [
+					{
+						role: "user",
+						content: "Build me a Cloudflare Worker that returns JSON.",
+					},
+				],
 			},
 			{
 				gateway: {
@@ -268,47 +279,46 @@ The same `ai` binding serves both Workers AI and AI Gateway. Refer to the [AI Ga
 
 ## OpenAI-compatible endpoints
 
-Agents can call models on any service that supports the OpenAI API. For example, you can use the OpenAI SDK to call one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js) directly from your Agent. These calls go straight to the vendor with your own API key.
+You can call models on any service that supports the OpenAI API. For example, use the OpenAI SDK to call one of [Google's Gemini models](https://ai.google.dev/gemini-api/docs/openai#node.js). These calls go straight to the vendor with your own API key.
 
-Agents can stream responses back over HTTP using Server-Sent Events (SSE) from an `onRequest` handler, or over the native [WebSocket API](/agents/agent-class/websockets/).
+Stream the response back over HTTP with Server-Sent Events (SSE) from `fetch`, or over a [WebSocket](/durable-objects/best-practices/websockets/).
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Agent } from "agents";
+import { DurableObject } from "cloudflare:workers";
 import { OpenAI } from "openai";
 
-export class MyAgent extends Agent {
-	async onRequest(request: Request): Promise<Response> {
+interface Env {
+	GEMINI_API_KEY: string;
+}
+
+export class MyAgent extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
 		const client = new OpenAI({
 			apiKey: this.env.GEMINI_API_KEY,
 			baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
 		});
 
-		let { readable, writable } = new TransformStream();
-		let writer = writable.getWriter();
-		const textEncoder = new TextEncoder();
+		const stream = await client.chat.completions.create({
+			model: "gemini-3.5-flash",
+			messages: [{ role: "user", content: "Write me a Cloudflare Worker." }],
+			stream: true,
+		});
 
-		this.ctx.waitUntil(
-			(async () => {
-				const stream = await client.chat.completions.create({
-					model: "gemini-2.0-flash",
-					messages: [
-						{ role: "user", content: "Write me a Cloudflare Worker." },
-					],
-					stream: true,
-				});
-
+		const encoder = new TextEncoder();
+		const body = new ReadableStream({
+			async start(controller) {
 				for await (const part of stream) {
-					writer.write(
-						textEncoder.encode(part.choices[0]?.delta?.content || ""),
+					controller.enqueue(
+						encoder.encode(part.choices[0]?.delta?.content ?? ""),
 					);
 				}
-				writer.close();
-			})(),
-		);
+				controller.close();
+			},
+		});
 
-		return new Response(readable);
+		return new Response(body);
 	}
 }
 ```
