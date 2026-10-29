@@ -18,8 +18,6 @@ The `Sessions` capability is experimental. Everything exported from `agents/sess
 
 `Sessions` from `agents/sessions` stores conversation history in the Durable Object's SQLite database. Messages form a tree, so a conversation can branch. Reads stream, so a long history does not have to fit in memory. Compaction replaces old messages with a summary at read time without deleting them, and full-text search finds messages by their text.
 
-`Sessions` needs no alarm. `AIChatAgent` also stores its messages with it.
-
 ## Install the capability
 
 <TypeScriptExample filename="src/index.ts">
