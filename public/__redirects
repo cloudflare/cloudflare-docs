@@ -363,7 +363,6 @@
 /agents/agentic-payments/x402/pay-from-agents-sdk/ /agents/tools/payments/x402/pay-from-agents-sdk/ 301
 /agents/agentic-payments/x402/pay-with-tool-plugins/ /agents/tools/payments/x402/pay-with-tool-plugins/ 301
 /agents/agentic-payments/mpp/ /agents/tools/payments/mpp/ 301
-/agents/guides/ /agents/model-context-protocol/guides/ 301
 /agents/concepts/agent-class/ /agents/agent-class/internals/ 301
 /agents/getting-started/prompting/ /workers/get-started/prompting/ 301
 /agents/platform/prompting/ /workers/get-started/prompting/ 301
