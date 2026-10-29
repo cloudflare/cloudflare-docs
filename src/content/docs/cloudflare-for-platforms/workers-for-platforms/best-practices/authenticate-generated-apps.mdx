@@ -3,9 +3,9 @@ title: Authenticate and authorize generated apps
 description: Enforce route policies before generated code runs, and protect data through scoped capabilities on Workers for Platforms and Dynamic Workers.
 pcx_content_type: design-guide
 sidebar:
-  order: 2
+  order: 1
+  label: Authentication and authorization
 products:
-  - workers
   - cloudflare-for-platforms
   - dynamic-workers
 ---
@@ -40,11 +40,11 @@ Choose checks according to what needs protection:
 
 | Requirement                                        | Enforcement point                            |
 | -------------------------------------------------- | -------------------------------------------- |
-| The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/workers/best-practices/authenticate-generated-apps/#authenticate-before-invoking-the-app) |
-| Routes mix public and private access               | [Platform-owned method/path policy](/workers/best-practices/authenticate-generated-apps/#publish-code-and-route-policy-together) |
-| Routes are unknown, but data permissions are known | [Platform-owned data operations](/workers/best-practices/authenticate-generated-apps/#authorize-the-protected-operation) |
-| Routing and policy must stay together              | [Registered handlers with access metadata](/workers/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
-| Public code needs fewer privileges                 | [Separate Workers with different capabilities](/workers/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
+| The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#authenticate-before-invoking-the-app) |
+| Routes mix public and private access               | [Platform-owned method/path policy](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#publish-code-and-route-policy-together) |
+| Routes are unknown, but data permissions are known | [Platform-owned data operations](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#authorize-the-protected-operation) |
+| Routing and policy must stay together              | [Registered handlers with access metadata](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
+| Public code needs fewer privileges                 | [Separate Workers with different capabilities](/cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
 | App libraries call HTTP APIs                       | [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [`globalOutbound` gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests) |
 
 Combine route checks with data-operation checks for mixed-access apps.

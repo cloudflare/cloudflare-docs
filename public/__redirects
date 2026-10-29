@@ -1952,6 +1952,7 @@
 /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/email/ /cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/ 301
 
 # workers for platforms
+/workers/best-practices/authenticate-generated-apps/ /cloudflare-for-platforms/workers-for-platforms/best-practices/authenticate-generated-apps/ 301
 /cloudflare-for-platforms/workers-for-platforms/learning/how-workers-for-platforms-works/ /cloudflare-for-platforms/workers-for-platforms/reference/how-workers-for-platforms-works/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/observability/ /cloudflare-for-platforms/workers-for-platforms/configuration/observability/ 301
 /cloudflare-for-platforms/workers-for-platforms/platform/outbound-workers/ /cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/ 301
