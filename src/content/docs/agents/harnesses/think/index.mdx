@@ -5,7 +5,7 @@ description: Opinionated chat agent framework with built-in tools, persistent me
 tags:
   - AI
 sidebar:
-  order: 9
+  order: 11
   group:
     hideIndex: false
 products:
@@ -32,7 +32,7 @@ If this is your first agent, start with the [Getting started tutorial](/agents/h
 
 ### Install
 
-<PackageManagers pkg="@cloudflare/think @cloudflare/ai-chat agents ai @cloudflare/shell zod workers-ai-provider" />
+<PackageManagers pkg="@cloudflare/think @cloudflare/computer @cloudflare/ai-chat agents ai zod @ai-sdk/provider" />
 
 Think supports AI SDK v6 and v7. Use `ai@^6` with `@ai-sdk/react@^3`, or use `ai@^7` with `@ai-sdk/react@^4`. Keep the AI SDK packages on matching major versions throughout your project.
 
@@ -42,12 +42,12 @@ Think supports AI SDK v6 and v7. Use `ai@^6` with `@ai-sdk/react@^3`, or use `ai
 
 ```ts
 import { Think } from "@cloudflare/think";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 import { routeAgentRequest } from "agents";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		return createWorkersAI({ binding: this.env.AI })(
+		return createAI({ binding: this.env.AI })(
 			"@cf/moonshotai/kimi-k2.6",
 		);
 	}
@@ -151,7 +151,7 @@ For span attributes, payload controls, exporting traces, and direct AI SDK v6 or
 
 ## Think vs AIChatAgent
 
-Both Think and [`AIChatAgent`](/agents/communication-channels/chat/chat-agents/) extend `Agent` and speak the same `cf_agent_chat_*` WebSocket protocol. They serve different goals.
+Both Think and [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) extend `Agent` and speak the same `cf_agent_chat_*` WebSocket protocol. They serve different goals.
 
 **AIChatAgent** is a protocol adapter. You override `onChatMessage` and are responsible for calling `streamText`, wiring tools, converting messages, and returning a `Response`. AIChatAgent handles the plumbing — message persistence, streaming, abort, resume — but the LLM call is entirely your concern.
 
@@ -247,7 +247,7 @@ Key behaviors:
 
 - **Blocking modes cannot nest.** Calling `wait`/`stream`/`continuation` (or the equivalent shortcut) from _inside_ an active turn — for example, from a tool's `execute` — throws, because it would deadlock the turn queue. From inside a turn, use `runTurn({ mode: "submit" })` (durable, runs after the current turn frees the queue) or [`addMessages()`](#add-messages-without-a-turn) (transcript only, no inference).
 - **`submit` is idempotent.** Pass `submissionId` and/or `idempotencyKey`; re-submitting a known key returns the existing record with `accepted: false` instead of starting a second turn. See [Programmatic submissions](/agents/harnesses/think/programmatic-submissions/).
-- **Recovery-safe.** When `chatRecovery` is enabled, the `wait`, `stream`, and drained `submit` paths all run inference inside a recovery fiber, so an interrupted turn resumes after eviction.
+- **Recovery-safe.** The `wait`, `stream`, and drained `submit` paths run inference inside a recovery fiber, so an interrupted turn resumes after eviction.
 
 `runTurn` is exported alongside its option and result types: `RunTurnOptions`, `RunTurnWait`, `RunTurnSubmit`, `RunTurnStream`, `TurnInputMessages`, and `TurnResult`.
 
@@ -300,9 +300,9 @@ export class Assistant extends Think<Env> {
 
 The supported pattern is "add context, then run a turn": call `addMessages()`, then `runTurn()`.
 
-Use `chat()` for low-level parent-to-child streaming when your code owns forwarding, cancellation, and replay policy. Use [Agents as tools](/agents/runtime/execution/agent-tools/) when a parent model or workflow delegates to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in.
+Use `chat()` for low-level parent-to-child streaming when your code owns forwarding, cancellation, and replay policy. Use [Agents as tools](/agents/agent-class/agent-tools/) when a parent model or workflow delegates to a child agent and you want retained child runs, event replay, abort bridging, and UI drill-in.
 
-Use [`startFiber()`](/agents/runtime/execution/durable-execution/#startfiber) outside Think when the durable unit is an application job around a turn: accepting a webhook once, restoring a serialized channel or thread target, posting a visible reply, or recording app-level recovery policy. Think submissions own conversation admission and turn serialization; managed fibers own external job acceptance, idempotent side effects, and application recovery.
+Use [`startFiber()`](/agents/agent-class/durable-execution/#startfiber) outside Think when the durable unit is an application job around a turn: accepting a webhook once, restoring a serialized channel or thread target, posting a visible reply, or recording app-level recovery policy. Think submissions own conversation admission and turn serialization; managed fibers own external job acceptance, idempotent side effects, and application recovery.
 
 ## In this section
 
@@ -394,8 +394,8 @@ Think's design is inspired by [Pi](https://pi.dev).
 ## Related
 
 - [Sessions](/agents/runtime/lifecycle/sessions/) — context blocks, compaction, search, multi-session (the storage layer Think builds on)
-- [Sub-agents](/agents/runtime/execution/sub-agents/) — `subAgent()`, `abortSubAgent()`, `deleteSubAgent()` (the base Agent methods for spawning children)
-- [Chat agents](/agents/communication-channels/chat/chat-agents/) — `AIChatAgent` for when you need full control over the LLM call
+- [Sub-agents](/agents/agent-class/sub-agents/) — `subAgent()`, `abortSubAgent()`, `deleteSubAgent()` (the base Agent methods for spawning children)
+- [Chat agents](/agents/agent-class/communication-channels/chat/chat-agents/) — `AIChatAgent` for when you need full control over the LLM call
 - [Long-running agents](/agents/concepts/agentic-patterns/long-running-agents/) — sub-agent delegation patterns for multi-week agent lifetimes
-- [Durable execution](/agents/runtime/execution/durable-execution/) — `runFiber()` and crash recovery (used by `chatRecovery`)
+- [Durable execution](/agents/agent-class/durable-execution/) — `runFiber()` and crash recovery (used by `chatRecovery`)
 - [Browse the web](/agents/tools/browser/) — full CDP helper API reference

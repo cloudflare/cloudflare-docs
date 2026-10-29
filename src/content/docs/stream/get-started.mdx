@@ -10,9 +10,9 @@ products:
 
 import { DashButton, Tabs, TabItem } from "~/components";
 
-:::note[Media Transformations is now GA:]
+:::note[Stream Live WebRTC is now GA:]
 
-Billing for Media Transformations will begin on November 1st, 2025.
+Billing for WebRTC delivery began on October 15th, 2026.
 
 :::
 
@@ -84,6 +84,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true

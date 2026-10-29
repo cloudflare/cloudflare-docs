@@ -29,10 +29,10 @@ A transition plan from Audit Logs v1 to Audit Logs v2 will be communicated in du
 Audit Logs (version 2) provide a unified and standardized system for tracking and recording actions across Cloudflare products. This system enhances transparency and accountability by offering comprehensive insights into user-initiated and system-initiated activities within your Cloudflare environment.
 
 - **Standardized logging**: Audit logs are automatically generated in a consistent format across all Cloudflare services, ensuring uniformity and eliminating inconsistencies.
-- **Expanded product coverage**: Audit Logs covers ~95% of Cloudflare products, capturing actions from key endpoints, such as `/accounts`, `/zones`, `/user`, and `/memberships` APIs.
+- **Expanded product coverage**: Audit Logs covers ~95% of Cloudflare products, capturing actions from key endpoints, such as `/accounts`, `/zones`, `/organizations`, `/user`, and `/memberships` APIs.
 - **Granular filtering**: Uniformly formatted logs allow for precise filtering by actions, actors, methods, and resources, facilitating efficient investigations.
 - **Enhanced context and transparency**: Each log entry includes detailed context, such as the authentication method used, the interface (API or dashboard) through which the action was performed, and mappings to Cloudflare Ray IDs for improved traceability.
-- **Comprehensive activity capture**: Audit Logs records create, update, and delete actions across all supported products. Selective logging of `GET` requests for sensitive read operations is planned for a future release.
+- **Comprehensive activity capture**: Audit Logs records create, update, delete, and view actions for the same endpoints covered above, with a small number of excluded endpoints.
 
 ## Retention
 
@@ -106,6 +106,29 @@ To access audit logs in the Cloudflare dashboard, go to **Manage Account** > **A
 
 :::note
 The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
+:::
+
+#### View actions
+
+By default, the Audit Logs v2 dashboard excludes `view` actions to reduce noise. This default filter (**Action type** is not `view`) applies to both account-level and organization-level audit logs. To include `view` actions, remove this filter. To show only `view` actions, set **Action type** to `view`.
+
+`view` actions remain available through the API and Logpush regardless of the dashboard filter.
+
+#### Account analytics
+
+The account-level Audit Logs v2 dashboard includes analytics for the selected time range. The **Actions over time** chart separates successful and failed actions. The summary cards show **Total actions**, **Unique actors**, **Products impacted**, and **Failure rate**.
+
+Select a summary card to view more details:
+
+- **Total actions**: Action types and authentication methods
+- **Unique actors**: Actors with the most actions
+- **Products impacted**: Products with the most actions
+- **Failure rate**: Failed actions and their HTTP status codes
+
+To focus the analytics and audit log table on a value, select **Filter** or **Exclude** from a detail panel. The analytics, table, filters, and time range remain synchronized.
+
+:::note
+Account analytics are available for account-level audit logs. They are not available for organization-level audit logs.
 :::
 
 ### Logpush
@@ -206,11 +229,12 @@ Audit logs can be initiated either by users or the system. Understanding the typ
 
 #### User initiated Audit Logs
 
-Track actions performed directly by users through Cloudflare interfaces (dashboard or API). These logs capture who performed the action, when it occurred, and what resource was affected. User initiated actions can be performed by three actors:
+Track actions initiated by users through Cloudflare interfaces, including the dashboard and API. These logs capture who or what performed the action. They also record when it occurred and which resource was affected. User-initiated actions can have four actor types:
 
 - `actor_type="user"`: Action was performed by an individual user.
-- `actor_type="Cloudflare_admin"`: Action was performed by Cloudflare.
+- `actor_type="cloudflare_admin"`: Action was performed by Cloudflare.
 - `actor_type="account"`: Action was performed using an account API token. Refer to the [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/) documentation for more information.
+- `actor_type="delegated_service"`: Action was performed by a Cloudflare service acting on a user's behalf. The log does not identify the initiating user.
 
 #### System initiated Audit Logs
 
@@ -231,10 +255,6 @@ The `GET /memberships` endpoint supports cross-account access. To query membersh
 #### Organization Activity Logs
 
 Contain events scoped to specific [Cloudflare Organizations](/fundamentals/organizations/). These logs capture user-initiated actions performed by Org Admins through organization-level APIs.
-
-:::note
-Cloudflare Organizations is Enterprise-only and currently in public beta.
-:::
 
 You can retrieve Organization audit logs using either the API or the Cloudflare dashboard.
 
@@ -325,13 +345,20 @@ Use the following example to get a list of audit logs for a Cloudflare account.
 
 ### Actor
 
-The actor represents who performed the action. It includes identity attributes like user ID, email address, IP address, and the type of actor (`user`, `account`, `Cloudflare_admin`, or `system`). It also includes the context used to initiate the action, such as API or dashboard (`dash`).
+The actor represents who or what performed the action. Its identity attributes depend on the actor type. These attributes can include a user ID, email address, and IP address. Actor types include `user`, `account`, `cloudflare_admin`, `delegated_service`, or `system`. An actor can also include the context used to initiate the action:
+
+- `api`: The action was performed through the API. The specific credential type was not recorded.
+- `api_key`: The action was authenticated with a Cloudflare Global API Key.
+- `api_token`: The action was authenticated with an API token.
+- `dash`: The action was performed through the Cloudflare dashboard.
+- `oauth`: The action was authenticated with an OAuth token.
+- `origin_ca_key`: The action was authenticated with an Origin CA key.
 
 ### Action
 
 The action field captures the nature of the event and whether it was successful. It includes a high-level type (e.g., `create`, `update`, `delete`), a specific description (such as `SSO_LOGIN`), the timestamp of when the action occurred, and the result (`success` or `failure`).
 
-`view` actions correspond to `GET` requests. These are defined in the schema but not currently captured in Audit Logs. Selective `GET` logging for sensitive read operations is planned for a future release.
+`view` actions are recorded for supported endpoints and are available through the Audit Logs v2 API and Logpush. The dashboard excludes `view` actions by default. For details, refer to [View actions](#view-actions).
 
 ### Account
 

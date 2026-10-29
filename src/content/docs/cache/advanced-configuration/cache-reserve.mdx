@@ -52,9 +52,15 @@ If you are an Enterprise customer and are interested in Cache Reserve, contact y
 
 ## Purge behavior
 
-To remove all data from Cache Reserve, refer to [Cache Reserve clear button](#cache-reserve-clear-button).
+[Purge](/cache/how-to/purge-cache/) forces a cache miss for matching Cache Reserve content, regardless of purge type. On the next request, your origin must deliver the content in full, and Cloudflare writes it to Cache Reserve again.
 
-Note that [Purge Everything](/cache/how-to/purge-cache/) performs a soft purge on Cache Reserve and does not update metadata set by [Cache Response Rules](/cache/how-to/cache-response-rules/) (such as cache tags). To refresh that metadata, purge the individual asset or wait for it to fully expire.
+Purging by URL deletes the content from Cache Reserve. Purging by tag, hostname, prefix, or everything does not delete it right away. Matching content continues to incur storage costs until a later request replaces it or its retention period ends.
+
+[Invalidation](/cache/guides/invalidate-cache/) keeps matching content in Cache Reserve and marks it as stale. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it again. Updating the stored content after the `304` response is a Class A operation.
+
+To refresh metadata set by [Cache Response Rules](/cache/how-to/cache-response-rules/), such as cache tags, purge the affected content. A `304 Not Modified` response to an invalidated request does not refresh this metadata.
+
+To remove all data from Cache Reserve, refer to [Cache Reserve clear button](#cache-reserve-clear-button).
 
 ## Limits
 
@@ -157,13 +163,16 @@ Cache Reserve is designed for use with [Tiered Cache](/cache/how-to/tiered-cache
 
 ## Cache Reserve Analytics
 
-<Render
-  file="cache-reserve-analytics"
-	product="cache"
-	params={{
-		conditional: "dedicated-cache-tile"
-	}}
-/>
+Cache Reserve Analytics provides insights regarding your Cache Reserve usage. It allows you to check what content is stored in Cache Reserve, how often it is being accessed, how long it has been there and how much egress from your origin it is saving you.
+
+In the **Overview** section, under **Cache Reserve**, you have access to the following metrics:
+
+- **Egress savings (bandwidth)** - is an estimation based on response bytes served from Cache Reserve that did not need to be served from your origin server. These are represented as cache hits.
+- **Requests served by Cache Reserve** - is the number of requests served by Cache Reserve (total).
+- **Data storage summary** - is based on a representative sample of requests. Refer to [Sampling](/analytics/graphql-api/sampling/) for more details about how Cloudflare samples data.
+  - **Current data stored** - is the data stored (currently) over time.
+  - **Aggregate storage usage** - is the total of storage used for the selected timestamp.
+- **Operations** - Class A (writes) and Class B (reads) operations over time.
 
 ## Cache Reserve clear button
 

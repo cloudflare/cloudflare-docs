@@ -7,28 +7,36 @@ title: Service tokens
 sidebar:
   order: 6
 tags:
-- JSON web token (JWT)
-- Authentication
+  - JSON web token (JWT)
+  - Authentication
 ---
 
 import {
 	AvailableNotifications,
 	Render,
 	APIRequest,
+	CURL,
 	DashButton,
+	Steps,
 	Tabs,
 	TabItem,
 } from "~/components";
 
 You can provide automated systems with service tokens to authenticate against your Cloudflare One policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
-This section covers how to create, renew, and revoke a service token.
+This section covers how to create, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
 
 ## Create a service token
 
 <Render file="access/create-service-token" product="cloudflare-one" />
 
 You can now configure your Access applications and [device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/#check-for-service-token) to accept this service token. Make sure to set the policy action to [**Service Auth**](/cloudflare-one/access-controls/policies/#service-auth); otherwise, Access will prompt for an identity provider login.
+
+### Client Secret format
+
+As of August 26, 2026, new service token Client Secrets use the format `cfast_[40 alphanumeric characters][8-character checksum]`. The prefix and checksum make the secrets easier for credential scanning tools to identify.
+
+Existing Client Secrets use a 64-character hexadecimal format. These secrets continue to work and do not require rotation. Both formats use the same Client ID and authentication headers.
 
 ## Connect your service to Access
 
@@ -76,6 +84,86 @@ To authenticate using a single header:
    ```sh
    curl -H "Authorization: {\"cf-access-client-id\": \"<CLIENT_ID>\", \"cf-access-client-secret\": \"<CLIENT_SECRET>\"}" https://app.example.com
    ```
+
+## Strict service token authentication
+
+Strict service token authentication is a Zero Trust organization setting that applies consistent behavior to requests made with service tokens. When the setting is on, Access handles requests with service token headers as follows:
+
+- If authentication or authorization fails, Access always returns `401` or `403` instead of redirecting the client to the login page with `302`.
+- Only Service Auth policies can authorize the request. Access ignores Allow policies and any `CF_Authorization` cookie sent with the request.
+- Access does not return a `CF_Authorization` cookie to the client after successful authentication. Subsequent requests should continue to use service token headers.
+- Failed requests for recognized service tokens appear in [Access authentication logs](/cloudflare-one/insights/logs/dashboard-logs/access-authentication-logs/#non-identity-authentication). Access logs expired or disabled tokens, incorrect Client Secrets, and tokens not authorized for the application. It does not log malformed headers or unknown Client IDs.
+
+Zero Trust organizations created on or after `2026-10-05` have strict service token authentication turned on by default and cannot turn it off. Cloudflare recommends that existing organizations turn it on as well.
+
+:::note
+Organizations created before `2026-10-05` can turn this setting on or off.
+:::
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+
+   <DashButton url="/?to=/:account/access-controls/settings" zeroTrust />
+
+2. Under **Manage service tokens**, turn on **Strict service token authentication**.
+3. In the confirmation dialog, select **Enable**.
+</Steps>
+
+To turn off strict service token authentication, turn off the setting and select **Disable**.
+
+</TabItem> <TabItem label="API">
+
+Send a `PATCH` request to the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) endpoint:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		strict_service_token_auth: true,
+	}}
+/>
+
+To turn off strict service token authentication, set `strict_service_token_auth` to `false`.
+
+</TabItem> </Tabs>
+
+## Rotate service token secrets
+
+Rotate a service token secret when you suspect exposure or as part of regular credential rotation. The Client ID remains the same, but Access generates a new Client Secret.
+
+You can set a grace period during which both secrets work. Use this period to update your services before Access revokes the previous secret.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
+
+   <DashButton url="/?to=/:account/access/service-auth/service-tokens" zeroTrust />
+
+2. Locate the token and select the three dots > **Rotate secret**.
+3. In **Keep the current secret valid for**, choose when Access should revoke the current secret. Available grace periods range from one hour to 30 days. To revoke it when you rotate, select _Revoke immediately_.
+4. Select **Rotate**.
+5. Copy the new Client Secret and update your services before the grace period ends.
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Make a `POST` request to the [Rotate a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/rotate/) endpoint. Set `previous_client_secret_expires_at` to an RFC 3339 timestamp when the previous secret should expire:
+
+<APIRequest
+	path="/accounts/{account_id}/access/service_tokens/{service_token_id}/rotate"
+	method="POST"
+	json={{
+		previous_client_secret_expires_at: "2030-01-01T00:00:00Z",
+	}}
+/>
+
+To revoke the previous secret immediately, omit `previous_client_secret_expires_at` from the request.
+
+</TabItem> </Tabs>
 
 ## Renew service tokens
 
@@ -125,6 +213,89 @@ resource "cloudflare_zero_trust_access_service_token" "example_service_token" {
 	}
 }
 ```
+
+</TabItem> </Tabs>
+
+## Manage inactive service tokens
+
+You can configure Access to automatically disable or delete service tokens that are no longer in use. The setting applies to all service tokens in your Zero Trust account.
+
+Access considers a service token inactive when all of the following are true:
+
+- The token has not successfully authenticated with an Access application during the configured inactivity period.
+- The token is older than the configured inactivity period.
+- The token is not directly referenced by an Access policy rule.
+
+You can set the inactivity period to a whole number from 30 to 365 days. Disabled tokens remain in your account and can be turned on again. Deleted tokens cannot be recovered.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+
+   <DashButton url="/?to=/:account/access-controls/settings" zeroTrust />
+
+2. Under **Manage service tokens**, turn on **Automatically clean up inactive service tokens**.
+3. Enter an **Inactivity period** from 30 to 365 days.
+4. Choose whether Access should disable or delete inactive tokens.
+5. Select **Save**.
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Send a `PATCH` request to update your Zero Trust organization. Set `action` to `disable` or `delete`:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/organizations"
+	method="PATCH"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		service_token_inactivity: {
+			enabled: true,
+			inactivity_threshold_days: 90,
+			action: "disable",
+		},
+	}}
+/>
+
+To stop automatic cleanup, set `enabled` to `false`.
+
+</TabItem> </Tabs>
+
+Cleanup runs gradually in the background. An eligible token may not be disabled or deleted immediately.
+
+## Turn a service token on or off
+
+Turn off a service token to temporarily prevent it from authenticating. Access preserves the token so you can turn it on again later.
+
+Turning off a token also stops its previous secret from working during an active rotation grace period.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
+
+   <DashButton url="/?to=/:account/access/service-auth/service-tokens" zeroTrust />
+
+2. Locate the token and select the three dots.
+3. To stop the token from authenticating, select **Disable token** > **Disable**.
+4. To restore authentication, select **Enable token** > **Enable**.
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Make a `PUT` request to the [Update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/) endpoint. Set `enabled` to `false` to turn off the token:
+
+<APIRequest
+	path="/accounts/{account_id}/access/service_tokens/{service_token_id}"
+	method="PUT"
+	json={{
+		name: "<TOKEN_NAME>",
+		enabled: false,
+	}}
+/>
+
+To turn the token on again, set `enabled` to `true`.
 
 </TabItem> </Tabs>
 

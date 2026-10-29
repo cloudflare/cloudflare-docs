@@ -1,7 +1,24 @@
 {
+    "name": "@cf/ai4bharat/indictrans2-en-indic-1B",
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.342,
+                    "currency": "USD"
+                },
+                {
+                    "unit": "per M output tokens",
+                    "price": 0.342,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "id": "60920ed4-cf72-449a-a0f3-a38456b78262",
     "source": 1,
-    "name": "@cf/ai4bharat/indictrans2-en-indic-1B",
     "description": "IndicTrans2 is the first open-source transformer-based multilingual NMT model that supports high-quality translations across all the 22 scheduled Indic languages",
     "task": {
         "id": "f57d07cb-9087-487a-bbbf-bc3e17fecc4b",
@@ -10,23 +27,6 @@
     },
     "created_at": "2025-09-23 18:19:17.382",
     "tags": [],
-    "properties": [
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per M input tokens",
-                    "price": 0.34,
-                    "currency": "USD"
-                },
-                {
-                    "unit": "per M output tokens",
-                    "price": 0.34,
-                    "currency": "USD"
-                }
-            ]
-        }
-    ],
     "schema": {
         "input": {
             "type": "object",
@@ -107,5 +107,6 @@
                 "translations"
             ]
         }
-    }
+    },
+    "deprecated": false
 }

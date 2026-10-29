@@ -5,29 +5,25 @@ let range = (n: number) => [...Array(n).keys()];
 <div class="ArchitectureDiagram not-content">
 	<div class="ArchitectureDiagram--diagram">
 		<div class="ArchitectureDiagram--content">
-			{
-				range(9).map(() => (
-					<div class="ArchitectureDiagram--process-overhead">
-						<div class="ArchitectureDiagram--user-code" />
-						<div class="ArchitectureDiagram--process-overhead-background" />
-					</div>
-				))
-			}
+			{range(9).map(() => (
+				<div class="ArchitectureDiagram--process-overhead">
+					<div class="ArchitectureDiagram--user-code" />
+					<div class="ArchitectureDiagram--process-overhead-background" />
+				</div>
+			))}
 		</div>
 		<div class="ArchitectureDiagram--caption">Traditional architecture</div>
 	</div>
 	<div class="ArchitectureDiagram--diagram">
 		<div class="ArchitectureDiagram--content">
-			{
-				range(8).map(() => (
-					<div class="ArchitectureDiagram--process-overhead">
-						{range(9).map(() => (
-							<div class="ArchitectureDiagram--user-code" />
-						))}
-						<div class="ArchitectureDiagram--process-overhead-background" />
-					</div>
-				))
-			}
+			{range(8).map(() => (
+				<div class="ArchitectureDiagram--process-overhead">
+					{range(9).map(() => (
+						<div class="ArchitectureDiagram--user-code" />
+					))}
+					<div class="ArchitectureDiagram--process-overhead-background" />
+				</div>
+			))}
 			<div class="ArchitectureDiagram--process-overhead">
 				<div class="ArchitectureDiagram--user-code"></div>
 				<div class="ArchitectureDiagram--process-overhead-background"></div>

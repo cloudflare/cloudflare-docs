@@ -398,6 +398,7 @@ Guidelines:
 - Avoid including the sidebar navigation (it changes frequently).
 - Always provide descriptive alt text.
 - Use Markdown image syntax for content images. Do not use raw `<img>` tags for screenshots or diagrams.
+- Use inline image syntax only (`![alt](~/assets/images/{product}/file.png)`). Do not use reference-style image links (`![alt][1]` with a `[1]: ~/assets/images/...` definition): Astro's asset pipeline does not resolve the `~/` alias in reference-style definitions, so the image renders as a broken relative URL.
 - Store images in `src/assets/images/{product}/` and reference them with `~/assets/images/{product}/...`. This enables Astro's asset pipeline (optimization, responsive variants, cache-busting). Only use `public/` for assets that need a stable static URL (e.g. OG images, badges, files referenced from non-Astro contexts). Do not use `public/images/` for docs screenshots or diagrams.
 
 ```mdx

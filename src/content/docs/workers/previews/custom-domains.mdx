@@ -1,0 +1,142 @@
+---
+pcx_content_type: how-to
+title: Custom domains
+description: Serve Preview URLs from custom domains and protect them with Cloudflare Access.
+sidebar:
+  order: 4
+products:
+  - workers
+---
+
+import {
+	DashButton,
+	Details,
+	Steps,
+	TabItem,
+	Tabs,
+	WranglerConfig,
+} from "~/components";
+
+Preview URLs can use a custom domain, `workers.dev`, or both. Enable at least one host to get a Preview URL.
+
+| Host          | Preview URL                                            | Unique deployment URL                                   |
+| ------------- | ------------------------------------------------------ | ------------------------------------------------------- |
+| Custom domain | `<preview-name>.app.example.com`                       | `<deployment-id>-<preview-name>.app.example.com`        |
+| `workers.dev` | `<preview-name>-<worker-name>.<subdomain>.workers.dev` | `<deployment-id>-<worker-name>.<subdomain>.workers.dev` |
+
+## Before you start
+
+Configure Previews in the same system that manages your custom domain:
+
+| Managed with | Configuration                                             |
+| ------------ | --------------------------------------------------------- |
+| Wrangler     | Use the **Wrangler** tab, then run `npx wrangler deploy`. |
+| Dashboard    | Use the **Dashboard** tab.                                |
+| Terraform    | Update and apply your Terraform configuration.            |
+
+## Enable custom domain Preview URLs
+
+<Tabs syncKey="customDomainSetup">
+<TabItem label="Wrangler">
+
+The following example configures `app.example.com` for Preview traffic only. Add `previews_enabled` and set `enabled` to `false`, then run `npx wrangler deploy` to apply the configuration.
+
+<WranglerConfig>
+
+```jsonc
+{
+  "routes": [
+    {
+      "pattern": "app.example.com",
+      "custom_domain": true,
+      "previews_enabled": true,
+      "enabled": false
+    }
+  ]
+}
+```
+
+</WranglerConfig>
+
+Choose which traffic the custom domain serves:
+
+| Traffic                | `previews_enabled` | `enabled`        |
+| ---------------------- | ------------------ | ---------------- |
+| Preview only           | `true`             | `false`          |
+| Production and Preview | `true`             | Omit or set `true` |
+
+</TabItem>
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Workers & Pages** and select your Worker.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. On the **Domains** tab, under **Custom Domains and Routes**, select **+ Add Domain**.
+3. Enter your domain. For **Enable for**, select _Preview_ or _Production and Preview_. Then select **Add domain**.
+
+   ![Add Domain modal with Enable for set to Preview](~/assets/images/workers/previews/replace.png)
+
+4. Confirm that the domain appears under **Custom Domains and Routes**.
+
+   ![Domains tab showing a custom domain enabled for Preview traffic](~/assets/images/workers/previews/customdomainonly.png)
+</Steps>
+
+</TabItem>
+</Tabs>
+
+<Details header="DNS and certificate behavior">
+
+Cloudflare creates a wildcard DNS record and SSL certificate for the custom domain, such as `*.app.example.com`. Certificate issuance can take time after you create the first Preview.
+
+Use a dedicated hostname such as `previews.example.com` if your production domain already has subdomains. This avoids wildcard conflicts.
+
+Preview URLs add another subdomain to your hostname. For example, `app.preview.example.com` creates `<preview-name>.app.preview.example.com`. For deeper hostnames, you may need [Advanced Certificate Manager](/ssl/edge-certificates/advanced-certificate-manager/) with [Total TLS](/ssl/edge-certificates/additional-options/total-tls/) or another certificate that covers the Preview hostname.
+
+</Details>
+
+## Enable `workers.dev` Preview URLs
+
+Production and Preview `workers.dev` URLs are configured separately.
+
+<Tabs syncKey="workersDevPreviewSetup">
+<TabItem label="Wrangler">
+
+Set `preview_urls` in your Wrangler configuration file, then run `npx wrangler deploy`.
+
+<WranglerConfig>
+
+```jsonc
+{
+  "preview_urls": true
+}
+```
+
+</WranglerConfig>
+
+If `preview_urls` is omitted, Wrangler does not change an existing Preview URL setting. If no setting exists, its initial value depends on `workers_dev`. Set `preview_urls` explicitly to change the Preview URL setting.
+
+</TabItem>
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Workers & Pages** and select your Worker.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. On the **Domains** tab, under **Worker URL**, turn on **Preview**.
+
+   ![Domains tab showing workers.dev Preview URLs enabled with no custom domains configured](~/assets/images/workers/previews/emptydomain.png)
+</Steps>
+
+</TabItem>
+</Tabs>
+
+## Protect Preview content
+
+To restrict access to custom domain and `workers.dev` Preview URLs, use [Cloudflare Access](/workers/configuration/cloudflare-access/). This prevents unauthenticated users and crawlers from viewing your Preview.
+
+To keep a Preview public while discouraging search engine indexing, add an `X-Robots-Tag: noindex` response header. Cloudflare adds this header automatically to `workers.dev` Preview URLs, but not to custom domain Preview URLs.
+
+For static assets, add the header through a [`_headers` file](/workers/static-assets/headers/). For Worker-generated responses, add it directly in your Worker code.

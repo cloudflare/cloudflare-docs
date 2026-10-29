@@ -1,0 +1,72 @@
+---
+title: Enforce profiles with Custom Rules
+pcx_content_type: configuration
+description: Mitigate profile violations with scoped Custom Rules.
+products:
+  - waf
+sidebar:
+  order: 5
+  label: Enforce with Custom Rules
+---
+
+Application Profiles separate detection from mitigation. Cloudflare runs an **always-on detection** after a profile becomes available.
+
+A violation does not block a request automatically. Use a [Custom Rule](/waf/custom-rules/) when you are ready to mitigate traffic.
+
+## Select a detection field
+
+Use this expression for learned Schema Profiles:
+
+```txt
+cf.schema_validation.learned.violated
+```
+
+Use this expression for uploaded Schema Profiles:
+
+```txt
+cf.schema_validation.uploaded.violated
+```
+
+Monitor the selected field in [Security Analytics](/waf/analytics/security-analytics/) before creating a blocking rule.
+
+## Scope by application
+
+Limit mitigation to the intended hostname and path:
+
+```txt
+cf.schema_validation.learned.violated and http.host eq "api.example.com" and starts_with(http.request.uri.path, "/v1/orders/")
+```
+
+Scope mitigation to an operation using its complete identity. Include the HTTP method, hostname, and path:
+
+```txt
+cf.schema_validation.learned.violated and http.request.method eq "POST" and http.host eq "api.example.com" and http.request.uri.path eq "/v1/orders"
+```
+
+## Combine security signals
+
+Combine a profile violation with [Attack Score](/waf/detections/attack-score/):
+
+```txt
+cf.schema_validation.learned.violated and cf.waf.score lt 20
+```
+
+Combine an uploaded profile violation with [Bot Score](/bots/concepts/bot-score/):
+
+```txt
+cf.schema_validation.uploaded.violated and cf.bot_management.score lt 10
+```
+
+## Roll out mitigation
+
+Review production traffic and sampled violation reasons first. Then [create a Custom Rule](/waf/custom-rules/create-dashboard/) with a suitable action.
+
+Follow these rollout practices:
+
+- Start with monitoring in Security Analytics.
+- Limit the first rule to one operation.
+- Review the effect before expanding scope.
+- Recheck profiles after application releases.
+- Recheck violations after client changes.
+
+For field details, refer to [Application Profile fields](/waf/detections/application-profiles/fields/).

@@ -6,13 +6,74 @@ products:
 title: DHCP relay
 ---
 
-import { Render } from "~/components";
+import { APIRequest, TabItem, Tabs } from "~/components";
 
-<Render file="mconn/network-options/dhcp/dhcp-relay"
-	product="networking-services"
-	params={{
-		dashName: "CF1 Cloudflare WAN",
-		cfTunnelURL: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
-		cfVsCoreDashNamingMwanCni: "Cloudflare WAN IPsec/GRE tunnel or a CNI connection"
-	}}
-	/>
+DHCP Relay provides a way for DHCP clients to communicate with DHCP servers that are not available on the same local subnet/broadcast domain. When you enable DHCP Relay, Cloudflare One Appliance (formerly Magic WAN Connector) forwards DHCP discover messages to a predefined DHCP server, and routes the responses back to the original device that sent the discover message.
+
+<pre class="mermaid">
+	{`
+		flowchart LR
+		accTitle: DHCP Relay diagram
+		accDescr: The graph shows Cloudflare One Appliance sending DHCP discover messages to a DHCP server offsite.
+				a(Cloudflare One Appliance) <--> b(Cloudflare/Cloudflare WAN) <--> c(DHCP server)
+
+				subgraph Site A
+				d[LAN 1] <--> a
+				e[LAN 2] <--> a
+				end
+
+				subgraph Site B
+				c
+				end
+				classDef orange fill:#f48120,color: black
+				class a,b,c orange
+	`}
+</pre>
+
+_The graph shows Cloudflare One Appliance sending DHCP discover messages to a DHCP server offsite._
+
+:::caution
+DHCP relay will not work if your DHCP server is behind a [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). To enable DHCP relay functionality, use either a Cloudflare WAN IPsec/GRE tunnel or a CNI connection.
+:::
+
+To configure DHCP relay:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks**.
+2. Go to **Connectors** > **Appliances** > **Profiles**.
+3. Select your Cloudflare One Appliance > **Edit**.
+4. Select **Network Configuration**.
+5. In **LAN configuration**, select the LAN where you need to configure DHCP relay.
+6. Select **Edit**.
+7. Select **This is a DHCP Relay**.
+8. In **Upstream DHCP server addresses**, enter the IP address of your DHCP server.
+9. (Optional) If you need to add more DHCP server addresses, select **Add upstream DHCP server address** as many times as needed, and enter the new values.
+
+</TabItem> <TabItem label="API">
+
+:::note
+You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+:::
+
+Create a [`PUT` request](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/update/) to update the LAN where you want to enable DHCP relay:
+
+Example:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PUT"
+  json={{
+    "lan": {
+    "static_addressing": {
+      "dhcp_relay": {
+        "server_addresses": [
+          "192.0.2.1"
+        ]
+      }
+    }
+  }
+  }}
+/>
+
+</TabItem> </Tabs>

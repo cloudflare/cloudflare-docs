@@ -23,9 +23,13 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code using the same runtime used in production, [`workerd`](https://github.com/cloudflare/workerd).
+You can build, run, and test your Worker code on your own local machine before deploying it to Cloudflare's network. This is made possible through [Miniflare](/workers/testing/miniflare/), a simulator that executes your Worker code in a local [`workerd`](https://github.com/cloudflare/workerd) process. `workerd` also powers the hosted Workers platform.
 
 [By default](/workers/local-development/#defaults), your Worker's bindings [connect to locally simulated resources](/workers/local-development/#bindings-during-local-development), but can be configured to interact with the real, production resource with [remote bindings](/workers/local-development/#remote-bindings).
+
+## Security considerations
+
+<Render file="local-development-security" product="workers" />
 
 ## Core concepts
 
@@ -74,7 +78,7 @@ During local development, your Worker code interacts with these bindings using t
 
 ## Remote bindings
 
-**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. Remote bindings are supported by [**Wrangler**](/workers/wrangler/), the [**Cloudflare Vite plugin**](/workers/vite-plugin/), and the `@cloudflare/vitest-pool-workers` package. You can configure remote bindings by setting `remote: true` in the binding definition.
+**Remote bindings** are bindings that are configured to connect to the deployed, remote resource during local development _instead_ of the locally simulated resource. Remote bindings are supported by [**Wrangler**](/workers/wrangler/), the [**Cloudflare Vite plugin**](/workers/vite-plugin/), and the `@cloudflare/vitest-plugin` package. You can configure remote bindings by setting `remote: true` in the binding definition.
 
 ### Example configuration
 
@@ -273,8 +277,6 @@ If `remote: true` is specified in Wrangler configuration for any of the followin
 - [**Static Assets**](/workers/wrangler/configuration/#assets) Static assets are always served from your local disk during development for speed and direct feedback on changes.
 
 - [**Version Metadata**](/workers/runtime-apis/bindings/version-metadata/): Since your Worker code is running locally, version metadata (like commit hash, version tags) associated with a specific deployed version is not applicable or accurate.
-
-- [**Analytics Engine**](/analytics/analytics-engine/): Local development sessions typically don't contribute data directly to production Analytics Engine.
 
 - [**Hyperdrive**](/workers/wrangler/configuration/#hyperdrive): This is being actively worked on, but is currently unsupported.
 
@@ -480,3 +482,4 @@ When using remote development, all bindings automatically connect to their remot
 ### Limitations
 
 - When you run a remote development session using the `--remote` flag, a limit of 50 [routes](/workers/configuration/routing/routes/) per zone is enforced. Learn more in[ Workers platform limits](/workers/platform/limits/#routes-and-domains-when-using-wrangler-dev---remote).
+- [Python Workers](/workers/languages/python/) do not support the `--remote` flag. Use remote bindings instead.

@@ -8,17 +8,13 @@ products:
   - fundamentals
 ---
 
-:::note
-
-Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
-
-:::
+import { DashButton, Steps } from "~/components"
 
 Organizations provides a single-tier structure for Enterprise customers to manage multiple Cloudflare accounts from one unified dashboard.
 
 ## Who is this for?
 
-Organizations is designed for **Enterprise customers of any size** who manage multiple Cloudflare accounts. Whether you have 5 accounts or 500, Organizations helps you manage them from one dashboard.
+Organizations is designed for **Enterprise customers of any size** who manage multiple Cloudflare accounts. Whether you manage a few accounts or thousands, Organizations helps you manage them from one dashboard.
 
 Common use cases:
 - Multi-brand companies managing separate accounts per brand
@@ -50,7 +46,7 @@ Organization
 - Each account can contain multiple zones
 - All accounts are at the same level (no sub-organizations)
 - Organization members have [implicit access](#implicit-access) to all accounts
-- Maximum: **500 accounts** and **5,000 zones** per Organization
+- Maximum: **20,000 accounts** and **200,000 zones** per Organization
 
 ## Example: Company A
 
@@ -82,7 +78,7 @@ Before you create an Organization:
 - Your user must have Super Admin role access to an account with an Enterprise plan.
 - You (the Organization creator) must have [two-factor authentication (2FA)](/fundamentals/user-profiles/2fa/) or [single sign-on (SSO)](/fundamentals/manage-members/dashboard-sso/) enabled on your Cloudflare user account. This is a per-user requirement — 2FA/SSO is not an account-level setting.
 - You must be a Super Administrator on the accounts you want to assign. You can add accounts of any plan type (eg Enterprise, or Free).
-- Each Organization supports a maximum of **500 accounts** and **5,000 zones**. Refer to [Limitations](/fundamentals/organizations/limitations/) for details.
+- Each Organization supports a maximum of **20,000 accounts** and **200,000 zones**. Refer to [Limitations](/fundamentals/organizations/limitations/) for details.
 - You may only create a single Organization. You, or another member of your company, must not have already created an Organization.
 - Your accounts must not already belong to another Organization.
 
@@ -108,6 +104,25 @@ After creating an Organization, you can assign existing accounts to manage them 
 The assigned account now appears on the Organization overview page. From here, you can view the account, copy its ID, or rename it.
 
 To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### Create new accounts
+
+Organization Super Administrators can create up to five Free accounts within an Enterprise Organization.
+
+<Steps>
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Accounts**.
+
+    <DashButton url="/" />
+
+2. Select **Create Account**.
+3. Enter an account name.
+4. For **Organization**, select the destination Organization.
+5. Select **Create Account**.
+</Steps>
+
+The new account starts on the Free plan. It does not inherit payment methods, plans, subscriptions, or entitlements from the Organization.
+
+API tokens and OAuth access tokens cannot create accounts within an Organization.
 
 ## Manage members
 
@@ -220,13 +235,10 @@ You can manage Organizations programmatically using the [Cloudflare Organization
 You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
 
 :::note
-The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
+To manage Organization resources through their full Terraform lifecycle, configure the provider with a [Global API key](/fundamentals/api/get-started/keys/) and the registered account email. User API Tokens support only some Organization operations. Refer to [API authentication](/fundamentals/organizations/limitations/#api-authentication).
 :::
 
 ## What you cannot do
-
-### Create new accounts
-Enterprise Organizations cannot self-serve create new accounts. To add a new account, contact [Cloudflare Support](/support/contacting-cloudflare-support/) to create it, then assign it to your Organization.
 
 ### Create sub-organizations
 Enterprise Organizations use a flat structure. You cannot create sub-organizations or nested containers. Use **tags** to organize accounts by business unit, region, or environment.

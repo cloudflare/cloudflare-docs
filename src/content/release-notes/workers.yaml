@@ -3,6 +3,22 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-10-22"
+    description: |-
+      - Hyperdrive bindings expose `ip`, and `node:dns` resolves a binding's host to it.
+      - Workers traces now include spans for `queue.metrics()` calls.
+  - publish_date: "2026-09-28"
+    description: |-
+      - Updated v8 to version 15.5.
+  - publish_date: "2026-09-14"
+    description: |-
+      - Updated v8 to version 15.4.
+  - publish_date: "2026-08-28"
+    description: |-
+      - Updated v8 to version 15.3.
+  - publish_date: "2026-08-20"
+    description: |-
+      - Increased the Durable Object Dynamic Worker concurrency limit from 4 to 10.
   - publish_date: "2026-08-18"
     description: |-
       - Updated v8 to version 15.2.

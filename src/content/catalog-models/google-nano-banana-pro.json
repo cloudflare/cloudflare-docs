@@ -11,6 +11,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 2,
+		"Output tokens (per 1M)": 120
+	},
 	"examples": [
 		{
 			"name": "Product Photography",
@@ -158,6 +162,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 2,
+				"output_tokens": 120
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:13",
 	"schema": {

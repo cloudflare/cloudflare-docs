@@ -1,0 +1,15 @@
+---
+title: More efficient Markdown for Agents conversion
+description: Markdown for Agents uses in-process streaming conversion, supports larger HTML pages, and changes response headers.
+date: 2026-10-09
+---
+
+[Markdown for Agents](/fundamentals/reference/markdown-for-agents/) now converts HTML with an in-process streaming engine at the edge. It processes content as it arrives instead of buffering the HTML response and sending it to a separate conversion service. This reduces conversion overhead and memory use.
+
+This release also changes the conversion limit and response headers:
+
+- Conversion supports up to 6 MiB (6,291,456 bytes) of decompressed HTML, increased from 2 MiB (2,097,152 bytes). The limit applies after decompression, not to the compressed response size.
+- Converted responses no longer generate the `x-markdown-tokens` or `x-original-tokens` headers. Clients that use these values need to calculate token counts themselves.
+- `Content-Length` is removed from converted responses rather than recalculated, because the Markdown body is streamed.
+
+For more information, refer to the [Markdown for Agents documentation](/fundamentals/reference/markdown-for-agents/).

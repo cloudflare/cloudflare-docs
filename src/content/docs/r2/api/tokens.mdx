@@ -26,7 +26,7 @@ To create an API token:
 
 2. Under the **Account Details** section, select **Manage** next to **API Tokens**.
 3. Choose to create either:
-   - **Create Account API token** - These tokens are tied to the Cloudflare account itself and can be used by any authorized system or user. Only users with the Super Administrator role can view or create them. These tokens remain valid until manually revoked.
+   - **Create Account API token** - These tokens are tied to the Cloudflare account itself and can be used by any authorized system or user. Refer to [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/) for role and permission requirements. These tokens remain valid until manually revoked or until they reach a preset expiration date.
    - **Create User API token** - These tokens are tied to your individual Cloudflare user. They inherit your personal permissions and become inactive if your user is removed from the account.
 4. Under **Permissions**, choose a permission types for your token. Refer to [Permissions](#permissions) for information about each option.
 5. (Optional) If you select the **Object Read and Write** or **Object Read** permissions, you can scope your token to a set of buckets.
@@ -67,9 +67,10 @@ Jurisdictional buckets can only be accessed via the corresponding jurisdictional
 
 :::note[Considerations]
 
-- [R2 Data Catalog](/r2-data-catalog/) requires an **Admin Read & Write** or **Admin Read only** permission. Read-only catalog operations (such as listing namespaces, loading tables, and querying data) work with **Admin Read only**, while write operations (such as creating or dropping tables and committing transactions) require **Admin Read & Write**. For details, refer to [Authenticate your Iceberg engine](/r2-data-catalog/manage-catalogs/#authenticate-your-iceberg-engine).
+- [Basin Catalog](/basin-catalog/) requires an **Admin Read & Write** or **Admin Read only** permission. Read-only catalog operations (such as listing namespaces, loading tables, and querying data) work with **Admin Read only**, while write operations (such as creating or dropping tables and committing transactions) require **Admin Read & Write**. For details, refer to [Authenticate your Iceberg engine](/basin-catalog/manage-catalogs/#authenticate-your-iceberg-engine).
 - The **Object Read & Write** and **Object Read only** permissions are only supported by the [S3-compatible API](/r2/api/s3/api/), not the [Cloudflare REST API](/api/resources/r2/).
 :::
+
 ## Create API tokens via API
 
 You can create API tokens via the API and use them to generate corresponding Access Key ID and Secret Access Key values. To get started, refer to [Create API tokens via the API](/fundamentals/api/how-to/create-via-api/). Below are the specifics for R2.

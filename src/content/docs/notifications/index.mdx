@@ -1,32 +1,59 @@
 ---
-
-pcx_content_type: overview
-title: Notifications
+pcx_content_type: navigation
+title: Alerts
 sidebar:
   order: 1
+  group:
+    hideIndex: false
 products:
   - notifications
-description: Configure alerts for your Cloudflare account.
+head:
+  - tag: title
+    content: Cloudflare Alerts
+description: Set up monitors and platform notifications, and deliver them to email, webhooks, PagerDuty, or connected services.
 ---
 
-import { Plan } from "~/components"
+Alerts is part of [Cloudflare Observability](/observability/). In the dashboard, you can find it under **Observability** > **Alerts**.
 
-<Plan type="all" />
+Alerts are organized into two categories: **Monitors** that you define yourself, and **Platform Notifications** that Cloudflare evaluates automatically.
 
-Cloudflare Notifications help you stay up to date with your Cloudflare account. Manage your Notifications to define what you want to be warned about and how, be it a denial-of-service attack or an issue with your server.
+## Monitors
 
-The available Notification features vary according to your plan:
+Monitors evaluate a SQL API query on a schedule and send a notification when the result meets your detection criteria. You choose the dataset, define the query, and select a detection method: threshold, anomaly detection, or service-level objective (SLO). Refer to [Monitors](/notifications/monitors/) for configuration details.
 
-- Free plans can set up email-based Notifications.
-- Business and higher plans can also [access PagerDuty](/notifications/get-started/configure-pagerduty/).
-- Professional and higher plans can also [use webhooks](/notifications/get-started/configure-webhooks/).
+## Platform Notifications
 
-The notification service only works on the [proxied](/dns/proxy-status/) domains because Cloudflare needs enough information necessary to decide if we need to trigger a notification or not.
+Platform Notifications are pre-configured alert types tied to specific Cloudflare products. You enable the ones you care about, choose where they are delivered, and Cloudflare evaluates the trigger conditions. They cover products such as DDoS Protection, SSL/TLS, Health Checks, Load Balancing, and Billing. Refer to [Platform Notifications](/notifications/notification-available/) for the full list.
 
-:::note
+## Delivery methods
 
-The availability of delivery methods like PagerDuty and webhooks in Free or Professional zones depends on the highest zone plan in your Cloudflare account:
+All alerts can be delivered to:
 
-- PagerDuty is available in zones on a Free/Professional plan if your Cloudflare account has at least one zone in a Business plan (or higher).
-- Webhooks are available in zones on a Free plan if your Cloudflare account has at least one zone in a Professional plan (or higher).
-:::
+- **Email** (all plans)
+- **[Webhooks](/notifications/get-started/configure-webhooks/)** (all plans; accounts without a paid zone can configure up to 100 webhook destinations)
+- **[PagerDuty](/notifications/get-started/configure-pagerduty/)** (Business and higher)
+- **Connected services**, including coding agents
+
+## [Get started](/notifications/get-started/)
+
+Create and manage alerts from the Cloudflare dashboard. Configure where alerts are delivered.
+
+## [Monitors](/notifications/monitors/)
+
+Define custom threshold, anomaly detection, and SLO monitors on SQL API datasets.
+
+## [Platform Notifications](/notifications/notification-available/)
+
+Browse built-in notification types organized by Cloudflare product.
+
+## [Alert history](/notifications/notification-history/)
+
+View a log of alerts that have been sent on your account.
+
+## [API reference](/notifications/api-reference/)
+
+Manage alerts programmatically using the Cloudflare API.
+
+## [Reference](/notifications/reference/)
+
+Troubleshooting, common errors, and details on specific alert types.

@@ -10,6 +10,8 @@ products:
 
 The Agents SDK includes an MCP client that can pay for x402-protected tools. Use it from your Agents or any MCP client connection.
 
+`agents/x402` needs `@modelcontextprotocol/sdk`, which is an optional peer dependency of `agents`. It does not load the package at runtime, but its types refer to MCP SDK v1. Add the exact version your Agents release expects, such as `@modelcontextprotocol/sdk@1.32.1`, to your `package.json`.
+
 ```ts
 import { Agent } from "agents";
 import { withX402Client } from "agents/x402";

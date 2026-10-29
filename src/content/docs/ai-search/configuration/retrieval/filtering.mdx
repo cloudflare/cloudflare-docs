@@ -14,6 +14,8 @@ Metadata filtering narrows down search results based on metadata, so only releva
 
 Filtering uses the metadata attributes extracted during indexing. To define custom attributes or use the built-in metadata attributes, refer to [Metadata attributes](/ai-search/configuration/indexing/metadata/).
 
+AI Search can store string values longer than the filterable prefix. Filters only match the first 64 UTF-8 bytes of each indexed string. Vectorize can store string arrays, but does not currently index or filter them.
+
 :::note
 If you are using the legacy AutoRAG API, refer to [Metadata filter format (legacy)](/ai-search/api/migration/autorag-filter-format/) for the filter syntax.
 :::
@@ -42,16 +44,16 @@ Filters are JSON objects where keys are metadata attribute names and values spec
 
 ### Supported operators
 
-| Operator | Description                       |
-| -------- | --------------------------------- |
-| `$eq`    | Equals                            |
-| `$ne`    | Not equals                        |
-| `$in`    | In (matches any value in array)   |
-| `$nin`   | Not in (excludes values in array) |
-| `$lt`    | Less than                         |
-| `$lte`   | Less than or equal to             |
-| `$gt`    | Greater than                      |
-| `$gte`   | Greater than or equal to          |
+| Operator | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| `$eq`    | Equals                                                       |
+| `$ne`    | Not equals                                                   |
+| `$in`    | Matches a stored scalar against any candidate scalar value   |
+| `$nin`   | Excludes a stored scalar matching any candidate scalar value |
+| `$lt`    | Less than                                                    |
+| `$lte`   | Less than or equal to                                        |
+| `$gt`    | Greater than                                                 |
+| `$gte`   | Greater than or equal to                                     |
 
 ### Implicit `$eq`
 
@@ -112,7 +114,7 @@ When you specify multiple keys, all conditions must match:
 
 ### `$in` operator
 
-Match any value in an array:
+Match a stored scalar field against any value in the candidate array. `$in` does not search inside stored arrays:
 
 ```json
 {

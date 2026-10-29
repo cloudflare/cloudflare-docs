@@ -12,6 +12,10 @@
 	"context_length": 65536,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.25,
+		"Output tokens (per 1M)": 30
+	},
 	"examples": [
 		{
 			"name": "Concept Sketch",
@@ -93,6 +97,15 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 0.25,
+				"output_tokens": 30
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-01 20:21:36",
 	"schema": {

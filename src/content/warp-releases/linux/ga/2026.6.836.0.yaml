@@ -27,3 +27,7 @@ linuxPlatforms:
   fedora43-intel: 77129159
   noble-arm: 73919322
   resolute-arm: 73687566
+  almalinux9-intel: 77049157
+  almalinux9-arm: 76200322
+  almalinux10-arm: 75988921
+  almalinux10-intel: 77108835

@@ -13,6 +13,10 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per character": 0.00005,
+		"Default (per second)": 0.00005
+	},
 	"examples": [
 		{
 			"name": "AI Gateway Assistant",
@@ -63,6 +67,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "elevenlabs",
+			"pricing": {
+				"input_characters": 0.00005
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-07-09 02:31:08",
 	"schema": {
@@ -71,15 +83,15 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The text to convert into speech.",
 					"type": "string",
 					"minLength": 1,
-					"maxLength": 10000
+					"maxLength": 10000,
+					"description": "The text to convert into speech."
 				},
 				"voice_id": {
-					"description": "The ElevenLabs voice ID to use for generation.",
 					"type": "string",
-					"minLength": 1
+					"minLength": 1,
+					"description": "The ElevenLabs voice ID to use for generation."
 				},
 				"output_format": {
 					"type": "string",
@@ -162,8 +174,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "Base64-encoded data URI for the generated audio file.",
-					"type": "string"
+					"type": "string",
+					"description": "URL to the generated audio file."
 				}
 			},
 			"required": [

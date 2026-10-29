@@ -12,6 +12,8 @@ This guide explains how to identify and resolve build errors, as well as trouble
 
 To view your build history, go to your Worker project in the Cloudflare dashboard, select **Deployment**, select **View Build History** at the bottom of the page, and select the build you want to view. To retry a build, select the ellipses next to the build and select **Retry build**. Alternatively, you can select **Retry build** on the Build Details page.
 
+Builds and their build logs are retained for 90 days after they finish. Refer to [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
+
 ## Known issues or limitations
 
 Here are some common build errors that may surface in the build logs or general issues and how you can resolve them.
@@ -52,6 +54,20 @@ The API Token dropdown in Build Configuration settings may show stale tokens tha
 `Build was timed out`
 
 There is a maximum build duration of 20 minutes. If a build exceeds this time, then the build will be terminated and the above error log is shown. For more details, see [Workers Builds limits](/workers/ci-cd/builds/limits-and-pricing/).
+
+### Build succeeds but the site returns a 404 or blank page
+
+If the build and deployment succeed but requests to your Worker return a `404` or an empty page, the deployed Worker is likely serving a directory that does not contain your built site. Check that:
+
+- The build command in **Settings** > **Build** > **Build Configuration** runs your framework's build step (for example, `npm run build`).
+- The [`assets.directory`](/workers/static-assets/binding/#directory) in your Wrangler configuration file points to the folder your build writes to (for example, `./dist` or `./build`).
+- For a single-page application, [`assets.not_found_handling`](/workers/static-assets/routing/single-page-application/) is set to `single-page-application` so that client-side routes do not return `404`.
+
+### `npm ci` reports that `package.json` and `package-lock.json` are out of sync
+
+`` npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. ``
+
+If this error appears in Workers Builds but `npm ci` works on your machine, your lockfile was probably written by a newer npm version than the build image's default. Workers Builds does not use the `engines.npm` field to choose an npm version. To use the same npm version as your local machine, set the [`packageManager`](/workers/ci-cd/builds/build-image/#package-manager-versions) field in your `package.json` to an exact version, for example `"packageManager": "npm@11.19.1"`. To check your local npm version, run `npm -v`.
 
 ### Git integration issues
 

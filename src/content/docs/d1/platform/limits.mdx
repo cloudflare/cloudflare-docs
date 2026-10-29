@@ -31,6 +31,8 @@ import { Render } from "~/components";
 
 :::note[Batch limits]
 Limits for individual queries (listed above) apply to each individual statement contained within a batch statement. For example, the maximum SQL statement length of 100 KB applies to each statement inside a `db.batch()`.
+
+The Queries per Worker invocation limit is an exception: a `db.batch()` call counts as a single query against it, not one query per statement. For example, a batch containing 2,000 statements executes in a single Worker invocation, while issuing 2,000 individual queries in one invocation fails with `Too many API requests by single Worker invocation`.
 :::
 
 [^1]: The maximum number of databases per account can be increased by request on Workers Paid and Enterprise plans, with support for millions to tens-of-millions of databases (or more) per account. Refer to the guidance on limit increases on this page to request an increase.
