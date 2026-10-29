@@ -100,8 +100,8 @@ const tools = [
 					<div class="agent-section-copy">
 						<div class="section-title">Runtime</div>
 						<p>
-							The Lifecycle runs in the Durable Object and starts each
-							capability you add.
+							The Lifecycle runs in the Durable Object and provides hooks for
+							capabilities.
 						</p>
 					</div>
 					<a class="agent-class" href="/agents/runtime/lifecycle/">
@@ -116,14 +116,12 @@ const tools = [
 
 				<div class="agent-section harness-section">
 					<div class="agent-section-copy">
-						<div class="section-title">Harness</div>
-						<p>
-							A capability that runs the agent loop: models, tools, and
-							responses.
-						</p>
+						<div class="section-title">Harnesses</div>
 					</div>
-					<div class="section-row">
-						<a href="/agents/harnesses/pi/">Pi harness</a>
+					<div class="section-row harness-row">
+						<a href="/agents/harnesses/pi/">Pi</a>
+						<a href="/agents/harnesses/opencode/">OpenCode</a>
+						<a href="/agents/harnesses/think/">Think</a>
 					</div>
 				</div>
 			</div>
@@ -418,6 +416,10 @@ const tools = [
 		color: var(--map-text);
 		font-size: 12px;
 		font-weight: 500;
+	}
+
+	.harness-row {
+		grid-template-columns: 1fr 1.5fr 1fr;
 	}
 
 	.agent-class {
