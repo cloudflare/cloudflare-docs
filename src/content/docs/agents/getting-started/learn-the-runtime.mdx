@@ -15,7 +15,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-An agent on Cloudflare runs in a [Durable Object](/durable-objects/). The Agents SDK [Lifecycle](/agents/runtime/lifecycle/) runs inside that Durable Object and starts the capabilities you add to it. A harness, such as the Pi harness in [Build your first Durable Agent](/agents/getting-started/build-your-first-durable-agent/), is one of those capabilities.
+An agent on Cloudflare runs in a [Durable Object](/durable-objects/). The Agents SDK [Lifecycle](/agents/runtime/lifecycle/) runs inside that Durable Object and starts the capabilities you add to it. A harness, such as the Pi harness in [Build your first Durable Agent](/agents/getting-started/quick-start/), is one of those capabilities.
 
 This guide leaves the harness out so you can see the runtime on its own. You build a counter on a Durable Object and add two capabilities, [`State`](/agents/runtime/capabilities/state/) and [`WebSockets`](/agents/runtime/capabilities/websockets/). Then you call it over HTTP and connect a client that stays in sync over WebSockets. Everything here works the same way on an object that also runs a harness.
 
@@ -295,7 +295,7 @@ Remove any `fetch()`, `alarm()`, `webSocketMessage()`, `webSocketClose()`, or `w
 
 ## Next steps
 
-- [Build your first Durable Agent](/agents/getting-started/build-your-first-durable-agent/): run the Pi harness on the same lifecycle.
+- [Build your first Durable Agent](/agents/getting-started/quick-start/): run the Pi harness on the same lifecycle.
 - [Pi harness](/agents/harnesses/pi/): add tools, sessions, and a browser UI to a Pi agent.
 - [Add to an existing project](/agents/getting-started/add-to-existing-project/): add the Lifecycle to a Durable Object you already have.
 - [Lifecycle](/agents/runtime/lifecycle/): the request path, the job queue, and how to write your own capability.
