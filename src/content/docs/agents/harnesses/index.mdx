@@ -12,16 +12,18 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), or build the loop yourself on top of the [Agents SDK runtime](/agents/agent-class/).
+To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
 
 ## How harnesses fit
 
 Harnesses sit on top of the Agents SDK runtime:
 
-- **The runtime** gives the agent durable infrastructure: the [`Agent` class](/agents/agent-class/internals/), [state](/agents/agent-class/state/), [sessions](/agents/runtime/capabilities/sessions/), [routing](/agents/agent-class/routing/), [WebSockets](/agents/agent-class/websockets/), [scheduling](/agents/agent-class/schedule-tasks/), [fibers](/agents/agent-class/durable-execution/), and [observability](/agents/runtime/observability/).
+- **The runtime** coordinates [startup and durable jobs](/agents/runtime/lifecycle/), [routing](/agents/runtime/routing/), and the [capabilities](/agents/runtime/capabilities/) you install. These can add WebSocket connections, shared state, scheduling, and MCP connections. Use [observability](/agents/runtime/observability/) to trace model calls and inspect runtime events.
 - **The harness** gives the agent behavior: model calls, prompt construction, tool selection, stream handling, memory strategy, and lifecycle hooks.
 
 The runtime answers “where does this agent live and how does it stay durable?” The harness answers “what does this agent do on each turn?”
+
+Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
 
 ## Choose an approach
 
@@ -60,8 +62,8 @@ A harness usually owns:
 
 <LinkCard
 	title="Agents SDK runtime"
-	href="/agents/agent-class/"
-	description="Build your own harness directly on the Agent class."
+	href="/agents/runtime/"
+	description="Compose a harness on a Durable Object with Lifecycle and optional capabilities."
 />
 
 <LinkCard

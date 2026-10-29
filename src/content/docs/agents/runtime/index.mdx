@@ -12,7 +12,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Every agent built with the Agents SDK runs on a [Durable Object](/durable-objects/). The runtime is what you add to that Durable Object so an agent can keep working across requests, evictions, deploys, and crashes:
+Every agent built with the Agents SDK runs on a [Durable Object](/durable-objects/). The runtime coordinates its startup, incoming events, and scheduled work. Your capabilities or harness use stored state to recover after interruptions:
 
 - **[Lifecycle](/agents/runtime/lifecycle/)** (`agents/lifecycle`) runs startup, dispatches each request and WebSocket event, and owns a durable job queue and the object's single alarm.
 - **[Routing](/agents/runtime/routing/)** (`agents/routing`) sends requests from your Worker to the right named object.
@@ -107,6 +107,8 @@ The [`Agent` class](/agents/agent-class/) is a preset of the same runtime: a Dur
 
 ## Capabilities
 
+Capabilities are optional features. Start with [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities) to check what your harness already provides and what to add yourself.
+
 | Capability                                                             | Import              | What it adds                                 | Status       |
 | ---------------------------------------------------------------------- | ------------------- | -------------------------------------------- | ------------ |
 | [`WebSockets`](/agents/runtime/capabilities/websockets/)               | `agents/websockets` | Real-time client connections and callables   | Stable       |
@@ -116,7 +118,9 @@ The [`Agent` class](/agents/agent-class/) is a preset of the same runtime: a Dur
 | [`Streams`](/agents/runtime/capabilities/streams/)                     | `agents/streams`    | Durable incremental output                   | Experimental |
 | [`Sessions`](/agents/runtime/capabilities/sessions/)                   | `agents/sessions`   | Durable conversation history                 | Experimental |
 
-To write your own, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
+[Callables](/agents/runtime/capabilities/websockets/#callables) are part of `WebSockets`: configure its `callables` option to let clients invoke actions on the agent.
+
+To write your own capability, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
 
 ## Observability
 

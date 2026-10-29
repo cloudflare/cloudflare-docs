@@ -12,41 +12,38 @@ products:
 
 import { PackageManagers, TypeScriptExample } from "~/components";
 
-`Lifecycle` from `agents/lifecycle` is the base of every agent built with the Agents SDK. You install it on a [Durable Object](/durable-objects/), and it runs the object for you. It is what lets an agent wake up and finish its work after an eviction, a deploy, or a crash.
+`Lifecycle` from `agents/lifecycle` coordinates startup and incoming events for a [Durable Object](/durable-objects/). It also stores pending jobs in SQLite and manages the object's single alarm. Multiple features can schedule work without replacing each other's wake-up time.
 
 `agents/lifecycle` is stable.
 
 Once installed, the Lifecycle gives your Durable Object:
 
-- **Startup.** Your `onStart()` runs once each time the object wakes, before any request, alarm, or WebSocket event.
-- **Request dispatch.** Each request goes to the [capabilities](/agents/runtime/capabilities/) you installed, then to your `onRequest()`.
+- **Startup.** Your `onStart()` runs once per in-memory lifetime, before the first request, alarm, or WebSocket event is handled.
+- **Request dispatch.** Each request goes to the [capabilities](/agents/runtime/capabilities/) you installed. If none handles it, it reaches your `onRequest()`.
 - **Durable jobs.** A job queue in SQLite that owns the object's single alarm, so scheduled work from different capabilities never overwrites each other. For more information, refer to [Jobs and alarms](/agents/runtime/lifecycle/job-queue/).
 - **A name.** `lifecycle.name` is the name the object was addressed by.
 - **Host context.** [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) returns the current object, request, and connection inside your hooks, and in any code they call.
 - **Teardown.** Methods to release live resources and stop the alarm before you delete an object.
 
-Every request, WebSocket event, and alarm goes through the Lifecycle. Work scheduled through its job queue comes back as an alarm, even after the object was evicted:
+The handlers installed by Lifecycle run startup when needed, then dispatch the event:
 
 ```mermaid
 flowchart TB
-    W["Worker<br/>routeAgentRequest()"] -->|"HTTP or WebSocket"| F
-    A["Alarm"] --> AL
-    subgraph DO["Durable Object"]
-        F["fetch / WebSocket handlers"] --> S
-        AL["alarm handler"] --> S
-        S{"Started?"} -->|"no"| ST["Startup<br/>capability onStart(), then your onStart()"]
-        ST --> D
-        S -->|"yes"| D["Dispatch"]
-        D -->|"request"| C["Capabilities, in order"]
-        C -->|"not handled"| R["Your onRequest()"]
-        D -->|"alarm"| J["Run due jobs<br/>capability or host onJob()"]
-        J --> OA["Your onAlarm()"]
-        Q[("Job queue in SQLite")] -->|"due jobs"| J
-        C -->|"push jobs"| Q
-        R -->|"lifecycle.jobs.push()"| Q
-        Q -->|"sets the next alarm"| A
-    end
+    accTitle: Lifecycle startup and event dispatch
+    accDescr: Lifecycle starts capabilities and the host once per in-memory lifetime, then dispatches HTTP requests, WebSocket events, and alarms to their handlers.
+    E["Request, WebSocket event, or alarm"] --> S{"Startup complete?"}
+    S -->|"No"| ST["Start capabilities,<br/>then your onStart()"]
+    S -->|"Yes"| D{"Dispatch event"}
+    ST --> D
+    D -->|"HTTP request"| R["First capability to handle it;<br/>otherwise your onRequest()"]
+    D -->|"WebSocket event"| W["Capability that owns<br/>the connection"]
+    D -->|"Alarm"| J["Run due jobs on their owners;<br/>then your onAlarm()"]
+    J --> A["Set the alarm for the next job"]
 ```
+
+After an eviction, deploy, or crash, Lifecycle starts the capabilities again. Pending jobs remain in SQLite, and the alarm can wake the object to run them. Each capability or harness reads its saved state to decide how to continue its work.
+
+Lifecycle does not automatically checkpoint arbitrary JavaScript or resume a function where it stopped. For retry behavior and recovery patterns, refer to [Jobs and alarms](/agents/runtime/lifecycle/job-queue/).
 
 ## Install the Lifecycle
 
