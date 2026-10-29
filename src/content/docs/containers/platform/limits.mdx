@@ -58,6 +58,14 @@ The following limits apply per account:
 
 [^1]: Delete container images with `wrangler containers delete` to free up space. If you delete a container image and then [roll back](/workers/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
 
+## Outbound HTTP request body size
+
+Cloudflare limits each HTTP request body forwarded from a Container to an external service through an [outbound handler](/containers/configuration/outbound-traffic/) to **100 MiB by default**.
+
+<Render file="outbound-request-body-limits" product="workers" />
+
+For upload failures, refer to [Troubleshoot outbound uploads](/containers/configuration/outbound-traffic/#troubleshoot-outbound-uploads).
+
 ## Snapshot limits
 
 The following limits apply to [Container snapshots](/containers/guides/snapshots/):
