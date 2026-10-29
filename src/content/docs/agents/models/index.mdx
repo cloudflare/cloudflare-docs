@@ -107,7 +107,7 @@ export default {
 
 </TypeScriptExample>
 
-The examples below show only the Durable Object class. To add the Durable Object binding to your Wrangler configuration, refer to [Get started with Durable Objects](/durable-objects/get-started/).
+The examples on this page show only the Durable Object class. To add the Durable Object binding to your Wrangler configuration, refer to [Get started with Durable Objects](/durable-objects/get-started/).
 
 ### Generate text with the AI SDK
 
@@ -179,7 +179,7 @@ export class MyAgent extends DurableObject<Env> {
 
 ### Stream over WebSockets {/* long-running-model-requests */}
 
-Reasoning models can take some time to both generate a response _and_ stream it back to the client. Instead of buffering the entire response, stream it back over a WebSocket. Install the `WebSockets` capability to accept upgrades and handle messages; without it, the Lifecycle declines WebSocket upgrades:
+Reasoning models can take some time to both generate a response _and_ stream it back to the client. Instead of buffering the entire response, stream it back over a WebSocket. Install the `WebSockets` capability to accept upgrades and handle messages. Without it, the Lifecycle declines WebSocket upgrades:
 
 <TypeScriptExample filename="src/index.ts">
 
