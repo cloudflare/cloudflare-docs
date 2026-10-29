@@ -76,7 +76,7 @@ The harness and the runtime split the work:
 | Which input runs next, and which input steers the turn | The job queue and the alarm that wake the harness after eviction |
 | Recovery of interrupted tool calls                     | Other capabilities, such as schedules and MCP clients            |
 
-The harness never sets its own timers. It pushes a job to the Lifecycle's [job queue](/agents/concepts/durable-execution/), so the object can hibernate between steps and still wake on time.
+The harness never sets its own timers. It pushes a job to the Lifecycle's [job queue](/agents/concepts/durable-agents/), so the object can hibernate between steps and still wake on time.
 
 ## Choose a harness
 
