@@ -1,6 +1,6 @@
 #!/bin/sh
 # 1. Format staged files with prettier (lint-staged).
-# 2. Convert CRLF to LF in staged text files, respecting -text attributes.
+# 2. Convert CRLF to LF in all staged files before committing.
 #    This guards against AI tooling and Windows environments introducing CRLF.
 
 pnpm exec lint-staged
@@ -18,11 +18,6 @@ while IFS= read -r file; do
   if [ ! -f "$file" ]; then
     continue
   fi
-
-  # Preserve files explicitly marked -text, such as upstream license notices.
-  case "$(git check-attr --cached text -- "$file")" in
-    *": text: unset") continue ;;
-  esac
 
   # Only process known text files (matches .gitattributes).
   # Skip binary files (images, fonts, etc.) to avoid corruption.
