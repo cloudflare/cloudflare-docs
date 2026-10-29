@@ -34,12 +34,12 @@ By the end of this guide you will have:
 
 ## 1. Create the project
 
-Scaffold a new Workers project with Vite and React, then add the voice dependencies:
+Scaffold a new Workers project with Vite and React, then update `agents` to a version that includes `agents/voice`:
 
 ```sh
 npm create cloudflare@latest voice-agent -- --template cloudflare/agents-starter
 cd voice-agent
-npm install @cloudflare/voice
+npm install agents@latest
 ```
 
 The starter gives you a working Vite + React + Cloudflare Workers setup. You will replace the server and client code in the following steps.
@@ -92,7 +92,7 @@ import {
 	WorkersAIFluxSTT,
 	WorkersAITTS,
 	type VoiceTurnContext,
-} from "@cloudflare/voice";
+} from "agents/voice";
 import { streamText, tool, stepCountIs } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
@@ -167,7 +167,7 @@ Key points:
 Replace `src/client.tsx` with a React component using the `useVoiceAgent` hook. The hook manages the WebSocket connection, mic capture, audio playback, and interrupt detection.
 
 ```tsx
-import { useVoiceAgent } from "@cloudflare/voice/react";
+import { useVoiceAgent } from "agents/voice/react";
 
 function App() {
 	const {
