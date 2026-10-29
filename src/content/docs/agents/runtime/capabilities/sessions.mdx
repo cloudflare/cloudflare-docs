@@ -173,7 +173,7 @@ flowchart TB
     A --> F["u2: Follow-up"]
 ```
 
-Append `a2` with `parentId: "u1"` to create an alternative reply. `getBranches("u1")` returns `a1` and `a2`. `getHistory({ leafId: "a2" })` returns the path `m1 → u1 → a2`.
+Append `a2` with `parentId: "u1"` to create an alternative reply. `getBranches("u1")` returns `a1` and `a2`. `getHistory({ leafId: "a2" })` returns the path `m1 → u1 → a2`. To continue the original reply with `u2`, append it with `parentId: "a1"`.
 
 For example, regenerate a reply to a user message:
 

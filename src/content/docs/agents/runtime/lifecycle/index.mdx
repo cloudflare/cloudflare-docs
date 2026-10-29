@@ -168,16 +168,16 @@ export class MyAgent extends DurableObject<Env> {
 
 Inside the object, the Lifecycle offers each HTTP request to the capabilities that implement `onRequest()`, and each WebSocket upgrade to the capabilities that implement `onWebSocketUpgrade()`. The first capability that returns a `Response` handles it. A capability that returns `undefined` passes it on. There is no `next()` callback, so a capability cannot wrap or observe a later response.
 
-After startup, HTTP requests follow this path:
+After startup, non-upgrade HTTP requests follow this path:
 
 ```mermaid
 flowchart TB
-    accTitle: HTTP request dispatch after Lifecycle startup
-    accDescr: Selective HTTP capabilities run in registration order until one returns a Response. If none handles the request, the HTTP catch-all is tried, followed by the host onRequest hook. Without a host hook, the response is 404.
+    accTitle: Non-upgrade HTTP request dispatch after Lifecycle startup
+    accDescr: Selective HTTP capabilities run in registration order until one returns a Response. If none handles the request, the HTTP catch-all is tried. If it is absent or returns undefined, the host onRequest hook runs. Without a host hook, the response is 404.
     S["Try selective HTTP capabilities<br/>in registration order"] -->|"First Response"| R["Return response"]
     S -->|"All return undefined"| C["Try HTTP catch-all, if installed"]
     C -->|"Response"| R
-    C -->|"Not handled"| H["Host onRequest(), if defined"]
+    C -->|"Absent or undefined"| H["Host onRequest(), if defined"]
     H -->|"Response"| R
     H -->|"No hook"| N["404"]
 ```
