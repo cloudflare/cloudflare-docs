@@ -40,12 +40,12 @@ Choose checks according to what needs protection:
 
 | Requirement                                        | Enforcement point                            |
 | -------------------------------------------------- | -------------------------------------------- |
-| The whole app requires sign-in                     | Dispatch or loader Worker, before invocation |
-| Routes mix public and private access               | Platform-owned method/path policy            |
-| Routes are unknown, but data permissions are known | Platform-owned data operations               |
-| Routing and policy must stay together              | Registered handlers with access metadata     |
-| Public code needs fewer privileges                 | Separate Workers with different capabilities |
-| App libraries call HTTP APIs                       | Outbound Worker or `globalOutbound` gateway  |
+| The whole app requires sign-in                     | [Dispatch or loader Worker, before invocation](/workers/best-practices/authenticate-generated-apps/#authenticate-before-invoking-the-app) |
+| Routes mix public and private access               | [Platform-owned method/path policy](/workers/best-practices/authenticate-generated-apps/#publish-code-and-route-policy-together) |
+| Routes are unknown, but data permissions are known | [Platform-owned data operations](/workers/best-practices/authenticate-generated-apps/#authorize-the-protected-operation) |
+| Routing and policy must stay together              | [Registered handlers with access metadata](/workers/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
+| Public code needs fewer privileges                 | [Separate Workers with different capabilities](/workers/best-practices/authenticate-generated-apps/#adapt-the-pattern) |
+| App libraries call HTTP APIs                       | [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [`globalOutbound` gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests) |
 
 Combine route checks with data-operation checks for mixed-access apps.
 
