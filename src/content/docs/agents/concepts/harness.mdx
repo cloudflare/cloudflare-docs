@@ -67,19 +67,11 @@ Keep the loop in the Durable Object when you control the agent loop. Run the loo
 
 ## One API across harnesses
 
-The harnesses in the Agents SDK share the same shape for sending work in. Each one has `prompt()`, which waits for the answer, and `submit()`, which returns as soon as the prompt is stored. Both take a string, and a `session` option to pick the conversation:
-
-```ts
-// The same calls work whether this.harness is a PiHarness or an OpenCodeHarness.
-const { text } = await this.harness.prompt("Summarize today's tickets.");
-await this.harness.submit("Draft a reply to ticket 42.", { session: "42" });
-```
-
-The Agents SDK keeps this input API the same across harnesses, so you can switch harnesses without rewriting how your app talks to the agent. What each harness returns, such as its events and transcript format, is still specific to that harness.
+The harnesses in the Agents SDK take work in the same way. You send a prompt and either wait for the answer, or hand it off and let the harness finish in the background, in any session. The Agents SDK keeps this input the same across harnesses, so you can switch harnesses without changing how your app talks to the agent. What comes back, such as events and the transcript format, is still specific to each harness.
 
 ## Choose a harness
 
-**Start with [Pi](/agents/harnesses/pi/).** `PiHarness` runs [Pi Durable](https://earendil.com/posts/pi-durable/), and Pi includes most of what you would otherwise build yourself: sessions and the transcript, a tool registry and [extensions](/agents/harnesses/pi/extensions/), skills, an event stream for clients, and recovery after an eviction, with replay rules for each tool.
+**Start with [Pi](/agents/harnesses/pi/).** The Pi harness runs [Pi Durable](https://earendil.com/posts/pi-durable/), and Pi includes most of what you would otherwise build yourself: sessions and the transcript, a tool registry and [extensions](/agents/harnesses/pi/extensions/), skills, an event stream for clients, and recovery after an eviction, with replay rules for each tool.
 
 **[Think](/agents/harnesses/think/)** was the first durable harness. It takes a more opinionated approach than Pi, built on the [`Agent` class](/agents/agent-class/) and the AI SDK, with its own conventions for tools, memory, and chat. Older agents often use Think, and it is still supported.
 
