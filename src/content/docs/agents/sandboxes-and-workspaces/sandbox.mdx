@@ -1,6 +1,6 @@
 ---
-title: Sandbox
-pcx_content_type: concept
+title: Give an agent a Linux sandbox
+pcx_content_type: how-to
 sidebar:
   order: 1
 description: Give an agent a Linux sandbox to run shell commands, scripts, and tests.
@@ -8,9 +8,16 @@ products:
   - agents
 ---
 
-import { LinkCard, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	LinkCard,
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Give an agent a Linux sandbox for shell commands, language runtimes, package installation, and project files that last across turns. The sandbox is a [Container](/containers/) attached to the agent. The agent gives the model a tool that runs commands in the sandbox.
+
+To share persistent files between shell commands and the agent's file tools, follow [Use Cloudflare Computer's container backend](/agents/sandboxes-and-workspaces/computer-container-backend/). That guide uses an experimental execution backend. The example on this page uses container-local files.
 
 Use a sandbox when an agent needs to:
 
@@ -32,6 +39,10 @@ The sandbox runs in its own virtual machine. It cannot read the storage, environ
 ## Basic pattern
 
 The following [Think](/agents/harnesses/think/) agent gives the model one tool, `run_command`. The tool starts the sandbox on first use and runs each command with Bash.
+
+In a [Worker project](/workers/get-started/), install the packages for this example:
+
+<PackageManagers pkg="@cloudflare/think @cloudflare/computer agents ai zod just-bash" />
 
 <TypeScriptExample>
 
@@ -59,9 +70,7 @@ export class CodeAgent extends Think<Env> {
 	}
 
 	getModel() {
-		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
-		);
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
 	}
 
 	getSystemPrompt() {
@@ -101,7 +110,7 @@ export class CodeAgent extends Think<Env> {
 			await container.setInactivityTimeout(INACTIVITY_TIMEOUT_MS);
 		}
 
-		// `timeout` stops the command and every process it started.
+		// Limit the command's process group with GNU `timeout`.
 		const process = await container.exec([
 			"timeout",
 			"--kill-after=5",
@@ -137,7 +146,7 @@ export default {
 
 `setInactivityTimeout()` keeps the container running for 10 minutes after the agent becomes inactive, so the files remain for the next turn. The tool sets it after `start()`. A Durable Object that restarts starts without the timeout, so the constructor sets it again when the container is already running. For more information, refer to [`setInactivityTimeout`](/containers/api/durable-object-container/#setinactivitytimeout).
 
-`timeout` stops a command, and every process it started, after 60 seconds. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
+After 60 seconds, `timeout` sends `SIGTERM` to the command's process group, then `SIGKILL` five seconds later if needed. Processes that create their own group can outlive this timeout. For more information, refer to [Stop the processes a command starts](/containers/guides/execute-commands/#stop-the-processes-a-command-starts).
 
 The tool returns only the last 10,000 characters of each output stream, so a noisy command does not fill the model context.
 

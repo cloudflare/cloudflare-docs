@@ -1,0 +1,235 @@
+---
+title: Use Cloudflare Computer's container backend
+description: Run Linux tools against your agent's files and save their changes in Durable Object storage, using the experimental Computer container backend.
+pcx_content_type: how-to
+sidebar:
+  order: 4
+  label: Computer container backend
+products:
+  - agents
+  - containers
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Run shell commands, native binaries, and package managers against the same persistent files that your agent reads and writes. This guide uses the experimental container backend in the `@cloudflare/computer` package.
+
+:::caution[Experimental]
+The container backend and its `computerd` daemon are for experiments and prototypes, not production use. Their APIs may change in any release. Refer to the [Computer component status](https://github.com/cloudflare/computer/tree/main/packages/computer#status).
+:::
+
+The workspace stores files in Durable Object SQLite storage and exposes them at `/workspace` inside the container. No R2 bucket is required. For the synchronization diagram and storage boundaries, refer to [How persistence works](/agents/sandboxes-and-workspaces/persistence/).
+
+## Before you begin
+
+- Use a [Workers Paid plan](/workers/platform/pricing/).
+- Install Node.js and [Wrangler](/workers/wrangler/install-and-update/).
+- Start Docker. For supported local FUSE configurations, refer to [Local development](/containers/guides/local-dev/#fuse-support).
+
+This example uses `@cloudflare/computer@0.8.0` and the `computerd` image from the same release.
+
+## Set up the workspace
+
+<Steps>
+
+1. Create a project directory:
+
+   ```sh
+   mkdir computer-container
+   cd computer-container
+   ```
+
+   Install Computer and the development tools:
+
+   <PackageManagers pkg="@cloudflare/computer@0.8.0" />
+
+   <PackageManagers pkg="wrangler@4.154.0 typescript" dev />
+
+2. Create `Dockerfile`. This image includes Node.js, Linux utilities, and the daemon that mounts the workspace:
+
+   ```dockerfile title="Dockerfile"
+   FROM ghcr.io/cloudflare/computer-computerd-linux-x64:0.8.0 AS computerd
+   FROM node:22-trixie-slim
+
+   RUN apt-get update \
+       && apt-get install -y --no-install-recommends fuse3 libfuse2t64 ca-certificates \
+       && rm -rf /var/lib/apt/lists/*
+
+   COPY --from=computerd /usr/local/bin/computerd /usr/local/bin/computerd
+
+   ENV PORT=8080
+   ENV MOUNT_POINT=/workspace
+   ENV FUSE_MOUNT=auto
+   EXPOSE 8080
+   ENTRYPOINT ["/usr/local/bin/computerd"]
+   ```
+
+3. Configure the Worker and its container:
+
+   <WranglerConfig>
+
+   ```toml
+   name = "computer-container"
+   main = "src/index.ts"
+   compatibility_date = "$today"
+   compatibility_flags = ["nodejs_compat"]
+
+   [[containers]]
+   class_name = "ComputerDemo"
+   scheduling_policy = "durable_object"
+
+   [containers.images.app]
+   dockerfile = "./Dockerfile"
+
+   [[durable_objects.bindings]]
+   name = "COMPUTER"
+   class_name = "ComputerDemo"
+
+   [exports.ComputerDemo]
+   type = "durable-object"
+   storage = "sqlite"
+   ```
+
+   </WranglerConfig>
+
+   The `app` image key matches the backend's `name`. With this [scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), the backend selects the instance size when it starts the container.
+
+4. Create `src/index.ts` using the TypeScript tab below. `POST` runs a fixed shell command; `GET` reads its saved output directly from the workspace.
+
+   <TypeScriptExample filename="src/index.ts">
+
+   ```ts
+   import { DurableObject } from "cloudflare:workers";
+   import { Workspace } from "@cloudflare/computer";
+   import {
+     ContainerBackend,
+     withWorkspaceContainer,
+   } from "@cloudflare/computer/backends/container";
+
+   export { WorkspaceProxy } from "@cloudflare/computer";
+
+   export class ComputerDemo extends withWorkspaceContainer(
+     class extends DurableObject<Env> {},
+   ) {
+     backend = new ContainerBackend({
+       id: "linux",
+       container: () => this,
+       workspace: { binding: "COMPUTER", id: this.ctx.id.toString() },
+       name: "app",
+       instance: "basic",
+     });
+
+     workspace = new Workspace({
+       storage: this.ctx.storage,
+       backends: [this.backend],
+     });
+
+     override fetch(request: Request) {
+       return this.backend.handleFetch(request);
+     }
+
+     async run() {
+       await this.workspace.fs.mkdir("/workspace", { recursive: true });
+       await this.workspace.fs.writeFile("/workspace/input.txt", "hello from the agent\n");
+
+       using execution = await this.workspace.runtime.exec(
+         "tr '[:lower:]' '[:upper:]' < input.txt > result.txt",
+         { backend: "linux", cwd: "/workspace", encoding: "utf8" },
+       );
+       const result = await execution.result();
+       if (result.exitCode !== 0 || result.sync.status !== "complete") {
+         throw new Error("Command failed or workspace synchronization is incomplete");
+       }
+       return { exitCode: result.exitCode, sync: result.sync.status };
+     }
+
+     async readResult() {
+       return this.workspace.fs.readFile("/workspace/result.txt", "utf8");
+     }
+   }
+
+   export default {
+     async fetch(request: Request, env: Env) {
+       const computer = env.COMPUTER.getByName("demo");
+       if (request.method === "POST") {
+         return Response.json(await computer.run());
+       }
+       if (request.method === "GET") {
+         return new Response(await computer.readResult());
+       }
+       return new Response("Method not allowed", {
+         status: 405,
+         headers: { Allow: "GET, POST" },
+       });
+     },
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   `withWorkspaceContainer` supplies container lifecycle methods. `WorkspaceProxy` routes the daemon's connection back to the `COMPUTER` binding; the Durable Object's `fetch()` passes it to the backend.
+
+5. Generate the `Env` type, then start the development server:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+</Steps>
+
+## Verify the result
+
+In a second terminal, run the command:
+
+```sh
+curl -X POST http://localhost:8787
+```
+
+```json output
+{ "exitCode": 0, "sync": "complete" }
+```
+
+Read the file that the command wrote:
+
+```sh
+curl http://localhost:8787
+```
+
+```txt output
+HELLO FROM THE AGENT
+```
+
+The `GET` request reads SQLite without starting a container. After synchronization completes, the saved result survives container replacement and Durable Object restarts.
+
+To deploy the example, run:
+
+<PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+Repeat the requests against the deployment URL. This example uses one workspace named `demo`; give each user their own authenticated agent instance when their files must stay separate.
+
+## Use the workspace in an agent
+
+Pass the workspace to the existing [workspace file tools](/agents/sandboxes-and-workspaces/persistent-files/#give-the-model-file-tools). A workspace with an execution backend also offers the model an `exec` tool.
+
+The backend starts lazily on its first execution. With multiple backends, pass `backend: "linux"` to select this one; otherwise, the first registered backend is the default.
+
+## Check file synchronization
+
+Check both the command's exit code and `result.sync.status`, as the example does. A `pending` result still needs synchronization. Refer to [Check container synchronization](/agents/sandboxes-and-workspaces/persistence/#check-container-synchronization) before retrying a command that may already have changed files.
+
+Calls made directly through `ctx.container.exec()` do not use Computer's synchronization around commands. Use `workspace.runtime.exec()` when commands need the shared workspace.
+
+## Configure Linux tools
+
+| Need                                     | Configuration                                                                                                                                  |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Python, Git, or a compiler               | Install it in the Dockerfile.                                                                                                                  |
+| Internet access for package installation | Set `egress: { mode: "direct" }` on `ContainerBackend`. The default is `"none"`.                                                               |
+| Rebuildable dependencies on local disk   | Set `ignore: ["**/node_modules"]` on `ContainerBackend`. Files created there in the container stay local and are not copied to `workspace.fs`. |
+
+The container's workspace copy is held in memory. Keep workspaces small and within the [Durable Object storage limits](/durable-objects/platform/limits/). For more backend configuration, refer to the [container example](https://github.com/cloudflare/computer/tree/main/examples/container).

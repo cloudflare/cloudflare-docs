@@ -1,14 +1,19 @@
 ---
 title: Tools
-pcx_content_type: navigation
+description: Give your agent tools to access services and take actions, and use Code Mode to combine tool calls by writing code.
+pcx_content_type: overview
 sidebar:
   order: 4
+  label: Overview
   group:
-    hideIndex: true
+    label: Tools
+    hideIndex: false
 ---
 
 import { DirectoryListing } from "~/components";
 
 Tools give agents capabilities such as [searching the web](/agents/tools/web-search/), [reading webpages and documents](/agents/tools/web-fetch/), browsing the web, processing payments, and running code. Agents can call tools in different ways. Use [Code Mode](/agents/tools/codemode/) to let models discover and orchestrate multiple tools by writing code, or use direct tool calls for simple actions.
+
+For a working directory, file tools, and an isolated environment to run code, refer to [Sandboxes and workspaces](/agents/sandboxes-and-workspaces/).
 
 <DirectoryListing />

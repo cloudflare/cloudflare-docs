@@ -272,7 +272,7 @@ export class MyAgent extends Think<Env> {
 
 `includeMcpTools` controls only the automatic model tool merge. MCP connections still register, restore, discover, and wait. Raw catalog access, direct calls, Code Mode connectors, and explicit `this.mcp.getAITools()` calls continue to work.
 
-Use this property instead of removing MCP tool names through `activeTools` in `beforeTurn`. Think converts MCP schemas before it calls `beforeTurn`, so `activeTools` cannot avoid that conversion. To configure a connector runtime, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
+Use this property instead of removing MCP tool names through `activeTools` in `beforeTurn`. Think converts MCP schemas before it calls `beforeTurn`, so `activeTools` cannot avoid that conversion. To configure a connector runtime, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/integrations/mcp/).
 
 Add MCP servers programmatically or via `@callable` methods:
 

@@ -1,0 +1,46 @@
+---
+title: Sandboxes and workspaces
+description: Give your agent persistent files and an isolated environment to run code, from JavaScript modules to Linux commands and tools.
+pcx_content_type: overview
+sidebar:
+  order: 3
+  label: Overview
+  group:
+    label: Sandboxes and workspaces
+    hideIndex: false
+products:
+  - agents
+---
+
+Give your agent a working directory and an isolated environment to run code. A workspace holds its files. A sandbox runs programs that can use them.
+
+Use a workspace on its own for reading, writing, and searching files. Add a sandbox when the agent needs to run code.
+
+<span id="choose-an-execution-environment"></span>
+
+## Choose a starting point
+
+Choose a guide based on what your agent needs to do:
+
+| Your agent needs to                                                     | Start here                                                                                                           |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| Keep notes, source files, and generated files across turns and restarts | [Give an agent persistent files](/agents/sandboxes-and-workspaces/persistent-files/)                                 |
+| Run shell commands, scripts, or native tools in Linux                   | [Give an agent a Linux sandbox](/agents/sandboxes-and-workspaces/sandbox/)                                           |
+| Run JavaScript modules against persistent workspace files               | [Run JavaScript against workspace files](/agents/sandboxes-and-workspaces/run-javascript/)                           |
+| Run shell commands on your agent's persistent files                     | [Cloudflare Computer container backend](/agents/sandboxes-and-workspaces/computer-container-backend/) — experimental |
+
+## Choose how files persist
+
+The Linux sandbox guide uses container-local files. They last while the container runs. To keep them after it stops, [save and restore a snapshot](/sandbox/files/save-and-restore-a-workspace/).
+
+For files that your agent can read and edit independently of a container, [give the agent a persistent workspace](/agents/sandboxes-and-workspaces/persistent-files/). The JavaScript backend and Computer's container backend can share those files with the agent's file tools.
+
+For storage boundaries and synchronization, refer to [How persistence works](/agents/sandboxes-and-workspaces/persistence/).
+
+## Combine tool calls with Code Mode
+
+[Code Mode](/agents/tools/codemode/) lets the model write code that calls tools, combines their results, and returns the information it needs. It can also use [workspace file tools](/agents/tools/codemode/integrations/ai-sdk/#organize-tools-with-providers).
+
+## More sandbox features
+
+For background processes, networking, and application previews, refer to [Sandboxes on Cloudflare](/sandbox/).

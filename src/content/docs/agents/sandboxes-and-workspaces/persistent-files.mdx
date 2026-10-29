@@ -1,0 +1,366 @@
+---
+title: Give an agent persistent files
+description: Store notes, drafts, and generated files across turns and restarts, and give your agent tools to read and edit them.
+pcx_content_type: how-to
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+[Cloudflare Computer](https://github.com/cloudflare/computer) gives an agent a persistent working directory backed by SQLite, with tools such as `read`, `write`, `edit`, and `grep`.
+
+An optional `exec` tool lets the agent run [JavaScript](/agents/sandboxes-and-workspaces/run-javascript/) or [shell commands](/agents/sandboxes-and-workspaces/computer-container-backend/) against those files.
+
+Use a file system when an agent needs to:
+
+- Keep notes, drafts, plans, or generated files across turns and restarts.
+- Read, search, and edit text files with tools built for a model.
+- Run JavaScript against files without starting a container.
+- Access skills, source files, and other documents without loading them all into its context window.
+
+The workspace and its file tools are stable.
+
+Use this guide in an existing [Worker project](/workers/get-started/).
+
+## Install
+
+<PackageManagers pkg="@cloudflare/computer zod" />
+
+Every tool entry point requires `zod`. What else you need depends on how your agent calls tools:
+
+- **[Think](/agents/harnesses/think/)** includes the workspace tools. Install `@cloudflare/computer` alongside it.
+- **[AI SDK](https://ai-sdk.dev/)** tools also require `ai`.
+- **[Pi](/agents/harnesses/pi/)** and **[OpenCode](/agents/harnesses/opencode/)** use the Pi AI tools, which need nothing beyond `zod`.
+
+Your Worker needs the `nodejs_compat` [compatibility flag](/workers/configuration/compatibility-flags/).
+
+## Add a workspace to a Durable Object
+
+Create a `Workspace` in your Durable Object class and pass it the `storage` object. The file system is ready to use immediately.
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { DurableObject } from "cloudflare:workers";
+
+export class NotesAgent extends DurableObject<Env> {
+	workspace = new Workspace({ storage: this.ctx.storage });
+
+	async addTodo(item: string) {
+		const path = "/workspace/notes/todo.md";
+		await this.workspace.fs.mkdir("/workspace/notes", { recursive: true });
+
+		let todo = "";
+		try {
+			todo = await this.workspace.fs.readFile(path, "utf8");
+		} catch (error) {
+			// A missing file means there are no to-do items yet.
+			if ((error as { code?: string }).code !== "ENOENT") throw error;
+		}
+
+		todo += `- [ ] ${item}\n`;
+		await this.workspace.fs.writeFile(path, todo);
+		return todo;
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		const agent = env.NotesAgent.getByName("user-123");
+		return new Response(await agent.addTodo("Ship it"));
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+Configure the Durable Object binding and a SQLite migration in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "NotesAgent",
+				"name": "NotesAgent"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_sqlite_classes": ["NotesAgent"]
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+### Work with files
+
+The `workspace.fs` object provides common methods for working with the file system. It accepts `string` or binary `Uint8Array` content. Use a `ReadableStream` to read or write large files.
+
+<TypeScriptExample>
+
+```ts
+const { fs } = this.workspace;
+
+await fs.mkdir("/workspace/data", { recursive: true });
+await fs.mkdir("/workspace/uploads", { recursive: true });
+
+// Write a string, bytes, or a stream.
+await fs.writeFile("/workspace/data/blob.bin", new Uint8Array([1, 2, 3]));
+await fs.writeFile("/workspace/uploads/report.csv", request.body!);
+
+// Read a file as text, or as a stream when you omit the encoding.
+const text = await fs.readFile("/workspace/uploads/report.csv", "utf8");
+const stream = await fs.readFile("/workspace/uploads/report.csv");
+
+// List, search, and remove.
+for (const entry of await fs.readdir("/workspace/notes")) {
+	console.log(entry.isDirectory ? `d ${entry.name}` : `f ${entry.name}`);
+}
+const matches = await fs.grep("TODO", "/workspace", { ignoreCase: true });
+await fs.rm("/workspace/notes", { recursive: true });
+```
+
+</TypeScriptExample>
+
+For every file operation, refer to [`workspace.fs`](/agents/sandboxes-and-workspaces/reference/#workspacefs) in the API reference.
+
+## Give the model file tools
+
+Computer builds one set of file tools for a workspace, with adapters for different agent libraries:
+
+| Tool     | What it does                                                                     |
+| -------- | -------------------------------------------------------------------------------- |
+| `read`   | Reads a text file by line, or passes an image or PDF to a model that accepts it. |
+| `ls`     | Lists one directory, page by page.                                               |
+| `find`   | Finds paths with `*`, `**`, and `?` globs.                                       |
+| `grep`   | Searches file contents with a regular expression or a fixed string.              |
+| `write`  | Writes a whole file.                                                             |
+| `edit`   | Replaces targeted text in a file and returns a diff.                             |
+| `delete` | Deletes a file or directory.                                                     |
+| `exec`   | Runs code on an execution backend. Present only when the workspace has one.      |
+
+:::note[Harnesses]
+[Think](#think) adds these tools to every turn with no configuration. The [Pi](#pi) and [OpenCode](#opencode) harnesses take the Pi AI tools through a small adapter. Any other agent built on the [AI SDK](#ai-sdk) can use `createAITools()`.
+:::
+
+### Think
+
+Every [Think](/agents/harnesses/think/) agent has a Computer `Workspace` at `this.workspace`, and Think adds the workspace tools to every turn. To change the workspace, override `workspace`. A custom tool from `getTools()` with the same name as a workspace tool replaces it.
+
+For more information, refer to [Built-in workspace tools](/agents/harnesses/think/tools/#built-in-workspace-tools).
+
+### AI SDK
+
+`createAITools()` from `@cloudflare/computer/tools/ai-sdk` returns an AI SDK `ToolSet` for a workspace. Pass it to `generateText()`, `streamText()`, or the `getTools()` method of an agent.
+
+The following example uses [Workers AI](/workers-ai/) through the Agents SDK. Install both packages:
+
+<PackageManagers pkg="ai agents" />
+
+Add a Workers AI binding to your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"ai": {
+		"binding": "AI"
+	}
+}
+```
+
+</WranglerConfig>
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
+import { generateText, stepCountIs } from "ai";
+import { DurableObject } from "cloudflare:workers";
+import { createAI } from "agents/models/ai-sdk";
+
+export class WriterAgent extends DurableObject<Env> {
+	workspace = new Workspace({ storage: this.ctx.storage });
+
+	async write(prompt: string) {
+		const { text } = await generateText({
+			model: createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6"),
+			system:
+				"You are a writing assistant. Keep drafts and notes as files under /workspace.",
+			prompt,
+			tools: createAITools({
+				workspace: this.workspace,
+				read: { maxBytes: 32 * 1024, maxLines: 800 },
+			}),
+			stopWhen: stepCountIs(20),
+		});
+		return text;
+	}
+}
+```
+
+</TypeScriptExample>
+
+### Pi
+
+`createPiTools()` from `@cloudflare/computer/tools/pi-ai` returns Pi AI tool declarations and one `execute` function that runs a call by name. [Pi Durable](/agents/harnesses/pi/) runs the agent loop itself and expects each tool to carry its own `execute`, so pair them up as `ToolRegistration` objects:
+
+<TypeScriptExample filename="src/workspace-tools.ts">
+
+```ts
+import type { Workspace } from "@cloudflare/computer";
+import { createPiTools } from "@cloudflare/computer/tools/pi-ai";
+import type { ToolRegistration } from "@earendil-works/pi-durable";
+
+// Running these again after an eviction is harmless.
+const REPLAY_SAFE = new Set(["read", "ls", "find", "grep", "write", "delete"]);
+
+export function workspaceTools(workspace: Workspace): ToolRegistration[] {
+	const { tools, execute } = createPiTools({ workspace });
+	return tools.map((tool): ToolRegistration => ({
+		name: tool.name,
+		description: tool.description,
+		parameters: tool.parameters,
+		replay: REPLAY_SAFE.has(tool.name) ? "safe" : "unsafe",
+		async execute(args, api, context) {
+			const { content, isError } = await execute(
+				{ id: api.callId, name: tool.name, arguments: args },
+				{ abortSignal: context.abortSignal },
+			);
+			return { output: content, isError };
+		},
+	}));
+}
+```
+
+</TypeScriptExample>
+
+Install the tools in an [extension](/agents/harnesses/pi/extensions/) inside the harness factory, before `Harness.open()`:
+
+<TypeScriptExample>
+
+```ts
+this.registry.install({
+	name: "workspace",
+	tools: workspaceTools(this.workspace),
+});
+```
+
+</TypeScriptExample>
+
+`execute` validates the arguments against the schema of the tool and reports failures as `isError` results, so the model can retry.
+
+### OpenCode
+
+[OpenCode](/agents/harnesses/opencode/) receives tools through plugins. The following plugin replaces the OpenCode tools that need a local file system with the workspace tools:
+
+<TypeScriptExample filename="src/workspace-plugin.ts">
+
+```ts
+import type { Workspace } from "@cloudflare/computer";
+import { createPiTools } from "@cloudflare/computer/tools/pi-ai";
+import type { Plugin } from "@opencode/plugin";
+
+// OpenCode tools that need a local file system or process.
+const LOCAL_TOOLS = ["read", "write", "edit", "patch", "glob", "grep", "shell"];
+
+export function workspacePlugin(workspace: Workspace): Plugin.Plugin {
+	const { tools, execute } = createPiTools({ workspace });
+	return {
+		id: "workspace",
+		async setup(ctx) {
+			await ctx.tool.transform((editor) => {
+				for (const id of LOCAL_TOOLS) editor.remove(id);
+				for (const tool of tools) {
+					editor.add({
+						name: tool.name,
+						description: tool.description,
+						input: tool.parameters,
+						// Offer each tool by name instead of through OpenCode's code mode.
+						options: { codemode: false },
+						async execute(input, context) {
+							const { content, isError } = await execute(
+								{ id: context.id, name: tool.name, arguments: input },
+								{ abortSignal: context.signal },
+							);
+							const text = content
+								.map((part) => (part.type === "text" ? part.text : ""))
+								.join("\n");
+							if (isError) throw new Error(text || `${tool.name} failed`);
+							return { content: text };
+						},
+					});
+				}
+			});
+		},
+	};
+}
+```
+
+</TypeScriptExample>
+
+Add the plugin to the `plugins` array that you pass to `OpenCodeWorkerd.create()` in the harness factory:
+
+<TypeScriptExample>
+
+```ts
+OpenCodeWorkerd.create({
+	storage,
+	plugins: [this.ai.plugin, workspacePlugin(this.workspace)],
+});
+```
+
+</TypeScriptExample>
+
+### Configure the tools
+
+`createAITools()`, `createPiTools()`, and `createTanStackTools()` accept the same options:
+
+| Option      | Default       | Description                                                                         |
+| ----------- | ------------- | ----------------------------------------------------------------------------------- |
+| `workspace` | Required      | A `Workspace`, or a client from `getWorkspace()`.                                   |
+| `readonly`  | `false`       | Offers only `read`, `ls`, `find`, and `grep`.                                       |
+| `read`      | Default caps  | Limits for `read`, such as `maxBytes`, `maxLines`, and `includeLineNumbers`.        |
+| `write`     | Default caps  | Limits for `write`.                                                                 |
+| `edit`      | Default caps  | Limits for `edit`.                                                                  |
+| `exec`      | Every backend | A map from backend ID to `{ description }`. Pass `{}` to leave out the `exec` tool. |
+
+To let the model read and search files but not change them, pass `readonly: true`:
+
+<TypeScriptExample>
+
+```ts
+createAITools({ workspace: this.workspace, readonly: true });
+```
+
+</TypeScriptExample>
+
+## Keep user files separate
+
+The model reads everything that the file tools and `exec` return. A file can contain text written to steer the model, such as an instruction to delete other files. Check tool results before the agent acts on them outside the workspace, and require [approval](/agents/harnesses/think/tools/#tool-approval) for tools with side effects.
+
+Every user who talks to the same agent instance shares its workspace. Give each user their own agent instance when their files must stay apart.
+
+## Next steps
+
+- [Run JavaScript against those files](/agents/sandboxes-and-workspaces/run-javascript/).
+- [Use Cloudflare Computer's container backend](/agents/sandboxes-and-workspaces/computer-container-backend/) to run shell commands against those files.
+- [How persistence works](/agents/sandboxes-and-workspaces/persistence/).

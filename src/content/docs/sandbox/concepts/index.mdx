@@ -38,7 +38,7 @@ Most existing tools expect an operating system as well as a language runtime. `n
 
 JavaScript code can need Linux too. A Dynamic Worker cannot start child processes or load native add-ons, and Workers implements some Node.js modules only in part. For what Workers supports, refer to [Node.js compatibility](/workers/runtime-apis/nodejs/).
 
-Your Worker decides when the container starts, whether it can reach the Internet, and which HTTP requests reach it. The [Agents sandbox tool](/agents/tools/sandbox/) uses a Container to run commands for an agent.
+Your Worker decides when the container starts, whether it can reach the Internet, and which HTTP requests reach it. The [Agents sandbox tool](/agents/sandboxes-and-workspaces/sandbox/) uses a Container to run commands for an agent.
 
 ## Use a Dynamic Worker when the code calls known methods
 
@@ -63,6 +63,8 @@ With a Container, you build and update the image. Existing tools run without cha
 With a Dynamic Worker, you write each method and decide what it returns. When generated code needs another operation, you add a method. The code that loads the Dynamic Worker lists everything the generated code can reach.
 
 ## Use both in one application
+
+An agent can also [keep persistent files](/agents/sandboxes-and-workspaces/persistent-files/) independently of its execution environment. To share those files between Linux commands and the agent's file tools, follow [Use Cloudflare Computer's container backend](/agents/sandboxes-and-workspaces/computer-container-backend/). That guide uses Cloudflare Computer's experimental container backend.
 
 A coding agent can answer questions about a repository through scoped methods in a Dynamic Worker. When the agent proposes a patch, the same Worker starts a Container and runs the test suite of the repository.
 
