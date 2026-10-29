@@ -8,7 +8,7 @@ distllms/
 .astro-cache/
 
 # skills/ is fetched from middlecache via bin/fetch-skills.ts
-skills/
+/skills/
 !.agents/skills/
 !.agents/commands/
 !.agents/agents/

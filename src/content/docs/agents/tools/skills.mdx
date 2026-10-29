@@ -1,0 +1,183 @@
+---
+title: Skills
+description: Give your agent Agent Skills tools to discover, load, and read skills on demand. Use Think, Pi Durable, AI SDK, or your own harness.
+pcx_content_type: integration-guide
+sidebar:
+  order: 5
+products:
+  - agents
+---
+
+import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+
+Give your agent tools to use [Agent Skills](/agents/skills/): on-demand instructions, references, and scripts stored as `SKILL.md` folders. The model sees a short catalog of skill names and descriptions, then loads a skill only when a task matches it.
+
+Skills come from [sources](/agents/skills/sources/computer/): a Computer Workspace, an R2 bucket, or code. The tools are the same whichever source you use.
+
+Use the supplied adapters with [Think](/agents/harnesses/think/), [Pi Durable](/agents/harnesses/pi/), or the AI SDK. For another harness, use the catalog functions in `agents/skills`.
+
+## What the tools add
+
+| Tool                  | What it does                                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `activate_skill`      | Returns a skill's instructions, its folder when it has one, and the list of files bundled with it.            |
+| `read_skill_resource` | Returns one bundled file, by `{ name, path }` or a qualified path such as `release-notes/references/guide.md`. |
+| `run_skill_script`    | Runs a bundled script. Only added when you set the experimental [script runner](/agents/skills/execution/#script-runner). |
+
+The tools only appear when at least one skill is available. `name` is limited to the skills in the catalog. Binary files are returned as base64.
+
+Alongside the tools, the catalog provides system prompt text that lists each skill:
+
+```txt
+Available skills. When a task matches a skill, use activate_skill with its name before proceeding.
+
+- release-notes: Turn a list of changes into release notes.
+- pirate-voice: Answer in a pirate voice.
+```
+
+## Add the tools to your harness
+
+These examples require an existing harness. For a new agent, start with [Think](/agents/harnesses/think/getting-started/) or the [Pi harness guide](/agents/harnesses/pi/).
+
+<Steps>
+
+1. Update the Agents SDK in your Worker project:
+
+   <PackageManagers pkg="agents@latest" />
+
+2. Choose a [source](/agents/skills/sources/computer/) for your skills.
+
+3. Register the tools with your harness using one of the examples that follow.
+
+</Steps>
+
+### Think
+
+Think adds the tools and the catalog for you. Return your sources from `getSkills()`:
+
+<TypeScriptExample>
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [skills.workspace(this.workspace)];
+	}
+}
+```
+
+</TypeScriptExample>
+
+Think lists the sources again before each turn, so new and edited skills take effect on the next turn.
+
+### Pi Durable
+
+In your [Pi harness factory](/agents/harnesses/pi/extensions/#add-skills), install the `skills()` extension. It adds `activate_skill`, `read_skill_resource`, and a `skills` system prompt section:
+
+<TypeScriptExample>
+
+```ts
+import { skills } from "agents/harness/pi";
+import { r2 } from "agents/skills";
+
+// Inside the harness factory, before Harness.open():
+this.registry.install(
+	await skills([r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })]),
+);
+```
+
+</TypeScriptExample>
+
+The extension reads the sources once, when the factory builds it. Both tools are marked `replay: "safe"`.
+
+### AI SDK
+
+Load a catalog with `loadSkillCatalog()`, then pass `createSkillTools()` to your `streamText()` or `generateText()` call. Add the catalog prompt to your system prompt:
+
+<TypeScriptExample>
+
+```ts
+import { streamText } from "ai";
+import { loadSkillCatalog, r2 } from "agents/skills";
+import { createSkillTools } from "agents/skills/tools/ai-sdk";
+
+const catalog = await loadSkillCatalog([
+	r2(env.SKILLS_BUCKET, { prefix: "skills/" }),
+]);
+
+const result = streamText({
+	model,
+	system: [instructions, catalog.prompt()].filter(Boolean).join("\n\n"),
+	tools: { ...tools, ...createSkillTools(catalog) },
+	messages,
+});
+```
+
+</TypeScriptExample>
+
+Load the catalog again to pick up changed skills, and build the tools from the new catalog. `catalog.fingerprint` changes whenever the catalog prompt changes, so compare it to decide when to rebuild a cached system prompt.
+
+To add `run_skill_script`, pass a runner from `agents/skills/runner`: `createSkillTools(catalog, { scriptRunner: runner({ loader: env.LOADER }) })`. Refer to [Execution](/agents/skills/execution/).
+
+### Other harnesses
+
+Use the catalog directly inside your harness's tool handlers. `activate()` and `readResource()` return results instead of throwing, and render the same text as the supplied adapters:
+
+<TypeScriptExample>
+
+```ts
+import {
+	formatSkillDiagnostic,
+	loadSkillCatalog,
+	renderSkillResource,
+	workspace,
+} from "agents/skills";
+
+const catalog = await loadSkillCatalog([workspace(computerWorkspace)]);
+
+for (const diagnostic of catalog.diagnostics) {
+	console.warn(formatSkillDiagnostic(diagnostic));
+}
+
+// Register these handlers with your harness's tool interface.
+function activateSkill(input: { name: string }): string {
+	const activated = catalog.activate(input.name);
+	// Report failures as a tool error, for example an unknown skill.
+	if (!activated.ok) throw activated.error;
+	return activated.value;
+}
+
+async function readSkillResource(input: {
+	name?: string;
+	path: string;
+}): Promise<string> {
+	const read = await catalog.readResource(input);
+	if (!read.ok) throw read.error;
+	return renderSkillResource(read.value);
+}
+```
+
+</TypeScriptExample>
+
+Define `name` as one of `catalog.skills.map((entry) => entry.skill.name)`. Add `catalog.prompt()` to your system prompt. It returns `null` when there are no skills.
+
+## Handle problems
+
+A broken skill never stops the agent. `loadSkillCatalog()` reports problems in `catalog.diagnostics` and keeps the other skills:
+
+| Diagnostic       | Cause                                                                                          |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| `SkillWarning`   | A skill breaks a [specification rule](/agents/skills/#validation) but was loaded anyway.        |
+| `InvalidSkill`   | A skill could not be loaded, for example because it has no `description`. It is not shown to the model. |
+| `SourceFailed`   | A source could not be listed, for example because the bucket was unavailable.                  |
+| `DuplicateSkill` | Two sources provide the same skill name. The first source wins.                                |
+
+Tool failures, such as an unknown skill or a missing file, are returned to the model as tool errors so it can try again. The AI SDK tools throw, and the Pi tools return `isError: true`.
+
+## Related
+
+- [Agent Skills concepts](/agents/concepts/agent-skills/): the open format and progressive disclosure
+- [Agent Skills](/agents/skills/): sources and validation in the Agents SDK
+- [Execution](/agents/skills/execution/): run skill scripts
+- [File system](/agents/tools/filesystem/): give the agent a Workspace to store skills in

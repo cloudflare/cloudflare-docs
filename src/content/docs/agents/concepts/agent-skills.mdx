@@ -1,0 +1,137 @@
+---
+title: Agent Skills
+pcx_content_type: concept
+description: What Agent Skills are, how agents load them through progressive disclosure, what the open SKILL.md format specifies, and what you can build with them.
+tags:
+  - AI
+sidebar:
+  order: 5
+products:
+  - agents
+---
+
+[Agent Skills](https://agentskills.io/) are an open format for giving an agent specialized knowledge and repeatable workflows. A skill is a folder with a `SKILL.md` file. The file holds a name, a description, and instructions for one kind of task. The folder can also hold scripts, reference documents, templates, and other files.
+
+Anthropic first developed the format and released it as an open standard. Many agent products now read it, so a skill written once works across compatible agents. The [specification](https://agentskills.io/specification) defines what goes inside a skill folder. It does not define where skills are stored or how an agent loads them.
+
+## Why skills
+
+Models know a lot, but they do not know your team's procedures, conventions, or edge cases. You could put all of that in the system prompt, but every turn would then pay for instructions that most tasks do not need. Skills package that context so the agent loads it only when a task calls for it.
+
+Skills are useful for:
+
+- **Domain expertise**: a legal review checklist, your API's error codes, or your brand guidelines.
+- **Repeatable workflows**: a release process, an incident runbook, or a data pipeline that should run the same way every time.
+- **Reuse**: the same skill in a coding agent, a chat agent, and a scheduled agent.
+- **Changing behavior without a deploy**: when skills are files the agent reads at runtime, editing a file changes what the agent does.
+
+## Progressive disclosure
+
+Agents load skills in three stages, so an agent can keep many skills on hand at a small cost:
+
+| Stage | What the agent loads | When | Approximate size |
+| --- | --- | --- | --- |
+| 1. Catalog | Each skill's `name` and `description` | When the session starts | 50 to 100 tokens per skill |
+| 2. Instructions | The full `SKILL.md` body | When a task matches the description | Under 5,000 tokens recommended |
+| 3. Resources | Scripts, references, and assets | When the instructions refer to them | Varies |
+
+An agent with 20 skills pays for 20 short catalog entries, not 20 sets of instructions. It loads the full instructions only for the skills it uses.
+
+The model decides when to activate a skill, based on the description alone. A clear description that says when to use the skill matters more than any other field.
+
+## Anatomy of a skill
+
+A skill is a directory whose name matches the skill's `name`:
+
+```text
+release-notes/
+├── SKILL.md          # Required: frontmatter and instructions
+├── scripts/          # Optional: code the agent can run
+├── references/       # Optional: documents the agent reads when needed
+└── assets/           # Optional: templates, images, data files
+```
+
+`SKILL.md` starts with YAML frontmatter, followed by Markdown instructions:
+
+```md
+---
+name: release-notes
+description: Turn a list of changes into release notes. Use when the user asks for release notes, a changelog entry, or a summary of what shipped.
+license: Apache-2.0
+compatibility: Requires Node.js 20 or later
+metadata:
+  author: my-team
+  version: "1.2"
+---
+
+1. Read `references/style-guide.md`.
+2. Run `scripts/format-release-notes.js` with one line per change.
+3. Reply with the formatted notes.
+```
+
+### Frontmatter fields
+
+| Field | Required | Rules |
+| --- | --- | --- |
+| `name` | Yes | 1 to 64 characters. Lowercase letters, digits, and hyphens. Cannot start or end with a hyphen or contain `--`. Must match the directory name. |
+| `description` | Yes | 1 to 1,024 characters. Says what the skill does and when to use it. |
+| `license` | No | A license name or a bundled license file. |
+| `compatibility` | No | 1 to 500 characters. Environment requirements, such as required tools or network access. |
+| `metadata` | No | A map of string keys to string values, for properties the specification does not define. |
+| `allowed-tools` | No | A space-separated list of tools the skill may use without asking. Experimental, and support varies by agent. |
+
+Agents may also read their own extra fields. For example, several agents hide a skill from the model when it sets `disable-model-invocation: true`.
+
+### Body and resources
+
+The specification places no rules on the Markdown body. Keep it focused: the recommended size is under 500 lines. Move detailed material into `references/` and tell the agent when to read each file, for example: "Read `references/api-errors.md` if the API returns a non-200 status code."
+
+Skill files refer to each other with paths relative to the skill's directory, such as `scripts/extract.py`. Keep references one level deep from `SKILL.md`.
+
+## Scripts
+
+A skill can bundle scripts in `scripts/` and tell the agent to run them. A script turns a fragile, multi-step procedure into one reliable command. Supported languages depend on where the agent runs.
+
+Scripts written for agents work best when they:
+
+- Never wait for interactive input. Take arguments, environment variables, or standard input instead.
+- Explain their usage with `--help`, and say what went wrong and what to try in error messages.
+- Print structured output, such as JSON, and keep diagnostics separate from data.
+- Keep output small, or let the agent request more with an offset.
+- Are safe to run twice, since agents retry.
+
+## Writing good skills
+
+- **Start from real work.** A skill extracted from a task you completed with an agent, or from your own runbooks, is more useful than generic advice.
+- **Add what the agent does not know.** Skip explanations of common concepts. Include your conventions, the tools to use, and the edge cases that go wrong.
+- **Scope a skill like a function.** One coherent unit of work. Too narrow, and several skills load for one task. Too broad, and the skill is hard to activate precisely.
+- **Give defaults, not menus.** Pick one approach and mention alternatives briefly.
+- **Write the description for the model.** Phrase it as when to act, such as "Use when the user asks for…", and include cases where the user does not name the domain.
+- **Test it.** Run the skill against real prompts, including near-misses that should not trigger it, and revise.
+
+## Trust
+
+A skill adds instructions to the agent's context, and its scripts can run code. Treat skills like code:
+
+- Only load skills from sources you trust. A skill from an untrusted repository can inject instructions.
+- Limit what scripts can do. Give them only the tools, network access, and file access they need.
+- Review changes to skills the agent or users can edit.
+
+## Skills in the Agents SDK
+
+The Agents SDK reads the open format in `agents/skills` and checks every `SKILL.md` against the specification. As the specification's guide for agents recommends, it loads skills that break a rule and logs a warning, so skills written for other agents still work. Skills that cannot be used, such as ones without a description, are skipped. To check a skill when you write it, parse it with `parseSkill()` and require no warnings. It loads skills from three sources:
+
+| Source | Use it when |
+| --- | --- |
+| [Computer Workspace](/agents/skills/sources/computer/) | Skills should be files the agent, a user, or your code can add and edit at runtime |
+| [R2](/agents/skills/sources/r2/) | Many agents share one set of skills managed outside your Worker |
+| [Code](/agents/skills/sources/code/) | Tests, or a small fixed set of skills that ships with your Worker |
+
+The SDK uses the `.agents/skills/` folder convention that several agents share, so `/workspace/.agents/skills/` in a Workspace holds the agent's skills. The model loads skills with the [skill tools](/agents/tools/skills/) `activate_skill` and `read_skill_resource`. With a Workspace backend, the model runs skill scripts with the Workspace `exec` tool. Refer to [Execution](/agents/skills/execution/).
+
+## Related
+
+- [Agent Skills](/agents/skills/): use skills in Think, Pi, and the AI SDK
+- [Skills tools](/agents/tools/skills/): add the skill tools to your harness
+- [Conversation state and memory](/agents/concepts/conversation-state-and-memory/): how skills compare to other kinds of context
+- [Agent Skills specification](https://agentskills.io/specification): the full format

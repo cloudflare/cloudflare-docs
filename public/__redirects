@@ -258,6 +258,8 @@
 /agents/runtime/communication/readonly-connections/ /agents/agent-class/readonly-connections/ 301
 /agents/runtime/communication/routing/ /agents/agent-class/routing/ 301
 /agents/runtime/communication/websockets/ /agents/agent-class/websockets/ 301
+/agents/runtime/execution/ /agents/skills/ 301
+/agents/runtime/execution/agent-skills/ /agents/skills/execution/ 301
 /agents/runtime/execution/agent-tools/ /agents/agent-class/agent-tools/ 301
 /agents/runtime/execution/durable-execution/ /agents/agent-class/durable-execution/ 301
 /agents/runtime/execution/queue-tasks/ /agents/agent-class/queue-tasks/ 301

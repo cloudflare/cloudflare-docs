@@ -1,0 +1,146 @@
+---
+title: Computer
+pcx_content_type: how-to
+description: Store Agent Skills as files in a Computer Workspace, so skills the agent or a user writes are available on the next turn.
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+`skills.workspace()` reads [Agent Skills](/agents/skills/) from files in a Workspace from [`@cloudflare/computer`](https://github.com/cloudflare/computer). A skill is a folder in the Workspace. Writing, editing, or deleting a `SKILL.md` changes the agent's skills on its next turn, with no deploy.
+
+## Read skills from the Workspace
+
+By default, every `/workspace/.agents/skills/<name>/SKILL.md` is a skill. The files beside it are its resources:
+
+```text
+/workspace/.agents/skills/
+  release-notes/
+    SKILL.md
+    references/style-guide.md
+    scripts/format-release-notes.js
+  pirate-voice/
+    SKILL.md
+```
+
+Return the source from `getSkills()`. In [Think](/agents/harnesses/think/), `this.workspace` is already a Computer Workspace:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [skills.workspace(this.workspace)];
+	}
+}
+```
+
+</TypeScriptExample>
+
+To read skills from another directory, pass an absolute `root`:
+
+```ts
+skills.workspace(this.workspace, { root: "/workspace/skills" });
+```
+
+If the root directory does not exist, the source lists no skills. `.git`, `node_modules`, and `.DS_Store` inside a skill directory are ignored.
+
+## Add skills to the Workspace
+
+Skills are plain files, so anything that writes to the Workspace can add one: the agent's own `write` tool, a user upload, or your code. For example, write the starter skills the first time the agent starts:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+const ROOT = "/workspace/.agents/skills";
+
+const STARTER_SKILLS: Record<string, string> = {
+	"pirate-voice/SKILL.md": `---
+name: pirate-voice
+description: Answer in a pirate voice. Use when the user asks for a pirate tone.
+---
+
+Answer accurately, then rewrite the answer in a light pirate voice.
+`,
+};
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [skills.workspace(this.workspace)];
+	}
+
+	async onStart() {
+		for (const [path, content] of Object.entries(STARTER_SKILLS)) {
+			const file = `${ROOT}/${path}`;
+			await this.workspace.fs.mkdir(file.slice(0, file.lastIndexOf("/")), {
+				recursive: true,
+			});
+			await this.workspace.fs.writeFile(file, content);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each skill is checked against the [specification](/agents/skills/#validation) when it is listed. A skill whose `name` does not match its folder still loads with a warning. A skill with no `description` is skipped and logged. Use `skills.parseSkill()` to check a skill before you write it: it follows the specification when it parses with no warnings.
+
+## Run skill scripts
+
+Skill scripts are Workspace files too. Give the Workspace a backend, and the model runs scripts with the `exec` tool. Activating a skill tells the model where the skill's folder is, so it can run a script from there:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new WorkerJavaScriptBackend({
+				id: "js",
+				loader: this.env.LOADER,
+				access: "read-write",
+			}),
+		],
+	});
+
+	getSkills() {
+		return [skills.workspace(this.workspace)];
+	}
+}
+```
+
+</TypeScriptExample>
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+With the JavaScript backend, a skill can tell the model to run a script by re-exporting it, with `cwd` set to the skill's folder:
+
+```js
+export { default } from "./scripts/format-release-notes.js";
+```
+
+Refer to [Execution](/agents/skills/execution/) for the options.
+
+## Example
+
+The [`computer-skills` example](https://github.com/cloudflare/agents/tree/main/examples/computer-skills) stores skills in a Workspace, runs their scripts with `exec`, and lets you add and delete skills from the UI.
