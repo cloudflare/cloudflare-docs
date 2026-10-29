@@ -55,7 +55,7 @@ cd memory-agent
 
 Install the dependencies used by this guide:
 
-<PackageManagers pkg="agents ai @ai-sdk/provider" />
+<PackageManagers pkg="agents ai @ai-sdk/provider zod" />
 
 ## 2. Create a namespace
 
@@ -104,34 +104,30 @@ Generate local TypeScript types for your bindings:
 
 The model cannot use memory just because your application has a memory binding. You need to expose recall through a tool and instruct the model when to call it.
 
-This guide builds the agent on a Durable Object with the Agents SDK [Lifecycle](/agents/runtime/lifecycle/). Two pieces of the SDK do the work:
+This guide builds the agent on a Durable Object with the Agents SDK [Lifecycle](/agents/runtime/lifecycle/). The [`Sessions`](/agents/runtime/capabilities/sessions/) capability stores the conversation. `agents/sessions` is experimental, so its API may change between releases.
 
-- The [`Sessions`](/agents/runtime/capabilities/sessions/) capability stores the conversation.
-- `ContextBlocks` from `agents/context` builds the system prompt from labelled blocks. A block whose provider has a `search()` method becomes a `search_context` tool for the model.
-
-`agents/sessions` and `agents/context` are experimental, so their APIs may change between releases.
-
-Create `src/server.ts` and add the recall setup:
+Create `src/server.ts`. It defines the system prompt and a `search_memory` tool that calls `recall()`:
 
 <TypeScriptExample filename="src/server.ts">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
-import { AgentContextProvider, ContextBlocks } from "agents/context";
+import { tool } from "ai";
+import { z } from "zod";
 import { Lifecycle } from "agents/lifecycle";
 import { routeAgentRequest } from "agents/routing";
 import { Sessions } from "agents/sessions";
 
-const INSTRUCTIONS = "You are a helpful assistant.";
+const SYSTEM_PROMPT = `You are a helpful assistant.
 
-const MEMORY_CONTEXT = `Long-term memory is available through the search_context tool.
+Long-term memory is available through the search_memory tool.
 
 MEMORY POLICY
-- Search memory with search_context when the user asks what you know or remember about them.
+- Search memory with search_memory when the user asks what you know or remember about them.
 - Search memory when the request depends on prior sessions, preferences, project state, conventions, decisions, or long-running tasks.
 - Phrase memory searches as concise topics, not questions.
 - Do not search memory to repeat something the user just said in the current conversation.
-- When search_context returns results, always incorporate them into your response. The results are real memories from previous conversations.
+- When search_memory returns results, always incorporate them into your response. The results are real memories from previous conversations.
 - Treat recalled memories as helpful context, not guaranteed truth. If a memory is important for an irreversible action, confirm with the user.`;
 
 const MEMORY_PROFILE_NAME = "demo-user";
@@ -141,31 +137,24 @@ export class ChatAgent extends DurableObject<Env> {
 	readonly lifecycle = Lifecycle.install(this).use(this.sessions);
 	readonly session = this.sessions.session();
 
-	readonly context = new ContextBlocks(
-		[
-			{
-				label: "instructions",
-				provider: { get: async () => INSTRUCTIONS },
-			},
-			{
-				label: "memory",
+	memoryTools() {
+		return {
+			search_memory: tool({
 				description:
-					"Searchable durable memory: facts, events, instructions, and tasks from prior conversations.",
-				provider: {
-					get: async () => MEMORY_CONTEXT,
-					search: async (query: string) => {
-						const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
-						const { answer } = await profile.recall(query, {
-							responseLength: "short",
-						});
-						return answer || "No relevant memories found.";
-					},
+					"Search durable memory: facts, events, instructions, and tasks from prior conversations.",
+				inputSchema: z.object({
+					query: z.string().describe("A concise topic to search for"),
+				}),
+				execute: async ({ query }) => {
+					const profile = await this.env.MEMORY.getProfile(MEMORY_PROFILE_NAME);
+					const { answer } = await profile.recall(query, {
+						responseLength: "short",
+					});
+					return answer || "No relevant memories found.";
 				},
-			},
-		],
-		// Store the rendered system prompt, so it stays the same after a restart.
-		new AgentContextProvider(this.lifecycle, "_system_prompt"),
-	);
+			}),
+		};
+	}
 }
 
 export default {
@@ -180,9 +169,7 @@ export default {
 
 </TypeScriptExample>
 
-The system prompt is as important as the tool. It tells the model when to call `search_context`, when not to call it, and how to treat recalled memory.
-
-`ContextBlocks` renders the system prompt once and stores it in the Durable Object's SQLite database. The model provider can then keep the prompt in its cache across turns.
+The system prompt is as important as the tool. It tells the model when to call `search_memory`, when not to call it, and how to treat recalled memory. The prompt is the same on every turn, so the model provider can keep it in its prompt cache.
 
 ## 5. Extract memories from conversation
 
@@ -194,9 +181,14 @@ Replace the imports at the top of `src/server.ts`:
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
-import { convertToModelMessages, generateText, stepCountIs } from "ai";
-import type { UIMessage } from "ai";
-import { AgentContextProvider, ContextBlocks } from "agents/context";
+import {
+	convertToModelMessages,
+	generateText,
+	stepCountIs,
+	tool,
+	type UIMessage,
+} from "ai";
+import { z } from "zod";
 import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/ai-sdk";
 import { routeAgentRequest } from "agents/routing";
@@ -216,7 +208,7 @@ const MEMORY_INGEST_DELAY_SECONDS = 10;
 
 </TypeScriptExample>
 
-Then update `ChatAgent` with the following shape. The comment marks where to keep the `context` setup from step 4.
+Then update `ChatAgent` with the following shape. The comment marks where to keep `memoryTools()` from step 4.
 
 <TypeScriptExample filename="src/server.ts">
 
@@ -233,7 +225,7 @@ export class ChatAgent extends DurableObject<Env> {
 		.use(this.scheduler);
 	readonly session = this.sessions.session();
 
-	// Keep the `context = new ContextBlocks(...)` setup from step 4 here.
+	// Keep `memoryTools()` from step 4 here.
 
 	async chat(message: string): Promise<string> {
 		// RPC calls do not start the Lifecycle on their own.
@@ -250,11 +242,11 @@ export class ChatAgent extends DurableObject<Env> {
 		const ai = createAI({ binding: this.env.AI });
 		const result = await generateText({
 			model: ai("@cf/zai-org/glm-5.3-flash"),
-			system: await this.context.freezeSystemPrompt(),
+			system: SYSTEM_PROMPT,
 			messages: await convertToModelMessages(
 				(await this.session.getHistory()) as UIMessage[],
 			),
-			tools: await this.context.tools(),
+			tools: this.memoryTools(),
 			stopWhen: stepCountIs(5),
 		});
 
@@ -385,7 +377,7 @@ curl -X POST "http://localhost:8787/chat" \
   -d '{"conversationId":"second-chat","message":"What do you know or remember about me and my preferences?"}'
 ```
 
-The model should call `search_context`, receive recalled memory from Agent Memory, and use that context in its response. The second conversation has no shared session history with the first, so any knowledge of user preferences comes from Agent Memory.
+The model should call `search_memory`, receive recalled memory from Agent Memory, and use that context in its response. The second conversation has no shared session history with the first, so any knowledge of user preferences comes from Agent Memory.
 
 ## Next steps
 
