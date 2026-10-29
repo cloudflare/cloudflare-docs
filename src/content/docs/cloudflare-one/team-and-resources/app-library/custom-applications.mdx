@@ -79,8 +79,9 @@ If the application is still referenced, deletion fails and the API returns HTTP 
 
 ## Required API token permissions
 
-To create, edit, or delete custom applications with the API or Terraform, the API token must have the following permission:
+To create, edit, or delete custom applications with the API or Terraform, the API token must have at least one of the following permissions:
 
+- _Account_ > _Zero Trust_ > _Edit_
 - _Account_ > _Resource Library_ > _Edit_
 
 To list or view applications and categories, the API token must have at least one of the following permissions:
@@ -89,8 +90,6 @@ To list or view applications and categories, the API token must have at least on
 - _Account_ > _Zero Trust_ > _Edit_
 - _Account_ > _Resource Library_ > _Read_
 - _Account_ > _Resource Library_ > _Edit_
-
-Zero Trust permissions do not allow you to create, edit, or delete custom applications.
 
 ## Custom application limits
 
