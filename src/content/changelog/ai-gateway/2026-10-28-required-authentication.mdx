@@ -1,0 +1,21 @@
+---
+title: Authentication is required for new AI Gateways
+description: New AI Gateways require authentication. Existing gateways can turn it on, but authentication cannot be turned off once it is on.
+date: 2026-10-28
+---
+
+New AI Gateways now require authentication to prevent unauthorized requests. Once authentication is on, you cannot turn it off through the dashboard or API.
+
+API creation requests default to `authentication: true` when the field is omitted. Creating a gateway with `authentication: false` or disabling authentication on an authenticated gateway returns HTTP `400`. Omitting the field in an update preserves its current setting.
+
+Existing gateways with authentication turned off can continue without it. You can turn it on in your gateway settings or include `authentication: true` in a [gateway update request](/api/resources/ai_gateway/methods/update/):
+
+```json
+{
+	"authentication": true
+}
+```
+
+Before turning authentication on, configure HTTP clients to send a valid Cloudflare API token. Requests through Workers bindings remain pre-authenticated.
+
+For setup instructions and supported authorization headers, refer to [AI Gateway authentication](/ai-gateway/configuration/authentication/).
