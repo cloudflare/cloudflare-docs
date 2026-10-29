@@ -159,12 +159,26 @@ async function forward(
 
 ## Serve over SSE
 
-`sseResponse(streams, id, options)` returns a `Response` that serves the whole stream as Server-Sent Events:
+`sseResponse(streams, id, options)` returns a `Response` that serves the whole stream as Server-Sent Events. It replays stored chunks, then follows live appends:
 
-1. It replays the stored chunks, from `Last-Event-ID`, a `?from=` query parameter, or the `from` option.
-2. It sends an `up-to-date` event.
-3. It follows live appends, with heartbeat comments so idle proxies keep the connection open.
-4. It finishes with a `done` event, or an `error` event that carries the stored reason.
+```mermaid
+sequenceDiagram
+    accTitle: Reconnect to a durable stream
+    accDescr: After receiving chunk 2, a browser disconnects while the producer stores chunks 3 and 4. It reconnects with Last-Event-ID 2, replays the missing chunks, and then receives live output.
+    participant B as Browser
+    participant S as Streams via SSE
+    S-->>B: Chunk 2, id: 2
+    Note over B,S: Connection drops
+    Note right of S: Producer stores chunks 3 and 4
+    B->>S: Reconnect with Last-Event-ID: 2
+    S-->>B: Replay chunks 3 and 4
+    S-->>B: up-to-date
+    Note right of S: Producer appends chunk 5
+    S-->>B: Live chunk 5
+    S-->>B: done or error
+```
+
+Replay starts from `Last-Event-ID`, a `?from=` query parameter, or the `from` option. After replay, the response sends an `up-to-date` event and follows live appends. Heartbeat comments keep idle proxies from closing the connection. The response finishes with a `done` event, or an `error` event that carries the stored reason.
 
 Each chunk's sequence number is its SSE `id`. A browser `EventSource` that reconnects sends `Last-Event-ID` on its own, so it continues from the next chunk without any client code. Pass `request` so the response reads those values and stops when the client disconnects.
 

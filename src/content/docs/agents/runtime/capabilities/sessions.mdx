@@ -163,6 +163,20 @@ Avoid `getHistory()` for an unbounded conversation, because it loads every messa
 
 A message can have more than one child. An append attaches to the latest message by default. Pass `parentId` to attach it somewhere else, or `null` to start a new root:
 
+```mermaid
+flowchart TB
+    accTitle: Two replies branch from the same user message
+    accDescr: An earlier message leads to user message u1. The original reply a1 and regenerated reply a2 are children of u1. A later user message u2 continues only the original branch.
+    M["m1: Earlier message"] --> U["u1: User message"]
+    U --> A["a1: Original reply"]
+    U --> B["a2: Regenerated reply"]
+    A --> F["u2: Follow-up"]
+```
+
+Append `a2` with `parentId: "u1"` to create an alternative reply. `getBranches("u1")` returns `a1` and `a2`. `getHistory({ leafId: "a2" })` returns the path `m1 → u1 → a2`.
+
+For example, regenerate a reply to a user message:
+
 <TypeScriptExample>
 
 ```ts
