@@ -61,7 +61,7 @@ For features your starting point does not provide, use these capabilities:
 
 | You want to…                                            | Use                                                                                                                                                                                                      |
 | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Connect a browser and expose actions such as **Stop**   | [`WebSockets`](/agents/runtime/capabilities/websockets/), with [callables](/agents/runtime/capabilities/websockets/#callables)                                                                           |
+| Connect browser clients to the agent                    | [`WebSockets`](/agents/runtime/capabilities/websockets/)                                                                                                                                                 |
 | Keep a shared value synchronized with connected clients | [`State`](/agents/runtime/capabilities/state/) with `WebSockets`                                                                                                                                         |
 | Run a callback later or on a recurring schedule         | [`Scheduler`](/agents/runtime/capabilities/scheduler/)                                                                                                                                                   |
 | Manage MCP connections through the runtime              | [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/). Check your harness's MCP integration first, such as [OpenCode's MCP plugins](/agents/harnesses/opencode/#connect-an-mcp-server). |
@@ -125,8 +125,6 @@ These capabilities ship with the `agents` package and are stable:
 | [`State`](/agents/runtime/capabilities/state/)                         | `agents/state`      | Stores one validated value and syncs it to clients through `WebSockets`                       |
 | [`Scheduler`](/agents/runtime/capabilities/scheduler/)                 | `agents/schedules`  | Runs callbacks after a delay, at a date, on a cron, or on an interval                         |
 | [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) | `agents/mcp/client` | Connects to MCP servers and keeps the connections across restarts                             |
-
-[Callables](/agents/runtime/capabilities/websockets/#callables) are a feature of `WebSockets`. Configure them through its `callables` option; there is no separate capability to install.
 
 These capabilities are experimental. Their APIs may change between releases:
 
