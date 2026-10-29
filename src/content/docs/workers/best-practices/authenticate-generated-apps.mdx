@@ -300,8 +300,6 @@ return Response.json(result, { status: result.status });
 ```
 </TypeScriptExample>
 
-Do not also give the app unrestricted database access. [Upload-time bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/) remain available to every invocation.
-
 Block unrestricted network access, or mediate it through [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) or [Dynamic Workers egress controls](/dynamic-workers/usage/egress-control/). Otherwise, another data-access path could bypass the capability.
 
 ## Adapt the pattern
