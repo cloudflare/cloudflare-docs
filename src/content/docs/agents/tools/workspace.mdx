@@ -766,6 +766,28 @@ await this.workspace.git.commit({ message: "Add notes" });
 
 </TypeScriptExample>
 
+### Skills
+
+[Skills](/agents/concepts/skills/) are folders with a `SKILL.md` file, by convention under `/workspace/.agents/skills/`. Mount them read-only, and the model finds and reads them with the same tools it uses for other files. This mount shows the skills stored in an R2 bucket:
+
+<TypeScriptExample>
+
+```ts
+import { R2Bucket, Workspace } from "@cloudflare/computer";
+import { DurableObject } from "cloudflare:workers";
+
+export class MyAgent extends DurableObject<Env> {
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		mounts: { "/workspace/.agents/skills": R2Bucket(this.env.SKILLS) },
+	});
+}
+```
+
+</TypeScriptExample>
+
+To ship skills inside your Worker instead, mount them with `WorkerBundle()`. With the `computerBundle()` Vite plugin from `@cloudflare/computer/vite`, import the folder as `computer:bundle/src/skills` and pass it to `WorkerBundle()`.
+
 For the full interfaces, refer to the [Computer README](https://github.com/cloudflare/computer/tree/main/packages/computer).
 
 ## Upgrade from `@cloudflare/shell`
