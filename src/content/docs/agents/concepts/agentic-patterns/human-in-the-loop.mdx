@@ -64,6 +64,8 @@ On the `Agent` class, `waitForApproval()` in an `AgentWorkflow`, and `approveWor
 
 A pause should not last forever. When the agent asks for approval, use the [Scheduler](/agents/runtime/capabilities/scheduler/) to schedule a check. If no one has answered by then, remind the person, escalate to someone else, or reject the action.
 
+For `Agent` class examples of these patterns, refer to [MCP client](/agents/runtime/capabilities/mcp-client/) for elicitation, [Scheduler](/agents/runtime/capabilities/scheduler/) for reminders and escalation, the [client SDK](/agents/runtime/client/) for a list of pending approvals, [State](/agents/agent-class/state/) for an audit trail, and [Run Workflows](/agents/agent-class/run-workflows/) for Workflow approvals, timeouts, and multiple approvers.
+
 ## Best practices
 
 1. **Ask only when it matters.** Require approval for actions with real consequences, such as payments, emails, and data changes.
