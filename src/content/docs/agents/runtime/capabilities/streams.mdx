@@ -11,7 +11,7 @@ products:
 import { TypeScriptExample } from "~/components";
 
 :::caution[Experimental]
-Everything exported from `agents/streams` may change between releases.
+The `Streams` capability is experimental. Everything exported from `agents/streams` may change between releases.
 :::
 
 `Streams` from `agents/streams` stores incremental output in the Durable Object's SQLite database. Each stream is an ordered log of chunks with a cursor. A reader replays the chunks from any position, then follows new chunks as they are appended, until the stream ends.
