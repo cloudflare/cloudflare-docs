@@ -1,6 +1,6 @@
 ---
 title: Android Studio
-description: Route Android Studio AI chat and agent requests through AI Gateway using a third-party remote model provider.
+description: Route Android Studio's built-in AI assistant or GitHub Copilot Chat through AI Gateway using a custom model provider.
 pcx_content_type: configuration
 sidebar:
   order: 9
@@ -10,9 +10,9 @@ products:
 
 import { Steps } from "~/components";
 
-[Android Studio](https://developer.android.com/studio/gemini/use-a-remote-model) supports third-party remote model providers for AI chat and agent features. Point a remote provider at AI Gateway's [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) to route requests through your gateway. Authenticate with a Cloudflare API token and use [Unified Billing](/ai-gateway/features/unified-billing/) or a stored [provider key](/ai-gateway/configuration/bring-your-own-keys/) to authenticate with the model provider.
+[Android Studio](https://developer.android.com/studio) supports custom model providers through its built-in AI assistant and the [GitHub Copilot plugin](https://plugins.jetbrains.com/plugin/17718-github-copilot). Point a provider at AI Gateway's [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) to route requests through your gateway. Authenticate with a Cloudflare API token and use [Unified Billing](/ai-gateway/features/unified-billing/) or a stored [provider key](/ai-gateway/configuration/bring-your-own-keys/) to authenticate with the model provider.
 
-This configuration applies to Android Studio's built-in AI assistant. It does not configure the GitHub Copilot plugin.
+Configure the assistant you use. The built-in AI assistant and GitHub Copilot Chat have separate provider settings.
 
 ## Prerequisites
 
@@ -22,9 +22,9 @@ Before you start, you need:
 - An [authenticated AI Gateway](/ai-gateway/configuration/authentication/). You can use your account's `default` gateway or [create a gateway](/ai-gateway/get-started/) and use its slug.
 - A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Account** > **AI Gateway** > **Run** permission.
 - [Unified Billing credits](/ai-gateway/features/unified-billing/#load-credits) or a stored [provider key](/ai-gateway/configuration/bring-your-own-keys/) for the models you select.
-- [Android Studio](https://developer.android.com/studio) installed with support for third-party remote model providers.
+- Android Studio installed. For the built-in AI assistant, use a version with support for third-party remote model providers. For GitHub Copilot Chat, install the latest [GitHub Copilot plugin](https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-extension?tool=jetbrains) and complete its sign-in flow.
 
-## Configure the remote provider
+## Configure the built-in AI assistant
 
 <Steps>
 
@@ -46,7 +46,7 @@ Before you start, you need:
    The `/compat` endpoint is deprecated for standard single-model calls. This integration uses it because Android Studio retrieves a model list during setup. The recommended [REST API](/ai-gateway/usage/rest-api/) does not provide a `/v1/models` endpoint.
    :::
 
-5. For **API key**, enter your Cloudflare API token.
+5. For **URL Schema**, select **OpenAI-compatible**. For **API key**, enter your Cloudflare API token.
 
 6. Select **Refresh** to retrieve the model list. Select the models you want to use, then select **OK** to save your settings.
 
@@ -57,5 +57,47 @@ Before you start, you need:
 </Steps>
 
 Some specialized Android Studio AI features may not work with third-party models. For feature compatibility, refer to [Use a remote model](https://developer.android.com/studio/gemini/use-a-remote-model).
+
+## Configure GitHub Copilot Chat
+
+Use a custom endpoint provider in GitHub Copilot Chat. Select **Chat Completions** explicitly for this configuration.
+
+<Steps>
+
+1. Open **GitHub Copilot Chat**. In the model picker, select **Manage Models**.
+
+2. In **Language Models (Copilot)**, select **Add Models**, then select the custom endpoint provider option.
+
+3. In **Add Custom Endpoint Provider**, enter the following values:
+
+   - **Provider Name**: `Cloudflare AI Gateway`.
+   - **API Key**: your Cloudflare API token.
+   - **API Type**: **Chat Completions**.
+
+4. Select **Save**. In the **Add Model** dialog, enter a model ID in `provider/model` format. For example, enter `openai/gpt-4.1-mini`.
+
+   Choose a model supported by your Unified Billing credits or stored provider keys.
+
+5. For **Deployment URL**, enter the following value. Replace `<ACCOUNT_ID>` and `<GATEWAY_ID>` with your Cloudflare account ID and gateway slug:
+
+   ```txt
+   https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>/compat/chat/completions
+   ```
+
+   Include `/chat/completions`. Unlike the built-in assistant, this field takes the full endpoint URL.
+
+6. For **Model Friendly Display Name**, enter a name such as `GPT-4.1 mini via AI Gateway`. Set the token limits and capabilities to match your model. For `openai/gpt-4.1-mini`, you can use the following settings:
+
+   - **Max Input Tokens**: `128000`.
+   - **Max Output Tokens**: `16000`.
+   - **Support Tool Calling**: selected.
+   - **Support Vision**: selected.
+   - **Custom Request Headers**: not selected.
+
+7. Select **Save**, then **OK**. Start a new Copilot chat and select your custom model from the model picker.
+
+8. Send a prompt such as `Reply with exactly: copilot-gateway-test`. Confirm that Copilot displays the reply.
+
+</Steps>
 
 To confirm traffic reaches AI Gateway, refer to [Verify it works](/ai-gateway/integrations/coding-agents/#verify-it-works).
