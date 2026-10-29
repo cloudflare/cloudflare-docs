@@ -14,6 +14,32 @@ products:
 
 `wrangler tail` displays a live feed of console and exception logs for each request served by your Worker code, including both normal Worker requests and Durable Object requests. After running `npx wrangler deploy`, you can use `wrangler tail` in the root directory of your Worker project and visit your Worker URL to see console and error logs in your terminal.
 
+## Unexpected charges from an alarm loop
+
+An alarm loop happens when an `alarm()` handler reschedules itself to the current time or a time in the past. The alarm then runs continuously. For background and prevention, refer to [Do not reschedule alarms without a delay and a stop condition](/durable-objects/best-practices/rules-of-durable-objects/#do-not-reschedule-alarms-without-a-delay-and-a-stop-condition).
+
+### Symptoms
+
+- The [billable usage dashboard](/billing/manage/billable-usage/) shows a sudden increase in Durable Objects requests and rows written.
+- The namespace **Metrics** tab shows a high, flat request rate that does not follow your traffic. Refer to [View metrics and analytics](/durable-objects/observability/metrics-and-analytics/#view-metrics-and-analytics).
+- [Workers Logs](/workers/observability/logs/workers-logs/) or `wrangler tail` show the same Durable Object running `alarm` invocations back to back.
+
+To find the affected object, filter the **Metrics** tab by Durable Object [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name).
+
+### Stop the loop
+
+The alarm is stored with the Durable Object, so the loop continues until the handler stops rescheduling or the alarm is deleted. Use one of the following options:
+
+- **Deploy a fix.** The next alarm run uses your new code. Make the handler return without calling `setAlarm()`, or enforce a minimum delay.
+- **Delete the alarm.** Call [`deleteAlarm()`](/durable-objects/api/alarms/#deletealarm) on the affected object, for example from an RPC method you call once.
+- **Delete all storage for the object.** If you no longer need the object's data, call [`deleteAll()`](/durable-objects/api/sqlite-storage-api/#deleteall). With a compatibility date of `2026-02-24` or later, `deleteAll()` also deletes the alarm.
+
+### Prevent alarm loops
+
+To catch an alarm loop before you deploy, add a regression test. For more information, refer to [Test that alarms reschedule safely](/durable-objects/examples/testing-with-durable-objects/#test-that-alarms-reschedule-safely).
+
+To find out about unexpected spend sooner, set up [budget alerts](/billing/manage/budget-alerts/). Usage is processed once per day, so a budget alert fires the day after spend crosses your threshold.
+
 ## Common errors
 
 ### No event handlers were registered. This script does nothing.
