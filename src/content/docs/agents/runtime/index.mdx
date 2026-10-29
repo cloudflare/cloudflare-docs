@@ -19,15 +19,40 @@ Every agent built with the Agents SDK runs on a [Durable Object](/durable-object
 - **[Capabilities](/agents/runtime/capabilities/)** are features you attach with `lifecycle.use()`, such as WebSocket clients, shared state, a scheduler, and MCP connections.
 - **[Observability](/agents/runtime/observability/)** traces model calls and publishes events from the Lifecycle and its capabilities.
 
-```txt
-Client ──HTTP or WebSocket──▶ Worker: routeAgentRequest()
-                                 │
-                                 ▼
-                     Durable Object, one per name
-                     ├─ Lifecycle: startup, dispatch, jobs, alarm
-                     ├─ Capabilities: WebSockets, State, Scheduler, ...
-                     └─ SQLite storage
+```mermaid
+flowchart LR
+    Client["Client<br/>useAgent, AgentClient, HTTP"] -->|"HTTP or WebSocket"| Worker["Worker<br/>routeAgentRequest()"]
+    Worker --> L
+    subgraph DO["Durable Object, one per name"]
+        L["Lifecycle<br/>startup, dispatch, jobs, the one alarm"]
+        L --> WS["WebSockets"]
+        L --> SC["Scheduler"]
+        L --> H["Harness, such as PiHarness"]
+        L --> More["Other capabilities"]
+        WS --- DB[("SQLite storage")]
+        SC --- DB
+        H --- DB
+        More --- DB
+    end
+    DO -.->|"traces and events"| Obs["Observability"]
 ```
+
+## If you use a harness
+
+You do not have to assemble all of this yourself. A [harness](/agents/harnesses/) sets up what it needs:
+
+- **[Think](/agents/harnesses/think/)** extends the [`Agent` class](/agents/agent-class/), which installs the Lifecycle and its capabilities for you.
+- **[Pi](/agents/harnesses/pi/)** is one capability. You install the Lifecycle and add the harness with `.use()`, and Pi handles its own storage and recovery.
+
+With either harness, the parts of the runtime you work with directly are usually:
+
+- **[Routing](/agents/runtime/routing/)**, to send requests to the right agent and check who is calling.
+- **[WebSockets](/agents/runtime/capabilities/websockets/)**, to connect your frontend to the agent.
+- **[Observability](/agents/runtime/observability/)**, to trace model calls and debug what the agent did.
+
+The rest of this section matters when you build your own agent loop, or add a capability of your own.
+
+## Compose the runtime yourself
 
 You compose these parts on a plain `DurableObject`:
 
