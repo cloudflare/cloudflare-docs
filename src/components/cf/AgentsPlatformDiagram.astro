@@ -98,7 +98,7 @@ const tools = [
 
 				<div class="agent-section runtime-section">
 					<div class="agent-section-copy">
-						<div class="section-title">Lifecycle and capabilities</div>
+						<div class="section-title">Runtime</div>
 						<p>
 							The Lifecycle runs in the Durable Object and starts each
 							capability you add.
@@ -359,10 +359,14 @@ const tools = [
 		min-width: 0;
 		margin: 0;
 		flex: 1;
+		overflow: hidden;
 		color: var(--map-text);
-		font-size: 20px;
+		font-size: 16px;
 		font-weight: 600;
 		font-variation-settings: "opsz" 24;
+		line-height: 1.2;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 
 	.agent-icon {
@@ -374,11 +378,13 @@ const tools = [
 		border-radius: 8px;
 		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
 		color: var(--map-brand);
-		font-size: 17px;
+		flex-shrink: 0;
+		font-size: 13px;
 		font-weight: 600;
 	}
 
 	.status-dot {
+		flex-shrink: 0;
 		width: 14px;
 		height: 14px;
 		border: 3px solid
