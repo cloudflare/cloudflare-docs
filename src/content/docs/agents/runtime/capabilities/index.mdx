@@ -12,7 +12,35 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-A capability is one feature of an agent, such as WebSocket connections, a scheduler, or an MCP client. You construct it as a field on your Durable Object and attach it to the [Lifecycle](/agents/runtime/lifecycle/) with `lifecycle.use()`. Each capability owns its own tables in the object's SQLite database, has a focused API, and implements only the Lifecycle hooks it needs.
+A capability is one feature of an agent, such as WebSocket connections, a scheduler, or an MCP client. You construct it as a field on your Durable Object and attach it to the [Lifecycle](/agents/runtime/lifecycle/) with `lifecycle.use()`.
+
+## Why capabilities
+
+A [Durable Object](/durable-objects/) stores state durably, but it does not run work durably. When the object is evicted, redeployed, or crashes, any code that was running stops, and nothing restarts it unless something wakes the object again. The only thing that can wake an idle object on its own is its single [alarm](/durable-objects/api/alarms/).
+
+The Lifecycle owns that alarm and turns it into a queue of durable jobs. A capability is a feature built on top of it. Each capability:
+
+- **Owns its tables.** It stores its data in its own SQLite tables in the object's database, such as the `Scheduler`'s list of schedules.
+- **Schedules its work as jobs.** When it needs to do something later, or finish something after a crash, it pushes a job onto the Lifecycle's queue. The Lifecycle sets the alarm, wakes the object when the job is due, and calls the capability back.
+- **Answers its own requests.** It can handle the requests that belong to it before they reach your code, such as the OAuth callback URL that `MCPClientManager` answers.
+
+```mermaid
+flowchart TB
+    E["Request, WebSocket message, or alarm"] --> L
+    subgraph DO["Durable Object"]
+        L["Lifecycle<br/>startup, dispatch, job queue, the one alarm"]
+        L -->|"start, offer requests, run due jobs"| C1["Capability: Scheduler"]
+        L -->|"start, offer requests, run due jobs"| C2["Capability: MCPClientManager"]
+        L -->|"unclaimed requests, onAlarm"| H["Your class"]
+        C1 -->|"push jobs"| L
+        C2 -->|"push jobs"| L
+        C1 --- T1[("Scheduler tables")]
+        C2 --- T2[("MCP server tables")]
+        L --- Q[("Job queue")]
+    end
+```
+
+Because every capability schedules through the same queue, they share the one alarm without overwriting each other, and their work survives eviction. You write a feature as ordinary code, and the Lifecycle handles waking it up.
 
 <TypeScriptExample>
 
@@ -81,6 +109,22 @@ These capabilities are experimental. Their APIs may change between releases:
 A [harness](/agents/harnesses/), such as `PiHarness`, is a capability that runs a whole agent loop.
 
 To write a capability of your own, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
+
+## Which capabilities you need
+
+Every capability is optional. Install only the ones your agent uses:
+
+- **Clients connect to the agent.** Install [`WebSockets`](/agents/runtime/capabilities/websockets/). Add [Callables](/agents/runtime/capabilities/callables/) to let clients call methods, and [`State`](/agents/runtime/capabilities/state/) to sync a value to them.
+- **The agent does work later.** Install [`Scheduler`](/agents/runtime/capabilities/scheduler/).
+- **The agent uses MCP tools.** Install [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/).
+
+A [harness](/agents/harnesses/) brings its own storage for the conversation:
+
+| Harness                                                      | Conversation storage                                                                        |
+| ------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| [Pi](/agents/harnesses/pi/)                                  | Pi Durable stores the transcript itself. You do not need `Sessions` or `Streams`.           |
+| [Think](/agents/harnesses/think/)                            | Think installs `Sessions` and `Streams` for you.                                            |
+| [Your own](/agents/runtime/capabilities/build-a-capability/) | Use `Sessions` for the transcript and `Streams` for in-progress output, or your own tables. |
 
 ## How capabilities run
 

@@ -10,15 +10,21 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Callables are the methods a connected client can call on your Durable Object. You declare them on an `RpcTarget` and pass it to the [`WebSockets` capability](/agents/runtime/capabilities/websockets/) as `callables`. Clients call them with `agent.call()` or `agent.stub` from `useAgent` and `AgentClient`.
+Callables let your frontend call functions on your agent. You declare the methods on an `RpcTarget`, and a React app calls them through a typed stub, as if they were local async functions:
 
-Callables are part of `agents/websockets`, which is stable.
+```ts
+const todo = await todos.add("Milk"); // runs on the Durable Object
+```
+
+Use callables for the actions a client takes, such as adding an item, approving a step, or starting a task. The call travels over the client's existing WebSocket connection, so you do not need a separate HTTP API.
+
+You pass the `RpcTarget` to the [`WebSockets` capability](/agents/runtime/capabilities/websockets/) as `callables`. Clients call it with `agent.stub` or `agent.call()` from `useAgent` and `AgentClient`. Callables are part of `agents/websockets`, which is stable.
 
 ## Declare callables
 
 Every method declared on the target's class is callable. Pass the object to the target's constructor when the methods need it:
 
-<TypeScriptExample filename="src/index.ts">
+<TypeScriptExample filename="src/server.ts">
 
 ```ts
 import { DurableObject, RpcTarget } from "cloudflare:workers";
@@ -27,7 +33,7 @@ import { WebSockets } from "agents/websockets";
 
 type Todo = { id: string; text: string; done: boolean };
 
-class TodoCallables extends RpcTarget {
+export class TodoCallables extends RpcTarget {
 	readonly #list: TodoList;
 
 	constructor(list: TodoList) {
@@ -92,27 +98,32 @@ Any connected client can call any of these methods. Treat every argument as untr
 
 ## Call from a client
 
-`agent.call()` takes the method name and an array of arguments:
+Type `agent.stub` with `AgentStub` from `agents/client` and your callables class. Each method becomes an async function with the same arguments and return type:
 
 ```tsx
+import type { AgentStub } from "agents/client";
 import { useAgent } from "agents/react";
+import type { TodoCallables } from "./server";
 
 export function Todos() {
 	const agent = useAgent({ agent: "TodoList", name: "groceries" });
+	const todos = agent.stub as AgentStub<TodoCallables>;
 
 	const add = async () => {
-		const todo = await agent.call("add", ["Milk"]);
-		console.log(todo);
+		const todo = await todos.add("Milk");
+		console.log(todo.id);
 	};
 
 	return <button onClick={add}>Add milk</button>;
 }
 ```
 
-`agent.stub` is a proxy, so you can call the method by name:
+Export `TodoCallables` from your server file so the client can import its type. `import type` brings in only the type, not the server code.
+
+`agent.call()` takes the method name and an array of arguments, without types:
 
 ```ts
-const todo = await agent.stub.add("Milk");
+const todo = await agent.call("add", ["Milk"]);
 ```
 
 `AgentClient` from `agents/client` has the same `call()` and `stub`. Non-streaming calls time out after 30 seconds by default. Pass `{ timeout }` as the third argument to `call()` to change it for one call, or set `defaultCallTimeout` on the client. A timeout of `0` turns it off.

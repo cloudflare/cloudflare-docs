@@ -25,6 +25,29 @@ Once installed, the Lifecycle gives your Durable Object:
 - **Host context.** [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) returns the current object, request, and connection inside your hooks, and in any code they call.
 - **Teardown.** Methods to release live resources and stop the alarm before you delete an object.
 
+Every request, WebSocket event, and alarm goes through the Lifecycle. Work scheduled through its job queue comes back as an alarm, even after the object was evicted:
+
+```mermaid
+flowchart TB
+    W["Worker<br/>routeAgentRequest()"] -->|"HTTP or WebSocket"| F
+    A["Alarm"] --> AL
+    subgraph DO["Durable Object"]
+        F["fetch / WebSocket handlers"] --> S
+        AL["alarm handler"] --> S
+        S{"Started?"} -->|"no"| ST["Startup<br/>capability onStart(), then your onStart()"]
+        ST --> D
+        S -->|"yes"| D["Dispatch"]
+        D -->|"request"| C["Capabilities, in order"]
+        C -->|"not handled"| R["Your onRequest()"]
+        D -->|"alarm"| J["Run due jobs<br/>capability or host onJob()"]
+        J --> OA["Your onAlarm()"]
+        Q[("Job queue in SQLite")] -->|"due jobs"| J
+        C -->|"push jobs"| Q
+        R -->|"lifecycle.jobs.push()"| Q
+        Q -->|"sets the next alarm"| A
+    end
+```
+
 ## Install the Lifecycle
 
 <PackageManagers pkg="agents" />

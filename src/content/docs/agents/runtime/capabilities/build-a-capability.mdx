@@ -10,7 +10,15 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-A capability is a class that the [Lifecycle](/agents/runtime/lifecycle/) starts and calls. It owns its own tables, its own jobs, and the routes it handles. Every capability in the Agents SDK, from `Scheduler` to `PiHarness`, is built this way, and you can write your own with the same API.
+A capability is a class that the [Lifecycle](/agents/runtime/lifecycle/) starts and calls. Write one when a feature of your agent has to keep working across evictions, deploys, and crashes. Every capability in the Agents SDK, from `Scheduler` to `PiHarness`, is built this way, and you can write your own with the same API.
+
+A capability usually has three parts:
+
+- **Tables.** It creates its own SQLite tables in the Durable Object's database when it starts, and keeps its data there.
+- **Jobs.** When it needs to run later, it pushes a job onto the Lifecycle's durable queue. The Lifecycle sets the object's alarm, wakes the object when the job is due, and calls the capability's `onJob()` hook, even if the object was evicted in between.
+- **Routes.** It can answer the HTTP requests that belong to it, such as `/health` or an OAuth callback, before they reach your `onRequest()`.
+
+For why this matters on a Durable Object, refer to [Why capabilities](/agents/runtime/capabilities/#why-capabilities).
 
 This guide builds an `UptimeMonitor` capability. It checks a URL on an interval, stores each result, serves the history over HTTP, and calls back into the host when the URL is down.
 
