@@ -12,9 +12,16 @@ products:
 
 import { Tabs, TabItem, TypeScriptExample } from "~/components";
 
-Generated apps can add routes without adding authentication checks. Enforce access in platform-owned code, before invoking the app.
+Your customers can use artificial intelligence (AI) to generate apps. Each app may need both public and private endpoints.
 
-For apps with public routes, also authorize sensitive data operations. A public route must not grant unrestricted database access.
+Your platform cannot predict every route those apps will introduce. Generated code may also omit authentication or authorization checks.
+
+Enforce access in code your platform controls:
+
+- **Before the app runs:** require a list of public and private routes when the app is published. Validate that list and enforce its rules before invoking app code.
+- **When the app accesses data:** check permissions inside platform-owned operations. Signing in must not let Bob read Alice's private report.
+
+This guide implements these checks with Workers for Platforms and Dynamic Workers.
 
 ```mermaid
 flowchart TB
