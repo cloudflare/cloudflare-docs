@@ -314,20 +314,3 @@ Use these variations when the app interface requires them:
 | Outbound HTTP gateway | Allow `GET https://reports.internal/reports/:id`, then check record access  | Existing HTTP clients can use the same authorization model. Ignore identity headers supplied by app code. |
 
 If the outbound gateway injects credentials, authorize the destination and operation first. Hiding a token does not limit what that token can do.
-
-## Verify the boundary
-
-Test both responses and whether generated code executed:
-
-| Request                                                    | Expected response    | App executes                                      |
-| ---------------------------------------------------------- | -------------------- | ------------------------------------------------- |
-| Anonymous request to a declared public route               | `200`                | Yes                                               |
-| Anonymous request to a member route                        | `401`                | No                                                |
-| Wrong tenant or missing route permission                   | `403`                | No                                                |
-| Undeclared route or method                                 | `404`                | No                                                |
-| Bob's public app requests Alice's record through RPC       | `404`                | Yes; the platform denies the read                 |
-| App sends a forged identity header to the outbound gateway | No additional access | Yes; the gateway uses its platform-bound identity |
-
-Route policy cannot prove that an approved public endpoint returns only public information. Capabilities protect new operations; they cannot retract data already returned to app code.
-
-Per-request props do not erase a reused Worker's module state. If visitors must be isolated from data the app previously received, also isolate execution and persistent storage across those visitors.
