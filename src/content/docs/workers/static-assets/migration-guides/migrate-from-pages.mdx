@@ -33,6 +33,12 @@ Unlike Pages, Workers has a distinctly broader set of features available to it, 
 
 Migrating from Cloudflare Pages to Cloudflare Workers is often a straightforward process. The following are some of the most common steps you will need to take to migrate your project.
 
+### Deployments and asset availability
+
+Workers associates static assets with individual Worker versions. Separate requests can select different versions during deployment propagation or gradual deployments. Older pages can also request files after a newer release starts serving traffic.
+
+Review [Version skew and static assets](/workers/versions-and-deployments/version-skew/) when migrating your release process. Distinguish cache residency from the asset paths available in each version; the Pages cache-retention description does not define a Workers asset retention period.
+
 ### Frameworks
 
 If your Pages project uses [a popular framework](/workers/framework-guides/), most frameworks already have adapters available for Cloudflare Workers. Switch out any Pages-specific adapters for the Workers equivalent and follow any guidance that they provide.

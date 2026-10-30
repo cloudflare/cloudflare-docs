@@ -27,16 +27,31 @@ Workers currently only supports serving **two** different versions in one deploy
 
 :::
 
+### Deployment membership and assets
+
+Uploading a version, including it in a deployment, and assigning normal traffic to it are separate states:
+
+| Deployment configuration at the receiving location | Normal traffic | Explicit override                                                                     |
+| -------------------------------------------------- | -------------- | ------------------------------------------------------------------------------------- |
+| Only A; B has been uploaded                        | A              | B is outside the deployment, so its override falls back to normal routing.            |
+| A at 100%, B at 0%                                 | A              | An override can select B, including B's asset set.                                    |
+| A at 0%, B at 100%                                 | B              | An override can still select A.                                                       |
+| Only B                                             | B              | An override for A falls back to normal routing, even if A remains in version history. |
+
+An enabled [Version URL](/workers/versions-and-deployments/version-urls/) provides a separate way to access an uploaded version. It does not require adding that version to the production deployment.
+
+Deployment changes propagate across the network. An override can fall back at a location whose deployment configuration does not yet include the requested version. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) before using explicit version selection for related requests.
+
 ### Verify that version overrides were applied
 
 There are a number of reasons why a request's version override may not be applied. For example:
 
-- The deployment may not contain the specified version. It can take up to a couple of seconds to be available globally after a recent change.
+- The receiving location's deployment configuration may not contain the specified version, including while a deployment change propagates across the network.
 - The header value may not be a valid [Dictionary](https://www.rfc-editor.org/rfc/rfc8941#name-dictionaries).
 
 In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
 
-You can observe the version of your Worker that was invoked using [Observability](https://developers.cloudflare.com/workers/observability/), including in features such as [Logpush](/workers/observability/logs/logpush/). Alternatively, if you want to inform clients about the version they ran (e.g. for faster and more transparent debugging), you could use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) and return the version ID in the Worker's response.
+You can observe the version of your Worker that was invoked using [Observability](/workers/observability/), including in features such as [Logpush](/workers/observability/logs/logpush/). Alternatively, use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to return the version ID in the Worker's response. Verify the serving version as well as the status code, because an ignored override can still return a successful response.
 
 ## Smoke test example
 
@@ -107,7 +122,8 @@ Version overrides only apply to `fetch()`-based service binding calls. There is 
 
 ## Related resources
 
-- [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) - Use cookies & headers to pin users to a specific version during a gradual deployment.
+- [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) - Use a stable request key to assign traffic consistently under a given deployment configuration.
+- [Version skew and static assets](/workers/versions-and-deployments/version-skew/) - Understand deployment propagation and asset availability across releases.
 - [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) - Learn how percentage-based traffic splitting works.
 - [Service bindings](/workers/runtime-apis/bindings/service-bindings/) - How Workers communicate with each other.
 - [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) - Access version ID and tag from within your Worker.

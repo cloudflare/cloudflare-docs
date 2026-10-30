@@ -56,7 +56,9 @@ Learn more about supported frameworks on Workers.
 
 ### How it works
 
-When you deploy your project, Cloudflare deploys both your Worker code and your static assets in a single operation. This deployment operates as a tightly integrated "unit" running across Cloudflare's network, combining static file hosting, custom logic, and global caching.
+Your Worker code, configuration, and static assets belong to a [Worker version](/workers/versions-and-deployments/#versions). Each version has an asset manifest that maps request paths to its uploaded files. Requests use the asset set associated with the selected version, including requests served directly without invoking Worker code.
+
+Deploying configures which versions receive traffic. Deployment changes propagate across Cloudflare's network, so separate requests for HTML and its assets can temporarily select different versions. Uploading an asset does not add it to earlier versions' manifests. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for deployment strategies and asset availability across releases.
 
 The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
 
@@ -177,11 +179,12 @@ For a more advanced pattern, refer to [SPA shell with bootstrap data](/workers/e
 
 ### Caching behavior
 
-Cloudflare provides automatic caching for static assets across its network, ensuring fast delivery to users worldwide. When a static asset is requested, it is automatically cached for future requests.
+Cloudflare automatically caches static assets across its network. Once a request matches a file in the selected version's manifest, the file can be served from cache or fetched from storage.
 
 - **First Request:** When an asset is requested for the first time, it is fetched from storage and cached at the nearest Cloudflare location.
-
 - **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratio, reduces latency, and reduces unnecessary origin fetches.
+
+Cache residency is separate from whether a version exposes an asset path. Refer to [Asset availability across releases](/workers/versions-and-deployments/version-skew/#asset-availability-across-releases).
 
 ## Try it out
 

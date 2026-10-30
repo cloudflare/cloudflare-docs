@@ -11,7 +11,9 @@ sidebar:
 
 import { DashButton } from "~/components";
 
-You can roll back to a previously deployed [version](/workers/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/general/#rollback) or the Cloudflare dashboard. Rolling back to a previous version of your Worker will immediately create a new [deployment](/workers/versions-and-deployments/#deployments) with the version specified and become the active deployment across all your deployed routes and domains.
+You can roll back to a previously deployed [version](/workers/versions-and-deployments/#versions) of your Worker using [Wrangler](/workers/wrangler/commands/general/#rollback) or the Cloudflare dashboard. A rollback creates a new [deployment](/workers/versions-and-deployments/#deployments) configured to send 100% of normal traffic to the selected version across your deployed routes and domains.
+
+The deployment change propagates across Cloudflare's network. Pages already loaded from a newer version can still request that version's assets after rollback. Include the required asset paths in the restored version, or account for these requests in your release strategy. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/#older-pages-and-rollbacks).
 
 You can roll back from any deployment, including:
 
@@ -40,7 +42,7 @@ If you are using a [gradual deployment](/workers/versions-and-deployments/gradua
 1. Replace the split deployment with a single-version deployment.
 2. Route 100% of traffic to the version you selected for rollback.
 
-This effectively promotes one version to handle all traffic, which is useful if you notice issues with one of the versions in your split deployment and want to revert to a stable version immediately.
+This configures normal traffic to use the selected version, which is useful if you notice issues with one version in your split deployment. It also removes the other version from the deployment, so overrides naming that version [fall back to normal routing](/workers/versions-and-deployments/version-overrides/#deployment-membership-and-assets).
 
 To roll back from a split deployment:
 
