@@ -1,0 +1,61 @@
+src/content/docs/agent-memory/get-started.mdx
+  s_b64bde0c022167::t_a51dd4cc481d42 58,186,221,223
+src/content/docs/agents/communication-channels/chat/chat-agents.mdx
+  s_b64bde0c022167::t_5344bcb3187919 43,51,56-57,60,197,200,273,276,553,952,955,1204,1209,1383,1408,1410,1412
+src/content/docs/agents/communication-channels/voice.mdx
+  s_b64bde0c022167::t_5f263f158c3045 246,253,256
+src/content/docs/agents/concepts/calling-llms.mdx
+  s_b64bde0c022167::t_32d392718f70fb 61,66,69,106,108,131,135,138,143,149,183,185
+src/content/docs/agents/examples/browser-agent.mdx
+  s_b64bde0c022167::t_ac0da74a084148 96,98,101,154,159,166
+src/content/docs/agents/examples/chat-agent.mdx
+  s_b64bde0c022167::t_31c53a31623019 38,79,91,94
+src/content/docs/agents/examples/voice-agent.mdx
+  s_b64bde0c022167::t_9d22e96b4176c6 97,107,110
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_b64bde0c022167::t_5b2a4926d706d9 55
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_b64bde0c022167::t_b7960b78f27447 40,104,109,229
+src/content/docs/agents/harnesses/think/index.mdx
+  s_b64bde0c022167::t_53c0b3f44615a9 35,45,50
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_b64bde0c022167::t_04e9001ac7d045 352,356,358
+src/content/docs/agents/runtime/communication/http-sse.mdx
+  s_b64bde0c022167::t_946190167e00fe 121,131,134
+src/content/docs/agents/runtime/operations/using-ai-models.mdx
+  s_b64bde0c022167::t_a5e3dcdba487f5 42,60,62,186,188,195,203,205
+src/content/docs/agents/tools/browser.mdx
+  s_b64bde0c022167::t_339d575253e011 347,351,359
+src/content/docs/agents/tools/codemode/browser.mdx
+  s_b64bde0c022167::t_26814406fabeec 160,169,172
+src/content/docs/agents/tools/filesystem.mdx
+  s_b64bde0c022167::t_d39d4e170073ce 178,185
+src/content/docs/agents/tools/mcp.mdx
+  s_b64bde0c022167::t_f2f681bfbe8bda 33,41,44
+src/content/docs/agents/tools/sandbox.mdx
+  s_b64bde0c022167::t_d4244404118470 42,62
+src/content/docs/ai-search/agent-sdks/agents-sdk.mdx
+  s_b64bde0c022167::t_6b29b647763924 56,58,103,152,155
+src/content/docs/ai-search/how-to/talk-to-your-knowledge-base.mdx
+  s_b64bde0c022167::t_cb95d6f0833342 126,140,144
+src/content/docs/sandbox/get-started/build-an-ai-code-interpreter.mdx
+  s_b64bde0c022167::t_2a6305370c33c0 68,70,195,226,231
+src/content/docs/sandbox/sdk/tutorials/ai-code-executor.mdx
+  s_b64bde0c022167::t_8ccab3093b6a87 253
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "28a91f388b3ec6fe25b82145c6b1f780ca8c0682",
+  "prompts": {},
+  "sessions": {
+    "s_b64bde0c022167": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15b0c-2cd9-7203-a5b1-1f22cc407ab2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/configure-virtual-appliance.mdx
+  s_b6674de0abe688::t_b46af8d7497f71 6,11-18,22,81,83,85,87,91,115,117,140,148,158-160,162,168-171,173,176,179-183,198-233,252,375-379,404-407
+src/content/docs/cloudflare-wan/configuration/appliance/configure-virtual-appliance.mdx
+  s_b6674de0abe688::t_d6a9e9af54439f 70,129,131,133,135,139,163,165,188,196,206-208,210,216-219,221,224,227-231,246-281,426-430,458-461
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a053d461e9875a70f0ec08e70e93b8b723a9d137",
+  "prompts": {},
+  "sessions": {
+    "s_b6674de0abe688": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcbc57c20ffevz3QEde2ahYjk2",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

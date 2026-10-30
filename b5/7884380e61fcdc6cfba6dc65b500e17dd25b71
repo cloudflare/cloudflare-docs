@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-26-computer-durable-javascript.mdx
+  s_afdc9b1ddaa927::t_73b79941af3343 40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b57884380e61fcdc6cfba6dc65b500e17dd25b71",
+  "prompts": {},
+  "sessions": {
+    "s_afdc9b1ddaa927": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a178de-f689-7c01-894a-3ac7e9b72b04",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

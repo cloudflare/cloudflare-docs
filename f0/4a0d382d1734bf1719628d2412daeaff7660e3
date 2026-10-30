@@ -1,0 +1,33 @@
+public/__redirects
+  s_781756062a0624::t_37abd3a9429b46 2149
+src/content/docs/r2/api/s3/presigned-urls.mdx
+  s_781756062a0624::t_4011c3772333e4 259-262
+src/content/docs/r2/buckets/public-buckets.mdx
+  s_781756062a0624::t_279a4716670dde 30-31
+src/content/docs/r2/get-started/index.mdx
+  s_781756062a0624::t_99c7f53d093dd8 60
+src/content/docs/r2/get-started/s3.mdx
+  s_781756062a0624::t_8db422239ba7f9 15-16
+src/content/docs/r2/get-started/workers-api.mdx
+  s_781756062a0624::t_a92f92c691fb87 142
+src/content/docs/r2/local-development/index.mdx
+  s_781756062a0624::t_91a553a3164e17 3-4,6,11-19,21,23-80,84-85,87,89-93,95,97,99,101-102,104,106-107,109,111-112,114,116-117,119,121-163,167,169-170,172-179,183-191,193,195-201,213,216,221,227,235,253-255,265-266,270-274,291-292,294,300-302,311-312,322-326,342-344
+src/content/docs/workers/wrangler/configuration.mdx
+  s_781756062a0624::t_8bbcd4b1711acf 998,1002-1012
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f04a0d382d1734bf1719628d2412daeaff7660e3",
+  "prompts": {},
+  "sessions": {
+    "s_781756062a0624": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18004-fe7e-7c23-9f1e-74438471bb48",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

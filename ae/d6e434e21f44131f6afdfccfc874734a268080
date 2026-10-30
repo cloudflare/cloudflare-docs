@@ -1,0 +1,21 @@
+src/content/changelog/d1/2026-08-07-us-jurisdiction.mdx
+  s_36a60952e86ad5::t_ea34a356548861 1-19
+src/content/docs/d1/configuration/data-location.mdx
+  s_36a60952e86ad5::t_0b4afb299a555c 36
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "aed6e434e21f44131f6afdfccfc874734a268080",
+  "prompts": {},
+  "sessions": {
+    "s_36a60952e86ad5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f02ffbdc8ffeblJMZShD4CURtC",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}
