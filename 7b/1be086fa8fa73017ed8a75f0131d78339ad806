@@ -1,0 +1,35 @@
+public/__redirects
+  s_41fd4d89757fb4::t_dc458d7aca5348 271-272,283,331
+src/content/docs/agents/agent-class/index.mdx
+  s_41fd4d89757fb4::t_90f888e0ca13d3 68-69,71-77,92-100,102-103,107-108,112,133-134,139
+src/content/docs/agents/agent-class/state.mdx
+  s_41fd4d89757fb4::t_3e80c523c2d6a1 645
+src/content/docs/agents/concepts/calling-llms.mdx
+  s_41fd4d89757fb4::t_1e7332bd66deb6 17,204-205
+src/content/docs/agents/concepts/what-are-agents.mdx
+  s_41fd4d89757fb4::t_af306ee9828c0a 105-106
+src/content/docs/agents/examples/voice-agent.mdx
+  s_41fd4d89757fb4::t_d719b9d8cd1cd0 305-306
+src/content/docs/agents/models/index.mdx
+  s_41fd4d89757fb4::t_b3d69c7ade6e82 15-20,85-317
+src/content/docs/agents/tools/ai-search.mdx
+  s_41fd4d89757fb4::t_55fdac862c32af 13
+src/content/partials/agents/next-steps.mdx
+  s_41fd4d89757fb4::t_df07a671f24b52 13-19,57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7b1be086fa8fa73017ed8a75f0131d78339ad806",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
