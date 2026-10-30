@@ -296,6 +296,14 @@ Complaint suppressions appear after Cloudflare receives and validates the provid
 
 Not every failure results in a suppression. Email Service creates automatic entries only for eligible recipient-side failures. Sender authentication, sender reputation, and unrelated infrastructure failures do not suppress the recipient. Check [Email sending logs](/email-service/observability/logs/) for the specific failure.
 
+## Conflicts with external mail providers
+
+### Onboarding fails with "Non-Cloudflare MX records exist"
+
+When you enable Email Routing on a domain that already has `MX` records from another provider (such as Google Workspace, Microsoft 365, or Zoho Mail), onboarding fails with error 2008, "Non-Cloudflare MX records exist". Email Routing requires exclusive control of the root domain `MX` records.
+
+To switch your domain to Email Routing, refer to [Move to Email Routing from another provider](/email-service/configuration/domains/#move-to-email-routing-from-another-provider).
+
 ## Testing tools
 
 Use these tools to validate your email authentication setup:
