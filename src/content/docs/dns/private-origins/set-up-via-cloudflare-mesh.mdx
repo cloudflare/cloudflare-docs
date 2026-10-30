@@ -19,7 +19,7 @@ Confirm the following before you start:
 
 - **Private Origins entitlement**: required on your account. It is separate from standard authoritative DNS access. Contact your account team to enable it.
 - **Unified Routing enabled**: your account must be on [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing) to use a private Cloudflare source range. Contact your account team to enable it. This applies to new and existing accounts.
-- **A Mesh node in the origin's network**: run a Mesh node on a host that can reach the origin, with a route covering the origin IP in your **default virtual network**. Refer to [Mesh routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/) and [Get started with Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/).
+- **A Mesh node in the origin's network**: run a Mesh node on a host that can reach the origin, with a route covering the origin IP in your **default virtual network**. A single Mesh node can serve multiple origins. Refer to [Mesh routes](/cloudflare-one/networks/connectors/cloudflare-mesh/features/routes/) and [Get started with Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/).
 - **Return routes for the Cloudflare source IP ranges**: in the origin's network, add routes that send `100.64.0.0/12` (or your configured private `/12`) and `2606:4700:cf1:5000::/64` back to the Mesh node, and allow both ranges in the origin's firewall.
 
 ## 1. Create a DNS record with private network routing
