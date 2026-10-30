@@ -57,6 +57,6 @@ Cloudflare can create a new namespace even when you split traffic, as long as th
 
 Deploy lifecycle changes separately from other code changes to limit the impact of failures and make code rollbacks safer.
 
-With `exports`, one option is to deploy a version with a lifecycle change to 100% of traffic. Then upload a second version with code changes and the same Durable Object settings. You can split traffic between these two versions. An older version with different lifecycle settings cannot be included.
+To understand why Durable Object lifecycle changes are atomic operations, consider the hypothetical example of gradually deploying a class deletion. If a delete were applied to 50% of Durable Object instances, then Workers requesting those Durable Object instances would fail because they would have been deleted.
 
 Before deleting a class, send 100% of traffic to a Worker version that no longer uses it. Then deploy the class deletion. Splitting traffic does not protect requests that still use the deleted namespace.
