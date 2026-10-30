@@ -91,4 +91,16 @@ Refer to [Migrate from Service Workers to ES modules](/workers/reference/migrate
 
 ### Durable Object migrations
 
-Uploading a version that changes Durable Object class lifecycle is not supported. This applies to both the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field and the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array - any change that creates, deletes, renames, or transfers a Durable Object class must be applied through [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy).
+#### Declarative `exports`
+
+If you use [`exports`](/durable-objects/reference/durable-objects-migrations/), `wrangler versions upload` saves your Durable Object settings with the version. It does not create, delete, rename, or transfer namespaces. Cloudflare applies those changes when you deploy with [`wrangler versions deploy`](/workers/wrangler/commands/workers/#versions-deploy) or [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy).
+
+When you add a new class, its namespace must exist before you can upload a `durable_objects.bindings` entry for it. Otherwise, the upload fails with error code `100406`. Use `wrangler deploy` to create the namespace and add the binding in one deployment. Or upload without the binding, then add it in a later version after the namespace has been created.
+
+`exports` also supports [gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/#durable-object-class-lifecycle-changes).
+
+#### Legacy `migrations`
+
+With the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array, `wrangler versions upload` rejects pending migrations. Apply those changes with `wrangler deploy` before uploading a version. Migrations you have already applied can remain in the configuration.
+
+Wrangler versions before `4.131.0` may return error code `10211` when `wrangler versions upload` encounters a pending legacy migration.
