@@ -277,10 +277,6 @@ The `bindings` section contains the following fields:
 - `class_name` - Required. The class name you wish to bind to.
 - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
 
-The `code_update_strategy` setting lets active objects keep running the previous version until they hibernate, for up to 300 seconds. Requires Wrangler 4.141.0 or later.
-
-Code updates are best effort. Keep recovery state in durable storage, and support requests from both Worker versions during deployments. Refer to [Durable Object code updates](/durable-objects/deployments/durable-objects-code-updates/).
-
 ## 5. Configure Durable Object class with SQLite storage backend
 
 You declare each Durable Object class your Worker exports in the `exports` field of your Wrangler configuration file. Cloudflare uses this declaration to provision a namespace for the class the first time you deploy, and to manage its lifecycle on later deploys (rename, delete, transfer).
