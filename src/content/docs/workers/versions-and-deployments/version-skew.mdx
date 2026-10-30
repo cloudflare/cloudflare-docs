@@ -43,7 +43,8 @@ sequenceDiagram
     Browser->>Updated: GET /
     Updated-->>Browser: HTML references /assets/app-b2c3.js
     Browser->>Earlier: GET /assets/app-b2c3.js
-    Earlier-->>Browser: Asset absent from A's manifest
+    Earlier->>Earlier: Asset absent from A's manifest
+    Earlier-->>Browser: Response follows A's routing settings
 ```
 
 The file can be missing from the selected manifest even though its upload succeeded. The resulting response depends on your [asset routing and fallback configuration](/workers/static-assets/#routing-behavior). For example, a missing file can return a `404` response.
@@ -58,9 +59,17 @@ During a gradual deployment, Cloudflare selects a version for each request using
 
 ### Older pages and rollbacks
 
-A page can remain open after a newer version starts serving traffic. If that page later imports a JavaScript chunk, it requests a file from its original release. The version handling that request must include the file.
+A page can remain open after a newer version starts serving traffic. For example, a browser loads version A's HTML, which references `/assets/app-a1b2.js`. You then deploy version B without that file. A later request for the file can reach B, which cannot find it in its own assets.
 
 [Rollbacks](/workers/versions-and-deployments/rollbacks/) can cause the same problem in reverse. Pages loaded from the newer version can request files missing from the restored version. Plan for both cases when choosing which assets each version includes.
+
+## Requests for missing assets
+
+With default [asset-first routing](/workers/static-assets/routing/worker-script/), a missing asset goes to the selected version's `fetch()` handler if you have a Worker script. The handler decides what response to return. A missing asset does not automatically produce a `404` response.
+
+If the handler calls `env.ASSETS.fetch(request)`, it still uses that version's assets and [`not_found_handling` setting](/workers/static-assets/binding/#fetch). It does not search other versions' assets. Without a Worker script, the default response for a missing asset is `404`.
+
+Routing settings can change this flow. For example, [single-page application routing](/workers/static-assets/routing/single-page-application/) can serve `/index.html` for navigation requests without invoking your Worker.
 
 ## Plan for related requests
 
@@ -103,7 +112,11 @@ An older version must still belong to the deployment to accept a version overrid
 
 Include required files in every version that needs to serve them. How long a file stays cached, whether uploads reuse it, and the [deployment history limit](/workers/versions-and-deployments/deployment-management/#deployments-limit) do not tell you how long Cloudflare stores it.
 
-A lazy-loaded chunk or a later range request makes a separate HTTP request. If that request cannot find a file, it does not prove that deployment stopped a download already in progress. Investigate interrupted downloads separately from missing file errors.
+### Downloads already in progress
+
+Deploying a new version does not cancel static asset downloads already in progress.
+
+A request for a lazy-loaded chunk or a later range request is a new HTTP request. It can use a different version's assets and fail to find the file. Investigate these missing file errors separately from interrupted downloads.
 
 ## Diagnose version skew
 
