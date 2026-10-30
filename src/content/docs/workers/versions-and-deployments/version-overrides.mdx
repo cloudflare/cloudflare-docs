@@ -6,7 +6,7 @@ sidebar:
   order: 4
 ---
 
-import { TypeScriptExample } from "~/components";
+import { Steps, TypeScriptExample, WranglerConfig } from "~/components";
 
 You can use version overrides to send a request to a specific version of your Worker in the current deployment, even those set to serve 0% of traffic.
 
@@ -52,6 +52,135 @@ There are a number of reasons why a request's version override may not be applie
 In the case that a request's version override is not applied, the request will be routed according to the percentages set in the gradual deployment configuration.
 
 Use [Observability](/workers/observability/), including [Logpush](/workers/observability/logs/logpush/), to check which Worker version handled a request. Alternatively, use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to return the version ID in the response. Check the version as well as the status code. An ignored override can still return a successful response.
+
+## Use version overrides for asset requests
+
+To keep HTML and asset requests on the same version, include the HTML's Worker version ID in each asset URL. A [Request Header Transform Rule](/rules/transform/request-header-modification/) can turn that ID into a version override.
+
+For example, version A contains `/assets/a.js` and version B contains `/assets/b.js`. Both versions belong to the deployment. B's HTML can request B's asset even when the location handling the asset request still has B at 0%:
+
+```mermaid
+sequenceDiagram
+    participant Browser
+    participant HTML as Location serving HTML
+    participant Assets as Location serving the asset
+    Browser->>HTML: GET /
+    HTML-->>Browser: B's HTML, with B's ID in the script URL
+    Browser->>Assets: GET /assets/b.js?__worker_version=B
+    Note over Assets: Deployment: A at 100%, B at 0%
+    Note over Assets: Transform Rule sets override for B
+    Assets-->>Browser: b.js from B
+```
+
+In this diagram, `B` represents the full Worker version ID.
+
+This approach requires a proxied hostname on your Cloudflare zone. The Transform Rule does not run on `workers.dev`.
+
+<Steps>
+
+1. Include the version ID in asset URLs.
+
+   Configure the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) and [assets binding](/workers/static-assets/binding/). This example runs the Worker for `/` to generate HTML:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+     "version_metadata": {
+       "binding": "CF_VERSION_METADATA"
+     },
+     "assets": {
+       "directory": "./public",
+       "binding": "ASSETS",
+       "run_worker_first": ["/"]
+     }
+   }
+   ```
+
+   </WranglerConfig>
+
+   In version B, place `b.js` in `public/assets/`. Read the serving version's ID when generating its script URL:
+
+   <TypeScriptExample>
+
+   ```ts
+   interface Env {
+     CF_VERSION_METADATA: WorkerVersionMetadata;
+     ASSETS: Fetcher;
+   }
+
+   export default {
+     async fetch(request, env): Promise<Response> {
+       if (new URL(request.url).pathname === "/") {
+         const version = encodeURIComponent(env.CF_VERSION_METADATA.id);
+         return new Response(
+           `<!doctype html>
+   <html lang="en">
+   <meta charset="utf-8">
+   <title>Version B</title>
+   <script src="/assets/b.js?__worker_version=${version}"></script>
+   </html>`,
+           { headers: { "content-type": "text/html; charset=utf-8" } },
+         );
+       }
+
+       return env.ASSETS.fetch(request);
+     },
+   } satisfies ExportedHandler<Env>;
+   ```
+
+   </TypeScriptExample>
+
+   Version A uses the same pattern with `/assets/a.js`. Each version reads its own ID, so older HTML keeps requesting that version's assets.
+
+2. Set the override before Cloudflare selects the Worker version.
+
+   The query parameter alone does not select a version. [Create a Request Header Transform Rule](/rules/transform/request-header-modification/create-dashboard/) with this filter expression. Replace the hostname and two version IDs with your values:
+
+   ```txt
+   (http.host eq "example.com"
+     and starts_with(http.request.uri.path, "/assets/")
+     and http.request.uri.args["__worker_version"][0] in {
+       "db7cd8d3-4425-4fe7-8c81-01bf963b6067"
+       "dc8dcd28-271b-4367-9840-6c244f84cb40"
+     })
+   ```
+
+   Select **Set dynamic** for the `Cloudflare-Workers-Version-Overrides` header. Use this value expression, replacing `my-worker` with your Worker name:
+
+   ```txt
+   concat("my-worker=\"", http.request.uri.args["__worker_version"][0], "\"")
+   ```
+
+   For a request with B's version ID, the rule produces:
+
+   ```http
+   Cloudflare-Workers-Version-Overrides: my-worker="dc8dcd28-271b-4367-9840-6c244f84cb40"
+   ```
+
+   The override selects B and its assets before asset routing runs. Setting the header inside the selected Worker's handler does not change which version handles that request.
+
+3. Keep both versions in the deployment.
+
+   Use a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/#use-gradual-deployments) to add B at 0% before sending normal traffic to it. Then promote B while keeping A at 0%:
+
+   ```mermaid
+   flowchart LR
+       Stage["A at 100%, B at 0%"] --> Wait["Allow deployment to propagate"]
+       Wait --> Promote["A at 0%, B at 100%"]
+       Promote --> Old["Older HTML requests A's assets"]
+       Promote --> New["New HTML requests B's assets"]
+   ```
+
+   Deployment changes take up to a few seconds to propagate. If the receiving location still has a deployment containing only A, an override for B is ignored. A fixed wait or a check at one location does not prove that every location includes B.
+
+</Steps>
+
+Apply the version ID to every related asset URL, including imported JavaScript chunks, stylesheets, and URLs within CSS. A script's query string does not carry over to files it imports.
+
+Keep the Transform Rule's allowed version IDs in sync with your deployment. When you later replace A with C, pages loaded from A can no longer select their version.
+
+For a runnable example, refer to the [Workers version skew reproduction](https://github.com/irvinebroque/workers-skew-protection-repro). It demonstrates asset requests selecting a version at 0% traffic. It does not test requests reaching different locations during deployment propagation.
 
 ## Smoke test example
 
