@@ -55,7 +55,7 @@ Cloudflare can create a new namespace even when you split traffic, as long as th
 
 ### Plan lifecycle changes separately from code changes
 
-To make problems easier to identify, deploy lifecycle changes separately from other code changes.
+Deploy lifecycle changes separately from other code changes to limit the impact of failures and make code rollbacks safer.
 
 With `exports`, one option is to deploy a version with a lifecycle change to 100% of traffic. Then upload a second version with code changes and the same Durable Object settings. You can split traffic between these two versions. An older version with different lifecycle settings cannot be included.
 
