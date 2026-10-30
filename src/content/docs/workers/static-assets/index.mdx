@@ -186,7 +186,7 @@ Cloudflare automatically caches static assets across its network. If the selecte
 - **First Request:** When an asset is requested for the first time, it is fetched from storage and cached at the nearest Cloudflare location.
 - **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratio, reduces latency, and reduces unnecessary origin fetches.
 
-Whether a file is cached is separate from whether a version can serve it. Refer to [Asset availability across releases](/workers/versions-and-deployments/version-skew/#asset-availability-across-releases).
+Suppose version A includes `/assets/app-a1b2.js`, but version B does not. If a request for that file reaches B, Cloudflare treats it as a [missing asset](/workers/versions-and-deployments/version-skew/#requests-for-missing-assets), even if it has a cached copy from A.
 
 ## Try it out
 
