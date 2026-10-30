@@ -3329,3 +3329,12 @@
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
+
+# Slug mismatches between dashboard /one/ routes and docs paths — BEFORE catch-all
+/one/dlp/* /one/data-loss-prevention/:splat 301
+/one/browser-isolation/* /one/remote-browser-isolation/:splat 301
+/one/cloud-saas-findings/* /one/cloud-and-saas-findings/:splat 301
+/one/team-resources/* /one/team-and-resources/:splat 301
+
+# Catch-all — fixes every existing /cloudflare-one/ target in the file
+/cloudflare-one/* /one/:splat 301
