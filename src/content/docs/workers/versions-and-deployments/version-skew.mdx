@@ -89,24 +89,7 @@ For example, first deploy the existing HTML with both releases' asset files. The
 
 If you include a version ID in asset URLs, include it in every script, stylesheet, and other asset URL the page loads. A script's query string is not automatically copied to the URLs it loads. A query parameter alone does not select a Worker version. The incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
 
-## Asset availability across releases
-
-Check these separately when investigating a missing asset:
-
-| Question                                          | What to check                                                                                                                                       |
-| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Does the selected version include the file?       | Check that version's build output and asset manifest.                                                                                               |
-| Can the request select the intended version?      | Check the versions in the deployment, their traffic percentages, and any version key or override.                                                   |
-| Is the file cached at this location?              | Inspect [cache response headers](/workers/static-assets/headers/#default-headers). A cache miss is different from a file missing from the manifest. |
-| Did a later request fail, or did a download stop? | Inspect the browser's network log for the request URL, start time, status, and any network error.                                                   |
-
-If a version's manifest omits a file, that version cannot serve it as a static asset. This does not tell you whether Cloudflare deleted the file from storage.
-
-An older version must still belong to the deployment to accept a version override. Keeping it in version history does not meet this requirement.
-
-Include required files in every version that needs to serve them. How long a file stays cached, whether uploads reuse it, and the [deployment history limit](/workers/versions-and-deployments/deployment-management/#deployments-limit) do not tell you how long Cloudflare stores it.
-
-### Downloads already in progress
+## Downloads already in progress
 
 Deploying a new version does not cancel static asset downloads already in progress.
 
