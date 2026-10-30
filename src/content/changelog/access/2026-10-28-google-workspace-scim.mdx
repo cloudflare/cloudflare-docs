@@ -11,7 +11,7 @@ System for Cross-domain Identity Management (SCIM) is an open standard that sync
 
 **You must use a generic SAML identity provider in Cloudflare One.** The dedicated Google Workspace integration does not support SCIM. Configure a SAML app in Google, then enter the Cloudflare SCIM endpoint and secret in the app's autoprovisioning settings. Turn on **Enable user deprovisioning** in Cloudflare One to revoke active Access sessions when Google deprovisions a user. Google's configured deprovisioning delay still applies.
 
-Group membership is configured separately. Have the Google SAML app send a `groups` attribute to include the user's selected Google groups during authentication. Selecting groups as a SCIM provisioning scope does not synchronize group membership.
+Group membership is configured separately. Have the Google SAML app send a `groups` attribute to include the user's selected Google groups during authentication. Selecting groups as a SCIM provisioning scope does not synchronize group membership, Google is still adding support for this in their SCIM provider.
 
 Cloudflare One users must first authenticate to Access or register a device with the Cloudflare One Client before SCIM updates can apply. Availability of custom SCIM profiles depends on Google's beta rollout.
 
