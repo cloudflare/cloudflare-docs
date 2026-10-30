@@ -1,0 +1,113 @@
+public/__redirects
+  s_78bc1ba5d92c7b::t_7d71cf0f281172 256-259,293,313-314,319,322,324,327,391-396
+src/components/cf/AgentsPlatformDiagram.astro
+  s_78bc1ba5d92c7b::t_d834dcb5df53e0 31-35
+src/components/config-explorer/config-reference.generated.ts
+  s_78bc1ba5d92c7b::t_138d15bbaa5a0f 4,130,133,135-158,542-575
+src/content/changelog/agents/2025-03-18-npm-i-agents.mdx
+  s_78bc1ba5d92c7b::t_72c3f398ee2965 131
+src/content/changelog/agents/2025-04-07-mcp-servers-agents-sdk-updates.mdx
+  s_78bc1ba5d92c7b::t_1a0902e026474c 55
+src/content/changelog/agents/2026-02-17-agents-sdk-v0.5.0.mdx
+  s_78bc1ba5d92c7b::t_1caec80d84cbc8 76
+src/content/docs/agent-memory/get-started.mdx
+  s_78bc1ba5d92c7b::t_f7afe782a80d99 21,107
+src/content/docs/agents/agent-class/communication-channels/chat/client-sdk.mdx
+  s_78bc1ba5d92c7b::t_589b5a06eac3db 664
+src/content/docs/agents/agent-class/durable-execution.mdx
+  s_78bc1ba5d92c7b::t_52aa48409e0da1 17-18,160
+src/content/docs/agents/agent-class/get-current-agent.mdx
+  s_78bc1ba5d92c7b::t_0ab651bda41473 6,15-16,250-255
+src/content/docs/agents/agent-class/index.mdx
+  s_78bc1ba5d92c7b::t_2412bbbbc1c64d 15,68-77,92-100,102-104,107-108,110,112,133-134,139,209
+src/content/docs/agents/agent-class/internals.mdx
+  s_78bc1ba5d92c7b::t_f9f6239921bca3 19,110,112,115,117,120-121,124-125,130-136,138,140,142,144,148,152,364,435-440,473
+src/content/docs/agents/agent-class/queue-tasks.mdx
+  s_78bc1ba5d92c7b::t_ffe46f80d4f5ec 3-4,13,15,17,22,24,26-28,31-34,36,43,45,47,52-56,61,63,65-72,74,76,78,81-83
+src/content/docs/agents/agent-class/schedule-tasks.mdx
+  s_78bc1ba5d92c7b::t_b3fef290fd8f78 3,13,15-20,33-34,36-37,41,46-48,60,66,447-452
+src/content/docs/agents/agent-class/state.mdx
+  s_78bc1ba5d92c7b::t_04cde4418aa468 13,30,189,704-708
+src/content/docs/agents/agent-class/websockets.mdx
+  s_78bc1ba5d92c7b::t_6d8427ee3107eb 3,13,15,17-23,28-39,44-45,48-49,51-52,56-57,60-61,68,73,79,91,93,95-99,101,103,108-112,114-117,124,126,128,133-139,141-143,146-149,152-157,164-168,170,172,174,176-183,190-194,196,201,206-207,214,216,218,221-223,229-235
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_78bc1ba5d92c7b::t_6955a30d6e218d 17,418,559
+src/content/docs/agents/examples/email-agent.mdx
+  s_78bc1ba5d92c7b::t_80bd69889a8ee8 751
+src/content/docs/agents/harnesses/index.mdx
+  s_78bc1ba5d92c7b::t_4f117c57b00eb5 21,69
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_78bc1ba5d92c7b::t_2911c87b56f250 27,90,120
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_78bc1ba5d92c7b::t_05a215eea40f90 257,348
+src/content/docs/agents/harnesses/think/index.mdx
+  s_78bc1ba5d92c7b::t_45c963848f3cfc 396
+src/content/docs/agents/harnesses/think/recovery.mdx
+  s_78bc1ba5d92c7b::t_08e745ef250f69 197,242
+src/content/docs/agents/index.mdx
+  s_78bc1ba5d92c7b::t_36c59dacd91ddf 29
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_78bc1ba5d92c7b::t_683f88515c643e 1095
+src/content/docs/agents/runtime/capabilities/browser.mdx
+  s_78bc1ba5d92c7b::t_2454348c198c96 1-51
+src/content/docs/agents/runtime/capabilities/channels.mdx
+  s_78bc1ba5d92c7b::t_579d18f8989a64 1-55
+src/content/docs/agents/runtime/capabilities/index.mdx
+  s_78bc1ba5d92c7b::t_f8f5a89e6a1c16 1-104
+src/content/docs/agents/runtime/capabilities/mcp-client.mdx
+  s_78bc1ba5d92c7b::t_871aabcb29768d 1-62
+src/content/docs/agents/runtime/capabilities/observability.mdx
+  s_78bc1ba5d92c7b::t_bdbbc46879980b 1-47
+src/content/docs/agents/runtime/capabilities/queue.mdx
+  s_78bc1ba5d92c7b::t_3d682e050d40aa 1-118
+src/content/docs/agents/runtime/capabilities/routing.mdx
+  s_78bc1ba5d92c7b::t_542c4fa8e8dd88 3,6,13-22,693-781,934,1001-1006
+src/content/docs/agents/runtime/capabilities/scheduler.mdx
+  s_78bc1ba5d92c7b::t_1024920e9ff05d 2-4,6,13,15-17,19,21,26-28,30,32-45,47-49,56,58,60-65,67,69-74,76,78,83-86,91,93,95,100-102,107-113,115,117,119,124-125,130-133,135-140,142,144,146-148,153-157,159-161,164,170,172-178,180,182,185-195,198,200,202,204,206,211-212,214-218,220-225,230,232,234-235,237,239-244,246,248,250,252
+src/content/docs/agents/runtime/capabilities/sessions.mdx
+  s_78bc1ba5d92c7b::t_f0440f2e2e6038 4,6,11,13,15,17,19-21,23,28-35,41,46-47,49-51,53-57,62,64,66,71-75,77-78,83,88-89,95,100-101,103,108,110,112-118,120,122,124,126,128,130,132,134,139-141,146,148,153-158,163,165-173,175,179,184,186,189-190,193,198,200,202,204,209,214,216,218,223-239,245,247,249,251,256-257,262,264,266,268-274,276,280-281
+src/content/docs/agents/runtime/capabilities/state.mdx
+  s_78bc1ba5d92c7b::t_d1bef7b7394d47 1-109
+src/content/docs/agents/runtime/capabilities/streams.mdx
+  s_78bc1ba5d92c7b::t_d35a80b67dd402 2-4,6,13,15,17-19,21,23,25-28,30-34,36,38,43-51,58-60,62,64-70,72-78,83-85,87-89,94,96,101-105,111,113,115,117,119,122-134,137,139,141,143-144,146-149,151,153,155,157,159,161,163-170,172,174,176,178-179,181,183-184
+src/content/docs/agents/runtime/capabilities/tasks.mdx
+  s_78bc1ba5d92c7b::t_2be7528315e940 1-212
+src/content/docs/agents/runtime/capabilities/websockets.mdx
+  s_78bc1ba5d92c7b::t_b0a2ad1df1aac4 1-194
+src/content/docs/agents/runtime/index.mdx
+  s_78bc1ba5d92c7b::t_fec050d36f1aee 12
+src/content/docs/agents/runtime/lifecycle/http-sse.mdx
+  s_174bf7a0c4da8e::t_d5efdbc793668a 3,6,13,15,20-24,30,38,43-48,50-57,64-65,68,72,77-79,112,118,126,128,133-134,138-139,147,157,159,164-166,168-170,172-173,180-182,186,192,194,198-199,203-205
+src/content/docs/agents/runtime/lifecycle/index.mdx
+  s_78bc1ba5d92c7b::t_e4818b5403bf93 3-4,8-10,13,15-427
+src/content/docs/agents/runtime/operations/configuration.mdx
+  s_78bc1ba5d92c7b::t_ec605cc5c2b5d9 948
+src/content/docs/agents/runtime/operations/cross-domain-authentication.mdx
+  s_78bc1ba5d92c7b::t_1edd3df080473a 259
+src/content/partials/agents/common-integration-patterns.mdx
+  s_78bc1ba5d92c7b::t_e249323d64740d 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1d7c62545972d19e3d6af2e75ac5ca1344f88b21",
+  "prompts": {},
+  "sessions": {
+    "s_174bf7a0c4da8e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a18352-5650-7012-a8f9-4bd5bd6621e8",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_78bc1ba5d92c7b": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1835b-41da-70b6-bb15-805b25dcfd52",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

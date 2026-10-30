@@ -1,0 +1,33 @@
+src/content/docs/agents/runtime/capabilities/build-a-capability.mdx
+  s_f570b705a2cffc::t_81bbc19212e756 6
+src/content/docs/agents/runtime/capabilities/index.mdx
+  s_f570b705a2cffc::t_11a0955f1cab5e 131-138
+src/content/docs/agents/runtime/capabilities/queue.mdx
+  s_f570b705a2cffc::t_43b884c79924e9 1-134
+src/content/docs/agents/runtime/capabilities/routed-agents.mdx
+  s_f570b705a2cffc::t_6a4686f92a1459 1-132
+src/content/docs/agents/runtime/capabilities/sessions.mdx
+  s_f570b705a2cffc::t_948ed1593c953a 7-8
+src/content/docs/agents/runtime/capabilities/streams.mdx
+  s_f570b705a2cffc::t_e123f4e5b8ed8a 7-8
+src/content/docs/agents/runtime/capabilities/tasks.mdx
+  s_f570b705a2cffc::t_41d39ddfb32d32 1-247
+src/content/docs/agents/runtime/index.mdx
+  s_f570b705a2cffc::t_c404b5df4a3643 121-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9f5b9ea8bacaeb249ff8c20cfa6ea781c89e869d",
+  "prompts": {},
+  "sessions": {
+    "s_f570b705a2cffc": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a188bb-8d8c-75ae-bc84-3552ae48d87d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

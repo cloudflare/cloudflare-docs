@@ -1,5 +1,6 @@
 src/content/changelog/durable-objects/2026-10-28-durable-objects-automatic-retries.mdx
   s_f70c3d9c923e90::t_4d4428d7a8b3cc 12,14,28,32-37
+  s_f70c3d9c923e90::t_c49dc458bf1996 1-2,4-11,13-57
 ---
 {
   "schema_version": "authorship/3.0.0",

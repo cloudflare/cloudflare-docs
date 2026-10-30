@@ -1,0 +1,19 @@
+src/content/docs/agents/skills/index.mdx
+  s_dde8d185bd747c::t_65b9e24cfa5ef1 122,128-129
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bd126890628d23dd318d53ced01f2d2ff6094732",
+  "prompts": {},
+  "sessions": {
+    "s_dde8d185bd747c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1877c-5b8b-7283-9f59-80a151595166",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

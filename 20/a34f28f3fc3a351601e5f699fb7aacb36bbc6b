@@ -1,0 +1,23 @@
+public/__redirects
+  s_46ec7e7188414e::t_cb3d08dc703c71 377
+src/content/docs/agents/concepts/memory.mdx
+  s_46ec7e7188414e::t_a3279c48d1463d 1-82
+src/content/docs/agents/concepts/sessions.mdx
+  s_46ec7e7188414e::t_72309d270bcac2 1-77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "20a34f28f3fc3a351601e5f699fb7aacb36bbc6b",
+  "prompts": {},
+  "sessions": {
+    "s_46ec7e7188414e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1881c-4b76-7533-bee9-537c6433c043",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+src/content/docs/agents/harnesses/think/index.mdx
+  s_dde8d185bd747c::t_a8f8976b7b4bcd 377
+public/__redirects
+  s_dde8d185bd747c::t_f0a9c91d82ace0 261-262
+src/content/docs/agents/harnesses/think/tools.mdx
+  s_dde8d185bd747c::t_bde8ece5cf3fcb 23
+src/content/docs/agents/concepts/agent-skills.mdx
+  s_41fd4d89757fb4::t_5019e231cf0558 122
+  s_dde8d185bd747c::t_032abfd0ef7552 1-121,123-137
+src/content/docs/agents/skills/sources/index.mdx
+  s_dde8d185bd747c::t_bee0742f988122 1-17
+src/content/docs/agents/skills/sources/computer.mdx
+  s_dde8d185bd747c::t_47a3eb840694c3 2-6
+  s_41fd4d89757fb4::t_6c283a1f167e74 93
+  s_dde8d185bd747c::t_4694a5dbf375f9 1,7-92,94-146
+src/content/docs/agents/skills/sources/code.mdx
+  s_dde8d185bd747c::t_0b0771da09fba0 2-6
+  s_41fd4d89757fb4::t_56fa50454a5e0e 64
+  s_dde8d185bd747c::t_260e07ea022cd4 1,7-63,65-84
+src/content/docs/agents/skills/sources/r2.mdx
+  s_dde8d185bd747c::t_3a1faff004a7c1 2-6,75
+  s_41fd4d89757fb4::t_73f5a875434902 71
+  s_dde8d185bd747c::t_b343fb1d9c16be 1,7-70,72-74,76-79
+.gitignore
+  s_dde8d185bd747c::t_7263a10f59166a 11
+src/content/docs/agents/harnesses/opencode.mdx
+  s_dde8d185bd747c::t_c275cf1c7e9bdd 342
+src/content/docs/agents/tools/skills.mdx
+  s_41fd4d89757fb4::t_b459ce94e8d4c4 27,146,163,171-172,176
+  s_dde8d185bd747c::t_b64e2d735df02a 1-26,28-145,149-162,164-170,173-175,177-183
+  s_dde8d185bd747c::t_b60c1afb1a9d52 147-148
+src/content/docs/agents/agent-class/index.mdx
+  s_dde8d185bd747c::t_250b46baf78a75 109
+src/content/docs/agents/skills/execution.mdx
+  s_dde8d185bd747c::t_3c7eba538ab204 6-22
+  s_dde8d185bd747c::t_f19d5e7a6dd644 2,4,24,26-28,30,32-33,35-37,41,43-45,47,49,51-54,57,59,61,63-64,66-69,71-73,77,79,84-91,93-98,107,109-115,117,119,121-124,126,128,130-137,139,143-144
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_dde8d185bd747c::t_9348a937e57bad 211
+  s_dde8d185bd747c::t_fee5cfbf73fbd2 207,209,215-217,245,275
+src/content/docs/agents/runtime/lifecycle/sessions.mdx
+  s_dde8d185bd747c::t_b584a5002b2f6f 138,209,231,283,343,627
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_dde8d185bd747c::t_aecd61b0e62e2a 28-29,118,153
+  s_dde8d185bd747c::t_7e7330ea833e6f 20
+src/content/changelog/agents/2026-10-20-think-computer-workspace.mdx
+  s_dde8d185bd747c::t_b476e5214d1e4e 12
+src/content/docs/agents/harnesses/pi/extensions.mdx
+  s_dde8d185bd747c::t_8957b30a5661c8 136,138,157
+  s_dde8d185bd747c::t_184e38d8223eb8 132
+src/content/docs/agents/skills/index.mdx
+  s_41fd4d89757fb4::t_0c6948d45ccd3c 107-118,120-122,124,126-137,139
+  s_dde8d185bd747c::t_19de19be0e1683 1-17,20-74,78-106,119,123,125,138,140-142,144-148,151-167
+  s_dde8d185bd747c::t_65b9e24cfa5ef1 143,149-150
+  s_dde8d185bd747c::t_8fad9501106b4a 75-77
+  s_dde8d185bd747c::t_d30e35f073a7e0 18-19
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_dde8d185bd747c::t_1a3ebfd2136d97 255
+src/content/docs/agents/harnesses/think/lifecycle-hooks.mdx
+  s_dde8d185bd747c::t_7979ce0b39868c 63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "993004adcbc9ef857475ccb38bbfd3daf7d7f44b",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_dde8d185bd747c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1877c-5b8b-7283-9f59-80a151595166",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
