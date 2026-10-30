@@ -54,6 +54,7 @@ Cloudflare Tunnel does not need Unified Routing or return routes. Your origin se
 - Traffic uses your default virtual network. Selecting another virtual network is not supported.
 - Zero Trust network session logs are not available for this traffic.
 - [Spectrum](/spectrum/) private origins are in beta. Proxy Protocol is not delivered over private networks yet.
+- [Dedicated Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) do not apply to traffic bound for private origins. The source IPs your origin sees are the [Cloudflare source IP ranges](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
 
 :::caution[Known issue: Tiered Cache]
 With Tiered Cache enabled, cacheable requests that miss cache can fail with HTTP `403` at the upper tier when the origin is reached over Cloudflare WAN. The origin is never contacted. Dynamic requests are not affected. As a workaround, create a [Cache Rule](/cache/how-to/cache-rules/) that bypasses cache for the affected hostnames.
