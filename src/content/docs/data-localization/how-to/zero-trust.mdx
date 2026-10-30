@@ -73,7 +73,7 @@ Refer to [Region support](/data-localization/region-support/) for region definit
 
 You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway, but the certificate cannot be restricted to a specific region.
 
-[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) is incompatible with Processing region for Gateway.
+[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) processes quarantined files in the United States, regardless of the selected Gateway processing region. Using File Sandboxing with a non-US processing region sends those files outside the selected region. 
 
 Processing region for Gateway supports [predefined and custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/) that do not use [EDM, custom wordlists, document entries, or AI prompt topics](/cloudflare-one/data-loss-prevention/detection-entries/configure-detection-entries/), or [pattern entries with custom functions](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/). [AI context analysis and OCR](/cloudflare-one/data-loss-prevention/dlp-profiles/advanced-settings/) are also unsupported.
 
