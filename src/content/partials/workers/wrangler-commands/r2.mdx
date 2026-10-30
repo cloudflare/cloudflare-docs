@@ -90,12 +90,12 @@ Disable table-level compaction:
 	args="basin catalog compaction disable my-bucket my-namespace my-table"
 />
 
-Enable snapshot expiration:
+Enable catalog-level snapshot expiration. The `--token` flag is required at the catalog level. `--older-than-days` defaults to `30` and `--retain-last` defaults to `5`:
 
 <PackageManagers
 	type="exec"
 	pkg="wrangler"
-	args="basin catalog snapshot-expiration enable <BUCKET_NAME>"
+	args="basin catalog snapshot-expiration enable <BUCKET_NAME> --token <API_TOKEN> --older-than-days 7 --retain-last 10"
 />
 
 Disable snapshot expiration:
