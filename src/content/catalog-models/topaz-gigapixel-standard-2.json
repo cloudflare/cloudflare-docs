@@ -1,0 +1,240 @@
+{
+	"model_id": "topaz/gigapixel-standard-2",
+	"provider_id": "topaz",
+	"name": "Gigapixel Standard 2",
+	"description": "Topaz Labs Gigapixel Standard 2 is a general-purpose precision image upscaler that balances detail, sharpness, and noise reduction while staying true to the source. It is the recommended default for photos, graphics, and print, with optional face recovery.",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image Upscaling",
+		"Image-to-Image",
+		"Enhancement"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per provider unit": 0.12
+	},
+	"examples": [
+		{
+			"name": "Poster Upscale",
+			"description": "Upscale a 475-pixel scan of a 1938 national park poster 4x to 1900 pixels wide, with sharp lettering and clean edges. Poster: C. Don Powell, via the Library of Congress (no known restrictions).",
+			"input": {
+				"image": "https://tile.loc.gov/storage-services/service/pnp/ppmsca/13300/13397r.jpg",
+				"output_format": "jpeg",
+				"output_width": 1900
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-standard-2/poster-upscale.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-standard-2/poster-upscale.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/gigapixel-standard-2',\n  {\n    image: 'https://tile.loc.gov/storage-services/service/pnp/ppmsca/13300/13397r.jpg',\n    output_format: 'jpeg',\n    output_width: 1900,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/gigapixel-standard-2\",\n  \"input\": {\n    \"image\": \"https://tile.loc.gov/storage-services/service/pnp/ppmsca/13300/13397r.jpg\",\n    \"output_format\": \"jpeg\",\n    \"output_width\": 1900\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Small Photo Upscale",
+			"description": "Upscale a 640-pixel photo 4x to 2560 pixels wide. Standard 2 picks its own enhancement settings, so none are needed. Photo: NASA.",
+			"input": {
+				"image": "https://images-assets.nasa.gov/image/KSC-20260313-PH-JBS01_0157/KSC-20260313-PH-JBS01_0157~small.jpg",
+				"output_format": "jpeg",
+				"output_width": 2560
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-standard-2/small-photo-upscale.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-standard-2/small-photo-upscale.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/gigapixel-standard-2',\n  {\n    image:\n      'https://images-assets.nasa.gov/image/KSC-20260313-PH-JBS01_0157/KSC-20260313-PH-JBS01_0157~small.jpg',\n    output_format: 'jpeg',\n    output_width: 2560,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/gigapixel-standard-2\",\n  \"input\": {\n    \"image\": \"https://images-assets.nasa.gov/image/KSC-20260313-PH-JBS01_0157/KSC-20260313-PH-JBS01_0157~small.jpg\",\n    \"output_format\": \"jpeg\",\n    \"output_width\": 2560\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Thumbnail Portrait",
+			"description": "Upscale a 127-pixel thumbnail of an 1863 portrait 6x to 762 pixels wide. Face recovery rebuilds a sharp face where a plain upscale smears it. Photo: Alexander Gardner, via the Library of Congress (no known restrictions).",
+			"input": {
+				"face_enhancement": true,
+				"face_enhancement_creativity": 0.2,
+				"face_enhancement_strength": 0.8,
+				"image": "https://tile.loc.gov/storage-services/service/pnp/ppmsca/19300/19301_150px.jpg",
+				"output_format": "jpeg",
+				"output_width": 762
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-standard-2/thumbnail-portrait.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-standard-2/thumbnail-portrait.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/gigapixel-standard-2',\n  {\n    face_enhancement: true,\n    face_enhancement_creativity: 0.2,\n    face_enhancement_strength: 0.8,\n    image: 'https://tile.loc.gov/storage-services/service/pnp/ppmsca/19300/19301_150px.jpg',\n    output_format: 'jpeg',\n    output_width: 762,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/gigapixel-standard-2\",\n  \"input\": {\n    \"face_enhancement\": true,\n    \"face_enhancement_creativity\": 0.2,\n    \"face_enhancement_strength\": 0.8,\n    \"image\": \"https://tile.loc.gov/storage-services/service/pnp/ppmsca/19300/19301_150px.jpg\",\n    \"output_format\": \"jpeg\",\n    \"output_width\": 762\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developer.topazlabs.com/image-models/gigapixel/standard-2",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Face Recovery": "Optional",
+		"Max Input": "512 MP",
+		"Max Output": "1024 MP",
+		"Output Formats": "jpeg, png, tiff"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "topaz",
+			"pricing": {
+				"units": 0.12
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-30 16:53:54",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"description": "Source image as a public HTTPS URL or a base64 data URI (JPEG, PNG, or TIFF)"
+				},
+				"output_width": {
+					"description": "Desired output width in pixels. If only one dimension is set, the other scales proportionally. If neither is set, the source resolution is kept (enhancement without upscaling)",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 32000
+				},
+				"output_height": {
+					"description": "Desired output height in pixels. If only one dimension is set, the other scales proportionally. If neither is set, the source resolution is kept (enhancement without upscaling)",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 32000
+				},
+				"output_format": {
+					"default": "jpeg",
+					"description": "Format of the upscaled image",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"tiff"
+					]
+				},
+				"crop_to_fill": {
+					"description": "Crop to fill the requested dimensions instead of letterboxing when the aspect ratio differs",
+					"type": "boolean"
+				},
+				"face_enhancement": {
+					"description": "Run face recovery on detected faces",
+					"type": "boolean"
+				},
+				"face_enhancement_strength": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Strength of face recovery"
+				},
+				"face_enhancement_creativity": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Face recovery style, from realistic (0) to creative (1)"
+				},
+				"subject_detection": {
+					"description": "Where enhancements are applied",
+					"type": "string",
+					"enum": [
+						"foreground",
+						"background",
+						"all"
+					]
+				},
+				"sharpen": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Amount of additional sharpening"
+				},
+				"denoise": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Amount of noise reduction"
+				},
+				"fix_compression": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Amount of compression-artifact reduction"
+				}
+			},
+			"required": [
+				"image",
+				"output_format"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "Time-limited presigned URL to the upscaled image"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

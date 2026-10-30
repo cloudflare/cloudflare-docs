@@ -218,7 +218,8 @@
 		"Input modalities": "Text, image",
 		"Knowledge cutoff": "June 1, 2026",
 		"Reasoning effort": "none, low, medium (default), high, xhigh, max",
-		"Tool calling": "Responses API only"
+		"Tool calling": "Responses API only",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses",

@@ -20,8 +20,7 @@
 		"Input video tokens (per 1M)": 1.5,
 		"output_text_tokens": 9,
 		"Reasoning tokens (per 1M)": 9,
-		"output_video_tokens": 17.5,
-		"Default (per second)": 1.5
+		"output_video_tokens": 17.5
 	},
 	"examples": [
 		{
@@ -176,12 +175,12 @@
 		{
 			"id": "google-ai-studio",
 			"pricing": {
-				"input_audio_tokens": 1.5,
-				"input_image_tokens": 1.5,
 				"input_text_tokens": 1.5,
+				"input_image_tokens": 1.5,
+				"input_audio_tokens": 1.5,
 				"input_video_tokens": 1.5,
-				"output_reasoning_tokens": 9,
 				"output_text_tokens": 9,
+				"output_reasoning_tokens": 9,
 				"output_video_tokens": 17.5
 			}
 		}

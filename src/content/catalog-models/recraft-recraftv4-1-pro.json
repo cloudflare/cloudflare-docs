@@ -14,7 +14,7 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Per image": 0.25
+		"Per image": 0.21
 	},
 	"examples": [
 		{
@@ -187,7 +187,7 @@
 		{
 			"id": "recraft",
 			"pricing": {
-				"output_image_count": 0.25
+				"output_image_count": 0.21
 			}
 		}
 	],
