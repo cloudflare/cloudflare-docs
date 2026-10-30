@@ -18,8 +18,7 @@
 	"pricing": {
 		"Input tokens (per 1M)": 0.75,
 		"Cached input tokens (per 1M)": 0.075,
-		"Output tokens (per 1M)": 3.75,
-		"Default (per second)": 0.75
+		"Output tokens (per 1M)": 3.75
 	},
 	"examples": [
 		{
@@ -207,8 +206,8 @@
 			"id": "google-vertex-ai",
 			"pricing": {
 				"input_tokens": 0.75,
-				"output_tokens": 3.75,
-				"input_cached_tokens": 0.075
+				"input_cached_tokens": 0.075,
+				"output_tokens": 3.75
 			}
 		}
 	],

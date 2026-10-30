@@ -347,7 +347,8 @@
 		"Model": "GPT-6 Luna",
 		"Question types": "Predicate, choice, score",
 		"Relative latency": "About 10x faster than Responses API",
-		"Status": "Public beta"
+		"Status": "Public beta",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": null,
 	"providers": null,

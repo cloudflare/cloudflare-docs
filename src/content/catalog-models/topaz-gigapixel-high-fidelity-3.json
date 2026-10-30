@@ -1,0 +1,187 @@
+{
+	"model_id": "topaz/gigapixel-high-fidelity-3",
+	"provider_id": "topaz",
+	"name": "Gigapixel High Fidelity 3",
+	"description": "Topaz Labs Gigapixel High Fidelity 3 is a precision image upscaler tuned for high-resolution sources and professional photography, preserving fine texture and detail with minimal alteration. It adds recovery-strength and opacity controls over High Fidelity 2.",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image Upscaling",
+		"Image-to-Image",
+		"Enhancement"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per provider unit": 0.12
+	},
+	"examples": [
+		{
+			"name": "Star Field Upscale",
+			"description": "Upscale a 1280-pixel Hubble image of the Pillars of Creation 2x to 2560 pixels wide, keeping its stars and dust true to the source. High Fidelity 3 picks its own recovery settings, so none are needed. Image: NASA, ESA, and the Hubble Heritage Team (STScI/AURA).",
+			"input": {
+				"image": "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000842/GSFC_20171208_Archive_e000842~medium.jpg",
+				"output_format": "jpeg",
+				"output_width": 2560
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-high-fidelity-3/star-field-upscale.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/topaz/gigapixel-high-fidelity-3/star-field-upscale.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/gigapixel-high-fidelity-3',\n  {\n    image:\n      'https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000842/GSFC_20171208_Archive_e000842~medium.jpg',\n    output_format: 'jpeg',\n    output_width: 2560,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/gigapixel-high-fidelity-3\",\n  \"input\": {\n    \"image\": \"https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000842/GSFC_20171208_Archive_e000842~medium.jpg\",\n    \"output_format\": \"jpeg\",\n    \"output_width\": 2560\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developer.topazlabs.com/image-models/gigapixel/high-fidelity-3",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Face Recovery": "Optional",
+		"Output Formats": "jpeg, png, tiff"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "topaz",
+			"pricing": {
+				"units": 0.12
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-30 16:53:52",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"description": "Source image as a public HTTPS URL or a base64 data URI (JPEG, PNG, or TIFF)"
+				},
+				"output_width": {
+					"description": "Desired output width in pixels. If only one dimension is set, the other scales proportionally. If neither is set, the source resolution is kept (enhancement without upscaling)",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 32000
+				},
+				"output_height": {
+					"description": "Desired output height in pixels. If only one dimension is set, the other scales proportionally. If neither is set, the source resolution is kept (enhancement without upscaling)",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 32000
+				},
+				"output_format": {
+					"default": "jpeg",
+					"description": "Format of the upscaled image",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"tiff"
+					]
+				},
+				"crop_to_fill": {
+					"description": "Crop to fill the requested dimensions instead of letterboxing when the aspect ratio differs",
+					"type": "boolean"
+				},
+				"face_enhancement": {
+					"description": "Run face recovery on detected faces",
+					"type": "boolean"
+				},
+				"face_enhancement_strength": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Strength of face recovery"
+				},
+				"face_enhancement_creativity": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Face recovery style, from realistic (0) to creative (1)"
+				},
+				"subject_detection": {
+					"description": "Where enhancements are applied",
+					"type": "string",
+					"enum": [
+						"foreground",
+						"background",
+						"all"
+					]
+				},
+				"sharpen": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Amount of additional sharpening"
+				},
+				"denoise": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Amount of noise reduction"
+				},
+				"fix_compression": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"description": "Amount of compression-artifact reduction"
+				},
+				"recovery_strength": {
+					"description": "Strength of detail recovery (Topaz default 1.0)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"opacity": {
+					"description": "Blend of the enhanced result over the source (Topaz default 1.0)",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				}
+			},
+			"required": [
+				"image",
+				"output_format"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "Time-limited presigned URL to the upscaled image"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

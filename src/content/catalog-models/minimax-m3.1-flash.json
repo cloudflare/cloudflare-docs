@@ -397,7 +397,8 @@
 	"metadata": {
 		"Function Calling": "Yes",
 		"Reasoning": "Yes (always-on, adjustable effort)",
-		"Vision": "Image and video input"
+		"Vision": "Image and video input",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions",
@@ -763,7 +764,8 @@
 										"type": "string",
 										"enum": [
 											"user",
-											"assistant"
+											"assistant",
+											"system"
 										]
 									},
 									"content": {

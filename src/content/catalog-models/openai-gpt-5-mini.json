@@ -6980,7 +6980,8 @@
 	"terms": "https://openai.com/policies/",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5-mini.png",
 	"metadata": {
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses",
@@ -7053,12 +7054,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},

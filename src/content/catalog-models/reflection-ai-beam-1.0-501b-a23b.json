@@ -365,7 +365,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://developers.reflection.ai/models",
 	"terms": "https://developers.reflection.ai/introduction",
@@ -375,13 +375,23 @@
 		"Context Window": "256K tokens",
 		"Max Output": "128K tokens",
 		"Parameters": "501B total, 23B active",
-		"Reasoning": "Always on"
+		"Reasoning": "Always on",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"
 	],
 	"providers": null,
-	"provider_details": null,
+	"provider_details": [
+		{
+			"id": "reflection-ai",
+			"pricing": {
+				"input_tokens": 0,
+				"input_cached_tokens": 0,
+				"output_tokens": 0
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-10-16 13:57:23",
 	"schema": {
