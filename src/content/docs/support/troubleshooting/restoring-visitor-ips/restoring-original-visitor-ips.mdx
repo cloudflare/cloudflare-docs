@@ -7,11 +7,17 @@ products:
   - support
 ---
 
-import { Render } from "~/components";
+import { Render, Steps } from "~/components";
 
 When your [website traffic is routed through the Cloudflare network](/fundamentals/concepts/how-cloudflare-works/), we act as a reverse proxy. This allows Cloudflare to speed up page load time by routing packets more efficiently and caching static resources (images, JavaScript, CSS, etc.). As a result, when responding to requests and logging them, your origin server returns a [Cloudflare IP address](https://www.cloudflare.com/ips/).
 
 For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [`CF-Connecting-IP`](/fundamentals/reference/http-headers/#cf-connecting-ip). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
+
+:::caution[Authenticate traffic before trusting visitor IP headers]
+The configurations below restore IP values for logs and applications. They do not authenticate the traffic reaching your origin. Before using those values for access control or rate limiting, follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers).
+
+Allowlisting Cloudflare IP ranges alone is insufficient: those ranges are shared across customers. Use your own certificate with zone-level or per-hostname Authenticated Origin Pulls, enforced at your origin, or Cloudflare Tunnel with direct public access blocked. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on the destination.
+:::
 
 :::note
 
@@ -256,28 +262,27 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 
 ### Lighttpd
 
-To have Lighttpd automatically rewrite the server IP for the access logs and for your application, you can follow one of the two solutions below.
+Use `mod_extforward` to restore visitor IPs in Lighttpd. Use Lighttpd 1.4.70 or later when your proxy reuses HTTP/2 connections for different visitors, as described in the [Lighttpd documentation](https://redmine.lighttpd.net/projects/lighttpd/wiki/Mod_extforward).
 
-1. Open your **lighttpd.conf** file and add *mod_extforward* to the *server.modules* list. It must come **after** *mod_accesslog* to show the real IP in the access logs
-2. Add the following code block anywhere in the **lighttpd.conf** file after the server modules list and then restart Lighttpd
+<Steps>
 
-```
-$HTTP["remoteip"] == "192.2.0.1 (example IP address)"
-{
-extforward.forwarder = ( "all" => "trust" )
-extforward.headers = ("CF-Connecting-IP")
-}
-```
+1. Open **lighttpd.conf** and add `mod_extforward` to the `server.modules` list. Place it after `mod_accesslog` to restore visitor IPs in access logs.
 
-:::note
+2. Configure `extforward.forwarder` with all current [Cloudflare IPv4 and IPv6 ranges](https://www.cloudflare.com/ips/), and set `extforward.headers` to `CF-Connecting-IP`. The following example shows one range of each type; add all remaining Cloudflare ranges before using it:
 
-If your origin connects to the Internet with IPv6,
-**$HTTP\["remoteip"]**, which is required for matching the remote IP
-ranges does not work when IPv6 is enabled. Using the above method will
-not work when trying to forward IP ranges. Add the following lines to
-lighttpd.conf as an alternative solution:
-`extforward.forwarder = ( "all" => "trust" ) extforward.headers = ("CF-Connecting-IP")`
-:::
+   ```txt
+   extforward.forwarder = (
+       "173.245.48.0/20" => "trust",
+       "2400:cb00::/32" => "trust"
+   )
+   extforward.headers = ("CF-Connecting-IP")
+   ```
+
+3. Restart Lighttpd after updating its configuration.
+
+</Steps>
+
+Do not use `"all" => "trust"` to work around IPv6 configuration issues. Trust only your configured proxy ranges and [authenticate the path to your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). For a complete example, refer to [Lighttpd's Cloudflare configuration guide](https://redmine.lighttpd.net/projects/lighttpd/wiki/Restoring_original_visitor_IPs_Logging_visitor_IP_addresses_with_mod_extforward).
 
 ### LiteSpeed server
 
@@ -432,7 +437,7 @@ An outside developer has created a module to restore visitor IP called [node_cl
 
 ### HAProxy
 
-In order to extract the original client IP in the X_FORWARDED_FOR header, you need to use the following configuration in HAProxy:
+After [authenticating traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers), use the following HAProxy configuration to copy `CF-Connecting-IP` into `X-Forwarded-For`. The source IP check below is an additional network filter and does not identify your zone:
 
 1. Create a text file `CF_ips.lst` containing all IP ranges from [https://www.cloudflare.com/en-gb/ips/](https://www.cloudflare.com/en-gb/ips/)
 2. Ensure to disable `option forwardfor` in HAProxy
@@ -456,13 +461,15 @@ clientIPDetection:
         failClosed: true
 ```
 
+`failClosed: true` rejects requests when the header is missing or does not contain a valid IP address. It does not authenticate the header's sender. [Authenticate traffic reaching your gateway](/fundamentals/reference/http-headers/#trust-visitor-ip-headers) before trusting this value.
+
 For more details, refer to [Custom header original IP detection extension](https://www.envoyproxy.io/docs/envoy/latest/api-v3/extensions/http/original_ip_detection/custom_header/v3/custom_header.proto).
 
 ### Caddy
 
 If you are running an application behind [Caddy](https://caddyserver.com/) that relies on the `X-Forwarded-For` header, you can configure Caddy to override the header with Cloudflare's [CF-Connecting-IP header](/fundamentals/reference/http-headers/#cf-connecting-ip).
 
-It is advised that you also only accept traffic from [Cloudflare's IP addresses](https://www.cloudflare.com/ips/); otherwise, the header could be spoofed. That's why, in the second example, we handle this as part of the Caddy configuration. Alternatively, you can handle this at the firewall level, which is usually easier to automate. If you already have a firewall or other measure in place to ensure this, your Caddyfile could look like this:
+First, [authenticate traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). Also restrict incoming connections to [Cloudflare's IP addresses](https://www.cloudflare.com/ips/) as an additional network filter. Cloudflare IP ranges are shared, so this restriction alone does not prevent another Cloudflare customer from sending requests with a chosen `CF-Connecting-IP` value. With origin authentication and network filtering in place, your Caddyfile could look like this:
 ```txt title="Caddyfile"
 https://example.com {
     reverse_proxy localhost:8080 {
@@ -472,7 +479,7 @@ https://example.com {
 }
 ```
 
-If you want Caddy to handle only accepting traffic from [Cloudflare's IP addresses](https://www.cloudflare.com/ips/), you can use a configuration like this one:
+The following example adds the network filter in Caddy. Configure origin authentication separately; this source IP matcher does not authenticate your account or zone:
 ```txt title="Caddyfile"
 https://example.com {
     # Restrict access to Cloudflare IPs (https://www.cloudflare.com/ips/)

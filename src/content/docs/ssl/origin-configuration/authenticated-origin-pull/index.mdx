@@ -19,7 +19,9 @@ Authenticated Origin Pulls (AOP) helps ensure requests to your origin server com
 Authenticated Origin Pulls does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
 :::
 
-Without AOP, anyone who discovers your origin server's IP address can send requests directly, bypassing Cloudflare and all its protections. When you combine AOP with the [Cloudflare Web Application Firewall (WAF)](/waf/), your origin only accepts requests that have passed through Cloudflare, which means every request is evaluated by the WAF before reaching your server.
+If your origin accepts unauthenticated public connections, anyone who discovers its IP address can send requests directly, bypassing Cloudflare and its protections. AOP lets your origin require a client certificate from Cloudflare.
+
+Global AOP uses a certificate shared across Cloudflare accounts. It proves that a request came from Cloudflare's network, but does not identify your account or zone. To authenticate traffic for your account or zone, use [your own certificate](#when-to-use-your-own-certificate) and configure your origin to reject requests without it. Enabling AOP in Cloudflare alone does not enforce certificate validation at your origin.
 
 :::note[Not compatible with Cloudflare Tunnel]
 AOP is not compatible with origins connected through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). Tunnel uses outbound-only connections from your origin, so there is no inbound listener for Cloudflare to present a client certificate to. If your origin is reachable through Cloudflare Tunnel, origin traffic is already authenticated using the tunnel's connector credentials, and AOP settings have no effect on that hostname.

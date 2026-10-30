@@ -30,6 +30,8 @@ Your origin server sees Cloudflare IP addresses as the source of all requests in
 
 Cloudflare includes the original visitor IP address in the [`CF-Connecting-IP`](/fundamentals/reference/http-headers/) and `X-Forwarded-For` request headers. Configure your origin server to read the visitor IP from these headers. For more information, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
+Before using these headers for authentication or rate limiting, [authenticate traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). Allowlisting Cloudflare IP ranges alone does not identify your zone. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on their destination.
+
 ### Client certificate (mTLS) validation
 
 When a record is proxied, TLS terminates at Cloudflare's global network. Cloudflare establishes a separate TLS connection to your origin server. This means the origin never receives the end-user's client certificate during the TLS handshake. You can achieve mTLS through the following:

@@ -22,8 +22,7 @@ For incoming requests, the value of this header will always be set to `accept-en
 
 ### CF-Connecting-IP
 
-`CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server.
-This header will only be sent on the traffic from Cloudflare's edge to your origin web server.
+`CF-Connecting-IP` provides the client IP address connecting to Cloudflare to the origin web server. For requests made by Workers, the value depends on the subrequest destination, as described below.
 
 For guidance on logging your visitor's original IP address, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
@@ -35,11 +34,19 @@ In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the va
 
 In cross-zone subrequests from one Cloudflare zone to another Cloudflare zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
 
-For Worker subrequests destined for a non-Cloudflare customer zone, the Worker script controls the client IP headers: both `CF-Connecting-IP` and `x-real-ip` can be altered by the Worker. If the subrequest forwards the original request's headers unchanged, both headers reflect the client's IP address.
-
-To authenticate that traffic originates from your own zone, use zone-level or per-hostname [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) with your own certificate, or [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
+For Worker subrequests to destinations not proxied by Cloudflare, the Worker can set or overwrite `CF-Connecting-IP`. The destination can therefore receive a value chosen by the Worker. `x-real-ip` is an internal Cloudflare header and is stripped before delivery to these destinations.
 
 When no Worker subrequest is triggered, `cf-connecting-ip` reflects the client's IP address and the `x-real-ip` header is stripped.
+
+#### Trust visitor IP headers
+
+:::caution
+Visitor IP headers do not authenticate a request's origin. A connection from a [Cloudflare IP address](/fundamentals/concepts/cloudflare-ip-addresses/) also does not prove that a request passed through your zone or its security rules. Cloudflare IP ranges are shared across customers.
+
+Before using `CF-Connecting-IP`, `True-Client-IP`, or `X-Forwarded-For` for access control or rate limiting, authenticate the traffic reaching your origin. Use [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with your own certificate, and configure your origin to reject requests without that certificate. Global AOP uses a shared certificate and only authenticates the Cloudflare network. Alternatively, use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and block direct public access to your origin.
+
+Your own Workers must also preserve or set visitor IP headers according to your application's trust requirements.
+:::
 
 ### CF-Connecting-IPv6
 
@@ -60,6 +67,8 @@ If [Pseudo IPv4](/network/pseudo-ipv4/) is set to `Add Header` - Cloudflare auto
 `True-Client-IP` provides the original client IP address to the origin web server. `True-Client-IP` is only available on an Enterprise plan. In the example below, `203.0.113.1` is the original visitor IP address. For example: `True-Client-IP: 203.0.113.1`
 
 There is no difference between the `True-Client-IP` and `CF-Connecting-IP` headers besides the name of the header. Some Enterprise customers with legacy devices need `True-Client-IP` to avoid updating firewalls or load-balancers to read a custom header name.
+
+`True-Client-IP` does not provide additional authentication. The same [visitor IP header trust requirements](#trust-visitor-ip-headers) apply.
 
 To add a `True-Client-IP` HTTP header to requests, [enable the **Add "True-Client-IP" header** Managed Transform](/rules/transform/managed-transforms/configure/).
 
@@ -83,6 +92,8 @@ Using the previous example where a request was proxied twice (proxies A and B) b
 
 :::note
 To restore the original visitor IP address at your origin web server, Cloudflare recommends that your logs or applications look at `CF-Connecting-IP` or `True-Client-IP` instead of `X-Forwarded-For`. `CF-Connecting-IP` and `True-Client-IP` both have a consistent format containing only one IP address.
+
+Before relying on these values for security decisions, follow the [visitor IP header trust requirements](#trust-visitor-ip-headers).
 :::
 
 ### X-Forwarded-Proto
