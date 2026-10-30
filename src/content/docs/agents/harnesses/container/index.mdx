@@ -3,8 +3,9 @@ title: Container harness
 pcx_content_type: overview
 description: Run Claude Code or Codex in a Cloudflare Container, driven from a Durable Object that keeps the session, the credentials, and the record of every run.
 sidebar:
-  order: 12
-  label: Container (experimental)
+  order: 14
+  badge:
+    text: Experimental
   group:
     hideIndex: false
 products:
@@ -20,6 +21,8 @@ import {
 } from "~/components";
 
 `ContainerHarness` runs an agent command-line interface (CLI), such as Claude Code or Codex, in a [Cloudflare Container](/containers/), and drives it from a [Durable Object](/durable-objects/). The CLI runs its own loop and tools in the container. The Durable Object keeps the session, holds the credentials, and decides when the container runs.
+
+To get started with a specific CLI, refer to [Claude Code](/agents/harnesses/claude-code/) or [OpenAI Codex](/agents/harnesses/codex/). This page covers how the harness works for every CLI.
 
 :::caution[Experimental]
 `agents/harness/container` is experimental. Its API may change in any release.
@@ -174,7 +177,7 @@ These routes have no authentication. Each prompt runs commands and spends model 
 
 ## Choose the CLI
 
-A preset says what runs in the container. Switching between Claude Code and Codex changes only the preset:
+A preset says what runs in the container. Switching between [Claude Code](/agents/harnesses/claude-code/) and [OpenAI Codex](/agents/harnesses/codex/) changes only the preset:
 
 <TypeScriptExample>
 
@@ -184,13 +187,13 @@ import { claudeCode, codex } from "agents/harness/container";
 claudeCode({
 	baseUrl: `${this.env.AI_GATEWAY_URL}/anthropic`,
 	apiKey: this.env.AI_GATEWAY_TOKEN,
-	model: "claude-sonnet-4-5",
+	model: "claude-opus-5-5",
 });
 
 codex({
 	baseUrl: `${this.env.AI_GATEWAY_URL}/openai`,
 	apiKey: this.env.AI_GATEWAY_TOKEN,
-	model: "gpt-5.1",
+	model: "gpt-5.5",
 });
 ```
 

@@ -12,7 +12,7 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), run Claude Code or Codex with the [Container harness](/agents/harnesses/container/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
+To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also run [OpenCode](/agents/harnesses/opencode/), run [Claude Code](/agents/harnesses/claude-code/) or [OpenAI Codex](/agents/harnesses/codex/) with the [Container harness](/agents/harnesses/container/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
 
 ## How harnesses fit
 
@@ -50,7 +50,19 @@ Use the Container harness (experimental) when you want a CLI agent, such as Clau
 />
 
 <LinkCard
-	title="Container (experimental)"
+	title="Claude Code (experimental)"
+	href="/agents/harnesses/claude-code/"
+	description="Run Claude Code in a Container, driven from a Durable Object that keeps its sessions and credentials."
+/>
+
+<LinkCard
+	title="OpenAI Codex (experimental)"
+	href="/agents/harnesses/codex/"
+	description="Run Codex in a Container, driven from a Durable Object that keeps its sessions and credentials."
+/>
+
+<LinkCard
+	title="Container harness (experimental)"
 	href="/agents/harnesses/container/"
 	description="Run Claude Code or Codex in a Container, driven from a Durable Object that keeps the session and the credentials."
 />

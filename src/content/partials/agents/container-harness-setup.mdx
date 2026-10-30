@@ -1,0 +1,13 @@
+---
+{}
+---
+
+There is no `image` in the container configuration. The harness starts the `cloudflare/debian-trixie` managed image, installs the CLI on first use, and snapshots the result.
+
+Store your AI Gateway token as a secret:
+
+```sh
+npx wrangler secret put AI_GATEWAY_TOKEN
+```
+
+To run containers locally, you need Docker and Wrangler 4.141.0 or later. For more information, refer to [Local development](/containers/guides/local-dev/).

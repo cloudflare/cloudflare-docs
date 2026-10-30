@@ -1,0 +1,171 @@
+---
+title: Claude Code
+pcx_content_type: get-started
+description: Run Claude Code on Cloudflare. The CLI runs in a Container, and a Durable Object keeps its sessions, its credentials, and the record of every run.
+sidebar:
+  order: 12
+  badge:
+    text: Experimental
+products:
+  - agents
+---
+
+import {
+	LinkCard,
+	PackageManagers,
+	Render,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Run [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) on Cloudflare, with its own tools, plugins, and settings, the way it runs on your laptop. Claude Code runs in a [Container](/containers/). A [Durable Object](/durable-objects/) drives it, keeps every session and the CLI's session files, and holds your model credentials outside the container.
+
+This page uses the [Container harness](/agents/harnesses/container/) with its `claudeCode()` preset. For how the harness works, sessions, events, and recovery, refer to that page.
+
+<Render file="experimental" product="agents" params={{ name: "ContainerHarness", module: "agents/harness/container" }} />
+
+## Install
+
+<PackageManagers pkg="agents@latest" />
+
+Add a SQLite-backed Durable Object and a container for the same class. The container must use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), so the object can start it from snapshots:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "claude-code-agent",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"compatibility_flags": ["nodejs_compat"],
+	"durable_objects": {
+		"bindings": [{ "name": "ClaudeCodeAgent", "class_name": "ClaudeCodeAgent" }],
+	},
+	"migrations": [{ "tag": "v1", "new_sqlite_classes": ["ClaudeCodeAgent"] }],
+	"containers": [
+		{ "class_name": "ClaudeCodeAgent", "scheduling_policy": "durable_object" },
+	],
+	"vars": {
+		"AI_GATEWAY_URL": "https://gateway.ai.cloudflare.com/v1/<ACCOUNT_ID>/<GATEWAY_ID>",
+	},
+}
+```
+
+</WranglerConfig>
+
+<Render file="container-harness-setup" product="agents" />
+
+## Create the agent
+
+Create the harness with the `claudeCode()` preset, and add it to the [Lifecycle](/agents/runtime/lifecycle/). Export `ContainerEgress` from your Worker's main module. It adds your credentials to Claude Code's model requests after they leave the container:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { routeAgentRequest } from "agents";
+import { ContainerHarness, claudeCode } from "agents/harness/container";
+import { Lifecycle } from "agents/lifecycle";
+
+export { ContainerEgress } from "agents/harness/container";
+
+export class ClaudeCodeAgent extends DurableObject<Env> {
+	readonly harness = new ContainerHarness({
+		container: containerOf(this.ctx),
+		egress: this.ctx.exports.ContainerEgress,
+		agent: claudeCode({
+			baseUrl: `${this.env.AI_GATEWAY_URL}/anthropic`,
+			apiKey: this.env.AI_GATEWAY_TOKEN,
+		}),
+	});
+
+	readonly lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return Response.json(await this.harness.messages());
+		}
+		const { text } = await request.json<{ text: string }>();
+		const result = await this.harness.prompt(text);
+		return Response.json({ status: result.status, text: result.text });
+	}
+}
+
+function containerOf(ctx: DurableObjectState): Container {
+	if (!ctx.container) {
+		throw new Error("Add a container for this class in wrangler.jsonc");
+	}
+	return ctx.container;
+}
+
+export default {
+	async fetch(request: Request, env: Env) {
+		return (
+			(await routeAgentRequest(request, env)) ??
+			new Response("Not found", { status: 404 })
+		);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+<Render file="container-harness-run" product="agents" />
+
+## Configure Claude Code
+
+`claudeCode()` takes Claude Code's own options:
+
+| Option               | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `model`              | The default model for new sessions, such as `claude-opus-5-5`.  |
+| `appendSystemPrompt` | Passed to `--append-system-prompt`.                             |
+| `allowedTools`       | Passed to `--allowedTools`.                                     |
+| `disallowedTools`    | Passed to `--disallowedTools`.                                  |
+| `maxTurns`           | Passed to `--max-turns`.                                        |
+| `version`            | The `@anthropic-ai/claude-code` version to install.             |
+| `setup`              | Commands that run once and are kept in the setup snapshot.      |
+
+Use `setup` to install plugins, `CLAUDE.md`, settings, or skills. A step with `user: "agent"` runs as the user Claude Code runs as, so files in its home work the way they do on your laptop:
+
+<TypeScriptExample>
+
+```ts
+import { claudeCode } from "agents/harness/container";
+
+claudeCode({
+	baseUrl: `${this.env.AI_GATEWAY_URL}/anthropic`,
+	apiKey: this.env.AI_GATEWAY_TOKEN,
+	model: "claude-opus-5-5",
+	appendSystemPrompt: "Run the tests before you report a change as done.",
+	setup: [
+		{
+			name: "install review plugin",
+			user: "agent",
+			command: [
+				"sh",
+				"-c",
+				"claude plugin marketplace add my-org/plugins && claude plugin install review@plugins",
+			],
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+Claude Code runs with `--dangerously-skip-permissions`, so it does not stop to ask before it runs a command. The container is the sandbox. Use `allowedTools` and `disallowedTools` to limit what it can do.
+
+## Next steps
+
+<LinkCard
+	title="Container harness"
+	href="/agents/harnesses/container/"
+	description="Sessions, events, credentials, the container lifecycle, and recovery."
+/>
+
+<LinkCard
+	title="OpenAI Codex"
+	href="/agents/harnesses/codex/"
+	description="Run Codex the same way."
+/>
