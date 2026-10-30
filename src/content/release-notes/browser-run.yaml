@@ -3,6 +3,18 @@ link: "/browser-run/changelog/"
 productName: Browser Run
 productLink: "/browser-run/"
 entries:
+  - publish_date: "2026-10-30"
+    title: "Chrome 152 and Quick Actions fixes"
+    description: |-
+      * Upgraded the default browser from Chrome 128 to Chrome 152 (`152.0.7977.64`). The default User-Agent for [CDP](/browser-run/cdp/) sessions now reports Chrome 152, and [`/accessibilityTree`](/browser-run/quick-actions/accessibility-tree-endpoint/) responses now include a `name` on `InlineTextBox` nodes.
+      * [Quick Actions](/browser-run/quick-actions/) now send `Sec-CH-UA` client hint headers and `navigator.userAgentData` that match the `userAgent` value, including custom values.
+      * Request headers now keep the casing Chrome uses, instead of being lowercased.
+      * Pages can now return response headers up to 256 KiB. Before, pages with more than 16 KiB of response headers failed with a connection reset.
+      * Browser Run no longer trusts the AAA Certificate Services and emSign root certificates. Requests to sites that chain only to these roots now fail TLS validation.
+      * [`/links`](/browser-run/quick-actions/links-endpoint/) now resolves relative `href` values to absolute URLs. Links-only [crawls](/browser-run/quick-actions/crawl-endpoint/) now follow relative links instead of stopping after the first page.
+      * [`/markdown`](/browser-run/quick-actions/markdown-endpoint/) and crawl Markdown output now keep code block languages and no longer duplicate repeated figure caption labels.
+      * When a Quick Action times out and the automatic retry also fails, Browser Run now returns the original `422` error instead of a `5xx` error.
+      * If an [outbound Worker](/browser-run/features/outbound-workers/) throws an exception, the browser now receives an HTTP `502` response instead of a reset connection.
   - publish_date: "2026-09-21"
     title: "Browser binding session and DevTools methods"
     description: |-
