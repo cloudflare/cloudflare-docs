@@ -26,11 +26,11 @@ When traffic is proxied through Cloudflare, the following behaviors apply. You m
 
 ### Source IP changes
 
-Your origin server sees Cloudflare IP addresses as the source of all requests instead of the end-user's IP address. Applications that rely on the source IP for authentication, rate limiting, or geolocation will not function as expected without additional configuration.
+Your origin server sees Cloudflare IP addresses as the source of all requests instead of the end-user's IP address. Applications that use source IPs for access restrictions, rate limiting, or geolocation need additional configuration.
 
 Cloudflare includes the original visitor IP address in the [`CF-Connecting-IP`](/fundamentals/reference/http-headers/) and `X-Forwarded-For` request headers. Configure your origin server to read the visitor IP from these headers. For more information, refer to [Restoring original visitor IPs](/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/).
 
-Before using these headers for authentication or rate limiting, [authenticate traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). Allowlisting Cloudflare IP ranges alone does not identify your zone. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on their destination.
+Do not use these headers as proof of a user's or client's identity. Before using their values for IP-based access restrictions or rate limiting, [authenticate traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). Allowlisting Cloudflare IP ranges alone does not identify your zone. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on their destination.
 
 ### Client certificate (mTLS) validation
 
