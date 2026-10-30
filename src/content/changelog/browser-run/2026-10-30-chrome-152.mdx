@@ -10,7 +10,8 @@ date: 2026-10-30
 
 This release also includes the following improvements:
 
-- **Better site compatibility.** [Quick Actions](/browser-run/quick-actions/) requests now look more like requests from a regular Chrome browser, so fewer sites block them.
+- **Updated default User-Agent.** The default User-Agent for [Quick Actions](/browser-run/quick-actions/) now reports Chrome 152 instead of Chrome 119. If you allowlist or match the Browser Run User-Agent, update your rules. You can still set your own value with the `userAgent` parameter. Refer to [Automatic request headers](/browser-run/reference/automatic-request-headers/#user-agent).
+- **Better site compatibility.** Quick Actions requests now look more like requests from a regular Chrome browser, so fewer sites block them.
 - **Large response headers.** Pages that return large response headers now load correctly.
 - **Updated root certificates.** Browser Run removed distrusted root certificates from its trust store.
 - **Absolute links.** [`/links`](/browser-run/quick-actions/links-endpoint/) now returns absolute URLs, and links-only [crawls](/browser-run/quick-actions/crawl-endpoint/) now follow relative links.

@@ -7,7 +7,8 @@ entries:
     title: "Chrome 152 and Quick Actions improvements"
     description: |-
       * Upgraded the default browser to Chrome 152.
-      * [Quick Actions](/browser-run/quick-actions/) requests now look more like requests from a regular Chrome browser, so fewer sites block them.
+      * The default User-Agent for [Quick Actions](/browser-run/quick-actions/) now reports Chrome 152 instead of Chrome 119. If you allowlist or match the Browser Run User-Agent, update your rules. Refer to [Automatic request headers](/browser-run/reference/automatic-request-headers/#user-agent).
+      * Quick Actions requests now look more like requests from a regular Chrome browser, so fewer sites block them.
       * Pages that return large response headers now load correctly.
       * Removed distrusted root certificates from the Browser Run trust store.
       * [`/links`](/browser-run/quick-actions/links-endpoint/) now returns absolute URLs, and links-only [crawls](/browser-run/quick-actions/crawl-endpoint/) now follow relative links.
