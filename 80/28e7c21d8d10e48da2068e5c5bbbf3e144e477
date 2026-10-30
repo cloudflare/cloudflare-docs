@@ -1,0 +1,19 @@
+src/content/docs/data-localization/region-support.mdx
+  s_920bb0062809f7::t_997c2738f06b34 77,118
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8028e7c21d8d10e48da2068e5c5bbbf3e144e477",
+  "prompts": {},
+  "sessions": {
+    "s_920bb0062809f7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e724c9618ffeLtFG8MByO7cxK7",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}
