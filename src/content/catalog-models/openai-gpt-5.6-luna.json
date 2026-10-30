@@ -22,7 +22,7 @@
 		"Long-context input (per 1M)": 0.4,
 		"Long-context cached input (per 1M)": 0.04,
 		"Long-context cache write (per 1M)": 0.5,
-		"Long-context output (per 1M)": 1.7999999999999998
+		"Long-context output (per 1M)": 1.8
 	},
 	"examples": [
 		{
@@ -290,7 +290,7 @@
 				"long_context_input_tokens": 0.4,
 				"long_context_input_cached_tokens": 0.04,
 				"long_context_input_cache_creation_tokens": 0.5,
-				"long_context_output_tokens": 1.7999999999999998
+				"long_context_output_tokens": 1.8
 			}
 		}
 	],
