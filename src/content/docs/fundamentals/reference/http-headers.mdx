@@ -45,7 +45,7 @@ Visitor IP headers are not authentication credentials for users or clients. An I
 
 A connection from a [Cloudflare IP address](/fundamentals/concepts/cloudflare-ip-addresses/) does not prove that a request passed through your zone or its security rules. Cloudflare IP ranges are shared across customers.
 
-Before using `CF-Connecting-IP`, `True-Client-IP`, or `X-Forwarded-For` for access control or rate limiting, authenticate the traffic reaching your origin. Use [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with your own certificate, and configure your origin to reject requests without that certificate. Global AOP uses a shared certificate and only authenticates the Cloudflare network. Alternatively, use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and block direct public access to your origin.
+Before using `CF-Connecting-IP`, `True-Client-IP`, or `X-Forwarded-For` for IP-based access restrictions or rate limiting, authenticate the Cloudflare-to-origin connection. Use [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with your own certificate, and configure your origin to reject requests without that certificate. Global AOP uses a shared certificate and only authenticates the Cloudflare network. Alternatively, use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) and block direct public access to your origin.
 
 Your own Workers must also preserve or set visitor IP headers according to your application's trust requirements.
 :::

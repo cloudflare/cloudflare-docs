@@ -9,7 +9,7 @@ products:
 
 Enabling the True-Client-IP Header adds the [`True-Client-IP` header](/fundamentals/reference/http-headers/#true-client-ip-enterprise-plan-only) to all requests to your origin server, which includes the end user's IP address.
 
-`True-Client-IP` does not authenticate a request's origin. Follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers) before using its value for access control or rate limiting.
+Do not use `True-Client-IP` to authenticate users or clients. Follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers) before using its value for IP-based access restrictions or rate limiting.
 
 ## Availability
 
