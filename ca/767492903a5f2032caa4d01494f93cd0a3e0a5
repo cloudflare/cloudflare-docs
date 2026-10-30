@@ -1,0 +1,19 @@
+src/content/docs/dns/private-origins/index.mdx
+  s_4546b8ee956c87::t_aaf7cf5e7dc556 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ca767492903a5f2032caa4d01494f93cd0a3e0a5",
+  "prompts": {},
+  "sessions": {
+    "s_4546b8ee956c87": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e81dc4676ffeIbZZWTm47jbklb",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "esomoza-cf <esomoza@cloudflare.com>"
+    }
+  }
+}

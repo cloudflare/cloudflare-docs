@@ -1,0 +1,21 @@
+src/content/changelog/ssl/2026-10-30-keyless-ssl-tls13-ecdsa.mdx
+  s_c393e9ada06fb7::t_49d8c23e57196e 1-11
+src/content/docs/ssl/keyless-ssl/index.mdx
+  s_c393e9ada06fb7::t_db967741ec4aa8 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8f045c6a7f0db7a787952f3a9ba0dd28be3a930d",
+  "prompts": {},
+  "sessions": {
+    "s_c393e9ada06fb7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e72e7ea02ffeF6SsOCJhs3cLKi",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

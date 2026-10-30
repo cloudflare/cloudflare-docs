@@ -1,0 +1,19 @@
+src/content/catalog-models/xai-grok-4.6.json
+  s_bd17dec7924f0a::t_c2fa6f1bf5e060 1-1286
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "282aed1489d6661184f9c66cb2868d05651ce8af",
+  "prompts": {},
+  "sessions": {
+    "s_bd17dec7924f0a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_008da9712ffefDGrvulYBE5FTH",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "shridharathi <shridhar@cloudflare.com>"
+    }
+  }
+}
