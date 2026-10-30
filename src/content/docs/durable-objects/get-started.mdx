@@ -15,7 +15,7 @@ import {
 	PackageManagers,
 	WranglerConfig,
 	TypeScriptExample,
-	DashButton
+	DashButton,
 } from "~/components";
 
 This guide will instruct you through:
@@ -258,6 +258,7 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 ```jsonc
 {
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [
 			{
 				"name": "MY_DURABLE_OBJECT",

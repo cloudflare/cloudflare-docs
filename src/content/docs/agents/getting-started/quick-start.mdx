@@ -74,6 +74,7 @@ Add the `AI` binding and a SQLite-backed Durable Object to your Wrangler configu
 		"binding": "AI",
 	},
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [{ "name": "Assistant", "class_name": "Assistant" }],
 	},
 	"exports": {

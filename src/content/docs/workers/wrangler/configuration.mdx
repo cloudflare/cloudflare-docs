@@ -624,6 +624,7 @@ Example:
 ```jsonc
 {
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [
 			{
 				"name": "<BINDING_NAME>",
@@ -635,6 +636,27 @@ Example:
 ```
 
 </WranglerConfig>
+
+#### Code update strategy
+
+Requires Wrangler 4.141.0 or later. Set `durable_objects.code_update_strategy` to control when active objects adopt new code:
+
+- `mode`: `"deferred"` (default) or `"immediate"`.
+- `max_delay`: Maximum wait in seconds for deferred updates. Defaults to `300`. Accepts `0` to `86400` (24 hours), with millisecond precision. Only valid with `"deferred"`.
+
+Deferred updates let active objects keep running the previous version until they hibernate or reach the deadline. Hibernatable WebSockets can stay connected when the object adopts new code after hibernation. Updates are best effort; an object can still reset earlier.
+
+The setting applies to every Durable Object class exported by the Worker. For a binding with `script_name`, configure the Worker that defines the class.
+
+To apply an urgent update immediately:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="deploy --durable-objects-code-update-mode immediate"
+/>
+
+Refer to [Durable Object code updates](/durable-objects/deployments/durable-objects-code-updates/) for version compatibility and recovery guidance.
 
 #### Exports
 
