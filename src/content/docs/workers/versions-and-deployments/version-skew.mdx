@@ -88,13 +88,3 @@ Keeping old files in a new release helps older pages. But new pages can still re
 For example, first deploy the existing HTML with both releases' asset files. Then change the HTML in a later deployment, keeping those files. Each deployment still takes time to reach every location. Waiting a fixed time or testing one location does not prove that every location has the change.
 
 If you include a version ID in asset URLs, include it in every script, stylesheet, and other asset URL the page loads. A script's query string is not automatically copied to the URLs it loads. A query parameter alone does not select a Worker version. The incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
-
-## Diagnose version skew
-
-Compare the version serving the HTML with the version handling the failing request. Use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to report which version handles each Worker request. For asset responses, add a build identifier with [`_headers`](/workers/static-assets/headers/#custom-headers).
-
-Record the requested path, response status, content type, deployment configuration, and any version headers. When testing overrides, check the version and response content as well as the status code. An ignored override uses the configured traffic percentages and can still return a successful response.
-
-By default, matching static assets bypass your Worker script. Code that logs a version or sets a cookie only runs when the request [invokes your Worker](/workers/static-assets/routing/worker-script/). Check whether your logging code runs for asset requests.
-
-Keep an older page open across several deployments and test its asset requests. Also test pages after a rollback and requests through every asset hostname. Testing only the application's root URL does not cover these cases.

@@ -24,4 +24,4 @@ See the [Platform Limits](/workers/platform/limits/#static-assets)
 ## Troubleshooting
 
 - `assets.bucket is a required field` — if you see this error, you need to update Wrangler to at least `3.78.10` or later. `bucket` is not a required field.
-- Asset requests fail after a deployment — HTML and asset requests may use different versions. An older page may also request a file missing from the version handling that request. Refer to [Diagnose version skew](/workers/versions-and-deployments/version-skew/#diagnose-version-skew).
+- Asset requests fail after a deployment — HTML and asset requests may use different versions. An older page may also request a file missing from the version handling that request. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
