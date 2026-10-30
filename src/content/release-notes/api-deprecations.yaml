@@ -10,7 +10,7 @@ entries:
 
       End of life date: February 1, 2027
 
-      HTTPS [Load Balancing monitors](/load-balancing/monitors/) and HTTPS [Health Checks](/health-checks/) will stop offering TLS cipher suites that use 3DES encryption or RSA key exchange when they connect to your origin servers. These cipher suites do not provide forward secrecy and are considered insecure. Removing them keeps health probes in line with current security standards.
+      HTTPS [Load Balancing monitors](/load-balancing/monitors/) and HTTPS [Health Checks](/health-checks/) will stop supporting TLS cipher suites that use 3DES encryption or RSA key exchange when they connect to your origin servers. These cipher suites do not provide forward secrecy and are considered insecure. Removing them keeps health probes in line with current security standards.
 
       This change only affects TLS 1.2 and earlier handshakes. Connections that negotiate TLS 1.3 are not affected. The request and response formats of the API do not change.
 
@@ -33,7 +33,7 @@ entries:
 
       Replacement:
 
-      Make sure each origin server checked by an HTTPS monitor or health check supports TLS 1.3, or at least one ECDHE-based cipher suite such as `ECDHE-ECDSA-AES128-GCM-SHA256` or `ECDHE-RSA-AES128-GCM-SHA256`. For the full list of cipher suites Cloudflare supports, refer to [Cipher suites for origin connections](/ssl/origin-configuration/cipher-suites/).
+      Make sure each origin server checked by an HTTPS monitor or health check supports TLS 1.3, or at least one ECDHE-based cipher suite such as `ECDHE-ECDSA-AES128-GCM-SHA256` or `ECDHE-RSA-AES128-GCM-SHA256`.
 
       If your origin already supports a modern cipher suite alongside the deprecated ones, you do not need to do anything. Health probes will negotiate the modern cipher suite automatically. To confirm, check that a TLS 1.2 connection restricted to ECDHE cipher suites succeeds:
 
