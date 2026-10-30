@@ -50,7 +50,7 @@ The Builds API has two ways to manage how your Worker is built:
 - **Worker build configuration** (`/builds/workers/{script_tag}`) — Manages your Worker's Git repository, **production settings**, and **Previews settings** together. Use these endpoints to connect a Worker to a repository, change build and deploy commands, and manage [Previews](/workers/previews/). The fields match the **Settings** > **Builds** page in the dashboard.
 - **Triggers** (`/builds/triggers/{trigger_uuid}`) — The lower-level record behind a set of build settings. You need a trigger UUID to [start a build manually](#trigger-a-manual-build), [manage build environment variables](#manage-build-environment-variables), or [purge the build cache](#purge-build-cache).
 
-Every connected Worker has a **production trigger** that runs on your [production branch](/workers/ci-cd/builds/build-branches/#change-production-branch). With [Worker Previews](/workers/previews/), each Preview also gets its own trigger the first time you push to its branch. Workers that were connected to Builds before Worker Previews may instead have a single legacy **branch build trigger** that runs on all non-production branches. To move these Workers to Previews, refer to [Switch an existing Worker to Worker Previews](#switch-an-existing-worker-to-worker-previews).
+Every connected Worker has a **production trigger** that runs on your [production branch](/workers/ci-cd/builds/build-branches/#change-production-branch). With [Worker Previews](/workers/previews/), each Preview also gets its own trigger the first time you push to its branch. Workers that were connected to Builds before Worker Previews may instead have a single legacy **branch build trigger** that runs on all non-production branches. To move these Workers to Previews, switch to Worker Previews in the dashboard. Refer to [Existing Workers connected to Builds](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
 
 **Build settings fields:**
 
@@ -215,12 +215,12 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
 
 The response includes:
 
-| Field                  | Description                                                                                                                                                                                                                                         |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `git_repository`       | The connected repository and the production branch (`branch`)                                                                                                                                                                                       |
-| `production_settings`  | Build settings used for pushes to your production branch                                                                                                                                                                                            |
-| `previews_enabled`     | Whether pushes to other branches create or update Previews                                                                                                                                                                                          |
-| `previews_base_config` | Build settings copied to each new Preview. If the Worker still uses legacy branch builds, this includes `proposed_deploy_command`, the Preview command that [switching to Worker Previews](#switch-an-existing-worker-to-worker-previews) will use. |
+| Field                  | Description                                                                                                                                          |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `git_repository`       | The connected repository and the production branch (`branch`)                                                                                        |
+| `production_settings`  | Build settings used for pushes to your production branch                                                                                             |
+| `previews_enabled`     | Whether pushes to other branches create or update Previews                                                                                           |
+| `previews_base_config` | Build settings copied to each new Preview. If the Worker still uses legacy branch builds, these are the settings of the legacy branch build trigger. |
 
 ### Update production settings
 
@@ -272,7 +272,7 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
   --data '{"previews_enabled": false}'
 ```
 
-Turning Previews on requires `previews_base_config` to already exist or to be sent in the same request. If the Worker still uses legacy branch builds, you must first [switch to Worker Previews](#switch-an-existing-worker-to-worker-previews).
+Turning Previews on requires `previews_base_config` to already exist or to be sent in the same request. If the Worker still uses legacy branch builds, you must first [switch to Worker Previews in the dashboard](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
 
 ## Manage Previews
 
@@ -325,36 +325,6 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
 ```
 
 To list a Preview's builds, send a `GET` request to the same endpoint.
-
-## Switch an existing Worker to Worker Previews
-
-Workers that were connected to Builds before [Worker Previews](/workers/previews/) keep using legacy branch builds until you switch. This is the API equivalent of the [dashboard switch](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
-
-<Aside type="caution" title="The switch cannot be reversed">
-	After switching, you cannot return to legacy branch builds, which use
-	production settings. Before switching, configure the variables, secrets, and
-	bindings your Previews need. Refer to [Preview
-	settings](/workers/previews/configuration/).
-</Aside>
-
-1. [Get your build settings](#get-build-settings) and check `previews_base_config.proposed_deploy_command`. This is the Preview command the switch will use. If it is `null`, your current command cannot be converted automatically and you must provide one.
-2. Send the switch request. To use the proposed command, send an empty body:
-
-   ```bash
-   curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/migrate_to_previews" \
-     --header "Authorization: Bearer <API_TOKEN>" \
-     --header "Content-Type: application/json" \
-     --request POST \
-     --data '{}'
-   ```
-
-   To set your own Preview command, send it as `deploy_command`. Custom commands must invoke `wrangler preview`:
-
-   ```bash
-   --data '{"deploy_command": "npx wrangler preview --env staging"}'
-   ```
-
-The legacy branch build trigger's settings become `previews_base_config`, and the legacy trigger is removed. Pushes to branches that are not your production branch now create or update Previews.
 
 ## Update trigger configuration
 
