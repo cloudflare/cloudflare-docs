@@ -50,3 +50,9 @@ Yes, you can use an index to reduce the number of rows read by a query. [Creatin
 ### Does a freshly created database, and/or an empty table with no rows, contribute to my storage?
 
 Yes, although minimal. An empty table consumes at least a few kilobytes, based on the number of columns (table width) in the table. An empty database consumes approximately 12 KB of storage.
+
+### How much do additional databases cost?
+
+The Workers Paid plan includes 100,000 databases per account. Each additional database costs $0.10 per month. Query and storage charges apply separately.
+
+For example, 100,020 databases existing for a full billing month cost `(100,020 - 100,000) × $0.10 = $2.00` for the 20 additional databases.
