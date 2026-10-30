@@ -130,6 +130,7 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 	"main": "src/index.ts",
 	"upload_source_maps": true,
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [
 			{
 				"name": "LOCATION",
@@ -149,3 +150,5 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 ```
 
 </WranglerConfig>
+
+Deferred code updates do not preserve in-memory state across resets. Store values that must survive a deployment in [durable storage](/durable-objects/api/sqlite-storage-api/).

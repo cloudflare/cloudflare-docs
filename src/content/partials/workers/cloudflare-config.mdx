@@ -163,6 +163,40 @@ first. It does not select the asset source.
 
 Use `domains` for custom domains. Use `triggers.fetch()` for routes.
 
+## Defer Durable Object code updates
+
+Set `worker.durableObjects.codeUpdateStrategy` to defer updates while objects are active:
+
+<TypeScriptExample filename="cloudflare.config.ts">
+
+```ts
+import { defineConfig } from "cf/config";
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint: "./src/index.ts",
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		durableObjects: {
+			codeUpdateStrategy: { mode: "deferred", maxDelay: 300 },
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+`maxDelay` is in seconds, from `0` to `86400` (24 hours), with millisecond precision. Omit it to use 300 seconds. Use `{ mode: "immediate" }` to reset active objects immediately.
+
+To override the setting for one deployment:
+
+```sh
+cf deploy --durable-objects-code-update-mode immediate
+cf deploy --durable-objects-code-update-mode deferred --durable-objects-code-update-max-delay 30
+```
+
+Updates are best effort. Keep recovery state in durable storage. Refer to [Durable Object code updates](/durable-objects/deployments/durable-objects-code-updates/).
+
 ## Use typed builder values
 
 The `bindings`, `triggers`, and `exports` builders return ordinary

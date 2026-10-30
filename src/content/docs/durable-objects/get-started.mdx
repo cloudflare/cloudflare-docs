@@ -15,7 +15,7 @@ import {
 	PackageManagers,
 	WranglerConfig,
 	TypeScriptExample,
-	DashButton
+	DashButton,
 } from "~/components";
 
 This guide will instruct you through:
@@ -258,6 +258,7 @@ Refer to [Access a Durable Object from a Worker](/durable-objects/best-practices
 ```jsonc
 {
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [
 			{
 				"name": "MY_DURABLE_OBJECT",
@@ -275,6 +276,10 @@ The `bindings` section contains the following fields:
 - `name` - Required. The binding name to use within your Worker.
 - `class_name` - Required. The class name you wish to bind to.
 - `script_name` - Optional. Defaults to the current [environment's](/durable-objects/reference/environments/) Worker code.
+
+The `code_update_strategy` setting lets active objects keep running the previous version until they hibernate, for up to 300 seconds. Requires Wrangler 4.141.0 or later.
+
+Code updates are best effort. Keep recovery state in durable storage, and support requests from both Worker versions during deployments. Refer to [Durable Object code updates](/durable-objects/deployments/durable-objects-code-updates/).
 
 ## 5. Configure Durable Object class with SQLite storage backend
 

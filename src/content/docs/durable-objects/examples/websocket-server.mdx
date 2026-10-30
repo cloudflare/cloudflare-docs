@@ -12,7 +12,13 @@ products:
   - durable-objects
 ---
 
-import { TabItem, Tabs, GlossaryTooltip, WranglerConfig, TypeScriptExample } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	GlossaryTooltip,
+	WranglerConfig,
+	TypeScriptExample,
+} from "~/components";
 
 This example shows how to build a WebSocket server using <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> and Workers. The example exposes an endpoint to create a new WebSocket connection. This WebSocket connection echos any message while including the total number of WebSocket connections currently established. For more information, refer to [Use Durable Objects with WebSockets](/durable-objects/best-practices/websockets/).
 
@@ -259,6 +265,7 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 	"main": "src/index.ts",
 	"upload_source_maps": true,
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [
 			{
 				"name": "WEBSOCKET_SERVER",
@@ -278,6 +285,8 @@ Finally, configure your Wrangler file to include a Durable Object [binding](/dur
 ```
 
 </WranglerConfig>
+
+This example uses the standard WebSocket API. Its open connections prevent hibernation, so they eventually disconnect when a deferred update reaches its deadline. Prefer the [hibernation example](/durable-objects/examples/websocket-hibernation-server/) to keep connections open across updates that apply after hibernation.
 
 ### Related resources
 

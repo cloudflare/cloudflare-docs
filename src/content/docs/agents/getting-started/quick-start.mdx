@@ -74,6 +74,7 @@ Add the `AI` binding and a SQLite-backed Durable Object to your Wrangler configu
 		"binding": "AI",
 	},
 	"durable_objects": {
+		"code_update_strategy": { "mode": "deferred" },
 		"bindings": [{ "name": "Assistant", "class_name": "Assistant" }],
 	},
 	"exports": {
@@ -86,6 +87,10 @@ Add the `AI` binding and a SQLite-backed Durable Object to your Wrangler configu
 
 - `ai` adds the [Workers AI](/workers-ai/) binding as `env.AI`.
   <Render file="durable-object-config" product="agents" />
+
+The deferred update setting lets an active agent keep running the previous version until it hibernates, for up to 300 seconds. Requires Wrangler 4.141.0 or later.
+
+Updates are best effort. Keep recovery state in durable storage and support requests from both Worker versions during deployments. Refer to [Durable Object code updates](/durable-objects/deployments/durable-objects-code-updates/).
 
 ## Run a harness on a Durable Object
 
