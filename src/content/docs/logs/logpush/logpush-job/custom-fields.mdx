@@ -255,14 +255,15 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 ## Enable custom fields via dashboard
 
-1. In the Cloudflare dashboard, go to the **Logpush** page.
+1. In the Cloudflare dashboard, select your account and zone. Then go to **Observability** > **Export** > **Logpush**.
 
-   <DashButton url="/?to=/:account/:zone/analytics/logs" />
+   <DashButton url="/?to=/:account/:zone/analytics/logs/configuration" />
 
-2. In the **Custom log fields** section, select **Edit Custom Fields**.
-3. Select **Set new Custom Field**.
-4. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
-5. When you are done, select **Save**.
+2. Select the **Configuration** tab.
+3. In the **Custom log fields** section, select **Edit Custom Fields**.
+4. Select **Set new Custom Field**.
+5. From the **Field Type** dropdown, select _Request Header_, _Response Header_, or _Cookies_ and type the **Field Name**.
+6. When you are done, select **Save**.
 
 ## Use case: Logging mTLS certificate headers
 
