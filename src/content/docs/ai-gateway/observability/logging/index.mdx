@@ -30,6 +30,10 @@ Logs are enabled by default for each gateway. This setting applies to all reques
 
 You can turn off collection for privacy or compliance requirements.
 
+:::note[Paid requests]
+Requests paid through [Unified Billing](/ai-gateway/features/unified-billing/) or [Machine Payments (x402)](/ai-gateway/features/machine-payments/) always store a metadata-only log entry, even when logging is turned off for the gateway or the request. The request and response payloads are not stored.
+:::
+
 <Render file="logging" product="ai-gateway" />
 
 ## Per-request logging
@@ -94,7 +98,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 ```
 
 :::note
-If `cf-aig-collect-log` is set to `false`, the entire log entry (including metadata) is skipped regardless of the `cf-aig-collect-log-payload` value. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
+If `cf-aig-collect-log` is set to `false`, the entire log entry (including metadata) is skipped regardless of the `cf-aig-collect-log-payload` value. The exception is [paid requests](#default-configuration), which still store a metadata-only log entry. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
 :::
 
 ## DLP fields in logs

@@ -56,6 +56,17 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 - Consider implementing [dynamic routing](/ai-gateway/features/dynamic-routing/) with fallbacks for transient failures
 - Review your [rate limiting](/ai-gateway/features/rate-limiting/) configuration
 
+### Bad request (7003)
+
+AI Gateway returns error code `7003` when it rejects a request to the [REST API](/ai-gateway/usage/rest-api/) as invalid. The HTTP status is usually `400`, or `404` when the requested model does not exist. Common causes include malformed JSON, a request body that does not match the model's input schema, and an unsupported HTTP method.
+
+When the provider rejects the request input, the error message starts with `Model execution failed (User Input Error)`, followed by the provider's error message. The provider's message usually names the field it rejected.
+
+To resolve the error:
+
+- Read the `message` in the `errors` array of the response. If request and response payloads are not logged, the message is not available in [AI Gateway logs](/ai-gateway/observability/logging/), so capture it from the response.
+- Check the request body against the model's input schema in the [model catalog](/ai/models/).
+
 ### Requests returning errors from the provider
 
 - Verify your API key or credentials are valid with the provider directly

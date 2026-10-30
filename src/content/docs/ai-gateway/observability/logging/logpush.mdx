@@ -17,7 +17,7 @@ Logpush supports four jobs per account. Each exported log can be up to 1 MB.
 
 :::note[Note]
 
-Logpush exports logs whether or not logs are turned on for the gateway. The `cf-aig-collect-log` and `cf-aig-collect-log-payload` headers do not change what Logpush exports.
+Logpush exports logs, including the encrypted request and response bodies, whether or not logs are turned on for the gateway. The `cf-aig-collect-log` and `cf-aig-collect-log-payload` headers do not change what Logpush exports.
 
 :::
 
