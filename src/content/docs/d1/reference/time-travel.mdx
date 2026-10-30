@@ -34,6 +34,7 @@ Time Travel leverages D1's concept of a <GlossaryTooltip term="bookmark"> bookma
 - Restoring a database to a specific bookmark does not remove or delete older bookmarks. For example, if you restore to a bookmark representing the state of your database 10 minutes ago, and determine that you needed to restore to an earlier point in time, you can still do so.
 - Bookmarks are lexicographically sortable. Sorting orders a list of bookmarks from oldest-to-newest.
 - Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) (seconds since Jan 1st, 1970), and conversion between a specific timestamp and a bookmark is deterministic (stable).
+- Bookmarks can advance due to Cloudflare internal maintenance events, such as instance restarts or storage checkpointing, without any SQL writes from your application. A newer current bookmark does not mean your data changed. To verify data state, compare row counts or use `wrangler d1 time-travel info` with a specific past timestamp.
 
 Bookmarks are also leveraged by [Sessions API](/d1/best-practices/read-replication/#use-sessions-api) to ensure sequential consistency within a Session.
 
