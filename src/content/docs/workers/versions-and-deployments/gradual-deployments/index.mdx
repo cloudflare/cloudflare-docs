@@ -91,13 +91,13 @@ Run `wrangler versions deploy` again and follow the interactive prompts. Select 
 
 ## Version skew
 
-During gradual deployments, clients and services can interact with incompatible versions of your Worker. This is called **version skew**. It can also occur during deployment propagation and when older pages make requests after a deployment changes. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for these cases.
+During gradual deployments, related requests can use incompatible versions of your Worker. This is called **version skew**. It can also happen while a deployment change spreads across the network, or when an older page makes requests after a deployment changes. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for these cases.
 
 ### Version skew within a Worker
 
 By default, each request is independently routed to a version based on the configured percentages. This means consecutive requests from the same user - including page reloads and asset fetches - can be handled by different versions.
 
-Use [version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) to assign requests with the same key consistently under a given deployment configuration. As traffic percentages increase, some users move to the new version. Their existing pages may still request files from the previous release.
+Use [version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) to send requests with the same key to the same version. This applies while the deployment configuration stays the same. As you increase the new version's traffic percentage, some users move to it. Their open pages may still request files from the previous release.
 
 ### Version skew between Workers
 

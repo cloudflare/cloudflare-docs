@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Version affinity
-description: Use stable request identifiers to assign traffic consistently during gradual Worker deployments.
+description: Use a shared request key to keep related requests on one Worker version during a gradual deployment, until the deployment changes.
 sidebar:
   order: 1
 ---
@@ -10,7 +10,7 @@ import { Example, TypeScriptExample, WranglerConfig } from "~/components";
 
 During a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), each request has a random chance of routing to either version based on the specified percentages. This means the same user can be served content from a different version every time a request is made, which can cause **version skew** issues.
 
-Version affinity makes version selection deterministic using a stable request identifier. Requests with the same identifier select the same version under a given deployment configuration. It does not permanently pin a browser page to a version across deployment changes.
+Version affinity sends requests with the same key to the same version. This applies while the deployment configuration stays the same. Changing the deployment can move a browser's requests to another version.
 
 ## How it works
 
@@ -26,7 +26,7 @@ As you progress a gradual deployment (for example, from 10% to 20% to 50%), user
 
 You can set the `Cloudflare-Workers-Version-Key` header both when making an external request from the Internet to your Worker, as well as when making a subrequest from one Worker to another Worker using a [service binding](/workers/runtime-apis/bindings/service-bindings/).
 
-The header must be present before the request selects a Worker version. Setting it inside that Worker's handler does not change the version already selected for the request.
+Set the header before Cloudflare selects a Worker version. Setting it inside that Worker's handler cannot change the version handling that request.
 
 ## Static assets
 
@@ -41,7 +41,7 @@ During a gradual rollout, different versions of your application will have diffe
 
 Without version affinity, a user can receive HTML from version A, but when their browser requests `index-a1b2c3d4.js`, that request may be routed to version B - which does not have that file - resulting in a 404 error and a broken page.
 
-Version affinity prevents independent random selection when every related request carries the same key and uses the same deployment configuration. It does not eliminate skew during deployment propagation, when traffic percentages move a user to a new version, or when an older page requests assets after its version leaves the deployment. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
+Version affinity keeps related requests on one version when they carry the same key and use the same deployment configuration. Version skew can still happen while a deployment change spreads across the network. Changing traffic percentages or removing a version can also leave older pages requesting missing assets. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
 
 ## Choose a version key
 
@@ -53,7 +53,7 @@ Transform Rules require your Worker to be on a route on a zone you control. They
 
 ### Authenticated applications
 
-If your application has a user identifier in a cookie or header, use it as the version key. Requests carrying the same identifier are assigned consistently under a given deployment configuration, including across sessions, devices, and reloads.
+If your application has a user ID in a cookie or header, use it as the version key. Requests with the same ID use the same version, even across sessions, devices, and reloads. This applies while the deployment configuration stays the same.
 
 <Example>
 
@@ -73,7 +73,7 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 ### Applications with sessions
 
-If your application sets a session cookie, use the session identifier. This gives consistent routing under a given deployment configuration. If the session expires or the deployment changes, the user may be assigned to a different version.
+If your application sets a session cookie, use the session ID. Requests with the same session ID use the same version while the deployment configuration stays the same. If the session expires or the deployment changes, the user may move to another version.
 
 <Example>
 
@@ -113,13 +113,13 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 </Example>
 
-**Option 2: Establish a cookie before serving HTML.** A new visitor's first request has no cookie and selects a version randomly. If that response serves HTML and sets a random key, the key can select a different version for the page's assets.
+**Option 2: Set a cookie before serving HTML.** A new visitor's first request has no cookie, so Cloudflare selects a version randomly. Serving HTML and setting a random key in that response can cause a mismatch. The key may select a different version for the page's assets.
 
-For an application that requires cookies, set the key on a redirect before returning the first page. The redirected request and subsequent asset requests then carry the same key. This example serves HTML at `/`; adapt the bootstrap route to your application's HTML routes.
+For an application that requires cookies, set the cookie in a redirect response before serving HTML. The redirected request and later asset requests then carry the same key. This example serves HTML at `/`. Adapt it to the routes that serve your application's HTML.
 
-Every version in the split deployment must implement this bootstrap flow.
+Add the redirect logic to both versions in the deployment.
 
-Ensure that the bootstrap route invokes your Worker. Matching static assets otherwise bypass its code. For example:
+Configure these page routes to run your Worker first. Otherwise, matching static assets bypass its code. For example:
 
 <WranglerConfig>
 
@@ -187,11 +187,11 @@ Selected operation under **Modify request header**: _Set dynamic_
 
 </Example>
 
-This flow requires the browser to accept the cookie. If your application supports visitors who block cookies, provide a fallback instead of repeatedly redirecting them. It still has the [deployment-change limitations](#static-assets) of version affinity.
+This approach requires the browser to accept the cookie. If your application supports visitors who block cookies, handle that case to avoid a redirect loop. [Changing deployments can still cause version skew](#static-assets).
 
 ### Requests through multiple hostnames
 
-Apply the version-key rule to every hostname serving related requests. The example cookie has no `Domain` attribute, so the browser only sends it to the hostname that set it. Asset subdomains need an identifier available on their own requests. Refer to [Multiple hostnames and connections](/workers/versions-and-deployments/version-skew/#multiple-hostnames-and-connections).
+Apply the version-key rule to every hostname serving related requests. The example cookie has no `Domain` attribute, so the browser only sends it to the hostname that set it. Requests to asset subdomains also need to carry the same key. Refer to [Multiple hostnames and connections](/workers/versions-and-deployments/version-skew/#multiple-hostnames-and-connections).
 
 ## Testing
 
@@ -210,6 +210,6 @@ During gradual rollouts, monitor your Worker's analytics for increased 404 respo
 ## Related resources
 
 - [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) - How percentage-based traffic splitting works
-- [Version overrides](/workers/versions-and-deployments/version-overrides/) - Select a specific version by ID, subject to deployment membership and fallback behavior
+- [Version overrides](/workers/versions-and-deployments/version-overrides/) - Select a version by ID from the versions in a deployment
 - [Version skew and static assets](/workers/versions-and-deployments/version-skew/) - Plan for deployment propagation, changing traffic allocations, and older pages
 - [Version metadata binding](/workers/runtime-apis/bindings/version-metadata/) - Access version ID and tag from within your Worker

@@ -63,7 +63,7 @@ The [Version upload API](/api/resources/workers/subresources/scripts/subresource
 
 The asset manifest is a ledger which keeps track of files we want to use in our Worker. This manifest is used to track assets associated with each Worker version, and eliminate the need to upload unchanged files prior to a new upload.
 
-Include every path the new version must serve in its manifest, including unchanged files. Upload deduplication reuses file contents; it does not merge the asset paths from previous versions into the new manifest. Uploading new files also does not change earlier versions' asset sets. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
+Include every file path the new version needs, including unchanged files. Cloudflare reuses files you have already uploaded, but does not add their paths to the new manifest automatically. Uploading new files does not change earlier versions' assets. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
 
 The [manifest upload request](/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
 
@@ -157,7 +157,7 @@ The `Authorization` header must be provided as a bearer token, using the JWT (up
 
 Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token used to attach this asset set to a Worker version. This completion token is valid for 1 hour.
 
-The completion token confirms the asset upload step. You must still attach the assets to a Worker version and create a deployment to send production traffic to it. Deployment changes then propagate across the network.
+The completion token confirms that asset upload is complete. You must still attach the assets to a Worker version and deploy it to receive production traffic. The deployment change takes time to reach every location on the network.
 
 ## Create/Deploy New Version
 
@@ -175,7 +175,7 @@ The completion token confirms the asset upload step. You must still attach the a
 
 If this is a Worker which already has assets, and you wish to just re-use the existing set of assets, we do not have to specify the completion token again. Instead, we can pass the boolean `keep_assets` option.
 
-`keep_assets` reuses the existing asset set. To create a different set containing both old and new paths, submit a manifest containing all required paths and attach its completion token.
+`keep_assets` reuses the existing asset set. To include both old and new files, submit a manifest with all required paths. Then attach the completion token for that upload.
 
 ```bash title="Example Worker Metadata Specifying keep_assets"
 {

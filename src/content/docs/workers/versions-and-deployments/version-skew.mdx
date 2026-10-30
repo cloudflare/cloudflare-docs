@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Version skew and static assets
-description: Understand how deployment changes affect related requests, static asset availability, and older browser pages.
+description: Learn why HTML and asset requests can use different Worker versions, and how to plan for deployments and older pages.
 products:
   - workers
 sidebar:
@@ -11,17 +11,21 @@ sidebar:
 
 **Version skew** occurs when related requests use incompatible application versions. For example, a browser can receive HTML from one version, then request a JavaScript file from another version that does not contain it.
 
-This can happen during deployment propagation, during a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/), or when an older page requests assets after a deployment changes.
+This can happen during a deployment change or a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/). Older pages can also request assets after a deployment changes.
 
 ## Versions, deployments, and asset sets
 
-A [Worker version](/workers/versions-and-deployments/#versions) associates your code and configuration with a particular set of static assets. Its **asset manifest** maps file paths to uploaded files. Asset requests use the asset set associated with the selected version, whether Cloudflare serves them directly or your Worker uses `env.ASSETS.fetch()`.
+A [Worker version](/workers/versions-and-deployments/#versions) includes your code, configuration, and static assets. Its **asset manifest** maps request paths to uploaded files.
 
-A [deployment](/workers/versions-and-deployments/#deployments) configures which versions receive requests and their traffic percentages. Deployment changes propagate across Cloudflare's network. Different locations can temporarily use different deployment configurations.
+Each asset request uses the files from the selected version. This applies whether Cloudflare serves assets directly or your Worker uses `env.ASSETS.fetch()`.
 
-Uploading assets, creating a version, and deploying that version are separate operations. Uploading a file does not add its path to other versions' manifests. Reusing an unchanged file during upload also does not make every version expose that file.
+A [deployment](/workers/versions-and-deployments/#deployments) sets which versions receive requests and their traffic percentages.
 
-A browser page makes separate requests for HTML, scripts, stylesheets, images, and imported JavaScript chunks. Serving the HTML does not reserve its version for those later requests. Configuring a deployment for 100% of traffic does not make the page's requests a single transaction.
+Deployment changes take time to reach every location on Cloudflare's network. This is called **deployment propagation**. Until the change reaches every location, locations can use different deployment configurations.
+
+Uploading assets, creating a version, and deploying it are separate steps. Uploading a file does not add it to other versions' manifests. Reusing a previously uploaded file does not add it to every version either.
+
+A browser makes separate requests for HTML, scripts, stylesheets, images, and imported JavaScript chunks. Serving HTML from one version does not keep later requests on that version. This also applies when you deploy a version to 100% of traffic.
 
 ## Causes of version skew
 
@@ -29,7 +33,7 @@ A browser page makes separate requests for HTML, scripts, stylesheets, images, a
 
 Suppose version A is serving traffic. You deploy version B, whose HTML references a new file, `/assets/app-b2c3.js`. Version A's manifest does not contain that path.
 
-During propagation, a location using the new deployment can serve B's HTML. A later request can reach a location still using the previous deployment and select A:
+During propagation, one location can serve B's HTML. The asset request can then reach a location still using A:
 
 ```mermaid
 sequenceDiagram
@@ -44,67 +48,69 @@ sequenceDiagram
 
 The file can be missing from the selected manifest even though its upload succeeded. The resulting response depends on your [asset routing and fallback configuration](/workers/static-assets/#routing-behavior). For example, a missing file can return a `404` response.
 
-This case applies to ordinary deployments as well as gradual deployments. Separating upload from promotion lets you choose when to create a deployment. It does not make the deployment change propagate simultaneously everywhere.
+Uploading a version separately allows you to choose when to deploy it. The deployment change still takes time to reach every location.
 
 ### Traffic split between versions
 
-During a gradual deployment, each request independently selects a version according to the configured percentages. Requests from the same browser can select different versions, even after the deployment configuration has propagated.
+During a gradual deployment, Cloudflare selects a version for each request using the configured percentages. Requests from the same browser can use different versions. This can happen even after every location has the same deployment configuration.
 
-[Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) uses a stable request identifier to make that selection deterministic for a given deployment configuration. Every relevant request must carry the same version key. Changing the traffic percentages can move users to the new version while their existing page remains open.
+[Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) sends requests with the same key to the same version. This applies while the deployment configuration stays the same. Every related request must carry that key. Changing traffic percentages can move users to a new version while their page remains open.
 
 ### Older pages and rollbacks
 
-A page can remain open after a newer version starts serving traffic. If that page later imports a JavaScript chunk, it requests a file from its original release. The selected version must contain that path for the asset lookup to succeed.
+A page can remain open after a newer version starts serving traffic. If that page later imports a JavaScript chunk, it requests a file from its original release. The version handling that request must include the file.
 
-[Rollbacks](/workers/versions-and-deployments/rollbacks/) create the reverse situation: pages loaded from the newer version can request files absent from the restored version. Allow for both directions when planning which assets each version includes.
+[Rollbacks](/workers/versions-and-deployments/rollbacks/) can cause the same problem in reverse. Pages loaded from the newer version can request files missing from the restored version. Plan for both cases when choosing which assets each version includes.
 
 ## Plan for related requests
 
 Choose a strategy based on how long your application's pages can remain open and which versions can serve their requests.
 
-| Strategy                                                                                    | Scope and constraints                                                                                                                                                                               |
-| ------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) | Keeps requests with the same key assigned consistently under a given deployment configuration. It does not preserve an older version after its traffic allocation or deployment membership changes. |
-| [Version overrides](/workers/versions-and-deployments/version-overrides/)                   | Selects an explicit version that belongs to the receiving location's deployment configuration, including one at 0%. An unavailable override falls back to normal traffic routing.                   |
-| Include assets needed by older pages                                                        | Allows a newer version to serve older content-hashed asset paths. It does not add a new release's files to an earlier version.                                                                      |
+| Strategy                                                                                    | What it does and where it applies                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) | Sends requests with the same key to the same version while the deployment configuration stays the same. Changing traffic percentages or removing a version can change where requests go.              |
+| [Version overrides](/workers/versions-and-deployments/version-overrides/)                   | Selects a version in the deployment at the location handling the request, even at 0% of traffic. If that deployment does not include the version, Cloudflare uses the configured traffic percentages. |
+| Include assets needed by older pages                                                        | Allows a newer version to serve files from earlier releases. It does not add new files to earlier versions.                                                                                           |
 
-When retaining assets across releases, use content-hashed filenames so different contents have different paths. Include every required dependency, such as imported chunks, stylesheet imports, and font files.
+When keeping assets across releases, use content-hashed filenames. Different file contents then have different paths. Include every file the page needs, such as imported chunks, stylesheets, and fonts.
 
-Keeping old files in a new release addresses requests from older pages. To address requests for new files reaching an earlier version, that earlier version must also include the required files, or the request must select a version that contains them.
+Keeping old files in a new release helps older pages. But new pages can still request new files from an earlier version. That earlier version must include those files, or the request must select a version that has them.
 
-For example, an application can first deploy its existing HTML with both releases' asset files. A later deployment can change the HTML while retaining those files. Each deployment still propagates across the network; a fixed waiting period or a successful request from one location does not establish global completion.
+For example, first deploy the existing HTML with both releases' asset files. Then change the HTML in a later deployment, keeping those files. Each deployment still takes time to reach every location. Waiting a fixed time or testing one location does not prove that every location has the change.
 
-If your application carries an explicit version identifier in asset URLs, preserve it throughout the dependency graph. A query string on a parent script is not automatically copied to imported chunks or stylesheet URLs. A query parameter alone also does not select a Worker version: the incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
+If you include a version ID in asset URLs, include it in every script, stylesheet, and other asset URL the page loads. A script's query string is not automatically copied to the URLs it loads. A query parameter alone does not select a Worker version. The incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
 
 ### Multiple hostnames and connections
 
-If assets use another hostname, ensure the same routing strategy applies there. A cookie set without a `Domain` attribute is only sent to its originating hostname. Check which cookies and headers reach each asset hostname.
+If assets use another hostname, apply the same routing strategy there. Without a `Domain` attribute, a cookie only reaches the hostname that set it. Check which cookies and headers reach each asset hostname.
 
-Apply the same version-selection strategy across all asset hostnames and connections, including HTTP/3 connections. Pointing multiple hostnames at the same Worker does not automatically carry a cookie or version header between their requests.
+Use the same routing strategy across all connections, including HTTP/3 connections. Pointing multiple hostnames at one Worker does not make browsers share cookies or version headers between those hostnames.
 
 ## Asset availability across releases
 
-Distinguish these questions when investigating a missing asset:
+Check these separately when investigating a missing asset:
 
-| Question                                                   | What to check                                                                                                                               |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| Does the selected version expose the path?                 | Check that version's build output and asset manifest.                                                                                       |
-| Can the request select the intended version?               | Check deployment membership, traffic percentages, and any version key or override.                                                          |
-| Is the file cached at this location?                       | Inspect [cache response headers](/workers/static-assets/headers/#default-headers). A cache miss is different from a missing manifest entry. |
-| Is this a later request or a response already in progress? | Inspect the browser's network log for the request URL, start time, status, and any network error.                                           |
+| Question                                          | What to check                                                                                                                                       |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Does the selected version include the file?       | Check that version's build output and asset manifest.                                                                                               |
+| Can the request select the intended version?      | Check the versions in the deployment, their traffic percentages, and any version key or override.                                                   |
+| Is the file cached at this location?              | Inspect [cache response headers](/workers/static-assets/headers/#default-headers). A cache miss is different from a file missing from the manifest. |
+| Did a later request fail, or did a download stop? | Inspect the browser's network log for the request URL, start time, status, and any network error.                                                   |
 
-Omitting a file from a new version's asset set makes that path unavailable through that version's asset lookup. This does not, by itself, show that the file was deleted from storage. Likewise, presence in version history does not make a version eligible for a production override.
+If a version's manifest omits a file, that version cannot serve it as a static asset. This does not tell you whether Cloudflare deleted the file from storage.
 
-Keep required asset paths in the versions that must serve them. Do not use cache residency, upload deduplication, or the [deployment history limit](/workers/versions-and-deployments/deployment-management/#deployments-limit) as an asset retention period.
+An older version must still belong to the deployment to accept a version override. Keeping it in version history does not meet this requirement.
 
-A lazy-loaded chunk or a later range request is a separate HTTP request. A failed lookup for that request does not establish that deployment interrupted a response already being downloaded. Diagnose failures after a response begins separately from missing-path responses.
+Include required files in every version that needs to serve them. How long a file stays cached, whether uploads reuse it, and the [deployment history limit](/workers/versions-and-deployments/deployment-management/#deployments-limit) do not tell you how long Cloudflare stores it.
+
+A lazy-loaded chunk or a later range request makes a separate HTTP request. If that request cannot find a file, it does not prove that deployment stopped a download already in progress. Investigate interrupted downloads separately from missing file errors.
 
 ## Diagnose version skew
 
-Compare the version serving the HTML with the version handling the failing request. Use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to identify Worker invocations, or attach a build identifier to asset responses with [`_headers`](/workers/static-assets/headers/#custom-headers).
+Compare the version serving the HTML with the version handling the failing request. Use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to report which version handles each Worker request. For asset responses, add a build identifier with [`_headers`](/workers/static-assets/headers/#custom-headers).
 
-Record the requested path, response status, content type, deployment configuration, and any version-selection headers. When testing overrides, verify the actual serving version and response content as well as the status code: an ignored override falls back to normal routing.
+Record the requested path, response status, content type, deployment configuration, and any version headers. When testing overrides, check the version and response content as well as the status code. An ignored override uses the configured traffic percentages and can still return a successful response.
 
-By default, matching static assets bypass your Worker script. Code that logs a version or sets a cookie only runs when the request [invokes your Worker](/workers/static-assets/routing/worker-script/). Account for this when instrumenting asset requests.
+By default, matching static assets bypass your Worker script. Code that logs a version or sets a cookie only runs when the request [invokes your Worker](/workers/static-assets/routing/worker-script/). Check whether your logging code runs for asset requests.
 
-Test an older page across multiple deployments, a page that loads assets after a rollback, and requests through every asset hostname. These cases cover more than repeated requests to the application's root URL.
+Keep an older page open across several deployments and test its asset requests. Also test pages after a rollback and requests through every asset hostname. Testing only the application's root URL does not cover these cases.

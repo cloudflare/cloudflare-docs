@@ -35,9 +35,9 @@ Migrating from Cloudflare Pages to Cloudflare Workers is often a straightforward
 
 ### Deployments and asset availability
 
-Workers associates static assets with individual Worker versions. Separate requests can select different versions during deployment propagation or gradual deployments. Older pages can also request files after a newer release starts serving traffic.
+Each Worker version has its own set of static assets. HTML and asset requests can use different versions while a deployment change spreads across the network, or during a gradual deployment. Older pages can also request files after a newer release starts serving traffic.
 
-Review [Version skew and static assets](/workers/versions-and-deployments/version-skew/) when migrating your release process. Distinguish cache residency from the asset paths available in each version; the Pages cache-retention description does not define a Workers asset retention period.
+Review [Version skew and static assets](/workers/versions-and-deployments/version-skew/) when migrating your release process. How long a file stays cached is separate from which versions can serve it. The Pages cache-retention description does not tell you how long Workers stores assets.
 
 ### Frameworks
 

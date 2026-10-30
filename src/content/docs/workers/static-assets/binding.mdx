@@ -132,7 +132,7 @@ Common uses for `run_worker_first` include authentication checks, A/B testing, a
 
 ## `binding`
 
-Configuring the optional [binding](/workers/runtime-apis/bindings/) gives your Worker script access to its version's collection of assets. `env.ASSETS.fetch()` looks up paths in that collection. It does not search the asset sets of other versions. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for availability across deployments.
+Configure the optional [binding](/workers/runtime-apis/bindings/) to access static assets from your Worker script. `env.ASSETS.fetch()` uses the assets in that Worker's version. It does not search other versions' assets. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for how this affects deployments.
 
 <WranglerConfig>
 

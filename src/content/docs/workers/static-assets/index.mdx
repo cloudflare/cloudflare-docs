@@ -56,9 +56,9 @@ Learn more about supported frameworks on Workers.
 
 ### How it works
 
-Your Worker code, configuration, and static assets belong to a [Worker version](/workers/versions-and-deployments/#versions). Each version has an asset manifest that maps request paths to its uploaded files. Requests use the asset set associated with the selected version, including requests served directly without invoking Worker code.
+Your Worker code, configuration, and static assets belong to a [Worker version](/workers/versions-and-deployments/#versions). Each version has an asset manifest that maps request paths to uploaded files. Each request uses the selected version's files. This also applies when Cloudflare serves assets without running your Worker code.
 
-Deploying configures which versions receive traffic. Deployment changes propagate across Cloudflare's network, so separate requests for HTML and its assets can temporarily select different versions. Uploading an asset does not add it to earlier versions' manifests. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for deployment strategies and asset availability across releases.
+Deploying sets which versions receive traffic. The change takes time to reach every location on Cloudflare's network. During this time, requests for HTML and its assets can use different versions. Uploading an asset does not add it to earlier versions' manifests. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for ways to plan for these requests.
 
 The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
 
@@ -179,12 +179,12 @@ For a more advanced pattern, refer to [SPA shell with bootstrap data](/workers/e
 
 ### Caching behavior
 
-Cloudflare automatically caches static assets across its network. Once a request matches a file in the selected version's manifest, the file can be served from cache or fetched from storage.
+Cloudflare automatically caches static assets across its network. If the selected version's manifest includes the requested file, Cloudflare serves it from cache or fetches it from storage.
 
 - **First Request:** When an asset is requested for the first time, it is fetched from storage and cached at the nearest Cloudflare location.
 - **Subsequent Requests:** If a request for the same asset reaches a data center that does not have it cached, Cloudflare's [tiered caching system](/cache/how-to/tiered-cache/) allows it to be retrieved from a nearby cache rather than going back to storage. This improves cache hit ratio, reduces latency, and reduces unnecessary origin fetches.
 
-Cache residency is separate from whether a version exposes an asset path. Refer to [Asset availability across releases](/workers/versions-and-deployments/version-skew/#asset-availability-across-releases).
+Whether a file is cached is separate from whether a version can serve it. Refer to [Asset availability across releases](/workers/versions-and-deployments/version-skew/#asset-availability-across-releases).
 
 ## Try it out
 
