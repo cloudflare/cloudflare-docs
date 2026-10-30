@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { Example } from "~/components";
+import { DashButton, Example } from "~/components";
 
 D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/observability/).
 
@@ -140,3 +140,30 @@ const result = await Promise.race([
 :::caution[Write operations and Promise.race]
 `Promise.race` bounds how long your Worker waits — it does not cancel the D1 query. A write that loses the race may still commit in the background. Always confirm the outcome of a write before retrying to avoid duplicate writes.
 :::
+
+## API error codes
+
+In addition to the `D1_ERROR` constants above, D1 returns numeric error codes on certain failures. Use the following table to identify the cause and recommended action.
+
+| Code  | Name                          | Common cause                                                                                     | Recommended action                                                                                                                                                                                                   |
+| ----- | ----------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7403  | Service authorization failure | The API token or Wrangler OAuth session does not have sufficient scope for the operation.        | Verify the token has the required permission for the endpoint. Run `wrangler login` to refresh the Wrangler OAuth session.                                                                                            |
+| 7404  | Database not found            | The database UUID does not exist in the account, or the binding is misconfigured.                | Confirm the `database_id` in your `wrangler.toml` matches the database UUID shown in the Cloudflare dashboard.                                                                                                       |
+| 7406  | Limit exceeded                | The account has reached the maximum number of D1 databases allowed on its plan.                  | Review your [current limits](/d1/platform/limits/). Enterprise accounts with a custom database limit should contact Cloudflare support if the limit is not reflected.                                                  |
+| 7429  | DB overloaded                 | Too many concurrent requests are queued, or queued requests are taking too long to complete.     | Retry with exponential backoff and jitter. If the error recurs while SQL execution time (`queryBatchTimeMs`) is fast and your workload is low, check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. |
+| 7500  | Internal error                | A platform-side storage event made the database temporarily unavailable.                         | Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. Retry with exponential backoff. If the database remains unavailable after the incident resolves, [contact Cloudflare support](/support/contacting-cloudflare-support/). |
+| 10000 | Authentication error          | The API token does not have the required scope for the endpoint.                                 | Check the required permission for the endpoint in the [API reference](/api/resources/d1/) and create a token with the correct scope. See [error 10000 and the export endpoint](#error-10000-and-the-export-endpoint). |
+
+### Error 7429 and analytics
+
+If you receive error 7429 while your analytics show fast SQL execution times, the error may originate from a server-side platform event rather than your application's workload. The `queryBatchTimeMs` metric measures only SQL execution time inside the database, not the total time a request spends waiting to reach SQL. Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page before reducing application concurrency.
+
+### Error 10000 and the export endpoint
+
+Error 10000 from the D1 export endpoint means the API token does not have the required permission for that endpoint.
+
+To resolve this:
+
+1. Go to **API Tokens** in your Cloudflare dashboard. <DashButton url="/profile/api-tokens" />
+2. Create a new token with the permission required for D1 export — check [Import and export data](/d1/best-practices/import-export-data/) for the required permission.
+3. Use that token for the export request.

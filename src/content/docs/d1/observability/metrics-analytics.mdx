@@ -32,7 +32,7 @@ D1 currently exports the below metrics:
 
 :::note[Analytics coverage]
 
-`queryBatchTimeMs` measures SQL execution time inside the D1 Durable Object only. It does not include time spent routing the request to the database, establishing a connection, or waiting in a queue before SQL begins. During a platform-side event, `queryBatchTimeMs` can show near-zero values while actual end-to-end D1 call duration is tens of seconds.
+`queryBatchTimeMs` measures SQL execution time inside the D1 database only. It does not include time spent routing the request to the database, establishing a connection, or waiting in a queue before SQL begins. During a platform-side event, `queryBatchTimeMs` can show near-zero values while actual end-to-end D1 call duration is tens of seconds.
 
 `d1AnalyticsAdaptiveGroups` records a data point only when a request successfully reaches SQL execution. Requests that fail before SQL begins — for example, during a storage restart or an overload event — are not recorded. If your D1 calls are timing out but analytics show no activity, this does not rule out a platform event.
 
