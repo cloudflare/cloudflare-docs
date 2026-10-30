@@ -185,24 +185,24 @@ Manual credentials require per-user authentication. Leave **Require user auth** 
 
 The MCP server status indicates the server's connection and tool and prompt synchronization status in Cloudflare Access.
 
-| Status        | Description                                                                                                                                                                          |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                                        |
-| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
-| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                   |
-| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.         |
+| Status        | Description                                                                                                                                                                                         |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                              |
+| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                |
+| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                      |
+| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.              |
 
 #### Error details
 
 When an MCP server is in the **Error** or **Sync Required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
 
-| Field         | Description                                                                                      |
-| ------------- | ------------------------------------------------------------------------------------------------ |
-| `status_code` | The HTTP status code returned by the MCP server, if available.                                   |
-| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                |
-| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                |
-| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed. |
-| `cause`       | The underlying error message.                                                                    |
+| Field         | Description                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `status_code` | The HTTP status code returned by the MCP server, if available.                                                         |
+| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                                      |
+| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                                     |
+| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed.                       |
+| `cause`       | The underlying error message.                                                                                          |
 
 If `is_upstream` is `true`, use `status_code`, `mcp_code`, and `cause` to troubleshoot the MCP server. If it is `false`, verify that the server URL is correct and reachable. Retry the sync when `retryable` is `true`; otherwise, correct the reported cause before trying again. Reauthenticate the server only when the error points to expired or invalid credentials.
 
@@ -245,11 +245,11 @@ OAuth providers typically exact-match the full URI, including the path.
 
 If your upstream OAuth provider restricts redirect URIs, add the URLs that match your server's configuration:
 
-| OAuth configuration      | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider                                                                                                                                                                                   |
-| ------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Automatic (DCR)          | No                                               | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server.   |
-| Automatic (DCR)          | Yes                                              | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
-| Manual OAuth credentials | Not available                                    | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration.                                                                             |
+| OAuth configuration | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider |
+| --- | --- | --- |
+| Automatic (DCR) | No | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server. |
+| Automatic (DCR) | Yes | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
+| Manual OAuth credentials | Not available | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration. |
 
 For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
 
@@ -629,11 +629,11 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 
 The `auth_type` field accepts the following values:
 
-| Value             | Description                                                                                                                                                                                               |
-| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                                                                            |
+| Value             | Description                                                                                                                                          |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                   |
 | `bearer`          | The server uses a static bearer token or custom authentication headers. Provide the credentials in `auth_credentials` (refer to [Bearer authentication credentials](#bearer-authentication-credentials)). |
-| `unauthenticated` | The server does not require authentication.                                                                                                                                                               |
+| `unauthenticated` | The server does not require authentication.                                                                                                          |
 
 #### Manual OAuth credentials
 
@@ -680,8 +680,8 @@ The `auth_credentials` field accepts two forms:
 
   ```json
   {
-  	"auth_type": "bearer",
-  	"auth_credentials": "your-bearer-token"
+    "auth_type": "bearer",
+    "auth_credentials": "your-bearer-token"
   }
   ```
 
@@ -689,8 +689,8 @@ The `auth_credentials` field accepts two forms:
 
   ```json
   {
-  	"auth_type": "bearer",
-  	"auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
+    "auth_type": "bearer",
+    "auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
   }
   ```
 
