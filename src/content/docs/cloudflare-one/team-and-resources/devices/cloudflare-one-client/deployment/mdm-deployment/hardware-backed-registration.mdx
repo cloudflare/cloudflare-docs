@@ -20,14 +20,14 @@ import { Details } from "~/components";
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
 | All modes                                                                                         | All plans                                                     |
 
-| System   | Availability | Minimum WARP version |
-| -------- | ------------ | -------------------- |
-| Windows  | ✅           | 2026.6.0             |
-| macOS    | ✅           | 2026.6.0             |
-| Linux    | ✅           | 2026.6.0             |
-| iOS      | ❌           | N/A                  |
-| Android  | ❌           | N/A                  |
-| ChromeOS | ❌           | N/A                  |
+| System   | Availability            | Minimum WARP version |
+| -------- | ----------------------- | -------------------- |
+| Windows  | ✅                      | 2026.6.0             |
+| macOS    | ✅ (Apple silicon only) | 2026.6.0             |
+| Linux    | ✅                      | 2026.6.0             |
+| iOS      | ❌                      | N/A                  |
+| Android  | ❌                      | N/A                  |
+| ChromeOS | ❌                      | N/A                  |
 
 </Details>
 
@@ -58,11 +58,11 @@ The client renews the certificate automatically before it expires, reusing the e
 
 Hardware-backed registration uses the security hardware available on each desktop platform:
 
-| Operating system | Hardware                             |
-| ---------------- | ------------------------------------ |
-| Windows          | TPM 2.0                              |
-| macOS            | Secure Enclave (T2 or Apple silicon) |
-| Linux            | TPM 2.0                              |
+| Operating system | Hardware                       |
+| ---------------- | ------------------------------ |
+| Windows          | TPM 2.0                        |
+| macOS            | Secure Enclave (Apple silicon) |
+| Linux            | TPM 2.0                        |
 
 Devices without a supported security module cannot complete a hardware-backed registration.
 
@@ -96,4 +96,4 @@ The following example turns on hardware-backed registration for the `example-tea
 
 ## Limitations
 
-Hardware-backed registration is available on Windows, macOS, and Linux only. Mobile platforms (iOS, Android, and ChromeOS) are not supported. The feature applies only to Zero Trust registrations that use an [identity provider](/cloudflare-one/integrations/identity-providers/) or a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Consumer registrations are not supported.
+Hardware-backed registration is available on Windows, macOS on Apple silicon, and Linux only. Intel-based Macs are not supported. Mobile platforms (iOS, Android, and ChromeOS) are not supported. The feature applies only to Zero Trust registrations that use an [identity provider](/cloudflare-one/integrations/identity-providers/) or a [service token](/cloudflare-one/access-controls/service-credentials/service-tokens/). Consumer registrations are not supported.
