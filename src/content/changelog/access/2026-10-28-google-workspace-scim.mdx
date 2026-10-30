@@ -7,7 +7,7 @@ products:
   - cloudflare-one
 ---
 
-Google Workspace is rolling out custom SCIM profiles in beta. Organizations with access to the feature can use Google's built-in provisioning service to send user updates and deprovisioning events to Cloudflare One.
+System for Cross-domain Identity Management (SCIM) is an open standard that synchronizes user identities between an identity provider and a service. For more information, refer to [SCIM provisioning](/cloudflare-one/team-and-resources/users/scim/). Google Workspace is rolling out custom SCIM profiles in beta. Organizations with access to the feature can use Google's built-in provisioning service to send user updates and deprovisioning events to Cloudflare One.
 
 **You must use a generic SAML identity provider in Cloudflare One.** The dedicated Google Workspace integration does not support SCIM. Configure a SAML app in Google, then enter the Cloudflare SCIM endpoint and secret in the app's autoprovisioning settings. Turn on **Enable user deprovisioning** in Cloudflare One to revoke active Access sessions when Google deprovisions a user. Google's configured deprovisioning delay still applies.
 
