@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-10-26-span-context-status-update-name.mdx
+  s_05bf7427c47c6d::t_9d0e90806ad696 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b7137a239dc264ecd76de139b8dc33f8d4f4bd56",
+  "prompts": {},
+  "sessions": {
+    "s_05bf7427c47c6d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a179e8-ef32-77c0-8701-0adbee842591",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

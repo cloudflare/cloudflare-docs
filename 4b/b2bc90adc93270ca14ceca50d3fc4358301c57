@@ -1,0 +1,83 @@
+public/__redirects
+  s_41fd4d89757fb4::t_8a7ca5c7d7c801 271,328
+src/components/cf/AgentsPlatformDiagram.astro
+  s_41fd4d89757fb4::t_0c1600d6258ad1 32
+src/content/docs/agent-memory/get-started.mdx
+  s_41fd4d89757fb4::t_fbeda95505b84f 21,107
+src/content/docs/agents/agent-class/index.mdx
+  s_41fd4d89757fb4::t_0915764bae3201 110
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_41fd4d89757fb4::t_0b0ebd6dad2031 17,418,559
+src/content/docs/agents/harnesses/index.mdx
+  s_41fd4d89757fb4::t_cccf04fd07ebbb 21,69
+src/content/docs/agents/harnesses/opencode.mdx
+  s_41fd4d89757fb4::t_6d88d0e09beca1 32
+src/content/docs/agents/harnesses/pi/index.mdx
+  s_41fd4d89757fb4::t_ea578463258540 38
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_41fd4d89757fb4::t_c487e73f909ffd 27,90,120
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_41fd4d89757fb4::t_66b97982005d17 257,348
+src/content/docs/agents/harnesses/think/index.mdx
+  s_41fd4d89757fb4::t_dfffeadc199136 396
+src/content/docs/agents/harnesses/think/recovery.mdx
+  s_41fd4d89757fb4::t_1aca7fa6694919 197,242
+src/content/docs/agents/index.mdx
+  s_41fd4d89757fb4::t_52e1c0f2f59856 29
+src/content/docs/agents/runtime/capabilities/build-a-capability.mdx
+  s_41fd4d89757fb4::t_5ad6af65257232 1-272
+src/content/docs/agents/runtime/capabilities/callables.mdx
+  s_41fd4d89757fb4::t_95695895b4d845 1-218
+src/content/docs/agents/runtime/capabilities/index.mdx
+  s_41fd4d89757fb4::t_bbc64e7d9100c0 1-100
+src/content/docs/agents/runtime/capabilities/mcp-client-manager.mdx
+  s_41fd4d89757fb4::t_a99bbcfb616c38 1-288
+src/content/docs/agents/runtime/capabilities/scheduler.mdx
+  s_41fd4d89757fb4::t_11f9788360480f 1-197
+src/content/docs/agents/runtime/capabilities/sessions.mdx
+  s_41fd4d89757fb4::t_96a43ca16dd14a 1-341
+src/content/docs/agents/runtime/capabilities/state.mdx
+  s_41fd4d89757fb4::t_0523152dc80789 1-166
+src/content/docs/agents/runtime/capabilities/streams.mdx
+  s_41fd4d89757fb4::t_300a224e138e4e 1-229
+src/content/docs/agents/runtime/capabilities/websockets.mdx
+  s_41fd4d89757fb4::t_64ab41e8b27a04 1-328
+src/content/docs/agents/runtime/execution/index.mdx
+  s_41fd4d89757fb4::t_a61117039e09c8 5
+src/content/docs/agents/runtime/index.mdx
+  s_41fd4d89757fb4::t_394b7336519195 3-4,8-10,13,15,17-94
+src/content/docs/agents/runtime/lifecycle/api-reference.mdx
+  s_41fd4d89757fb4::t_874d28420ace3d 2-3,6,11-152,154,156,158-170,172,174-177,179,181,183-186,188,190,192-196,198,200,202-206,208,210,212,214,219-223,225,227-230,232-240,242-246,248-252,254-256,258-260,267,269,271,273-277,279,281,283-289,291,293,295
+src/content/docs/agents/runtime/lifecycle/get-current-agent.mdx
+  s_41fd4d89757fb4::t_ab36f9bef77cab 3-4,6,11,13,18-19,21-23,26-27,29-30,33-34,38-40,46,48,50,52-57,59,61,63,65-73,75,80-82,84-86,89-95,97-99,106,108,110,112,114,116,118-120,122
+src/content/docs/agents/runtime/lifecycle/index.mdx
+  s_41fd4d89757fb4::t_f879e8ee6c6000 3-4,8-10,13,15-290
+src/content/docs/agents/runtime/lifecycle/job-queue.mdx
+  s_41fd4d89757fb4::t_511e6fa0208c2f 1-280
+src/content/docs/agents/runtime/operations/index.mdx
+  s_41fd4d89757fb4::t_27b77c1f7bccfe 5
+src/content/docs/agents/runtime/routing/authentication.mdx
+  s_41fd4d89757fb4::t_a7b7b65b733477 1-116
+src/content/docs/agents/runtime/routing/custom-routing.mdx
+  s_41fd4d89757fb4::t_0c3560b35982a9 1-151
+src/content/docs/agents/runtime/routing/index.mdx
+  s_41fd4d89757fb4::t_91f90cd3404ae5 1-190
+src/content/docs/agents/runtime/routing/options.mdx
+  s_41fd4d89757fb4::t_3bac386286c350 1-193
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4bb2bc90adc93270ca14ceca50d3fc4358301c57",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

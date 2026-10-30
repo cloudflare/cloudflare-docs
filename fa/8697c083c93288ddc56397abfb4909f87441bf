@@ -1,0 +1,23 @@
+src/content/docs/data-localization/compatibility.mdx
+  s_ae3210e2de3932::t_266faab0ae9a8e 21-26
+src/content/docs/data-localization/index.mdx
+  s_ae3210e2de3932::t_2bbc90ba9c6bee 30-35
+src/content/docs/data-localization/region-support.mdx
+  s_ae3210e2de3932::t_6519a2f6d81693 20-25,43-48,52-57,75-77,79-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fa8697c083c93288ddc56397abfb4909f87441bf",
+  "prompts": {},
+  "sessions": {
+    "s_ae3210e2de3932": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e82fea27fffebcQlJqua3j3awe",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

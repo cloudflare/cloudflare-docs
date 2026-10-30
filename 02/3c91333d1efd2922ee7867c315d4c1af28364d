@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/cloud-and-saas-findings/custom-finding-types.mdx
+  s_08e7de9b895463::t_660638fb50e2d3 24,51,61-70,78-79,187-189,194,206,211,268,275,280,296,305,324,355,359
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "023c91333d1efd2922ee7867c315d4c1af28364d",
+  "prompts": {},
+  "sessions": {
+    "s_08e7de9b895463": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "band-megaraptor",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}
