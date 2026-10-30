@@ -6,8 +6,6 @@ sidebar:
   order: 2
 ---
 
-import { PackageManagers } from "~/components";
-
 To provide [global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness), only one version of each [Durable Object](/durable-objects/) can run at a time. This means that gradual deployments work slightly differently for Durable Objects.
 
 When you create a new gradual deployment for a Worker with Durable Objects, each Durable Object is assigned a Worker version based on the percentages you configured in your [deployment](/workers/versions-and-deployments/#deployments). This version will not change until you create a new deployment.
@@ -43,32 +41,22 @@ You should ensure that API changes between your Durable Object and its Worker ar
 
 ## Durable Object class lifecycle changes
 
-Durable Object lifecycle changes create, delete, rename, or transfer namespaces. Worker versions share these namespaces. Cloudflare applies each lifecycle change to the whole namespace in one operation, regardless of how you split traffic. After you deploy a lifecycle change, you cannot roll back to a version from before that change.
+Durable Object lifecycle changes create, delete, rename, or transfer namespaces. Worker versions share these namespaces. Cloudflare applies each lifecycle change to the whole namespace in one operation, regardless of how you split traffic.
+
+For version upload requirements, including new class bindings and legacy `migrations`, refer to [Deployment management](/workers/versions-and-deployments/deployment-management/#durable-object-migrations).
 
 ### Declarative `exports`
 
-`wrangler versions upload` saves your [`exports`](/durable-objects/reference/durable-objects-migrations/) settings with the version without changing any namespaces. Cloudflare applies these settings when you deploy the version.
-
-To split traffic across versions, each version must declare the same Durable Object classes and lifecycle settings in `exports`. Cloudflare rejects conflicting settings with error code `100405`. This check only compares Durable Object entries. Other entries, such as Workflow entries, can differ.
+To split traffic across versions, each version must declare the same Durable Object classes and lifecycle settings in [`exports`](/durable-objects/reference/durable-objects-migrations/). Cloudflare rejects conflicting settings with error code `100405`. This check only compares Durable Object entries. Other entries, such as Workflow entries, can differ.
 
 The versions must also agree on which classes use [Containers](/containers/). Container names and images can differ.
 
 Cloudflare can create a new namespace even when you split traffic, as long as these Durable Object settings match across versions.
 
-One option is to deploy a version with a lifecycle change to 100% of traffic. Then upload a second version with code changes and the same Durable Object settings. You can split traffic between these two versions. An older version with different lifecycle settings cannot be included.
-
-When you add a new class, create its namespace before uploading a binding to it. Otherwise, `wrangler versions upload` fails with error code `100406`. For ways to create the namespace and add the binding, refer to [Deployment management - Durable Object migrations](/workers/versions-and-deployments/deployment-management/#durable-object-migrations).
-
-### Legacy `migrations`
-
-With the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array, `wrangler versions upload` rejects pending migrations. Migrations you have already applied can remain in the configuration.
-
-Wrangler versions before `4.131.0` may return error code `10211` when `wrangler versions upload` encounters a pending legacy migration. Apply the migration with `wrangler deploy`:
-
-<PackageManagers type="exec" pkg="wrangler" args="deploy" />
-
 ### Plan lifecycle changes separately from code changes
 
 To make problems easier to identify, deploy lifecycle changes separately from other code changes.
 
-For example, before deleting a class, send 100% of traffic to a Worker version that no longer uses it. Then deploy the class deletion. Splitting traffic does not protect requests that still use the deleted namespace.
+With `exports`, one option is to deploy a version with a lifecycle change to 100% of traffic. Then upload a second version with code changes and the same Durable Object settings. You can split traffic between these two versions. An older version with different lifecycle settings cannot be included.
+
+Before deleting a class, send 100% of traffic to a Worker version that no longer uses it. Then deploy the class deletion. Splitting traffic does not protect requests that still use the deleted namespace.
