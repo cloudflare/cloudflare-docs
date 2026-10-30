@@ -9,8 +9,6 @@ date: 2026-10-30
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-{/* TODO: Confirm the launch date and compatibility date before publication. */}
-
 Durable Objects can stay active across requests, allowing you to run long-running [agents](/agents/), maintain [long-lived WebSocket connections](/durable-objects/best-practices/websockets/) and coordinate state across many clients. This is possible because each Durable Object is globally unique, and this means it must run only one version of your code at a time. Previously, when you deployed a change to your Durable Objects code, that change would be applied immediately, which could interrupt in-flight work and terminate open connections.
 
 Durable Objects now defer code updates by default. When you deploy, an active Durable Object can keep running its current code for up to 5 minutes (300 seconds) while it waits to hibernate. This gives in-flight work time to finish. WebSocket connections that use the [Hibernation API](/durable-objects/examples/websocket-hibernation-server/) remain connected when an object adopts new code after hibernating.

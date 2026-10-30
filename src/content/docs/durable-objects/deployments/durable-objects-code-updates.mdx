@@ -10,8 +10,6 @@ products:
 
 import { WranglerConfig, PackageManagers } from "~/components";
 
-{/* TODO: Confirm the launch date for this feature before publication. */}
-
 By default, Durable Objects defer code updates for up to 300 seconds (5 minutes) to give in-flight requests time to finish. An active object can keep running its current code until it hibernates or reaches this delay. Deferral is best effort and does not guarantee that every operation finishes.
 
 Deploy a Worker with `--durable-objects-code-update-mode immediate` to apply a code update right away instead of waiting. For more information on when an object hibernates, refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/).
