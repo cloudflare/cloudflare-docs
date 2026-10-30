@@ -1,0 +1,25 @@
+src/content/catalog-models/pruna-p-image-edit.json
+  s_64b5ed3ec17e68::t_7fc188755dd6e9 30,35
+src/content/catalog-models/pruna-p-image-try-on.json
+  s_64b5ed3ec17e68::t_983ed23b41c095 30,35,66,71
+src/content/catalog-models/pruna-p-image-upscale.json
+  s_64b5ed3ec17e68::t_3e9fe3c321cf91 34,39
+src/content/catalog-models/pruna-p-image.json
+  s_64b5ed3ec17e68::t_102195e13c8a30 26,31,59,64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "365b9a716b8922f3676e374f31cce3c3bde01024",
+  "prompts": {},
+  "sessions": {
+    "s_64b5ed3ec17e68": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e72165ebdffeZlcJWKX42OM5wp",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "shridharathi <shridharathinarayanan@gmail.com>"
+    }
+  }
+}
