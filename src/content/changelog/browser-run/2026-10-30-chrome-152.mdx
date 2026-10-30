@@ -1,27 +1,20 @@
 ---
 title: Browser Run now runs Chrome 152
-description: Browser Run upgraded its default browser from Chrome 128 to Chrome 152, and fixed several Quick Actions and outbound Worker issues.
+description: Browser Run upgraded its default browser to Chrome 152 and improved Quick Actions reliability.
 products:
   - browser-run
 date: 2026-10-30
 ---
 
-[Browser Run](/browser-run/) now runs Chrome 152 (`152.0.7977.64`) by default, up from Chrome 128. Your sessions get current web platform features, rendering fixes, and security patches. You do not need to change your code.
+[Browser Run](/browser-run/) now runs Chrome 152 by default. Your sessions get current web platform features, rendering fixes, and security patches. You do not need to change your code.
 
-The upgrade can change some output:
+This release also includes the following improvements:
 
-- The default User-Agent for [CDP](/browser-run/cdp/) sessions now reports Chrome 152. [Quick Actions](/browser-run/quick-actions/) keep their default `userAgent` value.
-- [`/accessibilityTree`](/browser-run/quick-actions/accessibility-tree-endpoint/) responses now include a `name` on `InlineTextBox` nodes.
+- **Better site compatibility.** [Quick Actions](/browser-run/quick-actions/) requests now look more like requests from a regular Chrome browser, so fewer sites block them.
+- **Large response headers.** Pages that return large response headers now load correctly.
+- **Updated root certificates.** Browser Run removed distrusted root certificates from its trust store.
+- **Absolute links.** [`/links`](/browser-run/quick-actions/links-endpoint/) now returns absolute URLs, and links-only [crawls](/browser-run/quick-actions/crawl-endpoint/) now follow relative links.
+- **Better Markdown output.** [`/markdown`](/browser-run/quick-actions/markdown-endpoint/) and crawl Markdown output now keep code block languages.
+- **Clearer errors.** Quick Actions that time out now return a consistent error. [Outbound Workers](/browser-run/features/outbound-workers/) that throw an exception now return an HTTP error to the browser.
 
-This release also includes the following changes:
-
-- **Client hints match the User-Agent.** Quick Actions now send `Sec-CH-UA` client hint headers and `navigator.userAgentData` that match the `userAgent` value, including custom values. Before, Quick Actions sent no client hints, and some sites treated those requests as bots.
-- **Original header casing.** Browser Run now forwards request headers with the casing Chrome uses. Before, header names were lowercased, which some bot protection rules flagged.
-- **Larger response headers.** Pages can now return response headers up to 256 KiB, the same limit as Chrome. Before, pages with more than 16 KiB of response headers failed with a connection reset.
-- **Removed certificate authorities.** Browser Run no longer trusts the AAA Certificate Services and emSign root certificates. Requests to sites that chain only to these roots now fail TLS validation.
-- **Absolute links.** [`/links`](/browser-run/quick-actions/links-endpoint/) now resolves relative `href` values to absolute URLs, using the page's `<base href>` and redirects. Links-only [crawls](/browser-run/quick-actions/crawl-endpoint/) now follow relative links instead of stopping after the first page.
-- **Code block languages in Markdown.** [`/markdown`](/browser-run/quick-actions/markdown-endpoint/) and crawl Markdown output now keep the language of code blocks. Repeated figure caption labels are no longer duplicated.
-- **Timeout errors keep their status.** When a Quick Action times out and the automatic retry also fails, Browser Run now returns the original `422` error. Before, some of these requests returned a `5xx` error.
-- **Outbound Worker errors.** If an [outbound Worker](/browser-run/features/outbound-workers/) throws an exception, the browser now receives an HTTP `502` response instead of a reset connection.
-
-For Browser Run limits and supported features, refer to the [Browser Run documentation](/browser-run/).
+For more information, refer to the [Browser Run documentation](/browser-run/).
