@@ -1,0 +1,29 @@
+src/content/catalog-models/reflection-ai-beam-1.0-501b-a23b.json
+  s_b8e1913749fef1::t_89bb02480a883b 1-650
+src/content/catalog-models/black-forest-labs-flux-3-image-klein.json
+  s_b8e1913749fef1::t_c1340bebbad1b9 1-267
+src/content/catalog-models/krea-krea-3.json
+  s_b8e1913749fef1::t_ea878392a9fceb 1-299
+src/content/catalog-models/recraft-recraftv4-1-flash.json
+  s_b8e1913749fef1::t_317870dc196efe 1-293
+src/content/catalog-models/fireworks-ember-1.json
+  s_b8e1913749fef1::t_855ceb9450cb49 1-694
+src/content/catalog-models/bria-ad-delayer.json
+  s_b8e1913749fef1::t_99ff1dc65ddc59 1-747
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2c406da37069fa1365cf793e30d9070c10eae1be",
+  "prompts": {},
+  "sessions": {
+    "s_b8e1913749fef1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ebe5bc514ffeeamhJSHUXYxSVz",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "shridharathi <shridharathinarayanan@gmail.com>"
+    }
+  }
+}
