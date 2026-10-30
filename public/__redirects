@@ -3329,3 +3329,48 @@
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
+
+# [CF1] /cloudflare-one/ → /one/ (unified dashboard migration, 2026-10-29)
+# Section renames — MUST come before catch-all
+/cloudflare-one/data-loss-prevention/* /one/dlp/:splat 301
+/cloudflare-one/remote-browser-isolation/* /one/browser-isolation/:splat 301
+/cloudflare-one/cloud-and-saas-findings/* /one/cloud-saas-findings/:splat 301
+/cloudflare-one/team-and-resources/* /one/team-resources/:splat 301
+/cloudflare-one/access-controls/applications/* /one/access-controls/apps/:splat 301
+/cloudflare-one/access-controls/access-settings/* /one/access-controls/settings/:splat 301
+/cloudflare-one/insights/analytics/* /one/insights/dashboards/:splat 301
+/cloudflare-one/reusable-components/custom-pages/access-custom-pages/ /one/reusable-components/custom-pages/dynamic-pages/ 301
+# Catch-all
+/cloudflare-one/* /one/:splat 301
+
+# /one/ dashboard routes with no matching docs page yet
+/one/reusable-components/custom-pages/page-templates/ /one/reusable-components/custom-pages/dynamic-pages/ 301
+/one/access-controls/overview/ /one/access-controls/ 301
+/one/access-controls/targets/ /one/access-controls/ 301
+/one/browser-isolation/overview/ /one/browser-isolation/ 301
+/one/browser-isolation/settings/ /one/browser-isolation/ 301
+/one/cloud-saas-findings/overview/ /one/cloud-saas-findings/ 301
+/one/cloud-saas-findings/content/ /one/cloud-saas-findings/ 301
+/one/cloud-saas-findings/posture/ /one/cloud-saas-findings/ 301
+/one/cloud-workload-security/credentials/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/deployments/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/domain-acls/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/policies/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/policy-sets/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/rego-metadata/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/rego-modules/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/tenant-structures/ /one/cloud-workload-security/ 301
+/one/cloud-workload-security/workloads/ /one/cloud-workload-security/ 301
+/one/dlp/validators/ /one/dlp/ 301
+/one/email-security/overview/ /one/email-security/ 301
+/one/insights/overview/ /one/insights/ 301
+/one/integrations/webhooks/ /one/integrations/ 301
+/one/overview/ /one/ 301
+/one/settings/ /one/ 301
+/one/reusable-components/custom-functions/ /one/reusable-components/ 301
+/one/reusable-components/tags/ /one/reusable-components/ 301
+/one/team-resources/application-library/ /one/team-resources/ 301
+/one/traffic-controls/overview/ /one/traffic-controls/ 301
+/one/traffic-controls/policies/ /one/traffic-controls/ 301
+/one/traffic-controls/resolvers-proxies/ /one/traffic-controls/ 301
+/one/traffic-controls/traffic-settings/ /one/traffic-controls/ 301
