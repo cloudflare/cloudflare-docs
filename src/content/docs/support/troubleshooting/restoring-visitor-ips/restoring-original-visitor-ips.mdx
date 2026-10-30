@@ -13,10 +13,12 @@ When your [website traffic is routed through the Cloudflare network](/fundamenta
 
 For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [`CF-Connecting-IP`](/fundamentals/reference/http-headers/#cf-connecting-ip). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
 
-:::caution[Authenticate traffic before trusting visitor IP headers]
+:::caution[Protect the Cloudflare-to-origin connection]
 The configurations below restore IP values for logs and applications. They do not authenticate users or clients, or verify that traffic passed through your zone. Before using those values for IP-based access restrictions or rate limiting, follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers).
 
-Allowlisting Cloudflare IP ranges alone is insufficient: those ranges are shared across customers. Use your own certificate with zone-level or per-hostname Authenticated Origin Pulls, enforced at your origin, or Cloudflare Tunnel with direct public access blocked. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on the destination.
+For public HTTPS origins, we recommend mutual TLS (mTLS) using [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with a certificate dedicated to your zone or hostname. Configure your origin to require and verify client certificates, rejecting requests with missing or untrusted certificates. Alternatively, use Cloudflare Tunnel with direct public access blocked.
+
+Allowlisting Cloudflare IP ranges or using global AOP alone does not identify your zone: both use credentials or infrastructure shared across customers. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on the destination.
 :::
 
 :::note
