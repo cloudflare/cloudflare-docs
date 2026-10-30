@@ -21,7 +21,7 @@ Each asset request uses the files from the selected version. This applies whethe
 
 A [deployment](/workers/versions-and-deployments/#deployments) sets which versions receive requests and their traffic percentages.
 
-Deployment changes take time to reach every location on Cloudflare's network. This is called **deployment propagation**. Until the change reaches every location, locations can use different deployment configurations.
+Deployment changes take up to a few seconds to reach every location on Cloudflare's network. This is called **deployment propagation**. Until the change reaches every location, locations can use different deployment configurations.
 
 Uploading assets, creating a version, and deploying it are separate steps. Uploading a file does not add it to other versions' manifests. Reusing a previously uploaded file does not add it to every version either.
 
