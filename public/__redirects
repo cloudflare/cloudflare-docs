@@ -370,6 +370,7 @@
 
 # AI Gateway
 /ai-gateway/features/model-aliases/ /ai-gateway/features/routing/model-aliases/ 301
+/ai-gateway/features/auto-router/ /ai-gateway/features/routing/auto-router/ 301
 /ai-gateway/features/dynamic-routing/ /ai-gateway/features/routing/dynamic-routing/ 301
 /ai-gateway/features/dynamic-routing/json-configuration/ /ai-gateway/features/routing/dynamic-routing/json-configuration/ 301
 /ai-gateway/features/dynamic-routing/usage/ /ai-gateway/features/routing/dynamic-routing/usage/ 301
