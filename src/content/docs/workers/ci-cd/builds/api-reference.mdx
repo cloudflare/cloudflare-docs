@@ -1,7 +1,7 @@
 ---
 pcx_content_type: reference
 title: Builds API reference
-description: Learn how to programmatically trigger builds, manage build settings and Previews, and monitor your Workers Builds using the API.
+description: Learn how to connect a Worker to a Git repository, manage build settings and Previews, and monitor builds using the Workers Builds API.
 sidebar:
   order: 11
 products:
@@ -10,83 +10,32 @@ products:
 
 import { Aside } from "~/components";
 
-This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to programmatically trigger builds, manage build settings and [Previews](/workers/previews/), and monitor build status. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses — install it if you do not have it already.
+This guide shows you how to use the [Workers Builds REST API](/api/resources/workers_builds/) to connect a Worker to a Git repository, manage build settings and [Previews](/workers/previews/), and monitor builds. The examples use `curl` commands that you can run directly in your terminal or adapt to your preferred programming language. Some examples pipe output through [`jq`](https://jqlang.org/) to filter JSON responses.
 
 ## Before you start
 
-### 1. Create an API token with the correct permissions
+### Create an API token
 
-To use the Builds API, you need an API token to authenticate your requests. The Builds API requires a **user-scoped** API token. Account-scoped tokens are not supported and will return "Invalid token" errors.
+The Builds API requires a **user-scoped** API token. Account-scoped tokens are not supported and will return "Invalid token" errors.
 
 Create your token at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) with the following permissions:
 
-| Permission                   | Access level | Why you need it                                                                                                                                                                   |
-| ---------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workers Builds Configuration | Edit         | Trigger builds, manage build settings and Previews, configure environment variables                                                                                               |
-| Workers Scripts              | Read         | Only needed for [one endpoint](#step-1-get-your-worker-tag) to retrieve your Worker's tag (documented as [`external_script_id`](#2-worker-tags-documented-as-external_script_id)) |
+| Permission                   | Access level | Why you need it                                            |
+| ---------------------------- | ------------ | ---------------------------------------------------------- |
+| Workers Builds Configuration | Edit         | Manage build settings and Previews, and work with builds   |
+| Workers Scripts              | Read         | Only needed to [get your Worker tag](#get-your-worker-tag) |
 
 <Aside type="note">
-	This API token is different from a **build token**. Build tokens are used by
-	the build system to deploy your Worker — you will need a build token UUID when
-	[connecting a Worker to a repository](#step-3-get-your-build-token-uuid). The
-	API token described above is what you use to call the Builds API itself.
+	This API token is different from a **build token**. A build token is used by
+	the build system to deploy your Worker. You will need a build token UUID when
+	you [connect a Worker to a repository](#connect-a-worker-to-a-repository).
 </Aside>
 
-### 2. Worker tags (documented as external_script_id)
+### Get your Worker tag
 
-The Builds API identifies Workers by their **tag**, an immutable UUID assigned by Cloudflare. In API responses and parameters, this value appears as `script_tag` or `external_script_id`.
+The Builds API identifies Workers by their **tag**, an immutable ID assigned by Cloudflare, not by their name. In API requests and responses, this value appears as `script_tag`.
 
-| Identifier                        | Example                            | Where it comes from                   |
-| --------------------------------- | ---------------------------------- | ------------------------------------- |
-| Worker name (`id`)                | `my-worker`                        | The name you gave your Worker         |
-| Worker tag (`external_script_id`) | `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d` | Immutable UUID assigned by Cloudflare |
-
-Every Builds API endpoint that references a Worker requires the **tag**, not the name.
-
-### 3. How build settings are organized
-
-The Builds API has two ways to manage how your Worker is built:
-
-- **Worker build configuration** (`/builds/workers/{script_tag}`) — Manages your Worker's Git repository, **production settings**, and **Previews settings** together. Use these endpoints to connect a Worker to a repository, change build and deploy commands, and manage [Previews](/workers/previews/). The fields match the **Settings** > **Builds** page in the dashboard.
-- **Triggers** (`/builds/triggers/{trigger_uuid}`) — The lower-level record behind a set of build settings. You need a trigger UUID to [start a build manually](#trigger-a-manual-build), [manage build environment variables](#manage-build-environment-variables), or [purge the build cache](#purge-build-cache).
-
-Every connected Worker has a **production trigger** that runs on your [production branch](/workers/ci-cd/builds/build-branches/#change-production-branch). With [Worker Previews](/workers/previews/), each Preview also gets its own trigger the first time you push to its branch. Workers that were connected to Builds before Worker Previews may instead have a single legacy **branch build trigger** that runs on all non-production branches. To move these Workers to Previews, switch to Worker Previews in the dashboard. Refer to [Existing Workers connected to Builds](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
-
-**Build settings fields:**
-
-These fields appear in `production_settings` and `previews_base_config` on the Worker build configuration, and directly on triggers.
-
-| Field                   | Type    | Description                                                                                                                                                                                                                                                                                                     |
-| ----------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `build_token_uuid`      | string  | UUID of the build token used to deploy your Worker. Find this in your Worker's **Settings** > **Builds** > **API token** section, or with the [`GET /builds/tokens`](/api/resources/workers_builds/subresources/tokens/methods/list/) endpoint.                                                                 |
-| `build_command`         | string  | Command to build your project (for example, `npm run build`)                                                                                                                                                                                                                                                    |
-| `deploy_command`        | string  | Command to deploy your Worker. For production, this is the [deploy command](/workers/ci-cd/builds/configuration/#deploy-command) (for example, `npx wrangler deploy`). For Previews, this is the [Preview command](/workers/ci-cd/builds/configuration/#preview-command) (for example, `npx wrangler preview`). |
-| `root_directory`        | string  | Path to your project root                                                                                                                                                                                                                                                                                       |
-| `path_includes`         | array   | File path patterns that trigger builds                                                                                                                                                                                                                                                                          |
-| `path_excludes`         | array   | File path patterns to ignore                                                                                                                                                                                                                                                                                    |
-| `build_caching_enabled` | boolean | Enable or disable build caching                                                                                                                                                                                                                                                                                 |
-| `environment_variables` | object  | Build-time variables for these settings                                                                                                                                                                                                                                                                         |
-
-Triggers also have a `trigger_name` and `branch_includes` and `branch_excludes` patterns. Refer to [Update trigger configuration](#update-trigger-configuration) for the supported branch patterns.
-
-## Workflow overview
-
-Most build operations follow this pattern: first get your Worker's tag, then get the trigger UUID, then perform build operations.
-
-![Workflow overview: get Worker tag, then get trigger UUID, then perform build operations.](~/assets/images/workers/builds/workflow-overview.svg)
-
-| Step | Action           | Endpoint                                     |
-| ---- | ---------------- | -------------------------------------------- |
-| 1    | Get Worker tag   | `GET /workers/scripts`                       |
-| 2    | Get trigger UUID | `GET /builds/workers/:worker_tag/triggers`   |
-| 3a   | Trigger a build  | `POST /builds/triggers/:trigger_uuid/builds` |
-| 3b   | List builds      | `GET /builds/workers/:worker_tag/builds`     |
-| 3c   | Get build logs   | `GET /builds/builds/:build_uuid/logs`        |
-| 3d   | Cancel a build   | `PUT /builds/builds/:build_uuid/cancel`      |
-
-## Step 1: Get your Worker tag
-
-Call the [Workers Scripts API](/api/resources/workers/subresources/scripts/methods/list/) to list all your Workers and find the `tag` for the Worker you want to work with:
+To find your Worker's tag, call the [Workers Scripts API](/api/resources/workers/subresources/scripts/methods/list/):
 
 ```bash
 curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts" \
@@ -94,409 +43,36 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scri
   | jq '.result[] | {name: .id, tag: .tag}'
 ```
 
-Example output:
-
-```json
+```json output
 {
-  "name": "my-worker",
-  "tag": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
-}
-{
-  "name": "another-worker",
-  "tag": "8a1b2c3d4e5f67890abcdef123456789"
+	"name": "my-worker",
+	"tag": "1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d"
 }
 ```
 
-Save the `tag` value for your Worker. You will use it in all subsequent API calls.
+## Connect a Worker to a repository
 
-## Step 2: Get your trigger UUID
+One request connects your Worker to a repository and sets the build settings for your production branch and your Previews.
 
-Use the [`GET /builds/workers/{tag}/triggers`](/api/resources/workers_builds/subresources/triggers/methods/list/) endpoint to list triggers for your Worker:
+### Prerequisites
 
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/triggers" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result[] | {trigger_uuid, trigger_name, branch_includes, branch_excludes}'
-```
+1. **Install the Cloudflare GitHub App.** In the [Cloudflare dashboard](https://dash.cloudflare.com), go to **Workers & Pages**, select any Worker, and go to **Settings** > **Builds** > **Connect**. Select **GitHub** and authorize the app for your account or organization. You only need to do this once.
+2. **Get your GitHub account and repository IDs:**
 
-Example output:
+   ```bash
+   curl -s "https://api.github.com/users/<GITHUB_USERNAME>" | jq '.id'
+   curl -s "https://api.github.com/repos/<GITHUB_USERNAME>/<REPO_NAME>" | jq '.id'
+   ```
 
-```json
-{
-	"trigger_uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-	"trigger_name": "Deploy production",
-	"branch_includes": ["main"],
-	"branch_excludes": []
-}
-```
+3. **Get a build token UUID.** Select or create a build token in your Worker's **Settings** > **Builds** > **API token**, or list your build tokens with the [`GET /builds/tokens`](/api/resources/workers_builds/subresources/tokens/methods/list/) endpoint:
 
-Save the `trigger_uuid` for the trigger you want to work with. The trigger whose `branch_includes` contains your production branch (for example, `main`) deploys to your live Worker.
+   ```bash
+   curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/tokens" \
+     --header "Authorization: Bearer <API_TOKEN>" \
+     | jq '.result[] | {build_token_uuid, build_token_name}'
+   ```
 
-If the Worker still uses legacy branch builds, the response also includes a trigger with `branch_includes` set to `["*"]` and your production branch in `branch_excludes`.
-
-## Step 3: Work with builds
-
-Now that you have the Worker tag and trigger UUID, you can trigger builds, list build history, and get logs.
-
-### Trigger a manual build
-
-Use the [`POST /builds/triggers/{uuid}/builds`](/api/resources/workers_builds/subresources/triggers/methods/create_build/) endpoint with the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid).
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/builds" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"branch": "main"}'
-```
-
-You must specify `branch`, `commit_hash`, or both:
-
-| Field         | Description                                                                                          |
-| ------------- | ---------------------------------------------------------------------------------------------------- |
-| `branch`      | Git branch name to build (for example, `main`)                                                       |
-| `commit_hash` | Specific commit SHA to build. If provided without `branch`, builds the commit on its current branch. |
-
-The response includes the `build_uuid` which you can use to monitor the build. To build a Preview, refer to [Build a Preview](#build-a-preview).
-
-### List builds for a Worker
-
-Use the [`GET /builds/workers/{tag}/builds`](/api/resources/workers_builds/subresources/builds/methods/list/) endpoint with the `worker_tag` from [Step 1](#step-1-get-your-worker-tag).
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/builds" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result[] | {build_uuid, status, branch: .build_trigger_metadata.branch, created_on}'
-```
-
-The response includes `build_uuid` for each build, which you need for getting logs or canceling builds. Builds older than 90 days are not returned. Refer to [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
-
-### Get build logs
-
-Use the [`GET /builds/builds/{uuid}/logs`](/api/resources/workers_builds/subresources/builds/subresources/logs/methods/get/) endpoint. Get the `build_uuid` from:
-
-- [List builds](#list-builds-for-a-worker)
-- The response when [triggering a build](#trigger-a-manual-build)
-- [Get latest builds by script IDs](/api/resources/workers_builds/methods/get_latest_builds/)
-- The last segment of the URL on your build details page in the dashboard
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/logs" \
-  --header "Authorization: Bearer <API_TOKEN>"
-```
-
-Build logs are retained for 90 days after the build finishes. To keep them longer, save the response from this endpoint.
-
-### Cancel a running build
-
-Use the [`PUT /builds/builds/{uuid}/cancel`](/api/resources/workers_builds/subresources/builds/methods/cancel/) endpoint. Get the `build_uuid` from:
-
-- [List builds](#list-builds-for-a-worker)
-- The response when [triggering a build](#trigger-a-manual-build)
-- [Get latest builds by script IDs](/api/resources/workers_builds/methods/get_latest_builds/)
-- The last segment of the URL on your build details page in the dashboard
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/cancel" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --request PUT
-```
-
-## Manage build settings
-
-Use the `/builds/workers/{script_tag}` endpoints to read and update the build settings for your production branch and your Previews.
-
-### Get build settings
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}" \
-  --header "Authorization: Bearer <API_TOKEN>"
-```
-
-The response includes:
-
-| Field                  | Description                                                                                                                                          |
-| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `git_repository`       | The connected repository and the production branch (`branch`)                                                                                        |
-| `production_settings`  | Build settings used for pushes to your production branch                                                                                             |
-| `previews_enabled`     | Whether pushes to other branches create or update Previews                                                                                           |
-| `previews_base_config` | Build settings copied to each new Preview. If the Worker still uses legacy branch builds, these are the settings of the legacy branch build trigger. |
-
-### Update production settings
-
-Send only the fields you want to change:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{
-    "production_settings": {
-      "build_command": "npm run build:prod",
-      "deploy_command": "npx wrangler deploy"
-    }
-  }'
-```
-
-To change your production branch, send `{"git_repository": {"branch": "<BRANCH_NAME>"}}`.
-
-### Update Preview settings
-
-`previews_base_config` holds the build settings, including the [Preview command](/workers/ci-cd/builds/configuration/#preview-command), that are copied to each new Preview. By default, updating it only affects Previews created afterward. To also update every existing Preview, add `?patch_existing_previews=true`:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}?patch_existing_previews=true" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{
-    "previews_base_config": {
-      "build_command": "npm run build:preview",
-      "deploy_command": "npx wrangler preview"
-    }
-  }'
-```
-
-These are build settings. To configure the variables, secrets, and bindings your Preview uses at runtime, refer to [Preview settings](/workers/previews/configuration/).
-
-### Turn Previews on or off
-
-Set `previews_enabled` to control whether pushes to non-production branches create or update Previews:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{"previews_enabled": false}'
-```
-
-Turning Previews on requires `previews_base_config` to already exist or to be sent in the same request. If the Worker still uses legacy branch builds, you must first [switch to Worker Previews in the dashboard](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
-
-## Manage Previews
-
-When Previews are enabled, the first push to a branch that is not your production branch creates a Preview for that branch. Each Preview has its own build settings, copied from `previews_base_config` when the Preview is created.
-
-### List Previews
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/previews" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result[] | {preview_id, branch, auto_build, auto_delete}'
-```
-
-| Field         | Description                                                                                               |
-| ------------- | --------------------------------------------------------------------------------------------------------- |
-| `preview_id`  | Identifier of the Preview. Use it in the endpoints below.                                                 |
-| `branch`      | Git branch the Preview tracks                                                                             |
-| `auto_build`  | Whether pushes to the branch build this Preview. Deploy hooks, manual builds, and retries run regardless. |
-| `auto_delete` | Whether deleting the Git branch also deletes this Preview                                                 |
-
-To get a single Preview, including its build settings, use `GET /builds/workers/{worker_tag}/previews/{preview_id}`.
-
-### Update a Preview
-
-Send only the fields you want to change. For example, to stop pushes from building a Preview and change its build command:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/previews/{preview_id}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{
-    "auto_build": false,
-    "settings": {
-      "build_command": "npm run build:preview"
-    }
-  }'
-```
-
-You can also update `branch` and `auto_delete`.
-
-### Build a Preview
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/previews/{preview_id}/builds" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"branch": "feature-branch"}'
-```
-
-To list a Preview's builds, send a `GET` request to the same endpoint.
-
-## Update trigger configuration
-
-Use the [`PATCH /builds/triggers/{uuid}`](/api/resources/workers_builds/subresources/triggers/methods/update/) endpoint with the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid). For build and deploy commands, prefer [Manage build settings](#manage-build-settings).
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{
-    "build_command": "npm run build:prod",
-    "deploy_command": "npx wrangler deploy"
-  }'
-```
-
-Triggers only support the following `branch_includes` and `branch_excludes` combinations. Updates that produce any other combination, or that change a trigger from one type to the other, return `400` with error code `12002` (`Invalid request body`).
-
-| Trigger             | `branch_includes`                                           | `branch_excludes`                                                               |
-| ------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Production          | One branch name without wildcards (for example, `["main"]`) | Empty (`[]`)                                                                    |
-| Legacy branch build | `["*"]`                                                     | One or more branch names without wildcards (for example, `["main", "staging"]`) |
-
-This means you cannot limit legacy branch builds to a branch pattern such as `feature/*`.
-
-## Manage build environment variables
-
-Build environment variables are stored with each set of build settings, so production and Previews can have different values. For example, you might set `NODE_ENV=production` for production and `NODE_ENV=development` for Previews.
-
-<Aside type="note">
-	These are **build-time** environment variables, available only during the
-	build process. For runtime environment variables, refer to [Environment
-	variables](/workers/configuration/environment-variables/). For Preview runtime
-	variables, refer to [Preview settings](/workers/previews/configuration/).
-</Aside>
-
-### Set environment variables
-
-Set `environment_variables` in `production_settings` or `previews_base_config`. Set `is_secret` to `false` for plain values and `true` for sensitive values that should be masked in logs. To delete a variable, set it to `null`.
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{
-    "production_settings": {
-      "environment_variables": {
-        "NODE_ENV": {"value": "production", "is_secret": false},
-        "API_KEY": {"value": "prod-secret-key", "is_secret": true}
-      }
-    },
-    "previews_base_config": {
-      "environment_variables": {
-        "NODE_ENV": {"value": "development", "is_secret": false},
-        "API_KEY": {"value": "dev-secret-key", "is_secret": true},
-        "OLD_VARIABLE": null
-      }
-    }
-  }'
-```
-
-As with other Preview settings, add `?patch_existing_previews=true` to also update existing Previews.
-
-### Manage environment variables on a trigger
-
-You can also manage variables on a single trigger with the [environment variables endpoints](/api/resources/workers_builds/subresources/triggers/subresources/environment_variables/), using the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid).
-
-List variables:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/environment_variables" \
-  --header "Authorization: Bearer <API_TOKEN>"
-```
-
-Set variables:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/environment_variables" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '{
-    "NODE_ENV": {"value": "production", "is_secret": false}
-  }'
-```
-
-Delete a variable, where `variable_key` is the key name (for example, `NODE_ENV`):
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/environment_variables/{variable_key}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --request DELETE
-```
-
-## Purge build cache
-
-Use the [`POST /builds/triggers/{uuid}/purge_build_cache`](/api/resources/workers_builds/subresources/triggers/methods/purge_cache/) endpoint with the `trigger_uuid` from [Step 2](#step-2-get-your-trigger-uuid). This clears cached dependencies and build artifacts for that trigger.
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/purge_build_cache" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --request POST
-```
-
-## Examples
-
-The following examples show common use cases for the Builds API.
-
-### Set up Workers Builds from scratch
-
-This example connects a GitHub repository to a Worker, with production builds on `main` and Previews for all other branches, using only the API.
-
-| Step | Action                      | Endpoint                                                          |
-| ---- | --------------------------- | ----------------------------------------------------------------- |
-| 1    | Get GitHub account/repo IDs | `GET api.github.com/users/...` and `GET api.github.com/repos/...` |
-| 2    | Get Worker tag              | `GET /workers/scripts`                                            |
-| 3    | Get build token UUID        | `GET /builds/tokens`                                              |
-| 4    | Connect the Worker          | `POST /builds/workers`                                            |
-| 5    | Trigger first build         | `POST /builds/triggers/:trigger_uuid/builds`                      |
-
-#### Prerequisites
-
-Before using the API, you must first install the Cloudflare GitHub App through the dashboard:
-
-1. Go to **Workers & Pages** in the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Select any Worker and go to **Settings** > **Builds** > **Connect**.
-3. Select **GitHub** and authorize the Cloudflare GitHub App for your account or organization.
-
-This one-time setup creates the connection between your GitHub account and Cloudflare. Once complete, you can use the API for everything else.
-
-#### Step 1: Get your GitHub account information
-
-You need your GitHub account ID and repository ID. Get them from GitHub's API:
-
-```bash
-# Get your GitHub user/org ID
-curl -s "https://api.github.com/users/<GITHUB_USERNAME>" | jq '.id'
-
-# Get a repository ID
-curl -s "https://api.github.com/repos/<GITHUB_USERNAME>/<REPO_NAME>" | jq '.id'
-```
-
-#### Step 2: Get your Worker tag
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result[] | {name: .id, tag: .tag}'
-```
-
-#### Step 3: Get your build token UUID
-
-A build token authorizes the build system to deploy your Worker. To get your build token UUID:
-
-1. Go to your Worker in the [Cloudflare dashboard](https://dash.cloudflare.com).
-2. Navigate to **Settings** > **Builds** > **API token**.
-3. Select an existing build token or create a new one.
-
-You can also list your build tokens with the API:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/tokens" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result[] | {build_token_uuid, build_token_name}'
-```
-
-Save the `build_token_uuid` for the next step.
-
-#### Step 4: Connect the Worker to your repository
-
-Send a single request with your repository, production settings, and Preview settings. This also creates the repository connection.
+### Create the build configuration
 
 ```bash
 curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers" \
@@ -516,7 +92,6 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
     "production_settings": {
       "build_command": "npm run build",
       "deploy_command": "npx wrangler deploy",
-      "root_directory": "/",
       "build_token_uuid": "<BUILD_TOKEN_UUID>",
       "environment_variables": {
         "NODE_ENV": {"value": "production", "is_secret": false}
@@ -526,7 +101,6 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
     "previews_base_config": {
       "build_command": "npm run build",
       "deploy_command": "npx wrangler preview",
-      "root_directory": "/",
       "build_token_uuid": "<BUILD_TOKEN_UUID>",
       "environment_variables": {
         "NODE_ENV": {"value": "development", "is_secret": false}
@@ -535,81 +109,174 @@ curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/worke
   }'
 ```
 
-Production uses `wrangler deploy`, while Previews use `wrangler preview` to create [Previews](/workers/previews/) without affecting the live deployment. To connect the Worker without Previews, set `previews_enabled` to `false`.
+Pushes to `main` now deploy your Worker with `wrangler deploy`. Pushes to any other branch create or update a [Preview](/workers/previews/) with `wrangler preview`, without affecting your live deployment. To connect the Worker without Previews, set `previews_enabled` to `false`.
 
-#### Step 5: Trigger your first build
+| Field                  | Description                                                                                                                                  |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| `git_repository`       | The repository to connect. `branch` is your [production branch](/workers/ci-cd/builds/build-branches/).                                      |
+| `production_settings`  | Build settings for pushes to your production branch                                                                                          |
+| `previews_enabled`     | Whether pushes to other branches create or update Previews                                                                                   |
+| `previews_base_config` | Build settings copied to each new Preview. `deploy_command` is your [Preview command](/workers/ci-cd/builds/configuration/#preview-command). |
 
-[Get the production trigger UUID](#step-2-get-your-trigger-uuid), then start a build:
+`production_settings` and `previews_base_config` accept the same fields:
+
+| Field                   | Type    | Description                                                                                  |
+| ----------------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `build_command`         | string  | Command to build your project (for example, `npm run build`)                                 |
+| `deploy_command`        | string  | Command to deploy your Worker (for example, `npx wrangler deploy` or `npx wrangler preview`) |
+| `build_token_uuid`      | string  | UUID of the build token used to deploy your Worker                                           |
+| `root_directory`        | string  | Path to your project, relative to the repository root. Defaults to `/`.                      |
+| `path_includes`         | array   | File path patterns that start a build                                                        |
+| `path_excludes`         | array   | File path patterns that do not start a build                                                 |
+| `build_caching_enabled` | boolean | Whether builds reuse cached dependencies and build artifacts. Defaults to `true`.            |
+| `environment_variables` | object  | Build-time variables. Set `is_secret` to `true` to mask a value in build logs.               |
+
+<Aside type="note">
+	`environment_variables` are only available during the build. For runtime
+	variables, refer to [Environment
+	variables](/workers/configuration/environment-variables/). For Preview runtime
+	variables, secrets, and bindings, refer to [Preview
+	settings](/workers/previews/configuration/).
+</Aside>
+
+## View and update build settings
+
+### Get build settings
 
 ```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{production_trigger_uuid}/builds" \
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+The response has the same `git_repository`, `production_settings`, `previews_enabled`, and `previews_base_config` fields you set when [creating the build configuration](#create-the-build-configuration).
+
+### Update build settings
+
+Send only the fields you want to change. For example, to change the production build command and add a Preview build variable:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
-  --request POST \
-  --data '{"branch": "main"}'
-```
-
-Your Worker is now connected to GitHub. Future pushes to `main` will automatically trigger production deployments, and pushes to other branches will create or update Previews.
-
-### Redeploy current deployment
-
-Redeploy your current active deployment to refresh build-time data. This is useful when you need to rebuild without code changes.
-
-![Redeploy flow: get active deployment, find the build for that version, retrigger with same branch and commit.](~/assets/images/workers/builds/redeploy-flow.svg)
-
-| Step | Action                            | Endpoint                                        |
-| ---- | --------------------------------- | ----------------------------------------------- |
-| 1    | Get active deployment             | `GET /workers/scripts/:worker_name/deployments` |
-| 2    | Find the build for that version   | `GET /builds/builds?version_ids=:version_id`    |
-| 3    | Retrigger with same branch/commit | `POST /builds/triggers/:trigger_uuid/builds`    |
-
-**Step 1: Get the active deployment's version ID**
-
-Use the [`GET /workers/scripts/{script_name}/deployments`](/api/resources/workers/subresources/scripts/subresources/deployments/methods/list/) endpoint with the `worker_name` from [Step 1](#step-1-get-your-worker-tag):
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{worker_name}/deployments" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result.deployments[0].versions[0].version_id'
-```
-
-Save the `version_id` from the output.
-
-**Step 2: Find the build for that version**
-
-Use the [`GET /builds/builds`](/api/resources/workers_builds/methods/get_builds_by_version/) endpoint with the `version_id` from the previous step:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds?version_ids={version_id}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  | jq '.result.builds'
-```
-
-From the response, note the `trigger.trigger_uuid`, `build_trigger_metadata.branch`, and `build_trigger_metadata.commit_hash`.
-
-**Step 3: Retrigger with the same branch and commit**
-
-Use the [`POST /builds/triggers/{uuid}/builds`](/api/resources/workers_builds/subresources/triggers/methods/create_build/) endpoint with the values from the previous step:
-
-```bash
-curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/triggers/{trigger_uuid}/builds" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --request POST \
+  --request PATCH \
   --data '{
-    "branch": "{branch}",
-    "commit_hash": "{commit_hash}"
+    "production_settings": {
+      "build_command": "npm run build:prod"
+    },
+    "previews_base_config": {
+      "environment_variables": {
+        "API_URL": {"value": "https://staging.example.com", "is_secret": false},
+        "OLD_VARIABLE": null
+      }
+    }
   }'
 ```
 
-Passing both `branch` and `commit_hash` pins the build to that exact commit on that branch.
+- To delete an environment variable, set it to `null`.
+- To change your production branch, send `{"git_repository": {"branch": "<BRANCH_NAME>"}}`.
+- To turn Previews on or off, send `{"previews_enabled": true}` or `{"previews_enabled": false}`.
+- Changes to `previews_base_config` apply to Previews created afterward. To also update every existing Preview, add `?patch_existing_previews=true` to the URL.
+
+<Aside type="note">
+	Workers connected to Builds before [Worker Previews](/workers/previews/) use
+	legacy branch builds, and `previews_base_config` updates those settings. To
+	use Previews, [switch to Worker Previews in the
+	dashboard](/workers/ci-cd/builds/build-branches/#existing-workers-connected-to-builds).
+</Aside>
+
+## Manage Previews
+
+When Previews are enabled, the first push to a branch that is not your production branch creates a Preview for that branch. Each Preview gets its own copy of `previews_base_config`.
+
+### List Previews
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/previews" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | {preview_id, branch, auto_build, auto_delete}'
+```
+
+| Field         | Description                                                                                     |
+| ------------- | ----------------------------------------------------------------------------------------------- |
+| `preview_id`  | Identifier of the Preview                                                                       |
+| `branch`      | Git branch the Preview tracks                                                                   |
+| `auto_build`  | Whether pushes to the branch build this Preview. Manual builds and Deploy Hooks run regardless. |
+| `auto_delete` | Whether deleting the Git branch also deletes this Preview                                       |
+
+To get a single Preview and its build settings, send a `GET` request to `/builds/workers/{worker_tag}/previews/{preview_id}`.
+
+### Update a Preview
+
+Send only the fields you want to change. For example, to stop pushes from building a Preview and change its build command:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/previews/{preview_id}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{
+    "auto_build": false,
+    "settings": {
+      "build_command": "npm run build:preview"
+    }
+  }'
+```
+
+### Build a Preview
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/previews/{preview_id}/builds" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"branch": "feature-branch"}'
+```
+
+To list a Preview's builds, send a `GET` request to the same URL.
+
+## Work with builds
+
+### Start a production build
+
+To start a production build without pushing a commit, create a [Deploy Hook](/workers/ci-cd/builds/deploy-hooks/) for your production branch and send a `POST` request to its URL.
+
+### List builds
+
+Use the [`GET /builds/workers/{worker_tag}/builds`](/api/resources/workers_builds/subresources/builds/methods/list/) endpoint:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/workers/{worker_tag}/builds" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  | jq '.result[] | {build_uuid, status, build_outcome, branch: .build_trigger_metadata.branch, created_on}'
+```
+
+Builds older than 90 days are not returned. Refer to [Limits & pricing](/workers/ci-cd/builds/limits-and-pricing/).
+
+### Get build logs
+
+Use the [`GET /builds/builds/{build_uuid}/logs`](/api/resources/workers_builds/subresources/builds/subresources/logs/methods/get/) endpoint with a `build_uuid` from [List builds](#list-builds):
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/logs" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+Build logs are retained for 90 days after the build finishes. To keep them longer, save the response.
+
+### Cancel a build
+
+Use the [`PUT /builds/builds/{build_uuid}/cancel`](/api/resources/workers_builds/subresources/builds/methods/cancel/) endpoint:
+
+```bash
+curl -s "https://api.cloudflare.com/client/v4/accounts/{account_id}/builds/builds/{build_uuid}/cancel" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --request PUT
+```
 
 ## Related resources
 
 - [Workers Builds REST API reference](/api/resources/workers_builds/) - Complete endpoint documentation
-- [Workers Scripts REST API reference](/api/resources/workers/subresources/scripts/) - For retrieving Worker tags
-- [Workers Builds overview](/workers/ci-cd/builds/) - Dashboard setup and configuration
 - [Build configuration](/workers/ci-cd/builds/configuration/) - Build settings and options
-- [Troubleshooting builds](/workers/ci-cd/builds/troubleshoot/#builds-api-errors) - Common Builds API errors
 - [Previews](/workers/previews/) - Branch-isolated previews of your Worker
-- [Create API token](/fundamentals/api/get-started/create-token/) - How to create tokens with the correct permissions
+- [Deploy Hooks](/workers/ci-cd/builds/deploy-hooks/) - Start builds from external systems
+- [Troubleshooting builds](/workers/ci-cd/builds/troubleshoot/#builds-api-errors) - Common Builds API errors

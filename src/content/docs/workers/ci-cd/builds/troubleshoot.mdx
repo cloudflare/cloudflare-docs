@@ -80,11 +80,20 @@ These errors are returned by the [Builds API](/workers/ci-cd/builds/api-referenc
 
 ### "Resource not found" error
 
-You are likely using the Worker name instead of the Worker tag. The Builds API requires the `tag` (a UUID like `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`), not the Worker name. Refer to [Get your Worker tag](/workers/ci-cd/builds/api-reference/#step-1-get-your-worker-tag).
+You are likely using the Worker name instead of the Worker tag. The Builds API requires the `tag` (a UUID like `1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d`), not the Worker name. Refer to [Get your Worker tag](/workers/ci-cd/builds/api-reference/#get-your-worker-tag).
 
 ### "Invalid request body" (12002) when updating branch patterns
 
-`PATCH /builds/triggers/{uuid}` returns this error when the resulting `branch_includes` and `branch_excludes` are not a supported combination. Refer to [Update trigger configuration](/workers/ci-cd/builds/api-reference/#update-trigger-configuration) for the supported combinations. To change your production branch, [update `git_repository.branch`](/workers/ci-cd/builds/api-reference/#update-production-settings) instead.
+The [`PATCH /builds/triggers/{trigger_uuid}`](/api/resources/workers_builds/subresources/triggers/methods/update/) endpoint returns this error when the trigger's resulting `branch_includes` and `branch_excludes` are not one of these combinations:
+
+| Trigger                               | `branch_includes`                                           | `branch_excludes`                          |
+| ------------------------------------- | ----------------------------------------------------------- | ------------------------------------------ |
+| Production                            | One branch name without wildcards (for example, `["main"]`) | Empty (`[]`)                               |
+| Legacy branch builds (non-production) | `["*"]`                                                     | One or more branch names without wildcards |
+
+The error is also returned if the update would change a production trigger into a non-production trigger, or the other way around. Branch patterns such as `feature/*` are not supported.
+
+To change your production branch, [update `git_repository.branch`](/workers/ci-cd/builds/api-reference/#update-build-settings) instead.
 
 ## For additional support
 
