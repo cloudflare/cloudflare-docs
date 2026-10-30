@@ -46,14 +46,14 @@ Example response:
 
 ```json
 {
-	"success": true,
-	"errors": [],
-	"messages": [],
-	"result": {
-		"build_uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"branch": "main",
-		"worker": "my-worker"
-	}
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "build_uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "branch": "main",
+    "worker": "my-worker"
+  }
 }
 ```
 
@@ -92,15 +92,15 @@ Example response when an existing pending build is returned:
 
 ```json
 {
-	"success": true,
-	"errors": [],
-	"messages": [],
-	"result": {
-		"build_uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-		"status": "queued",
-		"created_on": "2026-01-21T18:50:00Z",
-		"already_exists": true
-	}
+  "success": true,
+  "errors": [],
+  "messages": [],
+  "result": {
+    "build_uuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "status": "queued",
+    "created_on": "2026-01-21T18:50:00Z",
+    "already_exists": true
+  }
 }
 ```
 
@@ -116,23 +116,23 @@ A Worker that receives a `/deploy` command from Slack and triggers a build:
 
 ```ts
 export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const body = await request.formData();
-		const command = body.get("command");
-		const token = body.get("token");
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const body = await request.formData();
+    const command = body.get("command");
+    const token = body.get("token");
 
-		if (token !== env.SLACK_VERIFICATION_TOKEN) {
-			return new Response("Unauthorized", { status: 401 });
-		}
+    if (token !== env.SLACK_VERIFICATION_TOKEN) {
+      return new Response("Unauthorized", { status: 401 });
+    }
 
-		if (command === "/deploy") {
-			const res = await fetch(env.DEPLOY_HOOK_URL, { method: "POST" });
-			const { result } = await res.json<{ result: { build_uuid: string } }>();
-			return new Response(`Build started: ${result.build_uuid}`);
-		}
+    if (command === "/deploy") {
+      const res = await fetch(env.DEPLOY_HOOK_URL, { method: "POST" });
+      const { result } = await res.json<{ result: { build_uuid: string } }>();
+      return new Response(`Build started: ${result.build_uuid}`);
+    }
 
-		return new Response("Unknown command", { status: 400 });
-	},
+    return new Response("Unknown command", { status: 400 });
+  },
 };
 ```
 
@@ -146,9 +146,9 @@ A Worker with a [Cron Trigger](/workers/configuration/cron-triggers/) that rebui
 
 ```ts
 export default {
-	async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
-		await fetch(env.DEPLOY_HOOK_URL, { method: "POST" });
-	},
+  async scheduled(event: ScheduledEvent, env: Env): Promise<void> {
+    await fetch(env.DEPLOY_HOOK_URL, { method: "POST" });
+  },
 };
 ```
 
@@ -157,9 +157,9 @@ export default {
 ## Security considerations
 
 <Aside type="caution">
-	Deploy Hook URLs do not require a separate authorization header. Anyone with
-	access to the URL can trigger builds for your Worker, so store them like other
-	sensitive credentials.
+  Deploy Hook URLs do not require a separate authorization header. Anyone with
+  access to the URL can trigger builds for your Worker, so store them like
+  other sensitive credentials.
 </Aside>
 
 - Store Deploy Hook URLs in environment variables or a secrets manager, never in source code or public configuration files.
