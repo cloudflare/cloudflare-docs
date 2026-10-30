@@ -66,7 +66,7 @@ After you trigger a Deploy Hook, you can verify it from the dashboard:
 - In the **Deploy Hooks** list, the hook shows when it was last triggered.
 - In your Worker's build history, the **Triggered by** column identifies builds started by a Deploy Hook using the hook name and a `deploy hook` label.
 
-If you need to inspect these builds programmatically, use [List builds for a Worker](/workers/ci-cd/builds/api-reference/#list-builds-for-a-worker) in the Builds API reference. Hook-triggered builds are recorded with `build_trigger_source: "deploy_hook"`.
+If you need to inspect these builds programmatically, use [List builds for a Worker](/workers/ci-cd/builds/api-reference/#list-builds) in the Builds API reference. Hook-triggered builds are recorded with `build_trigger_source: "deploy_hook"`.
 
 ## CMS integration
 
@@ -168,7 +168,7 @@ export default {
 
 ### Using the Builds API for authenticated triggers
 
-If your external system supports custom headers, you can call the [manual build endpoint](/api/resources/workers_builds/subresources/triggers/methods/create_build) with an API token in the `Authorization` header instead. This gives you token-based authentication and the ability to choose the branch per request. For a step-by-step walkthrough, see [Trigger a manual build](/workers/ci-cd/builds/api-reference/#trigger-a-manual-build).
+If your external system supports custom headers, you can call the [manual build endpoint](/api/resources/workers_builds/subresources/triggers/methods/create_build) with an API token in the `Authorization` header instead. This gives you token-based authentication and the ability to choose the branch per request.
 
 ## Limits
 
