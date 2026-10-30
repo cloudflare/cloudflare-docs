@@ -1,0 +1,19 @@
+src/content/docs/email-service/api/route-emails/email-handler.mdx
+  s_60dafef9d49784::t_465865c13261ea 122-128
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b0e64f41bffe9490477a070b88729f453679365e",
+  "prompts": {},
+  "sessions": {
+    "s_60dafef9d49784": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a189ac-284f-75d3-ab1f-72f4b8efdbb7",
+        "model": "unknown"
+      },
+      "human_author": "Timo Wilhelm <twilhelm@cloudflare.com>"
+    }
+  }
+}
