@@ -1,0 +1,462 @@
+---
+title: Find slow and expensive queries
+description: Use wrangler d1 insights or cf sql query to find the D1 databases and queries that cost the most, then fix them.
+pcx_content_type: how-to
+sidebar:
+  order: 11
+products:
+  - d1
+---
+
+import { Steps, Tabs, TabItem } from "~/components";
+
+A small number of databases and queries usually cause most of the rows read and written in an account. These rows are what you pay for, and these queries make your databases slow. A query is usually slow when it reads many more rows than it returns. A read query that runs many times also puts load on a database. Many small queries that your Worker sends one after another also make a request slow, because each query is a separate round trip to D1.
+
+To find these databases and queries, use `wrangler d1 insights` or the [`cf sql query`](/analytics/sql-api/get-started/#use-the-cloudflare-cli) command of the Cloudflare CLI. `wrangler d1 insights` returns the top queries from the GraphQL Analytics API. For all its options, refer to [Query `insights`](/d1/observability/metrics-analytics/#query-insights). `cf sql query` sends SQL to the [SQL API](/analytics/sql-api/). You can change the SQL in the examples to get different results.
+
+If you use an API token, the token must have the **Account Analytics Read** permission. Both commands return JSON, so an AI agent can run them and read the results.
+
+The SQL examples use the `events.d1Queries` dataset. This dataset has one row for each D1 query, with the columns `databaseId`, `query`, `queryDurationMs`, `rowsRead`, `rowsReturned`, `rowsWritten`, and `error`. The value of `error` is an empty string when the query is successful.
+
+:::note
+The `events.d1Queries` dataset is sampled. The SQL API applies the sample weights to `COUNT`, `SUM`, and `AVG` automatically. Do not multiply values by `sampleInterval`. Give `sampleInterval` as the weight only to functions that have a weight argument, such as `quantileWeighted`. For more information, refer to [Adaptive sampling](/analytics/sql-api/sql-reference/functions/#adaptive-sampling).
+:::
+
+## Find the most expensive databases
+
+Find the databases that read the most rows in your account during the last 7 days:
+
+<Tabs syncKey="d1Insights">
+<TabItem label="Wrangler">
+
+```sh
+npx wrangler d1 insights --sort-by=reads --time-period=7d --limit=20 --json
+```
+
+`wrangler d1 insights` returns queries, not databases. Each result includes the `databaseId` of the database that ran the query. Add the `totalRowsRead` of the results that have the same `databaseId` to find the most expensive databases.
+
+</TabItem>
+<TabItem label="Cloudflare CLI">
+
+```sh
+npx cf sql query --scope-account <account_id> "
+  SELECT
+    databaseId,
+    COUNT(*) AS numberOfTimesRun,
+    SUM(rowsRead) AS totalRowsRead,
+    SUM(rowsWritten) AS totalRowsWritten,
+    AVG(queryDurationMs) AS avgDurationMs
+  FROM events.d1Queries
+  WHERE timestamp >= NOW() - INTERVAL '7' DAY
+    AND error = ''
+  GROUP BY databaseId
+  ORDER BY totalRowsRead DESC
+  LIMIT 10
+"
+```
+
+To find the databases that write the most rows, change `ORDER BY` to `totalRowsWritten`. To find the slowest databases, change `ORDER BY` to `avgDurationMs`.
+
+</TabItem>
+</Tabs>
+
+To get the name of a database, run `npx wrangler d1 info <database_id>`. To find out how rows read and rows written affect your bill, refer to [Pricing](/d1/platform/pricing/).
+
+## Find queries that need an index
+
+<Steps>
+1. Find the queries that read the most rows in your account during the last 7 days:
+
+   <Tabs syncKey="d1Insights">
+   <TabItem label="Wrangler">
+
+   ```sh
+   npx wrangler d1 insights --sort-by=reads --time-period=7d --json
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   [
+     {
+       "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+       "avgRowsRead": 1244521,
+       "totalRowsRead": 75268630080,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 283.471346125992,
+       "totalDurationMs": 17144347.013699997,
+       "numberOfTimesRun": 60480,
+       "queryEfficiency": 1.6070439952399358e-05,
+       "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+     },
+     {
+       "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+       "avgRowsRead": 1244521,
+       "totalRowsRead": 74719796319,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 257.3288101250854,
+       "totalDurationMs": 15449764.431100003,
+       "numberOfTimesRun": 60039,
+       "queryEfficiency": 1.6070439952399358e-05,
+       "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15"
+     }
+   ]
+   ```
+
+   </TabItem>
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf sql query --scope-account <account_id> "
+     SELECT
+       databaseId,
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsRead) AS totalRowsRead,
+       AVG(rowsRead) AS avgRowsRead,
+       if(SUM(rowsRead) = 0, 0.0,
+          SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '7' DAY
+       AND error = ''
+     GROUP BY databaseId, query
+     ORDER BY totalRowsRead DESC
+     LIMIT 5
+   "
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   {
+     "data": [
+       {
+         "avgRowsRead": 1244521,
+         "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47",
+         "numberOfTimesRun": 60558,
+         "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+         "queryEfficiency": 1.6070439952399358e-05,
+         "totalRowsRead": 75365702718
+       },
+       {
+         "avgRowsRead": 1244521,
+         "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15",
+         "numberOfTimesRun": 60111,
+         "query": "SELECT \"Order\".Id, \"Order\".CustomerId, \"Order\".OrderDate,\n            SUM(OrderDetail.UnitPrice * OrderDetail.Quantity) AS TotalAmount\n          FROM \"Order\"\n          JOIN OrderDetail ON OrderDetail.OrderId = \"Order\".Id\n          GROUP BY \"Order\".Id\n          ORDER BY \"Order\".Id DESC\n          LIMIT ?",
+         "queryEfficiency": 1.6070439952399358e-05,
+         "totalRowsRead": 74809401831
+       }
+     ],
+     "rows": 5,
+     "statistics": {
+       "elapsed_ms": 156,
+       "rows_read": 11153623,
+       "bytes_read": 3732357193
+     }
+   }
+   ```
+
+   </TabItem>
+   </Tabs>
+
+   Each result includes the `databaseId` of the database that ran the query. In the example output, the same `JOIN` query runs on more than one database.
+
+2. Get the top queries for the database that you want to fix. Use the `databaseId` from step 1, or from [Find the most expensive databases](#find-the-most-expensive-databases):
+
+   <Tabs syncKey="d1Insights">
+   <TabItem label="Wrangler">
+
+   ```sh
+   npx wrangler d1 insights <database_id> --sort-by=reads --time-period=7d --json
+   ```
+
+   </TabItem>
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf sql query --scope-account <account_id> "
+     SELECT
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsRead) AS totalRowsRead,
+       AVG(rowsRead) AS avgRowsRead,
+       AVG(queryDurationMs) AS avgDurationMs,
+       quantileWeighted(0.95, queryDurationMs, sampleInterval) AS p95DurationMs,
+       if(SUM(rowsRead) = 0, 0.0,
+          SUM(rowsReturned) / SUM(rowsRead)) AS queryEfficiency
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '7' DAY
+       AND databaseId = '<database_id>'
+       AND error = ''
+     GROUP BY query
+     ORDER BY totalRowsRead DESC
+     LIMIT 5
+   "
+   ```
+
+   </TabItem>
+   </Tabs>
+
+3. Find the queries with a high `avgRowsRead` and a `queryEfficiency` much lower than `1`. These queries read many rows to return a small number of rows. Usually, a column in the `WHERE`, `JOIN`, or `ORDER BY` clause does not have an index.
+
+   In the example output in step 1, the `JOIN` query reads 1,244,521 rows each time it runs, and its `queryEfficiency` is approximately `0.000016`. The `OrderDetail.OrderId` column in the `JOIN` clause does not have an index.
+
+4. Find the index that fixes the query. To find the correct fix for each query pattern, refer to [Indexes and your bill](/d1/best-practices/use-indexes/#indexes-and-your-bill). For the example query, add an index on the `OrderId` column of the `OrderDetail` table.
+
+5. Create a [migration](/d1/reference/migrations/) for the index. The database must be in your [Wrangler configuration file](/d1/get-started/#3-bind-your-worker-to-your-d1-database):
+
+   ```sh
+   npx wrangler d1 migrations create <database_name> add_orderdetail_orderid_index
+   ```
+
+   ```sh output
+   ✅ Successfully created Migration '0001_add_orderdetail_orderid_index.sql'!
+   ```
+
+   The number at the start of the file name depends on the migrations that you already have.
+
+6. Add the `CREATE INDEX` statement to the new migration file:
+
+   ```sql title="migrations/0001_add_orderdetail_orderid_index.sql"
+   -- Migration number: 0001 	 2026-10-29T15:42:06.092Z
+   CREATE INDEX IF NOT EXISTS idx_orderdetail_orderid ON OrderDetail (OrderId);
+   ```
+
+7. Apply the migration to your remote database:
+
+   ```sh
+   npx wrangler d1 migrations apply <database_name> --remote
+   ```
+
+   ```sh output
+   ┌────────────────────────────────────────┬────────┐
+   │ name                                   │ status │
+   ├────────────────────────────────────────┼────────┤
+   │ 0001_add_orderdetail_orderid_index.sql │ ✅     │
+   └────────────────────────────────────────┴────────┘
+   ```
+
+8. Make sure that D1 uses the new index. Put `EXPLAIN QUERY PLAN` in front of the query and run it:
+
+   ```sh
+   npx wrangler d1 execute <database_name> --remote --command="EXPLAIN QUERY PLAN <query>"
+   ```
+
+   The line for the table that you added the index to should show `SEARCH ... USING INDEX`, not `SCAN`. For the example query, `SCAN OrderDetail` changes to `SEARCH OrderDetail USING INDEX idx_orderdetail_orderid (OrderId=?)`. For more information, refer to [Test an index](/d1/best-practices/use-indexes/#test-an-index).
+
+9. Make sure that the number of rows read decreases. Run the command from step 2 again with a shorter time period, such as `--time-period=1h` or `INTERVAL '1' HOUR`.
+
+   The results include all the queries in the time period. Queries that ran before you added the index increase the totals of a long time period.
+</Steps>
+
+## Find queries to cache
+
+A read query that runs many times often returns the same data each time. If you keep the result in a cache, your Worker does not send the query to D1 each time. This decreases the load on your database and the number of rows read.
+
+<Steps>
+1. Find the queries that run the most in your account during the last day:
+
+   <Tabs syncKey="d1Insights">
+   <TabItem label="Wrangler">
+
+   ```sh
+   npx wrangler d1 insights --sort-by=count --time-period=1d --json
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   [
+     {
+       "query": "SELECT * FROM Customer WHERE Id = ?",
+       "avgRowsRead": 1,
+       "totalRowsRead": 41876,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 0.312,
+       "totalDurationMs": 13065.312,
+       "numberOfTimesRun": 41876,
+       "queryEfficiency": 1,
+       "databaseId": "b5d18e3a-6f29-4c04-8e7b-1a9c2d5f7e60"
+     },
+     {
+       "query": "SELECT * FROM Category",
+       "avgRowsRead": 8,
+       "totalRowsRead": 191232,
+       "avgRowsWritten": 0,
+       "totalRowsWritten": 0,
+       "avgDurationMs": 0.274,
+       "totalDurationMs": 6549.696,
+       "numberOfTimesRun": 23904,
+       "queryEfficiency": 1,
+       "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15"
+     }
+   ]
+   ```
+
+   </TabItem>
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf sql query --scope-account <account_id> "
+     SELECT
+       databaseId,
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsRead) AS totalRowsRead,
+       AVG(queryDurationMs) AS avgDurationMs
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '1' DAY
+       AND rowsWritten = 0
+       AND error = ''
+     GROUP BY databaseId, query
+     ORDER BY numberOfTimesRun DESC
+     LIMIT 5
+   "
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   {
+     "data": [
+       {
+         "avgDurationMs": 0.3118,
+         "databaseId": "b5d18e3a-6f29-4c04-8e7b-1a9c2d5f7e60",
+         "numberOfTimesRun": 41903,
+         "query": "SELECT * FROM Customer WHERE Id = ?",
+         "totalRowsRead": 41903
+       },
+       {
+         "avgDurationMs": 0.2741,
+         "databaseId": "2e4f6a81-9c3d-4b7e-a512-8d0f3c6b9e15",
+         "numberOfTimesRun": 23911,
+         "query": "SELECT * FROM Category",
+         "totalRowsRead": 191288
+       }
+     ],
+     "rows": 5,
+     "statistics": {
+       "elapsed_ms": 98,
+       "rows_read": 1593847,
+       "bytes_read": 512730114
+     }
+   }
+   ```
+
+   </TabItem>
+   </Tabs>
+
+   The SQL query returns only queries that do not write rows. The Wrangler output includes all queries. To find the read queries in the Wrangler output, look for a `totalRowsWritten` of `0`.
+
+2. Find the queries with a high `numberOfTimesRun` that return the same data each time. Cache the result if the data does not change frequently, or if your application can show data that is a short time old.
+
+   In the example output, `SELECT * FROM Category` runs approximately 24,000 times a day and returns the same 8 rows each time. The categories almost never change, so this query is a good query to cache. Its `queryEfficiency` is already `1`, so an index does not decrease its rows read.
+
+3. Keep the result in [Workers KV](/kv/) or the [Cache API](/workers/runtime-apis/cache/). Set an expiration time that agrees with how frequently the data changes. For more information about how to use the cache from a Worker, refer to [Customize cache behavior with Workers](/cache/interaction-cloudflare-products/workers/).
+</Steps>
+
+If a query must always return the newest data, do not cache it.
+
+## Find queries to batch
+
+Each time your Worker calls `run()`, `all()`, `first()`, or `raw()` on a statement, it sends a separate request to D1 and waits for the response. If your Worker sends many queries one after another in the same request, such as an `INSERT` for each item in a list, the round trips add up. To send many statements to D1 in one round trip, use [`batch()`](/d1/worker-api/d1-database/#batch).
+
+<Steps>
+1. Find the write queries that write the most rows in your account during the last day:
+
+   <Tabs syncKey="d1Insights">
+   <TabItem label="Wrangler">
+
+   ```sh
+   npx wrangler d1 insights --sort-by=writes --time-period=1d --json
+   ```
+
+   The following example output shows the first two of the five results:
+
+   ```sh output
+   [
+     {
+       "query": "INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
+       "avgRowsRead": 0,
+       "totalRowsRead": 0,
+       "avgRowsWritten": 3,
+       "totalRowsWritten": 64818,
+       "avgDurationMs": 0.41,
+       "totalDurationMs": 8858.46,
+       "numberOfTimesRun": 21606,
+       "queryEfficiency": 0,
+       "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+     },
+     {
+       "query": "INSERT INTO \"Order\" (Id, CustomerId, EmployeeId, OrderDate, ShipVia, Freight) VALUES (?, ?, ?, ?, ?, ?)",
+       "avgRowsRead": 0,
+       "totalRowsRead": 0,
+       "avgRowsWritten": 1,
+       "totalRowsWritten": 6987,
+       "avgDurationMs": 0.38,
+       "totalDurationMs": 2655.06,
+       "numberOfTimesRun": 6987,
+       "queryEfficiency": 0,
+       "databaseId": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47"
+     }
+   ]
+   ```
+
+   </TabItem>
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf sql query --scope-account <account_id> "
+     SELECT
+       databaseId,
+       query,
+       COUNT(*) AS numberOfTimesRun,
+       SUM(rowsWritten) AS totalRowsWritten,
+       AVG(rowsWritten) AS avgRowsWritten
+     FROM events.d1Queries
+     WHERE timestamp >= NOW() - INTERVAL '1' DAY
+       AND rowsWritten > 0
+       AND error = ''
+     GROUP BY databaseId, query
+     ORDER BY totalRowsWritten DESC
+     LIMIT 5
+   "
+   ```
+
+   </TabItem>
+   </Tabs>
+
+2. Find the write queries with a high `numberOfTimesRun` and a small `avgRowsWritten`. Each time these queries run, they insert or update only one row of a table. The value of `avgRowsWritten` includes the rows written to the indexes of the table, so a query that inserts one row into a table with two indexes has an `avgRowsWritten` of `3`.
+
+   In the example output, the `OrderDetail` `INSERT` query runs 21,606 times a day, and the `Order` `INSERT` query runs 6,987 times a day. Each order has approximately three order details, and the Worker inserts each order detail with a separate query. The `avgRowsWritten` of the `OrderDetail` query is `3` because the table has two indexes: the index of its primary key, and the `idx_orderdetail_orderid` index from [Find queries that need an index](#find-queries-that-need-an-index).
+
+3. In your Worker code, find the places that run these queries in a loop, or that run many queries one after another in the same request. Put the statements in one `batch()` call:
+
+   ```ts
+   // Before: one round trip to D1 for each order detail
+   for (const detail of details) {
+   	await env.DB.prepare(
+   		"INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
+   	)
+   		.bind(detail.id, orderId, detail.productId, detail.unitPrice, detail.quantity, detail.discount)
+   		.run();
+   }
+
+   // After: one round trip to D1 for all the order details
+   const insertDetail = env.DB.prepare(
+   	"INSERT INTO OrderDetail (Id, OrderId, ProductId, UnitPrice, Quantity, Discount) VALUES (?, ?, ?, ?, ?, ?)",
+   );
+   await env.DB.batch(
+   	details.map((detail) =>
+   		insertDetail.bind(detail.id, orderId, detail.productId, detail.unitPrice, detail.quantity, detail.discount),
+   	),
+   );
+   ```
+
+   The statements in a batch run in one [SQL transaction](https://www.sqlite.org/lang_transaction.html). If one statement fails, D1 rolls back all the statements in the batch. You can also batch read queries that do not depend on the results of other queries in the same request.
+</Steps>
+
+`batch()` decreases the number of round trips, not the number of rows read or written. Each statement in a batch is still a separate query in the analytics data.
