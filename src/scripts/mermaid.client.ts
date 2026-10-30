@@ -306,6 +306,9 @@ async function render() {
 		return;
 	}
 
+	// Measure labels with the loaded fonts so later font swaps do not clip text.
+	await document.fonts.ready;
+
 	for (const diagram of diagrams) {
 		try {
 			const def = diagram.getAttribute("data-diagram") as string;
