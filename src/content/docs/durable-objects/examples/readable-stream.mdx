@@ -113,21 +113,3 @@ export default {
 In a setup where a Durable Object returns a readable stream to a Worker, if the Worker cancels the Durable Object's readable stream, the cancellation propagates to the Durable Object.
 
 :::
-
-## Code updates
-
-Use deferred updates to give an active stream time to finish before its object adopts new code:
-
-<WranglerConfig>
-
-```jsonc
-{
-  "durable_objects": {
-    "code_update_strategy": { "mode": "deferred" }
-  }
-}
-```
-
-</WranglerConfig>
-
-The default wait is 300 seconds. Updates are best effort; a reset can still interrupt the stream. Store progress and let clients reconnect if the stream must resume. Refer to [Durable Object code updates](/durable-objects/deployments/durable-objects-code-updates/).
