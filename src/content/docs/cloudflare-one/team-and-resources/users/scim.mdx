@@ -24,7 +24,7 @@ Users provisioned via the [Zero Trust SCIM integration](#sync-users-and-groups-i
 
 Cloudflare One supports SCIM provisioning for all SAML and OIDC identity providers that use SCIM version `2.0`.
 
-For Google's built-in SCIM provisioning, you must use a [generic SAML identity provider](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace-beta), not the dedicated Google Workspace integration. Google's custom SCIM profiles are in beta and provision users; configure [SAML group membership mapping](/cloudflare-one/integrations/identity-providers/generic-saml/#google-workspace) separately to send groups during authentication.
+For Google's built-in SCIM provisioning, you must use a [Google Workspace (SAML/SCIM) integration](/cloudflare-one/integrations/identity-providers/google-workspace-saml/), not the dedicated Google Workspace integration. Google's custom SCIM profiles are in beta and provision users; configure [SAML group membership mapping](/cloudflare-one/integrations/identity-providers/google-workspace-saml/#1-create-a-custom-saml-app-in-google-workspace) separately to send groups during authentication.
 
 ## Sync users and groups in Zero Trust policies
 
