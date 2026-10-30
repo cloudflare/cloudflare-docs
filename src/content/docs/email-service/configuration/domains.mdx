@@ -329,19 +329,19 @@ Unlocking an Email Service-created record and editing it to point to another pro
 
 If your domain has `MX` records from another provider, Email Routing onboarding fails with error 2008, "Non-Cloudflare MX records exist". Follow these steps to switch.
 
-1. Go to **Compute** > **Email Service** > **Email Routing** and configure your routing rules and destination addresses before switching. Refer to [Get started with Email Routing](/email-service/get-started/) for setup steps.
+1. Add and verify your destination addresses. Destination addresses belong to the account and can be added before onboarding. Refer to [Route emails](/email-service/get-started/route-emails/) for details.
 
    <DashButton url="/?to=/:account/email-service/routing" />
 
-2. In **DNS** > **Records**, delete your provider's `MX` records. Complete step 3 immediately after — there is a brief window where no MX records exist. Most senders retry delivery and succeed once Cloudflare's records propagate, typically within minutes. Resolvers that cached the absence of MX records may take up to 30 minutes to retry.
+2. In the Cloudflare dashboard, go to **DNS** > **Records** and delete your provider's `MX` records. Complete step 3 immediately after — there is a brief window where no MX records exist. Most senders retry delivery and succeed once Cloudflare's records propagate, typically within minutes. Resolvers that cached the absence of MX records may take up to 30 minutes to retry.
 
-   If you no longer send through your current provider, you can also remove its SPF `include:` entry and DKIM records at this point. If you continue to send through it, merge its SPF `include:` into your existing record instead of removing it, and leave its DKIM records in place — DKIM selectors use different names and do not conflict.
+   If you no longer send through your current provider, you can also remove its SPF `include:` entry and DKIM records at this point. If you continue to send through it, keep its SPF `include:` and leave its DKIM records in place. DKIM selectors use different names and do not conflict.
 
 3. Enable Email Routing for your domain. Cloudflare adds the required `MX` records and a DKIM record at `cf2024-1._domainkey.<yourdomain>`. If no SPF record exists, Cloudflare also adds one. If you already have an SPF record, add the Cloudflare `include:` manually — refer to [Routing records](#routing-records) for the correct value.
 
-Until Email Routing is active, keep the old provider account open. Messages sent to cached old `MX` records arrive in your previous mailbox rather than being lost.
+4. Create your routing rules immediately. When the `MX` records point to Cloudflare, mail to an address with no matching rule is rejected with "Address does not exist", and the sender does not retry.
 
-To use Email Routing on a subdomain only and leave the root domain with your current provider, refer to [Configure subdomains](/email-service/configuration/subdomains/) instead.
+Until Email Routing is active, keep the old provider account open. Messages sent to cached old `MX` records arrive in your previous mailbox rather than being lost.
 
 ### Transfer domain ownership
 
