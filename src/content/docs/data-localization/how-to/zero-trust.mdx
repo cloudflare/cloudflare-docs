@@ -17,7 +17,7 @@ sidebar:
 | Control | What it controls | Current availability |
 | - | - | - |
 | [Processing region (Regional Services for Gateway)](#processing-region-for-gateway) | Where Gateway decrypts HTTPS traffic and performs HTTP inspection | Available for [supported on-ramps and regions](#processing-region-for-gateway) |
-| [Connection locations](#connection-locations) | Where `cloudflared`, the Cloudflare One Client, and Direct CNI connect | Global, United States, or FedRAMP High |
+| [Connection locations](#connection-locations) | Where `cloudflared`, the Cloudflare One Client, and Direct CNI connect | Earth, United States, or FedRAMP High |
 | [Processing region for Access](#access) | Where Cloudflare processes reverse proxy requests for Access-protected applications | Team domain: FedRAMP Moderate Compliant (Domestic). Public hostnames: any managed region available for Regional Hostnames |
 | [Processing region for Browser Isolation](#browser-isolation) | Where Cloudflare processes supported Browser Isolation traffic | US FedRAMP region only |
 | [Log region (Customer Metadata Boundary)](#log-region) | Where Cloudflare stores supported Customer Logs | European Union and United States for selected datasets |
@@ -31,7 +31,9 @@ Customers that require a FedRAMP-authorized Cloudflare One deployment should use
 
 ## Processing region for Gateway
 
-Processing region (Regional Services for Gateway) controls where Cloudflare Gateway decrypts HTTPS traffic and performs HTTP inspection. Gateway HTTP inspection requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/). Processing region for Gateway does not apply to Gateway DNS or network policy processing.
+Processing region (Regional Services for Gateway) controls where Cloudflare Gateway decrypts HTTPS traffic and performs HTTP inspection. Gateway HTTP inspection requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/). 
+
+Processing region for Gateway does not apply to Gateway DNS or network policy processing.  Gateway DNS or network policy processing occurs at the Cloudflare data center where traffic is received.
 
 Processing region for Gateway is configured at the Cloudflare One account level. The selected region applies to Gateway HTTP traffic from supported on-ramps for the account.
 
@@ -62,6 +64,7 @@ Processing region for Gateway is available in these regions:
 - FedRAMP Moderate Compliant (International)
 - IRAP Protected
 - NATO
+- Schengen Area
 - United States of America
 
 Refer to [Region support](/data-localization/region-support/) for region definitions. Contact your account team to configure or inquire about the availability of other regions.
@@ -86,7 +89,7 @@ Use [dedicated egress IPs](/cloudflare-one/traffic-controls/egress-policies/dedi
 
 The following connection locations are separate from processing region:
 
-- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) connects globally by default. The `--region us` option restricts tunnel connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers. No `--region` flag is required.
+- [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) connects globally by default. The `--region us` option restricts tunnel connections to data centers in the United States. In FedRAMP High environments, the tunnel token automatically routes `cloudflared` to FedRAMP data centers and no `--region` flag is required.
 - [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#environment) connects to the global environment by default. The `fedramp_high` setting connects the client to the FedRAMP High environment.
 - [Direct CNI](/network-interconnect/) terminates a physical connection at the facility selected during provisioning. This is a physical topology choice that is made by the customer.
 
