@@ -1,0 +1,36 @@
+---
+title: "WAF Release - 2026-10-30 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-10-30 emergency release
+date: 2026-10-30
+---
+
+import { RuleID } from "~/components";
+
+This emergency release adds a new rule to the Cloudflare Managed Ruleset, disabled by default, for a vulnerability in Nuxt Image and IPX. The rule offers partial coverage. Please follow the advisory and patch to the latest version.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="ae8259332dc441288c46211f5b82bffe" />
+			</td>
+			<td>N/A</td>
+			<td>Nuxt Image / IPX - Explicit GIF or Animation Modifier Exposure</td>
+			<td>N/A</td>
+			<td>Disabled</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
