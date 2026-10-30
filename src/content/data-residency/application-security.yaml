@@ -1,0 +1,131 @@
+category: Application Security
+order: 2
+entries:
+  - product: Advanced Certificate Manager
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: out-of-scope
+      gkm:
+        status: out-of-scope
+  - product: Advanced DDoS Protection
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - "[Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) (which automatically adjusts DDoS rules based on your traffic patterns) is only supported when Customer Metadata Boundary is set to the US. All other DDoS protection features work with any CMB region."
+      gkm:
+        status: supported
+  - product: API Shield
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - "The following API Shield sub-features do not work when CMB is set to EU: API Discovery (automatic detection of your API endpoints), Volumetric Abuse Detection (identifying unusually high API call volumes), and [Sequence Analytics and Mitigation](/api-shield/security/sequence-analytics/) (tracking the order of API calls to detect misuse). All other API Shield features work with any CMB region."
+      gkm:
+        status: supported
+  - product: Bot Management
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported
+  - product: Client-side security (formerly Page Shield)
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported
+  - product: DNS Firewall
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Rate Limiting
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Legacy Zone Analytics & Logs section not available outside US region when using CMB. Use [Security Analytics](/waf/analytics/security-analytics/) instead.
+      gkm:
+        status: supported
+  - product: SSL
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported
+  - product: Cloudflare for SaaS
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: not-supported
+  - product: Turnstile
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - "[Turnstile Analytics](/turnstile/turnstile-analytics/) are available. However, there are no regionalization guarantees for the Siteverify API yet."
+      gkm:
+        status: out-of-scope
+  - product: WAF/L7 Firewall
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported
+  - product: DMARC Management
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope

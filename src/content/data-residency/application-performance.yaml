@@ -1,0 +1,172 @@
+category: Application Performance
+order: 1
+entries:
+  - product: Caching/CDN
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: out-of-scope
+      cmb:
+        status: supported
+      gkm:
+        status: supported
+  - product: Cache Reserve
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Contact your account team. Cloudflare configures the Cache Reserve storage location with you.
+      storage:
+        status: requirements
+        requirements:
+          - Contact your account team. Cloudflare configures the Cache Reserve storage location with you. By default, Cache Reserve stores data close to your origin server.
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: DNS
+    controls:
+      regional_services:
+        status: supported
+        impact:
+          - If you use [outgoing zone transfers](/dns/zone-setups/zone-transfers/cloudflare-as-primary/) (where Cloudflare sends your DNS records to non-Cloudflare nameservers), those transfers will include global Cloudflare IP addresses rather than region-specific ones. This means Regional Services will not function correctly when end users receive DNS answers from non-Cloudflare nameservers.
+      storage:
+        status: out-of-scope
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: HTTP/3 (with QUIC)
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: out-of-scope
+      cmb:
+        status: out-of-scope
+      gkm:
+        status: out-of-scope
+  - product: Image Resizing
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Only when using a Custom Domain set to a region, either through Workers or [Transform Rules](/images/optimization/transformations/rewrite-rules/) within the same zone.
+      storage:
+        status: out-of-scope
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: supported
+  - product: Load Balancing
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: out-of-scope
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: supported
+  - product: Network Error Logging (NEL)
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: out-of-scope
+  - product: Onion Routing
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: not-supported
+  - product: O2O
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: not-supported
+  - product: Stream Delivery
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported
+  - product: Tiered Caching
+    controls:
+      regional_services:
+        status: supported
+        impact:
+          - Regular and Custom Tiered Cache (where you define the caching hierarchy) work with Regional Services. Smart Tiered Caching (where Cloudflare automatically selects intermediate cache data centers) is not available with Regional Services.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Regular/Generic and Custom Tiered Cache work with Customer Metadata Boundary (CMB). Smart Tiered Caching (where Cloudflare automatically selects intermediate cache data centers) does not work with CMB.
+          - With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
+      gkm:
+        status: supported
+  - product: Trace
+    controls:
+      regional_services:
+        status: not-supported
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+      gkm:
+        status: not-supported
+  - product: Waiting Room
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Web Analytics / Real User Monitoring (RUM)
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+        notes:
+          - Web Analytics collects the [minimum amount of information](/web-analytics/data-metrics/data-origin-and-collection/). Alternatively, you can [exclude EU Visitors from RUM](/speed/observatory/rum-beacon/#rum-excluding-eeaeu).
+      gkm:
+        status: out-of-scope
+  - product: Zaraz
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported

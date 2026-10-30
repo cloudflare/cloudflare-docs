@@ -8,6 +8,7 @@ import {
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
 import { fieldsSchema } from "~/schemas/fields";
+import { dataResidencySchema } from "~/schemas/data-residency";
 // Remote (middlecache) data collections — no local content files exist, so we
 // reuse the shared collection configs in place (which carry the middlecache
 // loader + schema) rather than duplicating the fetcher on the Nimbus side.
@@ -140,6 +141,12 @@ export const collections = {
 				}),
 			),
 		}),
+	}),
+	// Data residency capability records, one YAML per product category. Read by
+	// DataResidencyCatalog on /data-localization/compatibility/.
+	"data-residency": defineCollection({
+		loader: glob({ pattern: "*.yaml", base: "./src/content/data-residency" }),
+		schema: dataResidencySchema,
 	}),
 	// CF release-notes data. Read by ProductReleaseNotes on the changelog page.
 	"release-notes": defineCollection({

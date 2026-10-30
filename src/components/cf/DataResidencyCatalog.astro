@@ -1,0 +1,263 @@
+---
+/**
+ * DataResidencyCatalog — searchable reference of how each product interacts
+ * with each data residency control. Renders the `data-residency` collection;
+ * one record per product holds the status, requirements, functional impact,
+ * and verification date for every control.
+ */
+import { getCollection } from "astro:content";
+import { Badge } from "@/components/ui/badge";
+import { renderMarkdownInline } from "~/util/markdown";
+
+const controls = [
+	{
+		key: "regional_services",
+		name: "Regional Services",
+		scope: "Request processing",
+	},
+	{ key: "storage", name: "Storage jurisdictions", scope: "Stored data" },
+	{
+		key: "cmb",
+		name: "Customer Metadata Boundary",
+		scope: "Logs and analytics",
+	},
+	{ key: "gkm", name: "Geo Key Manager", scope: "TLS private keys" },
+] as const;
+
+const statuses = {
+	supported: { label: "Supported", variant: "success" },
+	requirements: { label: "With requirements", variant: "info" },
+	"not-supported": { label: "Not supported", variant: "danger" },
+	"out-of-scope": { label: "Out of scope", variant: "default" },
+	unassessed: { label: "Not assessed", variant: "warning" },
+} as const;
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+const groups = (await getCollection("data-residency"))
+	.map((c) => c.data)
+	.sort((a, b) => a.order - b.order);
+---
+
+<div class="not-content my-4 grid gap-3 md:grid-cols-[1fr_auto_auto]">
+	<input
+		type="search"
+		id="residency-search"
+		aria-label="Search products"
+		placeholder="Search products, for example Workers or Gateway"
+		class="border-border bg-card focus:ring-primary w-full min-w-0 rounded-md border px-4 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
+	/>
+	<select
+		id="residency-control"
+		aria-label="What do you need to keep in region?"
+		class="border-border bg-card rounded-md border px-3 py-2"
+	>
+		<option value="">All controls</option>
+		{controls.map((c) => (
+			<option value={c.key}>{c.scope}</option>
+		))}
+	</select>
+	<select
+		id="residency-status"
+		aria-label="Filter by status"
+		class="border-border bg-card rounded-md border px-3 py-2"
+	>
+		<option value="">Any status</option>
+		{Object.entries(statuses).map(([k, s]) => (
+			<option value={k}>{s.label}</option>
+		))}
+	</select>
+</div>
+
+<p
+	id="residency-count"
+	class="text-muted-foreground text-sm"
+	aria-live="polite"
+></p>
+
+<div id="residency-catalog" class="not-content">
+	{groups.map((group) => (
+		<section data-group class="mt-6">
+			<h3 id={slug(group.category)} class="mb-2 text-lg font-semibold">
+				{group.category}
+			</h3>
+			<div class="border-border divide-border divide-y rounded-md border">
+				<div
+					class="residency-grid text-muted-foreground hidden gap-2 px-4 py-2 text-xs font-medium sm:grid"
+					aria-hidden="true"
+				>
+					<span>Product</span>
+					{controls.map((c) => (
+						<span data-control={c.key}>
+							{c.scope}
+							<br />
+							<span class="font-normal">{c.name}</span>
+						</span>
+					))}
+				</div>
+				{group.entries.map((entry) => (
+					<details
+						id={slug(entry.product)}
+						data-row
+						data-search={`${entry.product} ${group.category}`.toLowerCase()}
+						{...Object.fromEntries(
+							controls.map((c) => [
+								`data-status-${c.key}`,
+								entry.controls[c.key].status,
+							]),
+						)}
+						class="group"
+					>
+						<summary class="residency-grid hover:bg-accent grid cursor-pointer items-center gap-2 px-4 py-3">
+							<span class="font-semibold">
+								{entry.product}
+								{entry.review && (
+									<span class="ml-1 align-middle">
+										<Badge text="Under review" variant="warning" />
+									</span>
+								)}
+							</span>
+							{controls.map((c) => {
+								const s = statuses[entry.controls[c.key].status];
+								return (
+									<span
+										data-control={c.key}
+										class="flex items-center gap-1 text-xs"
+									>
+										<span class="text-muted-foreground sm:hidden">
+											{c.scope}:
+										</span>
+										<Badge text={s.label} variant={s.variant} />
+									</span>
+								);
+							})}
+						</summary>
+						<div class="grid gap-4 px-4 pt-1 pb-4 sm:grid-cols-2">
+							{controls.map((c) => {
+								const ctl = entry.controls[c.key];
+								const s = statuses[ctl.status];
+								const details = [
+									...(ctl.requirements ?? []).map((t) => ["Requires", t]),
+									...(ctl.impact ?? []).map((t) => ["Impact", t]),
+									...(ctl.notes ?? []).map((t) => ["Note", t]),
+								];
+								return (
+									<div data-control={c.key} class="text-sm">
+										<div class="mb-1 flex items-center gap-2">
+											<span class="font-medium">{c.name}</span>
+											<Badge text={s.label} variant={s.variant} />
+										</div>
+										{details.length > 0 ? (
+											<ul class="ml-4 list-disc space-y-1">
+												{details.map(([kind, text]) => (
+													<li>
+														<strong>{kind}:</strong>{" "}
+														<span set:html={renderMarkdownInline(text)} />
+													</li>
+												))}
+											</ul>
+										) : (
+											<p class="text-muted-foreground">
+												{ctl.status === "not-supported"
+													? "No reason documented."
+													: "No conditions documented."}
+											</p>
+										)}
+									</div>
+								);
+							})}
+							<p class="text-muted-foreground text-xs sm:col-span-2">
+								{entry.last_verified
+									? `Last verified ${entry.last_verified}.`
+									: "Not yet re-verified since the previous compatibility matrix."}
+							</p>
+						</div>
+					</details>
+				))}
+			</div>
+		</section>
+	))}
+</div>
+
+<style>
+	@media (min-width: 640px) {
+		.residency-grid {
+			grid-template-columns: minmax(9rem, 1.2fr) repeat(4, minmax(0, 1fr));
+		}
+		#residency-catalog[data-filtered] .residency-grid {
+			grid-template-columns: minmax(9rem, 1.2fr) minmax(0, 3fr);
+		}
+	}
+	#residency-catalog summary::-webkit-details-marker {
+		display: none;
+	}
+	#residency-catalog summary {
+		list-style: none;
+	}
+	#residency-catalog a {
+		color: var(--color-primary);
+		text-decoration: underline;
+	}
+</style>
+
+<script>
+	const search = document.querySelector<HTMLInputElement>("#residency-search");
+	const control =
+		document.querySelector<HTMLSelectElement>("#residency-control");
+	const status = document.querySelector<HTMLSelectElement>("#residency-status");
+	const catalog = document.querySelector<HTMLDivElement>("#residency-catalog");
+	const count =
+		document.querySelector<HTMLParagraphElement>("#residency-count");
+	const keys = ["regional_services", "storage", "cmb", "gkm"];
+
+	function apply() {
+		if (!catalog) return;
+		const term = (search?.value ?? "").toLowerCase().trim();
+		const ctl = control?.value ?? "";
+		const st = status?.value ?? "";
+
+		catalog.toggleAttribute("data-filtered", ctl !== "");
+		catalog.querySelectorAll<HTMLElement>("[data-control]").forEach((el) => {
+			el.hidden = ctl !== "" && el.dataset.control !== ctl;
+		});
+
+		let visible = 0;
+		catalog.querySelectorAll<HTMLElement>("[data-group]").forEach((group) => {
+			let groupVisible = 0;
+			group
+				.querySelectorAll<HTMLDetailsElement>("[data-row]")
+				.forEach((row) => {
+					const matchesTerm =
+						!term || (row.dataset.search ?? "").includes(term);
+					const checked = ctl ? [ctl] : keys;
+					const matchesStatus =
+						!st ||
+						checked.some((k) => row.getAttribute(`data-status-${k}`) === st);
+					const show = matchesTerm && matchesStatus;
+					row.hidden = !show;
+					if (show) groupVisible++;
+				});
+			group.hidden = groupVisible === 0;
+			visible += groupVisible;
+		});
+
+		if (count)
+			count.textContent = `${visible} products shown. Select a product to see requirements and impact.`;
+	}
+
+	search?.addEventListener("input", apply);
+	control?.addEventListener("change", apply);
+	status?.addEventListener("change", apply);
+	apply();
+
+	function openFromHash() {
+		const id = decodeURIComponent(location.hash.slice(1));
+		const target = id ? document.getElementById(id) : null;
+		if (target instanceof HTMLDetailsElement) {
+			target.open = true;
+			target.scrollIntoView({ block: "start" });
+		}
+	}
+	window.addEventListener("hashchange", openFromHash);
+	openFromHash();
+</script>
