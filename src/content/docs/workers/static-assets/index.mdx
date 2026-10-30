@@ -60,8 +60,6 @@ Your Worker code, configuration, and static assets belong to a [Worker version](
 
 Deploying sets which versions receive traffic. The change takes time to reach every location on Cloudflare's network. During this time, requests for HTML and its assets can use different versions. Uploading an asset does not add it to earlier versions' manifests. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for ways to plan for these requests.
 
-Deploying a new version does not cancel asset downloads already in progress. Later asset requests are separate requests and can use a different version. Refer to [Downloads already in progress](/workers/versions-and-deployments/version-skew/#downloads-already-in-progress).
-
 The **assets directory** specified in your [Wrangler configuration file](/workers/wrangler/configuration/#assets) is central to this design. During deployment, Wrangler automatically uploads the files from this directory to Cloudflare's infrastructure. Once deployed, requests for these assets are routed efficiently to locations closest to your users.
 
 <WranglerConfig>
