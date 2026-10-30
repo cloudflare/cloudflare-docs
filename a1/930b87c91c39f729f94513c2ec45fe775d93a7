@@ -1,0 +1,21 @@
+src/content/docs/cloudflare-one/cloud-and-saas-findings/custom-finding-types.mdx
+  s_08e7de9b895463::t_660638fb50e2d3 24,51,61-70,78-79,187-189,194,206,211,268,275,280,296,305,324,355,359
+src/content/docs/cloudflare-one/integrations/cloud-and-saas/anthropic.mdx
+  s_08e7de9b895463::t_7bbea2e3ef35cb 60-62,68-75,81-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a1930b87c91c39f729f94513c2ec45fe775d93a7",
+  "prompts": {},
+  "sessions": {
+    "s_08e7de9b895463": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "band-megaraptor",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}
