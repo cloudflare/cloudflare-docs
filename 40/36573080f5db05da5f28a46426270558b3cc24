@@ -1,0 +1,21 @@
+src/content/docs/workers/cache/configuration.mdx
+  s_4104cac19d0c3a::t_3f4d630fb5c901 114-131
+src/content/docs/workers/cache/index.mdx
+  s_4104cac19d0c3a::t_5c5542d57cfe61 278-279
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4036573080f5db05da5f28a46426270558b3cc24",
+  "prompts": {},
+  "sessions": {
+    "s_4104cac19d0c3a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18e3e-59f8-7ac2-97ca-44e9b219ae44",
+        "model": "unknown"
+      },
+      "human_author": "Timo Wilhelm <twilhelm@cloudflare.com>"
+    }
+  }
+}

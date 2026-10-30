@@ -1,0 +1,21 @@
+src/content/data-residency/application-performance.yaml
+  s_dd5861d15a7f89::t_155b4e637f343a 9,17-19,21-23,35,45,57,69
+src/content/docs/data-localization/index.mdx
+  s_dd5861d15a7f89::t_786726b6e94a36 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "804508a1e67e1d3f414648038db9c6d0205d6d2e",
+  "prompts": {},
+  "sessions": {
+    "s_dd5861d15a7f89": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e7df5c571ffeiPchwrJb7j0nZe",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

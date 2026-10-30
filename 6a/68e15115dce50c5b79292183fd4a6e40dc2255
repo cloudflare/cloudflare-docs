@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-08-19-abort-signal-global-scope.mdx
+  s_edb5ecd74715e6::t_d8ccfc438d7ee6 27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6a68e15115dce50c5b79292183fd4a6e40dc2255",
+  "prompts": {},
+  "sessions": {
+    "s_edb5ecd74715e6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a165a6-cb3b-7b31-a5cb-3633150a8ed5",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

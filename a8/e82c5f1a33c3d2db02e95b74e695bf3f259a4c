@@ -1,0 +1,19 @@
+src/components/config-explorer/config-reference.generated.ts
+  s_5190bcc727cfff::t_3bc96e3ed354de 4,130,133,135
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a8e82c5f1a33c3d2db02e95b74e695bf3f259a4c",
+  "prompts": {},
+  "sessions": {
+    "s_5190bcc727cfff": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e80dfd120ffeIGjFWwIOL0jME9",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

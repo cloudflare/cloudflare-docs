@@ -1,0 +1,31 @@
+src/content/docs/agents/agent-class/index.mdx
+  s_46ec7e7188414e::t_7236c4326ca483 215
+src/content/docs/agents/concepts/what-are-agents.mdx
+  s_46ec7e7188414e::t_1f753e662cdcf7 94
+src/content/docs/agents/examples/chat-agent.mdx
+  s_46ec7e7188414e::t_22e1944400bf91 21
+src/content/docs/agents/getting-started/add-to-existing-project.mdx
+  s_46ec7e7188414e::t_33cfc5d9b6ccae 22
+src/content/docs/agents/getting-started/index.mdx
+  s_46ec7e7188414e::t_87d455900b0cc4 21
+src/content/docs/agents/getting-started/learn-the-runtime.mdx
+  s_46ec7e7188414e::t_26fb57ca880fb1 18,298
+src/content/docs/agents/index.mdx
+  s_46ec7e7188414e::t_45b6f24857adc0 47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "88aaff9915a876f818f1e1c2873d6d006620fcbe",
+  "prompts": {},
+  "sessions": {
+    "s_46ec7e7188414e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1881c-4b76-7533-bee9-537c6433c043",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

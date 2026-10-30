@@ -1,0 +1,19 @@
+.github/CODEOWNERS
+  s_c939338179ae38::t_36d0fc42010a00 62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "30d226048447bb62f4036c54a85f4b565ae845d9",
+  "prompts": {},
+  "sessions": {
+    "s_c939338179ae38": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1658f-670f-7fb3-b039-73a7784a9e17",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

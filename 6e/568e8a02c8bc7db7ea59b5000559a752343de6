@@ -1,0 +1,21 @@
+src/content/docs/artifacts/get-started/index.mdx
+  s_c939338179ae38::t_f6119a559b126f 17
+src/content/docs/artifacts/index.mdx
+  s_c939338179ae38::t_830b908d22f9e6 24,26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6e568e8a02c8bc7db7ea59b5000559a752343de6",
+  "prompts": {},
+  "sessions": {
+    "s_c939338179ae38": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1658f-670f-7fb3-b039-73a7784a9e17",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
