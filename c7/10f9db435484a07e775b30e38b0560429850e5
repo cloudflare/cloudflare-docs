@@ -1,0 +1,19 @@
+src/content/docs/waf/managed-rules/waf-exceptions/define-dashboard.mdx
+  s_b6641fcb32a9d9::t_5a24272efb7fa5 84-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c710f9db435484a07e775b30e38b0560429850e5",
+  "prompts": {},
+  "sessions": {
+    "s_b6641fcb32a9d9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_eabf9c7aaffeiutYHwHuA9qwJm",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints.mdx
+  s_2e3efaa26871f6::t_7021ebc0f0d50c 13-21,47-52,78-83
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b24d3fe05fa71ea452a2e4be0c0ed34f96c0ddff",
+  "prompts": {},
+  "sessions": {
+    "s_2e3efaa26871f6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f9aa97675ffe5S1ztMP4J1ceDQ",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Steve Welham <swelham@cloudflare.com>"
+    }
+  }
+}

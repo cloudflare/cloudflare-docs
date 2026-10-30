@@ -1,0 +1,42 @@
+src/content/docs/network-interconnect/get-started.mdx
+  s_82823211c87440::t_e98a8fbd33d83a 88
+src/content/docs/network-interconnect/index.mdx
+  s_82823211c87440::t_82f500b3f9f775 46
+src/content/docs/network-interconnect/locations.mdx
+  s_97136034462d23::t_841145303ceb9c 64,106,108
+  s_97136034462d23::t_26b261d205abb9 13,19-22
+  s_97136034462d23::t_0e824d40c858af 28,36-43
+  s_97136034462d23::t_2709ccc857ecd0 29,45,52
+  s_97136034462d23::t_6e2ea77f220877 51
+  s_97136034462d23::t_3f028230c86bd4 53-63,65-73,79-87,95-105,107,109-131,258-262,268-285
+  s_97136034462d23::t_602a2085e18cd9 1-12,14-18,23-25,48-50,142,144,148,286-289
+  s_97136034462d23::t_9c7716cc1de805 26-27,74-78,88-94,149-257,263-267
+  s_97136034462d23::t_11591453c8be74 44
+  s_97136034462d23::t_0a1f3b0155b30b 32-33
+  s_97136034462d23::t_65338916f1d631 30-31,46-47,132-141,143,145-147
+  s_97136034462d23::t_ce15d3cd432ce0 34-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5b6815f22a7bb20fad74d6a80f23b68fb28ec212",
+  "prompts": {},
+  "sessions": {
+    "s_82823211c87440": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_053c72cc2ffeLoc81QWBWE2GgX",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Steve Welham <swelham@cloudflare.com>"
+    },
+    "s_97136034462d23": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05a711fc5ffeWYc6YiVe1fJXiP",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Steve Welham <swelham@cloudflare.com>"
+    }
+  }
+}

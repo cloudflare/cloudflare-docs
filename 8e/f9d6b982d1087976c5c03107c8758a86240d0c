@@ -1,0 +1,25 @@
+src/content/docs/workers/authorization/workers.mdx
+  s_de3d1feae9ed65::t_1be2517b3e18e9 56-63
+src/content/docs/workers/configuration/secrets.mdx
+  s_de3d1feae9ed65::t_ae50766e743297 22-34
+src/content/docs/workers/versions-and-deployments/index.mdx
+  s_de3d1feae9ed65::t_45c6a287d05a98 12,54-91
+src/content/partials/workers/env_and_secrets.mdx
+  s_de3d1feae9ed65::t_244b11566f3ac1 11-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8ef9d6b982d1087976c5c03107c8758a86240d0c",
+  "prompts": {},
+  "sessions": {
+    "s_de3d1feae9ed65": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1801b-e699-7063-8296-f96675083c35",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

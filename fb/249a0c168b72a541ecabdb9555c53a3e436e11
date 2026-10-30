@@ -1,0 +1,19 @@
+src/content/changelog/workers-ai/2026-10-19-deepseek-v4.1-flash-workers-ai.mdx
+  s_320307ba9c2bfe::t_80507e063d0de3 2-3,11,20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fb249a0c168b72a541ecabdb9555c53a3e436e11",
+  "prompts": {},
+  "sessions": {
+    "s_320307ba9c2bfe": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ea938ddfeffeShFuGXQdRq7HRk",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Kevin Flansburg <kflansburg@cloudflare.com>"
+    }
+  }
+}

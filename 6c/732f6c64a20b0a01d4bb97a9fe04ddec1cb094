@@ -1,0 +1,29 @@
+src/content/docs/email-service/api/send-emails/rest-api.mdx
+  s_8465005ec1a809::t_5adfd2a38e83ad 44
+src/content/docs/email-service/api/send-emails/smtp.mdx
+  s_8465005ec1a809::t_626129c0e80071 112,136,170
+src/content/docs/email-service/api/send-emails/workers-api.mdx
+  s_8465005ec1a809::t_9c8b5cc07dd89b 101
+src/content/docs/email-service/examples/email-sending/email-attachments.mdx
+  s_8465005ec1a809::t_c21d7f4e7978a6 329-330,332
+src/content/docs/email-service/examples/email-sending/smtp.mdx
+  s_8465005ec1a809::t_1377b2fbdb6c40 94
+src/content/docs/email-service/platform/limits.mdx
+  s_8465005ec1a809::t_52e7a7490a4e21 30-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6c732f6c64a20b0a01d4bb97a9fe04ddec1cb094",
+  "prompts": {},
+  "sessions": {
+    "s_8465005ec1a809": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bb624e3b-8a81-491a-93bc-cb84fe00a4ca",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Eric Falcao <efalcao@cloudflare.com>"
+    }
+  }
+}

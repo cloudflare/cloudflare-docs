@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-19-cloudflare-mcp-step-up.mdx
+  s_ce2cb8396807e3::t_e32258147dfdc0 2-3,9,11,13,15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "64602e7c4f64fad4c98e7ac46561d2ebc7830d9f",
+  "prompts": {},
+  "sessions": {
+    "s_ce2cb8396807e3": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a154d1-3d12-7095-a77d-6cd3bb0b7f20",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

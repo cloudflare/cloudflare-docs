@@ -1,0 +1,63 @@
+src/content/docs/ai-gateway/reference/limits.mdx
+  s_74920a660e98f5::t_3b36717ad1e940 23
+src/content/docs/ai-gateway/reference/pricing.mdx
+  s_74920a660e98f5::t_bcd316d13b35a9 17-24
+src/content/docs/ai-search/platform/limits-pricing.mdx
+  s_74920a660e98f5::t_704245abe08904 17,51-56
+src/content/docs/cloudflare-for-platforms/artifacts.mdx
+  s_74920a660e98f5::t_652290aee6b54d 1-10
+src/content/docs/cloudflare-for-platforms/d1.mdx
+  s_74920a660e98f5::t_688a6686ef7898 1-10
+src/content/docs/cloudflare-for-platforms/r2.mdx
+  s_74920a660e98f5::t_236916105d446b 1-10
+src/content/docs/d1/index.mdx
+  s_74920a660e98f5::t_fd29dfaafb1d65 35
+src/content/docs/d1/platform/limits.mdx
+  s_74920a660e98f5::t_0638fe21814f1f 13-19,21-30,36,38,40,42
+src/content/docs/d1/platform/pricing.mdx
+  s_74920a660e98f5::t_397908f98698e2 18
+src/content/docs/kv/platform/limits.mdx
+  s_74920a660e98f5::t_1cdd35fc003648 21
+src/content/docs/kv/platform/pricing.mdx
+  s_74920a660e98f5::t_8ee2a6f6badf9f 11,17-23,27,31,35
+src/content/docs/queues/platform/limits.mdx
+  s_74920a660e98f5::t_58d0c2594375d3 14,19
+src/content/docs/queues/platform/pricing.mdx
+  s_74920a660e98f5::t_ce0c070db12e09 20
+src/content/docs/r2/platform/limits.mdx
+  s_74920a660e98f5::t_ca7616a9795f02 15,17
+src/content/docs/r2/pricing.mdx
+  s_74920a660e98f5::t_e859cb53423c0c 28-37,47,96-99,131-137,143-149
+src/content/docs/vectorize/platform/limits.mdx
+  s_74920a660e98f5::t_0500e923ce014f 21
+src/content/docs/vectorize/platform/pricing.mdx
+  s_74920a660e98f5::t_ba2055acfbecc0 4,19,21,68-69
+src/content/partials/d1/faq-limits.mdx
+  s_74920a660e98f5::t_cbb1f4e4b61678 8
+src/content/partials/d1/faq-pricing.mdx
+  s_74920a660e98f5::t_9b9d5394a7c296 53-58
+src/content/partials/vectorize/vectorize-pricing.mdx
+  s_74920a660e98f5::t_5fe827480b04a5 5-9
+src/content/partials/workers/d1-pricing.mdx
+  s_74920a660e98f5::t_6dedf404545cb6 5-14,29
+src/content/partials/workers/kv_pricing.mdx
+  s_74920a660e98f5::t_dabdb38d4189a2 7-16,18-20
+src/content/partials/workers/queues_pricing.mdx
+  s_74920a660e98f5::t_0f75f9074479d8 5,16,19-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ff6e90427f0e05e9c9468364b3a99c96860c2721",
+  "prompts": {},
+  "sessions": {
+    "s_74920a660e98f5": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a16628-e510-7b80-8d83-fc6e145f3f90",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

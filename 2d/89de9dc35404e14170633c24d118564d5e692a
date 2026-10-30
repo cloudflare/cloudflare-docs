@@ -1,0 +1,19 @@
+src/content/docs/agents/models/index.mdx
+  s_41fd4d89757fb4::t_78dc447dce1bba 36,87,89-110,120,129-131,145,155,164-166,182,188-189,198-202,204-206,218,222,224,244,251-254,279,286-288,290,327,335-337
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2d89de9dc35404e14170633c24d118564d5e692a",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/network-interconnect/locations.mdx
+  s_97136034462d23::t_223bc2af231fdf 34,36,38,40,46,48-103,109,111-124,130,132,134-188,190-193,199,201-223
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "81342dedd9c3004210962507a6ffb1019965bfc0",
+  "prompts": {},
+  "sessions": {
+    "s_97136034462d23": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05a711fc5ffeWYc6YiVe1fJXiP",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Steve Welham <swelham@cloudflare.com>"
+    }
+  }
+}

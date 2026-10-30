@@ -1,0 +1,37 @@
+public/__redirects
+  s_dde8d185bd747c::t_f0a9c91d82ace0 261-262
+src/content/changelog/agents/2026-10-20-think-computer-workspace.mdx
+  s_dde8d185bd747c::t_b476e5214d1e4e 12
+src/content/docs/agents/agent-class/index.mdx
+  s_dde8d185bd747c::t_250b46baf78a75 109
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_dde8d185bd747c::t_fee5cfbf73fbd2 207,209,211,215-217,245,275
+src/content/docs/agents/harnesses/opencode.mdx
+  s_dde8d185bd747c::t_c275cf1c7e9bdd 342
+src/content/docs/agents/harnesses/pi/extensions.mdx
+  s_dde8d185bd747c::t_8957b30a5661c8 132,136,138,157
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_dde8d185bd747c::t_aecd61b0e62e2a 28-29,153
+src/content/docs/agents/harnesses/think/index.mdx
+  s_dde8d185bd747c::t_a8f8976b7b4bcd 377
+src/content/docs/agents/harnesses/think/tools.mdx
+  s_dde8d185bd747c::t_bde8ece5cf3fcb 23
+src/content/docs/agents/runtime/lifecycle/sessions.mdx
+  s_dde8d185bd747c::t_b584a5002b2f6f 138,209,231,283,343,627
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7944da53cfe27aac23eb7d4cc12de96b9d2687b6",
+  "prompts": {},
+  "sessions": {
+    "s_dde8d185bd747c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1877c-5b8b-7283-9f59-80a151595166",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}
