@@ -129,7 +129,7 @@ For `POST` and `PUT`, provide an alias name without `custom/`, a list of catalog
 }
 ```
 
-Each model's optional `providers` list restricts its providers and sets their preferred order. Omit `providers` to allow the gateway's registered providers for that model. Provider restrictions are configured through the API; the dashboard editor selects models only.
+Each model's optional `providers` list restricts its providers and sets their preferred order. Omit `providers` to allow the gateway's registered providers for that model. Provider restrictions are configured through the API. The dashboard editor selects models only.
 
 `PUT` replaces the whole configuration. Include every model and provider restriction you want to keep. Omitting `routing`, or setting it to `null` or `{}`, clears the alias's routing preferences.
 
@@ -137,7 +137,7 @@ Each model's optional `providers` list restricts its providers and sets their pr
 
 - Each gateway supports up to 100 aliases.
 - An alias must contain between 1 and 50 model entries.
-- Names must be unique within the gateway and contain 1–64 characters. Use lowercase letters and numbers, optionally separated by a single `.`, `_`, or `-`. For example, `support-fast` is valid; `Support Fast`, `support--fast`, and `support-` are not.
+- Names must be unique within the gateway and contain 1–64 characters. Use lowercase letters and numbers, optionally separated by a single `.`, `_`, or `-`. For example, `support-fast` is valid. `Support Fast`, `support--fast`, and `support-` are not.
 - An alias cannot reference another `custom/` alias.
 - Models must support a shared protocol format for the request. Native-only model formats are not available through aliases.
 - Aliases do not support x402 payments.
