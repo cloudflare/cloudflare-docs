@@ -16,7 +16,7 @@ This page covers common issues when using AI Gateway. For provider-specific trou
 
 If you receive authentication errors from your AI provider, AI Gateway did not pass valid credentials upstream. Check the following:
 
-1. **Verify header placement**: Make sure your Cloudflare token is in `cf-aig-authorization`, not `Authorization`. The `Authorization` header is reserved for provider credentials.
+1. **Verify header placement**: On provider-native endpoints, put your Cloudflare token in `cf-aig-authorization`. Supply provider credentials in the [format AI Gateway recognizes for the provider and endpoint](/ai-gateway/features/unified-billing/#credential-precedence). For example, Anthropic Messages requires `x-api-key`, while OpenAI uses `Authorization: Bearer`.
 
 2. **Check your configuration based on endpoint type**:
    - **Provider-specific endpoints**: Confirm your request URL includes the provider path (for example, `/google-vertex-ai/` or `/openai/`). AI Gateway uses this to identify the provider and apply the correct stored credentials.
@@ -31,6 +31,18 @@ If you receive authentication errors from your AI provider, AI Gateway did not p
 For provider-specific authentication issues:
 
 - [Google Vertex AI troubleshooting](/ai-gateway/usage/providers/vertex/#troubleshooting)
+
+### 400: Provider credentials required (2044)
+
+AI Gateway returns HTTP `400` with error code `2044` and the message `Customer-provided provider credentials are required for this request` when it cannot find applicable provider credentials and Unified Billing fallback is blocked.
+
+Fallback is blocked when **Require provider credentials** is on for the gateway or the request includes `cf-aig-no-wholesale: true`. Credentials supplied with the request or an applicable stored BYOK key can satisfy this requirement.
+
+To resolve the error:
+
+- Supply your provider key using the [recognized credential format](/ai-gateway/features/unified-billing/#credential-precedence).
+- For Anthropic Messages (`/anthropic/v1/messages`), send `x-api-key: <PROVIDER_API_KEY>`. AI Gateway does not recognize `Authorization: Bearer` as provider credentials on this endpoint.
+- If using [stored BYOK keys](/ai-gateway/configuration/bring-your-own-keys/), verify gateway authentication and the key alias. Use `default`, or select an applicable alias with `cf-aig-byok-alias` on provider-native requests.
 
 ## DLP issues
 

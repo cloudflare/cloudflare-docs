@@ -10,7 +10,7 @@ products:
 
 import { Render, GlossaryTooltip, WranglerConfig } from "~/components";
 
-Durable Objects are a special kind of Worker, so [Workers Limits](/workers/platform/limits/) apply according to your Workers plan. In addition, Durable Objects have specific limits as listed in this page.
+Durable Objects are a special kind of Worker, so [Workers limits](/workers/platform/limits/) also apply. Limits that depend on your Workers plan are identified on that page. This page also covers Durable Object storage, CPU, and [outbound HTTP request body size](#outbound-http-request-body-size) limits.
 
 ## SQLite-backed Durable Objects general limits
 
@@ -73,6 +73,12 @@ For Durable Object classes with [SQLite storage](/durable-objects/api/sqlite-sto
 [^7]: Each incoming HTTP request or WebSocket _message_ resets the remaining available CPU time to 30 seconds. This allows the Durable Object to consume up to 30 seconds of compute after each incoming network request, with each new network request resetting the timer. If you consume more than 30 seconds of compute between incoming network requests, there is a heightened chance that the individual Durable Object is evicted and reset. CPU time per request invocation [can be increased](/durable-objects/platform/limits/#can-i-increase-durable-objects-cpu-limit).
 
 <Render file="limits_increase" product="workers" />
+
+## Outbound HTTP request body size
+
+Cloudflare limits each HTTP request body a Durable Object sends to an external service with `fetch()` to **100 MiB by default**. Requests exceeding this limit can fail with [`413 Payload Too Large`](/support/troubleshooting/http-status-codes/4xx-client-error/error-413/).
+
+<Render file="outbound-request-body-limits" product="workers" />
 
 ## Frequently Asked Questions
 

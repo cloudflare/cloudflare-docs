@@ -4,7 +4,7 @@ entries:
     availability: Purchase of Access
     associatedProducts: Cloudflare Access
     nextSteps: Extend the expiration date of the service token. For more details, refer to [Renew your service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#renew-service-tokens).
-    otherFilters: None.
+    otherFilters: You can monitor all current and future Access service tokens. You can also select one or more specific service tokens.
 
   - name: Usage Based Billing
     audience: Customers who want to receive a notification when the usage of a product goes above a set level.

@@ -77,6 +77,20 @@ You cannot delete a custom application while a Gateway rule or reusable profile 
 
 If the application is still referenced, deletion fails and the API returns HTTP `409` with the referencing resource IDs, names, and types. If Gateway cannot verify the references, deletion also fails and the application remains available.
 
+## Required API token permissions
+
+To create, edit, or delete custom applications with the API or Terraform, the API token must have at least one of the following permissions:
+
+- _Account_ > _Zero Trust_ > _Edit_
+- _Account_ > _Resource Library_ > _Edit_
+
+To list or view applications and categories, the API token must have at least one of the following permissions:
+
+- _Account_ > _Zero Trust_ > _Read_
+- _Account_ > _Zero Trust_ > _Edit_
+- _Account_ > _Resource Library_ > _Read_
+- _Account_ > _Resource Library_ > _Edit_
+
 ## Custom application limits
 
 For the number of custom applications you can create per account, refer to [Application Library account limits](/cloudflare-one/account-limits/#application-library).

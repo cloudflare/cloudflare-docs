@@ -98,7 +98,7 @@ For multiple recipients, CC/BCC, and named addresses, refer to [Specify recipien
 
 ### Attachments
 
-Send files by including base64-encoded content in the `attachments` array. The total message size must not exceed 5 MiB (including attachments).
+Send files by including base64-encoded content in the `attachments` array. The total message size must not exceed 25 MiB (including attachments).
 
 ```ts
 const response = await env.EMAIL.send({

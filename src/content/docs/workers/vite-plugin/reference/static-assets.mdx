@@ -47,6 +47,8 @@ The following example configures the `not_found_handling` for a single-page appl
 
 </WranglerConfig>
 
+To serve built assets from a URL path prefix, set `assets.base_path` in your Wrangler configuration or `worker.assets.basePath` in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/). Refer to [Serving a subdirectory](/workers/static-assets/routing/advanced/serving-a-subdirectory/).
+
 ## Features
 
 The Vite plugin ensures that all of Vite's [static asset handling](https://vite.dev/guide/assets) features are supported in your Worker as well as in your frontend.

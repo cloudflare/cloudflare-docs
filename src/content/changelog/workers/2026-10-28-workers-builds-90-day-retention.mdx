@@ -1,0 +1,15 @@
+---
+title: Workers Builds now retains builds and build logs for 90 days
+description: Workers Builds retains each build and its build logs for 90 days. Versions, deployments, and rollbacks are not affected.
+products:
+  - workers
+date: 2026-10-28
+---
+
+[Workers Builds](/workers/ci-cd/builds/) now retains each build and its build logs for 90 days after the build finishes. You can find them under **View build history** in your Worker's **Deployments** tab, or through the [Workers Builds API](/workers/ci-cd/builds/api-reference/).
+
+After 90 days, a build and its logs are removed. The versions and deployments it created stay in your Worker's [version history](/workers/versions-and-deployments/), so you can still [roll back](/workers/versions-and-deployments/rollbacks/) to them.
+
+If you need a build's logs for longer, you can download them with the [Get build logs](/api/resources/workers_builds/subresources/builds/methods/get_logs/) API endpoint.
+
+For more information, refer to the [Workers Builds limits documentation](/workers/ci-cd/builds/limits-and-pricing/).

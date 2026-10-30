@@ -15,6 +15,10 @@ import { Details } from "~/components";
 
 These are the settings that you can configure when creating a Cache Response Rule. Because Cache Response Rules execute after Cloudflare receives the origin response, both request and response fields are available for rule matching.
 
+:::note
+Request fields describe the request as Cloudflare sends it to your origin. If an [Origin Rule](/rules/origin-rules/) changes the `Host` header, `http.host` returns the changed value. Match on the hostname your origin receives, not the hostname visitors request.
+:::
+
 ## Expression fields
 
 ### Request fields
@@ -22,7 +26,7 @@ These are the settings that you can configure when creating a Cache Response Rul
 | Field | Type | Description |
 | --- | --- | --- |
 | `http.cookie` | String | Full cookie header value |
-| `http.host` | String | The HTTP Host header |
+| `http.host` | String | The `Host` header received by your origin, which can differ from the requested hostname if an [Origin Rule](/rules/origin-rules/) changed it |
 | `http.referer` | String | The HTTP Referer header |
 | `http.user_agent` | String | The HTTP User-Agent header |
 | `http.request.method` | String | The HTTP request method |

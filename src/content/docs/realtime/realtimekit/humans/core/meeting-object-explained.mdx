@@ -1460,7 +1460,7 @@ await meeting.polls.vote(pollId, optionIndex); // Retrieve pollId from meeting.p
 
 <RTKCodeSnippet id="web-react">
 
-The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
+The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) property manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
 
 ```javascript
 // Get all available plugins
@@ -1480,7 +1480,7 @@ await meeting.plugins.all.get(pluginId).deactivate();
 
 <RTKCodeSnippet id="web-web-components">
 
-The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
+The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) property manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
 
 ```javascript
 // Get all available plugins
@@ -1500,7 +1500,7 @@ await meeting.plugins.all.get(pluginId).deactivate();
 
 <RTKCodeSnippet id="web-angular">
 
-The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
+The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) property manages meeting plugins (collaborative apps). Activation lives on the `Plugin` object.
 
 ```javascript
 // Get all available plugins
@@ -1520,7 +1520,7 @@ await meeting.plugins.all.get(pluginId).deactivate();
 
 <RTKCodeSnippet id="mobile-android">
 
-The `meeting.plugins` manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) property manages meeting plugins (collaborative apps). To exchange messages between your app and a plugin, refer to [Exchange messages with a plugin](/realtime/realtimekit/humans/core/plugins/#exchange-messages-with-a-plugin).
 
 ```kotlin
 // Get all available plugins
@@ -1580,7 +1580,7 @@ meeting.addPluginsEventListener(pluginsEventListener)
 
 <RTKCodeSnippet id="mobile-ios">
 
-The `meeting.plugins` manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/humans/core/plugins/) property manages meeting plugins (collaborative apps). To exchange messages between your app and a plugin, refer to [Exchange messages with a plugin](/realtime/realtimekit/humans/core/plugins/#exchange-messages-with-a-plugin).
 
 ```swift
 // Get all available plugins
@@ -1626,13 +1626,13 @@ extension MeetingViewModel: RtkPluginsEventListener {
 }
 
 // Add listener
-meeting.addPluginsEventListener(self)
+meeting.addPluginsEventListener(pluginsEventListener: self)
 ```
 
 </RTKCodeSnippet>
 <RTKCodeSnippet id="mobile-react-native">
 
-The [`meeting.plugins`](/realtime/realtimekit/humans/core/api-reference/rtkplugins/) manages meeting plugins (collaborative apps).
+The [`meeting.plugins`](/realtime/realtimekit/humans/core/api-reference/rtkplugins/) property manages meeting plugins (collaborative apps).
 
 ```javascript
 // Get all available plugins

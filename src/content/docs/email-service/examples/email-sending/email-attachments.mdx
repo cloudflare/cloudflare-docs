@@ -326,10 +326,10 @@ async function sendEmailWithUpload(
 }
 
 function validateFile(file: File): { valid: boolean; error?: string } {
-	// 5 MiB matches the general outbound message size limit. Messages up to
-	// 25 MiB are accepted only when sent to verified destination addresses.
+	// The total message size limit is 25 MiB, including attachments.
+	// Base64 encoding adds about 33% overhead, so cap the raw file at 18 MiB.
 	// Refer to /email-service/platform/limits/ for details.
-	const maxSize = 5 * 1024 * 1024;
+	const maxSize = 18 * 1024 * 1024;
 	const allowedTypes = [
 		"image/jpeg",
 		"image/png",

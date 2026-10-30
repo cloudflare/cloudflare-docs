@@ -780,7 +780,8 @@
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-sonnet-4.6.png",
 	"metadata": {
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"anthropic-messages"
@@ -813,7 +814,8 @@
 								"type": "string",
 								"enum": [
 									"user",
-									"assistant"
+									"assistant",
+									"system"
 								]
 							},
 							"content": {
@@ -875,7 +877,51 @@
 					"exclusiveMinimum": 0
 				},
 				"system": {
-					"type": "string"
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "text"
+									},
+									"text": {
+										"type": "string"
+									},
+									"cache_control": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "ephemeral"
+											},
+											"ttl": {
+												"type": "string",
+												"enum": [
+													"5m",
+													"1h"
+												]
+											}
+										},
+										"required": [
+											"type"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"text"
+								],
+								"additionalProperties": {}
+							}
+						}
+					]
 				},
 				"temperature": {
 					"type": "number",
@@ -958,13 +1004,31 @@
 						},
 						"output_tokens": {
 							"type": "number"
+						},
+						"cache_creation_input_tokens": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"cache_read_input_tokens": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"speed": {
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
 						"input_tokens",
 						"output_tokens"
 					],
-					"additionalProperties": false
+					"additionalProperties": {}
 				}
 			},
 			"required": [

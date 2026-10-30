@@ -49,7 +49,7 @@ import {
 | Response header size | 128 KB (total)    |
 | Response body size   | No enforced limit |
 
-Request body size limits depend on your Cloudflare account plan, not your Workers plan. Requests exceeding these limits return a [`413 Request entity too large`](/support/troubleshooting/http-status-codes/4xx-client-error/error-413/#cloudflare-specific-information) error.
+For incoming requests to a Worker on your domain, request body size limits depend on the domain's Cloudflare plan, not your Workers plan. Requests exceeding these limits return a [`413 Request entity too large`](/support/troubleshooting/http-status-codes/4xx-client-error/error-413/#cloudflare-specific-information) error.
 
 | Cloudflare Plan | Maximum request body size |
 | --------------- | ------------------------- |
@@ -59,6 +59,8 @@ Request body size limits depend on your Cloudflare account plan, not your Worker
 | Enterprise      | Up to 5 GB (self-serve)   |
 
 Enterprise customers can adjust the maximum request body size up to 5 GB themselves from the zone's **Network** page (**Maximum Upload Size**). For limits above 5 GB, contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
+
+Cloudflare limits each HTTP request body sent to an external service by a [Durable Object](/durable-objects/platform/limits/#outbound-http-request-body-size) or through a [Container outbound handler](/containers/platform/limits/#outbound-http-request-body-size) to **100 MiB by default**. Increasing **Maximum Upload Size** for your domain does not increase this limit. Refer to the product limits for upload guidance and how to request an increase.
 
 Cloudflare does not enforce response body size limits. [CDN cache limits](/cache/concepts/default-cache-behavior/) apply: 512 MB for Free, Pro, and Business plans, and 5 GB for Enterprise.
 

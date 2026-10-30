@@ -107,6 +107,19 @@ Cloudflare Pages builds are run in a [gVisor](https://gvisor.dev/docs/) containe
 
 <PagesBuildEnvironment />
 
+### Trusted certificates
+
+Build commands use the CA certificates installed in the build image at `/etc/ssl/certs/ca-certificates.crt`. Pages sets the following environment variables so that runtimes with their own bundled CA certificates use them as well, including older versions you select with a [version override](/pages/configuration/build-image/#override-default-versions):
+
+| Environment variable | Value                                |
+| -------------------- | ------------------------------------ |
+| `SSL_CERT_FILE`      | `/etc/ssl/certs/ca-certificates.crt` |
+| `PIP_CERT`           | `/etc/ssl/certs/ca-certificates.crt` |
+| `REQUESTS_CA_BUNDLE` | `/etc/ssl/certs/ca-certificates.crt` |
+| `NODE_OPTIONS`       | `--use-openssl-ca`                   |
+
+If you set any of these variables as an [environment variable](/pages/configuration/build-configuration/#environment-variables) in your project, your value replaces the default. `--use-openssl-ca` is added to your own `NODE_OPTIONS`, unless it already contains `--use-openssl-ca` or `--use-bundled-ca`.
+
 
 ## Build Image Policy
 

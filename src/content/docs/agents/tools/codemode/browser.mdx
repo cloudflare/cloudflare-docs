@@ -215,4 +215,4 @@ The timeout cannot interrupt a tight synchronous loop such as `while (true) {}`.
 
 `createBrowserCodeTool()` excludes any tool whose `needsApproval` value is `true` or a function. Code Mode does not pause iframe execution to request approval for those tools.
 
-Keep approval-gated actions outside the Code Mode descriptor. Register them as standard tools and use the [`useAgentChat()` approval flow](/agents/communication-channels/chat/chat-agents/#tool-approval-human-in-the-loop) instead.
+Keep approval-gated actions outside the Code Mode descriptor. Register them as standard tools and use the [`useAgentChat()` approval flow](/agents/agent-class/communication-channels/chat/chat-agents/#tool-approval-human-in-the-loop) instead.

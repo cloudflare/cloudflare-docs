@@ -17,8 +17,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 0.32,
-		"Output tokens (per 1M)": 1.28,
-		"Cached input tokens (per 1M)": 0.064
+		"Cached input tokens (per 1M)": 0.064,
+		"Output tokens (per 1M)": 1.28
 	},
 	"examples": [
 		{
@@ -11333,7 +11333,8 @@
 	"terms": "https://www.alibabacloud.com/help/en/legal",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen3.7-plus.png",
 	"metadata": {
-		"Context Window": "1M tokens"
+		"Context Window": "1M tokens",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions",
@@ -11345,8 +11346,8 @@
 			"id": "alibaba",
 			"pricing": {
 				"input_tokens": 0.32,
-				"output_tokens": 1.28,
-				"input_cached_tokens": 0.064
+				"input_cached_tokens": 0.064,
+				"output_tokens": 1.28
 			}
 		}
 	],
@@ -11544,12 +11545,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},

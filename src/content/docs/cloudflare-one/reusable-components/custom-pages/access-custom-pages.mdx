@@ -1,0 +1,154 @@
+---
+pcx_content_type: how-to
+description: Customize Access sign-in, denial, and command-line approval pages with HTML and Liquid templates.
+products:
+  - cloudflare-one
+title: Access custom pages
+sidebar:
+  order: 5
+---
+
+import { DashButton, Steps } from "~/components";
+
+Access custom pages let you customize the pages visitors see when they sign in, receive an Access policy denial, or approve a command-line login. Templates use HTML and Liquid to display request-specific information.
+
+Custom pages change the presentation, not the Access decision. They do not grant access or replace your authentication and authorization policies.
+
+## Page types
+
+Create a separate template for each page type:
+
+| Type                | Purpose                                                                                                         | Required control                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| **Login**           | Sign in to an Access application.                                                                               | Exactly one `<cf-access-authbox></cf-access-authbox>` element.           |
+| **Identity denied** | Explain a denial after the visitor signs in. Successful authentication does not guarantee policy authorization. | No interactive control required.                                         |
+| **Forbidden**       | Explain a non-identity policy denial, such as a request that fails a service authentication policy.             | No interactive control required.                                         |
+| **Interstitial**    | Ask the visitor to approve or deny a command-line login request.                                                | Exactly one `<cf-access-cli-approval></cf-access-cli-approval>` element. |
+
+Access inserts its own sign-in and approval controls into the required elements. Keep these elements visible and outside Liquid conditions or loops. They must render exactly once, not merely appear once in the template source. Do not replace them with your own forms, identity provider links, or approval buttons.
+
+## Create a custom page
+
+<Steps>
+
+1. In Cloudflare One, go to **Reusable components** > **Custom pages**.
+
+   <DashButton url="/?to=/:account/settings/custom_pages" zeroTrust />
+
+2. On the **Access custom pages** card, select **Manage**.
+3. Select **Create custom page**.
+4. Enter a unique **Name** and select a **Type**. The editor loads a starter template for that type.
+5. Edit the HTML and Liquid. Keep the required control for login or interstitial pages.
+6. Use **Variables** to check the data available to the selected type. Review **Problems** for validation errors and warnings.
+7. Resolve blocking errors, then select **Publish**. If validation is unavailable, select **Retry validation** before publishing.
+
+</Steps>
+
+Publishing saves a reusable template. To display it, assign it to an application or set it as an account default.
+
+:::caution[Test the saved page]
+Validation is not a rendered preview. Test the saved template against an isolated application before using it more broadly. Check the sign-in or denial flow, long text, mobile layouts, and any Liquid conditions. A clean **Problems** panel does not prove that every runtime condition renders correctly.
+:::
+
+### Login template example
+
+This minimal example displays the application name, sign-in messages, and the Access sign-in control:
+
+```html
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Sign in to {{ app_name }}</title>
+	</head>
+	<body>
+		<main>
+			<h1>Sign in to {{ app_name }}</h1>
+			{% if message.text.size > 0 %}
+			<p role="status">{{ message.text }}</p>
+			{% endif %}
+			<cf-access-authbox></cf-access-authbox>
+		</main>
+	</body>
+</html>
+```
+
+Keep `message.text` visible so visitors can understand sign-in problems. Do not hardcode identity provider URLs or copy credentials into the template.
+
+## Assign a page to an application
+
+For a self-hosted application:
+
+<Steps>
+
+1. Go to **Access controls** > **Applications** and select the application.
+
+   <DashButton url="/?to=/:account/access/apps" zeroTrust />
+
+2. Open **Additional settings** and find **Custom block pages**. This section also contains the login and interstitial settings.
+3. Choose the option for the page you want to replace:
+
+   | Application setting                 | Option                   | Template type       |
+   | ----------------------------------- | ------------------------ | ------------------- |
+   | **Identity failure block page**     | **Custom page template** | **Identity denied** |
+   | **Non-identity failure block page** | **Custom page template** | **Forbidden**       |
+   | **Login page**                      | **Custom page**          | **Login**           |
+   | **Interstitial page**               | **Custom page**          | **Interstitial**    |
+
+4. Select a saved template from the dropdown. Each dropdown only offers matching page types.
+5. Select **Save**, then exercise the application flow. Allow time for configuration changes to propagate before retesting.
+
+</Steps>
+
+To remove an application assignment, select **Cloudflare default** for that page type and save. If an account default exists, Access uses it when there is no application-specific template.
+
+### Account defaults
+
+The **Access custom pages** list offers **Set as default** and **Remove as default** actions. An application-specific assignment takes precedence over the account default for the same type. Without either assignment, Access uses its built-in page.
+
+An account default affects applications that inherit that page type. Test an application-specific assignment before changing an account default.
+
+## Template data
+
+Select **Variables** in the editor for the selected type's variable names and descriptions. Do not assume that every page type has the same data.
+
+| Page type                             | Examples of available data                                                                                                                |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| **Login**                             | `app_name`, `app_domain`, `org`, `idps`, `has_onetimepin`, and `message`. The `idps` list provides display information, not sign-in URLs. |
+| **Identity denied** and **Forbidden** | `app`, and optional `ray_id`, `user`, and `policy_evaluation` data. User information may be absent before sign-in.                        |
+| **Interstitial**                      | `app`, `requesting_tool`, and optional `user` data. Approval credentials belong to the Access control, not the template data.             |
+| All types                             | `request` connection information and optional `locale`. Request fields may also be absent.                                                |
+
+Guard optional data with Liquid conditions. For example, an identity-denied page can show an email address when available:
+
+```html
+<h1>Access denied</h1>
+<p>You do not have access to {{ app.name }}.</p>
+{% if user.email %}
+<p>You are signed in as {{ user.email }}.</p>
+{% endif %} {% if ray_id %}
+<p>Share this Ray ID with your administrator: {{ ray_id }}</p>
+{% endif %}
+```
+
+Liquid output is HTML-escaped. Missing variables render as empty text. Policy evaluation data is structured information, not a ready-made explanation of the denial. Choose what to display without exposing sensitive group names, claims, or policy details unnecessarily.
+
+### Template restrictions
+
+Templates run in a restricted Liquid environment:
+
+- Customer JavaScript, inline event handlers, and custom authentication forms are not supported. Access owns the interactive sign-in and approval controls.
+- The Liquid tags `include`, `render`, `layout`, `echo`, and `raw`, and the `raw` filter, are unavailable.
+- HTML and CSS are sanitized. External assets must comply with the page's Content Security Policy (CSP). Use HTTPS image and font URLs, and do not depend on a third-party script to render the page.
+- Parsing, rendering, and memory limits apply. Keep templates small and avoid expensive loops.
+
+If a saved template is unavailable or cannot render safely, Access falls back to a built-in page. This fallback does not change the policy decision.
+
+## Edit and maintain templates
+
+Select a template from **Access custom pages** to edit it. Its type is fixed after creation. Review **Problems**, then select **Publish** to save changes.
+
+A template can be used by multiple applications. Publishing an edit changes the shared template, so test with a separate template when you need to avoid affecting existing assignments. Before deleting a template, replace its application assignments and remove it as an account default.
+
+Keep a copy of your HTML and Liquid outside the dashboard. The editor does not provide a rendered preview or a **Download** action.

@@ -12,6 +12,15 @@ Configure [Cloudflare Traces](/observability/traces/) separately for each domain
 
 ![Trace settings for sampling, persistence, export destinations, trace rules, and trace context propagation.](~/assets/images/observability/trace-configuration.png)
 
+## API access
+
+To manage trace rules and settings via the API, create an [API token](/fundamentals/api/get-started/create-token/) with the **Zone Observability** permission scoped to the relevant zone:
+
+- **Zone Observability Read** — read trace rules and settings
+- **Zone Observability Edit** — update or delete trace rules and settings
+
+Refer to the [API reference](/api/resources/zones/subresources/observability/subresources/tracing/subresources/rules/) for full endpoint documentation.
+
 ## Head sampling
 
 **Default sample rate (%)** sets how many requests Cloudflare traces. For example, a rate of `10%` traces about 10 out of every 100 requests. Trace rules can use a different rate for requests that match a rule.

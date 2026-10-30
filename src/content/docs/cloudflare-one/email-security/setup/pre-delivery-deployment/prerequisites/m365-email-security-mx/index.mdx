@@ -85,7 +85,7 @@ To create the transport rules that will send emails with certain [dispositions](
 2. Go to **Mail flow** > **Rules**.
 3. Select **Add a Rule** > **Create a new rule**.
 4. Set the following rule conditions:
-   - **Name**: _Email Security Deliver to Junk Email folder_.
+   - **Name**: `Email security Deliver to Junk Email folder`.
    - **Apply this rule if**: _The message headers_ > _includes any of these words_.
      - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
      - **Enter words**: `BULK` > **Add** > **Save**.
@@ -99,7 +99,7 @@ To create the transport rules that will send emails with certain [dispositions](
 8. Select the rule **Email security Deliver to Junk Email folder** you have just created, and **Enable**.
 9. Select **Add a Rule** > **Create a new rule**.
 10. Set the following rule conditions:
-    - **Name**: `Email security Deliver to Junk Email folder`.
+    - **Name**: `Email security Admin Managed Host Quarantine`.
     - **Apply this rule if**: _The message headers_ > _includes any of these words_.
       - **Enter text**: `X-CFEmailSecurity-Disposition` > **Save**.
       - **Enter words**: `MALICIOUS`, `UCE`, `SPOOF` > **Add** > **Save**.

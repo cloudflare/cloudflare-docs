@@ -12,7 +12,9 @@ import { APIRequest } from "~/components";
 
 ## Endpoints
 
-The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Make sure that Account-scoped datasets use `/accounts/{account_id}` and Zone-scoped datasets use `/zone/{zone_id}`. For more information, refer to the [Datasets](/logs/logpush/logpush-job/datasets/) page.
+The table below summarizes the job operations available for both Logpush and Edge Log Delivery jobs. Account-scoped datasets use `/accounts/{account_id}`, and zone-scoped datasets use `/zones/{zone_id}`. For more information, refer to [Datasets](/logs/logpush/logpush-job/datasets/).
+
+The [HTTP requests](/logs/logpush/logpush-job/datasets/account/http_requests/) and [Firewall events](/logs/logpush/logpush-job/datasets/account/firewall_events/) datasets support both scopes. To collect logs from every zone in an account, create an account-scoped job for the dataset through the `/accounts/{account_id}/logpush/jobs` endpoint. Use the `ZoneName` field to identify the source zone in each log entry.
 
 You can locate `{zone_id}` and `{account_id}` arguments based on the [Find zone and account IDs](/fundamentals/account/find-account-and-zone-ids/) page.
 The `{job_id}` argument is numeric, like 123456.

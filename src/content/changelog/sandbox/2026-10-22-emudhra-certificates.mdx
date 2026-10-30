@@ -1,0 +1,59 @@
+---
+title: Sandbox SDK 0.12.14 updates trusted certificates after the eMudhra compromise
+description: Sandbox SDK images before 0.12.14 trust certificates from the compromised eMudhra intermediate CAs. If you use Sandbox SDK 0.x, update your package and image to 0.12.14 immediately.
+products:
+  - sandbox
+date: 2026-10-22
+---
+
+The private keys of [eight eMudhra intermediate certificate authorities](https://blog.cloudflare.com/emudhra-certificate-compromise/) can be recovered, so anyone can forge a certificate for any hostname that chains to them. Sandbox SDK images before 0.12.14 trust these certificates. An HTTPS connection that leaves the container directly, such as one from `mountBucket()`, backups, `gitCheckout()`, tunnels, or code that runs in the sandbox, can be intercepted with a forged certificate.
+
+## What you need to do
+
+### Sandbox SDK 0.x
+
+Update immediately. Install `@cloudflare/sandbox@0.12.14`, change the `FROM` line in your `Dockerfile` to the matching image, and redeploy. Keep any `-python`, `-opencode`, or `-musl` suffix on the image tag. The deployment's [rollout](/containers/configuration/rollouts/) replaces running sandboxes with ones that use the new image.
+
+```dockerfile title="Dockerfile"
+FROM docker.io/cloudflare/sandbox:0.12.14
+```
+
+If you use the `next` prerelease, update to `0.13.0-next.825.1` or later.
+
+If you cannot update yet and use 0.8.7 or later, send all HTTPS through your Worker, so that Cloudflare checks every certificate on port 443 whatever your image trusts:
+
+```ts title="src/index.ts"
+import { Sandbox, ContainerProxy } from "@cloudflare/sandbox";
+export { ContainerProxy };
+
+export class MySandbox extends Sandbox {
+	interceptHttps = true;
+}
+
+MySandbox.outbound = (request: Request) => fetch(request);
+```
+
+Deploy, then stop running sandboxes so that they restart with the interception certificate. This does not cover TLS on other ports, such as `cloudflared` tunnels, and clients that ignore the injected certificate fail to connect. For more information, refer to [HTTPS traffic](/sandbox/sdk/guides/outbound-traffic/#https-traffic).
+
+### Sandbox SDK 1.x
+
+You do not need to update the SDK, because it makes no TLS connections of its own. Your image decides which certificates your sandboxes trust, so rebuild it and replace the sandboxes that run the old one:
+
+1. Run `docker pull` for each base image in your `Dockerfile`, then clear the Docker build cache with `docker builder prune --all`. `wrangler deploy` builds with your local images and build cache, so without these steps it can ship the old CA certificates and runtimes. If your Wrangler configuration references an image by digest, build and push a new image and update the digest instead.
+2. Deploy your Worker.
+3. Stop sandboxes that are still running, for example with `this.ctx.container.destroy()`. A running sandbox keeps the image it started with until it stops. To restart only the sandboxes whose image is out of date, refer to [Roll out a named image update](/containers/guides/image-management/#roll-out-a-named-image-update).
+4. If you use [snapshots](/containers/guides/snapshots/), create new ones from sandboxes that run the updated image. A snapshot restores the image it was created from, so an older snapshot brings back the old certificates.
+
+## Check your sandboxes
+
+From inside a sandbox, connect to one of the test hosts listed at [emudhra.we-have-a-problem.com](https://emudhra.we-have-a-problem.com/) with each TLS client your code uses, such as `curl`, `node`, or `bun`. Every request should fail:
+
+```sh
+curl -f https://dv-g3b-emudhra.we-have-a-problem.com/
+```
+
+## What changed in 0.12.13 and 0.12.14
+
+In the 0.12.13 images, the system CA bundle, Node.js, `cloudflared`, and pip reject certificates from the compromised intermediates. The images ship updated Ubuntu and Alpine CA certificates, Node.js 22.23.4, `cloudflared` 2026.10.2, and pip 26.2.2 in the `-python` image.
+
+0.12.14 updates Bun to 1.4.4, so the `bun` command and `createBackup()` uploads of archives of 10 MiB or more reject these certificates too. The `-opencode` image ships OpenCode 1.19.4 or later, which also runs on Bun 1.4.4.

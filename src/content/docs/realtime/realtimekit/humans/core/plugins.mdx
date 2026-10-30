@@ -195,12 +195,12 @@ Each plugin configuration accepts the following fields:
 
 <RTKCodeSnippet id="mobile-android">
 
-Pass a `pluginConfigs` list to `RtkMeetingInfo`. The SDK loads each plugin's `url` directly into a WebView when the plugin is activated.
+Pass a list of `RtkClientPluginConfig` objects as `plugins` to `RtkMeetingInfo`. The SDK loads each plugin's `url` into a WebView when you [render the plugin](#render-plugins).
 
 ```kotlin
 val meetingInfo = RtkMeetingInfo(
 	authToken = "<auth_token>",
-	pluginConfigs = listOf(
+	plugins = listOf(
 		RtkClientPluginConfig(
 			// User-provided unique id. The SDK prefixes it with
 			// `{meetingId}:` to create the namespaced `plugin.id`.
@@ -223,24 +223,24 @@ val meetingInfo = RtkMeetingInfo(
 
 Each plugin configuration accepts the following fields:
 
-| Field         | Description                                                                                    | Type                         | Required |
-| ------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- | -------- |
-| `id`          | Unique identifier for the plugin. The SDK prefixes it with `{meetingId}:` to form `plugin.id`. | `String`                     | true     |
-| `name`        | Display name shown in the plugins list.                                                        | `String`                     | true     |
-| `icon`        | Icon URL shown next to the name.                                                               | `String`                     | true     |
-| `url`         | URL loaded into the plugin WebView when the plugin is active.                                  | `String`                     | true     |
-| `permissions` | Controls whether the local participant can activate or deactivate the plugin.                  | `RtkClientPluginPermissions` | true     |
+| Field         | Description                                                                                     | Type                         | Required |
+| ------------- | ----------------------------------------------------------------------------------------------- | ---------------------------- | -------- |
+| `id`          | Unique identifier for the plugin. The SDK prefixes it with `{meetingId}:` to form `plugin.id`.  | `String`                     | true     |
+| `name`        | Display name shown in the plugins list.                                                         | `String`                     | true     |
+| `icon`        | Icon URL shown next to the name.                                                                | `String`                     | true     |
+| `url`         | URL loaded into the plugin WebView when the plugin is active. Must use `https://`.              | `String`                     | true     |
+| `permissions` | Controls whether the local participant can activate or deactivate the plugin.                   | `RtkClientPluginPermissions` | true     |
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-ios">
 
-Pass a `pluginConfigs` array to `RtkMeetingInfo`. The SDK loads each plugin's `url` directly into a WebView when the plugin is activated.
+Pass an array of `RtkClientPluginConfig` objects as `plugins` to `RtkMeetingInfo`. The SDK loads each plugin's `url` into a WebView when you [render the plugin](#render-plugins).
 
 ```swift
 let meetingInfo = RtkMeetingInfo(
 	authToken: "<auth_token>",
-	pluginConfigs: [
+	plugins: [
 		RtkClientPluginConfig(
 			// User-provided unique id. The SDK prefixes it with
 			// `{meetingId}:` to create the namespaced `plugin.id`.
@@ -263,13 +263,13 @@ let meetingInfo = RtkMeetingInfo(
 
 Each plugin configuration accepts the following fields:
 
-| Field         | Description                                                                                    | Type                         | Required |
-| ------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- | -------- |
-| `id`          | Unique identifier for the plugin. The SDK prefixes it with `{meetingId}:` to form `plugin.id`. | `String`                     | true     |
-| `name`        | Display name shown in the plugins list.                                                        | `String`                     | true     |
-| `icon`        | Icon URL shown next to the name.                                                               | `String`                     | true     |
-| `url`         | URL loaded into the plugin WebView when the plugin is active.                                  | `String`                     | true     |
-| `permissions` | Controls whether the local participant can activate or deactivate the plugin.                  | `RtkClientPluginPermissions` | true     |
+| Field         | Description                                                                                     | Type                         | Required |
+| ------------- | ----------------------------------------------------------------------------------------------- | ---------------------------- | -------- |
+| `id`          | Unique identifier for the plugin. The SDK prefixes it with `{meetingId}:` to form `plugin.id`.  | `String`                     | true     |
+| `name`        | Display name shown in the plugins list.                                                         | `String`                     | true     |
+| `icon`        | Icon URL shown next to the name.                                                                | `String`                     | true     |
+| `url`         | URL loaded into the plugin WebView when the plugin is active. Must use `https://`.              | `String`                     | true     |
+| `permissions` | Controls whether the local participant can activate or deactivate the plugin.                   | `RtkClientPluginPermissions` | true     |
 
 </RTKCodeSnippet>
 
@@ -365,8 +365,10 @@ A `Plugin` object represents a single plugin. You obtain it from either collecti
 | `name`        | Display name of the plugin.                                 | `String`                     |
 | `icon`        | Icon URL.                                                   | `String`                     |
 | `permissions` | Activation permissions for the local participant.           | `RtkClientPluginPermissions` |
+| `isActive`    | Whether the plugin is currently running.                    | `Boolean`                    |
+| `enabledBy`   | Id of the participant who activated the plugin.             | `String?`                    |
 
-While a plugin is active, call `getPluginView()` to obtain the Android `WebView` that hosts it, and `sendData(eventName, data)` to push data into that WebView.
+To display an active plugin, refer to [Render plugins](#render-plugins). To exchange data with it, refer to [Exchange messages with a plugin](#exchange-messages-with-a-plugin).
 
 </RTKCodeSnippet>
 
@@ -378,8 +380,10 @@ While a plugin is active, call `getPluginView()` to obtain the Android `WebView`
 | `name`        | Display name of the plugin.                                 | `String`                     |
 | `icon`        | Icon URL.                                                   | `String`                     |
 | `permissions` | Activation permissions for the local participant.           | `RtkClientPluginPermissions` |
+| `isActive`    | Whether the plugin is currently running.                    | `Bool`                       |
+| `enabledBy`   | Id of the participant who activated the plugin.             | `String?`                    |
 
-While a plugin is active, call `getPluginView()` to obtain the `WKWebView` that hosts it, and `sendData(eventName:data:)` to push data into that WebView.
+To display an active plugin, refer to [Render plugins](#render-plugins). To exchange data with it, refer to [Exchange messages with a plugin](#exchange-messages-with-a-plugin).
 
 </RTKCodeSnippet>
 
@@ -433,12 +437,12 @@ meeting.plugins.all.on("pluginDeleted", (plugin) => {
 
 Register an `RtkPluginsEventListener` to receive plugin events.
 
-| Callback              | Description                                               |
-| --------------------- | --------------------------------------------------------- |
-| `onPluginActivated`   | Called when a plugin is activated for all participants.   |
-| `onPluginDeactivated` | Called when a plugin is deactivated for all participants. |
-| `onPluginMessage`     | Called when a plugin sends a message to the app.          |
-| `onPluginFileRequest` | Called when a plugin requests a file from the app.        |
+| Callback              | Description                                                                                                                               |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `onPluginActivated`   | Called when a plugin is activated for all participants.                                                                                   |
+| `onPluginDeactivated` | Called when a plugin is deactivated for all participants.                                                                                 |
+| `onPluginMessage`     | Called when a plugin's web page sends a message to the app. Refer to [Exchange messages with a plugin](#exchange-messages-with-a-plugin). |
+| `onPluginFileRequest` | Called when a plugin requests a file from the app.                                                                                        |
 
 ```kotlin
 val pluginsEventListener = object : RtkPluginsEventListener {
@@ -460,6 +464,9 @@ val pluginsEventListener = object : RtkPluginsEventListener {
 }
 
 meeting.addPluginsEventListener(pluginsEventListener)
+
+// Remove the listener when the owning screen is torn down
+meeting.removePluginsEventListener(pluginsEventListener)
 ```
 
 </RTKCodeSnippet>
@@ -468,12 +475,12 @@ meeting.addPluginsEventListener(pluginsEventListener)
 
 Conform to `RtkPluginsEventListener` and register the listener to receive plugin events.
 
-| Callback              | Description                                               |
-| --------------------- | --------------------------------------------------------- |
-| `onPluginActivated`   | Called when a plugin is activated for all participants.   |
-| `onPluginDeactivated` | Called when a plugin is deactivated for all participants. |
-| `onPluginMessage`     | Called when a plugin sends a message to the app.          |
-| `onPluginFileRequest` | Called when a plugin requests a file from the app.        |
+| Callback              | Description                                                                                                                               |
+| --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `onPluginActivated`   | Called when a plugin is activated for all participants.                                                                                   |
+| `onPluginDeactivated` | Called when a plugin is deactivated for all participants.                                                                                 |
+| `onPluginMessage`     | Called when a plugin's web page sends a message to the app. Refer to [Exchange messages with a plugin](#exchange-messages-with-a-plugin). |
+| `onPluginFileRequest` | Called when a plugin requests a file from the app.                                                                                        |
 
 ```swift
 extension MeetingViewModel: RtkPluginsEventListener {
@@ -494,7 +501,10 @@ extension MeetingViewModel: RtkPluginsEventListener {
 	}
 }
 
-meeting.addPluginsEventListener(self)
+meeting.addPluginsEventListener(pluginsEventListener: self)
+
+// Remove the listener when the owning screen is torn down
+meeting.removePluginsEventListener(pluginsEventListener: self)
 ```
 
 </RTKCodeSnippet>
@@ -515,26 +525,52 @@ These components read from `meeting.plugins`, so they reflect plugin state autom
 
 <RTKCodeSnippet id="mobile-android">
 
-When a plugin is active, `getPluginView()` returns the Android `WebView` that hosts it. Add this view to your layout to display the plugin.
+When a plugin is active, `getPluginView()` returns the Android `WebView` that hosts it. Add this view to your layout from the `onPluginActivated` callback of your [plugins event listener](#listen-to-plugin-events).
+
+The first call to `getPluginView()` after activation creates the WebView and starts loading the plugin's `url`. Later calls return the same view while the plugin stays active. The method returns `null` while the plugin is inactive. When the plugin is deactivated, the SDK discards its WebView, so remove the view from your layout and call `getPluginView()` again after the plugin is reactivated.
 
 ```kotlin
-val plugin = meeting.plugins.active.firstOrNull() ?: return
+// In your RtkPluginsEventListener
+override fun onPluginActivated(plugin: RtkPlugin) {
+	runOnUiThread {
+		// Returns an Android WebView you can add to your layout
+		val pluginView = plugin.getPluginView() ?: return@runOnUiThread
+		pluginContainer.addView(pluginView)
+	}
+}
 
-// Returns an Android WebView you can add to your layout
-val pluginView = plugin.getPluginView()
+override fun onPluginDeactivated(plugin: RtkPlugin) {
+	runOnUiThread {
+		// The SDK discards the WebView on deactivation
+		pluginContainer.removeAllViews()
+	}
+}
 ```
 
 </RTKCodeSnippet>
 
 <RTKCodeSnippet id="mobile-ios">
 
-When a plugin is active, `getPluginView()` returns the `WKWebView` that hosts it. Add this view to your view hierarchy to display the plugin.
+When a plugin is active, `getPluginView()` returns the `WKWebView` that hosts it. Add this view to your view hierarchy from the `onPluginActivated` callback of your [plugins event listener](#listen-to-plugin-events).
+
+The first call to `getPluginView()` after activation creates the WebView and starts loading the plugin's `url`. Later calls return the same view while the plugin stays active. The method returns `nil` while the plugin is inactive. When the plugin is deactivated, the SDK discards its WebView, so remove the view from your view hierarchy and call `getPluginView()` again after the plugin is reactivated.
 
 ```swift
-guard let plugin = meeting.plugins.active.first else { return }
+// In your RtkPluginsEventListener
+func onPluginActivated(plugin: RtkPlugin) {
+	DispatchQueue.main.async {
+		// Returns a WKWebView you can add to your view hierarchy
+		guard let pluginView = plugin.getPluginView() else { return }
+		self.pluginContainer.addSubview(pluginView)
+	}
+}
 
-// Returns a WKWebView you can add to your view hierarchy
-let pluginView = plugin.getPluginView()
+func onPluginDeactivated(plugin: RtkPlugin) {
+	DispatchQueue.main.async {
+		// The SDK discards the WebView on deactivation
+		self.pluginContainer.subviews.forEach { $0.removeFromSuperview() }
+	}
+}
 ```
 
 </RTKCodeSnippet>
@@ -548,5 +584,202 @@ The React Native UI Kit provides ready-made components for plugins:
 - [`RtkPluginMain`](/realtime/realtimekit/humans/ui-kit/api-reference/react-native/rtkpluginmain/): renders the active plugin in a `WebView`.
 
 These components read from `meeting.plugins` automatically once plugins are registered at initialization. If you use `RtkMeeting`, plugin UI is included without any additional setup.
+
+</RTKCodeSnippet>
+
+## Exchange messages with a plugin
+
+<RTKCodeSnippet id={["web-react", "web-web-components", "web-angular"]}>
+
+On web, a plugin's `component` is an `HTMLElement` that runs in your own page, so RealtimeKit does not provide a separate messaging API. Exchange data with the plugin using the mechanisms your UI framework provides, such as properties, attributes, callbacks, or DOM events.
+
+If your plugin component embeds an `iframe`, send messages to it with `iframe.contentWindow.postMessage(message, targetOrigin)`, and listen for replies with a `message` event listener on `window`. Always pass the plugin's origin as `targetOrigin`, and check `event.origin` before you trust an incoming message.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-react-native">
+
+Messaging between the app and a plugin through `sendData` and `onPluginMessage` is available in the Android and iOS Core SDKs. Select Android or iOS in the SDK selector to view this section.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
+
+On Android and iOS, a plugin is a web page that the SDK loads into a WebView. Your app and the page exchange messages through a bridge that the SDK injects into the WebView. The bridge has two independent, one-way directions. It does not pair messages into requests and responses.
+
+| Direction    | App API                                                            | Message `type` | Plugin page API                               |
+| ------------ | ------------------------------------------------------------------ | -------------- | --------------------------------------------- |
+| App → plugin | `RtkPlugin.sendData(eventName, data)`                              | `24`           | `window.addEventListener("message", handler)` |
+| Plugin → app | `RtkPluginsEventListener.onPluginMessage(plugin, eventName, data)` | `20`           | `window.parent.postMessage(message, "*")`     |
+
+Each message carries a string event name and optional data. Event names are your own application convention; the SDK does not reserve any. Data must be JSON-compatible: `null`, strings, numbers, booleans, lists, and maps with string keys.
+
+Messages travel only between your app and the plugin WebView on the same device. They are not sent to other participants. To share plugin state across participants, use the [meeting key-value store](/realtime/realtimekit/collaboration/meeting-key-value-store/) or [message broadcast](/realtime/realtimekit/collaboration/message-broadcast/).
+
+The bridge does not authenticate the page that sends messages. Only register plugin URLs that you trust, and validate every message you receive on either side.
+
+### Receive messages from the plugin
+
+The SDK calls `onPluginMessage` on every registered `RtkPluginsEventListener` when the plugin page sends a message. Implement it in the listener you registered in [Listen to plugin events](#listen-to-plugin-events). The plugin must be active, and the listener must be registered before the page sends the message.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+override fun onPluginMessage(plugin: RtkPlugin, eventName: String, data: Any?) {
+	when (eventName) {
+		"ready" -> {
+			// The plugin page has loaded and is listening for messages
+			plugin.sendData("init", mapOf("theme" to "dark"))
+		}
+		"score.updated" -> {
+			val payload = data as? Map<*, *> ?: return
+			val score = payload["score"] as? Int ?: return
+			// Update your app with score
+		}
+	}
+}
+```
+
+The SDK converts the JSON `data` sent by the page to Kotlin values:
+
+| JSON value        | Kotlin type                |
+| ----------------- | -------------------------- |
+| Object            | `Map<String, Any?>`        |
+| Array             | `List<Any?>`               |
+| String            | `String`                   |
+| Boolean           | `Boolean`                  |
+| Number            | `Int`, `Long`, or `Double` |
+| `null` or omitted | `null`                     |
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+func onPluginMessage(plugin: RtkPlugin, eventName: String, data: Any?) {
+	switch eventName {
+	case "ready":
+		// The plugin page has loaded and is listening for messages
+		plugin.sendData(eventName: "init", data: ["theme": "dark"])
+	case "score.updated":
+		guard let payload = data as? [String: Any],
+			let score = payload["score"] as? NSNumber else { return }
+		// Update your app with score
+	default:
+		break
+	}
+}
+```
+
+The SDK converts the JSON `data` sent by the page to Foundation values. Cast objects with `as? [String: Any]`, arrays with `as? [Any]`, strings with `as? String`, and numbers or booleans with `as? NSNumber`. If the page sends `null` or omits `data`, `data` is `nil`.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
+
+### Send messages to the plugin
+
+Call `sendData` on an active `RtkPlugin` to send an event to its web page.
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-android">
+
+```kotlin
+val error = plugin.sendData(
+	eventName = "init",
+	data = mapOf("theme" to "dark", "locale" to "en-US"),
+)
+
+if (error != null) {
+	// PluginError.NotActive: the plugin is not active
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id="mobile-ios">
+
+```swift
+if let error = plugin.sendData(eventName: "init", data: ["theme": "dark", "locale": "en-US"]) {
+	// PluginError.NotActive: the plugin is not active
+	print(error)
+}
+```
+
+</RTKCodeSnippet>
+
+<RTKCodeSnippet id={["mobile-android", "mobile-ios"]}>
+
+`sendData` returns `PluginError.NotActive` if the plugin is not active. Otherwise it returns no error and delivers the message asynchronously. A missing error means the SDK accepted the message, not that the page received it. The SDK drops the message without reporting an error when:
+
+- You have not called `getPluginView()` since the plugin was activated, so no WebView exists.
+- The page has not loaded yet, or it has not registered its `message` listener.
+- `data` contains a value that is not JSON-compatible.
+
+The SDK does not queue messages or acknowledge delivery. To avoid sending before the page is ready, have the page send a `ready` event after it loads, and call `sendData` only after `onPluginMessage` receives that event. The examples on this page follow this pattern.
+
+### Receive messages in the plugin
+
+In the plugin page, listen for `message` events on `window`. The SDK delivers each message as an object with this shape:
+
+```json
+{
+	"type": 24,
+	"uuid": "",
+	"payload": {
+		"eventName": "init",
+		"data": { "theme": "dark", "locale": "en-US" }
+	}
+}
+```
+
+Register the listener in an inline script in the page `<head>` so that it is installed before your app sends anything:
+
+```html
+<script>
+	window.addEventListener("message", (event) => {
+		const message = event.data;
+		// Ignore anything that is not a message from the app
+		if (!message || message.type !== 24 || !message.payload) return;
+
+		const { eventName, data } = message.payload;
+		if (eventName === "init") {
+			// Validate data before using it
+			document.body.dataset.theme = data?.theme ?? "light";
+		}
+	});
+</script>
+```
+
+`event.data` is already an object. Do not call `JSON.parse` on it.
+
+### Send messages from the plugin
+
+To send a message to the app, call `window.parent.postMessage` with an object that has `type: 20` and a `payload` object containing a string `eventName` and optional `data`.
+
+The SDK replaces `window.parent.postMessage` in the WebView each time a page starts loading, but it does not signal when the replacement is in place. Send your first message after the page's `load` event instead of from a script that runs while the page is parsed.
+
+```js
+function sendToApp(eventName, data) {
+	window.parent.postMessage({ type: 20, payload: { eventName, data } }, "*");
+}
+
+// Tell the app that the page is ready to receive messages
+window.addEventListener("load", () => sendToApp("ready"));
+
+// Send application events after the page has loaded
+document.querySelector("#submit-score").addEventListener("click", () => {
+	sendToApp("score.updated", { score: 42 });
+});
+```
+
+The SDK ignores the second argument to `postMessage`. It does not restrict which origins can send messages. The app does not receive messages that use a different `type`, omit `payload`, or are sent while the plugin is inactive. If you need to correlate a reply with a request, include your own identifier in `data`.
+
+:::caution
+Pass the message as an object. Do not call `JSON.stringify` on it first: the bridge serializes the object itself, and a pre-serialized string or an `eventName` that is not a string can cause an uncaught exception in the native SDK and crash your app.
+:::
 
 </RTKCodeSnippet>

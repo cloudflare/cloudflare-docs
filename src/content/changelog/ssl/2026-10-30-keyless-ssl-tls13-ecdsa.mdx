@@ -1,0 +1,11 @@
+---
+title: Keyless SSL supports TLS 1.3 with ECDSA certificates
+description: Keyless SSL connections that use ECDSA certificates negotiate TLS 1.3 when TLS 1.3 is enabled on the zone.
+date: 2026-10-30
+---
+
+[Keyless SSL](/ssl/keyless-ssl/) supports TLS 1.3 for ECDSA certificates. When [TLS 1.3](/ssl/edge-certificates/additional-options/tls-13/) is enabled on your zone, visitors connecting to a hostname that serves a Keyless ECDSA certificate negotiate TLS 1.3, and your private keys stay on your own key server.
+
+Keyless SSL connections that use RSA certificates continue to negotiate up to TLS 1.2.
+
+For details, refer to the [Keyless SSL limitations](/ssl/keyless-ssl/#limitations).

@@ -14,6 +14,14 @@
             "value": "true"
         },
         {
+            "property_id": "hugging_face_id",
+            "value": "deepseek-ai/DeepSeek-V4.1-Flash-1017"
+        },
+        {
+            "property_id": "openrouter_slug",
+            "value": "deepseek/deepseek-v4.1-flash-1017"
+        },
+        {
             "property_id": "reasoning",
             "value": "true"
         },
@@ -27,7 +35,7 @@
                     "none"
                 ],
                 "default_effort": "high",
-                "default_enabled": true,
+                "default_enabled": false,
                 "mandatory": false,
                 "normalizes_to": {
                     "null": "high",
@@ -342,7 +350,7 @@
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": true,
+                                            "default": false,
                                             "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
@@ -1591,7 +1599,7 @@
                                     "properties": {
                                         "enable_thinking": {
                                             "type": "boolean",
-                                            "default": true,
+                                            "default": false,
                                             "description": "Whether to enable reasoning for this model."
                                         },
                                         "clear_thinking": {
@@ -2410,7 +2418,7 @@
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": true,
+                                                        "default": false,
                                                         "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {
@@ -3659,7 +3667,7 @@
                                                 "properties": {
                                                     "enable_thinking": {
                                                         "type": "boolean",
-                                                        "default": true,
+                                                        "default": false,
                                                         "description": "Whether to enable reasoning for this model."
                                                     },
                                                     "clear_thinking": {

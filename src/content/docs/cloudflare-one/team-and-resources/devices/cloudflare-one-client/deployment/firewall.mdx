@@ -78,7 +78,7 @@ To deploy WARP in FedRAMP High environments, you will need to allow different do
 
 </Details>
 
-## WARP ingress IP
+## Cloudflare One Client ingress IP {/* warp-ingress-ip */}
 
 The Cloudflare One Client connects to the following IP addresses, depending on which [tunnel protocol](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#device-tunnel-protocol) is configured for your device (WireGuard or MASQUE). All network traffic from your device to Cloudflare goes through these IPs and ports over UDP.
 
@@ -143,7 +143,7 @@ The client connects to the following destinations to verify general Internet con
 
 - `162.159.197.3`
 - `2606:4700:102::3`
-- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [WARP ingress IPv4 or IPv6 range](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
+- `engage.cloudflareclient.com`: The client will always send requests directly to an IP in the [ingress IPv4 or IPv6 range](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip) (or to your [`override_warp_endpoint`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#override_warp_endpoint) if set). Requests will not use a proxy server, even if one is configured for the system.
 
 Even though `engage.cloudflareclient.com` may resolve to different IP addresses, the Cloudflare One Client overrides the resolved IPs with the IPs listed above. To avoid connectivity issues, ensure that the above IPs are permitted through your firewall.
 
@@ -163,7 +163,7 @@ The Cloudflare One Client reports connectivity issues to the Network Error Loggi
 
 ## Latency statistics (optional)
 
-The Cloudflare One Client generates ICMP traffic to the [WARP ingress IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip) when running tunnel latency tests. This is not technically required to operate but will result in errors in our logs if not excluded properly.
+The Cloudflare One Client generates ICMP traffic to the [ingress IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip) when running tunnel latency tests. This is not technically required to operate but will result in errors in our logs if not excluded properly.
 
 ## Time synchronization (optional)
 

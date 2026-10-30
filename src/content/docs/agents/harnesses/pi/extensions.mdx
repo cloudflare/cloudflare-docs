@@ -129,15 +129,14 @@ this.registry.install({
 
 ## Add skills
 
-`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/runtime/execution/agent-skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. It has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
+`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. Sources can read skills from a [Computer Workspace](/agents/skills/sources/computer/), [R2](/agents/skills/sources/r2/), or a [manifest](/agents/skills/sources/code/). The extension has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
 
 ```ts
 import { skills } from "agents/harness/pi";
-import { fromManifest } from "agents/skills";
+import { manifest } from "agents/skills";
 
-const handbook = fromManifest({
+const handbook = manifest({
 	id: "handbook",
-	fingerprint: "v1",
 	skills: [
 		{
 			name: "release-notes",
@@ -155,7 +154,7 @@ harness = new PiHarness({
 });
 ```
 
-The tools match the ones [Think](/agents/harnesses/think/) offers, so a skill written for one works in the other. The model can read a skill's instructions and resources. Skill scripts do not run.
+The tools match the ones [Think](/agents/harnesses/think/) offers, so a skill written for one works in the other. The sources are read once, when the factory builds the extension. The model can read a skill's instructions and resources. To run skill scripts, give the model a shell or Workspace tool. Refer to [Execution](/agents/skills/execution/).
 
 ## Use more of Pi Durable
 

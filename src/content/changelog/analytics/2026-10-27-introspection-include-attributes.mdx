@@ -1,0 +1,21 @@
+---
+title: "SQL API introspection: `include_attributes` parameter"
+description: The SQL API introspection endpoint now discovers `attributes` keys with the `include_attributes` parameter, and `include_custom_attributes` is deprecated.
+date: 2026-10-27
+---
+
+The SQL API introspection endpoint has a new `include_attributes` query parameter. Setting it to `true` discovers the keys of a dataset's `attributes` JSON column, and their types, from the preceding seven days of your account's data. Discovered keys are returned in the dataset's `attributes` response field.
+
+Some datasets store additional key-value data in an `attributes` JSON column, which you query with exact-key lookups such as `attributes['http.method']`. The previous way to discover these keys, `include_custom_attributes`, returned names in a `custom_attributes` field. The new names make it clearer that each returned name is a key you access through the `attributes` column.
+
+`include_custom_attributes` and `custom_attributes` are deprecated but still work. Update integrations to use `include_attributes` and `attributes`.
+
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql/introspection" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode "account_tag=<ACCOUNT_TAG>" \
+  --data-urlencode "dataset_name=events.httpRequests" \
+  --data-urlencode "include_attributes=true"
+```
+
+For more information, refer to [Attributes](/analytics/sql-api/datasets/#attributes).

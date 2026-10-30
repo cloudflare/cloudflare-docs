@@ -2027,12 +2027,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},

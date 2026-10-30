@@ -232,7 +232,8 @@
 		"API": "Responses, Chat Completions",
 		"Architecture": "Transformer",
 		"Input modalities": "Text, image",
-		"Knowledge cutoff": "May 18, 2026"
+		"Knowledge cutoff": "May 18, 2026",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses",

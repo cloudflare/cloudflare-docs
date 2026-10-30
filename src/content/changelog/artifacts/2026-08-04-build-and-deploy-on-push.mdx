@@ -58,12 +58,14 @@ To start the Workflow automatically after each push, add a `cf.artifacts.repo.pu
 				"type": "cf.artifacts.repo.pushed",
 				"filter": {
 					"namespace": "CI",
-					"repoName": "my-repo",
+					"repo_name": "my-repo",
 				},
-				"target": {
-					"scriptName": "my-ci-worker",
-					"workflowName": "ci-workflow",
-				},
+				"targets": [
+					{
+						"type": "workflow",
+						"workflow_name": "ci-workflow",
+					},
+				],
 			},
 		],
 	},

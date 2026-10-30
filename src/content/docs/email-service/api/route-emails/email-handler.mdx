@@ -117,6 +117,20 @@ export default {
 </TabItem>
 </Tabs>
 
+## Authentication results
+
+Email Routing validates Domain-based Message Authentication, Reporting & Conformance (DMARC) before invoking your Worker. It prepends a standard [`Authentication-Results`](https://www.rfc-editor.org/rfc/rfc8601.html) header that records SPF, DKIM, and DMARC results in a machine-readable format.
+
+A simplified header with passing results looks like this:
+
+```txt
+Authentication-Results: mx.cloudflare.net; spf=pass; dkim=pass; dmarc=pass
+```
+
+To check for `dmarc=pass`, read the first `Authentication-Results` header through `message.headers` and verify that its authentication service identifier is `mx.cloudflare.net`. Other `Authentication-Results` headers may have been supplied by the sender and should not be trusted.
+
+Cloudflare invokes the Worker directly, so Authenticated Received Chain (ARC) verification is not required to trust this result. ARC is intended for downstream mail servers after forwarding. ARC headers remain available through `message.headers` and `message.raw`.
+
 ## Email actions
 
 ### Forward emails

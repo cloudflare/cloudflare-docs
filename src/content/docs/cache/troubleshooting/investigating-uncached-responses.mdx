@@ -29,7 +29,7 @@ A recent [Purge Everything](/cache/how-to/purge-cache/purge-everything/), [purge
 Cloudflare made the "do not cache" decision at request time, before looking in the cache. Common causes:
 
 - **The file extension is not in the [default cached file extensions](/cache/concepts/default-cache-behavior/#default-cached-file-extensions) list** — for example, `.html` or a JSON API response — and no rule enables caching for it. Add a [Cache Rule](/cache/how-to/cache-rules/) with **Eligible for cache** set to *Yes*.
-- **A rule instructs Cloudflare to bypass cache.** Check whether a Cache Rule with the [Bypass cache](/cache/how-to/cache-rules/settings/#bypass-cache) setting, or a legacy `Cache Level: Bypass` [Configuration Rule](/rules/configuration-rules/) or [Page Rule](/rules/page-rules/), matches the URL. Use [Rule Trace](/rules/trace-request/) to confirm which rules apply.
+- **A rule instructs Cloudflare to bypass cache.** Check whether a Cache Rule with the [Bypass cache](/cache/how-to/cache-rules/settings/#bypass-cache) setting, or a legacy `Cache Level: Bypass` [Configuration Rule](/rules/configuration-rules/) or [Page Rule](/rules/page-rules/), matches the URL. Use [Rules simulator](/rules/simulator/) to confirm which rules apply.
 - **The request method is not `GET` or `HEAD`.** Cloudflare only caches these two methods.
 - **[Development Mode](/cache/reference/development-mode/) is enabled on the zone.** Development Mode suspends cache for three hours and returns `DYNAMIC` for every response.
 
@@ -74,7 +74,7 @@ If each real client request produces a different key, the cache never sees a rep
 - **[Cache by device type](/cache/how-to/cache-rules/examples/cache-device-type/) classifies clients differently than expected**, particularly for bots or clients with unusual `User-Agent` values.
 - **[Vary in Cache Rules](/cache/how-to/cache-rules/settings/#vary) is configured** for a header, the origin lists that header in its `Vary` response header, and the action is `normalize` or `passthrough`. Each response variant is stored under a separate key. When the header has high cardinality — for example, an unnormalized `Accept-Language` value or a per-user header — the practical hit rate drops. The `bypass` action prevents caching entirely.
 
-Two identical requests produce the same cache key and cannot reveal variance. To diagnose, use [Rule Trace](/rules/trace-request/) to see the applied cache-key configuration and Vary action for the URL, then compare that against the request attributes (query string, cookies, headers, device type) that differ between real client requests.
+Two identical requests produce the same cache key and cannot reveal variance. To diagnose, use [Rules simulator](/rules/simulator/) to see the applied cache-key configuration and Vary action for the URL, then compare that against the request attributes (query string, cookies, headers, device type) that differ between real client requests.
 
 ### Eviction and low-traffic assets
 

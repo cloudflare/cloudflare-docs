@@ -10,7 +10,7 @@ products:
 
 Limits that apply to creating, importing, cloning, and pushing Artifacts are detailed below.
 
-These limits cover naming rules, storage, and request rates for control-plane and Git operations.
+These limits cover naming rules, storage, request rates for control-plane and Git operations, and the size of each push.
 
 | Feature                        | Limit                                                                                                                                                                |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -22,3 +22,8 @@ These limits cover naming rules, storage, and request rates for control-plane an
 | Maximum number of namespaces   | Unlimited                                                                                                                                                            |
 | Namespace name length          | 2–63 characters                                                                                                                                                      |
 | Namespace and repo names       | Start with a letter or digit. Remaining characters may include letters, digits, `.`, `_`, and `-`.                                                                   |
+| Maximum push size              | 64 MiB per push. Includes all data sent in the push. Split larger work into several smaller pushes.                                                                  |
+| Maximum objects per push       | 50,000 objects, such as file versions, folders, and commits.                                                                                                         |
+| Maximum file size              | 32 MiB per file. Already-compressed files, like images, video, or zip archives, may be rejected slightly below 32 MiB.                                               |
+| Maximum ref updates per push   | 1 MiB of branch and tag updates per push.                                                                                                                            |
+| Maximum entries per folder     | 100,000 files and subfolders in a single folder.                                                                                                                     |

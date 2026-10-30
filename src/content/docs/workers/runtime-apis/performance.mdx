@@ -38,6 +38,8 @@ By wrapping a subrequest in calls to `performance.now()` or `Date.now()` APIs, y
 
 In local development, however, timers will increment regardless of whether I/O happens or not. This means that if you need to measure timing of a piece of code that is CPU intensive, that does not involve I/O, you can run your Worker locally, via [Wrangler](/workers/wrangler/), which uses the open-source Workers runtime, [workerd](https://github.com/cloudflare/workerd) — the same runtime that your Worker runs in when deployed to Cloudflare.
 
+If instead you need to measure the CPU time of a Worker that is already deployed to Cloudflare, use [Profiling in production](/workers/observability/profiling-in-production/) to capture a CPU profile of a deployed Worker or Durable Object, rather than relying on the timer APIs described above.
+
 ### `performance.timeOrigin`
 
 The [`performance.timeOrigin`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/timeOrigin) API is a read-only property that returns a baseline timestamp to base other measurements off of.

@@ -1,0 +1,263 @@
+{
+	"model_id": "klingai/kling-v4",
+	"provider_id": "klingai",
+	"name": "Kling 4.0",
+	"description": "Kling 4.0 is Kling AI's video generation model for text-to-video and multi-keyframe image-to-video, producing up to 30 seconds of 720p or 1080p video from prompts of up to 26,000 characters and up to 10 keyframes.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Text-to-Video",
+		"Image-to-Video",
+		"Keyframes",
+		"1080p"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.235,
+		"@720p (per second)": 0.157,
+		"@1080p (per second)": 0.235
+	},
+	"examples": [
+		{
+			"name": "Neon Alley Paper Boat",
+			"description": "Text-to-video at 1080p with the default 16:9 aspect ratio",
+			"input": {
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"prompt": "A paper boat drifts down a narrow, rain-soaked Tokyo alley at night. Neon signs in pink and teal reflect in the puddles and ripple as raindrops fall. The camera tracks low alongside the boat, close to the water. Cinematic, photorealistic, shallow depth of field.",
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/neon-alley-paper-boat.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/neon-alley-paper-boat.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'klingai/kling-v4',\n  {\n    aspect_ratio: '16:9',\n    duration: 5,\n    prompt:\n      'A paper boat drifts down a narrow, rain-soaked Tokyo alley at night. Neon signs in pink and teal reflect in the puddles and ripple as raindrops fall. The camera tracks low alongside the boat, close to the water. Cinematic, photorealistic, shallow depth of field.',\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"klingai/kling-v4\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"prompt\": \"A paper boat drifts down a narrow, rain-soaked Tokyo alley at night. Neon signs in pink and teal reflect in the puddles and ripple as raindrops fall. The camera tracks low alongside the boat, close to the water. Cinematic, photorealistic, shallow depth of field.\",\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Ultra-Wide Canyon Sunrise",
+			"description": "Ultra-wide 21:9 text-to-video, an aspect ratio new in Kling 4.0",
+			"input": {
+				"aspect_ratio": "21:9",
+				"duration": 8,
+				"prompt": "A sweeping aerial shot glides over a red sandstone canyon at sunrise. Long shadows stretch across the canyon floor as a river catches the first golden light. The camera slowly pushes forward and rises to reveal the desert horizon. Epic cinematic landscape, anamorphic look.",
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/ultra-wide-canyon-sunrise.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/ultra-wide-canyon-sunrise.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'klingai/kling-v4',\n  {\n    aspect_ratio: '21:9',\n    duration: 8,\n    prompt:\n      'A sweeping aerial shot glides over a red sandstone canyon at sunrise. Long shadows stretch across the canyon floor as a river catches the first golden light. The camera slowly pushes forward and rises to reveal the desert horizon. Epic cinematic landscape, anamorphic look.',\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"klingai/kling-v4\",\n  \"input\": {\n    \"aspect_ratio\": \"21:9\",\n    \"duration\": 8,\n    \"prompt\": \"A sweeping aerial shot glides over a red sandstone canyon at sunrise. Long shadows stretch across the canyon floor as a river catches the first golden light. The camera slowly pushes forward and rises to reveal the desert horizon. Epic cinematic landscape, anamorphic look.\",\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Sketch to Product Reveal",
+			"description": "Image-to-video from one first frame: a pencil concept sketch becomes a photoreal product shot",
+			"input": {
+				"prompt": "The pencil sneaker sketch in @image_1 comes to life. The graphite lines fill in with real materials: white leather, a perforated toe box, an orange suede heel panel, a translucent cushioned sole. The sneaker lifts off the sketchbook page and settles onto a slowly rotating white studio turntable as the paper fades into a soft grey seamless backdrop. Studio softbox lighting, crisp reflections, macro detail on the stitching. Smooth, continuous camera orbit.",
+				"first_frame": "https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/sneaker-sketch.jpg",
+				"duration": 10,
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/sketch-to-product-reveal.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/sketch-to-product-reveal.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'klingai/kling-v4',\n  {\n    prompt:\n      'The pencil sneaker sketch in @image_1 comes to life. The graphite lines fill in with real materials: white leather, a perforated toe box, an orange suede heel panel, a translucent cushioned sole. The sneaker lifts off the sketchbook page and settles onto a slowly rotating white studio turntable as the paper fades into a soft grey seamless backdrop. Studio softbox lighting, crisp reflections, macro detail on the stitching. Smooth, continuous camera orbit.',\n    first_frame: 'https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/sneaker-sketch.jpg',\n    duration: 10,\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"klingai/kling-v4\",\n  \"input\": {\n    \"prompt\": \"The pencil sneaker sketch in @image_1 comes to life. The graphite lines fill in with real materials: white leather, a perforated toe box, an orange suede heel panel, a translucent cushioned sole. The sneaker lifts off the sketchbook page and settles onto a slowly rotating white studio turntable as the paper fades into a soft grey seamless backdrop. Studio softbox lighting, crisp reflections, macro detail on the stitching. Smooth, continuous camera orbit.\",\n    \"first_frame\": \"https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/sneaker-sketch.jpg\",\n    \"duration\": 10,\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Mascot Hops Off the Page",
+			"description": "One continuous shot through three keyframes (first, middle, last), with each keyframe referenced in the prompt",
+			"input": {
+				"prompt": "A flat illustrated robot mascot printed on a notebook page wakes up. In @image_1 it is flat ink on the paper; it blinks, its antenna wiggles, and it peels itself up off the page into a glossy 3D toy. In @image_2 it stands on the page beside its own faded print, knees bent, mid-hop. By @image_3 it has hopped onto the wooden desk next to the coffee mug and waves at the camera. Warm morning sunlight, shallow depth of field, playful stop-motion feel, one continuous shot with a fixed camera.",
+				"first_frame": "https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-page.jpg",
+				"middle_frames": [
+					"https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-hop.jpg"
+				],
+				"last_frame": "https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-desk.jpg",
+				"duration": 15,
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/mascot-hops-off-the-page.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/klingai/kling-v4/mascot-hops-off-the-page.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'klingai/kling-v4',\n  {\n    prompt:\n      'A flat illustrated robot mascot printed on a notebook page wakes up. In @image_1 it is flat ink on the paper; it blinks, its antenna wiggles, and it peels itself up off the page into a glossy 3D toy. In @image_2 it stands on the page beside its own faded print, knees bent, mid-hop. By @image_3 it has hopped onto the wooden desk next to the coffee mug and waves at the camera. Warm morning sunlight, shallow depth of field, playful stop-motion feel, one continuous shot with a fixed camera.',\n    first_frame: 'https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-page.jpg',\n    middle_frames: ['https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-hop.jpg'],\n    last_frame: 'https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-desk.jpg',\n    duration: 15,\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"klingai/kling-v4\",\n  \"input\": {\n    \"prompt\": \"A flat illustrated robot mascot printed on a notebook page wakes up. In @image_1 it is flat ink on the paper; it blinks, its antenna wiggles, and it peels itself up off the page into a glossy 3D toy. In @image_2 it stands on the page beside its own faded print, knees bent, mid-hop. By @image_3 it has hopped onto the wooden desk next to the coffee mug and waves at the camera. Warm morning sunlight, shallow depth of field, playful stop-motion feel, one continuous shot with a fixed camera.\",\n    \"first_frame\": \"https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-page.jpg\",\n    \"middle_frames\": [\n      \"https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-hop.jpg\"\n    ],\n    \"last_frame\": \"https://examples.aig.cloudflare.com/klingai/kling-v4/inputs/mascot-desk.jpg\",\n    \"duration\": 15,\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://klingai.com/",
+	"terms": "https://klingai.com/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/klingai/kling-v4.png",
+	"metadata": {
+		"Aspect Ratios": "21:9, 16:9, 9:16, 1:1",
+		"Billing": "Pay-as-you-go, per output second",
+		"Duration": "3-30 seconds",
+		"Input Types": "Text, up to 10 keyframe images",
+		"Resolutions": "720p, 1080p"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "klingai",
+			"pricing": {
+				"default": 0.235,
+				"720p": 0.157,
+				"1080p": 0.235
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-26 13:56:19",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 26000,
+					"description": "Text prompt describing the video, up to 26,000 English characters. Refer to keyframes as @image_1, @image_2, and so on, numbered first frame, middle frames, then last frame."
+				},
+				"first_frame": {
+					"description": "Image the video starts from. An https URL, a data URI, or raw base64 (JPG or PNG, up to 30 MB, at least 300 px per side, aspect ratio between 2:5 and 5:2)",
+					"type": "string",
+					"minLength": 1
+				},
+				"middle_frames": {
+					"description": "Keyframes the video passes through, in order",
+					"maxItems": 9,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1,
+						"description": "An https URL, a data URI, or raw base64 (JPG or PNG, up to 30 MB, at least 300 px per side, aspect ratio between 2:5 and 5:2)"
+					}
+				},
+				"last_frame": {
+					"description": "Image the video ends on. An https URL, a data URI, or raw base64 (JPG or PNG, up to 30 MB, at least 300 px per side, aspect ratio between 2:5 and 5:2)",
+					"type": "string",
+					"minLength": 1
+				},
+				"duration": {
+					"default": 5,
+					"description": "Video duration in seconds",
+					"type": "integer",
+					"minimum": 3,
+					"maximum": 30
+				},
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Video aspect ratio. Ignored when keyframes are given.",
+					"type": "string",
+					"enum": [
+						"21:9",
+						"16:9",
+						"9:16",
+						"1:1"
+					]
+				},
+				"resolution": {
+					"default": "1080p",
+					"description": "Output resolution",
+					"type": "string",
+					"enum": [
+						"720p",
+						"1080p"
+					]
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"aspect_ratio",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"description": "URL to the generated video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

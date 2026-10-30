@@ -10,27 +10,30 @@ products:
 
 import { Render } from "~/components";
 
-| Feature                                                                                         | Limit                                             |
-| ----------------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| Databases per account | Workers Paid: 1,000,000. The first 100,000 databases are included. Each database above 100,000 costs [$0.10 per month](/d1/platform/pricing/#billing-metrics). Free: 10. |
-| Maximum database size                                                                           | 10 GB (Workers Paid) / 500 MB (Free)              |
-| Maximum storage per account                                                                     | 1 TB (Workers Paid) [^1] / 5 GB (Free)            |
-| [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                     | 30 days (Workers Paid) / 7 days (Free)            |
-| Maximum Time Travel restore operations                                                          | 10 restores per 10 minutes (per database)         |
-| Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#subrequests)) | 1000 (Workers Paid) / 50 (Free)                   |
-| Maximum number of columns per table                                                             | 100                                               |
-| Maximum number of rows per table                                                                | Unlimited (excluding per-database storage limits) |
-| Maximum string, `BLOB` or table row size                                                        | 2,000,000 bytes (2 MB)                            |
-| Maximum SQL statement length                                                                    | 100,000 bytes (100 KB)                            |
-| Maximum bound parameters per query                                                              | 100                                               |
-| Maximum arguments per SQL function                                                              | 32                                                |
-| Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                        | 50 bytes                                          |
-| Maximum bindings per Workers script                                                             | Approximately 5,000 [^2]                          |
-| Maximum SQL query duration                                                                      | 30 seconds [^3]                                   |
-| Maximum file import (`d1 execute`) size                                                         | 5 GB [^4]                                         |
+| Feature                                                                                         | Limit                                                                                                                                                                    |
+| ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Databases per account                                                                           | Workers Paid: 1,000,000. The first 100,000 databases are included. Each database above 100,000 costs [$0.10 per month](/d1/platform/pricing/#billing-metrics). Free: 10. |
+| Maximum database size                                                                           | 10 GB (Workers Paid) / 500 MB (Free)                                                                                                                                     |
+| Maximum storage per account                                                                     | 1 TB (Workers Paid) [^1] / 5 GB (Free)                                                                                                                                   |
+| [Time Travel](/d1/reference/time-travel/) duration (point-in-time recovery)                     | 30 days (Workers Paid) / 7 days (Free)                                                                                                                                   |
+| Maximum Time Travel restore operations                                                          | 10 restores per 10 minutes (per database)                                                                                                                                |
+| Queries per Worker invocation (read [subrequest limits](/workers/platform/limits/#subrequests)) | 1000 (Workers Paid) / 50 (Free)                                                                                                                                          |
+| Maximum number of columns per table                                                             | 100                                                                                                                                                                      |
+| Maximum number of rows per table                                                                | Unlimited (excluding per-database storage limits)                                                                                                                        |
+| Maximum string, `BLOB` or table row size                                                        | 2,000,000 bytes (2 MB)                                                                                                                                                   |
+| Maximum SQL statement length                                                                    | 100,000 bytes (100 KB)                                                                                                                                                   |
+| Maximum bound parameters per query                                                              | 100                                                                                                                                                                      |
+| Maximum arguments per SQL function                                                              | 32                                                                                                                                                                       |
+| Maximum characters (bytes) in a `LIKE` or `GLOB` pattern                                        | 50 bytes                                                                                                                                                                 |
+| Maximum bindings per Workers script                                                             | Approximately 5,000 [^2]                                                                                                                                                 |
+| Maximum SQL query duration                                                                      | 30 seconds [^3]                                                                                                                                                          |
+| Maximum file import (`d1 execute`) size                                                         | 5 GB [^4]                                                                                                                                                                |
+| Maximum query result size                                                                       | 50 MB [^5]                                                                                                                                                               |
 
 :::note[Batch limits]
 Limits for individual queries (listed above) apply to each individual statement contained within a batch statement. For example, the maximum SQL statement length of 100 KB applies to each statement inside a `db.batch()`.
+
+The Queries per Worker invocation limit is an exception: a `db.batch()` call counts as a single query against it, not one query per statement. For example, a batch containing 2,000 statements executes in a single Worker invocation, while issuing 2,000 individual queries in one invocation fails with `Too many API requests by single Worker invocation`.
 :::
 
 [^1]: The maximum storage per account can be increased by request on Workers Paid and Enterprise plans. Refer to the guidance on limit increases on this page to request an increase.
@@ -40,6 +43,8 @@ Limits for individual queries (listed above) apply to each individual statement 
 [^3]: Requests to Cloudflare API must resolve in 30 seconds. Therefore, this duration limit also applies to the entire batch call.
 
 [^4]: The imported file is uploaded to R2. Refer to [R2 upload limit](/r2/platform/limits).
+
+[^5]: This limit takes effect on 2026-11-04. Queries that return a result larger than 50 MB will fail and return an error. Import and export operations via the [REST API](/api/resources/d1/subresources/database/methods/export/) are not subject to this limit. For more information, refer to the [query result size limit changelog entry](/changelog/post/2026-10-30-query-result-size-limit/).
 
 Cloudflare also offers other storage solutions such as [Workers KV](/kv/api/), [Durable Objects](/durable-objects/), and [R2](/r2/get-started/). Each product has different advantages and limits. Refer to [Choose a data or storage product](/workers/platform/storage-options/) to review which storage option is right for your use case.
 

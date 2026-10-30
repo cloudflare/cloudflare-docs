@@ -60,7 +60,7 @@ beforeTurn(ctx: TurnContext): TurnConfig | void | Promise<TurnConfig | void>
 
 | Field          | Type                      | Description                                                                  |
 | -------------- | ------------------------- | ---------------------------------------------------------------------------- |
-| `system`       | `string`                  | Assembled system prompt (from context blocks or `getSystemPrompt()`)         |
+| `system`       | `string`                  | Assembled system prompt (`getSystemPrompt()` override, then context blocks)  |
 | `messages`     | `ModelMessage[]`          | Assembled model messages (truncated, pruned)                                 |
 | `tools`        | `ToolSet`                 | Merged tool set (workspace + getTools + session + extensions + MCP + client) |
 | `model`        | `LanguageModel`           | The model from `getModel()`                                                  |

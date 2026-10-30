@@ -52,9 +52,11 @@ dig TXT cf2024-1._domainkey.email.cloudflare.net +short
 
 ### DMARC enforcing
 
-Email Service supports Domain-based Message Authentication, Reporting & Conformance (DMARC). When sending emails, Email Service ensures proper SPF and DKIM alignment to pass DMARC authentication. For Email Routing, incoming emails are rejected if they fail authentication according to the sender's DMARC policy. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
+Email Service supports Domain-based Message Authentication, Reporting & Conformance (DMARC). When sending emails, Email Service ensures proper SPF and DKIM alignment to pass DMARC authentication. Email Routing honors the DMARC and SPF policies published by the claimed sender's domain. Incoming emails are rejected if they fail authentication according to that domain's DMARC policy. Refer to [dmarc.org](https://dmarc.org/) for more information on this protocol.
 
 It is recommended that all domains implement the DMARC protocol for optimal email deliverability.
+
+For emails routed to Workers, refer to [Authentication results](/email-service/api/route-emails/email-handler/#authentication-results) to access the DMARC result in your Worker.
 
 ### Mail authentication requirement
 

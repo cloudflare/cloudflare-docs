@@ -33,12 +33,12 @@ Create a custom Dockerfile that combines the sandbox binary with Docker. The Doc
 FROM docker:dind
 
 # Use the musl build so it runs on Alpine-based docker:dind
-COPY --from=docker.io/cloudflare/sandbox:0.12.13-musl /container-server/sandbox /sandbox
-COPY --from=docker.io/cloudflare/sandbox:0.12.13-musl /usr/lib/libstdc++.so.6 /usr/lib/libstdc++.so.6
-COPY --from=docker.io/cloudflare/sandbox:0.12.13-musl /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
-COPY --from=docker.io/cloudflare/sandbox:0.12.13-musl /bin/bash /bin/bash
-COPY --from=docker.io/cloudflare/sandbox:0.12.13-musl /usr/lib/libreadline.so.8 /usr/lib/libreadline.so.8
-COPY --from=docker.io/cloudflare/sandbox:0.12.13-musl /usr/lib/libreadline.so.8.2 /usr/lib/libreadline.so.8.2
+COPY --from=docker.io/cloudflare/sandbox:0.12.14-musl /container-server/sandbox /sandbox
+COPY --from=docker.io/cloudflare/sandbox:0.12.14-musl /usr/lib/libstdc++.so.6 /usr/lib/libstdc++.so.6
+COPY --from=docker.io/cloudflare/sandbox:0.12.14-musl /usr/lib/libgcc_s.so.1 /usr/lib/libgcc_s.so.1
+COPY --from=docker.io/cloudflare/sandbox:0.12.14-musl /bin/bash /bin/bash
+COPY --from=docker.io/cloudflare/sandbox:0.12.14-musl /usr/lib/libreadline.so.8 /usr/lib/libreadline.so.8
+COPY --from=docker.io/cloudflare/sandbox:0.12.14-musl /usr/lib/libreadline.so.8.2 /usr/lib/libreadline.so.8.2
 
 # Start dockerd without iptables or IP forwarding, wait up to 60 seconds
 # for it to accept connections, then keep running

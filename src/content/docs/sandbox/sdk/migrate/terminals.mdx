@@ -142,8 +142,10 @@ return sandbox.terminal(request, { cols: 80, rows: 24 });
 In 1.0, the Worker forwards the request to the Durable Object, and the `session` query parameter goes with it:
 
 ```ts title="src/index.ts (1.0)"
-return env.MY_SANDBOX.getByName(id.toLowerCase()).fetch(request);
+return env.MY_SANDBOX.getByName(id).fetch(request);
 ```
+
+Pass the name that 0.12 used. 0.12 kept the case of the name unless you passed `normalizeId: true`. In that case, call `id.toLowerCase()`, as [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/) shows.
 
 Replace `proxyTerminal(stub, sessionId, request)` with the same `fetch()` call, and put the session in the `session` query parameter. The handler reads the size from the `cols` and `rows` query parameters, and uses 80 by 24 without them. A request without a WebSocket upgrade gets HTTP `426`, where 0.12 threw an error.
 
@@ -153,7 +155,7 @@ If your class also forwards preview URLs, remove the `X-Sandbox-Port` header bef
 const headers = new Headers(request.headers);
 headers.delete("X-Sandbox-Port");
 
-const sandbox = env.MY_SANDBOX.getByName(id.toLowerCase());
+const sandbox = env.MY_SANDBOX.getByName(id);
 return sandbox.fetch(new Request(request, { headers }));
 ```
 

@@ -191,7 +191,7 @@ For a process that runs until the container stops, such as a development server 
 
    The process ID file also records the boot ID, which changes in every instance. A [snapshot](/sandbox/files/save-and-restore-a-workspace/) restores the file, and a new instance reuses the same process IDs, so a restored process ID can belong to an unrelated process. `current()` ignores a process ID from another instance, so a process that was running when the snapshot was taken is `lost`.
 
-4. Add methods that return the output of a process so far, and follow it while the process runs:
+4. Add a method that returns the output of a process so far:
 
    ```ts title="src/index.ts"
    export class MyContainer extends DurableObject<Env> {
@@ -205,83 +205,10 @@ For a process that runs until the container stops, such as a development server 
    		const path = `${ROOT}/${id}/${stream}.log`;
    		return (await run(this.ctx.container!, ["cat", path])).stdout;
    	}
-
-   	async follow(id: string, stream: "stdout" | "stderr"): Promise<Response | undefined> {
-   		const status = await this.status(id);
-
-   		if (!status) {
-   			return undefined;
-   		}
-
-   		const path = `${ROOT}/${id}/${stream}.log`;
-   		const argv =
-   			status.state === "running"
-   				? ["tail", "-n", "+1", "-F", "--pid", `${status.pid}`, path]
-   				: ["cat", path];
-   		const process = await this.ctx.container!.exec(argv, { stderr: "ignore" });
-   		const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
-   		const writer = writable.getWriter();
-   		const encoder = new TextEncoder();
-
-   		const send = (event: string, data: unknown) =>
-   			writer.write(
-   				encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`),
-   			);
-
-   		let exited = false;
-   		const markExited = () => {
-   			exited = true;
-   		};
-   		process.exitCode.then(markExited, markExited);
-
-   		// Signaling a process that has exited records an internal error.
-   		const stop = () => {
-   			if (!exited) process.kill();
-   		};
-
-   		// Stop following when the client disconnects.
-   		writer.closed.catch(stop);
-
-   		// Detect a disconnected client while the log is quiet.
-   		const heartbeat = setInterval(() => {
-   			writer.write(encoder.encode(": keep-alive\n\n")).catch(() => {});
-   		}, 5_000);
-
-   		const pump = async () => {
-   			try {
-   				for await (const text of process.stdout!.pipeThrough(
-   					new TextDecoderStream(),
-   				)) {
-   					await send(stream, text);
-   				}
-   				const ended = await this.status(id);
-   				const exitCode = ended?.state === "exited" ? ended.exitCode : null;
-   				await send("exit", { exitCode });
-   				await writer.close();
-   			} catch (error) {
-   				stop();
-   				// End the response, so a connected client does not wait forever.
-   				await writer.abort(error).catch(() => {});
-   			} finally {
-   				clearInterval(heartbeat);
-   			}
-   		};
-
-   		void pump();
-
-   		return new Response(readable, {
-   			headers: {
-   				"Content-Type": "text/event-stream",
-   				"Cache-Control": "no-cache",
-   			},
-   		});
-   	}
    }
    ```
 
-   `follow()` sends the output so far, then new output until the process exits and `tail --pid` stops. Each event is named after the stream, and holds a JSON-encoded chunk of output, which can be part of a line or several lines. When the output ends, `follow()` sends an `exit` event with the exit code, or `null` when the process recorded none. A page can read the stream with `EventSource`, as in [Stream command output](/sandbox/commands/stream-command-output/#read-the-stream-in-a-browser).
-
-   `follow()` notices a disconnected client only when a write fails. The keep-alive comment every five seconds makes that write happen while the log is quiet, so `follow()` stops `tail`. Without the comment, `tail` keeps running until the process exits.
+   To stream the output while the process runs, or to wait until it prints a line, refer to [Follow a background process](/sandbox/commands/follow-a-background-process/).
 
 5. Add a method that stops a process:
 
@@ -375,12 +302,6 @@ For a process that runs until the container stops, such as a development server 
    		if (logs) {
    			const stream =
    				url.searchParams.get("stream") === "stderr" ? "stderr" : "stdout";
-
-   			if (url.searchParams.has("follow")) {
-   				const response = await sandbox.follow(id, stream);
-   				return response ?? new Response("Not found", { status: 404 });
-   			}
-
    			const output = await sandbox.logs(id, stream);
    			return output === undefined
    				? new Response("Not found", { status: 404 })
@@ -428,43 +349,31 @@ For a process that runs until the container stops, such as a development server 
    { "state": "running", "pid": 354 }
    ```
 
-10. Read the output so far, then follow it:
+10. Read the output so far:
 
     ```sh
     curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker/logs
-    curl "https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker/logs?follow" --no-buffer
     ```
 
-    The first request prints the lines so far and ends. The second prints them as events, then a new event each second:
+    The request prints the lines so far and ends:
 
     ```txt output
-    event: stdout
-    data: "ready\ntick 1\ntick 2\ntick 3\ntick 4\n"
-
-    event: stdout
-    data: "tick 5\n"
-
-    event: stdout
-    data: "tick 6\n"
+    ready
+    tick 1
+    tick 2
+    tick 3
     ```
 
     Add `stream=stderr` to the query to read standard error.
 
-11. In another terminal, stop the process, then check it again:
+11. Stop the process, then check it again:
 
     ```sh
     curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker --request DELETE
     curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/processes/ticker
     ```
 
-    The `DELETE` request responds with `202`. The followed output ends with an `exit` event:
-
-    ```txt output
-    event: exit
-    data: {"exitCode":143}
-    ```
-
-    The status shows the same exit code:
+    The `DELETE` request responds with `202`. The status shows the exit code:
 
     ```json output
     { "state": "exited", "exitCode": 143 }
@@ -472,108 +381,9 @@ For a process that runs until the container stops, such as a development server 
 
 </Steps>
 
-## Wait for a log line
-
-A development server prints a line, such as `ready`, when it accepts requests. To wait for that line before you use the server, check the log files until a line matches or the process exits:
-
-<Steps>
-
-1. Add a script that checks the logs of a process:
-
-   <TypeScriptExample filename="src/index.ts">
-
-   ```ts
-   // Prints the first matching line and exits with 0. Exits with 3 when the
-   // process ends without printing one, 4 when there is no such process, and
-   // 5 when the process was lost, for example in an earlier instance.
-   const WAIT = `${CURRENT}
-   dir=$1; pattern=$2
-   [ -d "$dir" ] || exit 4
-   while :; do
-     exited=false; [ -e "$dir/exit-code" ] && exited=true
-     if ! $exited && [ -e "$dir/pid" ] && ! { current "$dir" && kill -0 "$pid" 2>/dev/null; }; then
-       sleep 0.1; [ -e "$dir/exit-code" ] || exit 5; exited=true
-     fi
-     line=$(grep -h -m 1 -E -e "$pattern" "$dir/stdout.log" "$dir/stderr.log" 2>/dev/null | head -n 1)
-     [ -n "$line" ] && { printf '%s\\n' "$line"; exit 0; }
-     $exited && exit 3
-     sleep 0.2
-   done`;
-   ```
-
-   </TypeScriptExample>
-
-   Do not pipe `tail -F` into `grep -m 1` instead: `tail` keeps running after `grep` exits, until the next line arrives.
-
-2. Add a method that runs the script with a time limit:
-
-   ```ts title="src/index.ts"
-   export class MyContainer extends DurableObject<Env> {
-   	// ...
-
-   	async waitForLog(id: string, pattern: string, timeoutMs: number) {
-   		const container = this.ctx.container;
-
-   		if (!container?.running) {
-   			return undefined;
-   		}
-
-   		const result = await run(container, [
-   			"timeout",
-   			"--kill-after=5",
-   			`${timeoutMs / 1000}`,
-   			"sh",
-   			"-c",
-   			WAIT,
-   			"sh",
-   			`${ROOT}/${id}`,
-   			pattern,
-   		]);
-
-   		if (result.exitCode === 0) {
-   			return { state: "matched", line: result.stdout.trimEnd() };
-   		}
-
-   		if (result.exitCode === 3) {
-   			return { state: "exited" };
-   		}
-
-   		if (result.exitCode === 4) {
-   			return undefined;
-   		}
-
-   		if (result.exitCode === 5) {
-   			return { state: "lost" };
-   		}
-
-   		// 124 when the time limit passes, or 137 if timeout also sends SIGKILL.
-   		if (result.exitCode === 124 || result.exitCode === 137) {
-   			return { state: "timed-out" };
-   		}
-
-   		throw new Error(`The log check failed with exit code ${result.exitCode}`);
-   	}
-   }
-   ```
-
-   `timeout` stops the script when the time limit passes. If the script is still running five seconds later, `--kill-after=5` stops it with `SIGKILL`.
-
-3. Call it after `startProcess()`, for example with the pattern `^ready`:
-
-   ```ts title="src/index.ts"
-   const ready = await sandbox.waitForLog(id, "^ready", 30_000);
-   ```
-
-   ```json output
-   { "state": "matched", "line": "ready" }
-   ```
-
-   The pattern is an extended regular expression. The state is `exited` when the process ends without printing a matching line, `lost` when it ended without recording an exit code, and `timed-out` when the time limit passes first. The method returns `undefined` when no process uses the ID. A process that was still running when an earlier instance stopped is `lost`, even when its log matches, because `current()` checks the boot ID.
-
-</Steps>
-
 ## Related resources
 
+- [Follow a background process](/sandbox/commands/follow-a-background-process/): stream the output of a process while it runs, or wait until it prints a line.
 - [Stream command output](/sandbox/commands/stream-command-output/): commands that finish while the request is open.
 - [Run a server in the background](/sandbox/commands/run-a-server-in-the-background/): processes that run until the container stops.
 - [Preview a web application](/sandbox/previews/): a web server as the main process.
