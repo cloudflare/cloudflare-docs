@@ -469,7 +469,9 @@ For more details, refer to [Custom header original IP detection extension](https
 
 If you are running an application behind [Caddy](https://caddyserver.com/) that relies on the `X-Forwarded-For` header, you can configure Caddy to override the header with Cloudflare's [CF-Connecting-IP header](/fundamentals/reference/http-headers/#cf-connecting-ip).
 
-First, [authenticate traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). Also restrict incoming connections to [Cloudflare's IP addresses](https://www.cloudflare.com/ips/) as an additional network filter. Cloudflare IP ranges are shared, so this restriction alone does not prevent another Cloudflare customer from sending requests with a chosen `CF-Connecting-IP` value. With origin authentication and network filtering in place, your Caddyfile could look like this:
+Before using `CF-Connecting-IP` for IP-based access restrictions or rate limiting, [verify that requests reach your origin through your Cloudflare zone](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). If you use Authenticated Origin Pulls (AOP), configure Caddy to [require and verify client certificates](https://caddyserver.com/docs/caddyfile/directives/tls) using a dedicated CA for your zone-level or per-hostname AOP certificate.
+
+For direct connections from Cloudflare to Caddy, also restrict incoming connections to [Cloudflare's IP addresses](https://www.cloudflare.com/ips/) as an additional network filter. Cloudflare IP ranges are shared, so this restriction alone does not prevent another Cloudflare customer from sending requests with a chosen `CF-Connecting-IP` value. With origin protection configured separately, your Caddyfile can copy the header as follows:
 ```txt title="Caddyfile"
 https://example.com {
     reverse_proxy localhost:8080 {
@@ -479,7 +481,7 @@ https://example.com {
 }
 ```
 
-The following example adds the network filter in Caddy. Configure origin authentication separately; this source IP matcher does not authenticate your account or zone:
+The following example adds the network filter in Caddy for direct connections from Cloudflare. These examples do not configure client certificate validation. The source IP matcher does not identify your account or zone:
 ```txt title="Caddyfile"
 https://example.com {
     # Restrict access to Cloudflare IPs (https://www.cloudflare.com/ips/)
