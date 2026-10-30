@@ -43,14 +43,32 @@ You should ensure that API changes between your Durable Object and its Worker ar
 
 ## Durable Object class lifecycle changes
 
-Versions of Worker bundles that change Durable Object class lifecycle cannot be uploaded. This applies to both the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field and the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array. This is because Durable Object lifecycle changes are atomic operations. Once a lifecycle change is deployed, rollbacks cannot take place to any version prior to the one that included the change.
+Durable Object lifecycle changes create, delete, rename, or transfer namespaces. These changes apply atomically to namespace state shared across Worker versions, independently of deployment traffic percentages. Once a lifecycle change is deployed, rollbacks cannot take place to any version prior to the one that included the change.
 
-Wrangler versions before `4.131.0` may return error code `10211` when `wrangler versions upload` encounters a pending Durable Object migration. Apply the migration with `wrangler deploy`:
+### Declarative `exports`
+
+With the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field, `wrangler versions upload` saves the declarations without applying lifecycle changes. Cloudflare reconciles them against provisioned namespaces when you deploy the version.
+
+Gradual deployments are supported when the Durable Object classes and lifecycle settings in `exports` match across all selected versions. Conflicting declarations are rejected with error code `100405`. This restriction compares only Durable Object entries, so differences in other entries, such as Workflow entries, do not trigger this error.
+
+For classes using [Containers](/containers/), whether each class uses Containers must also match. Container names and images can differ across versions.
+
+Matching declarations can provision a new namespace as part of a split deployment. Traffic percentages control which Worker code version handles requests; they do not limit the namespace lifecycle change to a percentage of Durable Objects.
+
+One way to separate a lifecycle change from a code rollout is to deploy the lifecycle change at 100%, then upload a version with code changes and the same Durable Object declarations. You can split traffic between those two versions. A version with different Durable Object declarations cannot be included in that split, even after the lifecycle change has been deployed.
+
+Version uploads that bind to a new class whose namespace has not been provisioned are rejected with error code `100406`. Refer to [Deployment management - Durable Object migrations](/workers/versions-and-deployments/deployment-management/#durable-object-migrations) for how to provision the namespace and add the binding.
+
+### Legacy `migrations`
+
+With the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array, `wrangler versions upload` rejects pending migrations. Previously applied migrations can remain in the configuration.
+
+Wrangler versions before `4.131.0` may return error code `10211` when `wrangler versions upload` encounters a pending legacy migration. Apply the migration with `wrangler deploy`:
 
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
+### Plan lifecycle changes separately from code changes
+
 To limit the blast radius of these deployments, Durable Object lifecycle changes should be deployed independently of other code changes.
 
-To understand why Durable Object lifecycle changes are atomic operations, consider the hypothetical example of gradually deploying a class deletion. If a delete were applied to 50% of Durable Object instances, then Workers requesting those Durable Object instances would fail because they would have been deleted.
-
-To do this without producing errors, a version of the Worker which does not depend on any of the Durable Objects to be deleted would have to have already been rolled out. Then, you can deploy the class deletion without affecting any traffic and there is no reason to do so gradually.
+For example, before deleting a class, fully roll out a Worker version that no longer depends on it. Then deploy the class deletion. Splitting traffic does not protect requests that still depend on the deleted namespace.

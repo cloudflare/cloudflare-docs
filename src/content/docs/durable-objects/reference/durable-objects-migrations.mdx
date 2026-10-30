@@ -473,19 +473,14 @@ The `exports` field is a map keyed by Durable Object class name. Each value is a
 
 - `type` <Type text="string" /> <MetaInfo text="required" />
   - For Durable Object class entries, set this to `"durable-object"`.
-
 - `state` <Type text="string" /> <MetaInfo text="optional" />
   - The lifecycle state. One of `"created"` (the default, omit to use), `"deleted"`, `"renamed"`, `"transferred"`, or `"expecting-transfer"`.
-
 - `storage` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"created"` or `"expecting-transfer"`. One of `"sqlite"` (recommended, the only valid value for new namespaces) or `"legacy-kv"` (only for existing key-value-backed namespaces). Forbidden on tombstone states.
-
 - `renamed_to` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"renamed"`. The destination class name. Must be a valid JavaScript identifier, differ from the source class name, and appear as a live entry in the same `exports` map.
-
 - `transferred_to` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"transferred"`. The name of the target Worker that will receive the namespace.
-
 - `transfer_from` <Type text="string" /> <MetaInfo text="conditional" />
   - Required when `state` is `"expecting-transfer"`. The name of the source Worker the namespace is being transferred from.
 
@@ -505,7 +500,7 @@ When a deploy fails reconciliation, Cloudflare returns one error per class along
 
 | Scenario                                          | Meaning                                                                                                                                                            | How to fix                                                                                                                                   |
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| `provisioned_class_missing_from_config`           | A namespace exists for a class that the Worker code still exports, but `exports` has no entry for it.                                                               | Add a live entry (`state: "created"`) to keep the namespace, or add a tombstone (`deleted`, `renamed`, or `transferred`) to retire it.       |
+| `provisioned_class_missing_from_config`           | A namespace exists for a class that the Worker code still exports, but `exports` has no entry for it.                                                              | Add a live entry (`state: "created"`) to keep the namespace, or add a tombstone (`deleted`, `renamed`, or `transferred`) to retire it.       |
 | `config_export_not_in_code`                       | A live entry declares a class that the Worker code does not export.                                                                                                | Add the class to your code, or replace the entry with a tombstone.                                                                           |
 | `config_references_nonexistent_class`             | A live entry declares a class that is neither in code nor provisioned.                                                                                             | Remove the entry, or add the class to your Worker code.                                                                                      |
 | `orphaned_provisioned_namespace`                  | A namespace exists for a class that is neither in code nor declared.                                                                                               | Add a tombstone for the class, or add the class back to code and `exports`.                                                                  |
@@ -537,8 +532,9 @@ The blocking error `tombstone_delete_class_still_in_code` (specific to `deleted`
 ## Constraints and limitations
 
 - **Durable Object entries in `exports` are mutually exclusive with `migrations`.** A Worker configuration that contains both is rejected at validation. Workflow entries in `exports` can be used alongside `migrations`. Once a Worker has been deployed with `exports`, subsequent deploys must continue to use `exports` (or neither, which reconciles against an empty config and is usually a mistake).
-- **`wrangler versions upload` does not apply lifecycle changes.** Just like the legacy `migrations` array, Durable Object lifecycle changes can only be applied via `wrangler deploy`. If your Wrangler configuration contains `exports` entries, `wrangler versions upload` fails fast with an actionable error. Refer to [Deployment management - Durable Object migrations](/workers/versions-and-deployments/deployment-management/#durable-object-migrations).
-- **Gradual deployments are not supported with `exports`.** Lifecycle changes are atomic at the Cloudflare control plane and cannot be rolled out gradually. Refer to [Gradual deployments with Durable Objects - Durable Object class lifecycle changes](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/#durable-object-class-lifecycle-changes).
+- **Version uploads store declarations without applying lifecycle changes.** `wrangler versions upload` supports `exports` and saves the declarations with the uploaded version. Cloudflare reconciles them against provisioned namespaces when the version is deployed, including through `wrangler versions deploy`. Refer to [Deployment management - Durable Object migrations](/workers/versions-and-deployments/deployment-management/#durable-object-migrations).
+- **Version uploads cannot bind to an unprovisioned namespace.** If a version adds a new class with a `durable_objects.bindings` entry before its namespace exists, `wrangler versions upload` fails with error code `100406`. Use `wrangler deploy` to provision and bind the class together, or upload without that binding and add it in a later version after the namespace has been provisioned.
+- **Gradual deployments require matching Durable Object lifecycle declarations.** The Durable Object classes and lifecycle settings in `exports` must match across all versions selected for a deployment. Conflicting declarations are rejected with error code `100405`. Namespace lifecycle changes apply atomically, independently of traffic percentages. Refer to [Gradual deployments with Durable Objects - Durable Object class lifecycle changes](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/#durable-object-class-lifecycle-changes).
 - **Rollbacks cannot cross a lifecycle change.** You cannot roll back to a version deployed before an `exports`-driven lifecycle change. Refer to [Rollbacks - Bindings](/workers/versions-and-deployments/rollbacks/#bindings).
 - **Storage backends are immutable once provisioned.** You cannot change a namespace's `storage` value in place; delete and re-provision instead.
 
