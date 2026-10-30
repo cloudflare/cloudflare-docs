@@ -89,12 +89,6 @@ For example, first deploy the existing HTML with both releases' asset files. The
 
 If you include a version ID in asset URLs, include it in every script, stylesheet, and other asset URL the page loads. A script's query string is not automatically copied to the URLs it loads. A query parameter alone does not select a Worker version. The incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
 
-### Multiple hostnames and connections
-
-If assets use another hostname, apply the same routing strategy there. Without a `Domain` attribute, a cookie only reaches the hostname that set it. Check which cookies and headers reach each asset hostname.
-
-Use the same routing strategy across all connections, including HTTP/3 connections. Pointing multiple hostnames at one Worker does not make browsers share cookies or version headers between those hostnames.
-
 ## Asset availability across releases
 
 Check these separately when investigating a missing asset:
