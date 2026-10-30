@@ -304,10 +304,6 @@ When you enable Email Routing on a domain that already has `MX` records from ano
 
 To switch your domain to Email Routing, refer to [Move to Email Routing from another provider](/email-service/configuration/domains/#move-to-email-routing-from-another-provider).
 
-### Dashboard shows domain as misconfigured
-
-If you have Email Sending configured on a domain whose `MX` records still point to another provider, the Cloudflare dashboard may show that domain as misconfigured. This is expected — Email Sending uses records on the `cf-bounce.<yourdomain>` subdomain and does not require the apex `MX` records to point to Cloudflare. Email delivery is not affected.
-
 ## Testing tools
 
 Use these tools to validate your email authentication setup:
