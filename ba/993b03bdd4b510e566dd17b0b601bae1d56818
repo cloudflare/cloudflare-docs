@@ -1,0 +1,21 @@
+src/content/catalog-models/typesafe-jev.json
+  s_1b429868c98270::t_6fcfdeb659ac9b 1-897
+src/content/catalog-models/unbiased-pareto.json
+  s_1b429868c98270::t_3fcea54c8ca488 1-602
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ba993b03bdd4b510e566dd17b0b601bae1d56818",
+  "prompts": {},
+  "sessions": {
+    "s_1b429868c98270": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f4e31dad4ffeVNcOu9vDJGvBfu",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "shridharathi <shridhar@cloudflare.com>"
+    }
+  }
+}
