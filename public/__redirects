@@ -3338,3 +3338,4 @@
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
 
+/one/reusable-components/custom-pages/page-templates /one/reusable-components/custom-pages/dynamic-pages 301
