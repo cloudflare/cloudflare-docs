@@ -1,6 +1,6 @@
 ---
 title: Features
-description: Explore AI Gateway features including caching, rate limiting, guardrails, dynamic routing, and data loss prevention.
+description: Explore AI Gateway features including caching, rate limiting, guardrails, routing, and data loss prevention.
 pcx_content_type: overview
 order: 1
 sidebar:
@@ -69,17 +69,16 @@ Automatically route each request to the most cost-effective model that can handl
 
 </Feature>
 
-<Feature header="Dynamic Routing" href="/ai-gateway/features/dynamic-routing/" badge="Beta">
+<Feature header="Routing" href="/ai-gateway/features/routing/">
 
-Create sophisticated request routing flows without code changes. Route requests based on user segments, geography, content analysis, or A/B testing requirements through a visual interface.
+Choose models without changing application code. Use model aliases for shared model choices and routing preferences, or dynamic routes for conditional flows.
 
 **Key benefits:**
 
-- Visual flow-based configuration
-- User-based and geographic routing
-- A/B testing and fractional traffic splitting
-- Context-aware routing based on request content
-- Dynamic rate limiting with automatic fallbacks
+- Stable model names with configurable model order or smart routing
+- Conditional routing and percentage-based traffic splits
+- Rate and budget limits within dynamic routes
+- Fallbacks when a model is unavailable
 
 </Feature>
 
@@ -211,7 +210,7 @@ Override default pricing with your negotiated rates or custom cost models. Apply
 ## Getting Started with Features
 
 1. **Start with the basics**: Enable [Caching](/ai-gateway/features/caching/) and [Analytics](/ai-gateway/observability/analytics/) for immediate benefits
-2. **Add reliability**: Configure Fallbacks and Rate Limiting using [Dynamic routing](/ai-gateway/features/dynamic-routing/)
+2. **Add reliability**: Configure Fallbacks and Rate Limiting using [dynamic routes](/ai-gateway/features/routing/dynamic-routing/)
 3. **Enhance security**: Implement [Guardrails](/ai-gateway/features/guardrails/), [DLP](/ai-gateway/features/dlp/), and [Authentication](/ai-gateway/configuration/authentication/)
 
 ---

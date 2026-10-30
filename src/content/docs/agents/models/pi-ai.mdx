@@ -123,7 +123,7 @@ ai(getBuiltinModel("anthropic", "claude-opus-5-5"));
 
 Any other string throws a `TypeError`. The provider does not guess what a prefix means.
 
-A [dynamic route](/ai-gateway/features/dynamic-routing/) runs on `env.AI.run()` under the gateway you created it on, so set that gateway's `id`. The route picks the model and answers in the chat completions format. It takes the same metadata defaults and overrides as a Workers AI id.
+A [dynamic route](/ai-gateway/features/routing/dynamic-routing/) runs on `env.AI.run()` under the gateway you created it on, so set that gateway's `id`. The route picks the model and answers in the chat completions format. It takes the same metadata defaults and overrides as a Workers AI id.
 
 A catalog id uses the AI Gateway catalog's spelling, `anthropic/claude-opus-5.5`. Pi AI's own list spells Claude ids the way Anthropic does (`claude-opus-5-5`), so the provider lists them under the catalog spelling. A model object from a vendor registry keeps the vendor's spelling.
 
@@ -264,5 +264,5 @@ const result = await ai.generateImages(images, {
 - [AI SDK provider](/agents/models/ai-sdk/)
 - [Pi harness](/agents/harnesses/pi/)
 - [Model catalog](/ai/models/)
-- [Dynamic routing](/ai-gateway/features/dynamic-routing/)
+- [Dynamic routes](/ai-gateway/features/routing/dynamic-routing/)
 - [Pi AI](https://github.com/earendil-works/pi/tree/main/packages/ai)

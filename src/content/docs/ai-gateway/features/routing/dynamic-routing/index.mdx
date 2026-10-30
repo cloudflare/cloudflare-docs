@@ -1,10 +1,10 @@
 ---
-title: Dynamic routing
+title: Dynamic routes
 description: Route AI Gateway requests based on conditions, quotas, and fallbacks using a visual interface or JSON configuration.
 pcx_content_type: navigation
 order: 1
 sidebar:
-  order: 6
+  order: 2
   group:
     badge: Beta
 products:
@@ -48,7 +48,7 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
 :::
 
 1. Create a route.
-   - Go to **(Select your gateway)** > **Dynamic Routes** > **Add Route**, and name it (for example, `support`).
+   - Select your gateway, go to **Routing**, then select **Create dynamic route**. Name the route (for example, `support`).
    - Open **Editor**.
 2. Define conditionals, limits and other settings.
    - You can use [Custom Metadata](/ai-gateway/observability/custom-metadata/) in your conditionals.
@@ -60,7 +60,7 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
    - Click **Save** to save the state. You can always roll back to earlier versions from **Versions**.
    - Deploy the version to make it live.
 5. Call the route from your code.
-   - Use the route name in place of the model, for example, `dynamic/support`. See [Using a dynamic route](/ai-gateway/features/dynamic-routing/usage/) for examples.
+   - Use the route name in place of the model, for example, `dynamic/support`. See [Using a dynamic route](/ai-gateway/features/routing/dynamic-routing/usage/) for examples.
 
 :::note
 
