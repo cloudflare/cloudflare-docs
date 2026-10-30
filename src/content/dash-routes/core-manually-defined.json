@@ -1,5 +1,10 @@
 [
 	{
+		"deeplink": "/?to=/:account/rules/simulator",
+		"name": "Rules simulator",
+		"parent": ["Rules"]
+	},
+	{
 		"deeplink": "/?to=/:account/tunnels",
 		"name": "Tunnels",
 		"parent": ["Networking"]

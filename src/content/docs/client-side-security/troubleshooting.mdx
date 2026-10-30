@@ -102,7 +102,7 @@ To fix this issue, choose one of the following approaches:
 
 - **Use raw fields to match the original URI path**: Use the [`raw.http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/raw.http.request.uri.path/) field instead of the [`http.request.uri.path`](/ruleset-engine/rules-language/fields/reference/http.request.uri.path/) field in your content security rule expression. [Raw fields](/ruleset-engine/rules-language/fields/reference/?field-category=Raw+fields) preserve the original request values and are not affected by Transform Rules.
 
-When troubleshooting this issue, consider using [Cloudflare Trace](/rules/trace-request/) to verify how the request path changes as it passes through different phases.
+When troubleshooting this issue, consider using [Rules simulator](/rules/simulator/) to verify how the request path changes as it passes through different phases.
 
 ## Responses contain duplicate CSP headers
 
