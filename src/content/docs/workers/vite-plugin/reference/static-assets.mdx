@@ -26,8 +26,6 @@ On running `vite build`, an output `wrangler.json` configuration file is generat
 The `assets.directory` field in this file is automatically populated with the path to your `client` build output.
 It is therefore not necessary to provide the `assets.directory` field in your input Worker configuration.
 
-The generated client assets belong to the uploaded Worker version. A later build can produce different content-hashed filenames. Requests can still need files from an earlier build. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) to plan for deployments and older pages.
-
 :::note[Cloudflare Access context]
 The Vite plugin can add Static Assets to the generated deployment configuration even when the input Wrangler configuration does not include `assets`. Workers with Static Assets do not receive `ctx.access` in the user Worker.
 
