@@ -1,12 +1,12 @@
 ---
 name: "New module registry"
-sort_date: "2026-11-08"
-enable_date: "2026-11-08"
+sort_date: "2026-11-12"
+enable_date: "2026-11-12"
 enable_flag: "new_module_registry"
 disable_flag: "legacy_module_registry"
 ---
 
-For compatibility dates on or after November 8, 2026, JavaScript Workers use the new module registry by default. For earlier dates, add `new_module_registry` to opt in. Add `legacy_module_registry` to retain the legacy registry with a later compatibility date. Python Workers continue to use the legacy registry.
+For compatibility dates on or after November 12, 2026, JavaScript Workers use the new module registry by default. For earlier dates, add `new_module_registry` to opt in. Add `legacy_module_registry` to retain the legacy registry with a later compatibility date. Python Workers continue to use the legacy registry.
 
 The registry resolves and loads the modules uploaded with your Worker and the runtime's built-in modules. It provides `import.meta.url`, `import.meta.main`, and `import.meta.resolve()`, and resolves module specifiers as URLs. Different query strings or fragments create separate module instances, even when they refer to the same source.
 

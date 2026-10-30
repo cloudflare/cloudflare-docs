@@ -1,6 +1,6 @@
 ---
-title: Workers will use the new module registry by default on November 8
-description: JavaScript Workers with compatibility dates on or after November 8, 2026 will use URL-based module resolution and import.meta by default.
+title: Workers will use the new module registry by default on November 12
+description: JavaScript Workers with compatibility dates on or after November 12, 2026 will use URL-based module resolution and import.meta by default.
 products:
   - workers
 date: 2026-10-17
@@ -8,7 +8,7 @@ date: 2026-10-17
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-Starting November 8, 2026, JavaScript Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-11-08` or later will use the new module registry by default. You will no longer need the `new_module_registry` flag for these dates. Python Workers keep using the legacy registry.
+Starting November 12, 2026, JavaScript Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-11-12` or later will use the new module registry by default. You will no longer need the `new_module_registry` flag for these dates. Python Workers keep using the legacy registry.
 
 The module registry finds and loads JavaScript modules in your Worker. We [announced the new registry in September 2026](https://blog.cloudflare.com/workers-module-registry-nodejs/). It improves compatibility with JavaScript standards and Node.js. In Workers using [Node.js compatibility](/workers/runtime-apis/nodejs/), you can use `require()` to load ES modules. The module and its dependencies must not use top-level `await`.
 
@@ -32,7 +32,7 @@ export default {
 
 When deployed with `src/index.ts` as the unbundled entrypoint, `isEntrypoint` is `true`. `helperUrl` is a URL within your Worker bundle. Resolving the URL does not check whether the module exists or load it over the network. Build tools may transform `import.meta`. To try this example directly, refer to [build settings for cf](/cf/wrangler/reference/#build-settings) or [unbundled deployments with Wrangler](/workers/wrangler/configuration/#bundling).
 
-Existing Workers keep their current behavior until you change their compatibility date or flags. To try the new registry before November 8, keep your current date and add `new_module_registry` to your existing flags. With [`cf`](/cf/get-started/), set `worker.compatibilityFlags` in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/). With Wrangler, set `compatibility_flags`:
+Existing Workers keep their current behavior until you change their compatibility date or flags. To try the new registry before November 12, keep your current date and add `new_module_registry` to your existing flags. With [`cf`](/cf/get-started/), set `worker.compatibilityFlags` in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/). With Wrangler, set `compatibility_flags`:
 
 <WranglerConfig
 	cfConfig={`import { defineConfig } from "cf/config";
@@ -55,6 +55,6 @@ compatibility_flags = ["new_module_registry"]
 
 With `cf`, run `cf dev` to test locally, then `cf deploy` to publish the change. For an existing Wrangler project, follow the [migration guide](/cf/wrangler/migrate/) before switching to `cf`.
 
-Before updating, check your dependencies for invalid import attributes and changes to `require()` behavior. The new registry rejects invalid import attributes. Calls to `require()` also fail if the module or any of its dependencies use top-level `await`. To keep the legacy registry with a compatibility date of `2026-11-08` or later, add `legacy_module_registry` to the same flags list instead of `new_module_registry`.
+Before updating, check your dependencies for invalid import attributes and changes to `require()` behavior. The new registry rejects invalid import attributes. Calls to `require()` also fail if the module or any of its dependencies use top-level `await`. To keep the legacy registry with a compatibility date of `2026-11-12` or later, add `legacy_module_registry` to the same flags list instead of `new_module_registry`.
 
 For migration details, refer to the [new module registry compatibility flag](/workers/configuration/compatibility-flags/#new-module-registry), [bundling documentation](/workers/wrangler/bundling/#runtime-module-loading), and [Node.js compatibility documentation](/workers/runtime-apis/nodejs/).
