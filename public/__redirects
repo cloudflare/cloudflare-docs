@@ -3050,6 +3050,12 @@
 
 # ============================================================================
 # DYNAMIC REDIRECTS
+# Rules simulator (renamed from Cloudflare Trace, DEE-4058)
+/rules/trace-request/ /rules/simulator/ 301
+/rules/trace-request/how-to/ /rules/simulator/how-to/ 301
+/rules/trace-request/limitations/ /rules/simulator/limitations/ 301
+/rules/trace-request/changelog/ /rules/simulator/changelog/ 301
+
 /cloudflare-one/traffic-policies/* /cloudflare-one/traffic-controls/:splat 301
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
@@ -3225,11 +3231,6 @@
 /page-shield/* /client-side-security/:splat 301
 
 # Rules
-# Rules simulator (renamed from Cloudflare Trace, DEE-4058)
-/rules/trace-request/ /rules/simulator/ 301
-/rules/trace-request/how-to/ /rules/simulator/how-to/ 301
-/rules/trace-request/limitations/ /rules/simulator/limitations/ 301
-/rules/trace-request/changelog/ /rules/simulator/changelog/ 301
 
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
