@@ -10,7 +10,15 @@ tags:
   - Microsoft Entra ID
 ---
 
-import { Render, Badge } from "~/components";
+import {
+	APIRequest,
+	Badge,
+	Details,
+	Render,
+	Steps,
+	TabItem,
+	Tabs,
+} from "~/components";
 
 Client sessions control how often users must re-authenticate with your identity provider (IdP) while using the Cloudflare One Client (formerly WARP). Unlike legacy VPNs, which enforce a single global session timeout, Cloudflare One allows you to set session timeouts per application or per policy. You can configure session timeouts for your [Access applications](#configure-warp-sessions-in-access) or as part of your [Gateway policies](#configure-warp-sessions-in-gateway).
 
@@ -49,6 +57,108 @@ This timeout value does not apply to [device client session checks in Gateway po
 
 Users can now authenticate once with the Cloudflare One Client and have access to your Access applications for the configured period of time. The session timer resets when the user re-authenticates with the IdP used to enroll in the Cloudflare One Client.
 
+## Reauthenticate silently with Entra ID <Badge text="Beta" variant="caution" size="small" />
+
+<Details header="Feature availability">
+
+| System   | Availability |
+| -------- | ------------ |
+| Windows  | ✅           |
+| macOS    | ✅           |
+| Linux    | ❌           |
+| iOS      | ❌           |
+| Android  | ❌           |
+| ChromeOS | ❌           |
+
+</Details>
+
+With Device Credential Authentication, the Cloudflare One Client can renew a client session without opening a browser. When a session expires, the client asks the operating system for an Entra ID token for the signed-in user. Cloudflare verifies the token and re-evaluates your Access policies. If both checks pass, the session renews and the user does not see a reauthentication prompt.
+
+If silent reauthentication fails, the client falls back to the [browser-based reauthentication flow](#manually-reauthenticate).
+
+### Requirements
+
+- Users enrolled the device in the Cloudflare One Client with your [Entra ID identity provider](/cloudflare-one/integrations/identity-providers/entra-id/).
+- Windows devices are Microsoft Entra joined or Microsoft Entra hybrid joined.
+- macOS devices have the [Microsoft Enterprise SSO plug-in](https://learn.microsoft.com/entra/identity-platform/apple-sso-plugin) configured, for example through Intune Company Portal.
+- The user is signed in to one Entra account from your tenant on the device.
+
+### 1. Add redirect URIs in Entra ID
+
+The client requests tokens with the same Entra application that you use for your Entra ID identity provider. Add the client's redirect URIs to that application:
+
+<Steps>
+
+1. In the [Microsoft Entra admin center](https://entra.microsoft.com/), go to **Applications** > **App registrations** > **All applications** and select the application used by your Entra ID identity provider.
+2. Go to **Authentication**, then select **Add a platform**.
+3. Select **Mobile and desktop applications**.
+4. Under **Custom redirect URIs**, enter the redirect URI for each operating system you deploy:
+
+   | System  | Redirect URI                                          |
+   | ------- | ----------------------------------------------------- |
+   | Windows | `ms-appx-web://microsoft.aad.brokerplugin/<client-id>` |
+   | macOS   | `msauth.com.cloudflare.1dot1dot1dot1.macos://auth`    |
+
+   Replace `<client-id>` with the **Application (client) ID** of the application.
+
+5. Select **Configure**.
+
+</Steps>
+
+### 2. Turn on Device Credential Authentication
+
+Device Credential Authentication is a [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) setting. It is off by default.
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Devices** > **Device profiles** > **General profiles**.
+2. Locate the device profile you would like to update and select **Configure**.
+3. Turn on **Device Credential Authentication**.
+4. Select **Save profile**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+To change device profiles, you need an [API token](/fundamentals/api/get-started/create-token/) with `Zero Trust Write` permissions.
+
+To turn on Device Credential Authentication for a custom device profile, send a `PATCH` request to the [Devices API](/api/resources/zero_trust/subresources/devices/subresources/policies/subresources/custom/methods/edit/):
+
+<APIRequest
+	path="/accounts/{account_id}/devices/policy/{policy_id}"
+	method="PATCH"
+	json={{
+		enable_device_credential_authentication: true,
+	}}
+/>
+
+To turn on Device Credential Authentication for the default device profile, send a `PATCH` request to the [Devices API](/api/resources/zero_trust/subresources/devices/subresources/policies/subresources/default/methods/edit/):
+
+<APIRequest
+	path="/accounts/{account_id}/devices/policy"
+	method="PATCH"
+	json={{
+		enable_device_credential_authentication: true,
+	}}
+/>
+
+</TabItem> </Tabs>
+
+<Render file="warp/client-notification-lag" product="cloudflare-one" />
+
+### Fallback to browser reauthentication
+
+The Cloudflare One Client opens the browser-based reauthentication flow when silent reauthentication does not complete. This happens when:
+
+- Entra ID requires user interaction to issue a token. For example, a Conditional Access policy requires multifactor authentication (MFA).
+- The device has no Entra account from your tenant, or has more than one.
+- The Entra account does not match the user registered to the device.
+- An Access policy denies the user or requires an interactive step.
+- The device session was revoked.
+- The client cannot get a token from Entra ID within 90 seconds.
+
 ## Force user interaction with IdP
 
 If the user has an active browser session with the IdP, the Cloudflare One Client will use the existing browser cookies to re-authenticate and the user will not be prompted to re-enter their credentials. You can override this behavior to require explicit user interaction in the IdP.
@@ -64,7 +174,6 @@ If the user has an active browser session with the IdP, the Cloudflare One Clien
 ## Limitations
 
 - **Only one user per device** — If a device is already registered with User A, User B will not be able to log in on that device through the re-authentication flow. To switch the device registration to a different user, User A must first log out from Zero Trust (if [Allow device to leave organization](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#allow-device-to-leave-organization) is enabled), or an admin can revoke the registration from **Team & Resources** > **Devices**. User B can then properly [enroll](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/manual-deployment/).
-
 - **Active connections are not terminated** — Active sessions such as SSH and RDP will remain connected beyond the timeout limit.
 - **Binding Cookie is not supported** - **Authenticate with Cloudflare One Client** will not work for Access applications that have the [Binding Cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#binding-cookie) enabled.
 
