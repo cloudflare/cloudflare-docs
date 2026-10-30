@@ -1,0 +1,19 @@
+src/content/docs/ai-search/how-to/human-in-the-loop-knowledge-base.mdx
+  s_bace8165f27ee8::t_1f4f6ada0d8a7b 7,21,25,35,37,39-45,71,73,81,104-105,109,114,116,118,123-130,138-174,176-177,179,183-186,188-189,192-207,210-229,231-233,235-239,241-254,256,262,269-274,281,299,301,304-308,312-313,319,322,324,329-339,341,343-347,349-367,372,374-377,383-385,391-393
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8d47fff33c3b562b839b3398ec7dfdb982fc8b0a",
+  "prompts": {},
+  "sessions": {
+    "s_bace8165f27ee8": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a188e4-9ff5-7009-b0f9-ae82c39ff5b6",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

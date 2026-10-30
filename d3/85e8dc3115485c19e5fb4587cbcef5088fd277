@@ -1,0 +1,31 @@
+src/content/changelog/agents/2026-10-20-think-computer-workspace.mdx
+  s_80fab4cbbeef01::t_add9eb7017e34a 1-39
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_80fab4cbbeef01::t_f98827d21a695c 31,33-34,124-133,144,149-151
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_80fab4cbbeef01::t_bc350b61e19f5b 21,40,136,300
+src/content/docs/agents/harnesses/think/index.mdx
+  s_80fab4cbbeef01::t_fcb15ce5a5ab05 35
+src/content/docs/agents/harnesses/think/tools.mdx
+  s_80fab4cbbeef01::t_d490b44cc79812 4,19,31,33-43,45,47,49-55,60-65,67-78,88-101,103,108-109,111-118,120-132,136,138,140,142-156,159-173,227,326-329,336,342,352-354,395,499
+src/content/docs/agents/runtime/execution/agent-skills.mdx
+  s_80fab4cbbeef01::t_7be2380142b998 116-117
+src/content/docs/agents/tools/codemode/ai-sdk.mdx
+  s_80fab4cbbeef01::t_4895282a3bd9d4 128,130,138-139,143,147-153,162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d385e8dc3115485c19e5fb4587cbcef5088fd277",
+  "prompts": {},
+  "sessions": {
+    "s_80fab4cbbeef01": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11d77-b402-77a1-bfff-639f8e6da640",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

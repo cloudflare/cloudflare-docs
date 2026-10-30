@@ -1,0 +1,35 @@
+src/content/changelog/cloudflare-wan/2026-10-05-bgp-over-tunnels-ga.mdx
+  s_b6b98a29c675a5::t_116f73360a4b09 13
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering.mdx
+  s_991ae280654271::t_c0cb306454827c 495
+src/content/docs/cloudflare-wan/reference/traffic-steering.mdx
+  s_991ae280654271::t_410c3a96afb63c 497
+src/content/docs/magic-transit/index.mdx
+  s_991ae280654271::t_156d7423caf998 68
+src/content/docs/magic-transit/reference/traffic-steering.mdx
+  s_991ae280654271::t_a11d5a7cd3cd90 394
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "74d76656989605d0aec9fb75c6b5d94f85c9b455",
+  "prompts": {},
+  "sessions": {
+    "s_991ae280654271": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ef314e6c3ffeYr3hcg2aCDvJ4H",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Steve Welham <152317467+steve-cloudflare@users.noreply.github.com>"
+    },
+    "s_b6b98a29c675a5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f01747b6affeMAEj9gHXpbpDlG",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Steve Welham <152317467+steve-cloudflare@users.noreply.github.com>"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+src/content/docs/agents/concepts/agent-skills.mdx
+  s_dde8d185bd747c::t_6ab6ec67b64d85 103
+src/content/docs/agents/harnesses/pi/extensions.mdx
+  s_dde8d185bd747c::t_e4475ea4c3ec1f 157
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_dde8d185bd747c::t_59820b1c16d463 255
+src/content/docs/agents/tools/skills.mdx
+  s_dde8d185bd747c::t_758d99d7a7a66b 137
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b75f2ccad3ee4bbe4d2270370a3be6f73afd6c07",
+  "prompts": {},
+  "sessions": {
+    "s_dde8d185bd747c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1877c-5b8b-7283-9f59-80a151595166",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

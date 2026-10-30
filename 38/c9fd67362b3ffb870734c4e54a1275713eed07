@@ -1,0 +1,19 @@
+src/content/docs/workers/wrangler/configuration.mdx
+  s_ff92bfaedba286::t_80ff55348dfd13 404
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "38c9fd67362b3ffb870734c4e54a1275713eed07",
+  "prompts": {},
+  "sessions": {
+    "s_ff92bfaedba286": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18007-b879-79d3-9960-f50804a13fd6",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

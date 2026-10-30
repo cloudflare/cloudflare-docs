@@ -1,0 +1,21 @@
+src/content/docs/workers/observability/configuration.mdx
+  s_ad7fef383a5af1::t_30a33b9ef95ecc 36,41,48
+src/content/docs/workers/wrangler/configuration.mdx
+  s_ad7fef383a5af1::t_9b093ecfa81fb1 414
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "86bd5f4e105388c3f92f96f7f09a9a95e3b1db8a",
+  "prompts": {},
+  "sessions": {
+    "s_ad7fef383a5af1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1800b-cd85-7cc0-99ef-97659ef79bff",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

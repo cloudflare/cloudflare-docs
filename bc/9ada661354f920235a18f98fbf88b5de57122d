@@ -1,0 +1,19 @@
+src/content/docs/argo-smart-routing/argo-for-packets.mdx
+  s_8e594490b4ce3a::t_41a18ea3808d88 4,11,13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bc9ada661354f920235a18f98fbf88b5de57122d",
+  "prompts": {},
+  "sessions": {
+    "s_8e594490b4ce3a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0363a80c3fferYt2afmZWx4eXN",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Steve Welham <152317467+steve-cloudflare@users.noreply.github.com>"
+    }
+  }
+}

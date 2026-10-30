@@ -1,0 +1,27 @@
+src/content/changelog/agents/2026-10-14-models-catalog-ids-stream-resume.mdx
+  s_fe1cefa783649c::t_ed0fc284c99944 1-52
+src/content/docs/agents/harnesses/opencode.mdx
+  s_fe1cefa783649c::t_e6595325471cfe 3,21,43,55,68,175,181-194
+src/content/docs/agents/models/ai-sdk.mdx
+  s_fe1cefa783649c::t_1c920a15bc197d 4,22-37,48,90-130,132,134-144,177-185,197-220,223,274-291,352,356,360-361,364,366,377,393-400,402-414,437-448,454,471,524,535,544,549-551,557-558
+src/content/docs/agents/models/index.mdx
+  s_fe1cefa783649c::t_d08b678323913c 4,25,33,35-45,47,51-57
+src/content/docs/agents/models/pi-ai.mdx
+  s_fe1cefa783649c::t_b162e78173dd02 4,95,101,106-109,113,119-121,123-125,146,164,168-170,186,209-216,219-228,230,232,234,258
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1c7a7bf4d3f1124c1c161e1fd6192c3cdb2c9596",
+  "prompts": {},
+  "sessions": {
+    "s_fe1cefa783649c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a13a91-70a8-75d9-987f-b2d26c7ae4fc",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

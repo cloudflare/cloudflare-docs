@@ -1,0 +1,31 @@
+src/content/docs/flagship/binding/types.mdx
+  s_a639c57ec76948::t_eee67815531a06 11,38,45
+src/content/docs/flagship/reference/evaluation-reasons.mdx
+  s_a639c57ec76948::t_88cd088e41174d 35
+src/content/docs/flagship/sdk/client-provider.mdx
+  s_a639c57ec76948::t_9445f0afc949f4 85,87
+src/content/docs/flagship/sdk/go.mdx
+  s_a639c57ec76948::t_b11db87a308433 124-126
+src/content/docs/flagship/sdk/index.mdx
+  s_a639c57ec76948::t_0dfd18bce2e2fc 44,46-47,49-58
+src/content/docs/flagship/sdk/python.mdx
+  s_a639c57ec76948::t_7ff0b58d3a7400 97-99
+src/content/docs/flagship/sdk/server-provider.mdx
+  s_a639c57ec76948::t_b21a746eb9f1c7 123,125,132-133
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d113f34b99b338c5319955bb44584ec079dcfaa9",
+  "prompts": {},
+  "sessions": {
+    "s_a639c57ec76948": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a14a71-4fb1-7d93-b8b4-3a97fa408a81",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}
