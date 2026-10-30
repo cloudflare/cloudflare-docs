@@ -1,9 +1,9 @@
 ---
 pcx_content_type: reference
-description: Known limitations when using the Trace feature.
+description: Known limitations when using Rules simulator.
 products:
   - rules
-title: Cloudflare Trace limitations
+title: Rules simulator limitations
 sidebar:
   order: 3
   label: Limitations
@@ -11,9 +11,9 @@ sidebar:
 
 ## Automatic rule bypasses
 
-Trace does not display rules that are automatically bypassed for operational reasons.
+Rules simulator does not display rules that are automatically bypassed for operational reasons.
 
-For example, when SSL/TLS certificates are in `pending_validation` status, security rules are automatically disabled for domain control validation (DCV) paths like `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`. These bypasses will not appear in trace results.
+For example, when SSL/TLS certificates are in `pending_validation` status, security rules are automatically disabled for domain control validation (DCV) paths like `/.well-known/pki-validation/` and `/.well-known/acme-challenge/`. These bypasses will not appear in simulation results.
 
 For more information, refer to [Why are some rules bypassed?](/waf/troubleshooting/faq/#why-are-some-rules-bypassed-when-i-did-not-create-an-exception) in the WAF documentation.
 
@@ -21,12 +21,12 @@ For more information, refer to [Why are some rules bypassed?](/waf/troubleshooti
 
 ## Unsupported features
 
-Trace currently does not support:
+Rules simulator currently does not support:
 
 - Hostnames using [Data Localization Suite](/data-localization/)
 - [Spectrum](/spectrum/) applications
 
-Additionally, the following products will not appear in trace results:
+Additionally, the following products will not appear in simulation results:
 
 - [Firewall rules (deprecated)](/firewall/)
 - [Load Balancing](/load-balancing/) and [Load Balancer Custom Rules](/load-balancing/additional-options/load-balancing-rules/)

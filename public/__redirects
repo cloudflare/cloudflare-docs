@@ -3329,3 +3329,6 @@
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
+
+# Rules Simulator (renamed from Cloudflare Trace, DEE-4058)
+/rules/trace-request/* /rules/simulator/:splat 301
