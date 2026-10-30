@@ -89,12 +89,6 @@ For example, first deploy the existing HTML with both releases' asset files. The
 
 If you include a version ID in asset URLs, include it in every script, stylesheet, and other asset URL the page loads. A script's query string is not automatically copied to the URLs it loads. A query parameter alone does not select a Worker version. The incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
 
-## Downloads already in progress
-
-Deploying a new version does not cancel static asset downloads already in progress.
-
-A request for a lazy-loaded chunk or a later range request is a new HTTP request. It can use a different version's assets and fail to find the file. Investigate these missing file errors separately from interrupted downloads.
-
 ## Diagnose version skew
 
 Compare the version serving the HTML with the version handling the failing request. Use the [version metadata binding](/workers/runtime-apis/bindings/version-metadata/) to report which version handles each Worker request. For asset responses, add a build identifier with [`_headers`](/workers/static-assets/headers/#custom-headers).
