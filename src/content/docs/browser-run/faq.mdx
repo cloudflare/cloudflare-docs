@@ -93,9 +93,11 @@ Browser sessions open on Cloudflare's global network, close to the incoming requ
 
 ### Does local development support all Browser Run features?
 
-Not yet. Local development currently has the following limitation(s):
+Not yet. Local development currently has the following limitations:
 
 - Requests larger than 1 MB are not supported.
+- The `json` [Quick Action](/browser-run/quick-actions/) returns placeholder data, because Workers AI is not available locally. Refer to [Test Quick Actions locally](/browser-run/quick-actions/#test-quick-actions-locally).
+- The [Kitesurf](/browser-run/kitesurf/) browser is not available.
 
 You can also run Chrome in visible (headful) mode during local development to visually debug your automation scripts (experimental). Set the `X_BROWSER_HEADFUL` environment variable before starting your dev server:
 

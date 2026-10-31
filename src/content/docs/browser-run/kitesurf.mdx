@@ -84,6 +84,8 @@ export default {
 
 The binding validates the value, so any engine name other than `kitesurf` fails with `Invalid input: expected "kitesurf"`. Leave out `browser` to use the default Chromium browser.
 
+Under `wrangler dev`, a `.quickAction()` call with `browser: "kitesurf"` throws an error, because Kitesurf is not available locally. To use Kitesurf during local development, set `"remote": true` in your browser binding configuration.
+
 ### Use Kitesurf with the CDP endpoint
 
 The [Browser Run CDP endpoint](/browser-run/cdp/) supports Kitesurf as an option, so your existing [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [chrome-remote-interface](https://www.npmjs.com/package/chrome-remote-interface) setup already works. To opt in, add `browser=kitesurf` to the endpoint URL:

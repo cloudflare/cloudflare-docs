@@ -65,9 +65,11 @@ The browser binding's `.quickAction()` method requires a compatibility date of `
 
 :::
 
-:::caution[Quick Actions require remote mode for local development]
+To test a Worker locally, run `npx wrangler dev`. Wrangler runs Puppeteer, Playwright, CDP, and `.quickAction()` calls against Chrome on your machine.
 
-The `.quickAction()` method is not yet supported in local development mode. When using `wrangler dev`, you must run with `--remote` or set `"remote": true` in your browser binding configuration:
+:::note[Some Quick Actions need remote mode]
+
+[Workers AI](/workers-ai/) is not available locally, so the `json` Quick Action returns placeholder data shaped like `response_format.json_schema`. The [Kitesurf](/browser-run/kitesurf/) browser is not available locally either. To get real `json` results or use Kitesurf, set `"remote": true` in your browser binding configuration:
 
 ```jsonc
 {
@@ -78,11 +80,9 @@ The `.quickAction()` method is not yet supported in local development mode. When
 }
 ```
 
-Without remote mode, calls to `.quickAction()` will fail with: `The RPC receiver does not implement the method "quickAction"`.
+For details, refer to [Test Quick Actions locally](/browser-run/quick-actions/#test-quick-actions-locally).
 
 :::
-
-For Puppeteer, Playwright, or CDP-based Workers, run `npx wrangler dev` to test locally. For Quick Actions via `.quickAction()`, use `npx wrangler dev --remote` as noted above.
 
 ### Headful mode (experimental)
 
