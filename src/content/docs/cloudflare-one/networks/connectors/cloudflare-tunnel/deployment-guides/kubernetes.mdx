@@ -110,7 +110,7 @@ A pod represents an instance of a running process in the cluster. In this exampl
                - containerPort: 80
    ```
 
-4. Create a new `httpbinsvc.yaml` file. This file defines a Kubernetes service that allows other apps in the cluster (such as `cloudflared`) to access the set of httpbin pods.
+4. Create a new `httpbinsvc.yaml` file. This file defines a [ClusterIP](https://kubernetes.io/docs/concepts/services-networking/service/#type-clusterip) Service that allows other apps in the cluster (such as `cloudflared`) to access the set of httpbin pods. ClusterIP exposes the Service only inside the cluster, so it does not provision an external load balancer.
 
    ```yaml title="httpbinsvc.yaml"
    apiVersion: v1
@@ -119,7 +119,7 @@ A pod represents an instance of a running process in the cluster. In this exampl
      name: httpbin-service
      namespace: default
    spec:
-     type: LoadBalancer
+     type: ClusterIP
      selector:
        app: httpbin
      ports:
@@ -145,7 +145,7 @@ A pod represents an instance of a running process in the cluster. In this exampl
    pod/httpbin-deployment-bc6689c5d-cbd9m   1/1     Running   0          79s
 
    NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)        AGE
-   service/httpbin-service   LoadBalancer   34.118.225.147   34.75.201.60   80:31967/TCP   79s
+   service/httpbin-service   ClusterIP      34.118.225.147   <none>         80/TCP         79s
    service/kubernetes        ClusterIP      34.118.224.1     <none>         443/TCP        24h
 
    NAME                                 READY   UP-TO-DATE   AVAILABLE   AGE
@@ -312,7 +312,7 @@ To run the Cloudflare Tunnel in Kubernetes:
    pod/httpbin-deployment-bc6689c5d-cbd9m        1/1     Running   0          3m36s
 
    NAME                      TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)        AGE
-   service/httpbin-service   LoadBalancer   34.118.225.147   34.75.201.60   80:31967/TCP   3m36s
+   service/httpbin-service   ClusterIP      34.118.225.147   <none>         80/TCP         3m36s
    service/kubernetes        ClusterIP      34.118.224.1     <none>         443/TCP        24h
 
    NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
