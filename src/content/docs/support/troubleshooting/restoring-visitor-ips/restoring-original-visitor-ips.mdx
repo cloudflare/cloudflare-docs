@@ -14,7 +14,7 @@ When your [website traffic is routed through the Cloudflare network](/fundamenta
 For example, if you install applications that depend on the incoming IP address of the original visitor, a Cloudflare IP address is logged by default. The original visitor IP address appears in an appended HTTP header called [`CF-Connecting-IP`](/fundamentals/reference/http-headers/#cf-connecting-ip). By following our [web server instructions](#web-server-instructions), you can log the original visitor IP address at your origin server. If this HTTP header is not available when requests reach your origin server, check your [Transform Rules](/rules/transform/) and [Managed Transforms](/rules/transform/managed-transforms/) configuration.
 
 :::caution[Protect the Cloudflare-to-origin connection]
-The configurations below restore IP values for logs and applications. They do not authenticate users or clients, or verify that traffic passed through your zone. Before using those values for IP-based access restrictions or rate limiting, follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers).
+The visitor IP restoration configurations restore IP values for logs and applications. They do not authenticate users or clients, or verify that traffic passed through your zone. Before using those values for IP-based access restrictions or rate limiting, follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers).
 
 For public HTTPS origins, we recommend mutual TLS (mTLS) using [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with a certificate dedicated to your zone or hostname. Configure your origin to require and verify client certificates, rejecting requests with missing or untrusted certificates. Alternatively, use Cloudflare Tunnel with direct public access blocked.
 
@@ -268,9 +268,9 @@ Use `mod_extforward` to restore visitor IPs in Lighttpd. Use Lighttpd 1.4.70 or 
 
 <Steps>
 
-1. Open **lighttpd.conf** and add `mod_extforward` to the `server.modules` list. Place it after `mod_accesslog` to restore visitor IPs in access logs.
+1. Open `lighttpd.conf` and add `mod_extforward` to the `server.modules` list. Place it after `mod_accesslog` to restore visitor IPs in access logs.
 
-2. Configure `extforward.forwarder` with all current [Cloudflare IPv4 and IPv6 ranges](https://www.cloudflare.com/ips/), and set `extforward.headers` to `CF-Connecting-IP`. The following example shows one range of each type; add all remaining Cloudflare ranges before using it:
+2. Configure `extforward.forwarder` with all current [Cloudflare IPv4 and IPv6 ranges](https://www.cloudflare.com/ips/), and set `extforward.headers` to `CF-Connecting-IP`. The following example shows one range of each type. Add all remaining Cloudflare ranges before using it:
 
    ```txt
    extforward.forwarder = (
@@ -439,7 +439,7 @@ An outside developer has created a module to restore visitor IP called [node_cl
 
 ### HAProxy
 
-After [authenticating traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers), use the following HAProxy configuration to copy `CF-Connecting-IP` into `X-Forwarded-For`. The source IP check below is an additional network filter and does not identify your zone:
+After [authenticating traffic reaching your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers), use the following HAProxy configuration to copy `CF-Connecting-IP` into `X-Forwarded-For`. The `from_cf` source IP check is an additional network filter and does not identify your zone:
 
 1. Create a text file `CF_ips.lst` containing all IP ranges from [https://www.cloudflare.com/en-gb/ips/](https://www.cloudflare.com/en-gb/ips/)
 2. Ensure to disable `option forwardfor` in HAProxy
