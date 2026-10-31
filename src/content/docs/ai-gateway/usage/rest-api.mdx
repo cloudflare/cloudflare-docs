@@ -10,7 +10,7 @@ products:
   - ai-gateway
 ---
 
-The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with all AI Gateway features — logging, caching, rate limiting, and more — applied automatically.
+The REST API lets you call any model — whether hosted on Cloudflare or by a third-party provider like OpenAI, Anthropic, or Google — through the same Cloudflare API, with AI Gateway features such as logging and rate limiting applied automatically. Caching is available only for supported requests.
 
 No provider SDKs or API keys are needed. Authentication and billing are handled through your Cloudflare account. Third-party models are billed via [Unified Billing](/ai-gateway/features/unified-billing/). Workers AI models can use prepaid AI Gateway credits or [Workers AI billing](/workers-ai/platform/pricing/).
 
@@ -61,6 +61,10 @@ Browse available models in the [model catalog](/ai/models/).
 ## `/ai/run` — universal endpoint
 
 Accepts any model with its per-model schema. Model-specific parameters go inside `input`.
+
+:::note[Response caching]
+AI Gateway does not support response caching for third-party models called through `/ai/run`. Gateway cache settings and per-request cache headers do not enable caching for these requests.
+:::
 
 ```bash
 # Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
@@ -324,9 +328,11 @@ const openai = new OpenAI({
 });
 ```
 
-All AI Gateway features configured on that gateway — caching, rate limiting, guardrails, and logging — apply to the request.
+AI Gateway features configured on that gateway — such as rate limiting, guardrails, and logging — apply to the request. Caching applies only to supported requests, excluding third-party model requests through `/ai/run`.
 
 ## Per-request configuration
+
+Cache headers do not enable response caching for third-party model requests through `/ai/run`.
 
 Use `cf-aig-*` headers to control AI Gateway behavior on a per-request basis:
 
