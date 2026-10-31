@@ -51,7 +51,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 | Product                                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | ------------------------------------------- | --------------- | ----------------- | -------------------------- |
 | Advanced Certificate Manager                | ⚫️             | ⚫️               | ⚫️                        |
-| Advanced DDoS Protection                    | ✅              | ✅                | 🚧 [^3] [^50]              |
+| Advanced DDoS Protection                    | ✅              | ✅                | 🚧 [^50]                   |
 | API Shield                                  | ✅              | ✅                | 🚧 [^4]                    |
 | Bot Management                              | ✅              | ✅                | ✅                         |
 | Client-side security (formerly Page Shield) | ✅              | ✅                | ✅                         |
@@ -98,7 +98,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 | Static IP/BYOIP             | ⚫️             | ✅ [^26]          | ⚫️                        |
 | Cloudflare Network Firewall | ⚫️             | ⚫️               | ✅                         |
 | Network Flow                | ⚫️             | ⚫️               | 🚧 [^1]                    |
-| Magic Transit               | ⚫️             | ⚫️               | ✅ [^3]                    |
+| Magic Transit               | ⚫️             | ⚫️               | ✅                         |
 | Cloudflare WAN              | ⚫️             | ⚫️               | ✅                         |
 | Spectrum                    | ✅              | ✅ [^42]          | ✅                         |
 
@@ -130,8 +130,6 @@ The tables below show whether each Cloudflare product is compatible with each DL
 [^1]: Logs / Analytics not available outside US region when using Customer Metadata Boundary.
 
 [^2]: Regular and Custom Tiered Cache (where you define the caching hierarchy) work with Regional Services. Smart Tiered Caching (where Cloudflare automatically selects intermediate cache data centers) is not available with Regional Services.
-
-[^3]: [Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) (which automatically adjusts DDoS rules based on your traffic patterns) is only supported when Customer Metadata Boundary is set to the US. All other DDoS protection features work with any CMB region.
 
 [^4]: The following API Shield sub-features do not work when CMB is set to EU: API Discovery (automatic detection of your API endpoints), Volumetric Abuse Detection (identifying unusually high API call volumes), and [Sequence Analytics and Mitigation](/api-shield/security/sequence-analytics/) (tracking the order of API calls to detect misuse). All other API Shield features work with any CMB region.
 
