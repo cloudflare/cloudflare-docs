@@ -91,6 +91,10 @@ export default {
 
 </TypeScriptExample>
 
+:::note
+When `run_worker_first` is an array, a request that matches none of its patterns goes to asset serving, and in `single-page-application` mode asset serving handles every path. Asset serving only responds to `GET` and `HEAD` requests. A request with any other method, such as a `POST` from a form or an API client, to a path outside your patterns receives a `405 Method Not Allowed` response and does not invoke your Worker script. Add every path your Worker script handles to `run_worker_first`, whatever its method.
+:::
+
 You can also use `run_worker_first` to inject data into your SPA shell before it reaches the browser. For a full example using HTMLRewriter to prefetch API data and embed it in the HTML stream, refer to [SPA shell with bootstrap data](/workers/examples/spa-shell/).
 
 ## Local Development
