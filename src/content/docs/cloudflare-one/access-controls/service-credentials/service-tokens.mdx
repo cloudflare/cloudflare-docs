@@ -136,6 +136,8 @@ Rotate a service token secret when you suspect exposure or as part of regular cr
 
 You can set a grace period during which both secrets work. Use this period to update your services before Access revokes the previous secret.
 
+For a token [reported as leaked](#recover-a-leaked-service-token), the previous secret must expire immediately. You cannot use a rotation grace period.
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Steps>
@@ -164,6 +166,32 @@ Make a `POST` request to the [Rotate a service token](/api/resources/zero_trust/
 To revoke the previous secret immediately, omit `previous_client_secret_expires_at` from the request.
 
 </TabItem> </Tabs>
+
+## Recover a leaked service token
+
+Cloudflare can receive service token leak reports from secret scanning partners, such as GitHub. A token reported as leaked cannot be re-enabled until you rotate its secret.
+
+To recover a disabled token after a leak report:
+
+<Steps>
+1. [Rotate the token's secret](#rotate-service-token-secrets). In the dashboard, select _Revoke immediately_. In an API rotation request, omit `previous_client_secret_expires_at`.
+2. Replace the leaked secret in your services with the new Client Secret. The Client ID stays the same.
+3. [Turn the token on again](#turn-a-service-token-on-or-off). Rotation does not automatically re-enable a disabled token.
+</Steps>
+
+Remove the exposed secret from the location identified in the report. Removing it does not replace rotation: the secret may already have been copied.
+
+The service token API returns these read-only fields when available:
+
+| Field              | Description                                              |
+| ------------------ | -------------------------------------------------------- |
+| `leak_reported_at` | When a secret scanning partner reported the leak.        |
+| `leak_reporter`    | The secret scanning partner that reported the leak.      |
+| `leak_report_url`  | Where the secret was found, if provided by the reporter. |
+
+Rotation clears the token's leak metadata. Review [admin activity logs](/cloudflare-one/insights/logs/dashboard-logs/admin-activity-logs/) for the audit history.
+
+Attempting to re-enable a token before rotation returns `409`. Requesting a future `previous_client_secret_expires_at` when rotating a leaked token returns `400`. The leaked secret is discarded immediately and cannot be restored by extending its expiration.
 
 ## Renew service tokens
 
