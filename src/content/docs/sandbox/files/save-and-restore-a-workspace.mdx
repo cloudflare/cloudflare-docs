@@ -1,6 +1,6 @@
 ---
 title: Save and restore a sandbox with snapshots
-description: Save the filesystem of a sandbox as a Container snapshot, stop its Linux instance, and restore the files in a new instance.
+description: Save the filesystem of a sandbox as a Container snapshot, stop its container, and restore the files in a new container.
 pcx_content_type: how-to
 sidebar:
   order: 2
@@ -17,7 +17,7 @@ reviewed: 2026-09-24
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-A Durable Object saves the filesystem of a sandbox as a Container snapshot, stores the snapshot ID, and starts the next instance from the snapshot. An instance is the Linux virtual machine that runs your image, and a snapshot is a saved copy of the files on its disk. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/). In this example, the sandbox keeps a notes file in `/workspace`.
+A Durable Object saves the filesystem of a sandbox as a Container snapshot, stores the snapshot ID, and starts the next container from the snapshot. A snapshot is a saved copy of the files on the disk of a container. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/). In this example, the sandbox keeps a notes file in `/workspace`.
 
 :::note[Public beta]
 Container snapshots are in public beta. Features and behavior may change.
@@ -31,7 +31,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
 <Steps>
 
-1. Add an inactivity timeout to your Durable Object. A Durable Object [restarts](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart) when it leaves memory and runs its constructor again, and its instance can keep running. The constructor sets the timeout again when it finds the container running:
+1. Add an inactivity timeout to your Durable Object. A Durable Object [restarts](/sandbox/concepts/lifetime/#the-timeout-does-not-survive-a-restart) when it leaves memory and runs its constructor again, and its container can keep running. The constructor sets the timeout again when it finds the container running:
 
    ```ts title="src/index.ts"
    const INACTIVITY_TIMEOUT_MS = 10 * 60 * 1000;
@@ -84,7 +84,7 @@ Container snapshots are in public beta. Features and behavior may change.
 
    A snapshot is tied to the image it was saved from, and it cannot be applied to a different image. To carry files to a new image, [back up a directory to R2](/sandbox/files/back-up-a-directory-to-r2/) instead. For more information, refer to [Container snapshots](/containers/guides/snapshots/#create-a-container-snapshot).
 
-2. Add a method that runs one operation at a time, and a method that saves the filesystem and stops the instance:
+2. Add a method that runs one operation at a time, and a method that saves the filesystem and stops the container:
 
    ```ts title="src/index.ts"
    export class MyContainer extends DurableObject<Env> {
@@ -113,9 +113,9 @@ Container snapshots are in public beta. Features and behavior may change.
    }
    ```
 
-   A command that writes a file while the snapshot runs can succeed and then disappear when `destroy()` stops the instance. `exclusive()` makes every operation that touches the disk wait for the save, and the save wait for them. Run each such method through it.
+   A command that writes a file while the snapshot runs can succeed and then disappear when `destroy()` stops the container. `exclusive()` makes every operation that touches the disk wait for the save, and the save wait for them. Run each such method through it.
 
-   Finish writing files before you save. For what a snapshot saves and what a restored instance starts with, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
+   Finish writing files before you save. For what a snapshot saves and what a restored container starts with, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 3. Add a method that adds a line to a file and returns the file, so you can check what a restore brings back:
 
@@ -190,7 +190,7 @@ Container snapshots are in public beta. Features and behavior may change.
    curl https://<YOUR_WORKER>.<YOUR_SUBDOMAIN>.workers.dev/sandboxes/ada/notes
    ```
 
-   The save responds with the snapshot ID and its size in bytes, such as `{"snapshotId":"<SNAPSHOT_ID>","size":123456}`. The last request starts a new instance from the snapshot, and the note is back:
+   The save responds with the snapshot ID and its size in bytes, such as `{"snapshotId":"<SNAPSHOT_ID>","size":123456}`. The last request starts a new container from the snapshot, and the note is back:
 
    ```txt output
    Continue from this checkpoint.
@@ -216,7 +216,7 @@ A snapshot ID restores in any Durable Object of the same class. To copy the file
 
    	async useSnapshot(snapshotId: string) {
    		return this.exclusive(async () => {
-   			// Replacing a running instance would discard files it has not saved.
+   			// Replacing a running container would discard files it has not saved.
    			if (this.ctx.container?.running) {
    				return false;
    			}
@@ -262,7 +262,7 @@ A snapshot ID restores in any Durable Object of the same class. To copy the file
 
 ## Start a sandbox over
 
-To discard the files of a sandbox, destroy its instance and delete the stored snapshot ID. The next request starts from the image:
+To discard the files of a sandbox, destroy its container and delete the stored snapshot ID. The next request starts from the image:
 
 ```ts title="src/index.ts"
 export class MyContainer extends DurableObject<Env> {

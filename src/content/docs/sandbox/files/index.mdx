@@ -1,6 +1,6 @@
 ---
 title: Work with files in a sandbox
-description: Move files in and out of a sandbox, keep a workspace after its instance stops, and share files through R2.
+description: Move files in and out of a sandbox, keep a workspace after its container stops, and share files through R2.
 pcx_content_type: navigation
 sidebar:
   order: 6
@@ -15,7 +15,7 @@ products:
 
 The `Files` class from `@cloudflare/sandbox` moves files between your Worker and a running sandbox, and provides common file system operations. For more information, refer to [Move files in and out of a sandbox](/sandbox/files/manage-files/).
 
-Each sandbox name reaches a [Durable Object](/durable-objects/), which starts a container instance when needed: a Linux virtual machine that runs your image. Stopping the instance deletes the files on its disk. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
+Each sandbox name reaches a [Durable Object](/durable-objects/), which starts a container when needed. Stopping the container deletes the files on its disk. For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#snapshots-carry-files-to-the-next-instance).
 
 ## Persistence
 

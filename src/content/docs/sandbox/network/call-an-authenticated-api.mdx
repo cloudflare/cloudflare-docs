@@ -161,7 +161,7 @@ The container sends its request to `api.github.com` as usual. The Durable Object
    }
    ```
 
-   The route uses a sandbox name of its own. An instance that is already running keeps the Internet access it started with, so `enableInternet: false` applies only to an instance that this method starts.
+   The route uses a sandbox name of its own. A container that is already running keeps the Internet access it started with, so `enableInternet: false` applies only to a container that this method starts.
 
 4. Deploy your Worker, then send a request to `/username` on the `workers.dev` URL that Wrangler prints:
 
