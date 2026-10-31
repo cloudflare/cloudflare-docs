@@ -36,6 +36,10 @@ For any given hostname, Cloudflare uses the following order to determine which c
    | 6        | [Advanced - Total TLS](/ssl/edge-certificates/additional-options/total-tls/)            |
    | 7        | [Universal](/ssl/edge-certificates/universal-ssl/)                                      |
 
+   :::note
+   For Custom Hostname certificates (priority 4), the certificate pack is deployed to the edge at the time it is uploaded or issued — independent of whether the custom hostname has completed [ownership verification](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/hostname-validation/). This means an uploaded certificate on a custom hostname in `pending` verification status will still take priority over a Cloudflare-managed certificate on an `active` custom hostname in another SaaS zone.
+   :::
+
 4. **Certificate expiration**: The most recently ordered certificate takes precedence unless a certificate deletion has occurred. If and when a certificate is deleted, the certificate with the latest expiration date is deployed.
 
 :::note
