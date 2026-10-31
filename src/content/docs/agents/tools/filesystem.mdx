@@ -439,7 +439,7 @@ const { exitCode, value, stdout, stderr } = await run.result();
 
 ### Give code access to your own functions
 
-Custom modules can be registered under the `ws:` namespace. Use these modules to give the model access to your application logic or file system tools, or to perform external actions.
+Custom modules can be registered under the `codemode:` namespace. Use these modules to give the model access to your application logic or file system tools, or to perform external actions. For more ways to supply tools as modules, including MCP tools and HTTP APIs, refer to [Run code with Computer](/agents/runtime/code-mode/computer/).
 
 <TypeScriptExample>
 
@@ -448,7 +448,7 @@ Custom modules can be registered under the `ws:` namespace. Use these modules to
 new WorkerJavaScriptBackend({
 	loader: this.env.LOADER,
 	modules: {
-		"ws:orders": {
+		"codemode:orders": {
 			// Arguments arrive as an array of JSON-compatible values.
 			lookup: ([orderId]) => this.lookUpOrder(String(orderId)),
 		},
@@ -461,7 +461,7 @@ new WorkerJavaScriptBackend({
 Code imports the module like any other:
 
 ```js
-import { lookup } from "ws:orders";
+import { lookup } from "codemode:orders";
 
 export default async function ({ ids }) {
 	return Promise.all(ids.map((id) => lookup(id)));
@@ -513,7 +513,7 @@ new WorkerJavaScriptBackend({
 	loader: this.env.LOADER,
 	onInterrupt: "replay",
 	modules: {
-		"ws:billing": {
+		"codemode:billing": {
 			refund: ([order], { callId }) =>
 				this.refund(String(order), { idempotencyKey: callId }),
 			charge: unsafeToRepeat(([order, cents]) =>
@@ -537,7 +537,7 @@ new WorkerJavaScriptBackend({
 	loader: this.env.LOADER,
 	onInterrupt: "replay",
 	modules: {
-		"ws:github": {
+		"codemode:github": {
 			postComment: async ([issue, body], ctx) => {
 				const { approved } = await ctx.interrupt<{ approved: boolean }>({
 					issue,
@@ -684,9 +684,10 @@ Pass these to the `modules` option of `WorkerJavaScriptBackend`:
 
 | Function                  | Entry point                              | Module         | Description                                                                                                                    |
 | ------------------------- | ---------------------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `createGitModule()`       | `@cloudflare/computer/modules/git`       | `ws:git`       | Git operations on the workspace. Requires the `git` workspace option. Pass `{ allowNetwork: true }` to clone, fetch, and push. |
-| `createArtifactsModule()` | `@cloudflare/computer/modules/artifacts` | `ws:artifacts` | [Artifacts](/artifacts/) repositories. Requires the `artifacts` workspace option.                                              |
-| `createToolBindings()`    | `@cloudflare/computer/modules/tools`     | `ws:tools`     | The agent's own tools, callable from code. Build the bindings with `forAISDKTools()` or `forPiTools()`.                        |
+| `createGitModule()`       | `@cloudflare/computer/modules/git`       | `codemode:git`       | Git operations on the workspace. Requires the `git` workspace option. Pass `{ allowNetwork: true }` to clone, fetch, and push. |
+| `createArtifactsModule()` | `@cloudflare/computer/modules/artifacts` | `codemode:artifacts` | [Artifacts](/artifacts/) repositories. Requires the `artifacts` workspace option.                                              |
+| `createToolBindings()`    | `@cloudflare/computer/modules/tools`     | `codemode:tools`     | The agent's own tools, callable from code. Build the bindings with `forAISDKTools()` or `forPiTools()`.                        |
+| `createContainerModule()` | `@cloudflare/computer/modules/container` | `codemode:container` | Shell commands in the workspace's container backend. |
 
 For the full interfaces, refer to the [Computer design documentation](https://github.com/cloudflare/computer/tree/main/docs).
 

@@ -534,7 +534,7 @@ This sanitization happens automatically. You do not need to call any helper func
 If you are building an MCP client with the [Agents SDK](/agents/model-context-protocol/apis/client-api/), the SDK provides helper functions for working with server IDs and tool names:
 
 - **`normalizeServerId`** (exported from `agents/mcp/client`) normalizes a caller-supplied server ID into a safe string. For example, `"GitHub MCP!"` becomes `"github-mcp"`. The SDK calls this automatically when you pass an `id` option to `addMcpServer()`.
-- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. Refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/#code-and-output-utilities) for details.
+- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. It is part of the [legacy Code Mode API](/agents/runtime/code-mode/legacy/).
 
 :::note
 The Agents SDK uses a `tool_{server_id}_{tool_name}` format (with a `tool_` prefix) when returning tools from `getAITools()`. This differs from the portal format, which uses `{server_id}_{tool_name}` without the prefix.
@@ -574,7 +574,7 @@ When you connect with [Code Mode](#code-mode) enabled, the portal replaces all u
 | `portal_codemode_search`  | Searches available tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode.tools()` function that returns all upstream tool definitions with sanitized names.                        |
 | `portal_codemode_execute` | Calls upstream tools by running JavaScript in a sandboxed Worker. The sandbox provides a `codemode` proxy object where each property maps to an upstream tool. Supports `Promise.all()` for parallel tool calls. |
 
-Refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/) for details on writing code for these tools.
+For background on the pattern, refer to [Code Mode](/agents/concepts/code-mode/).
 
 ## Manage portals via API
 
@@ -839,7 +839,7 @@ The provider marks the service token's `client_secret` as sensitive, but Terrafo
 
 ## Code Mode
 
-[Code Mode](/agents/tools/codemode/) reduces context window usage by replacing upstream tool definitions with two tools for search and code execution. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment. Authentication credentials and environment variables remain outside the model context.
+[Code Mode](/agents/concepts/code-mode/) reduces context window usage by replacing upstream tool definitions with two tools for search and code execution. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment. Authentication credentials and environment variables remain outside the model context.
 
 Code Mode is useful for portals with many MCP servers or tools. Context window usage stays fixed as the portal adds tools.
 
@@ -901,7 +901,7 @@ For MCP clients with server configuration files, use the portal URL with the que
 
 When Code Mode is active, the portal advertises `portal_codemode_search` and `portal_codemode_execute`. The AI agent can discover tools and compose multiple tool calls in one execution.
 
-For more information on building with Code Mode, refer to the [Code Mode SDK reference](/agents/tools/codemode/api-reference/).
+For more information on building with Code Mode, refer to [Code Mode in the Agents SDK](/agents/runtime/code-mode/).
 
 ## Route portal traffic through Gateway
 
@@ -1168,7 +1168,7 @@ For MCP clients with server configuration files:
 }
 ```
 
-For more information on the Code Mode pattern behind `search_and_execute`, refer to [Code Mode](/agents/tools/codemode/).
+For more information on the Code Mode pattern behind `search_and_execute`, refer to [Code Mode](/agents/concepts/code-mode/).
 
 ## Manage portal sessions
 

@@ -72,7 +72,7 @@ export class MyAgent extends Think<Env> {
 				id: "js",
 				loader: this.env.LOADER,
 				access: "read-write",
-				modules: { "ws:git": createGitModule() },
+				modules: { "codemode:git": createGitModule() },
 			}),
 		],
 	});
@@ -100,7 +100,7 @@ Computer also ships a `just-bash` shell backend that runs in Dynamic Workers, an
 
 ### Call the agent's tools from code
 
-Give a JavaScript backend a `ws:tools` module, and code the model runs with `exec` can import the agent's tools. Code reads files through `node:fs/promises`, so serve `getTools()` rather than the workspace tools:
+Give a JavaScript backend a `codemode:tools` module, and code the model runs with `exec` can import the agent's tools. Code reads files through `node:fs/promises`, so serve `getTools()` rather than the workspace tools:
 
 <TypeScriptExample>
 
@@ -112,7 +112,7 @@ new WorkerJavaScriptBackend({
 	id: "js",
 	loader: this.env.LOADER,
 	modules: {
-		"ws:tools": createToolBindings(forAISDKTools(() => this.getTools())),
+		"codemode:tools": createToolBindings(forAISDKTools(() => this.getTools())),
 	},
 });
 ```
@@ -123,7 +123,7 @@ Code the model runs with `exec`:
 
 ```js
 import { readFile } from "node:fs/promises";
-import { getWeather } from "ws:tools";
+import { getWeather } from "codemode:tools";
 
 export default async function () {
 	const cities = JSON.parse(await readFile("/workspace/cities.json", "utf8"));
@@ -133,7 +133,7 @@ export default async function () {
 }
 ```
 
-`ws:tools` does not export tools that need approval or tools that run in the browser, because nothing can approve or run them from code. Calls from code do not go through `beforeToolCall`. Refer to [`ws:tools`](https://github.com/cloudflare/computer/blob/main/docs/17_isolate_javascript.md#wstools) for how calls and results work.
+`codemode:tools` does not export tools that need approval or tools that run in the browser, because nothing can approve or run them from code. Calls from code do not go through `beforeToolCall`. Refer to [`codemode:tools`](https://github.com/cloudflare/computer/blob/main/docs/17_isolate_javascript.md#codemodetools) for how calls and results work.
 
 ### Change the tools
 
@@ -270,9 +270,9 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-`includeMcpTools` controls only the automatic model tool merge. MCP connections still register, restore, discover, and wait. Raw catalog access, direct calls, Code Mode connectors, and explicit `this.mcp.getAITools()` calls continue to work.
+`includeMcpTools` controls only the automatic model tool merge. MCP connections still register, restore, discover, and wait. Raw catalog access, direct calls, and explicit `this.mcp.getAITools()` calls continue to work.
 
-Use this property instead of removing MCP tool names through `activeTools` in `beforeTurn`. Think converts MCP schemas before it calls `beforeTurn`, so `activeTools` cannot avoid that conversion. To configure a connector runtime, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
+Use this property instead of removing MCP tool names through `activeTools` in `beforeTurn`. Think converts MCP schemas before it calls `beforeTurn`, so `activeTools` cannot avoid that conversion. To call MCP tools from model-written code, refer to [Supply MCP tools](/agents/runtime/code-mode/computer/#supply-mcp-tools).
 
 Add MCP servers programmatically or via `@callable` methods:
 
@@ -303,7 +303,7 @@ export class MyAgent extends Think<Env> {
 ## Code execution tool
 
 :::caution[Deprecated]
-`createExecuteTool` and `createExecuteRuntime` are deprecated. Use `exec` on a JavaScript backend with a `ws:tools` module instead. Refer to [Call the agent's tools from code](#call-the-agents-tools-from-code). The execute tool keeps working until it is removed along with `@cloudflare/codemode`.
+`createExecuteTool` and `createExecuteRuntime` are deprecated. Use `exec` on a JavaScript backend with a `codemode:tools` module instead. Refer to [Call the agent's tools from code](#call-the-agents-tools-from-code). The execute tool is built on the [legacy Code Mode API](/agents/runtime/code-mode/legacy/), which is feature-frozen. It keeps working but gets no new features or fixes.
 :::
 
 Let the LLM write and run JavaScript in a sandboxed Worker, recorded on a durable Code Mode runtime (abort-and-replay, human approvals, audit trail, reusable snippets). Requires `@cloudflare/codemode` and a `worker_loaders` binding.

@@ -1,0 +1,108 @@
+---
+title: Legacy Code Mode API
+description: createCodeTool, DynamicWorkerExecutor, connectors, the durable runtime, and the MCP server helpers in @cloudflare/codemode are feature-frozen. Learn what replaces each one.
+pcx_content_type: reference
+sidebar:
+  order: 9
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+`@cloudflare/codemode` used to export a full Code Mode toolkit: `createCodeTool()`, `DynamicWorkerExecutor`, connectors, a durable runtime with approvals and snippets, MCP server helpers, a browser executor, and a Vite plugin. That API is now feature-frozen:
+
+- It keeps working from the same import paths, and upgrading the package does not change it.
+- It gets no new features and no fixes.
+- Every export is marked `@deprecated`, so your editor flags each use.
+
+The package's main export is now [`WorkerJavaScriptBackend`](/agents/runtime/code-mode/executor/), the executor that [Computer](/agents/runtime/code-mode/computer/) runs code on. For new agents, use Computer.
+
+The legacy code lives in [`packages/codemode/src/legacy`](https://github.com/cloudflare/agents/tree/main/packages/codemode/src/legacy). Nothing in that folder imports from outside it. If you rely on a pattern in it, copy the folder into your project and own it from there.
+
+## What replaces what
+
+| Legacy API                                           | Replacement                                                                                                  |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `createCodeTool()` from `/ai` or `/tanstack-ai`      | The `exec` tool from `createAITools()`, `createTanStackTools()`, or `createPiTools()` in Computer             |
+| `DynamicWorkerExecutor`, `Executor`                  | [`WorkerJavaScriptBackend`](/agents/runtime/code-mode/executor/), on its own or through a Computer workspace |
+| Tools as `codemode.*` globals, `ToolProvider`        | Tools imported from [`codemode:tools`](/agents/runtime/code-mode/computer/#supply-the-agents-tools)          |
+| `CodemodeConnector`, `OpenApiConnector`              | A [host module](/agents/runtime/code-mode/computer/#supply-an-api) under a `codemode:` name                  |
+| `McpConnector`, `ToolSetConnector`                   | [`codemode:tools` with MCP tools](/agents/runtime/code-mode/computer/#supply-mcp-tools)                      |
+| `workspace.*` tools in the sandbox                   | `node:fs` in the code                                                                                        |
+| `createCodemodeRuntime()` approvals and replay       | [`ctx.interrupt()`](/agents/runtime/code-mode/computer/#ask-for-approval) in a host module                   |
+
+These have no replacement:
+
+- `codeMcpServer()` and `openApiMcpServer()` from `/mcp`. For a server-side Code Mode MCP server, start from the [Cloudflare MCP server source](https://github.com/cloudflare/mcp). Refer to [Code Mode on the server](/agents/concepts/code-mode/#code-mode-on-the-server).
+- `IframeSandboxExecutor` and `createBrowserCodeTool()` from `/browser`.
+- Rollback, through `revert` and `runtime.rollback()`.
+- Snippets, through `saveSnippet()` and `codemode.run()`. Save the code as a workspace file and import it instead.
+- The Vite plugin from `/vite`.
+
+## Move a code tool to Computer
+
+Before, with the legacy API:
+
+<TypeScriptExample>
+
+```ts
+import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+import { createCodeTool } from "@cloudflare/codemode/ai";
+import { streamText } from "ai";
+
+const codemode = createCodeTool({
+	tools: myTools,
+	executor: new DynamicWorkerExecutor({ loader: env.LOADER }),
+});
+
+streamText({ model, messages, tools: { codemode } });
+```
+
+</TypeScriptExample>
+
+After, with Computer:
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { createToolBindings } from "@cloudflare/computer/modules/tools";
+import { createAITools, forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
+import { streamText } from "ai";
+
+const workspace = new Workspace({
+	storage: this.ctx.storage,
+	backends: [
+		new WorkerJavaScriptBackend({
+			loader: this.env.LOADER,
+			modules: {
+				"codemode:tools": createToolBindings(forAISDKTools(() => myTools)),
+			},
+		}),
+	],
+});
+
+streamText({ model, messages, tools: createAITools({ workspace }) });
+```
+
+</TypeScriptExample>
+
+The model's code changes too. Legacy code was an async arrow function that called `codemode.toolName()`. Computer code is a module with a default export that imports the tools:
+
+```js
+import { getWeather } from "codemode:tools";
+
+export default async function () {
+	return (await getWeather({ city: "Lisbon" })).text;
+}
+```
+
+## Legacy documentation
+
+The guides for the legacy API are in the Agents SDK repository:
+
+- [The legacy API](https://github.com/cloudflare/agents/blob/main/docs/codemode/legacy.md): what is frozen, and how to copy it.
+- [How the legacy API works](https://github.com/cloudflare/agents/blob/main/docs/codemode/legacy-overview.md): executors, connectors, the durable runtime, approvals, and replay.
+- [Legacy API reference](https://github.com/cloudflare/agents/blob/main/docs/codemode/legacy-reference.md): every legacy export and option.

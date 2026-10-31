@@ -487,7 +487,7 @@ You might still use the legacy tools for the following:
 
 - **Your own browser.** Connect to a CDP endpoint you manage with `cdpUrl`. `Browser` supports only Browser Run's Chromium engine.
 - **Kitesurf.** A [Kitesurf](/browser-run/kitesurf/) browser lives only as long as its CDP WebSocket, so it cannot be a persistent browser.
-- **Approval or human handoff within a run.** The [durable Code Mode runtime](/agents/tools/codemode/how-it-works/) can pause a run for approval and resume it with the browser session intact. `browserTool` does not pause runs.
+- **Approval or human handoff within a run.** The [legacy Code Mode runtime](/agents/runtime/code-mode/legacy/) can pause a run for approval and resume it with the browser session intact. `browserTool` does not pause runs.
 
 You do not need the legacy tools to get a fresh browser for each run. With `browserTool`, call [`browser.close()`](#close-the-browser) after a turn, or set a short `keepAliveMs`, so the next run starts a new browser. To read a page without a browser, use the [`web_fetch` tool](/agents/tools/web-fetch/).
 
@@ -537,7 +537,7 @@ Browser tools must be created from inside a Durable Object, such as an Agent. Th
 | `browser_links`    | List links on a page.                                                                                         |
 | `browser_scrape`   | Scrape specific elements by CSS selector.                                                                     |
 
-The TanStack AI `createBrowserTools` returns only `browser_execute`. To discover protocol surface, the model calls `cdp.spec()` or the runtime's built-in [`codemode.search()` and `codemode.describe()`](/agents/tools/codemode/api-reference/#sandbox-codemode-api).
+The TanStack AI `createBrowserTools` returns only `browser_execute`. To discover protocol surface, the model calls `cdp.spec()` or the runtime's built-in `codemode.search()` and `codemode.describe()`. Refer to the [legacy Code Mode API](/agents/runtime/code-mode/legacy/).
 
 ### Configuration
 
