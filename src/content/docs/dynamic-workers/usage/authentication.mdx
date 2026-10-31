@@ -198,8 +198,6 @@ return Response.json(result, { status: result.status });
 ```
 </TypeScriptExample>
 
-These checks authorize each data operation. App code remains responsible for handling returned data safely.
-
 Keep `globalOutbound: null` to block network access, or mediate requests through a [gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests). Otherwise, another data-access path could bypass the capability.
 
 ## Adapt the pattern
