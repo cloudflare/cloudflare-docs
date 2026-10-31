@@ -144,43 +144,13 @@ Routes backup traffic from the container to `DirectoryBackupGateway`, which refu
 
 {/* Remove the second sentence and the last list item when a hostname intercept registered after interceptAllOutboundHttp() receives its requests. */}
 
-`backup()` and `restore()` add this route themselves. If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), `intercept()` must run before it. Otherwise the catch-all receives the backup traffic from the container, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
+`backup()` and `restore()` add this route themselves. If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), `intercept()` must run before it on each new container. Otherwise the catch-all receives the backup traffic from the container, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
 
-- Call `intercept()` in the setup that runs after you start the container, and again when a restarted Durable Object finds the container running. Backups and restores in that container then keep their route.
+- The routes belong to the container. They stay in place when the Durable Object restarts, so a restarted Durable Object that finds the container running does not need to call `intercept()` again.
 - Do not call `intercept()` while a backup or restore can be running. It replaces the access of the running operation, and the operation fails.
-- A container that registered the catch-all first keeps sending backup traffic to it until the container restarts.
+- The order of the routes is fixed when each is first registered on a container. A container that registered the catch-all first keeps sending backup traffic to it until a new container starts.
 
-```ts
-#setup: Promise<void> | null = null;
-
-// Call before each use of the container.
-#ensureRunning(container: Container): Promise<void> {
-	// Set up each new container, and a running container
-	// after this Durable Object restarts.
-	if (this.#setup === null || !container.running) {
-		this.#setup = this.#setUp(container).catch((error) => {
-			this.#setup = null;
-			throw error;
-		});
-	}
-	return this.#setup;
-}
-
-async #setUp(container: Container): Promise<void> {
-	// `sandbox` is an image in the Wrangler configuration, and `Outbound`
-	// is a WorkerEntrypoint that the main module of the Worker exports.
-	if (!container.running) {
-		container.start({
-			image: container.images.sandbox,
-			enableInternet: false,
-		});
-	}
-	await this.#backups.intercept();
-	await container.interceptAllOutboundHttp(
-		this.ctx.exports.Outbound({ props: {} }),
-	);
-}
-```
+For setup code that registers both routes, refer to [Send other requests to a catch-all intercept](/sandbox/files/back-up-a-directory-to-r2/#send-other-requests-to-a-catch-all-intercept).
 
 ## Types
 
