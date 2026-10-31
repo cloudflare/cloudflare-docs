@@ -5,7 +5,7 @@
 
 import { APIRequest } from "~/components";
 
-After applying the necessary changes, use the Validate Prefix endpoint to trigger the validation checks.
+After applying the necessary changes, use the Validate Prefix endpoint to queue validation. Checks run asynchronously. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to monitor the results. You do not need to submit repeated validation requests while checks are pending.
 
 <APIRequest
 	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/validate"
