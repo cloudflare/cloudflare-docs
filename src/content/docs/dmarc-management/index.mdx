@@ -31,7 +31,7 @@ When someone receives an email that claims to be from your domain, email servers
 Cloudflare DMARC Management helps you track every source that is sending emails from your domain and review DMARC reports for each source. These reports show whether messages sent from your domain are passing SPF, DKIM, and DMARC checks — so you can identify unauthorized senders and protect your domain from being used in phishing or spoofing attacks.
 
 :::note
-DMARC Management is available to all Cloudflare customers with [Cloudflare DNS](/dns/).
+DMARC Management is available to all Cloudflare customers with [Cloudflare DNS](/dns/). It supports internationalized domain names (IDN), including domains using non-ASCII characters such as Chinese, Arabic, or other scripts. When you enable DMARC Management, Cloudflare automatically updates your `_dmarc` DNS record to add its reporting address, or creates one if none exists. Refer to [Enable DMARC Management](/dmarc-management/enable/) for details.
 :::
 
 ---
