@@ -6,7 +6,7 @@ products:
 date: 2026-10-17
 ---
 
-import { TypeScriptExample, WranglerConfig } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 Starting November 17, 2026, Workers with a [compatibility date](/workers/configuration/compatibility-dates/) of `2026-11-17` or later will receive client disconnection events through `request.signal` by default. Use these events to stop unnecessary work when a client leaves. You will no longer need the `enable_request_signal` compatibility flag for these dates.
 
@@ -36,29 +36,8 @@ export default {
 
 </TypeScriptExample>
 
-Existing Workers keep their current behavior until you change their compatibility date or flags. To try this feature before November 17, keep your current date and add `enable_request_signal` to your existing flags. With [`cf`](/cf/get-started/), set `worker.compatibilityFlags` in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/). With Wrangler, set `compatibility_flags`:
+Existing Workers keep their current behavior until you change their compatibility date or flags. To try this feature before November 17, keep your current date and add `enable_request_signal` to your [compatibility flags](/workers/configuration/compatibility-flags/).
 
-<WranglerConfig
-	cfConfig={`import { defineConfig } from "cf/config";
-
-export default defineConfig({
-	worker: {
-		name: "my-worker",
-		entrypoint: "./src/index.ts",
-		compatibilityDate: "2026-10-17",
-		compatibilityFlags: ["enable_request_signal"],
-	},
-});`}
->
-
-```toml
-compatibility_flags = ["enable_request_signal"]
-```
-
-</WranglerConfig>
-
-With `cf`, run `cf dev` to test locally, then `cf deploy` to publish the change. For an existing Wrangler project, follow the [migration guide](/cf/wrangler/migrate/) before switching to `cf`.
-
-With a compatibility date of `2026-11-17` or later, use `disable_request_signal` instead of `enable_request_signal` in the same flags list to opt out. This change does not enable `request_signal_passthrough`. Pass the signal explicitly, as the example does.
+With a compatibility date of `2026-11-17` or later, add `disable_request_signal` to opt out. This change does not enable `request_signal_passthrough`. Pass the signal explicitly, as the example does.
 
 For more information, refer to the [Request API](/workers/runtime-apis/request/#properties) and the [Request.signal compatibility flag](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests).
