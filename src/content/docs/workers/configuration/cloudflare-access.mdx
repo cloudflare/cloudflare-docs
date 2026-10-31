@@ -288,6 +288,8 @@ If the caller instead sends a `fetch()` subrequest to an Access-protected hostna
 Workers with [Static Assets](/workers/static-assets/) execute behind an internal router Worker. Access still protects the application and its assets. However, the router does not pass `ctx.access` to the user Worker.
 
 The Cloudflare Vite plugin can add `assets` to the generated deployment configuration when the input Wrangler configuration omits it. Frameworks that use the plugin, including TanStack Start, can therefore be affected even when their source configuration does not declare Static Assets.
+
+When a request is authenticated via a non-browser client over [WARP](/cloudflare-one/team-and-resources/devices/warp/), `ctx.access` only populates the `aud` field. The [`Cf-Access-Jwt-Assertion`](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) request header remains complete and can be validated directly if you need the full JWT claims.
 :::
 
 ## Test ctx.access locally
