@@ -118,3 +118,7 @@ Sampling is [head-based](https://opentelemetry.io/docs/concepts/sampling/#head-s
 Workers traces have seven-day retention. Beginning December 1, 2026, stored traces contribute to account-level ingestion and storage usage under [Cloudflare Observability pricing](/observability/pricing/).
 
 Sampling reduces the number of spans ingested and stored, which reduces billable usage.
+
+### Data location
+
+Cloudflare-stored Workers traces follow your account's [Customer Metadata Boundary](/data-localization/metadata-boundary/) setting when one is configured. If no boundary is configured, traces may be stored in Cloudflare's core data centers globally.
