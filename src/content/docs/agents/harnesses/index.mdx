@@ -33,6 +33,8 @@ Use a build-your-own harness when you need full control over the model call, mes
 
 Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and plugin system. `OpenCodeHarness` runs [OpenCode's Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object.
 
+Use Nanocode to embed a coding agent that follows Codex or Claude Code prompt and tool conventions. Nanocode runs its own Rust/WebAssembly runtime in a Durable Object and provides session storage, recovery alarms, and client streaming.
+
 ## Current harnesses
 
 <LinkCard
@@ -45,6 +47,12 @@ Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and pl
 	title="OpenCode (experimental)"
 	href="/agents/harnesses/opencode/"
 	description="Run OpenCode 2.0 in a plain Durable Object, with Workers AI models, bundled plugins, and durable sessions."
+/>
+
+<LinkCard
+	title="Nanocode"
+	href="/agents/harnesses/nanocode/"
+	description="Run Nanocode with its own Durable Object host. Agents SDK is optional."
 />
 
 ## What a harness usually owns
