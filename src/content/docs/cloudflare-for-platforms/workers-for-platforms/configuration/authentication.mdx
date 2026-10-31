@@ -12,7 +12,7 @@ import { Render, TypeScriptExample } from "~/components";
 
 When you build a platform that runs customer apps, you need to control who can use each app and which data they can access. An app may have both public and private endpoints.
 
-Customers can add routes and change app code independently of your platform. Keep access rules in platform-owned code, so they do not depend on every app implementing authentication and authorization correctly.
+Customers can add routes and change app code independently of your platform. Enforce permissions for routes and data operations in platform-owned code.
 
 Enforce access at two points:
 
@@ -193,6 +193,12 @@ const result = await this.ctx.props.reports.read(reportId);
 return Response.json(result, { status: result.status });
 ```
 </TypeScriptExample>
+
+These checks authorize each data operation. App code remains responsible for handling returned data safely.
+
+User Workers can reuse isolates across requests. An app could retain Alice's report and return it to Bob without another capability call or outbound request.
+
+To prevent sharing through retained state, isolate app execution and storage by user. For example, use a fresh [Dynamic Worker for each request](/dynamic-workers/api-reference/#load) and scope any exposed storage to that user.
 
 Use [Outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) to restrict network access to authorized destinations and operations. Otherwise, another data-access path could bypass the capability.
 

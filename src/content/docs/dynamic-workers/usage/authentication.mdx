@@ -12,7 +12,7 @@ import { Render, TypeScriptExample } from "~/components";
 
 When you build a platform that runs customer apps, you need to control who can use each app and which data they can access. An app may have both public and private endpoints.
 
-Customers can add routes and change app code independently of your platform. Keep access rules in platform-owned code, so they do not depend on every app implementing authentication and authorization correctly.
+Customers can add routes and change app code independently of your platform. Enforce permissions for routes and data operations in platform-owned code.
 
 Enforce access at two points:
 
@@ -140,7 +140,11 @@ return app.getEntrypoint(undefined, { props: { identity } }).fetch(appRequest);
 ```
 </TypeScriptExample>
 
-`load()` creates a fresh Worker. With `get()`, keep code and configuration identical for each cache ID; do not cache one visitor's credentials for other visitors.
+`load()` creates a fresh Worker. With `get()`, keep code and configuration identical for each cache ID. Do not cache one visitor's credentials or private data for other visitors.
+
+A cached Worker can retain returned data between requests. Passing a new capability does not clear that app memory.
+
+If isolation must hold independently of app code, use `load()` per request or separate cache IDs by user. Scope any exposed storage to the same user.
 
 For a wholly private app, require membership on every request. For mixed-access apps, use the route policy to select public exceptions.
 
@@ -193,6 +197,8 @@ const result = await this.ctx.props.reports.read(reportId);
 return Response.json(result, { status: result.status });
 ```
 </TypeScriptExample>
+
+These checks authorize each data operation. App code remains responsible for handling returned data safely.
 
 Keep `globalOutbound: null` to block network access, or mediate requests through a [gateway](/dynamic-workers/usage/egress-control/#intercept-outbound-requests). Otherwise, another data-access path could bypass the capability.
 
