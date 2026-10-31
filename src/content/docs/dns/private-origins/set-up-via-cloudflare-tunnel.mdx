@@ -17,7 +17,7 @@ This guide walks you through proxying public hostnames to origins on a private n
 
 Confirm the following before you start:
 
-- **Private Origins entitlement**: required on your account. It is separate from standard authoritative DNS access. Contact your account team to enable it.
+- **Private Origins available on your account**: contact your account team to enable it.
 - **A healthy `cloudflared` tunnel**: the connector must run on a host that can reach the origin. Refer to [Get started with Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/).
 - **A private network route covering the origin IP**: add a route (CIDR) for the origin's network to the tunnel, in your **default virtual network**. Refer to [Connect a private network CIDR](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/).
 

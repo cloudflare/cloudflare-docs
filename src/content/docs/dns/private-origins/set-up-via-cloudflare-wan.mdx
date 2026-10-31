@@ -24,7 +24,7 @@ This feature is in closed beta. To request access, contact your Cloudflare accou
 Confirm the following before you start:
 
 - **Active Cloudflare WAN subscription**: this guide requires a Cloudflare WAN subscription on your account.
-- **Private Origins entitlement**: required on your account. It is separate from standard authoritative DNS access. Contact your account team to enable it.
+- **Private Origins available on your account**: contact your account team to enable it.
 - **IPsec tunnels configured**: Set up two anycast IPsec tunnels for redundancy, each with a different Cloudflare anycast endpoint. Refer to [Configure tunnel endpoints](/cloudflare-wan/configuration/how-to/configure-tunnel-endpoints/). Two settings are important for this use case:
   - Leave **Automatic return routing** disabled. It does not apply to the public-to-private origin traffic pattern, where requests originate on the Internet and reach your origin through Cloudflare's reverse proxy.
   - Keep the default **Health check** settings (type `reply`, direction `bidirectional`, rate `mid`). These defaults are required for tunnel health to track correctly in this use case.
