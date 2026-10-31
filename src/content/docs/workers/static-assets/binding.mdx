@@ -132,7 +132,9 @@ Common uses for `run_worker_first` include authentication checks, A/B testing, a
 
 ## `binding`
 
-Configuring the optional [binding](/workers/runtime-apis/bindings) gives you access to the collection of assets from within your Worker script.
+Configure the optional [binding](/workers/runtime-apis/bindings/) to serve static assets from your Worker script. `env.ASSETS.fetch(request)` returns a response using the configured [HTML handling](/workers/static-assets/routing/advanced/html-handling/) and [missing-asset fallbacks](/workers/static-assets/#routing-behavior).
+
+The binding uses the current Worker version's assets and configuration. It does not search other versions' assets. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for how this affects deployments.
 
 <WranglerConfig>
 
@@ -164,7 +166,7 @@ In the example above, assets would be available through `env.ASSETS`.
 
 **Response**
 
-- `Promise<Response>` Returns a static asset response for the given request.
+- `Promise<Response>` Returns the response for the request, including any HTML redirects or missing-asset handling.
 
 **Example**
 

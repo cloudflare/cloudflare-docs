@@ -1,0 +1,90 @@
+---
+pcx_content_type: concept
+title: Version skew and static assets
+description: Learn why HTML and asset requests can use different Worker versions, and how to plan for deployments and older pages.
+products:
+  - workers
+sidebar:
+  order: 2
+  label: Version skew
+---
+
+**Version skew** occurs when related requests use incompatible application versions. For example, a browser can receive HTML from one version, then request a JavaScript file from another version that does not contain it.
+
+This can happen during a deployment change or a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/). Older pages can also request assets after a deployment changes.
+
+## Versions, deployments, and asset sets
+
+A [Worker version](/workers/versions-and-deployments/#versions) includes your code, configuration, and static assets. Its **asset manifest** maps request paths to uploaded files.
+
+Each asset request uses the files from the selected version. This applies whether Cloudflare serves assets directly or your Worker uses `env.ASSETS.fetch()`.
+
+A [deployment](/workers/versions-and-deployments/#deployments) sets which versions receive requests and their traffic percentages.
+
+Deployment changes take up to a few seconds to reach every location on Cloudflare's network. This is called **deployment propagation**. Until the change reaches every location, locations can use different deployment configurations.
+
+Uploading assets, creating a version, and deploying it are separate steps. Uploading a file does not add it to other versions' manifests. Reusing a previously uploaded file does not add it to every version either.
+
+A browser makes separate requests for HTML, scripts, stylesheets, images, and imported JavaScript chunks. Serving HTML from one version does not keep later requests on that version. This also applies when you deploy a version to 100% of traffic.
+
+## Causes of version skew
+
+### Deployment propagation
+
+Suppose version A is serving traffic. You deploy version B, whose HTML references a new file, `/assets/app-b2c3.js`. Version A's manifest does not contain that path.
+
+During propagation, one location can serve B's HTML. The asset request can then reach a location still using A:
+
+```mermaid
+sequenceDiagram
+    participant Browser
+    participant Updated as Location using B
+    participant Earlier as Location still using A
+    Browser->>Updated: GET /
+    Updated-->>Browser: HTML references /assets/app-b2c3.js
+    Browser->>Earlier: GET /assets/app-b2c3.js
+    Earlier->>Earlier: Asset absent from A's manifest
+    Earlier-->>Browser: Response follows A's routing settings
+```
+
+The file can be missing from the selected manifest even though its upload succeeded. The resulting response depends on your [asset routing and fallback configuration](/workers/static-assets/#routing-behavior). For example, a missing file can return a `404` response.
+
+Uploading a version separately allows you to choose when to deploy it. The deployment change still takes time to reach every location.
+
+### Traffic split between versions
+
+During a gradual deployment, Cloudflare selects a version for each request using the configured percentages. Requests from the same browser can use different versions. This can happen even after every location has the same deployment configuration.
+
+[Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) sends requests with the same key to the same version. This applies while the deployment configuration stays the same. Every related request must carry that key. Changing traffic percentages can move users to a new version while their page remains open.
+
+### Older pages and rollbacks
+
+A page can remain open after a newer version starts serving traffic. For example, a browser loads version A's HTML, which references `/assets/app-a1b2.js`. You then deploy version B without that file. A later request for the file can reach B, which cannot find it in its own assets.
+
+[Rollbacks](/workers/versions-and-deployments/rollbacks/) can cause the same problem in reverse. Pages loaded from the newer version can request files missing from the restored version. Plan for both cases when choosing which assets each version includes.
+
+## Requests for missing assets
+
+With default [asset-first routing](/workers/static-assets/routing/worker-script/), a missing asset goes to the selected version's `fetch()` handler if you have a Worker script. The handler decides what response to return. A missing asset does not automatically produce a `404` response.
+
+If the handler calls `env.ASSETS.fetch(request)`, it still uses that version's assets and [`not_found_handling` setting](/workers/static-assets/binding/#fetch). It does not search other versions' assets. Without a Worker script, the default response for a missing asset is `404`.
+
+Routing settings can change this flow. For example, [single-page application routing](/workers/static-assets/routing/single-page-application/) can serve `/index.html` for navigation requests without invoking your Worker.
+
+## Plan for related requests
+
+Choose a strategy based on how long your application's pages can remain open and which versions can serve their requests.
+
+| Strategy                                                                                    | What it does and where it applies                                                                                                                                                                     |
+| ------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) | Sends requests with the same key to the same version while the deployment configuration stays the same. Changing traffic percentages or removing a version can change where requests go.              |
+| [Version overrides](/workers/versions-and-deployments/version-overrides/)                   | Selects a version in the deployment at the location handling the request, even at 0% of traffic. If that deployment does not include the version, Cloudflare uses the configured traffic percentages. |
+| Include assets needed by older pages                                                        | Allows a newer version to serve files from earlier releases. It does not add new files to earlier versions.                                                                                           |
+
+When keeping assets across releases, use content-hashed filenames. Different file contents then have different paths. Include every file the page needs, such as imported chunks, stylesheets, and fonts.
+
+Keeping old files in a new release helps older pages. But new pages can still request new files from an earlier version. That earlier version must include those files, or the request must select a version that has them.
+
+For example, first deploy the existing HTML with both releases' asset files. Then change the HTML in a later deployment, keeping those files. Each deployment still takes time to reach every location. Waiting a fixed time or testing one location does not prove that every location has the change.
+
+If you include a version ID in asset URLs, include it in every script, stylesheet, and other asset URL the page loads. A script's query string is not automatically copied to the URLs it loads. A query parameter alone does not select a Worker version. The incoming request must set the [version override header](/workers/versions-and-deployments/version-overrides/#how-to-set-version-overrides).
