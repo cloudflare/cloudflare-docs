@@ -1,0 +1,19 @@
+src/content/changelog/waf/2026-10-30-emergency-waf-release.mdx
+  s_901c7102a36f1f::t_42df0a32c34bae 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3afc74df3e1965b08035ba05e24bf356006970f0",
+  "prompts": {},
+  "sessions": {
+    "s_901c7102a36f1f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2da9475a-884e-477c-bbbe-affbf5f25db5",
+        "model": "unknown"
+      },
+      "human_author": "fbressan <fbressan@cloudflare.com>"
+    }
+  }
+}

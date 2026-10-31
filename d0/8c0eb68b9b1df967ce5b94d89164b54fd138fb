@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/cloud-and-saas-findings/custom-finding-types.mdx
+  s_403e4c66b85118::t_cdb58d12586dea 13,184-190,193-194,206-276,344,347,350,371,374-378,383,387-411,414-415,422-440,451-475,504
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d08c0eb68b9b1df967ce5b94d89164b54fd138fb",
+  "prompts": {},
+  "sessions": {
+    "s_403e4c66b85118": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "acidic-hydrogen",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}

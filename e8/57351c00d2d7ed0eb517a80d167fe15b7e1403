@@ -1,0 +1,19 @@
+.github/CODEOWNERS
+  s_fe873d779d5db1::t_4980235ebc4ded 299,315-319
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e857351c00d2d7ed0eb517a80d167fe15b7e1403",
+  "prompts": {},
+  "sessions": {
+    "s_fe873d779d5db1": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "lilac-outfit",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}

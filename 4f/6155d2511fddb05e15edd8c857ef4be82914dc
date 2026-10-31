@@ -1,0 +1,27 @@
+src/content/docs/cloudflare-one/integrations/cloud-and-saas/google-workspace/gemini.mdx
+  s_c103729a2c091e::t_37af3e0cbc69f6 54-55,61-62
+src/content/docs/cloudflare-one/integrations/cloud-and-saas/openai.mdx
+  s_c103729a2c091e::t_8e2c79a605d32f 73-75,83-84,92-95,103-105,113-115
+src/content/partials/cloudflare-one/casb/google/gemini-licensing.mdx
+  s_c103729a2c091e::t_f5c244edabdd4c 7-8
+src/content/partials/cloudflare-one/casb/google/inactive-suspended-users.mdx
+  s_c103729a2c091e::t_7d3e05b920472f 11-12
+src/content/partials/cloudflare-one/casb/google/user-account-settings.mdx
+  s_c103729a2c091e::t_701c7b7a835b0e 9-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4f6155d2511fddb05e15edd8c857ef4be82914dc",
+  "prompts": {},
+  "sessions": {
+    "s_c103729a2c091e": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "harsh-rugby",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}
