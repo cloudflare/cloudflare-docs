@@ -30,7 +30,7 @@ To protect your network with a Cloudflare IP address, contact your account manag
 - Confirm you properly configured [tunnel](/magic-transit/network-health/update-tunnel-health-checks-frequency/) and endpoint health checks.
 - Update your infrastructure at your own pace to use the allocated Cloudflare IPs.
 
-When you use a Cloudflare-owned IP space, you do not need a <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>. When using Cloudflare-leased IPs, Cloudflare automatically enables [Magic Transit Egress](/magic-transit/reference/egress/), which routes your egress traffic to Cloudflare instead of the Internet. Set up policy-based routing on your end to ensure return traffic routes properly.
+When you use a Cloudflare-owned IP space, you do not need a <GlossaryTooltip term="letter of agency">Letter of Agency (LOA)</GlossaryTooltip>. When using Cloudflare-leased IPs, your account team will enable [Magic Transit Egress](/magic-transit/reference/egress/), which allows Cloudflare to accept your return traffic. You then set up policy-based routing on your end to ensure return traffic routes via Cloudflare instead of the Internet.
 
 ## Verify router compatibility
 
