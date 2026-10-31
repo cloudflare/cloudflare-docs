@@ -173,7 +173,7 @@ export class Browser extends DurableObject<Env> {
 		const folder = roundedDate.split(" GMT")[0];
 
 		// If there is a browser session open, re-use it
-		if (!this.browser || !this.browser.isConnected()) {
+		if (!this.browser || !this.browser.connected) {
 			console.log(`Browser DO: Starting new instance`);
 			try {
 				this.browser = await puppeteer.launch(this.env.MYBROWSER);
