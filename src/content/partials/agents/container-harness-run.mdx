@@ -1,0 +1,11 @@
+---
+{}
+---
+
+`routeAgentRequest()` sends `/agents/<binding>/<name>` to the Durable Object with that name. Each object has its own container, workspace, and sessions. In an application, choose the object name from an authenticated user or project.
+
+The first prompt to a new object takes longer, because the harness installs the CLI and takes the setup snapshot. Later containers start from a snapshot, and the container stops five minutes after its last work.
+
+:::caution
+These routes have no authentication. Each prompt runs commands and spends model credit. Add [authentication](/agents/runtime/routing/authentication/) before you deploy anywhere public.
+:::
