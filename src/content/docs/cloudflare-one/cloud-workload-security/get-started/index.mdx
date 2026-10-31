@@ -1,6 +1,6 @@
 ---
 title: Get started
-description: Run a Cloud Workload Security proxy locally and test a policy that prevents public access to an R2 bucket.
+description: Set up a Cloud Workload Security proxy on a Linux host and test a policy that prevents public access to an R2 bucket.
 pcx_content_type: get-started
 products:
   - cloud-workload-security
@@ -10,9 +10,13 @@ sidebar:
 
 import { DashButton, Steps, TabItem, Tabs } from "~/components";
 
-Run a Cloud Workload Security (CWS) proxy locally and block requests that make an R2 bucket public. This walkthrough uses an empty test bucket in your Cloudflare account.
+Set up a Cloud Workload Security (CWS) proxy and block requests that make an R2 bucket public. This walkthrough uses an empty test bucket in your Cloudflare account.
 
-The proxy and `cf` client run on the same Linux machine. For pipeline runners, application hosts, and shared proxies, refer to [Proxy deployment options](/cloudflare-one/cloud-workload-security/platform/#proxy-deployment-options).
+Choose a Linux host that you provide for this walkthrough. Use an existing Linux machine, a local Linux virtual machine (VM), or a Linux VM in your cloud environment.
+
+Install the proxy and `cf` client on that host. Run the proxy and client terminal commands there. Keeping both processes on one host lets the client use `127.0.0.1:8080`.
+
+The proxy packages in this guide require Linux. In other deployments, clients can run on separate hosts and other operating systems. Refer to [Proxy deployment options](/cloudflare-one/cloud-workload-security/platform/#proxy-deployment-options) for pipeline runners, application hosts, and shared proxies.
 
 ## Prerequisites
 
@@ -20,10 +24,10 @@ The proxy and `cf` client run on the same Linux machine. For pipeline runners, a
 Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-create-a-zero-trust-organization). The Zero Trust Free plan is sufficient.
 :::
 
-- A Linux machine or virtual machine with APT or DNF, `curl`, and `sudo` access.
+- A Linux host with APT or DNF, `curl`, and `sudo` access.
 - A Cloudflare account with access to manage CWS resources and create account API tokens.
 - R2 access in the same account and permission to create and configure a test bucket.
-- The [Cloudflare CLI installed and signed in](/cf/get-started/). Use Node.js 24.5 or later for the client proxy settings in this guide.
+- The [Cloudflare CLI installed and signed in](/cf/get-started/) on that Linux host. Use Node.js 24.5 or later for the client proxy settings in this guide.
 - OpenSSL and a terminal on the proxy host.
 
 ## Set up the proxy locally
@@ -215,7 +219,7 @@ Your account must have a [Zero Trust subscription](/cloudflare-one/setup/#2-crea
 
 9. ### Route the CLI through the proxy
 
-   Open a second terminal for the client. Replace the certificate path and Account ID, then set:
+    Open a second terminal on the same Linux host for the client. Replace the certificate path and Account ID, then set:
 
    ```sh
    export HTTP_PROXY="http://127.0.0.1:8080"

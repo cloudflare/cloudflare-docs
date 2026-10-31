@@ -1,0 +1,216 @@
+---
+title: Policy input
+description: Look up the Rego input schema for Cloud Workload Security, including HTTP request fields, cloud context, and authenticated credentials.
+pcx_content_type: reference
+products:
+  - cloud-workload-security
+sidebar:
+  order: 1
+---
+
+Each Rego policy reads the current request through `input`. The proxy builds this object before evaluating the policy's `valid` rule.
+
+The input has these top-level groups:
+
+| Field | Contents |
+|---|---|
+| `input.http.request` | HTTP request details and parsed body. |
+| `input.http.parameters` | Host and path parameters captured during API classification. Omitted when no parameters are captured. |
+| `input.auth.basic_auth` | Authenticated CWS Basic Auth credential ID and username. |
+| `input.application` | Cloud provider, service, operation, and available provider context. |
+
+Shared metadata and tenant structures are available through `data`, separately from `input`. Refer to [Manage policy reference resources](/cloudflare-one/cloud-workload-security/guides/policy-reference/) for their import paths.
+
+## HTTP request fields
+
+Use these fields to inspect the request:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.http.request.host` | String | Destination hostname. |
+| `input.http.request.protocol` | String | HTTP version, such as `HTTP/1.1`. |
+| `input.http.request.method` | String | HTTP method, such as `GET` or `PUT`. |
+| `input.http.request.path` | String | URL path without the query string. |
+| `input.http.request.query` | Object | Decoded query parameter names and string values. |
+| `input.http.request.headers` | Object | Normalized header names and string values, with sensitive headers omitted. |
+| `input.http.request.body` | JSON value or `null` | Parsed request body. |
+| `input.http.request.remote_addr` | String | Client IP address observed by the proxy. |
+
+Header names are lowercase, except `user-agent` becomes `user_agent`. Repeated header and query parameter values become comma-separated strings.
+
+The proxy omits these headers from the policy input: `authorization`, `cookie`, `set-cookie`, `proxy-authorization`, `x-forwarded-authorization`, `www-authenticate`, and `x-amz-security-token`.
+
+Bodies that the proxy does not parse or inspect appear as `null`. This includes bodies over the 10 MiB inspection limit.
+
+Body fields marked sensitive by API classification appear as `"[REDACTED]"`. The proxy forwards the original body when it allows the request.
+
+### Captured host and path parameters
+
+API classification can capture values from hostname and path templates:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.http.parameters.host` | Object | Captured hostname parameter names and string values. |
+| `input.http.parameters.path` | Object | Captured path parameter names and string values. |
+
+Capture names depend on the classified API definition. The same name can occur in both objects without overwriting either value.
+
+## Basic Auth identity
+
+These fields identify the [Basic Auth credential](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#create-a-basic-auth-credential) matched by the proxy:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.auth.basic_auth.id` | String | ID of the matched CWS Basic Auth credential. |
+| `input.auth.basic_auth.username` | String | Username configured on that credential. |
+
+Both fields are empty strings when no configured credential matches. The `basic_auth` object contains no password or password hash.
+
+Attach the credential to your deployment and configure client proxy authentication. Refer to [Attach credentials to a deployment](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#attach-credentials-to-a-deployment).
+
+### Email addresses
+
+CWS does not automatically add the email of the dashboard user or cloud API caller. There is no general `input.user.email` field.
+
+If you configure an email address as a Basic Auth username, that value appears in `input.auth.basic_auth.username`. It remains the username you configured for that credential.
+
+The proxy's `cws.api_key_email` setting authenticates CWS API configuration requests. It does not populate client identity in a policy. Refer to [API connection and authentication](/cloudflare-one/cloud-workload-security/configuration/#api-connection-and-authentication).
+
+AWS federation claims can supply additional identity data when available. Refer to [AWS session and identity context](#aws-session-and-identity-context).
+
+### Example: require a specific credential
+
+This example permits only `GET` requests from one configured credential. Set the policy's **Filters** to the application you want to protect, for example:
+
+```txt
+application.name == "Cloudflare"
+```
+
+In **Rego source**, replace `<BASIC_AUTH_CREDENTIAL_ID>` with your credential ID:
+
+```txt title="Rego source"
+package policy.credential_read_only
+
+default valid := false
+
+valid if {
+  input.auth.basic_auth.id == "<BASIC_AUTH_CREDENTIAL_ID>"
+  input.http.request.method == "GET"
+}
+```
+
+Attach the policy to a policy set and turn on **Enforce**. Attach that policy set and the credential to the deployment.
+
+Within the policy's scope, requests with another credential or no matched identity fail the check. Rotating the credential's password secrets preserves its ID and username.
+
+Workload and policy filters can also select a credential. Use the field names without the Rego `input.` prefix, for example:
+
+```txt
+auth.basic_auth.username == "ci-deploy"
+```
+
+A filter selects which requests a policy checks. Requests outside all policy filters use the deployment's **Default mode**. Refer to [Request Validation](/cloudflare-one/cloud-workload-security/concepts/request-validation/).
+
+## Application fields
+
+Use these fields to identify the classified cloud API request:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.application.name` | String | Provider name, such as `Cloudflare` or `AWS`. |
+| `input.application.service` | String | Classified service name. Can also be present when the service is recognized but the operation is not. |
+| `input.application.operation` | String | Classified API operation name. |
+| `input.application.action_type` | String | `read` or `write`, when classification supplies this information. |
+| `input.application.provider_metadata` | Object | Provider-specific JSON values extracted during API classification. |
+
+Use the exact application, service, and operation values shown in **Visual Builder**. Classification fields are omitted when unavailable, and `provider_metadata` is omitted when empty.
+
+### Cloudflare context
+
+Cloudflare requests can include these additional fields:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.application.cloudflare.account_id` | String | Target account ID extracted from an account-scoped API path. |
+| `input.application.cloudflare.org_ids` | Array of strings | Ancestor organization IDs from a matching tenant structure, excluding the root. |
+| `input.application.cloudflare.org_names` | Array of strings | Organization names aligned with `org_ids`. |
+| `input.application.cloudflare.root_id` | String | Root organization ID from the matching tenant structure. |
+
+The account field comes from paths beginning `/client/v4/accounts/<ACCOUNT_ID>/`. Hierarchy fields require a matching [tenant structure](/cloudflare-one/cloud-workload-security/guides/policy-reference/#create-a-tenant-structure).
+
+### AWS context
+
+AWS requests can include these additional fields:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.application.aws.service` | String | AWS copy of the classified `application.service` value. |
+| `input.application.aws.action_type` | String | AWS copy of the classified `application.action_type` value. |
+| `input.application.aws.region` | String | AWS region derived from the request, when available. |
+| `input.application.aws.account_id` | String | Caller account ID derived from the AWS access key ID, when available. |
+| `input.application.aws.access_key_id` | String | Access key ID from the request's AWS credentials. |
+| `input.application.aws.ou_ids` | Array of strings | Ancestor organizational unit IDs from a matching tenant structure, excluding the root. |
+| `input.application.aws.ou_names` | Array of strings | Organizational unit names aligned with `ou_ids`. |
+| `input.application.aws.root_id` | String | Root ID from the matching tenant structure. |
+
+AWS hierarchy fields require a matching tenant structure. Optional fields and empty provider-specific objects are omitted rather than set to `null`.
+
+### AWS session and identity context
+
+AWS session and identity data depends on cached context for the request's credentials. These fields can be absent:
+
+| Field | Type | Description |
+|---|---|---|
+| `input.application.aws.session_context.session_arn` | String | AWS session ARN. |
+| `input.application.aws.session_context.assumed_role_id` | String | Assumed role ID. |
+| `input.application.aws.session_context.session_tags` | Object | Session tag names and string values. |
+| `input.application.aws.user_identity` | JSON value | Cached identity provider claims associated with the AWS credentials. |
+
+The proxy populates this cache from successful AWS Security Token Service (STS) requests routed through it. `AssumeRoleWithSAML` and `AssumeRoleWithWebIdentity` supply identity claims for the returned credentials. `AssumeRole` can record session tags and carry forward cached source identity.
+
+Later requests must use those returned credentials to access the cached context. Credentials issued outside the proxy's path may have no cached context. Process-local entries are lost when the proxy exits. For shared storage, refer to [Cache and Redis](/cloudflare-one/cloud-workload-security/configuration/#cache-and-redis).
+
+Claim and session tag names retain their original spelling. CWS does not synthesize an email claim. If your identity provider supplies `email`, a policy can read `input.application.aws.user_identity.email` when that claim is present.
+
+Handle missing context explicitly in your policy. For example, `not input.application.aws.session_context` tests whether session context is absent.
+
+## Example input
+
+This example shows common fields for an authenticated R2 request. Optional classification fields can add further context:
+
+```json
+{
+  "http": {
+    "request": {
+      "host": "api.cloudflare.com",
+      "protocol": "HTTP/1.1",
+      "method": "PUT",
+      "path": "/client/v4/accounts/<ACCOUNT_ID>/r2/buckets/cws-r2-guardrails-demo/domains/managed",
+      "query": {},
+      "headers": {
+        "content-type": "application/json"
+      },
+      "body": {
+        "enabled": false
+      },
+      "remote_addr": "192.0.2.10"
+    }
+  },
+  "auth": {
+    "basic_auth": {
+      "id": "<BASIC_AUTH_CREDENTIAL_ID>",
+      "username": "ci-deploy"
+    }
+  },
+  "application": {
+    "name": "Cloudflare",
+    "service": "r2",
+    "operation": "r2-put-bucket-public-policy",
+    "cloudflare": {
+      "account_id": "<ACCOUNT_ID>"
+    }
+  }
+}
+```
+
+The proxy's CWS account and deployment IDs are not additional policy input fields. For request decisions and log redaction, refer to [Read proxy logs](/cloudflare-one/cloud-workload-security/troubleshooting/#read-proxy-logs).

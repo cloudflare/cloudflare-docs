@@ -47,6 +47,8 @@ Within that scope, each policy's filter selects the requests to check. For examp
 
 Each matching policy evaluates a Boolean rule named `valid`. A `true` result passes that policy's check. A `false` result fails it. Use Rego to validate request content, such as whether a change would make a bucket public.
 
+Rego reads request details and authenticated client identity through `input`. For field names, optional provider context, and credential examples, refer to [Policy input](/cloudflare-one/cloud-workload-security/reference/policy-input/).
+
 Policies can reuse shared logic and data:
 
 - [Rego modules](/cloudflare-one/cloud-workload-security/guides/policy-reference/#create-a-rego-module) supply reusable checking logic.
@@ -78,6 +80,6 @@ An attempt to turn on public access matches the filter but fails Rego validation
 
 [Domain ACLs](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#create-a-domain-acl) control which destinations a deployment can reach. Allowing a destination does not bypass workload scope or policy checks.
 
-[Basic Auth credentials](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#create-a-basic-auth-credential) provide client identities that workload and policy filters can match. The cloud provider still applies its own authentication and permissions.
+[Basic Auth credentials](/cloudflare-one/cloud-workload-security/guides/manage-traffic-scope/#create-a-basic-auth-credential) provide client identities that filters and Rego checks can match. The cloud provider still applies its own authentication and permissions.
 
 To configure scope and enforcement, follow [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/). To inspect decisions, refer to [Read proxy logs](/cloudflare-one/cloud-workload-security/troubleshooting/#read-proxy-logs).
