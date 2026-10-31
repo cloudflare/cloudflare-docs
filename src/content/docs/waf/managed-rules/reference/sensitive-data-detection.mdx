@@ -30,9 +30,13 @@ Some rules in the Cloudflare Sensitive Data Detection managed ruleset are disabl
 
 ## Additional remarks
 
-When turned on, Cloudflare Sensitive Data Detection will check all responses sent to visitors (according to your custom filter expression, if defined), including responses from cache and responses handled by [Workers](/workers/).
+When turned on, Cloudflare Sensitive Data Detection will check supported, uncompressed responses sent to visitors (according to your custom filter expression, if defined), including responses from cache and responses handled by [Workers](/workers/).
 
 The detection will handle text, HTML, JSON, and XML content in the response up to 1 MB.
+
+:::caution
+Sensitive Data Detection does not inspect compressed response bodies. Sensitive data in compressed responses will not generate Sensitive Data Detection events. Do not rely on Sensitive Data Detection for coverage of compressed responses.
+:::
 
 Currently, Cloudflare Sensitive Data Detection does not support [matched payload logging](/waf/managed-rules/payload-logging/).
 
