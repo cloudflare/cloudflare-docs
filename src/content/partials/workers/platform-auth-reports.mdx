@@ -1,0 +1,39 @@
+---
+{}
+---
+
+import { TypeScriptExample } from "~/components";
+
+<TypeScriptExample filename="gateway.ts">
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+const records = [
+	{ id: "alice", tenant: "acme", owner: "alice", text: "Alice's report" },
+	{ id: "bob", tenant: "acme", owner: "bob", text: "Bob's report" },
+];
+
+type Scope = { identity: Identity | null; tenant: string };
+
+export class Reports extends WorkerEntrypoint<Cloudflare.Env, Scope> {
+	read(id: string) {
+		const { identity, tenant } = this.ctx.props;
+		if (!identity) return { status: 401, error: "Sign in" };
+		if (
+			identity.tenant !== tenant ||
+			!identity.permissions.includes("reports:read")
+		) {
+			return { status: 403, error: "Forbidden" };
+		}
+		const report = records.find(
+			(record) =>
+				record.id === id &&
+				record.tenant === tenant &&
+				record.owner === identity.userId,
+		);
+		if (!report) return { status: 404, error: "Report not found" };
+		return { status: 200, report: { text: report.text } };
+	}
+}
+```
+</TypeScriptExample>
