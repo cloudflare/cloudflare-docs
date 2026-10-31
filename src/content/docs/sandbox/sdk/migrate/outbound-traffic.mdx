@@ -12,7 +12,7 @@ products:
 
 import { Steps } from "~/components";
 
-In Sandbox SDK 0.12, `ContainerProxy` applies the outbound fields of your `Sandbox` class to each request that the container sends. In 1.0, your Durable Object registers your own `WorkerEntrypoint` for HTTP and HTTPS requests from the container, and the entrypoint applies the same rules in the same order.
+In Sandbox SDK 0.12, `ContainerProxy` applies the outbound fields of your `Sandbox` class to each request that the container sends. In 1.0, you write a `WorkerEntrypoint`, an exported class in your Worker that handles requests. Your Durable Object registers it as an outbound intercept, which sends HTTP and HTTPS requests from the container to the entrypoint. The entrypoint applies the same rules in the same order.
 
 ## Before you start
 
@@ -139,7 +139,7 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    The entrypoint blocks denied hostnames, then hostnames outside the allowed list. Next, it runs the first handler that matches, in this order: a hostname handler that the sandbox set at runtime, a hostname handler from your class, the catch-all handler set at runtime, and the catch-all handler of your class. With no handler, it sends the request to the Internet if you set an allowed list or allow the Internet. A blocked request gets status `520` with the body `Origin is disallowed`, as in 0.12.
 
-   The props carry the rules that the sandbox set at runtime, in the shape 0.12 stored them. Like 0.12, the entrypoint skips a handler whose name is not in `HANDLERS`, such as the handlers that 0.12 stored for bucket mounts.
+   Props are values that your Durable Object passes to the entrypoint when it registers the entrypoint. Here, the props carry the rules that the sandbox set at runtime, in the shape 0.12 stored them. Like 0.12, the entrypoint skips a handler whose name is not in `HANDLERS`, such as the handlers that 0.12 stored for bucket mounts.
 
 3. Add the certificate variables to `ENV`, and register the entrypoint in `startContainer()`:
 
@@ -225,7 +225,7 @@ This page replaces `enableInternet`, `interceptHttps`, `allowedHosts`, `deniedHo
 
    If your class uses `DirectoryBackup` from [Move backups](/sandbox/sdk/migrate/backups/), call [`this.backups.intercept()`](/sandbox/reference/directory-backups/#intercept) in the `try` block, before your `intercept()`. Otherwise every backup and restore fails with `BACKUP_TRANSFER`, because your `Outbound` entrypoint receives backup requests from the container. Call it only in `startContainer()`, not on every request.
 
-   The HTTPS intercept signs responses with a certificate that the container does not trust by default. As in 0.12, the `TRUST` command adds the certificate to the system bundle, which curl and Git read. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
+   The HTTPS intercept signs responses with a certificate from a certificate authority (CA) that the container does not trust by default. As in 0.12, the `TRUST` command adds the CA certificate to the system bundle, so curl and Git, which read the bundle, trust intercepted HTTPS connections. `ENV` sets `NODE_EXTRA_CA_CERTS` and `REQUESTS_CA_BUNDLE` for Node.js and Python `requests`, which do not read the bundle by default. Keep your other `ENV` values, and pass `ENV` to each `exec()` call. The image needs the `ca-certificates` package, which provides the bundle.
 
    The certificate appears once the HTTPS intercept is registered. `TRUST` waits up to 10 seconds for it. 0.12 waited up to 5 seconds. If the certificate does not appear, or the append fails, `trust()` throws, and `startContainer()` stops the container. Each container gets a new certificate. A [snapshot](/containers/api/durable-object-container/#snapshotcontainer) saves the bundle with the certificate of the container it came from, so appending to the bundle would keep certificates from earlier containers. `TRUST` therefore keeps a copy of the system bundle as it was before any certificate was added, and writes the bundle again from that copy and the current certificate. Running it again for the same container writes the same bundle.
 
