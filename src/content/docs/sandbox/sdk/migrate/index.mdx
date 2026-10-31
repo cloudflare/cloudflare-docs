@@ -86,8 +86,10 @@ Each name leads to one page:
 | `mountBucket()` | [Move bucket mounts](/sandbox/sdk/migrate/bucket-mounts/) | Change calls |
 | `createBackup()`, `restoreBackup()` | [Move backups](/sandbox/sdk/migrate/backups/) | Add code |
 | `runCode()`, `createCodeContext()` | [Replace the code interpreter](/sandbox/sdk/migrate/code-interpreter/) | Add code |
-| `sandbox/opencode`, `sandbox/openai`, `sandbox/bridge`, `WarmPool` | [Move other 0.x features](/sandbox/sdk/migrate/other-features/) | Add or remove code |
-| `FROM docker:dind-rootless` in a `Dockerfile` | [Run Docker inside the sandbox](/sandbox/sdk/migrate/other-features/#run-docker-inside-the-sandbox) | Change the image |
+| `sandbox/opencode` | [Move OpenCode servers](/sandbox/sdk/migrate/opencode/) | Add code |
+| `sandbox/openai` | [Move the OpenAI shell and editor](/sandbox/sdk/migrate/openai-agents/) | Add code |
+| `sandbox/bridge`, `WarmPool` | [Remove the bridge and WarmPool](/sandbox/sdk/migrate/other-features/) | Add or remove code |
+| `FROM docker:dind-rootless` in a `Dockerfile` | [Run Docker inside the sandbox](/sandbox/sdk/migrate/docker/) | Change the image |
 
 Work through the pages on your staging Worker, test it with your own checks, and then deploy to production. For every 0.x API and its replacement, including features with no equivalent in 1.0, refer to the [API map](/sandbox/sdk/migrate/api-map/).
 
