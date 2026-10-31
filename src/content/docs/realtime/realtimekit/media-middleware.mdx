@@ -1,0 +1,123 @@
+---
+title: Media Middleware
+description: Process local audio and video in RealtimeKit meetings with audio and video middleware.
+pcx_content_type: concept
+sidebar:
+  order: 8
+products:
+  - realtime
+---
+
+Media middleware lets you process the local participant's audio and video before RealtimeKit publishes them to other participants in a meeting.
+
+## About media middleware
+
+A middleware is a function that you attach to the local participant's audio or video. RealtimeKit passes the raw media from the microphone or camera through each middleware, then publishes the result.
+
+You can use media middleware for the following tasks:
+
+- Apply filters, overlays, or virtual backgrounds to video.
+- Transform audio, for example to suppress noise.
+- Observe media without changing it, for example to generate transcriptions.
+
+When you add more than one middleware, RealtimeKit runs them in the order you added them. To change the order, remove all middleware and add them again in the new order.
+
+### Raw and processed tracks
+
+RealtimeKit exposes two tracks for each media type on `meeting.self`:
+
+| Getter                       | Description                                                             |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `meeting.self.rawAudioTrack` | Audio from the microphone, before any middleware runs.                  |
+| `meeting.self.audioTrack`    | Audio after all middleware runs. Other participants receive this track. |
+| `meeting.self.rawVideoTrack` | Video from the camera, before any middleware runs.                      |
+| `meeting.self.videoTrack`    | Video after all middleware runs. Other participants receive this track. |
+
+Adding or removing a video middleware rebuilds `meeting.self.videoTrack`.
+
+Two tracks let you use different versions of the same media. For example, a proctoring application can publish video with a custom background and logo to other participants, while it displays or analyzes the unprocessed camera feed from `meeting.self.rawVideoTrack`.
+
+## Public methods
+
+### Audio middleware methods
+
+Use the following methods on `meeting.self` to manage audio middleware:
+
+| Method                                           | Description                                                                   |
+| ------------------------------------------------ | ----------------------------------------------------------------------------- |
+| `meeting.self.addAudioMiddleware(middleware)`    | Adds an audio middleware to the end of the middleware chain.                  |
+| `meeting.self.removeAudioMiddleware(middleware)` | Removes an audio middleware. Pass the same function reference that you added. |
+| `meeting.self.removeAllAudioMiddlewares()`       | Removes all audio middleware.                                                 |
+
+### Video middleware methods
+
+Use the following methods on `meeting.self` to manage video middleware:
+
+| Method                                                | Returns                                          | Description                                                                  |
+| ----------------------------------------------------- | ------------------------------------------------ | ---------------------------------------------------------------------------- |
+| `meeting.self.addVideoMiddleware(middleware)`         | `Promise<{ success: boolean; message: string }>` | Adds a video middleware to the end of the middleware chain.                  |
+| `meeting.self.removeVideoMiddleware(middleware)`      | `Promise<{ success: boolean; message: string }>` | Removes a video middleware. Pass the same function reference that you added. |
+| `meeting.self.removeAllVideoMiddlewares()`            | `Promise<{ success: boolean; message: string }>` | Removes all video middleware.                                                |
+| `meeting.self.setVideoMiddlewareGlobalConfig(config)` | `Promise<void>`                                  | Configures how RealtimeKit renders video frames for middleware.              |
+
+For the full list of local participant media methods, refer to the [RTKSelfMedia API reference](/realtime/realtimekit/core/api-reference/rtkselfmedia/).
+
+## Video middleware
+
+### Configure frame rendering
+
+By default, RealtimeKit calls a video middleware for every frame. To stop RealtimeKit from calling the middleware for every frame, set `disablePerFrameCanvasRendering` to `true`:
+
+```js
+await meeting.self.setVideoMiddlewareGlobalConfig({
+	disablePerFrameCanvasRendering: true,
+});
+```
+
+With this setting, RealtimeKit calls the middleware once with an empty canvas. The middleware must keep updating the canvas itself. Use `meeting.self.rawVideoTrack` to read the unprocessed input frames.
+
+### Add a video middleware
+
+The following example adds a static background with the `@cloudflare/realtimekit-virtual-background` package. It assumes `meeting` is an initialized RealtimeKit client. The image URL must allow cross-origin resource sharing (CORS):
+
+```js
+import RealtimeKitVideoBackgroundTransformer from "@cloudflare/realtimekit-virtual-background";
+
+await meeting.self.setVideoMiddlewareGlobalConfig({
+	disablePerFrameCanvasRendering: true,
+});
+
+const videoBackgroundTransformer =
+	await RealtimeKitVideoBackgroundTransformer.init({ meeting });
+
+const backgroundMiddleware =
+	await videoBackgroundTransformer.createStaticBackgroundVideoMiddleware(
+		"https://images.unsplash.com/photo-1487088678257-3a541e6e3922",
+	);
+
+const result = await meeting.self.addVideoMiddleware(backgroundMiddleware);
+
+if (!result.success) {
+	console.error(result.message);
+}
+```
+
+For background blur and other options, refer to [Video effects](/realtime/realtimekit/core/video-effects/).
+
+### Remove a video middleware
+
+To remove a single middleware, pass the same function reference that you added:
+
+```js
+await meeting.self.removeVideoMiddleware(backgroundMiddleware);
+```
+
+To remove all video middleware:
+
+```js
+await meeting.self.removeAllVideoMiddlewares();
+```
+
+## Examples
+
+For sample applications in React, Angular, and HTML, refer to the [RealtimeKit web examples](https://github.com/cloudflare/realtimekit-web-examples) repository.
