@@ -19,7 +19,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
+You will send JavaScript in the body of an HTTP POST request to a [Worker](/workers/). The Worker runs the code and returns `{"result":["Ada"]}`.
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    <PackageManagers
    	type="create"
    	pkg="cloudflare@latest"
-   	args={"sandbox-dynamic-worker --category=hello-world --type=hello-world --lang=ts --no-deploy"}
+   	args={"sandbox-dynamic-worker --category=hello-world --type=hello-world --lang=ts --no-deploy --no-git --no-agents"}
    />
 
 2. Change into the project directory:
@@ -43,7 +43,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
    cd sandbox-dynamic-worker
    ```
 
-3. Replace `wrangler.jsonc` to add a Worker Loader binding:
+3. Replace `wrangler.jsonc` to add a Worker Loader binding. A binding gives your Worker access to an API through `env`. The `LOADER` binding creates new Workers at runtime, called [Dynamic Workers](/dynamic-workers/):
 
    <WranglerConfig>
 
@@ -71,7 +71,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-5. Replace `src/index.ts`. Your Worker reads `code` from the JSON body and runs it in the sandbox:
+5. Replace `src/index.ts`. Your Worker reads `code` from the JSON body and places it in the `evaluate()` method of a `Code` class in the `code.js` module. `load()` creates a Dynamic Worker from that module. Calling `evaluate()` through `getEntrypoint("Code")` runs the code in that Dynamic Worker:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -122,7 +122,7 @@ You will POST JavaScript to a Worker and read `{"result":["Ada"]}`.
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-7. POST JavaScript to the URL Wrangler prints. The default is `http://localhost:8787`:
+7. Leave the development server running. Open a second terminal and POST JavaScript to the URL Wrangler prints. The default is `http://localhost:8787`:
 
    ```sh
    curl http://localhost:8787 --request POST --json '{

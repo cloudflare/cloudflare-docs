@@ -15,7 +15,7 @@ reviewed: 2026-09-25
 
 import { MetaInfo, Type, TypeScriptExample } from "~/components";
 
-`DirectoryBackup` saves a directory from a running container to an R2 bucket and restores it later into a container, including a container that runs a newer image. The container sends the backup through `DirectoryBackupGateway` in your Worker, so the container needs no Internet access and no R2 credentials. The gateway lets the container reach only the object that the operation needs. `DirectoryBackup` does not start or stop the container.
+`DirectoryBackup` saves a directory from a running container to an R2 bucket and restores it later into a container, including a container that runs a newer image. The container sends the backup through `DirectoryBackupGateway` in your Worker, so the container needs no Internet access and no R2 credentials. The gateway lets the container reach only the object that the operation needs.
 
 <TypeScriptExample>
 
@@ -50,7 +50,7 @@ export class MyContainer extends DurableObject<Env> {
 			dir: "/workspace/app",
 			exclude: ["node_modules/"],
 		});
-		// Keep the record. The package does not list backups.
+		// Keep the record.
 		await this.ctx.storage.put("workspace", backup);
 	}
 
@@ -120,10 +120,10 @@ restore(backup: DirectoryBackupRecord, options?: DirectoryRestoreOptions): Promi
 Replaces the target directory with the contents of the backup. The target is `dir` from the record, unless you pass another absolute path in `options.dir`.
 
 - The parent directory of the target must exist. The target does not need to exist.
-- The target must not be a mount point or contain one, such as an [`S3Mount`](/sandbox/reference/s3-mounts/) mount. Otherwise `restore()` fails with `EBUSY`, including when a mount appears during the restore. Unmount first, for example with `S3Mount.unmount()`, and mount again after the restore.
+- The target must not be a mount point or contain one, such as an [`S3Mount`](/sandbox/reference/s3-mounts/) mount. Otherwise `restore()` fails with `EBUSY`, including when a mount appears during the restore.
 - `restore()` extracts the backup into a new directory beside the target and checks the size and SHA-256 of the object against the record. It then replaces the target with the new directory in one atomic rename. When `restore()` throws `SandboxFileError` or `SandboxBackupError`, or is canceled before it verifies the download, it leaves the target as it was and removes the new directory.
-- A process that has its working directory inside the target, or has a file in the target open, keeps using the old directory or file. Restart such processes after `restore()`, or have them reopen files by absolute path.
-- The filesystem needs free space for the old and the restored directory at the same time. `restore()` stops with `ENOSPC` before free space falls below 5% of the filesystem or 256 MiB, whichever is smaller.
+- A process that has its working directory inside the target, or has a file in the target open, keeps using the old directory or file. Such a process reaches the restored files only after it restarts or reopens them by absolute path.
+- The filesystem needs free space for the old and the restored directory at the same time. `restore()` stops with `ENOSPC` before free space becomes less than 5% of the filesystem or 256 MiB, whichever is smaller.
 - The root filesystem of a deployed container compresses files. `restore()` writes files without compression. The restored files take more disk space until a process rewrites them.
 
 ### `delete`
@@ -144,11 +144,11 @@ Routes backup traffic from the container to `DirectoryBackupGateway`, which refu
 
 {/* Remove the second sentence and the last list item when a hostname intercept registered after interceptAllOutboundHttp() receives its requests. */}
 
-`backup()` and `restore()` add this route themselves. If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), call `intercept()` before it. Otherwise the catch-all receives the backup traffic from the container, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
+`backup()` and `restore()` add this route themselves. If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), `intercept()` must run before it. Otherwise the catch-all receives the backup traffic from the container, and `backup()` and `restore()` fail with `BACKUP_TRANSFER`.
 
 - Call `intercept()` in the setup that runs after you start the container, and again when a restarted Durable Object finds the container running. Backups and restores in that container then keep their route.
 - Do not call `intercept()` while a backup or restore can be running. It replaces the access of the running operation, and the operation fails.
-- A container that registered the catch-all first keeps sending backup traffic to it. Restart the container to use `intercept()`.
+- A container that registered the catch-all first keeps sending backup traffic to it until the container restarts.
 
 ```ts
 #setup: Promise<void> | null = null;
@@ -167,6 +167,8 @@ Routes backup traffic from the container to `DirectoryBackupGateway`, which refu
 }
 
 async #setUp(container: Container): Promise<void> {
+	// `sandbox` is an image in the Wrangler configuration, and `Outbound`
+	// is a WorkerEntrypoint that the main module of the Worker exports.
 	if (!container.running) {
 		container.start({
 			image: container.images.sandbox,
@@ -234,9 +236,9 @@ A backup keeps:
 
 A backup does not keep:
 
-- Sockets, devices, and FIFOs
+- Sockets, device files, and named pipes (FIFOs)
 - The setuid and setgid bits
-- Extended attributes, ACLs, and file capabilities
+- [Extended attributes](https://man7.org/linux/man-pages/man7/xattr.7.html), access control lists (ACLs), and [file capabilities](https://man7.org/linux/man-pages/man7/capabilities.7.html)
 - Holes in sparse files, which restore as zeros
 - Access times
 

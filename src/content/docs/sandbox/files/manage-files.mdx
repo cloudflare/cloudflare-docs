@@ -23,7 +23,7 @@ import {
 
 This guide streams an uploaded file into a sandbox, compresses it with `gzip`, and streams the compressed file back to the caller.
 
-The `Files` class from `@cloudflare/sandbox` reads and writes files in a running Linux instance, and [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the instance, so your Durable Object starts it before each file operation.
+The `Files` class from `@cloudflare/sandbox` reads and writes files in a running [container instance](/sandbox/concepts/lifetime/), the Linux virtual machine that your Durable Object starts. [`exec()`](/containers/api/durable-object-container/#exec) runs the command. `Files` does not start the instance, so your Durable Object starts it before each file operation.
 
 ## Prerequisites
 
@@ -77,7 +77,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    The `workspace` key names the image. Your code starts it as `container.images.workspace`.
 
-4. To start an instance before each file operation, replace `src/index.ts` with a `MyContainer` class that has a `startSandbox()` method:
+4. To start an instance before each file operation, replace the import and the `MyContainer` class in `src/index.ts` with a class that has a `startSandbox()` method. Keep the default export until step 6 replaces it:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -158,7 +158,7 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
    A Linux failure, such as a full disk, throws `SandboxFileError`. Its `code` holds the Linux error name, such as `ENOSPC`. To handle other errors, refer to [Files errors](/sandbox/reference/files/#errors).
 
-6. To send uploads to `compress()`, add a default export to `src/index.ts`:
+6. To send uploads to `compress()`, replace the default export in `src/index.ts`:
 
    <TypeScriptExample filename="src/index.ts">
 
@@ -211,21 +211,11 @@ The `Files` class from `@cloudflare/sandbox` reads and writes files in a running
 
 </Steps>
 
-## List, rename, and remove files
-
-`Files` has methods for other file operations. Each method accepts the same `cwd` option as `writeFile()` and `readFile()`:
-
-| Method            | Use it to                                            |
-| ----------------- | ---------------------------------------------------- |
-| `readDirectory()` | List directory entries                               |
-| `stat()`          | Read the type, size, owner, and timestamps of a path |
-| `mkdir()`         | Create a directory                                   |
-| `rename()`        | Rename or move a file or directory                   |
-| `remove()`        | Delete a file, or a directory with `recursive: true` |
+## Remove output files
 
 Compressed files stay in `/workspace` until the instance stops. To delete a file sooner, call `remove()` after the caller has read the response.
 
-For more information, refer to [Files API](/sandbox/reference/files/).
+For other file operations, such as listing a directory or renaming a file, refer to [Files API](/sandbox/reference/files/).
 
 ## Accept paths from callers
 

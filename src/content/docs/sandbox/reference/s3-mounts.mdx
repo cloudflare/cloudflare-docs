@@ -15,7 +15,7 @@ reviewed: 2026-09-23
 
 import { MetaInfo, Type, TypeScriptExample } from "~/components";
 
-`S3Mount` mounts an S3-compatible bucket, or a prefix in one, at a path in a running container. The container runs `s3fs`, which sends storage requests to `S3Gateway` in your Worker. `S3Gateway` checks each request and signs it with credentials that the container never receives. `S3Mount` does not start or stop the container.
+`S3Mount` mounts an S3-compatible bucket, or a prefix in one, at a path in a running container. The container runs [`s3fs`](https://github.com/s3fs-fuse/s3fs-fuse), which presents the bucket as files through FUSE (Filesystem in Userspace), a Linux interface for filesystems that run as ordinary processes. `s3fs` sends storage requests to `S3Gateway` in your Worker. `S3Gateway` checks each request and signs it with credentials that the container never receives.
 
 <TypeScriptExample>
 
@@ -67,7 +67,7 @@ For a complete Worker, refer to [Mount an R2 bucket](/sandbox/files/mount-an-r2-
 
 In addition to the [package requirements](/sandbox/reference/#requirements), `S3Mount` has these requirements:
 
-- The container image contains FUSE 3 and `s3fs`. In Debian and Ubuntu images, install the `fuse3` and `s3fs` packages.
+- The container image contains FUSE 3 and `s3fs`. Debian and Ubuntu provide them in the `fuse3` and `s3fs` packages.
 - The main module of the Worker re-exports `S3Gateway`, so that `this.ctx.exports.S3Gateway` exists:
 
   ```ts
@@ -98,15 +98,15 @@ Mounts the source at `request.mountPath`. The result depends on what the path ho
 - Nothing: `mount()` creates the directory and mounts the source.
 - A mount with the same settings: `mount()` reuses it.
 - Leftover state from a failed or canceled `mount()` with the same settings: `mount()` repairs it.
-- Another filesystem, or a mount with different settings: `mount()` throws `SandboxS3MountError` with code `S3_MOUNT_CONFLICT`. To change the settings, call `unmount()` first.
+- Another filesystem, or a mount with different settings: `mount()` throws `SandboxS3MountError` with code `S3_MOUNT_CONFLICT`. A mount takes new settings only after `unmount()`.
 
 Each new mount adds one outbound intercept target to the container. Reusing a mount does not add one. `unmount()` does not remove one. Mounts share the container [intercept limit](/containers/api/durable-object-container/#intercept-limit) with the intercepts your own code registers. Once the container reaches the limit, a mount with new settings fails.
 
 {/* Remove this paragraph when a hostname intercept registered after interceptAllOutboundHttp() receives its requests. */}
 
-If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), call `mount()` before it, right after you start the container. Otherwise the catch-all receives the storage requests from the container, and `mount()` fails with `cannot verify the new FUSE connection`. A container that registered the catch-all first keeps sending storage requests to it. Restart the container to mount.
+If the Durable Object also calls [`interceptAllOutboundHttp()`](/containers/api/durable-object-container/#interceptalloutboundhttp), `mount()` must run before it. Otherwise the catch-all receives the storage requests from the container, and `mount()` fails with `cannot verify the new FUSE connection`. A container that registered the catch-all first keeps sending storage requests to it until the container restarts.
 
-`S3Mount` does not retry a failed operation. Call `inspect()` before you retry.
+`S3Mount` does not retry a failed operation. `inspect()` reports the state that a failed operation left.
 
 ### `inspect`
 
@@ -116,7 +116,7 @@ inspect(mountPath: string, options?: S3MountOperationOptions): Promise<S3MountIn
 
 Reports the state of a path without changing it. `inspect()` waits for a `mount()` or `unmount()` in progress on the same path. It then reads the mount state in the container and sends one list request for the prefix through `S3Gateway`.
 
-Reading the mount state can block while the filesystem does not respond. `inspect()` has no timeout. Pass `signal` to set one.
+Reading the mount state can block while the filesystem does not respond. `inspect()` has no timeout of its own. The `signal` option sets one.
 
 Credentials that can read objects but cannot list the prefix produce a `rejected` upstream status.
 
@@ -128,11 +128,11 @@ unmount(mountPath: string, options?: S3MountOperationOptions): Promise<void>
 
 Denies further storage requests for the mount, then unmounts the path. On a path with no mount, `unmount()` succeeds without changes. `unmount()` never forces an unmount.
 
-- When a process is using the path, `unmount()` throws `S3_MOUNT_BUSY`. Requests stay denied. Stop the process and call `unmount()` again, or call `mount()` with the same request to restore access.
+- When a process is using the path, `unmount()` throws `S3_MOUNT_BUSY`. Requests stay denied until a later `unmount()` succeeds, or until `mount()` with the same request restores access.
 - After denial, new storage requests for the mount receive HTTP `403`. A request already in progress can complete.
 - After denial, a process that still uses the path can read empty files and lose writes without an error. Listing a directory fails.
 - A file that a process opened and read before the denial can stay readable through that open file.
-- Canceling `unmount()` or `mount()` can leave the filesystem mounted with requests denied. Call `mount()` with the same request, or call `unmount()` again.
+- Canceling `unmount()` or `mount()` can leave the filesystem mounted with requests denied. A later `mount()` with the same request restores access, and a later `unmount()` completes the unmount.
 
 ## Types
 
@@ -189,7 +189,7 @@ Provider credentials:
 
 ### `S3MountInspection`
 
-Every inspection has `mountPath` and `attachment.status`:
+Every inspection has `mountPath` and `attachment.status`. The status decides which other fields are present:
 
 | `attachment.status` | Other fields                                  | Meaning                                           |
 | ------------------- | --------------------------------------------- | ------------------------------------------------- |
@@ -199,10 +199,23 @@ Every inspection has `mountPath` and `attachment.status`:
 | `stale`             | `attachment.configuration`, `gateway`         | Mount settings remain, but the filesystem is gone |
 | `managed`           | `attachment.configuration`, `fuse`, `gateway` | The mount is active                               |
 
-- `configuration` — the endpoint, region, bucket, key prefix, access mode, and `s3fs` options of the mount.
-- `fuse.status` <Type text='"connected" | "disconnected" | "indeterminate"' />
-- `gateway.status` <Type text='"unreachable" | "error" | "reachable"' />
-- `gateway.upstream.status` <Type text='"usable" | "unavailable" | "rejected"' /> — present when `gateway.status` is `reachable`.
+- `attachment.configuration` — the settings of the mount, without credentials:
+  - `source` <Type text="object" /> — `type`, `endpoint`, `region`, and `bucket` of the source.
+  - `keyPrefix` <Type text="string" /> <MetaInfo text="optional" /> — the key prefix, ending in `/`. Omitted when the mount shows the whole bucket.
+  - `access` <Type text='"read-only" | "read-write"' /> — the access mode.
+  - `s3fsOptions` <Type text="{ name: string; value?: string }[]" /> — the `s3fs` options of the mount. A flag has no `value`.
+- `fuse.status` — the state of the FUSE connection at the path:
+  - `connected` — the filesystem responds.
+  - `disconnected` — the FUSE connection is gone, for example because `s3fs` exited. `mount()` with the same request repairs it.
+  - `indeterminate` — the helper cannot tell. `fuse.detail` contains the error.
+- `gateway.status` — the result of the list request that the container sends through `S3Gateway`:
+  - `unreachable` — the request did not reach `S3Gateway` or got no response. `gateway.detail` describes the failure.
+  - `error` — `S3Gateway` returned an error of its own or an invalid response. `gateway.reason` is `"credential-provider"`, `"protocol"`, or `"internal"`, and `gateway.detail` describes the failure.
+  - `reachable` — `S3Gateway` handled the request. `gateway.upstream` contains the result.
+- `gateway.upstream.status` — the outcome of the list request:
+  - `usable` — the list request succeeded.
+  - `unavailable` — the request failed, or the S3 API returned HTTP `429` or a `5xx` status. `gateway.upstream.detail` describes the failure.
+  - `rejected` — the S3 API refused the request, or `S3Gateway` denied it. `gateway.upstream.reason` is `"credentials"`, `"access"`, `"not-found"`, or `"other"`, and `gateway.upstream.detail` describes the refusal.
 
 ## `S3Gateway`
 
@@ -224,7 +237,7 @@ A mounted directory maps files to objects in the bucket. It does not behave like
 - `s3fs` caches file metadata, including the fact that a file does not exist, for 900 seconds by default.
 - Until the cache expires, a file that another client adds to the bucket can stay missing in the container.
 - Until the cache expires, a file that another client changes can keep its old size, and a read can return the new content cut to that size.
-- To shorten the wait, set a lower `stat_cache_expire` in `s3fsOptions`. To stop caching missing files, set `disable_noobj_cache: true`.
+- The `stat_cache_expire` option in `s3fsOptions` sets the cache duration in seconds. `disable_noobj_cache: true` stops caching missing files.
 - An interrupted write can leave an incomplete upload in the bucket.
 - A [snapshot](/containers/api/durable-object-container/#snapshotcontainer) does not include mounted directories.
 

@@ -20,9 +20,9 @@ Coding agents such as Claude Code, Codex, and OpenCode can run a task on their o
 
 ## The agent runs in your sandbox
 
-Your Worker starts the sandbox, holds the credentials, and decides which hostnames the sandbox can reach. The agent calls its model over HTTP, for example through [AI Gateway](/ai-gateway/). Your Worker adds the API token to each request, so the sandbox never receives it.
+Your [Worker](/workers/), the application that receives your requests, starts the sandbox, holds the credentials, and decides which hostnames the sandbox can reach. The agent calls its model over HTTP, for example through [AI Gateway](/ai-gateway/). Your Worker adds the API token to each request, so the sandbox never receives it.
 
-Each guide in this section changes only the agent-specific parts of one runner. Build the runner first:
+The guides for command-line agents change only the agent-specific parts of one runner. Build the runner first:
 
 <LinkTitleCard
 	title="Build a coding agent runner"
@@ -62,7 +62,7 @@ Then switch the runner to another agent:
 
 ## The vendor runs the agent loop
 
-Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop in their own service. The loop sends commands and file edits to sandboxes in your Cloudflare account. Each vendor template gives every session its own sandbox. In the Devin, Cursor, and OpenAI Agents API templates, the vendor worker process runs inside the sandbox, so the sandbox also holds a vendor credential.
+Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop, the repeated model calls and tool actions that carry out a task, in their own service. The loop sends commands and file edits to sandboxes in your Cloudflare account. Each vendor template gives every session its own sandbox. Each template also passes a vendor credential to its Linux sandboxes, where code that runs in a session can read it. The security section of each guide names that credential.
 
 <CardGrid>
 	<LinkTitleCard

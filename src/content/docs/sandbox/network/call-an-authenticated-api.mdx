@@ -21,7 +21,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Let code in a sandbox call an API that needs a token, while the token stays in your Worker. Requests from the sandbox reach an entrypoint in your Worker, which allows only the requests you choose and adds the token. In this example, the code reads your profile from the GitHub API.
+Let code in a sandbox call an API that needs a token, while the token stays in your Worker. Requests from the sandbox reach an entrypoint in your Worker, a class that the Worker exports to handle requests or method calls. The entrypoint allows only the requests you choose and adds the token. In this example, the code reads your profile from the GitHub API.
 
 ## Prerequisites
 
@@ -56,7 +56,7 @@ Let code in a sandbox call an API that needs a token, while the token stays in y
 
 ## Call the API from a Container
 
-The container sends its request to `api.github.com` as usual. The Durable Object intercepts HTTPS requests to that hostname and delivers them to an entrypoint in your Worker, which adds the token.
+The container sends its request to `api.github.com` as usual. The Durable Object registers an intercept for HTTPS requests to that hostname. The intercept delivers each request to an entrypoint in your Worker, which adds the token.
 
 <Steps>
 
@@ -134,8 +134,7 @@ The container sends its request to `api.github.com` as usual. The Durable Object
    			],
    			{
    				env: {
-   					// The intercept terminates TLS with a certificate that the container
-   					// CA certificate signs. Node.js reads the CA certificate from this path
+   					// Trust the CA that signs the certificate of the intercept
    					NODE_EXTRA_CA_CERTS: "/etc/cloudflare/certs/cloudflare-containers-ca.crt",
    				},
    			},
@@ -150,6 +149,8 @@ The container sends its request to `api.github.com` as usual. The Durable Object
    	}
    }
    ```
+
+   The intercept answers each HTTPS request with its own certificate, signed by a Cloudflare certificate authority (CA). Node.js accepts the certificate only when it trusts that CA, so `NODE_EXTRA_CA_CERTS` points Node.js to the CA certificate file. The `entrypoint` option of `start()` sets the command that the container runs, and is unrelated to the entrypoint in your Worker.
 
 3. Add a route to your Worker that returns the username:
 

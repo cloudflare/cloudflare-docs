@@ -23,7 +23,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
+You will send `uname -a` in the body of an HTTP POST request to a [Worker](/workers/). The Worker runs the command in Linux and returns its standard output (stdout), which contains `Linux`.
 
 ## Prerequisites
 
@@ -47,7 +47,7 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    cd sandbox-linux
    ```
 
-3. Replace `wrangler.jsonc` so a Durable Object can start a container:
+3. Replace `wrangler.jsonc` so a Durable Object can start a container. A [Durable Object](/durable-objects/) is a named object that handles requests and keeps its own storage. In this project, the `MyContainer` Durable Object starts the container and runs your commands:
 
    <WranglerConfig>
 
@@ -85,6 +85,8 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
    ```
 
    </WranglerConfig>
+
+   `scheduling_policy: "durable_object"` lets the Durable Object choose the image and options each time it starts the container. Refer to [Scheduling policies](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy).
 
 4. Replace `src/index.ts`. The Worker reads `argv` from the JSON body and runs it in Linux:
 
@@ -131,17 +133,27 @@ You will POST `uname -a` to a Worker and read stdout that contains `Linux`.
 
    </TypeScriptExample>
 
+   `start()` starts an instance of the container from the `cloudflare/debian-trixie` image. The `entrypoint` is the command that the instance runs when it starts. `sleep infinity` never exits, so the instance keeps running and accepts commands from `exec()`.
+
 5. Generate types for the binding. Wrangler reads the `MyContainer` class from `src/index.ts` to type `env.MY_CONTAINER`:
 
    <PackageManagers type="exec" pkg="wrangler" args="types" />
 
-6. Run `wrangler dev`:
+6. Start Docker. `wrangler dev` runs the instance in Docker on your machine. To install Docker, follow the [Docker Desktop installation docs](https://docs.docker.com/desktop/). Check that Docker is running:
+
+   ```sh
+   docker info
+   ```
+
+   If Docker is not running, the command hangs or returns an error.
+
+7. Run `wrangler dev`:
 
    <PackageManagers type="exec" pkg="wrangler" args="dev" />
 
-   `wrangler dev` runs the instance in [Docker](https://www.docker.com/) on your machine, so Docker must be running. Running `cloudflare/debian-trixie` locally needs Wrangler 4.141.0 or later.
+   Running `cloudflare/debian-trixie` locally needs Wrangler 4.141.0 or later. Refer to [Local development](/containers/guides/local-dev/).
 
-7. POST a command to the URL Wrangler prints. The default is `http://localhost:8787`:
+8. Leave the development server running. Open a second terminal and POST a command to the URL Wrangler prints. The default is `http://localhost:8787`:
 
    ```sh
    curl http://localhost:8787 --request POST --json '{"argv":["uname","-a"]}'
@@ -153,8 +165,7 @@ The JSON body includes `"exitCode":0`. `stdout` contains `Linux`. The Worker sta
 
 ## Next steps
 
-- Run another process in the instance. Refer to [`exec()`](/containers/api/durable-object-container/#exec).
+- Run another command or change startup options. Refer to the [Durable Object container API](/containers/api/durable-object-container/).
 - Deploy your Worker. Refer to [Deploy Containers](/containers/guides/deploy/). A deploy does not replace a running instance. Refer to [Sandbox lifetime](/sandbox/concepts/lifetime/#deploys-keep-instances-running).
 - Run JavaScript. Refer to [Run JavaScript](/sandbox/get-started/dynamic-workers/).
-- Use the [Durable Object container API](/containers/api/durable-object-container/) for `start()` and `exec()`.
 - Start a project from the [minimal sandbox template](https://github.com/cloudflare/sandbox-sdk/tree/main/examples/minimal). It adds a `Dockerfile`, a sandbox for each name in the URL, and file reads and writes with `@cloudflare/sandbox`.
