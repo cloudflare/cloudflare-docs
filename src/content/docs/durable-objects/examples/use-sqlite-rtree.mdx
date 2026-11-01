@@ -1,0 +1,62 @@
+---
+title: Use the R*Tree module
+summary: Create and query an R*Tree spatial index in a Durable Object
+pcx_content_type: example
+sidebar:
+  order: 21
+head:
+  - tag: title
+    content: Durable Zones - Use the R*Tree module
+description: Create and query an R*Tree spatial index in a Durable Object
+reviewed: 2026-10-23
+products:
+  - durable-objects
+---
+
+import { TypeScriptExample } from "~/components";
+
+The following example shows a Durable Object that uses SQLite's [R\*Tree module](https://www.sqlite.org/rtree.html) to answer spatial queries, such as finding every delivery zone that covers a coordinate.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class DeliveryZones extends DurableObject {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+
+		// Two dimensions: five columns, plus an auxiliary column for the name.
+		ctx.storage.sql.exec(`
+			CREATE VIRTUAL TABLE IF NOT EXISTS delivery_zones USING rtree(
+				id, minLng, maxLng, minLat, maxLat, +name
+			);
+		`);
+	}
+
+	zonesCovering(lng: number, lat: number) {
+		return this.ctx.storage.sql
+			.exec(
+				`SELECT id, name FROM delivery_zones
+				 WHERE minLng <= ? AND maxLng >= ?
+					 AND minLat <= ? AND maxLat >= ?`,
+				lng,
+				lng,
+				lat,
+				lat,
+			)
+			.toArray();
+	}
+}
+```
+
+</TypeScriptExample>
+
+Notes:
+
+- The `rtree` variant stores coordinates as 32-bit floats. To store them as 32-bit signed integers instead, use `rtree_i32`.
+- A column prefixed with `+`, such as `name`, is an auxiliary column. It stores extra data alongside the coordinates.
+- Each R\*Tree table is backed by three shadow tables, so writing to it counts as more rows written than in an equivalent ordinary table. Refer to [Durable Objects pricing](/durable-objects/platform/pricing/).
+- Of the functions the R\*Tree module provides, only `rtreecheck()` is available.
+
+For full syntax, refer to the [SQLite R\*Tree documentation](https://www.sqlite.org/rtree.html).
