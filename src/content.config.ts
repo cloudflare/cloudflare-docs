@@ -186,6 +186,17 @@ export const collections = {
 			products: z.array(reference("directory")).default([]),
 			// Hidden entries are excluded from /changelog/ and the RSS feeds.
 			hidden: z.boolean().default(false),
+			// Material changes made after publishing (for example, rules added to
+			// a WAF release). Each entry is listed on the post and emitted as its
+			// own RSS item with a distinct GUID, so feed subscribers are notified.
+			updates: z
+				.array(
+					z.object({
+						date: z.coerce.date(),
+						summary: z.string().min(1),
+					}),
+				)
+				.default([]),
 		}),
 	}),
 	// CF product directory — product metadata + group membership. Id is the
