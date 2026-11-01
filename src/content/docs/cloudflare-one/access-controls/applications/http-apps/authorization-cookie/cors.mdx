@@ -117,6 +117,23 @@ To configure how Cloudflare responds to preflight requests:
    cf-ray: 7109408e6b84efe4-EWR
    ```
 
+## CORS headers on the unauthenticated login redirect
+
+When a cross-origin request reaches an Access application without a valid `CF-Authorization` cookie, Access returns a `302` redirect to the Access login page. If the request includes an `Origin` header, the redirect also includes `Access-Control-Allow-Origin` set to that origin, and `Access-Control-Allow-Credentials: true`:
+
+```txt
+HTTP/2 302
+location: https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/login/api.mysite.com
+access-control-allow-origin: https://example.com
+access-control-allow-credentials: true
+```
+
+Access adds these headers so the browser can follow the redirect with credentials. They do not come from your application CORS settings.
+
+The [CORS settings](#configure-response-to-preflight-requests) in an Access application apply to preflight (`OPTIONS`) responses and to responses that include the Access JWT. They do not apply to the unauthenticated login redirect, and you cannot turn these headers off.
+
+A cross-origin `fetch` or `XMLHttpRequest` that follows this redirect can still fail with a CORS error. Browsers send `Origin: null` on the requests that follow a `302`, so the login flow only completes cross-origin if your application allows `null` as an origin. To avoid the error, send the request from the same origin or from a server-side fetch that does not include an `Origin` header.
+
 ## Send authentication token with Cloudflare Worker
 
 If you have two sites protected by Cloudflare Access, `example.com` and `api.mysite.com`, requests made between the two will be subject to CORS checks. Users who log in to `example.com` will be issued a cookie for `example.com`. When the user's browser requests `api.mysite.com`, Cloudflare Access looks for a cookie specific to `api.mysite.com`. The request will fail if the user has not already logged in to `api.mysite.com`.
