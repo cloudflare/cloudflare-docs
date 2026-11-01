@@ -276,6 +276,12 @@ The `mediaConnectionUpdate` event provides:
 
  </RTKCodeSnippet>
 
+#### Failed transport recovery
+
+When `state` is `failed`, the Core SDK continues trying to recover the affected WebRTC transport indefinitely. The participant remains logically present in the meeting while media is not flowing.
+
+The SDK does not emit `roomLeft` for a media transport failure alone. A transport can remain in the `failed` state while the SDK retries recovery. If recovery attempts stop while the participant remains in the meeting, this indicates an SDK issue.
+
 ### Socket connection updates
 
 <RTKCodeSnippet id={["web-angular","web-web-components"]}>
