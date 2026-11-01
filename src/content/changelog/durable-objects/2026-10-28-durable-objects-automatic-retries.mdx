@@ -1,0 +1,57 @@
+---
+title: Automatic retries for Durable Object calls
+description: The runtime retries failed calls to Durable Objects. Mark methods as safe to run more than once with retryable(), and set retry limits per stub.
+products:
+  - durable-objects
+  - workers
+date: 2026-10-28
+---
+
+import { TypeScriptExample } from "~/components";
+
+The runtime now retries `fetch()` and RPC calls to a Durable Object when they fail with a retryable error before reaching it. This applies whether the caller is a Worker or another Durable Object. Short disruptions, such as brief network interruptions, no longer need a retry loop in your code.
+
+By default, the runtime retries a call up to four times, and starts no retry more than 10 seconds after the initial call starts. It does not retry errors thrown by your Durable Object code, or errors with `.overloaded` set to `true`.
+
+If the connection drops and the runtime cannot tell whether the Durable Object received the call, it still retries, but the Durable Object rejects the retry if the first attempt arrived. A method never runs twice because of a retry, unless you mark it with `retryable()` from `cloudflare:durable-objects`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { retryable } from "cloudflare:durable-objects";
+
+export class Cart extends DurableObject {
+	static {
+		retryable(this.prototype.setQuantity);
+	}
+	// Idempotent: a second run sets the same quantity.
+	async setQuantity(itemId: string, quantity: number): Promise<void> {
+		await this.ctx.storage.put(itemId, quantity);
+	}
+
+	// Not retryable: a second run would add another item.
+	async addOne(itemId: string): Promise<void> {
+		const quantity = (await this.ctx.storage.get<number>(itemId)) ?? 0;
+		await this.ctx.storage.put(itemId, quantity + 1);
+	}
+}
+```
+
+</TypeScriptExample>
+
+To change the limits for one stub, pass a `retry` option to `get()` or `getByName()`. `maxRetries` accepts 0 to 10 retries, and `timeoutMs` accepts 500 to 60,000 milliseconds:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+const stub = env.CART.getByName("user-123", {
+	retry: { maxRetries: 1, timeoutMs: 2000 },
+});
+```
+
+</TypeScriptExample>
+
+If you already retry Durable Object calls in your own code, each of your attempts now includes the runtime's retries. Lower your own attempt count, or set `maxRetries: 0` on stubs where your code handles retries.
+
+For more information, refer to [Automatic retries](/durable-objects/best-practices/automatic-retries/).

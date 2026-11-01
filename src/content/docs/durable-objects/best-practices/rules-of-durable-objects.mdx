@@ -1119,7 +1119,9 @@ export class ChatRoom extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-When calling Durable Objects from a Worker, errors may include `.retryable` and `.overloaded` properties indicating whether the operation can be retried. For transient failures, implement exponential backoff to avoid overwhelming the system.
+When calling Durable Objects from a Worker, the runtime retries some failed calls automatically. Refer to [Automatic retries](/durable-objects/best-practices/automatic-retries/) for which calls it retries.
+
+Errors that reach your code may include `.retryable` and `.overloaded` properties indicating whether the operation can be retried. For transient failures, implement exponential backoff to avoid overwhelming the system.
 
 Refer to [Error handling](/durable-objects/best-practices/error-handling/) for details on error properties, retry strategies, and exponential backoff patterns.
 
