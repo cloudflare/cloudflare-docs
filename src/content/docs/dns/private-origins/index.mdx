@@ -17,7 +17,6 @@ tags:
 
 import {
 	Description,
-	Plan,
 	RelatedProduct,
 	DirectoryListing,
 } from "~/components";
@@ -26,15 +25,37 @@ import {
 Proxy HTTP/HTTPS traffic from public hostnames to origins in your private network.
 </Description>
 
-<Plan type="enterprise" />
+Connect Cloudflare's application services to origins in your private network. Traffic reaches the origin over your existing Cloudflare One connectivity: Cloudflare WAN (IPsec, GRE, or CNI), Cloudflare Tunnel, or Cloudflare Mesh. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
 
-Connect Cloudflare's application services to your private network through secure tunnels. The CDN, WAF, Cache, and other proxied features apply to this traffic the same way they apply to traffic destined for public origins.
+To get started, check the [prerequisites](#prerequisites), follow the setup guide for your connectivity type, then create a DNS record with [private network routing](/dns/private-origins/private-network-routing/).
 
-Getting started takes three steps. Follow the [setup guide](/dns/private-origins/set-up-via-cloudflare-wan/) to configure a tunnel, create a DNS record with [private network routing](/dns/private-origins/private-network-routing/), and verify end-to-end connectivity.
+---
 
-:::note[Closed beta]
-This feature is in closed beta. Contact your account team to request access.
+## Prerequisites
+
+- **Private Origins** is available for your account. Contact your account team to enable it.
+- **Cloudflare One connectivity** to the network where your origin lives: Cloudflare WAN (IPsec, GRE, or CNI), Cloudflare Tunnel, or Cloudflare Mesh.
+- **A route to the origin in your default virtual network.** Private network routing does not support selecting another virtual network.
+- **For Cloudflare WAN and Cloudflare Mesh only:**
+  - [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing) is available for your account. Contact your account team to enable it. This applies to new and existing accounts.
+  - Return routes in your private network for the [Cloudflare source IP ranges](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/): `100.64.0.0/12` for IPv4 (default, configurable) and `2606:4700:cf1:5000::/64` for IPv6.
+
+Cloudflare Tunnel does not need Unified Routing or return routes. Your origin sees the host running `cloudflared` as the source.
+
+## Limitations
+
+- Argo Smart Routing is not supported for private origins.
+- [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) are not supported for private origins. The source IPs your origin sees are the [Cloudflare source IP ranges](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
+- Origin health checks require [Load Balancing](/load-balancing/). Configurations without Load Balancing do not get origin health visibility.
+- Traffic uses your default virtual network. Selecting another virtual network is not supported.
+- Zero Trust network session logs are not available for this traffic.
+- [Spectrum](/spectrum/) private origins are in beta. Proxy Protocol is not delivered over private networks yet.
+
+:::caution
+With Tiered Cache enabled, cacheable requests that miss cache can fail with HTTP `403` at the upper tier when the origin is reached over Cloudflare WAN. The origin is never contacted. Dynamic requests are not affected. As a workaround, create a [Cache Rule](/cache/how-to/cache-rules/) that bypasses cache for the affected hostnames.
 :::
+
+Private network connectivity also works beyond HTTP. [Spectrum](/spectrum/) (beta) can sit in front of TCP and UDP services on private IPs, and [Workers VPC](/workers-vpc/) bindings let Workers reach private origins directly.
 
 ---
 
@@ -51,5 +72,37 @@ This feature is in closed beta. Contact your account team to request access.
 	href="/cloudflare-wan/"
 	product="cloudflare-wan"
 >
-	Connect your private network to Cloudflare with IPsec tunnels.
+	Connect your private network to Cloudflare with IPsec, GRE, or CNI.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare Tunnel"
+	href="/cloudflare-one/networks/connectors/cloudflare-tunnel/"
+	product="tunnel"
+>
+	Connect individual hosts and networks to Cloudflare with `cloudflared`.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Cloudflare Mesh"
+	href="/cloudflare-one/networks/connectors/cloudflare-mesh/"
+	product="cloudflare-mesh"
+>
+	Connect devices and sites to Cloudflare with the Mesh client.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Spectrum"
+	href="/spectrum/"
+	product="spectrum"
+>
+	Proxy TCP and UDP traffic to services on private IPs.
+</RelatedProduct>
+
+<RelatedProduct
+	header="Workers VPC"
+	href="/workers-vpc/"
+	product="workers-vpc"
+>
+	Let Workers reach private origins directly through bindings.
 </RelatedProduct>
