@@ -729,7 +729,7 @@ export default {
 </TypeScriptExample>
 
 :::caution
-Assign `outbound`, `outboundByHost`, and `outboundHandlers` after the class declaration, as in the example above. If you declare them as static class fields (for example, `static outboundByHost = { ... }`), the setter that registers the handlers never runs, so the handlers are never called. Requests to those hosts then go to the Internet when `enableInternet` is `true`, and fail when it is not.
+Assign `outbound`, `outboundByHost`, and `outboundHandlers` after the class declaration, for example `MyContainer.outboundByHost = { ... }`. If you declare them as static class fields (`static outboundByHost = { ... }`), the setter that registers the handlers never runs, so the handlers are never called. Requests to those hosts then go to the Internet when `enableInternet` is `true`, and fail when it is not.
 :::
 
 For more information, refer to [Handle outbound traffic](/containers/configuration/outbound-traffic/).
