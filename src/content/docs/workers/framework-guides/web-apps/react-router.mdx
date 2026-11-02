@@ -42,6 +42,8 @@ Run `wrangler deploy` in a project without a Wrangler configuration file and Wra
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+
+To move an existing Remix or React Router project from Vercel, refer to [Migrate Remix and React Router from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/react-router/).
 :::
 
 <AutoconfigDiagram
@@ -49,7 +51,6 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 	configs={[
 		{ label: "main", file: "wrangler.jsonc", value: "build/server/index.js" },
 		{ label: "assets", file: "wrangler.jsonc", value: "directory: build/client" },
-		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 	]}
 />

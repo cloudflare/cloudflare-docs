@@ -1,0 +1,134 @@
+---
+reviewed: 2026-11-02
+pcx_content_type: how-to
+title: Migrate Next.js from Vercel to Cloudflare Workers
+description: Move a Next.js application from Vercel to Cloudflare Workers with vinext, using a coding agent prompt or step-by-step instructions.
+sidebar:
+  label: Next.js
+  order: 2
+products:
+  - workers
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+This guide moves a Next.js application from Vercel to Cloudflare Workers with [vinext](https://github.com/cloudflare/vinext). vinext reimplements the Next.js API on Vite and deploys to Workers.
+
+Your `app/`, `pages/`, `next.config.*`, and `public/` directories stay the same. `next dev` and `next build` keep working after the migration.
+
+## Before you begin
+
+- vinext supports Next.js 16. For Next.js 15 or earlier, or for applications that depend on Partial Prerendering, use the [OpenNext adapter](/workers/framework-guides/web-apps/opennext/).
+- vinext uses `cloudflare.config.ts` instead of a Wrangler configuration file, and deploys with the `cf` CLI. The Worker name is the `worker.name` value in that file.
+- Run `vinext init` directly instead of `wrangler setup`. [Automatic project configuration](/workers/framework-guides/automatic-configuration/#nextjs-configuration) with Wrangler configures OpenNext, not vinext.
+- Review the steps in [Before you begin](/workers/static-assets/migration-guides/vercel-to-workers/#before-you-begin) that apply to every framework.
+
+## Migrate with a coding agent
+
+Copy this prompt into your coding agent. The agent stops before it deploys.
+
+```txt
+Migrate this Next.js app from Vercel to Cloudflare Workers using vinext (https://github.com/cloudflare/vinext).
+
+1. Check the installed "next" version in package.json and the lockfile. vinext targets Next.js 16. If the app uses Next.js 15 or earlier, stop and ask whether to upgrade Next.js or use @opennextjs/cloudflare instead. Do not use `npx wrangler setup`, because it configures OpenNext.
+2. Run `npx vinext check` and summarize the report. Stop and ask me if there are critical incompatibilities.
+3. Choose the init flags. `vinext init` fails without a terminal unless you pass all of them:
+   - --name <repository name>. Without it, the Worker uses the package.json "name".
+   - Caching: if the app has no ISR (export const revalidate, fetch next.revalidate), no revalidatePath or revalidateTag, and no "use cache", use --cdn-cache=none --data-cache=none. Otherwise, use --cdn-cache=response-store --response-store-mode=self-contained. Add --data-cache=kv if the app uses the data cache.
+   - Images: use --image-optimization=cloudflare-images only if next/image renders raster (PNG, JPEG, WebP, AVIF) or remote images. Otherwise, use --image-optimization=none.
+   Then run: npx vinext init --platform=cloudflare --name <name> --cdn-cache=<value> --data-cache=<value> --image-optimization=<value>
+   Read every file that init creates or changes. Add ".cloudflare/types" to tsconfig.json "include". Add ".cloudflare/**", ".vinext/**", and "dist/**" to the ESLint ignores. If cloudflare.config.ts lists "nodejs_compat" in compatibilityFlags, remove it. A compatibility date of 2026-08-04 or later enables it, and workerd rejects the explicit flag. Do not register @vitejs/plugin-rsc manually. Do not add a wrangler.jsonc file.
+4. Do not modify app/ or pages/ beyond the replacements in step 5. Do not rewrite next/* imports. Do not delete next.config.*.
+5. Replace Vercel features:
+   - Move vercel.json redirects, rewrites, and headers into next.config redirects(), rewrites(), and headers(). List any crons and ask me how to handle them.
+   - Replace @vercel/kv with Workers KV, @vercel/blob with R2, @vercel/postgres with Hyperdrive or D1 (ask me), and @vercel/edge-config with KV. Declare bindings in cloudflare.config.ts and read them with `import { env } from "cloudflare:workers"`. Run `npx cf workers types` after you change bindings.
+   - Remove @vercel/analytics and @vercel/speed-insights, or ask me about Cloudflare Web Analytics.
+   - Replace native modules such as sharp, @resvg/resvg-js, and @napi-rs/canvas.
+6. Verify:
+   - Run `<pm> run dev:vinext -- --port <free port>` and check the main routes.
+   - Run `<pm> run build:vinext`, then `<pm> run start:vinext -- --port <free port>`, and check the routes again. This runs the built Worker locally.
+   - Confirm that lint, type checking, and `next dev` still work.
+
+Rules: work on a new git branch; use the repository's package manager; never print secret values; do not deploy, log in, or change DNS.
+When you finish, list the files you changed, the Vercel features that were replaced or are unsupported, and the secrets I must set. Give me the deploy commands: `npx cf auth login`, then `npx @vinext/cloudflare deploy --dry-run`, then `npx @vinext/cloudflare deploy`. Remind me that NEXT_PUBLIC_* values must exist at build time.
+```
+
+## Migrate manually
+
+<Steps>
+
+1. Check that your application is compatible with vinext:
+
+   <PackageManagers type="dlx" pkg="vinext" args="check" />
+
+2. Initialize vinext with the cache and image options your application needs. All three options are required when you run `vinext init` without an interactive terminal.
+
+   <PackageManagers
+   	type="dlx"
+   	pkg="vinext"
+   	args="init --platform=cloudflare --name <YOUR_WORKER_NAME> --cdn-cache=none --data-cache=none --image-optimization=none"
+   />
+
+   Change the options if your application needs them:
+
+   | Your application uses                                     | Option                                                            |
+   | --------------------------------------------------------- | ----------------------------------------------------------------- |
+   | ISR, `revalidatePath`, `revalidateTag`, or `"use cache"`  | `--cdn-cache=response-store --response-store-mode=self-contained` |
+   | The Next.js data cache                                    | `--data-cache=kv`                                                 |
+   | `next/image` with raster or remote images                 | `--image-optimization=cloudflare-images`                          |
+
+   `vinext init` adds dependencies, `vite.config.ts`, `cloudflare.config.ts`, and the `dev:vinext`, `build:vinext`, `start:vinext`, and `deploy:vinext` scripts. It can also upgrade `react` and `react-dom`.
+
+   If `cloudflare.config.ts` lists `nodejs_compat` in `compatibilityFlags`, remove it. A compatibility date of `2026-08-04` or later enables Node.js compatibility by default, and workerd rejects the explicit flag.
+
+3. Add `.cloudflare/types` to the `include` array in `tsconfig.json`. Add `.cloudflare/**`, `.vinext/**`, and `dist/**` to your ESLint ignores.
+
+4. Replace Vercel-specific packages. Declare bindings in `cloudflare.config.ts`, and read them in Server Components, Route Handlers, and Server Actions:
+
+   ```ts
+   import { env } from "cloudflare:workers";
+   ```
+
+5. Start the vinext development server:
+
+   <PackageManagers type="run" args="dev:vinext" />
+
+6. Build your application and run the built Worker locally:
+
+   <PackageManagers type="run" args="build:vinext" />
+
+   <PackageManagers type="run" args="start:vinext" />
+
+7. Log in with the Cloudflare CLI and deploy your application:
+
+   <PackageManagers type="dlx" pkg="cf" args="auth login" />
+
+   <PackageManagers type="dlx" pkg="@vinext/cloudflare" args="deploy" />
+
+</Steps>
+
+## Map Next.js features on vinext
+
+These Vercel and Next.js features behave differently on vinext:
+
+| Feature                                          | Behavior on vinext                                                                                                |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| ISR, `revalidatePath`, and `revalidateTag`       | Supported. Choose a persistent cache when you run `vinext init`. The default cache is in memory.                  |
+| `next/font/google`                               | Supported. Fonts are downloaded at build time and served from your Worker.                                        |
+| `next/image`                                     | Without an optimizer, `/_next/image` redirects to the original file. Cloudflare Images rejects ICO and SVG files. |
+| `runtime` and `preferredRegion` route options    | Ignored. Every route runs on Workers.                                                                             |
+| `vercel.json`                                    | Not read. Move its rules into `next.config`.                                                                      |
+| `@vercel/kv`, `@vercel/blob`, `@vercel/postgres` | Not supported. Use [Workers KV](/kv/), [R2](/r2/), and [Hyperdrive](/hyperdrive/) or [D1](/d1/).                  |
+
+## Known issues
+
+- **`vinext init` exits with `vinext init needs Cloudflare cache and image choices`.** Coding agents run without an interactive terminal. Pass `--cdn-cache`, `--data-cache`, and `--image-optimization`.
+- **The Worker uses the wrong name.** Pass `--name` to `vinext init`, or edit `worker.name` in `cloudflare.config.ts`. The `--name` option of `@vinext/cloudflare deploy` does not apply to `cloudflare.config.ts` projects.
+- **ESLint reports thousands of problems after the first build.** ESLint lints the `.cloudflare/` build output. Add the build directories to your ESLint ignores.
+- **Deploy prompts for an account.** Set the `CLOUDFLARE_ACCOUNT_ID` environment variable, or add `accountId` to `cloudflare.config.ts`.
+
+## Related resources
+
+- [Next.js framework guide](/workers/framework-guides/web-apps/nextjs/)
+- [vinext compatibility](https://vinext.dev/compatibility)
+- [Migrate from Vercel to Workers](/workers/static-assets/migration-guides/vercel-to-workers/)
