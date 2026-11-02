@@ -6,23 +6,24 @@ entries:
       regional_services:
         status: requirements
         requirements:
-          - Can be localized to US FedRAMP Moderate Domestic region only.
+          - The Access team domain can be processed only in the FedRAMP Moderate Compliant (Domestic) region. Contact your account team to configure it.
+          - A protected public application hostname can use any managed region available for [Regional Hostnames](/data-localization/regional-services/regional-hostnames/).
       storage:
         status: unassessed
       cmb:
         status: supported
         impact:
-          - Customer Metadata Boundary can be used to limit data transfer outside region, but Access User Logs will not be available outside US region. EU customers must use Logpush to retain logs.
+          - When Customer Metadata Boundary is set to the EU, Access does not store Access User Logs and the dashboard appears empty. Use [Logpush](/logs/logpush/) to retain these logs.
       gkm:
         status: supported
         impact:
-          - Access App SSL keys can use Geo Key Manager. [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) is not yet localized.
+          - If the protected application hostname uses a supported custom certificate, Geo Key Manager can restrict where its private key is used. [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) is not yet localized.
   - product: Browser Isolation
     controls:
       regional_services:
         status: requirements
         requirements:
-          - Currently may only be used with US FedRAMP region.
+          - Only the US FedRAMP region is supported. Contact your account team to set up a FedRAMP account.
       storage:
         status: unassessed
       cmb:
@@ -44,7 +45,9 @@ entries:
       regional_services:
         status: requirements
         requirements:
-          - The [`--region` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) in `cloudflared` controls where the tunnel connector establishes its connection to Cloudflare. This setting is separate from Regional Services. For public hostnames served through a tunnel, Regional Services is configured at the DNS record level and operates independently from the tunnel connector region. For incoming web requests, Regional Services only applies when you have [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/) (services exposed to users through the tunnel). In that case, the region associated with the DNS record will apply.
+          - For [published applications](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/), Regional Services applies through the region set on the public hostname's DNS record.
+        notes:
+          - The [`--region us` parameter](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/run-parameters/#region) restricts `cloudflared` connections to data centers in the United States. It is separate from Regional Services.
       storage:
         status: unassessed
       cmb:
@@ -82,10 +85,13 @@ entries:
   - product: Gateway
     controls:
       regional_services:
-        status: supported
+        status: requirements
+        requirements:
+          - Applies to Gateway HTTP traffic from [supported on-ramps](/data-localization/how-to/zero-trust/#supported-on-ramps) in [supported regions](/data-localization/how-to/zero-trust/#available-regions). The region is set per account.
         impact:
-          - Gateway HTTP (web traffic filtering) supports Regional Services. Gateway DNS (domain name filtering) does not yet support regionalization.
-          - ICMP proxy (forwarding network diagnostic traffic like ping) and Mesh proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) (an add-on that quarantines and scans suspicious files in an isolated environment) is incompatible with DLS.
+          - Gateway DNS and network policies are processed at the data center where traffic is received, not in the selected region.
+          - "[File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) processes quarantined files in the United States, regardless of the selected region."
+          - Some DLP detection features are unsupported. Refer to [Gateway limitations](/data-localization/how-to/zero-trust/#gateway-limitations).
       storage:
         status: unassessed
       cmb:
@@ -95,7 +101,7 @@ entries:
       gkm:
         status: supported
         impact:
-          - You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
+          - You can [bring your own certificate](/cloudflare-one/team-and-resources/devices/user-side-certificates/custom-certificate/) to Gateway, but the certificate cannot be restricted to a specific region.
   - product: Cloudflare One Client
     controls:
       regional_services:

@@ -51,6 +51,8 @@ entries:
         status: unassessed
       cmb:
         status: supported
+        notes:
+          - Cloudflare ingests CSP violation reports at the edge and processes reported JavaScript files in its core data centers.
       gkm:
         status: supported
   - product: DNS Firewall
@@ -61,6 +63,8 @@ entries:
         status: unassessed
       cmb:
         status: supported
+        impact:
+          - Dashboard analytics are not available outside the US region when using Customer Metadata Boundary. Use [Logpush](/logs/logpush/) instead.
       gkm:
         status: out-of-scope
   - product: Rate Limiting
@@ -94,7 +98,9 @@ entries:
       cmb:
         status: supported
       gkm:
-        status: not-supported
+        status: requirements
+        requirements:
+          - Only with [custom certificates](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/custom-certificates/) that you upload for custom hostnames. Certificates that Cloudflare issues for custom hostnames are not supported.
   - product: Turnstile
     controls:
       regional_services:

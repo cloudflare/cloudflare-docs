@@ -128,7 +128,7 @@ entries:
           - With CMB set to EU, the Zone Dashboard **Caching** > **Tiered Cache** > **Smart Tiered Caching** option will not populate the Dashboard Analytics.
       gkm:
         status: supported
-  - product: Trace
+  - product: Rules simulator (formerly Trace)
     controls:
       regional_services:
         status: not-supported
@@ -147,7 +147,7 @@ entries:
       cmb:
         status: supported
       gkm:
-        status: out-of-scope
+        status: supported
   - product: Web Analytics / Real User Monitoring (RUM)
     controls:
       regional_services:
