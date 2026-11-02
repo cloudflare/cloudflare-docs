@@ -67,7 +67,11 @@ describe("ModelCard", () => {
 					.querySelector("[data-models-cell]")
 					?.getAttribute("data-model-zdr"),
 			).toBe("Yes");
-			expect(root.textContent).toContain("Zero data retention");
+			expect(
+				root
+					.querySelector("[data-model-badge-tooltip]")
+					?.getAttribute("data-model-badge-tooltip"),
+			).toBe("Zero data retention");
 			expect(hostedModel.capabilities).toContain("Zero data retention");
 			expect(
 				hostedModel.propertiesList.filter((p) => p.property_id === "zdr"),
