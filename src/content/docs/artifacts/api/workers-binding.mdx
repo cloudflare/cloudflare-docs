@@ -323,6 +323,92 @@ async function readCommitHistory(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
+### `diff(from, to, opts?)`
+
+Compare two repository snapshots directly from your Worker. This read returns changed files without cloning or starting a runner.
+
+- `from` <Type text="string | null" />: Branch name, tag, or full 40-character commit hash. Use `null` to compare against an empty tree.
+- `to` <Type text="string" />: Branch name, tag, or full 40-character commit hash. Tags resolve to the commit they point at.
+- `opts.limit` <Type text="number" />: Entries per page. Defaults to `100`; accepts integers from `1` through `1000`.
+- `opts.cursor` <Type text="string" />: Opaque continuation from the previous page. Valid only for the same resolved commit pair.
+
+Returns an `ArtifactsDiffResult`:
+
+```ts
+interface ArtifactsDiffResult {
+	from: string | null; // Resolved original commit, or the empty tree
+	to: string; // Resolved destination commit
+	changes: ArtifactsDiffEntry[];
+	cursor?: string; // Present only when more changes remain
+}
+
+interface ArtifactsDiffEntry {
+	path: string;
+	status: "added" | "modified" | "deleted" | "type_changed";
+	oldMode?: string;
+	newMode?: string;
+	oldHash?: string;
+	newHash?: string;
+}
+```
+
+Entries contain blobs, symlinks, and gitlinks; directories are excluded. Paths use repository-relative names sorted by raw bytes. The method reports a rename as a deletion and an addition, matching `git diff --name-status --no-renames`. Executable-bit changes are `modified`; changes between regular files, symlinks, and gitlinks are `type_changed`.
+
+Added entries omit `oldMode` and `oldHash`. Deleted entries omit `newMode` and `newHash`. Modes are Git mode strings, such as `100644`, `100755`, `120000`, and `160000`.
+
+Identical commits return an empty `changes` array without a cursor. Unrelated histories are valid comparisons. With `from: null`, every file in `to` is added. Convert an all-zero before-SHA from a new-branch push to `null`, or use your workflow's merge-base policy.
+
+Each page resumes the tree walk without calculating a total count. The operation records read analytics and publishes no events. Memory-intensive walks fail with `MEMORY_LIMIT`.
+
+Errors use the existing [Artifacts error codes](/artifacts/api/errors/):
+
+- `INVALID_INPUT`: Empty or malformed input, invalid limit, a hash naming a non-commit object, or an invalid cursor. A cursor for different resolved commits is also invalid.
+- `NOT_FOUND`: A ref or commit is missing, with the missing side identified in the message, or the repository was deleted.
+- `MEMORY_LIMIT`: The walk exceeds its memory budget.
+- `INTERNAL_ERROR`: An unexpected read failure.
+
+Use an async iterator to consume every page. Pin subsequent calls to the returned hashes so branch movements do not change the comparison:
+
+<TypeScriptExample>
+
+```ts
+async function* diffEntries(
+	repo: Pick<ArtifactsRepo, "diff">,
+	from: string | null,
+	to: string,
+): AsyncGenerator<ArtifactsDiffEntry> {
+	let cursor: string | undefined;
+	do {
+		const page = await repo.diff(from, to, {
+			limit: 100,
+			...(cursor === undefined ? {} : { cursor }),
+		});
+		from = page.from;
+		to = page.to;
+		for (const entry of page.changes) yield entry;
+		cursor = page.cursor;
+	} while (cursor !== undefined);
+}
+
+export default {
+	async fetch(request, env) {
+		using repo = await env.ARTIFACTS.get("my-repo");
+		const url = new URL(request.url);
+		const counts = { added: 0, modified: 0, deleted: 0, type_changed: 0 };
+		for await (const entry of diffEntries(
+			repo,
+			url.searchParams.get("from"),
+			url.searchParams.get("to") ?? "main",
+		)) {
+			counts[entry.status]++;
+		}
+		return Response.json(counts);
+	},
+} satisfies ExportedHandler<{ ARTIFACTS: Artifacts }>;
+```
+
+</TypeScriptExample>
+
 ### `readCommit(hash)`
 
 - `hash` <Type text="string" /> <MetaInfo text="required" /> — Commit SHA-1 hash.
