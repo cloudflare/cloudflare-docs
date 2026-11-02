@@ -21,6 +21,12 @@ Requests to a project with static assets can either return static assets or invo
 
 See the [Platform Limits](/workers/platform/limits/#static-assets)
 
+### Range requests
+
+When a request for a static asset includes a `Range` header, Workers returns `200 OK` with the full file instead of `206 Partial Content`, and the response has no `Content-Range` or `Accept-Ranges` header. Some clients need range support, for example Safari when it plays video.
+
+To serve byte ranges, route the affected paths to your Worker with [`run_worker_first`](/workers/static-assets/binding/#run_worker_first). In your Worker, fetch the file with `env.ASSETS.fetch()`, then return a `206 Partial Content` response that contains the requested bytes and a `Content-Range` header.
+
 ## Troubleshooting
 
 - `assets.bucket is a required field` — if you see this error, you need to update Wrangler to at least `3.78.10` or later. `bucket` is not a required field.
