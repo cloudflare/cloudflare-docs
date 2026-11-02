@@ -21,8 +21,8 @@ Durable Objects are a special kind of Worker, so [Workers limits](/workers/platf
 | Storage per account                          | Unlimited (Workers Paid) / 5GB (Free) [^2]                                                                     |
 | Storage per class                            | Unlimited [^3]                                                                                                 |
 | Storage per Durable Object                   | 10 GB [^3]                                                                                                     |
-| Key size                                     | Key and value combined cannot exceed 2 MB                                                                      |
-| Value size                                   | Key and value combined cannot exceed 2 MB                                                                      |
+| Key size                                     | Key and value combined cannot exceed 8 MB                                                                      |
+| Value size                                   | Key and value combined cannot exceed 8 MB                                                                      |
 | WebSocket message size                       | 32 MiB (only for received messages)                                                                            |
 | CPU per request                              | 30 seconds (default) / configurable to 5 minutes of [active CPU time](/workers/platform/limits/#cpu-time) [^4] |
 | Simultaneous outgoing connections/request    | 6 (same as [Workers](/workers/platform/limits/#simultaneous-open-connections)) |
@@ -43,7 +43,7 @@ For Durable Object classes with [SQLite storage](/durable-objects/api/sqlite-sto
 | -------------------------------------------------------- | ----------------------------------------------- |
 | Maximum number of columns per table                      | 100                                             |
 | Maximum number of rows per table                         | Unlimited (excluding per-object storage limits) |
-| Maximum string, `BLOB` or table row size                 | 2 MB                                            |
+| Maximum string, `BLOB` or table row size                 | 8 MB                                            |
 | Maximum SQL statement length                             | 100 KB                                          |
 | Maximum bound parameters per query                       | 100                                             |
 | Maximum arguments per SQL function                       | 32                                              |
