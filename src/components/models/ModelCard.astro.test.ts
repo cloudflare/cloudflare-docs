@@ -3,6 +3,7 @@ import { parse } from "node-html-parser";
 import { describe, expect, test } from "vitest";
 
 import type { ModelCardData } from "~/util/models";
+import { legacyToResolved } from "~/util/models/model-resolver";
 import ModelCard from "./ModelCard.astro";
 
 const model: ModelCardData = {
@@ -39,6 +40,41 @@ const truncationClasses = (className: string | undefined): string[] =>
 		);
 
 describe("ModelCard", () => {
+	test.each([undefined, "false", "true"])(
+		"shows hosted models as ZDR when the incoming property is %s",
+		async (zdr) => {
+			const hostedModel = legacyToResolved({
+				id: "hosted-fixture",
+				collection: "workers-ai-models",
+				data: {
+					id: "hosted-fixture",
+					name: "@cf/fixture/hosted-model",
+					description: "A hosted model",
+					task: { name: "Text Generation" },
+					tags: [],
+					properties:
+						zdr === undefined ? [] : [{ property_id: "zdr", value: zdr }],
+				},
+			});
+			const container = await AstroContainer.create();
+			const html = await container.renderToString(ModelCard, {
+				props: { model: hostedModel, index: 0, cols: 3 },
+			});
+			const root = parse(html);
+
+			expect(
+				root
+					.querySelector("[data-models-cell]")
+					?.getAttribute("data-model-zdr"),
+			).toBe("Yes");
+			expect(root.textContent).toContain("Zero data retention");
+			expect(hostedModel.capabilities).toContain("Zero data retention");
+			expect(
+				hostedModel.propertiesList.filter((p) => p.property_id === "zdr"),
+			).toEqual([{ property_id: "zdr", value: "true" }]);
+		},
+	);
+
 	test("wraps titles and clamps descriptions to four lines", async () => {
 		const container = await AstroContainer.create();
 		const html = await container.renderToString(ModelCard, {
