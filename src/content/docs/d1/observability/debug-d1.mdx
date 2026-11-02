@@ -144,7 +144,7 @@ const result = await Promise.race([
 
 ## API error codes
 
-In addition to the `D1_ERROR` constants above, D1 returns numeric error codes on certain failures. Use the following table to identify the cause and recommended action.
+In addition to the `D1_ERROR` constants in the [Error list](#error-list), D1 returns numeric error codes on certain failures. Use the following table to identify the cause and recommended action.
 
 | Code  | Name                          | Common cause                                                                                     | Recommended action                                                                                                                                                                                                   |
 | ----- | ----------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -153,7 +153,7 @@ In addition to the `D1_ERROR` constants above, D1 returns numeric error codes on
 | 7406  | Limit exceeded                | The account has reached the maximum number of D1 databases allowed on its plan.                  | Review your [current limits](/d1/platform/limits/). Enterprise accounts with a custom database limit should contact Cloudflare support if the limit is not reflected.                                                  |
 | 7429  | DB overloaded                 | Too many concurrent requests are queued, or queued requests are taking too long to complete.     | Retry with exponential backoff and jitter. If the error recurs while SQL execution time (`queryBatchTimeMs`) is fast and your workload is low, check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. |
 | 7500  | Internal error                | A platform-side storage event made the database temporarily unavailable.                         | Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. Retry with exponential backoff. If the database remains unavailable after the incident resolves, [contact Cloudflare support](/support/contacting-cloudflare-support/). |
-| 10000 | Authentication error          | The API token does not have the required scope for the endpoint.                                 | Check the required permission for the endpoint in the [API reference](/api/resources/d1/) and create a token with the correct scope. See [error 10000 and the export endpoint](#error-10000-and-the-export-endpoint). |
+| 10000 | Authentication error          | The API token does not have the required scope for the endpoint.                                 | Check the required permission for the endpoint in the [API reference](/api/resources/d1/) and create a token with the correct scope. Refer to [Error 10000 and the export endpoint](#error-10000-and-the-export-endpoint). |
 
 ### Error 7429 and analytics
 
