@@ -24,7 +24,7 @@ import {
 
 You can provide automated systems with service tokens to authenticate against your Cloudflare One policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
-This section covers how to create, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
+This section covers how to create, tag, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
 
 ## Create a service token
 
@@ -37,6 +37,93 @@ You can now configure your Access applications and [device enrollment permission
 As of August 26, 2026, new service token Client Secrets use the format `cfast_[40 alphanumeric characters][8-character checksum]`. The prefix and checksum make the secrets easier for credential scanning tools to identify.
 
 Existing Client Secrets use a 64-character hexadecimal format. These secrets continue to work and do not require rotation. Both formats use the same Client ID and authentication headers.
+
+## Tag service tokens
+
+Use key-value tags to organize service tokens by environment, team, or purpose. For example, assign `environment: production` to your production tokens. You can filter tokens by tag and authorize tokens with a matching tag in a [Service Auth policy](#authorize-service-tokens-by-tag).
+
+Service token tags integrate with [Resource Tagging](/resource-tagging/). They are separate from [App Launcher tags](/cloudflare-one/reusable-components/tags/), which label applications for end users.
+
+Each service token supports up to five tags, with one value per key. Keys and values are case-sensitive and can each contain up to 256 characters. Keys support Unicode letters, digits, underscores (`_`), periods (`.`), and hyphens (`-`).
+
+### Add or edit tags
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
+
+   <DashButton url="/?to=/:account/access/service-auth/service-tokens" zeroTrust />
+
+2. Locate the token and select the three dots > **Edit**.
+3. In **Tags**, select **Add tag**. Enter a key and value, or select existing suggestions.
+4. To remove a tag, select its remove button.
+5. Select **Save**.
+</Steps>
+
+You can also add tags when you [create a service token](#create-a-service-token). Editing only the tags does not rotate the Client Secret or change the expiration date.
+
+</TabItem> <TabItem label="API">
+
+Include a `tags` object when you [create a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/create/) or [update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/). When updating, include the token's existing `name` to preserve it. For example:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens/{service_token_id}"
+	method="PUT"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "CI/CD token",
+		tags: {
+			environment: "production",
+			team: "payments",
+		},
+	}}
+/>
+
+On update, `tags` replaces the token's entire tag set. Include every tag you want to keep, or send `"tags": {}` to remove all tags.
+
+</TabItem> </Tabs>
+
+:::note
+Resource Tagging uses the resource type `access_service_token` and the token's `id`, not its Client ID. You can query service token tags through Resource Tagging, but you must add, update, and remove them through the Access dashboard or service token API. Direct writes through the Tagging API are not supported.
+:::
+
+### Authorize service tokens by tag
+
+Use the **Service Token Tag** selector to authorize valid tokens with a specific key-value pair. You do not need to list each token individually. Tokens assigned the matching tag are eligible under the policy, including tokens you create later.
+
+<Steps>
+1. Create or edit an [Access policy](/cloudflare-one/access-controls/policies/) for your application.
+2. Set the action to **Service Auth**.
+3. Add an **Include** rule with the **Service Token Tag** selector.
+4. Enter the **Tag key** and **Tag value**, such as `environment` and `production`.
+5. Save the policy and ensure it is assigned to your application.
+</Steps>
+
+The equivalent API policy configuration is:
+
+```json
+{
+	"name": "Production service tokens",
+	"decision": "non_identity",
+	"include": [
+		{
+			"service_token_tag": {
+				"key": "environment",
+				"value": "production"
+			}
+		}
+	]
+}
+```
+
+Each rule matches one exact, case-sensitive key-value pair. Key-only matches and wildcards are not supported. The client must still present a valid Client ID and Client Secret; a tag does not make an expired or disabled token valid.
+
+You can use this selector in **Include**, **Require**, or **Exclude** rules. Policies that use the selector must use the **Service Auth** action. To require multiple tags, use the [Require rule type](/cloudflare-one/access-controls/policies/#require); multiple Include rules are combined with OR.
+
+:::caution
+Changing a token's tags can change which applications it can access. Only grant service token edit permissions to administrators who should be able to change tag-based access.
+:::
 
 ## Connect your service to Access
 
