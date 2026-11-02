@@ -14,8 +14,7 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Per image": 0.045,
-		"Per input image": 0.03,
-		"Default (per second)": 0.045
+		"Per input image": 0.03
 	},
 	"examples": [
 		{

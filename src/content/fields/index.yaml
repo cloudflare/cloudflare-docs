@@ -1111,7 +1111,7 @@ entries:
     example_value: |-
       "7zIpdDU5pvFPPBI2/PCzqbaXnRA="
 
-  - name: cf.tls_ciphers_sha1
+  - name: cf.tls_client_ciphers_sha1
     data_type: String
     categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
@@ -1182,7 +1182,7 @@ entries:
       20
     example_block: |-
       # Match requests over TCP where the RTT exceeds 200 ms
-      cf.timings.client_quic_rtt_msec > 200
+      cf.timings.client_tcp_rtt_msec > 200
 
   - name: cf.timings.client_quic_rtt_msec
     data_type: Integer

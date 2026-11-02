@@ -304,6 +304,21 @@ const headings: MarkdownHeading[] = [
 		<CopyableCode text={model.name} label="Copy model ID" />
 	</div>
 
+	{model.dataSource === "catalog" && (
+		<Aside>
+			<p>
+				Use this model ID with the Workers AI binding, the AI Gateway{" "}
+				<a href="/ai-gateway/usage/rest-api/">REST API</a>, and the{" "}
+				<a href="/ai-gateway/usage/chat-completion/">Unified API</a>. When you
+				call the provider directly, through{" "}
+				<a href="/ai-gateway/usage/providers/">provider-native endpoints</a>, or
+				from a tool configured with the provider's own SDK, use the provider's
+				model name instead. For example, Anthropic's name for{" "}
+				<code>anthropic/claude-opus-4.8</code> is <code>claude-opus-4-8</code>.
+			</p>
+		</Aside>
+	)}
+
 	<div class="not-prose mb-4">
 		<ModelBadges model={model} />
 	</div>

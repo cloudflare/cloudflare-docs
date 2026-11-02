@@ -155,9 +155,7 @@ entries:
       storage:
         status: unassessed
       cmb:
-        status: not-supported
-        notes:
-          - Web Analytics collects the [minimum amount of information](/web-analytics/data-metrics/data-origin-and-collection/). Alternatively, you can [exclude EU Visitors from RUM](/speed/observatory/rum-beacon/#rum-excluding-eeaeu).
+        status: supported
       gkm:
         status: out-of-scope
   - product: Zaraz

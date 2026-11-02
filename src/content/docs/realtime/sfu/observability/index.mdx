@@ -14,7 +14,7 @@ For a returned API error, use the [Error codes reference](/realtime/sfu/observab
 
 ## Record useful context
 
-Record the operation, time, application resource ID, SFU session or adapter ID, HTTP status, and per-item error codes. On the endpoint, record signaling, connection, and DataChannel state transitions.
+Record the operation, UTC timestamp, App ID, target SFU session or adapter ID, HTTP status, `cf-ray` response header, and per-item error codes. On the endpoint, record signaling, connection, and DataChannel state transitions.
 
 Keep App Secrets, endpoint tokens, SDP, ICE credentials, and media payloads out of logs. Sanitize errors before returning them to untrusted clients.
 

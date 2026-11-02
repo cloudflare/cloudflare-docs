@@ -10,7 +10,7 @@ entries:
       cmb:
         status: out-of-scope
       gkm:
-        status: out-of-scope
+        status: not-supported
   - product: Advanced DDoS Protection
     controls:
       regional_services:
@@ -19,8 +19,6 @@ entries:
         status: unassessed
       cmb:
         status: supported
-        impact:
-          - "[Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) (which automatically adjusts DDoS rules based on your traffic patterns) is only supported when Customer Metadata Boundary is set to the US. All other DDoS protection features work with any CMB region."
       gkm:
         status: supported
   - product: API Shield
@@ -77,7 +75,7 @@ entries:
           - Legacy Zone Analytics & Logs section not available outside US region when using CMB. Use [Security Analytics](/waf/analytics/security-analytics/) instead.
       gkm:
         status: supported
-  - product: SSL
+  - product: SSL/TLS
     controls:
       regional_services:
         status: supported
@@ -107,6 +105,8 @@ entries:
         status: supported
         impact:
           - "[Turnstile Analytics](/turnstile/turnstile-analytics/) are available. However, there are no regionalization guarantees for the Siteverify API yet."
+        notes:
+          - For how Turnstile handles visitor data, refer to the [Turnstile privacy policy](https://www.cloudflare.com/turnstile-privacy-policy/).
       gkm:
         status: out-of-scope
   - product: WAF/L7 Firewall

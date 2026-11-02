@@ -346,7 +346,8 @@
 	"terms": "https://ai.google.dev/gemini-api/terms",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-2.5-flash-lite.png",
 	"metadata": {
-		"Architecture": "Transformer (multimodal)"
+		"Architecture": "Transformer (multimodal)",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"

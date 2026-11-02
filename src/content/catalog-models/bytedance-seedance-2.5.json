@@ -17,11 +17,11 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Default (per second)": 0.2312,
+		"@480p non-video input (per second)": 0.1028,
+		"@720p non-video input (per second)": 0.2312,
 		"@480p video input (per second)": 0.4304,
 		"@720p video input (per second)": 0.9676,
-		"@480p non-video input (per second)": 0.1028,
-		"@720p non-video input (per second)": 0.2312
+		"Default (per second)": 0.2312
 	},
 	"examples": [
 		{
@@ -171,7 +171,7 @@
 	"supports_async": false,
 	"zdr": false,
 	"zdr_comment": null,
-	"external_info": "https://seed.bytedance.com/en/seedance2_5",
+	"external_info": null,
 	"terms": null,
 	"cover_image_url": null,
 	"metadata": {
@@ -189,11 +189,11 @@
 		{
 			"id": "bytedance",
 			"pricing": {
-				"default": 0.2312,
+				"480p_non_video_in": 0.1028,
+				"720p_non_video_in": 0.2312,
 				"480p_video_in": 0.4304,
 				"720p_video_in": 0.9676,
-				"480p_non_video_in": 0.1028,
-				"720p_non_video_in": 0.2312
+				"default": 0.2312
 			}
 		}
 	],
@@ -207,7 +207,7 @@
 				"prompt": {
 					"description": "Text prompt describing the video to generate. Optional when at least one reference image, video, or audio clip is provided (Seedance 2.5 supports audio-only input).",
 					"type": "string",
-					"maxLength": 2000
+					"maxLength": 25000
 				},
 				"image": {
 					"description": "First-frame reference image (HTTP(S) URL or base64 data URI) for image-to-video",

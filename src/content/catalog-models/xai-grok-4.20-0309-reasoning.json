@@ -8292,10 +8292,11 @@
 	"zdr_comment": null,
 	"external_info": "https://x.ai/",
 	"terms": "https://x.ai/legal/terms-of-service",
-	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/xai/grok-4.20-reasoning.png",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/xai/grok-4.20-0309-reasoning.png",
 	"metadata": {
 		"Architecture": "Transformer",
-		"Reasoning": "Yes"
+		"Reasoning": "Yes",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"

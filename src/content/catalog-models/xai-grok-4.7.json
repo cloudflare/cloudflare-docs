@@ -20,8 +20,8 @@
 		"Cached input <200k (per 1M)": 0.5,
 		"Output <200k (per 1M)": 6,
 		"Input >=200k (per 1M)": 4,
-		"Cached input >=200k (per 1M)": 1,
-		"Output >=200k (per 1M)": 12
+		"Output >=200k (per 1M)": 12,
+		"Cached input >=200k (per 1M)": 1
 	},
 	"examples": [
 		{
@@ -391,7 +391,8 @@
 	"metadata": {
 		"Architecture": "Transformer",
 		"Input Modalities": "Text, Image",
-		"Reasoning": "Configurable (low, medium, high, xhigh)"
+		"Reasoning": "Configurable (low, medium, high, xhigh)",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"
@@ -405,8 +406,8 @@
 				"under_200k_per_1m_input_cached_tokens": 0.5,
 				"under_200k_per_1m_output_tokens": 6,
 				"over_200k_per_1m_input_tokens": 4,
-				"over_200k_per_1m_input_cached_tokens": 1,
-				"over_200k_per_1m_output_tokens": 12
+				"over_200k_per_1m_output_tokens": 12,
+				"over_200k_per_1m_input_cached_tokens": 1
 			}
 		}
 	],

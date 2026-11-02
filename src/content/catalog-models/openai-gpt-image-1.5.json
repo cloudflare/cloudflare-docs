@@ -14,10 +14,7 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 5,
-		"Input image tokens (per 1M)": 8,
 		"Cached input tokens (per 1M)": 1.25,
-		"Cached input image tokens (per 1M)": 2,
-		"Output image tokens (per 1M)": 32,
 		"Output tokens (per 1M)": 10
 	},
 	"examples": [
@@ -202,8 +199,8 @@
 			"id": "openai",
 			"pricing": {
 				"input_tokens": 5,
-				"output_tokens": 10,
-				"input_cached_tokens": 1.25
+				"input_cached_tokens": 1.25,
+				"output_tokens": 10
 			}
 		}
 	],

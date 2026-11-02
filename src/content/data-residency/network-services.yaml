@@ -21,7 +21,7 @@ entries:
       regional_services:
         status: requirements
         requirements:
-          - You can use Static IP/BYOIP with Regionalized Spectrum Applications. You can also regionalize BYOIP prefixes at the IP layer with [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/).
+          - You can use Static IP/BYOIP with [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/). You can also regionalize BYOIP prefixes at the IP layer with [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/).
       storage:
         status: unassessed
       cmb:
@@ -58,8 +58,6 @@ entries:
         status: unassessed
       cmb:
         status: supported
-        impact:
-          - "[Adaptive DDoS Protection](/ddos-protection/managed-rulesets/adaptive-protection/) (which automatically adjusts DDoS rules based on your traffic patterns) is only supported when Customer Metadata Boundary is set to the US. All other DDoS protection features work with any CMB region."
       gkm:
         status: out-of-scope
   - product: Cloudflare WAN

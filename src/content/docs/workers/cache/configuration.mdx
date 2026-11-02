@@ -111,6 +111,24 @@ Do not enable caching on a gateway entrypoint and then return `Cache-Control: no
 
 :::
 
+## Bypass cache for a request
+
+For calls between Workers in the same account, set [`cache: "no-store"`](/workers/runtime-apis/fetch/#parameters) in the calling Worker's `fetch()` options. This skips the cache lookup and invokes the callee directly, without storing its response.
+
+For example, with a [service binding](/workers/runtime-apis/bindings/service-bindings/http/) named `OTHER_WORKER`:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.OTHER_WORKER.fetch(request, {
+	cache: "no-store",
+});
+```
+
+</TypeScriptExample>
+
+The same option applies to loopback calls through [`ctx.exports`](/workers/runtime-apis/bindings/service-bindings/rpc/), such as `ctx.exports.Backend.fetch(request, { cache: "no-store" })`.
+
 ## Versioned deployments
 
 The `cache` configuration is part of your Worker version:

@@ -14,8 +14,7 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Per character": 0.00005,
-		"Default (per second)": 0.00005
+		"Per character": 0.00005
 	},
 	"examples": [
 		{

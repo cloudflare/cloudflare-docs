@@ -47,7 +47,11 @@ For an Agent that connects to MCP servers:
 
 <PackageManagers pkg="agents @modelcontextprotocol/client@2.3.1" />
 
-Follow peer dependency instructions from your package manager. Update the exact MCP versions with the Agents release that supports them.
+`@modelcontextprotocol/server` and `@modelcontextprotocol/sdk` are optional peer dependencies of `agents`, so your package manager does not install them automatically. Add them to your own `package.json` when you use them. `@modelcontextprotocol/client` is a required peer, because every Agent includes the MCP client. Update the exact MCP versions with the Agents release that supports them.
+
+If an existing legacy server imports `@modelcontextprotocol/sdk` without listing it in `package.json`, it worked only because the package was installed as a dependency of `agents`. Add it explicitly before you upgrade.
+
+The `agents/mcp` entry point loads `@modelcontextprotocol/sdk` even if you only import client helpers from it. Import `RPCClientTransport`, `RPC_DO_PREFIX`, and `McpClientOptions` from `agents/mcp/client` instead. `agents/x402` also needs `@modelcontextprotocol/sdk` installed: it does not load the package at runtime, but its types refer to MCP SDK v1.
 
 ## Decide whether a temporary legacy lane is required
 

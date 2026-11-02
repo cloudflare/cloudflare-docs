@@ -351,7 +351,8 @@
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/gemini-2.5-pro.png",
 	"metadata": {
 		"Architecture": "Transformer (multimodal)",
-		"Thinking": "Yes"
+		"Thinking": "Yes",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"
