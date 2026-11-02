@@ -11,7 +11,7 @@ head:
     content: Troubleshooting Domain Control Validation
 ---
 
-import { GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
+import { APIRequest, GlossaryTooltip, Render, Tabs, TabItem } from "~/components";
 
 If your certificate is stuck in **Pending Validation** or failing to issue, the <GlossaryTooltip term="Certificate Authority (CA)">certificate authority (CA)</GlossaryTooltip> may be unable to complete [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/). This page helps you identify and resolve common DCV issues.
 
@@ -38,20 +38,20 @@ The Cloudflare dashboard does not have a **Retry** or **Re-validate** button for
 
 Set `validation_method` to the same method your certificate is currently using (`http` or `txt`).
 
-```sh
-curl --request PATCH \
-  "https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/verification/{cert_pack_uuid}" \
-  --header "Authorization: Bearer <API_TOKEN>" \
-  --header "Content-Type: application/json" \
-  --data '{"validation_method":"txt"}'
-```
+<APIRequest
+	path="/zones/{zone_id}/ssl/verification/{cert_pack_uuid}"
+	method="PATCH"
+	json={{
+		validation_method: "txt",
+	}}
+/>
 
 To find your certificate pack UUID and current validation method, use the [List Certificate Pack Validation Details](/api/resources/ssl/subresources/verification/methods/list/) endpoint:
 
-```sh
-curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/verification" \
-  --header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/zones/{zone_id}/ssl/verification"
+	method="GET"
+/>
 
 :::note
 For Cloudflare for SaaS custom hostnames, use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint instead. Refer to [Custom hostname certificate troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/).
