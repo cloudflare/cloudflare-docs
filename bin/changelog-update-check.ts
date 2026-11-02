@@ -133,7 +133,7 @@ export type CheckResult =
 
 const OK: CheckResult = { status: "ok" };
 
-const EXAMPLE = `updates:\n  - date: YYYY-MM-DD\n    summary: What changed and what readers should do.`;
+const EXAMPLE = `updates:\n  - date: YYYY-MM-DDTHH:MM:00Z\n    summary: What changed and what readers should do.`;
 
 /**
  * Decide whether a change to a changelog post needs an `updates` entry.

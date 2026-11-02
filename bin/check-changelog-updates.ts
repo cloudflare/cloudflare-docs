@@ -85,7 +85,7 @@ if (commentFile) {
 	].filter(Boolean);
 
 	const example =
-		"```yaml\nupdates:\n  - date: YYYY-MM-DD\n    summary: What changed and what readers should do.\n```";
+		"```yaml\nupdates:\n  - date: YYYY-MM-DDTHH:MM:00Z\n    summary: What changed and what readers should do.\n```";
 
 	fs.writeFileSync(
 		commentFile,

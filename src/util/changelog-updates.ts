@@ -18,6 +18,22 @@ export function changelogUpdateAnchor(date: Date): string {
 }
 
 /**
+ * Anchors shared by more than one update. Updates dated within the same
+ * minute would get the same RSS GUID, so feed readers would deliver only the
+ * first. The changelog schema rejects them.
+ */
+export function duplicateUpdateAnchors(updates: { date: Date }[]): string[] {
+	const seen = new Set<string>();
+	const duplicates = new Set<string>();
+	for (const { date } of updates) {
+		const anchor = changelogUpdateAnchor(date);
+		if (seen.has(anchor)) duplicates.add(anchor);
+		seen.add(anchor);
+	}
+	return [...duplicates];
+}
+
+/**
  * Display label for an update, in UTC: "October 21, 2026, 03:29 UTC".
  * Date-only entries (`2026-10-22`) parse as midnight UTC and show the date
  * alone, since they carry no time.

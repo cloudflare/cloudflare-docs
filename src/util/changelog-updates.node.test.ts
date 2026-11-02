@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
 	changelogUpdateAnchor,
+	duplicateUpdateAnchors,
 	formatUpdateDate,
 	publishedUpdates,
 	sortByPubDateDesc,
@@ -91,5 +92,28 @@ describe("formatUpdateDate", () => {
 
 	test("shows the date alone for date-only entries", () => {
 		expect(formatUpdateDate(new Date("2026-10-22"))).toBe("October 22, 2026");
+	});
+});
+
+describe("duplicateUpdateAnchors", () => {
+	test("finds updates dated within the same minute", () => {
+		expect(
+			duplicateUpdateAnchors([
+				{ date: new Date("2026-10-22") },
+				{ date: new Date("2026-10-22") },
+				{ date: new Date("2026-10-21T12:34:10Z") },
+				{ date: new Date("2026-10-21T12:34:50Z") },
+				{ date: new Date("2026-10-21T03:29:00Z") },
+			]),
+		).toEqual(["update-2026-10-22T00-00", "update-2026-10-21T12-34"]);
+	});
+
+	test("returns nothing when every update has its own time", () => {
+		expect(
+			duplicateUpdateAnchors([
+				{ date: new Date("2026-10-22T09:00:00Z") },
+				{ date: new Date("2026-10-22T09:01:00Z") },
+			]),
+		).toEqual([]);
 	});
 });
