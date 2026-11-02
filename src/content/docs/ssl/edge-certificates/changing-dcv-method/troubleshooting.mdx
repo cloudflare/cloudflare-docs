@@ -32,6 +32,35 @@ Use this checklist to identify common DCV issues:
 
 ---
 
+## Trigger an immediate DCV recheck
+
+The Cloudflare dashboard does not have a **Retry** or **Re-validate** button for edge certificates (Universal SSL and Advanced Certificate Manager). To force an immediate DCV recheck — rather than waiting for the next scheduled retry — use the [Edit SSL Certificate Pack Validation Method](/api/resources/ssl/subresources/verification/methods/edit/) endpoint.
+
+Set `validation_method` to the same method your certificate is currently using (`http` or `txt`).
+
+```sh
+curl --request PATCH \
+  "https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/verification/{cert_pack_uuid}" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --header "Content-Type: application/json" \
+  --data '{"validation_method":"txt"}'
+```
+
+To find your certificate pack UUID and current validation method, use the [List Certificate Pack Validation Details](/api/resources/ssl/subresources/verification/methods/list/) endpoint:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/verification" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+:::note
+For Cloudflare for SaaS custom hostnames, use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint instead. Refer to [Custom hostname certificate troubleshooting](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/).
+:::
+
+:::tip
+To avoid managing DCV tokens and rechecks manually, consider [Delegated DCV](/ssl/edge-certificates/changing-dcv-method/methods/delegated-dcv/). Cloudflare handles token rotation and revalidation automatically.
+:::
+
 ## Blocked validation URL
 
 If you have issues while HTTP DCV is in place, review the following settings:
@@ -120,7 +149,7 @@ To confirm, query the record from your authoritative nameservers:
 dig _acme-challenge.example.com TXT +short @<AUTHORITATIVE_NAMESERVER>
 ```
 
-Compare each value that `dig` returns with the tokens listed for your certificates that are pending validation (refer to [Get DCV values](/ssl/edge-certificates/changing-dcv-method/methods/txt/#get-dcv-values)). If a value matches none of them and you can find the record in your DNS settings (under **DNS** > **Records**, or at your external DNS provider), it is yours to remove. If a value matches none of them and you cannot find the record in your DNS settings, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have the stale records removed. After the records are removed, you can send a `PATCH` request to the [validation endpoint](/api/resources/ssl/subresources/verification/methods/edit/) using the same DCV method to trigger revalidation.
+Compare each value that `dig` returns with the tokens listed for your certificates that are pending validation (refer to [Get DCV values](/ssl/edge-certificates/changing-dcv-method/methods/txt/#get-dcv-values)). If a value matches none of them and you can find the record in your DNS settings (under **DNS** > **Records**, or at your external DNS provider), it is yours to remove. If a value matches none of them and you cannot find the record in your DNS settings, [contact Cloudflare Support](/support/contacting-cloudflare-support/) to have the stale records removed. After the records are removed, you can [trigger an immediate DCV recheck](#trigger-an-immediate-dcv-recheck) using the same DCV method.
 
 ## Certificate authority (CA) errors
 
