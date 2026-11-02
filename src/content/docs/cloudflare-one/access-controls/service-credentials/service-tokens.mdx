@@ -80,44 +80,13 @@ Include a `tags` object when you [create a service token](/api/resources/zero_tr
 	}}
 />
 
-On update, `tags` replaces the token's entire tag set. Include every tag you want to keep. Omit `tags` to leave the existing tags unchanged, or send `"tags": {}` to remove all tags. Omit `duration` when editing only tags so the token's expiration date does not change.
+On update, `tags` replaces the token's entire tag set. Include every tag you want to keep, or send `"tags": {}` to remove all tags.
 
 </TabItem> </Tabs>
 
 :::note
 Resource Tagging uses the resource type `access_service_token` and the token's `id`, not its Client ID. You can query service token tags through Resource Tagging, but you must add, update, and remove them through the Access dashboard or service token API. Direct writes through the Tagging API are not supported.
 :::
-
-### Filter tokens by tag
-
-<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
-
-On the **Service Tokens** page, select **Filters**. In **Tags**, select a key to match any value, or select a key-value pair for an exact match. You can combine tag filters with the token name search.
-
-Multiple values for the same key match **any** selected value (OR). Different keys must **all** match (AND). For example, selecting `environment=production`, `environment=staging`, and `team=payments` returns payments tokens in either environment.
-
-</TabItem> <TabItem label="API">
-
-To [list service tokens](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/list/) by tag, add one or more `tag` query parameters:
-
-| Parameter | Matches |
-| --- | --- |
-| `tag=environment` | Tokens with an `environment` tag, regardless of its value. |
-| `tag=environment=production` | Tokens with the exact key-value pair. |
-| `tag=environment=production,staging` | Tokens with either value for that key. |
-
-Repeated `tag` parameters are combined with AND. To match multiple values for one key, use a comma-separated list in a single parameter:
-
-<CURL
-	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens"
-	method="GET"
-	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
-	query={{ tag: ["environment=production,staging", "team=payments"] }}
-/>
-
-Queries support up to 20 tag filters and 10 values per filter. Matching is case-sensitive. Commas always separate values, so a value containing a comma cannot be matched exactly by this filter syntax.
-
-</TabItem> </Tabs>
 
 ### Authorize service tokens by tag
 
@@ -150,7 +119,7 @@ The equivalent API policy configuration is:
 
 Each rule matches one exact, case-sensitive key-value pair. Key-only matches and wildcards are not supported. The client must still present a valid Client ID and Client Secret; a tag does not make an expired or disabled token valid.
 
-You can use this selector in **Include**, **Require**, or **Exclude** rules, including rules in reusable Access groups. Policies that use the selector, directly or through a group, must use the **Service Auth** action. To require multiple tags, use the [Require rule type](/cloudflare-one/access-controls/policies/#require); multiple Include rules are combined with OR.
+You can use this selector in **Include**, **Require**, or **Exclude** rules. Policies that use the selector must use the **Service Auth** action. To require multiple tags, use the [Require rule type](/cloudflare-one/access-controls/policies/#require); multiple Include rules are combined with OR.
 
 :::caution
 Changing a token's tags can change which applications it can access. Only grant service token edit permissions to administrators who should be able to change tag-based access.

@@ -17,7 +17,7 @@ description: API limits, tag key validation rules, and pagination behavior.
 | Maximum OR values per filter  | 10               | `1013`     |
 | Results per page              | 100 (fixed)      | N/A        |
 
-[Access service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/#tag-service-tokens) have resource-specific limits: up to five tags per token, with keys and values each limited to 256 characters. Manage these tags through Access rather than direct Tagging API writes.
+[Access service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/#tag-service-tokens) have resource-specific limits: up to five tags per token, with keys and values each limited to 256 characters.
 
 When a limit is exceeded, the API returns `400 Bad Request` with the corresponding error code.
 

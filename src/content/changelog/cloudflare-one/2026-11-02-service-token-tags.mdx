@@ -9,7 +9,7 @@ products:
 
 You can now assign key-value tags to [Access service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/#tag-service-tokens) and use those tags to organize credentials or control application access. Each token supports up to five tags, such as `environment: production` or `team: payments`.
 
-Add or edit tags when you create or update a token in the dashboard or service token API. On the **Service Tokens** page, filter by tag key or key-value pair and combine filters with a token name search. Tags also appear in [Resource Tagging](/resource-tagging/), where you can query them alongside other tagged resources. Tag changes must go through Access, not direct Tagging API writes.
+Add or edit tags when you create or update a token in the dashboard or service token API. You can search and filter by tag on the **Service Tokens** page. Tags also appear in [Resource Tagging](/resource-tagging/), where you can query them alongside other tagged resources.
 
 The **Service Token Tag** policy selector matches valid tokens with an exact key-value pair. Use it in a **Service Auth** policy to authorize tokens by environment or team without listing each token individually. For example, this API policy configuration accepts valid tokens tagged `environment: production`:
 
