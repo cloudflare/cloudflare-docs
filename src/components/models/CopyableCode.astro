@@ -12,33 +12,50 @@ interface Props {
 const { text, label = "Copy" } = Astro.props;
 ---
 
-<copyable-code data-text={text}>
+<copyable-code data-text={text} class="block min-w-0">
 	<button
 		type="button"
 		title={label}
 		aria-label={label}
-		class="copy-button border-border bg-card hover:border-border-strong hover:bg-accent inline-flex cursor-pointer items-center gap-2 rounded-md border px-2.5 py-1.5 transition-colors"
+		class="copy-button text-foreground flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-sm bg-transparent py-1.5 text-start active:bg-accent"
 	>
-		<code class="text-muted-foreground border-0 bg-transparent p-0 font-mono text-[0.8125rem]">
+		<code class="min-w-0 border-0 bg-transparent p-0 font-mono text-sm [overflow-wrap:anywhere]">
 			{text}
 		</code>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			width="14"
-			height="14"
-			viewBox="0 0 24 24"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			class="copy-icon text-muted-foreground shrink-0"
-		>
-			<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
-			<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
-		</svg>
+		<span class="text-muted-foreground inline-flex shrink-0 items-center gap-1.5 text-xs">
+			<svg
+				aria-hidden="true"
+				xmlns="http://www.w3.org/2000/svg"
+				width="14"
+				height="14"
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				stroke-width="2"
+				stroke-linecap="round"
+				stroke-linejoin="round"
+				class="copy-icon text-muted-foreground shrink-0"
+			>
+				<rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+				<path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+			</svg>
+			Copy
+		</span>
 	</button>
 </copyable-code>
+
+<style>
+	.copy-button:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+	}
+
+	@media (hover: hover) and (pointer: fine) {
+		.copy-button:hover {
+			background-color: var(--nb-accent);
+		}
+	}
+</style>
 
 <script>
 	class CopyableCode extends HTMLElement {

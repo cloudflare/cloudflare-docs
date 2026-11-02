@@ -300,24 +300,52 @@ const headings: MarkdownHeading[] = [
 		<div class="bg-border mt-3 mb-6 h-px w-full" role="none"></div>
 	</div>
 
-	<div class="not-prose mb-4">
+	<section
+		aria-label="Model ID"
+		class="not-prose border-border bg-card [margin-block-end:1rem] flex min-w-0 flex-col gap-2 rounded-lg border p-4"
+	>
+		<p class="text-muted-foreground m-0 text-sm font-medium">Model ID</p>
 		<CopyableCode text={model.name} label="Copy model ID" />
-	</div>
-
-	{model.dataSource === "catalog" && (
-		<Aside>
-			<p>
-				Use this model ID with the Workers AI binding, the AI Gateway{" "}
-				<a href="/ai-gateway/usage/rest-api/">REST API</a>, and the{" "}
-				<a href="/ai-gateway/usage/chat-completion/">Unified API</a>. When you
-				call the provider directly, through{" "}
-				<a href="/ai-gateway/usage/providers/">provider-native endpoints</a>, or
-				from a tool configured with the provider's own SDK, use the provider's
-				model name instead. For example, Anthropic's name for{" "}
-				<code>anthropic/claude-opus-4.8</code> is <code>claude-opus-4-8</code>.
-			</p>
-		</Aside>
-	)}
+		{model.dataSource === "catalog" && (
+			<>
+				<p class="text-muted-foreground m-0 text-sm leading-relaxed">
+					Use with the{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/worker-binding-methods/"
+					>
+						Workers AI binding
+					</a>
+					, the AI Gateway{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/rest-api/"
+					>
+						REST API
+					</a>
+					, or the{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/chat-completion/"
+					>
+						Unified API
+					</a>
+					.
+				</p>
+				<p class="text-muted-foreground border-border m-0 [border-block-start-width:1px] [padding-block-start:1rem] text-sm leading-relaxed">
+					Calling the provider directly? Use the provider's model name instead,
+					including with{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/providers/"
+					>
+						provider-native endpoints
+					</a>{" "}
+					or the provider's own SDK.
+				</p>
+			</>
+		)}
+	</section>
 
 	<div class="not-prose mb-4">
 		<ModelBadges model={model} />
