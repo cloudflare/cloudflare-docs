@@ -12,7 +12,7 @@ description: Create standard or Advanced Custom Nameserver sets and assign them 
 
 import { APIRequest, DashButton, Steps } from "~/components";
 
-A nameserver set is an account-level group of two to five custom nameserver names, together with the IP addresses that Cloudflare assigns to those names. You create a set once and then assign it to zones in the same account. Each set has a name to identify it.
+A nameserver set is an account-level group of up to five custom nameserver names, together with the IP addresses that Cloudflare assigns to those names. You create a set once and then assign it to zones in the same account. Each set has a name to identify it.
 
 Nameserver sets are a separate configuration from [zone](/dns/nameservers/custom-nameservers/zone-custom-nameservers/), [account](/dns/nameservers/custom-nameservers/account-custom-nameservers/), and [tenant](/dns/nameservers/custom-nameservers/tenant-custom-nameservers/) custom nameservers. A zone uses either a nameserver set or one of those configurations, never both. Existing configurations cannot be converted into nameserver sets.
 
@@ -49,10 +49,18 @@ The following limits apply to nameserver sets:
 
 | Item                                        | Limit                                   |
 | ------------------------------------------- | --------------------------------------- |
-| Nameserver names per set                    | 2 to 5                                  |
+| Nameserver names per set                    | 1 to 5                                  |
 | IPv4 and IPv6 addresses per nameserver name | 1 to 3 each (`ip_count`, defaults to 1) |
 
 All nameserver names in an Advanced set must use the same `ip_count` value.
+
+:::caution
+
+A zone should have at least two listed authoritative nameservers. For details, refer to [RFC 2182, section 5](https://www.rfc-editor.org/rfc/rfc2182.html#section-5).
+
+Single-name sets are intended only for [multi-provider DNS setups](/dns/nameservers/nameserver-options/#multi-provider-dns). In these setups, another provider supplies additional authoritative nameservers.
+
+:::
 
 ### Set names
 
