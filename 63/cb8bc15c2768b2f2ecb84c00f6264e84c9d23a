@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/agents/get-started.mdx
+  s_f6b725d696e880::t_a270a1b581e626 124-127,136-137,396-410,427-437,504-515,517-539
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "63cb8bc15c2768b2f2ecb84c00f6264e84c9d23a",
+  "prompts": {},
+  "sessions": {
+    "s_f6b725d696e880": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ea774788cffe4MOLE82d50oCor",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}
