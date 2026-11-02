@@ -94,7 +94,8 @@ O2O only applies when the proxied record in your zone is a `CNAME` to your SaaS 
 | Record in your Cloudflare zone | Result |
 | ------------------------------ | ------ |
 | Proxied `CNAME` to the SaaS provider target | O2O: your zone, then the SaaS provider zone, then their origin |
-| Proxied `A`, `AAAA`, or `CNAME` to a different target | Not O2O to that SaaS provider. Your zone settings apply and traffic is sent to that target as the origin |
+| Proxied `A` or `AAAA` pointing to a SaaS provider using [apex proxying](/cloudflare-for-platforms/cloudflare-for-saas/start/advanced-settings/apex-proxying/) | Not O2O. Traffic may still reach the SaaS provider's zone, but without the O2O mechanism and routing behavior |
+| Proxied `A`, `AAAA`, or `CNAME` to any other target | Not O2O. Your zone settings apply and traffic is sent to that target as the origin |
 | No matching proxied hostname in your zone | O2O is not enabled. Only the SaaS provider's zone applies if the hostname is configured there |
 
 Point the `CNAME` **directly** at the SaaS provider target. Do not target another proxied record in your zone that then points at the SaaS provider. Indirect targets can prevent O2O from applying for that hostname.
