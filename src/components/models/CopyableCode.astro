@@ -17,7 +17,7 @@ const { text, label = "Copy" } = Astro.props;
 		type="button"
 		title={label}
 		aria-label={label}
-		class="copy-button text-foreground flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-sm bg-transparent py-1.5 text-start active:bg-accent"
+		class="copy-button text-foreground flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 rounded-sm bg-transparent [padding-block:0.625rem] [padding-inline:0.75rem] text-start active:bg-accent"
 	>
 		<code class="min-w-0 border-0 bg-transparent p-0 font-mono text-sm [overflow-wrap:anywhere]">
 			{text}
