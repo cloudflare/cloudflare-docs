@@ -206,7 +206,7 @@ export default {
 
 </TypeScriptExample>
 
-The `delta` must be a positive integer, up to 4,294,967,295. If `delta` is `0`, `limit()` throws a `RangeError`. If `delta` is negative, too large, or not a number, `limit()` throws a `TypeError`.
+The `delta` must be a positive integer. Other values can cause `limit()` to throw an error.
 
 The rate limit decision uses the count before the call:
 
