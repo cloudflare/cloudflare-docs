@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/cloud-and-saas-findings/policies.mdx
+  s_403e4c66b85118::t_58827654f02d3d 13,35-43,46-47,60-123,176-177,187-251
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "20a2b5821ba1c6f5df28dddc4cab93ba0ce62bad",
+  "prompts": {},
+  "sessions": {
+    "s_403e4c66b85118": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "acidic-hydrogen",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}
