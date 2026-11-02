@@ -72,7 +72,9 @@ To retrieve the one-time code for a user:
 5. Copy the 7-digit **Override code** shown in the side panel.
 6. Share this code with the user for them to enter on their device.
 
-The user will have an unlimited amount of time to activate their code.
+The override code remains valid for the duration of the **Timeout**, even after Cloudflare generates a new code. Because override codes follow fixed-hour time blocks, each new hour that begins before the user enters the code shortens the override by one hour.
+
+For example, with a 3-hour **Timeout**, a code retrieved at 9:15 AM and entered immediately allows the user to connect or disconnect the client until 12:15 PM. If the user enters the same code at 10:02 AM, after a new hour block has started, the override lasts until 12:02 PM.
 
 #### Enter the override code
 
