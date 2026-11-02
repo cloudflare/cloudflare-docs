@@ -178,7 +178,7 @@ Clients that omit the `server_name` extension from their TLS `ClientHello` — t
 
 SNI is required for custom hostnames. There is no configuration within Cloudflare for SaaS that enables non-SNI clients to connect to arbitrary custom hostnames (for example, `shop.customer.com`). The only reliable fix is to upgrade the affected devices to a TLS stack that supports SNI.
 
-## Alternative architecture for non-SNI clients
+### Alternative architecture for non-SNI clients
 
 If upgrading affected devices is not possible, an alternative architecture combining [Spectrum](/spectrum/) and [BYOIP](/byoip/) can allow non-SNI clients to reach custom hostnames — but it does not use Cloudflare for SaaS.
 
