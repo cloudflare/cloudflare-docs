@@ -1,0 +1,31 @@
+---
+title: Request metrics breakdown by region and HTTP error code
+description: Compare regional request activity and errors by status code.
+pcx_content_type: changelog
+products:
+  - r2
+date: 2026-11-03
+---
+
+import { DashButton } from "~/components";
+
+You can compare regional activity and errors by HTTP status code on the **Metrics** page for a R2 bucket in the Cloudflare dashboard.
+
+<DashButton
+	url="/?to=/:account/r2/:bucket/metrics"
+	buttonName="Bucket metrics"
+/>
+
+## Compare regions
+
+Use **Request Distribution by Region** to compare request activity and filter by writes, reads, errors, or rate-limited errors (`429`).
+
+![R2 request distribution showing a globe, a list of regions, and the Writes filter](~/assets/images/r2/r2-request-by-region.png)
+
+## Inspect errors
+
+Use **Errors by Status Code** to compare error counts and trends.
+
+![R2 error counts and time series grouped by HTTP status code](~/assets/images/r2/r2-error-by-status-code.png)
+
+To troubleshoot errors, refer to the [R2 error code reference](/r2/api/error-codes/#error-code-reference).
