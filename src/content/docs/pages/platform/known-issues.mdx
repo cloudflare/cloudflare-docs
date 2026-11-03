@@ -52,6 +52,12 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
+## Browser Integrity Check
+
+[Browser Integrity Check](/waf/tools/browser-integrity-check/) runs on the Cloudflare-managed Pages zone for both `pages.dev` hostnames and custom domains. Turning it off or skipping it in your own zone does not turn it off in Pages. You cannot turn off this Pages-managed check.
+
+If your client receives [Error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/), configure it to send a descriptive `User-Agent` header that identifies your application, rather than a library default. The client does not need to impersonate a browser. Refer to [Error 1010 troubleshooting](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/#requests-to-pages-projects-or-workersdev) for details.
+
 ## Pages Functions
 
 - [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
