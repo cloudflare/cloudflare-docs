@@ -146,7 +146,7 @@
 		"react-markdown": "10.1.0",
 		"react-select": "5.10.2",
 		"redirects-in-workers": "0.0.7",
-		"satteri": "^0.11.6",
+		"satteri": "^0.10.5",
 		"sharp": "0.35.5",
 		"svgo": "4.1.0",
 		"tailwind-merge": "3.7.0",
