@@ -86,7 +86,7 @@ This list covers causes reported so far and is not exhaustive.
 | Tool not supported on the endpoint                                 | `tools: [{"type":"web_search"}]` sent to an xAI model on the Chat Completions endpoint                                               | Use the endpoint and tool listed for the provider in [Web search](/ai-gateway/usage/web-search/).                                                                                                  |
 | Wrong URL or account ID on the Cloudflare API                      | `Could not route to /accounts/..., perhaps your object identifier is invalid?`, returned with error `7000` (`No route for that URI`) | Check the endpoint path and the account ID.                                                                                                                                                        |
 
-Error code `7003` has a different meaning in other Cloudflare products, such as Cloudflare Radar and Queues.
+Error code `7003` has a different meaning in other Cloudflare products. For example, refer to [Radar API error codes](/radar/get-started/error-codes/) and [Queues error codes](/queues/reference/error-codes/#how-errors-are-returned).
 
 ### Requests timing out
 
