@@ -75,6 +75,11 @@
 		"parent": ["Storage & databases", "R2 object storage"]
 	},
 	{
+		"deeplink": "/?to=/:account/r2/:bucket/metrics",
+		"name": "Bucket metrics",
+		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
 		"deeplink": "/?to=/:account/r2/metrics",
 		"name": "R2 Metrics",
 		"parent": ["Storage & databases", "R2 object storage"]
