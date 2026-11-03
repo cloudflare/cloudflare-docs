@@ -59,6 +59,8 @@ const results = await instance.search({
 
 The `get()` method is synchronous and does not make a network call. The instance is resolved lazily when you call a method like `search()` or `chatCompletions()`.
 
+The binding manages instances inside its namespace. To create, update, or delete namespaces themselves, refer to the [Namespaces API](/ai-search/api/namespaces/).
+
 ## Default namespace
 
 A `default` namespace is automatically created for every account. If you do not need multiple namespaces, use `default` for all your instances.
@@ -116,7 +118,7 @@ resource "cloudflare_ai_search_instance" "docs" {
 }
 ```
 
-Changing `namespace` on an existing instance replaces it. To import an instance, use `<account_id>/<namespace>/<id>`. To import a namespace, use `<account_id>/<name>`.
+Changing `namespace` on an existing instance replaces it. For imports, data sources, and other options, refer to [Namespaces with Terraform](/ai-search/api/namespaces/terraform/) and [Instances with Terraform](/ai-search/api/instances/terraform/).
 
 ## Namespace public endpoints
 
