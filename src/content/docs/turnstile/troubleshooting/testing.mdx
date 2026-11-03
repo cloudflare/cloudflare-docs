@@ -159,3 +159,4 @@ Production secret keys will reject the dummy token. You must also use a dummy se
 | `1x00000000000000000000AA` | `1x0000000000000000000000000000000AA` | This combination will always result in successful validation. |
 | `2x00000000000000000000AB` | `2x0000000000000000000000000000000AA` | This combination will always fail. |
 | `1x00000000000000000000AA` | `3x0000000000000000000000000000000AA` | This combination will always fail with "timeout-or-duplicate" error. |
+| `3x00000000000000000000FF` | `1x0000000000000000000000000000000AA` | This combination forces an interactive challenge. After the visitor solves it, server-side validation always succeeds. |

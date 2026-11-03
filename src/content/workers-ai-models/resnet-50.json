@@ -1,22 +1,12 @@
 {
-    "id": "7f9a76e1-d120-48dd-a565-101d328bbb02",
-    "source": 1,
     "name": "@cf/microsoft/resnet-50",
-    "description": "50 layers deep image classification CNN trained on more than 1M images from ImageNet",
-    "task": {
-        "id": "00cd182b-bf30-4fc4-8481-84a3ab349657",
-        "name": "Image Classification",
-        "description": "Image classification models take an image input and assigns it labels or classes."
-    },
-    "created_at": "2023-09-25 19:21:11.898",
-    "tags": [],
     "properties": [
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per inference request",
-                    "price": 0.0000025,
+                    "price": 0.00000251,
                     "currency": "USD"
                 }
             ]
@@ -26,6 +16,16 @@
             "value": "https://www.microsoft.com/en-us/research/blog/microsoft-vision-model-resnet-50-combines-web-scale-data-and-multi-task-learning-to-achieve-state-of-the-art/"
         }
     ],
+    "id": "7f9a76e1-d120-48dd-a565-101d328bbb02",
+    "source": 1,
+    "description": "50 layers deep image classification CNN trained on more than 1M images from ImageNet",
+    "task": {
+        "id": "00cd182b-bf30-4fc4-8481-84a3ab349657",
+        "name": "Image Classification",
+        "description": "Image classification models take an image input and assigns it labels or classes."
+    },
+    "created_at": "2023-09-25 19:21:11.898",
+    "tags": [],
     "schema": {
         "input": {
             "oneOf": [
@@ -69,5 +69,6 @@
                 }
             }
         }
-    }
+    },
+    "deprecated": false
 }

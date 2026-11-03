@@ -1,0 +1,89 @@
+---
+title: Send a Slack notification
+description: Send a background Slack notification for a selected Gateway HTTP request.
+pcx_content_type: tutorial
+difficulty: Beginner
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  badge:
+    text: Beta
+    variant: caution
+  order: 1
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
+
+Send a Slack notification when a request to a selected application endpoint completes. The Worker returns the upstream response and sends the notification in the background.
+
+## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
+
+Create a [Slack incoming webhook](https://docs.slack.dev/messaging/sending-messages-using-incoming-webhooks/) for your chosen channel. Store its URL as a [Worker secret](/workers/configuration/secrets/) named `SLACK_WEBHOOK_URL`:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="secret put SLACK_WEBHOOK_URL"
+/>
+
+Use this script as `src/index.ts`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
+
+interface Env {
+	SLACK_WEBHOOK_URL: string;
+}
+
+export class GatewayMiddleware extends WorkerEntrypoint<Env> {
+	async handle(
+		request: Request,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
+	): Promise<Response> {
+		const response = await next(request);
+		this.ctx.waitUntil(
+			this.notify(
+				`${request.method} ${context.host}: HTTP ${response.status}`,
+			).catch(() => console.error("Slack notification failed")),
+		);
+		return response;
+	}
+
+	async notify(text: string): Promise<void> {
+		const result = await fetch(this.env.SLACK_WEBHOOK_URL, {
+			method: "POST",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify({
+				blocks: [{ type: "section", text: { type: "plain_text", text } }],
+			}),
+			signal: AbortSignal.timeout(10_000),
+		});
+		await result.body?.cancel();
+		if (!result.ok) throw new Error("Webhook rejected notification");
+	}
+}
+```
+
+</TypeScriptExample>
+
+The message uses Slack's plain text format to prevent request text from creating mentions. It includes the method, host, and response status. It does not send cookies, authorization headers, bodies, or URL query parameters.
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). Match a test user group and a specific application event, such as **Host** is `app.example.com`, **URL Path** is `/signup`, and **HTTP Method** is `POST`.
+
+Trigger one test request and confirm that its response is unchanged and one message appears in Slack. A filtering Block policy prevents both the upstream request and this notification.
+
+This script sends a notification for every invocation, including application error responses. To notify only on success, guard `waitUntil()` with `if (response.ok)`. For higher-volume policies, add sampling or a queued notification pipeline and account for [Slack rate limits](https://docs.slack.dev/apis/web-api/rate-limits/). A broad host policy can generate a message for every page asset.

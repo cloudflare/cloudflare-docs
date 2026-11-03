@@ -6,7 +6,7 @@ products:
 date: 2026-07-17
 ---
 
-Cloudflare Gateway now supports advanced header control on [Allow policies](/cloudflare-one/traffic-policies/http-policies/#allow). Administrators can add, overwrite, or delete headers on matching requests using static values or dynamic variables.
+Cloudflare Gateway now supports advanced header control on [Allow policies](/cloudflare-one/traffic-controls/http-policies/#allow). Administrators can add, overwrite, or delete headers on matching requests using static values or dynamic variables.
 
 ### Header operations
 
@@ -39,4 +39,4 @@ Header values can include dynamic variables using the `@{...}` syntax. Gateway r
 
 You can mix static text and dynamic variables in a single header value. For example, `user-@{identity.email}` resolves to `user-jdoe@example.com`.
 
-For more information, refer to [Custom headers](/cloudflare-one/traffic-policies/http-policies/tenant-control/).
+For more information, refer to [Custom headers](/cloudflare-one/traffic-controls/http-policies/tenant-control/).

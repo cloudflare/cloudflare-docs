@@ -1,0 +1,112 @@
+---
+title: Pricing
+description: Compare monthly rates across all Basin products.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - basin
+---
+
+Basin pricing includes Pipelines processing, Catalog operations, and SQL queries. All included usage allocations on this page apply monthly.
+
+R2 storage, read, and write operations add separate charges. This page excludes R2 rates and costs from every table and example. Refer to [R2 pricing](/r2/pricing/).
+
+## [Basin Pipelines](/basin-pipelines/platform/pricing/)
+
+Pipelines charges for SQL transforms and sink delivery. Stream ingress remains free without a usage limit.
+
+| Dimension                         | Monthly included usage      | Additional usage rate |
+| --------------------------------- | --------------------------- | --------------------- |
+| Stream ingress                    | Unlimited                   | Free                  |
+| SQL transforms                    | 50 GB                       | $0.04 per GB          |
+| Sink delivery, JSON               | 50 GB shared sink allowance | $0.03 per GB          |
+| Sink delivery, Parquet or Iceberg | 50 GB shared sink allowance | $0.06 per GB          |
+
+Sink billing uses uncompressed data delivered to each destination.
+
+## [Basin Catalog](/basin-catalog/platform/pricing/)
+
+Catalog charges for operations and optional compaction. Both compaction dimensions apply only when compaction is enabled.
+
+| Dimension                    | Monthly included usage | Additional usage rate     |
+| ---------------------------- | ---------------------- | ------------------------- |
+| Catalog operations           | 1 million operations   | $9 per million operations |
+| Compaction data processed    | 10 GB                  | $0.005 per GB             |
+| Compaction objects processed | 1 million objects      | $2 per million objects    |
+
+Snapshot expiration does not have a separate charge. Related R2 and Catalog operations may still incur charges.
+
+## [Basin SQL](/basin-sql/platform/pricing/)
+
+SQL charges for compressed data scanned from R2. Each query has a 10 MB minimum billable scan.
+
+| Dimension               | Monthly included usage | Additional usage rate         |
+| ----------------------- | ---------------------- | ----------------------------- |
+| Compressed data scanned | 10 GB                  | $0.0025 per GB ($2.50 per TB) |
+
+Queries that fail before or during execution do not incur SQL scan charges. This includes syntax, system, and runtime failures.
+
+Metadata-only operations, including `EXPLAIN`, `SHOW`, and `DESCRIBE`, do not scan data. Related R2 and Catalog operations may still incur charges.
+
+## End-to-end Basin data pipeline
+
+Assume 500 GB enters a stream and is filtered with SQL transforms to deliver 300 GB of uncompressed data to Basin Catalog.
+
+Catalog usage includes 500,000 operations and 20 GB of compaction across 200,000 objects. SQL queries scan 50 GB of compressed data.
+
+Monthly included allocations are otherwise unused. The SQL total already accounts for per-query minimums.
+
+| Product and dimension      | Formula                                  |       Cost |
+| -------------------------- | ---------------------------------------- | ---------: |
+| Pipelines stream ingress   | 500 GB × $0                              |      $0.00 |
+| Pipelines SQL transforms   | (500 GB - 50 GB) × $0.04 per GB          |     $18.00 |
+| Pipelines Iceberg sink     | (300 GB - 50 GB) × $0.06 per GB          |     $15.00 |
+| **Pipelines subtotal**     | $0.00 + $18.00 + $15.00                  | **$33.00** |
+| Catalog operations         | 500,000 operations within included usage |      $0.00 |
+| Catalog compaction data    | (20 GB - 10 GB) × $0.005 per GB          |      $0.05 |
+| Catalog compaction objects | 200,000 objects within included usage    |      $0.00 |
+| **Catalog subtotal**       | $0.00 + $0.05 + $0.00                    |  **$0.05** |
+| SQL scans                  | (50 GB - 10 GB) × $0.0025 per GB         |      $0.10 |
+| **SQL subtotal**           | $0.10                                    |  **$0.10** |
+| **Total Basin cost**     | $33.00 + $0.05 + $0.10                   | **$33.15** |
+
+R2 costs are not included in this example.
+
+## Basin Catalog and Basin SQL
+
+Assume 500,000 Catalog operations and 20 GB of compaction across 200,000 objects. SQL queries scan 50 GB of compressed data after per-query minimums.
+
+Monthly included allocations are otherwise unused.
+
+| Product and dimension      | Formula                                  |      Cost |
+| -------------------------- | ---------------------------------------- | --------: |
+| Catalog operations         | 500,000 operations within included usage |     $0.00 |
+| Catalog compaction data    | (20 GB - 10 GB) × $0.005 per GB          |     $0.05 |
+| Catalog compaction objects | 200,000 objects within included usage    |     $0.00 |
+| **Catalog subtotal**       | $0.00 + $0.05 + $0.00                    | **$0.05** |
+| SQL scans                  | (50 GB - 10 GB) × $0.0025 per GB         |     $0.10 |
+| **SQL subtotal**           | $0.10                                    | **$0.10** |
+| **Pipelines subtotal**     | Not used                                 | **$0.00** |
+| **Total Basin cost**     | $0.05 + $0.10                            | **$0.15** |
+
+R2 costs are not included in this example.
+
+## Basin Catalog with DuckDB or Trino
+
+Assume 500,000 Catalog operations and 20 GB of compaction across 200,000 objects. Queries use an external engine instead of Basin SQL.
+
+Monthly included allocations are otherwise unused. Configure [DuckDB](/basin-catalog/config-examples/duckdb/) or [Trino](/basin-catalog/config-examples/trino/) to access the Catalog.
+
+| Product and dimension      | Formula                                  |      Cost |
+| -------------------------- | ---------------------------------------- | --------: |
+| Catalog operations         | 500,000 operations within included usage |     $0.00 |
+| Catalog compaction data    | (20 GB - 10 GB) × $0.005 per GB          |     $0.05 |
+| Catalog compaction objects | 200,000 objects within included usage    |     $0.00 |
+| **Catalog subtotal**       | $0.00 + $0.05 + $0.00                    | **$0.05** |
+| **Basin SQL subtotal**   | Not used                                 | **$0.00** |
+| **Total Basin cost**     | $0.05 + $0.00                            | **$0.05** |
+
+R2 costs are not included in this example.
+
+For billing calculation details, refer to the [Cloudflare billing policy](/billing/understand/billing-policy/).

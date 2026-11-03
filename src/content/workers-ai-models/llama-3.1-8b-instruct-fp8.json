@@ -1,27 +1,17 @@
 {
-    "id": "9b9c87c6-d4b7-494c-b177-87feab5904db",
-    "source": 1,
     "name": "@cf/meta/llama-3.1-8b-instruct-fp8",
-    "description": "Llama 3.1 8B quantized to FP8 precision",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2024-07-25 17:28:43.328",
-    "tags": [],
     "properties": [
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.15,
+                    "price": 0.152,
                     "currency": "USD"
                 },
                 {
                     "unit": "per M output tokens",
-                    "price": 0.29,
+                    "price": 0.287,
                     "currency": "USD"
                 }
             ]
@@ -35,6 +25,16 @@
             "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/LICENSE"
         }
     ],
+    "id": "9b9c87c6-d4b7-494c-b177-87feab5904db",
+    "source": 1,
+    "description": "Llama 3.1 8B quantized to FP8 precision",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2024-07-25 17:28:43.328",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -469,5 +469,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

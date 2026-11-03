@@ -1,0 +1,22 @@
+---
+title: Inspect provisioned users and groups with the SCIM population viewer
+description: Search SCIM users and groups, inspect resource attributes, and investigate provisioning issues in Cloudflare One.
+date: 2026-10-30
+products:
+  - cloudflare-one
+---
+
+The SCIM population viewer lets you inspect the users and groups provisioned to Cloudflare One by each identity provider. You can check which resources Cloudflare has received without making API requests or opening a support ticket.
+
+In **Zero Trust** > **Integrations** > **Identity providers**, select a user or group count in **SCIM resources** to open the viewer. You can:
+
+- Search users by username, email, name, or resource ID, and groups by name or resource ID.
+- Inspect resource attributes in formatted or JSON views.
+- View group members and compare Cloudflare and IdP resource IDs with provisioning logs.
+- Delete individual resources from the Cloudflare SCIM population when you have edit permission.
+
+![SCIM users table with search controls and blurred personal information](~/assets/images/cloudflare-one/identity/scim-population-viewer.png)
+
+The viewer shows provisioned resources rather than provisioning event history. Use [SCIM provisioning logs](/cloudflare-one/insights/logs/dashboard-logs/scim-logs/) to investigate failed requests. Existing SCIM deprovisioning and policy behavior remain unchanged.
+
+For dashboard instructions and API examples, refer to [View SCIM users and groups](/cloudflare-one/team-and-resources/users/scim-population-viewer/).

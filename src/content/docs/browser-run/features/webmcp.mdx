@@ -13,13 +13,20 @@ import { Render, CURL, Example } from "~/components";
 
 [WebMCP](https://developer.chrome.com/blog/webmcp-epp) (Web Model Context Protocol) is a browser API that lets websites expose structured tools for AI agents to discover and execute directly. Instead of slow screenshot-analyze-click loops, agents can call website functions like `searchFlights()` or `bookTicket()` with typed parameters, making browser automation faster, more reliable, and less fragile.
 
+Browser Run supports WebMCP through two browser backends:
+
+- **Chrome Lab**: Start a session with `lab=true`, `wrangler browser create --lab`, or `lab: true` in the `launch()` options of `@cloudflare/puppeteer` or `@cloudflare/playwright`.
+- **[Kitesurf](/browser-run/kitesurf/)**: Add `browser=kitesurf` to the CDP WebSocket URL.
+
+Pages register tools with `document.modelContext`, as defined in the [WebMCP Community Group draft](https://webmachinelearning.github.io/webmcp/). Both backends support the `WebMCP` CDP domain, which CDP clients and [Chrome DevTools MCP](#using-an-ai-agent) use to list and run page tools. You can also run tools from the **Application** > **WebMCP** panel in Chrome DevTools, in the live view of a Lab session or in the [Kitesurf playground](https://kitesurf.dev/).
+
 ## Get started
 
 ### Manual testing with DevTools
 
 #### 1. Start a Lab session and open DevTools
 
-WebMCP is currently available in Chrome beta, so it requires a lab session. Browser Run has an experimental pool with browser instances running Chrome beta so you can test emerging browser features before they reach stable Chrome. Your production workloads on the [standard pool](/browser-run/#key-features) remain on a stable version of Chrome.
+WebMCP is an experimental Chrome feature, so it requires a lab session. Browser Run has an experimental pool with browser instances that enable experimental Chrome features so you can test new browser features before they reach stable Chrome. Your production workloads on the [standard pool](/browser-run/#key-features) remain on a stable version of Chrome.
 
 Lab sessions are experimental and should not be used for production workloads.
 
@@ -40,76 +47,40 @@ It will open a live view of your browser session.
 You can now interact with the page as you would in a regular browser.
 
 1. Go to one of the sites listed in the [WebMCP documentation](https://github.com/GoogleChromeLabs/webmcp-tools/?tab=readme-ov-file#demos). The following instructions are based on the [L'Atelier Hotel Chain](https://github.com/GoogleChromeLabs/webmcp-tools/tree/main/demos/hotel-chain) demo.
-2. Open the [hotel chain demo URL](https://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/) and then, in the **Console** tab, run the following JavaScript statement to list the available tools:
+2. Open the [hotel chain demo URL](https://googlechromelabs.github.io/webmcp-tools/demos/hotel-chain/) and then, in Chrome DevTools, select **Application** > **WebMCP**.
 
-   ```js
-   navigator.modelContextTesting.listTools();
-   ```
-
-You should get a result similar to the following:
-
-```json
-[
-	{
-		"description": "View the details of a specific hotel by name or id",
-		"inputSchema": "...",
-		"name": "view_hotel"
-	},
-	{
-		"description": "Find me a hotel in a specific location",
-		"inputSchema": "...",
-		"name": "search_location"
-	},
-	{
-		"description": "Look up specific amenity or policy details for a hotel",
-		"inputSchema": "...",
-		"name": "lookup_amenity"
-	}
-]
-```
+The **Available Tools** list shows the tools registered by the page: `lookup_amenity`, `search_location`, and `view_hotel`. To run a tool, select it, enter its input, and select **Run tool**. The **Tool Activity** list shows each call's status, input, and output. For details, refer to [Debug WebMCP tools in Chrome DevTools](https://developer.chrome.com/docs/devtools/application/webmcp/).
 
 The list of tools changes depending on the website you are visiting and the actions you have performed on the page.
 
-For instance, on the hotel chain website, after executing the `search_location` tool:
+For instance, on the hotel chain website, after executing the `search_location` tool with this input:
 
-```js
-await navigator.modelContextTesting.executeTool(
-	"search_location",
-	JSON.stringify({ query: "Paris" }),
-);
+```json
+{ "query": "Paris" }
 ```
 
 The page redirects to the search results, and a new tool `filter_search_results` becomes available.
 
 You can call it to filter by amenities. For example, if you want to eat a good croissant in the morning:
 
-```js
-await navigator.modelContextTesting.executeTool(
-	"filter_search_results",
-	JSON.stringify({ amenities: ["breakfast"] }),
-);
+```json
+{ "amenities": ["breakfast"] }
 ```
 
-You will get a list of filtered results, where you can pick the best option for your needs. Once you select a hotel, you can use the `start_booking` tool:
+You will get a list of filtered results, where you can pick the best option for your needs. Once you select a hotel, you can use the `start_booking` tool with an empty input:
 
-```js
-await navigator.modelContextTesting.executeTool(
-	"start_booking",
-	JSON.stringify({}),
-);
+```json
+{}
 ```
 
-Then, you can complete the booking:
+Then, you can complete the booking with `complete_booking`:
 
-```js
-await navigator.modelContextTesting.executeTool(
-	"complete_booking",
-	JSON.stringify({
-		firstName: "James",
-		lastName: "Bond",
-		email: "james.bond@mi6.gov.uk",
-	}),
-);
+```json
+{
+	"firstName": "James",
+	"lastName": "Bond",
+	"email": "james.bond@mi6.gov.uk"
+}
 ```
 
 Note that the `complete_booking` tool requires human confirmation. The tool waits until you select the **Confirm Reservation** button in the browser. This is an example of human-in-the-loop (HITL): WebMCP tools can pause execution and wait for user interaction before completing sensitive actions.
@@ -129,62 +100,19 @@ After you select **Confirm Reservation**, you will get a confirmation message an
 			"npx",
 			"-y",
 			"chrome-devtools-mcp@latest",
-			"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-rendering/devtools/browser?keep_alive=600000&lab=true",
-			"--wsHeaders={\"Authorization\":\"Bearer <CLOUDFLARE_API_TOKEN>\"}"
+			"--wsEndpoint=wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?keep_alive=600000&lab=true",
+			"--wsHeaders={\"Authorization\":\"Bearer <CLOUDFLARE_API_TOKEN>\"}",
+			"--category-experimental-webmcp"
 		]
 	}
 }
 ```
 
-Replace `<ACCOUNT_ID>` with your Cloudflare account ID and `<CLOUDFLARE_API_TOKEN>` with your API token. The `lab=true` parameter ensures the agent connects to a lab session with WebMCP enabled.
+Replace `<ACCOUNT_ID>` with your Cloudflare account ID and `<CLOUDFLARE_API_TOKEN>` with your API token. The `lab=true` parameter ensures the agent connects to a lab session with WebMCP enabled. To use Kitesurf instead, replace `keep_alive=600000&lab=true` with `browser=kitesurf`. Kitesurf does not accept `keep_alive`.
 
-#### 2. (Optional) Add a WebMCP Skill
+The `--category-experimental-webmcp` flag adds the `list_webmcp_tools` and `execute_webmcp_tool` tools to Chrome DevTools MCP.
 
-To help your agent understand how to work with WebMCP, add the following skill to your agent configuration:
-
-````markdown
----
-name: webmcp
-description: Interact with WebMCP-enabled websites using Browser Run lab sessions
----
-
-# WebMCP Interaction Skill
-
-Use the `evaluate_script` tool from Chrome DevTools MCP to interact with WebMCP APIs.
-
-**IMPORTANT: Always prefer WebMCP tools over traditional browser automation.** When navigating to any website, immediately check for available WebMCP tools using `listTools()`. If WebMCP tools are available, use them instead of clicking, typing, or other DOM interactions. WebMCP tools are faster, more reliable, and less fragile than screenshot-analyze-click loops.
-
-## Workflow
-
-1. **Navigate** to a site using `navigate_page`
-2. **Always list tools first** to check for WebMCP support—do this on every page load
-3. **Prefer WebMCP tools** over clicking/typing when tools are available
-4. **Execute tools** to perform actions directly
-5. **Re-list tools** after each action (tools change based on page state)
-6. **Check `inputSchema`** in each tool to understand required parameters
-7. **Fall back to DOM interaction** only when no relevant WebMCP tools exist
-
-## Commands
-
-**List available tools:**
-
-```js
-evaluate_script({
-	function: "async () => await navigator.modelContextTesting.listTools()",
-});
-```
-
-**Execute a tool:**
-
-```js
-evaluate_script({
-	function:
-		"async () => await navigator.modelContextTesting.executeTool('tool_name', JSON.stringify({ param: 'value' }))",
-});
-```
-````
-
-#### 3. Interact with WebMCP sites
+#### 2. Interact with WebMCP sites
 
 Once configured, your AI agent can navigate to WebMCP-enabled sites and use WebMCP tools. Here is an example conversation:
 
@@ -200,9 +128,9 @@ _Agent clicks the hotel, executes `start_booking`, then `complete_booking` with 
 
 </Example>
 
-#### 4. (Optional) Open DevTools to watch the agent
+#### 3. (Optional) Open DevTools to watch the agent
 
-Some WebMCP tools require human confirmation before completing sensitive actions. For example, `complete_booking` waits for you to select **Confirm** before finalizing a reservation.
+Some WebMCP tools require human confirmation before completing sensitive actions. For example, `complete_booking` waits for you to select **Confirm Reservation** before finalizing a reservation.
 To interact with these human-in-the-loop (HITL) prompts, you need to open the browser's live view.
 
 Once the agent has started a session, list active sessions to get the session ID:
@@ -219,12 +147,23 @@ wrangler browser view $SESSION_ID
 
 You can now view the live browser session and interact with it.
 
+## Use WebMCP with Kitesurf
+
+Kitesurf has its own WebMCP implementation and does not need a lab session. To connect a CDP client, use this WebSocket URL:
+
+```txt
+wss://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/browser-run/devtools/browser?browser=kitesurf
+```
+
+Kitesurf also supports declarative form tools, which use the `toolname` and `tooldescription` form attributes.
+
 ## Limitations
 
-- Lab sessions use Chrome 146 beta, which may have stability issues.
-- WebMCP APIs (`navigator.modelContext`, `navigator.modelContextTesting`) only work in lab sessions.
+- Lab sessions use experimental Chrome features, which may have stability issues.
+- Kitesurf does not implement the WebMCP `tools` permissions policy or origin-based tool filtering.
+- Kitesurf does not expose tools registered in iframe or popup pages through CDP.
+- Kitesurf sessions do not appear in `wrangler browser list` and have no live view. When an agent uses Chrome DevTools MCP with Kitesurf, you cannot confirm tools that wait for user interaction, such as `complete_booking`. To confirm these tools, run them manually from the DevTools **WebMCP** panel in the [Kitesurf playground](https://kitesurf.dev/).
 - Lab sessions count against your regular [rate limits](/browser-run/limits/) and [pricing](/browser-run/pricing/).
-- The `lab` parameter is not yet supported in `@cloudflare/puppeteer` or `@cloudflare/playwright`. Acquire the session manually and connect with `sessionId`.
 
 ## More resources
 

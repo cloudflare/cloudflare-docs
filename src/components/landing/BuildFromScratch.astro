@@ -3,8 +3,12 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import CommandBlock from "./CommandBlock.astro";
 import CornerMarks from "@/components/CornerMarks.astro";
 import { LinkButton } from "@/components/ui/link-button";
+import CliPreferenceSelector from "@/components/ui/cli-preference/CliPreferenceSelector.astro";
 import SectionHeading from "./SectionHeading.astro";
 import TabBar from "./TabBar.astro";
+
+const sectionId = "build";
+const headingId = `${sectionId}-heading`;
 
 const primitives = [
 	{
@@ -41,6 +45,7 @@ const primitives = [
 		description:
 			"Run AI inference globally with one API call, build agents, and search across your data — no GPUs to manage, no capacity planning.",
 		command: "npx wrangler ai models",
+		cfCommand: "cf ai run @cf/meta/llama-3.1-8b-instruct --help",
 		cta: { label: "Browse available models", href: "/workers-ai/models/" },
 		tags: [
 			{ label: "Workers AI", href: "/workers-ai/" },
@@ -62,10 +67,12 @@ const primitives = [
 		description:
 			"Serverless SQL, globally distributed key-value, and global database acceleration — query directly from Workers with no connection management.",
 		command: "npx wrangler d1 create my-database",
+		cfCommand: "cf d1 --help",
 		cta: { label: "Get started with D1", href: "/d1/get-started/" },
 		tags: [
 			{ label: "R2", href: "/r2/" },
-			{ label: "Pipelines", href: "/pipelines/" },
+			{ label: "Basin", href: "/basin/" },
+			{ label: "K2", href: "/k2/" },
 			{ label: "D1", href: "/d1/" },
 			{ label: "KV", href: "/kv/" },
 			{ label: "Hyperdrive", href: "/hyperdrive/" },
@@ -96,82 +103,109 @@ const primitives = [
 ];
 ---
 
-<section class="pt-10 pb-6 lg:pt-14" aria-labelledby="build-heading" id="build">
-	<SectionHeading id="build-heading" class="mb-8">
-		Powerful primitives, seamlessly integrated
-	</SectionHeading>
+<section
+	class="pt-10 pb-6 lg:pt-14"
+	aria-labelledby={headingId}
+	id={sectionId}
+	data-nb-cli-preference-scope
+>
+	<div class="mb-8 flex flex-wrap items-center justify-between gap-4">
+		<SectionHeading id={headingId}>
+			Powerful primitives, seamlessly integrated
+		</SectionHeading>
+		<CliPreferenceSelector />
+	</div>
 
 	<div class="border-border relative overflow-visible border">
 		<CornerMarks />
 
 		<TabBar
-			name="build"
+			name={sectionId}
 			variant="underline"
 			aria-label="Build primitives"
 			tabs={primitives.map((p) => ({ id: p.id, label: p.label }))}
 		/>
 
-		{
-			primitives.map((p, i) => (
-				<div
-					role="tabpanel"
-					id={`build-panel-${p.id}`}
-					aria-labelledby={`build-tab-${p.id}`}
-					data-tabbar="build"
-					data-tab-id={p.id}
-					hidden={i !== 0}
-					class="bg-card p-5 sm:p-8"
-				>
-					<div class="w-full">
-						<div class="mb-4 flex items-center gap-3">
-							<div
-								class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
-								style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
-							>
-								<Icon name={p.icon} size="16px" />
-							</div>
-							<h3 class="text-foreground text-base leading-snug font-medium md:text-lg">
-								{p.heading}
-							</h3>
+		{primitives.map((p, i) => (
+			<div
+				role="tabpanel"
+				id={`${sectionId}-panel-${p.id}`}
+				aria-labelledby={`${sectionId}-tab-${p.id}`}
+				data-tabbar={sectionId}
+				data-tab-id={p.id}
+				hidden={i !== 0}
+				class="bg-card p-5 sm:p-8"
+			>
+				<div class="w-full">
+					<div class="mb-4 flex items-center gap-3">
+						<div
+							class="build-panel-icon flex size-8 shrink-0 items-center justify-center rounded border border-dashed"
+							style={`--build-icon-color:${p.iconColor};--build-icon-bg:${p.iconBg};--build-icon-bg-dark:${p.iconBgDark};`}
+						>
+							<Icon name={p.icon} size="16px" />
 						</div>
-						<p class="text-muted-foreground mb-6 text-sm leading-relaxed md:text-base">
-							{p.description}
-						</p>
+						<h3 class="text-foreground text-base leading-snug font-medium md:text-lg">
+							{p.heading}
+						</h3>
+					</div>
+					<p class="text-muted-foreground mb-6 text-sm leading-relaxed md:text-base">
+						{p.description}
+					</p>
 
+					{p.cfCommand ? (
+						<>
+							<div data-nb-cli-variant="wrangler">
+								<CommandBlock
+									id={`${sectionId}-cmd-${p.id}-wrangler`}
+									command={p.command}
+									rounded
+									class="mb-6 max-w-[680px]"
+								/>
+							</div>
+							<div data-nb-cli-variant="cf">
+								<CommandBlock
+									id={`${sectionId}-cmd-${p.id}-cf`}
+									command={p.cfCommand}
+									rounded
+									class="mb-6 max-w-[680px]"
+								/>
+							</div>
+						</>
+					) : (
 						<CommandBlock
-							id={`build-cmd-${p.id}`}
+							id={`${sectionId}-cmd-${p.id}`}
 							command={p.command}
 							rounded
 							class="mb-6 max-w-[680px]"
 						/>
+					)}
 
-						<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-							<LinkButton href={p.cta.href} variant="secondary" size="base">
-								{p.cta.label}
-								<Icon name="ph:arrow-right" class="h-3 w-3" />
-							</LinkButton>
-							<p class="text-muted-foreground relative top-px min-w-0 flex-1 text-sm">
-								{p.tags.map((tag, idx) => (
-									<span class="inline-flex items-center">
-										<a
-											href={tag.href}
-											class="text-foreground no-underline hover:underline hover:underline-offset-4"
-										>
-											{tag.label}
-										</a>
-										{idx < p.tags.length - 1 && (
-											<span class="text-border mx-1.5" aria-hidden="true">
-												·
-											</span>
-										)}
-									</span>
-								))}
-							</p>
-						</div>
+					<div class="flex w-full flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
+						<LinkButton href={p.cta.href} variant="secondary" size="base">
+							{p.cta.label}
+							<Icon name="ph:arrow-right" class="h-3 w-3" />
+						</LinkButton>
+						<p class="text-muted-foreground relative top-px min-w-0 flex-1 text-sm">
+							{p.tags.map((tag, idx) => (
+								<span class="inline-flex items-center">
+									<a
+										href={tag.href}
+										class="text-foreground no-underline hover:underline hover:underline-offset-4"
+									>
+										{tag.label}
+									</a>
+									{idx < p.tags.length - 1 && (
+										<span class="text-border mx-1.5" aria-hidden="true">
+											·
+										</span>
+									)}
+								</span>
+							))}
+						</p>
 					</div>
 				</div>
-			))
-		}
+			</div>
+		))}
 	</div>
 </section>
 

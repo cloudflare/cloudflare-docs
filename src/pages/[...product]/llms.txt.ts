@@ -12,9 +12,14 @@ import {
 	type LlmsIndex,
 	type LlmsSidebarOrderPart,
 } from "../../util/llms-delegation";
-import { formatPage, normalizeForIndexMd } from "../../util/llms-txt";
+import {
+	formatPage,
+	formatModel,
+	normalizeForIndexMd,
+} from "../../util/llms-txt";
 import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
 import { isDisallowedByRobots } from "../../util/robots";
+import { getLegacyModels, getResolvedModels } from "../../util/models";
 
 const DIRECTORY_PROSE_THRESHOLD = 250;
 
@@ -27,9 +32,26 @@ function isDirectoryOnlyPage(body: string): boolean {
 	return prose.trim().length <= DIRECTORY_PROSE_THRESHOLD;
 }
 
+type ResolvedModel = Awaited<ReturnType<typeof getResolvedModels>>[number];
+
+// Workers AI model pages use the last segment of the `@cf/...` name.
+const workersAiSlug = (model: ResolvedModel) => model.name.split("/").at(-1)!;
+
+function toModelEntry(slugOf: (model: ResolvedModel) => string) {
+	return (model: ResolvedModel) => ({
+		id: model.id,
+		title: model.name,
+		slug: slugOf(model),
+		description: model.description,
+		digest: model.digest,
+	});
+}
+
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 	const docs = await getCollection("docs");
+	const workersAiModels = await getLegacyModels();
+	const allModels = await getResolvedModels();
 	const documentIds = new Set(docs.map((page) => page.id));
 
 	const mapped = directory
@@ -67,10 +89,22 @@ export const getStaticPaths = (async () => {
 
 			if (pages.length === 0) return null;
 
+			// Model pages are generated from collections, not `docs`, so they have
+			// to be added to the index explicitly.
+			const models =
+				productUrl === "/workers-ai/"
+					? workersAiModels.map(toModelEntry(workersAiSlug))
+					: productUrl === "/ai/"
+						? allModels.map(toModelEntry((model) => model.slug))
+						: [];
+			models.sort((a, b) => a.title.localeCompare(b.title));
+
 			return {
 				params: { product: urlPath },
-				props: { entry, pages, navigationPages },
-				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}`,
+				props: { entry, pages, navigationPages, models },
+				// Directory-only pages are not listed, but their title and sidebar order
+				// name and place sections, so their digests must invalidate the page.
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${navigationPages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest ?? model.id).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
@@ -113,11 +147,7 @@ export const getStaticPaths = (async () => {
 		const productUrl = `/${product.params.product}/`;
 		const delegatedIndexes = getDelegatedIndexes(productUrl, indexes);
 		const cacheKey = isInDelegatingLlmsTree(productUrl)
-			? [
-					product.cacheKey,
-					product.props.navigationPages.map((page) => page.digest).join(","),
-					JSON.stringify(delegatedIndexes),
-				].join(":")
+			? [product.cacheKey, JSON.stringify(delegatedIndexes)].join(":")
 			: product.cacheKey;
 
 		return {
@@ -251,14 +281,17 @@ function buildSections(
 		sectionMap.get(sectionId)!.delegatedIndexes.push(index);
 	}
 
-	if (hasDelegation) {
-		for (const [sectionId, section] of sectionMap) {
-			const metadataPage = metadataPages.get(sectionId);
-			if (metadataPage) {
-				section.label =
-					getSidebarGroupLabel(metadataPage) ?? metadataPage.data.title;
-				section.order = getSidebarOrder(metadataPage);
-			}
+	for (const [sectionId, section] of sectionMap) {
+		// A section whose index page only renders a directory listing is left
+		// out of `pages`, but its title and sidebar order still name and place
+		// the section.
+		if (!hasDelegation && section.indexPage) continue;
+		const metadataPage = metadataPages.get(sectionId);
+		if (metadataPage) {
+			section.label = hasDelegation
+				? (getSidebarGroupLabel(metadataPage) ?? metadataPage.data.title)
+				: metadataPage.data.title;
+			section.order = getSidebarOrder(metadataPage);
 		}
 	}
 
@@ -273,7 +306,7 @@ function buildSections(
 
 export const GET: APIRoute<Props> = async ({ props, url }) => {
 	const base = url.origin;
-	const { entry, pages, navigationPages, delegatedIndexes } = props;
+	const { entry, pages, navigationPages, delegatedIndexes, models } = props;
 	const title = entry.data.entry?.title ?? entry.data.name ?? entry.id;
 	const productUrl = entry.data.entry?.url ?? `/${entry.id}/`;
 	const description = entry.data.meta?.description;
@@ -334,6 +367,13 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 						...section.children.map((child) => formatPage(base, child)),
 					);
 				}
+				if (section.id === `${prefix}/models`) {
+					lines.push(
+						...models.map((model) =>
+							formatModel(base, `/${section.id}`, model),
+						),
+					);
+				}
 				return `${heading}\n\n${lines.join("\n")}`;
 			})
 			.join("\n\n");
@@ -374,7 +414,7 @@ export const GET: APIRoute<Props> = async ({ props, url }) => {
 
 	return new Response(markdown, {
 		headers: {
-			"content-type": "text/plain",
+			"content-type": "text/plain; charset=utf-8",
 		},
 	});
 };

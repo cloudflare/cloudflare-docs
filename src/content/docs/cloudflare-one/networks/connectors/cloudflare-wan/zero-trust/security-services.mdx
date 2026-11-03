@@ -24,7 +24,7 @@ Cloudflare WAN carries three types of traffic, and different security services a
 
 ### Cloudflare Network Firewall
 
-[Cloudflare Network Firewall](/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/) provides packet-level filtering at layers 3 and 4. You define allow or block rules based on IP addresses, ports, and protocols.
+[Cloudflare Network Firewall](/cloudflare-one/traffic-controls/packet-filtering/network-firewall-overview/) provides packet-level filtering at layers 3 and 4. You define allow or block rules based on IP addresses, ports, and protocols.
 
 - **Applies to**: inbound, outbound, and east-west traffic
 - **Included with**: Cloudflare WAN by default for [standard features](/cloudflare-network-firewall/plans/)
@@ -33,7 +33,7 @@ Use Network Firewall when you need to control traffic at the packet level — fo
 
 ### Gateway (Secure Web Gateway)
 
-[Cloudflare Gateway](/cloudflare-one/traffic-policies/) inspects traffic at layers 4 through 7 and supports three policy types:
+[Cloudflare Gateway](/cloudflare-one/traffic-controls/) inspects traffic at layers 4 through 7 and supports three policy types:
 
 - **DNS policies**: Filter and log DNS queries from your sites. You configure the DNS resolver for your WAN networks to point to Gateway's resolver IPs.
 - **Network policies**: Filter TCP, UDP, and ICMP traffic based on IP, port, protocol, and identity attributes.
@@ -105,6 +105,6 @@ This means you can layer multiple security services on the same traffic flow wit
 ## Next steps
 
 - [Connect to Cloudflare Gateway with Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-gateway/): Detailed setup guide for Gateway integration with WAN traffic.
-- [Cloudflare Network Firewall](/cloudflare-one/traffic-policies/packet-filtering/network-firewall-overview/): Configure packet-level filtering rules.
+- [Cloudflare Network Firewall](/cloudflare-one/traffic-controls/packet-filtering/network-firewall-overview/): Configure packet-level filtering rules.
 - [SASE reference architecture](/reference-architecture/architectures/sase/): Explore the full architecture of Cloudflare One as a SASE platform.
 - [WAN transformation](/cloudflare-one/networks/connectors/cloudflare-wan/wan-transformation/): Plan your migration from traditional WAN to Cloudflare.

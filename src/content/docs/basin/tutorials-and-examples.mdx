@@ -1,0 +1,41 @@
+---
+title: Tutorials and examples
+description: Find Basin tutorials and examples organized by workflow goal.
+pcx_content_type: navigation
+sidebar:
+  order: 7
+products:
+  - basin
+---
+
+Use these guides to build workflows or connect existing tools.
+
+## Build streaming workflows
+
+| Goal                                | Resource                                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| Explore ingestion examples          | [Basin Pipelines examples](/basin-pipelines/examples/)                           |
+| Send one stream to several tables   | [Fan out the Bluesky firehose](/basin-pipelines/examples/bluesky-firehose-fanout/) |
+| Build a complete analytics workflow | [Build an end-to-end data pipeline](/basin-sql/tutorials/end-to-end-pipeline/)     |
+
+## Connect an Iceberg engine
+
+Choose a configuration example for your existing engine:
+
+| Goal                         | Resource                                                                                                                               |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Use a local SQL engine       | [DuckDB](/basin-catalog/config-examples/duckdb/)                                                                                     |
+| Use a distributed SQL engine | [Trino](/basin-catalog/config-examples/trino/) or [StarRocks](/basin-catalog/config-examples/starrocks/)                           |
+| Use Python                   | [PyIceberg](/basin-catalog/config-examples/pyiceberg/) or [Apache Spark with Python](/basin-catalog/config-examples/spark-python/) |
+| Use Scala                    | [Apache Spark with Scala](/basin-catalog/config-examples/spark-scala/)                                                               |
+| Use a data warehouse         | [Snowflake](/basin-catalog/config-examples/snowflake/)                                                                               |
+
+For all supported examples, refer to [Connect to Iceberg engines](/basin-catalog/config-examples/).
+
+## Query with Basin SQL
+
+| Goal                                  | Resource                                                                         |
+| ------------------------------------- | -------------------------------------------------------------------------------- |
+| Run a first Basin SQL query         | [Get started with Basin SQL](/basin-sql/get-started/)                        |
+| Browse guided SQL workflows           | [Basin SQL tutorials](/basin-sql/tutorials/)                                 |
+| Build a transaction analysis workflow | [Build an end-to-end data pipeline](/basin-sql/tutorials/end-to-end-pipeline/) |

@@ -1,0 +1,31 @@
+---
+title: Manage Email Routing rules with Wrangler
+description: Define the email addresses handled by a Worker and manage their Email Routing rules from Wrangler configuration.
+products:
+  - email-service
+  - workers
+date: 2026-09-04
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now manage Email Routing rules that route emails to Workers from your Wrangler configuration. Add literal addresses or a catch-all address to the top-level `addresses` field:
+
+<WranglerConfig>
+
+```toml
+name = "invoice-handler"
+main = "src/index.ts"
+compatibility_date = "$today"
+addresses = ["invoice@yourdomain.com"]
+```
+
+</WranglerConfig>
+
+When you run `wrangler deploy`, Wrangler creates rules for new addresses, updates existing rules managed by the Worker, and removes managed rules that are no longer in the configuration. Wrangler shows the planned changes and asks for confirmation before applying potentially destructive changes.
+
+Email Routing rules created by Wrangler also appear in the dashboard but with an icon that identifies them.
+
+![Email Routing rule created by Wrangler in dashboard](~/assets/images/changelog/email-service/wrangler-email-routing-rules-dash.png)
+
+Refer to [Configure rules with Wrangler](/email-service/configuration/email-routing-addresses/#configure-rules-with-wrangler) for more information.

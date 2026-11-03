@@ -25,7 +25,7 @@ This means that:
 
 ### Resolution
 
-When troubleshooting a custom rule, check whether a rewrite rule already changed the URL before WAF evaluation. You can use [Trace](/rules/trace-request/) to check the evaluation order of your rules based on an example request.
+When troubleshooting a custom rule, check whether a rewrite rule already changed the URL before WAF evaluation. You can use [Rules simulator](/rules/simulator/) to check the evaluation order of your rules based on an example request.
 
 For more information, refer to the request execution order in [Phases list](/ruleset-engine/reference/phases-list/#application-layer).
 
@@ -81,4 +81,4 @@ When a WAF decision looks incorrect:
 2. Check for matching IP Access rules.
 3. Confirm whether the request was expected to stop in the custom rules phase or skip later phases.
 4. Review whether a managed rule still ran after a custom rule match.
-5. Use [Trace](/rules/trace-request/) when available to confirm the actual phase-by-phase result.
+5. Use [Rules simulator](/rules/simulator/) when available to confirm the actual phase-by-phase result.

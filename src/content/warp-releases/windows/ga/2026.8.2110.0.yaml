@@ -1,0 +1,8 @@
+releaseNotes: This hotfix resolves an issue where the client could repeatedly
+  disconnect and reconnect when a split tunnel configuration with hostname-based
+  entries failed to apply.
+version: 2026.8.2110.0
+releaseDate: 2026-10-12T19:28:14.968Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2026.8.2110.0
+packageSize: 60100608
+platformName: Windows

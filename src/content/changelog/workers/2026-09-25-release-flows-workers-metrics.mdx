@@ -1,0 +1,25 @@
+---
+title: See every release and gradual deployment on Workers Metrics charts
+description: Workers Metrics charts now show all releases in the selected time range, including each traffic allocation change in a gradual deployment.
+products:
+  - workers
+date: 2026-09-25
+---
+
+[Workers Metrics](/workers/observability/metrics-and-analytics/) charts now show every release in the selected time range, including the full progression of [gradual deployments](/workers/versions-and-deployments/gradual-deployments/). This makes it easier to correlate changes in memory, CPU time, errors, or latency with the code that was serving traffic.
+
+![Memory usage chart showing a gradual deployment as a shaded rollout band](~/assets/images/changelog/workers/observability/2026-09-25-release-flow-memory-usage.png)
+
+A gradual deployment appears as a single rollout across the chart, with shading that increases as more traffic moves to the new version. Hover over a rollout to see the previous and new versions, the rollout duration, and the traffic percentage configured at each step.
+
+![Invocations chart showing traffic shifting from the previous version to the new version during a gradual deployment](~/assets/images/changelog/workers/observability/2026-09-25-release-flow-invocations.png)
+
+Use these annotations to:
+
+- **Find when a regression started** — See which traffic percentage was configured when errors, latency, CPU time, or wall time changed.
+- **Compare rollout stages** — Check whether a metric changed as more traffic moved to the new version.
+- **Confirm rollbacks** — Rollbacks appear as separate release events, so you can check whether metrics recovered after a rollback.
+
+Direct deployments that send 100% of traffic to a single version still appear as individual markers. Nearby direct deployments are grouped to reduce visual clutter. Versions that are only uploaded, or only configured at 0%, do not appear on metrics charts.
+
+To view release annotations, open the **Metrics** tab for your [Worker](https://dash.cloudflare.com/?to=/:account/workers/services/view/:worker/production/metrics).

@@ -1,0 +1,551 @@
+---
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+import { Button } from "~/components/ui/button";
+import { LayerCard, LayerCardHeader } from "~/components/ui/layer-card";
+import { buildAnnotatedCategories } from "./annotated-config";
+import { buildAnnotatedSnippet } from "./annotated-snippet";
+import { CONFIG_SOURCE, type Category } from "./config-examples";
+
+interface Props {
+	/** Category selected on first render. Ignored when `code` is set. */
+	category?: Category;
+	/** Heading level for each category when JavaScript is unavailable. */
+	headingLevel?: 2 | 3 | 4 | 5;
+	/** Prefix for element IDs and deep links. Must be unique on the page. */
+	id?: string;
+	/**
+	 * A complete `cloudflare.config.ts` example to annotate instead of the
+	 * category tabs. It cannot contain backticks or `${` when written as an
+	 * MDX template literal. Requires an explicit `id`.
+	 */
+	code?: string;
+	/** File name shown above a `code` example. */
+	filename?: string;
+}
+
+const {
+	category = "config",
+	headingLevel = 3,
+	id = "config-reference",
+	code,
+	filename = "cloudflare.config.ts",
+} = Astro.props;
+
+if (code !== undefined && !Astro.props.id) {
+	throw new Error(
+		"AnnotatedConfigExplorer: pass a unique `id` with `code` so that deep links do not collide.",
+	);
+}
+const snippet =
+	code === undefined ? undefined : buildAnnotatedSnippet(code, id);
+if (snippet && !snippet.code) {
+	throw new Error(`AnnotatedConfigExplorer "${id}": \`code\` is empty.`);
+}
+const categories = snippet ? [] : buildAnnotatedCategories(id);
+const panels = snippet
+	? [
+			{
+				id: "snippet",
+				label: filename,
+				code: snippet.code,
+				lines: snippet.lines,
+			},
+		]
+	: categories;
+const selected = categories.some((entry) => entry.id === category)
+	? category
+	: "config";
+const Heading = `h${headingLevel}` as "h2" | "h3" | "h4" | "h5";
+const helpId = `${id}-help`;
+const tabClass =
+	"text-foreground/75 hover:bg-accent hover:text-foreground aria-selected:bg-card aria-selected:text-foreground aria-selected:ring aria-selected:ring-muted-foreground focus-visible:outline-ring m-0 inline-flex cursor-pointer items-center gap-1.5 rounded-md border-0 bg-transparent px-2 py-0.5 text-xs leading-5 font-medium whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-2";
+---
+
+<cfdocs-annotated-config class={snippet ? "ace ace-snippet" : "ace"} id={id}>
+	{snippet ? (
+		<p class="sr-only" id={helpId}>
+			Select a highlighted line to show its type and description below it.
+		</p>
+	) : (
+		<div class="ace-header">
+			<p class="ace-help" id={helpId}>
+				Select a highlighted line to show its type and description below it.
+			</p>
+			<p class="ace-source">
+				Generated from <code>{CONFIG_SOURCE.package}</code>
+				{CONFIG_SOURCE.version}
+			</p>
+		</div>
+	)}
+
+	<LayerCard class="bg-card">
+		<LayerCardHeader
+			class={`${snippet ? "ace-filebar" : "ace-bar"} flex-wrap justify-between bg-[var(--nb-surface-sunken)]`}
+		>
+			{snippet ? (
+				<span class="ace-filename">{filename}</span>
+			) : (
+				<div
+					class="flex flex-wrap gap-1"
+					role="tablist"
+					aria-label="Configuration categories"
+					data-ace-tablist
+				>
+					{categories.map((entry) => (
+						<button
+							type="button"
+							role="tab"
+							class={tabClass}
+							id={`${id}-tab-${entry.id}`}
+							aria-controls={`${id}-panel-${entry.id}`}
+							aria-selected={entry.id === selected ? "true" : "false"}
+							tabindex={entry.id === selected ? 0 : -1}
+						>
+							{entry.label}
+							<span class="font-normal tabular-nums">
+								{entry.count}
+								<span class="sr-only"> options</span>
+							</span>
+						</button>
+					))}
+				</div>
+			)}
+			<div class="ms-auto flex gap-1">
+				<Button size="sm" variant="ghost" class="me-0" data-ace-expand hidden>
+					<Icon
+						name="ph:arrows-out-line-vertical"
+						class="h-3.5 w-3.5"
+						aria-hidden="true"
+						data-ace-icon="expand"
+					/>
+					<Icon
+						name="ph:arrows-in-line-vertical"
+						class="hidden h-3.5 w-3.5"
+						aria-hidden="true"
+						data-ace-icon="collapse"
+					/>
+					<span data-ace-label>Expand all</span>
+				</Button>
+				<Button size="sm" variant="ghost" data-ace-copy hidden>
+					<Icon
+						name="ph:copy"
+						class="h-3.5 w-3.5"
+						aria-hidden="true"
+						data-ace-icon="copy"
+					/>
+					<Icon
+						name="ph:check"
+						class="hidden h-3.5 w-3.5"
+						aria-hidden="true"
+						data-ace-icon="copied"
+					/>
+					<span data-ace-label>Copy</span>
+				</Button>
+			</div>
+		</LayerCardHeader>
+		{panels.map((entry) => (
+			<section
+				class="ace-panel"
+				data-ace-panel
+				id={snippet ? undefined : `${id}-panel-${entry.id}`}
+				role={snippet ? undefined : "tabpanel"}
+				aria-labelledby={snippet ? undefined : `${id}-tab-${entry.id}`}
+				hidden={snippet || entry.id === selected ? undefined : "until-found"}
+			>
+				{!snippet && <Heading class="ace-panel-heading">{entry.label}</Heading>}
+				<div class="ace-editor bg-card ring-border relative overflow-hidden rounded-lg ring">
+					<div
+						class="ace-code"
+						role="group"
+						aria-label={
+							snippet
+								? `Annotated ${filename}`
+								: `${entry.label} example in cloudflare.config.ts`
+						}
+						aria-describedby={helpId}
+					>
+						{entry.lines.map((line) =>
+							line.id ? (
+								<details
+									class="ace-line ace-annotated"
+									id={line.id}
+									style={`--ace-indent: ${line.indent}`}
+								>
+									<summary class="ace-summary">
+										<span class="ace-marker" aria-hidden="true" />
+										<span class="ace-text" set:html={line.html} />
+										<span class="sr-only">
+											{` (${line.references.map((ref) => ref.name).join(", ")} reference)`}
+										</span>
+									</summary>
+									<div class="ace-note">
+										{line.references.map((ref) => (
+											<div class="ace-ref">
+												<p class="ace-ref-head">
+													<code class="ace-ref-name">{ref.name}</code>
+													<span class="ace-kind">{ref.kind}</span>
+													<a class="ace-permalink" href={`#${line.id}`}>
+														Link<span class="sr-only"> to {ref.name}</span>
+													</a>
+												</p>
+												<code class="ace-signature">{ref.signature}</code>
+												<p
+													class="ace-description"
+													set:html={ref.descriptionHtml}
+												/>
+												{ref.defaultValue && (
+													<p class="ace-default">
+														Default: <code>{ref.defaultValue}</code>
+													</p>
+												)}
+												{ref.options.length > 0 && (
+													<details class="ace-options">
+														<summary>Options ({ref.options.length})</summary>
+														<dl>
+															{ref.options.map((option) => (
+																<div class="ace-option">
+																	<dt>
+																		<code>{option.signature}</code>
+																	</dt>
+																	<dd set:html={option.descriptionHtml} />
+																</div>
+															))}
+														</dl>
+													</details>
+												)}
+												{ref.links.length > 0 && (
+													<ul class="ace-links">
+														{ref.links.map((link) => (
+															<li>
+																<a href={link.url}>{link.label}</a>
+															</li>
+														))}
+													</ul>
+												)}
+											</div>
+										))}
+									</div>
+								</details>
+							) : (
+								<div class="ace-line" style={`--ace-indent: ${line.indent}`}>
+									<span class="ace-marker" aria-hidden="true" />
+									<span class="ace-text" set:html={line.html || " "} />
+								</div>
+							),
+						)}
+					</div>
+					<template data-ace-source>{entry.code}</template>
+				</div>
+			</section>
+		))}
+	</LayerCard>
+	<p class="sr-only" aria-live="polite" data-ace-status></p>
+	{/* These rules only match category mode. Snippet mode has nothing hidden. */}
+	<noscript>
+		<style>
+			.ace-bar {
+				display: none !important;
+			}
+			.ace-panel[hidden] {
+				display: block !important;
+				content-visibility: visible !important;
+			}
+			.ace-panel-heading {
+				display: block !important;
+			}
+		</style>
+	</noscript>
+</cfdocs-annotated-config>
+
+<script>
+	import "./annotated-config-explorer";
+</script>
+
+<style>
+	.ace {
+		--ace-gutter: 1.5rem;
+		display: block;
+		margin-block: 1.5rem;
+		color: var(--nb-foreground);
+		container-type: inline-size;
+	}
+
+	.ace-header {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 0.75rem;
+	}
+
+	.ace-header p {
+		margin: 0;
+	}
+
+	.ace-help {
+		font-size: 0.9375rem;
+	}
+
+	.ace-source {
+		color: var(--nb-muted-foreground);
+		font-size: 0.8125rem;
+	}
+
+	.ace-source code {
+		font-size: inherit;
+	}
+
+	.ace-filename {
+		color: var(--nb-foreground);
+		font-family: var(--nb-font-mono);
+		font-weight: 400;
+		overflow-wrap: anywhere;
+	}
+
+	.ace-summary:focus-visible,
+	.ace-options summary:focus-visible {
+		outline: 2px solid var(--nb-primary);
+		outline-offset: 2px;
+	}
+
+	.ace-panel[hidden="until-found"] {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	.ace-panel-heading {
+		display: none;
+		margin: 1rem 0.75rem 0.5rem;
+		font-size: 1rem;
+	}
+
+	.ace-code {
+		position: relative;
+		block-size: clamp(16rem, 65vh, 40rem);
+		block-size: clamp(16rem, 65svh, 40rem);
+		overflow-y: auto;
+		padding: 0.5rem 0;
+		font-family: var(--nb-font-mono);
+		font-size: 0.8125rem;
+		font-variant-ligatures: none;
+		line-height: 1.5rem;
+		tab-size: 2;
+	}
+
+	.ace-snippet .ace-code {
+		block-size: auto;
+	}
+
+	.ace-line {
+		display: block;
+		padding-inline-start: calc(var(--ace-indent) * 1ch);
+	}
+
+	.ace-summary,
+	div.ace-line {
+		display: grid;
+		grid-template-columns: var(--ace-gutter) minmax(0, 1fr);
+		padding-inline-end: 0.75rem;
+	}
+
+	.ace-summary {
+		margin-inline-start: calc(var(--ace-indent) * -1ch);
+		padding-inline-start: calc(var(--ace-indent) * 1ch);
+		list-style: none;
+		cursor: pointer;
+	}
+
+	.ace-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.ace-summary:hover,
+	.ace-annotated[open] > .ace-summary {
+		background: var(--nb-accent);
+	}
+
+	.ace-text {
+		padding-inline-start: 2ch;
+		text-indent: -2ch;
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+	}
+
+	.ace-marker {
+		align-self: start;
+		width: 1rem;
+		height: 1lh;
+		margin-inline-start: 0.25rem;
+	}
+
+	.ace-annotated .ace-marker {
+		background: var(--nb-muted-foreground);
+		mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Cpath d='m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z'/%3E%3C/svg%3E")
+			center / 0.75rem no-repeat;
+	}
+
+	.ace-annotated[open] > .ace-summary .ace-marker {
+		rotate: 90deg;
+		background: var(--nb-foreground);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.ace-marker {
+			transition: rotate 150ms ease-out;
+		}
+	}
+
+	.ace-text :global(.ace-token) {
+		border-bottom: 1px dashed var(--nb-orange);
+		color: var(--nb-orange);
+		font-weight: 600;
+	}
+
+	.ace-text :global(.ace-string) {
+		color: var(--nb-cyan);
+		white-space: nowrap;
+	}
+
+	.ace-text :global(.ace-keyword) {
+		color: var(--nb-info);
+	}
+
+	.ace-text :global(.ace-comment) {
+		color: var(--nb-muted-foreground);
+		font-style: italic;
+	}
+
+	.ace-note {
+		margin: 0.25rem 0.75rem 0.75rem var(--ace-gutter);
+		padding: 0.75rem 1rem;
+		border-inline-start: 3px solid var(--nb-orange);
+		border-radius: 0 0.5rem 0.5rem 0;
+		background: var(--nb-surface-sunken);
+		font-family: var(--nb-font-sans);
+		font-size: 0.875rem;
+		line-height: 1.55;
+	}
+
+	.ace-ref + .ace-ref {
+		margin-top: 0.75rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid var(--nb-border);
+	}
+
+	.ace-ref p,
+	.ace-ref dl,
+	.ace-ref ul {
+		margin: 0;
+	}
+
+	.ace-ref-head {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 0.5rem;
+		align-items: baseline;
+	}
+
+	.ace-ref-name {
+		font-weight: 600;
+	}
+
+	.ace-kind {
+		padding: 0 0.5rem;
+		border: 1px solid var(--nb-border-strong);
+		border-radius: 999px;
+		color: var(--nb-foreground);
+		font-size: 0.75rem;
+	}
+
+	.ace-permalink {
+		margin-inline-start: auto;
+		font-size: 0.8125rem;
+	}
+
+	.ace-signature {
+		display: block;
+		font-variant-ligatures: none;
+		margin: 0.375rem 0;
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+		font-size: 0.8125rem;
+	}
+
+	.ace-default {
+		margin-top: 0.375rem !important;
+	}
+
+	.ace-options {
+		margin-top: 0.5rem;
+	}
+
+	.ace-options summary {
+		width: fit-content;
+		font-weight: 500;
+		cursor: pointer;
+	}
+
+	.ace-option {
+		margin-top: 0.5rem;
+	}
+
+	.ace-option dt code {
+		white-space: pre-wrap;
+		overflow-wrap: anywhere;
+		font-size: 0.8125rem;
+	}
+
+	.ace-option dd {
+		margin: 0.125rem 0 0;
+		color: var(--nb-muted-foreground);
+	}
+
+	.ace-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
+		margin-top: 0.5rem !important;
+		padding: 0;
+		list-style: none;
+	}
+
+	.ace-note :global(a) {
+		color: var(--nb-foreground);
+		text-decoration: underline;
+		text-decoration-color: var(--nb-primary);
+		text-decoration-thickness: 2px;
+		text-underline-offset: 3px;
+		overflow-wrap: anywhere;
+	}
+
+	.ace-note :global(a:hover) {
+		text-decoration-color: currentColor;
+	}
+
+	@container (max-width: 30rem) {
+		.ace {
+			--ace-gutter: 1.25rem;
+		}
+
+		.ace-code {
+			font-size: 0.75rem;
+		}
+
+		.ace-note {
+			margin-inline-end: 0.5rem;
+			padding: 0.625rem 0.75rem;
+		}
+	}
+
+	@media (forced-colors: active) {
+		.ace-annotated .ace-marker {
+			background: CanvasText;
+		}
+
+		[role="tab"][aria-selected="true"] {
+			outline: 2px solid Highlight;
+		}
+	}
+</style>

@@ -37,6 +37,10 @@ Additionally, if you are defining a CSP via HTML `meta` tag, you must either tur
 
 When turned on, Cloudflare will check HTTP(S) proxied traffic for `script` tags with an `src` attribute pointing to a potentially insecure service and replace the `src` value with the equivalent link hosted under [cdnjs](https://cdnjs.cloudflare.com/).
 
+:::caution
+Replace insecure JavaScript libraries modifies eligible HTML responses. Cloudflare may decompress and recompress the response. When the transformation runs, Cloudflare removes headers such as `ETag` and `Content-Length`. For more information, refer to [Notes about end-to-end compression](/speed/optimization/content/compression/#notes-about-end-to-end-compression).
+:::
+
 The rewritten URL will keep the original URL scheme (`http://` or `https://`).
 
 For `polyfill.io` URL rewrites, all `3.*` versions of the `polyfill` library are supported under the `/v3` path. Additionally, the `/v2` path is also supported. If an unknown version is requested under the `/v3` path, Cloudflare will rewrite the URL to use the latest `3.*` version of the library (currently `3.111.0`).

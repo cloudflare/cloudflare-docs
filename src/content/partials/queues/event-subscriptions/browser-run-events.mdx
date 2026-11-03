@@ -1,0 +1,118 @@
+import { PackageManagers } from "~/components";
+
+[Browser Run crawl](/browser-run/quick-actions/crawl-endpoint/) events are account-level. A subscription receives events for all crawl jobs in your account and does not require a source-specific selector.
+
+#### Subscribe to events
+
+##### Dashboard
+
+Follow the [subscription creation procedure](/queues/event-subscriptions/manage-event-subscriptions/#create-subscription) and select **Browser Run** as the source.
+
+##### Wrangler
+
+To subscribe with Wrangler, run the following command:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="queues subscription create <QUEUE_NAME> --source browserRun --events crawl.started,crawl.updated,crawl.finished"
+/>
+
+#### `crawl.started`
+
+Triggered when a crawl job starts.
+
+**Example:**
+
+```json
+{
+	"type": "cf.browserRun.crawl.started",
+	"source": {
+		"type": "browserRun"
+	},
+	"payload": {
+		"jobId": "crawl-job-1234",
+		"createdAt": "2026-09-23T14:00:00.000Z",
+		"crawlConfig": {
+			"url": "https://example.com",
+			"limit": 100,
+			"depth": 2,
+			"render": true,
+			"formats": ["markdown", "html"],
+			"source": "all"
+		}
+	},
+	"metadata": {
+		"accountId": "00000000000000000000000000000000",
+		"eventSubscriptionId": "11111111111111111111111111111111",
+		"eventSchemaVersion": 1,
+		"eventTimestamp": "2026-09-23T14:00:00.000Z"
+	}
+}
+```
+
+#### `crawl.updated`
+
+Triggered when a crawled URL changes status.
+
+**Example:**
+
+```json
+{
+	"type": "cf.browserRun.crawl.updated",
+	"source": {
+		"type": "browserRun"
+	},
+	"payload": {
+		"jobId": "crawl-job-1234",
+		"url": "https://example.com/docs/",
+		"crawlStatus": "completed",
+		"httpStatus": 200
+	},
+	"metadata": {
+		"accountId": "00000000000000000000000000000000",
+		"eventSubscriptionId": "11111111111111111111111111111111",
+		"eventSchemaVersion": 1,
+		"eventTimestamp": "2026-09-23T14:02:00.000Z"
+	}
+}
+```
+
+#### `crawl.finished`
+
+Triggered when a crawl job finishes.
+
+**Example:**
+
+```json
+{
+	"type": "cf.browserRun.crawl.finished",
+	"source": {
+		"type": "browserRun"
+	},
+	"payload": {
+		"jobId": "crawl-job-1234",
+		"jobStatus": "completed",
+		"createdAt": "2026-09-23T14:00:00.000Z",
+		"finishedAt": "2026-09-23T14:05:00.000Z",
+		"total": 3,
+		"completed": 2,
+		"errored": 1,
+		"skipped": 0,
+		"crawlConfig": {
+			"url": "https://example.com",
+			"limit": 100,
+			"depth": 2,
+			"render": true,
+			"formats": ["markdown", "html"],
+			"source": "all"
+		}
+	},
+	"metadata": {
+		"accountId": "00000000000000000000000000000000",
+		"eventSubscriptionId": "11111111111111111111111111111111",
+		"eventSchemaVersion": 1,
+		"eventTimestamp": "2026-09-23T14:05:00.000Z"
+	}
+}
+```

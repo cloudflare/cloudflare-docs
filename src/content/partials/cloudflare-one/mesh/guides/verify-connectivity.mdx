@@ -1,0 +1,35 @@
+---
+{}
+---
+
+import { TabItem, Tabs } from "~/components";
+
+## Verify connectivity
+
+Test the application protocol that you intend to use. For example, test a service that listens on TCP port `22`:
+
+<Tabs syncKey="os">
+<TabItem label="macOS / Linux">
+
+```sh
+nc -vz <DESTINATION-IP> 22
+```
+
+</TabItem>
+<TabItem label="Windows (PowerShell)">
+
+```powershell
+Test-NetConnection <DESTINATION-IP> -Port 22
+```
+
+</TabItem>
+<TabItem label="iOS / Android">
+
+For an HTTP service, open `http://<DESTINATION-IP>:<PORT>` in a browser.
+
+</TabItem>
+</Tabs>
+
+Replace `<DESTINATION-IP>` with the destination Mesh IP or private IP. Replace port `22` or `<PORT>` with the port used by your service.
+
+If you turned on the ICMP Gateway proxy, you can also run `ping <DESTINATION-IP>` as a diagnostic check. A connected participant status does not confirm that the application protocol can reach the destination.

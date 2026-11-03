@@ -57,6 +57,14 @@ This is only useful if you are creating buckets on demand because you do not kno
 
 Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
 
+### Conditional operations in `PutObject`
+
+`PutObject` supports the standard S3 conditional headers `If-Match`, `If-None-Match`, `If-Modified-Since`, and `If-Unmodified-Since`. `If-None-Match: *` in particular is commonly used to implement "create-once" semantics: the write only succeeds if the key does not exist yet.
+
+These conditions are evaluated atomically, as part of the same write that commits the object. If two or more clients concurrently issue `PutObject` with `If-None-Match: *` for a previously absent key, at most one request succeeds and every other request fails with a `412 PreconditionFailed` error code. Competing conditional writes can never both observe success.
+
+A negative read (`NoSuchKey`) is not proof that a prior write failed if that write's outcome is unknown — an in-flight write may still commit after the read returns. Refer to [Consistency model](/r2/reference/consistency/#negative-reads-and-in-flight-writes) for details.
+
 ## CopyObject
 
 ### MERGE metadata directive

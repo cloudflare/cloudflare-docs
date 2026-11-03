@@ -26,7 +26,7 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 ## Manage access to `workers.dev`
 
-When enabled, your `workers.dev` URL is available publicly. To require visitors to sign in before they can access a `workers.dev` URL, use [Cloudflare Access](/workers/configuration/cloudflare-access/).
+When enabled, your `workers.dev` URL is available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing [Version URLs](/workers/versions-and-deployments/version-urls/), [Preview URLs](/workers/previews/), and Deployment URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
 
 Access can protect one Worker's production `workers.dev` URL, preview URLs, or both. You can also protect all Workers or all Worker previews in an account.
 
@@ -61,7 +61,7 @@ To disable the `workers.dev` route for a Worker, include the following in your W
 
 </WranglerConfig>
 
-When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Preview URLs default to matching your `workers_dev` setting unless explicitly configured. If you explicitly enabled Preview URLs, [disable them separately](/workers/versions-and-deployments/preview-urls/#toggle-preview-urls-enable-or-disable).
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable [Version URLs](/workers/versions-and-deployments/version-urls/), [Preview URLs](/workers/previews/), or Deployment URLs.
 
 If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your [Wrangler configuration file](/workers/wrangler/configuration/), the value of `workers_dev` will be inferred as `false` on the next deploy.
 

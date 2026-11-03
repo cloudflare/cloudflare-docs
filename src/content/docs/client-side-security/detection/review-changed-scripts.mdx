@@ -17,6 +17,12 @@ Only available to customers with Client-Side Security Advanced.
 
 Cloudflare analyzes the JavaScript dependencies in the pages of your domain over time.
 
+## How changes are detected
+
+Cloudflare parses each script into an abstract syntax tree (AST) and hashes its structure. A script is marked as changed when this structural hash changes.
+
+The comparison does not use the raw file bytes. Changes that preserve the same AST structure, such as formatting changes or changing only numeric literal values, do not trigger a code change alert.
+
 You can configure a notification for [code change alerts](/client-side-security/alerts/alert-types/#code-change-alert) to receive a daily notification about changed scripts in your domain.
 
 When you receive such a notification:

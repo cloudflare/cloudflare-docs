@@ -6,10 +6,13 @@
 // Use from MDX:
 //   <RandomPrompt />
 import { Code } from "~/components";
+import { seededRandom } from "~/util/stable-id";
 import { SHARED_PROMPTS } from "./prompts";
 
 const prompt =
-	SHARED_PROMPTS[Math.floor(Math.random() * SHARED_PROMPTS.length)];
+	SHARED_PROMPTS[
+		Math.floor(seededRandom(Astro.url.pathname)() * SHARED_PROMPTS.length)
+	];
 ---
 
 <Code code={prompt} lang="txt" />

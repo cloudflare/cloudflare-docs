@@ -1,7 +1,13 @@
 {
+    "name": "@cf/lykon/dreamshaper-8-lcm",
+    "properties": [
+        {
+            "property_id": "info",
+            "value": "https://huggingface.co/Lykon/DreamShaper"
+        }
+    ],
     "id": "7912c0ab-542e-44b9-b9ee-3113d226a8b5",
     "source": 1,
-    "name": "@cf/lykon/dreamshaper-8-lcm",
     "description": "Stable Diffusion model that has been fine-tuned to be better at photorealism without sacrificing range.",
     "task": {
         "id": "3d6e1f35-341b-4915-a6c8-9a7142a9033a",
@@ -10,12 +16,6 @@
     },
     "created_at": "2024-02-27 17:40:38.881",
     "tags": [],
-    "properties": [
-        {
-            "property_id": "info",
-            "value": "https://huggingface.co/Lykon/DreamShaper"
-        }
-    ],
     "schema": {
         "input": {
             "type": "object",
@@ -92,5 +92,6 @@
             "format": "binary",
             "description": "The generated image in PNG format"
         }
-    }
+    },
+    "deprecated": false
 }

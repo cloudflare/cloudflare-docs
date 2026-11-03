@@ -1,0 +1,197 @@
+---
+pcx_content_type: how-to
+title: Query the API
+description: Send SQL statements, parameters, and time ranges to the SQL API.
+sidebar:
+  order: 3
+---
+
+Send a `GET` or `POST` request to:
+
+```txt
+https://api.cloudflare.com/client/v4/analytics/sql
+```
+
+Include an `Authorization: Bearer <API_TOKEN>` header with every request.
+
+Cloudflare recommends `POST` with a JSON body. `POST` also accepts raw SQL, and `GET` accepts SQL in the `query` query parameter.
+
+## JSON request
+
+The recommended request format is a JSON object:
+
+```json
+{
+	"query": "SELECT timestamp, clientRequestHttpHost FROM events.httpRequests WHERE accountTag = $1 AND timestamp >= $2 LIMIT 100",
+	"params": ["<ACCOUNT_TAG>", "2026-09-15T00:00:00Z"]
+}
+```
+
+The request object supports the following fields:
+
+| Field        | Type            | Required | Description                                              |
+| ------------ | --------------- | -------- | -------------------------------------------------------- |
+| `query`      | string          | Yes      | One SQL `SELECT` statement.                              |
+| `params`     | array or object | No       | Values for positional or named placeholders in `query`.  |
+| `scope`      | object          | No       | An account or zone scope supplied separately from SQL.   |
+| `time_range` | object          | No       | A time range supplied separately from the SQL statement. |
+
+## Parameters
+
+Use parameters instead of inserting user-provided values into SQL text. Parameters keep values separate from SQL syntax.
+
+Use `$1`, `$2`, and subsequent placeholders with an array:
+
+```json
+{
+	"query": "SELECT timestamp FROM events.httpRequests WHERE accountTag = $1 AND timestamp >= $2 LIMIT 10",
+	"params": ["<ACCOUNT_TAG>", "2026-09-15T00:00:00Z"]
+}
+```
+
+Use `$name` placeholders with an object:
+
+```json
+{
+	"query": "SELECT timestamp FROM events.httpRequests WHERE accountTag = $account AND timestamp >= $start LIMIT 10",
+	"params": {
+		"account": "<ACCOUNT_TAG>",
+		"start": "2026-09-15T00:00:00Z"
+	}
+}
+```
+
+Parameter values can be strings, numbers, booleans, or `null`. The API infers the required type from the expression. Every placeholder must have a corresponding value.
+
+For `GET` and raw SQL `POST` requests, bind placeholders with URL query parameters named `param_<NAME>`. For example, `param_status=404` binds `$status`, and `param_1=404` binds `$1`. Duplicate parameter names are rejected. Do not combine URL parameters with `params` in a JSON body.
+
+## Request-level scope
+
+You can supply the account or zone scope outside the SQL statement. This allows applications to reuse SQL without embedding a tenancy predicate.
+
+Use `accountTag` for account scope:
+
+```json
+{
+	"query": "SELECT edgeResponseStatus AS status, COUNT(*) AS requests FROM events.httpRequests WHERE timestamp >= $start GROUP BY edgeResponseStatus",
+	"params": {
+		"start": "<START_TIME>"
+	},
+	"scope": {
+		"accountTag": "<ACCOUNT_TAG>"
+	}
+}
+```
+
+Use `zoneTag` for zone scope:
+
+```json
+{
+	"query": "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE timestamp >= $start",
+	"params": {
+		"start": "<START_TIME>"
+	},
+	"scope": {
+		"zoneTag": "<ZONE_TAG>"
+	}
+}
+```
+
+A query that contains `zoneTag`, including request-level zone scope, requires either **Zone Analytics Read** permission for every named zone or **Account Analytics Read** permission for their owning account.
+
+The `scope` object must contain exactly one of `accountTag` or `zoneTag`. Do not combine request-level scope with an `accountTag`, `zoneTag`, or resource tenancy predicate in SQL. The API returns HTTP `422` if the request specifies tenancy in both places.
+
+Account and zone tags must be 32-character lowercase hexadecimal strings.
+
+Request-level scope is available only with the JSON request format.
+
+## Request-level time range
+
+You can supply a time range outside the SQL statement. This is useful when an application controls the query window separately from saved SQL.
+
+```json
+{
+	"query": "SELECT edgeResponseStatus AS status, COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = $account GROUP BY edgeResponseStatus",
+	"params": {
+		"account": "<ACCOUNT_TAG>"
+	},
+	"time_range": {
+		"start": "2026-09-15T00:00:00Z",
+		"end": "2026-09-15T01:00:00Z"
+	}
+}
+```
+
+The `start` value is required. The `end` value is optional. Both bounds are inclusive.
+
+Do not combine `time_range` with a time predicate in SQL. The API rejects a request that specifies the time range in both places.
+
+## Raw SQL request
+
+The API also accepts SQL text as the request body:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/analytics/sql" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = '<ACCOUNT_TAG>' AND timestamp >= NOW() - INTERVAL '1' HOUR"
+```
+
+Raw SQL requests can use URL parameter bindings:
+
+```bash
+curl --get "https://api.cloudflare.com/client/v4/analytics/sql" \
+  --header "Authorization: Bearer <API_TOKEN>" \
+  --data-urlencode 'query=SELECT COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = $account AND timestamp >= $start' \
+  --data-urlencode "param_account=<ACCOUNT_TAG>" \
+  --data-urlencode "param_start=<START_TIME>"
+```
+
+For a raw SQL `POST`, place SQL in the request body and use the same `param_*` URL parameters for values. Use the JSON request format when an application supplies request-level scope or a time range.
+
+## Response formats
+
+Without a `FORMAT` clause, ClickHouse-backed datasets return JSON with `data`, `rows`, and `statistics`:
+
+```json
+{
+	"data": [],
+	"rows": 0,
+	"statistics": {
+		"elapsed_ms": 12,
+		"rows_read": 10000,
+		"bytes_read": 720000
+	}
+}
+```
+
+| Field                   | Type    | Description                                |
+| ----------------------- | ------- | ------------------------------------------ |
+| `data`                  | array   | Result rows represented as JSON objects.   |
+| `rows`                  | integer | Number of objects in `data`.               |
+| `statistics.elapsed_ms` | integer | Data-store execution time in milliseconds. |
+| `statistics.rows_read`  | integer | Number of rows read to execute the query.  |
+| `statistics.bytes_read` | integer | Number of bytes read to execute the query. |
+
+Execution statistics do not include queue time, retries, network transfer, or client-side processing. A value can be `0` when the data store does not report that statistic.
+
+Log Explorer-backed datasets return `data` and `rows` without `statistics`.
+
+Add one of the following clauses to the end of a query to select an explicit output format:
+
+| Clause                | Content type                | Output                                                                                                 |
+| --------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `FORMAT JSON`         | `application/json`          | JSON with typed `meta`, `data`, `rows`, `rows_before_limit_at_least`, and `statistics` for ClickHouse. |
+| `FORMAT JSONEachRow`  | `application/x-ndjson`      | One JSON object per line without a response envelope.                                                  |
+| `FORMAT TabSeparated` | `text/tab-separated-values` | Tab-separated rows without a header or response envelope.                                              |
+| `FORMAT TSV`          | `text/tab-separated-values` | Alias for `FORMAT TabSeparated`.                                                                       |
+
+For Log Explorer datasets, `FORMAT JSON` returns the same `data` and `rows` shape as the default response. It does not add ClickHouse metadata or statistics.
+
+```sql
+SELECT timestamp, edgeResponseStatus
+FROM events.httpRequests
+WHERE accountTag = '<ACCOUNT_TAG>'
+  AND timestamp >= NOW() - INTERVAL '1' HOUR
+LIMIT 10
+FORMAT JSONEachRow
+```

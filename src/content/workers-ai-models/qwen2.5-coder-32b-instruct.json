@@ -1,15 +1,5 @@
 {
-    "id": "51b71d5b-8bc0-4489-a107-95e542b69914",
-    "source": 1,
     "name": "@cf/qwen/qwen2.5-coder-32b-instruct",
-    "description": "Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen). As of now, Qwen2.5-Coder has covered six mainstream model sizes, 0.5, 1.5, 3, 7, 14, 32 billion parameters, to meet the needs of different developers. Qwen2.5-Coder brings the following improvements upon CodeQwen1.5:",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2025-02-27 00:31:43.829",
-    "tags": [],
     "properties": [
         {
             "property_id": "context_window",
@@ -35,6 +25,16 @@
             "value": "true"
         }
     ],
+    "id": "51b71d5b-8bc0-4489-a107-95e542b69914",
+    "source": 1,
+    "description": "Qwen2.5-Coder is the latest series of Code-Specific Qwen large language models (formerly known as CodeQwen). As of now, Qwen2.5-Coder has covered six mainstream model sizes, 0.5, 1.5, 3, 7, 14, 32 billion parameters, to meet the needs of different developers. Qwen2.5-Coder brings the following improvements upon CodeQwen1.5:",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2025-02-27 00:31:43.829",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -448,5 +448,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

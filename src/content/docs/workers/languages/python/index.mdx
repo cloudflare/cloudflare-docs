@@ -3,8 +3,6 @@ pcx_content_type: navigation
 title: Python Workers
 sidebar:
   order: 3
-  badge:
-    text: Beta
 head:
   - tag: title
     content: Write Cloudflare Workers in Python
@@ -43,9 +41,9 @@ sent to the Worker.
 
 In a Python Worker, this handler is placed in a `Default` class that extends the `WorkerEntrypoint` class (which you can import from the `workers` SDK module).
 
-:::caution[Python Workers are in beta.]
+:::note
 
-You must add the `python_workers` compatibility flag to your Worker, while Python Workers are in open beta.
+You must add the `python_workers` compatibility flag to your Worker.
 
 We'd love your feedback. Join the #python-workers channel in the [Cloudflare Developers Discord](https://discord.cloudflare.com/) and let us know what you'd like to see next.
 :::

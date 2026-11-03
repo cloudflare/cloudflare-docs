@@ -43,106 +43,109 @@ const { forceClient, forceAPI } = props.parse(Astro.props);
 </style>
 <div class="aig-code-example-container border">
 	<CodeSelector client:load forceClient={forceClient} forceApiType={forceAPI} />
-	{
-		(!forceClient || forceClient === "openai-js") &&
-			modelOptions.map((option) => (
-				<CodeExample
-					client:load
-					provider={option.provider}
-					clientType="openai-js"
-					keyType="stored"
-					apiType="unified"
-					forceClientType={forceClient}
-					forceApiType={forceAPI}
-				>
-					<Code
-						lang="javascript"
-						title=""
-						code={code
-							.replace("{provider}", option.provider)
-							.replace("{model}", option.model)
-							.replace("    {headerauth}\n", "")}
-					/>
-				</CodeExample>
-			))
-	}
-	{
-		(!forceClient || forceClient === "openai-js") &&
-			modelOptions.map((option) => (
-				<CodeExample
-					client:load
-					provider={option.provider}
-					clientType="openai-js"
-					keyType="in-request"
-					apiType="unified"
-					forceClientType={forceClient}
-					forceApiType={forceAPI}
-				>
-					<Code
-						lang="javascript"
-						title=""
-						code={code
-							.replace("{provider}", option.provider)
-							.replace("{model}", option.model)
-							.replace("{cf_api_token}", "{" + option.provider + "_api_token}")
-							.replace(
-								"    {headerauth}\n",
-								'  defaultHeaders: {\n      // if gateway is authenticated\n      "cf-aig-authorization": `Bearer {cf_api_token}`, \n  },\n',
-							)}
-					/>
-				</CodeExample>
-			))
-	}
-	{
-		(!forceClient || forceClient === "aisdk") &&
-			modelOptions.map((option) => (
-				<CodeExample
-					client:load
-					provider={option.provider}
-					clientType="aisdk"
-					keyType="stored"
-					apiType="unified"
-					forceClientType={forceClient}
-					forceApiType={forceAPI}
-				>
-					<Code
-						lang="javascript"
-						title=""
-						code={aiSDKUnifiedCode
-							.replaceAll("{provider}", option.provider)
-							.replaceAll("{apikey}", "")
-							.replace("{model}", option.model)}
-					/>
-				</CodeExample>
-			))
-	}
-	{
-		(!forceClient || forceClient === "aisdk") &&
-			modelOptions.map((option) => (
+	{(!forceClient || forceClient === "openai-js") &&
+		modelOptions.map((option) => (
+			<CodeExample
+				client:load
+				provider={option.provider}
+				clientType="openai-js"
+				keyType="stored"
+				apiType="unified"
+				forceClientType={forceClient}
+				forceApiType={forceAPI}
+			>
+				<Code
+					lang="javascript"
+					title=""
+					code={code
+						.replace("{provider}", option.provider)
+						.replace("{model}", option.model)
+						.replace("    {headerauth}\n", "")}
+				/>
+			</CodeExample>
+		))}
+	{(!forceClient || forceClient === "openai-js") &&
+		modelOptions.map((option) => (
+			<CodeExample
+				client:load
+				provider={option.provider}
+				clientType="openai-js"
+				keyType="in-request"
+				apiType="unified"
+				forceClientType={forceClient}
+				forceApiType={forceAPI}
+			>
+				<Code
+					lang="javascript"
+					title=""
+					code={code
+						.replace("{provider}", option.provider)
+						.replace("{model}", option.model)
+						.replace("{cf_api_token}", "{" + option.provider + "_api_token}")
+						.replace(
+							"    {headerauth}\n",
+							'  defaultHeaders: {\n      // if gateway is authenticated\n      "cf-aig-authorization": `Bearer {cf_api_token}`, \n  },\n',
+						)}
+				/>
+			</CodeExample>
+		))}
+	{(!forceClient || forceClient === "aisdk") &&
+		modelOptions.map((option) => (
+			<CodeExample
+				client:load
+				provider={option.provider}
+				clientType="aisdk"
+				keyType="stored"
+				apiType="unified"
+				forceClientType={forceClient}
+				forceApiType={forceAPI}
+			>
+				<Code
+					lang="javascript"
+					title=""
+					code={aiSDKUnifiedCode.replace("{id}", option.aiSDK.id)}
+				/>
+			</CodeExample>
+		))}
+	{(!forceClient || forceClient === "aisdk") &&
+		modelOptions
+			.filter((option) => option.aiSDK.pkg !== undefined)
+			.flatMap((option) =>
+				(["unified", "native"] as const).map((apiType) => ({
+					option,
+					apiType,
+				})),
+			)
+			.map(({ option, apiType }) => (
 				<CodeExample
 					client:load
 					provider={option.provider}
 					clientType="aisdk"
 					keyType="in-request"
-					apiType="unified"
+					apiType={apiType}
 					forceClientType={forceClient}
 					forceApiType={forceAPI}
 				>
 					<Code
 						lang="javascript"
 						title=""
-						code={aiSDKUnifiedCode
-							.replaceAll("{provider}", option.provider)
-							.replaceAll("{apikey}", "{ apiKey: '{API_KEY}' }")
+						code={aiSDKNativeCode
+							.replaceAll("{provider}", option.aiSDK.provider ?? "")
+							.replaceAll(
+								"{providerFactory}",
+								option.aiSDK.providerFactory ?? "",
+							)
+							.replace("{pkg}", option.aiSDK.pkg ?? "")
+							.replace("{apikey}", '{ apiKey: "{API_KEY}" }')
+							.replace("{vendorKey}", ', { vendorKey: "request" }')
 							.replace("{model}", option.model)}
 					/>
 				</CodeExample>
-			))
-	}
-
-	{
-		(!forceClient || forceClient === "aisdk") &&
-			modelOptions.map((option) => (
+			))}
+	{(!forceClient || forceClient === "aisdk") &&
+		modelOptions
+			.filter((option) => option.aiSDK.pkg !== undefined)
+			.map((option) => (
 				<CodeExample
 					client:load
 					provider={option.provider}
@@ -156,90 +159,64 @@ const { forceClient, forceAPI } = props.parse(Astro.props);
 						lang="javascript"
 						title=""
 						code={aiSDKNativeCode
-							.replaceAll("{provider}", option.aiSDK.provider)
-							.replaceAll("{providerFactory}", option.aiSDK.providerFactory)
-							.replaceAll("{providerUsage}", option.aiSDK.providerUsage)
-							.replaceAll("{apikey}", "")
+							.replaceAll("{provider}", option.aiSDK.provider ?? "")
+							.replaceAll(
+								"{providerFactory}",
+								option.aiSDK.providerFactory ?? "",
+							)
+							.replace("{pkg}", option.aiSDK.pkg ?? "")
+							.replace("{apikey}", '{ apiKey: "cloudflare" }')
+							.replace("{vendorKey}", "")
 							.replace("{model}", option.model)}
 					/>
 				</CodeExample>
-			))
-	}
-	{
-		(!forceClient || forceClient === "aisdk") &&
-			modelOptions.map((option) => (
-				<CodeExample
-					client:load
-					provider={option.provider}
-					clientType="aisdk"
-					keyType="in-request"
-					apiType="native"
-					forceClientType={forceClient}
-					forceApiType={forceAPI}
-				>
-					<Code
-						lang="javascript"
-						title=""
-						code={aiSDKNativeCode
-							.replaceAll("{provider}", option.aiSDK.provider)
-							.replaceAll("{providerFactory}", option.aiSDK.providerFactory)
-							.replaceAll("{providerUsage}", option.aiSDK.providerUsage)
-							.replaceAll("{apikey}", "{ apiKey: '{API_KEY}' }")
-							.replace("{model}", option.model)}
-					/>
-				</CodeExample>
-			))
-	}
+			))}
 
-	{
-		(!forceClient || forceClient === "curl") &&
-			modelOptions.map((option) => (
-				<CodeExample
-					client:load
-					provider={option.provider}
-					clientType="curl"
-					keyType="stored"
-					apiType="unified"
-					forceClientType={forceClient}
-					forceApiType={forceAPI}
-				>
-					<Code
-						title=""
-						lang="bash"
-						code={curlCode
-							.replaceAll("{provider}", option.provider)
-							.replace("{model}", option.model)
-							.replace("{headerauth}\n", "")}
-					/>
-				</CodeExample>
-			))
-	}
-	{
-		(!forceClient || forceClient === "curl") &&
-			modelOptions.map((option) => (
-				<CodeExample
-					client:load
-					provider={option.provider}
-					clientType="curl"
-					keyType="in-request"
-					apiType="unified"
-					forceClientType={forceClient}
-					forceApiType={forceAPI}
-				>
-					<Code
-						title=""
-						lang="bash"
-						code={curlCode
-							.replaceAll("{provider}", option.provider)
-							.replace("{model}", option.model)
-							.replace(
-								"{headerauth}\n",
-								"  --header 'Authorization: Bearer {" +
-									option.provider +
-									"_api_token}' \\\n",
-							)}
-					/>
-				</CodeExample>
-			))
-	}
+	{(!forceClient || forceClient === "curl") &&
+		modelOptions.map((option) => (
+			<CodeExample
+				client:load
+				provider={option.provider}
+				clientType="curl"
+				keyType="stored"
+				apiType="unified"
+				forceClientType={forceClient}
+				forceApiType={forceAPI}
+			>
+				<Code
+					title=""
+					lang="bash"
+					code={curlCode
+						.replaceAll("{provider}", option.provider)
+						.replace("{model}", option.model)
+						.replace("{headerauth}\n", "")}
+				/>
+			</CodeExample>
+		))}
+	{(!forceClient || forceClient === "curl") &&
+		modelOptions.map((option) => (
+			<CodeExample
+				client:load
+				provider={option.provider}
+				clientType="curl"
+				keyType="in-request"
+				apiType="unified"
+				forceClientType={forceClient}
+				forceApiType={forceAPI}
+			>
+				<Code
+					title=""
+					lang="bash"
+					code={curlCode
+						.replaceAll("{provider}", option.provider)
+						.replace("{model}", option.model)
+						.replace(
+							"{headerauth}\n",
+							"  --header 'Authorization: Bearer {" +
+								option.provider +
+								"_api_token}' \\\n",
+						)}
+				/>
+			</CodeExample>
+		))}
 </div>

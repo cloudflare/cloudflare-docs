@@ -1,0 +1,224 @@
+---
+title: Deploy your first Worker
+description: Create a Workers project with cf init, develop it locally, and deploy it with the Cloudflare CLI.
+pcx_content_type: get-started
+sidebar:
+  order: 2
+  label: Deploy a Worker
+products:
+  - cf
+  - workers
+---
+
+import {
+	AnnotatedConfigExplorer,
+	FileTree,
+	Steps,
+	TypeScriptExample,
+} from "~/components";
+
+This guide creates a [Worker](/workers/) with `cf init`, runs it on your
+machine, and deploys it to your Cloudflare account.
+
+## Before you begin
+
+[Install `cf`](/cf/get-started/) and check the
+[requirements](/cf/get-started/#requirements). You do not need to sign in until
+you deploy.
+
+## 1. Create a project
+
+Create a project in a new directory:
+
+```sh
+cf init my-worker
+```
+
+`cf init` asks which package manager to use, creates the project in
+`my-worker`, installs its dependencies, and generates types for its bindings.
+If you leave out the directory, `cf init` asks for one.
+
+Apart from `node_modules` and the lockfile from the install, `cf init` creates
+these files:
+
+<FileTree>
+- my-worker/
+	- .cloudflare/
+		- types/
+			- index.d.ts
+	- src/
+		- index.ts
+	- .gitignore
+	- cloudflare.config.ts
+	- package.json
+	- tsconfig.json
+	- vite.config.ts
+</FileTree>
+
+- `src/index.ts` is the Worker.
+- `cloudflare.config.ts` describes the Worker in TypeScript.
+- `vite.config.ts` adds the [Cloudflare Vite plugin](/workers/vite-plugin/),
+  which runs your code in the Workers runtime during development and builds
+  it for deployment.
+- `package.json` has `dev`, `build`, and `deploy` scripts that run the
+  matching `cf` commands. It lists `cf` and the Vite plugin 2.0 beta
+  (`@cloudflare/vite-plugin@beta`), which `cf` uses, but not Wrangler.
+- `.cloudflare/types/index.d.ts` holds generated binding and runtime types. The
+  Vite plugin updates it when you run `cf dev` or `cf build`. The generated
+  `.gitignore` excludes `.cloudflare/`.
+
+The Worker reads a `WORLD` binding and returns a greeting:
+
+<TypeScriptExample filename="src/index.ts" omitTabs>
+```ts
+import { env } from "cloudflare:workers";
+
+export default {
+	fetch() {
+		return new Response(`Hello ${env.WORLD}!`);
+	},
+} satisfies ExportedHandler;
+```
+</TypeScriptExample>
+
+`cloudflare.config.ts` names the Worker, points to its entrypoint, and declares
+the `WORLD` text binding. The annotations explain each field and builder:
+
+<AnnotatedConfigExplorer
+	id="first-worker-config"
+	code={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		entrypoint,
+		env: {
+			WORLD: bindings.text("World"),
+		},
+	},
+});`}
+/>
+
+`cf init` sets `compatibilityDate` to a fixed, recent date that ships with
+your version of `cf`. The `cf-worker` import attribute points the configuration
+at your Worker module. `cf` reads the module path from it and does not load or
+run your Worker code.
+
+## 2. Develop locally
+
+Start the development server:
+
+```sh
+cd my-worker
+cf dev
+```
+
+Open the local URL that `cf dev` prints, by default `http://localhost:5173/`.
+The Worker responds with `Hello World!`.
+
+Change the response in `src/index.ts`, save the file, and refresh the page. The
+development server picks up the change without a restart.
+
+In this project, `cf dev` does not accept options such as `--port`. To change
+the port, set `server.port` in `vite.config.ts`.
+
+## 3. Deploy
+
+<Steps>
+1. If you have not signed in yet, sign in:
+
+   ```sh
+   cf auth login
+   ```
+
+2. Deploy the Worker:
+
+   ```sh
+   cf deploy
+   ```
+
+   `cf deploy` builds the project, uploads the Worker, deploys it to your
+   account, and prints the result. If you can access more than one account,
+   `cf` asks which one to use. To learn how to set a default, refer to
+   [Select an account](/cf/get-started/#select-an-account).
+</Steps>
+
+To check the build without deploying, run `cf deploy --dry-run`. A dry run
+makes no API requests, so it works before you sign in.
+
+## Create a project without prompts
+
+In a script or CI job, `cf init` cannot ask questions, so pass the directory.
+Choose the package manager with `--package-manager`, which accepts `npm`,
+`pnpm`, `yarn`, or `bun`. Without it, `cf init` uses npm, unless you ran `cf`
+through another package manager:
+
+```sh
+cf init my-worker --package-manager npm
+```
+
+To skip the installation, add `--no-install`. Then run your package manager's
+install command in the project before you run `cf dev`.
+
+## Start from an existing project
+
+`cf` can also set up an existing app. In the project directory, install its
+dependencies, then run `cf init .`:
+
+```sh
+cf init .
+```
+
+`cf` detects the framework and shows the settings it found, including the
+Worker name, framework, build command, and output directory. After you confirm,
+`cf` changes the project. For a Vite app, it:
+
+- Installs `cf` and `@cloudflare/vite-plugin` as development dependencies.
+- Adds the Cloudflare plugin to `vite.config.ts`, or creates the file.
+- Creates `cloudflare.config.ts`, with observability turned on.
+- Adds a `deploy` script that runs `cf deploy`.
+- Adds `.wrangler`, `.dev.vars*`, and `.env*` entries to `.gitignore`. In a Git
+  repository without a `.gitignore` file, it creates one.
+
+`cf` does not add `.cloudflare/`, where it writes builds and generated types, to
+`.gitignore`. Add it yourself:
+
+```sh
+echo ".cloudflare/" >> .gitignore
+```
+
+`cf build` and `cf deploy` run the framework's build command, such as
+`vite build`, not the `build` script in `package.json`. To keep extra build
+steps, refer to
+[How cf runs your project](/cf/projects/#how-cf-runs-your-project).
+
+If you skip `cf init .`, then `cf dev`, `cf build`, and `cf deploy` run the same
+setup the first time you use them. In CI, they apply the changes without
+asking, so run `cf init .` locally and commit the result first. For details,
+refer to [Automatic configuration](/cf/projects/#automatic-configuration).
+
+Plain Vite apps work with this flow. `cf` also detects other frameworks, such
+as Astro, React Router, and SvelteKit, but detection does not mean the project
+builds. For example, Astro 6 and later does not build with `cf` during the
+beta.
+
+:::caution[Wrangler projects]
+Do not run `cf init .`, `cf dev`, `cf build`, or `cf deploy` in a project that
+has a `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` file. The automatic
+setup ignores the Wrangler configuration and can produce a Worker that does not
+match it. To convert a Wrangler project, use `cf migrate` instead. Refer to
+[Migrate a Wrangler project](/cf/wrangler/migrate/).
+:::
+
+## Next steps
+
+- Add storage, queues, or other resources with
+  [bindings](/cf/projects/cloudflare-config/#declare-bindings).
+- Route traffic to your Worker with
+  [triggers](/cf/projects/cloudflare-config/#declare-triggers).
+- Learn how `cf` develops, builds, and deploys projects in
+  [Develop, build, and deploy](/cf/projects/).
+- Explore every configuration option in the
+  [configuration explorer](/cf/projects/config-explorer/).

@@ -1,0 +1,20 @@
+---
+title: Account members can self-serve create Account API tokens
+description: Members with the API Token Provisioning role can now create their Account API tokens. 
+products:
+  - fundamentals
+date: 2026-10-01
+---
+
+Account API token creation is no longer limited to Super Administrators. Members with the **API Token Provisioning** role can now create Account API tokens via the Dashboard, API, Terraform, or CF CLI, making it easier for developers and platform teams to provision credentials without depending on a Super Administrator for Account API Token Provisioning.
+
+![Creating an Account API Token via CF CLI](~/assets/images/changelog/fundamentals/2026-10-01-account-api-token-provisioning.png)
+
+### What's new
+
+- **Delegated creation**: Members with the **API Token Provisioning** role can create Account API tokens from the dashboard. Administrators can grant this role through the dashboard, API, or Terraform.
+- **OAuth support for token creation**: OAuth clients that request the `account_api_tokens:create` scope, starting with Cloudflare CLI, can create Account API tokens.
+- **Account API token permissions limited to the creator’s access at creation time**: Members can only create an Account API Token using the permissions they already have. For OAuth-created tokens, permissions are also limited to the scopes granted during authorization.
+- **Creator attribution and visibility**: Account API tokens now include creator metadata. Super Administrators and Administrators can view all Account API tokens in an account, while members with the **API Token Provisioning** role can only view tokens they created.
+
+For more information, refer to [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/), [Create tokens via API](/fundamentals/api/how-to/create-via-api/), and [Roles](/fundamentals/manage-members/roles/).

@@ -102,7 +102,7 @@ Using Static Assets means your frontend files are not bundled inside the Worker 
 
 Place your static files in a directory such as `./public/`. Then configure your
 Wrangler file with an `assets` block that includes a `binding` and sets
-`run_worker_first` to `true`. This ensures every request reaches your FastAPI
+`run_worker_first` to `true`. This ensures every request reaches your Flask
 Worker first, so your API routes take priority over static files.
 
 <WranglerConfig>

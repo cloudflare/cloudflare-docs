@@ -1,15 +1,5 @@
 {
-    "id": "e8e8abe4-a372-4c13-815f-4688ba655c8e",
-    "source": 1,
     "name": "@cf/google/gemma-2b-it-lora",
-    "description": "This is a Gemma-2B base model that Cloudflare dedicates for inference with LoRA adapters. Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2024-04-02 00:19:34.669",
-    "tags": [],
     "properties": [
         {
             "property_id": "beta",
@@ -24,6 +14,16 @@
             "value": "true"
         }
     ],
+    "id": "e8e8abe4-a372-4c13-815f-4688ba655c8e",
+    "source": 1,
+    "description": "This is a Gemma-2B base model that Cloudflare dedicates for inference with LoRA adapters. Gemma is a family of lightweight, state-of-the-art open models from Google, built from the same research and technology used to create the Gemini models.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2024-04-02 00:19:34.669",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -458,5 +458,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

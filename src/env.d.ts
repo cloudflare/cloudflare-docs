@@ -39,3 +39,10 @@ interface ModelContext {
 interface Navigator {
 	readonly modelContext?: ModelContext;
 }
+
+declare namespace App {
+	interface Locals {
+		/** Per-page repeat counts for `stableId` (src/util/stable-id.ts). */
+		stableIdCounts?: Map<string, number>;
+	}
+}

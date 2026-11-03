@@ -18,7 +18,7 @@ https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools
 
 ### `search_and_execute`
 
-Hides all upstream tools and exposes only two tools: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools in an isolated [Dynamic Worker](/workers/runtime-apis/bindings/worker-loader/) environment. This reduces the initial token cost to a small constant, regardless of how many tools are available through the portal.
+Hides all upstream tools and exposes only two tools: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools in an isolated [Dynamic Worker](/dynamic-workers/) environment. This reduces the initial token cost to a small constant, regardless of how many tools are available through the portal.
 
 ```txt
 https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute

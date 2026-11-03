@@ -70,6 +70,8 @@ export interface WeldedCardProps {
 	accent?: boolean;
 	/** Drop the shadow — for a card overlaid on another. */
 	flat?: boolean;
+	/** Corner radius override — pass rect.h / 2 for a fully rounded pill. */
+	rx?: number;
 }
 
 export function WeldedCard({
@@ -81,10 +83,11 @@ export function WeldedCard({
 	dashed = false,
 	accent = false,
 	flat = false,
+	rx,
 }: WeldedCardProps) {
 	return (
 		<path
-			d={indentedRect(rect, notches)}
+			d={indentedRect(rect, notches, rx)}
 			fill={accent ? "var(--color-brand)" : "white"}
 			fillOpacity={accent ? 0.06 : 1}
 			stroke={active ? "var(--color-brand)" : "currentColor"}
@@ -602,6 +605,8 @@ export interface LabelCardProps {
 	active?: boolean;
 	ghost?: boolean;
 	fontSize?: number;
+	/** Corner radius override — pass rect.h / 2 for a fully rounded pill. */
+	rx?: number;
 }
 
 export function LabelCard({
@@ -610,11 +615,18 @@ export function LabelCard({
 	label,
 	active = false,
 	ghost = false,
+	rx,
 	fontSize = 9,
 }: LabelCardProps) {
 	return (
 		<g>
-			<WeldedCard rect={rect} notches={notches} active={active} ghost={ghost} />
+			<WeldedCard
+				rect={rect}
+				notches={notches}
+				active={active}
+				ghost={ghost}
+				rx={rx}
+			/>
 			<text
 				x={rect.cx}
 				y={rect.cy + fontSize * 0.33}

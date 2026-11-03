@@ -14,8 +14,8 @@ You can now set a maximum time-to-live (TTL) for DNS responses returned by Gatew
 The setting is available at two levels:
 
 - **Account level** - In **Traffic Policies** > **Traffic Settings**, under **Proxy and inspection**. This sets the default cap for all DNS locations.
-- **Per-location** - Each [DNS location](/cloudflare-one/networks/resolvers-proxies/) can inherit the account setting, disable the cap, or override it with a custom value.
+- **Per-location** - Each [DNS location](/cloudflare-one/traffic-controls/resolver-endpoints/) can inherit the account setting, disable the cap, or override it with a custom value.
 
 Two new fields are also available in DNS logs: `upstream_record_ttls` (the original TTL from the upstream response) and `applied_max_ttl` (the cap Gateway applied). These appear in the DNS logs column picker and in Logpush datasets.
 
-For more information, refer to [Maximum DNS TTL](/cloudflare-one/traffic-policies/dns-policies/maximum-dns-ttl/).
+For more information, refer to [Maximum DNS TTL](/cloudflare-one/traffic-controls/dns-policies/maximum-dns-ttl/).

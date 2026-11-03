@@ -104,11 +104,9 @@ const groups = [...groupSet].sort((a, b) => {
 						legend="Filter by group"
 						legendClass="mb-3 px-2 font-mono text-[0.6875rem] tracking-[0.14em] text-muted-foreground uppercase"
 					>
-						{
-							groups.map((group) => (
-								<Checkbox label={group} name="category" value={group} />
-							))
-						}
+						{groups.map((group) => (
+							<Checkbox label={group} name="category" value={group} />
+						))}
 					</CheckboxGroup>
 
 					<button
@@ -136,58 +134,56 @@ const groups = [...groupSet].sort((a, b) => {
 
 				<div class="border-border relative w-full border-t border-l">
 					<div data-directory-grid class={LG_GRID_CLASS[cols]}>
-						{
-							items.map((product, i) => {
-								const description =
-									product.data.meta?.description ?? product.data.entry?.title;
-								return (
+						{items.map((product, i) => {
+							const description =
+								product.data.meta?.description ?? product.data.entry?.title;
+							return (
+								<div
+									data-directory-cell
+									data-name={(product.data.name ?? "").toLowerCase()}
+									data-groups={groupsOf(product).join("|")}
+									class={cellClass}
+								>
 									<div
-										data-directory-cell
-										data-name={(product.data.name ?? "").toLowerCase()}
-										data-groups={groupsOf(product).join("|")}
-										class={cellClass}
+										data-corner-marks
+										class="pointer-events-none absolute inset-0 z-10 select-none"
+										aria-hidden="true"
+										set:html={cornerSpansHTML(cornersFor(i, cols))}
+									/>
+									<a
+										href={product.data.entry?.url ?? `/${product.id}/`}
+										class="group/card flex h-full flex-col p-4 text-inherit! no-underline lg:p-5"
 									>
-										<div
-											data-corner-marks
-											class="pointer-events-none absolute inset-0 z-10 select-none"
-											aria-hidden="true"
-											set:html={cornerSpansHTML(cornersFor(i, cols))}
-										/>
-										<a
-											href={product.data.entry?.url ?? `/${product.id}/`}
-											class="group/card flex h-full flex-col p-4 text-inherit! no-underline lg:p-5"
-										>
-											{product.icon ? (
-												<svg
-													viewBox={product.icon.attributes.viewBox}
-													fill="currentColor"
-													aria-hidden="true"
-													class="text-muted-foreground group-hover/card:text-primary -ml-0.5 inline-block size-5 shrink-0"
-													set:html={product.icon.body}
-												/>
-											) : (
-												<span
-													aria-hidden="true"
-													class="text-muted-foreground group-hover/card:text-primary -ml-0.5 inline-flex size-5 shrink-0 items-center justify-center text-base leading-none font-bold"
-												>
-													{(product.data.name ?? "?").charAt(0)}
-												</span>
-											)}
-											<p class="pt-2 pb-0.5">
-												<strong class="text-foreground text-base font-semibold">
-													{product.data.name}
-												</strong>
+										{product.icon ? (
+											<svg
+												viewBox={product.icon.attributes.viewBox}
+												fill="currentColor"
+												aria-hidden="true"
+												class="text-muted-foreground group-hover/card:text-primary -ml-0.5 inline-block size-5 shrink-0"
+												set:html={product.icon.body}
+											/>
+										) : (
+											<span
+												aria-hidden="true"
+												class="text-muted-foreground group-hover/card:text-primary -ml-0.5 inline-flex size-5 shrink-0 items-center justify-center text-base leading-none font-bold"
+											>
+												{(product.data.name ?? "?").charAt(0)}
+											</span>
+										)}
+										<p class="pt-2 pb-0.5">
+											<strong class="text-foreground text-base font-semibold">
+												{product.data.name}
+											</strong>
+										</p>
+										{description && (
+											<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
+												{description}
 											</p>
-											{description && (
-												<p class="text-muted-foreground line-clamp-2 text-sm leading-relaxed">
-													{description}
-												</p>
-											)}
-										</a>
-									</div>
-								);
-							})
-						}
+										)}
+									</a>
+								</div>
+							);
+						})}
 					</div>
 				</div>
 			</div>

@@ -1,0 +1,128 @@
+---
+title: Query data
+pcx_content_type: configuration
+description: Understand how to query data with Basin SQL
+products:
+  - basin-sql
+sidebar:
+  order: 3
+---
+
+import { Render, LinkCard, Tabs, TabItem, Steps, PackageManagers } from "~/components";
+
+Query [Apache Iceberg](https://iceberg.apache.org/) tables managed by [Basin Catalog](/basin-catalog/). Basin SQL queries can be made via [Wrangler](/workers/wrangler/) or HTTP API.
+
+## Get your warehouse name
+
+To query data with Basin SQL, you need your warehouse name associated with your [catalog](/basin-catalog/manage-catalogs/). To retrieve it, you can run the `basin catalog get` command:
+
+<PackageManagers type="exec" pkg="wrangler" args={"basin catalog get <BUCKET_NAME>"} />
+
+Alternatively, you can find it in the dashboard by going to the **R2 object storage** page, selecting the bucket, switching to the **Settings** tab, scrolling to **Basin Catalog**, and finding **Warehouse name**.
+
+## Query via Wrangler
+
+To begin, install [`npm`](https://docs.npmjs.com/getting-started). Then [install Wrangler, the Developer Platform CLI](/workers/wrangler/install-and-update/).
+
+Wrangler needs an API token with permissions to access Basin Catalog, R2 storage, and Basin SQL to execute queries. The `basin sql query` command looks for the token in the `WRANGLER_BASIN_SQL_AUTH_TOKEN` environment variable.
+
+Set up your environment:
+
+```bash
+export WRANGLER_BASIN_SQL_AUTH_TOKEN=YOUR_API_TOKEN
+```
+
+Or create a `.env` file with:
+
+```txt
+WRANGLER_BASIN_SQL_AUTH_TOKEN=YOUR_API_TOKEN
+```
+
+Where `YOUR_API_TOKEN` is the token you created with the [required permissions](#authentication). For more information on setting environment variables, refer to [Wrangler system environment variables](/workers/wrangler/system-environment-variables/).
+
+To run a SQL query, run the `basin sql query` command:
+
+<PackageManagers type="exec" pkg="wrangler" args={"basin sql query <WAREHOUSE> \"SELECT * FROM namespace.table_name limit 10;\""} />
+
+For a full list of supported SQL commands, refer to the [Basin SQL reference](/basin-sql/sql-reference/).
+
+## Query via API
+
+Below is an example of using Basin SQL via the REST endpoint:
+
+```bash
+curl -X POST \
+  "https://api.sql.cloudflarestorage.com/api/v1/accounts/{ACCOUNT_ID}/basin-sql/query/{BUCKET_NAME}" \
+  -H "Authorization: Bearer ${WRANGLER_BASIN_SQL_AUTH_TOKEN}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "SELECT * FROM namespace.table_name limit 10;"
+  }'
+```
+
+The API requires an API token with the appropriate permissions in the Authorization header. Refer to [Authentication](#authentication) for details on creating a token.
+
+For a full list of supported SQL commands, refer to the [Basin SQL reference](/basin-sql/sql-reference/).
+
+## Authentication
+
+To query data with Basin SQL, you must provide a Cloudflare API token with Basin SQL, Basin Catalog, and R2 storage permissions. Basin SQL requires these permissions to access catalog metadata and read the underlying data files stored in R2.
+
+### Create API token in the dashboard
+
+Create an [R2 API token](/r2/api/tokens/#permissions) with the following permissions:
+
+- Access to Basin Catalog (read-only)
+- Access to R2 storage (Admin read/write)
+- Access to Basin SQL (read-only)
+
+Use this token value for the `WRANGLER_BASIN_SQL_AUTH_TOKEN` environment variable when querying with Wrangler, or in the Authorization header when using the REST API.
+
+### Create API token via API
+
+To create an API token programmatically for use with Basin SQL, specify Basin SQL, Basin Catalog, and R2 storage permission groups in your [Access Policy](/r2/api/tokens/#access-policy).
+
+#### Example Access Policy
+
+```json
+[
+	{
+		"id": "f267e341f3dd4697bd3b9f71dd96247f",
+		"effect": "allow",
+		"resources": {
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_default_my-bucket": "*",
+			"com.cloudflare.edge.r2.bucket.4793d734c0b8e484dfc37ec392b5fa8a_eu_my-eu-bucket": "*"
+		},
+		"permission_groups": [
+			{
+				"id": "f45430d92e2b4a6cb9f94f2594c141b8",
+				"name": "Workers R2 SQL Read"
+			},
+			{
+				"id": "d229766a2f7f4d299f20eaa8c9b1fde9",
+				"name": "Workers R2 Data Catalog Write"
+			},
+			{
+				"id": "bf7481a1826f439697cb59a20b22293e",
+				"name": "Workers R2 Storage Write"
+			}
+		]
+	}
+]
+```
+
+To learn more about how to create API tokens for Basin SQL using the API, including required permission groups and usage examples, refer to the [Create API tokens via API documentation](/r2/api/tokens/#create-api-tokens-via-api).
+
+## Additional resources
+
+<LinkCard
+	title="Manage catalogs"
+	href="/basin-catalog/manage-catalogs/"
+	description="Enable or disable Basin Catalog on your bucket, retrieve configuration details, and authenticate your Iceberg engine."
+/>
+
+<LinkCard
+	title="Build an end to end data pipeline"
+	href="/basin-sql/tutorials/end-to-end-pipeline/"
+	description="Detailed tutorial for setting up a simple fraud detection data pipeline, and generate events for it in Python."
+/>

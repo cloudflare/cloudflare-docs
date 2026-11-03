@@ -13,6 +13,10 @@
 	"context_length": 1000000,
 	"max_output_tokens": 16384,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 5,
+		"Output tokens (per 1M)": 30
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -5256,13 +5260,23 @@
 	"terms": "https://openai.com/policies/",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.5.png",
 	"metadata": {
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses",
 		"chat-completions"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_tokens": 5,
+				"output_tokens": 30
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:37",
 	"schema": {
@@ -5319,12 +5333,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},
@@ -5371,8 +5388,7 @@
 									}
 								},
 								"required": [
-									"role",
-									"content"
+									"role"
 								],
 								"additionalProperties": {}
 							}
@@ -5461,6 +5477,13 @@
 								}
 							},
 							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
@@ -5567,13 +5590,9 @@
 												"type": "string"
 											},
 											"content": {
-												"anyOf": [
-													{
-														"type": "string"
-													},
-													{
-														"type": "null"
-													}
+												"type": [
+													"string",
+													"null"
 												]
 											},
 											"tool_calls": {
@@ -5588,22 +5607,29 @@
 												]
 											},
 											"audio": {
-												"type": "object",
-												"properties": {
-													"id": {
-														"type": "string"
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
 													},
-													"data": {
-														"type": "string"
-													},
-													"expires_at": {
-														"type": "number"
-													},
-													"transcript": {
-														"type": "string"
+													{
+														"type": "null"
 													}
-												},
-												"additionalProperties": {}
+												]
 											}
 										},
 										"required": [
@@ -5612,13 +5638,9 @@
 										"additionalProperties": {}
 									},
 									"finish_reason": {
-										"anyOf": [
-											{
-												"type": "string"
-											},
-											{
-												"type": "null"
-											}
+										"type": [
+											"string",
+											"null"
 										]
 									}
 								},

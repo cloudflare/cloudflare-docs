@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent, KeyboardEvent } from "react";
 import type { CollectionEntry } from "astro:content";
 import ReactSelect from "./ReactSelect";
+import { isEditableKeyboardTarget } from "~/util/keyboard";
 import { setSearchParams } from "~/util/url";
 import { formatContentType } from "~/util/content-type";
 import Markdown from "react-markdown";
@@ -243,15 +244,9 @@ export default function ResourcesBySelector({
 	useEffect(() => {
 		if (filterPlacement !== "left") return;
 		const onKeyDown = (e: globalThis.KeyboardEvent) => {
-			const target = e.target as HTMLElement | null;
-			const typing =
-				target &&
-				(target.tagName === "INPUT" ||
-					target.tagName === "TEXTAREA" ||
-					target.isContentEditable);
 			if (
 				(e.key === "k" && (e.metaKey || e.ctrlKey)) ||
-				(e.key === "/" && !typing)
+				(e.key === "/" && !isEditableKeyboardTarget(e))
 			) {
 				e.preventDefault();
 				searchRef.current?.focus();

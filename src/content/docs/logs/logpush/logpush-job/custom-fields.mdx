@@ -12,7 +12,9 @@ import { APIRequest, DashButton } from "~/components";
 
 The HTTP requests dataset includes most standard log information by default. However, if you need to capture additional request or response headers or cookies, you can use custom fields to tailor the logs to your specific needs
 
-Custom fields are configured per zone and, once set up, are enabled for all Logpush jobs in that zone that use the HTTP requests dataset and include the request headers, response headers, or cookie fields. You can log these fields in their raw form or as transformed values.
+Custom fields are configured per zone. They apply to all HTTP requests Logpush jobs that process the zone, including account-scoped jobs. The job must include the request headers, response headers, or cookie fields. You can log these fields in their raw form or as transformed values.
+
+Account-scoped jobs honor the custom fields configuration for each zone. You cannot configure custom fields once for every zone in an account.
 
 :::note[By default:]
 
@@ -25,7 +27,7 @@ This default behavior can be changed. You can configure either request or respon
 Custom fields can be enabled via API or the Cloudflare dashboard.
 
 :::note
-Custom fields are only available for the [HTTP requests dataset](/logs/logpush/logpush-job/datasets/zone/http_requests/).
+Custom fields are only available for the HTTP requests dataset. They apply to [account-scoped](/logs/logpush/logpush-job/datasets/account/http_requests/) and [zone-scoped](/logs/logpush/logpush-job/datasets/zone/http_requests/) jobs.
 :::
 
 :::note
@@ -253,14 +255,15 @@ If you are a Cloudflare Access user, as of March 2022 you have to manually add t
 
 ## Enable custom fields via dashboard
 
-1. In the Cloudflare dashboard, go to the **Logpush** page.
+1. In the Cloudflare dashboard, select your account and zone. Then go to **Observability** > **Export** > **Logpush**.
 
-   <DashButton url="/?to=/:account/:zone/analytics/logs" />
+   <DashButton url="/?to=/:account/:zone/analytics/logs/configuration" />
 
-2. In the **Custom log fields** section, select **Edit Custom Fields**.
-3. Select **Set new Custom Field**.
-4. From the **Field Type** dropdown, select _Request Header_, _Response Header_ or _Cookies_ and type the **Field Name**.
-5. When you are done, select **Save**.
+2. Select the **Configuration** tab.
+3. In the **Custom log fields** section, select **Edit Custom Fields**.
+4. Select **Set new Custom Field**.
+5. From the **Field Type** dropdown, select _Request Header_, _Response Header_, or _Cookies_ and type the **Field Name**.
+6. When you are done, select **Save**.
 
 ## Use case: Logging mTLS certificate headers
 

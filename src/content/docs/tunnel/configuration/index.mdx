@@ -26,7 +26,7 @@ This page covers the most common configuration options for `cloudflared` tunnels
 
 When you run a tunnel, `cloudflared` establishes four outbound-only, [post-quantum encrypted](/ssl/post-quantum-cryptography/) connections to at least two distinct Cloudflare data centers. If any connection, server, or data center goes offline, your resources remain available.
 
-A replica is an additional `cloudflared` instance that points to the same tunnel. Each replica creates four new connections, providing additional ingress points to your origin. You can run up to 25 replicas (100 connections) per tunnel. Traffic routes to the geographically closest replica.
+A replica is an additional `cloudflared` instance that points to the same tunnel. Each replica creates four new connections, providing additional ingress points to your origin. You can run up to 25 replicas (100 connections) per tunnel. Traffic routes to the geographically closest replica. To see which replica received a specific session, refer to [Network session logs](/tunnel/observability/#network-session-logs).
 
 <Render file="tunnel/availability/cloudflared-replicas-diagram" product="cloudflare-one" />
 

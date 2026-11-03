@@ -16,6 +16,26 @@ Cloudflare Access offers three different block page options:
 - **Custom Redirect URL** - Redirects blocked requests to the specified URL. For example, you could redirect the user to a [dynamic Access Denied page](https://github.com/cloudflare/cf-identity-dynamic) that fetches their identity and shows the exact reason they were blocked.
 - **Custom Page Template** - (Only available on Pay-as-you-go and Enterprise plans) Displays a [custom HTML page](/cloudflare-one/reusable-components/custom-pages/access-block-page/#create-a-custom-block-page) hosted by Cloudflare.
 
+### Custom redirect URL parameters
+
+When Access redirects a blocked request to your **Custom Redirect URL**, it includes these query parameters:
+
+| Parameter      | Description                                                                                            |
+| -------------- | ------------------------------------------------------------------------------------------------------ |
+| `kid`          | The application audience (AUD) tag.                                                                    |
+| `account_id`   | The Cloudflare account ID that owns the application. Omitted when account context is unavailable.      |
+| `original_url` | The requested hostname and path, including any query string. Included when request state is available. |
+
+For example, a request to `app.example.com/admin` can redirect to:
+
+```txt
+https://denied.example.com/?kid=<APP_AUD>&account_id=<ACCOUNT_ID>&original_url=app.example.com%2Fadmin
+```
+
+Use `account_id` to identify the account when looking up the application through the [Access applications API](/api/resources/zero_trust/subresources/access/subresources/applications/methods/list/). Match `kid` to the application's AUD tag, not its application ID.
+
+These parameters provide context for your block page. Do not use them as proof of authentication or authorization: a visitor can modify URL query parameters.
+
 ### Identity versus non-identity
 
 You can display a different [type of block page](/cloudflare-one/reusable-components/custom-pages/access-block-page/#types-of-block-pages) to users who fail an identity-based policy versus a non-identity policy.

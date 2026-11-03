@@ -114,7 +114,7 @@ Save the `id` from the response. This is your `token_id` to pass when creating R
 Pass the `token_id` when creating an R2-backed instance:
 
 ```bash
-curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/instances" \
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
   -H "Authorization: Bearer <API_TOKEN>" \
   -H "Content-Type: application/json" \
   --data '{

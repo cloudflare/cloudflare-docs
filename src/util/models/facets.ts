@@ -31,7 +31,12 @@ export interface FacetGroup {
  * array index) in both directions; the rest sort by `created_at`. No-op if none
  * are present.
  */
-export const pinnedModelNames: string[] = [];
+export const pinnedModelNames: string[] = [
+	"@cf/cloudflare/clef",
+	"@cf/cloudflare/clef-omni",
+	"@cf/cloudflare/clef-flash",
+	"@cf/cloudflare/clairic",
+];
 
 const providerSlug = (model: ModelCardData): string =>
 	model.hosting === "proxied" ? "third-party" : "cloudflare-hosted";

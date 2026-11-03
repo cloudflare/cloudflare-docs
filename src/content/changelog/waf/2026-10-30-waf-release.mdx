@@ -1,0 +1,80 @@
+---
+title: "WAF Release - 2026-10-30"
+description: Cloudflare WAF managed, free and response rulesets 2026-10-30 release
+date: 2026-10-30
+---
+
+import { RuleID } from "~/components";
+
+This release introduces updates to the underlying rule expressions for PHP out-of-memory (OOM) vulnerabilities CVE-2026-109618, CVE-2026-109619 and CVE-2026-115560. The improvements are iterative changes based on reports from Security Researchers as part of [PHP Capture the Flag (CTF) challenge](https://blog.cloudflare.com/php-ctf).
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="771c654ae1154d4daa72f4e1545d163c" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #3</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="48ddf592361e4fdb97a8a85982dab691" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #3</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="217005865f0145f392300bac212afcc9" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #4</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="3556683d512a47f2937899c524b1a4c6" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #4</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Response Ruleset</td>
+			<td>
+				<RuleID id="afffe22785674c80a31875c848d2242a" />
+			</td>
+			<td>N/A</td>
+			<td>Default block for High confidence Signatures</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+	</tbody>
+</table>

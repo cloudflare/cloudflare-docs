@@ -34,6 +34,9 @@ describe("generateDescriptionFromHtml", () => {
 		expect(
 			generateDescriptionFromHtml("<p>  See <a>Docs ↗</a> now  </p>"),
 		).toBe("See Docs now");
+		expect(
+			generateDescriptionFromHtml("<p>  See <a>Docs ↗\uFE0E</a> now  </p>"),
+		).toBe("See Docs now");
 	});
 
 	test("empty paragraph yields an empty (falsy) string", () => {

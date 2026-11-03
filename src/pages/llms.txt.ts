@@ -121,7 +121,7 @@ export const GET: APIRoute = async ({ url }) => {
 
 	return new Response(markdown, {
 		headers: {
-			"content-type": "text/plain",
+			"content-type": "text/plain; charset=utf-8",
 		},
 	});
 };

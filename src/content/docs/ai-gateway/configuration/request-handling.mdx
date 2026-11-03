@@ -55,7 +55,7 @@ This feature improves your application's resiliency, ensuring you can recover fr
 With request retries, you can adjust a combination of three properties:
 
 - Number of attempts (maximum of 5 tries)
-- How long before retrying (in milliseconds, maximum of 5 seconds)
+- How long before retrying (in milliseconds, maximum of 60 seconds)
 - Backoff method (constant, linear, or exponential)
 
 On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes.

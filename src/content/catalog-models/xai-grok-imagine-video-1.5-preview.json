@@ -12,6 +12,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"@480p (per second)": 0.08,
+		"@720p (per second)": 0.14,
+		"Default (per second)": 0.08,
+		"@1080p (per second)": 0.25
+	},
 	"examples": [
 		{
 			"name": "Image to video",
@@ -61,10 +67,21 @@
 		"Aspect Ratios": "1:1, 16:9, 9:16, 4:3, 3:4, 3:2, 2:3",
 		"Input Modalities": "Text, Image, Video",
 		"Max Duration": "15 seconds",
-		"Resolutions": "480p, 720p"
+		"Resolutions": "480p, 720p, 1080p"
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "xai",
+			"pricing": {
+				"480p": 0.08,
+				"720p": 0.14,
+				"default": 0.08,
+				"1080p": 0.25
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-06-03 20:26:48",
 	"schema": {
@@ -104,7 +121,8 @@
 					"type": "string",
 					"enum": [
 						"480p",
-						"720p"
+						"720p",
+						"1080p"
 					]
 				},
 				"size": {

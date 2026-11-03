@@ -31,6 +31,14 @@ The `{account_id}` argument is the [account ID](/fundamentals/account/find-accou
 
 The tables in the following sections summarize the available operations.
 
+## Program versions
+
+Each uploaded program starts at version `1`. Updating a program with a `PATCH` request creates a new version under the same program ID. Program responses include the current version in the `version` field.
+
+Each rule is pinned to a specific program version, which appears in the rule's `program_version` field. Creating a rule without `program_version` pins it to the program's current version. Updating a program does not update existing rules that reference it.
+
+To move an existing rule to another successful version of its program, send a `PATCH` request to the rule endpoint with the target `program_version`. For an example, refer to [Update a rule](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/examples/#update-a-rule).
+
 ### Program operations
 
 | Operation | Method and endpoint / Description |

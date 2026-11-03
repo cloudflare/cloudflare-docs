@@ -45,8 +45,6 @@ const r = await fetch(
 		},
 	},
 );
-const tokenCount = r.headers.get("x-markdown-tokens");
-const originalTokenCount = r.headers.get("x-original-tokens");
 const markdown = await r.text();
 ```
 
@@ -58,12 +56,9 @@ The response to this request is now formatting in markdown:
 HTTP/2 200
 date: Wed, 11 Feb 2026 11:44:48 GMT
 content-type: text/markdown; charset=utf-8
-content-length: 2899
 vary: accept
 cache-control: public, max-age=3600
 strict-transport-security: max-age=63072000; includeSubDomains
-x-markdown-tokens: 725
-x-original-tokens: 12345
 content-signal: ai-train=yes, search=yes, ai-input=yes
 
 ---
@@ -86,14 +81,8 @@ Because the body is replaced with converted Markdown, the following changes are 
 
 - `Content-Type` is set to `text/markdown; charset=utf-8`.
 - `Vary` includes `Accept` (any `Vary` dimensions your origin already declared are preserved) so that caches store separate variants for Markdown and HTML.
-- `Content-Length` is recalculated to match the size of the Markdown response.
+- `Content-Length` is removed because the Markdown response is streamed.
 - Headers that describe the original body are removed, because they no longer match the converted response: `Content-Encoding`, `Content-Range`, `Transfer-Encoding`, `ETag`, and `Last-Modified`. `ETag` and `Last-Modified` are dropped because conditional requests (`If-None-Match`, `If-Modified-Since`) cannot be honored for converted responses.
-
-Markdown for Agents also adds the token count headers described below.
-
-### Token count headers
-
-Note that we include token count headers with the converted response. `x-markdown-tokens` indicates the estimated number of tokens in the Markdown document, and `x-original-tokens` indicates the estimated number of tokens in the original HTML document before conversion. You can use these values in your flow, for example to calculate the size of a context window, estimate the token savings from Markdown conversion, or decide on your chunking strategy.
 
 ### Content Signals Policy
 
@@ -182,7 +171,7 @@ curl https://blog.cloudflare.com/markdown-for-agents/ \
 ## Limitations
 
 - We only convert from HTML, other types of documents may be included in the future.
-- The origin response cannot exceed 2 MB (2,097,152 bytes).
+- Conversion is limited to 6 MiB (6,291,456 bytes) of decompressed HTML. The limit applies after decompression, not to the compressed response size.
 
 ## Other Markdown conversion APIs
 

@@ -42,6 +42,20 @@ Additional notes:
 * Copying an object within the same bucket also follows the same read-after-write consistency that writing a new object would. The "copied" object is immediately readable by all clients once the copy operation completes.
 * To delete an R2 bucket, it must be completely empty before deletion is allowed. If you attempt to delete a bucket that still contains objects, you will receive an error such as: `The bucket you tried to delete (X) is not empty (account Y)` or `Bucket X cannot be deleted because it isn’t empty.` For instructions on emptying and deleting a bucket, refer to [Delete buckets](/r2/buckets/delete-buckets/).
 
+## Conditional writes
+
+R2 evaluates conditional write headers (for example `If-Match` and `If-None-Match` on `PutObject`) atomically, as part of the same write that commits the object:
+
+- The condition is always evaluated against the committed state of the bucket at the moment the write commits, never against an older snapshot.
+- Competing conditional writes to the same key are serialized. When two or more clients concurrently issue `PutObject` with `If-None-Match: *` for a previously absent key, at most one request succeeds and every other request fails with a `412 PreconditionFailed` error. It is therefore safe to rely on `If-None-Match: *` for "create-once" semantics: two concurrent conditional writes can never both observe success.
+
+For S3 API usage, refer to [Conditional operations in `PutObject`](/r2/api/s3/extensions/#conditional-operations-in-putobject).
+
+## Negative reads and in-flight writes
+
+A strongly consistent read (`HeadObject` or `GetObject`) that returns `NoSuchKey` (404) tells you that the object did not exist at the moment the read was processed. This absence is **not** final with respect to an earlier `PutObject` whose outcome is still unknown: a request that was still in flight — for example, a client that lost its connection before receiving the response — may still commit after the negative read has returned. Reads are never stale, but they do not wait for or cancel earlier writes.
+
+If you need to treat a negative read as proof that a write failed, first make sure the original write has definitively completed (either succeeded or returned a definitive error) before trusting the read. Alternatively, retry the write with `If-None-Match: *`: it fails with `412 PreconditionFailed` if the ambiguous write did in fact commit.
 
 ## Caching
 

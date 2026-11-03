@@ -1,0 +1,49 @@
+---
+pcx_content_type: navigation
+title: rtk-markdown-view
+description: API reference for rtk-markdown-view component (Web Components (HTML) Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-markdown-view/rtk-markdown-view.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `maxLength` | `number` | ✅ | - | max length of text to render as markdown |
+| `text` | `string` | ✅ | - | raw text to render as markdown |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-markdown-view></rtk-markdown-view>
+```
+
+### With Properties
+
+```html
+<rtk-markdown-view
+ text="example">
+</rtk-markdown-view>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-markdown-view");
+
+  el.maxLength = 42;
+</script>
+```

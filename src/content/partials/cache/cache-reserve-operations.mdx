@@ -12,14 +12,12 @@ Class A operations are performed based on cache misses from Cloudflare’s CDN. 
 
 Class B operations are performed when data needs to be fetched from Cache Reserve to respond to a miss in the edge cache.
 
-#### Purge
+#### Purge and invalidation
 
-Asset purges are free operations.
+Purge requests are free operations. Invalidation requests can result in Class A operations.
 
-Cache Reserve will be instantly purged along with edge cache when you send a purge by URL request. Refer to [cache configurations](/cache/how-to/purge-cache/) for details.
+[Purging](/cache/how-to/purge-cache/) content forces a cache miss in both Cache Reserve and the edge cache, regardless of purge type. The next request for that content is fetched from your origin and written to Cache Reserve again, which is a Class A operation.
 
-Other purge methods, such as purge by tag, host, prefix, or purge everything will force an attempt to [revalidate](/cache/concepts/cache-responses/#revalidated) on the subsequent request for the Cache Reserve asset. Note that assets purged this way will still incur storage costs until their retention TTL expires.
+Purging by URL deletes content from Cache Reserve. Purging by tag, hostname, prefix, or everything does not delete it right away. Matching content stays stored and continues to incur storage costs until a later request replaces it or its retention period ends.
 
-:::note
-Note this differs from the standard CDN's purge by tag, host, or prefix features which force a cache miss, requiring the origin to deliver the asset in full.
-:::
+[Invalidating](/cache/guides/invalidate-cache/) content keeps it in Cache Reserve and marks it for revalidation. If your origin responds with `304 Not Modified`, Cloudflare reuses the stored content instead of fetching it from your origin. Updating the stored content after the `304` response is a Class A operation. Invalidating by URL also updates the stored content when you send the request, which is a Class A operation. Invalidated content remains stored and continues to incur storage costs.

@@ -427,6 +427,7 @@ export class ResearchAgent extends Agent<Env, State> {
    	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "durable-ai-agent",
    	"main": "src/index.ts",
+       "upload_source_maps": true,
    	"compatibility_date": "$today",
    	"observability": {
    		"enabled": true
@@ -648,7 +649,7 @@ Agent class names are automatically converted to kebab-case for URLs (`ResearchA
 
 <LinkCard
 	title="Agents SDK Workflows"
-	href="/agents/runtime/execution/run-workflows/"
+	href="/agents/agent-class/run-workflows/"
 	description="Complete API reference for AgentWorkflow, lifecycle callbacks, and bidirectional communication."
 />
 

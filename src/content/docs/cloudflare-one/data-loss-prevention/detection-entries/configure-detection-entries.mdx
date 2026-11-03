@@ -62,6 +62,8 @@ DLP does not support regular expressions with `+` or `*` operators because they 
 
 To use a pattern entry, add it as an existing entry to one or more [custom DLP profiles](/cloudflare-one/data-loss-prevention/dlp-profiles/#build-a-custom-profile).
 
+To apply organization-specific checks to pattern matches, refer to [Validate data loss prevention matches with Cloudflare Workers](/cloudflare-one/data-loss-prevention/detection-entries/custom-validation-workers/).
+
 ## Exact Data Match datasets
 
 Exact Data Match (EDM) datasets protect sensitive information such as names, addresses, phone numbers, and account numbers.
@@ -186,7 +188,7 @@ Your new document entry will replace the original document entry. If your file u
 
 ## AI prompt topics
 
-DLP uses [Application Granular Controls](/cloudflare-one/traffic-policies/http-policies/#granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
+DLP uses [Application Granular Controls](/cloudflare-one/traffic-controls/http-policies/#granular-controls) to detect and categorize prompts submitted to generative AI tools. Application Granular Controls analyzes prompts for both content and user intent. Supported AI prompt protection detections include:
 
 | Detection entry | Description |
 | --- | --- |

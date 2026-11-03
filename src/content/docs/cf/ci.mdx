@@ -1,0 +1,221 @@
+---
+title: Use cf in CI
+description: Run the Cloudflare CLI in continuous integration with an API token, predictable non-interactive behavior, and a build that you deploy once.
+pcx_content_type: how-to
+sidebar:
+  order: 6
+  label: CI and automation
+products:
+  - cf
+---
+
+import { PackageManagers, Render, Steps } from "~/components";
+
+<Render file="beta-note" product="cf" />
+
+Run `cf` in continuous integration (CI) to check every pull request and deploy
+your Worker without a person present. In CI, `cf` authenticates with an API
+token and does not wait for input.
+
+## Deploy from GitHub Actions
+
+This workflow builds the project once for every pull request and every push to
+`main`. It checks the build with a dry run, and deploys the same build only on
+pushes to `main`.
+
+<Steps>
+1. Add `cf` as a development dependency, so every run uses the same release:
+
+   <PackageManagers type="add" pkg="cf" dev />
+
+   Projects created with `cf init` or migrated with `cf migrate` already
+   include it.
+
+2. Commit `cloudflare.config.ts`. If the project does not have one yet, refer
+   to [Commit the project configuration](#commit-the-project-configuration).
+
+3. Add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository
+   secrets. Grant the token only the permissions the workflow needs. To create
+   a token, refer to
+   [Create an API token](/fundamentals/api/get-started/create-token/).
+
+4. Add the workflow file:
+
+   ```yaml title=".github/workflows/deploy.yml"
+   name: Deploy
+
+   on:
+     pull_request:
+     push:
+       branches: [main]
+
+   jobs:
+     deploy:
+       runs-on: ubuntu-latest
+       env:
+         CF_SEND_TELEMETRY: "false"
+       steps:
+         - uses: actions/checkout@v6
+         - uses: actions/setup-node@v6
+           with:
+             node-version: 22
+             cache: npm
+         - run: npm ci
+         - run: npx cf build
+         - run: npx cf deploy --prebuilt --mode production --dry-run
+         - if: github.event_name == 'push'
+           run: npx cf deploy --prebuilt --mode production
+           env:
+             CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+             CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+   ```
+
+</Steps>
+
+The workflow assumes a project created with `cf init`, with
+`package-lock.json` committed. Only the final deploy step receives secrets, so
+the pull request steps also work for pull requests from forks. If you pass
+another `--mode` to `cf build`, use the same mode in both deploy steps. The
+following sections explain each part.
+
+## Provide credentials
+
+`cf auth login` needs a person to approve access in a browser. In CI, set these
+environment variables instead:
+
+| Variable                | Purpose                                                                                                                                                                            |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                                                                                  |
+| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then an account saved by an earlier run in the same checkout, then the only account available. |
+| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                                                                              |
+
+If the token can access more than one account and no account is set or saved,
+the command fails instead of prompting:
+
+```txt
+More than one account available but unable to select one in non-interactive mode.
+Please set the appropriate `account_id` in your cf config file or assign it to the `CLOUDFLARE_ACCOUNT_ID` environment variable.
+Available accounts are (`<name>`: `<account_id>`):
+  `(redacted)`: `<ACCOUNT_ID>`
+```
+
+In CI, `cf` replaces account names with `(redacted)`. To fix the error, set
+`CLOUDFLARE_ACCOUNT_ID`, or add `accountId` to the default export in
+`cloudflare.config.ts`.
+
+### Use a `.env` file for local automation
+
+For scripts on your own machine, `cf` commands that call the Cloudflare API
+can also read these variables from a `.env` file in the current directory.
+They do not read `.env.local`. Variables already set in the environment take
+priority. For details, refer to
+[Load credentials from a .env file](/cf/get-started/#load-credentials-from-a-env-file).
+
+:::caution
+Do not commit a `.env` file that contains API tokens. Add it to `.gitignore`.
+:::
+
+## Pin the `cf` version
+
+With `cf` installed as a development dependency, `npx cf <COMMAND>` runs the
+project's copy. On a developer's machine, a globally installed `cf` also hands
+each command to the project's copy. Collaborators, coding agents, and CI then
+run the same version. One-off runs such as `npx cf@<VERSION>` are not handed
+off.
+
+Use Node.js 22.18 or later. For details, refer to
+[Requirements](/cf/get-started/#requirements).
+
+## Understand non-interactive behavior
+
+`cf` treats a run as non-interactive when it has no terminal, or when it detects
+a CI environment, for example through the `CI` environment variable. In a
+non-interactive run:
+
+- **Prompts** use their default answer. Prompts without a default fail, so pass
+  the value as an option instead.
+- **Destructive commands** abort without `--force`. They print `Aborted.` to
+  standard error, make no change, and exit with status `0`.
+- **`cf init`** needs a directory, such as `cf init my-worker` or `cf init .`.
+  A new project uses the package manager that started `cf`, or npm. Pass
+  `--package-manager` to choose another.
+
+Before you pass `--force` in a job, read the command's `--help` output. On some
+commands, `--force` is also an API parameter.
+
+### Commit the project configuration
+
+In a project without `cloudflare.config.ts`, every command that builds runs
+automatic configuration first. In CI, automatic configuration accepts the
+detected settings, installs packages, and edits project files without asking.
+
+To avoid unreviewed changes, run `cf init .` on your own machine. Review the
+result, and commit `cloudflare.config.ts` with the other changes. For what
+automatic configuration changes, refer to
+[Automatic configuration](/cf/projects/#automatic-configuration).
+
+:::caution
+Automatic configuration does not read Wrangler configuration files. In a
+Wrangler project, run `cf migrate` before you use `cf` in CI. Refer to
+[Migrate a Wrangler project](/cf/wrangler/migrate/).
+:::
+
+## Build once, then deploy the build
+
+To deploy exactly what an earlier step built, build the project once:
+
+<PackageManagers type="exec" pkg="cf" args="build" />
+
+Then deploy that build with `--prebuilt` and the mode it recorded:
+
+<PackageManagers
+	type="exec"
+	pkg="cf"
+	args="deploy --prebuilt --mode production"
+/>
+
+`--prebuilt` skips the build and automatic configuration, and uses the Build
+Output in `.cloudflare/output`. Vite builds record `production` unless you pass
+`--mode`. If you build with `--mode staging`, deploy with `--mode staging`. When
+the modes do not match, the deploy stops before it uploads anything and prints
+the mode to use.
+
+If the Build Output contains more than one Worker, `cf` deploys the default
+Worker unless you pass `--worker <NAME>`. For the full rules, refer to
+[Deploy a prebuilt build](/cf/projects/#deploy-a-prebuilt-build).
+
+## Check pull requests with a dry run
+
+`cf deploy --dry-run` builds the project and validates the result without
+uploading it or sending API requests. It needs no credentials, so it also works
+for pull requests from forks, where CI secrets are not available.
+
+<PackageManagers type="exec" pkg="cf" args="deploy --dry-run" />
+
+To check a build from an earlier step instead, add `--prebuilt` and the
+recorded `--mode`, as the example workflow does.
+
+## Deploy previews from CI
+
+`cf previews deploy` builds the project and deploys a Worker Preview. It needs
+credentials and has no `--dry-run` option.
+
+<PackageManagers type="exec" pkg="cf" args="previews deploy" />
+
+The preview name defaults to the current branch. In GitHub Actions, `cf` reads
+`GITHUB_HEAD_REF` or `GITHUB_REF_NAME`. In GitLab CI/CD, it reads
+`CI_COMMIT_REF_NAME`. Otherwise, it uses the current Git branch. On a detached
+checkout without these variables, pass the preview name as an argument. For
+the output and options, refer to [Deploy a preview](/cf/projects/#deploy-a-preview).
+
+## Turn off telemetry
+
+`cf` sends anonymous usage telemetry, which records whether it runs in CI. To
+turn it off for a job, set `CF_SEND_TELEMETRY=false` or `DO_NOT_TRACK=1` in the
+job environment. `cf` does not check npm for updates in CI.
+
+## Related resources
+
+- [Develop, build, and deploy](/cf/projects/) describes the project commands.
+- [Use cf with coding agents](/cf/agents/) covers command discovery and safe
+  operation.

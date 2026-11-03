@@ -4,7 +4,11 @@
 
 import { TypeScriptExample } from "~/components";
 
-Durable Objects may shut down at any time due to deployments, inactivity, or runtime decisions. Design your application to write state incrementally rather than relying only on a shutdown notification.
+A Durable Object shuts down when it becomes inactive, when a [code update strategy](/durable-objects/deployments/durable-objects-code-updates/) applies new code, or when Cloudflare deploys a new version of the Workers runtime.
+
+An `immediate` strategy applies the update right away. A `deferred` strategy gives the object time to hibernate, up to `max_delay`, but is best effort: the object can reset earlier.
+
+Design your application to write state incrementally rather than relying only on a shutdown notification.
 
 Use the best-effort [`[shutdown]()`](/durable-objects/api/base/#shutdown) hook for clean shutdown logic. The hook runs before idle eviction and code-update resets, but it is not guaranteed to run.
 

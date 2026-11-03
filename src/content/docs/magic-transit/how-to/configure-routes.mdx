@@ -6,20 +6,20 @@ title: Configure routes
 sidebar:
   order: 2
 head: []
-description: Magic Transit uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. If you are connected through CNI with Dataplane v2, you also have access to BGP peering (beta).
+description: Magic Transit uses a static configuration to route your traffic through anycast tunnels from Cloudflare's global network to your locations. You can also use BGP peering to exchange routes dynamically.
 tags:
   - IPsec
 ---
 
-import { Aside, APIRequest, DashButton, TabItem, Tabs } from "~/components";
+import { Aside, APIRequest, DashButton, Steps, TabItem, Tabs } from "~/components";
 
-Magic Transit Virtual Network uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic Transit Virtual Network routing table through static route configuration or routes learned from BGP peering (beta) (available over CNI with Dataplane v2, as well as IPsec and GRE tunnels).
+Magic Transit Virtual Network uses a routing table to steer your traffic from Cloudflare's global network to your connected networks via next-hop. You can add entries to the Magic Transit Virtual Network routing table through static route configuration or routes learned from BGP peering over IPsec and GRE tunnels or CNI with Dataplane v2 (closed beta).
 
 Refer to [Traffic Steering](/magic-transit/reference/traffic-steering/) for more information about all the technical aspects related to:
 
 - Routes' priorities and weights
 - Regional scoping of traffic to reduce latency
-- BGP peering (beta)
+- BGP peering
 
 :::caution[Anycast routing]
 Cloudflare uses anycast to route traffic. Anycast is a network addressing and routing method that routes incoming requests to different locations. Traffic can arrive at a different geographic location than expected. Not all requests go to the closest data center because Internet routing and peering relationships are complex, and Cloudflare optimizes for performance and reliability.
@@ -35,7 +35,7 @@ The dashboard **Routes** page shows the routes for all of your connectors — in
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to **Routes** page.
+1. Go to the **Routes** page.
 
    <DashButton url="/?to=/:account/magic-networks/routes" />
 
@@ -269,8 +269,8 @@ Example:
 
 BGP peering is available when using the following on-ramps:
 
-- [CNI with Dataplane v2](/network-interconnect/).
-- [IPsec and GRE tunnels (beta)](/magic-transit/how-to/configure-tunnel-endpoints/). Requires [Unified Routing (beta)](/magic-transit/reference/traffic-steering/#unified-routing-mode-beta).
+- [IPsec and GRE tunnels](/magic-transit/how-to/configure-tunnel-endpoints/). Requires [Unified Routing](/magic-transit/reference/traffic-steering/#unified-routing).
+- [CNI with Dataplane v2](/network-interconnect/) (closed beta and not available to new customers).
 
 ### Choose an ASN for BGP peering
 
@@ -278,11 +278,11 @@ The Magic Transit Virtual Network routing table is managed by the customer. You 
 
 By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Magic Transit Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
 
-:::note
-If you are setting up BGP over IPsec or GRE tunnels you cannot change this value.
-:::
+The CF Account ASN applies to all BGP sessions in your account, over both IPsec/GRE tunnels and CNI. It must be different from the customer device ASN on each tunnel.
 
 To set this ASN:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. Go to the Routes page.
 
@@ -291,6 +291,20 @@ To set this ASN:
 2. Select **WAN configuration**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Select **Update**.
+
+</TabItem> <TabItem label="API">
+
+Create a `PUT` request to update the BGP settings for your account. The following example sets the CF Account ASN to `65000`:
+
+<APIRequest
+  path="/accounts/{account_id}/magic/bgp/settings"
+  method="PUT"
+  json={{
+		"cloudflare_asn": 65000
+  }}
+/>
+
+</TabItem> </Tabs>
 
 Magic Transit customers should also be aware of the following:
 
@@ -327,7 +341,7 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations and is not a security mechanism.
 8. (Optional) In **Additional Advertised prefix list**, input any additional prefixes you want to advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using Magic Transit with Egress.
-	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#return-traffic-routing).
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/mesh/features/routes/#return-traffic-routing).
 9. Select **Save**.
 
 #### Set up BGP for IPsec/GRE tunnels
@@ -347,7 +361,7 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 7. In **MD5 key**, you can optionally enter the key for your network. Note that this is meant to prevent accidental misconfigurations and is not a security mechanism.
 8. (Optional) In **Additional Advertised prefix list**, input any additional prefixes you want to advertise alongside your existing routes. Leave this blank if you do not want to advertise extra routes. Typical prefixes to configure here include:
 	- A route to `0.0.0.0/0`, the default route — to attract all Internet-bound traffic if using Magic Transit with Egress.
-	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#return-traffic-routing).
+	- A route to `100.96.0.0/12`, the portion of CGNAT space [used by default with Cloudflare One Clients](/mesh/features/routes/#return-traffic-routing).
 9. Select **Save**.
 
 ### Important remarks for GRE/IPsec tunnels
@@ -359,7 +373,7 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
   :::caution
 	If the tunnel is to an Azure VPN gateway, the tunnel interface address must not be in the link-local range. Azure will not initiate BGP sessions to peers using link-local addresses. Use an RFC 1918 address for your tunnel interface address instead.
   :::
-- Hold time must be greater than 0 seconds (BGP `KEEPALIVE` messages are required). Cloudflare recommends at least 45 seconds. Cloudflare advertises a hold time of 90 seconds for GRE/IPsec tunnels. If you set a value greater than 90 seconds, the negotiated hold time will be 90 seconds, according to the standard way BGP has of negotiating hold times.
+- Hold time must be 30 seconds or greater. Cloudflare recommends at least 90 seconds. Cloudflare advertises a hold time of 240 seconds, so if you set a value greater than 240 seconds, the negotiated hold time will be 240 seconds.
 - Connect retry time should be low (for example, five or 10 seconds).
 - Your CPE may advertise up to 5,000 prefixes on one BGP session.
 - MD5 authentication is optional. You can use a maximum of 80 characters. Supported characters include ``a-zA-Z0-9'!@#$%^&*()+[]{}<>/.,;:_-~`= \\|``
@@ -368,3 +382,117 @@ If you are configuring BGP peering for a tunnel (GRE or IPsec) you must be aware
 
 	When MD5 is enabled, you cannot use Telnet to test BGP connectivity (Telnet does not support TCP MD5 authentication).
   :::
+
+### Filter BGP routes
+
+BGP filter profiles control routes exchanged over your peering session with Cloudflare. They apply to BGP over GRE or IPsec tunnels.
+
+Each account-scoped profile requires a unique name, one match action, and up to 1,000 Classless Inter-Domain Routing (CIDR) targets.
+
+Match actions have the following behavior:
+
+| Match action | Behavior                                           |
+| ------------ | -------------------------------------------------- |
+| `allow`      | Accept matching routes and reject everything else. |
+| `deny`       | Reject matching routes and accept everything else. |
+
+Each CIDR target has a matching mode that determines whether the prefix and its subnets match:
+
+| Matching mode                   | Syntax              | Matches                                             |
+| ------------------------------- | ------------------- | --------------------------------------------------- |
+| Exact prefix                    | `10.0.0.0/8`        | Only `10.0.0.0/8`.                                  |
+| Prefix and more-specific routes | `10.0.0.0/8+`       | `10.0.0.0/8` and every more-specific subnet.        |
+| Exact length                    | `10.0.0.0/8{16}`    | Every `/16` subnet within `10.0.0.0/8`.             |
+| Length range                    | `10.0.0.0/8{16,24}` | Every `/16` through `/24` subnet within the prefix. |
+
+Each tunnel supports one import filter and one export filter.
+
+Import filters apply to routes Cloudflare receives from the peer. Rejected routes do not enter the Magic routing table.
+Rejected routes remain in the local routing information base (RIB-in). Making the filter more permissive adds them to the Magic routing table without a route refresh.
+
+Export filters apply to routes selected for peer advertisement. Prefixes in the tunnel's `extra_prefixes` field bypass export filters.
+
+#### Create profiles
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. Go to the **Routes** page.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. From the **BGP filter profiles** tab, select **Create filter profile**.
+3. Enter a descriptive **Name** for your filter profile and optionally add a **Description**.
+4. Choose **Allow** or **Deny** as the **Action** to take when a route matches a target.
+5. Add a **Target** by entering a CIDR prefix in **CIDR prefix**. Choose which **Match** mode this target should use.
+6. If you want to add more targets, choose **Add target**.
+7. Select **Create**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+You need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+
+The following request creates an allow profile for corporate subnets:
+
+<APIRequest
+	path="/accounts/{account_id}/magic/bgp/filter_profiles"
+	method="POST"
+	json={{
+		name: "Allowed on-premises imports",
+		description: "Corporate subnets accepted from the customer router",
+		match_action: "allow",
+		targets: ["10.0.0.0/8+", "192.168.0.0/16", "2001:db8::/32+"],
+	}}
+/>
+
+</TabItem> </Tabs>
+
+Profile targets have these requirements:
+
+- Targets must use valid CIDR network addresses without whitespace. Cloudflare rejects duplicate or equivalent targets.
+- Profiles support IPv4 and IPv6 targets, but not IPv4-mapped IPv6 targets.
+
+#### Assign profiles
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. Go to the **Connectors** page and choose **IPsec/GRE tunnels**.
+
+   <DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Choose **Create a tunnel** to make a new tunnel or choose **Configure BGP** from the three-dot menu next to an existing tunnel.
+3. Select a profile from **Import filter profile**. To remove it, select **X** next to the selected profile.
+4. Repeat for **Export filter profile**.
+5. Choose **Add tunnels** or **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+The following request assigns import and export profiles to a GRE tunnel. Set each field to a profile ID from your account.
+
+<APIRequest
+	path="/accounts/{account_id}/magic/gre_tunnels/{gre_tunnel_id}"
+	method="PUT"
+	json={{
+		bgp: {
+			import_filter_id: "a1b2c3d4e5f647890a1b2c3d4e5f6789",
+			export_filter_id: "b2c3d4e5f6a78901b2c3d4e5f6a78901",
+		},
+	}}
+/>
+
+To remove an assigned profile, set its corresponding field to `null`.
+
+</TabItem> </Tabs>
+
+Profile assignments have these behaviors and limits:
+
+- Changing a profile or a tunnel's profile assignments does not reset BGP sessions.
+- You cannot delete an in-use profile. Detach the profile from all tunnels first.
+- Cloudflare enforces the 5,000-route RIB-in limit before import filtering. Rejected routes still count toward this limit.

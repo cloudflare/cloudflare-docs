@@ -31,11 +31,11 @@ Passive Detection works without a Gateway DLP policy. It does not change how Gat
 To collect Passive Detection results:
 
 - Route HTTP traffic through Cloudflare Gateway.
-- Turn on [Gateway HTTP filtering](/cloudflare-one/traffic-policies/get-started/http/).
-- Turn on [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) for HTTPS traffic.
+- Turn on [Gateway HTTP filtering](/cloudflare-one/traffic-controls/get-started/http/).
+- Turn on [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) for HTTPS traffic.
 - Make sure each detection entry you want to scan is enabled in at least one [DLP profile](/cloudflare-one/data-loss-prevention/dlp-profiles/) in your account. Passive Detection scans entries enabled in any profile in your account, not just profiles selected for a policy.
 
-For uploaded or downloaded files, refer to the [supported file types](/cloudflare-one/data-loss-prevention/#supported-file-types). Traffic that bypasses Gateway or matches a [Do Not Inspect](/cloudflare-one/traffic-policies/http-policies/#do-not-inspect) policy cannot produce findings.
+For uploaded or downloaded files, refer to the [supported file types](/cloudflare-one/data-loss-prevention/#supported-file-types). Traffic that bypasses Gateway or matches a [Do Not Inspect](/cloudflare-one/traffic-controls/http-policies/#do-not-inspect) policy cannot produce findings.
 
 ### View Passive Detection
 

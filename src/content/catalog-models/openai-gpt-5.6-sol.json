@@ -14,6 +14,16 @@
 	"context_length": 1050000,
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Short-context input (per 1M)": 4,
+		"Short-context cached input (per 1M)": 0.4,
+		"Short-context cache write (per 1M)": 5,
+		"Short-context output (per 1M)": 20,
+		"Long-context input (per 1M)": 8,
+		"Long-context cached input (per 1M)": 0.8,
+		"Long-context cache write (per 1M)": 10,
+		"Long-context output (per 1M)": 30
+	},
 	"examples": [
 		{
 			"name": "Launch Checklist",
@@ -269,19 +279,36 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://openai.com/",
 	"terms": "https://openai.com/policies/",
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.6-sol.png",
 	"metadata": {
 		"API": "Responses",
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"long_context_threshold_tokens": 272000,
+				"short_context_input_tokens": 4,
+				"short_context_input_cached_tokens": 0.4,
+				"short_context_input_cache_creation_tokens": 5,
+				"short_context_output_tokens": 20,
+				"long_context_input_tokens": 8,
+				"long_context_input_cached_tokens": 0.8,
+				"long_context_input_cache_creation_tokens": 10,
+				"long_context_output_tokens": 30
+			}
+		}
+	],
 	"banner": {
 		"id": "e2dc316b-8765-407f-8405-058ab5d502c8",
 		"text": "GPT-5.6 Sol is 50% off through Sept 18",
@@ -341,12 +368,15 @@
 					"type": "object",
 					"properties": {
 						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
 							"type": "string",
 							"enum": [
 								"none",
 								"low",
 								"medium",
-								"high"
+								"high",
+								"xhigh",
+								"max"
 							]
 						}
 					},

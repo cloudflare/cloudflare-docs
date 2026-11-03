@@ -12,6 +12,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.047,
+		"6s @768p": 0.28,
+		"10s @768p": 0.56,
+		"6s @1080p": 0.49
+	},
 	"examples": [
 		{
 			"name": "Simple Video",
@@ -176,6 +182,17 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"default": 0.047,
+				"768p_6s": 0.28,
+				"768p_10s": 0.56,
+				"1080p_6s": 0.49
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:17",
 	"schema": {

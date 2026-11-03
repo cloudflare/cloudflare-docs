@@ -1,0 +1,23 @@
+---
+title: Monitors (Beta)
+description: Define threshold, anomaly detection, and SLO monitors that evaluate SQL API queries on a schedule.
+date: 2026-10-02
+---
+
+The Alerts section now includes **Monitors** (Beta), a dedicated space for creating alerts based on your own [SQL API](/analytics/sql-api/) queries. Monitors are available under **Observability** > **Alerts** > **Monitors** in the Cloudflare dashboard.
+
+![Monitors empty state showing the Create Monitor button and a diagram of the query-to-monitor-to-destinations flow.](~/assets/images/observability/monitors-empty-state.png)
+
+Each monitor evaluates a query against a supported SQL API dataset on a schedule and sends a notification when the result meets your detection criteria. Three detection methods are available:
+
+- **Threshold**: triggers when a query result crosses a fixed value.
+- **Anomaly detection**: triggers when a query result deviates from its historical baseline by more than a configured sensitivity.
+- **SLO**: triggers when the ratio of successful events to total events drops below a target percentage.
+
+The monitor builder includes a visual query builder, custom SQL support, and a query preview that charts the signal over a configurable time range of up to 7 days.
+
+![Monitor query builder showing dataset selection, metric, filters, and a query preview chart with anomaly bounds.](~/assets/images/observability/monitors-query-builder.png)
+
+Pre-defined notifications for DDoS, SSL/TLS, Health Checks, and other Cloudflare products are now listed separately under **Platform Notifications**.
+
+For configuration details, refer to [Monitors](/notifications/monitors/).

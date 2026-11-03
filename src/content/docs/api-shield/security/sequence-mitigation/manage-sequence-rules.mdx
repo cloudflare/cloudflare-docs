@@ -24,6 +24,8 @@ Cloudflare recommends creating sequence rules using WAF custom rules. Refer to t
 
 ## Create a sequence rule
 
+The starting and ending endpoints must use the same hostname.
+
 <Steps>
 1. In the Cloudflare dashboard, go to the **Security rules** page.
 
@@ -35,7 +37,7 @@ Cloudflare recommends creating sequence rules using WAF custom rules. Refer to t
    - Choose an endpoint.
    - Select **Set as starting endpoint**.
 5. Select a final endpoint. This is the endpoint you are targeting for protection.
-   - Choose a hostname to display the list of endpoints for that hostname.
+   - Choose the same hostname as the starting endpoint to display its endpoints.
    - Choose an endpoint.
    - Select **Set as ending endpoint**.
 6. Choose an action that corresponds to the security model type:

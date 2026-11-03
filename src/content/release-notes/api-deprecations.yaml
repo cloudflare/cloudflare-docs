@@ -3,6 +3,26 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
+  - publish_date: "2026-10-02"
+    title: "Cloudflare Radar: Top browsers and NetFlows summary endpoints"
+    description: |-
+      Deprecation date: October 2, 2026
+
+      End of life date: April 2, 2027
+
+      The Radar top browsers endpoints and the NetFlows summary endpoint without a dimension are deprecated and will be replaced by the corresponding summary endpoints with a `{dimension}` path parameter.
+
+      Deprecated APIs:
+
+      - `GET /radar/http/top/browser`
+      - `GET /radar/http/top/browser_family`
+      - `GET /radar/netflows/summary`
+
+      Replacements:
+
+      - [Get HTTP summary by dimension](/api/resources/radar/subresources/http/methods/summary_v2/) — `GET /radar/http/summary/{dimension}` with the `BROWSER` or `BROWSER_FAMILY` dimension
+      - [Get NetFlows summary by dimension](/api/resources/radar/subresources/netflows/methods/summary_v2/) — `GET /radar/netflows/summary/{dimension}` with the `PRODUCT` dimension
+
   - publish_date: "2026-07-27"
     title: "Zone Settings Batch API"
     description: |-
@@ -213,7 +233,7 @@ entries:
 
       End of life date: July 15, 2026
 
-      The Gateway Audit SSH action for [network policies](/cloudflare-one/traffic-policies/network-policies/) is deprecated and will be fully removed on July 15, 2026. [SSH with Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) is the replacement for managing and auditing SSH access.
+      The Gateway Audit SSH action for [network policies](/cloudflare-one/traffic-controls/network-policies/) is deprecated and will be fully removed on July 15, 2026. [SSH with Access for Infrastructure](/cloudflare-one/connections/connect-networks/use-cases/ssh/ssh-infrastructure-access/) is the replacement for managing and auditing SSH access.
 
       Creating new Gateway rules with `action: "audit_ssh"` via the dashboard was disabled in December 2024. Creating new rules via the API and Terraform was disabled on November 3, 2025. Editing existing rules via the dashboard, API, and Terraform was disabled on January 15, 2026. On July 15, 2026, all remaining Audit SSH rules will stop working.
 

@@ -6,19 +6,13 @@ sidebar:
   order: 2
 products:
   - notifications
-description: Troubleshoot common notification configuration errors.
+description: Troubleshoot common alert configuration errors.
 ---
 
-Refer to the information below for more details on common notification errors and how to troubleshoot them.
+## Webhook test failed with status code 400 Bad Request
 
-## Webhook test failed with status code 400 400 Bad Request
+This error can occur when you try to configure a webhook that is not currently supported, such as setting up a PagerDuty webhook. PagerDuty needs to be configured under [connected services](/notifications/get-started/configure-pagerduty/), not as a webhook.
 
-This error can occur when you try to configure a webhook that is not currently supported, such as setting up a PagerDuty webhook.
+## Deleted users are still receiving alerts
 
-PagerDuty needs to be configured under [connected notification services](/notifications/get-started/configure-pagerduty/).
-
-## Deleted users are still receiving notifications
-
-When you remove a user from your account via **Manage Account** > **Members** in the Cloudflare dashboard, their email address is not removed from existing notifications.
-
-You need to remove the email address from the configuration of the notifications by [editing the notification recipient](/notifications/get-started/#edit-a-notification).
+When you remove a user from your account via **Manage Account** > **Members** in the Cloudflare dashboard, their email address is not removed from existing alerts. You need to remove their email address by [editing the alert](/notifications/get-started/#manage-alerts).

@@ -42,7 +42,7 @@ If you enable replay protection for Cloudflare WAN IPsec tunnels, Cloudflare rou
 
 ## Additional considerations
 
-IPsec anti-replay protection is extremely important for transport mode - host-to-host or even app-to-app IPsec. In transport mode, an attacker has a relatively easy time identifying the encrypted protocol and identifying which packets to replay if the protocol is even subject to replay attacks. Cloudflare WAN, however, uses tunnel mode, which is inherently much harder to successfully manage a replay attack.
+IPsec anti-replay protection is extremely important for transport mode - host-to-host or even app-to-app IPsec. In transport mode, an attacker has a relatively easy time identifying the encrypted protocol and identifying which packets to replay if the protocol is even subject to replay attacks. Cloudflare WAN, however, uses tunnel mode, not transport mode, which makes a successful replay attack much harder.
 
 There are several reasons that make replay attacks difficult with tunnel mode:
 
@@ -55,3 +55,5 @@ There are several reasons that make replay attacks difficult with tunnel mode:
 ## Troubleshooting
 
 If you're experiencing tunnel instability or packet drops related to anti-replay protection, refer to [Troubleshoot tunnel health](/cloudflare-wan/troubleshooting/tunnel-health/#ipsec-tunnel-instability-or-packet-drops).
+
+If your IPsec tunnel has replay protection turned off in Cloudflare and a small, steady percentage of health checks fail, your device may still be enforcing anti-replay protection. Refer to [Health checks fail at a low, steady rate](/cloudflare-wan/troubleshooting/ipsec-troubleshoot/#anti-replay-mismatch).

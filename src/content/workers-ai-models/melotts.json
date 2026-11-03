@@ -1,7 +1,19 @@
 {
+    "name": "@cf/myshell-ai/melotts",
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per audio minute",
+                    "price": 0.000205,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "id": "c837b2ac-4d9b-4d37-8811-34de60f0c44f",
     "source": 1,
-    "name": "@cf/myshell-ai/melotts",
     "description": "MeloTTS is a high-quality multi-lingual text-to-speech library by MyShell.ai.",
     "task": {
         "id": "b52660a1-9a95-4ab2-8b1d-f232be34604a",
@@ -10,18 +22,6 @@
     },
     "created_at": "2024-07-19 15:51:04.819",
     "tags": [],
-    "properties": [
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per audio minute",
-                    "price": 0.0002,
-                    "currency": "USD"
-                }
-            ]
-        }
-    ],
     "schema": {
         "input": {
             "type": "object",
@@ -61,5 +61,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

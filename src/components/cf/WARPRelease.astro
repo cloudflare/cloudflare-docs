@@ -45,60 +45,52 @@ const sortedPlatforms = Object.entries(release.linuxPlatforms ?? {}).sort(
 			<div class="flex gap-2">
 				<span>
 					<strong>Version: </strong>
-					{release.platformName}
-					{" "}
-					{release.version}
+					{release.platformName} {release.version}
 				</span>
 				<span>
 					<strong>Date: </strong>
 					{release.releaseDate.toISOString().split("T")[0]}
 				</span>
-				{
-					release.packageSize && (
-						<span>
-							<strong>Size: </strong>
-							<span data-size>{prettyBytes(release.packageSize)}</span>
-						</span>
-					)
-				}
+				{release.packageSize && (
+					<span>
+						<strong>Size: </strong>
+						<span data-size>{prettyBytes(release.packageSize)}</span>
+					</span>
+				)}
 			</div>
 		</p>
 		<div class="my-3 flex flex-wrap items-center gap-3">
-			{
-				sortedPlatforms.length > 0 ? (
-					<>
-						<div class="relative inline-flex">
-							<select
-								aria-label="Select Linux distribution"
-								class="border-border bg-background text-foreground hover:border-foreground/20 focus-visible:ring-primary/50 h-9 appearance-none rounded-md border pr-9 pl-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
-							>
-								{sortedPlatforms.map(([platform]) => (
-									<option value={platform}>
-										{getPrettyLinuxName(platform)}
-									</option>
-								))}
-							</select>
-							<Icon
-								name="ph:caret-down"
-								aria-hidden="true"
-								class="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2"
-							/>
-						</div>
-						<LinkButton
-							variant="primary"
-							size="base"
-							data-linux-download
-							href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
+			{sortedPlatforms.length > 0 ? (
+				<>
+					<div class="relative inline-flex">
+						<select
+							aria-label="Select Linux distribution"
+							class="border-border bg-background text-foreground hover:border-foreground/20 focus-visible:ring-primary/50 h-9 appearance-none rounded-md border pr-9 pl-3 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
 						>
-							Download
-						</LinkButton>
-					</>
-				) : (
-					<LinkButton variant="primary" size="base" href={release.packageURL}>
+							{sortedPlatforms.map(([platform]) => (
+								<option value={platform}>{getPrettyLinuxName(platform)}</option>
+							))}
+						</select>
+						<Icon
+							name="ph:caret-down"
+							aria-hidden="true"
+							class="text-muted-foreground pointer-events-none absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2"
+						/>
+					</div>
+					<LinkButton
+						variant="primary"
+						size="base"
+						data-linux-download
+						href={`https://downloads.cloudflareclient.com/v1/download/${sortedPlatforms[0][0]}/version/${release.version}`}
+					>
 						Download
 					</LinkButton>
-				)
-			}
+				</>
+			) : (
+				<LinkButton variant="primary" size="base" href={release.packageURL}>
+					Download
+				</LinkButton>
+			)}
 		</div>
 		<p>
 			<span>

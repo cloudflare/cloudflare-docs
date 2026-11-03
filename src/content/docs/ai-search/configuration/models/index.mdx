@@ -14,7 +14,7 @@ AI Search uses models at multiple stages. You can configure which models are use
 
 AI Search leverages Workers AI models in the following stages:
 
-- Image to markdown conversion (if images are in data source): Converts image content to Markdown using object detection and captioning models.
+- Image processing: Multimodal embedding models embed images directly. Text-only embedding models create captions for images and image queries.
 - Embedding: Transforms your documents and queries into vector representations for semantic search.
 - Query rewriting (optional): Reformulates the user’s query to improve retrieval accuracy.
 - Reranking (optional): Reorders retrieved results by semantic relevance using a cross-encoder model.
@@ -37,7 +37,7 @@ To use AI Search with other model providers:
    - Embedding model: Only available to be changed when creating a new AI Search.
    - Generation model: Can be selected when creating a new AI Search and can be changed at any time in **Settings**.
 
-AI Search supports a subset of models that have been selected to provide the best experience. Refer to the list of [supported models](/ai-search/configuration/models/supported-models/).
+Embedding and reranking models must appear in [Supported models](/ai-search/configuration/models/supported-models/). Generation and query-rewriting models can use any AI Gateway model ID compatible with the OpenAI Chat Completions API.
 
 ### Smart default
 

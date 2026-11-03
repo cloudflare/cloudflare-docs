@@ -30,6 +30,7 @@ Before you set up Secondary DNS override, make sure that you have:
 - [Set up a secondary DNS zone](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/) and confirmed your DNS records are transferred correctly.
 - Set your [DNSSEC with Secondary DNS](https://dash.cloudflare.com/?to=/:account/:zone/dns/settings/) option to either **Unsigned** or **Live Signing**. If set to [Pre-signed](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/dnssec-for-secondary/#set-up-pre-signed-dnssec), Cloudflare will treat all your DNS records as unproxied (DNS only).
 - Removed all nameservers from your registrar except for those provided by Cloudflare (highly recommended).
+- For full Cloudflare proxy coverage (required for Spectrum, WAF, and CDN), use a [hidden primary configuration](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup/#hidden-primary) where your primary DNS server is not listed at the registrar. If both your primary and Cloudflare nameservers are listed, resolvers will split queries and approximately 50% of traffic will bypass Cloudflare.
 
   :::caution
 

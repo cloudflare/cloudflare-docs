@@ -8,13 +8,13 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-This example demonstrates how to use a VPC Network binding with [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) (formerly WARP Connector) to connect to any private service in your account from a Worker — without pre-registering individual hosts or specifying a Cloudflare Tunnel UUID.
+This example uses a VPC Network binding with [Cloudflare Mesh](/mesh/) (formerly WARP Connector) to connect through your account's default [virtual network](/cloudflare-one/networks/virtual-networks/). It does not require pre-registering individual hosts or specifying a Cloudflare Tunnel UUID.
 
-When you bind to [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) using `network_id: "cf1:network"`, your Worker can reach any Mesh node, client device, subnet or hostname route announced through Cloudflare Tunnel or Cloudflare Mesh, or destination connected through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI).
+The `cf1:network` selector uses your account's default virtual network. Your Worker can reach destinations routed through that network, including Mesh nodes, client devices, subnet or hostname routes announced through Cloudflare Tunnel or Cloudflare Mesh, and destinations connected through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI). To select another configured virtual network, refer to [VPC Networks configuration](/workers-vpc/configuration/vpc-networks/).
 
 ## Prerequisites
 
-- A [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) node connected to your private network
+- A [Cloudflare Mesh](/mesh/) node connected to your private network
 - Private services running behind your Mesh node (for example, an internal API, database, or web application)
 
 ## 1. Configure your Worker
@@ -27,6 +27,7 @@ Bind your Worker to Cloudflare Mesh using `network_id: "cf1:network"` in your Wr
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "mesh-gateway",
 	"main": "src/index.js",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"vpc_networks": [
 		{
@@ -39,7 +40,7 @@ Bind your Worker to Cloudflare Mesh using `network_id: "cf1:network"` in your Wr
 ```
 </WranglerConfig>
 
-With this single binding, your Worker can reach any service across all Cloudflare Tunnels, Mesh nodes, and Cloudflare WAN on-ramps in your account.
+This binding can reach services routed through your account's default virtual network, including services behind Cloudflare Tunnel, Mesh nodes, and Cloudflare WAN on-ramps.
 
 ## 2. Implement the Worker
 
@@ -116,5 +117,5 @@ curl https://mesh-gateway.workers.dev/api/metrics
 
 - Learn more about [VPC Networks](/workers-vpc/configuration/vpc-networks/) configuration options
 - Refer to the [Workers Binding API](/workers-vpc/api/) reference
-- [Set up Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/get-started/) for your account
+- [Set up Cloudflare Mesh](/mesh/get-started/) for your account
 - Explore [other examples](/workers-vpc/examples/)

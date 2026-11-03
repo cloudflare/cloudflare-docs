@@ -26,9 +26,9 @@ AI Search can ingest a variety of file types. The following plain text files and
 
 ### Plain text file types
 
-| Format     | File extensions                                                                | Mime Type                                                            |
+| Format     | File extensions                                                                | MIME type                                                            |
 | ---------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| Text       | `.txt`, `.rst`                                                                 | `text/plain`                                                         |
+| Text       | `.txt`, `.rst`                                                                 | `text/plain`, `text/x-rst`                                           |
 | Log        | `.log`, `.log.gz`                                                              | `text/plain`                                                         |
 | Config     | `.ini`, `.conf`, `.env`, `.properties`, `.gitignore`, `.editorconfig`, `.toml` | `text/plain`, `text/toml`                                            |
 | Markdown   | `.markdown`, `.md`, `.mdx`, `.mdoc`                                            | `text/markdown`                                                      |
@@ -36,10 +36,12 @@ AI Search can ingest a variety of file types. The following plain text files and
 | Script     | `.sh`, `.bat`, `.ps1`                                                          | `application/x-sh`, `application/x-msdos-batch`, `text/x-powershell` |
 | SGML       | `.sgml`                                                                        | `text/sgml`                                                          |
 | JSON       | `.json`                                                                        | `application/json`                                                   |
+| XML        | `.xml`                                                                         | `application/xml`                                                    |
 | SQL        | `.sql`                                                                         | `application/sql`                                                    |
 | YAML       | `.yaml`, `.yml`                                                                | `application/x-yaml`                                                 |
 | CSS        | `.css`                                                                         | `text/css`                                                           |
 | JavaScript | `.js`                                                                          | `application/javascript`                                             |
+| TypeScript | `.ts`, `.tsx`                                                                  | `application/typescript`                                             |
 | PHP        | `.php`                                                                         | `application/x-httpd-php`                                            |
 | Python     | `.py`                                                                          | `text/x-python`                                                      |
 | Ruby       | `.rb`                                                                          | `text/x-ruby`                                                        |
@@ -51,6 +53,7 @@ AI Search can ingest a variety of file types. The following plain text files and
 | Rust       | `.rs`                                                                          | `text/rust`                                                          |
 | Swift      | `.swift`                                                                       | `text/swift`                                                         |
 | Dart       | `.dart`                                                                        | `text/dart`                                                          |
+| Terraform  | `.tf`                                                                          | `text/plain`                                                         |
 | EMACS Lisp | `.el`                                                                          | `application/x-elisp`, `text/x-elisp`, `text/x-emacs-lisp`           |
 
 ### Rich format file types
@@ -61,6 +64,21 @@ AI Search uses [Markdown Conversion](/workers-ai/features/markdown-conversion/) 
 
 ## File limits
 
-AI Search has a file size limit of **up to 4 MB**.
+AI Search applies these file size limits:
 
-Files that exceed this limit will not be indexed and will show up in the error logs.
+| File type                                                                                                            | Maximum size |
+| -------------------------------------------------------------------------------------------------------------------- | ------------ |
+| PDF with OCR enabled                                                                                                 | 10 MiB       |
+| PDF without OCR                                                                                                      | 4 MiB        |
+| Plain text, code, configuration, markup, and other formats listed in [Plain text file types](#plain-text-file-types) | 10 MiB       |
+| Other formats converted to Markdown                                                                                  | 4 MiB        |
+
+Files that exceed these limits are not indexed. They appear in the error logs.
+
+## Images and optical character recognition
+
+AI Search supports `.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.bmp`, `.tif`, `.tiff`, `.heic`, and `.heif` images. Multimodal embedding models embed supported images directly. Text-only embedding models create captions before embedding images.
+
+Optical character recognition (OCR) extracts text from scanned PDFs and images. Set `indexing_options.use_ocr` to `true` when creating or updating an instance. OCR is disabled by default and changing this setting triggers a full reindex.
+
+OCR is available for every account. OCR usage is billed as image-processing ingestion tokens. For pricing details, refer to [Limits and pricing](/ai-search/platform/limits-pricing/).

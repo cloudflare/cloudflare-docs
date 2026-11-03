@@ -187,6 +187,14 @@ If you rotate again before updating your IdP with the current certificate, the p
 
 This optional configuration signs the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
 
+### Require fresh authentication at the identity provider
+
+You can ask your identity provider to reauthenticate the user for every SAML authentication request. This option applies whether the request is signed or unsigned.
+
+This setting is available through the API. First, retrieve the identity provider's current configuration from the [Access identity provider endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/get/). Then, send the complete configuration to the [update identity provider endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/update/) with `force_authn` set to `true` in the `config` object. The default value is `false`.
+
+When this option is turned on, Access sets `ForceAuthn` to `true` in each SAML authentication request. Access may also set `ForceAuthn` to `true` when a security check requires the user to reauthenticate, even if `force_authn` is `false`.
+
 ### Email attribute name
 
 Many [Access policies](/cloudflare-one/access-controls/policies/) depend on a user's email address. Some identity providers have a different naming for the email address attribute (for example, `Email`, `e-mail`, `emailAddress`). This can typically be checked in the identity provider's SAML test option.

@@ -1,0 +1,52 @@
+---
+title: Cursor
+description: Route Cursor chat and agent requests through AI Gateway using a custom OpenAI base URL.
+pcx_content_type: configuration
+sidebar:
+  order: 2
+products:
+  - ai-gateway
+---
+
+import { Steps } from "~/components";
+
+[Cursor](https://cursor.com/) supports a custom OpenAI base URL for models that use a custom API key. Point it at AI Gateway's [REST API](/ai-gateway/usage/rest-api/) to route Cursor chat and agent requests through AI Gateway. Cursor sends requests through its servers, so your AI Gateway endpoint must be publicly reachable.
+
+## Prerequisites
+
+Before you start, you need:
+
+- Your Cloudflare account ID. To find it, refer to [Find your account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
+- A [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Account** > **Workers AI** > **Read** permission.
+- [Credits loaded](/ai-gateway/features/unified-billing/#load-credits) on your account for third-party models.
+- [Cursor](https://cursor.com/downloads) installed and updated to the latest version.
+
+<Steps>
+
+1. In Cursor, go to **Cursor Settings** > **Models**. Under **API Keys**, enter your Cloudflare API token in the **OpenAI API Key** field, then select **Save**.
+
+2. Turn on **Override OpenAI Base URL**. Enter the following value, replacing `<ACCOUNT_ID>` with your Cloudflare account ID:
+
+   ```txt
+   https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai/v1
+   ```
+
+   :::note
+   If Cursor does not show **Override OpenAI Base URL**, this Cursor version or plan does not support routing OpenAI-compatible requests through AI Gateway.
+   :::
+
+3. Select **+ Add Custom Model**. Enter a model name, then turn on the model.
+
+   Use a Workers AI model for chat, such as `@cf/meta/llama-3.3-70b-instruct-fp8-fast`. For agent mode, use a third-party model that supports the OpenAI Responses API, such as `openai/gpt-4.1-mini`.
+
+   For available models, refer to the [model catalog](/ai/models/).
+
+4. Select the custom model in Cursor and send a prompt. Requests now route through AI Gateway.
+
+</Steps>
+
+:::note
+Workers AI models work with Cursor chat requests through the OpenAI Chat Completions API. Cursor agent mode uses the OpenAI Responses API. Use a third-party Responses-compatible model, such as `openai/gpt-4.1-mini`, for agent mode.
+:::
+
+To confirm traffic reaches AI Gateway, refer to [Verify it works](/ai-gateway/integrations/coding-agents/#verify-it-works).

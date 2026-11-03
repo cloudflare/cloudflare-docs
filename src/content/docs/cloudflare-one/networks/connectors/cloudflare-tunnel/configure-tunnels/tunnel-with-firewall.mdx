@@ -103,7 +103,7 @@ Allows `cloudflared` to report [post-quantum key exchange](https://blog.cloudfla
 | -------------- | -------------- | -------------- | -------------- |
 | Not applicable | Not applicable | Not applicable | Not applicable |
 
-Performing a DNS query for a `TXT` record to this hostname allows `cloudflared` to determine which version of [UDP datagram](/changelog/2025-07-15-udp-improvements/) to use when connecting via the `quic` protocol. If your firewall filters egress DNS queries by FQDN, you may need to allow queries for this domain to ensure optimal `quic` performance.
+Performing a DNS query for a `TXT` record to this hostname allows `cloudflared` to determine which version of [UDP datagram](/changelog/post/2025-07-15-udp-improvements/) to use when connecting via the `quic` protocol. If your firewall filters egress DNS queries by FQDN, you may need to allow queries for this domain to ensure optimal `quic` performance.
 
 ## Firewall configuration
 

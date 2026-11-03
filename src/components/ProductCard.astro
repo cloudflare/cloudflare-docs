@@ -46,36 +46,26 @@ const ScenarioTag = headingLevel === 4 ? "h4" : headingLevel === 3 ? "h3" : "p";
 	class="group/product-card bg-background hover:bg-background/90 focus-visible:outline-primary relative flex flex-1 flex-col p-6 no-underline focus-visible:outline-2 focus-visible:-outline-offset-2"
 >
 	<div class="mb-4 flex items-center justify-between">
-		<span
-			class="pc-icon-shell border-border bg-muted text-muted-foreground relative flex size-11 items-center justify-center rounded-md border transition-[background-color,border-color,color] duration-200"
-		>
+		<span class="pc-icon-shell border-border bg-muted text-muted-foreground relative flex size-11 items-center justify-center rounded-md border transition-[background-color,border-color,color] duration-200">
 			<Icon
 				name={icon}
 				size="24px"
 				class="pc-icon transition-colors duration-200"
 			/>
 		</span>
-		<span
-			class="text-primary text-right font-mono text-xs tracking-widest uppercase"
-		>
+		<span class="text-primary text-right font-mono text-xs tracking-widest uppercase">
 			{product}
 		</span>
 	</div>
 
-	<ScenarioTag
-		class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg"
-	>
+	<ScenarioTag class="text-foreground mb-2 text-base leading-snug font-medium md:text-lg">
 		{scenario}
 	</ScenarioTag>
-	<p
-		class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed md:text-base"
-	>
+	<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed md:text-base">
 		{detail}
 	</p>
 
-	<span
-		class="pc-cta text-muted-foreground inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/product-card:underline"
-	>
+	<span class="pc-cta text-muted-foreground inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/product-card:underline">
 		{cta}
 		<Icon
 			name="ph:arrow-right"

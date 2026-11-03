@@ -1,7 +1,6 @@
 import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
-import { skillsLoader } from "astro-skills";
 import {
 	docsCollection,
 	partialsCollection,
@@ -257,10 +256,6 @@ export const collections = {
 	// middlecache at build. Read by ProductAvailabilityText /
 	// GranularControlApplicationsList.
 	"product-availability": defineCollection(productAvailabilityCollectionConfig),
-	// Agent Skills Discovery — shared root `./skills` dir, served via astro-skills.
-	skills: defineCollection({
-		loader: skillsLoader({ base: "./skills" }),
-	}),
 	"granular-control-applications": defineCollection(
 		granularControlApplicationsCollectionConfig,
 	),
@@ -269,8 +264,6 @@ export const collections = {
 	"mcp-servers": defineCollection(mcpServersCollectionConfig),
 	// Agent Skills manifest (name + description only), fetched from
 	// middlecache at build. Read by SkillsList on the agent-setup pages.
-	// Distinct from the `skills` collection above, which loads the full
-	// SKILL.md bundles for the /.well-known/skills/ discovery routes.
 	"skills-manifest": defineCollection(skillsManifestCollectionConfig),
 	// CF notification catalog (single index.yaml). Read by AvailableNotifications.
 	notifications: defineCollection({

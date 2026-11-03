@@ -1,7 +1,13 @@
 {
+    "name": "@cf/black-forest-labs/flux-1-schnell",
+    "properties": [
+        {
+            "property_id": "terms",
+            "value": "https://bfl.ai/legal/terms-of-service"
+        }
+    ],
     "id": "9e087485-23dc-47fa-997d-f5bfafc0c7cc",
     "source": 1,
-    "name": "@cf/black-forest-labs/flux-1-schnell",
     "description": "FLUX.1 [schnell] is a 12 billion parameter rectified flow transformer capable of generating images from text descriptions. ",
     "task": {
         "id": "3d6e1f35-341b-4915-a6c8-9a7142a9033a",
@@ -10,27 +16,6 @@
     },
     "created_at": "2024-08-29 16:37:39.541",
     "tags": [],
-    "properties": [
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per 512 by 512 tile",
-                    "price": 0.000053,
-                    "currency": "USD"
-                },
-                {
-                    "unit": "per step",
-                    "price": 0.00011,
-                    "currency": "USD"
-                }
-            ]
-        },
-        {
-            "property_id": "terms",
-            "value": "https://bfl.ai/legal/terms-of-service"
-        }
-    ],
     "schema": {
         "input": {
             "type": "object",
@@ -43,14 +28,14 @@
                 },
                 "steps": {
                     "type": "integer",
-                    "default": 4,
                     "maximum": 8,
-                    "description": "The number of diffusion steps; higher values can improve quality but take longer."
+                    "description": "The number of diffusion steps; higher values can improve quality but take longer. Default is 4"
                 }
             },
             "required": [
                 "prompt"
-            ]
+            ],
+            "additionalProperties": false
         },
         "output": {
             "type": "object",
@@ -62,5 +47,6 @@
                 }
             }
         }
-    }
+    },
+    "deprecated": false
 }

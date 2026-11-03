@@ -94,7 +94,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 | Product                     | Geo Key Manager | Regional Services | Customer Metadata Boundary |
 | --------------------------- | --------------- | ----------------- | -------------------------- |
-| Argo Smart Routing          | ✅              | ✘ [^9]            | ✘ [^10]                    |
+| Argo Smart Routing          | ✅              | ✅                | ✘ [^10]                    |
 | Static IP/BYOIP             | ⚫️             | ✅ [^26]          | ⚫️                        |
 | Cloudflare Network Firewall | ⚫️             | ⚫️               | ✅                         |
 | Network Flow                | ⚫️             | ⚫️               | 🚧 [^1]                    |
@@ -141,13 +141,11 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 [^8]: Only when using a [Custom Domain](/r2/buckets/public-buckets/#connect-a-bucket-to-a-custom-domain) set to a region and using [jurisdictions with the S3 API](/r2/reference/data-location/#using-jurisdictions-with-the-s3-api).
 
-[^9]: Argo cannot be used with Regional Services.
-
 [^10]: Argo cannot be used with Customer Metadata Boundary.
 
 [^11]: Only when using [Custom Domain](/pages/configuration/custom-domains/) set to a region.
 
-[^12]: Logpull available when using CMB = US only. Logpull is a legacy feature, consider using [Logpush](/data-localization/metadata-boundary/logpush-datasets/) or [Log Explorer](/log-explorer/) instead.
+[^12]: Logpull available when using CMB = US only. Logpull is a legacy feature, consider using [Logpush](/data-localization/metadata-boundary/logpush-datasets/) or [Log Explorer](/observability/logs/log-explorer/) instead.
 
 [^13]: Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your account team if you need another dataset.
 
@@ -165,7 +163,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 [^20]: You can [bring your own certificate](https://blog.cloudflare.com/bring-your-certificates-cloudflare-gateway/) to Gateway but these cannot yet be restricted to a specific region.
 
-[^21]: Gateway HTTP (web traffic filtering) supports Regional Services. Gateway DNS (domain name filtering) does not yet support regionalization. <br/> ICMP proxy (forwarding network diagnostic traffic like ping) and Mesh proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-policies/http-policies/file-sandboxing/) (an add-on that quarantines and scans suspicious files in an isolated environment) is incompatible with DLS.
+[^21]: Gateway HTTP (web traffic filtering) supports Regional Services. Gateway DNS (domain name filtering) does not yet support regionalization. <br/> ICMP proxy (forwarding network diagnostic traffic like ping) and Mesh proxy are not available to Regional Services users. [File Sandboxing](/cloudflare-one/traffic-controls/http-policies/file-sandboxing/) (an add-on that quarantines and scans suspicious files in an isolated environment) is incompatible with DLS.
 
 [^22]: Dashboard Analytics and Logs are empty when using CMB outside the US region. Use Logpush instead.
 

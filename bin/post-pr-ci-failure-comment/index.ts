@@ -25,14 +25,11 @@ async function run(): Promise<void> {
 		});
 
 		const ciJobs = run.jobs.filter(
-			(job) =>
-				job.name === "Pre Build" ||
-				job.name === "Build" ||
-				job.name === "Post Build",
+			(job) => job.name === "Pre Build" || job.name === "Build",
 		);
 
 		if (ciJobs.length === 0) {
-			core.setFailed(`Could not find Pre Build, Build, or Post Build jobs`);
+			core.setFailed(`Could not find Pre Build or Build jobs`);
 			process.exit();
 		}
 

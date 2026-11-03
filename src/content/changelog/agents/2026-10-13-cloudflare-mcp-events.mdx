@@ -1,0 +1,14 @@
+---
+title: Cloudflare API MCP server sends Workers Issues as MCP Events
+description: MCP clients can subscribe to Workers Issues through the Cloudflare API MCP server and receive each new issue as an MCP event.
+products:
+  - agents
+  - workers
+date: 2026-10-13
+---
+
+[Workers Issues](/workers/observability/issues/) provides built-in error monitoring for Cloudflare Workers. It detects production failures and groups related failures into issues without an SDK or application wrapper.
+
+The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now sends these issues as [MCP Events](https://github.com/modelcontextprotocol/experimental-ext-triggers-events), the first event it exposes. MCP clients discover `cloudflare.alert.workers_observability_real_time_issue` with `events/list` and subscribe with `events/subscribe`, scoped to an account or a single Worker. When Issues detects a new or recurring issue, the server posts a signed event to the client's webhook, so an agent can start investigating without polling.
+
+To use it, [enable Issues](/workers/observability/issues/#enable-issues) on your Worker and connect `https://mcp.cloudflare.com/mcp` with the Notifications Write and Workers Observability Write permissions to a client that supports MCP Events webhooks.

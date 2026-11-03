@@ -1,0 +1,99 @@
+---
+pcx_content_type: how-to
+title: Set up an automation
+description: Route Workers Issues to coding agents, webhooks, chat services, or incident-management tools based on configurable triggers.
+sidebar:
+  order: 2
+products:
+  - workers
+---
+
+import { DashButton, Steps } from "~/components";
+
+You can set up automations that send issues to a configured destination when matching issues meet a trigger condition. Configure automations and destinations in the dashboard or with the Cloudflare CLI (`cf`).
+
+## Trigger types
+
+| Trigger                       | Behavior                                                                                       |
+| ----------------------------- | ---------------------------------------------------------------------------------------------- |
+| Occurrence threshold          | Runs once when an issue's occurrence count crosses the configured threshold.                   |
+| Recurrence after inactivity   | Runs when an existing issue returns after the configured period without a newer occurrence.    |
+
+An occurrence-threshold automation does not run for every occurrence after the threshold. A recurrence automation requires at least one earlier occurrence.
+
+## Set up an automation
+
+<Steps>
+
+1. Go to the **Issues** page.
+
+   <DashButton url="/?to=/:account/workers/services/view/:worker/production/issues?status=active" />
+
+2. Select **Automations** > **Add automation**.
+
+   ![Automations dialog with an Add automation button.](~/assets/images/workers-observability/issues/create-automation.png)
+
+3. Select an occurrence threshold or recurrence-after-inactivity trigger and enter its value.
+
+4. Select an existing destination, or create a destination.
+
+   ![Create automation dialog with the destination menu open.](~/assets/images/workers-observability/issues/select-destination.png)
+
+5. Turn on **Enabled**, and then select **Create**.
+
+</Steps>
+
+## Destinations
+
+| Destination type    | Use                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------- |
+| Coding agent        | Send diagnostic context to an agent that can investigate a connected codebase.              |
+| Generic webhook     | Send an issue event to your HTTPS endpoint. You can add a webhook secret or use mutual TLS.  |
+| Chat                | Post an issue summary to a team channel for review and triage.                              |
+| Incident management | Create an incident or notify an on-call workflow when an issue meets its trigger condition. |
+
+### Coding agents
+
+Claude Code, Cursor, and Devin are supported prebuilt coding-agent integrations. An automation sends the selected agent an issue summary and captured diagnostic context. The agent can inspect a connected repository and propose code and test changes. You review and deploy those changes.
+
+All coding-agent destinations require a display name. Configure the remaining fields for each integration:
+
+| Integration | Required fields | Optional fields | Setup documentation |
+| ----------- | --------------- | --------------- | ------------------- |
+| Claude Code | Routine ID and authorization token | None | [Add an API trigger](https://code.claude.com/docs/en/routines#add-an-api-trigger) |
+| Cursor | Automation webhook URL | Authorization header | [Webhook triggers](https://cursor.com/docs/cloud-agent/automations#webhook-triggers) |
+| Devin | Authorization token and organization ID | Repositories and playbook ID | [Authentication](https://docs.devin.ai/api-reference/authentication) and [Create playbooks](https://docs.devin.ai/product-guides/creating-playbooks) |
+
+### Generic webhooks
+
+To bring your own coding agent, configure a generic webhook endpoint to receive the issue summary and diagnostic context. You can also use a generic webhook to connect an internal workflow. Treat destination URLs, webhook secrets, and access tokens as credentials.
+
+Generic webhooks use the standard Cloudflare Notifications webhook payload. For payload and endpoint guidance, refer to [Configure a webhook](/notifications/get-started/configure-webhooks/).
+
+### Configure a generic webhook
+
+<Steps>
+
+1. When you create a destination, select **Generic Webhook**.
+
+2. Enter a name and an HTTPS endpoint URL.
+
+3. Enter a webhook secret or turn on mutual TLS (mTLS).
+
+4. Select **Create destination**, and then finish creating the automation.
+
+</Steps>
+
+## Agent access to Cloudflare
+
+An automation sends an issue to its destination. It does not give the destination permission to query your Cloudflare account.
+
+To let an agent investigate related logs and traces, configure the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) separately. Review the agent's proposed code and test changes before deploying them.
+
+Issue data can include error messages, stack traces, request metadata, logs, and application context. Before you configure a destination, review its access controls and data-handling policies. Do not include secrets, access tokens, or sensitive request content in telemetry. Handle application identifiers and personal data according to your privacy and data-handling policies.
+
+## Run and review an automation
+
+You can send an issue to a destination without waiting for its trigger. Open the issue and select the destination from its available actions. The manual run appears in the issue's activity history.
+
+Open an issue or automation to review recent runs. A run can be pending, succeeded, or failed. Cloudflare attempts to hand off each run up to three times before marking it failed. A succeeded run means Cloudflare Notifications accepted the event for delivery.

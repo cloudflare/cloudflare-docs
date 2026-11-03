@@ -1,0 +1,271 @@
+---
+title: Proxy configuration
+description: Configure Cloud Workload Security proxy authentication, logging, TLS certificates, upstream proxies, and memory or Redis caching.
+pcx_content_type: configuration
+products:
+  - cloud-workload-security
+sidebar:
+  label: Configuration
+  order: 5
+---
+
+Use `config.yaml` to configure the Cloud Workload Security (CWS) proxy process. Start with the complete local configuration in [Get started](/cloudflare-one/cloud-workload-security/get-started/#configure-the-proxy), then replace the relevant blocks with the options in this reference.
+
+Either API authentication mode can be combined with direct or chained outbound connections and any cache mode.
+
+The file requires three top-level objects:
+
+| Object  | Purpose                                                             |
+| ------- | ------------------------------------------------------------------- |
+| `cws`   | Account, deployment, API authentication, and configuration refresh. |
+| `proxy` | Listener, logging, TLS certificates, and outbound proxy settings.   |
+| `redis` | Process-local cache limits and optional shared Redis storage.       |
+
+Unknown settings are rejected, including unknown fields within these objects. Examples containing one object are partial configurations. Retain the other required objects from your file.
+
+## Validate a configuration
+
+After editing your configuration, validate it before starting the proxy:
+
+```sh
+cws-proxy --config config.yaml --config-test
+```
+
+Successful validation prints `CWS proxy configuration is valid`. This checks local settings. It does not fetch the deployment, verify credentials, connect to Redis, or prove the listener can start.
+
+Restart the proxy after changing `config.yaml` or its process environment. Dashboard policy changes are loaded through configuration refresh instead.
+
+## API connection and authentication
+
+The `cws` object connects the proxy to one account and deployment. Its settings are:
+
+| Setting                  | Required or default                        | Description                                                                              |
+| ------------------------ | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `api_base_url`           | Required                                   | Use `https://api.cloudflare.com/client/v4`.                                              |
+| `account_id`             | Required                                   | Account ID containing the deployment.                                                    |
+| `deployment_id`          | Required                                   | ID of the deployment whose configuration the proxy loads.                                |
+| `api_poll_interval_secs` | `30`                                       | Seconds between deployment configuration refreshes. Must be an integer of at least `30`. |
+| `api_token_env`          | Required for API token authentication      | Name of the environment variable containing the API token.                               |
+| `api_key_env`            | Required for Global API Key authentication | Name of the environment variable containing the Global API Key.                          |
+| `api_key_email`          | Required for Global API Key authentication | Literal account email associated with that key.                                          |
+
+Choose exactly one authentication mode. For API token authentication, omit `api_key_env` and `api_key_email`. For Global API Key authentication, supply both key fields and omit `api_token_env`. Do not set unused authentication fields to `null`.
+
+### API token
+
+Use an API token with the **Cloud Workload Security Deployment** permission for the intended account. For token creation, follow [Create the proxy API token](/cloudflare-one/cloud-workload-security/get-started/#create-the-proxy-api-token).
+
+Replace `<ACCOUNT_ID>` and `<DEPLOYMENT_ID>` with your resource IDs:
+
+```yaml title="API token authentication"
+cws:
+  api_base_url: "https://api.cloudflare.com/client/v4"
+  api_poll_interval_secs: 30
+  api_token_env: CWS_DEPLOYMENT_TOKEN
+  account_id: "<ACCOUNT_ID>"
+  deployment_id: "<DEPLOYMENT_ID>"
+```
+
+Supply the token through `CWS_DEPLOYMENT_TOKEN` in the proxy process environment. `api_token_env` stores the variable's name, not its value. This credential loads CWS configuration. Clients still need their own cloud-provider credentials.
+
+### Global API Key
+
+For Global API Key authentication, replace the entire `cws` object with this form. Replace the email and resource placeholders:
+
+```yaml title="Global API Key authentication"
+cws:
+  api_base_url: "https://api.cloudflare.com/client/v4"
+  api_poll_interval_secs: 30
+  api_key_env: CWS_GLOBAL_API_KEY
+  api_key_email: "<ACCOUNT_EMAIL>"
+  account_id: "<ACCOUNT_ID>"
+  deployment_id: "<DEPLOYMENT_ID>"
+```
+
+Supply the key through `CWS_GLOBAL_API_KEY` in the proxy process environment.
+
+### Environment references
+
+`api_base_url`, `account_id`, and `deployment_id` also accept complete environment references such as `${CWS_ACCOUNT_ID}`. The referenced variable must exist and contain a nonblank value. Embedded substitutions and shell expressions are not supported.
+
+For example, replace the two ID values in your existing `cws` object with:
+
+```yaml title="Account and deployment references"
+account_id: "${CWS_ACCOUNT_ID}"
+deployment_id: "${CWS_DEPLOYMENT_ID}"
+```
+
+Other strings remain literal. For `api_token_env`, `api_key_env`, and Redis `url_env`, use the variable name directly, without `${...}`. Certificate paths and `api_key_email` do not expand environment references.
+
+## Listener and logging
+
+The `proxy` object requires `logging`, `tls_interception`, and `upstream`. Its listener and logging options are:
+
+| Setting                   | Default        | Description                                                                                                               |
+| ------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `proxy.listen_addr`       | `0.0.0.0:8080` | IP address and port for the HTTP proxy listener. Hostnames are not accepted. Use brackets for IPv6, such as `[::1]:8080`. |
+| `proxy.logging.format`    | `json`         | Log format: `json` or `text`.                                                                                             |
+| `proxy.logging.verbosity` | `INFO`         | Log level: `CRITICAL`, `ERROR`, `WARN`, `INFO`, `DEBUG`, or `TRACE`. Values are case-sensitive.                           |
+
+Keep `127.0.0.1:8080` for clients on the same host or network namespace. For a shared proxy, choose an address clients can reach and restrict network access to intended clients. `0.0.0.0` listens on all IPv4 interfaces. It is not a destination address for clients.
+
+An empty `logging: {}` uses JSON at `INFO`. For human-readable logging, replace `proxy.logging` with:
+
+```yaml title="Text logging"
+logging:
+  format: text
+  verbosity: INFO
+```
+
+For log events, decision fields, and redaction guidance, refer to [Read proxy logs](/cloudflare-one/cloud-workload-security/troubleshooting/#read-proxy-logs).
+
+## TLS certificates and trust
+
+The `proxy.tls_interception` object requires all three settings:
+
+| Setting          | Value                               | Description                                                                                       |
+| ---------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `ca_cert`        | Nonblank file path                  | CA certificate used to sign certificates presented to clients.                                    |
+| `ca_private_key` | Nonblank file path                  | Matching CA private key. Keep this key on the proxy host.                                         |
+| `extra_root_cas` | List of unique, nonblank file paths | Additional trusted roots for the proxy's outbound TLS connections. Use `[]` when none are needed. |
+
+Clients trust `ca_cert`, not the private key. For CA creation and client setup, follow [Prepare a certificate authority](/cloudflare-one/cloud-workload-security/get-started/#prepare-a-certificate-authority).
+
+Paths are resolved from the proxy process's working directory, not the configuration file's directory. Use absolute paths when those directories differ.
+
+If your network inspects outbound TLS, add its approved CA certificate to `extra_root_cas`. Each file supplies only its first certificate, so use a separate PEM file for each additional root. This setting does not configure client trust or the CA used to sign intercepted certificates.
+
+## Outbound proxy chaining
+
+Use `proxy.upstream.proxy` when CWS must reach destinations through another HTTP proxy. These settings belong to the CWS proxy process. They are separate from the client's `HTTP_PROXY`, `HTTPS_PROXY`, and `NO_PROXY` environment variables.
+
+The outbound proxy settings are:
+
+| Setting       | Default | Description                                                                                                                             |
+| ------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `http_proxy`  | `null`  | Upstream proxy URL for destination port `80`.                                                                                           |
+| `https_proxy` | `null`  | Upstream proxy URL for destination port `443`.                                                                                          |
+| `ca_cert`     | `null`  | Additional CA certificate file trusted when connecting to an `https://` upstream proxy. Only the first certificate in the file is read. |
+| `no_proxy`    | `null`  | Unique destination rules that connect directly instead of using the upstream proxy. An empty list also means no exceptions.             |
+
+Both proxy URL fields accept `http://` or `https://`. The field chooses the destination traffic. The URL scheme chooses whether CWS uses TLS to connect to the upstream proxy. For example, `https_proxy: "http://proxy.example.com:8080"` routes port `443` through an HTTP proxy.
+
+Configure each traffic type independently. Setting only `http_proxy` does not route port `443` through it. Omit a field or use `null` for direct connections of that type. `proxy.upstream.proxy: {}` uses direct connections for both types.
+
+Proxy URLs can include Basic Auth credentials. Supply such configuration through your secret-management process. Do not confuse these credentials with the deployment API credential or client identity.
+
+### Chain both traffic types
+
+Replace `proxy.upstream` with this block, substituting your upstream proxy URL and CA path:
+
+```yaml title="Upstream proxy with direct exceptions"
+upstream:
+  proxy:
+    http_proxy: "https://proxy.example.com:8443"
+    https_proxy: "https://proxy.example.com:8443"
+    ca_cert: /path/to/upstream-proxy-ca.pem
+    no_proxy:
+      - api.example.com
+      - .internal.example.com
+      - 192.0.2.10
+      - 2001:db8::/32
+```
+
+`ca_cert` establishes trust in the upstream proxy. `tls_interception.extra_root_cas` establishes additional trust for outbound destination certificates. These serve different connections.
+
+### Direct-connection rules
+
+`no_proxy` supports these rule types:
+
+| Rule                              | Matches                                     |
+| --------------------------------- | ------------------------------------------- |
+| `api.example.com`                 | That hostname only.                         |
+| `.example.com`                    | The parent domain and its subdomains.       |
+| `192.0.2.10` or `2001:db8::10`    | That IP address.                            |
+| `192.0.2.0/24` or `2001:db8::/32` | IP-address destinations in that CIDR range. |
+
+Hostname comparisons ignore case. Entries are destination names or addresses, not URLs or `host:port` pairs. Use hostname rules for named destinations rather than assuming a CIDR rule resolves their DNS names.
+
+An exception bypasses the additional upstream proxy, not CWS policy evaluation. Domain ACLs and applicable request policies still apply.
+
+## Cache and Redis
+
+CWS always has a bounded process-local memory cache. Redis adds shared storage. Without Redis, cached values are local to that process and are lost when it exits.
+
+Choose the connection mode that matches your Redis service:
+
+| Mode                            | `enabled` | `cluster_mode` | `auth_type` | Additional required settings                     |
+| ------------------------------- | --------- | -------------- | ----------- | ------------------------------------------------ |
+| Memory only                     | `false`   | Not needed     | Not needed  | None.                                            |
+| Standalone Redis                | `true`    | `false`        | `basic`     | `url_env`.                                       |
+| Redis Cluster                   | `true`    | `true`         | `basic`     | `url_env`.                                       |
+| Standalone ElastiCache with IAM | `true`    | `false`        | `iam`       | `url_env`, `iam_cluster_name`, and `iam_region`. |
+| ElastiCache cluster with IAM    | `true`    | `true`         | `iam`       | `url_env`, `iam_cluster_name`, and `iam_region`. |
+
+### Memory only
+
+This is the configuration used in Get started:
+
+```yaml title="Memory-only cache"
+redis:
+  enabled: false
+```
+
+Redis connection and authentication settings are unused in this mode. The memory-cache limits still apply.
+
+### Redis with URL credentials
+
+Replace the `redis` object with:
+
+```yaml title="Standalone Redis"
+redis:
+  enabled: true
+  url_env: CWS_REDIS_URL
+  cluster_mode: false
+  auth_type: basic
+```
+
+Inject the Redis connection URL into the proxy environment variable named `CWS_REDIS_URL`. The URL uses `redis://` or `rediss://` and includes the Redis username and password when required. `rediss://` uses TLS.
+
+For Redis Cluster, set `cluster_mode: true`. The environment variable can contain one seed URL or comma-separated seed URLs. Each seed needs a complete URL, and all seeds must use the same scheme.
+
+### ElastiCache IAM
+
+Replace the `redis` object with this form. Substitute your replication-group name and AWS region:
+
+```yaml title="ElastiCache IAM authentication"
+redis:
+  enabled: true
+  url_env: CWS_REDIS_URL
+  cluster_mode: false
+  auth_type: iam
+  iam_cluster_name: "<REPLICATION_GROUP_NAME>"
+  iam_region: "<AWS_REGION>"
+```
+
+Set `cluster_mode: true` for an ElastiCache cluster. The connection URL must use `rediss://`, include the ElastiCache username, and omit a password. All seed URLs must use the same username. The proxy obtains AWS credentials through the default AWS credential provider chain and generates IAM authentication tokens. The proxy's AWS identity needs permission to connect to that ElastiCache user and replication group.
+
+When Redis is enabled, startup requires a successful Redis connection. A missing connection variable, invalid authentication, or exhausted connection retries prevents startup. Local `--config-test` validation does not test that connection.
+
+### Redis settings reference
+
+The `redis` settings and defaults are:
+
+| Setting                    | Default               | Description                                                                                                                              |
+| -------------------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled`                  | Required              | `false` for process-local memory only; `true` adds Redis storage.                                                                        |
+| `url_env`                  | `null`                | Environment variable name containing the Redis URL. Required and nonblank when enabled.                                                  |
+| `cluster_mode`             | `false` when disabled | Required when enabled. Use `true` for Redis Cluster and `false` for standalone Redis.                                                    |
+| `auth_type`                | `basic`               | `basic` for credentials from the URL, or `iam` for ElastiCache IAM.                                                                      |
+| `iam_cluster_name`         | `null`                | ElastiCache replication-group name. Required and nonblank for enabled IAM authentication.                                                |
+| `iam_region`               | `null`                | AWS region used to sign IAM tokens. Required and nonblank for enabled IAM authentication.                                                |
+| `max_retries`              | `3`                   | Additional connection or command attempts after the first attempt. Integer from `0` through `5`.                                         |
+| `backoff_secs`             | `1`                   | Whole seconds between connection or command attempts. Integer from `0` through `5`.                                                      |
+| `namespace`                | `cws`                 | Prefix for proxy-internal cache keys. Must be nonblank, omit the trailing `:`, and not equal `cws_data` or start with `cws_data:`.       |
+| `cache_item_size`          | `0`                   | Maximum bytes read from Redis for a non-internal key. `0` removes this read limit. Does not limit process-local or proxy-internal reads. |
+| `memory_cache_max_entries` | `10000`               | Maximum process-local cache entries. Must be a positive integer.                                                                         |
+| `memory_cache_max_bytes`   | `67108864`            | Maximum combined process-local key and value bytes, equivalent to 64 MiB. Must be a positive integer.                                    |
+
+Both memory limits apply whether Redis is enabled or disabled. A zero `cache_item_size` does not remove those limits.
+
+The proxy appends `:` to the internal namespace. Policy cache keys use a separate account-and-deployment-scoped namespace, `cws_data:<ACCOUNT_ID>:<DEPLOYMENT_ID>:`. Changing `redis.namespace` does not replace that policy-key isolation.

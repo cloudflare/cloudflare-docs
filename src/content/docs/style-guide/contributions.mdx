@@ -57,8 +57,9 @@ To edit and create a pull request with the [full development workflow](https://d
    If you are editing on your local machine (with [Visual Studio
    Code](https://code.visualstudio.com/)): * (Required) Install
    [Node.js](https://nodejs.org/en) (version 24 or later). * (Recommended, but
-   not required) Install [Volta](https://volta.sh/) for easier package
-   management. * (Required) [Clone the fork to your local
+   not required) Install [Vite+](https://viteplus.dev/guide/) and use
+   [`vp env`](https://viteplus.dev/guide/env) to manage Node.js and package
+   manager versions. * (Required) [Clone the fork to your local
    machine.](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 3. Create a branch from your fork (or from your clone).
 4. Make your edits.
@@ -131,9 +132,7 @@ This check makes sure that:
 
 We commonly get questions about approvals, especially for pull requests that touch multiple product areas (or our components).
 
-We have a specific part of [CI](https://github.com/cloudflare/cloudflare-docs/blob/production/.github/workflows/ci.yml#L32) that [posts a comment](https://github.com/cloudflare/cloudflare-docs/blob/production/bin/post-codeowners-comment/index.ts) with the relevant codeowners.
-
-![Codeowners comment](~/assets/images/style-guide/how-we-docs/codeowners-comment.png)
+On open pull requests, the Cloudflare Docs Bot posts a [Review coverage](https://github.com/cloudflare/cloudflare-docs/tree/production/.flue) comment that shows which areas still need a CODEOWNERS approval, suggests contacts for those areas, and summarizes the areas already covered. Expand the CODEOWNERS mappings section to see the exact patterns and owners for the ownership areas displayed in the comment. The bot skips draft, closed, and spam/off-topic pull requests.
 
 #### What changed?
 
