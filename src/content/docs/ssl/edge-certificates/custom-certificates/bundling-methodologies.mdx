@@ -9,38 +9,82 @@ sidebar:
 
 ---
 
-import { Tabs, TabItem } from "~/components";
-
 When an SSL certificate is deployed to Cloudflare's global network, it may be augmented with intermediate and root certificates to assist the user agent in finding a chain to a publicly trusted root.
 
 You can control the mechanics of how certificates are bundled by specifying a bundling methodology.
 
 ## Intermediate and root certificates
 
-Cloudflare maintains intermediate and root certificates used for bundling on a [GitHub repository](https://github.com/cloudflare/cfssl_trust). As the certificates expire or are removed by certificate authorities, Cloudflare removes and adds them accordingly.
+Cloudflare maintains the intermediate and root certificates used for bundling in a public [GitHub repository](https://github.com/cloudflare/cfssl_trust) (Cloudflare's trust store).
+
+Cloudflare removes certificates from the trust store when they expire. New roots, intermediates, and cross-signed certificates are added after review by Cloudflare. If a certificate your CA uses is missing, contact [Cloudflare Support](/support/contacting-cloudflare-support/) or your account team.
 
 Expiration values for these certificates may appear in the `expires_on` field when you use the [Analyze Certificate endpoint](/api/resources/ssl/subresources/analyze/methods/create/) - often when the methodology you specify is [Compatible](#compatible). However, these expiration values reflect intermediate and root certificates - which are handled by Cloudflare -, not the leaf certificate you would have previously uploaded to Cloudflare.
 
-:::note
-When using `compatible` or `modern`, a selection might be done on the intermediates you provide at upload time, meaning it is not guaranteed all of them will make it to the final chain. If you must ensure the chain you upload is the one used, select `user-defined`.
-:::
+## How Cloudflare builds the certificate chain
+
+Cloudflare builds the certificate chain once, when you [upload](/ssl/edge-certificates/custom-certificates/uploading/#upload-a-custom-certificate) or [update](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) a custom certificate. The resulting chain is stored and served to clients as-is. It is not rebuilt for each connection.
+
+This means that:
+
+- Changes to Cloudflare's trust store, such as a newly added cross-signed certificate, do not affect custom certificates that are already deployed.
+- To pick up a newer chain, update the existing certificate (in the dashboard, **Replace SSL certificate and key**, or a `PATCH` request through the API). Replacing the certificate in an existing custom certificate triggers a new chain build.
+
+When you use Compatible or Modern, Cloudflare selects the intermediates itself:
+
+- Intermediate certificates you upload are not guaranteed to be part of the final chain, including cross-signed certificates.
+- In addition to the trust store repository, Cloudflare may use other publicly available intermediate certificates it has previously processed. As a result, the served chain is not guaranteed to match what you would build from the public repository, and it may differ if you upload the same certificate again.
+
+This is expected behavior. If you must ensure the chain you upload is the one used, select [User-defined](#user-defined).
 
 ## Methodologies
 
 ### Compatible
 
-Compatible is the default methodology and uses common and well distributed intermediate certificates to complete the chain. This ensures that the resulting bundle is compatible with as many clients as possible.
+Compatible is the default methodology and uses common and well distributed intermediate certificates to complete the chain. Cloudflare builds the chain toward the oldest trusted root certificate available, so that the resulting bundle is compatible with as many clients as possible. This may result in a longer chain.
 
 The related value for the `bundle_method` parameter when using the [API](/api/resources/custom_certificates/methods/create/) is `ubiquitous`.
 
 ### Modern
 
-Modern consists of attempts to make the chain as efficient as possible, often by using newer or fewer intermediate certificates.
+Modern consists of attempts to make the chain as efficient as possible, by building the shortest chain to a trusted root, often by using newer or fewer intermediate certificates.
 
 The related value for the `bundle_method` parameter when using the [API](/api/resources/custom_certificates/methods/create/) is `optimal`.
 
+:::note
+For many certificates, especially those whose CA has a single, simple chain, Compatible and Modern produce the same chain. The difference shows when a certificate has several valid paths, for example a path to a newer root and a cross-signed path to an older root.
+:::
+
 ### User-defined
 
-User-defined allows you to paste your own certificate chain and present that bundle to clients. If you are using a self-signed certificate (not recommended), you must use this mode.
+User-defined allows you to paste your own certificate chain and present that bundle to clients exactly as uploaded. If you are using a self-signed certificate (not recommended), you must use this mode.
+
+When using User-defined, you are responsible for the chain. Paste the certificates in this order:
+
+1. Leaf certificate
+2. Intermediate certificate(s), in order, ending with the certificate signed by the root
+3. Cross-signed certificate, if your clients require it
+
+You do not need to include the root certificate.
 
 The related value for the `bundle_method` parameter when using the [API](/api/resources/custom_certificates/methods/create/) is `force`.
+
+## Choose a bundle method
+
+| Situation | Recommended method |
+| --- | --- |
+| Certificate from a widely trusted CA, standard browser and OS clients | Compatible |
+| You want the shortest chain and your clients are modern | Modern |
+| Your clients need a specific chain or cross-signed certificate (for example, older Android devices or embedded clients) | User-defined |
+| Your CA is migrating to a new root or hierarchy and you need to control which chain clients receive during the transition | User-defined |
+| Self-signed or privately issued certificate | User-defined |
+
+## Check the served chain
+
+After the certificate is active, you can check the chain that Cloudflare serves for a hostname:
+
+```bash
+openssl s_client -connect <HOSTNAME>:443 -servername <HOSTNAME> -showcerts </dev/null
+```
+
+Each certificate in the chain is listed with its subject (`s:`) and issuer (`i:`).

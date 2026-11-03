@@ -29,6 +29,19 @@ Refer to [DigiCert's root and intermediate CA certificate updates](https://knowl
 
 DigiCert recommends reissuing any affected certificates from a G2 intermediate. This is a standard reissuance — you do not need to generate a new key in most cases.
 
+## DigiCert G5 hierarchy
+
+Starting November 12, 2026, DigiCert issues new, renewed, and reissued certificates from the G5 hierarchy by default, instead of G2/G3. Refer to [DigiCert's G5 root migration guide](https://knowledge.digicert.com/general-information/digicert-g5-root-and-intermediate-ca-certificate-update) for details.
+
+Cloudflare's trust store includes these DigiCert G5 cross-signed certificates:
+
+- DigiCert TLS RSA4096 Root G5, cross-signed by DigiCert Global Root G2
+- DigiCert TLS ECC P384 Root G5, cross-signed by DigiCert Global Root G3
+
+If you upload a G5 certificate with the **compatible** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/), Cloudflare can build a chain to G2 (RSA) or G3 (ECC) for clients that do not yet trust G5. There is no ECC G5 cross-sign to G2: if your clients only trust G2, use an RSA 4096 G5 certificate.
+
+Certificates that are already deployed keep their current chain until you [update them](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate). If you need to control the exact chain served during the migration, use the **user-defined** bundle method.
+
 ## Cloudflare-managed certificates
 
 Since Cloudflare does not use DigiCert roots, you can avoid this dependency entirely by switching to Cloudflare-managed certificates:
@@ -40,5 +53,6 @@ Since Cloudflare does not use DigiCert roots, you can avoid this dependency enti
 ## More resources
 
 - [DigiCert root and intermediate CA certificate updates](https://knowledge.digicert.com/general-information/digicert-root-and-intermediate-ca-certificate-updates-2023)
+- [DigiCert G5 root migration and ICA certificate selection guide](https://knowledge.digicert.com/general-information/digicert-g5-root-and-intermediate-ca-certificate-update)
 - [Custom certificates](/ssl/edge-certificates/custom-certificates/)
 - [Certificate bundling methodologies](/ssl/edge-certificates/custom-certificates/bundling-methodologies/)
