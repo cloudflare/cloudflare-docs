@@ -23,6 +23,17 @@
 	font-size: var(--nb-h3-size);
 }
 
+/* Changelog headings render as h4 beneath the post title, but should remain
+ * visually distinct from the body text. */
+.changelog-post-content .heading-wrapper.level-h4,
+.changelog-post-content .heading-wrapper.level-h4 > h4 {
+	font-size: var(--nb-h2-size);
+}
+
+.changelog-post-content .heading-wrapper.level-h4 > h4 {
+	letter-spacing: var(--nb-h2-tracking);
+}
+
 .docs-content .anchor-link {
 	position: absolute;
 	top: 0;
