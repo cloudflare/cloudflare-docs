@@ -50,6 +50,44 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 
 ## Request failures
 
+### 400: Bad request (7003)
+
+:::note[What error 7003 means]
+Error code `7003` is the general bad-request code for AI Gateway. It does not point to one specific cause. AI Gateway returns it with HTTP `400` when AI Gateway or the provider rejects a request as invalid. The message that comes with the code describes the actual problem.
+:::
+
+The error message usually has this format:
+
+```txt
+Model execution failed (User Input Error): <REASON>
+```
+
+If the provider rejected the request, `<REASON>` is the provider's own error message.
+
+To resolve the error:
+
+- Read the full error message. It usually names the field or value that was rejected.
+- Correct the request before you retry. If you send the same request again, you get the same error.
+- If you call the model through the [AI binding](/ai-gateway/usage/worker-binding-methods/) (`env.AI.run()`), the error may only show `AiGatewayError: 7003: User Input Error`, with no reason. To see the reason, send the same request through the [REST API](/ai-gateway/usage/rest-api/).
+- If [logging](/ai-gateway/observability/logging/) or payload collection is turned off, AI Gateway does not store the error message. Record the error response in your application, or turn on logging while you reproduce the problem.
+
+#### Known causes
+
+This list covers causes reported so far and is not exhaustive.
+
+| Cause                                            | Example                                                                                                                              | Resolution                                                                                                        |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| Provider requirement not met                     | `'messages' must contain the word 'json' in some form, to use 'response_format' of type 'json_object'`                               | Follow the provider's requirement. For OpenAI JSON mode, include the word "JSON" in the prompt.                   |
+| Field not accepted by the model                  | `7003: User Input Error` from the AI binding, for example when you send `watermark: false` to an image model                         | Remove any fields that are not listed on the model's page in the [model catalog](/ai/models/).                    |
+| Input in the wrong shape for a third-party model | The error lists the valid fields.                                                                                                    | Pass the input object exactly as the model catalog shows. Do not wrap it in an `input` field.                     |
+| Wrong value type                                 | `Invalid value at system: expected string, received array` on `/ai/v1/messages`                                                      | Send the value in the type that the error asks for.                                                               |
+| Dynamic route called on `/ai/run`                | `messages: Invalid input: expected array, received undefined`                                                                        | Call [dynamic routes](/ai-gateway/features/dynamic-routing/) through `/ai/v1/chat/completions` or the AI binding. |
+| Model ID not recognized                          | `model: <MODEL_ID>`                                                                                                                  | Use the exact model ID from the [model catalog](/ai/models/).                                                     |
+| Tool not supported on the endpoint               | `tools: [{"type":"web_search"}]` sent to an xAI model on the Chat Completions endpoint                                               | Use the endpoint and tool listed for the provider in [Web search](/ai-gateway/usage/web-search/).                 |
+| Wrong URL or account ID on the Cloudflare API    | `Could not route to /accounts/..., perhaps your object identifier is invalid?`, returned with error `7000` (`No route for that URI`) | Check the endpoint path and the account ID.                                                                       |
+
+Error code `7003` has a different meaning in other Cloudflare products, such as Cloudflare Radar and Queues.
+
 ### Requests timing out
 
 - Check if the upstream provider is experiencing issues
