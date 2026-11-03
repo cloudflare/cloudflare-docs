@@ -1,0 +1,23 @@
+src/content/catalog-models/alibaba-qwen3.7-max.json
+  s_7f33aba41d483c::t_042578d259e7ec 127
+src/content/catalog-models/alibaba-qwen3.7-plus.json
+  s_7f33aba41d483c::t_39b4d9f9f3ca3a 131
+src/content/catalog-models/alibaba-qwen3.8-max.json
+  s_7f33aba41d483c::t_2115cafa490235 131
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "bab3e7b9325f91f8332cdb3059505779dad246f9",
+  "prompts": {},
+  "sessions": {
+    "s_7f33aba41d483c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_00d15a87effe8fOAippfjYugPx",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "shridharathi <shridhar@cloudflare.com>"
+    }
+  }
+}

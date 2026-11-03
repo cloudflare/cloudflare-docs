@@ -1,0 +1,29 @@
+src/content/docs/agents/harnesses/claude-code.mdx
+  s_41fd4d89757fb4::t_624324018f1b6a 1-171
+src/content/docs/agents/harnesses/codex.mdx
+  s_41fd4d89757fb4::t_dc426983df9475 1-168
+src/content/docs/agents/harnesses/container/index.mdx
+  s_41fd4d89757fb4::t_eac95f5e017129 6-8,25-26,180,190,196
+src/content/docs/agents/harnesses/index.mdx
+  s_41fd4d89757fb4::t_4959a9ac8403ae 15,53-65
+src/content/partials/agents/container-harness-run.mdx
+  s_41fd4d89757fb4::t_ecfb214271db14 1-11
+src/content/partials/agents/container-harness-setup.mdx
+  s_41fd4d89757fb4::t_e71886f5ccd5f3 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "83e0a3ae3e5d13859dbfe48cf0e7f80c0c01a229",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

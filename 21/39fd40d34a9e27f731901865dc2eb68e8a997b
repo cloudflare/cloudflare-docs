@@ -1,0 +1,21 @@
+src/content/docs/r2/platform/limits.mdx
+  s_e4eac3efaaf33f::t_360da748feb958 15
+src/content/docs/r2/pricing.mdx
+  s_e4eac3efaaf33f::t_761f83697b5c8a 35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2139fd40d34a9e27f731901865dc2eb68e8a997b",
+  "prompts": {},
+  "sessions": {
+    "s_e4eac3efaaf33f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a16af1-c7ad-7451-a139-f9ef2a0ef9a0",
+        "model": "unknown"
+      },
+      "human_author": "Brendan Irvine-Broque <birvine-broque@cloudflare.com>"
+    }
+  }
+}

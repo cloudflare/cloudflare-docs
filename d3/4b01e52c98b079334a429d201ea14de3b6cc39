@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/integrations/cloud-and-saas/webhooks.mdx
+  s_403e4c66b85118::t_d666330b4dc1a2 11-12,31-32,42-89,97-100,112-113,125-161,164-190
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d34b01e52c98b079334a429d201ea14de3b6cc39",
+  "prompts": {},
+  "sessions": {
+    "s_403e4c66b85118": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "acidic-hydrogen",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}

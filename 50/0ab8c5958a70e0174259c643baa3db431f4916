@@ -1,0 +1,29 @@
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_6ca65135f6cb8f::t_b218b4e8a2f24d 146-159,162,164,223-224,226-234,237,239,242-243,248-249,251-279,282-283,303-305,308-315,319-329,332,335-336,346-352,355-375,380,383-384,387-390,399,407-408,412-413,416,420,422-430,432-438,443-463,466
+src/content/docs/agents/model-context-protocol/guides/securing-mcp-server.mdx
+  s_6ca65135f6cb8f::t_7c6fc76bec4551 13,33-34,36-50,53-135,139-140,159-160,162-174,176-293,296-297,306-307,309-344,346-357,360-361
+src/content/docs/agents/model-context-protocol/protocol/authorization.mdx
+  s_6ca65135f6cb8f::t_233333a997ab16 283,291-292,294-309,312,322,327,329-330,339-340,352-370,373-374
+src/content/docs/agents/model-context-protocol/protocol/tools.mdx
+  s_6ca65135f6cb8f::t_605ca254dd1757 39,50-57,63-70,84-106,109,111-115,117-121,123,145-174,176-196,198,211,218,227-228,231,233,245-246,248-272,274
+src/content/docs/agents/model-context-protocol/protocol/transport.mdx
+  s_6ca65135f6cb8f::t_e0edae5552da32 85-91,94-114,119,122-123,126-129
+src/content/docs/agents/tools/payments/x402/charge-for-mcp-tools.mdx
+  s_6ca65135f6cb8f::t_2b4458f616b1ca 11-12,19-20,73-74,83,85-94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "500ab8c5958a70e0174259c643baa3db431f4916",
+  "prompts": {},
+  "sessions": {
+    "s_6ca65135f6cb8f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15b50-b2f2-7189-bdc9-f33f3f5fadc2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

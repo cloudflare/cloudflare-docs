@@ -1,0 +1,33 @@
+src/components/config-explorer/config-reference.generated.ts
+  s_ac7f4e16270f38::t_867ad1cb3206b6 4,130,133,135-158,542-575
+src/content/docs/realtime/realtimekit/agents/get-started.mdx
+  s_f9d3890ef9e810::t_01030ed9cd649c 108
+src/content/docs/realtime/realtimekit/concepts/participant.mdx
+  s_f9d3890ef9e810::t_2178603cd56aab 38-44,48-64,66
+src/content/partials/realtime/realtimekit/disable-a-meeting.mdx
+  s_f9d3890ef9e810::t_dc0bcf3f293d20 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4821faf891668e12d8496ff5fedd5996227d8872",
+  "prompts": {},
+  "sessions": {
+    "s_ac7f4e16270f38": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e9cb2d456ffeFZDhycqNpo2G9Y",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    },
+    "s_f9d3890ef9e810": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e9d930f88ffeh32gnyS2ghkOcf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}

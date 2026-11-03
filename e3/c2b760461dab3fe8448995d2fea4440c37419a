@@ -1,0 +1,69 @@
+public/__redirects
+  s_78bc1ba5d92c7b::t_430da26594a4fd 256,259,293,314,324
+src/content/changelog/agents/2025-03-18-npm-i-agents.mdx
+  s_78bc1ba5d92c7b::t_ac26fbc687cfef 131
+src/content/changelog/agents/2025-04-07-mcp-servers-agents-sdk-updates.mdx
+  s_78bc1ba5d92c7b::t_79b2c5cc442780 55
+src/content/docs/agents/agent-class/communication-channels/chat/client-sdk.mdx
+  s_78bc1ba5d92c7b::t_0526ba6114f1e8 664
+src/content/docs/agents/agent-class/durable-execution.mdx
+  s_78bc1ba5d92c7b::t_965366d438661e 17,427-490
+src/content/docs/agents/agent-class/http-sse.mdx
+  s_78bc1ba5d92c7b::t_50c8f0427b072a 1-241
+src/content/docs/agents/agent-class/index.mdx
+  s_78bc1ba5d92c7b::t_fba029ed335990 68-77,90-137,234
+src/content/docs/agents/agent-class/internals.mdx
+  s_8c61cebfb660ba::t_386e3a024ff815 144,249,286
+src/content/docs/agents/agent-class/routing.mdx
+  s_78bc1ba5d92c7b::t_2ffc9fd77b7c59 1-929
+src/content/docs/agents/agent-class/schedule-tasks.mdx
+  s_78bc1ba5d92c7b::t_3d835d483b4aae 3,13,15-28,41-44,46-47,51,61,66,68-166,168-254,256-258,263-293,415-452,455-536,568-686,905-914,934-939
+src/content/docs/agents/agent-class/state.mdx
+  s_78bc1ba5d92c7b::t_c8a639b31e6a65 30
+src/content/docs/agents/agent-class/websockets.mdx
+  s_78bc1ba5d92c7b::t_5ae302543b5921 13,15,17-35,40-60,62-74,80-82,85-156,158-162,166-168,170-193,195-214,221-234,239-271,273,278,285-300,306-314,316,318,320,322-337,342-353,355-356,358-409,412-433,439-499,567-614,641-662
+src/content/docs/agents/examples/email-agent.mdx
+  s_78bc1ba5d92c7b::t_14cdbfd91f6c0c 751
+src/content/docs/agents/harnesses/index.mdx
+  s_78bc1ba5d92c7b::t_09269c58f3a636 21
+src/content/docs/agents/index.mdx
+  s_78bc1ba5d92c7b::t_c79ac251853f26 29
+src/content/docs/agents/runtime/capabilities/index.mdx
+  s_78bc1ba5d92c7b::t_de9dd17ec296f6 101-102
+src/content/docs/agents/runtime/capabilities/routing.mdx
+  s_78bc1ba5d92c7b::t_d3de39e644ba1b 3,11,13,15-18,20,22,24,29,31,33-34,36-40,56,58,60,62-71,73,75,80,82-83,88,177,179,181-183
+src/content/docs/agents/runtime/capabilities/tasks.mdx
+  s_78bc1ba5d92c7b::t_095ab084008be4 199
+src/content/docs/agents/runtime/lifecycle/http-sse.mdx
+  s_78bc1ba5d92c7b::t_cf5967f663d6e2 13,48
+src/content/docs/agents/runtime/operations/configuration.mdx
+  s_78bc1ba5d92c7b::t_5918c86894bea4 948
+src/content/docs/agents/runtime/operations/cross-domain-authentication.mdx
+  s_78bc1ba5d92c7b::t_7c58272b883849 259
+src/content/partials/agents/common-integration-patterns.mdx
+  s_78bc1ba5d92c7b::t_c66bd7d63b93d0 52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e3c2b760461dab3fe8448995d2fea4440c37419a",
+  "prompts": {},
+  "sessions": {
+    "s_78bc1ba5d92c7b": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1835b-41da-70b6-bb15-805b25dcfd52",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_8c61cebfb660ba": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a18361-e005-76f3-8720-a46b0f3293ea",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

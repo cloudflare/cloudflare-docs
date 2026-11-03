@@ -1,0 +1,87 @@
+src/content/catalog-models/anthropic-claude-opus-5.5.json
+  s_b8e1913749fef1::t_92cde8849a4f8e 20,1808,1829
+src/content/catalog-models/bytedance-seedance-2.5.json
+  s_b8e1913749fef1::t_0e7131ed87a0da 174
+src/content/catalog-models/google-gemini-4-argon.json
+  s_b8e1913749fef1::t_083b70a54a5011 39,48,114,123,271,280,346-347,351-357
+src/content/catalog-models/google-gemini-omni-1.1-flash.json
+  s_b8e1913749fef1::t_d138ff257f3848 17-18,21-23
+src/content/catalog-models/minimax-m3.json
+  s_b8e1913749fef1::t_75e44ec3254ddd 18-20,361-363
+src/content/catalog-models/openai-gpt-5.6-sol.json
+  s_b8e1913749fef1::t_99290eb3680cc8 20,278,297,366
+src/content/catalog-models/openai-gpt-6-sol.json
+  s_b8e1913749fef1::t_4eb94cca605a9b 226
+src/content/catalog-models/openai-gpt-6.1-sol.json
+  s_b8e1913749fef1::t_63304bbbe9a0ee 224
+src/content/catalog-models/pruna-p-image-edit.json
+  s_b8e1913749fef1::t_974a74a21d3a8b 30,35
+src/content/catalog-models/pruna-p-image-try-on.json
+  s_b8e1913749fef1::t_eb616220321d22 30,35,66,71
+src/content/catalog-models/pruna-p-image-upscale.json
+  s_b8e1913749fef1::t_0100ba3d91f48a 34,39
+src/content/catalog-models/pruna-p-image.json
+  s_b8e1913749fef1::t_334391ee7b67f2 26,31,59,64
+src/content/catalog-models/typesafe-jev.json
+  s_b8e1913749fef1::t_7bdc789fe82079 5,11,18-19,69-70,75-76,84-85,107-108,113-114,122-123,254-255,274-275,336-337,345-346,351,364-365,373-374,379,408,411,420-421
+src/content/catalog-models/unbiased-pareto.json
+  s_b8e1913749fef1::t_a835ff5f582adb 41,100,155,218,273
+src/content/workers-ai-models/apertus-v1.5-8b.json
+  s_b8e1913749fef1::t_46dfb96456ab3d 2-3,5-12,26-27
+src/content/workers-ai-models/clef-flash.json
+  s_b8e1913749fef1::t_98e4eea010c964 19-28
+src/content/workers-ai-models/clef-omni.json
+  s_b8e1913749fef1::t_248c9bc3be1614 6-18,39
+src/content/workers-ai-models/clef.json
+  s_b8e1913749fef1::t_00017ccc3cfb81 19-28
+src/content/workers-ai-models/deepseek-v4-flash-0731.json
+  s_b8e1913749fef1::t_734cf5722f361d 4709
+src/content/workers-ai-models/deepseek-v4-pro-0813.json
+  s_b8e1913749fef1::t_8c45ef20b1a587 4705
+src/content/workers-ai-models/eurollm-9b-it.json
+  s_b8e1913749fef1::t_8f640b6cd2c7e5 2-3,5-12,26-27
+src/content/workers-ai-models/gemma-4-26b-a4b-it.json
+  s_b8e1913749fef1::t_0c5067aeea51c3 4639
+src/content/workers-ai-models/glm-4.7-flash.json
+  s_b8e1913749fef1::t_95134fd9a83652 2572
+src/content/workers-ai-models/glm-5.2.json
+  s_b8e1913749fef1::t_6539d1ae496fcd 4701
+src/content/workers-ai-models/glm-5.3-flash.json
+  s_b8e1913749fef1::t_3d709c868bcde6 4721
+src/content/workers-ai-models/glm-5.3.json
+  s_b8e1913749fef1::t_33a84a29971c19 4713
+src/content/workers-ai-models/gpt-oss-120b.json
+  s_b8e1913749fef1::t_ef87f4abc15b97 39,41,555
+src/content/workers-ai-models/gpt-oss-20b.json
+  s_b8e1913749fef1::t_b466097a5bd458 39,41,555
+src/content/workers-ai-models/kimi-k2.6.json
+  s_b8e1913749fef1::t_f971727c51d4ee 4707
+src/content/workers-ai-models/kimi-k2.7-code.json
+  s_b8e1913749fef1::t_d5473c8bb0d1a9 4640
+src/content/workers-ai-models/llava-1.5-7b-hf.json
+  s_b8e1913749fef1::t_ec5b0b344664b4 25,31-49,53,58,62,65-70,74,78,82,84-87,101,103
+src/content/workers-ai-models/nemotron-3-120b-a12b.json
+  s_b8e1913749fef1::t_b14f0dd8cafe21 2581
+src/content/workers-ai-models/phonellm-mini-alpha-2.json
+  s_b8e1913749fef1::t_1c22b153192d1a 8-22,45,47,49-87,89-97,99-104,106-115,117-125,127-140,143-151,153-162,164-173,175-191,193-205,207-210,212-257,260-296,298-325,328-329,331-345,347-350,352-365,367-371,373-384,387-426,428-436,438-552,556,560,562,564-566,568,571,573,575-577,579,581-586,588-593,597,602-603,607,611-613,615,619,622,624-638,640,642-647,649-672,678,684,690-761,764-765,768-779,781-816,818-911,913-926,929-937,939-948,950-959,961-977,979-991,993-996,998-1043,1046-1057,1059,1061,1063-1151,1153-1193,1195-1219,1221-1225,1227-1338,1340,1342,1344-1345,1347-1390,1392-1571,1574-1594,1596-2519,2521-2531,2535-2539,2544
+src/content/workers-ai-models/qwen3.8-27b.json
+  s_b8e1913749fef1::t_017e17f3ab8e3a 24,26,4702
+src/content/workers-ai-models/whisper.json
+  s_b8e1913749fef1::t_ca023df8abfa87 4-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7311602e45954fa22a937b5570b3a1c16b1d061c",
+  "prompts": {},
+  "sessions": {
+    "s_b8e1913749fef1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ebe5bc514ffeeamhJSHUXYxSVz",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "shridharathi <shridharathinarayanan@gmail.com>"
+    }
+  }
+}

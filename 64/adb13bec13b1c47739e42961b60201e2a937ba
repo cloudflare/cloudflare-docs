@@ -1,0 +1,25 @@
+src/content/docs/pages/configuration/build-image.mdx
+  s_64979ae03c04d4::t_e8f95392b640d2 110-122
+src/content/docs/workers/ci-cd/builds/build-image.mdx
+  s_64979ae03c04d4::t_aa20727c2a30cb 25-26,30,36,41,46,114-126
+src/content/pages-build-environment/v2.yaml
+  s_64979ae03c04d4::t_8e68a0d6151fbe 16,51
+src/content/pages-build-environment/v3.yaml
+  s_64979ae03c04d4::t_c5f1a6b66862a9 9,16,48,51
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "64adb13bec13b1c47739e42961b60201e2a937ba",
+  "prompts": {},
+  "sessions": {
+    "s_64979ae03c04d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e9f8c69bbffe3FyFIpM3P3B5uI",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "jurgen@cloudflare.com <jurgen@cloudflare.com>"
+    }
+  }
+}

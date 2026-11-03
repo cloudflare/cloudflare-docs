@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/integrations/cloud-and-saas/anthropic.mdx
+  s_08e7de9b895463::t_7bbea2e3ef35cb 60-62,68-75,81-91
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "969d45ca57fa104597cd2716263c27c86d617645",
+  "prompts": {},
+  "sessions": {
+    "s_08e7de9b895463": {
+      "agent_id": {
+        "tool": "windsurf",
+        "id": "band-megaraptor",
+        "model": "unknown"
+      },
+      "human_author": "Reid Klarsfeld <rklarsfeld@cloudflare.com>"
+    }
+  }
+}

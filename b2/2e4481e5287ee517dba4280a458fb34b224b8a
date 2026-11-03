@@ -1,0 +1,27 @@
+src/content/docs/dns/private-origins/index.mdx
+  s_4546b8ee956c87::t_3b868e61de973d 36,40,54
+src/content/docs/dns/private-origins/private-network-routing.mdx
+  s_4546b8ee956c87::t_ab23db872920ac 27,44
+src/content/docs/dns/private-origins/set-up-via-cloudflare-mesh.mdx
+  s_4546b8ee956c87::t_cd3221683f884e 20
+src/content/docs/dns/private-origins/set-up-via-cloudflare-tunnel.mdx
+  s_4546b8ee956c87::t_20036d35e444d1 20
+src/content/docs/dns/private-origins/set-up-via-cloudflare-wan.mdx
+  s_4546b8ee956c87::t_219abe7c6b7bad 27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b22e4481e5287ee517dba4280a458fb34b224b8a",
+  "prompts": {},
+  "sessions": {
+    "s_4546b8ee956c87": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e81dc4676ffeIbZZWTm47jbklb",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "esomoza-cf <esomoza@cloudflare.com>"
+    }
+  }
+}
