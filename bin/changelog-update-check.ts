@@ -102,15 +102,31 @@ export function diffRules(base: string, head: string): RuleChanges {
 }
 
 /**
- * The words readers see: title, description, and body, without imports, link
- * targets, `href`/`src` values, punctuation, or case. Two versions with the
- * same words differ only mechanically.
+ * Remove MDX `import` lines. Only lines outside fenced code blocks are MDX
+ * imports; an `import` inside a code sample is content readers see.
+ */
+function stripMdxImports(body: string): string {
+	let inFence = false;
+	return body
+		.split("\n")
+		.filter((line) => {
+			if (/^\s*(?:```|~~~)/.test(line)) {
+				inFence = !inFence;
+				return true;
+			}
+			return inFence || !/^import /.test(line);
+		})
+		.join("\n");
+}
+
+/**
+ * The words readers see: title, description, and body, without MDX imports,
+ * link targets, `href`/`src` values, punctuation, or case. Two versions with
+ * the same words differ only mechanically.
  */
 export function readableWords(source: string): string[] {
 	const { title, description } = readFrontmatter(source);
-	const body = source
-		.replace(FRONTMATTER, "")
-		.replace(/^import .*$/gm, "")
+	const body = stripMdxImports(source.replace(FRONTMATTER, ""))
 		.replace(/\]\([^)]*\)/g, "]")
 		.replace(/\b(?:href|src)="[^"]*"/g, "");
 
@@ -135,23 +151,32 @@ const OK: CheckResult = { status: "ok" };
 
 const EXAMPLE = `updates:\n  - date: YYYY-MM-DDTHH:MM:00Z\n    summary: What changed and what readers should do.`;
 
+const RENAMED = `Renaming a published post changes its URL, which is also its RSS GUID: feed readers deliver it again as a new item, dated when it was first published, and links to the old URL break. Add a redirect from the old URL. If readers need to know what changed, add an \`updates\` entry.`;
+
 /**
  * Decide whether a change to a changelog post needs an `updates` entry.
- * `base` is undefined for new files, which never need one.
+ * `base` is undefined for new files, which never need one. For renamed files,
+ * `renamedFrom` is the old path and `base` its content.
  */
 export function checkChangelogChange({
 	path,
+	renamedFrom,
 	base,
 	head,
 	now = new Date(),
 }: {
 	path: string;
+	renamedFrom?: string;
 	base: string | undefined;
 	head: string;
 	now?: Date;
 }): CheckResult {
 	if (base === undefined) return OK;
-	if (!path.startsWith(CHANGELOG_DIR) || LIVING_PAGES.includes(path)) {
+	if (
+		!path.startsWith(CHANGELOG_DIR) ||
+		LIVING_PAGES.includes(path) ||
+		(renamedFrom !== undefined && LIVING_PAGES.includes(renamedFrom))
+	) {
 		return OK;
 	}
 
@@ -161,6 +186,27 @@ export function checkChangelogChange({
 	const publishedAt = new Date(String(baseFrontmatter.date));
 	if (Number.isNaN(publishedAt.getTime()) || publishedAt > now) return OK;
 
+	const result = checkContent({ path, base, head, baseFrontmatter });
+	if (renamedFrom === undefined) return result;
+
+	const note = `Renamed from \`${renamedFrom}\`. ${RENAMED}`;
+	return result.status === "ok"
+		? { status: "reminder", message: note }
+		: { ...result, message: `${result.message}\n\n${note}` };
+}
+
+/** Content rules for a published post, compared against its base version. */
+function checkContent({
+	path,
+	base,
+	head,
+	baseFrontmatter,
+}: {
+	path: string;
+	base: string;
+	head: string;
+	baseFrontmatter: Frontmatter;
+}): CheckResult {
 	if (updateCount(readFrontmatter(head)) > updateCount(baseFrontmatter)) {
 		return OK;
 	}

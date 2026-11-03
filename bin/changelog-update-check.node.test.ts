@@ -109,6 +109,17 @@ describe("readableWords", () => {
 		expect(readableWords(before)).toEqual(readableWords(after));
 	});
 
+	test("keeps import lines inside code samples", () => {
+		const sample = (module: string) =>
+			`---\ntitle: Example\n---\n\nimport { A } from "~/components";\n\n\`\`\`ts\nimport { env } from "${module}";\n\`\`\`\n`;
+		expect(readableWords(sample("cloudflare:workers"))).not.toEqual(
+			readableWords(sample("cloudflare:test")),
+		);
+		expect(readableWords(sample("cloudflare:workers"))).not.toContain(
+			"components",
+		);
+	});
+
 	test("includes the title and description", () => {
 		expect(readableWords(`---\ntitle: Limit raised\n---\n`)).toEqual([
 			"limit",
@@ -232,5 +243,45 @@ describe("checkChangelogChange", () => {
 		const head = post({ rows: [...FOUR_RULES, { id: "r5", next: "Block" }] });
 		const path = "src/content/changelog/ddos-protection/2026-10-21-rules.mdx";
 		expect(check(head, { path }).status).toBe("reminder");
+	});
+
+	describe("renamed posts", () => {
+		const renamedFrom =
+			"src/content/changelog/waf/2026-10-20-emergency-waf-release.mdx";
+		const checkRename = (head: string, from = renamedFrom, b = base) =>
+			checkChangelogChange({
+				path: PATH,
+				renamedFrom: from,
+				base: b,
+				head,
+				now: NOW,
+			});
+
+		test("fails when a renamed WAF release changes rules", () => {
+			const result = checkRename(
+				post({ rows: [...FOUR_RULES, { id: "r5", next: "Block" }] }),
+			);
+			expect(result.status).toBe("error");
+			if (result.status === "error") {
+				expect(result.message).toContain("added rules: r5");
+				expect(result.message).toContain(`Renamed from \`${renamedFrom}\``);
+			}
+		});
+
+		test("reminds about the GUID and redirect when only the name changes", () => {
+			const result = checkRename(base);
+			expect(result.status).toBe("reminder");
+			if (result.status === "reminder") {
+				expect(result.message).toContain("RSS GUID");
+				expect(result.message).toContain("redirect");
+			}
+		});
+
+		test("passes for renamed posts that are not published yet", () => {
+			const futureBase = post({ rows: FOUR_RULES, date: "2026-11-02" });
+			expect(checkRename(futureBase, renamedFrom, futureBase)).toEqual({
+				status: "ok",
+			});
+		});
 	});
 });

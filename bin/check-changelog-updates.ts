@@ -38,10 +38,13 @@ if (!baseRef || (commentIndex !== -1 && !commentFile)) {
 const git = (...args: string[]) =>
 	execFileSync("git", args, { encoding: "utf8" });
 
+// Modified and renamed files. Renames are compared against the old path, so
+// renaming a post doesn't skip the check.
 const changedFiles = git(
 	"diff",
-	"--name-only",
-	"--diff-filter=M",
+	"--name-status",
+	"--find-renames",
+	"--diff-filter=MR",
 	// No second ref: compare against the working tree, which matches HEAD in
 	// CI and also covers uncommitted edits when run locally.
 	baseRef,
@@ -49,20 +52,28 @@ const changedFiles = git(
 	CHANGELOG_DIR,
 )
 	.split("\n")
-	.filter((path) => /\.mdx?$/.test(path));
+	.filter(Boolean)
+	.map((line) => {
+		const [status, from, to] = line.split("\t");
+		return status.startsWith("R")
+			? { path: to, renamedFrom: from }
+			: { path: from, renamedFrom: undefined };
+	})
+	.filter(({ path }) => /\.mdx?$/.test(path));
 
 const findings: Array<{
 	path: string;
+	renamedFrom?: string;
 	result: Exclude<CheckResult, { status: "ok" }>;
 }> = [];
 
-for (const path of changedFiles) {
-	const base = git("show", `${baseRef}:${path}`);
+for (const { path, renamedFrom } of changedFiles) {
+	const base = git("show", `${baseRef}:${renamedFrom ?? path}`);
 	const head = fs.readFileSync(path, "utf8");
-	const result = checkChangelogChange({ path, base, head });
+	const result = checkChangelogChange({ path, renamedFrom, base, head });
 	if (result.status === "ok") continue;
 
-	findings.push({ path, result });
+	findings.push({ path, renamedFrom, result });
 	const level = result.status === "error" ? "error" : "warning";
 	console.log(
 		`::${level} file=${path}::${result.message.replaceAll("\n", "%0A")}`,
@@ -75,7 +86,13 @@ const reminders = findings.filter(({ result }) => result.status === "reminder");
 
 if (commentFile) {
 	const list = (items: typeof findings) =>
-		items.map(({ path }) => `- \`${path}\``).join("\n");
+		items
+			.map(({ path, renamedFrom }) =>
+				renamedFrom
+					? `- \`${path}\` (renamed from \`${renamedFrom}\`: add a redirect from the old URL)`
+					: `- \`${path}\``,
+			)
+			.join("\n");
 
 	const sections = [
 		errors.length > 0 &&
