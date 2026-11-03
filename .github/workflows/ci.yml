@@ -134,7 +134,12 @@ jobs:
       - name: Check out repo
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
+          # The merge queue build is the production build, and Nimbus reads
+          # page lastUpdated dates from `git log`, so it needs full history.
+          # A blobless clone keeps every commit and tree but skips historical
+          # file contents, cutting the checkout from ~1.4 GiB to ~50 MiB.
           fetch-depth: ${{ github.event_name != 'merge_group' && 1 || 0 }}
+          filter: ${{ github.event_name == 'merge_group' && 'blob:none' || '' }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
@@ -167,6 +172,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_OPTIONS: "--max-old-space-size=8192"
           DEPLOYMENT_ENV: ${{ github.event_name == 'merge_group' && 'production' || 'preview' }}
+          # Rename detection in Nimbus's `git log --name-status` needs blob
+          # contents, which would trigger hundreds of on-demand fetches in the
+          # blobless clone. Dates are unchanged with it off: the rename commit
+          # still shows the new path (as an add).
+          GIT_CONFIG_COUNT: "1"
+          GIT_CONFIG_KEY_0: diff.renames
+          GIT_CONFIG_VALUE_0: "false"
         run: |
           set -o pipefail
           pnpm run build:parallel 2>&1 | tee build.log
