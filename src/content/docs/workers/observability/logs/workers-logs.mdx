@@ -228,6 +228,10 @@ the day.
 KB](/workers/platform/limits/#log-size). Logs exceeding that size will be
 truncated and the log's `$cloudflare.truncated` field will be set to true.
 
+## Data location
+
+Cloudflare-stored Workers Logs, including invocation logs, follow your account's [Customer Metadata Boundary](/data-localization/metadata-boundary/) setting when one is configured. If no boundary is configured, logs may be stored in Cloudflare's core data centers globally.
+
 ## Pricing
 
 <Render file="workers_logs_pricing" product="workers" />
