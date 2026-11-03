@@ -123,6 +123,8 @@ Inside `query()`, write your policy. This example logs every query, then forward
 
 :::caution
 The `query()` parameter uses `params.queries` (an array of statements, each with a `.sql` field). A single `env.DB.prepare(...).all()` call arrives as one entry in `params.queries`.
+
+One entry's `sql` string can still contain more than one statement, such as `SELECT 1; DELETE FROM Customers`, because [D1 accepts multiple statements in a single string](/d1/worker-api/). If your policy checks SQL text, account for every statement in the string, not only the first keyword. For example, a statement that starts with `WITH` can still delete or update rows.
 :::
 
 The TypeScript version imports types from `./binding-types`. Create that file using the definitions in the [TypeScript types](#typescript-types) section.
