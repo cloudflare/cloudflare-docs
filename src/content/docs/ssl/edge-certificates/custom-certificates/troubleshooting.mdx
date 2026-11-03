@@ -89,12 +89,6 @@ An accepted certificate that is expired, or expires soon, causes TLS errors for 
 openssl x509 -in certificate.crt -noout -dates
 ```
 
-### Legacy custom certificate quota is not consistently enforced
-
-For **Custom Legacy** certificates, the quota check may allow you to upload more certificates than your quota. If your zone has more active Legacy certificates than its quota, replacing an existing certificate (**Replace SSL certificate and key** or `PATCH`) may fail with `Custom certificate IP quota exceeded for this zone` (Code: 1221), even though a replacement does not use an additional quota slot.
-
-If this happens, delete any Legacy certificate you no longer use and try again, or contact your account team or [Cloudflare Support](/support/contacting-cloudflare-support/).
-
 ## Error codes
 
 ### Invalid certificate. (Code: 1002)
@@ -161,7 +155,7 @@ You have reached the quota for **Custom Legacy** (non-SNI) certificates on this 
 
 If you are renewing a certificate, [update the existing certificate](/ssl/edge-certificates/custom-certificates/uploading/#update-or-renew-an-existing-custom-certificate) instead of uploading a new one. If you do not need non-SNI support, upload the certificate with **Legacy Client Support** set to **Modern** (API `type`: `sni_custom`).
 
-Also refer to [Legacy custom certificate quota is not consistently enforced](#legacy-custom-certificate-quota-is-not-consistently-enforced).
+By design, Cloudflare allows you to upload one **Custom Legacy** certificate more than your quota. This lets you upload a new certificate and then delete the previous one during renewal, instead of updating the existing certificate. After the new certificate is active, delete the previous certificate to return within your quota. While your zone is above its quota, replacing an existing Legacy certificate may fail with this error.
 
 ### You already have a certificate of this signature type. (Code: 1228)
 
@@ -243,7 +237,6 @@ Then, when actually uploading or editing the certificate, make sure you select t
 
 Cloudflare cannot build a chain from your certificate to a root certificate in [Cloudflare's trust store](https://github.com/cloudflare/cfssl_trust). Common causes include:
 
-- The file contains the leaf and root certificates at the same time.
 - The certificate was issued by a private or internal CA.
 - The certificate chains to a root or cross-signed certificate that is not in Cloudflare's trust store, for example after a CA hierarchy change.
 
@@ -251,7 +244,7 @@ Cloudflare cannot build a chain from your certificate to a root certificate in [
 
 - If your certificate is from a publicly trusted CA, upload the leaf certificate only.
 - If your certificate is from a private CA, or you need to serve a chain that is not in Cloudflare's trust store, use the **user-defined** [bundle method](/ssl/edge-certificates/custom-certificates/bundling-methodologies/#user-defined) and upload the full chain. Clients must trust the root of this chain.
-- If you believe a publicly trusted root or intermediate is missing from the trust store, contact [Cloudflare Support](/support/contacting-cloudflare-support/).
+- If you believe a publicly trusted root or intermediate is missing from the trust store, open an issue in the [trust store repository](https://github.com/cloudflare/cfssl_trust/issues) or contact [Cloudflare Support](/support/contacting-cloudflare-support/).
 
 ### The certificate chain you uploaded has no leaf certificates. Please check your input and try again. (Code: 2101)
 
