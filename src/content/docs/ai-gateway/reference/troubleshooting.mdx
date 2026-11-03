@@ -44,6 +44,89 @@ To resolve the error:
 - For Anthropic Messages (`/anthropic/v1/messages`), send `x-api-key: <PROVIDER_API_KEY>`. AI Gateway does not recognize `Authorization: Bearer` as provider credentials on this endpoint.
 - If using [stored BYOK keys](/ai-gateway/configuration/bring-your-own-keys/), verify gateway authentication and the key alias. Use `default`, or select an applicable alias with `cf-aig-byok-alias` on provider-native requests.
 
+### 401: Provider credentials rejected (2009)
+
+AI Gateway returns HTTP `401` with error code `2009` when the provider rejects the credentials sent with the request or your stored [BYOK key](/ai-gateway/configuration/bring-your-own-keys/).
+
+To resolve the error:
+
+- Check with the provider that the key is valid and active.
+- Update the key in your request, or update the stored BYOK key in AI Gateway.
+
+If the request uses [Unified Billing](/ai-gateway/features/unified-billing/), AI Gateway returns HTTP `503` instead. Refer to [503: Unified Billing temporarily unavailable (7005)](#503-unified-billing-temporarily-unavailable-7005).
+
+## Unified Billing and credit errors
+
+These errors apply to requests that use [Unified Billing](/ai-gateway/features/unified-billing/) credits.
+
+### 403: Insufficient balance (2049)
+
+AI Gateway returns HTTP `403` with error code `2049` and the message `Insufficient balance; add money to your gateway or use BYOK` when it cannot bill the request to your credits.
+
+Common causes:
+
+- Your account has no credits loaded.
+- The gateway does not have [authentication](/ai-gateway/configuration/authentication/) turned on. Unified Billing requires an authenticated gateway.
+- Unified Billing is not available on your account.
+
+To resolve the error:
+
+- [Load credits](/ai-gateway/features/unified-billing/#load-credits) to your account.
+- Turn on [authentication](/ai-gateway/configuration/authentication/) for the gateway.
+- Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+- If credits are loaded and authentication is on, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### 402: Credit balance exhausted (2052)
+
+AI Gateway returns HTTP `402` with error code `2052` when your credit balance runs out.
+
+To resolve the error:
+
+- [Load more credits](/ai-gateway/features/unified-billing/#load-credits) to your account.
+- Set up [auto top-up](/ai-gateway/features/unified-billing/#auto-top-up) so that your balance does not run out.
+
+### 402: Payment error (2021)
+
+AI Gateway returns HTTP `402` with error code `2021` and the message `Model execution failed (Payment error)` when AI Gateway cannot pay for the request.
+
+Common causes:
+
+- The [BYOK key](/ai-gateway/configuration/bring-your-own-keys/) stored under the `default` alias is invalid or has no funds with the provider.
+- Your Cloudflare account has a billing or payment issue.
+
+To resolve the error:
+
+- Check the `default` BYOK key and its balance with the provider. To use credits instead, remove the key.
+- If the error continues, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### 429: Unified Billing rate limit (2018)
+
+AI Gateway returns HTTP `429` with error code `2018` when a gateway exceeds the [Unified Billing request rate limit](/ai-gateway/reference/limits/#gateway-limits). This error is a rate limit, not a balance problem.
+
+To resolve the error:
+
+- Reduce your request rate, and retry with exponential backoff.
+- Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/). The limit does not apply to BYOK requests.
+
+### 503: Unified Billing temporarily unavailable (7005)
+
+AI Gateway returns HTTP `503` with error code `7005` and the message `Unified billing is temporarily unavailable for this provider; retry, or configure your own provider API key (BYOK)` when Cloudflare-managed credentials for the provider cannot be used.
+
+To resolve the error:
+
+- Retry the request later.
+- Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+
+## Account access errors
+
+### 403: AI Gateway is not enabled for this account (2042)
+
+AI Gateway returns HTTP `403` with error code `2042` when AI Gateway is not enabled for your account. To resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### 403: AI Gateway Access integration is not enabled for this account (2036)
+
+AI Gateway returns HTTP `403` with error code `2036` when you use [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/) with a custom domain before the Access integration is enabled for your account. To resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
 ## DLP issues
 
 For troubleshooting Data Loss Prevention issues such as DLP not triggering or unexpected blocking, refer to [DLP troubleshooting](/ai-gateway/features/dlp/set-up-dlp/#troubleshooting).
@@ -61,6 +144,24 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 - Verify your API key or credentials are valid with the provider directly
 - Check the provider's status page for outages
 - Review [AI Gateway logs](/ai-gateway/observability/logging/) for detailed error information
+
+#### 500: Model execution failed (2002)
+
+AI Gateway returns HTTP `500` with error code `2002` and the message `Model execution failed (Error)` when the provider fails to process the request.
+
+To resolve the error:
+
+- Retry the request.
+- Set up [dynamic routing](/ai-gateway/features/dynamic-routing/) with a fallback model.
+
+#### Failed to get response from provider (2005)
+
+AI Gateway returns error code `2005` when it does not receive a response from the provider.
+
+To resolve the error:
+
+- Check the provider's status page for outages.
+- Retry the request.
 
 ## Caching issues
 
