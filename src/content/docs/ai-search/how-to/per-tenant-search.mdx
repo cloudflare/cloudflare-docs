@@ -213,7 +213,7 @@ const instance = await env.TENANTS.create({
 	type: "r2",
 	source: "my-bucket",
 	source_params: {
-		include_items: [`/customers/${tenantId}/**`],
+		include_items: [`customers/${tenantId}/**`],
 	},
 });
 ```

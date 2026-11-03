@@ -116,13 +116,13 @@ Default retrieval configuration for the instance. These defaults can be overridd
 
 `sync_interval` <Type text="number" /> <MetaInfo text="optional" />
 
-Seconds between automatic data source syncs. Valid values: `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `21600` (6 hours).
+Seconds between automatic data source syncs. Valid values: `900`, `1800`, `3600`, `7200`, `14400`, `21600`, `43200`, `86400`. Defaults to `86400` (24 hours).
 
 ---
 
 `token_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The UUID of the [service API token](/ai-search/configuration/indexing/service-api-token/) to use for this instance. Only required if you have never created an AI Search instance before. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
+The UUID of the [service API token](/ai-search/configuration/indexing/service-api-token/) to use for this instance. Required for R2 data sources only if your account has no service API token registered yet. If omitted, AI Search uses the most recently registered service API token for your account. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
 
 ---
 
