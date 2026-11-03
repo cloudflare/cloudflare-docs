@@ -1,0 +1,31 @@
+---
+title: Agents SDK now supports the latest Pi 1.5 release
+description: Agents SDK v0.33.0 runs PiHarness on Pi 1.5, which stores far less while streaming, scales to more sessions, and lets you continue a run that ended without an answer.
+products:
+  - agents
+date: 2026-11-03
+---
+
+import { CopyPromptButton } from "~/components";
+
+Agents SDK v0.33.0 runs [`PiHarness`](/agents/harnesses/pi/) on [Pi 1.5](https://github.com/earendil-works/pi/blob/v1.5.0/packages/durable/CHANGELOG.md#150---2026-11-02), which makes it much faster and lighter on memory, and lets you continue a run that ended without an answer.
+
+- **Far fewer storage writes while streaming.** Pi stores streamed answers and tool output in batches, at least once a second, instead of on every update. Over SQLite, this cuts storage transactions by about 27x for long answers and 5.7x for turns with parallel tools, and CPU by about a quarter.
+- **Faster with many sessions.** Pi's scheduler no longer rechecks every conversation on each commit. On SQLite, one Pi harness with 2,048 sessions went from 88 to 459 agent runs per second.
+- **Less memory on large answers.** Streaming a 500 KB tool call used to take about 20 seconds of CPU and a 100 MB heap. Pi now appends new text instead of copying it on every update.
+- **A view of each session.** [`session.watch()`](/agents/harnesses/pi/#watch-sessions-from-clients) replaces `session.events()`. It returns the newest transcript entries and the session's live state, such as the answer being streamed, running tools, and why the last run ended without an answer.
+- **Continue a run.** `session.continue()` starts a run on the transcript as it is, without a new message, for example after the model errored.
+- **Turn limit.** `defaults.maxTurns` caps the tool rounds a run can take in new sessions.
+- **Tasks that keep crashing end.** Pi now ends a task cut off by its restart limit instead of parking it. `retry()` and the `parked` status are removed.
+- **Browser in Pi's code mode.** Scripts in [Pi's code mode](/agents/tools/browser/#use-it-in-pis-code-mode) can call `browserTool` and pass its screenshots to `image()`. `browserTool` also stops when the harness aborts its call.
+
+## Upgrade
+
+The [Agents SDK v0.33.0 changelog](https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0330) has step-by-step upgrade instructions. Point your coding agent at them and upgrade today:
+
+<CopyPromptButton
+	tooltip="Upgrade to Pi 1.5"
+	prompt="Upgrade my Pi harness agent to Agents SDK v0.33.0 and Pi 1.5 by following the upgrade steps at https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0330. Refer to https://developers.cloudflare.com/agents/harnesses/pi/ for the current PiHarness API."
+/>
+
+Once a conversation runs on Pi 1.5, Pi 1.4 cannot read it, so a deployment cannot roll back past this upgrade. Refer to the [Pi Durable 1.5.0 changelog](https://github.com/earendil-works/pi/blob/v1.5.0/packages/durable/CHANGELOG.md#150---2026-11-02) for Pi's own breaking changes.
