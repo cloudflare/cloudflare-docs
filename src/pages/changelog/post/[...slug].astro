@@ -10,10 +10,12 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { getEntries, render } from "astro:content";
 
 import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
+import ChangelogUpdates from "~/components/changelog/ChangelogUpdates.astro";
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
 import { PageActions } from "~/components/ui/page-actions";
 import { components } from "~/mdx-components";
+import { liveUpdates } from "~/util/changelog-git";
 import { changelogOgImage } from "~/util/og";
 
 export const prerender = true;
@@ -45,6 +47,9 @@ const dateLabel = date.toLocaleDateString("en-US", {
 	timeZone: "UTC",
 });
 
+const lastUpdated =
+	liveUpdates(note.data.updates, note.filePath)[0]?.liveAt ?? date;
+
 const { Content } = await render(note);
 ---
 
@@ -53,7 +58,7 @@ const { Content } = await render(note);
 	description={description}
 	noindex={note.data.hidden}
 	socialImage={await changelogOgImage(note)}
-	lastUpdated={date}
+	lastUpdated={lastUpdated}
 	meta={{
 		titleSuffix: "Changelog",
 		product: primaryProduct?.data.entry?.title,
@@ -103,6 +108,12 @@ const { Content } = await render(note);
 			)}
 
 			<PageActions class="mt-4" />
+
+			<ChangelogUpdates
+				updates={note.data.updates}
+				filePath={note.filePath}
+				class="mt-6"
+			/>
 
 			<div class="docs-content nb-cl-prose mt-9 max-w-none">
 				<Content components={components} />
