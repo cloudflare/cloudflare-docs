@@ -1,0 +1,80 @@
+---
+title: "WAF Release - 2026-11-03"
+description: Cloudflare WAF managed and free rulesets 2026-11-03 release
+date: 2026-11-03
+---
+
+import { RuleID } from "~/components";
+
+This release introduces updates to the underlying rule expressions for PHP out-of-memory (OOM) vulnerabilities CVE-2026-109618, CVE-2026-109619 and CVE-2026-115560. The improvements are iterative changes based on reports from Security Researchers as part of [PHP Capture the Flag (CTF) challenge](https://blog.cloudflare.com/php-ctf).
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="00c10e6cc4da4bd08722adeebcd95984" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #2</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="48ddf592361e4fdb97a8a85982dab691" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #3</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f9a45927414245e3a64bb12d0a0c2f64" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #2</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="771c654ae1154d4daa72f4e1545d163c" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #3</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="96284f85f5984e29be0616f013f91633" />
+			</td>
+			<td>N/A</td>
+			<td>phpMyAdmin - Authentication Bypass</td>
+			<td>N/A</td>
+			<td>Disabled</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
