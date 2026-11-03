@@ -1,0 +1,25 @@
+---
+title: Updated verification for bots, agents, and their operators
+description: Cloudflare is evolving its Verified bots program with distinct bot and agent categories, operator requirements, proxy criteria, and graduated enforcement.
+products:
+  - bots
+date: 2026-11-02
+---
+
+Cloudflare is updating its Verified bots program as more automated traffic comes from agents and other intermediaries. The changes make it clearer who is sending traffic, what Cloudflare has verified, and how sites can choose to handle it.
+
+## What is changing
+
+- **Separate classifications for “Bots and Crawlers” and “Agents.”** Bots and Crawlers do defined jobs on behalf of an operator; Agents act on behalf of users. We are creating two top-level categories so each can be managed with independent policies.
+- **Identified and Verified have separate criteria.** Identified means a bot or agent securely identifies itself; Verified means it also meets Cloudflare's [requirements for Verified bots and agents](/bots/concepts/bot/verified-bots/). Sites can choose whether to allow traffic that is Identified but not Verified.
+- **Introducing Verified Operators.** We are adding requirements for the registered business behind a bot or agent, including a contact, a list of its services, and policies to prevent abuse. Verification will apply to the operator as well as to its individual bots and agents.
+- **New requirements for Verified Agents.** Agents must identify themselves cryptographically, respect site preferences, treat access challenges as a refusal, act on their users' instructions, and avoid abuse. Agents currently verified by IP address and user agent will need to migrate, and a Verified Agent must have a Verified Operator.
+- **A path to verification for proxies.** Proxies can qualify if they publish their egress addresses, can trace traffic to a user, separate traffic they cannot account for, and keep abuse under control. Proxies designed to hide traffic cannot qualify, and a Verified Proxy does not make the traffic it carries Verified.
+
+## Losing and regaining Verified status
+
+When a bot, agent, proxy, or operator falls short of the requirements, Cloudflare may first notify the operator privately, then issue a public warning, and ultimately revoke Verified status.
+
+**An operator whose bot behaves abusively may lose Verified status.** If that happens, its other registered bots, agents, browsers, and proxies lose Verified status too. A revoked operator can apply again after stopping the violations and completing a probation period, but its history remains public.
+
+For current verification methods, refer to [Web Bot Auth](/bots/reference/bot-verification/web-bot-auth/) and [IP validation](/bots/reference/bot-verification/ip-validation/).
