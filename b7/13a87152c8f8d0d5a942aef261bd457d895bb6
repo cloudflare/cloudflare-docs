@@ -1,0 +1,19 @@
+src/content/docs/containers/concepts/placement.mdx
+  s_b9e6dc21e3888e::t_492fb32ec80484 37-41,45-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b713a87152c8f8d0d5a942aef261bd457d895bb6",
+  "prompts": {},
+  "sessions": {
+    "s_b9e6dc21e3888e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e5db0607fffeg0MR0XnyGVaNgi",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}
