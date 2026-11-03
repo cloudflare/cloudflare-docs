@@ -100,6 +100,29 @@ Email Service rejects the entire send request if it contains a disallowed header
 | ------------- | --------------------------------------------------------- | ----------------------------- |
 | `Archived-At` | [RFC 5064](https://datatracker.ietf.org/doc/html/rfc5064) | URL where message is archived |
 
+### One-time passcodes
+
+| Header      | RFC                                                                                    | Notes                                                              |
+| ----------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `OTP-Token` | [draft-goto-otp-token](https://datatracker.ietf.org/doc/draft-goto-otp-token/) (draft) | One-time passcode bound to a web origin. Refer to the rules below. |
+
+The `OTP-Token` header gives a one-time passcode (OTP) in a form that mail apps can read, together with the origin of the site that asks for it. A mail app that supports the header can offer the code for autofill only on a page with that origin.
+
+```txt
+OTP-Token: "123456"; origin="https://example.com"
+```
+
+- **Code** — A quoted string that is not empty. ASCII characters only.
+- **`origin`** — Required. A quoted `https` origin in canonical form: lowercase host, no path or trailing slash, and no default port (`:443`). The host can be a domain name, an IPv4 address, or an IPv6 address in brackets (for example, `https://[2001:db8::1]`).
+- **Other parameters** — Ignored, so that later versions of the draft can add parameters.
+- **One per message** — Header names are case-insensitive, so `OTP-Token` and `otp-token` in the same `headers` object count as two headers, and the request is rejected.
+
+Email Service rejects a request with an invalid `OTP-Token` value in the `headers` field. When you send a complete MIME message, for example over SMTP, Email Service does not check the value.
+
+Email Service includes `OTP-Token` in the DKIM signature of every message, also of messages that do not have the header. As a result, the header cannot be added or changed after Email Service signs the message.
+
+The header is defined in an Internet-Draft that can still change, and support in mail apps varies. Always include the code in the message body as well.
+
 ### Custom X-headers
 
 Any header starting with `X-` is allowed. This covers common headers like `X-Mailer`, `X-Priority`, `X-Campaign-ID`, and any custom tracking headers your application needs.
