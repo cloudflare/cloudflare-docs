@@ -13,7 +13,22 @@ import { Details } from "~/components";
 
 The Workers Vitest integration provides additional configuration on top of Vitest's usual options using the `cloudflareTest()` Vite plugin.
 
-An example configuration would be:
+An example configuration for a project with a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file would be:
+
+```ts
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			config: true,
+		}),
+	],
+});
+```
+
+If your project uses a [Wrangler configuration file](/workers/wrangler/configuration/), set the `wrangler` option instead of `config`:
 
 ```ts
 import { cloudflareTest } from "@cloudflare/vitest-plugin";
@@ -25,21 +40,6 @@ export default defineConfig({
 			wrangler: {
 				configPath: "./wrangler.jsonc",
 			},
-		}),
-	],
-});
-```
-
-If your project uses a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file, set the `config` option instead of `wrangler`:
-
-```ts
-import { cloudflareTest } from "@cloudflare/vitest-plugin";
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-	plugins: [
-		cloudflareTest({
-			config: true,
 		}),
 	],
 });
