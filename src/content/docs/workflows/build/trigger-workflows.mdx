@@ -110,6 +110,8 @@ export class MyWorkflow extends WorkflowEntrypoint<Env> {
 
 On [Workers Paid](/workers/platform/pricing/#workers), Workflow instances created by `schedules` can run for up to one hour per cron firing without consuming a Workflow concurrency slot. If the instance pauses or sleeps after that window, the instance yields and enters the normal concurrency queue upon resume. It resumes when a concurrency slot is available.
 
+This also applies to a Workflow with a [concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits): instances created by `schedules` are not held back by the limit during the one-hour window. After the window, the instance yields and is queued until both your account and the Workflow have a free slot.
+
 Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
 
 The following example shows how you can manage Workflows from within a Worker, including:
@@ -212,7 +214,7 @@ await instance.resume(); // Returns Promise<void>
 Calling `resume` on an instance that is not currently paused will have no effect.
 
 :::caution
-If you have reached the maximum concurrent instances for your Workflow, resuming an instance may not restart it immediately. The instance will be queued until a concurrency slot becomes available.
+If you have reached the maximum concurrent instances for your account, or the [concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits) set on your Workflow, resuming an instance may not restart it immediately. The instance will be queued until a concurrency slot becomes available.
 :::
 
 ### Stop a Workflow
