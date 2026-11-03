@@ -1,0 +1,25 @@
+src/content/data-residency/application-performance.yaml
+  s_5923cf5722a4a1::t_32836332f93aa6 131,150
+src/content/data-residency/application-security.yaml
+  s_5923cf5722a4a1::t_d835d75ac78fbf 54-55,66-67,101-103
+src/content/data-residency/zero-trust.yaml
+  s_5923cf5722a4a1::t_8ed9bf690e161e 9-10,16,20,26,48-50,88-90,92-94,104
+src/content/docs/data-localization/region-support.mdx
+  s_5923cf5722a4a1::t_1e7c57e033326b 68-69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0ffb3e6aa5aea266791324ddec5eb32194df1d58",
+  "prompts": {},
+  "sessions": {
+    "s_5923cf5722a4a1": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e64275490ffe8BbMpv0oXbb905",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

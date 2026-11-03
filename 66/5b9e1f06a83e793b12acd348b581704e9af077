@@ -1,0 +1,65 @@
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/alibaba-cloud.mdx
+  s_f15c457c013f84::t_b6f6b336b2d3bf 3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/aruba-edgeconnect.mdx
+  s_f15c457c013f84::t_c77de6941f9136 3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/aws.mdx
+  s_f15c457c013f84::t_84184c79989eb1 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/azure/azure-virtual-wan.mdx
+  s_f15c457c013f84::t_755d5e0c747662 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/azure/azure-vpn-gateway.mdx
+  s_f15c457c013f84::t_954e9acbbe2596 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/check-point.mdx
+  s_f15c457c013f84::t_cd58f24e4625ca 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/cisco-ios-xe.mdx
+  s_f15c457c013f84::t_c524acec92f123 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/cisco-meraki-static.mdx
+  s_f15c457c013f84::t_3d4d2daf86fc12 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/fitelnet.mdx
+  s_f15c457c013f84::t_10aeca6642c558 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/fortinet.mdx
+  s_f15c457c013f84::t_810fd8bc7bed3a 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/google.mdx
+  s_f15c457c013f84::t_27aa0aeef43e2d 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/juniper.mdx
+  s_f15c457c013f84::t_f77aa1a18e5cec 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/oracle.mdx
+  s_f15c457c013f84::t_c15faef7974446 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/palo-alto.mdx
+  s_f15c457c013f84::t_11be34e70f53fa 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/pfsense.mdx
+  s_f15c457c013f84::t_fa401b8649dcd6 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/sonicwall.mdx
+  s_f15c457c013f84::t_b2aa163c925663 3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/sophos-firewall.mdx
+  s_f15c457c013f84::t_3a84b48bcf454b 3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/strongswan.mdx
+  s_f15c457c013f84::t_f1e094212b0948 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/ubiquiti.mdx
+  s_f15c457c013f84::t_6d318d93198c93 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/velocloud.mdx
+  s_f15c457c013f84::t_265df250d47083 3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/viptela.mdx
+  s_f15c457c013f84::t_1e2ed5457b336a 3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/vyos.mdx
+  s_f15c457c013f84::t_6808227a89070f 2-3,7
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/yamaha.mdx
+  s_f15c457c013f84::t_9a60666f3184ed 2-3,7
+src/content/docs/cloudflare-wan/configuration/third-party/ubiquiti.mdx
+  s_f15c457c013f84::t_e7ccbf68ffe97e 26,28-31,43-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "665b9e1f06a83e793b12acd348b581704e9af077",
+  "prompts": {},
+  "sessions": {
+    "s_f15c457c013f84": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_196026b93ffe50rSL4gc2d8s7n",
+        "model": "@cf/moonshotai/kimi-k2.6"
+      },
+      "human_author": "Jeff Hochberg <jeffh@cloudflare.com>"
+    }
+  }
+}
