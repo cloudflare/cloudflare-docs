@@ -117,15 +117,36 @@ export class DependabotReviewWorkflow extends WorkflowEntrypoint<
 			};
 		});
 
-		if (!ctx.isDependabot) {
-			return {
-				acted: false,
-				reason: "not_dependabot",
+		if (!ctx.isDependabot || ctx.packages.length === 0) {
+			const reason = ctx.isDependabot ? "no_packages_parsed" : "not_dependabot";
+			console.warn({
+				message: `Dependabot review skipped: PR #${number} — ${reason}`,
+				event: "dependabot_review",
+				number,
 				author: ctx.author,
-			};
-		}
-		if (ctx.packages.length === 0) {
-			return { acted: false, reason: "no_packages_parsed" };
+				runId,
+				action: reason,
+			});
+			// A slash command left 👀 on its comment; swap it for 😕 so the
+			// command does not look stuck.
+			if (reviewMode === "comment" && params.triggerCommentId) {
+				const commentId = params.triggerCommentId;
+				await step.do("react-skipped", async () => {
+					const token = await getInstallationToken(ghEnv);
+					if (params.triggerEyesReactionId) {
+						await removeReactionFromComment(
+							token,
+							commentId,
+							params.triggerEyesReactionId,
+						).catch(() => {});
+					}
+					await addReactionToComment(token, commentId, "confused").catch(
+						() => {},
+					);
+					return { reacted: true };
+				});
+			}
+			return { acted: false, reason, author: ctx.author };
 		}
 
 		console.log({
