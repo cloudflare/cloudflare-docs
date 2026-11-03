@@ -14,6 +14,10 @@ Custom Domains allow you to connect your Worker to a domain or subdomain, withou
 
 Custom Domains are routes to a domain or subdomain (such as `example.com` or `shop.example.com`) within a Cloudflare zone where the Worker is the origin.
 
+:::note[TLS cipher suite settings]
+Custom Domains provision and manage their own certificate. Zone-level and per-hostname cipher suite settings do not apply to traffic served through a Custom Domain. If you need to enforce specific cipher suites on a hostname, use a [Workers zone route](/workers/configuration/routing/routes/) instead — zone routes use your existing zone certificate, making cipher settings enforceable.
+:::
+
 Custom Domains are recommended if you want to connect your Worker to the Internet and do not have an application server that you want to always communicate with. If you do have external dependencies, you can create a `Request` object with the target URI, and use `fetch()` to reach out.
 
 Custom Domains can stack on top of each other. For example, if you have Worker A attached to `app.example.com` and Worker B attached to `api.example.com`, Worker A can call `fetch()` on `api.example.com` and invoke Worker B.
