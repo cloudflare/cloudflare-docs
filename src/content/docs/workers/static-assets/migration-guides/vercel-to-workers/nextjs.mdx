@@ -37,7 +37,7 @@ Migrate this Next.js app from Vercel to Cloudflare Workers using vinext (https:/
    - Caching: if the app has no ISR (export const revalidate, fetch next.revalidate), no revalidatePath or revalidateTag, and no "use cache", use --cdn-cache=none --data-cache=none. Otherwise, use --cdn-cache=response-store --response-store-mode=self-contained. Add --data-cache=kv if the app uses the data cache.
    - Images: use --image-optimization=cloudflare-images only if next/image renders raster (PNG, JPEG, WebP, AVIF) or remote images. Otherwise, use --image-optimization=none.
    Then run: npx vinext init --platform=cloudflare --name <name> --cdn-cache=<value> --data-cache=<value> --image-optimization=<value>
-   Read every file that init creates or changes. Add ".cloudflare/types" to tsconfig.json "include". Add ".cloudflare/**", ".vinext/**", and "dist/**" to the ESLint ignores. If cloudflare.config.ts lists "nodejs_compat" in compatibilityFlags, remove it. A compatibility date of 2026-08-04 or later enables it, and workerd rejects the explicit flag. Do not register @vitejs/plugin-rsc manually. Do not add a wrangler.jsonc file.
+   Read every file that init creates or changes. Add ".cloudflare/types" to tsconfig.json "include". Add ".cloudflare/**", ".vinext/**", and "dist/**" to the ESLint ignores. Do not add "nodejs_compat" to compatibilityFlags. A compatibility date of 2026-08-04 or later already enables it. Do not register @vitejs/plugin-rsc manually. Do not add a wrangler.jsonc file.
 4. Do not modify app/ or pages/ beyond the replacements in step 5. Do not rewrite next/* imports. Do not delete next.config.*.
 5. Replace Vercel features:
    - Move vercel.json redirects, rewrites, and headers into next.config redirects(), rewrites(), and headers(). List any crons and ask me how to handle them.
@@ -79,7 +79,7 @@ When you finish, list the files you changed, the Vercel features that were repla
 
    `vinext init` adds dependencies, `vite.config.ts`, `cloudflare.config.ts`, and the `dev:vinext`, `build:vinext`, `start:vinext`, and `deploy:vinext` scripts. It can also upgrade `react` and `react-dom`.
 
-   If `cloudflare.config.ts` lists `nodejs_compat` in `compatibilityFlags`, remove it. A compatibility date of `2026-08-04` or later enables Node.js compatibility by default, and workerd rejects the explicit flag.
+   You do not need `nodejs_compat` in `compatibilityFlags`. A compatibility date of `2026-08-04` or later enables Node.js compatibility by default.
 
 3. Add `.cloudflare/types` to the `include` array in `tsconfig.json`. Add `.cloudflare/**`, `.vinext/**`, and `dist/**` to your ESLint ignores.
 

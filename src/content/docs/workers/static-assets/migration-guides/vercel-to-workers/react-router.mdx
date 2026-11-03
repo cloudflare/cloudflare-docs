@@ -10,7 +10,7 @@ products:
   - workers
 ---
 
-import { Details, PackageManagers, Steps, WranglerConfig } from "~/components";
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
 This guide moves a Remix v2 or [React Router](https://reactrouter.com/) v7 application from Vercel to Cloudflare Workers. React Router v7 framework mode is the successor to Remix. Cloudflare supports Remix applications through React Router and the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
@@ -18,7 +18,7 @@ If your application uses Remix v2, upgrade to React Router v7 first. Ship that u
 
 ## Before you begin
 
-- SPA mode (`ssr: false`) and `prerender` are not supported with the Cloudflare Vite plugin. Check `react-router.config.ts` before you start.
+- SPA mode (`ssr: false`) is not supported with the Cloudflare Vite plugin. Prerendering requires React Router 7.13.1 or later with the `future.unstable_previewServerPrerendering` flag. Check `react-router.config.ts` before you start.
 - Do not use automatic project configuration on a Remix v2 application. It detects the application as a static site.
 - This guide uses React Router v7. Install `@react-router/*` packages with `@^7`, because unpinned installs can resolve a newer major version.
 - Review the steps in [Before you begin](/workers/static-assets/migration-guides/vercel-to-workers/#before-you-begin) that apply to every framework.
@@ -30,7 +30,7 @@ Copy this prompt into your coding agent. The agent stops before it deploys.
 ```txt
 Migrate this app from Vercel to Cloudflare Workers (Workers with Static Assets, not Pages). It is either Remix v2 or React Router v7 in framework mode. Target React Router 7.x. Do not upgrade to React Router 8 in the same change.
 
-0. Detect the framework. @remix-run/* means Remix v2. react-router plus @react-router/dev means React Router v7. If react-router.config.ts has `ssr: false` or `prerender`, stop and report that the Cloudflare Vite plugin does not support them. Do not use `wrangler setup` on Remix v2.
+0. Detect the framework. @remix-run/* means Remix v2. react-router plus @react-router/dev means React Router v7. If react-router.config.ts has `ssr: false`, stop and report that the Cloudflare Vite plugin does not support SPA mode. If it has `prerender`, use react-router and @react-router/* 7.13.1 or later and set `future: { unstable_previewServerPrerendering: true }`. Do not use `wrangler setup` on Remix v2.
 1. Remix v2 only: upgrade to React Router v7 first (https://reactrouter.com/upgrading/remix). Commit the upgrade separately.
    - If the app has loaders or actions, update @remix-run/* to the latest 2.x and turn on every v3_* future flag. Fix what breaks, then typecheck, build, and commit.
    - Run `npx codemod remix/2/react-router/upgrade`. If it fails with "Registry error: HTTP request failed", run `npx codemod@0.18.13 remix/2/react-router/upgrade --no-interactive` instead.
@@ -57,7 +57,7 @@ Migrate this app from Vercel to Cloudflare Workers (Workers with Static Assets, 
    declare module "react-router" { interface AppLoadContext { cloudflare: { env: Env; ctx: ExecutionContext } } }
    const requestHandler = createRequestHandler(() => import("virtual:react-router/server-build"), import.meta.env.MODE);
    export default { fetch(request, env, ctx) { return requestHandler(request, { cloudflare: { env, ctx } }); } } satisfies ExportedHandler<Env>;
-5. Create wrangler.jsonc with "name" (the repository name), "main": "./workers/app.ts", "compatibility_date": "<today>", "observability": { "enabled": true }, and "upload_source_maps": true. Do not add nodejs_compat, because a compatibility date of 2026-08-04 or later enables it and workerd rejects the explicit flag. If an existing or scaffolded config contains it, remove it. Create public/_headers:
+5. Create wrangler.jsonc with "name" (the repository name), "main": "./workers/app.ts", "compatibility_date": "<today>", "observability": { "enabled": true }, and "upload_source_maps": true. Do not add nodejs_compat. A compatibility date of 2026-08-04 or later already enables it. Create public/_headers:
    /assets/*
      Cache-Control: public, max-age=31536000, immutable
    Add .wrangler/ and .dev.vars* to .gitignore.

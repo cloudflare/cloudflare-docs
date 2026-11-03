@@ -36,7 +36,7 @@ These steps apply to every framework:
 - Install dependencies before you run any migration tool. [Automatic project configuration](/workers/framework-guides/automatic-configuration/) cannot detect your framework without `node_modules`.
 - If you use pnpm 10 or later, allow the `esbuild` and `workerd` build scripts. Otherwise, installs fail with `ERR_PNPM_IGNORED_BUILDS`. Run `pnpm approve-builds --all`, or add the packages to `allowBuilds` in `pnpm-workspace.yaml`.
 - Set the Worker `name` explicitly. Migration tools default to the `name` field in `package.json`, which is often a template name.
-- Use a compatibility date of `2026-08-04` or later, for example today. [Node.js compatibility](/workers/runtime-apis/nodejs/) is on by default for these dates, so do not add the `nodejs_compat` flag. If an existing Wrangler configuration file has an older date and `nodejs_compat`, update the date and remove the flag.
+- Use a compatibility date of `2026-08-04` or later, for example today. [Node.js compatibility](/workers/runtime-apis/nodejs/) is on by default for these dates, so new configurations do not need the `nodejs_compat` flag. Existing configurations can keep it. For more information, refer to [Node.js compatibility flag](/workers/configuration/compatibility-flags/#nodejs-compatibility-flag).
 - Add `.wrangler/` and `.dev.vars*` to `.gitignore`.
 - If your account has access to more than one Cloudflare account, set the `CLOUDFLARE_ACCOUNT_ID` environment variable before you deploy.
 
@@ -152,13 +152,25 @@ SvelteKit and Nuxt generate a `_headers` file for you. Cloudflare applies every 
 
 ## Replace ISR and edge caching
 
-On Vercel, a `Cache-Control: s-maxage` header caches server-rendered responses at the edge. A Worker does not cache its own responses based on that header. Without changes, every request renders the page again.
+On Vercel, a `Cache-Control: s-maxage` header caches server-rendered responses at the edge. On Workers, turn on [Workers Cache](/workers/cache/) to cache your Worker's responses based on the `Cache-Control` headers they return. Workers Cache requires Wrangler 4.69.0 or later.
 
-To keep caching, use one of these options:
+<WranglerConfig>
 
-- Prerender pages that do not change between deploys.
-- Use your framework's Cloudflare cache integration, such as Astro route caching or a vinext cache adapter.
-- Use the [Cache API](/workers/runtime-apis/cache/) from your server code.
+```jsonc
+{
+	"cache": {
+		"enabled": true,
+	},
+}
+```
+
+</WranglerConfig>
+
+Workers Cache does not serve stale responses that include `s-maxage`, even if they also set `stale-while-revalidate`. For more information, refer to [Cache-Control semantics](/workers/cache/configuration/#cache-control-semantics).
+
+When caching is on, all requests to your Worker are billed at the standard request rate, including static asset requests. For more information, refer to [Workers Cache pricing](/workers/cache/#pricing).
+
+You can also prerender pages that do not change between deploys, use your framework's Cloudflare cache integration, such as Astro route caching or a vinext cache adapter, or use the [Cache API](/workers/runtime-apis/cache/) from your server code.
 
 ## Add a custom domain
 

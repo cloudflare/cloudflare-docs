@@ -32,7 +32,7 @@ import {
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
 
 :::note
-SPA mode and prerendering are not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/).
+SPA mode is not currently supported when using the [Cloudflare Vite plugin](/workers/vite-plugin/). Prerendering is supported in React Router v8. On React Router v7, prerendering requires version 7.13.1 or later with the `future.unstable_previewServerPrerendering` flag.
 If you wish to use React Router in an SPA then we recommend starting with the [React template](/workers/framework-guides/web-apps/react/) and using React Router [as a library](https://reactrouter.com/start/data/installation).
 :::
 
