@@ -231,7 +231,7 @@ Runs in one scope drive one tab. If your runs can overlap with each other or wit
 A locking session holds the lock until `close()`, even if its signal aborts, it loses the browser, or you stop using it. Until then, other locking sessions in the scope wait until the Durable Object restarts. Close every locking session in a `finally` block, including when connecting failed.
 :::
 
-To share a tab with a Pi conversation, use `conversationScope(conversationId)` from `agents/browser`. It returns the scope that the Pi `browserTool` uses for that conversation.
+To share a tab with a Pi conversation, use `conversationScope(String(conversationId))` from `agents/browser`. It returns the scope that the Pi `browserTool` uses for that conversation. It takes a string and throws on an empty one.
 
 ## Internal hostnames
 

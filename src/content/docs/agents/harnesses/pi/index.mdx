@@ -135,7 +135,7 @@ The factory runs inside the object's startup, before any session is used, and ag
 
 Without a model, a session's prompts end unanswered until you set one. A run that reaches `maxTurns` runs that round's tools, then ends unanswered with reason `turn_limit`. Like the other defaults, `maxTurns` applies to new sessions only. Changing it does not change sessions that already exist. Without it, a run takes as many tool rounds as the model asks for.
 
-Settings for the whole harness go in Pi's `settings`, passed to `Harness.open()`. For example, `settings: { retry: { enabled: true, maxRetries: 2, baseDelayMs: 500 } }` retries a failed model request. `compaction` and `toolExecution` set how Pi compacts long transcripts and runs a round's tools.
+Settings for the whole harness go in Pi's `settings`, passed to `Harness.open()`. For example, Pi retries a failed model request 3 times by default, and `settings: { retry: { maxRetries: 2, baseDelayMs: 500 } }` changes that. `compaction` and `toolExecution` set how Pi compacts long transcripts and runs a round's tools.
 
 ## Add tools and a system prompt
 
@@ -291,7 +291,8 @@ watch.start(async (call) => {
 });
 
 function render(view: ConversationView) {
-	const live = view.docs["pi.live"] as LiveState;
+	// A session that has never run has no pi.live yet.
+	const live = (view.docs["pi.live"] ?? {}) as LiveState;
 	drawEntries(view.entries);
 	if (live.generation?.message) drawStreaming(live.generation.message);
 	if (live.runFailure) drawFailure(live.runFailure);
