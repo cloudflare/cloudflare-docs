@@ -75,7 +75,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 | AI Security for Apps           | ✘               | ✘                 | ✘                          |
 | Cloudflare Pages               | ✅ [^11]        | ✅ [^11]          | 🚧 [^1]                    |
 | Cloudflare D1                  | ⚫️             | ⚫️               | 🚧 [^40]                   |
-| Containers                     | ⚫️             | 🚧 [^51]          | 🚧 [^1]                    |
+| Containers                     | ⚫️             | ✅ [^51]          | 🚧 [^1]                    |
 | Durable Objects                | ⚫️             | ✅ [^7]           | 🚧 [^1]                    |
 | Email Routing                  | ⚫️             | ⚫️               | ✅                         |
 | Remote MCP Server              | ✅ [^44]        | ✅ [^45]          | 🚧 [^1]                    |
@@ -218,4 +218,4 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 [^50]: Email and webhook notifications for DDoS and WAF events may not fire reliably when Customer Metadata Boundary is set to `eu`. This behavior is intermittent and under investigation. If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism.
 
-[^51]: The `eu` and `us` [jurisdiction constraints](/containers/concepts/placement/#jurisdictional-constraints) control where containers run, but do not yet provide full regional compliance. Container images are stored in and pulled from the global Cloudflare registry (`registry.cloudflare.com`). Regional registries for `eu` and `us` are not yet available.
+[^51]: Only when using the `eu` or `us` [jurisdiction constraint](/containers/concepts/placement/#jurisdictional-constraints) and pulling images from the matching regional registry (`eu.registry.cloudflare.com` or `us.registry.cloudflare.com`).
