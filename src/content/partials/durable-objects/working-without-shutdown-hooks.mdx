@@ -10,7 +10,7 @@ An `immediate` strategy applies the update right away. A `deferred` strategy giv
 
 Design your application to write state incrementally rather than relying only on a shutdown notification.
 
-Use the best-effort [`[shutdown]()`](/durable-objects/api/base/#shutdown) hook for clean shutdown logic. The hook runs before idle eviction and code-update resets, but it is not guaranteed to run.
+Use the best-effort [`onHibernate`](/durable-objects/api/base/#onhibernate) hook for clean shutdown logic. The hook is not guaranteed to run.
 
 Persist important changes during normal request processing rather than deferring them to shutdown. SQLite storage operations such as `sql.exec()` complete synchronously, and key-value storage writes issued without an intervening `await` are automatically coalesced into a single atomic transaction — so writing incrementally does not add meaningful overhead compared to batching writes until shutdown.
 
@@ -18,21 +18,20 @@ For example, persist each event as it arrives rather than buffering events in me
 
 <TypeScriptExample filename="index.ts">
 ```ts
-import { DurableObject, shutdown } from "cloudflare:workers";
+import { DurableObject } from "cloudflare:workers";
+import { onHibernate } from "cloudflare:durable-objects";
 
 export class EventRecorder extends DurableObject<Env> {
 	async recordEvent(eventId: string, payload: string) {
 		await this.ctx.storage.put(`event:${eventId}`, payload);
 	}
 
-	async [shutdown](info) {
+	async [onHibernate](info: DurableObjectHibernationInfo) {
 		// Record shutdown metadata, but do not rely on this write for progress.
-		await this.ctx.storage.put("lastShutdownReason", info.reason);
+		await this.ctx.storage.put("lastHibernationReason", info.reason);
 	}
 }
 ```
 </TypeScriptExample>
 
-This approach ensures that recorded events survive an unexpected shutdown. Refer to [`[shutdown]()`](/durable-objects/api/base/#shutdown) for hook details.
-
-```
+This approach ensures that recorded events survive an unexpected shutdown. Refer to [`onHibernate`](/durable-objects/api/base/#onhibernate) for hook details.

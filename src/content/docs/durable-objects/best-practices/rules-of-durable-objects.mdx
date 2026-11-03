@@ -1433,13 +1433,14 @@ export class ChatRoom extends DurableObject<Env> {
 
 <Render file="working-without-shutdown-hooks" product="durable-objects" />
 
-Use [`[shutdown]()`](/durable-objects/api/base/#shutdown) for a final best-effort checkpoint. Combine it with relaxed count-based or time-based checkpoints during normal requests.
+Use [`onHibernate`](/durable-objects/api/base/#onhibernate) for a final best-effort checkpoint. Combine it with relaxed count-based or time-based checkpoints during normal requests.
 
-The following counter accepts the loss of increments since the previous checkpoint after an unexpected shutdown. It checkpoints every 100 increments and again during clean shutdown:
+The following counter accepts the loss of increments since the previous checkpoint after an unexpected shutdown. It checkpoints every 100 increments and again if the hook runs:
 
 <TypeScriptExample filename="index.ts">
 ```ts
-import { DurableObject, shutdown } from "cloudflare:workers";
+import { DurableObject } from "cloudflare:workers";
+import { onHibernate } from "cloudflare:durable-objects";
 
 export interface Env {
 	COUNTER: DurableObjectNamespace<Counter>;
@@ -1469,10 +1470,10 @@ export class Counter extends DurableObject<Env> {
 		return this.count;
 	}
 
-	async [shutdown](info) {
-		console.log(`Shutting down: ${info.reason}`);
+	async [onHibernate](info: DurableObjectHibernationInfo) {
+		console.log(`Hibernating: ${info.reason}`);
 		this.checkpoint();
-		await this.ctx.storage.put("lastShutdownReason", info.reason);
+		await this.ctx.storage.put("lastHibernationReason", info.reason);
 	}
 
 	private checkpoint() {
