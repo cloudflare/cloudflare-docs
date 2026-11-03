@@ -24,14 +24,13 @@ Once your endpoint is on your own domain, you can put [Cloudflare Access](/ai-se
 
 ## Search several instances from one URL
 
-A namespace can expose its own [public endpoint](/ai-search/configuration/retrieval/public-endpoint/namespace/) with `/search`, `/chat/completions`, and `/mcp` paths that fan out across the instances you choose:
+A namespace can expose its own [public endpoint](/ai-search/configuration/retrieval/public-endpoint/namespace/) with `/search`, `/chat/completions`, and `/mcp` paths that fan out across the instances in its allowlist:
 
 ```bash
 curl https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/search \
   --header "Content-Type: application/json" \
   --data '{
-    "messages": [{ "content": "How do I configure AI Search?", "role": "user" }],
-    "ai_search_options": { "instance_ids": ["docs", "support"] }
+    "messages": [{ "content": "How do I configure AI Search?", "role": "user" }]
   }'
 ```
 
