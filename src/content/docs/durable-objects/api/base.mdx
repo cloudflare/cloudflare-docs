@@ -310,7 +310,7 @@ class MyDurableObject(DurableObject):
 
 Import the `onHibernate` symbol from `cloudflare:durable-objects`. Define the hook with a computed method name, as shown in the example.
 
-- <code>[onHibernate](info)</code>
+- `[onHibernate](info)`
   : <Type text="void" /> | <Type text="Promise<void>" />
   - Use this handler for best-effort clean shutdown logic, such as a final storage checkpoint. The hook is not guaranteed to run. Persist important changes during normal request processing.
   - The runtime reads the handler once after the constructor returns. Adding or replacing the handler later does not change the registered callback.
