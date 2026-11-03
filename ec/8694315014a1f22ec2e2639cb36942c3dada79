@@ -1,0 +1,1244 @@
+src/content/docs/sandbox/commands/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-27
+src/content/docs/sandbox/sdk/configuration/dockerfile.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-178
+bin/bump-openapi-lock.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-458
+src/content/docs/reference-architecture/diagrams/ai/enterprise-ai-vibe-coding-platform.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 57
+src/content/docs/sandbox/sdk/configuration/sandbox-options.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-257
+src/content/docs/ssl/client-certificates/troubleshooting.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16,117-180
+src/content/docs/tunnel/features/locally-managed-tunnels/configuration-file.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15
+src/util/sidebar.astro.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 21
+src/content/docs/containers/guides/migrate-to-durable-object-container-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-36
+src/components/models/ModelCard.astro.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-94
+src/content/docs/ai-gateway/features/auto-router.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-221
+src/content/docs/sandbox/sdk/api/storage.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-215
+src/content/docs/sandbox/sdk/tutorials/ai-code-executor.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-253
+src/util/api.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 4-10,20,27
+worker/og/tests/route.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-102
+src/content/changelog/tunnel/2026-03-19-wrangler-tunnel-commands.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 21
+src/icons/monetization-gateway.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1
+src/content/docs/durable-objects/best-practices/websockets.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 317
+src/content/docs/api-shield/security/graphql-protection/api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 8-9,161
+src/components/agent-setup/CloudflareToolsBanner.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 4-9,57-70
+src/content/docs/browser-run/features/live-view.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 67,92,107,117,170,186
+bin/config-explorer-jsdoc.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-56
+public/icons/agents/vibe/light.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-13
+src/content/docs/api-shield/security/volumetric-abuse-detection.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,27,29,35,37,39,43,47,50,54,77
+src/content/docs/cf/get-started/first-worker.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-224
+src/content/docs/cf/projects/cloudflare-config.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-15
+src/content/docs/sandbox/sdk/api/files.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-252
+src/content/docs/sandbox/sdk/guides/workers-connections.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-88
+src/components/react/sandbox/SandboxCredentials.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-276
+src/content/docs/sandbox/sdk/api/backups.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-232
+src/content/docs/sandbox/sdk/migrate/backups.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-301
+src/content/docs/workers/observability/traces/custom-spans.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,23-26,180-200,203-252,254-259,262-263,266,277-278,282-341,364,366-368,371-373,376-377,450-453,456-461,464-468,476-492,494,496-499,505
+.github/workflows/bump-openapi-schema.yml
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-160
+src/content/docs/email-service/configuration/subdomains.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 27
+src/content/docs/browser-run/cdp/session-management.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 26,39,50,77,120
+.flue/AGENTS.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 123-130,144-154,173
+src/components/cf/AutoconfigDiagram.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 11,14-19,99
+src/content/docs/browser-run/limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 109
+src/content/docs/sandbox/coding-agents/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-96
+src/content/docs/sandbox/sdk/migrate/bucket-mounts.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-246
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/client-version-assignments.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 50
+src/content/docs/browser-run/quick-actions/content-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,44,96
+src/content/docs/containers/configuration/environment-variables.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/content/docs/sandbox/sdk/guides/browser-terminals.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-181
+src/content/docs/sandbox/sdk/migrate/background-processes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-271
+src/content/docs/browser-run/quick-actions/pdf-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,44,101,131,156,172,196
+src/assets/images/reference-architecture/ai-vibe-coding/ai-platform-sandbox.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-410.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 18
+wrangler.jsonc
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,23-27
+openapi.lock.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-5
+.flue/lib/github.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 5,8-9,175-347
+src/content/docs/sandbox/concepts/security.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2-3,6-7,10-14,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63,65,67,71-75
+.flue/agents/dependabot-reviewer.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 90-91,118
+src/components/config-explorer/AnnotatedConfigExplorer.astro.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-217
+src/content/directory/sandbox.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 2,5,12-13
+src/content/docs/agent-setup/github-copilot.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 94,99-107,116
+src/content/docs/sandbox/coding-agents/devin.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-158
+src/content/docs/sandbox/network/call-an-authenticated-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-268
+src/content/docs/sandbox/sdk/api/interpreter.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-228
+.flue/lib/changelog-date-check.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 182-184,192-204,207-208,238
+  s_c4a2528dde84b4::t_d0c62b43a893f4 181
+src/content/docs/images/reference/troubleshooting.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 44
+src/content/docs/sandbox/sdk/migrate/outbound-traffic.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-350
+src/components/react/sandbox/VendorAgentConnections.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-256
+src/components/ui/sidebar/SidebarGroup.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 172-181
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/tunnel-useful-terms.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 49
+src/content/docs/sandbox/files/save-and-restore-a-workspace.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-270
+src/components/models/ModelBadges.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,16,57-63,66-73,82-93,95-112
+src/content/docs/sandbox/sdk/concepts/sessions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-228
+src/content/docs/sandbox/sdk/guides/code-execution.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-274
+src/content/docs/browser-run/how-to/og-images-astro.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 184
+src/content/docs/cf/get-started/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-253
+src/util/og/changelog.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-19
+src/content/docs/api-shield/security/sequence-mitigation/custom-rules.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 12,17,20,28,45,52-53,57-59,62,69-71,73
+src/content/docs/reference-architecture/diagrams/ai/ai-vibe-coding-platform.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 8,59-64,72,74
+src/components/CopyPromptButton.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 2,10,23,41,76
+src/content/docs/workers/configuration/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13-20
+src/content/docs/workers/configuration/routing/custom-domains.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 162-163
+src/icons/cf.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1
+src/content/docs/containers/examples/durable-object-interface.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5
+worker/og/tests/changelog-parity.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-85
+src/content/docs/cache/troubleshooting/investigating-tiered-cache-latency.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-64
+src/content/docs/containers/examples/status-hooks.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14,16-91,93,103,118,123-128
+src/content/docs/stream/manage-video-library/using-webhooks.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 179
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-401.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/sandbox/sdk/concepts/backup-restore.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-49
+src/components/models/ModelFeatures.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,9,30,211,215-227
+src/content/docs/containers/platform/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/content/docs/cf/wrangler/migrate.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-703
+src/components/react/sandbox/BrowserTerminal.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-110
+src/content/docs/queues/event-subscriptions/events-schemas.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 28-31
+src/components/cf/ListTutorials.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 6-9,11-20,23-29,35-40
+src/content/docs/tunnel/configuration/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 29
+src/content/docs/turnstile/troubleshooting/client-side-errors/error-codes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 19-32
+src/components/cf/Feature.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 47
+src/content/docs/sandbox/sdk/bridge/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-319
+src/content/docs/email-service/configuration/suppressions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 3,13,15,27,34-35,38,44-45,50,66-117,124
+src/content/changelog/monetization-gateway/2026-09-30-closed-beta.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-11
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,159,169
+src/content/changelog/browser-run/2026-09-25-crawl-event-subscriptions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-22
+src/content/changelog/api-shield/2026-08-27-jwt-validation-limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-11
+src/content/docs/cloudflare-wan/reference/traffic-steering.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 240,581,585
+src/content/dash-routes/core-manually-defined.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 71-75
+src/content/docs/sandbox/sdk/guides/file-watching.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-513
+src/content/docs/sandbox/sdk/migrate/plan-the-move.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-129
+src/content/docs/cache/troubleshooting/investigating-uncached-responses.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 57-59,100-104
+src/content/changelog/workers/2026-09-25-release-flows-workers-metrics.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-25
+src/content/docs/sandbox/sdk/migrate/api-map.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-251
+src/content/changelog/containers/2026-09-30-durable-object-scheduling-policy.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-54
+src/components/landing/BuildFromScratch.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,10-12,48,70,105-116,122,131-133,154-180
+src/content/partials/cache/cache-reserve-operations.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,17,19,21,23
+src/content/docs/agent-setup/bionic.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 34,74,78-86,95
+src/components/config-explorer/annotated-snippet.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-756
+src/content/changelog/durable-objects/2026-10-01-pending-io-keep-alive.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-29
+src/content/docs/api-shield/security/mtls/configure.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 18,50
+src/content/docs/cache/how-to/cache-keys.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 162-165
+src/components/agent-setup/PlatformCliDetails.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 22-24,47,50-53
+src/content/partials/cloudflare-one/warp/system-requirements/macOS.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5-15,17
+src/content/docs/browser-run/quick-actions/scrape-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,45
+src/content/docs/sandbox/coding-agents/claude-managed-agents.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-85
+src/content/docs/sandbox/sdk/migrate/tunnels.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-358
+src/content/docs/cloudflare-one/traffic-policies/http-policies/package-registry-security.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 250
+src/content/docs/sandbox/sdk/guides/manage-files.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-224
+src/content/changelog/browser-run/2026-09-29-concurrent-session-connections.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-37
+src/content/docs/sandbox/sdk/tutorials/analyze-data-with-ai.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-303
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-403.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13
+src/content/docs/cf/ci.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-221
+bin/config-explorer-jsdoc.mjs
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-40
+src/content/docs/ai-gateway/features/unified-billing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 145-152
+src/content/docs/ai/related-products/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 71-72
+src/content/partials/cloudflare-one/mesh/pages/get-started.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 201-203
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-400.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14,22
+src/content/docs/ruleset-engine/rulesets-api/json-object.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 114-115
+src/content/docs/sandbox/sdk/tutorials/workers-ai-code-interpreter.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-230
+src/content/docs/moq/demo-streams/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-56
+src/util/openapi-schema.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-486
+src/components/config-explorer/AnnotatedConfigExplorer.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-551
+src/content/docs/api-shield/security/sequence-mitigation/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,34,47,62,70,90
+src/content/docs/cf/projects/config-explorer.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-29
+src/content/docs/cloudflare-one/integrations/identity-providers/google-workspace.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 129-151
+src/content/docs/agent-setup/claude-code.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 39,76,91,97-105,113
+src/content/docs/containers/platform/limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 4,19,27-29,33-39,59-69
+src/content/docs/magic-transit/how-to/configure-routes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 362
+src/content/docs/containers/examples/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/content/docs/sandbox/sdk/configuration/transport.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-219
+src/content/docs/sandbox/sdk/concepts/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-33
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-411.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/waf/detections/ai-security-for-apps/unsafe-topics.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 39-46
+src/content/docs/workflows/build/workers-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 363-460
+src/content/docs/api-shield/security/api-discovery.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 3,6,13,17,24,26,28-29,31,36,45,51-53,55,57,68,70,72,74,80-81,84,88-90,92,102
+src/content/partials/cf/beta-note.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-8
+src/util/og/tests/docs.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-128
+src/content/docs/sandbox/coding-agents/cursor.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-248
+src/content/docs/sandbox/get-started/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-160
+src/content/changelog/workers/2026-09-25-custom-span-apis.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-48
+.flue/package.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 17,20,24,28,31
+src/util/openapi-schema.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 4-24,26-30,33,37,41-81,83,85-91,94-95,97-98,100,102-138,140-217,219-262,264-275,277-284,286-307,309-318
+worker/index.preview.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 17,27-28,80-82,93-101,105-106,150,187-188
+  s_c4a2528dde84b4::t_dbe079f8841971 189-190
+worker/og/cards/docs.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-65
+src/content/docs/browser-run/playwright/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 28
+src/content/docs/durable-objects/api/state.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 82,84
+src/content/docs/browser-run/quick-actions/snapshot.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,48,123,164
+worker/worker-configuration.d.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,12-13
+  s_c4a2528dde84b4::t_cc86717ece7047 14-15
+.flue/lib/webhook-classify.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 52-60,144-148,150,154-178,195-196,208
+src/content/changelog/sandbox/2026-07-21-devin-outposts.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15
+src/content/docs/workers/languages/python/packages/flask.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 105
+src/content/docs/workers/platform/known-issues.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 88
+src/content/partials/api-shield/mtls-create-rule.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5,18
+src/content/partials/logs/enable-logpush-job.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 8
+src/content/docs/sandbox/sdk/concepts/sandboxes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-203
+src/content/docs/sandbox/sdk/guides/streaming-output.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-179
+src/content/partials/api-shield/label-methodology.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5-8
+src/content/docs/sandbox/files/save-a-sandbox-automatically.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-219
+src/components/models/ModelCard.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 75,87,118-119,137,141-145
+src/content/docs/api-shield/get-started.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 58,64,68
+src/content/docs/learning-paths/data-center-protection/configure-tunnels-routes/configure-routes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 356
+src/content/docs/argo-smart-routing/argo-for-packets.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 4,11,13
+src/content/docs/fundamentals/api/how-to/create-via-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 111-120,147-148
+src/content/docs/api-shield/security/graphql-protection/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,23,26
+src/content/docs/monetization-gateway/configuration/rules.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-64
+src/content/docs/byoip/concepts/dynamic-advertisement/best-practices.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 49-54
+src/content/docs/cloudflare-challenges/challenge-types/javascript-detections.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14-21,128-144,168
+src/content/docs/workers/wrangler/configuration.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 127-130,162,213-214,362,420-434,649-650,686,1221-1268,1329-1330,1332,1335-1338,1341-1342,1346,1348-1350,1353-1360,1369-1372,1375,1393,1414-1466,1468-1478,1481-1494,1500-1504,1527,1541
+src/components/ui/steps/Steps.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 44
+src/content/docs/api-shield/security/schema-validation/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 34,82,104,112,114,126,132-135,149,154,186,193,225-226,234,236,238-241,243,245,247,249,251
+src/content/docs/cf/agents.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-216
+src/icons/devin.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1
+src/content/docs/tunnel/get-started/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 173,175,177
+src/content/changelog/workflows/2026-09-24-workflow-exports.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-43
+src/content/docs/containers/examples/websocket.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,15-91,94-98,104,110,113-116
+src/content/docs/sandbox/sdk/api/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-85
+src/content/docs/workers-vpc/configuration/vpc-networks/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 141-150
+src/content/docs/workers-vpc/reference/troubleshooting.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15-20
+.flue/lib/comment-spam.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-223
+src/content/compatibility-flags/durable-object-io-tasks-prevent-eviction.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-14
+src/content/docs/browser-run/features/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2-3,6
+src/content/docs/containers/guides/local-dev.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 11,16-17,70-94
+  s_c4a2528dde84b4::t_5b2ee59e470fe9 95
+src/content/docs/sandbox/coding-agents/pi.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-238
+src/content/partials/api-shield/labels-add.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 7,11
+src/content/docs/artifacts/examples/sandbox-sdk-artifacts.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,27
+src/pages/changelog/post/[...slug].astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 17,55
+AGENTS.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 48,53-59
+  s_c4a2528dde84b4::t_7ca98618f7045a 60
+src/content/changelog/sandbox/2026-09-02-cursor-cloud-agents.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15
+src/content/docs/sandbox/get-started/dynamic-workers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-141
+src/content/docs/sandbox/network/clone-a-private-repository.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-206
+src/util/description.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 37-39
+src/content/docs/sandbox/sdk/platform/limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-70
+src/content/docs/sandbox/sdk/migrate/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-101
+src/content/partials/sandbox/sdk-0x-note.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-9
+src/util/markdown.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 18,129-134
+src/content/docs/billing/manage/invoices.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 36-37
+public/icons/agents/devin/light.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1
+src/content/compatibility-flags/webcrypto-modern-algorithms.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-19
+src/util/custom-loaders.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 24-34,36,44,49,54,57-59,147,149,179-181
+src/content/changelog/cloudflare-wan/2026-09-25-unified-routing-managed-rulesets.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-12
+src/content/docs/sandbox/sdk/concepts/containers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-123
+src/content/docs/sandbox/sdk/migrate/code-interpreter.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-521
+src/content/docs/containers/get-started/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 18-19,77,98-101,103,115,176
+src/content/changelog/containers/2026-03-26-outbound-workers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 81
+.flue/lib/changelog-date-check.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 131-132,134
+src/content/docs/ai-gateway/features/machine-payments.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-83
+src/content/docs/sandbox/sdk/migrate/preview-urls.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-323
+src/content/changelog/bots/2026-09-16-jsd-api-results.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-19
+src/content/docs/docs-for-agents/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 58-64
+src/content/docs/ai-gateway/features/rate-limiting.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+.github/labeler.yml
+  s_c4a2528dde84b4::t_f2e855c822a72c 719-723
+src/content/docs/sandbox/reference/files.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-336
+src/content/docs/sandbox/concepts/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2-4,6-9,12-15,18-19,21,23,25-87
+.flue/lib/reviewer-recommendations.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 760,773,779-782
+src/content/docs/api-shield/management-and-monitoring/developer-portal.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 30-31
+src/content/docs/sandbox/sdk/api/sessions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-202
+.flue/lib/draft-stale.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 4,8-9,11-13,15,17-18,25,49-85,102-111,162-164,166-243,245-266,268-312,314,328-333,381-382,384-393,404-406,423-427,429,434,462-463,466-467,491-539
+src/content/docs/cf/projects/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-492
+.flue/lib/dev-review-routes.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,13,49-70
+  s_c4a2528dde84b4::t_69a8f3d1ce23db 71
+src/content/docs/sandbox/sdk/api/file-watching.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-220
+src/content/changelog/containers/2026-09-29-remove-disk-to-memory-ratio.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-36
+src/content/docs/browser-run/how-to/extract-brand-kit.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-440
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-routes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 391
+src/content/docs/sandbox/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2-3,14-15,29,35,37,39,41,45,47,49,51,53,55-63,65-73,77,79,81,83,85-94,96-104,108,112-118,122-124,126-127,131-133,135-136,139-141,143-147,150-151,155-157,159,163-165,167,171-173,175,179-181,183-184,188-220
+src/content/docs/api-shield/security/sequence-mitigation/api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,17,19-29,39-48,50,64,79-81,91-92,107
+src/content/docs/containers/examples/container-backend.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13-19,32,34-37,57-60,62,147-237,242-247,253,264,266-269,271-272,274,294,308-310,318-333
+  s_c4a2528dde84b4::t_71be812af535a7 334-335
+src/content/docs/sandbox/sdk/concepts/terminal.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-97
+src/content/docs/sandbox/sdk/guides/docker-in-docker.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-106
+src/content/docs/agents/examples/slack-agent.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 278
+src/content/docs/containers/configuration/wrangler.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-79
+worker/og/tests/fonts.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-55
+src/content/docs/sandbox/sdk/migrate/other-features.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-616
+src/components/config-explorer/annotated-config-explorer.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-269
+src/content/directory/monetization-gateway.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-14
+src/components/react/sandbox/SandboxLifetime.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-278
+src/content/docs/sandbox/manage/run-code-when-a-sandbox-stops.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-274
+src/content/docs/sandbox/sdk/guides/websocket-connections.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-259
+src/components/models/ModelCatalog.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 329-351
+src/content/docs/durable-objects/platform/pricing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 34
+src/content/docs/sandbox/manage/list-sandboxes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-249
+.flue/wrangler.jsonc
+  s_c4a2528dde84b4::t_f2e855c822a72c 60-64,212-218
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-417.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+worker/og/fonts.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-76
+src/content/docs/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 207-208
+worker/index.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 282-284
+src/content/docs/api-shield/security/authentication-posture.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,17,19,23,33,47
+  s_c4a2528dde84b4::t_38eff4743e0d26 48
+.flue/evals/comment-spam-filter.eval.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-122
+src/content/docs/sandbox/commands/run-a-server-in-the-background.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-271
+src/content/docs/sandbox/reference/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-156
+src/content/docs/r2/api/tokens.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 29
+bin/fetch-openapi.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 5-7,25-31,34,37
+src/content/docs/sandbox/sdk/migrate/commands.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-168
+src/content/docs/sandbox/sdk/tutorials/automated-testing-pipeline.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-242
+src/content/docs/containers/reference/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 4,6
+.flue/lib/comment-spam.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-196
+src/content/docs/sandbox/sdk/guides/execute-commands.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-239
+.flue/cloudflare.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 240
+src/content/docs/sandbox/previews/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-424
+src/content/docs/sandbox/sdk/guides/deploy.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-60
+src/content/docs/sandbox/sdk/guides/git-workflows.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-154
+src/content/partials/workers/wrangler-commands/tunnel.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 184
+src/content/docs/cache/how-to/purge-cache/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 19-20,36-37,40,52
+src/content/docs/sandbox/sdk/concepts/architecture.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-164
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/logs.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 82-91
+src/scripts/copy-prompt.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-21
+public/icons/agents/devin/dark.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1
+.flue/lib/pipeline-entry.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 26-28,37,61,150-163
+  s_c4a2528dde84b4::t_4291d69e568ddf 164-166
+src/content/docs/sandbox/reference/directory-backups.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-337
+src/content/docs/rules/transform/managed-transforms/reference.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 60-61
+src/util/og/index.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-26
+src/content/changelog/access/2026-09-24-mcp-portals-ga.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-21
+src/content/docs/cf/wrangler/reference.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-271
+src/content/docs/containers/guides/migrate-to-durable-object-scheduling-policy.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-226
+src/content/docs/containers/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 24,48,52-176,224-232,257,269-270,282-283
+src/content/directory/cf.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-12
+src/content/partials/load-balancing/monitor-settings-advanced.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16
+src/content/docs/cf/environment-variables.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-48
+src/content/partials/workers/cloudflare-config.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-718
+src/content/docs/ai-gateway/features/dlp/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/content/docs/fundamentals/api/get-started/account-owned-tokens.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 19-22,24,27-29,33
+  s_c4a2528dde84b4::t_e135078b4b2007 34
+src/content/changelog/containers/2026-04-13-sandbox-outbound-workers-tls-auth.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 112
+src/content/docs/cf/get-started/resources.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-178
+src/content/docs/containers/guides/snapshots.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-80
+src/content/docs/monetization-gateway/eligibility.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-30
+src/content/docs/sandbox/sdk/migrate/terminals.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-267
+.flue/bin/replay-dependabot.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-97
+src/content/changelog/workflows/2026-09-27-workflow-ctx-exports.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-37
+src/content/agent-setup/prompt.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,66,80,96-117,131-196,203,206,210
+.flue/prompts/comment-spam-filter.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-46
+src/content/docs/dynamic-workers/usage/egress-control.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 65
+src/content/docs/api-shield/security/sequence-analytics.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 11,50
+src/content/partials/api-shield/rate-limit-user.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5,7,9,11,13,17,19,22,24-25
+src/plugins/satteri/index.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 10,30
+src/content/docs/durable-objects/api/container.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2-5,7,9
+src/content/docs/sandbox/files/mount-an-r2-bucket.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-325
+worker/og/route.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-77
+src/content/docs/realtime/realtimekit/recording-guide/create-record-app-using-sdks.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 67
+src/content/docs/api-shield/management-and-monitoring/endpoint-management/schema-learning.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 49,56
+src/content/docs/containers/configuration/scaling-and-routing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,14
+src/content/docs/r2/buckets/public-buckets.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 134
+src/content/docs/durable-objects/concepts/durable-object-lifecycle.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 50,66-67,69,71,93
+src/plugins/satteri/heading-slugs.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 15,69-71
+src/content/changelog/ai-gateway/2026-09-30-machine-payments.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-31
+src/components/landing/BuildFromScratch.astro.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-41
+src/content/docs/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/provider-guides/hubspot.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 42
+src/pages/[...slug].astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 16-18,32-35,40-52,136-162
+worker/og/registry.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-10
+src/content/docs/sandbox/sdk/migrate/changes-in-1-0.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-57
+src/content/docs/sandbox/coding-agents/opencode.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-221
+worker/og/page.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-48
+src/components/CopyPromptButton.astro.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-42
+src/content/docs/sandbox/sdk/concepts/preview-urls.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-310
+src/content/docs/sandbox/sdk/guides/expose-services.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-405
+src/content/docs/containers/concepts/architecture.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,15,17-52,68,70,74,84,108-110,118,120,130-132,134,136-139,143,145-146,148-150
+src/content/docs/ai-gateway/features/dlp/set-up-dlp.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 11,55-103
+src/util/sidebar.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 13
+src/content/workers-ai-models/glm-5.3.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 10
+src/components/landing/sidebar-data.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 7-8,27,31,70-73,107,214-219
+  s_c4a2528dde84b4::t_aacee7c264b1b8 220
+src/content/docs/sandbox/sdk/configuration/environment-variables.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-386
+src/content/docs/realtime/turn/custom-domains.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-414.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/browser-run/examples.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/content/docs/tunnel/get-started/quick-tunnels/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-99
+.flue/lib/reviewer-recommendations.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 421-423,431-433
+src/content/docs/logs/logpush/transformers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 42-58,309
+src/content/partials/cloudflare-one/tunnel/logs/network-session-logs.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-15
+worker/og/layout.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-346
+src/content/docs/browser-run/features/custom-fonts.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 138,183,200
+src/content/changelog/ai-gateway/2026-09-29-user-insights-task-analysis.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-19
+src/content/docs/sandbox/sdk/concepts/security.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-220
+src/components/config-explorer/annotated-config.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-200
+src/content/docs/containers/configuration/outbound-traffic.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-426
+src/content/docs/workflows/build/sleeping-and-retrying.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 88
+src/content/docs/browser-run/features/guardrails.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 86
+src/components/cf/command-reference.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 14,31,34-36,40,45,47,50
+src/content/changelog/email-service/2026-09-04-email-routing-rules-wrangler.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-31
+worker/index.preview.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1,136-174
+  s_c4a2528dde84b4::t_2b36a71126a48a 175
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-413.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-412.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/cf/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-83
+src/content/docs/magic-transit/reference/traffic-steering.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 174,479,483
+src/content/docs/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1034.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 33-50
+src/content/docs/agent-setup/devin.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-133
+src/content/docs/containers/configuration/scheduling-policy.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-202
+src/content/docs/monetization-gateway/get-started/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-42
+src/content/docs/browser-run/kitesurf.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,40,94,116,123
+src/content/docs/api-shield/management-and-monitoring/endpoint-labels.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16,18,20,28-30,70,72,74,78,84,86,91,103,107,198,233
+src/content/docs/sandbox/sdk/guides/proxy-requests.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-15
+src/content/docs/browser-run/cdp/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 51-135
+src/content/docs/sandbox/files/manage-files.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-297
+src/content/docs/secrets-store/manage-secrets/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,31
+src/content/docs/sandbox/manage/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-19
+src/content/docs/sandbox/sdk/tutorials/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-33
+src/content/docs/fundamentals/manage-members/roles.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 23,28,32,60,109-114,116-124,134-142
+src/content/docs/sandbox/get-started/build-a-coding-agent-runner.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-907
+src/content/docs/sandbox/sdk/configuration/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-71
+src/components/react/sandbox/SandboxSdkVersions.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-280
+src/content/docs/monetization-gateway/configuration/payment-validation.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-85
+src/content/docs/agent-setup/opencode.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 60,94,100-108
+src/content/changelog/waf/2026-09-25-emergency-waf-release.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-81
+src/content/docs/sandbox/network/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-24
+src/content/docs/ai/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 94-95
+src/content/docs/containers/api/container-class.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-828
+.github/CODEOWNERS
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,25,27-30,75,89-95,204-212,291,308-309,320,328-329,447-454,474-481,594-599,1029-1033,1079-1092,1109-1116
+src/content/partials/artifacts/agent-setup.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-8
+worker/og/cards/changelog.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-66
+worker/og/opentype.d.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-12
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-409.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/api-shield/security/vulnerability-scanner.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 207-234,237,248-258,265-275,282-292,326
+src/content/docs/sandbox/sdk/migrate/files.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-195
+src/components/config-explorer/config-examples.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-796
+src/content/changelog/mesh/2026-09-29-mesh-workers-vpc-network-logs.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-48
+src/content/docs/api-shield/security/schema-validation/api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 27-29,39,44,46,55,62-63,65-67,79,82-83,100,107-109,114-123,143,145,147,149-173,177,179,185-203
+src/content/docs/reference-architecture/diagrams/ai/enterprise-ai-agent-workspace.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 18,43,51,78,89
+src/content/changelog/containers/2026-09-30-snapshots.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-47
+src/content/docs/workers/observability/logs/workers-logs.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 25-26
+src/content/partials/containers/dind-network-host-caveat.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 4
+src/components/PageHead.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 231-239
+src/content/docs/ai-gateway/features/guardrails/set-up-guardrail.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 11-12,26-70
+src/content/docs/browser-run/cdp/mcp-clients.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 43,64,85
+src/util/external-link-arrow.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-10
+src/content/docs/durable-objects/reference/durable-objects-migrations.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 539
+src/content/docs/monetization-gateway/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-43
+src/content/docs/sandbox/commands/run-background-processes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-559
+src/content/docs/sandbox/previews/serve-previews-on-their-own-hostnames.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-152
+src/content/docs/realtime/realtimekit/faq.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 10,24-50
+  s_c4a2528dde84b4::t_52c60e39c031b1 51-53
+src/content/docs/sandbox/coding-agents/openai-agents-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-362
+src/content/docs/sandbox/sdk/api/lifecycle.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-150
+src/content/docs/sandbox/sdk/guides/backup-restore.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-372
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-404.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/sandbox/sdk/migrate/replace-the-sandbox-class.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-303
+wrangler.preview.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 10-11,19-21
+src/content/partials/cloudflare-one/warp/system-requirements/windows.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5-7,9-14,16
+src/content/docs/browser-run/quick-actions/json-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 28,58,208,237,356
+src/content/docs/sandbox/get-started/build-an-ai-code-interpreter.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-350
+src/content/docs/sandbox/sdk/api/terminal.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-214
+src/content/docs/workers/testing/vitest-integration/test-apis.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 512-560
+src/content/docs/cloudflare-wan/configuration/how-to/configure-routes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 410
+.flue/orchestrators/comment-spam-workflow.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-159
+.flue/prompts/dependabot-review.md
+  s_c4a2528dde84b4::t_f2e855c822a72c 28,30-36,38,42-63,65,67-69,71,73,75-79,81,83,85-92,94-96,98-99,101-102
+src/content/docs/sandbox/sdk/tutorials/openai-agents.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-259
+worker/og/serve.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-106
+src/assets/images/durable-objects/pending-io-keep-alive.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-48
+src/content/docs/sandbox/coding-agents/codex.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-226
+src/content/docs/workflows/build/local-development.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 63-64,101
+  s_c4a2528dde84b4::t_a21e03ca96c501 102
+.flue/orchestrators/dependabot-review-workflow.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 49-50,207,238-241,271-274,289-291
+src/content/docs/browser-run/quick-actions/links-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,46,178,270
+src/content/changelog/workers/2026-05-18-local-dev-tunnels.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16
+src/content/docs/cloudflare-one/email-security/settings/detection-settings/configure-link-actions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 52
+src/content/docs/learning-paths/warp-overview-course/series/warp-basics-1.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 23
+src/content/warp-releases/macos/beta/2026.8.2028.1.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-29
+src/content/docs/cache/how-to/purge-cache/purge-by-single-file.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 36
+src/components/agent-setup/agents.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 165-198,200-201,203,206,208-209,213-216,225-226
+src/content/changelog/tunnel/2026-10-02-protected-quick-tunnels.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-27
+src/content/docs/monetization-gateway/x402.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-97
+src/content/docs/sandbox/sdk/guides/background-processes.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-297
+src/content/docs/agent-setup/vibe.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-205
+src/util/og/hash.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-10
+src/content/docs/sandbox/reference/s3-mounts.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-277
+src/content/docs/load-balancing/troubleshooting/load-balancing-faq.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 52
+worker/og/tests/changelog.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-295
+src/content/docs/sandbox/sdk/api/commands.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-499
+src/content/docs/sandbox/commands/run-tests-from-a-git-repository.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-210
+src/content/docs/sandbox/commands/run-python-code.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-268
+src/content/docs/artifacts/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16,45-47
+  s_c4a2528dde84b4::t_9987435bb4458b 48
+src/content/docs/agent-setup/codex.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 40,103,109-117
+src/content/catalog-models/unbiased-pareto.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 41,100,155,218,273
+.flue/agents/comment-spam-filter.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-76
+src/content/docs/browser-run/quick-actions/markdown-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,45,100,126
+.flue/lib/draft-stale.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1,4-6,8,10-12,14-34,38-40,48,58,62-104,106-112,115-276,278,281-294,296,299-320,323-332,335-348,350,352,354-360,363-368,371-376,443-466,494-696
+  s_c4a2528dde84b4::t_de119e9d758924 697
+src/content/docs/containers/configuration/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 4
+src/content/docs/ai-gateway/features/guardrails/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 9
+src/content/docs/email-service/concepts/suppressions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 21,23-34,58-59,99
+src/content/docs/sandbox/sdk/bridge/http-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-217
+src/content/docs/containers/guides/execute-commands.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14,155,225,243,265,300,448-472,513
+src/content/docs/workers/runtime-apis/web-crypto.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 553-566
+src/content/docs/realtime/turn/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20
+src/content/docs/browser-run/quick-actions/crawl-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 21,40,53,75,88-99,111,142,194,205,247,264,302,327,363,379,395,412,435,531,558
+src/components/ui/search/Search.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 210-217,276-277,294
+src/content/docs/api-shield/security/bola-vulnerability-detection.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 26,31,40,45,53,60-61,92-96,98,122
+src/content/docs/browser-run/features/session-recording.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 88,101
+src/content/docs/sandbox/sdk/platform/pricing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-32
+src/content/docs/browser-run/features/webmcp.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16-22,29,50,52,56,58-59,66-67,70,72-73,76-83,103-105,111,113,115,131,133,150-159,162-165
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 56
+src/content/docs/tunnel/concepts/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 78,124
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-408.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/ai-gateway/features/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 59-71,203-209
+src/content/docs/reference-architecture/architectures/load-balancing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 381
+.flue/lib/dependabot-review.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 31-40,43-50,56-65,122-208,215,219-230,239,242-266,268-274,277-296,300
+src/content/docs/sandbox/sdk/guides/mount-buckets.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-463
+.flue/lib/dependabot-review.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 4-5,7-8,44-166
+src/scripts/copy-prompt.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-81
+src/content/docs/sandbox/sdk/tutorials/persistent-storage.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-262
+src/content/docs/browser-run/cdp/playwright.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 41
+src/content/docs/ai-gateway/features/dynamic-routing/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 7
+src/content/docs/agent-setup/cursor.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 60,74,79-87,96-98,119
+src/content/docs/sandbox/sdk/guides/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-25
+src/content/warp-releases/windows/beta/2026.8.2028.1.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-30
+src/content/docs/agents/tools/sandbox.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6-8,13,15,17-20,22-24,26-30,34,39-59,61-74,76-87,89-93,95-102,104-114,117-119,123-131,136-147,150,156-159,162-163,169-170,177,185-192,195,197-207,212,214-220,224-226,230-232
+src/components/landing/Sidebar.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 55
+src/content/docs/sandbox/sdk/configuration/wrangler.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-156
+public/__redirects
+  s_c4a2528dde84b4::t_f2e855c822a72c 13-14,19-22,64-66,651-657,670,677,680,727-758,1621-1624,2688,2926-2928,2960-2965
+src/content/docs/sandbox/commands/stream-command-output.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-217
+src/content/changelog/cache/2026-09-28-cache-reserve-purge-behavior.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-37
+src/content/docs/waf/detections/ai-security-for-apps/example-rules.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,15,19-21,24
+src/content/docs/artifacts/get-started/workers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 31-36
+src/content/docs/fundamentals/api/how-to/account-owned-token-template.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 43
+src/content/docs/sandbox/sdk/tutorials/code-review-bot.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-368
+src/content/docs/stream/examples/test-webhooks-locally.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 26,46
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 33,96-98
+  s_c4a2528dde84b4::t_0a45db521abf49 99
+src/layouts/ChangelogLayout.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 55,58-59,69,94,136
+src/content/docs/workers/wrangler/api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 661-662
+src/content/docs/email-service/configuration/email-routing-addresses.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 11,142-174
+  s_c4a2528dde84b4::t_b07b8d0fc5f953 175
+src/content/docs/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 77,106
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-406.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/api-shield/security/sequence-mitigation/manage-sequence-rules.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 27-28,40
+src/components/config-explorer/annotated-config.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-110
+src/content/docs/cache/concepts/revalidation.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 10-11
+src/content/docs/cf/wrangler/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-151
+src/content/docs/sandbox/sdk/api/tunnels.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-374
+src/content/fields/index.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 1678-1685,1689-1690
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 239,580,584
+package.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 8,15,41,43,45,55,57-59,64-65,67,72-73,76-77,91,95-96,98-99,120,127,130,132-133,135,143,152,156,158-159
+src/content/docs/sandbox/commands/open-a-terminal-in-the-browser.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-400
+src/content/docs/containers/api/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-104
+src/content/docs/sandbox/coding-agents/claude-code.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-209
+src/content/docs/sandbox/sdk/get-started.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-218
+src/content/docs/containers/api/durable-object-container.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-653
+src/components/changelog/ChangelogFeed.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 45-47,61,74,91,94,122-123
+src/content/docs/workers/observability/issues/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-157
+src/content/docs/api-shield/plans.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 17-25
+src/content/docs/api-shield/management-and-monitoring/api-routing.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 22,30,44,57
+src/util/og/tests/changelog.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-49
+src/content/docs/sandbox/sdk/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-87
+src/content/docs/sandbox/concepts/lifetime.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-106
+src/content/docs/sandbox/sdk/guides/outbound-traffic.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-313
+src/content/docs/sandbox/sdk/api/ports.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-298
+worker/tsconfig.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 12
+src/components/config-explorer/annotated-snippet.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-955
+src/content/docs/cache/how-to/tiered-cache.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16,24,34-42,56-61,87,90
+src/content/docs/browser-run/cdp/puppeteer.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 41
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-405.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/containers/configuration/workers-connections.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5,11,60,62
+src/content/docs/workers/observability/errors.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 380
+src/content/docs/workers/observability/exporting-opentelemetry-data/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/plugins/satteri/pipeline.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 66,69
+src/content/docs/ssl/edge-certificates/changing-dcv-method/troubleshooting.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 159-221
+src/content/docs/warp-client/get-started/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 29
+src/content/changelog/browser-run/2026-09-28-webmcp-api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-15
+src/content/docs/ruleset-engine/reference/phases-list.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 41,47,60-62
+  s_c4a2528dde84b4::t_9ae65c237d5406 63
+src/content/docs/ai-gateway/features/caching.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5
+src/content/docs/cache/advanced-configuration/cache-reserve.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 55-59,61-63
+src/content/docs/browser-run/features/reuse-sessions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 24-25,54-57,83-85,87-89,94-100,112-116,118-128,130,135,140-154,156-160,163-171,173,175-180,182-186,193-195
+src/content/docs/containers/examples/stateless.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,15-93,99-103,115,117-118,120-121,123
+src/content/docs/workers/configuration/cloudflare-config/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-11
+src/content/docs/workers/observability/issues/investigate.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-84
+src/content/partials/queues/event-subscriptions/browser-run-events.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-118
+src/content/partials/api-shield/set-up-session-identifiers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 7-8,20,26-28
+src/content/docs/containers/examples/cron.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13,21,25-28,48-51,53,59-104,106-109,111,126-140,143-148
+src/content/docs/sandbox/files/back-up-a-directory-to-r2.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-333
+src/content/changelog/email-service/2026-09-25-sending-domain-suppressions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-32
+src/components.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 23,29
+src/content/docs/api-shield/security/jwt-validation/transform-rules.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2,4,11,16,18,20,30,32,47
+src/content/docs/sandbox/sdk/migrate/move-side-by-side.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-284
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-421.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-35
+src/content/docs/pages/how-to/preview-with-cloudflare-tunnel.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 11,13
+src/content/docs/containers/examples/env-vars-and-secrets.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16,84-86
+src/content/docs/durable-objects/reference/durable-object-class-migrations-legacy.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 23
+src/content/partials/cloudflare-one/warp/system-requirements/linux.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5-14,18
+src/content/docs/billing/understand/how-billing-works.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 146,149
+src/util/description.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 4,15
+src/content/docs/email-service/platform/limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 42-48
+src/content/docs/realtime/turn/generate-credentials.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 48,78
+src/content/docs/api-shield/security/jwt-validation/api.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 27,32-38,46-48,58-59,62,64,70-72,270,306,335-336,345-347,350-351,365-366,373,446,456-457,462,467,473,601
+src/content/docs/cloudflare-one/integrations/identity-providers/facebook-login.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 29
+src/content/docs/workers/observability/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 47-50
+src/content/docs/containers/concepts/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 99
+src/components/react/sandbox/PreviewHostname.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-113
+src/content/docs/cache/guides/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-17
+src/content/docs/workers/vite-plugin/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 19
+src/content/docs/tunnel/observability/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 95-104
+src/content/changelog/sandbox/2026-09-30-sandbox-sdk-1-0.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-75
+src/content/docs/cache/guides/invalidate-cache.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-254
+src/content/changelog/cache/2026-09-28-cache-invalidation.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-31
+src/content/docs/containers/faq.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 107-108,110-112,127-129,150,153,155-156,159-162,179-181,185
+.flue/lib/webhook-classify.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 139,142-143,161-270
+  s_c4a2528dde84b4::t_bfcd30c5a689e0 271
+src/content/docs/containers/guides/image-management.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 4,11-16,18-160,191,193,201-205,235,243,276,345,406-419,445,461,463,465-491,493,497
+src/content/docs/sandbox/sdk/platform/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-25
+public/icons/agents/vibe/dark.svg
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-13
+wrangler.preview.test.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 9-10,18-21
+.flue/app.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 34,102-103,218
+src/util/og/docs.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-128
+src/content/changelog/workers/2026-09-28-cloudflare-cli-beta.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-31
+src/content/partials/api-shield/session-identifiers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5,11,13
+src/components/ui/sidebar/SidebarLink.astro
+  s_c4a2528dde84b4::t_f2e855c822a72c 2,13-14,22,35
+worker/og/tests/docs.worker.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-235
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-407.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13
+src/content/docs/dns/zone-setups/troubleshooting/pending-nameservers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 159
+src/content/partials/fundamentals/api-rate-limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5-11
+src/content/docs/workers/local-development/local-dev-tunnels.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 18
+worker/og/tests/layout.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-136
+worker/og/types.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-19
+src/content/glossary/api-shield.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 18
+src/content/docs/ai/related-products/sandbox-sdk.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 2-3
+src/content/docs/workers/observability/issues/automations.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-99
+src/content/docs/monetization-gateway/configuration/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-17
+bin/generate-cf-config-reference.mjs
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-307
+src/components/config-explorer/config-examples.node.test.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-77
+src/content/changelog/workers/2026-09-28-webcrypto-modern-algorithms.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-55
+src/content/docs/browser-run/quick-actions/screenshot-endpoint.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 20,44,125,147,165,182,209,234
+src/content/workers-ai-models/glm-5.3-flash.json
+  s_c4a2528dde84b4::t_f2e855c822a72c 10
+src/content/docs/cache/how-to/purge-cache/purge-everything.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 16-18,41
+src/content/docs/ai-gateway/features/spend-limits.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6
+src/content/docs/sandbox/sdk/guides/preview-urls-custom-domain.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-127
+src/content/partials/api-shield/required-session-identifiers.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 5
+.flue/lib/github.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 3,45,205-227,388,390,447-472,474-477,479,481-495,497-531,533-538
+worker/index.ts
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,98-99
+  s_c4a2528dde84b4::t_e44d77f34a7174 100-101
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/error-415.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 14
+src/content/docs/sandbox/files/index.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-41
+src/content/docs/workers/observability/source-maps.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 44-46
+src/content/docs/containers/configuration/rollouts.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 6,13-16,60,151-154,156,167
+src/content/docs/spectrum/reference/analytics.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 75-76
+src/content/docs/cloudflare-one/insights/analytics/network-sessions.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 13
+src/content/docs/workers/runtime-apis/context.mdx
+  s_c4a2528dde84b4::t_f2e855c822a72c 97
+pnpm-workspace.yaml
+  s_c4a2528dde84b4::t_f2e855c822a72c 9-11
+src/components/react/sandbox/SandboxEnvironments.tsx
+  s_c4a2528dde84b4::t_f2e855c822a72c 1-228
+.flue/pnpm-lock.yaml
+  s_c4a2528dde84b4::t_b43ecd29987f8e 12-13,21-22,28-29,32,35,40-41,44,47,49-50,306-307,311,313-314,319-320,325-326,331-332,337-338,343-344,1688-1689,1926-1927,2400-2401,2512-2513,2517-2518,2522,2970,2974,2976,2978-2979,2981-2983,2990,2993,2996,2999,3002,3005,3130,3133,3140,3199,3202-3203,3207,3251,3253,3436,3446,3625,3632,3811,3817,3850,3857,3862,3871,4311,4525,4530,4623,4625,5081,5094,5099,5104,5107,5124,5143,5145-5149,5151,5154,5157,5160,5162
+pnpm-lock.yaml
+  s_c4a2528dde84b4::t_2eeb5f2a7bb760 25,27-28,33-34,36-37,39-40,53-55,57-58,61,63-64,77-82,90-91,93-94,121,135-136,147-148,150-151,154,156-157,159-160,222-223,243-244,251-253,258-259,261-262,265,267-268,291-292,318-319,330-331,334-337,339-340,396-397,402-407,414-419,426-431,439-445,453-459,467-473,481-487,493-497,504-509,516-521,526-529,534-537,562-563,565-566,571,580-581,586,589-591,810-818,823-824,846-848,893-894,899-906,923-924,929-936,953-954,959-966,983-990,995-996,1013-1020,1025-1026,1031-1032,1065-1067,1077-1079,1514-1519,1546-1547,1549-1550,1577-1582,1595-1600,1611-1615,1626-1630,1641-1645,1658-1663,1676-1681,1694-1699,1712-1717,1730-1735,1748-1753,1766-1771,1784-1789,1804-1810,1825-1831,1846-1852,1867-1873,1888-1894,1909-1915,1930-1936,1951-1957,1966-1969,1980-1984,1997-2002,2015-2020,2033-2038,2200-2203,2332-2336,2617-2618,2654-2655,2658,2662-2663,2669-2670,2675-2676,2679-2680,2685-2686,2692-2693,2696-2697,2702-2703,2709-2710,2723-2724,2727-2737,2934-2935,2980-2982,3027-3028,3033-3034,3074-3075,3078-3079,3172-3185,3192-3194,3448-3449,3499-3502,3722-3724,3858-3859,3883-3885,4095-4098,4156-4157,4358-4360,4540-4542,4546-4547,4799-4804,4807-4808,4849-4850,4915-4916,4934-4937,4985-4987,4992-4994,5070-5071,5081-5082,5142-5143,5147-5148,5403-5406,5454-5462,5546-5548,5652-5653,5746-5747,5792-5794,5966-5967,6216-6217,6221-6227,6231-6233,6244-6245,6249,6331-6333,6366-6367,6408,6410,6419,6423-6424,6426-6427,6444-6446,6450-6452,6456-6458,6462-6464,6468-6470,6474-6476,6480-6483,6485,6491-6497,6501-6503,6507-6510,6518,6525-6540,6545-6548,6564,6568,6578,6585-6586,6617,6624,6627-6628,6637,6642-6643,6647,6649,6652,6869-6880,6883,6885-6886,6895,6922,6942-6950,6963,6967,6969,6972,6974,6976,6983,6990-6991,7004,7007-7010,7019,7022-7025,7034,7037-7040,7049,7052-7055,7064,7067,7070-7073,7112-7117,7133-7137,7439-7442,7465,7469,7503-7507,7518-7522,7533-7537,7544-7546,7553-7555,7562-7564,7571-7573,7580-7582,7589-7591,7598-7600,7607-7609,7616-7618,7625-7627,7638-7642,7653-7657,7668-7672,7683-7687,7698-7702,7713-7717,7728-7732,7743-7747,7758-7762,7773-7777,7784-7786,7793-7795,7802-7804,7879,7881,7940-7941,7953,8027-8028,8118-8122,8232,8237,8417,8437,8450,8452,8455-8459,8468,8470-8473,8480,8482-8483,8489,8491-8492,8494,8498,8500-8502,8510,8512,8514-8517,8527,8530-8532,8538,8540,8552,8554-8555,8566,8572,8678,8783-8784,8797,8799,8801,8807,8809,8811,8823,8841,8850,8857-8858,8864,8924,8947,8970,8974,8976-8978,8980,9013,9015,9017-9018,9108-9115,9132-9137,9408,9466-9467,9765-9766,9780-9782,9787,9846,9963,9991-9992,10134,10303-10304,10348,10350,10541-10542,10668-10672,10675,10876,11053-11054,11215,11218,11228,11231,11233,11241,11244,11246-11259,11293,11363,11383-11384,11435-11436,11441-11445,11518,11528,11530,11532,11538,11540,11542,11544,11546,11606,11973-11986,12083,12114-12147,12239-12240,12369,12465,12467-12470,12505-12509,12650,12658,12665,12667,12669,12672,12683,12686,12689,12692,12722,12727,12887-12910,12921,12927,12930,12933,12936,12938,12969,12999-13000
+src/components/config-explorer/config-reference.generated.ts
+  s_c4a2528dde84b4::t_031068a19bffba 1-2270
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ec8694315014a1f22ec2e2639cb36942c3dada79",
+  "prompts": {},
+  "sessions": {
+    "s_c4a2528dde84b4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0c7ef39dffedgsGM4j2dRhbJO",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

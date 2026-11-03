@@ -1,0 +1,19 @@
+src/content/docs/r2/examples/aws/custom-header.mdx
+  s_b7bd9e4af91b81::t_4ddc20abc3c12b 48-49,52-58,62-63,65-72,75-77,131-132,135-142,146-148,151,153-163
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "92abc825529b902189ec0ea9f4666549ff02523b",
+  "prompts": {},
+  "sessions": {
+    "s_b7bd9e4af91b81": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05b6f2d22ffezON7diXFyz1u3l",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "rdimaio <riccardodimaio11@gmail.com>"
+    }
+  }
+}

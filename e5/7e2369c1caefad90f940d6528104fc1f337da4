@@ -1,0 +1,21 @@
+src/content/docs/agents/harnesses/pi/extensions.mdx
+  s_41e15f96bbbada::t_76c23f97e7d8ed 17
+src/content/docs/agents/harnesses/pi/index.mdx
+  s_41e15f96bbbada::t_191195a24448d6 4,17,24,26-33,36,41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e57e2369c1caefad90f940d6528104fc1f337da4",
+  "prompts": {},
+  "sessions": {
+    "s_41e15f96bbbada": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a0fcca-7a99-73cf-84bb-ccfe6ae39bd3",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

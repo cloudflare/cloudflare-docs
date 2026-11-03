@@ -1,0 +1,19 @@
+src/content/changelog/workers-ai/2026-10-15-phonellm-mini-workers-ai.mdx
+  s_43c3675511cce1::t_cddd82d770aa74 1-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f2d616d25d9fd486b0f7d397e974a7b44650d849",
+  "prompts": {},
+  "sessions": {
+    "s_43c3675511cce1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a92ac83f-9d7d-4e93-b3f4-43d9ca2af209",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}

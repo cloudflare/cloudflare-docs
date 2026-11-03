@@ -1,0 +1,25 @@
+src/content/docs/realtime/realtimekit/ai/agent-participant/events.mdx
+  s_96d98fd0c13142::t_7c1e4429b46b29 70,123
+src/content/docs/realtime/realtimekit/ai/agent-participant/get-started.mdx
+  s_96d98fd0c13142::t_39ba1e5c972494 106
+src/content/docs/realtime/realtimekit/ai/agent-participant/index.mdx
+  s_96d98fd0c13142::t_d93bf2c9e2193c 29,40,46,50-51
+src/content/docs/realtime/realtimekit/ai/index.mdx
+  s_96d98fd0c13142::t_df790575eb823a 19-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0917a1c5c3dd5e536e0a3889e1b4d97fcbbd1bf0",
+  "prompts": {},
+  "sessions": {
+    "s_96d98fd0c13142": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_12f6db7acffeJmdMMkYJ5rhPkC",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}

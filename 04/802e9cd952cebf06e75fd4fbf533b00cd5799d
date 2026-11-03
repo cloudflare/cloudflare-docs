@@ -1,0 +1,56 @@
+src/components.ts
+  s_d7935a36d92519::t_020fb6f32455d4 37
+src/content/data-residency/developer-platform.yaml
+  s_d7935a36d92519::t_1e97541d897acd 1-267
+src/content/data-residency/zero-trust.yaml
+  s_d7935a36d92519::t_7434717f2e5562 1-110
+src/content/docs/data-localization/region-support.mdx
+  s_ae3210e2de3932::t_6519a2f6d81693 20-80
+  s_ae3210e2de3932::t_1c1be9ecb78d65 4,16-19,81-100
+src/content/data-residency/network-services.yaml
+  s_d7935a36d92519::t_e3803946fadb35 1-86
+src/content/data-residency/application-performance.yaml
+  s_d7935a36d92519::t_bc5fb00ade2945 1-172
+src/content/data-residency/platform.yaml
+  s_d7935a36d92519::t_e02b7bdccbe3de 1-52
+src/components/cf/DataResidencyCatalog.astro
+  s_d7935a36d92519::t_adc3a1d8546de7 1-263
+src/schemas/index.ts
+  s_d7935a36d92519::t_69d04a6b193de6 5-6
+src/content/docs/data-localization/index.mdx
+  s_d7935a36d92519::t_f80fb175244760 26-29,36-39,45,47,53,57,59
+  s_ae3210e2de3932::t_2bbc90ba9c6bee 30-35
+src/content.config.ts
+  s_d7935a36d92519::t_c488fb6cd50cdc 11,145-150
+src/content/data-residency/application-security.yaml
+  s_d7935a36d92519::t_1510fab637748e 1-131
+src/schemas/data-residency.ts
+  s_d7935a36d92519::t_ddb3c8b435a511 1-49
+src/content/docs/data-localization/compatibility.mdx
+  s_d7935a36d92519::t_02cd44f23f9e05 2,4,9,12,15,17,19,28,30,32,34-38,40,42,44,46,48
+  s_ae3210e2de3932::t_266faab0ae9a8e 21-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "04802e9cd952cebf06e75fd4fbf533b00cd5799d",
+  "prompts": {},
+  "sessions": {
+    "s_ae3210e2de3932": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e82fea27fffebcQlJqua3j3awe",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    },
+    "s_d7935a36d92519": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec05edb13ffeery0m40jL9ph45",
+        "model": "unknown"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

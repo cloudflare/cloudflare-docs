@@ -1,0 +1,47 @@
+src/content/docs/agents/getting-started/add-to-existing-project.mdx
+  s_41fd4d89757fb4::t_acd357e5c876c6 13,91-94,96,178-180,229-233,235
+src/content/docs/agents/getting-started/learn-the-runtime.mdx
+  s_41fd4d89757fb4::t_7543505a537e95 13,76-77
+src/content/docs/agents/getting-started/quick-start.mdx
+  s_41fd4d89757fb4::t_f764297c96f749 13,52-56,88
+src/content/docs/agents/harnesses/pi/index.mdx
+  s_41fd4d89757fb4::t_b8536398de7483 18,49,51
+src/content/docs/agents/index.mdx
+  s_41fd4d89757fb4::t_a57e3494ca838f 14,38
+src/content/docs/agents/runtime/capabilities/mcp-client-manager.mdx
+  s_41fd4d89757fb4::t_cc2b93fb1bdcd3 11,280-282
+src/content/docs/agents/runtime/capabilities/sessions.mdx
+  s_41fd4d89757fb4::t_8f9b281f83a310 11,15-19
+src/content/docs/agents/runtime/capabilities/streams.mdx
+  s_41fd4d89757fb4::t_0a6fcc266373cf 11,13-17
+src/content/docs/agents/runtime/lifecycle/index.mdx
+  s_41fd4d89757fb4::t_e2221aa8b96213 13,136-138
+src/content/docs/agents/runtime/routing/custom-routing.mdx
+  s_41fd4d89757fb4::t_8a12052fbb3516 11,149-151
+src/content/docs/agents/tools/browser.mdx
+  s_41fd4d89757fb4::t_4aa4dae23970e3 13,32-36
+src/content/partials/agents/durable-object-config.mdx
+  s_41fd4d89757fb4::t_5066a7d58160d0 1-6
+src/content/partials/agents/experimental.mdx
+  s_41fd4d89757fb4::t_375483a47a49c2 1-9
+src/content/partials/agents/pi-install.mdx
+  s_41fd4d89757fb4::t_47da44319f517e 1-12
+src/content/partials/agents/rpc-start.mdx
+  s_41fd4d89757fb4::t_565a6b2b4655e1 1-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e5199de2f5f230c943c312655a183911667dc261",
+  "prompts": {},
+  "sessions": {
+    "s_41fd4d89757fb4": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a187ec-1a2b-7271-992e-6e20a8c1a0a4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

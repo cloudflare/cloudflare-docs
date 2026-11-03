@@ -1,0 +1,21 @@
+src/content/docs/observability/index.mdx
+  s_b2e0c910719b78::t_ddbaa657f19757 34-41
+src/content/docs/observability/pricing/index.mdx
+  s_b2e0c910719b78::t_b25c78b3845b48 29-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2e99f8129f83b7f8a2db0e0770bb867c62882e11",
+  "prompts": {},
+  "sessions": {
+    "s_b2e0c910719b78": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_b2e0c910719b78",
+        "model": "unknown"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

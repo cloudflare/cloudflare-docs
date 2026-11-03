@@ -1,0 +1,31 @@
+src/content/docs/monetization-gateway/get-started/index.mdx
+  s_a64d4d0a2a5189::t_5ca34bd44cbce2 34,36-37,40,42
+src/content/docs/monetization-gateway/index.mdx
+  s_cea2c8f96e25fa::t_84ef19df9fa29b 14,39
+src/content/docs/monetization-gateway/x402.mdx
+  s_cea2c8f96e25fa::t_61dccd33678ce7 13,18,85,95,97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "68c0953d988a87663929a62988ac35341f373f88",
+  "prompts": {},
+  "sessions": {
+    "s_a64d4d0a2a5189": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0e4d5621ffeBNuYtsqoS3j81J",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    },
+    "s_cea2c8f96e25fa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0e4c6432ffejOkl5iVVMaNLeR",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    }
+  }
+}

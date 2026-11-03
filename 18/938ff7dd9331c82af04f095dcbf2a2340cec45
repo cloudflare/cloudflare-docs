@@ -1,0 +1,41 @@
+src/components/agent-setup/PlatformAccessSection.astro
+  s_8045362b510a8c::t_4069c4d451dff1 37,40-42
+src/components/ui/tabs/tabs.client.ts
+  s_8045362b510a8c::t_6fa10fbc52ac00 34,41,67-96,98-100
+src/content/docs/agent-setup/opencode.mdx
+  s_8045362b510a8c::t_d7c0c1e42359d1 3,10,27-30,32,34-36,38,40-42,44,46,48-55,57,59,61-63,65,67,69-110,124,150-158,170
+src/content/docs/agents/model-context-protocol/cloudflare/servers-for-cloudflare/index.mdx
+  s_8045362b510a8c::t_0cc017d71f6af6 13,55
+src/components/agent-setup/AgentComparison.astro
+  s_8045362b510a8c::t_e74754427c4f91 22-23,36,69,212
+src/components/agent-setup/AgentPrimer.astro
+  s_8045362b510a8c::t_6bb91424ca52d7 14-16,24
+src/components/agent-setup/CatalogWithFilter.astro
+  s_8045362b510a8c::t_b1b96b65700f3e 15,17,55,66-68,142,172-177
+src/components/agent-setup/definitions.ts
+  s_8045362b510a8c::t_e4c277e157ad27 6-7,35,37
+src/components/agent-setup/types.ts
+  s_8045362b510a8c::t_1d16bee0f351b6 4,14,23
+src/components/ui/tabs/TabItem.astro
+  s_8045362b510a8c::t_c11e85b4ee8418 13-14,17,28
+src/components/ui/tabs/Tabs.astro
+  s_8045362b510a8c::t_278c79890236eb 17-18,21,24-30
+src/pages/agent-setup/index.astro
+  s_8045362b510a8c::t_ac7c9d7d634e30 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "18938ff7dd9331c82af04f095dcbf2a2340cec45",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

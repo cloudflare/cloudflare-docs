@@ -1,0 +1,82 @@
+src/assets/images/realtime/sfu/cloud-gaming-architecture.svg
+  s_2a6eea9fd6e8c6::t_6f5b3915e5c94b 1
+src/content/docs/realtime/sfu/features/media-transport-adapters/index.mdx
+  s_2a6eea9fd6e8c6::t_c58db1649f9c0a 2-3,6-7,12,14,16,18,20,22-26,29-32,35,37-39,41,43,45
+src/content/docs/realtime/sfu/get-started/index.mdx
+  s_2a6eea9fd6e8c6::t_ace9e430a8d78f 2-3,6,11,13,15,17,19,21-23,25,27,29,31,33,35,37,39,41-44,46,48,50,52-55,57,59,61,63,65,67-95
+src/content/changelog/realtime/2026-08-13-datachannels-reliability-ordering.mdx
+  s_570f071b3b298d::t_9c6a84e4f9a428 11,13,19,25,33,35-37,41-43,45,52-55,57-64,73-76,78-86,95-98,107-108
+src/content/docs/realtime/sfu/platform/index.mdx
+  s_2a6eea9fd6e8c6::t_f8cbdb19521302 2-4,6,11,13,15
+src/content/docs/realtime/sfu/platform/pricing.mdx
+  s_2a6eea9fd6e8c6::t_6bb8936adf6bf6 3-4,6,11,13,15,17,19,21,23,25-29
+src/content/docs/realtime/sfu/examples/video-room.mdx
+  s_2a6eea9fd6e8c6::t_7b8adcf72e49af 1-112
+src/assets/images/realtime/sfu/embedded-architecture.svg
+  s_2a6eea9fd6e8c6::t_6eb0b01e3467f0 1-124
+src/content/docs/realtime/sfu/examples/embedded-devices.mdx
+  s_2a6eea9fd6e8c6::t_fa0269da85f145 1-128
+src/content/changelog/realtime/2026-05-29-websocket-adapter-auto-reconnect.mdx
+  s_570f071b3b298d::t_f8d72ed8a0d17f 9,11,17,21,25,32,39-40,42-43
+src/content/docs/realtime/sfu/examples/ai-audio.mdx
+  s_2a6eea9fd6e8c6::t_e18665c4ced98e 1-112
+src/content/docs/realtime/sfu/examples/index.mdx
+  s_2a6eea9fd6e8c6::t_0fb31b99acb03f 1-66
+src/content/changelog/realtime/2026-06-08-realtimekit-post-meeting-transcription-ga.mdx
+  s_570f071b3b298d::t_aaab382cec5f22 9
+src/content/docs/realtime/sfu/features/simulcast.mdx
+  s_2a6eea9fd6e8c6::t_3a9dea376218be 2,6,11-13,25,27,29,31,33,35,37,46,50-55,59-112,114,116,118
+src/content/release-notes/realtime.yaml
+  s_2a6eea9fd6e8c6::t_426345d890b7aa 16,26,35,44,53
+  s_dff028527e6e65::t_b9f7643c014d1b 9,13-15
+src/content/docs/realtime/sfu/features/media-transport-adapters/websocket-adapter.mdx
+  s_2a6eea9fd6e8c6::t_d7ae3a3a1b239d 3-4,13,15,17,19,21-24,26,28,30,32,34,36,38,40,42,44-49,52,54,56,58,60,62-73,76,78-82,89-91,97,99-104,106-108,114-117,123-125,127,129-131,138-140,147-155,157,159,165-167,173,175,177,181-192,196,198,200,202,204-206,208-210,214,216-225,227,229,231,235,237,241,243,245,247,249,251,253,255,257,259,261
+src/content/docs/realtime/sfu/features/index.mdx
+  s_2a6eea9fd6e8c6::t_9965d2122b3568 2-3,6,11,13,15
+src/content/docs/realtime/realtimekit/index.mdx
+  s_2a6eea9fd6e8c6::t_b488446ae41903 26-28
+src/assets/images/realtime/sfu/video-room-architecture.svg
+  s_2a6eea9fd6e8c6::t_ec443935f56efe 1
+src/content/docs/realtime/sfu/platform/changelog.mdx
+  s_2a6eea9fd6e8c6::t_0f3418cdbab645 4-5,17
+public/realtime/static/realtime-api-2024-05-21.yaml
+  s_dff028527e6e65::t_9864a476d4fb8d 90,102,126-135,137-139,152-178,192,204,219-221,236-257,361,439,478,607,647-649,659,665,707,710,713-722,724,727,744-746,764,796,1024-1026,1029-1031,1040-1042,1045-1047,1061-1065,1072-1075,1256-1258,1261-1264,1268,1271-1277,1283-1285,1296-1298,1310-1312,1319-1346,1375-1381,1401-1407,1414-1416,1428-1430,1436-1440,1445-1449,1454-1457,1463-1468,1471,1540-1549
+src/content/docs/realtime/sfu/examples/cloud-gaming.mdx
+  s_dff028527e6e65::t_3ac8558946bdfd 2-4,11,13,15,17-19,21,23,25,27,29,31-35,37,39,41,43-46,48,50,52-55,57-120
+src/content/docs/realtime/sfu/features/datachannels.mdx
+  s_2a6eea9fd6e8c6::t_c56abf2467ddd3 3-4,6,13,15,18-23,26,28-34,37-42,45-48,51-55,57-61,63,65-69,71,73,75-79,83-90,94-105,109-117,121,124-128,132,134,136,138,142-149,153,156-160,162,164,166,168,172,174,176-178,180,184,188-195,199,203,207-214,218,220,222,224,226-232,234,236,238,240
+src/content/docs/realtime/sfu/get-started/connection-patterns.mdx
+  s_dff028527e6e65::t_578f0207dbf96c 1-308
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "84f0ee19b4d1832abe42021f42604e4a106a28fd",
+  "prompts": {},
+  "sessions": {
+    "s_2a6eea9fd6e8c6": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a285-2b2d-7762-a3ca-ac201ad9a0c9",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    },
+    "s_570f071b3b298d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a287-0216-7762-8d49-60b0eac0b1cb",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    },
+    "s_dff028527e6e65": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a7a5-57f8-7aa1-b29b-ef85449ced5b",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    }
+  }
+}

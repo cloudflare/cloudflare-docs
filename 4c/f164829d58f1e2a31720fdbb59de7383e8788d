@@ -1,0 +1,21 @@
+src/content/docs/bots/additional-configurations/ai-labyrinth.mdx
+  s_fa2fccf0f88d55::t_58fe269f927630 25-30,34-38
+src/content/docs/waf/analytics/security-events.mdx
+  s_fa2fccf0f88d55::t_ef41b8f7d83866 146-147,149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4cf164829d58f1e2a31720fdbb59de7383e8788d",
+  "prompts": {},
+  "sessions": {
+    "s_fa2fccf0f88d55": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f85539ad3ffe8N0vcAu2g4E1yI",
+        "model": "@cf/moonshotai/kimi-k3"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}

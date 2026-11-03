@@ -1,0 +1,51 @@
+src/content/changelog/workers/2025-11-07-automatic-tracing.mdx
+  s_6f194763c246dc::t_0a0a1fc97d875d 24
+src/content/docs/analytics/account-and-zone-analytics/zone-analytics.mdx
+  s_6f194763c246dc::t_6c0d7c446fe019 32
+src/content/docs/analytics/sql-api/datasets.mdx
+  s_6f194763c246dc::t_775371f7680035 76,192
+src/content/docs/analytics/sql-api/errors.mdx
+  s_6f194763c246dc::t_6cdce232112a54 38
+src/content/docs/analytics/sql-api/limits.mdx
+  s_6f194763c246dc::t_c7cbf281cbfdee 24
+src/content/docs/analytics/sql-api/sql-reference/statements.mdx
+  s_6f194763c246dc::t_e328ebf1e3d9ab 58
+src/content/docs/analytics/sql-api/workers-binding.mdx
+  s_6f194763c246dc::t_87ebfb6f3065f8 9,35-41,43,59,62-63
+src/content/docs/fundamentals/user-profiles/change-password-or-email.mdx
+  s_6f194763c246dc::t_9bcf3862966124 31
+src/content/docs/load-balancing/reference/migration-guides/health-monitor-notifications.mdx
+  s_6f194763c246dc::t_cc87b11dad26af 103
+src/content/docs/notifications/get-started/configure-pagerduty.mdx
+  s_6f194763c246dc::t_9d71f4caec0d0d 11,23-24,33-34,41-42,51-52
+src/content/docs/notifications/get-started/configure-webhooks.mdx
+  s_6f194763c246dc::t_ac78d80a068038 11,21-22,33-34,39-40,48-49
+src/content/docs/notifications/get-started/index.mdx
+  s_6f194763c246dc::t_3e093446058ad3 24
+src/content/docs/observability/export/opentelemetry/index.mdx
+  s_6f194763c246dc::t_1c735e15c20c4d 78
+src/content/docs/observability/logs/datasets.mdx
+  s_6f194763c246dc::t_3f59b2f21da7c1 21
+src/content/docs/observability/pricing/index.mdx
+  s_6f194763c246dc::t_d791ecce4718a2 47,81
+src/content/docs/observability/traces/spans.mdx
+  s_6f194763c246dc::t_99e9da1fe0acfd 24-25
+src/content/partials/workers/workers_logs_pricing.mdx
+  s_6f194763c246dc::t_675bda8a1e8e3d 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3a68ab9d52210ac5534453e8db5a21d112dc0cd8",
+  "prompts": {},
+  "sessions": {
+    "s_6f194763c246dc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fb6c4cb5-dd86-4a7b-954e-86ac770030e1",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,59 @@
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-ai.mdx
+  s_d39432e4d01bda::t_899c86856107f9 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-broadcast-message-modal.mdx
+  s_d39432e4d01bda::t_18efd0c33d24a2 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-livestream-toggle.mdx
+  s_d39432e4d01bda::t_e31cb8c8a34b73 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-participants-stage-queue.mdx
+  s_d39432e4d01bda::t_9897812cf017ae 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-pip-toggle.mdx
+  s_d39432e4d01bda::t_97b9e25d7978a5 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-plugin-main.mdx
+  s_d39432e4d01bda::t_9f15940a000bd2 9-12
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-sidebar-ui.mdx
+  s_d39432e4d01bda::t_962b4fe4495bc5 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ai.mdx
+  s_d39432e4d01bda::t_dec374f3ebb923 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-broadcast-message-modal.mdx
+  s_d39432e4d01bda::t_b28101b197a554 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-livestream-toggle.mdx
+  s_d39432e4d01bda::t_17b890c988920d 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-stage-queue.mdx
+  s_d39432e4d01bda::t_8b5f300dd25f3b 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-pip-toggle.mdx
+  s_d39432e4d01bda::t_e2eab13faba5d6 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-plugin-main.mdx
+  s_d39432e4d01bda::t_9d03a9a63a89eb 9-12
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-sidebar-ui.mdx
+  s_d39432e4d01bda::t_6c20308438f979 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkAi.mdx
+  s_d39432e4d01bda::t_f1bc17564c9dd6 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkBroadcastMessageModal.mdx
+  s_d39432e4d01bda::t_f76fc4e26de4fe 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkLivestreamToggle.mdx
+  s_d39432e4d01bda::t_b6999ae22e0610 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkParticipantsStageQueue.mdx
+  s_d39432e4d01bda::t_058ea3354343bc 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkPipToggle.mdx
+  s_d39432e4d01bda::t_abb766f02eb275 8-10
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkPluginMain.mdx
+  s_d39432e4d01bda::t_52938125458f84 9-12
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkSidebarUi.mdx
+  s_d39432e4d01bda::t_f27a5849c65cbf 8-10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "68b2753ad1f64309b46075d362c96713b28fd034",
+  "prompts": {},
+  "sessions": {
+    "s_d39432e4d01bda": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9409ba2e-cdc2-4456-ad81-bcba07a67759",
+        "model": "unknown"
+      },
+      "human_author": "Aman Kumar <amankumar@cloudflare.com>"
+    }
+  }
+}

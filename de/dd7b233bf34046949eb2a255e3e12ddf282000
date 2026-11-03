@@ -1,0 +1,19 @@
+src/content/docs/workers/ci-cd/builds/build-caching.mdx
+  s_9e21336fac67c8::t_16a4c0c1ea183a 25-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dedd7b233bf34046949eb2a255e3e12ddf282000",
+  "prompts": {},
+  "sessions": {
+    "s_9e21336fac67c8": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f7d48640dffexTBu7JVAFICsGA",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

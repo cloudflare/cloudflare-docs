@@ -1,0 +1,27 @@
+src/content/changelog/workers/2026-07-24-durable-object-instance-observability.mdx
+  s_06aec84e422a49::t_4c3708935bc41b 10
+src/content/docs/logs/logpush/pricing.mdx
+  s_06aec84e422a49::t_96f0b7556e3451 70
+src/content/docs/observability/pricing/index.mdx
+  s_06aec84e422a49::t_8ce6daf0304255 35-36,48,75
+src/content/docs/observability/traces/configuration.mdx
+  s_06aec84e422a49::t_3c25d46c038499 48
+src/content/docs/workers/previews/test-and-debug.mdx
+  s_06aec84e422a49::t_5ba01c6f0c282c 130
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "21442c0dd5b6ba370db39a6e72d1834acee6d4de",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

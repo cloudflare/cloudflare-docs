@@ -1,0 +1,21 @@
+src/content/docs/realtime/index.mdx
+  s_af1d4955d8c11f::t_fd87224aa5bdf4 23,35,37-39,49-56,86-87,90
+src/content/docs/realtime/sfu/index.mdx
+  s_af1d4955d8c11f::t_6c2e8cbf7aa2c7 14,18,22,26-73
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c8d886d2bfd41e64c19ab0b81cb7b6d2b4002dd2",
+  "prompts": {},
+  "sessions": {
+    "s_af1d4955d8c11f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a04442-1aa6-7e02-8a59-fec095e87cdf",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+src/content/docs/network-interconnect/locations.mdx
+  s_97136034462d23::t_841145303ceb9c 59,98,100
+  s_97136034462d23::t_26b261d205abb9 13,19-23
+  s_97136034462d23::t_602a2085e18cd9 1-12,14-18,24-26,43-45,129-132
+  s_97136034462d23::t_11591453c8be74 41
+  s_97136034462d23::t_0e824d40c858af 29,33-40
+  s_97136034462d23::t_9c7716cc1de805 27-28,68-72,78-84,105-107,111-115
+  s_97136034462d23::t_0a1f3b0155b30b 31-32
+  s_97136034462d23::t_3f028230c86bd4 48-58,60-67,73-77,85-97,99,101-104,108-110,116-128
+  s_97136034462d23::t_6e2ea77f220877 46
+  s_97136034462d23::t_2709ccc857ecd0 30,42,47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cf3f8fdbced1bfd85146151a014fe73ff6dcef19",
+  "prompts": {},
+  "sessions": {
+    "s_97136034462d23": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05a711fc5ffeWYc6YiVe1fJXiP",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Steve Welham <swelham@cloudflare.com>"
+    }
+  }
+}

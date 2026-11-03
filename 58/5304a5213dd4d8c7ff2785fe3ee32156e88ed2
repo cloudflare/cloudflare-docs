@@ -1,0 +1,32 @@
+src/content/docs/log-explorer/index.mdx
+  s_77671d7e4e7f84::t_4cf1b2213909c0 46
+src/content/changelog/log-explorer/2026-10-07-log-search-in-observability-logs.mdx
+  s_77671d7e4e7f84::t_ed73e88df7e68a 1-15
+src/content/dash-routes/core-manually-defined.json
+  s_77671d7e4e7f84::t_709c4cea708663 81-85
+src/content/docs/log-explorer/manage-datasets.mdx
+  s_77671d7e4e7f84::t_eae677f1e7b32b 85
+  s_77671d7e4e7f84::t_ff671c7f320525 140
+  s_77671d7e4e7f84::t_642255894f7720 61
+src/content/docs/log-explorer/log-search.mdx
+  s_77671d7e4e7f84::t_f7b50aeb98b8ec 42
+  s_77671d7e4e7f84::t_62ce39138e16f0 97
+  s_77671d7e4e7f84::t_8be9b012e1cdef 108
+  s_77671d7e4e7f84::t_6be27d56cf9b80 15-18,23,30,36-38,40-41,44,46
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "585304a5213dd4d8c7ff2785fe3ee32156e88ed2",
+  "prompts": {},
+  "sessions": {
+    "s_77671d7e4e7f84": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "754faea7-2d57-4af5-b661-deb955d82600",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

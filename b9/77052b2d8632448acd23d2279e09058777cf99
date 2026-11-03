@@ -1,0 +1,22 @@
+src/content/docs/workers/ci-cd/builds/git-integration/artifacts-integration.mdx
+  s_ee4f95324732cb::t_9de8a7a4ea2a54 67
+  s_ee4f95324732cb::t_4c583ddad79169 69
+  s_ee4f95324732cb::t_a8a9af58c128ec 56-61
+  s_ee4f95324732cb::t_024da2d13eec23 23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b977052b2d8632448acd23d2279e09058777cf99",
+  "prompts": {},
+  "sessions": {
+    "s_ee4f95324732cb": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f12885451ffe12NYi7X7hJpbqs",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

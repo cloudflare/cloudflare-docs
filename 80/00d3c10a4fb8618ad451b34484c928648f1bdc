@@ -1,0 +1,21 @@
+src/content/docs/analytics/sql-api/workers-binding.mdx
+  s_06aec84e422a49::t_8cdb6f557e9a2c 29
+  s_06aec84e422a49::t_c29f257e2bdaf6 9-10,15,17,21-23,27
+  s_06aec84e422a49::t_67efe1ce29342d 28
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8000d3c10a4fb8618ad451b34484c928648f1bdc",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

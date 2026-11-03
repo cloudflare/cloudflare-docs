@@ -1,0 +1,55 @@
+src/content/docs/cloudflare-one/insights/dex/notifications.mdx
+  s_6f194763c246dc::t_d30591ded99ae5 20
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/monitor-tunnels/notifications.mdx
+  s_6f194763c246dc::t_b4b5314a5f4b6d 18
+src/content/docs/dns/zone-setups/zone-transfers/cloudflare-as-secondary/setup.mdx
+  s_6f194763c246dc::t_9a1a1e68107490 120
+src/content/docs/email-security/migrate-to-email-security.mdx
+  s_6f194763c246dc::t_9404b076f664df 84
+src/content/docs/fundamentals/security/protect-your-origin-server.mdx
+  s_6f194763c246dc::t_d922522795421f 47
+src/content/docs/fundamentals/user-profiles/change-password-or-email.mdx
+  s_6f194763c246dc::t_0780c6050d8f73 31
+src/content/docs/load-balancing/reference/migration-guides/health-monitor-notifications.mdx
+  s_6f194763c246dc::t_559415486f0b70 103
+src/content/docs/notifications/get-started/configure-pagerduty.mdx
+  s_6f194763c246dc::t_167190d05d1d25 8,14,17,19,21,23,25-29,31,33,35,37,39-43,45-47
+src/content/docs/notifications/get-started/configure-webhooks.mdx
+  s_6f194763c246dc::t_8dd3ac6e689699 8,13,15,19,21,23,25-29,31,33,35,37,39-40,44,55,59,67,71,73,77,79,147,159
+src/content/docs/notifications/get-started/index.mdx
+  s_6f194763c246dc::t_43342e17b93daf 3,6,11,16,20,22-24,26,28,30,32-37,40,42,44-48,50,52,54
+src/content/docs/notifications/index.mdx
+  s_6f194763c246dc::t_05c3607d818e2e 2-3,6-7,10-13,16-29,31,33,35,37,39,41,43,45
+src/content/docs/notifications/notification-available.mdx
+  s_6f194763c246dc::t_0090cae9e3910f 2,8,13,141,143
+src/content/docs/notifications/notification-history.mdx
+  s_6f194763c246dc::t_21819e21ddc30c 3,8,11,13,15,28,30-31,35
+src/content/docs/notifications/reference/common-errors.mdx
+  s_6f194763c246dc::t_1d53f4c9b9e5f7 9,12,14,16,18
+src/content/docs/notifications/reference/index.mdx
+  s_6f194763c246dc::t_2a1210f79f9768 10
+src/content/docs/notifications/reference/traffic-alerts.mdx
+  s_6f194763c246dc::t_d2fd628382f326 55,57-59
+src/content/docs/tunnel/observability/index.mdx
+  s_6f194763c246dc::t_000f26b3dc6597 40
+src/content/docs/waf/reference/alerts.mdx
+  s_6f194763c246dc::t_c732a236f9447b 25
+src/content/partials/networking-services/mnm/rules/rule-notifications.mdx
+  s_6f194763c246dc::t_266dff7ad05d7f 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d71ffb9474c6736eacbea3bccf174ca05cf94f86",
+  "prompts": {},
+  "sessions": {
+    "s_6f194763c246dc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fb6c4cb5-dd86-4a7b-954e-86ac770030e1",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

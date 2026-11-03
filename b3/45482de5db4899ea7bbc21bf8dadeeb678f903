@@ -1,0 +1,71 @@
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-ai-transcriptions.mdx
+  s_d39432e4d01bda::t_e186d3367761dc 12
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-chat-composer-view.mdx
+  s_d39432e4d01bda::t_4dfb8e3f54ac63 19
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-grid.mdx
+  s_d39432e4d01bda::t_cb9de73cb9d095 21
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-idle-screen.mdx
+  s_d39432e4d01bda::t_a9bf90485f87cb 18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-message-list-view.mdx
+  s_d39432e4d01bda::t_e474bf5982b4e5 16,18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-paginated-list.mdx
+  s_d39432e4d01bda::t_b260f1084dd7d8 13,15,17-19,22-23
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-setup-screen.mdx
+  s_d39432e4d01bda::t_9e5ee421f20d37 18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-text-composer-view.mdx
+  s_d39432e4d01bda::t_afc8741770f94a 16,20
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-virtualized-participant-list.mdx
+  s_d39432e4d01bda::t_67bf442e547a8f 16
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ai-transcriptions.mdx
+  s_d39432e4d01bda::t_f37df6b8cc3ca6 12
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-composer-view.mdx
+  s_d39432e4d01bda::t_b47f9247062b67 19
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-grid.mdx
+  s_d39432e4d01bda::t_8343bb37759338 21
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-idle-screen.mdx
+  s_d39432e4d01bda::t_1022b247e7499a 18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-message-list-view.mdx
+  s_d39432e4d01bda::t_419ea69fee2b44 16,18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-paginated-list.mdx
+  s_d39432e4d01bda::t_1853620723d5ec 13,15,17-19,22-23
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-setup-screen.mdx
+  s_d39432e4d01bda::t_575cd6a72c346a 18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-text-composer-view.mdx
+  s_d39432e4d01bda::t_3dbb3515b0cb8b 16,20
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-virtualized-participant-list.mdx
+  s_d39432e4d01bda::t_c297a93c4e4411 16
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkAiTranscriptions.mdx
+  s_d39432e4d01bda::t_28819a34eb0fbd 12
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkChatComposerView.mdx
+  s_d39432e4d01bda::t_e76ca7ffebcd50 19
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkGrid.mdx
+  s_d39432e4d01bda::t_8ca8653249b842 21
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkIdleScreen.mdx
+  s_d39432e4d01bda::t_3b6a7c0fb2f642 18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkMessageListView.mdx
+  s_d39432e4d01bda::t_a157fe386a78b9 16,18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkPaginatedList.mdx
+  s_d39432e4d01bda::t_33fbb25cda1a7f 13,15,17-19,22-23
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkSetupScreen.mdx
+  s_d39432e4d01bda::t_ca46acad158e8d 18
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkTextComposerView.mdx
+  s_d39432e4d01bda::t_b05e52d296bb75 16,20
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkVirtualizedParticipantList.mdx
+  s_d39432e4d01bda::t_1aec174908cb83 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b345482de5db4899ea7bbc21bf8dadeeb678f903",
+  "prompts": {},
+  "sessions": {
+    "s_d39432e4d01bda": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9409ba2e-cdc2-4456-ad81-bcba07a67759",
+        "model": "unknown"
+      },
+      "human_author": "Aman Kumar <amankumar@cloudflare.com>"
+    }
+  }
+}

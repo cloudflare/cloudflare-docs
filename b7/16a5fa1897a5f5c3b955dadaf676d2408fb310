@@ -1,0 +1,31 @@
+public/realtime/static/realtime-api-2024-05-21.yaml
+  s_742d50f7d469ca::t_ce9a318e4a8142 182-185,211-213,223-242,245-246,259-260,280-282,1380-1381,1395-1397,1434-1436
+src/content/changelog/realtime/2026-09-29-websocket-adapter-ga.mdx
+  s_742d50f7d469ca::t_2d5896ffe667e6 1-21
+src/content/docs/realtime/index.mdx
+  s_742d50f7d469ca::t_3872f5b6a7bfe4 95-96
+src/content/docs/realtime/sfu/features/media-transport-adapters/index.mdx
+  s_742d50f7d469ca::t_e0cfff2623afa3 21
+src/content/docs/realtime/sfu/features/media-transport-adapters/websocket-adapter.mdx
+  s_742d50f7d469ca::t_c0849bf22b1261 12,14,31-33,79-80,89-96,115-122,138-146,166-172,182-193,203-207,215-218,222,226-234,238,242
+src/content/docs/realtime/sfu/observability/error-codes.mdx
+  s_742d50f7d469ca::t_bd04b5a5cbdb62 70-83,95-101
+src/content/docs/realtime/sfu/platform/limits.mdx
+  s_742d50f7d469ca::t_f50a2963021e7f 48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b716a5fa1897a5f5c3b955dadaf676d2408fb310",
+  "prompts": {},
+  "sessions": {
+    "s_742d50f7d469ca": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ee95-7801-7541-8460-4a7c89fe9050",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Rachel Chen <rchen@cloudflare.com>"
+    }
+  }
+}

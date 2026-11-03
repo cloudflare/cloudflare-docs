@@ -1,0 +1,19 @@
+src/content/docs/hyperdrive/platform/limits.mdx
+  s_11e562d491e73a::t_ce6decccb53dae 17-20,29-33,35,37-39,45-47,56-57,59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "aeaa7fe2e91cdb3ecadc0118d7da062124f632b0",
+  "prompts": {},
+  "sessions": {
+    "s_11e562d491e73a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f73714691ffeLT54wBcAC6TPGr",
+        "model": "gpt-5.5"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

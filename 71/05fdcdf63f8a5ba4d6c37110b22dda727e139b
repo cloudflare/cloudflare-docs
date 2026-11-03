@@ -1,0 +1,19 @@
+.github/CODEOWNERS
+  s_fd87eace6e3361::t_e2b3492a6def1b 142,304
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7105fdcdf63f8a5ba4d6c37110b22dda727e139b",
+  "prompts": {},
+  "sessions": {
+    "s_fd87eace6e3361": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f5e9be1cfffeNpKKWaMfXduvWM",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Steve Welham <swelham@cloudflare.com>"
+    }
+  }
+}

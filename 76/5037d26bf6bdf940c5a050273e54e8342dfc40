@@ -1,0 +1,23 @@
+src/content/docs/artifacts/get-started/workers.mdx
+  s_a44cbdd7be0874::t_c6eaa522830fc3 24
+src/content/docs/workers/ci-cd/builds/git-integration/artifacts-integration.mdx
+  s_a44cbdd7be0874::t_c6eaa522830fc3 23
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_a44cbdd7be0874::t_aa181d5b2d4a72 54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "765037d26bf6bdf940c5a050273e54e8342dfc40",
+  "prompts": {},
+  "sessions": {
+    "s_a44cbdd7be0874": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f36b003eeffeHJbDh4aZuu9EwP",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+src/content/docs/containers/faq.mdx
+  s_06aec84e422a49::t_cf6075955a2e33 34
+src/content/docs/observability/export/index.mdx
+  s_06aec84e422a49::t_858b546dde481c 25
+src/content/docs/observability/logs/index.mdx
+  s_06aec84e422a49::t_b7dc15d956ecb7 26,36
+src/content/docs/observability/pricing/index.mdx
+  s_06aec84e422a49::t_f01917c6d1fe76 70
+src/content/docs/observability/traces/index.mdx
+  s_06aec84e422a49::t_e5b07522672c12 8-9,30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "37b66d7ac2c42a7facc964c757d1c3dc31c9f81b",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

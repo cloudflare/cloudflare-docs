@@ -1,0 +1,19 @@
+.github/workflows/ci.yml
+  s_e48533e1a1b24f::t_74956cadce6602 214-215
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5b1859c9a3b29ff51eb8b42a8b295acdac4a4077",
+  "prompts": {},
+  "sessions": {
+    "s_e48533e1a1b24f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f3d3-7c48-7703-973c-05214ab2f4f8",
+        "model": "unknown"
+      },
+      "human_author": "Yevgen Safronov <sejoker@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+src/content/docs/bots/concepts/bot-tags.mdx
+  s_645f46c336a5cc::t_93348a5a799ce1 41,43,45,47,49-51
+src/content/docs/bots/reference/bot-management-variables.mdx
+  s_645f46c336a5cc::t_56dc782ebb6c8d 16,27
+src/content/docs/cache/how-to/cache-rules/settings.mdx
+  s_645f46c336a5cc::t_f93a346436b40f 36-50
+src/content/fields/index.yaml
+  s_645f46c336a5cc::t_4172ef14b9d51b 611-623
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "36b3fb04683cf9ed05ceb895a8838385628f43db",
+  "prompts": {},
+  "sessions": {
+    "s_645f46c336a5cc": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_febab6e4bffe4Pm4QkpsZeCz9t",
+        "model": "gpt-5.6"
+      },
+      "human_author": "Matt Bullock <mbullock@cloudflare.com>"
+    }
+  }
+}

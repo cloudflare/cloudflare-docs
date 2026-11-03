@@ -1,0 +1,19 @@
+src/content/changelog/cf/2026-10-16-docs-search.mdx
+  s_0c3f61f605b434::t_bfd7a4cb9848cc 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "aa54c286f9e21bb04e95264c71c593be3fc8f93c",
+  "prompts": {},
+  "sessions": {
+    "s_0c3f61f605b434": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1442c-9388-7590-acbd-00beb464b441",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}

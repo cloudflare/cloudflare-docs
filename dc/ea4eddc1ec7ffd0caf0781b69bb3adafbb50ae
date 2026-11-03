@@ -1,0 +1,19 @@
+src/content/docs/data-localization/limitations.mdx
+  s_be0f6832b7379c::t_c53c65fe3c4fad 24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dcea4eddc1ec7ffd0caf0781b69bb3adafbb50ae",
+  "prompts": {},
+  "sessions": {
+    "s_be0f6832b7379c": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f090e3a65ffe50CsrYCfQqO2t0",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

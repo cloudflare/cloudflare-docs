@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/support-lifecycle.mdx
+  s_f7f1c7b6c6f087::t_44d4275fb94bd1 81,83,85-89,163
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6f8a93f6ef4fb44cd785c5be3dbfd08a11f3bff6",
+  "prompts": {},
+  "sessions": {
+    "s_f7f1c7b6c6f087": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f5b8bfedeffe4FM0UZJtTacA8U",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rhett Griggs <rhett@cloudflare.com>"
+    }
+  }
+}

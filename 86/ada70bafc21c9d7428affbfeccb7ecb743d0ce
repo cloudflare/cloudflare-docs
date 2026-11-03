@@ -1,0 +1,19 @@
+src/content/docs/workers/framework-guides/web-apps/react.mdx
+  s_80effd9682baf2::t_9bec6f770381f3 32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "86ada70bafc21c9d7428affbfeccb7ecb743d0ce",
+  "prompts": {},
+  "sessions": {
+    "s_80effd9682baf2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_05bb45deaffewtDlY70jw9oUz8",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

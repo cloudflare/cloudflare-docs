@@ -1,0 +1,19 @@
+src/content/docs/analytics/custom-dashboards.mdx
+  s_06aec84e422a49::t_79e1ff6c1da5d6 158
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "07320f16ebd8c1cf72eae3b20ef6ced4b6b87d6e",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

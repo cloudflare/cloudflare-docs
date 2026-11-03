@@ -1,0 +1,132 @@
+src/content/docs/cf/get-started/resources.mdx
+  s_c188427086e28c::t_046fd40a9eaba0 1-178
+src/content/partials/workers/cloudflare-config.mdx
+  s_c188427086e28c::t_c19c6aaab72c7f 1-716
+src/content/docs/agent-setup/devin.mdx
+  s_c188427086e28c::t_f50cb090a3d012 74,89,93-101,104-107
+src/components.ts
+  s_c188427086e28c::t_ca50b330868855 28
+src/content/docs/workers/build-output/index.mdx
+  s_c188427086e28c::t_a721fa57536a53 1-14
+src/components/landing/Sidebar.astro
+  s_c188427086e28c::t_edfd4d2d81faa6 55
+src/components/config-explorer/annotated-snippet.node.test.ts
+  s_c188427086e28c::t_f3e3da46d260d3 2-756
+  s_c188427086e28c::t_e7176f7e7ea884 1
+src/content/docs/cf/ci.mdx
+  s_c188427086e28c::t_c73705c98a7a0a 1-221
+src/content/docs/cf/wrangler/reference.mdx
+  s_c188427086e28c::t_e1cf38b50e81a6 1-271
+src/components/config-explorer/config-examples.ts
+  s_c188427086e28c::t_9de19a434c5c05 1-796
+src/components/agent-setup/PlatformCliDetails.astro
+  s_c188427086e28c::t_1e4ea7043fbb14 22-24,47,50-53
+src/content/docs/cf/index.mdx
+  s_c188427086e28c::t_067fa6b0413996 1-83
+src/components/ui/sidebar/SidebarLink.astro
+  s_c188427086e28c::t_10774901a90f03 2,13-14,22,35
+src/content/docs/cf/projects/index.mdx
+  s_c188427086e28c::t_cbebe9ce718333 1-492
+bin/config-explorer-jsdoc.node.test.ts
+  s_c188427086e28c::t_c8e085bbec2efd 1-56
+src/content/docs/agent-setup/bionic.mdx
+  s_c188427086e28c::t_78ee5c5de576e4 34,74,78-86,95
+src/components/config-explorer/annotated-config.node.test.ts
+  s_c188427086e28c::t_b854a252002772 2-110
+  s_c188427086e28c::t_bfea7d88571eb8 1
+src/content/changelog/workers/2026-09-28-cloudflare-cli-beta.mdx
+  s_c188427086e28c::t_518c42f7a81459 1-23,25-31
+  s_c188427086e28c::t_c6aff6c4047ae0 24
+src/content/partials/workers/build-output.mdx
+  s_c188427086e28c::t_4c5d4ea58dec45 1-164
+src/content/docs/docs-for-agents/index.mdx
+  s_c188427086e28c::t_917df1a9ba1971 58-64
+src/components/config-explorer/annotated-config.ts
+  s_c188427086e28c::t_d8c52c6fe12277 1-200
+src/content/docs/workers/vite-plugin/index.mdx
+  s_c188427086e28c::t_a5201c58239a67 19
+src/components/config-explorer/AnnotatedConfigExplorer.astro.test.ts
+  s_c188427086e28c::t_03a0e5ef04488b 1-217
+src/content/docs/cf/wrangler/migrate.mdx
+  s_c188427086e28c::t_0304de7561c917 1-703
+src/content/docs/agent-setup/cursor.mdx
+  s_c188427086e28c::t_4ee9b8f1e9af29 60,74,79-87,96-98,119
+src/content/docs/agent-setup/codex.mdx
+  s_c188427086e28c::t_702f80f7b30330 40,103,109-117
+src/icons/cf.svg
+  s_c188427086e28c::t_adf9b88995ef7d 1
+src/content/docs/cf/projects/build-output.mdx
+  s_c188427086e28c::t_27904ee9d22a4f 1-14
+src/components/cf/AutoconfigDiagram.astro
+  s_c188427086e28c::t_70e717481780fa 11,14-19,99
+src/content/docs/agent-setup/github-copilot.mdx
+  s_c188427086e28c::t_f0a6b901bad37d 94,99-107,116
+src/components/config-explorer/config-reference.generated.ts
+  s_c188427086e28c::t_53aec363a8742d 1-2270
+src/content/docs/workers/configuration/cloudflare-config/index.mdx
+  s_c188427086e28c::t_283fb910f6cbf4 1-14
+src/components/config-explorer/annotated-config-explorer.ts
+  s_c188427086e28c::t_9f28e58a60e987 1-269
+src/content/agent-setup/prompt.md
+  s_c188427086e28c::t_3795c4d5b7c109 6,96-117,210
+src/content/partials/cf/beta-note.mdx
+  s_c188427086e28c::t_25c0f10864e8f6 1-8
+src/components/agent-setup/CloudflareToolsBanner.astro
+  s_c188427086e28c::t_fdcfe8776166dd 4-9,57-70
+src/content/docs/cf/projects/config-explorer.mdx
+  s_c188427086e28c::t_994b777c5c095a 1-29
+src/components/landing/BuildFromScratch.astro
+  s_c188427086e28c::t_6943ab7d52363f 9-16,51-54,75-76,111-112,120,129-131,153
+src/components/config-explorer/AnnotatedConfigExplorer.astro
+  s_c188427086e28c::t_3e8c6eb525cfe3 1-551
+bin/generate-cf-config-reference.mjs
+  s_c188427086e28c::t_4cea2c4381bae0 1-307
+src/components/landing/sidebar-data.ts
+  s_c188427086e28c::t_eb3cce71fdd424 7-8,27,31,70-73
+src/content/docs/workers/configuration/index.mdx
+  s_c188427086e28c::t_01f359f5fa3160 13-20
+bin/config-explorer-jsdoc.mjs
+  s_c188427086e28c::t_0495fbdcae7156 1-40
+pnpm-workspace.yaml
+  s_c188427086e28c::t_c8add955f8b64e 9-11
+src/content/docs/cf/get-started/first-worker.mdx
+  s_c188427086e28c::t_bc527b547ec12b 1-224
+src/components/config-explorer/config-examples.node.test.ts
+  s_c188427086e28c::t_4f9ca2c2e846e1 1-77
+src/content/directory/cf.yaml
+  s_c188427086e28c::t_f0b88457bd6ce8 1-12
+src/content/docs/cf/get-started/index.mdx
+  s_c188427086e28c::t_9b0afd31eb2e8b 1-252
+src/content/docs/agent-setup/claude-code.mdx
+  s_c188427086e28c::t_31bd0397f00cf0 39,76,91,97-105,113
+src/components/config-explorer/annotated-snippet.ts
+  s_c188427086e28c::t_0e079a97af7479 1-955
+src/content/docs/cf/agents.mdx
+  s_c188427086e28c::t_e88311880d8ce5 1-216
+pnpm-lock.yaml
+  s_c188427086e28c::t_8dc0535a5c8cfa 53-55,765-767,6664-6667
+src/content/docs/cf/projects/cloudflare-config.mdx
+  s_c188427086e28c::t_af9187cb4f9757 1-15
+src/content/docs/cf/wrangler/index.mdx
+  s_c188427086e28c::t_a93d0559f992f5 1-151
+src/content/docs/agent-setup/opencode.mdx
+  s_c188427086e28c::t_bd05a2471dd386 60,94,100-108
+package.json
+  s_c188427086e28c::t_a88ece49849c5d 8,15,42,44,63
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "898a545ca95a2fb7dc7ffa3c5d3f370635524d48",
+  "prompts": {},
+  "sessions": {
+    "s_c188427086e28c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d2e809bd-820c-47f9-900f-62cd6977b7ec",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": null
+    }
+  }
+}

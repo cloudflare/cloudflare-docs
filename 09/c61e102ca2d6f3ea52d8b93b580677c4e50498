@@ -1,0 +1,21 @@
+src/components/cf/AgentsPlatformDiagram.astro
+  s_b45bc0a16e3c0e::t_51f89f95f10262 398-401
+src/content/docs/agents/index.mdx
+  s_b45bc0a16e3c0e::t_eba42efda8b665 67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "09c61e102ca2d6f3ea52d8b93b580677c4e50498",
+  "prompts": {},
+  "sessions": {
+    "s_b45bc0a16e3c0e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a17d04-2de9-71ed-b093-da9bd401b2be",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

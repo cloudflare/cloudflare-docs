@@ -1,0 +1,19 @@
+src/content/docs/rules/custom-errors/index.mdx
+  s_9f20ba95c945dd::t_8f3c6ad006b58c 103-108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "d31914f054faacde50806d60f79e722b611f1d72",
+  "prompts": {},
+  "sessions": {
+    "s_9f20ba95c945dd": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f7fadced9ffepTkGiHC3IRDsQO",
+        "model": "@cf/moonshotai/kimi-k2.7-code"
+      },
+      "human_author": "Matt Bullock <mbullock@cloudflare.com>"
+    }
+  }
+}

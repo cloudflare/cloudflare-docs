@@ -1,0 +1,21 @@
+src/content/docs/log-explorer/index.mdx
+  s_616da53cb0a27f::t_d4e91858fd7851 43
+  s_616da53cb0a27f::t_bc04bc500aed7c 32-37
+  s_616da53cb0a27f::t_09c9f0afec49ad 30,39-42,44-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0ec45663f1fc43791bfc56726f01f098e3ce0d1d",
+  "prompts": {},
+  "sessions": {
+    "s_616da53cb0a27f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d86b7b96-dbea-4332-9965-c17e2b8a81e7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

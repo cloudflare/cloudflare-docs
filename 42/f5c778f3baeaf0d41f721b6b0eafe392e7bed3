@@ -1,0 +1,19 @@
+src/content/docs/analytics/graphql-api/limits.mdx
+  s_281bd1e0ffb84f::t_4668df78353471 45-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "42f5c778f3baeaf0d41f721b6b0eafe392e7bed3",
+  "prompts": {},
+  "sessions": {
+    "s_281bd1e0ffb84f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fc6f285d1ffeDvN5qqxVplD6BM",
+        "model": "@cf/moonshotai/kimi-k2.6"
+      },
+      "human_author": "Henry Clausen <hclausen@cloudflare.com>"
+    }
+  }
+}

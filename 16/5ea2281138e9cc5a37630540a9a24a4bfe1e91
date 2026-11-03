@@ -1,0 +1,49 @@
+src/content/docs/realtime/realtimekit/concepts/preset.mdx
+  s_14199abc9393ad::t_d32b048331d0b2 32,34,36,40,42-44,77
+src/content/docs/realtime/realtimekit/faq.mdx
+  s_fd40a299e73adf::t_13db2be928547f 12,18-19,22-24,30,60,126,157,160-164,168-173,177-181,185-190,194-198,201,211,215,217,219,223,245,257,277,293,305,319,335,356
+src/content/docs/realtime/realtimekit/quickstart.mdx
+  s_fd40a299e73adf::t_221948470f555a 11,15,19-22,25-56,58,60-61,65,69,71,73-75,82-103,112-115,117,128,130,132-136,140-142,144,146,165
+src/content/docs/realtime/realtimekit/webhooks.mdx
+  s_14199abc9393ad::t_269c1ca714f36c 11,75-77,84-109,129-130
+src/content/docs/realtime/sfu/api/index.mdx
+  s_14199abc9393ad::t_a9188beda9bcda 29-31,35-38
+src/content/docs/realtime/sfu/concepts/architecture.mdx
+  s_14199abc9393ad::t_616b8e1e3d2eab 65-67,71-76
+src/content/docs/realtime/sfu/get-started/index.mdx
+  s_14199abc9393ad::t_4714e082e91838 11,27,31-34,37,39,41,43,45,47,58,67,73
+src/content/docs/realtime/sfu/index.mdx
+  s_14199abc9393ad::t_743f802610efba 14,73-78
+src/content/docs/realtime/turn/generate-credentials.mdx
+  s_14199abc9393ad::t_56bb5f16c8cb40 11,13,17,19-21,28-35,37-44,46-56,141-144
+src/content/partials/realtime/realtimekit/api-token-prompt.mdx
+  s_fd40a299e73adf::t_9593ac7cc3e458 3,7
+src/content/partials/realtime/realtimekit/preset-options.mdx
+  s_14199abc9393ad::t_24035bc07f880d 1-38
+src/content/partials/realtime/sfu/create-app-options.mdx
+  s_14199abc9393ad::t_f6013e9cd3106e 1-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "165ea2281138e9cc5a37630540a9a24a4bfe1e91",
+  "prompts": {},
+  "sessions": {
+    "s_14199abc9393ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a0f9bd-6340-75f1-859e-c365ad02b122",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    },
+    "s_fd40a299e73adf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a0fdb4-cefa-76f3-a839-7d43af18c323",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}

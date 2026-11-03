@@ -1,0 +1,25 @@
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_0f793ce443e5af::t_b4312e75b00866 32
+src/content/docs/agents/harnesses/think/tools.mdx
+  s_0f793ce443e5af::t_b43b41ebad928a 24,184,203-223
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_0f793ce443e5af::t_5752669ed47bdd 323-324,328,330,340-341,370,1151-1160,1171-1172
+src/content/docs/agents/tools/codemode/mcp.mdx
+  s_0f793ce443e5af::t_fcff8dfd1c27ad 139-155,203-204
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "180732abac60ce307e7f5fd92af67f0648282366",
+  "prompts": {},
+  "sessions": {
+    "s_0f793ce443e5af": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f808e-e494-7420-98c6-9e128e7f943c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

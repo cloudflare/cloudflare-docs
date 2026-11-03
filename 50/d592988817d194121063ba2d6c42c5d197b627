@@ -1,0 +1,35 @@
+src/content/docs/realtime/realtimekit/humans/core/error-codes.mdx
+  s_c9eefa02e609ba::t_141c4dcd3b5634 28,156
+src/content/docs/realtime/realtimekit/humans/core/meeting-object-explained.mdx
+  s_c9eefa02e609ba::t_e86aa512d3b4a9 32,86,140,365,423,884,966,978,990,1063,1079,1104,1129,1262,1291,1313,1335,1437,1635
+src/content/docs/realtime/realtimekit/humans/ui-kit/chat-panel.mdx
+  s_c9eefa02e609ba::t_649d1bdd05cfd5 1-219
+src/content/docs/realtime/realtimekit/recording-guide/create-record-app-using-sdks.mdx
+  s_c9eefa02e609ba::t_b16bc197949df6 12
+src/content/docs/realtime/realtimekit/recording-guide/interactive-recording.mdx
+  s_c9eefa02e609ba::t_fe163d37ae4235 32
+src/content/release-notes/realtimekit-android-core.yaml
+  s_c9eefa02e609ba::t_7d7791f4258aea 249
+src/content/release-notes/realtimekit-web-core.yaml
+  s_c9eefa02e609ba::t_f347b3e0bca306 6-23
+src/content/release-notes/realtimekit-web-ui-addons.yaml
+  s_c9eefa02e609ba::t_8722c0a4a1d814 1-28
+src/content/release-notes/realtimekit-web-ui-kit.yaml
+  s_c9eefa02e609ba::t_e8281ee2fe92a6 6-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "50d592988817d194121063ba2d6c42c5d197b627",
+  "prompts": {},
+  "sessions": {
+    "s_c9eefa02e609ba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec5e02743ffei557a5jtzrzhTK",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}

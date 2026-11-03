@@ -1,0 +1,29 @@
+src/content/partials/workers/nodejs-compat-howto.mdx
+  s_3f312cb67d5967::t_1dba97429aba9b 7
+src/content/changelog/workers/2026-08-04-nodejs-compat-default.mdx
+  s_3f312cb67d5967::t_aa67d744478142 13-14,25-28,30-31
+src/content/compatibility-flags/nodejs-compat.mdx
+  s_3f312cb67d5967::t_75bae4af68d7d8 35
+src/content/docs/workers/configuration/compatibility-flags.mdx
+  s_3f312cb67d5967::t_8d296a24895b87 62,64
+src/content/docs/workers/runtime-apis/nodejs/index.mdx
+  s_3f312cb67d5967::t_a1663ef046023d 25,40
+src/content/partials/workers/nodejs_compat.mdx
+  s_3f312cb67d5967::t_b010bdc1b943d9 7,23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2f0374dab308259886ba1d1eb2604f1351267057",
+  "prompts": {},
+  "sessions": {
+    "s_3f312cb67d5967": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019ff2ae-53b0-7183-89e3-db7dccdbbacb",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "MattieTK <matttaylor@cloudflare.com>"
+    }
+  }
+}

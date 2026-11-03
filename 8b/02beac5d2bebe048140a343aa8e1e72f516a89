@@ -1,0 +1,19 @@
+src/content/changelog/workers-ai/2026-10-21-workers-ai-provider-ai-gateway-provider-deprecated.mdx
+  s_9052ae3a3bfc59::t_df293b83bb5c70 13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8b02beac5d2bebe048140a343aa8e1e72f516a89",
+  "prompts": {},
+  "sessions": {
+    "s_9052ae3a3bfc59": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a12ffa-4429-7344-8f32-b55fe04f5889",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

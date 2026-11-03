@@ -1,0 +1,21 @@
+bin/fetch-catalog-models.ts
+  s_fbeaaa7dd26e6b::t_6c60f95f0b4d3d 28-31,193,231,235,238,296-303,306-309
+src/components/models/ModelCard.astro
+  s_fbeaaa7dd26e6b::t_12a271b5927525 18-19,48-55,61,71-82,94,128,130,148,150-157,163,168-179,181-189
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3e21aafc1380921d8cc035a26872dd105156bcb8",
+  "prompts": {},
+  "sessions": {
+    "s_fbeaaa7dd26e6b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f7bf45c09ffe0BctOwjeo7uYVe",
+        "model": "gpt-5.6-luna"
+      },
+      "human_author": "Allan Leinwand <aleinwand@cloudflare.com>"
+    }
+  }
+}

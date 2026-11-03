@@ -1,0 +1,23 @@
+src/content/docs/observability/logs/unsampled-security-datasets/faq.mdx
+  s_616da53cb0a27f::t_c02615bf79f8be 90,97,105
+src/content/docs/observability/logs/unsampled-security-datasets/sql-queries.mdx
+  s_616da53cb0a27f::t_7694e6099b2b13 15
+src/content/docs/reference-architecture/diagrams/content-delivery/distributed-web-performance-architecture.mdx
+  s_616da53cb0a27f::t_66c0e4b421ec55 146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4860554b4511769d8c0cb19301b9b042a1c7d7da",
+  "prompts": {},
+  "sessions": {
+    "s_616da53cb0a27f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d86b7b96-dbea-4332-9965-c17e2b8a81e7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

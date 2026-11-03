@@ -1,0 +1,23 @@
+src/content/changelog/cf/2026-10-14-docs-search.mdx
+  s_a709f07fce52c1::t_df3f57afa7a4c0 1-38
+src/content/directory/cf.yaml
+  s_a709f07fce52c1::t_b40dfddf77d897 7-8
+src/content/docs/cf/agents.mdx
+  s_a709f07fce52c1::t_c5d4c4924c51dd 124-152
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "782998c5f3f76c56697a14da64ef163f09cb74f2",
+  "prompts": {},
+  "sessions": {
+    "s_a709f07fce52c1": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1372b-dc34-74e3-a785-28237256ddda",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}

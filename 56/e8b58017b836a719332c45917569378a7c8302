@@ -1,0 +1,19 @@
+src/content/changelog/ssl/2026-07-21-automatic-origin-key-exchange.mdx
+  s_01a01dd5460b22::t_3e7300304db102 1-26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "56e8b58017b836a719332c45917569378a7c8302",
+  "prompts": {},
+  "sessions": {
+    "s_01a01dd5460b22": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_07ab458fbffeHo2MlehF7qgr5s",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Alex Krivit <akrivit@cloudflare.com>"
+    }
+  }
+}

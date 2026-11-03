@@ -1,0 +1,19 @@
+src/content/changelog/agents/2026-10-04-agents-lifecycle-capabilities.mdx
+  s_7131be7e5a394e::t_a7a580cbececd6 2-3,12,39,41,59,61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2a60b67f759211e0d455e4ef43ee7b54c9426d3d",
+  "prompts": {},
+  "sessions": {
+    "s_7131be7e5a394e": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11212-d70d-71e4-aea3-bae68f8d2bc4",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

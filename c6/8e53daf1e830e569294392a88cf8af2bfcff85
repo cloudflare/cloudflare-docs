@@ -1,0 +1,21 @@
+src/content/docs/workers/previews/index.mdx
+  s_122396f4fb9d94::t_2621450f19d494 42
+src/content/docs/workers/previews/custom-domains.mdx
+  s_122396f4fb9d94::t_2621450f19d494 138-163
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c68e53daf1e830e569294392a88cf8af2bfcff85",
+  "prompts": {},
+  "sessions": {
+    "s_122396f4fb9d94": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f36165fbeffeOKiyQZqlrdy1rc",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

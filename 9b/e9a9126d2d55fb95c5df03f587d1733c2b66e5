@@ -1,0 +1,28 @@
+src/content/docs/analytics/account-and-zone-analytics/zone-analytics.mdx
+  s_06aec84e422a49::t_c36fc53ec47a0b 28,32
+src/content/changelog/analytics/2026-10-02-30-days-analytics-on-every-plan.mdx
+  s_06aec84e422a49::t_40aad88cb21839 11-12
+src/content/docs/analytics/account-and-zone-analytics/account-analytics.mdx
+  s_06aec84e422a49::t_4959ab034230c1 25
+src/content/docs/analytics/types-of-analytics.mdx
+  s_06aec84e422a49::t_8fcc66c3c2b078 19
+  s_06aec84e422a49::t_c4592ca9af94da 39,41
+src/content/docs/analytics/faq/about-analytics.mdx
+  s_06aec84e422a49::t_9fd1789fb25728 56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9be9a9126d2d55fb95c5df03f587d1733c2b66e5",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/webinar.mdx
+  s_fd40a299e73adf::t_58a83d4d6cbde5 45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6ac72c481f44ac6f993e9ec8733e9afd6bcd305a",
+  "prompts": {},
+  "sessions": {
+    "s_fd40a299e73adf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a0fdb4-cefa-76f3-a839-7d43af18c323",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}

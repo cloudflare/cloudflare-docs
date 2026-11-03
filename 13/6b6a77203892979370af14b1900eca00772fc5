@@ -1,0 +1,25 @@
+src/content/docs/logs/faq/general-faq.mdx
+  s_f3d1cb99424c6f::t_ca5d3158d541d7 25
+src/content/docs/logs/logpush/index.mdx
+  s_f3d1cb99424c6f::t_76d35e4cbc23f4 56,58,60
+src/content/docs/logs/logpush/pricing.mdx
+  s_f3d1cb99424c6f::t_29ae881108504a 1-74
+src/content/docs/logs/logpush/transformers.mdx
+  s_f3d1cb99424c6f::t_5d7d575927a54b 17,47-48,88-94,173-182,208-217,239-248,278-287,295-304
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "136b6a77203892979370af14b1900eca00772fc5",
+  "prompts": {},
+  "sessions": {
+    "s_f3d1cb99424c6f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0c6ec78cffeqjnrs3wlxb3FJt",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "sahidya <sahidya@cloudflare.com>"
+    }
+  }
+}

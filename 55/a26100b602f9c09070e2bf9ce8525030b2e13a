@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-10-14-workers-builds-default-tooling.mdx
+  s_c8ddefcd97961a::t_630110abaf8024 2-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "55a26100b602f9c09070e2bf9ce8525030b2e13a",
+  "prompts": {},
+  "sessions": {
+    "s_c8ddefcd97961a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec49fbe3affev5qBKev8WaY8Lb",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

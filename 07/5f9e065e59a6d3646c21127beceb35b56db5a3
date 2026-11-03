@@ -1,0 +1,19 @@
+src/content/docs/observability/logs/unsampled-security-datasets/index.mdx
+  s_f8ba9fe1539e6d::t_d7c33f7d10d300 31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "075f9e065e59a6d3646c21127beceb35b56db5a3",
+  "prompts": {},
+  "sessions": {
+    "s_f8ba9fe1539e6d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "60a34602-4408-4cef-93e4-f8efdd56a93c",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

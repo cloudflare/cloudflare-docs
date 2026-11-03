@@ -1,0 +1,21 @@
+src/content/docs/artifacts/guides/build-and-deploy-on-push.mdx
+  s_6ea6dfb732a905::t_c0870026842842 25-29
+src/content/docs/artifacts/index.mdx
+  s_6ea6dfb732a905::t_9515a4b57538c9 43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8fb4d8cf50562e86ddb633b71765fcb2973ca0e6",
+  "prompts": {},
+  "sessions": {
+    "s_6ea6dfb732a905": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f2b1b15d6ffeYGErGEBs6GqIHH",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

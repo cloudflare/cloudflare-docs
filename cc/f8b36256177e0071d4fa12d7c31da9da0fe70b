@@ -1,0 +1,249 @@
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/device-metrics.mdx
+  s_86f2d3d4880982::t_6b1520c2e1d9be 11-83
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/index.mdx
+  s_86f2d3d4880982::t_9345e70efeb5c6 11,13-23
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/activate-appliance.mdx
+  s_86f2d3d4880982::t_b91beefb3c2588 11,13-14
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/deactivate-appliance.mdx
+  s_86f2d3d4880982::t_7d73bc9d1daf20 12-16
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/edit-basic-info.mdx
+  s_86f2d3d4880982::t_665b750ded575d 11,13-17
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/edit-network-settings.mdx
+  s_86f2d3d4880982::t_954e24e57c0164 11-17
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/edit-sites.mdx
+  s_86f2d3d4880982::t_8f6aae2b6abb49 11-15
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/edit-traffic-steering-settings.mdx
+  s_86f2d3d4880982::t_87a7253e285490 11,13-18
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/heartbeat.mdx
+  s_86f2d3d4880982::t_c67ea65e7bf450 12,14-26
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window.mdx
+  s_86f2d3d4880982::t_ddbb0198ae3e69 12,14-19
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/maintenance/remove-appliances.mdx
+  s_86f2d3d4880982::t_59bdc0c0b96a8b 11-13,15-29
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/index.mdx
+  s_86f2d3d4880982::t_2fb43e3de20893 10-25
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/link-aggregation.mdx
+  s_86f2d3d4880982::t_ceff8c04774e46 11-69
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/nat-subnet.mdx
+  s_86f2d3d4880982::t_73c3e73e99cba1 10-68
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/routed-subnets.mdx
+  s_86f2d3d4880982::t_6bc42a95a54b70 10-60
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/reference.mdx
+  s_86f2d3d4880982::t_725e1bcc5421ef 11-120
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/troubleshooting.mdx
+  s_86f2d3d4880982::t_f54e58ad825470 13-125
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips.mdx
+  s_86f2d3d4880982::t_535b784ecb5cf2 13-95,97-98
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/traceroute.mdx
+  s_86f2d3d4880982::t_77806f3d798ff5 12-75
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/alibaba-cloud.mdx
+  s_86f2d3d4880982::t_19ab06821dd658 11-80
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/aruba-edgeconnect.mdx
+  s_86f2d3d4880982::t_f75ea837337db7 11-380
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/aws.mdx
+  s_86f2d3d4880982::t_8dba8ba2192fce 12-99
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/azure/azure-virtual-wan.mdx
+  s_86f2d3d4880982::t_593b9736759ae9 11-149
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/azure/azure-vpn-gateway.mdx
+  s_86f2d3d4880982::t_18c55f15ff1c11 11-385
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/cisco-meraki-static.mdx
+  s_86f2d3d4880982::t_1e065e564e7c88 11-741
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/fitelnet.mdx
+  s_86f2d3d4880982::t_d091b4940ef48f 11-277
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/fortinet.mdx
+  s_86f2d3d4880982::t_c35f3285ccc145 11-518
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/google.mdx
+  s_86f2d3d4880982::t_02f759a1b613e1 13-104
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/juniper.mdx
+  s_86f2d3d4880982::t_43999f0b16fc68 11-803
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/oracle.mdx
+  s_86f2d3d4880982::t_f3b4cca61a02cc 11-117
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/palo-alto.mdx
+  s_86f2d3d4880982::t_983a038520239f 14-692
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/pfsense.mdx
+  s_86f2d3d4880982::t_c3723fc30f6905 12-236
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/sonicwall.mdx
+  s_86f2d3d4880982::t_54a12ec095ccaf 11-207
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/sophos-firewall.mdx
+  s_86f2d3d4880982::t_8ab26c1e266d8e 11-281
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/strongswan.mdx
+  s_86f2d3d4880982::t_0026451922a2bf 12,14-204
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/ubiquiti.mdx
+  s_86f2d3d4880982::t_e2080318993a41 11-147
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/velocloud.mdx
+  s_86f2d3d4880982::t_23a6054d4beb7f 11,13-298
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/viptela.mdx
+  s_86f2d3d4880982::t_de3af34660e129 12-107
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/yamaha.mdx
+  s_86f2d3d4880982::t_f3a5626f2c898b 11-221
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/get-started.mdx
+  s_86f2d3d4880982::t_b760c2fa5d4ccd 11-85
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/network-interconnect.mdx
+  s_86f2d3d4880982::t_0949eb11335a56 16-22
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/on-ramps.mdx
+  s_86f2d3d4880982::t_8b51c8b945eefb 11,13-21
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/anti-replay-protection.mdx
+  s_86f2d3d4880982::t_c9fad449172e1e 14-54
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/bandwidth-measurement.mdx
+  s_86f2d3d4880982::t_8edcc959946166 11-28
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/device-compatibility.mdx
+  s_86f2d3d4880982::t_debd9ac04555a5 13,15-50
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/gre-ipsec-tunnels.mdx
+  s_86f2d3d4880982::t_5c68ad2236b7f2 15-291
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts.mdx
+  s_86f2d3d4880982::t_dcf139f6f80f4d 11,13-50
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/mtu-mss.mdx
+  s_86f2d3d4880982::t_88e3e57e7caf75 12-90
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering.mdx
+  s_86f2d3d4880982::t_88773162299ae8 14-566
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/reference/tunnel-health-checks.mdx
+  s_86f2d3d4880982::t_4621758de6115c 14-300
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/security.mdx
+  s_86f2d3d4880982::t_ddaba90cc85d13 15,17-19
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/wan-transformation.mdx
+  s_86f2d3d4880982::t_5deb9467ba7e8e 14-87
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-gateway.mdx
+  s_86f2d3d4880982::t_f200e4b0129dcb 14-138
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-one-client.mdx
+  s_86f2d3d4880982::t_dbd1d7ee9607f3 15-111
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/cloudflare-tunnel.mdx
+  s_86f2d3d4880982::t_97ad0887447806 11-87
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/zero-trust/security-services.mdx
+  s_86f2d3d4880982::t_f8bec6aea96687 13-110
+src/content/docs/cloudflare-wan/configuration/appliance/device-metrics.mdx
+  s_86f2d3d4880982::t_b20f6dfe7303e1 11-83
+src/content/docs/cloudflare-wan/configuration/appliance/index.mdx
+  s_86f2d3d4880982::t_66f50b66f502bb 11,13-23
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/activate-appliance.mdx
+  s_86f2d3d4880982::t_445d44e6e8f978 9,11-12
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/deactivate-appliance.mdx
+  s_86f2d3d4880982::t_a7aa920984ebc6 9,11-18
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/edit-basic-info.mdx
+  s_86f2d3d4880982::t_cb6c5077fc5052 9,11-20
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/edit-network-settings.mdx
+  s_86f2d3d4880982::t_4cd67d7821f443 9,11-20
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/edit-sites.mdx
+  s_86f2d3d4880982::t_74099f677fffc3 9,11-17
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/edit-traffic-steering-settings.mdx
+  s_86f2d3d4880982::t_c147282dce6933 9,11-21
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/heartbeat.mdx
+  s_86f2d3d4880982::t_b92482451abf9f 9-28
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/interrupt-service-window.mdx
+  s_86f2d3d4880982::t_b7d2286f766b0e 9,11-22
+src/content/docs/cloudflare-wan/configuration/appliance/maintenance/remove-appliances.mdx
+  s_86f2d3d4880982::t_a88dfbeceb3897 9-35
+src/content/docs/cloudflare-wan/configuration/appliance/network-options/application-based-policies/index.mdx
+  s_86f2d3d4880982::t_eac267f9b58dc8 9-24
+src/content/docs/cloudflare-wan/configuration/appliance/network-options/link-aggregation.mdx
+  s_86f2d3d4880982::t_bf4afae18bc71b 11-69
+src/content/docs/cloudflare-wan/configuration/appliance/network-options/nat-subnet.mdx
+  s_86f2d3d4880982::t_0440d28f3c715a 10-68
+src/content/docs/cloudflare-wan/configuration/appliance/network-options/routed-subnets.mdx
+  s_86f2d3d4880982::t_7e9cf1004e4c83 10-60
+src/content/docs/cloudflare-wan/configuration/appliance/reference.mdx
+  s_86f2d3d4880982::t_5b7990e6bff000 11-120
+src/content/docs/cloudflare-wan/configuration/appliance/troubleshooting.mdx
+  s_86f2d3d4880982::t_845651c043a12f 11-140
+src/content/docs/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips.mdx
+  s_86f2d3d4880982::t_4f9d426482cb4d 13-95,97-98
+src/content/docs/cloudflare-wan/configuration/how-to/traceroute.mdx
+  s_86f2d3d4880982::t_7f1d98e21bb841 13-76
+src/content/docs/cloudflare-wan/configuration/multi-cloud-networking.mdx
+  s_86f2d3d4880982::t_7d0cdbc17ac052 14-262
+src/content/docs/cloudflare-wan/configuration/third-party/alibaba-cloud.mdx
+  s_86f2d3d4880982::t_d105271956fec5 10-79
+src/content/docs/cloudflare-wan/configuration/third-party/aruba-edgeconnect.mdx
+  s_86f2d3d4880982::t_8d6f1767ab26cd 9-378
+src/content/docs/cloudflare-wan/configuration/third-party/aws.mdx
+  s_86f2d3d4880982::t_8277f31932c43d 10-97
+src/content/docs/cloudflare-wan/configuration/third-party/azure/azure-virtual-wan.mdx
+  s_86f2d3d4880982::t_1f187ba5b2fdb9 9-147
+src/content/docs/cloudflare-wan/configuration/third-party/azure/azure-vpn-gateway.mdx
+  s_86f2d3d4880982::t_7203b6fd7d3a6d 9-383
+src/content/docs/cloudflare-wan/configuration/third-party/cisco-meraki-static.mdx
+  s_86f2d3d4880982::t_ff02a72b468087 9-739
+src/content/docs/cloudflare-wan/configuration/third-party/fitelnet.mdx
+  s_86f2d3d4880982::t_2f3d5afae6fe28 10-276
+src/content/docs/cloudflare-wan/configuration/third-party/fortinet.mdx
+  s_86f2d3d4880982::t_3579b12e986d75 9-516
+src/content/docs/cloudflare-wan/configuration/third-party/google.mdx
+  s_86f2d3d4880982::t_42a5e54e7a6208 10-101
+src/content/docs/cloudflare-wan/configuration/third-party/juniper.mdx
+  s_86f2d3d4880982::t_d77d7910732257 11-803
+src/content/docs/cloudflare-wan/configuration/third-party/oracle.mdx
+  s_86f2d3d4880982::t_9956d013fb541d 10-116
+src/content/docs/cloudflare-wan/configuration/third-party/palo-alto.mdx
+  s_86f2d3d4880982::t_fbf09b094eab40 14-692
+src/content/docs/cloudflare-wan/configuration/third-party/pfsense.mdx
+  s_86f2d3d4880982::t_868daa6cf15c70 11-235
+src/content/docs/cloudflare-wan/configuration/third-party/sonicwall.mdx
+  s_86f2d3d4880982::t_0faf13199fbbaa 10-206
+src/content/docs/cloudflare-wan/configuration/third-party/sophos-firewall.mdx
+  s_86f2d3d4880982::t_22bdf816496e5d 10-280
+src/content/docs/cloudflare-wan/configuration/third-party/strongswan.mdx
+  s_86f2d3d4880982::t_c51c492645eace 10,12-202
+src/content/docs/cloudflare-wan/configuration/third-party/ubiquiti.mdx
+  s_86f2d3d4880982::t_21c4f697c88595 9-153
+src/content/docs/cloudflare-wan/configuration/third-party/velocloud.mdx
+  s_86f2d3d4880982::t_9fa6d736c5806c 10,12-297
+src/content/docs/cloudflare-wan/configuration/third-party/viptela.mdx
+  s_86f2d3d4880982::t_ac92b8cff04f0c 10-105
+src/content/docs/cloudflare-wan/configuration/third-party/yamaha.mdx
+  s_86f2d3d4880982::t_6693ed2ffbf441 9-219
+src/content/docs/cloudflare-wan/get-started.mdx
+  s_86f2d3d4880982::t_df9a40788294fe 11-85
+src/content/docs/cloudflare-wan/network-interconnect.mdx
+  s_86f2d3d4880982::t_48243ce5259daa 16-22
+src/content/docs/cloudflare-wan/on-ramps.mdx
+  s_86f2d3d4880982::t_0d9f59d946840e 11,13-23
+src/content/docs/cloudflare-wan/reference/anti-replay-protection.mdx
+  s_86f2d3d4880982::t_308d952ba1b353 13-53
+src/content/docs/cloudflare-wan/reference/bandwidth-measurement.mdx
+  s_86f2d3d4880982::t_431adaeff222b8 11-28
+src/content/docs/cloudflare-wan/reference/device-compatibility.mdx
+  s_86f2d3d4880982::t_a0eadef63708cb 11,13-48
+src/content/docs/cloudflare-wan/reference/gre-ipsec-tunnels.mdx
+  s_86f2d3d4880982::t_c2b116155318a5 14-290
+src/content/docs/cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts.mdx
+  s_86f2d3d4880982::t_b94283159734e6 11,13-50
+src/content/docs/cloudflare-wan/reference/tunnel-health-checks.mdx
+  s_86f2d3d4880982::t_b466cdc2be7879 13-299
+src/content/docs/cloudflare-wan/security.mdx
+  s_86f2d3d4880982::t_4ed2948592d042 15,17-19
+src/content/docs/cloudflare-wan/wan-transformation.mdx
+  s_86f2d3d4880982::t_bf3b57d431244d 14-87
+src/content/docs/cloudflare-wan/zero-trust/cloudflare-gateway.mdx
+  s_86f2d3d4880982::t_e89d7c8309bd6a 12-136
+src/content/docs/cloudflare-wan/zero-trust/cloudflare-one-client.mdx
+  s_86f2d3d4880982::t_ac240cc39141fc 14-110
+src/content/docs/cloudflare-wan/zero-trust/cloudflare-tunnel.mdx
+  s_86f2d3d4880982::t_f7e61d0123ad21 9-85
+src/content/docs/cloudflare-wan/zero-trust/security-services.mdx
+  s_86f2d3d4880982::t_737b19813ffedb 11-108
+src/content/docs/magic-transit/reference/anti-replay-protection.mdx
+  s_86f2d3d4880982::t_592a7e71057283 14-54
+src/content/docs/magic-transit/reference/gre-ipsec-tunnels.mdx
+  s_86f2d3d4880982::t_6ad69c9355caee 15-298
+src/content/docs/magic-transit/reference/how-cloudflare-calculates-tunnel-health-alerts.mdx
+  s_86f2d3d4880982::t_100d9058c8fbea 11,13-50
+src/content/docs/magic-transit/reference/tunnel-health-checks.mdx
+  s_86f2d3d4880982::t_1c8dd050789c9f 15-301
+src/content/docs/multi-cloud-networking/cloud-on-ramps.mdx
+  s_86f2d3d4880982::t_6c258636ed0cef 12,14-260
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ccf8b36256177e0071d4fa12d7c31da9da0fe70b",
+  "prompts": {},
+  "sessions": {
+    "s_86f2d3d4880982": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fdb35e241ffe3zxB0sXuRNGzgW",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

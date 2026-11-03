@@ -1,0 +1,19 @@
+src/content/docs/data-localization/region-support.mdx
+  s_04e1e821477cd2::t_da523caee26d26 18,32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "435cc8b6391981a0899cb1a38671c1b2a6643c3d",
+  "prompts": {},
+  "sessions": {
+    "s_04e1e821477cd2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f13686d05ffeany8jorTcQZNUL",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "cferike <eengstrom@cloudflare.com>"
+    }
+  }
+}

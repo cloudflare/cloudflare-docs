@@ -1,0 +1,21 @@
+src/content/warp-releases/macos/beta/2026.8.2028.1.yaml
+  s_9fb4beb4cc1c85::t_623661bc0f77ea 1-29
+src/content/warp-releases/windows/beta/2026.8.2028.1.yaml
+  s_9fb4beb4cc1c85::t_6a2fbc9562b117 1-30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "db5a91355d99b53af6eac2955f46117ed9d59517",
+  "prompts": {},
+  "sessions": {
+    "s_9fb4beb4cc1c85": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0ed76-9cca-7943-a44f-15dc9360ff9c",
+        "model": "unknown"
+      },
+      "human_author": "Logan Praneis <lpraneis@cloudflare.com>"
+    }
+  }
+}

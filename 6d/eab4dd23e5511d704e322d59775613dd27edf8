@@ -1,0 +1,109 @@
+public/__redirects
+  s_616da53cb0a27f::t_0029608b9c672d 48-58,1506
+src/components/landing/sidebar-data.ts
+  s_616da53cb0a27f::t_599742f1eca9f4 261-264
+src/content/changelog/gateway/2026-04-24-nsl-all-onramps.mdx
+  s_616da53cb0a27f::t_7a88a05ebb45c7 12
+src/content/changelog/log-explorer/2025-06-18-log-explorer-ga.mdx
+  s_616da53cb0a27f::t_d599966480faf2 7,20
+src/content/changelog/log-explorer/2025-07-09-usage-tracking.mdx
+  s_616da53cb0a27f::t_24e06e0d0dea9d 7
+src/content/changelog/log-explorer/2025-09-03-log-headers-and-cookies.mdx
+  s_616da53cb0a27f::t_696f2a6b771741 7,13
+src/content/changelog/log-explorer/2025-09-11-contextual-pivots.mdx
+  s_616da53cb0a27f::t_b04682c279bc05 7
+src/content/changelog/log-explorer/2025-11-11-resize-sql-window.mdx
+  s_616da53cb0a27f::t_757a82a33f2112 11
+src/content/changelog/log-explorer/2025-11-13-new-datasets.mdx
+  s_616da53cb0a27f::t_8d4cb548b9d206 45
+src/content/changelog/log-explorer/2026-02-09-tabs-and-pivots.mdx
+  s_616da53cb0a27f::t_cec525cbe7c69a 16
+src/content/changelog/log-explorer/2026-03-11-ingest-field-selection.mdx
+  s_616da53cb0a27f::t_9ce2400e922480 37
+src/content/changelog/log-explorer/2026-08-26-dataset-deletion.mdx
+  s_616da53cb0a27f::t_e3a1143ee1f31b 9
+src/content/changelog/log-explorer/2026-08-28-dataset-configuration.mdx
+  s_616da53cb0a27f::t_1f4e3a0035eb13 16
+src/content/changelog/log-explorer/2026-10-07-log-search-in-observability-logs.mdx
+  s_616da53cb0a27f::t_3da62ef0fbe816 15
+src/content/changelog/logs/2026-08-20-pqc-key-exchange-visibility.mdx
+  s_616da53cb0a27f::t_0b4809531cb07c 10
+src/content/directory/log-explorer.yaml
+  s_616da53cb0a27f::t_e38084aa69e3af 7
+src/content/docs/analytics/account-and-zone-analytics/app-security-reports.mdx
+  s_616da53cb0a27f::t_8bfabe7788e075 55
+src/content/docs/cloudflare-one/insights/logs/index.mdx
+  s_616da53cb0a27f::t_11556df82d5b24 42
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/cisco-meraki-static.mdx
+  s_616da53cb0a27f::t_4a928826cd0d94 709
+src/content/docs/cloudflare-one/networks/resolvers-and-proxies/proxy-endpoints/index.mdx
+  s_616da53cb0a27f::t_5faf2514a12b31 41
+src/content/docs/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation.mdx
+  s_616da53cb0a27f::t_b7d34a820158de 143
+src/content/docs/cloudflare-wan/configuration/third-party/cisco-meraki-static.mdx
+  s_616da53cb0a27f::t_463fd5dd3eb8d2 707
+src/content/docs/data-localization/compatibility.mdx
+  s_616da53cb0a27f::t_c2dca8ce20aa7c 150
+src/content/docs/fundamentals/reference/cloudflare-ray-id.mdx
+  s_616da53cb0a27f::t_5dc92810270112 37,39
+src/content/docs/learning-paths/surge-readiness/performance/logs.mdx
+  s_616da53cb0a27f::t_5e82c74a6f3530 30
+src/content/docs/logs/R2-log-retrieval.mdx
+  s_616da53cb0a27f::t_3204948722565a 18
+src/content/docs/logs/index.mdx
+  s_616da53cb0a27f::t_4790cc7871f5d8 52
+src/content/docs/observability/index.mdx
+  s_616da53cb0a27f::t_034725cbc7234c 63
+src/content/docs/observability/logs/datasets.mdx
+  s_616da53cb0a27f::t_77e6386bca06c1 13,26-52,69
+src/content/docs/observability/logs/unsampled-security-datasets/api.mdx
+  s_616da53cb0a27f::t_cd9f20b0fef669 3,6,17,21
+src/content/docs/observability/logs/unsampled-security-datasets/example-queries.mdx
+  s_616da53cb0a27f::t_568a7c8f8dba68 11
+src/content/docs/observability/logs/unsampled-security-datasets/faq.mdx
+  s_616da53cb0a27f::t_00abf217564b28 5,14-15,18,26,30,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,74,76,80,82
+src/content/docs/observability/logs/unsampled-security-datasets/index.mdx
+  s_616da53cb0a27f::t_b9f9bf1f599f8a 2,5-6,18,20,27,46-47,54-55,58
+src/content/docs/observability/logs/unsampled-security-datasets/log-search.mdx
+  s_616da53cb0a27f::t_2db4d4542d0810 13,16,19,30,32,40,44,101,105,108
+src/content/docs/observability/logs/unsampled-security-datasets/manage-datasets.mdx
+  s_616da53cb0a27f::t_c7f6d476d3a43b 6,13,16,21,67,79,89
+src/content/docs/observability/logs/unsampled-security-datasets/pricing.mdx
+  s_616da53cb0a27f::t_3addb6ce7c9ae5 6,11,17,21,25,28,33,71
+src/content/docs/observability/logs/unsampled-security-datasets/sql-queries.mdx
+  s_616da53cb0a27f::t_af7ec24c6e3164 6,13,15,31,46
+src/content/docs/observability/pricing/index.mdx
+  s_616da53cb0a27f::t_09f24904dcd2dd 81
+src/content/docs/reference-architecture/diagrams/content-delivery/distributed-web-performance-architecture.mdx
+  s_616da53cb0a27f::t_a411a4eab81629 146
+src/content/docs/rules/trace-request/index.mdx
+  s_616da53cb0a27f::t_31379515b6f8ff 33
+src/content/docs/ssl/post-quantum-cryptography/pqc-cloudflare-products.mdx
+  s_616da53cb0a27f::t_f789433f300130 43
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/index.mdx
+  s_616da53cb0a27f::t_05b9e504007e07 18,20
+src/content/docs/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/index.mdx
+  s_616da53cb0a27f::t_1713a17c91b1bc 49,51
+src/content/docs/waf/analytics/security-analytics.mdx
+  s_616da53cb0a27f::t_c195bbf9fd6bce 182,217
+src/content/docs/waf/detections/attack-signature-detection/analyze-attack-signatures.mdx
+  s_616da53cb0a27f::t_052f0319762664 64
+src/content/partials/billing/usage-based-products.mdx
+  s_616da53cb0a27f::t_72a12e94851c5c 17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6deab4dd23e5511d704e322d59775613dd27edf8",
+  "prompts": {},
+  "sessions": {
+    "s_616da53cb0a27f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d86b7b96-dbea-4332-9965-c17e2b8a81e7",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

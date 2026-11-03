@@ -1,0 +1,21 @@
+src/content/docs/analytics/analytics-integrations/index.mdx
+  s_06aec84e422a49::t_d5c45728262798 5
+src/content/docs/analytics/sql-api/index.mdx
+  s_06aec84e422a49::t_ecf7db3743caa1 6-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "02cfc301daee9206dba2637c17e58950a8a41e8a",
+  "prompts": {},
+  "sessions": {
+    "s_06aec84e422a49": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2076c777-9603-4e66-bea6-cb8c534bf9c2",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

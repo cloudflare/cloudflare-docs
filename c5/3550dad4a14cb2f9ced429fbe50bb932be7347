@@ -1,0 +1,23 @@
+src/content/docs/fundamentals/reference/cloudflare-ray-id.mdx
+  s_ee96e2ef87332a::t_2b9ad5f0aeb027 35,37
+src/content/docs/support/troubleshooting/http-status-codes/4xx-client-error/index.mdx
+  s_ee96e2ef87332a::t_beef07fcf23f5a 16,18
+src/content/docs/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/index.mdx
+  s_ee96e2ef87332a::t_27722c258ef369 47,49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c53550dad4a14cb2f9ced429fbe50bb932be7347",
+  "prompts": {},
+  "sessions": {
+    "s_ee96e2ef87332a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b664ef6-65b9-4fd8-8bd5-3c06f8c19a69",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

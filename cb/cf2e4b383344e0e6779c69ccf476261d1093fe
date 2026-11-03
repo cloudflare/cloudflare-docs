@@ -1,0 +1,120 @@
+src/content/docs/agents/getting-started/add-to-existing-project.mdx
+  s_8f467c684acac7::t_9599d0a2bebdef 2-3,13,18,20,24,36,38,40,42,44-51,53,55,57,59,61-63,65-66,68-72,74,76-78,80,82,84-85,87,89-92,94-98,100,102,104,106-108,110,112,114,116,118,120,125-126,128-129,131-136,140,142,144,146,150-165,167-170,176,178,180,185-201,206,208,210,212,214,216,218-220
+public/__redirects
+  s_8f467c684acac7::t_4d701f2adcf676 222-233,292,301,304,309,318,331
+src/content/docs/agents/lifecycle/job-queue.mdx
+  s_8f467c684acac7::t_c2396d3ca0a479 1-126
+src/content/docs/agents/getting-started/index.mdx
+  s_05f3f07321373b::t_fa807f35abc31a 3,15,22,26-28,32-40
+src/content/changelog/agents/2026-08-04-agent-tracing.mdx
+  s_8f467c684acac7::t_8fe0b142e7ab15 67
+src/content/changelog/agents/2026-05-13-agents-sdk-v0.12.4.mdx
+  s_8f467c684acac7::t_0564c21f8df5c5 128
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_8f467c684acac7::t_584564c06ef314 17,418,559
+src/content/agent-setup/tracing.md
+  s_8f467c684acac7::t_3c50ac9eddb497 170
+src/content/docs/agents/index.mdx
+  s_8f467c684acac7::t_add6dd5450220e 3,14,17,19,21-46,50-55,57,61,63-66,68
+src/content/changelog/agents/2025-03-18-npm-i-agents.mdx
+  s_8f467c684acac7::t_23b1566d6895a5 129
+src/content/docs/agents/platform/cross-domain-authentication.mdx
+  s_8f467c684acac7::t_49a34854160ab2 6
+src/content/docs/agent-memory/get-started.mdx
+  s_8f467c684acac7::t_5587ee01fb3dbc 21,106
+src/content/docs/agents/harnesses/think/recovery.mdx
+  s_8f467c684acac7::t_c18361064eb908 48,196,238,241
+src/content/docs/agents/agent-class/websockets.mdx
+  s_8f467c684acac7::t_46015a573a9be6 575
+src/content/docs/agents/tools/agent-skills.mdx
+  s_8f467c684acac7::t_fe333ee3dd35b3 6
+src/content/docs/agents/capabilities/index.mdx
+  s_8f467c684acac7::t_0afad3f7df376b 1-344
+src/content/docs/agents/agent-class/index.mdx
+  s_8f467c684acac7::t_85cb6af316c70b 15,17,19-50,59,88,135-137,140-141,245-247,252
+src/content/docs/agents/models/index.mdx
+  s_8f467c684acac7::t_df9c550998225a 8
+src/content/docs/agents/agent-class/communication-channels/chat/client-sdk.mdx
+  s_8f467c684acac7::t_9f4c18e1f45eb2 676
+src/content/docs/agents/platform/index.mdx
+  s_8f467c684acac7::t_99a1f195a4dc07 4,6
+src/content/docs/agents/tools/index.mdx
+  s_8f467c684acac7::t_82f655cc339ed9 5
+src/content/docs/agents/agent-class/get-current-agent.mdx
+  s_8f467c684acac7::t_debbce304c55ee 6,287
+src/content/docs/agents/harnesses/index.mdx
+  s_8f467c684acac7::t_e8026d24ce3569 15,19,21-23,25,29,31,33,63-65,69-71,77
+src/content/docs/agents/agent-class/routing.mdx
+  s_8f467c684acac7::t_98e0ae9d668799 546,799,916,928
+src/content/changelog/agents/2026-06-02-agents-sdk-v0.14.0.mdx
+  s_8f467c684acac7::t_caee51d4a54266 163
+src/content/changelog/agents/2026-03-02-agents-sdk-v0.7.0.mdx
+  s_8f467c684acac7::t_64be49a5f15121 75
+src/content/docs/agents/lifecycle/build-a-capability.mdx
+  s_05f3f07321373b::t_fe3421bd552948 1-32,36,38-206
+  s_8f467c684acac7::t_c72cb6dbf39550 33-35,37
+src/content/docs/agents/lifecycle/get-current-agent.mdx
+  s_8f467c684acac7::t_47c671145be417 1-76
+src/content/docs/agents/platform/observability/tracing.mdx
+  s_8f467c684acac7::t_768785fa6e8156 44,81,91,112,146,270,276
+src/content/docs/agents/platform/configuration.mdx
+  s_8f467c684acac7::t_a1df03a0fc9f86 6
+src/content/docs/agents/harnesses/pi/extensions.mdx
+  s_8f467c684acac7::t_94b9ade7e6f5c5 137
+src/content/docs/agents/platform/observability/diagnostics-channels.mdx
+  s_8f467c684acac7::t_55b636cfebde19 302,308
+src/content/docs/agents/platform/observability/index.mdx
+  s_8f467c684acac7::t_20888a630ae0ef 5
+src/components/cf/AgentsPlatformDiagram.astro
+  s_8f467c684acac7::t_b568b6cde5f2c3 31-36,97,99-101,107,109,112-113,138
+src/content/docs/agents/harnesses/think/getting-started.mdx
+  s_8f467c684acac7::t_911732d4d9e6cf 256,347
+src/content/docs/agents/agent-class/get-started.mdx
+  s_8f467c684acac7::t_e718453cc0326d 1-242
+src/content/docs/agents/model-context-protocol/index.mdx
+  s_8f467c684acac7::t_93ea95dd337398 8
+src/content/docs/agents/agent-class/internals.mdx
+  s_8f467c684acac7::t_8236bac73ce804 3,13,17,19-26,91,93,117,119,121,123,125,129,133,135,151,192-194,215-217,232-234,271,349,358-359,363,416,421-429,460,476
+src/content/docs/agents/model-context-protocol/apis/agent-api.mdx
+  s_8f467c684acac7::t_45010540fcdd1c 208,210
+src/content/docs/agents/concepts/what-are-agents.mdx
+  s_8f467c684acac7::t_55d5f996311ee0 82,84-88,99-101
+src/content/docs/agents/examples/index.mdx
+  s_8f467c684acac7::t_700f3f2f14d172 5
+src/content/docs/agents/harnesses/think/index.mdx
+  s_8f467c684acac7::t_70453c480dabfb 150,377,396
+src/content/docs/agents/harnesses/think/tools.mdx
+  s_8f467c684acac7::t_30064f99a92116 23
+src/content/docs/agents/getting-started/quick-start.mdx
+  s_8f467c684acac7::t_b0bfda00f45575 6,12-13,18,20,22,24-25,27,29,31,33-37,39,41-43,45,47,49,51,53,55-69,71,73,75,77,79,81-104,106,108-113,118,129,131-135,137-140,143,145,147,149-151,153,155,157-160,162-164,166,168-170,172,174,176,178,180,183-197,199,201-206,211-217,220,223,225,227-230
+src/content/docs/agents/lifecycle/index.mdx
+  s_8f467c684acac7::t_abddfa017b842e 1-213
+src/content/docs/agents/agent-class/add-to-existing-project.mdx
+  s_8f467c684acac7::t_fd2fb4b1837e0a 1-349
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_8f467c684acac7::t_502c2594a98f27 27-28,91,121,156
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cbcf2e4b383344e0e6779c69ccf476261d1093fe",
+  "prompts": {},
+  "sessions": {
+    "s_05f3f07321373b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "4de9f694-8b45-45a6-8df3-776e716faafd",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    },
+    "s_8f467c684acac7": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a10741-569f-7029-8bc9-b2bb4625a3ab",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

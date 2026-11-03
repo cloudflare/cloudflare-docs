@@ -1,0 +1,36 @@
+src/content/directory/cf.yaml
+  s_087c7ce1ebf930::t_393f782bd98691 2-12
+  s_087c7ce1ebf930::t_a6b2eaeccb8ac3 1
+src/content/docs/workers/vite-plugin/index.mdx
+  s_087c7ce1ebf930::t_393f782bd98691 19
+src/content/docs/workers/configuration/index.mdx
+  s_087c7ce1ebf930::t_393f782bd98691 13-20
+src/content/docs/cf/commands.mdx
+  s_087c7ce1ebf930::t_b62cfae2decc62 1-111
+src/content/docs/cf/get-started.mdx
+  s_087c7ce1ebf930::t_8c5ad2b67a7cdb 1-77
+src/content/docs/cf/index.mdx
+  s_087c7ce1ebf930::t_dbbcc25b7a3b6a 1-50
+src/content/docs/cf/workers.mdx
+  s_087c7ce1ebf930::t_37a53d3f927f62 1-87
+src/content/docs/workers/build-output/index.mdx
+  s_087c7ce1ebf930::t_6f45032eaecf45 1-95
+src/content/docs/workers/configuration/cloudflare-config/index.mdx
+  s_087c7ce1ebf930::t_7d3e7601c2377f 1-115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "8cae627736f74e1301e581b4946c83791e84bef4",
+  "prompts": {},
+  "sessions": {
+    "s_087c7ce1ebf930": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a024a7-5b67-7722-897c-b05d0576a381",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}

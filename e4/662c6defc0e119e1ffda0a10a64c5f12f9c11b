@@ -1,0 +1,19 @@
+src/content/docs/bots/account-abuse-protection.mdx
+  s_6085f57980df14::t_d4ea072f36fba4 149
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e4662c6defc0e119e1ffda0a10a64c5f12f9c11b",
+  "prompts": {},
+  "sessions": {
+    "s_6085f57980df14": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f02f3a052ffeQfpMGbuNbb7ElW",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "zeinjaber <zein@cloudflare.com>"
+    }
+  }
+}

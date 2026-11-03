@@ -1,0 +1,23 @@
+src/content/docs/agents/model-context-protocol/apis/agent-api.mdx
+  s_6ca65135f6cb8f::t_5b0076137c1249 3,8
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_6ca65135f6cb8f::t_cc6576b0ee4e3c 2
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_6ca65135f6cb8f::t_7a580eb607fe2a 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4b72f1db9522552ff09894c06f16a0e4fad9ed4d",
+  "prompts": {},
+  "sessions": {
+    "s_6ca65135f6cb8f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15b50-b2f2-7189-bdc9-f33f3f5fadc2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

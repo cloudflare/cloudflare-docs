@@ -1,0 +1,103 @@
+public/__redirects
+  s_c9eefa02e609ba::t_206be202e44dbc 602-604,606-608,3168-3171
+src/content/docs/realtime/index.mdx
+  s_c9eefa02e609ba::t_3b5a322e06c620 41,111,125
+src/content/docs/realtime/realtimekit/agents/events.mdx
+  s_c9eefa02e609ba::t_03d32268f4feb0 6,70,123,234
+src/content/docs/realtime/realtimekit/agents/index.mdx
+  s_c9eefa02e609ba::t_d02cd80fce0a19 6,9,29,40,44-54,57,61-63
+src/content/docs/realtime/realtimekit/audio-calls.mdx
+  s_c9eefa02e609ba::t_d72fe7ce48481b 38,44
+src/content/docs/realtime/realtimekit/concepts/participant.mdx
+  s_c9eefa02e609ba::t_fe0f04f9c2ff07 44,62
+src/content/docs/realtime/realtimekit/custom-plugins/build-your-own-plugins.mdx
+  s_c9eefa02e609ba::t_51d029a0eb847f 21,130,177,214
+src/content/docs/realtime/realtimekit/custom-plugins/index.mdx
+  s_c9eefa02e609ba::t_d48f2753b69c5f 16
+src/content/docs/realtime/realtimekit/faq.mdx
+  s_c9eefa02e609ba::t_3dc93e2405023d 205,215,225,249,259,271,311,368,375
+src/content/docs/realtime/realtimekit/humans/core/breakout-rooms.mdx
+  s_c9eefa02e609ba::t_c791970a647fe8 354-356
+src/content/docs/realtime/realtimekit/humans/core/display-active-speakers.mdx
+  s_c9eefa02e609ba::t_4e6bffc2e74639 26,53,81,109,136,164,196,229,267,305,343,370,404,468-469
+src/content/docs/realtime/realtimekit/humans/core/end-a-session.mdx
+  s_c9eefa02e609ba::t_0111b13d618269 328
+src/content/docs/realtime/realtimekit/humans/core/index.mdx
+  s_c9eefa02e609ba::t_fa9cd3458f1347 296
+src/content/docs/realtime/realtimekit/humans/core/local-participant.mdx
+  s_c9eefa02e609ba::t_7267b646de0572 17,605
+src/content/docs/realtime/realtimekit/humans/core/manage-participants-in-a-session.mdx
+  s_c9eefa02e609ba::t_2a3c4cb4426afb 957,1084
+src/content/docs/realtime/realtimekit/humans/core/media-acquisition-approaches.mdx
+  s_c9eefa02e609ba::t_b204b7479383e1 15
+src/content/docs/realtime/realtimekit/humans/core/meeting-metadata.mdx
+  s_c9eefa02e609ba::t_843d0d3b41e482 417
+src/content/docs/realtime/realtimekit/humans/core/meeting-object-explained.mdx
+  s_c9eefa02e609ba::t_a4e55024001320 17,1463,1483,1503
+src/content/docs/realtime/realtimekit/humans/core/plugins.mdx
+  s_c9eefa02e609ba::t_ede32ef2cc8334 137,508-510,546-548
+src/content/docs/realtime/realtimekit/humans/core/remote-participants/events.mdx
+  s_c9eefa02e609ba::t_675e3e1fc35b75 18
+src/content/docs/realtime/realtimekit/humans/core/remote-participants/index.mdx
+  s_c9eefa02e609ba::t_bda03087e16359 18
+src/content/docs/realtime/realtimekit/humans/core/video-effects.mdx
+  s_c9eefa02e609ba::t_d1f64d715be42e 18
+src/content/docs/realtime/realtimekit/humans/core/waiting-room.mdx
+  s_c9eefa02e609ba::t_1e55ade0e98260 15,560
+src/content/docs/realtime/realtimekit/humans/index.mdx
+  s_c9eefa02e609ba::t_c08758a300e241 1-20
+src/content/docs/realtime/realtimekit/humans/ui-kit/branding/design-system.mdx
+  s_c9eefa02e609ba::t_8ec303daef9b15 18
+src/content/docs/realtime/realtimekit/humans/ui-kit/branding/index.mdx
+  s_c9eefa02e609ba::t_8fef0abe875ae9 187-188
+src/content/docs/realtime/realtimekit/humans/ui-kit/breakout-rooms.mdx
+  s_c9eefa02e609ba::t_e9408b252ae420 587-589
+src/content/docs/realtime/realtimekit/humans/ui-kit/build-your-own-ui.mdx
+  s_c9eefa02e609ba::t_21f1ddb8bca5b3 18,24,31,38,45,252-259,261,433-440,442,652-659,661
+src/content/docs/realtime/realtimekit/humans/ui-kit/custom-controlbar.mdx
+  s_c9eefa02e609ba::t_28ab8179f36601 15,17,26,54,139,141,212,777
+src/content/docs/realtime/realtimekit/humans/ui-kit/custom-header.mdx
+  s_c9eefa02e609ba::t_7f9132e0c63e83 15,17,26,45,103,105,151
+src/content/docs/realtime/realtimekit/humans/ui-kit/index.mdx
+  s_c9eefa02e609ba::t_6e0d8b62e550c8 314-315,317-318
+src/content/docs/realtime/realtimekit/humans/ui-kit/meeting-locale.mdx
+  s_c9eefa02e609ba::t_531e9e9f1f4cee 18
+src/content/docs/realtime/realtimekit/humans/ui-kit/state-management.mdx
+  s_c9eefa02e609ba::t_1dcd9776cb5ba1 16,645,679,698
+src/content/docs/realtime/realtimekit/index.mdx
+  s_c9eefa02e609ba::t_a3218852f59ae3 73,165,171,173
+src/content/docs/realtime/realtimekit/recording-guide/create-record-app-using-sdks.mdx
+  s_c9eefa02e609ba::t_b46a0a2b9f2e8f 83
+src/content/docs/realtime/realtimekit/webinar.mdx
+  s_c9eefa02e609ba::t_3067333cc4ca88 15,33,44,71,88
+src/content/partials/realtime/realtimekit/common/installation.mdx
+  s_c9eefa02e609ba::t_1e7969b006695c 242
+src/content/partials/realtime/realtimekit/web/select-a-remote-participant.mdx
+  s_c9eefa02e609ba::t_6c8e4807384e90 7
+src/content/release-notes/realtimekit-android-core.yaml
+  s_c9eefa02e609ba::t_cb44242e6c5d3b 53
+src/content/release-notes/realtimekit-ios-core.yaml
+  s_c9eefa02e609ba::t_7f0812a681e87b 54
+src/content/release-notes/realtimekit-react-native-core.yaml
+  s_c9eefa02e609ba::t_59cf5b77337f96 21
+src/content/release-notes/realtimekit-web-core.yaml
+  s_c9eefa02e609ba::t_1ee81d58e8667a 12,206,309
+src/content/release-notes/realtimekit-web-ui-kit.yaml
+  s_c9eefa02e609ba::t_857413a75b9de5 24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ffd8df25e7fa3c9d66d972f15a49bef5af7f4f75",
+  "prompts": {},
+  "sessions": {
+    "s_c9eefa02e609ba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec5e02743ffei557a5jtzrzhTK",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/agents/harnesses/think/configuration.mdx
+  s_80fab4cbbeef01::t_8af8f3b6553c22 126
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5a089036cee9603060f4dcf0f4268ac63c1363a6",
+  "prompts": {},
+  "sessions": {
+    "s_80fab4cbbeef01": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a11d77-b402-77a1-bfff-639f8e6da640",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+src/content/docs/realtime/realtimekit/pricing.mdx
+  s_11032c9acd5e07::t_698642dca5b949 14-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "0cd74b18c53d95b4b74a45b62c7afc8d3d0279eb",
+  "prompts": {},
+  "sessions": {
+    "s_11032c9acd5e07": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0940ec0d6ffedE6g4yVOSlkUa2",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "abdulsaboor <abdulsaboor@cloudflare.com>"
+    }
+  }
+}

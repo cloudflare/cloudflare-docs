@@ -1,0 +1,21 @@
+src/content/docs/realtime/realtimekit/index.mdx
+  s_c9eefa02e609ba::t_7a74ed3c702676 144-146
+src/content/docs/realtime/realtimekit/platform/limits.mdx
+  s_c9eefa02e609ba::t_ddc2f5c6837411 6,31-41,45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c069fc96711c61874e09339a7fcd84b62cdf7ecd",
+  "prompts": {},
+  "sessions": {
+    "s_c9eefa02e609ba": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec5e02743ffei557a5jtzrzhTK",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "kpsingh <kpsingh@cloudflare.com>"
+    }
+  }
+}

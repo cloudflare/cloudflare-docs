@@ -1,0 +1,23 @@
+src/content/partials/cloudflare-one/warp/system-requirements/linux.mdx
+  s_ece5d0789176cf::t_7e0176fe760a48 5-14,18
+src/content/partials/cloudflare-one/warp/system-requirements/macOS.mdx
+  s_ece5d0789176cf::t_912f330231ec1e 5-15,17
+src/content/partials/cloudflare-one/warp/system-requirements/windows.mdx
+  s_ece5d0789176cf::t_6f3a709a0f5d54 5-7,9-14,16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "433d2b652516ee214528eec8c6a4d8277eeb533e",
+  "prompts": {},
+  "sessions": {
+    "s_ece5d0789176cf": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f171e8b59ffe6yoTRzRY6qFMnT",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rhett Griggs <rhett@cloudflare.com>"
+    }
+  }
+}

@@ -1,0 +1,35 @@
+src/content/docs/moq/index.mdx
+  s_1e1b1d1815345d::t_d1bed9ecc82369 39,81,90
+src/content/docs/realtime/realtimekit/quickstart.mdx
+  s_1e1b1d1815345d::t_e8d4925db9f706 11-19,87
+src/content/docs/realtime/realtimekit/webhooks.mdx
+  s_1e1b1d1815345d::t_bec52bb13803b6 11-18,88
+src/content/docs/realtime/realtimekit/webinar.mdx
+  s_1e1b1d1815345d::t_e9198d36679ccd 11-17,51
+src/content/docs/realtime/turn/generate-credentials.mdx
+  s_1e1b1d1815345d::t_85f693c4ec77cb 25,73,75,101-103,112-119
+src/content/partials/realtime/realtimekit/api-token-prompt.mdx
+  s_1e1b1d1815345d::t_34a36f39cd0c87 3,7
+src/content/partials/realtime/realtimekit/preset-prompt.mdx
+  s_1e1b1d1815345d::t_761644ae400f65 7
+src/content/partials/realtime/sfu/create-app-prompt.mdx
+  s_1e1b1d1815345d::t_127d87a64f5395 7
+src/util/realtime-copy-prompts.node.test.ts
+  s_1e1b1d1815345d::t_9e86bbf5467328 1-122
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7e9abbf256ab4b572338ff8805546e1781dce9f2",
+  "prompts": {},
+  "sessions": {
+    "s_1e1b1d1815345d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a112ca-5fc5-7c93-ae34-447051bb5f12",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}

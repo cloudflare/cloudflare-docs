@@ -1,0 +1,23 @@
+src/content/agent-setup/prompt.md
+  s_8045362b510a8c::t_d2dd50ec0758c6 3,5,9,20-31,35,37,45-47,58,76,90,92,113,124
+src/content/docs/agent-setup/cursor.mdx
+  s_8045362b510a8c::t_cb8ea864334617 3
+src/content/docs/agent-setup/windsurf.mdx
+  s_8045362b510a8c::t_535167a3eec293 3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "144c521c7f5c4d80cb3178b6168364f83ed93703",
+  "prompts": {},
+  "sessions": {
+    "s_8045362b510a8c": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fd741-a61f-7182-92c6-a6866aa11be4",
+        "model": "unknown"
+      },
+      "human_author": "Angus <ahawkings@cloudflare.com>"
+    }
+  }
+}

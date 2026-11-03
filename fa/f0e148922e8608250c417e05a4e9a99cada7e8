@@ -1,0 +1,19 @@
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_6442e3c5ecd901::t_0d4b7c971b2dd7 42-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "faf0e148922e8608250c417e05a4e9a99cada7e8",
+  "prompts": {},
+  "sessions": {
+    "s_6442e3c5ecd901": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ece00d0f2ffeUQgqbcQlTxt5f6",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

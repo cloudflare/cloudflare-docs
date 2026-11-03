@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-10-12-faster-pull-request-comments.mdx
+  s_db902d477de34b::t_c382e4e9500052 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "9e25348f02e0215e4e04940c64890675c0abf642",
+  "prompts": {},
+  "sessions": {
+    "s_db902d477de34b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ecf4ac88fffeZ5yx0WxMrihsga",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

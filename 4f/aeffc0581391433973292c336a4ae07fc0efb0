@@ -1,0 +1,19 @@
+src/content/docs/cloudflare-for-platforms/workers-for-platforms/configuration/bindings.mdx
+  s_b63db652997711::t_50bec314d9db1b 16-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "4faeffc0581391433973292c336a4ae07fc0efb0",
+  "prompts": {},
+  "sessions": {
+    "s_b63db652997711": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0a0f7-e06a-7552-8368-dfe73dbf4f14",
+        "model": "unknown"
+      },
+      "human_author": "dkozlov <dkozlov@cloudflare.com>"
+    }
+  }
+}

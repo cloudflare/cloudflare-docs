@@ -1,0 +1,279 @@
+src/content/docs/agent-memory/get-started.mdx
+  s_d8523844793afe::t_a0415b3464aa81 42
+src/content/docs/ai-gateway/integrations/aig-workers-ai-binding.mdx
+  s_d8523844793afe::t_34ddc64684819c 32
+src/content/docs/ai-search/agent-sdks/agents-sdk.mdx
+  s_d8523844793afe::t_f10caebf78bd8f 40
+src/content/docs/ai-search/agent-sdks/ai-sdk.mdx
+  s_d8523844793afe::t_22b43ad5f74f07 40
+src/content/docs/ai-search/get-started/workers.mdx
+  s_d8523844793afe::t_af67ac322e3385 32
+src/content/docs/ai-search/how-to/bring-your-own-generation-model.mdx
+  s_d8523844793afe::t_9a61e45e0ad662 46
+src/content/docs/ai-search/how-to/fetch-and-index-web-pages.mdx
+  s_d8523844793afe::t_7cf145d256e006 47
+src/content/docs/ai-search/how-to/human-in-the-loop-knowledge-base.mdx
+  s_d8523844793afe::t_da54e825c189cd 52
+src/content/docs/ai-search/how-to/per-tenant-search.mdx
+  s_d8523844793afe::t_bea4e2a3550523 47
+src/content/docs/ai-search/how-to/search-multiple-sources.mdx
+  s_d8523844793afe::t_df5a853f8ccd5f 46
+src/content/docs/ai-search/how-to/simple-search-engine.mdx
+  s_d8523844793afe::t_97070e4893c11c 42
+src/content/docs/argo-smart-routing/index.mdx
+  s_610a063d7f2122::t_bc92d6073461de 26-28
+src/content/docs/artifacts/get-started/workers.mdx
+  s_d8523844793afe::t_5284815fbb6052 56
+src/content/docs/browser-run/features/reuse-sessions.mdx
+  s_d8523844793afe::t_4066a9fd27e4fa 40
+src/content/docs/cache/how-to/cache-response-rules/terraform-example.mdx
+  s_50e3f3111f69bb::t_69ecbf68acb83a 73
+src/content/docs/cache/how-to/cache-rules/terraform-example.mdx
+  s_50e3f3111f69bb::t_fab5bc3f312a76 98,159
+src/content/docs/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors.mdx
+  s_d8523844793afe::t_4b7c4a2392c1af 162
+src/content/docs/cloudflare-one/access-controls/applications/http-apps/saas-apps/generic-oidc-saas.mdx
+  s_88a4e92db4d2f2::t_42e096669d6368 62
+src/content/docs/cloudflare-one/insights/dex/monitoring.mdx
+  s_d6b50504a637a9::t_6362347c7d1906 90
+src/content/docs/cloudflare-one/integrations/identity-providers/entra-id.mdx
+  s_610a063d7f2122::t_6ecf849a87937c 189-208
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/azure.mdx
+  s_fe14f523c919d6::t_551289116be21c 36-78,111-118
+src/content/docs/cloudflare-one/networks/connectors/cloudflare-tunnel/deployment-guides/kubernetes.mdx
+  s_d60514f062c07f::t_284dcbf8991b6d 13,15-374
+src/content/docs/cloudflare-one/tutorials/extend-sso-with-workers.mdx
+  s_d8523844793afe::t_301ec50ec7bb0b 61
+src/content/docs/d1/get-started.mdx
+  s_d8523844793afe::t_d76ac78b686422 52
+src/content/docs/d1/tutorials/build-a-comments-api.mdx
+  s_d8523844793afe::t_9775f11934b4de 44
+src/content/docs/d1/tutorials/build-an-api-to-access-d1.mdx
+  s_d8523844793afe::t_69f2ae7d884324 54
+src/content/docs/d1/tutorials/using-read-replication-for-e-com.mdx
+  s_d8523844793afe::t_09b81aff7df94b 50
+src/content/docs/dns/internal-dns/get-started.mdx
+  s_fe14f523c919d6::t_efe05d780f0c38 20,68-88,92-117,123-125,154-167
+src/content/docs/durable-objects/get-started.mdx
+  s_d8523844793afe::t_cb1d1462f9db70 59
+src/content/docs/durable-objects/tutorials/build-a-seat-booking-app.mdx
+  s_d8523844793afe::t_c7bb8837fc710b 63
+src/content/docs/fundamentals/api/reference/permissions.mdx
+  s_ccef7ddff6b67f::t_52854cc64d052d 56-230,234-408,418-493,497-572
+src/content/docs/hyperdrive/get-started.mdx
+  s_d8523844793afe::t_ed1463387e9b64 68
+src/content/docs/hyperdrive/tutorials/serverless-timeseries-api-with-timescale.mdx
+  s_d8523844793afe::t_1237cdd6c0abd7 40
+src/content/docs/kv/get-started.mdx
+  s_d8523844793afe::t_acec0283fa55de 58
+src/content/docs/learning-paths/workers/get-started/first-worker.mdx
+  s_d8523844793afe::t_197ed766daed6d 40
+src/content/docs/pipelines/examples/bluesky-firehose-fanout.mdx
+  s_d8523844793afe::t_d92cc670a71b39 57
+src/content/docs/queues/get-started.mdx
+  s_d8523844793afe::t_a9d415d0023540 38
+src/content/docs/queues/tutorials/handle-rate-limits/index.mdx
+  s_d8523844793afe::t_667274c87511a3 45
+src/content/docs/queues/tutorials/web-crawler-with-browser-run/index.mdx
+  s_d8523844793afe::t_2a6b5d4de6315d 41
+src/content/docs/r2/api/workers/workers-api-usage.mdx
+  s_d8523844793afe::t_84d9a57e972141 26
+src/content/docs/r2/tutorials/summarize-pdf.mdx
+  s_d8523844793afe::t_164dcaf4fcd87a 45
+src/content/docs/r2/tutorials/upload-logs-event-notifications.mdx
+  s_d8523844793afe::t_d395eb279d2fe8 58
+src/content/docs/radar/investigate/bgp-anomalies.mdx
+  s_d8523844793afe::t_3901974a6ecb94 189
+src/content/docs/rules/compression-rules/examples/disable-all-brotli.mdx
+  s_50e3f3111f69bb::t_83092f7c071cca 54
+src/content/docs/rules/compression-rules/examples/disable-compression-avif.mdx
+  s_50e3f3111f69bb::t_b7fc91c9b52de0 56
+src/content/docs/rules/compression-rules/examples/enable-zstandard.mdx
+  s_50e3f3111f69bb::t_490a0d1f8102d2 52
+src/content/docs/rules/compression-rules/examples/gzip-for-csv.mdx
+  s_50e3f3111f69bb::t_77234a9bc1a567 53
+src/content/docs/rules/compression-rules/examples/only-brotli-url-path.mdx
+  s_50e3f3111f69bb::t_28f6b92d0b6b7b 55
+src/content/docs/rules/configuration-rules/create-api.mdx
+  s_50e3f3111f69bb::t_74fc8203d9b990 64,93
+src/content/docs/rules/configuration-rules/examples/define-single-configuration-terraform.mdx
+  s_50e3f3111f69bb::t_84397de5331116 42
+src/content/docs/rules/custom-errors/create-rules.mdx
+  s_50e3f3111f69bb::t_f8cce1dfeda4e4 148
+src/content/docs/rules/custom-errors/example-rules.mdx
+  s_50e3f3111f69bb::t_ec92ba70638f6e 70,132,188,243
+src/content/docs/rules/origin-rules/create-api.mdx
+  s_50e3f3111f69bb::t_eabbaa0a8ad039 73
+src/content/docs/rules/origin-rules/examples/define-single-origin-terraform.mdx
+  s_50e3f3111f69bb::t_545598ce347236 46
+src/content/docs/rules/transform/request-header-modification/create-api.mdx
+  s_50e3f3111f69bb::t_ae87cff2e5d244 110,181,250
+src/content/docs/rules/transform/request-header-modification/reference/fields-functions.mdx
+  s_fe14f523c919d6::t_9db9bb269c0d6e 16-102
+src/content/docs/rules/transform/response-header-modification/create-api.mdx
+  s_50e3f3111f69bb::t_fcfd6c017a726f 109,180,251,320
+src/content/docs/rules/transform/url-rewrite/create-api.mdx
+  s_50e3f3111f69bb::t_559b24dd789115 106,175
+src/content/docs/rules/url-forwarding/bulk-redirects/create-api.mdx
+  s_50e3f3111f69bb::t_a1b02628fa1e4d 202
+src/content/docs/rules/url-forwarding/single-redirects/create-api.mdx
+  s_50e3f3111f69bb::t_bcd43dbefcc938 107
+src/content/docs/rules/url-forwarding/single-redirects/terraform-example.mdx
+  s_50e3f3111f69bb::t_0c25a4388b2ea8 49
+src/content/docs/security/rules.mdx
+  s_663af416531968::t_d49f4437e6d2bc 68
+src/content/docs/tunnel/deployment-guides/azure.mdx
+  s_fe14f523c919d6::t_8900997788eb27 27-69,95-102
+src/content/docs/tunnel/deployment-guides/google-cloud-platform.mdx
+  s_ccef7ddff6b67f::t_40629979ded595 56-63
+src/content/docs/vectorize/get-started/embeddings.mdx
+  s_d8523844793afe::t_186358408a9d50 52
+src/content/docs/vectorize/get-started/intro.mdx
+  s_d8523844793afe::t_5beb48a3f36d0d 57
+src/content/docs/waf/custom-rules/index.mdx
+  s_663af416531968::t_6efa63718af338 27
+src/content/docs/waf/detections/ai-security-for-apps/get-started.mdx
+  s_d6b50504a637a9::t_849fe12e3692b4 97-104
+src/content/docs/waf/managed-rules/index.mdx
+  s_663af416531968::t_c4fae46979859f 58
+src/content/docs/waf/managed-rules/reference/owasp-core-ruleset/configure-dashboard.mdx
+  s_fe14f523c919d6::t_eb5292728f7cb5 14-17,27-38,69-84,98-113,123-134
+src/content/docs/waf/managed-rules/reference/sensitive-data-detection.mdx
+  s_fe14f523c919d6::t_d61b4aae708682 12-13,106-119,131-140,251
+src/content/docs/waf/rate-limiting-rules/index.mdx
+  s_663af416531968::t_8e2aa159ce3fec 36
+src/content/docs/workers-ai/get-started/workers-wrangler.mdx
+  s_d8523844793afe::t_c9a9a86a2d5a9c 31
+src/content/docs/workers-ai/guides/tutorials/build-a-retrieval-augmented-generation-ai.mdx
+  s_d8523844793afe::t_1eb04e4a7aff49 43
+src/content/docs/workers-ai/guides/tutorials/build-a-workers-ai-whisper-with-chunking.mdx
+  s_d8523844793afe::t_afc3e038d6c1cd 38
+src/content/docs/workers-ai/guides/tutorials/llama-vision-tutorial.mdx
+  s_d8523844793afe::t_f36ac1951eaee1 51
+src/content/docs/workers-vpc/get-started.mdx
+  s_d8523844793afe::t_0390f86456e1ec 57,59
+src/content/docs/workers/framework-guides/web-apps/more-web-frameworks/waku.mdx
+  s_ccef7ddff6b67f::t_b05ceeb13a4892 51-57
+src/content/docs/workers/get-started/guide.mdx
+  s_d8523844793afe::t_06addb9cb81855 35
+src/content/docs/workers/static-assets/get-started.mdx
+  s_d8523844793afe::t_797d9e4f7b1a88 47,104
+src/content/docs/workers/tutorials/build-a-jamstack-app.mdx
+  s_d8523844793afe::t_7ed7a65201e337 35
+src/content/docs/workers/tutorials/build-a-qr-code-generator.mdx
+  s_d8523844793afe::t_69866a82609888 33
+src/content/docs/workers/tutorials/connect-to-turso-using-workers.mdx
+  s_d8523844793afe::t_49a67cab944d0e 119
+src/content/docs/workers/tutorials/create-finetuned-chatgpt-ai-models-with-r2.mdx
+  s_d8523844793afe::t_e0155a1b74d304 51
+src/content/docs/workers/tutorials/deploy-an-express-app.mdx
+  s_d8523844793afe::t_33c4bf71aeee0d 40
+src/content/docs/workers/tutorials/generate-youtube-thumbnails-with-workers-and-images.mdx
+  s_d8523844793afe::t_045f94613194ac 377
+src/content/docs/workers/tutorials/github-sms-notifications-using-twilio.mdx
+  s_d8523844793afe::t_7ef46a86b13ba8 41
+src/content/docs/workers/tutorials/handle-form-submissions-with-airtable.mdx
+  s_d8523844793afe::t_6acc54cf532421 94
+src/content/docs/workers/tutorials/mysql.mdx
+  s_d8523844793afe::t_468c9954ebce17 48
+src/content/docs/workers/tutorials/openai-function-calls-workers.mdx
+  s_d8523844793afe::t_41ef2e02d5706d 43
+src/content/docs/workers/tutorials/postgres.mdx
+  s_d8523844793afe::t_1b0a47712bde28 41
+src/content/docs/workers/tutorials/upload-assets-with-r2.mdx
+  s_d8523844793afe::t_d0f85fe17ca656 36
+src/content/docs/workflows/get-started/durable-agents.mdx
+  s_d8523844793afe::t_8edd1bfba88ba5 71
+src/content/docs/workflows/get-started/guide.mdx
+  s_d8523844793afe::t_5d9e3af9096702 61
+src/content/partials/browser-run/example-quick-action-binding.mdx
+  s_d8523844793afe::t_978b2bb7611049 19
+src/content/partials/browser-run/example-workers-binding-screenshots-from-web.mdx
+  s_d8523844793afe::t_da38cbd57f41c6 22
+src/content/partials/cloudflare-one/troubleshooting/warp-client.mdx
+  s_ccef7ddff6b67f::t_7e507036b904ac 510-551
+src/content/partials/rules/origin-rules-api-change-host-header-dns-record.mdx
+  s_50e3f3111f69bb::t_2a096e2979b453 66
+src/content/partials/rules/origin-rules-api-change-port.mdx
+  s_50e3f3111f69bb::t_d2ec7577b03455 64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "22f589125cfae2d8d92ee22624df59aed3f3323f",
+  "prompts": {},
+  "sessions": {
+    "s_50e3f3111f69bb": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcaff11b4ffetr5J7uoF2RuBt0",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_610a063d7f2122": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcac1a0f3ffexq4RQM6txQWmR8",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_663af416531968": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcb22a94bffeUIxOFfG8RLTQ8c",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_88a4e92db4d2f2": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcae00592ffeb0ZjFJKTbsRDIH",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_ccef7ddff6b67f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcac0c424ffe5Y9ipgYdmDF3YI",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_d60514f062c07f": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcac15226ffeknZcD6ka7yWMbK",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_d6b50504a637a9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcac108ddffeBvFxRTGnBUN5we",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_d8523844793afe": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcaecf254ffeni4yWuhwOXW8Lk",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    },
+    "s_fe14f523c919d6": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_fcac08595ffe8xL7iCChwGgLW6",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

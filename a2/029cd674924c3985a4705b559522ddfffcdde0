@@ -1,0 +1,51 @@
+src/content/docs/monetization-gateway/configuration/index.mdx
+  s_f88dacf13bd65b::t_a2de28452b7f49 1-17
+src/content/directory/monetization-gateway.yaml
+  s_f88dacf13bd65b::t_bd112e352534e0 1-14
+src/content/docs/monetization-gateway/index.mdx
+  s_f88dacf13bd65b::t_c9982bce89d04f 1-12,15-38,40-42
+  s_f88dacf13bd65b::t_3e00c875ccdcd6 43
+  s_cea2c8f96e25fa::t_84ef19df9fa29b 14,39
+src/content/docs/monetization-gateway/get-started/index.mdx
+  s_a64d4d0a2a5189::t_5ca34bd44cbce2 34-42
+  s_a64d4d0a2a5189::t_d992996089ee2b 31-33
+.github/labeler.yml
+  s_f88dacf13bd65b::t_6e17648df50985 719-723
+.github/CODEOWNERS
+  s_f88dacf13bd65b::t_256ef6024a27b8 594-599
+src/content/docs/monetization-gateway/x402.mdx
+  s_cea2c8f96e25fa::t_61dccd33678ce7 13-97
+  s_cea2c8f96e25fa::t_e75204435dd37a 10-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a2029cd674924c3985a4705b559522ddfffcdde0",
+  "prompts": {},
+  "sessions": {
+    "s_a64d4d0a2a5189": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0e4d5621ffeBNuYtsqoS3j81J",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    },
+    "s_cea2c8f96e25fa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0e4c6432ffejOkl5iVVMaNLeR",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    },
+    "s_f88dacf13bd65b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f5928295effeKtN6My8tX9KfHU",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Rohin Lohe <rohin@cloudflare.com>"
+    }
+  }
+}

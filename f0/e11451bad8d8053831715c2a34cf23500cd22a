@@ -1,0 +1,20 @@
+src/content/docs/logs/logpush/index.mdx
+  s_f9dcf473636fba::t_06bc7a61ffd550 27,29,31,33,35-38,40,42
+  s_f9dcf473636fba::t_96c74e5b841954 11,52-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f0e11451bad8d8053831715c2a34cf23500cd22a",
+  "prompts": {},
+  "sessions": {
+    "s_f9dcf473636fba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aadf4da1-9071-4af2-b1da-c86a6fc68b74",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

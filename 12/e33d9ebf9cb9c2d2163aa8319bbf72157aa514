@@ -1,0 +1,23 @@
+src/content/changelog/agents/2026-10-29-agent-skills-from-files.mdx
+  s_dde8d185bd747c::t_81bd917c310cda 1-38
+src/content/docs/agents/concepts/conversation-state-and-memory.mdx
+  s_dde8d185bd747c::t_347f33372dac64 17
+src/content/docs/agents/skills/index.mdx
+  s_dde8d185bd747c::t_dfcce85446e1bd 21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "12e33d9ebf9cb9c2d2163aa8319bbf72157aa514",
+  "prompts": {},
+  "sessions": {
+    "s_dde8d185bd747c": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a1877c-5b8b-7283-9f59-80a151595166",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

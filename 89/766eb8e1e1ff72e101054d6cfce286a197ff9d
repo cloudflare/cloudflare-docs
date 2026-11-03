@@ -1,0 +1,19 @@
+src/content/docs/workers/ci-cd/builds/index.mdx
+  s_0a88b989226253::t_fc91458f70e241 27,44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "89766eb8e1e1ff72e101054d6cfce286a197ff9d",
+  "prompts": {},
+  "sessions": {
+    "s_0a88b989226253": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f9260e2fcffeQuLsNCWXhBmDs8",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

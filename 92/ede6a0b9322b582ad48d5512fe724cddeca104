@@ -1,0 +1,24 @@
+src/content/changelog/workers/2026-10-14-workers-builds-default-tooling.mdx
+  s_94c602eab0f70b::t_3cd351d3404658 2-27
+  s_94c602eab0f70b::t_507324b48f9585 1
+  s_94c602eab0f70b::t_933885ce752e05 28-30
+src/content/docs/workers/ci-cd/builds/build-image.mdx
+  s_94c602eab0f70b::t_3cd351d3404658 49
+  s_94c602eab0f70b::t_7d72c699ee51e2 25-28,30,36,39-41,43-45,48,50-57,89-96
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "92ede6a0b9322b582ad48d5512fe724cddeca104",
+  "prompts": {},
+  "sessions": {
+    "s_94c602eab0f70b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ece2c8cfbffeCS1uPzWf6ajfh6",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}

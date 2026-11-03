@@ -1,0 +1,29 @@
+src/content/docs/hyperdrive/reference/supported-databases-and-features.mdx
+  s_037d5be6da8760::t_df46d4bc99e25c 80
+src/content/partials/hyperdrive/pooling-mode.mdx
+  s_ecb4e0fe3b5ec9::t_f8f0afb24a8c4e 11,13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c08a6bd60c052c7491f402a7c4ad56f3d3f8fc02",
+  "prompts": {},
+  "sessions": {
+    "s_037d5be6da8760": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e94f818b1ffe6EmioaFcVriZRl",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    },
+    "s_ecb4e0fe3b5ec9": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_e81a1abb3ffejuVDyW7WkGytE8",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

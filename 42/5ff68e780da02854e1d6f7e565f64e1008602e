@@ -1,0 +1,25 @@
+src/components/config-explorer/AnnotatedConfigExplorer.astro.test.ts
+  s_9bfd99323e4f2a::t_8a07889768c83a 14-15,204-222
+src/components/config-explorer/annotated-config.node.test.ts
+  s_9bfd99323e4f2a::t_e668446ed1daee 62-75
+src/components/config-explorer/config-examples.node.test.ts
+  s_9bfd99323e4f2a::t_6b54c72a75ad8d 1-2,5,12-36,60-61,74-107,130-134,136-138,140,143-144,146
+src/components/config-explorer/config-examples.ts
+  s_9bfd99323e4f2a::t_ae7a1ea54d60cc 432-436,471-507,526-531,534-540,544-549
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "425ff68e780da02854e1d6f7e565f64e1008602e",
+  "prompts": {},
+  "sessions": {
+    "s_9bfd99323e4f2a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0f224-1b88-79c3-bd52-4a5f7a64c019",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Matt TK Taylor <matttaylor@cloudflare.com>"
+    }
+  }
+}

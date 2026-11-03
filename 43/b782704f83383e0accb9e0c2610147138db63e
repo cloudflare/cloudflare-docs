@@ -1,0 +1,19 @@
+src/components/realtimekit/RealtimeKitArchitecture/RealtimeKitArchitecture.astro
+  s_c89cfb08aa11ac::t_e32e066921f0cb 5-52,55-60,62,64-68,71-110,116-118,124-125,127-138,144-157,159,161,166-172,175-179,182-188,191-193,196-200,202-205,207-209,212-213,217,219,225,228,231,236-253,256-261,265-287,289-291,294-296,298-305,309-324,328-331,334-335,340-342,344-347,354,360,363-364,366-368,370,374,378,383-385,392-393,396,398-399,402-404,407-410,413-414,418,425-426,430,435,438-445
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "43b782704f83383e0accb9e0c2610147138db63e",
+  "prompts": {},
+  "sessions": {
+    "s_c89cfb08aa11ac": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ffd7e35f5ffef89pnveFaT12Pc",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}

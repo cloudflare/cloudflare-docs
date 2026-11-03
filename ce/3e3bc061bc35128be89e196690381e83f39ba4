@@ -1,0 +1,19 @@
+src/content/docs/artifacts/guides/build-and-deploy-on-push.mdx
+  s_c4a2528dde84b4::t_16485af15da035 25
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ce3e3bc061bc35128be89e196690381e83f39ba4",
+  "prompts": {},
+  "sessions": {
+    "s_c4a2528dde84b4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f0c7ef39dffedgsGM4j2dRhbJO",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

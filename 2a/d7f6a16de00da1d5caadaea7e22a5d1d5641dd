@@ -1,0 +1,144 @@
+src/content/docs/k2/concepts/index.mdx
+  s_76ad8b2ea376aa::t_cc652c08289355 32-33
+  s_76ad8b2ea376aa::t_71188c3c614324 70-75
+  s_76ad8b2ea376aa::t_d796c0a8eb6d10 1-10
+  s_76ad8b2ea376aa::t_c4565a2519408a 12
+  s_76ad8b2ea376aa::t_3fb1dc252af9e4 59
+  s_76ad8b2ea376aa::t_a912704c55aa91 40
+  s_4f32735c2c017a::t_1f03236575a2c4 15-19
+  s_76ad8b2ea376aa::t_867052b5f15696 27
+  s_76ad8b2ea376aa::t_1c1053cc076ad6 50
+  s_76ad8b2ea376aa::t_55d1fbef33b5ee 11
+  s_76ad8b2ea376aa::t_6e10fd1653f149 28-31
+  s_76ad8b2ea376aa::t_a7f699e4ec7229 34-39
+  s_76ad8b2ea376aa::t_d686ad425445c4 41-43,47-49
+  s_76ad8b2ea376aa::t_3898afd8bf051c 51-53,56-58
+  s_76ad8b2ea376aa::t_2dae46015b882b 60-62,67-69
+  s_103fd8daa7fa03::t_dd2ebfafc95a10 13-14,20-26,44-46,54-55,63-66
+src/content/docs/k2/features/produce.mdx
+  s_76ad8b2ea376aa::t_1090ef7551c932 1-10,12-25,27-28,32-68,70-77,80,83,85-95,101-102,105-106,109-111,145-147,154-229
+  s_76ad8b2ea376aa::t_0617a9b69da84e 26
+  s_76ad8b2ea376aa::t_8a9ba7052d0b84 112-144
+  s_76ad8b2ea376aa::t_8d6ce2e9c638f1 81-82,84
+  s_4fcbd24d6c1d03::t_c0235e828c290a 29-31,69,78-79,96-100,103-104,107-108
+  s_76ad8b2ea376aa::t_4d0996ae9e18e3 11
+  s_4693b4aa9d3d57::t_492b3cfaec9828 152-153
+  s_103fd8daa7fa03::t_6acdd763e4ea08 148-151
+src/content/docs/k2/platform/limits.mdx
+  s_4693b4aa9d3d57::t_a49d21ecd73168 17,58
+  s_76ad8b2ea376aa::t_1edb01ec2f2062 1-2
+  s_76ad8b2ea376aa::t_fd35467136bb33 3-14,20-52
+  s_4fcbd24d6c1d03::t_2146cb4edd1a94 18,53-57,59
+  s_4fcbd24d6c1d03::t_c4b672d49cc9df 60-61
+  s_103fd8daa7fa03::t_75293741f24c5a 15-16,19
+src/content/docs/k2/features/index.mdx
+  s_76ad8b2ea376aa::t_48572d0d52241a 1-15
+src/content/docs/k2/platform/index.mdx
+  s_76ad8b2ea376aa::t_839f5def66713c 1-7,9-15
+  s_76ad8b2ea376aa::t_77e38d079108f7 8
+src/content/docs/k2/configuration/index.mdx
+  s_76ad8b2ea376aa::t_081cc8d9189923 75-77
+  s_76ad8b2ea376aa::t_3b81f0e5159971 1-74
+  s_4693b4aa9d3d57::t_41fb143c2e1057 95,97-120
+  s_76ad8b2ea376aa::t_372dc50b5b1d9a 79-80
+  s_76ad8b2ea376aa::t_cbf0767cd047c7 78
+  s_4693b4aa9d3d57::t_199bd991095c90 96
+  s_4693b4aa9d3d57::t_a0708b1b2b1a71 121-123
+  s_103fd8daa7fa03::t_a360620af6dc69 81-94,124-125
+src/content/docs/k2/features/consume.mdx
+  s_76ad8b2ea376aa::t_cc2515847a637a 1-12,14,16-20,22-29,31-38,46-53,55-67,72,74-89,92-106,109-127,129-133,135-136,138-148,156,159-165,167-180,183,188-206,210,213,242-243,246-254,262-282,284-286,304-309
+  s_4fcbd24d6c1d03::t_0e7b981cb9e2de 13,21,30,39-45,90-91,107-108,128,134,137,149-155,166,181-182,185-186,207,214-241,283,302-303
+  s_4693b4aa9d3d57::t_5e2bafaffd7136 255-258
+  s_76ad8b2ea376aa::t_7bfed551e40152 157-158,184,187,208-209,211-212,244-245,259-261,287-301
+  s_4f32735c2c017a::t_b89645618cdf61 15
+  s_76ad8b2ea376aa::t_a18c39303c624c 54,68-71,73
+src/content/docs/k2/index.mdx
+  s_4693b4aa9d3d57::t_ce834273082520 11-29
+  s_76ad8b2ea376aa::t_e050de300c7378 51,56-58,67
+  s_76ad8b2ea376aa::t_15bcf1e9d51d3b 68
+  s_76ad8b2ea376aa::t_4332cd54e75bea 60
+  s_76ad8b2ea376aa::t_58377c1cb7c012 49,55,63
+  s_4fcbd24d6c1d03::t_2d190578227e1a 33-48,52,59,64-66,69-84
+  s_4693b4aa9d3d57::t_e286efc06aeb37 8-10
+  s_76ad8b2ea376aa::t_d567b271b3148b 50
+  s_76ad8b2ea376aa::t_fa2562a35b78ea 61-62
+  s_4fcbd24d6c1d03::t_e14d9bdcacbac6 85-87
+  s_103fd8daa7fa03::t_0fcf15512c6568 1-7,30-32,53-54,88
+src/content/docs/k2/get-started/index.mdx
+  s_76ad8b2ea376aa::t_7ec0ccb491a4ee 262
+  s_76ad8b2ea376aa::t_9c2482afd998a5 13
+  s_4f32735c2c017a::t_789c94503d0289 281
+  s_4fcbd24d6c1d03::t_cca495406288b3 58,91,93-112,120,123-125,194,239,285-290,296,333
+  s_76ad8b2ea376aa::t_9a08082db70969 335-337
+  s_76ad8b2ea376aa::t_57e9c8fa8e16b5 3-12,14-23,25-57,59-90,92,113-119,121-122,126-193,195-238,240-241,243-246,248-253,255-261,264-280,282-284,291-295,297-320,330-332,334
+  s_76ad8b2ea376aa::t_b37ab8c8219512 254
+  s_76ad8b2ea376aa::t_ad10372659c281 263
+  s_76ad8b2ea376aa::t_924549fd1c1b3b 242
+  s_4693b4aa9d3d57::t_bfdef95e473ef4 24,247,321-329,338-341
+  s_76ad8b2ea376aa::t_1c9f47df93e3ea 1-2
+  s_4693b4aa9d3d57::t_a54a22bee01520 342-344
+  s_103fd8daa7fa03::t_336bfe0fec5e14 345-348
+src/content/directory/k2.yaml
+  s_9a4f3e415ad479::t_c227a5fc36b60e 1-11,13
+  s_76ad8b2ea376aa::t_583600bc19acc9 12
+src/components/landing/sidebar-data.ts
+  s_9a4f3e415ad479::t_883cfcaf05fac0 116
+src/components/landing/BuildFromScratch.astro
+  s_9a4f3e415ad479::t_8f6af990115dac 69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2ad7f6a16de00da1d5caadaea7e22a5d1d5641dd",
+  "prompts": {},
+  "sessions": {
+    "s_103fd8daa7fa03": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2096c1af-51d0-4ef6-acac-efe404a8141b",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_4693b4aa9d3d57": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "15295e40-bedc-4ee4-a329-722b8f3375ed",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_4f32735c2c017a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0de47-3717-7b81-aff0-e24f5ccd0211",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_4fcbd24d6c1d03": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc5f5669-5d7d-4ac3-9087-84c4a68bf4ed",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_76ad8b2ea376aa": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f310453a6ffe772Bz4uTEvazXh",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    },
+    "s_9a4f3e415ad479": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0cb2d-d0e6-7f61-8e62-b96f5728ebcf",
+        "model": "unknown"
+      },
+      "human_author": "Micah Wylde <mwylde@cloudflare.com>"
+    }
+  }
+}

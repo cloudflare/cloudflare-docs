@@ -1,0 +1,27 @@
+src/content/docs/agents/model-context-protocol/apis/agent-api.mdx
+  s_6ca65135f6cb8f::t_00e079baa9b6df 13,29-32
+src/content/docs/agents/model-context-protocol/apis/client-api.mdx
+  s_6ca65135f6cb8f::t_9419a315686139 15
+src/content/docs/agents/model-context-protocol/apis/handler-api.mdx
+  s_6ca65135f6cb8f::t_c76d714fd93de3 26-27,30,34
+src/content/docs/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2.mdx
+  s_6ca65135f6cb8f::t_7264e92cc1c31a 40,44,48,50-52
+src/content/docs/agents/model-context-protocol/protocol/transport.mdx
+  s_6ca65135f6cb8f::t_29225c31f3ee3a 122-123
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "821129f9bb2feab123face9a51a63c2b2361964b",
+  "prompts": {},
+  "sessions": {
+    "s_6ca65135f6cb8f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "01a15b50-b2f2-7189-bdc9-f33f3f5fadc2",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Matt Carey <mcarey@cloudflare.com>"
+    }
+  }
+}

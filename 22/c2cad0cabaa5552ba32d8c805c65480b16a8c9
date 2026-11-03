@@ -1,0 +1,21 @@
+src/styles/globals.css
+  s_4aff66036dbf2b::t_9593af546ee7ec 875-1112
+src/styles/prose.css
+  s_4aff66036dbf2b::t_bb31990f2a9b3b 281-407
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "22c2cad0cabaa5552ba32d8c805c65480b16a8c9",
+  "prompts": {},
+  "sessions": {
+    "s_4aff66036dbf2b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f97bc7301ffeDoXLls0PHUSv5Y",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

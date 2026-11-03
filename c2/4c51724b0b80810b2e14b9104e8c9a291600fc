@@ -1,0 +1,19 @@
+src/content/docs/data-localization/metadata-boundary/logpush-datasets.mdx
+  s_50454cfd24dd29::t_e99b25c3eca224 31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c24c51724b0b80810b2e14b9104e8c9a291600fc",
+  "prompts": {},
+  "sessions": {
+    "s_50454cfd24dd29": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e5d3aa31-fc15-4e58-97d0-191e48bea23a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Rian van der Merwe <rianvdm@gmail.com>"
+    }
+  }
+}

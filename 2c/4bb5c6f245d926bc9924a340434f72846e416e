@@ -1,0 +1,19 @@
+.github/CODEOWNERS
+  s_b656e3f266f15b::t_3ec63405a862c2 47-49,53-56,64-68,76,80,84-85,97-98,100,102-103,107-109,117-123,125-131,138-143,145-149,154-156,160,162,179-180,186,216-219,223,226,281,283-285,293-294,310-312,316-318
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2c4bb5c6f245d926bc9924a340434f72846e416e",
+  "prompts": {},
+  "sessions": {
+    "s_b656e3f266f15b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0379eb181ffeYwv8gc2FgFfDbS",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "kodster28 <kody@cloudflare.com>"
+    }
+  }
+}

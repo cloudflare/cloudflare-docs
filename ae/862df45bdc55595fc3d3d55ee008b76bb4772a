@@ -1,0 +1,300 @@
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-screenshare-view.mdx
+  s_d39432e4d01bda::t_7a786cc7403097 36-37,46-47
+  s_d39432e4d01bda::t_ca76b7e0dffb4d 48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-permissions-message.mdx
+  s_d39432e4d01bda::t_1d7c78a5eccf1f 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-recording-indicator.mdx
+  s_d39432e4d01bda::t_7029d35168ea4f 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-paginated-list.mdx
+  s_d39432e4d01bda::t_05b8481a520fd5 38-40,49-51
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-waiting-screen.mdx
+  s_d39432e4d01bda::t_1af05323044ebb 37
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-dialog.mdx
+  s_d39432e4d01bda::t_dcc30d6dedcea4 35-36,45
+  s_d39432e4d01bda::t_ccf2ee517cb377 46-47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-sidebar-ui.mdx
+  s_d39432e4d01bda::t_cbde13c484fde0 36-37
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-poll-form.mdx
+  s_d39432e4d01bda::t_9feb226ed476e0 37
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-text-composer-view.mdx
+  s_d39432e4d01bda::t_911d25adf2ac73 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-paginated-list.mdx
+  s_d39432e4d01bda::t_1dfd8d09271705 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-audio-grid.mdx
+  s_d39432e4d01bda::t_f526ea866f4235 31-32,41-42
+  s_d39432e4d01bda::t_0a6741f1d67268 43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-selector.mdx
+  s_d39432e4d01bda::t_eea2b80d8eb0bc 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-stage-queue.mdx
+  s_d39432e4d01bda::t_df626079f0db78 43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-header.mdx
+  s_d39432e4d01bda::t_73e71f1b2b63c6 44
+  s_d39432e4d01bda::t_70d5a12ade73a9 45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-grid-pagination.mdx
+  s_d39432e4d01bda::t_082b7598023552 43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-recording-toggle.mdx
+  s_d39432e4d01bda::t_e22673e6b5c716 36-37,46
+  s_d39432e4d01bda::t_d897fe53c58247 47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-mute-all-confirmation.mdx
+  s_d39432e4d01bda::t_2ccf3d565aa891 37
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkMessageListView.mdx
+  s_d39432e4d01bda::t_12db58e7c28ee5 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-mute-all-button.mdx
+  s_d39432e4d01bda::t_586aa455868bca 31,40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-setup-screen.mdx
+  s_d39432e4d01bda::t_03871816bff66b 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-pip-toggle.mdx
+  s_d39432e4d01bda::t_2ac8b57366a68a 36,45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ended-screen.mdx
+  s_d39432e4d01bda::t_0d4061f35acae3 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-breakout-rooms-toggle.mdx
+  s_d39432e4d01bda::t_e8c632cafa6ab3 34-35,44-45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-polls.mdx
+  s_d39432e4d01bda::t_1e953c8127a294 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-debugger-screenshare.mdx
+  s_d39432e4d01bda::t_781e15776139aa 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-grid.mdx
+  s_d39432e4d01bda::t_61955aaf3de93e 39-40,49
+  s_d39432e4d01bda::t_a0a5c69829252b 50
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-more-toggle.mdx
+  s_d39432e4d01bda::t_2ef6c7a1109323 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-settings-toggle.mdx
+  s_d39432e4d01bda::t_6f4a0276efaeca 37,46
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-viewer-count.mdx
+  s_d39432e4d01bda::t_a3a060ac841f2c 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ui-provider.mdx
+  s_d39432e4d01bda::t_c3cb4046aa409e 40-41
+  s_d39432e4d01bda::t_08ccbc8097b9a7 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-image-message-view.mdx
+  s_d39432e4d01bda::t_ed672a1797128e 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-breakout-room-manager.mdx
+  s_d39432e4d01bda::t_85b79bef481a70 43
+  s_d39432e4d01bda::t_b688e3f63124c3 44-45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-overlay-modal.mdx
+  s_d39432e4d01bda::t_fd46aaf21f8e07 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-spotlight-grid.mdx
+  s_d39432e4d01bda::t_0c5d24cc8764b5 43-44,53-55
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-image-message.mdx
+  s_d39432e4d01bda::t_ed1136308ffc46 43
+  s_d39432e4d01bda::t_2364af76f07961 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-information-tooltip.mdx
+  s_d39432e4d01bda::t_5a12db497e5023 34
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participant-count.mdx
+  s_d39432e4d01bda::t_72f514262c800e 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-livestream-player.mdx
+  s_d39432e4d01bda::t_91120d09a4d98f 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-debugger-toggle.mdx
+  s_d39432e4d01bda::t_75d7efbd3e3e75 32,41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-audio-tile.mdx
+  s_d39432e4d01bda::t_324f5b33547651 31-32,41-43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-camera-toggle.mdx
+  s_d39432e4d01bda::t_d189e65242cf75 33,42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-settings-video.mdx
+  s_d39432e4d01bda::t_8db16ae5768859 49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-meeting-title.mdx
+  s_d39432e4d01bda::t_e6f10df5aae542 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-plugins-toggle.mdx
+  s_d39432e4d01bda::t_9a5c2c1600ed92 38,47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-messages-ui.mdx
+  s_d39432e4d01bda::t_37445e2ee27522 34-36
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-clock.mdx
+  s_d39432e4d01bda::t_bec52e4177a0d8 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-simple-grid.mdx
+  s_d39432e4d01bda::t_a509695392c831 36-37,46-48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-microphone-selector.mdx
+  s_d39432e4d01bda::t_1d218eb292b5cd 49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-message.mdx
+  s_d39432e4d01bda::t_253a5ae18d6335 43-45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-livestream-indicator.mdx
+  s_d39432e4d01bda::t_60a755d53d09bd 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-viewer-list.mdx
+  s_d39432e4d01bda::t_4556e3a607876c 33-34,43
+  s_d39432e4d01bda::t_c11cdbc39ca65f 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants.mdx
+  s_d39432e4d01bda::t_0c5a9db63bacbb 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ai.mdx
+  s_d39432e4d01bda::t_32609793ad16d1 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-mic-toggle.mdx
+  s_d39432e4d01bda::t_7907d6319276f1 33,42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-file-message.mdx
+  s_d39432e4d01bda::t_dd17f85483b50d 43
+  s_d39432e4d01bda::t_08420a0ba6fb65 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-settings.mdx
+  s_d39432e4d01bda::t_d8c7dc8ca60d1b 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-text-message.mdx
+  s_d39432e4d01bda::t_c76c069cc174b7 43
+  s_d39432e4d01bda::t_0a67b8645834dc 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-breakout-rooms-manager.mdx
+  s_d39432e4d01bda::t_3696a9fb361211 37
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-waiting-list.mdx
+  s_d39432e4d01bda::t_8767786093a3db 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-message-view.mdx
+  s_d39432e4d01bda::t_b5ad921f843661 50-51
+  s_d39432e4d01bda::t_5eff5113749a33 49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-messages-ui-paginated.mdx
+  s_d39432e4d01bda::t_98f3f4f6d3164d 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-livestream-toggle.mdx
+  s_d39432e4d01bda::t_7b3ff42e7acbc1 34,43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-selector-ui.mdx
+  s_d39432e4d01bda::t_83c432b355d9c4 32-33,42-43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-tooltip.mdx
+  s_d39432e4d01bda::t_cbe08e11c9eb7a 34-36,45-47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-network-indicator.mdx
+  s_d39432e4d01bda::t_c302a38ca930c6 38-39
+  s_d39432e4d01bda::t_e3106668849ac6 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-debugger-video.mdx
+  s_d39432e4d01bda::t_c41b541b015e87 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkPaginatedList.mdx
+  s_d39432e4d01bda::t_7d095a890d6d55 47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-fullscreen-toggle.mdx
+  s_d39432e4d01bda::t_427e8bfb94d311 35,44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-sidebar.mdx
+  s_d39432e4d01bda::t_75c252c62a970f 36-37,46
+  s_d39432e4d01bda::t_26d7c5b55eb5b2 47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-camera-selector.mdx
+  s_d39432e4d01bda::t_b8d001581fcf00 49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-stage.mdx
+  s_d39432e4d01bda::t_06aad401eac205 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-menu-item.mdx
+  s_d39432e4d01bda::t_7f0bb32047d727 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-file-dropzone.mdx
+  s_d39432e4d01bda::t_fe08b4b98aee96 36
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-debugger-system.mdx
+  s_d39432e4d01bda::t_1094dc4f8c3463 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ai-toggle.mdx
+  s_d39432e4d01bda::t_a6ef27ca5bf696 32,41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-dialog-manager.mdx
+  s_d39432e4d01bda::t_0e18f13c5abeb0 48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participant-setup.mdx
+  s_d39432e4d01bda::t_8a93965f84bd16 33-34,43
+  s_d39432e4d01bda::t_68c7a72ff2f9ca 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-transcripts.mdx
+  s_d39432e4d01bda::t_557c94dc39ff43 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-speaker-selector.mdx
+  s_d39432e4d01bda::t_930e5c4fbee7e5 50
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-pinned-message-selector.mdx
+  s_d39432e4d01bda::t_6e00252f25281e 36
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-plugin-main.mdx
+  s_d39432e4d01bda::t_dbac2da0171338 43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-file-picker-button.mdx
+  s_d39432e4d01bda::t_3197703d23a849 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-leave-meeting.mdx
+  s_d39432e4d01bda::t_ef7dbd5f1118b6 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-image-viewer.mdx
+  s_d39432e4d01bda::t_b0e19227576fbe 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participant-tile.mdx
+  s_d39432e4d01bda::t_d68dc77f8ccf9e 37-38,47-48
+  s_d39432e4d01bda::t_d66f14ea495500 49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-spinner.mdx
+  s_d39432e4d01bda::t_2bb422f0c85363 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-notifications.mdx
+  s_d39432e4d01bda::t_e417523530d25d 44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-controlbar-button.mdx
+  s_d39432e4d01bda::t_1a8ad1b9e15622 36-38,47-49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-button.mdx
+  s_d39432e4d01bda::t_8e9b0ec0705d93 32-33
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat.mdx
+  s_d39432e4d01bda::t_a779fe3ac99ba2 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-logo.mdx
+  s_d39432e4d01bda::t_7fb11c3ea0e6de 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/react/RtkTextComposerView.mdx
+  s_d39432e4d01bda::t_3e58a917716f77 45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-menu-list.mdx
+  s_d39432e4d01bda::t_405a461ae6b952 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-stage-list.mdx
+  s_d39432e4d01bda::t_39935913916cbb 37-38,47
+  s_d39432e4d01bda::t_d93af8bc903205 48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-message-list-view.mdx
+  s_d39432e4d01bda::t_82ed483bd0c122 36
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-stage-toggle.mdx
+  s_d39432e4d01bda::t_2b36eb771503f6 32,41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-text-composer-view.mdx
+  s_d39432e4d01bda::t_c16d081d299349 35-37,46-47
+  s_d39432e4d01bda::t_66db121b808fb3 48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-toggle.mdx
+  s_d39432e4d01bda::t_194a605acf942c 38,47
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-join-stage.mdx
+  s_d39432e4d01bda::t_195b3c8c492b30 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-ai-transcriptions.mdx
+  s_d39432e4d01bda::t_6746a1cf72a32d 38
+  s_d39432e4d01bda::t_b1063e8e91d98d 37
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-search-results.mdx
+  s_d39432e4d01bda::t_b2d653ebb2ab9e 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-broadcast-message-modal.mdx
+  s_d39432e4d01bda::t_fda7814c0e0c99 40
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-screen-share-toggle.mdx
+  s_d39432e4d01bda::t_2aca1df3385f40 34,43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-leave-button.mdx
+  s_d39432e4d01bda::t_83ed7510f53ae1 32,41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-virtualized-participant-list.mdx
+  s_d39432e4d01bda::t_ad27ab24cc6771 40
+  s_d39432e4d01bda::t_e0dca66fa520cb 38-39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-idle-screen.mdx
+  s_d39432e4d01bda::t_6de7db05e86cf8 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-tab-bar.mdx
+  s_d39432e4d01bda::t_f6d21378f4d68b 33-34,43-44
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-plugins.mdx
+  s_d39432e4d01bda::t_078c460ba08576 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-toggle.mdx
+  s_d39432e4d01bda::t_89db02d5271176 39,48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-spotlight-indicator.mdx
+  s_d39432e4d01bda::t_a1640746830545 38
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-mixed-grid.mdx
+  s_d39432e4d01bda::t_daceff1dd194cf 42-43,52-54
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-meeting.mdx
+  s_d39432e4d01bda::t_21b4cae3dfd31e 41-42,51-53
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-polls-toggle.mdx
+  s_d39432e4d01bda::t_e3d3b4ac8d7412 39,48
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/angular/rtk-draft-attachment-view.mdx
+  s_d39432e4d01bda::t_dc14f5108098fb 32
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-name-tag.mdx
+  s_d39432e4d01bda::t_f1f6d233cd7a4f 33-34,43-44
+  s_d39432e4d01bda::t_46edd35c19c1a5 45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-poll.mdx
+  s_d39432e4d01bda::t_2963bc3358b244 42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participants-audio.mdx
+  s_d39432e4d01bda::t_33f6940ed72eeb 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-debugger-audio.mdx
+  s_d39432e4d01bda::t_4f86214f9ae074 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-settings-audio.mdx
+  s_d39432e4d01bda::t_a14385099b3d04 49
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-audio-visualizer.mdx
+  s_d39432e4d01bda::t_9edcda1106c4f7 34-35,44
+  s_d39432e4d01bda::t_d4aa814b2fac1c 45-46
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-caption-toggle.mdx
+  s_d39432e4d01bda::t_545221a855adba 33,42
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-debugger.mdx
+  s_d39432e4d01bda::t_0bd17502c6f158 41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-participant.mdx
+  s_d39432e4d01bda::t_dd808be1629dad 44-45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-confirmation-modal.mdx
+  s_d39432e4d01bda::t_a50ba7fb40ad57 39
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-message-list-view.mdx
+  s_d39432e4d01bda::t_9a7721e184267e 42
+  s_d39432e4d01bda::t_07fd136f781d02 41
+  s_d39432e4d01bda::t_9e91e9f8963ec8 43
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-breakout-room-participants.mdx
+  s_d39432e4d01bda::t_f8ec9505d84834 43
+  s_d39432e4d01bda::t_fefd918d9fa510 44-45
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-chat-composer-view.mdx
+  s_d39432e4d01bda::t_3a70d088d66f46 39-41
+src/content/docs/realtime/realtimekit/ui-kit/api-reference/core/rtk-controlbar.mdx
+  s_d39432e4d01bda::t_d84859f97e39b1 44
+  s_d39432e4d01bda::t_7027cf7add8123 45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ae862df45bdc55595fc3d3d55ee008b76bb4772a",
+  "prompts": {},
+  "sessions": {
+    "s_d39432e4d01bda": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9409ba2e-cdc2-4456-ad81-bcba07a67759",
+        "model": "unknown"
+      },
+      "human_author": "Aman Kumar <amankumar@cloudflare.com>"
+    }
+  }
+}

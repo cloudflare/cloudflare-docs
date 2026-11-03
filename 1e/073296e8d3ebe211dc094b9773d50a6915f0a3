@@ -1,0 +1,19 @@
+src/content/docs/durable-objects/concepts/durable-object-lifecycle.mdx
+  s_d746e3fc5b512b::t_b6543655a974d0 74-79
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1e073296e8d3ebe211dc094b9773d50a6915f0a3",
+  "prompts": {},
+  "sessions": {
+    "s_d746e3fc5b512b": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec010c254ffeVpEfgi3prVCZq3",
+        "model": "claude-haiku-5-5"
+      },
+      "human_author": "Dominik Picheta <dominik@cloudflare.com>"
+    }
+  }
+}

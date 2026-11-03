@@ -1,0 +1,19 @@
+src/content/changelog/workers/2026-10-09-faster-pull-request-comments.mdx
+  s_39c1cdd1270492::t_44145adbefee50 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dcebffef6f96d67c0efefc909c8ff50a9a53dff7",
+  "prompts": {},
+  "sessions": {
+    "s_39c1cdd1270492": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a121e2-89cb-78a2-8e74-d06e3123b893",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Eric Clemmons <eclemmons@cloudflare.com>"
+    }
+  }
+}

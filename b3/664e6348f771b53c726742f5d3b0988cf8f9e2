@@ -1,0 +1,36 @@
+package.json
+  s_ec43507d233187::t_85f6b4fb3d0d6b 33
+.agents/skills/contributing/references/changelog.md
+  s_ec43507d233187::t_85f6b4fb3d0d6b 39,45-46,93
+src/content/changelog/waf/2026-10-14-emergency-waf-release.mdx
+  s_ec43507d233187::t_85f6b4fb3d0d6b 4,43
+bin/validate-changelog-dates.node.test.ts
+  s_ec43507d233187::t_85f6b4fb3d0d6b 1-35
+bin/validate-changelog-dates.ts
+  s_ec43507d233187::t_0696c83067b1c9 58-90
+  s_ec43507d233187::t_d32ccfe019718c 1-57,91-92
+src/content/changelog/rules/2026-10-14-trim-functions.mdx
+  s_ec43507d233187::t_85f6b4fb3d0d6b 4
+src/content/changelog/workers/2026-10-14-workers-builds-default-tooling.mdx
+  s_ec43507d233187::t_85f6b4fb3d0d6b 6
+src/content/changelog/dns/2026-10-14-nameserver-sets.mdx
+  s_ec43507d233187::t_85f6b4fb3d0d6b 4
+.github/workflows/ci.yml
+  s_ec43507d233187::t_2d062ef98e99e2 49
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b3664e6348f771b53c726742f5d3b0988cf8f9e2",
+  "prompts": {},
+  "sessions": {
+    "s_ec43507d233187": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_ec418a2e1ffef4sqIbudkSdXMl",
+        "model": "unknown"
+      },
+      "human_author": "scottbuscemi <sbuscemi@cloudflare.com>"
+    }
+  }
+}

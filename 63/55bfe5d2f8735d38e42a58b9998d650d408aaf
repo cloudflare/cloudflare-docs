@@ -1,0 +1,19 @@
+src/plugins/satteri/heading-slugs.ts
+  s_3d35959f766002::t_b1ff7711315f38 15,69-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6355bfe5d2f8735d38e42a58b9998d650d408aaf",
+  "prompts": {},
+  "sessions": {
+    "s_3d35959f766002": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f29b723ddffeFugy1cZwf2Jt4w",
+        "model": "gpt-6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}

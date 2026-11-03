@@ -1,0 +1,29 @@
+src/content/docs/workers/observability/traces/spans-and-attributes.mdx
+  s_4baecb2f5e898d::t_ec349ec0173702 150-151
+src/content/changelog/workers/2026-09-10-javascript-rpc-session-spans.mdx
+  s_ed5f3595425ba0::t_27f986b780b0f9 1-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "6ed2d12d6c68b1cf2a1605dc96b18172a06e7ba6",
+  "prompts": {},
+  "sessions": {
+    "s_4baecb2f5e898d": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f79877d6effeC4GjdTncLdOwYe",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ashley Peacock <apeacock@cloudflare.com>"
+    },
+    "s_ed5f3595425ba0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f6eb32fd7ffeOjiPUexpn65PX3",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Ashley Peacock <apeacock@cloudflare.com>"
+    }
+  }
+}

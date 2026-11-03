@@ -1,0 +1,19 @@
+src/content/docs/hyperdrive/platform/limits.mdx
+  s_837dcc1b4b9cc0::t_8cc80023a74b59 19,29-33,37,45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1675402e816047ee5e2a52634b09493c3cd637f1",
+  "prompts": {},
+  "sessions": {
+    "s_837dcc1b4b9cc0": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f3df4778fffezskvgg4Xju2H4N",
+        "model": "@cf/zai-org/glm-5.3-flash"
+      },
+      "human_author": "Ivory <ivory@cloudflare.com>"
+    }
+  }
+}

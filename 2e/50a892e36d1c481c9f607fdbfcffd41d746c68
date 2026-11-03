@@ -1,0 +1,21 @@
+src/content/changelog/email-service/2026-09-04-email-routing-rules-wrangler.mdx
+  s_250cc64016b320::t_e2101c36e7a499 1-31
+src/content/docs/email-service/configuration/email-routing-addresses.mdx
+  s_250cc64016b320::t_eb037257a4d101 11,142-170
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "2e50a892e36d1c481c9f607fdbfcffd41d746c68",
+  "prompts": {},
+  "sessions": {
+    "s_250cc64016b320": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_f94cccf00ffeRhn5p0ynueUWf1",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Diogo Santos <dsantos@cloudflare.com>"
+    }
+  }
+}

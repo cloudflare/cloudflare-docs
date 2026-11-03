@@ -1,0 +1,21 @@
+src/content/docs/realtime/realtimekit/quickstart.mdx
+  s_fd40a299e73adf::t_9a61c7175342f9 79
+src/content/partials/realtime/sfu/create-app-prompt.mdx
+  s_fd40a299e73adf::t_80429f07420650 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3e34fdfa583d3f10958261caf1e30d11cafc7420",
+  "prompts": {},
+  "sessions": {
+    "s_fd40a299e73adf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a0fdb4-cefa-76f3-a839-7d43af18c323",
+        "model": "unknown"
+      },
+      "human_author": "korinne <korinne@cloudflare.com>"
+    }
+  }
+}
