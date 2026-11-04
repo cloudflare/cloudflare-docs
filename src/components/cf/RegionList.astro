@@ -1,0 +1,279 @@
+---
+/**
+ * RegionList — searchable list of the regions available for one data
+ * residency control, filterable by region type.
+ */
+import { Badge } from "@/components/ui/badge";
+import { renderMarkdownInline } from "~/util/markdown";
+
+const types = {
+	country: "Country",
+	state: "US state",
+	group: "Group of countries",
+	framework: "Compliance framework",
+	attribute: "Attribute-based",
+} as const;
+
+type Region = { name: string; type: keyof typeof types; notes?: string };
+
+interface Props {
+	control: "regional-services" | "geo-key-manager";
+}
+
+const { control } = Astro.props;
+
+const countries = [
+	"Australia",
+	"Austria",
+	"Brazil",
+	"Canada",
+	"Germany",
+	"Hong Kong",
+	"India",
+	"Italy",
+	"Japan",
+	"Netherlands",
+	"Russia",
+	"Saudi Arabia",
+	"Singapore",
+	"South Africa",
+	"South Korea",
+	"Spain",
+	"Switzerland",
+	"Taiwan",
+	"Turkey",
+	"United Arab Emirates",
+	"United States of America",
+];
+
+const regionalServices: Region[] = [
+	...countries.map((name) => ({ name, type: "country" as const })),
+	{
+		name: "France",
+		type: "country",
+		notes: "Metropolitan France, the European territory of France.",
+	},
+	{
+		name: "United Kingdom",
+		type: "country",
+		notes:
+			"Not in the EU. Traffic processing stays in the UK, but logs and stored content still go to the EU or the US.",
+	},
+	{ name: "California", type: "state" },
+	{ name: "Florida", type: "state" },
+	{ name: "Texas", type: "state" },
+	{
+		name: "European Union",
+		type: "group",
+		notes:
+			"Data centers in the [European Union](https://european-union.europa.eu/principles-countries-history/country-profiles_en).",
+	},
+	{
+		name: "Schengen Area",
+		type: "group",
+		notes:
+			"Data centers in the [Schengen Area](https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en).",
+	},
+	{
+		name: "NATO",
+		type: "group",
+		notes:
+			"Data centers in [NATO member countries](https://www.nato.int/en/about-us/organization/nato-member-countries).",
+	},
+	{
+		name: "Exclusive of Hong Kong and Macau",
+		type: "group",
+		notes: "Any data center worldwide **except** those in Hong Kong and Macau.",
+	},
+	{
+		name: "Exclusive of Russia and Belarus",
+		type: "group",
+		notes: "Any data center worldwide **except** those in Russia and Belarus.",
+	},
+	{
+		name: "C5:2020 (Germany)",
+		type: "framework",
+		notes: "Data centers in Germany.",
+	},
+	{ name: "ENS (Spain)", type: "framework", notes: "Data centers in Spain." },
+	{
+		name: "FedRAMP Moderate Compliant (Domestic)",
+		type: "framework",
+		notes: "FedRAMP Moderate certified data centers in the United States only.",
+	},
+	{
+		name: "FedRAMP Moderate Compliant (International)",
+		type: "framework",
+		notes:
+			"FedRAMP Moderate certified data centers, **including locations outside the United States**.",
+	},
+	{
+		name: "IRAP Protected",
+		type: "framework",
+		notes:
+			"[IRAP](https://www.cloudflare.com/cloudflare-for-government/australia/irap/)-assessed data centers, **including locations outside Australia**.",
+	},
+	{ name: "ISMAP", type: "framework", notes: "Data centers in Japan." },
+	{
+		name: "ISO 27001 Certified European Union",
+		type: "framework",
+		notes: "EU data centers that hold ISO 27001 certification.",
+	},
+	{
+		name: "Cloudflare Green Energy",
+		type: "attribute",
+		notes:
+			"Data centers committed to powering their operations with [renewable energy](https://www.cloudflare.com/impact/). No geographic guarantee, so it does not satisfy a data residency requirement on its own.",
+	},
+];
+
+const allAccounts = "Available to all accounts.";
+const currentGkm =
+	"Available with the current [Geo Key Manager](/ssl/edge-certificates/geokey-manager/), which added country-level control.";
+
+const geoKeyManager: Region[] = [
+	{ name: "European Union", type: "group", notes: allAccounts },
+	{ name: "United States of America", type: "country", notes: allAccounts },
+	{
+		name: "Highest security data centers",
+		type: "attribute",
+		notes: `${allAccounts} Refer to [Highest security data centers](/ssl/edge-certificates/geokey-manager/supported-options/#highest-security-data-centers).`,
+	},
+	...[
+		"Australia",
+		"Canada",
+		"Germany",
+		"India",
+		"Japan",
+		"Singapore",
+		"South Korea",
+		"United Kingdom",
+	].map((name) => ({ name, type: "country" as const, notes: currentGkm })),
+	{
+		name: "FedRAMP Moderate Compliant (Domestic)",
+		type: "framework",
+		notes: currentGkm,
+	},
+];
+
+const regions =
+	control === "geo-key-manager" ? geoKeyManager : regionalServices;
+const usedTypes = Object.entries(types).filter(([k]) =>
+	regions.some((r) => r.type === k),
+);
+
+const typeOrder = Object.keys(types);
+regions.sort(
+	(a, b) =>
+		typeOrder.indexOf(a.type) - typeOrder.indexOf(b.type) ||
+		a.name.localeCompare(b.name),
+);
+---
+
+<div data-region-list>
+	<div class="not-content my-4 grid gap-3 md:grid-cols-[1fr_auto]">
+		<input
+			type="search"
+			data-region-search
+			aria-label="Search regions"
+			placeholder="Search regions, for example Japan or FedRAMP"
+			class="border-border bg-card focus:ring-primary w-full min-w-0 rounded-md border px-4 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
+		/>
+		<select
+			data-region-type
+			aria-label="Filter by region type"
+			class="border-border bg-card rounded-md border px-3 py-2"
+		>
+			<option value="">All region types</option>
+			{usedTypes.map(([k, label]) => (
+				<option value={k}>{label}</option>
+			))}
+		</select>
+	</div>
+
+	<p
+		data-region-count
+		class="text-muted-foreground text-sm"
+		aria-live="polite"
+	></p>
+
+	<div
+		data-region-rows
+		class="not-content border-border divide-border divide-y rounded-md border"
+	>
+		<div
+			class="region-grid text-muted-foreground hidden gap-4 px-4 py-2 text-xs font-medium sm:grid"
+			aria-hidden="true"
+		>
+			<span>Region</span>
+			<span>Type</span>
+			<span>Notes</span>
+		</div>
+		{regions.map((r) => (
+			<div
+				data-row
+				data-type={r.type}
+				data-search={`${r.name} ${types[r.type]} ${r.notes ?? ""}`.toLowerCase()}
+				class="region-grid grid items-center gap-x-4 gap-y-1 px-4 py-3 text-sm"
+			>
+				<span class="font-semibold">{r.name}</span>
+				<span>
+					<Badge
+						text={types[r.type]}
+						variant="steel"
+						class="py-1 leading-tight whitespace-normal"
+					/>
+				</span>
+				<span class="text-muted-foreground">
+					{r.notes && <span set:html={renderMarkdownInline(r.notes)} />}
+				</span>
+			</div>
+		))}
+	</div>
+</div>
+
+<style>
+	@media (min-width: 640px) {
+		.region-grid {
+			grid-template-columns: minmax(10rem, 1.2fr) minmax(8rem, 0.8fr) minmax(
+					0,
+					2fr
+				);
+		}
+	}
+	[data-region-list] a {
+		color: var(--color-primary);
+		text-decoration: underline;
+	}
+</style>
+
+<script>
+	document
+		.querySelectorAll<HTMLElement>("[data-region-list]")
+		.forEach((root) => {
+			const search = root.querySelector<HTMLInputElement>(
+				"[data-region-search]",
+			);
+			const type = root.querySelector<HTMLSelectElement>("[data-region-type]");
+			const rows = root.querySelectorAll<HTMLElement>("[data-row]");
+			const count = root.querySelector<HTMLElement>("[data-region-count]");
+
+			function apply() {
+				const term = (search?.value ?? "").toLowerCase().trim();
+				const t = type?.value ?? "";
+				let visible = 0;
+				rows.forEach((row) => {
+					const show =
+						(!term || (row.dataset.search ?? "").includes(term)) &&
+						(!t || row.dataset.type === t);
+					row.hidden = !show;
+					if (show) visible++;
+				});
+				if (count) count.textContent = `${visible} regions shown.`;
+			}
+
+			search?.addEventListener("input", apply);
+			type?.addEventListener("change", apply);
+			apply();
+		});
+</script>

@@ -13,16 +13,16 @@ head:
     content: Region support
 ---
 
-import { Aside } from "~/components";
+import { Aside, RegionList } from "~/components";
 
-Each data residency control has its own region list. A country available for Regional Services is usually not available for storage or logs. Check this page before you commit to a region.
+Each regionalization control has its own regionalization list. Verify your setup before assuming a configuration is regionalizable.
 
-| Control                                                             | What it keeps in region | Regions available                   |
-| ------------------------------------------------------------------- | ----------------------- | ----------------------------------- |
-| [Regional Services](/data-localization/regional-services/)          | Request processing      | 39, listed below                    |
-| [Storage jurisdictions](/data-localization/compatibility/#controls) | Stored data             | EU, US, FedRAMP. Varies by product. |
-| [Customer Metadata Boundary](/data-localization/metadata-boundary/) | Logs and analytics      | EU, US                              |
-| [Geo Key Manager](/data-localization/geo-key-manager/)              | TLS private keys        | 12, listed below                    |
+| Goal            | Control                                                             | What it keeps in region | Regions available                   |
+| --------------- | ------------------------------------------------------------------- | ----------------------- | ----------------------------------- |
+| Data Processing | [Regional Services](/data-localization/regional-services/)          | Request processing      | 39, listed below                    |
+| Data Residency  | [Storage jurisdictions](/data-localization/compatibility/#controls) | Stored data             | EU, US, FedRAMP. Varies by product. |
+| Log Residency   | [Customer Metadata Boundary](/data-localization/metadata-boundary/) | Logs and analytics      | EU, US                              |
+| Key Management  | [Geo Key Manager](/data-localization/geo-key-manager/)              | TLS private keys        | 12, listed below                    |
 
 <Aside type="caution" title="Processing is not storage">
 
@@ -34,59 +34,33 @@ Setting Regional Services to Japan does not put your logs or stored content in J
 
 Regional Services restricts which data centers can decrypt and service your HTTPS traffic. Unless noted otherwise, Cloudflare uses only data centers physically located in the named country.
 
-**Countries:** Australia, Austria, Brazil, Canada, France, Germany, Hong Kong, India, Italy, Japan, Netherlands, Russia, Saudi Arabia, Singapore, South Africa, South Korea, Spain, Switzerland, Taiwan, Turkey, United Arab Emirates, United Kingdom, United States of America.
+The regions below are managed regions, identified by a region key such as `eu` or `us`. Some regions are named after compliance frameworks. Those restrict by certification, not only by geography, so they can include data centers outside the country you might expect. Selecting a region does not make your deployment compliant with that framework.
 
-**US states:** California, Florida, Texas.
+<RegionList control="regional-services" />
 
-Two notes on country regions:
-
-- **France** means Metropolitan France, the European territory of France.
-- **United Kingdom** is not in the EU. Regional Services set to the UK keeps traffic processing in the UK, but your logs and stored content still go to the EU or the US.
-
-**Groups of countries:**
-
-| Region                           | Definition                                                                                                               |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| European Union                   | Data centers in the [European Union](https://european-union.europa.eu/principles-countries-history/country-profiles_en). |
-| Schengen Area                    | Data centers in the [Schengen Area](https://home-affairs.ec.europa.eu/policies/schengen/schengen-area_en).               |
-| NATO                             | Data centers in [NATO member countries](https://www.nato.int/en/about-us/organization/nato-member-countries).            |
-| Exclusive of Hong Kong and Macau | Any data center worldwide **except** those in Hong Kong and Macau.                                                       |
-| Exclusive of Russia and Belarus  | Any data center worldwide **except** those in Russia and Belarus.                                                        |
-
-**Compliance frameworks.** These regions are named after compliance frameworks. Some restrict by certification, not only by geography, so they include data centers outside the country you might expect. Selecting a region does not make your deployment compliant with that framework.
-
-| Region                                                                                 | Definition                                                                                  |
-| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| C5:2020 (Germany)                                                                      | Data centers in Germany.                                                                    |
-| ENS (Spain)                                                                            | Data centers in Spain.                                                                      |
-| FedRAMP Moderate Compliant (Domestic)                                                  | FedRAMP Moderate certified data centers in the United States only.                          |
-| FedRAMP Moderate Compliant (International)                                             | FedRAMP Moderate certified data centers, **including locations outside the United States**. |
-| [IRAP](https://www.cloudflare.com/cloudflare-for-government/australia/irap/) Protected | IRAP-assessed data centers, **including locations outside Australia**.                      |
-| ISMAP                                                                                  | Data centers in Japan.                                                                      |
-| ISO 27001 Certified European Union                                                     | EU data centers that hold ISO 27001 certification.                                          |
+<Aside type="note" title="FedRAMP High">
 
 FedRAMP High is a separate Cloudflare environment, not a Regional Services region. Contact your account team for FedRAMP High.
 
-**Attribute-based regions.** Cloudflare Green Energy restricts traffic to data centers committed to powering their operations with [renewable energy](https://www.cloudflare.com/impact/). It carries no geographic guarantee, so it does not satisfy a data residency requirement on its own.
+</Aside>
 
-### Region types
+### Custom regions
 
-- **Managed regions** are predefined and identified by a region key such as `eu` or `us`. These are the regions listed above. Most customers use a managed region.
-- **Custom regions** restrict processing to a specific set of data centers you agree with your account team, for when no managed region meets your requirements. Custom regions work with [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/) and [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/), but not with [Regional Hostnames](/data-localization/regional-services/regional-hostnames/).
+If no managed region meets your requirements, your account team can set up a custom region that restricts processing to a specific set of data centers. Custom regions work with [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/) and [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/), but not with [Regional Hostnames](/data-localization/regional-services/regional-hostnames/).
 
 ## Storage jurisdictions
 
 Set per resource as a jurisdiction, when you create the resource:
 
-| Product                                                                                                 | What the jurisdiction covers                    | Jurisdictions         |
-| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | --------------------- |
-| [R2](/r2/reference/data-location/#jurisdictional-restrictions)                                          | Stored objects                                  | `eu`, `us`, `fedramp` |
-| [Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) | Object execution and stored state               | `eu`, `us`, `fedramp` |
-| [D1](/d1/configuration/data-location/#restrict-database-to-a-jurisdiction)                              | Stored databases                                | `eu`, `us`, `fedramp` |
-| [Workers KV](/kv/reference/data-location/#restrict-a-namespace-to-a-jurisdiction)                       | Stored key-value pairs                          | `eu`, `us`, `fedramp` |
-| [Queues](/queues/configuration/data-location/)                                                          | Message storage and processing                  | `eu`, `us`, `fedramp` |
-| [Workflows](/workflows/reference/data-location/)                                                        | Workflow execution and persisted instance data  | `eu`, `us`, `fedramp` |
-| [Containers](/containers/concepts/placement/#jurisdictional-constraints)                                | Container execution                             | `eu`, `us`, `fedramp` |
+| Product                                                                                                 | What the jurisdiction covers                   | Jurisdictions         |
+| ------------------------------------------------------------------------------------------------------- | ---------------------------------------------- | --------------------- |
+| [R2](/r2/reference/data-location/#jurisdictional-restrictions)                                          | Stored objects                                 | `eu`, `us`, `fedramp` |
+| [Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction) | Object execution and stored state              | `eu`, `us`, `fedramp` |
+| [D1](/d1/configuration/data-location/#restrict-database-to-a-jurisdiction)                              | Stored databases                               | `eu`, `us`, `fedramp` |
+| [Workers KV](/kv/reference/data-location/#restrict-a-namespace-to-a-jurisdiction)                       | Stored key-value pairs                         | `eu`, `us`, `fedramp` |
+| [Queues](/queues/configuration/data-location/)                                                          | Message storage and processing                 | `eu`, `us`, `fedramp` |
+| [Workflows](/workflows/reference/data-location/)                                                        | Workflow execution and persisted instance data | `eu`, `us`, `fedramp` |
+| [Containers](/containers/concepts/placement/#jurisdictional-constraints)                                | Container execution                            | `eu`, `us`, `fedramp` |
 
 Each product defines what its jurisdiction covers. Refer to [Product compatibility](/data-localization/compatibility/) for products that store content without a jurisdiction setting.
 
@@ -98,10 +72,8 @@ Regional Services does not set where your logs are stored. For any Regional Serv
 
 ## Geo Key Manager
 
-Geo Key Manager restricts which data centers can use your TLS private keys to decrypt traffic. Twelve regions are available, in two groups.
+Geo Key Manager restricts which data centers can use your TLS private keys to decrypt traffic. Twelve regions are available. Three are available to all accounts. The rest require the current [Geo Key Manager](/ssl/edge-certificates/geokey-manager/).
 
-**Available to all accounts:** European Union, United States of America, [Highest security data centers](/ssl/edge-certificates/geokey-manager/supported-options/#highest-security-data-centers).
-
-**Available with the current [Geo Key Manager](/ssl/edge-certificates/geokey-manager/)**, which added country-level control: Australia, Canada, FedRAMP Moderate Compliant (Domestic), Germany, India, Japan, Singapore, South Korea, United Kingdom.
+<RegionList control="geo-key-manager" />
 
 Geo Key Manager uses its own country-based list, which differs from the Regional Services list. If you need a country that is not listed, it is not available for Geo Key Manager today.

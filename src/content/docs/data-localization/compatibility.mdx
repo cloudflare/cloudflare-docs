@@ -12,18 +12,18 @@ head:
     content: Data residency controls and product compatibility
 ---
 
-import { Aside, DataResidencyCatalog } from "~/components";
+import { Aside, Badge, DataResidencyCatalog } from "~/components";
 
 Use this reference to check whether the products in your architecture can keep each kind of data in a region, and what you must configure for that to hold. Each control covers a different part of your data. A product can be supported by one control and outside the scope of another.
 
 ## Controls
 
-| Control                                                             | What it keeps in region                                                                                             | Where you set it                                  | What it does not cover                                                                                      |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| [Regional Services](/data-localization/regional-services/)          | Where Cloudflare decrypts, inspects, and processes your HTTPS traffic.                                              | Per hostname, IP prefix, or Spectrum HTTP/S application. | Stored content, logs, Worker subrequests, and service bindings.                                             |
-| Storage jurisdictions                                               | Where a resource stores its data, for example R2 buckets, Durable Objects, D1 databases, and Workers KV namespaces. | Per resource, when you create it.                 | Request processing and logs. Each product defines its own scope.                                            |
-| [Customer Metadata Boundary](/data-localization/metadata-boundary/) | Where logs and analytics about your traffic ("Customer Logs") are stored. Regions: EU or US.                        | Per account.                                      | Content you store. Coverage varies by dataset.                                                              |
-| [Geo Key Manager](/data-localization/geo-key-manager/)              | Which data centers can use your TLS private keys to decrypt traffic.                                                | Per certificate.                                  | Keys for certificates Cloudflare manages for you, such as Cloudflare for SaaS custom hostname certificates. |
+| Goal            | Control                                                                                                                                                                                                               | What it keeps in region                                                                                             | Where you set it                                         | What it does not cover                                                                                      |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Data Processing | [Regional Services](/data-localization/regional-services/)                                                                                                                                                            | Where Cloudflare decrypts, inspects, and processes your HTTPS traffic.                                              | Per hostname, IP prefix, or Spectrum HTTP/S application. | Stored content, logs, Worker subrequests, and service bindings.                                             |
+| Data Residency  | Storage jurisdictions for [R2](/r2/reference/data-location/#jurisdictional-restrictions), [Durable Objects](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction), D1, and Workers KV | Where a resource stores its data, for example R2 buckets, Durable Objects, D1 databases, and Workers KV namespaces. | Per resource, when you create it.                        | Request processing and logs. Each product defines its own scope.                                            |
+| Log Residency   | [Customer Metadata Boundary](/data-localization/metadata-boundary/)                                                                                                                                                   | Where logs and analytics about your traffic ("Customer Logs") are stored. Regions: EU or US.                        | Per account.                                             | Content you store. Coverage varies by dataset.                                                              |
+| Key Management  | [Geo Key Manager](/data-localization/geo-key-manager/)                                                                                                                                                                | Which data centers can use your TLS private keys to decrypt traffic.                                                | Per certificate.                                         | Keys for certificates Cloudflare manages for you, such as Cloudflare for SaaS custom hostname certificates. |
 
 <Aside type="note">
 
@@ -35,13 +35,11 @@ Each control has its own list of regions. For example, a processing region in Ja
 
 ## Statuses
 
-- **Supported**: The control applies with no extra configuration. Any functional impact, such as unavailable dashboard analytics, is listed separately.
-- **With requirements**: The control applies only when you meet the listed requirements.
-- **Not supported**: The product cannot be used with this control.
-- **Out of scope**: The product does not handle the data this control covers.
-- **Not assessed**: Cloudflare has not documented how this control applies. Do not assume it applies.
-
-Each product shows when its entry was last verified. Entries marked **Not yet re-verified** were carried over from the previous compatibility matrix and are being reviewed.
+- <Badge text="Supported" variant="success" />: The control applies with no extra configuration. Any functional impact, such as unavailable dashboard analytics, is listed separately.
+- <Badge text="With requirements" variant="info" />: The control applies only when you meet the listed requirements.
+- <Badge text="Not supported" variant="danger" />: The product cannot be used with this control.
+- <Badge text="Out of scope" variant="default" />: The product does not handle the data this control covers.
+- <Badge text="Not assessed" variant="warning" />: Cloudflare has not documented how this control applies. Do not assume it applies.
 
 ## Products
 

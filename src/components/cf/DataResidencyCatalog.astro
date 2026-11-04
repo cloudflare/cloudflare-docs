@@ -6,6 +6,7 @@
  * and verification date for every control.
  */
 import { getCollection } from "astro:content";
+import { Aside } from "@/components/ui/aside";
 import { Badge } from "@/components/ui/badge";
 import { renderMarkdownInline } from "~/util/markdown";
 
@@ -13,15 +14,15 @@ const controls = [
 	{
 		key: "regional_services",
 		name: "Regional Services",
-		scope: "Request processing",
+		scope: "Data Processing",
 	},
-	{ key: "storage", name: "Storage jurisdictions", scope: "Stored data" },
+	{ key: "storage", name: "Storage jurisdictions", scope: "Data Residency" },
 	{
 		key: "cmb",
 		name: "Customer Metadata Boundary",
-		scope: "Logs and analytics",
+		scope: "Log Residency",
 	},
-	{ key: "gkm", name: "Geo Key Manager", scope: "TLS private keys" },
+	{ key: "gkm", name: "Geo Key Manager", scope: "Key Management" },
 ] as const;
 
 const statuses = {
@@ -39,7 +40,7 @@ const groups = (await getCollection("data-residency"))
 	.sort((a, b) => a.order - b.order);
 ---
 
-<div class="not-content my-4 grid gap-3 md:grid-cols-[1fr_auto_auto]">
+<div class="not-content my-4 grid gap-3 md:grid-cols-[1fr_auto]">
 	<input
 		type="search"
 		id="residency-search"
@@ -57,23 +58,11 @@ const groups = (await getCollection("data-residency"))
 			<option value={c.key}>{c.scope}</option>
 		))}
 	</select>
-	<select
-		id="residency-status"
-		aria-label="Filter by status"
-		class="border-border bg-card rounded-md border px-3 py-2"
-	>
-		<option value="">Any status</option>
-		{Object.entries(statuses).map(([k, s]) => (
-			<option value={k}>{s.label}</option>
-		))}
-	</select>
 </div>
 
-<p
-	id="residency-count"
-	class="text-muted-foreground text-sm"
-	aria-live="polite"
-></p>
+<Aside type="note">
+	<p id="residency-count" aria-live="polite"></p>
+</Aside>
 
 <div id="residency-catalog" class="not-content">
 	{groups.map((group) => (
@@ -83,13 +72,13 @@ const groups = (await getCollection("data-residency"))
 			</h3>
 			<div class="border-border divide-border divide-y rounded-md border">
 				<div
-					class="residency-grid text-muted-foreground hidden gap-2 px-4 py-2 text-xs font-medium sm:grid"
+					class="residency-grid text-muted-foreground hidden gap-4 px-4 py-2 text-xs font-medium sm:grid"
 					aria-hidden="true"
 				>
 					<span>Product</span>
 					{controls.map((c) => (
 						<span data-control={c.key}>
-							{c.scope}
+							<strong class="text-foreground font-bold">{c.scope}</strong>
 							<br />
 							<span class="font-normal">{c.name}</span>
 						</span>
@@ -100,15 +89,9 @@ const groups = (await getCollection("data-residency"))
 						id={slug(entry.product)}
 						data-row
 						data-search={`${entry.product} ${group.category}`.toLowerCase()}
-						{...Object.fromEntries(
-							controls.map((c) => [
-								`data-status-${c.key}`,
-								entry.controls[c.key].status,
-							]),
-						)}
 						class="group"
 					>
-						<summary class="residency-grid hover:bg-accent grid cursor-pointer items-center gap-2 px-4 py-3">
+						<summary class="residency-grid hover:bg-accent grid cursor-pointer items-center gap-4 px-4 py-3">
 							<span class="font-semibold">
 								{entry.product}
 								{entry.review && (
@@ -122,17 +105,21 @@ const groups = (await getCollection("data-residency"))
 								return (
 									<span
 										data-control={c.key}
-										class="flex items-center gap-1 text-xs"
+										class="flex min-w-0 items-center gap-1 text-xs"
 									>
 										<span class="text-muted-foreground sm:hidden">
 											{c.scope}:
 										</span>
-										<Badge text={s.label} variant={s.variant} />
+										<Badge
+											text={s.label}
+											variant={s.variant}
+											class="py-1 leading-tight whitespace-normal"
+										/>
 									</span>
 								);
 							})}
 						</summary>
-						<div class="grid gap-4 px-4 pt-1 pb-4 sm:grid-cols-2">
+						<div class="border-border divide-border mx-4 mb-4 divide-y rounded-md border">
 							{controls.map((c) => {
 								const ctl = entry.controls[c.key];
 								const s = statuses[ctl.status];
@@ -142,36 +129,46 @@ const groups = (await getCollection("data-residency"))
 									...(ctl.notes ?? []).map((t) => ["Note", t]),
 								];
 								return (
-									<div data-control={c.key} class="text-sm">
-										<div class="mb-1 flex items-center gap-2">
-											<span class="font-medium">{c.name}</span>
-											<Badge text={s.label} variant={s.variant} />
+									<div
+										data-control={c.key}
+										class="residency-detail grid gap-x-4 gap-y-2 px-4 py-3 text-sm"
+									>
+										<div>
+											<strong class="font-bold">{c.scope}</strong>
+											<div class="text-muted-foreground text-xs">{c.name}</div>
 										</div>
-										{details.length > 0 ? (
-											<ul class="ml-4 list-disc space-y-1">
-												{details.map(([kind, text]) => (
-													<li>
+										<div>
+											<Badge
+												text={s.label}
+												variant={s.variant}
+												class="py-1 leading-tight whitespace-normal"
+											/>
+										</div>
+										<div class="space-y-1.5">
+											{details.length > 0 ? (
+												details.map(([kind, text]) => (
+													<p>
 														<strong>{kind}:</strong>{" "}
 														<span set:html={renderMarkdownInline(text)} />
-													</li>
-												))}
-											</ul>
-										) : (
-											<p class="text-muted-foreground">
-												{ctl.status === "not-supported"
-													? "No reason documented."
-													: "No conditions documented."}
-											</p>
-										)}
+													</p>
+												))
+											) : (
+												<p class="text-muted-foreground">
+													{ctl.status === "not-supported"
+														? "No reason documented."
+														: "No conditions documented."}
+												</p>
+											)}
+										</div>
 									</div>
 								);
 							})}
-							<p class="text-muted-foreground text-xs sm:col-span-2">
-								{entry.last_verified
-									? `Last verified ${entry.last_verified}.`
-									: "Not yet re-verified since the previous compatibility matrix."}
-							</p>
 						</div>
+						<p class="text-muted-foreground px-4 pb-4 text-xs">
+							{entry.last_verified
+								? `Last verified ${entry.last_verified}.`
+								: "Not yet re-verified since the previous compatibility matrix."}
+						</p>
 					</details>
 				))}
 			</div>
@@ -187,6 +184,27 @@ const groups = (await getCollection("data-residency"))
 		#residency-catalog[data-filtered] .residency-grid {
 			grid-template-columns: minmax(9rem, 1.2fr) minmax(0, 3fr);
 		}
+	}
+	@media (min-width: 640px) {
+		.residency-detail {
+			grid-template-columns: 11rem 8.5rem minmax(0, 1fr);
+		}
+	}
+	#residency-catalog details {
+		transition:
+			opacity 150ms ease,
+			filter 150ms ease;
+	}
+	#residency-catalog details[open] {
+		background: var(--color-accent);
+	}
+	#residency-catalog[data-focus] details:not([open]) {
+		opacity: 0.35;
+		filter: saturate(0.2);
+	}
+	#residency-catalog[data-focus] details:not([open]):hover {
+		opacity: 1;
+		filter: none;
 	}
 	#residency-catalog summary::-webkit-details-marker {
 		display: none;
@@ -204,17 +222,14 @@ const groups = (await getCollection("data-residency"))
 	const search = document.querySelector<HTMLInputElement>("#residency-search");
 	const control =
 		document.querySelector<HTMLSelectElement>("#residency-control");
-	const status = document.querySelector<HTMLSelectElement>("#residency-status");
 	const catalog = document.querySelector<HTMLDivElement>("#residency-catalog");
 	const count =
 		document.querySelector<HTMLParagraphElement>("#residency-count");
-	const keys = ["regional_services", "storage", "cmb", "gkm"];
 
 	function apply() {
 		if (!catalog) return;
 		const term = (search?.value ?? "").toLowerCase().trim();
 		const ctl = control?.value ?? "";
-		const st = status?.value ?? "";
 
 		catalog.toggleAttribute("data-filtered", ctl !== "");
 		catalog.querySelectorAll<HTMLElement>("[data-control]").forEach((el) => {
@@ -227,13 +242,7 @@ const groups = (await getCollection("data-residency"))
 			group
 				.querySelectorAll<HTMLDetailsElement>("[data-row]")
 				.forEach((row) => {
-					const matchesTerm =
-						!term || (row.dataset.search ?? "").includes(term);
-					const checked = ctl ? [ctl] : keys;
-					const matchesStatus =
-						!st ||
-						checked.some((k) => row.getAttribute(`data-status-${k}`) === st);
-					const show = matchesTerm && matchesStatus;
+					const show = !term || (row.dataset.search ?? "").includes(term);
 					row.hidden = !show;
 					if (show) groupVisible++;
 				});
@@ -247,7 +256,6 @@ const groups = (await getCollection("data-residency"))
 
 	search?.addEventListener("input", apply);
 	control?.addEventListener("change", apply);
-	status?.addEventListener("change", apply);
 	apply();
 
 	function openFromHash() {
@@ -258,6 +266,16 @@ const groups = (await getCollection("data-residency"))
 			target.scrollIntoView({ block: "start" });
 		}
 	}
+	function updateFocus() {
+		catalog?.toggleAttribute(
+			"data-focus",
+			!!catalog.querySelector("details[data-row][open]"),
+		);
+	}
+	catalog
+		?.querySelectorAll<HTMLDetailsElement>("details[data-row]")
+		.forEach((row) => row.addEventListener("toggle", updateFocus));
+
 	window.addEventListener("hashchange", openFromHash);
 	openFromHash();
 </script>
