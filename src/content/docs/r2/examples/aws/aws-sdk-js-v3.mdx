@@ -32,10 +32,6 @@ compatibility_flags = ["nodejs_compat"]
 If you only need object reads and writes from a Worker, the [R2 Workers API binding](/r2/api/workers/workers-api-reference/) does not require the SDK. [aws4fetch](/r2/examples/aws/aws4fetch/) is a lighter alternative for S3-compatible requests and presigned URLs.
 :::
 
-:::note
-Currently, you cannot use AWS S3-compatible API while developing locally via `wrangler dev`.
-:::
-
 ```ts
 import {
 	S3Client,
