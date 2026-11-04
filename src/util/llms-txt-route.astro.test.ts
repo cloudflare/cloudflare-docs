@@ -45,6 +45,11 @@ const catalogModels = [
 	},
 ];
 
+const directoryOnlyBody = vi.hoisted(
+	() =>
+		'import { DirectoryListing } from "~/components";\n\n<DirectoryListing />',
+);
+
 vi.mock("astro:content", () => ({
 	getCollection: vi.fn(async (id: string) => {
 		if (id === "directory") {
@@ -61,6 +66,14 @@ vi.mock("astro:content", () => ({
 					id: "ai",
 					digest: "ai-directory-digest",
 					data: { name: "AI", entry: { title: "AI", url: "/ai/" } },
+				},
+				{
+					id: "example",
+					digest: "example-directory-digest",
+					data: {
+						name: "Example",
+						entry: { title: "Example", url: "/example/" },
+					},
 				},
 			];
 		}
@@ -93,6 +106,48 @@ vi.mock("astro:content", () => ({
 					digest: "ai-models-digest",
 					body: "Browse the model catalog.",
 					data: { title: "Models", sidebar: { order: 2 } },
+				},
+				{
+					id: "example",
+					digest: "example-index-digest",
+					body: "Example documentation.",
+					data: { title: "Example", sidebar: { order: 1 } },
+				},
+				{
+					id: "example/runtime",
+					digest: "example-runtime-digest",
+					body: directoryOnlyBody,
+					data: { title: "Runtime", sidebar: { order: 3 } },
+				},
+				{
+					id: "example/runtime/state",
+					digest: "example-state-digest",
+					body: "Store state.",
+					data: { title: "State" },
+				},
+				{
+					id: "example/tools",
+					digest: "example-tools-digest",
+					body: "Tools give the agent abilities beyond the model.",
+					data: { title: "Tools", sidebar: { order: 2 } },
+				},
+				{
+					id: "example/tools/browser",
+					digest: "example-browser-digest",
+					body: "Browse the web.",
+					data: { title: "Browser" },
+				},
+				{
+					id: "example/getting-started",
+					digest: "example-getting-started-digest",
+					body: directoryOnlyBody,
+					data: { title: "Getting started", sidebar: { order: 1 } },
+				},
+				{
+					id: "example/getting-started/quick-start",
+					digest: "example-quick-start-digest",
+					body: "Build your first agent.",
+					data: { title: "Quick start" },
 				},
 			];
 		}
@@ -145,5 +200,29 @@ describe("Workers AI llms.txt", () => {
 			const url = `https://developers.cloudflare.com/ai/models/${slug}/index.md`;
 			expect(body.split(url)).toHaveLength(2);
 		}
+	});
+});
+
+describe("product llms.txt sections", () => {
+	test("sections with a directory-only index page use its title and sidebar order", async () => {
+		const paths = await getStaticPaths();
+		const example = paths.find((path) => path.params.product === "example");
+		expect(example).toBeDefined();
+
+		const response = await GET({
+			props: example!.props,
+			url: new URL("https://developers.cloudflare.com/example/llms.txt"),
+		} as never);
+		const body = await response.text();
+
+		expect(body.match(/^## .+$/gm)).toEqual([
+			"## Overview",
+			"## Getting started",
+			"## Tools",
+			"## Runtime",
+		]);
+		expect(body).not.toContain(
+			"https://developers.cloudflare.com/example/runtime/index.md",
+		);
 	});
 });

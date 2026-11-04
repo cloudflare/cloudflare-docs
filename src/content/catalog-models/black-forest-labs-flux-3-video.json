@@ -13,10 +13,10 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"hd": 0.17,
-		"fhd": 0.29,
-		"v2v_hd": 0.41,
-		"v2v_fhd": 0.53,
+		"hd": 0.15,
+		"fhd": 0.24,
+		"v2v_hd": 0.21,
+		"v2v_fhd": 0.27,
 		"hd_draft": 0.06,
 		"v2v_hd_draft": 0.12
 	},
@@ -77,10 +77,10 @@
 		{
 			"id": "black-forest-labs",
 			"pricing": {
-				"hd": 0.17,
-				"fhd": 0.29,
-				"v2v_hd": 0.41,
-				"v2v_fhd": 0.53,
+				"hd": 0.15,
+				"fhd": 0.24,
+				"v2v_hd": 0.21,
+				"v2v_fhd": 0.27,
 				"hd_draft": 0.06,
 				"v2v_hd_draft": 0.12
 			}

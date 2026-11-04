@@ -201,6 +201,35 @@ export default {
 
 When testing image resizing, please deploy the script first. Resizing will not be active in the online editor in the dashboard.
 
+## Unsupported fetch options
+
+Some [`cf` properties](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) that work on a regular `fetch()` subrequest are not applied when the same subrequest also sets `cf.image`.
+
+### `resolveOverride`
+
+[`resolveOverride`](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) is ignored on a `fetch()` subrequest that includes `cf.image`. Cloudflare fetches the original image using the hostname in the image URL, not the hostname set in `resolveOverride`.
+
+```js
+// resolveOverride is ignored because cf.image is set.
+// The original image is fetched from images.example.com, not origin.example.com.
+fetch("https://images.example.com/photo.jpg", {
+	cf: {
+		image: { width: 800 },
+		resolveOverride: "origin.example.com",
+	},
+});
+```
+
+To fetch the original image from a different origin, use a hostname that resolves to that origin in the image URL itself. The request to the origin then uses that hostname in the `Host` header.
+
+```js
+fetch("https://origin.example.com/photo.jpg", {
+	cf: {
+		image: { width: 800 },
+	},
+});
+```
+
 ## Warning about `cacheKey`
 
 Resized images are always cached. They are cached as additional variants under a cache entry for the URL of the full-size source image in the `fetch` subrequest. Do not worry about using many different Workers or many external URLs — they do not influence caching of resized images, and you do not need to do anything for resized images to be cached correctly.

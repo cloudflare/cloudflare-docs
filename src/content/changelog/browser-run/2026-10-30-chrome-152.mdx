@@ -1,0 +1,21 @@
+---
+title: Browser Run now runs Chrome 152
+description: Browser Run upgraded its default browser to Chrome 152 and improved Quick Actions reliability.
+products:
+  - browser-run
+date: 2026-10-30
+---
+
+[Browser Run](/browser-run/) now runs Chrome 152 by default. Your sessions get current web platform features, rendering fixes, and security patches. You do not need to change your code.
+
+This release also includes the following improvements:
+
+- **Updated default User-Agent.** The default User-Agent for [Quick Actions](/browser-run/quick-actions/) now reports Chrome 152 instead of Chrome 119. If you allowlist or match the Browser Run User-Agent, update your rules. You can still set your own value with the `userAgent` parameter. Refer to [Automatic request headers](/browser-run/reference/automatic-request-headers/#user-agent).
+- **Better site compatibility.** Quick Actions requests now look more like requests from a regular Chrome browser, so fewer sites block them.
+- **Large response headers.** Pages that return large response headers now load correctly.
+- **Updated root certificates.** Browser Run removed distrusted root certificates from its trust store.
+- **Absolute links.** [`/links`](/browser-run/quick-actions/links-endpoint/) now returns absolute URLs, and links-only [crawls](/browser-run/quick-actions/crawl-endpoint/) now follow relative links.
+- **Better Markdown output.** [`/markdown`](/browser-run/quick-actions/markdown-endpoint/) and crawl Markdown output now keep code block languages.
+- **Clearer errors.** Quick Actions that time out now return a consistent error. [Outbound Workers](/browser-run/features/outbound-workers/) that throw an exception now return an HTTP error to the browser.
+
+For more information, refer to the [Browser Run documentation](/browser-run/).

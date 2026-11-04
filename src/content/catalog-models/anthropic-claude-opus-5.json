@@ -18,9 +18,9 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 5,
-		"Output tokens (per 1M)": 25,
 		"Cached input tokens (per 1M)": 0.5,
-		"Cache creation tokens (per 1M)": 6.25
+		"Cache creation tokens (per 1M)": 6.25,
+		"Output tokens (per 1M)": 25
 	},
 	"examples": [
 		{
@@ -149,7 +149,8 @@
 	"cover_image_url": null,
 	"metadata": {
 		"Adaptive Thinking": "Yes",
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"anthropic-messages"
@@ -160,9 +161,9 @@
 			"id": "anthropic",
 			"pricing": {
 				"input_tokens": 5,
-				"output_tokens": 25,
 				"input_cached_tokens": 0.5,
-				"input_cache_creation_tokens": 6.25
+				"input_cache_creation_tokens": 6.25,
+				"output_tokens": 25
 			}
 		}
 	],
@@ -182,7 +183,8 @@
 								"type": "string",
 								"enum": [
 									"user",
-									"assistant"
+									"assistant",
+									"system"
 								]
 							},
 							"content": {
@@ -244,7 +246,51 @@
 					"exclusiveMinimum": 0
 				},
 				"system": {
-					"type": "string"
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "text"
+									},
+									"text": {
+										"type": "string"
+									},
+									"cache_control": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "ephemeral"
+											},
+											"ttl": {
+												"type": "string",
+												"enum": [
+													"5m",
+													"1h"
+												]
+											}
+										},
+										"required": [
+											"type"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"text"
+								],
+								"additionalProperties": {}
+							}
+						}
+					]
 				},
 				"stream": {
 					"type": "boolean"
@@ -313,13 +359,31 @@
 						},
 						"output_tokens": {
 							"type": "number"
+						},
+						"cache_creation_input_tokens": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"cache_read_input_tokens": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"speed": {
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
 						"input_tokens",
 						"output_tokens"
 					],
-					"additionalProperties": false
+					"additionalProperties": {}
 				}
 			},
 			"required": [

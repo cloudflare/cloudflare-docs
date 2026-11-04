@@ -207,7 +207,7 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    TCPServer(("0.0.0.0", PORT), Kernel).serve_forever()
    ```
 
-   The kernel runs the body of each `POST` request as an IPython cell, and returns what 0.12 returned: standard output and standard error, one result for each value that the cell displays, a PNG for each open matplotlib figure, the value of the last expression, and the error. It handles one request at a time, so calls to one context wait for each other, as they did in 0.12.
+   The kernel runs the body of each `POST` request as an IPython cell, and returns what 0.12 returned: standard output and standard error, one result for each value that the cell displays, a PNG for each open matplotlib figure, the value of the last expression, and the error. It handles one request at a time.
 
 3. Add the result and context types before your class:
 
@@ -289,42 +289,56 @@ A kernel is a Python process that runs the code of each call with IPython, and k
 
    Call `this.kernels.clear()` in `startContainer()`, inside `if (newContainer)`, because a new container has no kernels. If your Durable Object restarts while the container runs, `startServer()` finds the kernel that already runs, and the kernel keeps its variables. If a kernel exits, `waitForServer()` throws with the end of its log.
 
-5. Add a `runCode()` method:
+5. Add a method that runs the calls to one context one at a time, and a `runCode()` method:
 
    ```ts title="src/index.ts"
    export class MySandbox extends DurableObject<Env> {
    	// ...
 
+   	// The last call queued for each context.
+   	private queues = new Map<string, Promise<unknown>>();
+
+   	private inContext<T>(id: string, operation: () => Promise<T>): Promise<T> {
+   		const previous = this.queues.get(id) ?? Promise.resolve();
+   		const result = previous.then(operation);
+   		this.queues.set(id, result.catch(() => {}));
+   		return result;
+   	}
+
    	async runCode(
    		code: string,
    		options: { context?: string; timeout?: number } = {},
    	): Promise<Execution> {
-   		await this.ensureRunning();
-   		const context = await this.getContext(
-   			options.context ?? DEFAULT_CONTEXT.id,
-   		);
-   		const kernel = await this.startKernel(context);
+   		const id = options.context ?? DEFAULT_CONTEXT.id;
 
-   		try {
-   			const response = await kernel.fetch("http://kernel/", {
-   				method: "POST",
-   				body: code,
-   				signal: AbortSignal.timeout(options.timeout ?? 60_000),
-   			});
-   			return await response.json<Execution>();
-   		} catch (error) {
-   			if ((error as Error).name === "TimeoutError") {
-   				// Stop the cell, and keep the kernel variables.
-   				await this.interruptKernel(context);
-   			} else {
-   				// The kernel exited. The next call starts a new one.
-   				this.kernels.delete(context.port);
+   		return this.inContext(id, async () => {
+   			await this.ensureRunning();
+   			const context = await this.getContext(id);
+   			const kernel = await this.startKernel(context);
+
+   			try {
+   				const response = await kernel.fetch("http://kernel/", {
+   					method: "POST",
+   					body: code,
+   					signal: AbortSignal.timeout(options.timeout ?? 60_000),
+   				});
+   				return await response.json<Execution>();
+   			} catch (error) {
+   				if ((error as Error).name === "TimeoutError") {
+   					// Stop the cell, and keep the kernel variables.
+   					await this.interruptKernel(context);
+   				} else {
+   					// The kernel exited. The next call starts a new one.
+   					this.kernels.delete(context.port);
+   				}
+   				throw error;
    			}
-   			throw error;
-   		}
+   		});
    	}
    }
    ```
+
+   Calls to one context wait for each other, as they did in 0.12. Calls to different contexts run at the same time. Because only one call to a context runs at a time, the time limit starts when the call reaches the kernel, not while it waits for an earlier call, and the interrupt reaches the cell of the call that timed out. The queue also keeps two first calls from starting the same kernel twice.
 
    0.12 had no default timeout, and a cell that timed out kept running. Here, a call that runs longer than `timeout` throws a `TimeoutError`, and the kernel stops the cell with `KeyboardInterrupt`. Variables that earlier calls defined stay. If the kernel exits, for example because the code runs out of memory, the call throws and the next call starts a kernel without variables.
 
@@ -383,14 +397,17 @@ A kernel is a Python process that runs the code of each call with IPython, and k
    	}
 
    	async deleteCodeContext(id: string): Promise<void> {
-   		const context = await this.getContext(id);
+   		// Wait for the calls already queued for the context.
+   		return this.inContext(id, async () => {
+   			const context = await this.getContext(id);
 
-   		if (this.container.running) {
-   			await stopServer(this.container, kernelDir(context));
-   			this.kernels.delete(context.port);
-   		}
+   			if (this.container.running) {
+   				await stopServer(this.container, kernelDir(context));
+   				this.kernels.delete(context.port);
+   			}
 
-   		await this.ctx.storage.delete(`context:${id}`);
+   			await this.ctx.storage.delete(`context:${id}`);
+   		});
    	}
    }
    ```

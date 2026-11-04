@@ -9,6 +9,7 @@
  * instead of opaque tag pills, and the `/changelog/post/<id>/` permalink.
  */
 import { render, type CollectionEntry } from "astro:content";
+import ChangelogUpdates from "./ChangelogUpdates.astro";
 import DateRail from "./DateRail.astro";
 import ProductPills from "./ProductPills.astro";
 import { components } from "@/mdx-components";
@@ -48,6 +49,13 @@ const { Content } = await render(entry);
 				<ProductPills products={products} />
 			</div>
 		)}
+
+		<ChangelogUpdates
+			updates={entry.data.updates}
+			filePath={entry.filePath}
+			postHref={href}
+			class="mt-[1.125rem]"
+		/>
 
 		<div class="docs-content nb-cl-prose mt-[1.125rem] max-w-none">
 			<Content components={components} />

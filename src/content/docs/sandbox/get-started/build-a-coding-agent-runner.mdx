@@ -310,7 +310,7 @@ export class AgentSandbox extends DurableObject<Env> {
 		const container = ctx.container;
 
 		if (!container) {
-			throw new Error("The container binding is not configured");
+			throw new Error("No container is configured");
 		}
 
 		this.container = container;
@@ -407,7 +407,7 @@ export class AgentSandbox extends DurableObject<Env> {
 		await this.startSandbox();
 
 		return this.run(
-			["/bin/sh", "-c", "git add --intent-to-add . && git diff"],
+			["/bin/sh", "-c", "git add --intent-to-add . && git diff HEAD"],
 			repositoryDirectory,
 			{},
 		);
@@ -660,7 +660,7 @@ While no exit code exists, the Durable Object runs `kill -0` to check whether th
 
 The process ID file also records the boot ID, which changes in every instance. If you restore the workspace from a snapshot, the file comes back, and the new instance reuses the same process IDs. The check ignores a process ID from another instance, so a task that was running when the snapshot was taken is `lost`.
 
-`readDiff()` marks new files with `git add --intent-to-add` so that `git diff` includes them.
+`readDiff()` marks new files with `git add --intent-to-add` so that the diff includes them. `git diff HEAD` compares the files with the checked-out commit, so the diff also includes changes that the agent staged.
 
 ## 4. Route requests
 

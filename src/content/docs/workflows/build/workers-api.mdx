@@ -360,6 +360,10 @@ Instance-level retention settings take precedence over Workflow binding settings
 
 :::
 
+## Workflow jurisdiction
+
+To run the instances of a Workflow and store their data only within a region, set `jurisdiction` on the Workflow binding in your Wrangler configuration. Refer to [Data location](/workflows/reference/data-location/).
+
 ## Declare Workflows in `exports`
 
 :::note
@@ -394,7 +398,7 @@ Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `
 
 </WranglerConfig>
 
-A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, and `default_retention`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, `default_retention`, and `jurisdiction`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
 
 You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
 

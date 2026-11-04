@@ -275,6 +275,8 @@ The cache key for service binding calls includes the caller's [`ctx.props`](/wor
 
 For same-account calls, the calling Worker can also tailor the callee's caching for an individual request by setting [`cf.cacheKey`](/workers/cache/cache-keys/#custom-cache-keys) to override the cache key or [`cf.cacheControl`](/workers/cache/configuration/#override-cache-control-from-the-calling-worker) to supply a `Cache-Control` directive.
 
+To [bypass the callee's cache for a request](/workers/cache/configuration/#bypass-cache-for-a-request), set `cache: "no-store"` in the calling Worker's `fetch()` options.
+
 ## Cache Durable Object responses
 
 [Durable Objects](/durable-objects/) are never cached directly by Workers Caching. However, since Workers Caching runs in front of any Worker entrypoint, you can cache a Durable Object's HTTP responses by wrapping the Durable Object behind a [named Worker entrypoint](/workers/runtime-apis/bindings/service-bindings/rpc/#named-entrypoints) and caching the entrypoint.

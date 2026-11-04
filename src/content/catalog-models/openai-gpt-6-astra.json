@@ -238,7 +238,8 @@
 		"API": "Responses, Chat Completions",
 		"Architecture": "Transformer",
 		"Input modalities": "Text, image",
-		"Knowledge cutoff": "April 30, 2026"
+		"Knowledge cutoff": "April 30, 2026",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses",
@@ -317,12 +318,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},

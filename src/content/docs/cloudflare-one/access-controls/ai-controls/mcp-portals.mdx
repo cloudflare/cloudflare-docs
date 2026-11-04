@@ -194,7 +194,7 @@ The MCP server status indicates the server's connection and tool and prompt sync
 
 #### Error details
 
-When an MCP server is in the **Error** or **Sync Required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
+When an MCP server is in the **Error** or **Sync required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
 
 | Field         | Description                                                                                                            |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------- |
@@ -212,8 +212,7 @@ To reauthenticate an MCP server in Cloudflare Access:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab.
-3. Select the server that you want to reauthenticate, then select **Edit**.
-4. Select **Authenticate server**.
+3. Find the server that you want to reauthenticate, select the three dots, and select **Re-authenticate server**.
 
 You will be redirected to log in to your OAuth provider. The account used to authenticate will serve as the new admin credential for this MCP server.
 
@@ -224,7 +223,7 @@ For servers that use DCR, Cloudflare Access synchronizes tools and prompts appro
 Resources are not synchronized or stored. When an MCP client sends a `resources/list` request, the portal fetches resources live from the upstream servers. Servers that cannot connect or respond are omitted from the result.
 
 :::note
-Synchronization uses the admin credential, not individual user credentials. If the admin credential's refresh token has expired or been revoked, the [server status](#server-status) will change to **Sync Required** and you will need to [reauthenticate the server](#reauthenticate-the-mcp-server). This will not impact end users' ability to connect to the MCP server. It will impact the ability to fetch tool and prompt information or additions and removals.
+Synchronization uses the admin credential, not individual user credentials. If the admin credential's refresh token has expired or been revoked, the [server status](#server-status) will change to **Sync required** and you will need to [reauthenticate the server](#reauthenticate-the-mcp-server). This will not impact end users' ability to connect to the MCP server. It will impact the ability to fetch tool and prompt information or additions and removals.
 :::
 
 To manually refresh the MCP server in Zero Trust:
@@ -306,7 +305,7 @@ To turn on the setting, go to **Zero Trust** > **Access controls** > **MCP Porta
 To create an MCP server portal:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
-2. Select **Add MCP server portal**.
+2. Select **Add server portal**.
 3. Enter any name for the portal.
 4. Under **Custom domain**, select a domain from an active zone in your account. You can optionally specify a subdomain.
 5. [Add MCP servers](#add-an-mcp-server) to the portal.
@@ -318,7 +317,7 @@ To create an MCP server portal:
    [Independent MFA](/cloudflare-one/access-controls/policies/mfa-requirements/#independent-mfa), [purpose justification](/cloudflare-one/access-controls/policies/require-purpose-justification/), and [temporary authentication](/cloudflare-one/access-controls/policies/temporary-auth/) will not be enforced for MCP servers that are authorized through an MCP portal. For example, if independent MFA is enabled on a policy assigned to a server, users will not be prompted to perform MFA to authorize the server after authenticating to the portal. Refer to [Policy limitations](#policy-limitations) for details.
    :::
 
-9. Select **Add an MCP server portal**.
+9. Select **Save portal**.
 10. (Optional) [Customize the login experience](#customize-login-settings) for the portal.
 
 Users can now [connect to the portal](#connect-to-a-portal) at `https://<subdomain>.<domain>/mcp` using an MCP client.
@@ -637,8 +636,6 @@ The `auth_type` field accepts the following values:
 
 #### Manual OAuth credentials
 
-For manual OAuth, allowlist the shared callback URL at the upstream provider. Set `is_shared_oauth_callback_enabled` to `true` when creating the server through the API.
-
 To create an MCP server with a pre-registered OAuth client, set `auth_type` to `oauth` and provide both `auth_credentials` and `client_secret`. The `auth_credentials` value is required and must be a JSON-encoded string:
 
 <CURL
@@ -650,10 +647,10 @@ To create an MCP server with a pre-registered OAuth client, set `auth_type` to `
 		name: "GitHub MCP Server",
 		hostname: "https://github-mcp.example.com/mcp",
 		auth_type: "oauth",
-		is_shared_oauth_callback_enabled: true,
 		auth_credentials:
 			'{"auth_mode":"manual","config":{"authorization_endpoint":"https://github.com/login/oauth/authorize","token_endpoint":"https://github.com/login/oauth/access_token"},"registration_info":{"client_id":"<client-id>","token_endpoint_auth_method":"client_secret_basic","scope":"repo read:user"}}',
 		client_secret: "<client-secret>",
+		is_shared_oauth_callback_enabled: true,
 	}}
 />
 
@@ -662,9 +659,11 @@ The decoded `auth_credentials` object must contain:
 - `auth_mode`: Must be `manual`.
 - `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
 - `registration_info.client_id`: The client ID issued by the upstream provider.
-- `registration_info.redirect_uris`: Optional when `is_shared_oauth_callback_enabled` is `true`. Cloudflare uses the shared callback URL even if you provide a different URI. This field cannot override the shared callback URL.
+- `registration_info.redirect_uris`: Cloudflare uses only the first URI in the array. When `is_shared_oauth_callback_enabled` is `true`, omit this field. Cloudflare adds the [shared callback URL](#shared-cloudflare-callback-url).
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
+
+Before you create the server, add the [shared callback URL](#shared-cloudflare-callback-url) to the upstream provider's allowed redirect URIs. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare then uses the shared callback for dashboard authorization and for users who connect through any portal that contains the server.
 
 Do not include `client_secret` or OAuth tokens inside `auth_credentials`. Send `client_secret` as the separate sibling field shown above.
 
@@ -700,6 +699,8 @@ The `auth_credentials` field accepts two forms:
 
 Use the account endpoint to retrieve daily or monthly MCP tool-call counts across the account:
 
+By default, these counts include only successful tool calls. To include errors and cached calls, set `response_status=all`. Use `error` or `cached` to count either status separately.
+
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/analytics/tool-calls/timeseries?granularity=daily&aggregate=false&tz=utc&days=30"
 	method="GET"
@@ -708,14 +709,15 @@ Use the account endpoint to retrieve daily or monthly MCP tool-call counts acros
 
 The same query parameters apply to each endpoint:
 
-| Parameter     | Values and behavior                                                                                                                                                         |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `granularity` | `daily` or `monthly`. Defaults to `daily`.                                                                                                                                   |
-| `aggregate`   | `true` or `false`. Defaults to `false`. Set to `true` to request aggregated counts.                                                                                          |
-| `tz`          | `utc`, `Z`, or a fixed `+HH:MM` or `-HH:MM` offset. Defaults to `utc`. Offsets range from `-12:00` through `+14:00`; `+14:00` and `-12:00` are the limits. The offset is used for local-day bucketing and does not account for daylight saving time changes within the window. |
-| `days`        | An integer from `1` to `179`. For daily results, this sets the trailing window and defaults to `7`. It is ignored when `granularity=monthly`.                               |
+| Parameter         | Values and behavior                                                                                                                                                                                                                                                            |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `granularity`     | `daily` or `monthly`. Defaults to `daily`.                                                                                                                                                                                                                                     |
+| `aggregate`       | `true` or `false`. Defaults to `false`. Set to `true` to request aggregated counts.                                                                                                                                                                                            |
+| `tz`              | `utc`, `Z`, or a fixed `+HH:MM` or `-HH:MM` offset. Defaults to `utc`. Offsets range from `-12:00` through `+14:00`; `+14:00` and `-12:00` are the limits. The offset is used for local-day bucketing and does not account for daylight saving time changes within the window. |
+| `days`            | An integer from `1` to `179`. For daily results, this sets the trailing window and defaults to `7`. It is ignored when `granularity=monthly`.                                                                                                                                  |
+| `response_status` | `success`, `error`, `cached`, or `all`. Defaults to `success`. Set to `all` to include every status. Invalid values, including an empty value, return `400`.                                                                                                                   |
 
-The response `result` includes the selected `granularity`, `aggregate`, and `tz`, the `start` and `end` of the window as epoch milliseconds, a `series` of `day` and `count` values, and the `total` count. The window includes `start` and excludes `end`. Daily `day` values use `YYYY-MM-DD` in the requested timezone offset.
+The response `result` includes the selected `granularity`, `aggregate`, `tz`, and `response_status`, the `start` and `end` of the window as epoch milliseconds, a `series` of `day` and `count` values, and the `total` count. The window includes `start` and excludes `end`. Daily `day` values use `YYYY-MM-DD` in the requested timezone offset.
 
 Use a scoped endpoint to limit the counts:
 
@@ -742,33 +744,97 @@ To manually trigger a synchronization of tools and prompts from an upstream MCP 
 
 ## Configure via Terraform
 
-You can manage MCP server portals using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs). Use the `cloudflare_zero_trust_access_mcp_server_portal` resource to create and configure portals programmatically.
+You can manage MCP servers and portals using the Cloudflare Terraform provider. Use the [`cloudflare_zero_trust_access_ai_controls_mcp_server`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_ai_controls_mcp_server) and [`cloudflare_zero_trust_access_ai_controls_mcp_portal`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/zero_trust_access_ai_controls_mcp_portal) resources.
 
 :::caution
 Unlike the dashboard, the Terraform provider does not automatically create DNS records for your portal hostname. You must create a CNAME record that points your portal subdomain to `gateway.agents.cloudflare.com`. Without this record, the portal will return `522` errors.
 :::
 
-The following example creates an MCP server portal with a CNAME record:
+The following example creates an unauthenticated upstream MCP server, a portal, and the Access resources required for a service token to use the server through the portal:
 
-```hcl title="MCP server portal with DNS record"
-# Create the MCP server portal
-resource "cloudflare_zero_trust_access_mcp_server_portal" "example" {
+```hcl title="MCP server portal with service token access"
+resource "cloudflare_zero_trust_access_service_token" "mcp_bot" {
   account_id = var.cloudflare_account_id
-  name       = "Engineering Portal"
-  hostname   = "mcp.example.com"
+  name       = "MCP bot"
+  duration   = "8760h"
 }
 
-# Required: Create the CNAME record for the portal hostname
+resource "cloudflare_zero_trust_access_policy" "mcp_bot" {
+  account_id = var.cloudflare_account_id
+  name       = "Allow MCP bot"
+  decision   = "non_identity"
+
+  include = [{
+    service_token = {
+      token_id = cloudflare_zero_trust_access_service_token.mcp_bot.id
+    }
+  }]
+}
+
+resource "cloudflare_zero_trust_access_ai_controls_mcp_server" "docs" {
+  account_id = var.cloudflare_account_id
+  id         = "cloudflare-docs"
+  name       = "Cloudflare documentation"
+  hostname   = "https://docs.mcp.cloudflare.com/mcp"
+  auth_type  = "unauthenticated"
+}
+
+resource "cloudflare_zero_trust_access_application" "docs" {
+  account_id = var.cloudflare_account_id
+  name       = "Cloudflare documentation"
+  type       = "mcp"
+
+  destinations = [{
+    type          = "via_mcp_server_portal"
+    mcp_server_id = cloudflare_zero_trust_access_ai_controls_mcp_server.docs.id
+  }]
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.mcp_bot.id
+    precedence = 1
+  }]
+}
+
+resource "cloudflare_zero_trust_access_ai_controls_mcp_portal" "engineering" {
+  account_id = var.cloudflare_account_id
+  id         = "engineering"
+  name       = "Engineering Portal"
+  hostname   = "mcp.example.com"
+
+  servers = [{
+    server_id = cloudflare_zero_trust_access_ai_controls_mcp_server.docs.id
+    on_behalf = false
+  }]
+}
+
+resource "cloudflare_zero_trust_access_application" "engineering" {
+  account_id = var.cloudflare_account_id
+  name       = "Engineering Portal"
+  type       = "mcp_portal"
+  domain     = cloudflare_zero_trust_access_ai_controls_mcp_portal.engineering.hostname
+
+  destinations = [{
+    type = "public"
+    uri  = cloudflare_zero_trust_access_ai_controls_mcp_portal.engineering.hostname
+  }]
+
+  policies = [{
+    id         = cloudflare_zero_trust_access_policy.mcp_bot.id
+    precedence = 1
+  }]
+}
+
 resource "cloudflare_dns_record" "mcp_portal" {
   zone_id = var.cloudflare_zone_id
   name    = "mcp"
   content = "gateway.agents.cloudflare.com"
   type    = "CNAME"
   proxied = true
+  ttl     = 1
 }
 ```
 
-For the full list of supported resource arguments, refer to the [Terraform provider documentation](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs).
+The provider marks the service token's `client_secret` as sensitive, but Terraform still stores it in state. Store Terraform state securely and pass the credentials to your MCP client through a secret manager or environment variables.
 
 ## Code Mode
 
@@ -826,12 +892,7 @@ For MCP clients with server configuration files, use the portal URL with the que
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp?codemode=search_and_execute"
-			]
+			"url": "https://<subdomain>.<domain>/mcp?codemode=search_and_execute"
 		}
 	}
 }
@@ -886,7 +947,7 @@ To route traffic from every MCP server in a portal through Gateway:
 
 To route traffic from one MCP server through Gateway without enabling Gateway routing for the entire portal:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **AI controls**.
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
 2. Go to the **MCP servers** tab.
 3. Find the server you want to configure, then select the three dots > **Edit**.
 4. Under **Basic information**, turn on **Route traffic through Cloudflare Gateway**.
@@ -926,7 +987,7 @@ The agent can retry the request, but it will continue to be blocked until the co
 
 ## Connect to a portal
 
-Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-your-mcp-server-to-claude-and-other-mcp-clients) that support remote MCP servers.
+Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-from-an-mcp-client) that support remote MCP servers.
 
 To test in Workers AI Playground:
 
@@ -939,24 +1000,17 @@ To test in Workers AI Playground:
 
 Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
 
-For MCP clients with server configuration files, we recommend using the `npx` command with the `mcp-remote@latest` argument:
+For MCP clients with server configuration files, add the portal as a remote HTTP server. The exact URL field depends on your client. For example:
 
-```json title= "MCP client configuration for MCP portals"
+```json title="MCP client configuration for MCP portals"
 {
 	"mcpServers": {
 		"example-mcp-server": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>.com/mcp"
-			]
+			"url": "https://<subdomain>.<domain>/mcp"
 		}
 	}
 }
 ```
-
-We do not recommend using the `serverURL` parameter since it may cause issues with portal session creation and management.
 
 ### Portal homepage
 
@@ -1013,15 +1067,20 @@ If a linked MCP server does not have a Service Auth policy matching the token, t
    2. Open the portal and edit the server. Turn **Require user auth** off so the portal uses the [admin credential](#reauthenticate-the-mcp-server) for that server.
 4. Connect from your MCP client with the service token headers.
 
-For a CLI client, set the headers directly:
+To configure this flow with the API, set `servers[].on_behalf` to `false` in the [MCP portal request](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/create/). Create a `non_identity` Access policy with a `service_token` include rule. Attach the policy to the portal and each linked server Access application. For a complete Terraform example, refer to [Configure via Terraform](#configure-via-terraform).
+
+To verify the connection, send an MCP `initialize` request with the service token headers:
 
 ```sh
 curl https://<subdomain>.<domain>/mcp \
   -H "CF-Access-Client-Id: <CLIENT_ID>" \
-  -H "CF-Access-Client-Secret: <CLIENT_SECRET>"
+  -H "CF-Access-Client-Secret: <CLIENT_SECRET>" \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"service-token-test","version":"1.0.0"}}}'
 ```
 
-For `mcp-remote`, pass the headers with `--header`:
+For `mcp-remote`, pass the credentials through environment variables instead of storing them in the MCP client configuration:
 
 ```json title="MCP client configuration for service token connections"
 {
@@ -1033,10 +1092,14 @@ For `mcp-remote`, pass the headers with `--header`:
 				"mcp-remote@latest",
 				"https://<subdomain>.<domain>/mcp",
 				"--header",
-				"CF-Access-Client-Id: <CLIENT_ID>",
+				"CF-Access-Client-Id:${ACCESS_CLIENT_ID}",
 				"--header",
-				"CF-Access-Client-Secret: <CLIENT_SECRET>"
-			]
+				"CF-Access-Client-Secret:${ACCESS_CLIENT_SECRET}"
+			],
+			"env": {
+				"ACCESS_CLIENT_ID": "<CLIENT_ID>",
+				"ACCESS_CLIENT_SECRET": "<CLIENT_SECRET>"
+			}
 		}
 	}
 }
@@ -1074,12 +1137,7 @@ For MCP clients with server configuration files:
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools"
-			]
+			"url": "https://<subdomain>.<domain>/mcp?optimize_context=minimize_tools"
 		}
 	}
 }
@@ -1103,12 +1161,7 @@ For MCP clients with server configuration files:
 {
 	"mcpServers": {
 		"example-portal": {
-			"command": "npx",
-			"args": [
-				"-y",
-				"mcp-remote@latest",
-				"https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute"
-			]
+			"url": "https://<subdomain>.<domain>/mcp?optimize_context=search_and_execute"
 		}
 	}
 }
@@ -1151,17 +1204,7 @@ The portal toggles the server and refreshes the active tool list immediately. Th
 
 When an upstream MCP server token expires, the portal prompts you to reauthenticate from within your MCP client. Open the provided URL in your browser and complete the login to restore the session.
 
-If your MCP client does not display the reauthentication prompt, you can manually clear cached credentials:
-
-:::note
-This command clears credentials for all MCP servers using `mcp-remote@latest`, not just MCP portals.
-:::
-
-```sh
-rm -rf ~/.mcp-auth
-```
-
-After clearing credentials, reconnect to the portal from your MCP client.
+If your MCP client does not display the reauthentication prompt, use its authentication controls to remove the saved portal credentials. Then reconnect to the portal.
 
 ### Authorize new servers
 
@@ -1202,7 +1245,7 @@ MCP server portals have the following known limitations:
 - **Only remote HTTP MCP servers are supported.** MCP servers that use [stdio transport only](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) (for example, `github/github-mcp-server`) do not expose a remote HTTP endpoint and cannot be added to an MCP server portal. To use a stdio-only server, you must self-host it behind an HTTP endpoint and authenticate with a [bearer token or custom headers](#create-an-mcp-server).
 - **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
 - **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
-- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync Required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
+- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
 - **Each portal supports up to 80 MCP servers.**
 
 ## Policy limitations
@@ -1228,7 +1271,7 @@ Cloudflare creates a custom hostname for each portal custom domain. Portal creat
 ### After authenticating to the portal, my user receives the error `No allowed servers available, check your Zero Trust Policies`.
 
 1. An MCP portal and server must both have an attached Access policy. Ensure that all MCP servers assigned to the portal have their own associated policy.
-2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows **Error** or **Sync Required**, [reauthenticate the server](#reauthenticate-the-mcp-server).
+2. The server's admin authentication may be expired. Check that the [server's status](#server-status) is **Ready**. If the status shows **Error** or **Sync required**, [reauthenticate the server](#reauthenticate-the-mcp-server).
 
 ### The portal URL does not prompt for authentication when it is added to an MCP client.
 
@@ -1261,7 +1304,7 @@ To resolve this, [reauthenticate the server](#reauthenticate-the-mcp-server) wit
 ### Tool calls fail with an `unauthorized` error.
 
 1. If the server uses per-user OAuth (**Require user auth** is turned on), the user's OAuth token may have expired. Ask the user to [reauthenticate the server](#reauthenticate-a-server) from their MCP client.
-2. If the server uses admin credentials, check the [server status](#server-status). A status of **Error** or **Sync Required** indicates the admin credential needs to be refreshed.
+2. If the server uses admin credentials, check the [server status](#server-status). A status of **Error** or **Sync required** indicates the admin credential needs to be refreshed.
 3. If the user recently changed permissions on the upstream service (for example, revoked OAuth scopes), they will need to reauthenticate.
 
 ### OAuth authentication fails with a redirect URI error when connecting to an upstream MCP server.
@@ -1276,11 +1319,11 @@ Contact the upstream MCP server vendor if you do not control the allowlist.
 2. If the upstream server URL ends in `/sse`, the portal automatically attempts to connect using Streamable HTTP on a `/mcp` path instead. If the server does not support this, the connection will fail.
 3. Check [Gateway HTTP logs](/cloudflare-one/insights/logs/dashboard-logs/gateway-logs/) for DLP block events. If a DLP policy is blocking the traffic, the portal returns an error to the MCP client with the DLP rule ID.
 
-### Users cannot connect with `mcp-remote` or similar tools.
+### Users cannot connect from an MCP client
 
-1. Ensure you are using the latest version of `mcp-remote`. Run `npx -y mcp-remote@latest` to update.
-2. Use the `command` and `args` format in your MCP client configuration, not the `serverURL` parameter. The `serverURL` parameter may cause issues with portal session creation.
-3. If authentication fails repeatedly, clear cached credentials by running `rm -rf ~/.mcp-auth` and reconnecting.
+1. Verify that the client supports Streamable HTTP and OAuth discovery.
+2. Configure the portal URL as a remote HTTP server.
+3. If authentication fails repeatedly, use the client authentication controls to remove the saved portal credentials and reconnect.
 
 ### The portal homepage shows the wrong name or domain.
 

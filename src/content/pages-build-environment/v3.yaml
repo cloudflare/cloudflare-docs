@@ -6,14 +6,14 @@ languages:
     supported: "Any version"
     environment_variable: "GO_VERSION"
   - name: Node.js
-    default: "22.16.0"
+    default: "22.23.4"
     supported: "Any version"
     environment_variable: "NODE_VERSION"
     file:
       - ".nvmrc"
       - ".node-version"
   - name: Bun
-    default: "1.2.15"
+    default: "1.4.4"
     supported: "Any version"
     environment_variable: "BUN_VERSION"
   - name: Python
@@ -45,10 +45,10 @@ tools:
     supported: "Any version"
     environment_variable: "HUGO_VERSION"
   - name: npm
-    default: "10.9.2"
+    default: "10.9.9"
     supported: "Corresponds with Node.js version"
   - name: pip
-    default: "25.1.1"
+    default: "26.2.2"
     supported: "Corresponds with Python version"
   - name: pipx
     default: "1.7.1"

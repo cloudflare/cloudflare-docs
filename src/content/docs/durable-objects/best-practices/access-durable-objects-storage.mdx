@@ -17,7 +17,13 @@ storage. Durable Objects
 <GlossaryTooltip term="Storage API">Storage API</GlossaryTooltip> provides
 access to a Durable Object's attached storage.
 
-A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object is not evicted from memory. Inactive Durable Objects with no incoming request traffic can be evicted. There are normal operations like [code deployments](/workers/versions-and-deployments/) that trigger Durable Objects to restart and lose their in-memory state. For these reasons, you should use Storage API to persist state durably on disk that needs to survive eviction or restart of Durable Objects.
+A Durable Object's [in-memory state](/durable-objects/reference/in-memory-state/) is preserved as long as the Durable Object remains in memory. Inactive Durable Objects with no incoming request traffic can be evicted.
+
+When you deploy a code change to Durable Objects, the default [code update strategy](/durable-objects/deployments/durable-objects-code-updates/) is `deferred`, with a `max_delay` of 300 seconds (5 minutes). Active objects can continue running their current code until they hibernate or reach this delay. When an object starts on the new version, Cloudflare creates a fresh isolate and discards any in-memory state.
+
+Deferral gives your application time to finish in-flight work or persist in-memory state to [SQLite](/durable-objects/api/sqlite-storage-api/) or external storage. It is best effort, not a guarantee that every operation finishes. Cloudflare can reset an object before `max_delay` is reached.
+
+Just like other compute environments where compute instances do not live forever, you should persist any state that must be durable across code deployments to Durable Storage. Durable Objects makes this simple — each individual Durable Object has its own SQLite database that you can read from and write to synchronously.
 
 ## Access storage
 

@@ -24,7 +24,7 @@ A sandbox runs code that you did not write and do not trust, such as code that a
 
 Code in a Container can use everything in its Linux image: runtimes, packages, files, and the processes it starts.
 
-Code in a Dynamic Worker can use only the modules, methods, and values that your Worker passes to it. It does not inherit the bindings, credentials, or data of your Worker. Set `globalOutbound` to `null` to block its direct access to the Internet.
+Code in a Dynamic Worker can use the Workers runtime APIs, plus the modules, methods, and values that your Worker passes to it. It does not inherit the bindings, credentials, or data of your Worker. It can reach the Internet unless you set `globalOutbound` to `null`.
 
 <SandboxEnvironments client:visible>
 

@@ -308,7 +308,8 @@
 		"Answer types": "Noul, Choice, Score, and Box",
 		"Box questions": "Beta / dreamer-ready; requires image input",
 		"Image inputs": "Beta / dreamer-ready",
-		"Provider model": "jev-1.14.0"
+		"Provider model": "jev-1.14.0",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": null,
 	"providers": null,

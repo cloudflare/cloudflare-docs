@@ -343,7 +343,8 @@
 	"metadata": {
 		"Context Window": "1,048,576 tokens",
 		"Input Modalities": "Text, image, video, audio, PDF",
-		"Output Modalities": "Text"
+		"Output Modalities": "Text",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses"
