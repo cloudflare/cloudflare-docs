@@ -145,6 +145,10 @@ In order for Cloudflare One Clients to connect to your load balancer, the load b
 
 Cloudflare One Client traffic can now reach your private load balancer. For example, if your load balancer points to a web application, you can test by running `curl <load-balancer-IP>` from the device. This traffic will be distributed over Cloudflare Tunnel to your private endpoints according to your configured steering method.
 
+:::note
+To keep each device on the same endpoint, set the pool's endpoint steering to [**Hash**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/hash-origin-steering/#private-load-balancers), or set [session affinity](/load-balancing/understand-basics/session-affinity/#private-load-balancers) to `ip_cookie` with the API. This pins the endpoint, not the `cloudflared` replica. If your application ties sessions to the source IP, refer to the caution in [Session affinity](/load-balancing/understand-basics/session-affinity/#private-load-balancers).
+:::
+
 ## 4. (Optional) Assign a hostname to the load balancer
 
 If you want your load balancer and its endpoints to be transparently accessible to users via a hostname, you can create a Gateway DNS [Override policy](/cloudflare-one/traffic-controls/dns-policies/#override) that maps the hostname to the load balancer's IP address. This ensures that traffic destined for the hostname resolves to the correct IP.
