@@ -191,5 +191,5 @@ if (typeof roles === "string") {
 	headers={headers}
 	json={json}
 	form={form}
-	code={{ ...code, title: operation.summary }}
+	code={{ ...code, title: code?.title ?? operation.summary }}
 />

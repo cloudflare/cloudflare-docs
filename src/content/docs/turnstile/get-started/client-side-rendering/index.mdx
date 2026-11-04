@@ -68,8 +68,18 @@ Cloudflare recommends using implicit rendering on the following scenarios:
 ></script>
 ```
 
+For a China widget, use the China-hosted script instead:
+
+```html wrap
+<script
+	src="https://challenges.cloudflare-cn.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
+```
+
 :::caution
-The `api.js` file must be fetched from the exact URL shown above. Proxying or caching this file will cause Turnstile to fail when future updates are released.
+Load `api.js` from the exact URL for your widget's region. Proxying or caching this file will cause Turnstile to fail when future updates are released.
 :::
 
 #### 2. (Optional) Optimize performance with resource hints
@@ -78,6 +88,12 @@ Add resource hints to improve loading performance by establishing early connecti
 
 ```html wrap
 <link rel="preconnect" href="https://challenges.cloudflare.com" />
+```
+
+For a China widget, preconnect to the China-hosted domain instead:
+
+```html wrap
+<link rel="preconnect" href="https://challenges.cloudflare-cn.com" />
 ```
 
 #### 3. Add widget elements

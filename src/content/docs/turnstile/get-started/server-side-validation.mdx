@@ -18,11 +18,12 @@ Learn how to securely validate Turnstile tokens on your server using the Sitever
 
 You must call the Siteverify API to complete your Turnstile implementation. The client-side widget alone does not protect your forms.
 
-Server-side validation is required because:
+When validating tokens:
 
 - **Tokens can be forged.** An attacker can submit any string to your form endpoint without completing a challenge.
 - **Tokens expire.** Each token is valid for 300 seconds (5 minutes) after generation.
 - **Tokens are single-use.** Each token can only be validated once. A replayed token will be rejected with the `timeout-or-duplicate` error code.
+- For China widgets, you must use the China Siteverify domain, `challenges.cloudflare-cn.com`.
   :::
 
 ## Process
@@ -37,6 +38,12 @@ Server-side validation is required because:
 
 ```shell title="Endpoint"
 POST https://challenges.cloudflare.com/turnstile/v0/siteverify
+```
+
+For China widgets, use the China Siteverify endpoint instead.
+
+```shell title="China endpoint"
+POST https://challenges.cloudflare-cn.com/turnstile/v0/siteverify
 ```
 
 ### Request format

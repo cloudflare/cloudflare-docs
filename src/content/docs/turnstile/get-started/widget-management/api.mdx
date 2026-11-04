@@ -34,6 +34,21 @@ Before you begin, you must have:
   }}
 />
 
+To create a China widget, set `region` to `china` in the request. You cannot change a widget's region after creation.
+
+<APIRequest
+  path="/accounts/{account_id}/challenges/widgets"
+  method="POST"
+  roles={false}
+  code={{ title: "Create a Turnstile Widget in China" }}
+  json={{
+    domains: ["example.com"],
+    mode: "managed",
+    name: "My China Turnstile Widget",
+    region: "china",
+  }}
+/>
+
 ### Manage widgets via the API
 
 <APIRequest
