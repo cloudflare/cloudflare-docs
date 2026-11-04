@@ -174,7 +174,7 @@ Cloudflare can receive service token leak reports from secret scanning partners,
 To recover a disabled token after a leak report:
 
 <Steps>
-1. [Rotate the token's secret](#rotate-service-token-secrets). In the dashboard, select _Revoke immediately_. In an API rotation request, omit `previous_client_secret_expires_at`.
+1. [Rotate the token's secret](#rotate-service-token-secrets). In the dashboard, select **Rotate secret** — the current secret is revoked immediately. In an API rotation request, omit `previous_client_secret_expires_at`.
 2. Replace the leaked secret in your services with the new Client Secret. The Client ID stays the same.
 3. [Turn the token on again](#turn-a-service-token-on-or-off). Rotation does not automatically re-enable a disabled token.
 </Steps>

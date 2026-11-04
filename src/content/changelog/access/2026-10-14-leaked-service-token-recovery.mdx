@@ -7,10 +7,10 @@ products:
   - cloudflare-one
 ---
 
-A Cloudflare Access service token reported as leaked cannot be re-enabled until its secret is rotated. This prevents a disabled credential from being put back into use without replacing the exposed secret.
+When a leak is reported by a secret scanning partner such as GitHub, Cloudflare automatically disables the token and notifies account administrators by email. A Cloudflare Access service token reported as leaked cannot be re-enabled until its secret is rotated. This prevents a disabled credential from being put back into use without replacing the exposed secret.
 
 Leaked secrets do not support a rotation grace period. When you rotate one, the previous secret is discarded immediately. Update your services with the new secret, then re-enable the token.
 
-For API rotations, omit `previous_client_secret_expires_at`. A future expiration returns `400`; attempting to re-enable the token before rotation returns `409`.
+For API rotations, omit `previous_client_secret_expires_at`. A future expiration returns `400`. Attempting to re-enable the token before rotation returns `409`.
 
 For recovery steps and leak metadata fields, refer to [Recover a leaked service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#recover-a-leaked-service-token).
