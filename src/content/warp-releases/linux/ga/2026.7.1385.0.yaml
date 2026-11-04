@@ -1,0 +1,25 @@
+releaseNotes: This hotfix addresses an issue building trusted certificate chains.
+version: 2026.7.1385.0
+releaseDate: 2026-11-03T19:57:25.743Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/resolute-arm/version/2026.7.1385.0
+packageSize: 75848364
+platformName: Linux
+linuxPlatforms:
+  resolute-arm: 75848364
+  resolute-intel: 73622830
+  noble-intel: 73625654
+  jammy-intel: 73882104
+  fedora44-arm: 80575832
+  bookworm-arm: 75531456
+  trixie-arm: 75884848
+  noble-arm: 76152990
+  almalinux9-intel: 76251036
+  almalinux10-arm: 80516944
+  fedora44-intel: 77741756
+  fedora43-intel: 77721721
+  almalinux9-arm: 78363292
+  bookworm-intel: 73892742
+  almalinux10-intel: 77723184
+  trixie-intel: 73627136
+  fedora43-arm: 80512586
+  jammy-arm: 75529098
