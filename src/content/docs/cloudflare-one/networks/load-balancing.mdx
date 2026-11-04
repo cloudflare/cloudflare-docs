@@ -1,0 +1,68 @@
+---
+title: Load balance private network traffic
+pcx_content_type: concept
+description: Distribute and fail over private network traffic across servers and sites connected with Cloudflare Tunnel, Cloudflare Mesh, or Cloudflare WAN.
+products:
+  - cloudflare-one
+sidebar:
+  order: 5
+tags:
+  - Private networks
+---
+
+import { GlossaryTooltip } from "~/components";
+
+Connectors such as Cloudflare Tunnel and Cloudflare Mesh make a private network reachable, but they do not spread traffic across multiple servers or sites. To do that, put a [private load balancer](/load-balancing/private-network/) in front of your private services.
+
+A private load balancer gets an IP address that users reach through Cloudflare One. When a user connects to that IP, Cloudflare picks a healthy endpoint (a private IP address and its [virtual network](/cloudflare-one/networks/virtual-networks/)) based on your [steering policy](/load-balancing/understand-basics/traffic-steering/), and sends the traffic to it through whichever connector routes that endpoint.
+
+```mermaid
+flowchart LR
+  U[Cloudflare One Client <br> or Cloudflare WAN site] --> LB{Private load balancer <br> 100.112.0.0}
+  LB -- Pool 1 --> T[Cloudflare Tunnel] --> S1[10.0.0.1]
+  LB -- Pool 2 --> M[Cloudflare Mesh node] --> S2[10.1.0.1]
+  LB -- Pool 3 --> W[Cloudflare WAN] --> S3[10.2.0.1]
+```
+
+## When to use a private load balancer
+
+| You want to | Use |
+| --- | --- |
+| Keep a single tunnel or Mesh node online if one host fails | Connector redundancy: [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) or [Mesh high availability](/mesh/features/high-availability/) |
+| Spread traffic across several servers, or fail over between data centers | A private load balancer |
+| Monitor the health of each server, not only the connector | A private load balancer with [health monitors](/load-balancing/monitors/) |
+| Keep each user on the same server | A private load balancer with [hash steering or session affinity](#keep-users-on-the-same-endpoint) |
+
+Connector redundancy and load balancing work together. A typical setup has one tunnel or Mesh node per site, with replicas for redundancy, and one load balancer pool per site.
+
+## Supported connectors
+
+Private load balancers accept traffic from the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), [Cloudflare WAN](/cloudflare-wan/), and other <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip>. They can send traffic to endpoints behind any of these connectors:
+
+- **Cloudflare Tunnel**: Add the private IPs from your tunnel's [CIDR routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/) as endpoints, with the tunnel's virtual network. Refer to [Set up Private Network Load Balancing with Client-to-Tunnel](/load-balancing/private-network/warp-to-tunnel/).
+- **Cloudflare Mesh**: Add private IPs from a Mesh node's [CIDR routes](/mesh/features/routes/), or a node's Mesh IP, as endpoints. Mesh nodes use your account's default virtual network, so select the default virtual network for these endpoints. The setup is the same as for [Client-to-Tunnel](/load-balancing/private-network/warp-to-tunnel/), with Mesh routes in place of tunnel routes.
+- **Cloudflare WAN**: Add private IPs reachable through your GRE, IPsec, or CNI connections. Refer to [Set up Private Network Load Balancing with Cloudflare WAN](/load-balancing/private-network/cloudflare-wan/).
+
+You can mix connectors in the same load balancer. For example, use one pool per site, where each site uses a different connector.
+
+## Keep users on the same endpoint
+
+To send each user to the same endpoint, set the pool's endpoint steering to [**Hash**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/hash-origin-steering/#private-load-balancers), or set [session affinity](/load-balancing/understand-basics/session-affinity/#private-load-balancers) to `ip_cookie` with the API. Both key on the Cloudflare One Client device, or on the source IP for other on-ramps.
+
+This pins the endpoint, not the connector replica. For applications that tie a session to the source IP, refer to [Source IP seen by your application](#source-ip-seen-by-your-application).
+
+## Source IP seen by your application
+
+Some applications, such as firewall or appliance admin interfaces, end a session when the client's source IP changes. What the application sees depends on the connector:
+
+- **Cloudflare Tunnel**: `cloudflared` opens the connection to your application, so the application sees the IP of the host running `cloudflared`. Cloudflare sends traffic to the [replica](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) closest to the Cloudflare data center handling the request, so with several replicas the same user can arrive from different host IPs.
+- **Cloudflare Mesh**: Only one replica of a Mesh node is active at a time, so traffic arrives through a single host until failover. With [source NAT](/mesh/guides/run-mesh-in-containers/#source-nat) enabled (the default for containers), the application sees the node's local IP. Without source NAT, your network needs [return routes](/mesh/features/routes/#return-traffic-routing) through the Mesh node. After a failover, traffic arrives through the new active replica.
+- **Cloudflare WAN**: The application sees a [Cloudflare source IP](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/).
+
+If your application needs a stable source IP behind Cloudflare Tunnel, use a single tunnel replica per endpoint, put a proxy in front of the application, or connect that site with a Mesh node instead.
+
+## Limitations
+
+- Endpoints must be IP addresses. [Private hostname routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-private-hostname/) and Mesh [hostname routes](/mesh/features/routes/#hostname-routes) cannot be used as load balancer endpoints.
+- A pool cannot contain the same IP address twice, even with different virtual networks. Put endpoints that share an IP address in different pools.
+- Health monitor traffic sent through Mesh nodes and Cloudflare WAN originates from the Cloudflare source IP range (default `100.64.0.0/12`). Make sure your network can route responses back for this range.
