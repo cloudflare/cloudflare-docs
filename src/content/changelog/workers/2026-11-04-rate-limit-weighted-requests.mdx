@@ -1,0 +1,40 @@
+---
+title: Count weighted requests with the Rate Limiting binding
+description: Pass a delta to limit() so that one call counts as more than one request.
+products:
+  - workers
+date: 2026-11-04
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Rate Limiting binding](/workers/runtime-apis/bindings/rate-limit/) now accepts an optional `delta` in `limit()`. A call counts as `delta` requests instead of one, so you can weight requests by what they cost without calling `limit()` in a loop.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const { pathname } = new URL(request.url);
+
+		// A search costs 10 times as much as any other request
+		const delta = pathname.startsWith("/search") ? 10 : 1;
+
+		const { success } = await env.MY_RATE_LIMITER.limit({
+			key: pathname,
+			delta,
+		});
+		if (!success) {
+			return new Response("Rate limit exceeded", { status: 429 });
+		}
+
+		return new Response("Success!");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The `delta` defaults to `1`. To use `delta` in local development, use [Wrangler 4.157.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.157.0) or later.
+
+For more details, refer to [Weighted requests](/workers/runtime-apis/bindings/rate-limit/#weighted-requests).
