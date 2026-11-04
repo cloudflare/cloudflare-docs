@@ -81,7 +81,7 @@ resource "cloudflare_turnstile_widget" "api_protection" {
 resource "cloudflare_turnstile_widget" "china_domain_widget" {
   account_id = var.account_id
   name       = "Widget for China Domains"
-  domains    = ["example.com", "example.cn"]
+  domains    = ["example.cn"]
   mode       = "managed"
   region     = "china"
 }
