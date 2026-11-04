@@ -18,7 +18,7 @@ Your `app/`, `pages/`, `next.config.*`, and `public/` directories stay the same.
 
 ## Before you begin
 
-- vinext aims to support Next.js 14 and later. Partial Prerendering support is in progress. To find features your application uses that vinext does not support yet, run `vinext check`.
+- vinext aims to support Next.js 14 and later. Partial Prerendering support is in progress. To check your application's compatibility with vinext, run `npx vinext check`.
 - vinext uses `cloudflare.config.ts` instead of a Wrangler configuration file, and deploys with the `cf` CLI. The Worker name is the `worker.name` value in that file.
 - Run `vinext init` directly instead of `wrangler setup`. [Automatic project configuration](/workers/framework-guides/automatic-configuration/#nextjs-configuration) with Wrangler configures OpenNext, not vinext.
 - Review the steps in [Before you begin](/workers/static-assets/migration-guides/vercel-to-workers/#before-you-begin) that apply to every framework.
