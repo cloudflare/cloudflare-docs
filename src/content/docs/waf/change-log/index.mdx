@@ -43,6 +43,12 @@ In some cases, the `beta` tag may persist beyond the standard seven-day review p
 
 For updates to existing rules, Cloudflare first deploys the updated version as a separate `BETA` rule (noted in the rule description) with a `beta` tag, before updating the original rule on the next release cycle.
 
+### Rule removals
+
+Cloudflare announces planned managed rule removals in [Scheduled changes](/waf/change-log/scheduled-changes/) at least seven days before the planned removal date. Each notice lists the affected rule IDs and names and the planned removal date.
+
+Emergency removals may occur without advance notice.
+
 ### Disabled rules
 
 Cloudflare may also add rules in disabled mode on the same release cycle. These rules make remediation logic available without affecting traffic, and allow Cloudflare to perform impact testing and performance checks. You can activate a disabled rule at any time if you need its protection. Disabled rules do not carry the `beta` or `new` tags.
