@@ -1,0 +1,30 @@
+---
+title: Turnstile in China
+description: Serve Turnstile challenges and validate tokens through endpoints within Mainland China.
+date: 2026-11-04
+---
+
+Turnstile in China is available to accounts with access. It serves challenges and validates tokens through endpoints within Mainland China. A China Network subscription is not required. Contact your account team to request access.
+
+When creating a widget for visitors in Mainland China, select **China** as its region. You cannot change the region after creating the widget.
+
+![Turnstile widget form with China selected as the region and a warning that the region cannot be changed](~/assets/images/turnstile/china-widget-region.jpg)
+
+The selected region is locked in the widget settings after creation.
+
+![Turnstile widget settings showing the China region selected and unavailable to edit](~/assets/images/turnstile/china-widget-region-locked.jpg)
+
+You can also create a widget with the API or Terraform by setting its region to `china`. For example, an API request can include:
+
+```json
+{
+	"name": "Widget for China Domains",
+	"domains": ["example.cn"],
+	"mode": "managed",
+	"region": "china"
+}
+```
+
+Use the China-hosted script at `challenges.cloudflare-cn.com` for client-side rendering and the China Siteverify endpoint on the same domain for server-side token validation.
+
+For implementation steps, refer to [Get started with Turnstile](/turnstile/get-started/).
