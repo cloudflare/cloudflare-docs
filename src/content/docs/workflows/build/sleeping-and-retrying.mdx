@@ -218,6 +218,10 @@ Rollback handlers receive:
 
 You can use `rollbackConfig` to control retry behavior for the rollback handler. Throw a `NonRetryableError` from the rollback handler to stop retrying it immediately.
 
+Workflows runs rollback handlers one at a time. If a rollback handler fails, Workflows does not run the remaining rollback handlers. A handler fails when it throws a `NonRetryableError` or runs out of retries. The instance's `rollback.outcome` is then `failed`.
+
+A step that is still running when the instance fails is cancelled. If that step registered a rollback handler, the handler runs with `output` set to `undefined`. For example, this applies to the other steps in a `Promise.all()` when one of them fails.
+
 ## Catch Workflow errors
 
 Any uncaught exceptions that propagate to the top level, or any steps that reach their retry limit, will cause the Workflow to end execution in an `Errored` state.
