@@ -25,7 +25,7 @@ Each framework guide includes a prompt for your coding agent and the equivalent 
 | Remix and React Router         | [Migrate React Router from Vercel](/workers/static-assets/migration-guides/vercel-to-workers/react-router/)     | `@vercel/remix` is replaced by the Cloudflare Vite plugin       |
 | SvelteKit                      | [Migrate SvelteKit from Vercel](/workers/static-assets/migration-guides/vercel-to-workers/sveltekit/)           | `adapter-vercel` is replaced by `adapter-cloudflare`            |
 | TanStack Start                 | [Migrate TanStack Start from Vercel](/workers/static-assets/migration-guides/vercel-to-workers/tanstack-start/) | The Nitro Vite plugin is replaced by the Cloudflare Vite plugin |
-| Static site or single-page app | [Migrate a static site](#migrate-a-static-site-or-single-page-application)                                      | A Wrangler configuration file points to your build output       |
+| Static site or single-page app | [Migrate a static site from Vercel](/workers/static-assets/migration-guides/vercel-to-workers/static-site/)     | A Wrangler configuration file points to your build output       |
 
 For other frameworks, refer to the [framework guides](/workers/framework-guides/) and the rest of this page.
 
@@ -42,56 +42,7 @@ These steps apply to every framework:
 
 ## Migrate a static site or single-page application
 
-Use these steps if your project does not render pages on the server.
-
-<Steps>
-
-1. In the Vercel dashboard, go to your project's **Settings** > **Build & Development settings**. Note the **Build Command** and **Output Directory** values.
-
-   ![Finding the Build Command and Output Directory fields](~/assets/images/workers/migrations/vercel-deploy-1.png)
-
-2. In the root of your project, create a Wrangler configuration file. Replace `<your-project-name>` with your project name, and `<your-build-directory>` with the output directory, for example `./dist`.
-
-   For a static site:
-
-   <WranglerConfig>
-
-   ```jsonc
-   {
-   	"name": "<your-project-name>",
-   	"compatibility_date": "$today",
-   	"assets": {
-   		"directory": "<your-build-directory>",
-   	},
-   }
-   ```
-
-   </WranglerConfig>
-
-   For a single-page application, add `not_found_handling`:
-
-   <WranglerConfig>
-
-   ```jsonc
-   {
-   	"name": "<your-project-name>",
-   	"compatibility_date": "$today",
-   	"assets": {
-   		"directory": "<your-build-directory>",
-   		"not_found_handling": "single-page-application",
-   	},
-   }
-   ```
-
-   </WranglerConfig>
-
-3. Build your project, then deploy it:
-
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
-
-4. To deploy on every push, [connect your repository to Workers Builds](/workers/ci-cd/builds/#connect-a-new-worker). Use the same build command as on Vercel, and use `npx wrangler deploy` as the deploy command.
-
-</Steps>
+To migrate a project that does not render pages on the server, refer to [Migrate a static site or SPA from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/static-site/).
 
 ## Map Vercel features to Cloudflare
 
