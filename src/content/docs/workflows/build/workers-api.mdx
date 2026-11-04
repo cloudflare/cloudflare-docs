@@ -843,7 +843,7 @@ interface WorkflowInstanceCreateOptions {
 type WorkflowRetentionDuration = WorkflowSleepDuration;
 ```
 
-If `retention` is not set, instance state is retained for the [`default_retention`](/workflows/build/workers-api/#default-instance-retention) configured on the Workflow binding. If the binding does not set a default either, instance state is retained for your account's default retention period: 3 days on the Workers Free plan, or 7 days on the Workers Paid plan (30 days for Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/)). Refer to the [retention limit](/workflows/reference/limits/) for more information.
+If `retention` is not set, instance state is retained for the [`default_retention`](/workflows/build/workers-api/#default-instance-retention) configured on the Workflow binding. If the binding does not set a default either, the account-level default applies, if one is set. Otherwise, instance state is retained for 3 days on the Workers Free plan, or 7 days on the Workers Paid plan (30 days for Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/)). Refer to the [retention limit](/workflows/reference/limits/) for more information.
 
 The following example creates an instance that retains state for 1 day after success and 7 days after an error:
 
