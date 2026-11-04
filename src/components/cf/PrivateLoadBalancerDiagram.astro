@@ -4,8 +4,25 @@
    applied, so the explicit role is required to preserve list semantics
    for screen reader users. */
 /* eslint-disable astro/jsx-a11y/no-redundant-roles */
-import { z } from "astro/zod";
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+interface Endpoint {
+	ip: string;
+	vnet: string;
+}
+
+interface Pool {
+	name: string;
+	site?: string;
+	connector: "tunnel" | "mesh" | "wan";
+	endpoints: Endpoint[];
+}
+
+interface Props {
+	client?: string;
+	ip?: string;
+	pools?: Pool[];
+}
 
 const connectors = {
 	tunnel: {
@@ -25,53 +42,69 @@ const connectors = {
 	},
 } as const;
 
-const pool = z.object({
-	name: z.string(),
-	site: z.string().optional(),
-	connector: z.enum(["tunnel", "mesh", "wan"]),
-	endpoints: z
-		.array(z.object({ ip: z.string(), vnet: z.string() }))
-		.min(1),
+const defaultPools: Pool[] = [
+	{
+		name: "Pool 1",
+		connector: "tunnel",
+		endpoints: [{ ip: "10.0.0.1", vnet: "vnet-a" }],
+	},
+	{
+		name: "Pool 2",
+		connector: "mesh",
+		endpoints: [{ ip: "10.1.0.1", vnet: "default" }],
+	},
+	{
+		name: "Pool 3",
+		connector: "wan",
+		endpoints: [{ ip: "10.2.0.1", vnet: "default" }],
+	},
+];
+
+const pills = [
+	{ label: "Health monitors", href: "/load-balancing/monitors/" },
+	{
+		label: "Steering",
+		href: "/load-balancing/understand-basics/traffic-steering/",
+	},
+	{
+		label: "Session affinity",
+		href: "/load-balancing/understand-basics/session-affinity/#private-load-balancers",
+	},
+];
+
+const {
+	client = "Cloudflare One Client or Cloudflare WAN site",
+	ip = "100.112.0.0",
+	pools = defaultPools,
+} = Astro.props;
+
+const cards = pools.map((p) => {
+	const connector = connectors[p.connector];
+	return {
+		title: p.site ? `${p.name} · ${p.site}` : p.name,
+		label: connector.label,
+		icon: connector.icon,
+		href: connector.href,
+		cardClass: `node-card pool-card ${p.connector}-card`,
+		iconClass: `node-icon ${p.connector}-icon`,
+		endpoints: p.endpoints,
+	};
 });
 
-const props = z.object({
-	client: z.string().default("Cloudflare One Client or Cloudflare WAN site"),
-	ip: z.string().default("100.112.0.0"),
-	pools: z
-		.array(pool)
-		.min(1)
-		.max(3)
-		.default([
-			{
-				name: "Pool 1",
-				connector: "tunnel",
-				endpoints: [{ ip: "10.0.0.1", vnet: "vnet-a" }],
-			},
-			{
-				name: "Pool 2",
-				connector: "mesh",
-				endpoints: [{ ip: "10.1.0.1", vnet: "default" }],
-			},
-			{
-				name: "Pool 3",
-				connector: "wan",
-				endpoints: [{ ip: "10.2.0.1", vnet: "default" }],
-			},
-		]),
-});
+const poolsRowClass = `row pools-row pools-${Math.min(pools.length, 3)}`;
 
-const { client, ip, pools } = props.parse(Astro.props);
+const describePool = (p: Pool) => {
+	const via = connectors[p.connector].label;
+	const site = p.site ? ` in ${p.site}` : "";
+	const ips = p.endpoints.map((e) => `${e.ip} (${e.vnet})`).join(", ");
+	return `${p.name}${site} through ${via} to ${ips}`;
+};
 
-const summary = pools
-	.map(
-		(p) =>
-			`${p.name}${p.site ? ` in ${p.site}` : ""} through ${connectors[p.connector].label} to ${p.endpoints
-				.map((e) => `${e.ip} in virtual network ${e.vnet}`)
-				.join(" and ")}`,
-	)
-	.join("; ");
-
-const ariaLabel = `Private load balancing: a ${client} connects to the private load balancer IP ${ip}. The load balancer picks a healthy endpoint from one of its pools and sends traffic through the connector that routes it: ${summary}.`;
+const ariaLabel = [
+	`Private load balancing: ${client} connects to ${ip}.`,
+	"The load balancer picks a healthy endpoint from one of its pools.",
+	`${pools.map(describePool).join("; ")}.`,
+].join(" ");
 ---
 
 <figure class="private-lb-diagram not-content" aria-label={ariaLabel}>
@@ -104,59 +137,37 @@ const ariaLabel = `Private load balancing: a ${client} connects to the private l
 					Picks a healthy endpoint based on your steering policy
 				</p>
 				<div class="pill-row">
-					<a class="lb-pill" href="/load-balancing/monitors/">Health monitors</a>
-					<a
-						class="lb-pill"
-						href="/load-balancing/understand-basics/traffic-steering/"
-					>
-						Steering
-					</a>
-					<a
-						class="lb-pill"
-						href="/load-balancing/understand-basics/session-affinity/#private-load-balancers"
-					>
-						Session affinity
-					</a>
+					{pills.map((p) => (
+						<a class="lb-pill" href={p.href}>
+							{p.label}
+						</a>
+					))}
 				</div>
 			</div>
 		</div>
 
-		<ul
-			class:list={["row", "pools-row", `pools-${pools.length}`]}
-			role="list"
-		>
-			{
-				pools.map((p) => {
-					const c = connectors[p.connector];
-					return (
-						<li class:list={["node-card", "pool-card", `${p.connector}-card`]}>
-							<span class="pool-name">
-								{p.name}
-								{p.site && <span class="pool-site"> · {p.site}</span>}
-							</span>
-							<div class="node-header">
-								<span
-									class:list={["node-icon", `${p.connector}-icon`]}
-									aria-hidden="true"
-								>
-									<Icon name={c.icon} />
-								</span>
-								<a class="node-title" href={c.href}>
-									{c.label}
-								</a>
-							</div>
-							<ul class="endpoint-list" role="list">
-								{p.endpoints.map((e) => (
-									<li class="endpoint">
-										<code>{e.ip}</code>
-										<span class="vnet-pill">{e.vnet}</span>
-									</li>
-								))}
-							</ul>
-						</li>
-					);
-				})
-			}
+		<ul class={poolsRowClass} role="list">
+			{cards.map((card) => (
+				<li class={card.cardClass}>
+					<span class="pool-name">{card.title}</span>
+					<div class="node-header">
+						<span class={card.iconClass} aria-hidden="true">
+							<Icon name={card.icon} />
+						</span>
+						<a class="node-title" href={card.href}>
+							{card.label}
+						</a>
+					</div>
+					<ul class="endpoint-list" role="list">
+						{card.endpoints.map((e) => (
+							<li class="endpoint">
+								<code>{e.ip}</code>
+								<span class="vnet-pill">{e.vnet}</span>
+							</li>
+						))}
+					</ul>
+				</li>
+			))}
 		</ul>
 	</div>
 	<figcaption>Endpoint = IP address + virtual network</figcaption>
@@ -394,10 +405,6 @@ const ariaLabel = `Private load balancing: a ${client} connects to the private l
 			monospace;
 		font-size: 11px;
 		font-weight: 500;
-	}
-
-	.pool-site {
-		color: var(--map-caption);
 	}
 
 	.endpoint-list {
