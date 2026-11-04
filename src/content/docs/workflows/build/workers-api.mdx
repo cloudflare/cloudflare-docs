@@ -825,7 +825,7 @@ interface WorkflowInstanceCreateOptions {
 	params?: unknown;
 	/**
 	 * The retention policy for the Workflow instance.
-	 * Defaults to the Workflow's `default_retention`, or to the default retention period for the owner's account.
+	 * Defaults to the Workflow's `default_retention`, then the account default, then the plan default (3 days on Workers Free, 7 days on Workers Paid).
 	 */
 	retention?: {
 		/**
