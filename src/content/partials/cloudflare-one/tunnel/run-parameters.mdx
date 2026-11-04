@@ -177,7 +177,9 @@ Requires `cloudflared` version `2026.10.0` or later.
 
 When `false`, normalizes URLs before matching ingress rules for tunnels requiring [Cloudflare Access](/cloudflare-one/access-controls/) validation. The URL path sent to your origin stays the same. Set `--disable-path-normalization=false` to turn on normalization.
 
-The default is `true` in version `2026.10.0`. For the planned default change, refer to the [URL normalization changelog](/changelog/post/2026-10-22-cloudflared-path-normalization/).
+Version `2026.11.0` and later also handles semicolon-delimited path parameters during normalization.
+
+The default is `true`. For the planned default change, refer to the [URL normalization follow-up](/changelog/post/2026-11-04-cloudflared-matrix-path-parameters/).
 
 ### `dns-resolver-addrs`
 
