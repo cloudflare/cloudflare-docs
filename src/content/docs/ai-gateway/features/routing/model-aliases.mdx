@@ -1,6 +1,6 @@
 ---
 title: Model aliases
-description: Give a group of models a stable name, configure routing preferences, and update model choices without changing application code.
+description: Call a pool of models by one name, and route requests in a fallback order or with smart routing, without changing application code.
 pcx_content_type: how-to
 sidebar:
   order: 1
@@ -11,11 +11,14 @@ products:
 
 import { DashButton, Steps } from "~/components";
 
-A model alias gives one or more models a name such as `custom/support-fast`. Your application calls that name instead of a specific model. You can change the models and routing preferences on your gateway without updating your application.
+A model alias is a pool of models that your application calls by a single name, such as `custom/support-fast`. For each request, AI Gateway picks a model from the pool in one of two ways:
 
-Aliases belong to individual gateways. A `custom/support-fast` alias on one gateway does not configure the same name on another gateway.
+- **Default order**: Try the models in the order you set, and fall back to the next model if one fails.
+- **Smart routing**: Choose the model for each request.
 
-Use an alias for a list of models with shared routing preferences. For conditional branches, percentage splits, or limits within a routing flow, use [dynamic routes](/ai-gateway/features/routing/dynamic-routing/).
+Because your application only references the alias name, you can change the models or routing algorithm on your gateway without updating your code. Aliases belong to individual gateways, so a `custom/support-fast` alias on one gateway is separate from one with the same name on another.
+
+For conditional branches, percentage splits, or limits within a routing flow, use [dynamic routes](/ai-gateway/features/routing/dynamic-routing/) instead.
 
 ## Before you start
 
@@ -36,30 +39,24 @@ Not every catalog model is available as an alias target. Targets must be availab
 2. Select your gateway, then go to **Routing**.
 3. Select **Create alias**.
 4. In **Alias name**, enter a name such as `support-fast`. The dashboard adds the `custom/` prefix.
-5. In **Models**, select a model. To add fallbacks, select **Add model** and choose additional models. Drag the models to set their preferred order.
-6. (Optional) In **Routing**, turn on **Custom routing** and configure the [routing preferences](#routing-preferences).
+5. In **Models**, select a model. To add fallbacks, select **Add model** and choose additional models. Drag the models to set their default order.
+6. In **Routing algorithm**, select a [routing algorithm](#routing-algorithm).
 7. Select **Create alias**.
 
 </Steps>
 
-The alias appears in the Routing list with its `custom/` prefix. Select its name to edit the models or routing preferences, then select **Save alias**. Renaming an alias changes the name your application must request.
+The alias appears in the Routing list with its `custom/` prefix. Select its name to edit the models or routing algorithm, then select **Save alias**. Renaming an alias changes the name your application must request.
 
 Configuration changes can take time to reach requests served from different locations. A request may use a cached alias configuration while it refreshes.
 
-## Routing preferences
+## Routing algorithm
 
-Turn on **Custom routing** to save routing preferences for this alias.
+| Algorithm                     | Behavior                                                                                                      |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| _Default order_ (`preferred`) | Try eligible models from top to bottom until one responds.                                                    |
+| _Smart routing_ (`smart`)     | Choose a model for each request. If smart routing cannot rank the models, the gateway uses the default order. |
 
-| Setting          | Value                           | Behavior                                                                 |
-| ---------------- | ------------------------------- | ------------------------------------------------------------------------ |
-| **Algorithm**    | _Preferred order_ (`preferred`) | Prefer eligible models in their configured order.                        |
-| **Algorithm**    | _Smart routing_ (`smart`)       | Rank eligible models for each request using the optimization preference. |
-| **Optimize for** | _Cost_ (`cost`)                 | Favor cost efficiency when using smart routing.                          |
-| **Optimize for** | _Best quality_ (`best`)         | Favor the router's quality ranking when using smart routing.             |
-
-The optimization preference applies to smart routing. If smart routing cannot rank the models, the gateway uses the model order you configured.
-
-When **Custom routing** is off, the gateway uses the model order you configured. Routing options supplied with a request override the alias's saved preferences.
+Routing options supplied with a request override the alias's saved routing algorithm.
 
 Only models and providers that support the request format and pass gateway checks are eligible. A failed attempt can fall back to another eligible model or provider. This does not bypass authentication, billing, or gateway policies.
 
