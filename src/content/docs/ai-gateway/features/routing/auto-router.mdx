@@ -96,15 +96,11 @@ At the start of each turn, Auto Router switches models only when the expected be
 
 Auto Router supports the following request headers:
 
-| Header                       | Description                                                                                                              |
-| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `cf-aig-session-id`          | Identifies the session that the request belongs to. Enables [session affinity](#session-affinity).                       |
-| `cf-aig-turn-id`             | Identifies the turn that the request belongs to. Overrides turn detection from message history.                          |
-| `cf-aig-no-session-affinity` | Set to `true` to select a model for each request instead of pinning a model for the turn.                                |
-| `cf-aig-allowed-models`      | A comma-separated list of models that Auto Router can select from. Supports the `*` wildcard, for example `anthropic/*`. |
-| `cf-aig-allowed-providers`   | A comma-separated list of providers that Auto Router can select from, for example `openai,anthropic`.                    |
-
-By default, Auto Router selects from a set of [default models](#default-models). `cf-aig-allowed-models` replaces the default models with the models you provide. Entries can match any model in [Models](#models), including additional models. The `*` wildcard does not match `/`, so use `anthropic/*` instead of `*`. If an entry matches no model, AI Gateway returns a `400` error. If you send both headers, a model must match both.
+| Header                       | Description                                                                                        |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- |
+| `cf-aig-session-id`          | Identifies the session that the request belongs to. Enables [session affinity](#session-affinity). |
+| `cf-aig-turn-id`             | Identifies the turn that the request belongs to. Overrides turn detection from message history.    |
+| `cf-aig-no-session-affinity` | Set to `true` to select a model for each request instead of pinning a model for the turn.          |
 
 The response includes headers that describe the routing decision. These headers can help you identify the selected model, understand why it was selected, and correlate the request with AI Gateway logs for support and diagnostics:
 
@@ -132,11 +128,11 @@ The `cf-aig-routing-reason` header has one of these values:
 
 ## Models
 
-Auto Router selects from a pool of models managed by Cloudflare. The pool may change over time.
+Auto Router selects from a pool of models managed by Cloudflare. The pool may change over time. To route between models you choose, use a [model alias](#choose-your-own-models).
 
 ### Default models
 
-By default, Auto Router selects from the following models. To provide your own set of models, use the [`cf-aig-allowed-models` or `cf-aig-allowed-providers` header](#headers).
+Auto Router selects from the following models:
 
 | Model                       | Provider    |
 | --------------------------- | ----------- |
@@ -148,11 +144,22 @@ By default, Auto Router selects from the following models. To provide your own s
 | `openai/gpt-5.6-terra`      | `openai`    |
 | `xai/grok-4.5`              | `xai`       |
 
-### Additional models
+### Choose your own models
 
-Auto Router only selects these models when they match `cf-aig-allowed-models` or `cf-aig-allowed-providers`.
+To route between a set of models you choose, create a [model alias](/ai-gateway/features/routing/model-aliases/) and turn on smart routing. The alias stores the models and routing preferences on your gateway, so you can change them without updating your application.
 
-<Details header="Additional models">
+<Details header="Restrict models with request headers">
+
+To limit the models that `cloudflare/auto` selects from for a single request, use the following headers. To create a reusable set of models, use a [model alias](/ai-gateway/features/routing/model-aliases/) instead.
+
+| Header                     | Description                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `cf-aig-allowed-models`    | A comma-separated list of models that Auto Router can select from. Supports the `*` wildcard, for example `anthropic/*`. |
+| `cf-aig-allowed-providers` | A comma-separated list of providers that Auto Router can select from, for example `openai,anthropic`.                    |
+
+`cf-aig-allowed-models` replaces the [default models](#default-models) with the models you provide. Entries can match a default model or one of the additional models below. The `*` wildcard does not match `/`, so use `anthropic/*` instead of `*`. If an entry matches no model, AI Gateway returns a `400` error. If you send both headers, a model must match both.
+
+Auto Router only selects these additional models when they match one of the headers. The Provider column uses the values that `cf-aig-allowed-providers` accepts.
 
 | Model                                    | Provider     |
 | ---------------------------------------- | ------------ |
@@ -178,8 +185,6 @@ Auto Router only selects these models when they match `cf-aig-allowed-models` or
 | `xai/grok-4.6`                           | `xai`        |
 
 </Details>
-
-The Provider column uses the values that `cf-aig-allowed-providers` accepts.
 
 ## Use with OpenCode
 
