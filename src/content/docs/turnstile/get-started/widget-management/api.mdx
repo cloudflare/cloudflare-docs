@@ -11,7 +11,7 @@ sidebar:
     label: API
 ---
 
-import { APIRequest } from "~/components"
+import { APIRequest, CURL } from "~/components"
 
 Use the [Cloudflare API](/api/resources/turnstile/) for programmatic widget management and automation.
 
@@ -36,10 +36,10 @@ Before you begin, you must have:
 
 To create a China widget, set `region` to `china` in the request. You cannot change a widget's region after creation.
 
-<APIRequest
-  path="/accounts/{account_id}/challenges/widgets"
+<CURL
+  url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/challenges/widgets"
   method="POST"
-  roles={false}
+  headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
   code={{ title: "Create a Turnstile Widget in China" }}
   json={{
     domains: ["example.com"],
