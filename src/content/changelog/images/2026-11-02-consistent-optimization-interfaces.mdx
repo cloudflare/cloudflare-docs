@@ -1,0 +1,86 @@
+---
+title: A new, consistent language across Images interfaces
+description: The Images URL interface and cf.image options now share a consistent parameter structure.
+date: 2026-11-02
+---
+
+[Cloudflare Images](/images/) lets you dynamically compose, manipulate, and encode images using a broad set of optimizations, including [resizing](/images/optimization/features/#width--w), [face cropping](/images/optimization/features/#face), and [background removal](/images/optimization/features/#segment). You can configure optimizations directly in an image URL or programmatically through the [`cf.image` options](/images/optimization/transformations/transform-via-workers/) on a Worker [`fetch()` subrequest](/workers/runtime-apis/fetch/).
+
+We redesigned the Images API to provide a consistent, predictable, and intuitive language for developers and AI agents to optimize and manipulate images.
+
+Starting today, the URL interface and `cf.image` options in [Workers](/workers/) use the same parameter structure to [apply optimizations](/images/optimization/features/). Existing syntax in URLs and Worker configurations continues to behave as before.
+
+This release also makes adding [borders](/images/optimization/features/#border) and [overlays](/images/optimization/features/#draw) available in the URL interface. For example, you can now add a logo or text watermark by changing the URL instead of writing a Worker.
+
+## What changed
+
+Optimization parameters are now represented in one of two ways: a compact form for single values and a structured form for related settings.
+
+For example, `width=500` requests an exact width, while `width=auto` asks Images to automatically select a width using request context. [Automatic width selection](/images/optimization/features/#widthauto) already supports mobile and desktop fallbacks and a list of breakpoint widths; these settings were previously configured as separate top-level parameters.
+
+The new structure groups existing settings underneath `width`:
+
+_URLs and `cf.image` objects now use the same hierarchy to express relationships between parameters and their settings._
+
+In the URL interface, automatic width selection is configured under a single top-level `width` parameter:
+
+```txt
+width=(mode=auto,mobile=600,desktop=1400,breakpoints=(400,800))
+```
+
+The same hierarchy maps directly to `cf.image` in Workers, where related values that were previously separate or inferred now live in the same object. The structured object uses `mode` to explicitly identify the selected behavior, while the remaining properties configure that behavior:
+
+```js
+width: {
+	mode: "auto",
+	mobile: 600,
+	desktop: 1400,
+	breakpoints: [400, 800]
+}
+```
+
+## A unified parameter model
+
+In Images, optimizations are expressed as parameters, which form the language used to describe every optimization and its intended behavior. `width` sets the output width, `gravity` identifies the area that a crop should preserve, and `draw` defines how image or text overlays are rendered.
+
+Many optimization features began as scalar parameters, pairing a parameter key with one value, such as `width=500`. As we introduced more capabilities, some parameters gained settings to configure how the optimization worked. We added syntax to support each use case, gradually accumulating different forms for expressing related settings, such as separate top-level parameters, dotted parameter names, and unlabeled positional values.
+
+In our legacy structure, [trimming](/images/optimization/features/#trim) exposed additional top-level parameters, similarly to automatic width selection. [Border-based trimming](/images/optimization/features/#trim-border) used separate, dotted parameters to configure color detection behavior. [Side-based trimming](/images/optimization/features/#trim-side) used four positional values to represent the number of pixels that should be removed from the top, right, bottom, and left sides:
+
+```txt
+trim=border,trim.border.color=%23fff,trim.border.tolerance=10,trim.border.keep=5
+trim=10;20;10;20
+```
+
+None of these forms were especially challenging in isolation. But together, they required developers to learn several parameter models and agents to infer the relationships between parameters and their settings to produce the correct syntax for each interface.
+
+In the new structure, the Images API distinguishes between two core concepts: A **parameter** identifies an optimization feature, while a **setting** configures how that feature behaves.
+
+The compact form continues to assign one value directly to a parameter. When an optimization has configurable behavior, the structured form organizes named settings, lists, and nested groups beneath the parameter, making the relationship between the optimization and its configuration explicit.
+
+The unified parameter model follows these rules:
+
+- **A parameter that needs one value uses the compact form.** When the relationship is unambiguous, existing forms like `width=500`, `trim=border` (with default settings), and `gravity=auto` continue to work with the same syntax.
+- **A parameter with configurable behavior groups its settings beneath the top-level parameter.** When a parameter supports multiple behaviors, the `mode` setting identifies the selected behavior. Without `mode`, an expression such as `width=(desktop=1400)` would require Images to infer `auto` from the presence of `desktop`.
+- **Across interfaces, groups and lists follow the same nesting rules.** A grouped URL parameter maps to an object in `cf.image`, while a URL list maps to an array. Previously, each feature needed a separate representation and translation rules for each interface. The shared hierarchy eliminates structural drift by using the same vocabulary and relationships in both interfaces.
+
+For developers, a standard form for configuring parameters means fewer special-case conventions to remember and less translation between interfaces. Related settings stay together and a configuration expressed in a URL maps predictably to its `cf.image` object.
+
+## How this affects existing optimizations
+
+The new structure is available for existing optimization features whose settings previously used separate top-level parameters, dotted names, or positional values. It also brings two previously Workers-only capabilities, borders and overlays, to the URL interface.
+
+Use the new structured form to express the following optimizations and capabilities:
+
+| Optimization | What it does | What changed |
+| --- | --- | --- |
+| [`border`](/images/optimization/features/#border) | Adds a border around the image. | Now supported in the URL interface. Previously, this was available only in Workers. |
+| [`draw`](/images/optimization/features/#draw) | Adds an image or text overlay to the source image. | Now supported in the transformation URL interface for remote images. Previously, this was available only in Workers. |
+| [`gravity`](/images/optimization/features/#gravity) coordinates | Sets the focal point using relative `x` and `y` coordinates. | Uses named `x` and `y` settings in the URL interface. |
+| [`trim`](/images/optimization/features/#trim) | Removes pixels around the sides of an image. | Uses named settings beneath `trim` for individual sides, rectangular areas, and border-color detection. |
+| [`upscale`](/images/optimization/features/#upscale) | Controls the algorithm used when an image is enlarged. | Configured as the `upscale` setting beneath [`fit`](/images/optimization/features/#fit), alongside the selected mode. |
+| [`width=auto`](/images/optimization/features/#width) | Automatically selects an appropriate output width using available information about the browser and device. | Uses named settings under the `width` parameter for mobile, desktop, and breakpoint widths. |
+
+These structured forms are additive. Earlier forms, including `gravity=0.5x0.3`, dotted `trim` parameters, and separate top-level parameters continue to work.
+
+Refer to [Features](/images/optimization/features/) for the complete reference of optimization features.

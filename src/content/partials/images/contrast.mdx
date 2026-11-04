@@ -14,6 +14,19 @@ Adjusts the image's overall difference between the darkest and lightest parts us
 - `< 1.0` — Decreases contrast, which makes shadows lighter and highlights darker.
 - `> 1.0` — Increases contrast, which pushes shadows toward black and highlights toward white.
 
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    contrast=0.5
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {contrast: 0.5}}
+  ```
+  </TabItem>
+</Tabs>
+
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
     <td style="width:33%; border:none; vertical-align:bottom">
@@ -40,16 +53,3 @@ Adjusts the image's overall difference between the darkest and lightest parts us
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    contrast=0.5
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {contrast: 0.5}}
-  ```
-  </TabItem>
-</Tabs>
