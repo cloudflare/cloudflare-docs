@@ -1,0 +1,136 @@
+---
+pcx_content_type: how-to
+title: Rust SDK
+description: Set up the Flagship OpenFeature provider to evaluate Flagship feature flags from Rust applications.
+sidebar:
+  order: 4
+products:
+  - flagship
+---
+
+The Rust SDK provides an OpenFeature-compatible provider for Rust applications. It supports remote HTTP evaluation, local evaluation, and response caching. It does not support the Cloudflare Workers binding.
+
+The SDK requires Rust 1.88 or later and a Tokio runtime.
+
+## Installation
+
+Install the SDK and the Tokio runtime features used by this example:
+
+```sh
+cargo add cloudflare-flagship
+cargo add tokio --features macros,rt-multi-thread
+```
+
+## Setup
+
+Configure the provider with your Flagship app ID, Cloudflare account ID, and an [API token](/flagship/api-tokens/) with Flagship Evaluate or Flagship App Evaluate permission.
+
+```rust
+use std::error::Error;
+
+use cloudflare_flagship::{
+    open_feature::{EvaluationContext, EvaluationError, OpenFeature},
+    FlagshipClientOptions, FlagshipServerProvider,
+};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn Error>> {
+    let options = FlagshipClientOptions::builder()
+        .app_id("<APP_ID>")
+        .account_id("<ACCOUNT_ID>")
+        .auth_token("<API_TOKEN>")
+        .build()?;
+    let provider = FlagshipServerProvider::new(options)?;
+
+    let mut api = OpenFeature::default();
+    api.set_provider(provider).await;
+
+    let client = api.create_client();
+    let context = EvaluationContext::default()
+        .with_targeting_key("user-42")
+        .with_custom_field("plan", "enterprise");
+    let enabled = client
+        .get_bool_value("new-checkout", Some(&context), None)
+        .await
+        .map_err(evaluation_error)?;
+
+    println!("new-checkout: {enabled}");
+
+    Ok(())
+}
+
+fn evaluation_error(error: EvaluationError) -> std::io::Error {
+    let message = error.message.unwrap_or_default();
+
+    std::io::Error::other(format!("{:?}: {message}", error.code))
+}
+```
+
+## Flag types
+
+The Rust SDK supports all OpenFeature server-side flag types.
+
+```rust
+use cloudflare_flagship::open_feature::StructValue;
+
+let enabled = client
+    .get_bool_value("new-checkout", Some(&context), None)
+    .await
+    .map_err(evaluation_error)?;
+let variant = client
+    .get_string_value("homepage-hero", Some(&context), None)
+    .await
+    .map_err(evaluation_error)?;
+let rate = client
+    .get_float_value("sample-rate", Some(&context), None)
+    .await
+    .map_err(evaluation_error)?;
+let limit = client
+    .get_int_value("upload-limit", Some(&context), None)
+    .await
+    .map_err(evaluation_error)?;
+let config = client
+    .get_struct_value::<StructValue>("ui-config", Some(&context), None)
+    .await
+    .map_err(evaluation_error)?;
+```
+
+Use the `*_details` methods when you need the resolved value, reason, variant, or error code.
+
+## Evaluation modes
+
+By default, the provider evaluates flags through the Flagship HTTP API. You can also configure these modes:
+
+- **Local evaluation** downloads flag definitions and evaluates flags in-process. The provider refreshes definitions in the background.
+- **Response caching** stores remote evaluation results for repeated flag and context pairs.
+
+Local evaluation and response caching cannot be used together.
+
+## Configuration options
+
+| Option              | Description                                                           |
+| ------------------- | --------------------------------------------------------------------- |
+| `app_id`            | Flagship app ID. Mutually exclusive with `endpoint`.                  |
+| `account_id`        | Required with `app_id` and for local evaluation.                      |
+| `base_url`          | Base URL override used with `app_id`.                                 |
+| `endpoint`          | Full absolute evaluation endpoint URL.                                |
+| `auth_token`        | Adds an `Authorization` bearer token to each request.                 |
+| `static_headers`    | Static request headers.                                               |
+| `header_factory`    | Async per-request headers.                                            |
+| `http_client`       | Custom `reqwest::Client`.                                             |
+| `timeout`           | Per-attempt timeout. Defaults to five seconds.                        |
+| `retries`           | Retry attempts on transient errors. Defaults to one.                  |
+| `retry_delay`       | Delay between retries. Defaults to one second.                        |
+| `cache_ttl`         | Cache lifetime. A value greater than zero turns on response caching.  |
+| `cache_max_entries` | Maximum cached entries. Defaults to 1,000.                            |
+| `local_evaluation`  | Downloads definitions and evaluates flags in-process.                 |
+| `refresh_interval`  | Local definition refresh period. Defaults to 30 seconds.              |
+| `hook`              | Adds a provider-level OpenFeature hook.                               |
+
+## Evaluation context
+
+The Rust SDK supports strings, finite numbers, booleans, nulls, structs, and arrays in the evaluation context. Primitive-only context uses URL query parameters. Context containing structs, arrays, or nulls uses a JSON `POST` request.
+
+The SDK rejects context that exceeds [Flagship limits](/flagship/reference/limits/) before sending a request.
+
+For advanced configuration, refer to the [`cloudflare-flagship` crate documentation](https://docs.rs/cloudflare-flagship/). For complete programs, refer to the [Rust SDK examples](https://github.com/cloudflare/flagship/tree/main/sdks/rust/examples).
