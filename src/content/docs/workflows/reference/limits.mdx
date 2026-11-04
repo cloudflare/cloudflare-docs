@@ -60,7 +60,7 @@ Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows d
 
 [^10]: This total includes persisted bytes from streamed step outputs returned from JavaScript `step.do()` calls.
 
-[^11]: By default, each Workflow can use all of your account's concurrency. To cap the number of instances of a single Workflow that run at once, set a [concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits). Instances above the limit are queued.
+[^11]: By default, each Workflow can use all of your account's concurrency. To cap the number of instances of a single Workflow that run at once, set a [concurrency limit](/workflows/build/concurrency-limits/). Instances above the limit are queued.
 
 <Render file="limits_increase" product="workers" />
 
@@ -68,7 +68,7 @@ In JavaScript Workflows, if you need to persist large binary output from a step,
 
 ### `waiting` instances do not count towards instance concurrency limits
 
-Instances that are in a `waiting` state — either sleeping via `step.sleep`, waiting for a retry, or waiting for an event via `step.waitForEvent` — do **not** count towards concurrency limits. This means you can have millions of Workflow instances sleeping or waiting for events simultaneously, as only actively `running` instances count toward your account's concurrent instance limit, and toward any [concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits) set on the Workflow.
+Instances that are in a `waiting` state — either sleeping via `step.sleep`, waiting for a retry, or waiting for an event via `step.waitForEvent` — do **not** count towards concurrency limits. This means you can have millions of Workflow instances sleeping or waiting for events simultaneously, as only actively `running` instances count toward your account's concurrent instance limit, and toward any [concurrency limit](/workflows/build/concurrency-limits/) set on the Workflow.
 However, if your account or the Workflow is already at its concurrency limit, an instance that has been in a `waiting` state will be queued instead of resuming immediately.
 When an instance transitions from `running` to `waiting`, other `queued` instances will be scheduled (usually the oldest queued instance, on a best-effort basis). This state transition may not occur if the wait duration is very short.
 
@@ -120,7 +120,7 @@ While a given Workflow instance is waiting for 30 days, it will transition to th
 
 On [Workers Paid](/workers/platform/pricing/#workers), Workflow instances created by `schedules` can run for up to one hour per cron firing without consuming a Workflow concurrency slot.
 
-After that budget is used, the instance yields and enters the normal concurrency queue. It resumes when a concurrency slot is available. The instance does not fail, time out, or terminate because it used this cron concurrency budget. During the budget, the instance is also not held back by a [Workflow's concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits).
+After that budget is used, the instance yields and enters the normal concurrency queue. It resumes when a concurrency slot is available. The instance does not fail, time out, or terminate because it used this cron concurrency budget. During the budget, the instance is also not held back by a [Workflow's concurrency limit](/workflows/build/concurrency-limits/).
 
 The following limits apply to Workflow `schedules`:
 

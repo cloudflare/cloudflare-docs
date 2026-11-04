@@ -327,7 +327,7 @@ Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workf
 
 ## Workflow concurrency limits
 
-By default, instances of a Workflow can run concurrently up to your account's [concurrency limit](/workflows/reference/limits/), which is shared by every Workflow in the account. To cap how many instances of a single Workflow run at the same time, configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration:
+To cap how many instances of a single Workflow run at the same time, configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -348,33 +348,7 @@ By default, instances of a Workflow can run concurrently up to your account's [c
 
 </WranglerConfig>
 
-With this configuration, no more than 10 instances of `MyWorkflow` run at once, no matter how many you create. Use a concurrency limit to:
-
-- Protect a downstream dependency, such as a database or third-party API, that degrades or rate limits past a certain number of concurrent requests.
-- Spread bursts of expensive calls over time, instead of making them all at once.
-- Stop one high-volume Workflow from using all of your account's concurrency and delaying instances of your other Workflows.
-
-`limit` must be a positive integer, and cannot be higher than your account's concurrency limit. A Workflow's concurrency limit can only make it more restrictive. It does not raise your account limit.
-
-### How concurrency limits are applied
-
-- **Instances above the limit are queued, not rejected.** They have the `queued` [status](#instancestatus) and start automatically as running instances finish. Queued instances start in the order they were queued, on a best-effort basis.
-- **Only `running` instances count towards the limit.** Instances that are sleeping, waiting to retry a step, or waiting for an event with `step.waitForEvent` have the `waiting` status and do not use a slot. When they are ready to continue, they are queued again if your account or the Workflow is at its limit.
-- **Both limits apply.** An instance starts only when your account and the Workflow both have capacity. If your account is at its concurrency limit, instances are queued even if the Workflow is below its own limit.
-- **Limits are caps, not reservations.** The concurrency limits of your Workflows can add up to more than your account limit. Setting a limit does not reserve capacity for a Workflow. To leave capacity for an important Workflow, set limits on your other Workflows so they cannot use all of your account's concurrency.
-- **Lowering the limit does not stop running instances.** If more instances than the new limit are already running, they continue to completion. No new instance of the Workflow starts until the number of running instances drops below the new limit.
-- **Workflows without a limit are not affected.** Only your account's concurrency limit applies to them.
-- **Instances created by `schedules` are not held back during their cron concurrency budget.** On Workers Paid, an instance created by a [cron schedule](/workflows/build/trigger-workflows/#schedule-a-workflow-directly) is not held back by the limit and does not use a slot for up to one hour per firing, so it can run even when the Workflow is at its limit. After that budget is used, the instance yields and is queued until both your account and the Workflow have a free slot.
-
-To change the limit, update `concurrency.limit` and redeploy your Worker. To remove the limit, remove `concurrency` from your Wrangler configuration and run `wrangler deploy`. Each deploy sets the limit from your configuration, so deploying without `concurrency` removes any existing limit.
-
-:::note
-
-`concurrency` cannot be combined with `script_name`. If you bind to a Workflow defined in another Worker, set `concurrency` on the Worker that defines the Workflow.
-
-Concurrency limits are not applied in local development.
-
-:::
+Instances above the limit are queued and start automatically as running instances finish. The limit cannot be higher than your account's [concurrency limit](/workflows/reference/limits/). Refer to [Concurrency limits](/workflows/build/concurrency-limits/) for how limits are applied, and how to change or remove them.
 
 ## Default instance retention
 

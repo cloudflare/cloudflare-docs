@@ -47,7 +47,7 @@ The possible values for `eventType` are documented below:
 
 #### Workflows-level status labels
 
-- `WORKFLOW_QUEUED` - the Workflow is queued, but not currently running. This can happen when your account is at its [concurrency limit](/workflows/reference/limits/), or the Workflow is at its own [concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits), and new instances are waiting for currently running instances to complete.
+- `WORKFLOW_QUEUED` - the Workflow is queued, but not currently running. This can happen when your account is at its [concurrency limit](/workflows/reference/limits/), or the Workflow is at its own [concurrency limit](/workflows/build/concurrency-limits/), and new instances are waiting for currently running instances to complete.
 - `WORKFLOW_START` - the Workflow has started and is running.
 - `WORKFLOW_SUCCESS` - the Workflow finished without errors.
 - `WORKFLOW_FAILURE` - the Workflow failed due to errors (exhausting retries, errors thrown, etc).

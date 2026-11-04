@@ -9,7 +9,7 @@ date: 2026-08-27
 
 import { WranglerConfig } from "~/components";
 
-You can now set a [concurrency limit](/workflows/build/workers-api/#workflow-concurrency-limits) on an individual Workflow, capping how many of its instances run at the same time. Previously, every Workflow in an account shared the account's [concurrency limit](/workflows/reference/limits/). Keeping a single Workflow below a lower ceiling meant building your own queue, semaphore, or backoff logic inside your steps.
+You can now set a [concurrency limit](/workflows/build/concurrency-limits/) on an individual Workflow, capping how many of its instances run at the same time. Previously, every Workflow in an account shared the account's [concurrency limit](/workflows/reference/limits/). Keeping a single Workflow below a lower ceiling meant building your own queue, semaphore, or backoff logic inside your steps.
 
 Set `concurrency.limit` on a `workflows` binding and redeploy:
 
@@ -42,4 +42,4 @@ Each deploy sets the limit from your configuration, so deploying without `concur
 
 Per-workflow concurrency limits require Wrangler 4.127.0 or above.
 
-For more information, refer to [Workflow concurrency limits](/workflows/build/workers-api/#workflow-concurrency-limits).
+For more information, refer to [Concurrency limits](/workflows/build/concurrency-limits/).
