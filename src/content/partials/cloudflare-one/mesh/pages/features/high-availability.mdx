@@ -14,7 +14,7 @@ High availability provides resilience for CIDR route prefixes advertised by a Me
 
 This means HA is useful for nodes that have routes configured — nodes acting as subnet gateways for private networks behind them. If a node is only used for direct Mesh IP connectivity (no routes), HA has limited benefit because the node's Mesh IP is tied to the individual replica.
 
-High availability does not spread traffic across replicas, because only one replica is active at a time. To distribute traffic across several servers, health-check each server, or fail over between sites (for example, from a Cloudflare WAN site to a Mesh site), use a [private load balancer](/cloudflare-one/networks/load-balancing/). Each Mesh node must route different IP addresses, so endpoints behind different nodes need different IPs.
+High availability does not spread traffic across replicas, because only one replica is active at a time. To distribute traffic across several servers, health-check each server, or fail over between sites (for example, from a Cloudflare WAN site to a Mesh site), use a [private load balancer](/cloudflare-one/networks/load-balancing/). A route can only be assigned to one Mesh node, and Mesh only uses the default virtual network, so endpoints behind different nodes need different IPs.
 
 ## How it works
 

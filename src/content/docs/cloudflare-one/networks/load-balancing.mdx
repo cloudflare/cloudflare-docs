@@ -45,10 +45,10 @@ Private load balancers accept traffic from the [Cloudflare One Client](/cloudfla
 
 ### Overlapping IP addresses
 
-An endpoint is identified by its IP address and virtual network, and Cloudflare must be able to route it to exactly one place. Mesh and Cloudflare WAN only use the default virtual network, and a route can only be assigned to one Mesh node. As a result:
+An endpoint is identified by its IP address and virtual network, and Cloudflare must be able to route it to exactly one place. Cloudflare Tunnel and Cloudflare Mesh share the same [routes](/cloudflare-one/networks/routes/) system: within a virtual network, a route can only be assigned to one tunnel or one Mesh node. For redundancy on the same route, run [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) or [Mesh replicas](/mesh/features/high-availability/) instead of separate connectors. As a result:
 
-- **Cloudflare Tunnel** can reach the same IP address at several sites. Give each site's tunnel its own [virtual network](/cloudflare-one/networks/virtual-networks/), and put each site's endpoints in a separate pool.
-- **Cloudflare Mesh and Cloudflare WAN** endpoints must have IP addresses that are unique within the default virtual network. To load balance across several Mesh nodes, each node must route a different range, so the servers behind each node need different IP addresses. If your sites use the same IP addresses, use Cloudflare Tunnel with one virtual network per site instead.
+- **Cloudflare Tunnel** supports custom virtual networks, so it can reach the same IP address at several sites. Put each site's tunnel in its own [virtual network](/cloudflare-one/networks/virtual-networks/), and each site's endpoints in a separate pool.
+- **Cloudflare Mesh and Cloudflare WAN** only use the default virtual network, so their endpoints must have IP addresses that are unique within it. To load balance across several Mesh nodes, each node must route a different range, so the servers behind each node need different IP addresses. If your sites use the same IP addresses, use Cloudflare Tunnel with one virtual network per site instead.
 
 ### Combine connectors
 
