@@ -1,0 +1,281 @@
+---
+/* `role="list"` on the list below is intentional, not redundant: Safari
+   + VoiceOver drop the implicit list role when `list-style: none` is
+   applied, so the explicit role is required to preserve list semantics
+   for screen reader users. */
+/* eslint-disable astro/jsx-a11y/no-redundant-roles */
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+const replicas = [
+	{ name: "Replica 1", host: "host-a" },
+	{ name: "Replica 2", host: "host-b" },
+];
+---
+
+<figure
+	class="replicas-diagram not-content"
+	aria-label="Cloudflare Tunnel replicas: two cloudflared replicas of the same tunnel, tunnel-01, run on different hosts in your network. Each replica opens four outbound connections to Cloudflare, Cloudflare forwards each request to the closest replica, and both replicas reach the same application."
+>
+	<div class="diagram">
+		<div class="row single-row">
+			<div class="node-card">
+				<div class="node-header">
+					<span class="node-icon cloudflare-icon" aria-hidden="true">
+						<Icon name="ph:cloud" />
+					</span>
+					<span class="node-title">Cloudflare network</span>
+				</div>
+				<p class="node-caption">
+					Forwards each request to the geographically closest replica
+				</p>
+			</div>
+		</div>
+
+		<div class="connector">
+			<span class="connector-label">4 outbound connections per replica</span>
+		</div>
+
+		<div class="network">
+			<span class="network-label">Your network</span>
+			<ul class="row replica-row" role="list">
+				{replicas.map((replica) => (
+					<li class="node-card">
+						<div class="node-header">
+							<span class="node-icon tunnel-icon" aria-hidden="true">
+								<Icon name="tunnel" />
+							</span>
+							<span class="node-title">cloudflared</span>
+						</div>
+						<p class="node-caption">
+							{replica.name} on <code>{replica.host}</code>
+						</p>
+						<span class="tunnel-pill">tunnel-01</span>
+					</li>
+				))}
+			</ul>
+
+			<div class="row single-row">
+				<div class="node-card">
+					<div class="node-header">
+						<span class="node-icon app-icon" aria-hidden="true">
+							<Icon name="ph:app-window" />
+						</span>
+						<span class="node-title">Application</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</figure>
+
+<style>
+	.replicas-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-caption: light-dark(#737373, #a3a3a3);
+		--map-brand: #f6821f;
+		--map-tunnel: light-dark(#0891b2, #67e8f9);
+		--map-app: light-dark(#10b981, #34d399);
+
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 1.5rem 0;
+		padding: 22px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 14px 14px;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.diagram {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.row {
+		position: relative;
+		display: grid;
+		gap: 16px;
+		align-items: stretch;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.single-row {
+		grid-template-columns: minmax(0, 1fr);
+		justify-items: center;
+	}
+
+	.single-row .node-card {
+		width: 100%;
+		max-width: 360px;
+	}
+
+	.replica-row {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.replica-row + .row::before {
+		content: "";
+		position: absolute;
+		top: -14px;
+		left: 50%;
+		width: 2px;
+		height: 12px;
+		background: var(--map-line);
+	}
+
+	.connector {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+	}
+
+	.connector::before,
+	.connector::after {
+		content: "";
+		width: 2px;
+		height: 10px;
+		background: var(--map-line);
+	}
+
+	.connector-label {
+		color: var(--map-caption);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		font-weight: 500;
+		text-align: center;
+	}
+
+	.network {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+		padding: 14px;
+		border: 1px dashed var(--map-line);
+		border-radius: 12px;
+	}
+
+	.network-label {
+		align-self: center;
+		color: var(--map-strong);
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	.node-card {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 12px 14px;
+		border: 1px solid var(--map-line);
+		border-radius: 10px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		color: var(--map-text);
+	}
+
+	.node-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	.node-title {
+		min-width: 0;
+		color: var(--map-text);
+		font-size: 14px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+	}
+
+	.node-icon {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 7px;
+	}
+
+	.node-icon :global(svg) {
+		width: 18px;
+		height: 18px;
+		fill: currentColor;
+	}
+
+	.cloudflare-icon {
+		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
+		color: var(--map-brand);
+	}
+
+	.tunnel-icon {
+		background: color-mix(in srgb, var(--map-tunnel) 14%, transparent);
+		color: var(--map-tunnel);
+	}
+
+	.app-icon {
+		background: color-mix(in srgb, var(--map-app) 14%, transparent);
+		color: var(--map-app);
+	}
+
+	.node-caption {
+		margin: 0;
+		color: var(--map-caption);
+		font-size: 12px;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	code {
+		display: inline;
+		padding: 1px 6px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	.tunnel-pill {
+		align-self: center;
+		padding: 2px 8px;
+		border-radius: 9999px;
+		background: color-mix(in srgb, var(--map-tunnel) 12%, transparent);
+		color: var(--map-tunnel);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		font-weight: 500;
+	}
+
+	@media (max-width: 30rem) {
+		.replica-row {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

@@ -10,6 +10,7 @@ sidebar:
 ---
 
 import { Details, GlossaryTooltip, Render } from "~/components";
+import TunnelLoadBalancingDiagram from "~/components/cf/TunnelLoadBalancingDiagram.astro";
 
 Our lightweight and open-source connector, [`cloudflared`](https://github.com/cloudflare/cloudflared), was built to be highly available without any additional configuration requirements. When you run a tunnel, `cloudflared` establishes four outbound-only connections between the origin server and the Cloudflare network. These four connections are made to four different servers spread across at least two distinct data centers. This model ensures high availability and mitigates the risk of individual connection failures. This means in event a single connection, server, or data center goes offline, your resources will remain available.
 
@@ -36,30 +37,7 @@ For setup instructions, refer to [Deploy cloudflared replicas](/cloudflare-one/n
 
 [Cloudflare Load Balancing](/load-balancing/) proactively steers traffic away from unhealthy origins and intelligently distributes the traffic load based on your choice of [steering algorithms](/load-balancing/understand-basics/traffic-steering/). Unlike [`cloudflared` replicas](#cloudflared-replicas) which all use the same tunnel, a typical load balancer setup requires creating multiple tunnels. Most customers will create one tunnel per data center and one load balancer pool per tunnel.
 
-```mermaid
-graph LR
-    accTitle: Load balancing traffic to applications behind Cloudflare Tunnel
-
-    A[Internet] --> C{Cloudflare <br> Load Balancer}
-    B[Cloudflare One Client] --> C
-    M[Cloudflare WAN] --> C
-    C -- Tunnel 1 --> cf1
-    C -- Tunnel 2 --> cf2
-    subgraph F[Data center 2]
-        cf2[cloudflared <br> server]
-        S3[App server]
-        S4[App server]
-        cf2-->S3
-        cf2-->S4
-    end
-    subgraph E[Data center 1]
-        cf1[cloudflared <br> server]
-        S1[App server]
-        S2[App server]
-        cf1-->S1
-        cf1-->S2
-    end
-```
+<TunnelLoadBalancingDiagram />
 
 ### When to use load balancers
 
