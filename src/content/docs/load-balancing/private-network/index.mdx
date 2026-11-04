@@ -51,7 +51,7 @@ If your application only needs TCP or UDP proxying (not load balancing), you can
 
 Private Network Load Balancing supports endpoints behind [Cloudflare Mesh](/mesh/) nodes. Use private IPs from a Mesh node's [CIDR routes](/mesh/features/routes/), or a node's Mesh IP, as endpoint addresses, and select the virtual network that contains the node's route (the default virtual network unless you assigned the route to another one).
 
-Within a virtual network, the same CIDR can be assigned to only one tunnel and only one Mesh node. To reach the same IP address at several sites, assign each site's route to its own virtual network. A common use is failover between a site connected with Cloudflare WAN and a site connected with a Mesh node. For more details, refer to [Load balance private network traffic](/cloudflare-one/networks/load-balancing/#overlapping-ip-addresses).
+Within a virtual network, a CIDR can be assigned to only one tunnel or Mesh node. To reach the same IP address at several sites, assign each site's route to its own virtual network. A common use is failover between a site connected with Cloudflare WAN and a site connected with a Mesh node. For more details, refer to [Load balance private network traffic](/cloudflare-one/networks/load-balancing/#overlapping-ip-addresses).
 
 ### Cloudflare WAN
 

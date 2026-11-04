@@ -54,8 +54,8 @@ Use CIDR routes to forward traffic from your mesh node to devices on your local 
 3. Go to the **Routes** tab.
 4. Select **Add route**.
 5. Enter the private CIDR you want to route through this node (for example, `10.0.0.0/24`).
-6. (Optionally) select a [virtual network](/cloudflare-one/networks/virtual-networks/) for the route. If you do not select one, the route uses your default virtual network.
-7. (Optionally) add a description for the route.
+6. (Optionally) add a description for the route.
+7. (Optionally) in **Virtual network**, select the [virtual network](/cloudflare-one/networks/virtual-networks/) for the route. The default virtual network is preselected.
 8. Select **Add route**.
 
 </TabItem> <TabItem label="API">
@@ -75,7 +75,7 @@ Use CIDR routes to forward traffic from your mesh node to devices on your local 
 
 </TabItem> </Tabs>
 
-Within a virtual network, the same CIDR can be assigned to only one Mesh node. To route overlapping IP ranges at different sites, assign each site's route to a different virtual network.
+Within a virtual network, a CIDR can be assigned to only one Mesh node or [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). To route overlapping IP ranges at different sites, assign each site's route to a different virtual network. Client devices reach a route only while they are connected to the route's virtual network.
 
 ### Edit a route
 
@@ -83,7 +83,7 @@ Within a virtual network, the same CIDR can be assigned to only one Mesh node. T
 
 1. Go to **Networking** > **Mesh** > select your node > **Routes** tab.
 2. Select the edit icon next to the route you want to modify.
-3. Update the CIDR or description.
+3. Update the CIDR, description, or virtual network.
 4. Select **Save**.
 
 </TabItem> <TabItem label="API">
@@ -94,8 +94,11 @@ Within a virtual network, the same CIDR can be assigned to only one Mesh node. T
   json={{
     network: "10.0.0.0/24",
     comment: "Updated description",
+    virtual_network_id: "{virtual_network_id}",
   }}
 />
+
+Omit `virtual_network_id` to keep the route's current virtual network.
 
 </TabItem> </Tabs>
 
