@@ -73,11 +73,17 @@ When you finish, list the files you changed, behavior changes from any SvelteKit
 
 1. If your SvelteKit version is earlier than 2, upgrade to SvelteKit 2 first. For more information, refer to [Migrating to SvelteKit v2](https://svelte.dev/docs/kit/migrating-to-sveltekit-2).
 
-2. Remove the Vercel adapter and install the Cloudflare adapter. On SvelteKit 3, use `@sveltejs/adapter-cloudflare@^8`.
+2. Remove the Vercel adapter. List only the adapters in your `package.json`, because pnpm fails if you list a package that is not installed.
 
    <PackageManagers type="remove" pkg="@sveltejs/adapter-vercel @sveltejs/adapter-auto" />
 
+   Install the Cloudflare adapter that matches your SvelteKit version. On SvelteKit 2:
+
    <PackageManagers pkg="@sveltejs/adapter-cloudflare@^7 wrangler" dev />
+
+   On SvelteKit 3:
+
+   <PackageManagers pkg="@sveltejs/adapter-cloudflare@^8 wrangler" dev />
 
 3. Configure the adapter. On SvelteKit 2, edit `svelte.config.js`:
 

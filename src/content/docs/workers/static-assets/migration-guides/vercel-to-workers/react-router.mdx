@@ -98,13 +98,13 @@ Skip this section if your application already uses React Router v7.
 
 <Steps>
 
-1. Remove the Vercel packages and install the Cloudflare Vite plugin:
+1. Remove the Vercel packages and install the Cloudflare Vite plugin. List only the packages in your `package.json`, because pnpm fails if you list a package that is not installed.
 
-   <PackageManagers type="remove" pkg="@vercel/react-router @vercel/remix @vercel/analytics" />
+   <PackageManagers type="remove" pkg="@vercel/react-router @vercel/remix @vercel/analytics @vercel/speed-insights" />
 
    <PackageManagers pkg="@cloudflare/vite-plugin wrangler vite@^7" dev />
 
-2. Remove `vercelPreset()`, `vercel.json`, `<Analytics />`, and any route `export const config`. If `vercelPreset()` generated `app/entry.server.jsx`, delete that file too.
+2. Remove `vercelPreset()`, `vercel.json`, `<Analytics />`, `<SpeedInsights />`, and any route `export const config`. If `vercelPreset()` generated `app/entry.server.jsx`, delete that file too.
 
 3. Add the Cloudflare plugin to `vite.config.ts`, before `reactRouter()`:
 
