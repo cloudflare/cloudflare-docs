@@ -1,0 +1,26 @@
+---
+title: Keep users on the same endpoint with private load balancers
+description: Private load balancers support Hash endpoint steering and session affinity, keyed on the Cloudflare One Client device or the source IP address.
+products:
+  - load-balancing
+  - tunnel
+  - mesh
+date: 2026-11-04
+---
+
+import PrivateLoadBalancerDiagram from "~/components/cf/PrivateLoadBalancerDiagram.astro";
+
+[Private load balancers](/load-balancing/private-network/) can now keep each user on the same endpoint. This helps with applications that keep session state on a single server.
+
+<PrivateLoadBalancerDiagram />
+
+Two options are available:
+
+- **Hash endpoint steering.** In the dashboard, set a pool's **Endpoint steering** to [**Hash**](/load-balancing/understand-basics/traffic-steering/origin-level-steering/hash-origin-steering/#private-load-balancers). Each user is mapped to an endpoint within the pool.
+- **Session affinity.** With the API, set `session_affinity` to `ip_cookie` on the load balancer. Each user stays on the same endpoint while it remains healthy and your pools do not change. Refer to [Session affinity](/load-balancing/understand-basics/session-affinity/#private-load-balancers).
+
+For traffic from the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/), Cloudflare identifies the user by their device, so a user stays on the same endpoint even if their IP address changes. For other traffic, such as from a [Cloudflare WAN](/cloudflare-wan/) site, Cloudflare uses the source IP address.
+
+This works for endpoints reached through Cloudflare Tunnel, Cloudflare Mesh, and Cloudflare WAN. Affinity pins the endpoint, not the `cloudflared` or Mesh replica that carries the traffic.
+
+To learn how private load balancing fits with your connectors, refer to [Load balance private network traffic](/cloudflare-one/networks/load-balancing/).

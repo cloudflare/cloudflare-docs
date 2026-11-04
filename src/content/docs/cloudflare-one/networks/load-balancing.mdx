@@ -11,18 +11,13 @@ tags:
 ---
 
 import { GlossaryTooltip } from "~/components";
+import PrivateLoadBalancerDiagram from "~/components/cf/PrivateLoadBalancerDiagram.astro";
 
-Connectors such as Cloudflare Tunnel and Cloudflare Mesh make a private network reachable, but they do not spread traffic across multiple servers or sites. To do that, put a [private load balancer](/load-balancing/private-network/) in front of your private services.
+Connectors such as Cloudflare Tunnel and Cloudflare Mesh make a private network reachable, but they do not let you control how traffic is spread across servers and sites. To do that, put a [private load balancer](/load-balancing/private-network/) in front of your private services.
 
 A private load balancer gets an IP address that users reach through Cloudflare One. When a user connects to that IP, Cloudflare picks a healthy endpoint (a private IP address and its [virtual network](/cloudflare-one/networks/virtual-networks/)) based on your [steering policy](/load-balancing/understand-basics/traffic-steering/), and sends the traffic to it through whichever connector routes that endpoint.
 
-```mermaid
-flowchart LR
-  U[Cloudflare One Client <br> or Cloudflare WAN site] --> LB{Private load balancer <br> 100.112.0.0}
-  LB -- Pool 1 --> T[Cloudflare Tunnel] --> S1[10.0.0.1]
-  LB -- Pool 2 --> M[Cloudflare Mesh node] --> S2[10.1.0.1]
-  LB -- Pool 3 --> W[Cloudflare WAN] --> S3[10.2.0.1]
-```
+<PrivateLoadBalancerDiagram />
 
 ## When to use a private load balancer
 
@@ -47,7 +42,7 @@ Private load balancers accept traffic from the [Cloudflare One Client](/cloudfla
 
 An endpoint is identified by its IP address and virtual network. For Cloudflare Tunnel and Cloudflare Mesh endpoints, Cloudflare sends the traffic through the route that covers that IP address in that virtual network.
 
-Cloudflare Tunnel and Cloudflare Mesh share the same [routes](/cloudflare-one/networks/routes/add-routes/) system. Within a virtual network, a CIDR can be assigned to only one tunnel or Mesh node, so you cannot add the same CIDR to both a tunnel and a Mesh node. For redundancy on the same route, run [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) or [Mesh replicas](/mesh/features/high-availability/) instead of separate connectors.
+Cloudflare Tunnel and Cloudflare Mesh share the same [routing table](/cloudflare-one/networks/routes/add-routes/). Within a virtual network, a CIDR can be assigned to only one tunnel or Mesh node, so you cannot add the same CIDR to both a tunnel and a Mesh node. For redundancy on the same route, run [`cloudflared` replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/#cloudflared-replicas) or [Mesh replicas](/mesh/features/high-availability/) instead of separate connectors.
 
 To reach the same IP address at several sites through Cloudflare Tunnel or Cloudflare Mesh, assign each site's route to its own [virtual network](/cloudflare-one/networks/virtual-networks/), and put each site's endpoints in a separate pool.
 

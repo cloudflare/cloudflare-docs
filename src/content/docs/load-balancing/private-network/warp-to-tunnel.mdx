@@ -1,6 +1,6 @@
 ---
 pcx_content_type: how-to
-description: Load balance WARP client traffic to private origins via Tunnel.
+description: Load balance Cloudflare One Client traffic to private origins via Tunnel.
 products:
   - load-balancing
 title: Set up Private Network Load Balancing with Client-to-Tunnel
@@ -18,38 +18,35 @@ import {
 	APIRequest,
 	GlossaryTooltip,
 } from "~/components";
+import PrivateLoadBalancerDiagram from "~/components/cf/PrivateLoadBalancerDiagram.astro";
 
 You can use Private Network Load Balancing to distribute Cloudflare One Client traffic to private hostnames and IPs connected via [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 
 For example, assume you have an internal application running in two data centers, and you want Cloudflare One Client users to access the application from the data center closest to their geographic location. A typical load balancing configuration is shown in the following diagram:
 
-```mermaid
-graph LR
-    W[WARP clients] --> C{Private load balancer <br> 100.112.0.0}
-    C -- Tunnel 1 --> cf1
-    C -- Tunnel 2 --> cf2
-		subgraph D2[Data center 2]
-			cf2@{ shape: processes, label: "cloudflared" }
-			subgraph F[Pool 2]
-					S3["Endpoint <br> 10.0.0.1 (VNET-2)"]
-					S4["Endpoint <br> 10.0.0.2 (VNET-2)"]
-			end
-			cf2-->S3
-			cf2-->S4
-		end
-		subgraph D1[Data center 1]
-			cf1@{ shape: processes, label: "cloudflared" }
-			subgraph E[Pool 1]
-					S1["Endpoint <br> 10.0.0.1 (VNET-1)"]
-					S2["Endpoint <br> 10.0.0.2 (VNET-1)"]
-			end
-			cf1-->S1
-			cf1-->S2
-		end
-
-		style E stroke-width:2px,stroke-dasharray: 5 5
-		style F stroke-width:2px,stroke-dasharray: 5 5
-```
+<PrivateLoadBalancerDiagram
+	client="Cloudflare One Client devices"
+	pools={[
+		{
+			name: "Pool 1",
+			site: "Data center 1",
+			connector: "tunnel",
+			endpoints: [
+				{ ip: "10.0.0.1", vnet: "VNET-1" },
+				{ ip: "10.0.0.2", vnet: "VNET-1" },
+			],
+		},
+		{
+			name: "Pool 2",
+			site: "Data center 2",
+			connector: "tunnel",
+			endpoints: [
+				{ ip: "10.0.0.1", vnet: "VNET-2" },
+				{ ip: "10.0.0.2", vnet: "VNET-2" },
+			],
+		},
+	]}
+/>
 
 The components in the diagram include:
 
@@ -131,7 +128,7 @@ After completing the setup, you will be redirected to the Load Balancing dashboa
 
 ## 3. Route the load balancer IP through the Cloudflare One Client
 
-In order for Cloudflare One Clients to connect to your load balancer, the load balancer's IP address must route through the WARP tunnel in your [Split Tunnel settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
+In order for Cloudflare One Clients to connect to your load balancer, the load balancer's IP address must route through the Cloudflare One Client in your [Split Tunnels settings](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/).
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Team & Resources** > **Device profiles**.
 2. Find the [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles/) you would like to modify and select **Edit**.
@@ -139,7 +136,7 @@ In order for Cloudflare One Clients to connect to your load balancer, the load b
 4. Select **Manage**. Depending on the mode:
    - **Exclude mode**: Delete the IP range that contains your load balancer IP. For example, if your load balancer has a Cloudflare-assigned CGNAT IP, delete `100.64.0.0/10`. We recommend [adding back the IPs](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/cloudflared/connect-cidr/#3-route-private-network-ips-through-the-cloudflare-one-client) that are not being used by your load balancer.
      :::note
-     Some IPs in the `100.64.0.0/10` range may be reserved for other Zero Trust services such as <GlossaryTooltip term = "WARP CGNAT IP">WARP CGNAT IPs</GlossaryTooltip>, or Gateway <GlossaryTooltip term = "initial resolved IP">initial resolved IPs</GlossaryTooltip> if your account uses a legacy or custom range within CGNAT space. These IPs should remain deleted from the Exclude list.
+     Some IPs in the `100.64.0.0/10` range may be reserved for other Zero Trust services such as <GlossaryTooltip term = "WARP CGNAT IP">Cloudflare One Client device IPs</GlossaryTooltip>, or Gateway <GlossaryTooltip term = "initial resolved IP">initial resolved IPs</GlossaryTooltip> if your account uses a legacy or custom range within CGNAT space. These IPs should remain deleted from the Exclude list.
      :::
    - **Include mode**: Add your load balancer IP.
 
