@@ -49,9 +49,9 @@ If your application only needs TCP or UDP proxying (not load balancing), you can
 
 ### Cloudflare Mesh
 
-Private Network Load Balancing supports endpoints behind [Cloudflare Mesh](/mesh/) nodes. Use private IPs from a Mesh node's [CIDR routes](/mesh/features/routes/), or a node's Mesh IP, as endpoint addresses. Mesh nodes use your account's default virtual network, so select the default virtual network for these endpoints.
+Private Network Load Balancing supports endpoints behind [Cloudflare Mesh](/mesh/) nodes. Use private IPs from a Mesh node's [CIDR routes](/mesh/features/routes/), or a node's Mesh IP, as endpoint addresses. Mesh nodes do not support custom virtual networks, so select the default virtual network for these endpoints.
 
-Mesh [high availability](/mesh/features/high-availability/) is active-passive within a node. To spread traffic across several Mesh nodes or sites, add them as endpoints in a load balancer. For more details, refer to [Load balance private network traffic](/cloudflare-one/networks/load-balancing/).
+Because a route can only be assigned to one Mesh node, endpoints behind different Mesh nodes must have different IP addresses. A common use is failover between a site connected with Cloudflare WAN and a site connected with a Mesh node. For more details, refer to [Load balance private network traffic](/cloudflare-one/networks/load-balancing/#overlapping-ip-addresses).
 
 ### Cloudflare WAN
 
