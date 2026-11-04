@@ -525,6 +525,7 @@
 /ai-search/configuration/retrieval/embed-search-snippets/ /ai-search/configuration/retrieval/public-endpoint/embed-search-snippets/ 301
 
 # bots
+/changelog/post/2026-11-02-account-abuse-protection-dashboard/ /changelog/post/2026-10-03-account-abuse-protection-dashboard/ 301
 /bots/attribution-business-insights/ /bots/business-insights/ 301
 /bots/about/plans/ /bots/plans/ 301
 /bots/about/plans/biz-and-ent/ /bots/plans/biz-and-ent/ 301
