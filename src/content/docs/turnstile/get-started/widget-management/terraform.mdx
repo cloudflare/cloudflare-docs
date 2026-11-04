@@ -76,11 +76,11 @@ resource "cloudflare_turnstile_widget" "api_protection" {
   region     = "world"
 }
 
-# To create a China widget, set region = "china".
+# To create a China domain widget, set region = "china".
 # You cannot change a widget's region after creation.
-resource "cloudflare_turnstile_widget" "china_widget" {
+resource "cloudflare_turnstile_widget" "china_domain_widget" {
   account_id = var.account_id
-  name       = "China Widget"
+  name       = "Widget for China Domains"
   domains    = ["example.com", "example.cn"]
   mode       = "managed"
   region     = "china"
@@ -96,7 +96,7 @@ output "api_sitekey" {
 }
 
 output "china_sitekey" {
-  value = cloudflare_turnstile_widget.china_widget.sitekey
+  value = cloudflare_turnstile_widget.china_domain_widget.sitekey
 }
 ```
 

@@ -23,7 +23,7 @@ When validating tokens:
 - **Tokens can be forged.** An attacker can submit any string to your form endpoint without completing a challenge.
 - **Tokens expire.** Each token is valid for 300 seconds (5 minutes) after generation.
 - **Tokens are single-use.** Each token can only be validated once. A replayed token will be rejected with the `timeout-or-duplicate` error code.
-- For China widgets, you must use the China Siteverify domain, `challenges.cloudflare-cn.com`.
+- For China domain widgets, you must use the China Siteverify domain, `challenges.cloudflare-cn.com`.
   :::
 
 ## Process
@@ -40,9 +40,9 @@ When validating tokens:
 POST https://challenges.cloudflare.com/turnstile/v0/siteverify
 ```
 
-For China widgets, use the China Siteverify endpoint instead.
+For China domain widgets, use the China Siteverify endpoint instead.
 
-```shell title="China endpoint"
+```shell title="China siteverify endpoint"
 POST https://challenges.cloudflare-cn.com/turnstile/v0/siteverify
 ```
 
