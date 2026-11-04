@@ -157,7 +157,7 @@ In addition to the `D1_ERROR` constants in the [Error list](#error-list), D1 ret
 
 ### Error 7429 and analytics
 
-If you receive error 7429 while your analytics show fast SQL execution times, the error may originate from a server-side platform event rather than your application's workload. The `queryBatchTimeMs` metric measures only SQL execution time inside the database, not the total time a request spends waiting to reach SQL. Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page before reducing application concurrency.
+If you receive error 7429 while your analytics show fast SQL execution times, the error may originate from a server-side platform event rather than your application's workload. The `queryBatchTimeMs` metric measures only SQL execution time inside the database, not the total time a request spends waiting to reach SQL. Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page before reducing application concurrency. If the error recurs and you suspect slow or expensive queries are contributing, refer to [Find slow and expensive queries](/d1/observability/find-expensive-queries/) to identify the databases and queries using the most resources.
 
 ### Error 10000 and the export endpoint
 
