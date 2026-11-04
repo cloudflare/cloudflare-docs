@@ -215,6 +215,8 @@ The rate limit decision uses the count before the call:
 
 Weighted counts are approximate, like other counts. Refer to [Accuracy](#accuracy).
 
+To use `delta` in local development, use version 4.157.0 or later of the [Wrangler CLI](/workers/wrangler/).
+
 ## Best practices
 
 The `key` passed to the `limit` function, that determines what to rate limit on, should represent a unique characteristic of a user or class of user that you wish to rate limit.
