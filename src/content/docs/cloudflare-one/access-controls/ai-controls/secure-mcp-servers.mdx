@@ -19,14 +19,76 @@ import {
 	TabItem,
 	APIRequest,
 	DashButton,
+	Steps,
 } from "~/components";
 
 You can secure [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) with Cloudflare Access. Choose an approach based on who manages the MCP server code and hostname:
 
-| Approach                                                                            | Best for                                                                                                      | Auth handled by                                          |
-| ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
-| [Customer-managed third-party MCP server](#customer-managed-third-party-mcp-server) | Third-party MCP server code running on a hostname you control in Cloudflare                                   | The third-party MCP server                               |
-| [SaaS-managed third-party MCP server](#saas-managed-third-party-mcp-server)         | Third-party MCP servers hosted by the provider that support customer-provided OAuth or OIDC identity settings | Third-party MCP server, with Access as the OIDC provider |
+| Approach                                                                              | Best for                                                                                                      | Auth handled by                                          |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [Customer-managed custom MCP server](#customer-managed-custom-mcp-server-recommended) | MCP server code you control on a Cloudflare Worker or a proxied hostname in your account                      | Cloudflare Access Managed OAuth                          |
+| [Customer-managed third-party MCP server](#customer-managed-third-party-mcp-server)   | Third-party MCP server code running on a hostname you control in Cloudflare                                   | The third-party MCP server                               |
+| [SaaS-managed third-party MCP server](#saas-managed-third-party-mcp-server)           | Third-party MCP servers hosted by the provider that support customer-provided OAuth or OIDC identity settings | Third-party MCP server, with Access as the OIDC provider |
+
+## Customer-managed custom MCP server (recommended)
+
+Use this setup for an MCP server you control that does not implement its own OAuth flow. The dashboard creates a dedicated Access application and turns on [Managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/) before you authenticate to the server.
+
+### Prerequisites
+
+- Create a [Zero Trust organization](/cloudflare-one/setup/#2-create-a-zero-trust-organization) and configure an [identity provider](/cloudflare-one/integrations/identity-providers/).
+- Deploy your MCP server to either:
+  - A Cloudflare Worker in the same account, with its [`workers.dev` route](/workers/configuration/routing/workers-dev/) turned on. Copy the deployed URL from **Workers & Pages**. For example, `https://my-mcp-server.my-workers-subdomain.workers.dev/mcp`, where `my-workers-subdomain` is your account's Workers subdomain.
+  - A dedicated hostname in an active zone in the same account, with [Proxy status](/dns/proxy-status/) turned on. For example, `https://mcp.example.com/mcp`.
+- Ensure you can edit Access applications and policies and read the Workers or DNS configuration used to verify the endpoint.
+- Configure your origin to [validate Access tokens](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/). For Workers, you can use the [Workers Access integration](/workers/configuration/cloudflare-access/#read-authenticated-user-identity-with-ctxaccess). If your server validates the JWT itself, you will configure its team domain and audience after the Access application is created.
+
+:::caution[Use a dedicated endpoint]
+
+For a proxied hostname, Access protects every path, not only the MCP path. For a Worker, the Access application protects the Worker, including its other domains and routes. Use a dedicated hostname or Worker that is not already protected by another Access application.
+
+Do not use this flow for third-party MCP servers that already provide OAuth. Follow [Customer-managed third-party MCP server](#customer-managed-third-party-mcp-server) instead.
+
+:::
+
+### 1. Add the MCP server
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
+
+   <DashButton url="/?to=/:account/one/access-controls/ai-controls" />
+
+2. Go to the **MCP servers** tab and select **Add MCP server**.
+3. Enter a name for the server.
+4. In **HTTP URL**, enter the full HTTPS URL, including the MCP path. For example, `https://mcp.example.com/mcp`.
+5. Under **OAuth credentials**, select **Automatic (recommended)**.
+6. Turn on **Protect this server with Managed OAuth**.
+7. Wait for the dashboard to confirm the endpoint is eligible. If verification fails, check the endpoint's account ownership, routing, and your Workers or DNS permissions.
+8. Add at least one [Access Allow policy](/cloudflare-one/access-controls/policies/#allow) for the users who can access the server. Include the account you will use to authenticate during setup.
+9. <Render
+    file="access/access-choose-idps-default"
+    product="cloudflare-one"
+   />
+10. Select **Save and connect server**.
+</Steps>
+
+The dashboard creates the MCP server and its dedicated Access application, then opens **Managed OAuth configuration**. It configures the application's destinations, Managed OAuth settings, and callback URLs. You do not need to create a separate Access application or manually add callback URLs for this flow.
+
+The server is not connected yet. Complete the origin configuration before you verify the connection.
+
+### 2. Configure the origin and connect
+
+<Steps>
+1. In **Managed OAuth configuration**, copy **Application audience (AUD)** and **Team domain**.
+2. If your MCP server validates the `Cf-Access-Jwt-Assertion` JWT itself, configure it with these values. Validate the token's signature, issuer, and audience as described in [Validate JWTs](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/). Redeploy the server if required by your configuration.
+3. Return to the MCP server's setup page and select **Verify and connect**.
+4. Complete the Access login flow with an account allowed by the server's Access policies.
+5. When the dashboard shows **Server connected**, select **Done**.
+</Steps>
+
+Cloudflare Access synchronizes the server's tools and prompts. Confirm the [server status](/cloudflare-one/access-controls/ai-controls/mcp-portals/#server-status) is **Ready**, then [add the server to a portal](/cloudflare-one/access-controls/ai-controls/mcp-portals/#create-a-portal).
+
+If you leave before completing setup, open the server's **Edit** page to resume. If setup is incomplete or ambiguous, review the application's destinations and Managed OAuth settings in **Access controls** > **Applications** before retrying. Do not create another Access application for the same endpoint.
 
 ## Customer-managed third-party MCP server
 
