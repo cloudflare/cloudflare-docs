@@ -6,18 +6,20 @@ entries:
       regional_services:
         status: requirements
         requirements:
-          - The Access team domain can be processed only in the FedRAMP Moderate Compliant (Domestic) region. Contact your account team to configure it.
           - A protected public application hostname can use any managed region available for [Regional Hostnames](/data-localization/regional-services/regional-hostnames/).
+          - The Access team domain can be processed only in the FedRAMP Moderate Compliant (Domestic) region. Contact your account team to configure it.
       storage:
         status: unassessed
       cmb:
-        status: supported
+        status: requirements
+        requirements:
+          - Use [Logpush](/logs/logpush/) to retain Access User Logs when Customer Metadata Boundary is set to the EU.
         impact:
-          - When Customer Metadata Boundary is set to the EU, Access does not store Access User Logs and the dashboard appears empty. Use [Logpush](/logs/logpush/) to retain these logs.
+          - Access logging respects Customer Metadata Boundary. When Customer Metadata Boundary is set to the EU, Access does not store Access User Logs and the dashboard appears empty.
       gkm:
-        status: supported
-        impact:
-          - If the protected application hostname uses a supported custom certificate, Geo Key Manager can restrict where its private key is used. [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) is not yet localized.
+        status: requirements
+        requirements:
+          - The protected application hostname must use a supported custom certificate. Geo Key Manager can then restrict where its private key is used.
   - product: Browser Isolation
     controls:
       regional_services:
@@ -51,9 +53,31 @@ entries:
       storage:
         status: unassessed
       cmb:
-        status: out-of-scope
+        status: requirements
+        requirements:
+          - Tunnel metadata must be in a Customer Metadata Boundary-supported dataset. Verify coverage in the [supported Logpush datasets](/data-localization/metadata-boundary/logpush-datasets/) and [supported GraphQL datasets](/data-localization/metadata-boundary/graphql-datasets/).
+        impact:
+          - Zero Trust Sessions includes `cloudflared` replica data and respects Customer Metadata Boundary. HTTP Requests and Access Requests may also apply to published applications.
       gkm:
-        status: out-of-scope
+        status: not-supported
+  - product: Cloudflare One (SASE)
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Support varies by product. Refer to [Data residency for Cloudflare One](/data-localization/how-to/zero-trust/) for details.
+      storage:
+        status: unassessed
+      cmb:
+        status: requirements
+        requirements:
+          - Coverage varies by product, dataset, and selected Customer Metadata Boundary region. Verify the current [supported Logpush datasets](/data-localization/metadata-boundary/logpush-datasets/) and [supported GraphQL datasets](/data-localization/metadata-boundary/graphql-datasets/).
+        impact:
+          - Some dashboard views are unavailable when Customer Metadata Boundary is enabled.
+      gkm:
+        status: requirements
+        requirements:
+          - Support varies by product. Refer to [Data residency for Cloudflare One](/data-localization/how-to/zero-trust/) for details.
   - product: Digital Experience
     controls:
       regional_services:
@@ -82,6 +106,24 @@ entries:
         status: out-of-scope
         notes:
           - Uses Gateway HTTP and CASB.
+  - product: Email Security
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - "[Email Security regional processing](/cloudflare-one/email-security/reference/regional-processing/) is available only for MX/Inline or BCC/Journaling deployments."
+        notes:
+          - Email Security regional processing is a product-specific control and does not require the Data Localization Suite add-on.
+      storage:
+        status: unassessed
+      cmb:
+        status: requirements
+        requirements:
+          - Use the [Email Security Alerts Logpush dataset](/data-localization/metadata-boundary/logpush-datasets/), which respects Customer Metadata Boundary and is available with US and EU Customer Metadata Boundary.
+        notes:
+          - Customer Metadata Boundary behavior for other Email Security data is not assessed.
+      gkm:
+        status: out-of-scope
   - product: Gateway
     controls:
       regional_services:
