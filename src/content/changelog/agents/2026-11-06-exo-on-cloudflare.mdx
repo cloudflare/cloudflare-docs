@@ -1,0 +1,15 @@
+---
+title: Run Exo agents on Cloudflare
+description: Host agents with Exo's independent Cloudflare adapter, using Durable Objects for orchestration and Linux sandboxes for tools.
+products:
+  - workers
+date: 2026-11-06
+---
+
+You can run [Exo](/agents/harnesses/exo/), an open-source runtime for hosting agents behind an API, on Cloudflare. Define an agent in a Markdown file, choose its harness and model, and configure its tools, sandbox, and credentials.
+
+The Exo project's [Cloudflare adapter](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare) runs Rust orchestration as WebAssembly in Workers and SQLite-backed Durable Objects. Linux tools and the Codex harness run in Cloudflare Sandboxes backed by Containers. The Exo project maintains this integration independently of Cloudflare. It does not require the Agents SDK.
+
+Each thread has its own Durable Object, with a persisted turn queue and recovery alarms. Sandbox checkpoints preserve working files, so conversation recovery and sandbox persistence are managed separately.
+
+Follow the [Exo guide](/agents/harnesses/exo/) for the architecture, recovery boundaries, and links to upstream setup instructions.

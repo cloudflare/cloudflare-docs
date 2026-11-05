@@ -8,9 +8,11 @@ products:
   - agents
 ---
 
-[Exo](https://github.com/exoharness/exo) is an independent agent runtime. Its [Cloudflare adapter](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare) runs shared Rust orchestration as WebAssembly in Workers and SQLite-backed Durable Objects. Linux tools and the Codex harness execute in Cloudflare Sandboxes backed by Containers.
+[Exo](https://github.com/exoharness/exo) is an open-source runtime for hosting agents behind an API. You define an agent in a Markdown file, choose its harness and model, and configure its tools, sandbox, and credentials. Exo separates the agent loop from the infrastructure that stores conversations and manages its working environment.
 
-Use it to explore managed agents with per-thread turn queues, remote tools, and sandbox files. Exo provides its own host and recovery coordinator. It does not require the Agents SDK.
+Use it when you want to build a hosted coding assistant or task-specific agent with control over its infrastructure and a choice of harnesses. Exo handles durable conversations, sandbox files, and credential access around the harness you select.
+
+Its [Cloudflare adapter](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare) runs shared Rust orchestration as WebAssembly in Workers and SQLite-backed Durable Objects. Linux tools and the Codex harness execute in Cloudflare Sandboxes backed by Containers. The Exo project maintains the adapter independently of Cloudflare. It provides its own host and recovery coordinator and does not require the Agents SDK.
 
 ## How it runs on Cloudflare
 

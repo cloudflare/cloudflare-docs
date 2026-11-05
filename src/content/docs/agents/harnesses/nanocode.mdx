@@ -10,9 +10,11 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-[Nanocode](https://github.com/gakonst/nanocode) is a Rust agent runtime that implements Codex and Claude Code prompt and tool conventions. Its TypeScript package runs the engine as [WebAssembly](/workers/runtime-apis/webassembly/) inside a [Durable Object](/durable-objects/).
+[Nanocode](https://github.com/gakonst/nanocode) is an SDK for embedding Codex and Claude agents in your application. It brings both harnesses behind one runtime, with shared tools, subagents, and session storage. Use it when you want their prompt and tool conventions with control over your application's UI, tools, and execution environment.
 
-Nanocode provides its own Cloudflare host. It does not require Agents SDK, and there is no `agents/harness/nanocode` export.
+On Cloudflare, its Rust engine runs as [WebAssembly](/workers/runtime-apis/webassembly/) inside a [Durable Object](/durable-objects/). Its [Code Mode](https://nanocode.xyz/docs/guides/code-mode) lets agents combine tool calls in JavaScript, while [remote hands](https://nanocode.xyz/docs/guides/remote-hands) let them run code on a laptop, build machine, or sandbox while keeping the agent session on Cloudflare.
+
+The Nanocode project maintains its own Cloudflare host independently of Cloudflare. It does not require the Agents SDK, and there is no `agents/harness/nanocode` export. Refer to the upstream project for integration updates and issues.
 
 ```mermaid
 flowchart TD
