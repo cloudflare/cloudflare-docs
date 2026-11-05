@@ -4,6 +4,10 @@
         {
             "property_id": "beta",
             "value": "true"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-15"
         }
     ],
     "id": "af274959-cb47-4ba8-9d8e-5a0a58b6b402",
