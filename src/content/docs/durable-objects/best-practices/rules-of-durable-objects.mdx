@@ -8,7 +8,7 @@ products:
   - durable-objects
 ---
 
-import { WranglerConfig, TypeScriptExample, Render } from "~/components";
+import { LinkCard, WranglerConfig, TypeScriptExample, Render } from "~/components";
 
 Durable Objects provide a powerful primitive for building stateful, coordinated applications. Each Durable Object is a single-threaded, globally-unique instance with its own persistent storage. Understanding how to design around these properties is essential for building effective applications.
 
@@ -99,312 +99,41 @@ export default {
 
 A common pattern is to use Workers as the stateless entry point that routes requests to Durable Objects when coordination is needed. The Worker handles authentication, validation, and response formatting, while the Durable Object handles the stateful logic.
 
+### Keep your control plane in Workers
+
+Keep authentication, routing, registries, and configuration in Workers and supporting services. Use Durable Objects for stateful coordination, not as a global entry point for every request. Refer to [Workers are the control plane; Durable Objects are the data plane](/durable-objects/best-practices/architecture-guidance/#control-plane).
+
 ## Design and sharding
+
+- Model each Durable Object around an atom of coordination, such as a room, a session, or a document.
+- Keep authentication, routing, registries, and configuration in Workers and supporting services, rather than a global Durable Object.
+- Size each atom against per-object limits, and add shards or layers when its workload grows.
+
+<LinkCard
+	title="Architecture guidance"
+	description="Choose, size, name, compose, place, and scale Durable Objects."
+	href="/durable-objects/best-practices/architecture-guidance/"
+/>
 
 ### Model your Durable Objects around your "atom" of coordination
 
-The most important design decision is choosing what each Durable Object represents. Create one Durable Object per logical unit that needs coordination: a chat room, a game session, a document, a user's data, or a tenant's workspace.
-
-This is the key insight that makes Durable Objects powerful. Instead of a shared database with locks, each "atom" of your application gets its own single-threaded execution environment with private storage.
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
-}
-
-// Each chat room is its own Durable Object instance
-export class ChatRoom extends DurableObject<Env> {
-	async sendMessage(userId: string, message: string) {
-		// All messages to this room are processed sequentially by this single instance.
-		// No race conditions, no distributed locks needed.
-		this.ctx.storage.sql.exec(
-			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
-			userId,
-			message,
-			Date.now()
-		);
-	}
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const roomId = url.searchParams.get("room") ?? "lobby";
-
-		// Each room ID maps to exactly one Durable Object instance globally
-		const id = env.CHAT_ROOM.idFromName(roomId);
-		const stub = env.CHAT_ROOM.get(id);
-
-		await stub.sendMessage("user-123", "Hello, room!");
-		return new Response("Message sent");
-	},
-};
-```
-
-</TypeScriptExample>
-
-:::note
-
-If you have global application or user configuration that you need to access frequently (on every request), consider using [Workers KV](/kv/) instead.
-
-:::
-
-Do not create a single "global" Durable Object that handles all requests:
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
-}
-
-// 🔴 Bad: A single Durable Object handling ALL chat rooms
-export class ChatRoom extends DurableObject<Env> {
-async sendMessage(roomId: string, userId: string, message: string) {
-// All messages for ALL rooms go through this single instance.
-// This becomes a bottleneck as traffic grows.
-this.ctx.storage.sql.exec(
-"INSERT INTO messages (room_id, user_id, content) VALUES (?, ?, ?)",
-roomId,
-userId,
-message
-);
-}
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		// 🔴 Bad: Always using the same ID means one global instance
-		const id = env.CHAT_ROOM.idFromName("global");
-		const stub = env.CHAT_ROOM.get(id);
-
-    	await stub.sendMessage("room-123", "user-456", "Hello!");
-    	return new Response("Sent");
-    },
-};
-
-```
-</TypeScriptExample>
+Refer to [Step 1: Choose the atom of coordination](/durable-objects/best-practices/architecture-guidance/#step-1-choose-the-atom) to select the logical unit each object represents.
 
 ### Message throughput limits
 
-A single Durable Object can handle approximately **500-1,000 requests per second** for simple operations. This limit varies based on the work performed per request:
-
-| Operation type | Throughput |
-|----------------|------------|
-| Simple pass-through (minimal parsing) | ~1,000 req/sec |
-| Moderate processing (JSON parsing, validation) | ~500-750 req/sec |
-| Complex operations (transformation, storage writes) | ~200-500 req/sec |
-
-When modeling your "atom," factor in the expected request rate. If your use case exceeds these limits, shard your workload across multiple Durable Objects.
-
-For example, consider a real-time game with 50,000 concurrent players sending 10 updates per second. This generates 500,000 requests per second total. You would need 500-1,000 game session Durable Objects—not one global coordinator.
-
-Calculate your sharding requirements:
-
-```
-
-Required DOs = (Total requests/second) / (Requests per DO capacity)
-
-```
+Refer to [Step 2: Size each atom](/durable-objects/best-practices/architecture-guidance/#step-2-size) to estimate per-object load and identify when to shard.
 
 ### Use deterministic IDs for predictable routing
 
-Use `getByName()` with meaningful, deterministic strings for consistent routing. The same input always produces the same Durable Object ID, ensuring requests for the same logical entity always reach the same instance.
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	GAME_SESSION: DurableObjectNamespace<GameSession>;
-}
-
-export class GameSession extends DurableObject<Env> {
-	async join(playerId: string) {
-		// Game logic here
-	}
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const gameId = url.searchParams.get("game");
-
-		if (!gameId) {
-			return new Response("Missing game ID", { status: 400 });
-		}
-
-		// ✅ Good: Deterministic ID from a meaningful string
-		// All requests for "game-abc123" go to the same Durable Object
-		const stub = env.GAME_SESSION.getByName(gameId);
-
-		await stub.join("player-xyz");
-		return new Response("Joined game");
-	},
-};
-```
-
-</TypeScriptExample>
-
-Creating a stub does not instantiate or wake up the Durable Object. The Durable Object is only activated when you call a method on the stub.
-
-Use `newUniqueId()` only when you need a new, random instance and will store the mapping externally:
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	GAME_SESSION: DurableObjectNamespace<GameSession>;
-}
-
-export class GameSession extends DurableObject<Env> {
-	async join(playerId: string) {
-		// Game logic here
-	}
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		// newUniqueId() creates a random ID - useful when creating new instances
-		// You must store this ID somewhere (e.g., D1) to find it again later
-		const id = env.GAME_SESSION.newUniqueId();
-		const stub = env.GAME_SESSION.get(id);
-
-    	// Store the mapping: gameCode -> id.toString()
-    	// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
-
-    	return Response.json({ gameId: id.toString() });
-    },
-};
-
-```
-</TypeScriptExample>
+Refer to [Step 3: Name and route](/durable-objects/best-practices/architecture-guidance/#step-3-name) to route requests with deterministic object names.
 
 ### Use parent-child relationships for related entities
 
-Do not put all your data in a single Durable Object. When you have hierarchical data (workspaces containing projects, game servers managing matches), create separate child Durable Objects for each entity. The parent coordinates and tracks children, while children handle their own state independently.
-
-This enables parallelism: operations on different children can happen concurrently, while each child maintains its own single-threaded consistency ([read more about this pattern](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/)).
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	GAME_SERVER: DurableObjectNamespace<GameServer>;
-	GAME_MATCH: DurableObjectNamespace<GameMatch>;
-}
-
-// Parent: Coordinates matches, but doesn't store match data
-export class GameServer extends DurableObject<Env> {
-	async createMatch(matchName: string): Promise<string> {
-		const matchId = crypto.randomUUID();
-
-		// Store reference to the child in parent's database
-		this.ctx.storage.sql.exec(
-			"INSERT INTO matches (id, name, created_at) VALUES (?, ?, ?)",
-			matchId,
-			matchName,
-			Date.now()
-		);
-
-		// Initialize the child Durable Object
-		const childId = this.env.GAME_MATCH.idFromName(matchId);
-		const childStub = this.env.GAME_MATCH.get(childId);
-		await childStub.init(matchId, matchName);
-
-		return matchId;
-	}
-
-	async listMatches(): Promise<{ id: string; name: string }[]> {
-		// Parent knows about all matches without waking up each child
-		const cursor = this.ctx.storage.sql.exec<{ id: string; name: string }>(
-			"SELECT id, name FROM matches ORDER BY created_at DESC"
-		);
-		return cursor.toArray();
-	}
-}
-
-// Child: Handles its own game state independently
-export class GameMatch extends DurableObject<Env> {
-	async init(matchId: string, matchName: string) {
-		await this.ctx.storage.put("matchId", matchId);
-		await this.ctx.storage.put("matchName", matchName);
-		this.ctx.storage.sql.exec(`
-			CREATE TABLE IF NOT EXISTS players (
-				id TEXT PRIMARY KEY,
-				name TEXT NOT NULL,
-				score INTEGER DEFAULT 0
-			)
-		`);
-	}
-
-	async addPlayer(playerId: string, playerName: string) {
-		this.ctx.storage.sql.exec(
-			"INSERT INTO players (id, name, score) VALUES (?, ?, 0)",
-			playerId,
-			playerName
-		);
-	}
-
-	async updateScore(playerId: string, score: number) {
-		this.ctx.storage.sql.exec(
-			"UPDATE players SET score = ? WHERE id = ?",
-			score,
-			playerId
-		);
-	}
-}
-```
-
-</TypeScriptExample>
-
-With this pattern:
-
-- Listing matches only queries the parent (children stay hibernated)
-- Different matches process player actions in parallel
-- Each match has its own SQLite database for player data
+Refer to [Step 4: Compose parents and children](/durable-objects/best-practices/architecture-guidance/#step-4-compose) to coordinate related objects without introducing a global bottleneck.
 
 ### Consider location hints for latency-sensitive applications
 
-By default, a Durable Object is created near the location of the first request it receives. For most applications, this works well. However, you can provide a location hint to influence where the Durable Object is created.
-
-<TypeScriptExample filename="index.ts">
-```ts
-import { DurableObject } from "cloudflare:workers";
-
-export interface Env {
-	GAME_SESSION: DurableObjectNamespace<GameSession>;
-}
-
-export class GameSession extends DurableObject<Env> {
-	// Game session logic
-}
-
-export default {
-	async fetch(request: Request, env: Env): Promise<Response> {
-		const url = new URL(request.url);
-		const gameId = url.searchParams.get("game") ?? "default";
-		const region = url.searchParams.get("region") ?? "wnam"; // Western North America
-
-    	// Provide a location hint for where this Durable Object should be created
-    	const id = env.GAME_SESSION.idFromName(gameId);
-    	const stub = env.GAME_SESSION.get(id, { locationHint: region });
-
-    	return new Response("Connected to game session");
-    },
-};
-
-```
-</TypeScriptExample>
-
-Location hints are suggestions, not guarantees. Refer to [Data location](/durable-objects/reference/data-location/) for available regions and details.
+Refer to [Step 5: Place near users and spread capacity](/durable-objects/best-practices/architecture-guidance/#step-5-place) to use location hints and regional instances.
 
 ## Storage and state
 
