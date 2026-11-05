@@ -110,7 +110,13 @@ Any country not explicitly defined will fall back to using the corresponding `re
 
 When creating a load balancer [via the API](/api/resources/load_balancers/methods/create/), include the `pop_pools` object to map Cloudflare data centers to a list of pool IDs (ordered by their failover priority).
 
-For help finding data center identifiers, refer to [this community thread](https://community.cloudflare.com/t/is-there-a-way-to-retrieve-cloudflare-pops-list-and-locations-programmatically/234643).
+To find data center identifiers, use the [Cloudflare Status](https://www.cloudflarestatus.com/) components API at `https://www.cloudflarestatus.com/api/v2/components.json`. Each data center appears with its three-letter identifier in parentheses at the end of its `name` (for example, `Ashburn, United States - (IAD)`). Use this identifier as the key in `pop_pools`.
+
+The following command lists all data centers and their identifiers:
+
+```sh
+curl -s https://www.cloudflarestatus.com/api/v2/components.json | jq -r '.components[].name | select(test("\\([A-Z]{3}\\)$"))'
+```
 
 Any data center not explicitly defined will fall back to using the corresponding `country_pool`, then `region_pool` mapping (if it exists), and finally to associated default pools.
 
