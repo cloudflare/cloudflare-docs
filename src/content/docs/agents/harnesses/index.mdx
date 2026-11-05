@@ -1,6 +1,6 @@
 ---
 title: Harnesses
-description: Understand agent harnesses — the loop that controls planning, tool use, and response flow.
+description: Compare agent harnesses on Cloudflare by execution environment, recovery behavior, and persistent workspace integration.
 pcx_content_type: concept
 sidebar:
   order: 5
@@ -12,56 +12,67 @@ A harness is the loop that makes an agent behave like an agent instead of a sing
 
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-To build a new agent, start with the [Pi harness](/agents/harnesses/pi/), which runs Pi Durable in a Durable Object. You can also use [OpenCode](/agents/harnesses/opencode/), run the [Codex agent loop](/agents/harnesses/codex/), or build the loop yourself on top of the [Agents SDK runtime](/agents/runtime/).
+To build a new agent, start with the [Pi harness](/agents/harnesses/pi/). To explore other approaches, compare where each harness runs, how it recovers, and how it accesses files.
 
 ## How harnesses fit
 
-Harnesses sit on top of the Agents SDK runtime:
+A harness can run directly in a Durable Object, run code in a Dynamic Worker, or drive a CLI in a Linux container. These choices affect what survives an interruption.
 
-- **The runtime** coordinates [startup and durable jobs](/agents/runtime/lifecycle/), [routing](/agents/runtime/routing/), and the [capabilities](/agents/runtime/capabilities/) you install. These can add WebSocket connections, shared state, scheduling, and MCP connections. Use [observability](/agents/runtime/observability/) to trace model calls and inspect runtime events.
-- **The harness** gives the agent behavior: model calls, prompt construction, tool selection, stream handling, memory strategy, and lifecycle hooks.
+SDK integrations use the [Agents SDK runtime](/agents/runtime/) for startup, routing, and durable jobs. Projects such as Nanocode and Exo provide their own Durable Object hosts and recovery protocols. They do not require the Agents SDK.
 
-The runtime answers “where does this agent live and how does it stay durable?” The harness answers “what does this agent do on each turn?”
+A Durable Object supplies persistent storage and alarms. The harness must still save progress and decide how to resume it. Saved conversation history, recoverable turns, and persistent files are separate capabilities. A running model request or Linux process does not become durable just because a Durable Object started it.
 
-Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
+## Compare execution and recovery
+
+This table describes the linked Cloudflare integrations, rather than every deployment of each project:
+
+| Harness or example                                                         | Where the agent loop runs                                                                               | Recovery behavior                                                                                                                                       |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Pi](/agents/harnesses/pi/)                                                | In a Durable Object through `PiHarness`                                                                 | Pi Durable stores sessions in SQLite. Lifecycle wakes interrupted work. Tool replay follows each tool's replay policy.                                  |
+| [OpenCode](/agents/harnesses/opencode/) (experimental)                     | In a Durable Object through `OpenCodeHarness`                                                           | OpenCode stores sessions and durable events in SQLite. Lifecycle jobs wake interrupted sessions.                                                        |
+| [Think](/agents/harnesses/think/)                                          | In an SDK Agent, backed by a Durable Object                                                             | Saves conversation state and partial output. Fibers schedule bounded continuation or retry after interruption.                                          |
+| [Codex](/agents/harnesses/codex/) (experimental example)                   | Rust/WebAssembly loop in a Durable Object                                                               | Tasks journals model and tool steps. Completed steps reuse saved results; interrupted steps can run again.                                              |
+| [Nanocode](/agents/harnesses/nanocode/) (independent project)              | Rust/WebAssembly engine in its own `AgentSession` Durable Object                                        | Checkpoints, tool receipts, and recovery alarms resume pending turns. Tool recovery depends on the host adapter; unrecoverable outcomes remain unknown. |
+| [Exo](/agents/harnesses/exo/) (independent project)                        | Rust/WebAssembly orchestration in Workers and per-thread Durable Objects; Codex runs in a Linux sandbox | Stored turn queues and alarms recover pending work. Model calls can repeat; ambiguous tool outcomes fail instead of replaying.                          |
+| [Self-modifying](/agents/harnesses/self-modifying/) (experimental example) | A Durable Object coordinates editable code in fresh Dynamic Workers                                     | Tasks restarts work with a pinned source revision. The host journals model and System tool results for replay. Dynamic Worker memory is temporary.      |
+| [Coding agent CLIs](/sandbox/coding-agents/)                               | In a Linux sandbox, outside the Durable Object JavaScript runtime                                       | Depends on the CLI and host integration. Session files and filesystem snapshots do not by themselves resume interrupted processes.                      |
+
+Recovery can repeat a model request or encounter a tool whose result was never saved. Review each integration's recovery boundaries before adding tools with external side effects.
+
+## Compare workspace integration
+
+[Cloudflare Computer](/agents/tools/filesystem/) provides a `Workspace` with files in Durable Object SQLite. It also provides model tools and optional execution backends. Workspace persistence is separate from conversation and turn recovery.
+
+The integrations differ in how they use Computer:
+
+| Harness or example                                  | Computer integration             | File and execution environment                                                                                                  |
+| --------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| [Pi](/agents/tools/filesystem/#pi)                  | Available through a tool adapter | Add Computer's Pi tools to the registry. Configure execution backends separately.                                               |
+| [OpenCode](/agents/tools/filesystem/#opencode)      | Available through a plugin       | Replace local file tools with Computer tools. Configure execution backends separately.                                          |
+| [Think](/agents/harnesses/think/tools/)             | Built in                         | Includes a Workspace and file tools. Add backends to enable `exec`.                                                             |
+| [Codex](/agents/harnesses/codex/#file-tools)        | Included in the example          | Reads and writes persistent Workspace files. The example does not provide the full Codex CLI shell.                             |
+| [Nanocode](/agents/harnesses/nanocode/#workspaces)  | Requires a custom host adapter   | Uses its own workspace operations. Connecting Computer requires mapping those operations to a Workspace.                        |
+| [Exo](/agents/harnesses/exo/#files-and-sandboxes)   | Uses its own sandbox backend     | Linux files use sandbox checkpoints. The published adapter does not use Computer.                                               |
+| [Self-modifying](/agents/harnesses/self-modifying/) | Included in the example          | Editable TypeScript lives in a Workspace. Worker Bundler and Worker Loader execute activated revisions.                         |
+| [Coding agent CLIs](/sandbox/coding-agents/)        | Uses the sandbox filesystem      | A Linux filesystem is separate from a Computer Workspace. Choose an integration that explicitly synchronizes or restores files. |
+
+Computer's [JavaScript execution backend](/agents/tools/filesystem/#run-javascript-in-the-workspace) runs code against Workspace files. A [Linux sandbox](/agents/tools/sandbox/) supplies processes and a Linux userland. Choose the execution environment your tools need, and check its persistence behavior separately.
 
 ## Choose an approach
 
-Use Pi when you want [Pi Durable](https://earendil.com/posts/pi-durable/) to own the agent loop, transcript, and recovery. This is the recommended starting point for a new agent. `PiHarness` runs Pi in a Durable Object and wakes it after eviction. You choose the transport.
+Use [Pi](/agents/harnesses/pi/) when you want Pi Durable to own the loop, transcript, and recovery. Use [OpenCode](/agents/harnesses/opencode/) for OpenCode's sessions, tools, and plugins, or [Think](/agents/harnesses/think/) for an AI SDK chat agent with built-in Workspace tools.
 
-Use a build-your-own harness when you need full control over the model call, message format, tool loop, or UI protocol. This is the right approach when you want to compose low-level APIs directly from the Agents SDK.
+Use a build-your-own harness when you need control over model calls, message formats, or tool execution. Compose it with the [Agents SDK runtime](/agents/runtime/).
 
-Use OpenCode (experimental) when you want OpenCode 2.0's sessions, tools, and plugin system. `OpenCodeHarness` runs [OpenCode's Workerd SDK](https://opencode.ai/v2/docs/build/sdk/cloudflare/) inside a plain Durable Object.
+### Experimental examples
 
-Use Codex (experimental) to run its Rust/WebAssembly agent loop directly in a Durable Object. The [Codex example](/agents/harnesses/codex/) combines the loop with Agents SDK storage, recovery, and file tools.
+The [Codex example](/agents/harnesses/codex/) explores a Rust/WebAssembly loop with SDK persistence. The [self-modifying example](/agents/harnesses/self-modifying/) explores an agent that edits and activates its own TypeScript harness. Their harness classes live in the examples and depend on internal SDK APIs.
 
-Use Nanocode to embed a coding agent that follows Codex or Claude Code prompt and tool conventions. Nanocode runs its own Rust/WebAssembly runtime in a Durable Object and provides session storage, recovery alarms, and client streaming.
+### Independent projects
 
-## Current harnesses
+[Nanocode](/agents/harnesses/nanocode/) and [Exo](/agents/harnesses/exo/) show other ways to build durable agents on Cloudflare. Each project owns its host, APIs, and release process. Follow its upstream documentation for setup and compatibility.
 
-<LinkCard
-	title="Pi"
-	href="/agents/harnesses/pi/"
-	description="Run Pi Durable sessions in a Durable Object, with storage in SQLite and recovery after eviction."
-/>
-
-<LinkCard
-	title="OpenCode (experimental)"
-	href="/agents/harnesses/opencode/"
-	description="Run OpenCode 2.0 in a plain Durable Object, with Workers AI models, bundled plugins, and durable sessions."
-/>
-
-<LinkCard
-	title="Codex (experimental)"
-	href="/agents/harnesses/codex/"
-	description="Run the Codex agent loop as WebAssembly in a Durable Object, with persistent conversations, files, and event replay."
-/>
-
-<LinkCard
-	title="Nanocode"
-	href="/agents/harnesses/nanocode/"
-	description="Run Nanocode with its own Durable Object host. Agents SDK is optional."
-/>
+These projects illustrate the range of harnesses running on Cloudflare. Inclusion here does not make their APIs part of the Agents SDK.
 
 ## What a harness usually owns
 

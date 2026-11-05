@@ -3,7 +3,7 @@ title: Codex
 description: Run the Codex agent loop as WebAssembly in a Durable Object, with configurable models, persistent conversations, files, and recovery.
 pcx_content_type: overview
 sidebar:
-  order: 11
+  order: 10.75
 products:
   - agents
 reviewed: 2026-10-27
@@ -40,9 +40,11 @@ You need Git, Node.js 24 or later, pnpm, rustup, and a Cloudflare account. Model
    rustup toolchain install 1.95.0 --target wasm32-unknown-unknown
    ```
 
-4. Sign in to Cloudflare with Wrangler, then start the app:
+4. Sign in with the [Cloudflare CLI](/cf/get-started/), then start the app:
 
-   <PackageManagers type="exec" pkg="wrangler" args="login" managers={["pnpm"]} />
+   ```sh
+   cf auth login
+   ```
 
    <PackageManagers type="run" args="start" managers={["pnpm"]} />
 
@@ -59,7 +61,7 @@ You need Git, Node.js 24 or later, pnpm, rustup, and a Cloudflare account. Model
 
 ## Configure the harness
 
-The example composes the harness with [Lifecycle](/agents/runtime/lifecycle/), `Tasks`, [Sessions](/agents/runtime/lifecycle/sessions/), `Streams`, and a `Workspace` from `@cloudflare/computer`. Configure the harness in `src/server.ts` with `createAI`:
+The example composes the harness with [Lifecycle](/agents/runtime/lifecycle/), `Tasks`, [Sessions](/agents/runtime/capabilities/sessions/), `Streams`, and a `Workspace` from `@cloudflare/computer`. Configure the harness in `src/server.ts` with `createAI`:
 
 <TypeScriptExample>
 

@@ -1,0 +1,20 @@
+---
+title: Explore more agent harnesses on Cloudflare
+description: Compare harness runtimes, turn recovery, and workspace integration, with guides to Codex, Nanocode, Exo, and a self-modifying example.
+products:
+  - workers
+date: 2026-11-05
+---
+
+The [harnesses overview](/agents/harnesses/) compares how agent harnesses run on Cloudflare, recover interrupted work, and access persistent files. It distinguishes a loop running in a Durable Object from code executing in a Dynamic Worker or Linux sandbox.
+
+Four guides explore additional approaches:
+
+- [Codex](/agents/harnesses/codex/) runs a Rust/WebAssembly turn loop in a Durable Object. The experimental example combines Tasks, Sessions, Streams, and a Computer Workspace.
+- [Nanocode](/agents/harnesses/nanocode/) provides its own Durable Object host for a Rust/WebAssembly agent engine, with turn checkpoints, tool receipts, and recovery alarms.
+- [Exo](/agents/harnesses/exo/) runs Rust/WebAssembly orchestration with per-thread Durable Objects and Linux sandboxes. Its Cloudflare adapter owns turn coordination and sandbox checkpoints.
+- [Self-modifying harness](/agents/harnesses/self-modifying/) stores editable TypeScript in a Computer Workspace and activates checked revisions in fresh Dynamic Workers.
+
+The comparison covers Pi, OpenCode, and Think alongside these projects. It separates conversation persistence, turn recovery, and file persistence, and identifies built-in Computer integration, adapters, and separate sandbox backends.
+
+Codex and self-modifying harness classes live in experimental examples. Nanocode and Exo maintain their own hosts independently of the Agents SDK. Refer to [Harnesses](/agents/harnesses/) to choose an approach and review its recovery boundaries.
