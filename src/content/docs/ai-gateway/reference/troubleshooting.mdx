@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Troubleshooting
-description: Resolve common AI Gateway issues including authentication errors, missing logs, and provider connectivity problems.
+description: Resolve common AI Gateway issues and error codes, including authentication, Unified Billing, and bad request (7003) errors.
 sidebar:
   order: 5
 products:
@@ -17,15 +17,12 @@ This page covers common issues when using AI Gateway. For provider-specific trou
 If you receive authentication errors from your AI provider, AI Gateway did not pass valid credentials upstream. Check the following:
 
 1. **Verify header placement**: On provider-native endpoints, put your Cloudflare token in `cf-aig-authorization`. Supply provider credentials in the [format AI Gateway recognizes for the provider and endpoint](/ai-gateway/features/unified-billing/#credential-precedence). For example, Anthropic Messages requires `x-api-key`, while OpenAI uses `Authorization: Bearer`.
-
 2. **Check your configuration based on endpoint type**:
    - **Provider-specific endpoints**: Confirm your request URL includes the provider path (for example, `/google-vertex-ai/` or `/openai/`). AI Gateway uses this to identify the provider and apply the correct stored credentials.
    - **Unified `/compat/chat/completions` endpoint**: Confirm your `model` name starts with the provider prefix (for example, `google-vertex-ai/google/gemini-2.5-flash` or `openai/gpt-4o`). AI Gateway uses this prefix to route the request and select the correct stored credentials.
-
 3. **Verify BYOK key selection**: If you have multiple keys configured for a provider, ensure either:
    - You are using the key with alias `default`, or
    - You include the `cf-aig-byok-alias` header with the correct alias name
-
 4. **Verify BYOK configuration**: If using BYOK, confirm in the dashboard that your credentials were saved correctly.
 
 For provider-specific authentication issues:
@@ -79,7 +76,7 @@ AI Gateway returns HTTP `403` with error code `2049` when it cannot use Unified 
 
   Your account does not have enough credits for the request. [Load credits](/ai-gateway/features/unified-billing/#load-credits) to your account, or use your own provider key with BYOK.
 
-The `Insufficient balance` message can also come with error code `2021`. Refer to [402: Payment error (2021)](#402-payment-error-2021).
+The `Insufficient balance` message can also come with error code `2021`. For low-balance fixes, refer to [402: Insufficient Unified Billing balance (2052)](#402-insufficient-unified-billing-balance-2052).
 
 ### 402: Insufficient Unified Billing balance (2052)
 
@@ -107,7 +104,7 @@ AI Gateway returns HTTP `402` with error code `2021` when the request cannot be 
 
 - `Insufficient balance; add money to your gateway or use BYOK`, with the description `Insufficient AI Gateway credits`
 
-  Your Unified Billing credits ran out. [Load more credits](/ai-gateway/features/unified-billing/#load-credits), or set up [auto top-up](/ai-gateway/features/unified-billing/#auto-top-up).
+  Your Unified Billing credits ran out. Refer to [402: Insufficient Unified Billing balance (2052)](#402-insufficient-unified-billing-balance-2052).
 
 ### 429: Unified Billing rate limit (2018)
 
@@ -137,7 +134,7 @@ AI Gateway returns HTTP `403` with error code `2042` and the message `AI Gateway
 
 AI Gateway returns HTTP `403` with error code `2036` when the request uses a feature that is not enabled. The general message is `This feature is not enabled for this gateway`.
 
-If you use [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/) with a custom domain, the message is `AI Gateway Access integration is not enabled for this account`. This happens when the Access integration is not yet enabled for your account.
+If you use [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/) with a custom domain, the message is `AI Gateway Access integration is not enabled for this account`.
 
 To resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
 
@@ -165,12 +162,10 @@ To resolve the error:
 
 - Read the full error message. It usually names the field or value that was rejected.
 - Correct the request before you retry. If you send the same request again, you get the same error.
-- If you call the model through the [AI binding](/ai-gateway/usage/worker-binding-methods/) (`env.AI.run()`), the error may only show `AiGatewayError: 7003: User Input Error`, with no reason. The error response has two text fields: `message`, with the full text, and `description`, with only the category, such as `User Input Error`. The AI binding shows only `description`. To see the full message, send the same request through the [REST API](/ai-gateway/usage/rest-api/), which returns both fields.
+- If you call the model through the [AI binding](/ai-gateway/usage/worker-binding-methods/) (`env.AI.run()`), the error may only show `AiGatewayError: 7003: User Input Error`, with no reason. To see the full error message, send the same request through the [REST API](/ai-gateway/usage/rest-api/).
 - If [logging](/ai-gateway/observability/logging/) or payload collection is turned off, AI Gateway does not store the error message. Record the error response in your application, or turn on logging while you reproduce the problem.
 
 #### Known causes
-
-This list covers causes reported so far and is not exhaustive.
 
 | Cause                                                              | Example                                                                                                                              | Resolution                                                                                                                                                                                         |
 | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -186,8 +181,6 @@ This list covers causes reported so far and is not exhaustive.
 | Dynamic route not found (HTTP `404`)                               | `Dynamic route '<ROUTE_NAME>' not found`                                                                                             | Check the route name. Make sure the request targets the gateway that owns the [dynamic route](/ai-gateway/features/dynamic-routing/).                                                              |
 | Wrong URL or account ID on the Cloudflare API                      | `Could not route to /accounts/..., perhaps your object identifier is invalid?`, returned with error `7000` (`No route for that URI`) | Check the endpoint path and the account ID.                                                                                                                                                        |
 
-Error code `7003` has a different meaning in other Cloudflare products. For example, refer to [Radar API error codes](/radar/get-started/error-codes/) and [Queues error codes](/queues/reference/error-codes/#how-errors-are-returned).
-
 ### Requests timing out
 
 - Check if the upstream provider is experiencing issues
@@ -200,7 +193,7 @@ Error code `7003` has a different meaning in other Cloudflare products. For exam
 - Check the provider's status page for outages
 - Review [AI Gateway logs](/ai-gateway/observability/logging/) for detailed error information
 
-#### 500: Model execution failed (2002)
+### 500: Model execution failed (2002)
 
 AI Gateway returns HTTP `500` with error code `2002` and the message `Model execution failed (Error)` when the provider or AI Gateway fails to process the request.
 
@@ -209,7 +202,7 @@ To resolve the error:
 - Retry the request.
 - Set up [dynamic routing](/ai-gateway/features/dynamic-routing/) with a fallback model.
 
-#### 400: Failed to get response from provider (2005)
+### 400: Failed to get response from provider (2005)
 
 AI Gateway returns HTTP `400` with error code `2005` and the message `Failed to get response from provider` when it does not receive a response from the provider.
 
