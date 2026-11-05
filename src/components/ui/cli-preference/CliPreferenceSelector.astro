@@ -1,6 +1,11 @@
 ---
 import { stableId } from "~/util/stable-id";
 
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
 const uid = stableId(Astro.locals, "cli-preference", null);
 const options = [
 	{ value: "wrangler", label: "Wrangler" },
@@ -13,7 +18,7 @@ const toggleClass =
 <div
 	data-nb-cli-control
 	style="visibility: hidden"
-	class="mb-2 flex min-w-0 items-center justify-end gap-2"
+	class:list={["mb-2 flex min-w-0 items-center justify-end gap-2", className]}
 >
 	<span id={`${uid}-label`} class="text-muted-foreground text-xs font-medium">
 		Select your preferred CLI
