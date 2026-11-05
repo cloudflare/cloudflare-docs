@@ -1,0 +1,178 @@
+{
+    "name": "@cf/google/embeddinggemma-2",
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "8192"
+        }
+    ],
+    "id": "0446c408-a932-495f-9ab6-9744760dbbe8",
+    "source": 1,
+    "description": "EmbeddingGemma 2 is an open multimodal embedding model built by Google DeepMind which maps text (incl. code), images, video, and audio inputs—and combinations thereof—into a single, unified 768-dimensional vector space.",
+    "task": {
+        "id": "e8fd402c-337b-4c7a-b6f8-5f596805378b",
+        "name": "Multimodal Embeddings",
+        "description": "Multimodal embeddings represent data from different sources, like text and images, in a shared vector space, enabling semantic understanding across modalities."
+    },
+    "created_at": "2026-10-08 12:39:40.122",
+    "tags": [],
+    "schema": {
+        "input": {
+            "type": "object",
+            "description": "Use either OpenAI-compatible input or native text/media fields, not both. Include task prefixes yourself. Requests are validated for usable input, media alignment and context limits.",
+            "properties": {
+                "text": {
+                    "description": "Native text input: a string or batch of strings. May accompany native media.",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "image_data": {
+                    "description": "Native image input. Nested arrays preserve per-input grouping; batch entries may be null.",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "video_data": {
+                    "description": "Native video input. Nested arrays preserve per-input grouping; batch entries may be null.",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "audio_data": {
+                    "description": "Native audio input. Nested arrays preserve per-input grouping; batch entries may be null. Audio should be mono at 16 kHz.",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {}
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "input": {
+                    "description": "OpenAI-compatible input. Each batch item produces one embedding. Multimodal items support text and at most one image or video. Use native fields for audio or multiple media items per embedding.",
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "text": {
+                                                "type": "string"
+                                            },
+                                            "image": {
+                                                "type": "string"
+                                            },
+                                            "video": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "output": {
+            "type": "object",
+            "contentType": "application/json",
+            "description": "OpenAI-style embedding list. Native results retain their order, media grouping and metadata.",
+            "properties": {
+                "object": {
+                    "type": "string",
+                    "enum": [
+                        "list"
+                    ]
+                },
+                "model": {
+                    "type": "string",
+                    "description": "Model identifier, when present."
+                },
+                "data": {
+                    "type": "array",
+                    "description": "One embedding per input.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "object": {
+                                "type": "string",
+                                "enum": [
+                                    "embedding"
+                                ]
+                            },
+                            "index": {
+                                "type": "integer",
+                                "minimum": 0
+                            },
+                            "embedding": {
+                                "type": "array",
+                                "description": "Embedding vector. Default output dimension is 768.",
+                                "items": {
+                                    "type": "number"
+                                }
+                            },
+                            "meta_info": {
+                                "type": "object",
+                                "description": "Additional metadata, when present."
+                            }
+                        },
+                        "required": [
+                            "object",
+                            "index",
+                            "embedding"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "object",
+                "data"
+            ]
+        }
+    },
+    "deprecated": false
+}
