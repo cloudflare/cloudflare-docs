@@ -1297,7 +1297,7 @@ MCP server portals have the following known limitations:
 - **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
 - **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
 - **Upstream MCP tool calls time out after 60 seconds.** The portal returns an error if the upstream server does not respond before the timeout. For longer operations, return a job ID immediately. Expose separate tools to check the operation status and retrieve results.
-- **Each portal supports up to 80 MCP servers.**
+- **Each portal supports up to 120 MCP servers.**
 
 ## Policy limitations
 
