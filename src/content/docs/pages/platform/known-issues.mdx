@@ -199,6 +199,97 @@ Write-Output "Done."
 ```
 
 	</TabItem>
+	<TabItem label="Windows Command Prompt">
+
+```cmd
+@echo off
+setlocal
+
+if /i "%~1"=="--worker" goto :worker
+
+if "%~1"=="" (
+    echo Usage: %~nx0 ^<project-name^> [parallelism] 1>&2
+    exit /b 1
+)
+
+set "PROJECT=%~1"
+set "PARALLEL=%~2"
+if not defined PARALLEL set "PARALLEL=5"
+
+set "WORK=%TEMP%\cf-pages-%RANDOM%%RANDOM%"
+mkdir "%WORK%\run" "%WORK%\failed"
+
+call npx --no-install wrangler pages deployment list --project-name "%PROJECT%" --json > "%WORK%\deployments.json" 2>nul
+if errorlevel 1 goto :listfailed
+
+set "PROD="
+for /f "usebackq delims=" %%i in (`node -e "const d=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));const p=d.find(function(x){return x.Environment==='Production'});if(p)console.log(p.Id)" "%WORK%\deployments.json"`) do set "PROD=%%i"
+if not defined PROD goto :noprod
+
+set "COUNT=0"
+for /f "usebackq delims=" %%i in (`node -e "const d=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));console.log(d.filter(function(x){return x.Environment==='Production'?false:true}).length)" "%WORK%\deployments.json"`) do set "COUNT=%%i"
+if "%COUNT%"=="0" goto :nothing
+
+echo Production: %PROD%. Deleting %COUNT% preview deployments...
+
+for /f "usebackq delims=" %%i in (`node -e "const d=JSON.parse(require('fs').readFileSync(process.argv[1],'utf8'));d.filter(function(x){return x.Environment==='Production'?false:true}).forEach(function(x){console.log(x.Id)})" "%WORK%\deployments.json"`) do call :launch %%i
+
+:drain
+dir /b "%WORK%\run" 2>nul | findstr "^" >nul
+if not errorlevel 1 (
+    ping -n 2 127.0.0.1 >nul
+    goto :drain
+)
+
+set "FAILED=0"
+for /f %%n in ('dir /b "%WORK%\failed" 2^>nul ^| find /c /v ""') do set "FAILED=%%n"
+if %FAILED% GTR 0 (
+    echo The following deployments failed to delete: 1>&2
+    dir /b "%WORK%\failed" 1>&2
+    rmdir /s /q "%WORK%"
+    exit /b 1
+)
+
+rmdir /s /q "%WORK%"
+echo Done.
+exit /b 0
+
+:listfailed
+echo Could not list deployments for '%PROJECT%'. Check the project name and your Wrangler authentication. 1>&2
+rmdir /s /q "%WORK%"
+exit /b 1
+
+:noprod
+echo No production deployment found for '%PROJECT%' - aborting. 1>&2
+echo This script keeps your production deployment, so it needs one to run. 1>&2
+echo Create a production deployment by deploying to your production branch (for example: npx wrangler pages deploy ^<output-dir^> --project-name %PROJECT%), then re-run this script. 1>&2
+rmdir /s /q "%WORK%"
+exit /b 1
+
+:nothing
+echo Nothing to delete. Production: %PROD%
+rmdir /s /q "%WORK%"
+exit /b 0
+
+:launch
+set "RUNNING=0"
+for /f %%n in ('dir /b "%WORK%\run" 2^>nul ^| find /c /v ""') do set "RUNNING=%%n"
+if %RUNNING% GEQ %PARALLEL% (
+    ping -n 2 127.0.0.1 >nul
+    goto :launch
+)
+type nul > "%WORK%\run\%~1"
+start "" /b cmd /c ""%~f0" --worker "%~1" "%PROJECT%" "%WORK%""
+exit /b
+
+:worker
+call npx --no-install wrangler pages deployment delete "%~2" --project-name "%~3" --force >nul 2>&1
+if errorlevel 1 type nul > "%~4\failed\%~2"
+del "%~4\run\%~2" >nul 2>&1
+exit /b
+```
+
+	</TabItem>
 </Tabs>
 
 These scripts will not delete the active production deployment if one exists.
