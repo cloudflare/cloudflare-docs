@@ -61,14 +61,14 @@ Users can now authenticate once with the Cloudflare One Client and have access t
 
 <Details header="Feature availability">
 
-| System   | Availability |
-| -------- | ------------ |
-| Windows  | ✅           |
-| macOS    | ✅           |
-| Linux    | ❌           |
-| iOS      | ❌           |
-| Android  | ❌           |
-| ChromeOS | ❌           |
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ✅           | 2026.9.1556.1          |
+| macOS    | ✅           | 2026.9.1556.1          |
+| Linux    | ❌           |                        |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
 
 </Details>
 
@@ -157,7 +157,7 @@ The Cloudflare One Client opens the browser-based reauthentication flow when sil
 - The Entra account does not match the user registered to the device.
 - An Access policy denies the user or requires an interactive step.
 - The device session was revoked.
-- The client cannot get a token from Entra ID within 90 seconds.
+- The client cannot get a token from Entra ID within 90 seconds. The Cloudflare One Client enforces this limit, and it is not configurable.
 
 ## Force user interaction with IdP
 
