@@ -156,3 +156,13 @@ entries:
           - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
       gkm:
         status: out-of-scope
+  - product: Mesh
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed

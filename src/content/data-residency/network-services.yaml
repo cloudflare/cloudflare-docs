@@ -82,3 +82,23 @@ entries:
         status: supported
       gkm:
         status: supported
+  - product: Network Interconnect
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: RDP
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed

@@ -50,3 +50,13 @@ entries:
       gkm:
         status: out-of-scope
     review: true
+  - product: Custom Domain Protection
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
