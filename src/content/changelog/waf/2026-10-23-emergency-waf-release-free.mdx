@@ -1,0 +1,38 @@
+---
+title: "WAF Release - 2026-10-23 - Emergency - Cloudflare Free Ruleset"
+description: Cloudflare Free Ruleset 2026-10-23 emergency release
+date: 2026-10-23
+---
+
+import { RuleID } from "~/components";
+
+The existing PHP remote code execution rule in the Cloudflare Free Ruleset covers CVE-2026-115560. This emergency release adds the CVE identifier to existing rule. Detection logic and rule actions remain unchanged.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="19373a83abb840e18ab3ce5a7975ce1b" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619, CVE-2026-115560) #6</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+	</tbody>
+</table>
+
+For more information, refer to [WAF Managed Rules](/waf/managed-rules/).
