@@ -8,6 +8,8 @@ products:
   - cf
 ---
 
+import { Render } from "~/components";
+
 Set these variables in the environment that runs `cf`. They configure the CLI,
 not the environment variables or secrets available to a deployed Worker. If a
 variable is unset, `cf` uses the behavior in the Default column.
@@ -27,6 +29,7 @@ The following variables control `cf` behavior:
 | `CLOUDFLARE_ACCESS_CLIENT_SECRET` | Unset; no Access service-token secret is supplied.                                   | Supplies the secret for the Access service token. Set it with `CLOUDFLARE_ACCESS_CLIENT_ID`.                                                                          |
 | `CLOUDFLARE_ACCOUNT_ID`           | Unset; `cf` uses project configuration, a saved selection, or an accessible account. | Selects the account for account-scoped commands. Overrides `accountId` in `cloudflare.config.ts`.                                                                     |
 | `CLOUDFLARE_API_BASE_URL`         | The Cloudflare API endpoint for the selected compliance region.                      | Overrides the API endpoint. Only point it at an endpoint you trust because API requests carry credentials.                                                            |
+| `CLOUDFLARE_API_HEADERS` | Unset; no custom headers are added. | A JSON object of [custom HTTP headers](#custom-api-headers) for Cloudflare API requests. Configured values override existing request headers, including authentication headers. |
 | `CLOUDFLARE_API_TOKEN`            | Unset; `cf` uses the selected OAuth profile.                                         | Authenticates API commands with this token instead of a saved profile. Use it for CI and other automation.                                                            |
 | `CLOUDFLARE_COMPLIANCE_REGION`    | `public`, unless set in `cloudflare.config.ts`.                                      | Selects the API compliance region and overrides the project configuration. Accepts `public`, `fedramp_high`, or `fedramp-high`.                                       |
 | `CLOUDFLARE_REGISTRY_PATH`        | The `registry` directory in the `cf` configuration directory.                        | Sets the local development registry path shared with Wrangler and Miniflare processes started by `cf`.                                                                |
@@ -36,6 +39,7 @@ The following variables control `cf` behavior:
 | `FORCE_COLOR`                     | Unset; color is used when standard output is a terminal.                             | Set to a value other than `0` to enable styled output without a terminal. `NO_COLOR` takes precedence.                                                                |
 | `NO_COLOR`                        | Unset; color is used when standard output is a terminal.                             | Set to any value to disable styled output and animated API progress.                                                                                                  |
 | `TUNNEL_MANAGEMENT_TOKEN`         | Unset; `cf tunnels tail` requests a token for the specified tunnel ID.               | Supplies an existing management token to `cf tunnels tail`. Do not pass a tunnel ID when this is set.                                                                 |
+| `WRANGLER_LOG_SANITIZE` | `true`. | Omits sensitive deployment debug sections by default. Set to `false` with `DEBUG` enabled to include headers, request options, query strings, and request/response bodies. Header values outside the diagnostic allowlist remain redacted. |
 | `WRANGLER_SEND_METRICS`           | Unset; `cf` uses its saved telemetry preference or enables telemetry.                | Sets CLI telemetry when `CF_SEND_TELEMETRY` is not set. Accepts `true`, `false`, `1`, or `0`.                                                                         |
 
 `cf` loads only selected authentication and context variables from a project
@@ -46,3 +50,7 @@ guidance, refer to [Load credentials from a .env file](/cf/get-started/#load-cre
 For more on API tokens and account selection, refer to
 [Install and sign in](/cf/get-started/). For telemetry settings in CI, refer to
 [Use cf in CI](/cf/ci/#turn-off-telemetry).
+
+## Custom API headers
+
+<Render file="custom-api-headers" product="workers" />
