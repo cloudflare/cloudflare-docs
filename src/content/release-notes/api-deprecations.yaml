@@ -3,10 +3,10 @@ link: "/fundamentals/api/reference/deprecations/"
 productName: API deprecations
 productLink: "/fundamentals/"
 entries:
-  - publish_date: "2026-11-03"
+  - publish_date: "2026-11-05"
     title: "Load Balancing monitors and Health Checks: Legacy TLS cipher suites"
     description: |-
-      Deprecation date: November 3, 2026
+      Deprecation date: November 5, 2026
 
       End of life date: February 1, 2027
 
