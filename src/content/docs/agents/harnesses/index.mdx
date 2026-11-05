@@ -27,20 +27,27 @@ Conversation storage depends on the harness. Pi and OpenCode manage their own tr
 
 ## Compare harnesses
 
-| Harness                                             | Runs in                                              | Durability                        | Computer Workspace                                                   |
-| --------------------------------------------------- | ---------------------------------------------------- | --------------------------------- | -------------------------------------------------------------------- |
-| [Pi](/agents/harnesses/pi/)                         | Durable Objects via the Agents SDK                   | 🟢 Automatic recovery             | 🟡 [Tool adapter](/agents/tools/filesystem/#pi)                      |
-| [OpenCode](/agents/harnesses/opencode/)             | Durable Objects via the Agents SDK                   | 🟡 Experimental recovery          | 🟡 [Plugin](/agents/tools/filesystem/#opencode)                      |
-| [Think](/agents/harnesses/think/)                   | Durable Objects via the Agents SDK                   | 🟡 Continues from saved output    | 🟢 [Built in](/agents/harnesses/think/tools/)                        |
-| [Codex](/agents/harnesses/codex/)                   | Wasm in Durable Objects via the Agents SDK           | 🟡 May repeat interrupted work    | 🟢 [File tools included](/agents/harnesses/codex/#file-tools)        |
-| [Nanocode](/agents/harnesses/nanocode/)             | Wasm in its own Durable Object host                  | 🟡 Tool recovery varies           | 🟡 [Custom adapter needed](/agents/harnesses/nanocode/#workspaces)   |
-| [Exo](/agents/harnesses/exo/)                       | Wasm in Durable Objects + Linux sandbox              | 🟡 Some tool calls cannot recover | 🔴 [Own sandbox backend](/agents/harnesses/exo/#files-and-sandboxes) |
-| [Self-modifying](/agents/harnesses/self-modifying/) | Durable Objects via the Agents SDK + Dynamic Workers | 🟡 May repeat custom tool calls   | 🟢 Source files included                                             |
-| [Coding agent CLIs](/sandbox/coding-agents/)        | Linux sandbox                                        | 🔴 No automatic recovery          | 🔴 Separate Linux filesystem                                         |
+**Durability** means the harness saves agent progress and can resume work after a crash, restart, or deployment. For SDK integrations, [Lifecycle](/agents/runtime/lifecycle/) coordinates startup and recovery jobs.
+
+[Cloudflare Computer](/agents/tools/filesystem/) provides persistent files and file tools for agents. Agents can return to files they created or edited across turns, even after a restart.
+
+| Harness                                                            | Runs in                                              | Durability                                   | Cloudflare Computer      |
+| ------------------------------------------------------------------ | ---------------------------------------------------- | -------------------------------------------- | ------------------------ |
+| [Pi](/agents/harnesses/pi/) (Experimental)                         | Durable Objects via the Agents SDK                   | 🟢 Automatically resumes interrupted work    | 🟢 Supported             |
+| [Flue](https://flueframework.com/)                                 | Durable Objects via the Agents SDK                   | 🟢 Automatically resumes interrupted work    | 🟢 Supported             |
+| [OpenCode](/agents/harnesses/opencode/) (Experimental)             | Durable Objects via the Agents SDK                   | 🟡 Resumes interrupted work                  | 🟡 Example plugin        |
+| [Think](/agents/harnesses/think/) (Experimental)                   | Durable Objects via the Agents SDK                   | 🟡 Continues from saved output               | 🟢 Supported             |
+| [Codex](/agents/harnesses/codex/) (Experimental)                   | Wasm in Durable Objects via the Agents SDK           | 🟡 Resumes work; interrupted steps may rerun | 🟡 File tools in example |
+| [Nanocode](/agents/harnesses/nanocode/) (Pre-1.0)                  | Wasm in its own Durable Object host                  | 🟡 Resumes turns; some tools cannot recover  | 🟡 Custom adapter needed |
+| [Exo](/agents/harnesses/exo/) (Pre-1.0)                            | Wasm in Durable Objects + Linux sandbox              | 🟡 Resumes turns; interrupted tools may fail | 🔴 No integration        |
+| [Self-modifying](/agents/harnesses/self-modifying/) (Experimental) | Durable Objects via the Agents SDK + Dynamic Workers | 🟡 Resumes turns; custom tools may rerun     | 🟡 Workspace in example  |
+| [Coding agent CLIs](/sandbox/coding-agents/)                       | Linux sandbox                                        | 🔴 Does not resume interrupted work          | 🔴 No integration        |
 
 ## Choose an approach
 
 Use [Pi](/agents/harnesses/pi/) when you want Pi Durable to own the loop, transcript, and recovery. Use [OpenCode](/agents/harnesses/opencode/) for OpenCode's sessions, tools, and plugins, or [Think](/agents/harnesses/think/) for an AI SDK chat agent with built-in Workspace tools.
+
+Use [Flue](https://flueframework.com/) for a TypeScript hooks API built on Pi, with automatic recovery and a [Cloudflare target](https://flueframework.com/docs/guide/cloudflare-target/) that uses the Agents SDK.
 
 Use a build-your-own harness when you need control over model calls, message formats, or tool execution. Compose it with the [Agents SDK runtime](/agents/runtime/).
 
