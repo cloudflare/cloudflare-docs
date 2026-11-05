@@ -100,6 +100,12 @@ Email Service rejects the entire send request if it contains a disallowed header
 | ------------- | --------------------------------------------------------- | ----------------------------- |
 | `Archived-At` | [RFC 5064](https://datatracker.ietf.org/doc/html/rfc5064) | URL where message is archived |
 
+### One-time passcodes
+
+| Header      | RFC                                                                            | Notes                                                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `OTP-Token` | [draft-goto-otp-token](https://datatracker.ietf.org/doc/draft-goto-otp-token/) | One-time passcode bound to a web origin, for example `"123456"; origin="https://example.com"`. The origin must be a canonical `https` origin. At most one per message. |
+
 ### Custom X-headers
 
 Any header starting with `X-` is allowed. This covers common headers like `X-Mailer`, `X-Priority`, `X-Campaign-ID`, and any custom tracking headers your application needs.

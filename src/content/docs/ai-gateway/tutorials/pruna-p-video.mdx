@@ -31,7 +31,7 @@ This tutorial shows how to call the [Pruna's P-video](https://replicate.com/prun
 
 Note your **Account ID** and **Gateway name** for use in later steps.
 
-To add authentication to your gateway, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/).
+New gateways require authentication. To create a token or turn on authentication for an existing gateway, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/).
 
 ## 3. Construct the gateway URL
 
@@ -106,12 +106,12 @@ The response includes a prediction `id`:
 
 ```json
 {
-  "id": "xyz789...",
-  "status": "starting",
-  "urls": {
-    "get": "https://api.replicate.com/v1/predictions/xyz789...",
-    "cancel": "https://api.replicate.com/v1/predictions/xyz789.../cancel"
-  }
+	"id": "xyz789...",
+	"status": "starting",
+	"urls": {
+		"get": "https://api.replicate.com/v1/predictions/xyz789...",
+		"cancel": "https://api.replicate.com/v1/predictions/xyz789.../cancel"
+	}
 }
 ```
 
@@ -127,7 +127,7 @@ Keep polling until `status` is `succeeded` (or `failed`). When complete, the `ou
 
 ## Next steps
 
-From here you can: 
+From here you can:
 
 - Use [logging](/ai-gateway/observability/logging/) to monitor requests and debug issues.
 - Set up [rate limiting](/ai-gateway/features/rate-limiting/) to control usage.

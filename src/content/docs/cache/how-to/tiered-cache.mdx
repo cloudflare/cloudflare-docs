@@ -57,6 +57,8 @@ Custom Tiered cache allows Enterprise customers to work with their account team 
 
 Tiered Cache applies only to requests eligible for cache at request time. Origin-response cacheability is evaluated later, so an eligible request can be routed through an upper tier before Cloudflare treats the origin response as uncacheable. For details and request-time bypass options, refer to [Investigate uncached responses](/cache/troubleshooting/investigating-uncached-responses/).
 
+For orange-to-orange (O2O) traffic from a customer zone to a SaaS provider zone, Tiered Cache settings on the customer zone do not apply. The SaaS provider zone determines whether Tiered Cache is used. Tiered Cache continues to apply to non-O2O traffic on the customer zone. For more information, refer to [Product compatibility](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/product-compatibility/).
+
 For intermittent slowness that only affects requests routed through an upper tier, refer to [Investigate latency on tiered requests](/cache/troubleshooting/investigating-tiered-cache-latency/).
 
 ## Availability

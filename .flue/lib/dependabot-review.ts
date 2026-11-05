@@ -100,6 +100,28 @@ export function parseDependabotPackages(body: string): DependabotPackage[] {
 		});
 	}
 
+	// Small grouped PR: no table, one "Updates `name` from X to Y" line per
+	// package. Repo URLs come from the links in the "Bumps the … group" intro.
+	if (packages.length === 0) {
+		const intro = /^Bumps the .+$/m.exec(body)?.[0] ?? "";
+		const urls = new Map<string, string>();
+		for (const link of intro.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)) {
+			urls.set(link[1], link[2]);
+		}
+		const updateRe = /^Updates `([^`]+)` from (\S+) to (\S+)/gm;
+		const seen = new Set<string>();
+		while ((m = updateRe.exec(body)) !== null) {
+			if (seen.has(m[1])) continue;
+			seen.add(m[1]);
+			packages.push({
+				name: m[1],
+				repoUrl: urls.get(m[1]),
+				from: m[2],
+				to: m[3].replace(/\.$/, ""),
+			});
+		}
+	}
+
 	// Single-package PR: prose on first line — "Bumps [name](url) from X to Y."
 	if (packages.length === 0) {
 		const proseRe = /^Bumps \[([^\]]+)\]\(([^)]+)\) from ([\S]+) to ([\S]+)/m;

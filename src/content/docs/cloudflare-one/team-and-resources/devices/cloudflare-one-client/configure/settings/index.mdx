@@ -72,7 +72,9 @@ To retrieve the one-time code for a user:
 5. Copy the 7-digit **Override code** shown in the side panel.
 6. Share this code with the user for them to enter on their device.
 
-The user will have an unlimited amount of time to activate their code.
+The user must enter the override code before the **Timeout** elapses, counted from the start of the hour in which the code was retrieved. The override then lasts for the **Timeout**, minus one hour for each new hour that has started since the code was retrieved.
+
+For example, with a 3-hour **Timeout**, a code retrieved at 9:15 AM can be entered until 12:00 PM. If entered at 9:15 AM, the override lasts until 12:15 PM; at 10:02 AM, until 12:02 PM; at 11:50 AM, until 12:50 PM.
 
 #### Enter the override code
 
@@ -206,6 +208,15 @@ Allows administrators to disconnect and reconnect the Cloudflare One Client usin
 To set up the local signal file, refer to [Emergency Disconnect](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/emergency-disconnect/#set-up-local-emergency-disconnect).
 
 ## Device profile settings
+
+The device profile form has **Settings** and **Advanced** tabs. Configure routing and user controls in **Settings**. Select **Advanced** for the following settings:
+
+- [Directly route Microsoft 365 traffic](#directly-route-microsoft-365-traffic)
+- [Allow users to enable local network exclusion](#allow-users-to-enable-local-network-exclusion)
+- [DNS search suffixes](#dns-search-suffixes)
+- [Client interface IP DNS registration](#client-interface-ip-dns-registration)
+- [SCCM VPN boundary support](#sccm-vpn-boundary-support)
+- [NetBIOS over TCPIP](#netbios-over-tcpip)
 
 ### Captive portal detection
 

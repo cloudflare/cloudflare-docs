@@ -1,0 +1,129 @@
+---
+pcx_content_type: reference
+title: v2 beta
+sidebar:
+  order: 3
+  badge:
+    text: Beta
+description: Compare Vite plugin v2 beta with v1 and review the changes required to migrate an existing Cloudflare Workers project.
+products:
+  - workers
+---
+
+import { PackageManagers } from "~/components";
+
+:::caution[Vite plugin v2 is in beta]
+v2 may change before general availability. The other Vite plugin pages describe
+v1, the current stable version.
+:::
+
+Vite plugin v2 uses
+[`cloudflare.config.ts`](/cf/projects/cloudflare-config/) for configuration and
+integrates with the [cf CLI](/cf/) for deployment.
+
+See [Deploy your first Worker](/cf/get-started/first-worker/) to quickly
+scaffold a new project using the beta.
+
+Alternatively, to try the beta in an existing project, install the Vite plugin
+and `cf` as development dependencies.
+
+<PackageManagers type="add" pkg="@cloudflare/vite-plugin@beta cf" dev />
+
+## Differences from v1
+
+The following table summarizes the main differences:
+
+|                      | v1                                                          | v2 beta                                                              |
+| -------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------- |
+| Worker configuration | Loads `wrangler.jsonc`, `wrangler.json`, or `wrangler.toml` | Loads `cloudflare.config.ts`                                         |
+| Deployment           | Deploys with `wrangler deploy`                              | Deploys with `cf deploy`                                             |
+| Build Output         | Writes per-Worker deployment output under `dist` by default | Always writes structured Build Output to `.cloudflare/output`        |
+| Vite version         | Supports Vite 6 and above                                   | Supports Vite 7 and above                                            |
+| Vite environment     | Derives the environment name from the Worker name           | Uses the `ssr` environment by default                                |
+| Type generation      | Run `wrangler types` separately                             | Generates types by default during development and builds             |
+| Local secrets        | Can use `CLOUDFLARE_ENV` to select env-specific files       | Uses Vite's resolved mode and `envDir` to select mode-specific files |
+
+## Configuration
+
+v2 reads configuration from
+[`cloudflare.config.ts`](/cf/projects/cloudflare-config/). It does not load
+Wrangler configuration files. To convert an existing configuration, refer to
+[Migrate from Wrangler to `cf`](/cf/wrangler/migrate/).
+
+The `configPath` option has been removed and the `config`, `auxiliaryWorkers`,
+and `prerenderWorker` options now accept the new camelCase
+[Worker configuration format](/cf/projects/cloudflare-config/#configure-the-worker).
+
+## Build and deployment
+
+`vite build` always writes structured Build Output to `.cloudflare/output`.
+Run [`cf deploy`](/cf/projects/#deploy) to build and deploy.
+To deploy an existing build without rebuilding, use
+[`cf deploy --prebuilt`](/cf/projects/#deploy-a-prebuilt-build)
+
+Wrangler cannot deploy applications built with Vite plugin v2. Wrangler is also
+no longer a runtime or peer dependency of the plugin.
+
+When a project
+[configures Containers](/cf/projects/cloudflare-config/#attach-a-container),
+`vite build` builds Dockerfile-backed Container images and records them in the
+Build Output. `vite preview` reuses these images instead of rebuilding them.
+
+## Vite environment
+
+The entry Worker now uses the `ssr` Vite environment by default. Update Vite
+configuration and plugins that target the previous Worker-derived name to use
+`environments.ssr`. To keep the previous name, set `viteEnvironment.name`
+explicitly in the `cloudflare()` plugin options.
+
+## Generated types
+
+v2 generates `.cloudflare/types/index.d.ts` during development and builds. The
+declarations infer
+[bindings from `cloudflare.config.ts`](/cf/projects/cloudflare-config/#declare-bindings).
+They also include runtime types for the configured compatibility date and
+compatibility flags.
+
+Add the configuration file and generated declarations to your TypeScript
+configuration:
+
+```json title="tsconfig.json"
+{
+	"include": ["src", "cloudflare.config.ts", ".cloudflare/types"]
+}
+```
+
+Use the top-level `types` plugin option to turn off generation or omit runtime
+types. For the equivalent manual command, refer to
+[Generate types](/cf/projects/#generate-types).
+
+## Local secrets and environment variables
+
+v2 uses Vite's resolved mode and `envDir` to locate
+[`.dev.vars` and `.env` files](/workers/configuration/secrets/#local-development-with-secrets)
+that provide declared Worker secrets. Use Vite's `--mode` option instead of
+`CLOUDFLARE_ENV` to select mode-specific files.
+When `--mode` is not specified, the mode defaults to `development` in dev and
+`production` in build.
+
+For preview, set the mode during `vite build`. `vite preview` uses the mode
+recorded in the Build Output.
+
+v2 also removes the deprecated
+`WRANGLER_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>` environment
+variable. Rename
+[Hyperdrive local overrides](/hyperdrive/configuration/local-development/#configure-with-environment-variable)
+to `CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_<BINDING_NAME>`.
+
+## Local testing endpoints
+
+v2 no longer rewrites legacy local testing endpoints. Update scripts, tests,
+and integrations that call these endpoints directly:
+
+| Legacy endpoint                                         | v2 endpoint                                                                       |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `/cdn-cgi/handler/scheduled` or `/cdn-cgi/mf/scheduled` | [`/cdn-cgi/local/scheduled`](/workers/runtime-apis/handlers/scheduled/)           |
+| `/cdn-cgi/handler/email`                                | [`/cdn-cgi/local/email`](/email-service/observability/local-development/routing/) |
+| `/cdn-cgi/mf/stream/*`                                  | `/__cf_local/stream/*`                                                            |
+| `/cdn-cgi/mf/imagedelivery/*`                           | `/__cf_local/imagedelivery/*`                                                     |
+| `/cdn-cgi/explorer/*`                                   | [`/cdn-cgi/local/explorer/*`](/workers/local-development/local-explorer/)         |
