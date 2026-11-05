@@ -128,14 +128,14 @@ These capabilities ship with the `agents` package and are stable:
 
 These capabilities are experimental. Their APIs may change between releases:
 
-| Capability                                           | Import            | What it does                                                        |
-| ---------------------------------------------------- | ----------------- | ------------------------------------------------------------------- |
-| [`Streams`](/agents/runtime/capabilities/streams/)   | `agents/streams`  | Stores incremental output that readers replay and follow            |
-| [`Sessions`](/agents/runtime/capabilities/sessions/) | `agents/sessions` | Stores conversation history as a tree of messages                   |
-| `Queue`                                              | `agents/queue`    | Runs background callbacks one at a time, in push order              |
-| `Tasks`                                              | `agents/tasks`    | Runs replayable background work with journaled steps                |
-| `RoutedAgents`                                       | `agents/routing`  | Keeps a catalog of independent agents and forwards requests to them |
-| `Browser`                                            | `agents/browser`  | Keeps one persistent Browser Run session open for the agent         |
+| Capability                                                    | Import            | What it does                                                        |
+| ------------------------------------------------------------- | ----------------- | ------------------------------------------------------------------- |
+| [`Streams`](/agents/runtime/capabilities/streams/)            | `agents/streams`  | Stores incremental output that readers replay and follow            |
+| [`Sessions`](/agents/runtime/capabilities/sessions/)          | `agents/sessions` | Stores conversation history as a tree of messages                   |
+| [`Queue`](/agents/runtime/capabilities/queue/)                | `agents/queue`    | Runs background callbacks one at a time, in push order              |
+| [`Tasks`](/agents/runtime/capabilities/tasks/)                | `agents/tasks`    | Runs multi-step background work that resumes where it stopped       |
+| [`RoutedAgents`](/agents/runtime/capabilities/routed-agents/) | `agents/routing`  | Keeps a catalog of independent agents and forwards requests to them |
+| [`Browser`](/agents/tools/browser/)                           | `agents/browser`  | Keeps one persistent Browser Run session open for the agent         |
 
 A [harness](/agents/harnesses/), such as `PiHarness`, is a capability that runs a whole agent loop.
 
