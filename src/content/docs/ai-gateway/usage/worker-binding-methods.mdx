@@ -88,6 +88,12 @@ const resp = await env.AI.run(
 
 Third-party models require an AI Gateway and use [Unified Billing](/ai-gateway/features/unified-billing/). Cloudflare manages the provider credentials and deducts credits from your account. You do not need to supply your own API keys.
 
+:::note[Input format for third-party models]
+Pass the model's input object directly as the second argument to `env.AI.run()`. Do not wrap it in an `input` field. AI Gateway rejects fields that the model does not accept.
+
+Errors from the binding may only show `7003: User Input Error`. To find the cause, refer to [400: Bad request (7003)](/ai-gateway/reference/troubleshooting/#400-bad-request-7003).
+:::
+
 :::note
 On the AI binding path, only a [BYOK (Bring Your Own Keys)](/ai-gateway/configuration/bring-your-own-keys/) key stored under the `default` alias is used. Keys stored under other aliases are not consulted, and the request falls through to Unified Billing. To select a non-default alias, use the [provider-native endpoints](/ai-gateway/usage/providers/) with the `cf-aig-byok-alias` header. See [credential precedence](/ai-gateway/features/unified-billing/#credential-precedence) for details.
 :::

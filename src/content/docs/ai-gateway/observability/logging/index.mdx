@@ -94,7 +94,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 ```
 
 :::note
-If `cf-aig-collect-log` is set to `false`, the entire log entry (including metadata) is skipped regardless of the `cf-aig-collect-log-payload` value. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
+If `cf-aig-collect-log` is set to `false`, AI Gateway does not store the request and response bodies, regardless of the `cf-aig-collect-log-payload` value, and skips the rest of the log entry. For [Unified Billing](/ai-gateway/features/unified-billing/) requests, AI Gateway always logs the request billing details. If the collect logs headers are set to `false`, the entry is logged without the request and response bodies.
+
+Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
 :::
 
 ## DLP fields in logs
