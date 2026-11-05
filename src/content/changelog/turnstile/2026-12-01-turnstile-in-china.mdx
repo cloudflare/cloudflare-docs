@@ -8,11 +8,11 @@ Turnstile in China is now available, helping visitors in Mainland China move thr
 
 When creating a widget for visitors in Mainland China, select **China** as its region via the [dashboard](/turnstile/get-started/widget-management/dashboard/), [API](/turnstile/get-started/widget-management/api/), or [Terraform](/turnstile/get-started/widget-management/terraform/). You cannot change the region after creating the widget.
 
-For example, the dashboard offers **China** under **Widget region**:
+The dashboard presents **China** as an option under **Widget region**:
 
 ![Widget region options in the dashboard and a warning that the region cannot be changed after creation](~/assets/images/turnstile/china-widget-region.png)
 
-For example, an API request can include:
+When creating a widget through the API, set `region` to `china` in the request:
 
 ```json
 {
