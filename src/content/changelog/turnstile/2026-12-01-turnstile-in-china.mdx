@@ -8,9 +8,9 @@ Turnstile in China is now available, helping visitors in Mainland China move thr
 
 When creating a widget for visitors in Mainland China, select **China** as its region via the [dashboard](/turnstile/get-started/widget-management/dashboard/), [API](/turnstile/get-started/widget-management/api/), or [Terraform](/turnstile/get-started/widget-management/terraform/). You cannot change the region after creating the widget.
 
-For example, in the dashboard, select **China** under **Widget region**:
+For example, the dashboard offers **China** under **Widget region**:
 
-![Turnstile widget form with China selected as the region and a warning that the region cannot be changed](~/assets/images/turnstile/china-widget-region.jpg)
+![Widget region options in the dashboard and a warning that the region cannot be changed after creation](~/assets/images/turnstile/china-widget-region.png)
 
 For example, an API request can include:
 
@@ -24,5 +24,20 @@ For example, an API request can include:
 ```
 
 Use the China-hosted script at `challenges.cloudflare-cn.com` for client-side rendering and the China Siteverify endpoint on the same domain for server-side token validation.
+
+```html title="China client-side script"
+<script
+	src="https://challenges.cloudflare-cn.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
+```
+
+```shell title="China Siteverify request"
+curl https://challenges.cloudflare-cn.com/turnstile/v0/siteverify \
+  --request POST \
+  --data-urlencode "secret=YOUR_SECRET_KEY" \
+  --data-urlencode "response=TOKEN_FROM_WIDGET"
+```
 
 A China Network subscription is not required; contact your account team to request access. For implementation steps, refer to [Get started with Turnstile](/turnstile/get-started/).
