@@ -8,39 +8,30 @@ products:
   - durable-objects
 ---
 
-import {
-	Aside,
-	Details,
-	TypeScriptExample,
-	WranglerConfig,
-} from "~/components";
+import { Details, TypeScriptExample, WranglerConfig } from "~/components";
 
 Durable Objects scale by having _many_ of them. This page is a decision sequence: the constraints first, then seven steps to choose, size, name, compose, place, pattern, and scale your Durable Objects, then how to build and deploy the Workers control plane around them.
 
-## Decision summary {/* decision-summary */}
+## Starting considerations {/* decision-summary */}
 
-<Aside type="tip" title="Five rules">
+### Primary Recommendations
 
-1. **Keep the control plane in Workers.** Authentication, routing, registries, and configuration live in Workers, D1, KV, and Workers for Platforms. Durable Objects are the data plane.
+1. **Prefer Workers for the control plane.** Use Workers and supporting services such as D1, KV, and Workers for Platforms for authentication, routing, registries, and configuration. Reserve Durable Objects primarily for stateful coordination.
 2. **One Durable Object per atom of coordination.** An atom is the largest unit that must change atomically, such as a room, a session, a document, or a match.
-3. **Size each atom against per-object limits** before you ship. Shard anything that fans in.
+3. **Measure each atom's capacity** before you ship. Load-test the expected workload, allow headroom, and shard when one object cannot meet your targets.
 4. **Route with deterministic names** built from the atom key, using `getByName()`.
-5. **When an atom gets too hot, keep the atom and add a layer beneath it.** Do not switch to a smaller unit.
+5. **Plan for hot Durable Objects.** Identify the limiting resource, then consider shards or layers that preserve the coordination your application needs.
 
-</Aside>
-
-<Aside type="danger" title="Never">
+### Anti-Patterns
 
 - Route every request, or every tenant, through one Durable Object (a registry, router, authorizer, or global counter).
 - Wake many objects to list, search, or aggregate. Read D1, KV, Analytics Engine, or R2 instead.
-- Create one object per row, message, or tool call when those must change together.
-- Split a hot atom into a smaller unit (one object per market, per nominee) instead of adding a layer beneath it.
+- Create one object per row, message, tool call, or agent turn when those must change together.
+- Split a hot Durable Object into smaller units (one object per feed field or event type) without considering upstream connections or hot keys.
 - Pin entities to fixed shards with no way to move a hot one.
 - Arm one object's alarm from several code paths.
 - Deploy every Durable Object class in the same Worker as your whole control plane.
 - Shard without per-atom numbers.
-
-</Aside>
 
 ### Terms used on this page {/* terms */}
 
@@ -53,9 +44,9 @@ Durable Objects scale by having _many_ of them. This page is a decision sequence
 | Hub, relay, leaf | Broadcast roles. A hub holds one upstream link and its subscribers. When a hub gets too busy it becomes a relay that forwards to leaf objects, which hold the subscribers. |
 | Bounded parent   | An object that indexes the children of one tenant or workspace. It is part of that tenant's data plane, never a router for everyone.                                       |
 
-## Workers are the control plane; Durable Objects are the data plane {/* control-plane */}
+## Prefer Workers for the control plane and Durable Objects for the data plane {/* control-plane */}
 
-Almost every well-designed Durable Objects application has the same three layers:
+A recommended starting architecture separates these three layers:
 
 - **A stateless Worker in front.** It runs everywhere, authenticates the caller, validates input, and computes which object owns the request from its name.
 - **Many Durable Objects behind it, one per atom.** Each object is single-threaded, lives in one location, and owns its own SQLite database and WebSocket connections.
@@ -78,34 +69,32 @@ Clients (browsers, mobile apps, webhooks and APIs)
 
 </Details>
 
-<Aside type="danger" title="Do not use a Durable Object as your control plane">
+### Prefer Workers over a global control-plane Durable Object
 
-A Durable Object that every request, or every tenant, must pass through (for authentication, tenant lookup, routing, or a global registry) has all the weaknesses of a single global object:
+You can use Durable Objects for control-plane coordination. However, routing every request or tenant through a single object for authentication, tenant lookup, routing, or a global registry is generally not recommended. It introduces these tradeoffs:
 
 - **Throughput ceiling:** one thread serves your whole platform.
 - **Latency:** it lives in one location, so distant users pay a round trip on every request.
-- **Blast radius:** if it is overloaded, evicted, or deploying, nothing works.
-- **Storage ceiling:** the registry grows with every resource, toward the 10 GB limit.
+- **Blast radius:** requests that depend on it can be delayed or fail when it is overloaded or unavailable.
+- **Storage ceiling:** the registry grows with every resource, toward the [per-object storage limit](/durable-objects/platform/limits/).
 
-Put these responsibilities in a Worker, which runs everywhere and has no single thread, and store shared metadata in D1 or KV.
-
-</Aside>
+Prefer a Worker for these responsibilities, with shared metadata in D1 or KV. If you use a coordinating Durable Object, keep its scope bounded as described in [Use Durable Objects as coordinators](#bounded-coordinators).
 
 ![Left: a registry object becomes a global bottleneck and a single point of failure. Right: the Worker owns the control plane, and data traffic goes directly to each object.](~/assets/images/durable-objects/architecture-guidance/02-registry-vs-worker.svg)
 
 <Details header="Diagram as text">
 
 ```txt
-WRONG: clients → Worker → registry Durable Object (auth, lookup, list, route) → doc:1 | doc:2 | doc:3
+NOT RECOMMENDED: clients → Worker → registry Durable Object (auth, lookup, list, route) → doc:1 | doc:2 | doc:3
        every request queues on one thread, in one location
-RIGHT: clients → Worker (auth, route by name) ↔ D1 (registry), KV (config)
+RECOMMENDED: clients → Worker (auth, route by name) ↔ D1 (registry), KV (config)
        Worker → doc:1 | doc:2 | doc:3 directly
        control requests hit D1 and KV; data requests go straight to the object
 ```
 
 </Details>
 
-### Where each responsibility belongs {/* where-each-responsibility-belongs */}
+### Recommended service responsibilities {/* where-each-responsibility-belongs */}
 
 | Responsibility                                                | Where it lives                                                      | Why                                               |
 | ------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------- |
@@ -118,15 +107,15 @@ RIGHT: clients → Worker (auth, route by name) ↔ D1 (registry), KV (config)
 | Cross-atom analytics and aggregation                          | Analytics Engine, Queues, R2                                        | Do not wake every object to count                 |
 | State and coordination for one atom                           | **Durable Object**                                                  | Strong consistency, local storage, sockets        |
 
-### When a coordinating Durable Object is fine {/* bounded-coordinators */}
+### Use Durable Objects as coordinators {/* bounded-coordinators */}
 
-Coordination objects are fine when they are **bounded**. A per-tenant or per-workspace parent that tracks its own children is part of that tenant's data plane. Refer to [Step 4: Compose parents and children](#step-4-compose).
+When you use Durable Objects as coordinators, keep their scope **bounded**. A per-tenant or per-workspace parent can track its own children without becoming a global dependency. Refer to [Step 4: Compose parents and children](#step-4-compose).
 
-<Aside type="tip" title="Rule of thumb">
+:::note[Rule of thumb]
 
-If every request in your system, or the requests of every tenant, must pass through the same object, that object is a control plane. Move its responsibilities into a Worker, and store the metadata in D1 or KV.
+If every request in your system, or the requests of every tenant, must pass through the same object, consider moving those responsibilities into a Worker and storing the metadata in D1 or KV.
 
-</Aside>
+:::
 
 Code for building this control plane is in [Build and deploy the control plane](#build-control-plane).
 
@@ -177,11 +166,11 @@ export default {
 
 </TypeScriptExample>
 
-<Aside type="note" title="Note">
+:::note
 
 If you have global application or user configuration that you need to access frequently (on every request), consider using [Workers KV](/kv/) instead.
 
-</Aside>
+:::
 
 ### Find the right level of granularity {/* find-the-right-granularity */}
 
@@ -197,7 +186,7 @@ Granularity ladder, coarse to fine:
   Tenant or workspace ......... OK as a bounded parent or per-tenant database; too coarse if one tenant is busy
   User ........................ OK for per-user state, settings, inbox
   Room, session, document ..... SWEET SPOT: largest unit updated atomically, smallest unit served on its own
-  Row, message, tool call ..... TOO FINE: needs cross-object transactions; every action fans out to many objects
+  Row, message, tool call, agent turn ... TOO FINE when each operation needs shared state from other objects
 ```
 
 </Details>
@@ -214,9 +203,9 @@ Signs your atom is too fine
 - You need a transaction that spans several objects.
 - One user action fans out to many objects.
 - Every read reassembles state from several objects.
-- You have one object per row, message, or tool call.
+- You have one object per row, message, tool call, or agent turn, but each operation needs shared conversation or run state.
 
-One application can, and often should, use several Durable Object classes at different rungs. For example, a consumer AI app might use one object per user profile, one per conversation, and one per agent run. Refer to [Pattern: Per-user constellation](#pattern-per-user).
+One application can, and often should, use several Durable Object classes at different rungs. For example, a consumer AI app might use one object per user profile, one per conversation, and one per agent run. Refer to [Per-user constellation](#pattern-per-user).
 
 ### Do not create a single global Durable Object {/* do-not-create-a-global-durable-object */}
 
@@ -253,53 +242,48 @@ RIGHT: clients → room:lobby | room:42 | room:dev (one object per room)
 
 ### Limits at a glance {/* limits-at-a-glance */}
 
-Quote limits from the [Limits](/durable-objects/platform/limits/) page, which is the source of truth. As of writing:
+The [Limits](/durable-objects/platform/limits/) page is the source of truth for platform limits. Note the scope of each limit:
 
-| Per-object limit                  | Value                                                                                                                       |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Requests per second               | Soft limit of about 1,000 for simple operations; lower when each request does more work (refer to the planning table below) |
-| Storage (SQLite-backed)           | 10 GB                                                                                                                       |
-| CPU per request                   | 30 seconds by default, configurable up to 5 minutes                                                                         |
-| Alarm handler wall time           | 15 minutes                                                                                                                  |
-| Key and value size                | 2 MB combined                                                                                                               |
-| Bound parameters per SQL query    | 100                                                                                                                         |
-| Simultaneous outgoing connections | 6                                                                                                                           |
-| WebSocket broadcast               | No published cap. Each broadcast is serialized work proportional to the number of connections, so load-test it.             |
+| Resource and scope                                         | Value                                                                                                      |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Requests per second, per object                            | Soft limit of 1,000; not guaranteed throughput                                                             |
+| SQLite-backed storage, per object on Workers Paid          | 10 GB; refer to [Limits](/durable-objects/platform/limits/) for Workers Free per-object and account limits |
+| CPU per request                                            | 30 seconds by default, configurable up to 5 minutes                                                        |
+| Alarm handler wall time                                    | 15 minutes                                                                                                 |
+| Key and value size, per entry in the key-value storage API | 2 MB combined                                                                                              |
+| Bound parameters per SQL query                             | 100                                                                                                        |
+| Simultaneous outgoing connections, per request             | 6                                                                                                          |
 
-### Message throughput limits: shard anything that fans in {/* message-throughput-limits */}
+### Message throughput: measure before sharding {/* message-throughput-limits */}
 
-A single Durable Object can handle about **1,000 requests per second** for simple operations. This limit varies based on the work performed per request. The following figures are illustrative planning estimates, not guaranteed throughput; load-test your own workload:
+The documented **1,000 requests per second per object is a soft limit**, not a throughput benchmark. The rate an object sustains depends on its CPU work, storage operations, payload sizes, and other work performed for each request. Do not assign fixed capacities to categories such as JSON validation or storage writes.
 
-| Operation type                                      | Throughput       |
-| --------------------------------------------------- | ---------------- |
-| Simple pass-through (minimal parsing)               | ~1,000 req/sec   |
-| Moderate processing (JSON parsing, validation)      | ~500-750 req/sec |
-| Complex operations (transformation, storage writes) | ~200-500 req/sec |
+Load-test the operations your application performs, including expected bursts. Measure latency, CPU usage, storage work, and [overload errors](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded). Choose a target rate below both the documented soft limit and the rate your workload sustains, with headroom for bursts and variation.
 
-When modeling your "atom," factor in the expected request rate. If your use case exceeds these limits, shard your workload across multiple Durable Objects.
-
-For example, consider a real-time game with 50,000 concurrent players sending 10 updates per second. This generates 500,000 requests per second total. You would need 500-1,000 game session Durable Objects—not one global coordinator.
-
-Calculate your sharding requirements:
+For writes that can be partitioned independently, estimate an initial shard count from that measured target, then load-test the sharded design:
 
 ```txt
-Required DOs = (Total requests/second) / (Requests per DO capacity)
+Required shards = ceil(Peak requests/second for one atom / Target requests/second per shard)
 ```
 
-<Aside type="note" title="Size per atom, not per system">
+:::note[Size per atom, not per system]
 
-Apply the formula to _one atom's_ traffic. Load across atoms spreads out automatically: 50,000 chat rooms at 2 messages per second each is 100,000 requests per second in total, but only 2 per object. That needs no sharding at all. Shard only when a _single_ atom is too busy, or when one object would receive calls from every writer, worker, or tenant (it fans in).
+Apply the formula to _one atom's_ traffic, not the application's total traffic. Separate chat rooms already spread load across separate objects. Shard a room only when that room's object cannot meet your latency and throughput targets with headroom. Fan-in does not by itself require sharding.
 
-</Aside>
+:::
 
-### Worked examples {/* worked-examples */}
+WebSocket fan-out needs its own load test. Incoming requests per second and outbound messages per second measure different work: one incoming update can produce many outgoing messages. Measure broadcast latency at the expected subscriber count rather than deriving fan-out capacity from the request soft limit.
 
-| Workload                           | Peak for one atom                                                          | Decision                                                                      |
-| ---------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| Collaborative coding-agent session | ~50 streamed events/s and a few viewers                                    | Far below the limits: one object per session, no sharding                     |
-| Chat room                          | 2–20 messages/s                                                            | One object per room                                                           |
-| Public vote closing on live TV     | ~30,000 writes/s for one round ÷ ~500 writes/s per object                  | 60 shards needed; use 64 ([hash shards](#scale-hash-shards))                  |
-| Championship final, one region     | 50,000 viewers × 4 updates/s = 200,000 outbound messages/s from one thread | Keep a regional hub as the atom and add a [fan-out tree](#scale-fan-out-tree) |
+### Illustrative sizing decisions {/* worked-examples */}
+
+These hypothetical workloads show how to choose a boundary. They are not customer measurements or throughput guarantees.
+
+| Workload                      | What to measure for one atom                                     | Decision                                                                                                  |
+| ----------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Collaborative editing session | Event processing and broadcast latency with the expected viewers | Start with one object per session; split responsibilities if measurements require it                      |
+| Chat room                     | Message rate, storage work, and subscriber count                 | Start with one object per room and test busy rooms separately                                             |
+| Telemetry ingestion stream    | Burst write rate and time to drain the backlog                   | Add [hash shards](#scale-hash-shards) when one buffer cannot meet the target                              |
+| Live status feed              | Time to deliver an update to the expected subscribers            | Keep a regional hub as the atom and add a [fan-out tree](#scale-fan-out-tree) when broadcasts fall behind |
 
 ## Step 3: Name and route {/* step-3-name */}
 
@@ -367,33 +351,33 @@ export default {
 
 </TypeScriptExample>
 
-### Build compound names from your atom key {/* compound-names */}
+### Recommended naming pattern: compound names from your atom key {/* compound-names */}
 
-When an atom has a scale-out dimension, such as a region or a shard, put it in the name: `{class}:{atomId}[:{dimension}:{value}]`. A consistent scheme lets any Worker compute the right object without a lookup.
+When an atom has a scale-out dimension, such as a region or a shard, consider this naming pattern: `{class}:{atomId}[:{dimension}:{value}]`. A consistent scheme lets any Worker compute the right object without a lookup.
 
 ![Anatomy of a compound Durable Object name. The stable atom key comes first and the scale-out dimension comes last.](~/assets/images/durable-objects/architecture-guidance/05-compound-name.svg)
 
 <Details header="Diagram as text">
 
 ```txt
-Name: round:7:v2:shard:13
-  round     = class or type prefix
+Name: stream:7:v2:shard:5
+  stream    = class or type prefix
   7         = atom ID
   v2        = layout version (bump it before changing the shard count)
-  shard:13  = scale-out dimension (shard or region), always last
+  shard:5   = scale-out dimension (shard or region), always last
 ```
 
 </Details>
 
-- **Start with a type prefix** (`room:`, `session:`, `round:`) so that names stay readable in logs and never collide across uses.
+- **Start with a type prefix** (`room:`, `session:`, `stream:`) so that names stay readable in logs and never collide across uses.
 - **Put the scale-out dimension last.** Everything before it identifies the atom.
-- **Derive shards from a stable key.** Hash a user ID or a connection ID. Never use a random number per request, or the same key lands on different objects.
+- **Derive shards from a stable key.** Hash a user ID, an event ID, or a connection ID. Never use a random number per request, or the same key lands on different objects.
 - **Version the layout** before you change the shard count. Otherwise the same key maps to a different object mid-flight.
 
 <TypeScriptExample filename="index.ts">
 
 ```ts
-// Stable 32-bit FNV-1a hash: the same key always maps to the same shard
+// Stable 32-bit FNV-1a hash: the same key maps to the same shard within a layout
 function shardFor(key: string, shardCount: number): number {
 	let hash = 0x811c9dc5;
 	for (let index = 0; index < key.length; index++) {
@@ -403,37 +387,39 @@ function shardFor(key: string, shardCount: number): number {
 	return (hash >>> 0) % shardCount;
 }
 
-type RoundConfig = { shardCount: number; layout: number };
+type StreamConfig = { shardCount: number; layout: number };
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
-		const { roundId, voterId, choice } = await request.json<{
-			roundId: string;
-			voterId: string;
-			choice: string;
+		const { streamId, eventId, payload } = await request.json<{
+			streamId: string;
+			eventId: string;
+			payload: string;
 		}>();
 
-		// Per-round settings are read-heavy config: keep them in KV
-		const config = await env.CONFIG.get<RoundConfig>(
-			`round:${roundId}`,
+		// Per-stream settings are read-heavy config: keep them in KV
+		const config = await env.CONFIG.get<StreamConfig>(
+			`stream:${streamId}`,
 			"json",
 		);
-		if (!config) return new Response("Unknown round", { status: 404 });
+		if (!config) return new Response("Unknown stream", { status: 404 });
 
 		// The layout version is part of the name, so changing the shard
-		// count starts a new set of shards instead of re-mapping live keys
-		const shard = shardFor(voterId, config.shardCount);
-		const stub = env.VOTE_SHARD.getByName(
-			`round:${roundId}:v${config.layout}:shard:${shard}`,
+		// count starts a new set of shards
+		const shard = shardFor(eventId, config.shardCount);
+		const stub = env.INGEST_SHARD.getByName(
+			`stream:${streamId}:v${config.layout}:shard:${shard}`,
 		);
 
-		const accepted = await stub.record(voterId, choice);
+		const accepted = await stub.record(eventId, payload);
 		return new Response(null, { status: accepted ? 202 : 409 });
 	},
 };
 ```
 
 </TypeScriptExample>
+
+This example routes new events using the current layout. If an event can be retried after a layout change, retain its original layout version and shard count so that retries reach the original shard.
 
 ## Step 4: Compose parents and children {/* step-4-compose */}
 
@@ -631,11 +617,11 @@ export default {
 
 </TypeScriptExample>
 
-<Aside type="caution" title="Caution">
+:::caution
 
 Regional instances do not share state. Use them for data that has a single upstream source, such as a broadcast feed or cache. Do not use them for data that users write and that must stay consistent globally.
 
-</Aside>
+:::
 
 ### Spread capacity across regions {/* spread-capacity-across-regions */}
 
@@ -652,7 +638,7 @@ const REGIONS: DurableObjectLocationHint[] = [
 	"eeur",
 	"apac",
 ];
-const EXECUTOR_SHARDS = 64;
+const EXECUTOR_SHARDS = 16;
 
 function executorFor(env: Env, instanceId: string) {
 	const shard = shardFor(instanceId, EXECUTOR_SHARDS);
@@ -670,19 +656,21 @@ function executorFor(env: Env, instanceId: string) {
 
 ## Step 6: Pick a pattern {/* step-6-patterns */}
 
-These patterns are abstracted from production systems built on Durable Objects. Match the signals in your requirements to a pattern, then check its _Not a fit when_ row before you adopt it. Every pattern keeps a Worker in front and avoids any object that every request must visit.
+The following patterns are illustrative designs, not reproductions of customer architectures. Names, integrations, shard counts, batch sizes, and timer values in the examples are hypothetical, not recommended defaults. Public case studies are identified separately; their reported results are not benchmarks for the sample code.
 
-| Signals in your requirements                                                    | Pattern                                                | Atom and name                                | Scale-out path          |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------ | -------------------------------------------- | ----------------------- |
-| One upstream stream to many read-only viewers; global audience                  | [Fan out: Hubs at the edge](#pattern-fan-out-hub)      | topic × region: `topic:{id}:{region}`        | Fan-out tree            |
-| Bursty writes into a backend that needs a steady rate                           | [Fan in: Ingestion buffer](#pattern-ingest-buffer)     | campaign × shard: `round:{id}:shard:{n}`     | More hash shards        |
-| Long-lived collaborative or agent session streaming to several clients          | [Session per Durable Object](#pattern-session)         | session: `session:{id}`                      | Split by responsibility |
-| Consumer app; each user has several independent stateful things and agent loops | [Per-user constellation](#pattern-per-user)            | `user:{id}:{facet}`, `conv:{id}`, `run:{id}` | Rarely needed per user  |
-| Very many small entities with background work; skewed, shifting load            | [Shared shards placed by load](#pattern-place-by-load) | `shared:{n}`, promoted to `entity:{id}`      | Promote hot entities    |
+Match the signals in your requirements to a pattern, then check its _Not a fit when_ row before you adopt it. Every pattern keeps a Worker in front and avoids any object that every request must visit.
 
-### Fan out: Hubs at the edge {/* pattern-fan-out-hub */}
+| Signals in your requirements                                                    | Pattern                                                   | Atom and name                                | Scale-out path          |
+| ------------------------------------------------------------------------------- | --------------------------------------------------------- | -------------------------------------------- | ----------------------- |
+| One upstream stream to many read-only viewers; global audience                  | [Fan out (e.g., hubs at the edge)](#pattern-fan-out-hub)  | topic × region: `topic:{id}:{region}`        | Fan-out tree            |
+| Bursty writes into a backend that needs a steady rate                           | [Fan in (e.g., ingestion buffer)](#pattern-ingest-buffer) | stream × shard: `stream:{id}:shard:{n}`      | More hash shards        |
+| Long-lived collaborative or agent session streaming to several clients          | [Session per Durable Object](#pattern-session)            | session: `session:{id}`                      | Split by responsibility |
+| Consumer app; each user has several independent stateful things and agent loops | [Per-user constellation](#pattern-per-user)               | `user:{id}:{facet}`, `conv:{id}`, `run:{id}` | Rarely needed per user  |
+| Very many small entities with background work; skewed, shifting load            | [Shared shards placed by load](#pattern-place-by-load)    | `shared:{n}`, promoted to `entity:{id}`      | Promote hot entities    |
 
-Deliver one live stream (scores, odds, prices) to hundreds of thousands of clients without every client holding its own connection to your origin.
+### Fan out (e.g., hubs at the edge) {/* pattern-fan-out-hub */}
+
+Deliver one live stream, such as inventory or service status updates, to many clients without every client holding its own connection to your origin.
 
 | Decision       | Guidance                                                                                                                                      |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -700,9 +688,9 @@ Deliver one live stream (scores, odds, prices) to hundreds of thousands of clien
 ```txt
 Origin (one live data stream)
   → about 1 upstream connection per hub
-     → topic:match-123:sam   → thousands of client WebSockets (WebSocket Hibernation)
-     → topic:match-123:weur  → thousands of client WebSockets
-     → topic:match-456:sam   → thousands of client WebSockets
+     → topic:feed-1:wnam  → client WebSockets (WebSocket Hibernation)
+     → topic:feed-1:weur  → client WebSockets
+     → topic:feed-2:wnam  → client WebSockets
 Each update crosses the long-haul link once per hub, not once per client.
 ```
 
@@ -767,19 +755,19 @@ export class TopicHub extends DurableObject<Env> {
 
 While the upstream socket is open, the hub stays in memory and cannot hibernate. That is expected while subscribers are connected.
 
-**In production:** [Kaizen Gaming](https://www.cloudflare.com/case-studies/kaizen-gaming/) used this pattern to cut ~600,000 origin connections at peak down to ~1,000, and reduced peak bandwidth by more than 90%.
+**Public case study:** [Kaizen Gaming](https://www.cloudflare.com/case-studies/kaizen-gaming/) reports reducing peak origin connections from approximately 600,000 to 1,000 and peak bandwidth by more than 90%. These are results from that deployment, not capacity guarantees for the illustrative design here.
 
-### Fan in: Ingestion buffer {/* pattern-ingest-buffer */}
+### Fan in (e.g., ingestion buffer) {/* pattern-ingest-buffer */}
 
-Accept very bursty writes (votes, events, telemetry) and deliver them to a backend that needs a steady, predictable rate.
+Accept bursts of telemetry events and deliver them to a backend that needs a steady, predictable rate.
 
 | Decision       | Guidance                                                                                                                    |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------- |
 | Use when       | Writes arrive in bursts, the backend needs a steady rate, and writes can be acknowledged before the backend processes them. |
 | Not a fit when | The writer needs the backend's result synchronously, or strict ordering across all writers matters.                         |
-| Atom           | One campaign (for example, a voting round), one shard                                                                       |
-| Name           | `round:{roundId}:shard:{n}`                                                                                                 |
-| Control plane  | Worker validates and routes; KV holds per-round config (shard count, layout version)                                        |
+| Atom           | One telemetry stream, one shard                                                                                             |
+| Name           | `stream:{streamId}:shard:{n}`                                                                                               |
+| Control plane  | Worker validates and routes; KV holds per-stream config (shard count, layout version)                                       |
 | Scale-out path | [More hash shards](#scale-hash-shards), versioned in the name                                                               |
 
 ![Fan in through an ingestion buffer. Shards absorb bursts and flush batches to R2, and the backend drains them at its own pace.](~/assets/images/durable-objects/architecture-guidance/09-fan-in-ingestion-buffer.svg)
@@ -787,50 +775,52 @@ Accept very bursty writes (votes, events, telemetry) and deliver them to a backe
 <Details header="Diagram as text">
 
 ```txt
-Millions of spiky writers
-  → Worker: validate, authenticate, hash to shard   ⇢ audit log (independent copy)
-  → round:7:shard:0 | round:7:shard:1 | round:7:shard:2  (each: SQLite buffer + flush alarm)
+Telemetry producers
+  → Worker: validate, authenticate, hash to shard
+  → stream:7:shard:0 | stream:7:shard:1 | stream:7:shard:2  (each: SQLite buffer + flush alarm)
   → alarm flushes batches → R2 batch objects (absorbs the peak)
   → steady, controlled drain → backend systems (never see the spike)
-KV holds per-round config (shard count, layout version).
+KV holds per-stream config (shard count, layout version).
 ```
 
 </Details>
 
-1. The Worker validates the write and routes it to a shard. Use a region per shard for geographic redundancy, or a hash of the writer's ID for even load.
+1. The Worker validates the event and routes it to a shard using a hash of the event ID. Retries of the same event reach the same shard.
 2. The shard appends the write to SQLite and sets an alarm.
 3. The alarm flushes a batch to R2 (or [Queues](/queues/)). The backend drains batches at its own pace.
-4. An independent copy, such as Logpush or a second bucket, allows recovery if a batch is lost.
+4. Choose retention, replay, and recovery requirements before acknowledging events. The buffer alone is not an end-to-end delivery guarantee.
 
-<TypeScriptExample filename="vote-shard.ts">
+The batch size and flush interval below are example settings. Tune both against your latency target and backend capacity.
+
+<TypeScriptExample filename="ingest-shard.ts">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
-const MAX_BATCH = 500;
-const FLUSH_AFTER_MS = 5_000;
+const MAX_BATCH = 100;
+const FLUSH_AFTER_MS = 10_000;
 
-export class VoteShard extends DurableObject<Env> {
+export class IngestShard extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
 		super(ctx, env);
 		ctx.blockConcurrencyWhile(async () => {
 			this.ctx.storage.sql.exec(`
-				CREATE TABLE IF NOT EXISTS votes (
-					voter_id TEXT PRIMARY KEY,
-					choice TEXT NOT NULL,
+				CREATE TABLE IF NOT EXISTS events (
+					event_id TEXT PRIMARY KEY,
+					payload TEXT NOT NULL,
 					received_at INTEGER NOT NULL,
 					flushed INTEGER NOT NULL DEFAULT 0
 				)`);
 		});
 	}
 
-	async record(voterId: string, choice: string): Promise<boolean> {
-		// The primary key makes duplicate votes a no-op
+	async record(eventId: string, payload: string): Promise<boolean> {
+		// The primary key makes duplicate events a no-op
 		const inserted = this.ctx.storage.sql
 			.exec(
-				"INSERT INTO votes (voter_id, choice, received_at) VALUES (?, ?, ?) ON CONFLICT DO NOTHING RETURNING voter_id",
-				voterId,
-				choice,
+				"INSERT INTO events (event_id, payload, received_at) VALUES (?, ?, ?) ON CONFLICT DO NOTHING RETURNING event_id",
+				eventId,
+				payload,
 				Date.now(),
 			)
 			.toArray();
@@ -844,8 +834,8 @@ export class VoteShard extends DurableObject<Env> {
 
 	async alarm() {
 		const batch = this.ctx.storage.sql
-			.exec<{ rowid: number; voter_id: string; choice: string }>(
-				"SELECT rowid, voter_id, choice FROM votes WHERE flushed = 0 ORDER BY rowid LIMIT ?",
+			.exec<{ rowid: number; event_id: string; payload: string }>(
+				"SELECT rowid, event_id, payload FROM events WHERE flushed = 0 ORDER BY rowid LIMIT ?",
 				MAX_BATCH,
 			)
 			.toArray();
@@ -856,7 +846,7 @@ export class VoteShard extends DurableObject<Env> {
 		await this.env.BATCHES.put(key, JSON.stringify(batch));
 
 		this.ctx.storage.sql.exec(
-			"UPDATE votes SET flushed = 1 WHERE flushed = 0 AND rowid <= ?",
+			"UPDATE events SET flushed = 1 WHERE flushed = 0 AND rowid <= ?",
 			batch[batch.length - 1].rowid,
 		);
 		// More waiting? Flush again soon.
@@ -868,50 +858,50 @@ export class VoteShard extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-If the R2 write succeeds but the alarm fails before it marks rows as flushed, the batch is written again on retry. Make the backend idempotent by deduplicating on `voter_id`.
+If the R2 write succeeds but the alarm fails before it marks rows as flushed, the batch is written again on retry. Make the backend idempotent by deduplicating on `event_id`.
 
-**In production:** [BAFTA](https://www.cloudflare.com/case-studies/bafta/) runs its public awards vote on this pattern at "tens of dollars per million votes", with zero compute cost between voting windows.
+**Public case study:** [BAFTA](https://www.cloudflare.com/case-studies/bafta/) describes using Durable Objects for public voting. The telemetry example here does not describe BAFTA's implementation or configuration.
 
-### Pattern: Session per Durable Object {/* pattern-session */}
+### Session per Durable Object (e.g., coding-agent session) {/* pattern-session */}
 
 A long-lived, multiplayer work session, such as a coding-agent session, a document, or a design file, that streams in real time to several clients and integrations at once.
 
-| Decision       | Guidance                                                                                                                               |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Use when       | A unit of work lasts minutes to days, has its own history, and is watched or edited by several clients (web, chat bot, IDE, webhooks). |
-| Not a fit when | Sessions must change shared state together, or you need real-time queries across all sessions (keep a D1 index for that).              |
-| Atom           | One session (and the pull request or artifact it produces)                                                                             |
-| Name           | `session:{sessionId}`; sub-agents get their own `session:{id}`                                                                         |
-| Control plane  | Worker handles OAuth, membership, and webhooks; D1 indexes sessions for listing and statistics                                         |
-| Scale-out path | [Split by responsibility](#scale-split): viewer relay and child run objects                                                            |
+| Decision       | Guidance                                                                                                                             |
+| -------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Use when       | A unit of work lasts minutes to days, has its own history, and is watched or edited by several clients (web, mobile, CLI, webhooks). |
+| Not a fit when | Sessions must change shared state together, or you need real-time queries across all sessions (keep a D1 index for that).            |
+| Atom           | One session and the artifact it produces                                                                                             |
+| Name           | `session:{sessionId}`; sub-agents get their own `session:{id}`                                                                       |
+| Control plane  | Worker handles OAuth, membership, and webhooks; D1 indexes sessions for listing and statistics                                       |
+| Scale-out path | [Split by responsibility](#scale-split): viewer relay and child run objects                                                          |
 
-![Session per Durable Object. Every client and the sandbox meet in one object per session. A Worker plus D1 handles auth, webhooks, and listing.](~/assets/images/durable-objects/architecture-guidance/10-session-per-object.svg)
+![Session per Durable Object. Clients and a job runner exchange events through one object per session. A Worker plus D1 handles auth, webhooks, and listing.](~/assets/images/durable-objects/architecture-guidance/10-session-per-object.svg)
 
 <Details header="Diagram as text">
 
 ```txt
-Web app | Slack bot | browser extension | GitHub webhooks
-  → Worker: GitHub OAuth, membership check, webhook → session lookup
+Web app | mobile app | CLI client | external webhooks
+  → Worker: OAuth, membership check, webhook → session lookup
       ↔ D1: session index and stats (listing never wakes objects)
   → getByName("session:91")
-      holds: SQLite (prompts with authors, events, PR state) + hibernated WebSockets for every client
-      ↔ sandbox VM (runs the agent, streams events in)
-      → GitHub (opens the pull request)
+      holds: SQLite (messages, events, artifact state) + hibernated WebSockets for every client
+      ↔ job runner (executes work, streams events in)
+      → external integration (publishes an artifact)
       ⇢ spawns session:92, session:93 (sub-agents)
       ⇢ lifecycle changes only → D1
 ```
 
 </Details>
 
-- **Every session gets its own object and its own SQLite database**, holding prompts with author attribution, events, and pull request state. A busy session cannot slow down another one.
-- **All clients meet in the session object:** web app, Slack bot, browser extension, and IDE. Multiplayer support comes almost for free. The [Agents SDK](/agents/) wraps the hibernation and streaming plumbing.
-- **The sandbox streams events into the session**, which persists them and fans them out.
+- **Every session gets its own object and its own SQLite database**, holding messages, events, and artifact state. This separates session state and coordination.
+- **All clients meet in the session object:** web app, mobile app, and CLI. They share the session's event stream. The [Agents SDK](/agents/) provides hibernation and streaming support for agent applications.
+- **The job runner streams events into the session**, which persists them and fans them out.
 - **Sub-agents are new session objects.** The parent session stores its children's IDs, which keeps the parent bounded.
 - **The control plane stays in Workers.** A webhook looks up the session in D1, then calls that session's object directly. The code is in [Build and deploy the control plane](#build-control-plane).
 
 For example, a background coding agent can give every session its own Durable Object and SQLite database to isolate session state and coordinate concurrent streams.
 
-### Pattern: Per-user constellation (agent loop per Durable Object) {/* pattern-per-user */}
+### Per-user constellation (e.g., agent loop per Durable Object) {/* pattern-per-user */}
 
 A consumer AI assistant where each user has several independent, stateful things (memory, conversations, scheduled tasks), and every agent run can take minutes and call many tools.
 
@@ -929,20 +919,20 @@ A consumer AI assistant where each user has several independent, stateful things
 <Details header="Diagram as text">
 
 ```txt
-Worker (auth, route by name) → one user's ~6 Durable Objects:
+Worker (auth, route by name) → objects for one user's independent responsibilities:
   user:u1:profile    memory, preferences
   user:u1:inbox      notifications
   user:u1:schedule   alarms, reminders
   conv:c1, conv:c2   history, live sockets (one per conversation)
   run:r1, r2, r3     one agent loop each (checkpoint + alarm)
-conv:* starts runs → run:*; each run streams progress back to its conversation. Idle users cost nothing.
+conv:* starts runs → run:*; each run streams progress back to its conversation. Idle objects can hibernate.
 ```
 
 </Details>
 
-- **Do not build one large "user" object.** Give each user about half a dozen small objects with separate jobs. A long agent run then never blocks chat, notifications, or reminders.
+- **Separate independent responsibilities.** Use separate objects for conversations, notifications, and background runs when they do not need shared atomic updates. Choose boundaries from the work, not a fixed number of objects per user.
 - **Every agent loop is its own object.** It checkpoints after each step, uses alarms to continue (and to resume after an eviction), and reports progress to its conversation. One step per alarm keeps each invocation inside the 15-minute alarm wall-time limit.
-- **Idle users cost nothing.** Their objects hibernate, so tens of millions of objects are fine.
+- **Let idle objects hibernate.** Hibernation avoids duration charges while an object is hibernated; request and storage charges can still apply. Refer to [Pricing](/durable-objects/platform/pricing/).
 
 <TypeScriptExample filename="agent-run.ts">
 
@@ -1001,7 +991,7 @@ export class AgentRun extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-### Pattern: Shared shards placed by load {/* pattern-place-by-load */}
+### Shared shards placed by load (e.g., background jobs) {/* pattern-place-by-load */}
 
 A platform runs millions of small entities (jobs, workflow instances, devices), and each one has a little background work. Pinning each entity to a fixed shard by hash looks even on paper. In practice, a few hot entities land on the same shard while other shards sit idle, and there is no way to move them.
 
@@ -1036,7 +1026,7 @@ RIGHT: Worker + cached placement map (KV)
 <TypeScriptExample filename="index.ts">
 
 ```ts
-const SHARED_SHARDS = 32;
+const SHARED_SHARDS = 16;
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
@@ -1074,9 +1064,9 @@ Each Durable Object has exactly one alarm. A shared shard may host thousands of 
 ```ts
 import { DurableObject } from "cloudflare:workers";
 
-const BATCH = 100;
-const DRAIN_MS = 5_000; // short interval while working through a backlog
-const IDLE_MS = 6 * 60 * 60 * 1000; // long housekeeping interval when idle
+const BATCH = 50;
+const DRAIN_MS = 1_000; // short interval while working through a backlog
+const IDLE_MS = 30 * 60 * 1000; // long housekeeping interval when idle
 
 export class EngineShard extends DurableObject<Env> {
 	constructor(ctx: DurableObjectState, env: Env) {
@@ -1142,41 +1132,41 @@ export class EngineShard extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-## Step 7: Scale a hot atom without changing it {/* step-7-scale */}
+## Step 7: Plan for scalability with a hot Durable Object {/* step-7-scale */}
 
-When one atom gets too hot, the instinct is to pick a smaller unit. That is usually wrong. A smaller unit either multiplies upstream connections (one hub per sub-topic) or concentrates load on hot keys (one shard per nominee). Instead, **keep the atom and add a layer beneath it**. Find the limit you are hitting first:
+When a Durable Object becomes hot, identify which resource or measured capacity its workload approaches. Then choose a scale-out technique that preserves the coordination your application needs. Smaller units can multiply upstream connections (one hub per sub-topic) or concentrate load on hot keys (one shard per event type). Consider adding shards or layers beneath the existing coordination boundary instead:
 
-![Choosing a scale-out technique. Keep the atom, find the limit you are hitting, and add the matching layer beneath it.](~/assets/images/durable-objects/architecture-guidance/13-scale-decision.svg)
+![Choosing a scale-out technique for a hot Durable Object. Identify the limiting resource, then add the matching shards or layers.](~/assets/images/durable-objects/architecture-guidance/13-scale-decision.svg)
 
 <Details header="Diagram as text">
 
 ```txt
-Is one atom over a per-object limit?
+Does one Durable Object approach a platform limit or miss its performance target?
   no  → stop: one object per atom
-  yes → which limit?
+  yes → which resource?
         broadcast or socket count → fan-out tree
         write rate                → hash shards
         storage growth            → time buckets or child objects
         mixed workloads           → split by responsibility
-Never switch to a smaller unit: it multiplies upstream links or concentrates hot keys.
+Before choosing smaller units, consider upstream connections and hot keys.
 ```
 
 </Details>
 
-### Broadcast limit: add a fan-out tree {/* scale-fan-out-tree */}
+### Broadcast capacity: add a fan-out tree {/* scale-fan-out-tree */}
 
-**Trigger:** one hub's broadcast falls behind (send latency grows with subscriber count). **Example:** a championship final draws 50,000 viewers in one region, and odds change several times a second.
+**Trigger:** one hub's broadcast latency exceeds your target at the expected subscriber count. **Example:** a live status feed gains subscribers faster than a regional hub can deliver updates.
 
 ![Fan-out tree. Keep the topic hub as the atom, and add leaf objects beneath it when one topic outgrows a single object.](~/assets/images/durable-objects/architecture-guidance/14-fan-out-tree.svg)
 
 <Details header="Diagram as text">
 
 ```txt
-Origin → topic:final:sam (relay; still exactly one upstream link per region)
-  → topic:final:sam:leaf:0 → capped share of client sockets
-  → topic:final:sam:leaf:1 → capped share of client sockets
-  → topic:final:sam:leaf:2 → capped share of client sockets
-  → topic:final:sam:leaf:3 → capped share of client sockets
+Origin → topic:feed:weur (relay; still exactly one upstream link per region)
+  → topic:feed:weur:leaf:0 → capped share of client sockets
+  → topic:feed:weur:leaf:1 → capped share of client sockets
+  → topic:feed:weur:leaf:2 → capped share of client sockets
+  → topic:feed:weur:leaf:3 → capped share of client sockets
 Add leaves only for topics above a threshold.
 ```
 
@@ -1187,43 +1177,43 @@ Add leaves only for topics above a threshold.
 - Enable leaves only for topics above a threshold. Most topics stay single-hub.
 - **Trade-off:** one extra internal hop per update, plus some routing logic.
 
-<Aside type="caution" title="Anti-pattern: one hub per sub-topic">
+:::caution[Anti-pattern: one hub per sub-topic]
 
-Splitting a match into one hub per betting market multiplies upstream connections and forces clients to hold many subscriptions. Filter per subscriber inside the topic hub instead.
+Splitting a feed into one hub per field multiplies upstream connections and can force clients to hold many subscriptions. Filter per subscriber inside the topic hub instead.
 
-</Aside>
+:::
 
-### Write limit: add hash shards {/* scale-hash-shards */}
+### Write capacity: add hash shards {/* scale-hash-shards */}
 
-**Trigger:** peak writes for one atom exceed what one object sustains with storage writes (about 200–500 per second). **Example:** voting closes live on TV, and a few regional shards cannot absorb the final-minute spike.
+**Trigger:** peak writes for one atom exceed the target rate established by load-testing, or latency and overload errors show insufficient headroom. **Example:** a telemetry stream receives a burst that one ingestion buffer cannot absorb within the latency target.
 
-![Hash-sharded ingest. A stable key spreads load evenly and routes repeat writers to the same shard, so that shard can reject duplicates.](~/assets/images/durable-objects/architecture-guidance/15-hash-shards.svg)
+![Hash-sharded ingest. Hashing event IDs distributes events across shards and routes retries to the same shard for local deduplication.](~/assets/images/durable-objects/architecture-guidance/15-hash-shards.svg)
 
 <Details header="Diagram as text">
 
 ```txt
-voter A        → Worker: shard = hash(voterId) % 64 → shard:13 → accepted
-voter B        → Worker → shard:14 → accepted
-voter A again  → Worker → shard:13 → rejected by UNIQUE (voter_id)
+event A        → Worker: shard = hash(eventId) % shardCount → shard:5 → accepted
+event B        → Worker → shard:6 → accepted
+event A retry  → Worker → shard:5 → duplicate detected by PRIMARY KEY (event_id)
 Same key → same shard, every time: deduplication is a local SQLite constraint.
 ```
 
 </Details>
 
-- Increase the shard count per round (for example, from 3 regional shards to 64) and route by **hash of the voter ID**.
-- The same voter always lands on the same shard, so a `UNIQUE` or `PRIMARY KEY` constraint rejects duplicate votes locally. The integrity check costs almost nothing.
-- Store the shard count in per-round configuration and version it in the name.
-- **Trade-off:** shards are no longer tied to regions, so keep an independent copy for redundancy. You also get more, smaller batches for the backend to merge.
+- Choose the shard count from measured per-shard capacity and peak load, with headroom, and route by **hash of the event ID**. The diagram shows illustrative mappings, not a recommended shard count.
+- The same event ID lands on the same shard within a layout, so a `UNIQUE` or `PRIMARY KEY` constraint detects retries locally.
+- Store the shard count in per-stream configuration and version it in the name. Preserve the original layout when retrying an event across a layout change.
+- **Trade-off:** more shards can mean more, smaller batches for the backend to merge. Retention, replay, and recovery still need an end-to-end design.
 
-<Aside type="caution" title="Anti-pattern: one object per nominee">
+:::caution[Anti-pattern: one object per event type]
 
-It makes live tallies easy, but when one nominee goes viral, every vote for them lands on a single object. That recreates the spike the design exists to absorb.
+Grouping by event type makes per-type counts easy, but a common event type can still send most writes to one object. Hash event IDs when events can be processed independently.
 
-</Aside>
+:::
 
 ### Storage limit: add time buckets {/* scale-time-buckets */}
 
-**Trigger:** one atom's append-only data will exceed the 10 GB per-object limit. **Example:** a tenant's audit log.
+**Trigger:** one atom's append-only data approaches its [storage limit](/durable-objects/platform/limits/) (10 GB per object on Workers Paid). **Example:** a tenant's audit log.
 
 ![Time buckets. Append-only data rolls over to a new object each period, so no single object grows without bound.](~/assets/images/durable-objects/architecture-guidance/16-time-buckets.svg)
 
@@ -1233,7 +1223,7 @@ It makes live tallies easy, but when one nominee goes viral, every vote for them
 Worker: bucket = yyyy-mm → audit:acme:2026-11 (hot, receives all new writes)
 audit:acme:2026-10, audit:acme:2026-09 (cold, read-only, hibernated)
 audit:acme:2026-08 (archived to R2, then deleted)
-Each bucket stays far below the 10 GB per-object limit.
+Monitor bucket size and roll over before reaching the applicable storage limit.
 ```
 
 </Details>
@@ -1242,7 +1232,7 @@ Name buckets by period (`audit:{tenantId}:{yyyy-mm}`). Only the current bucket r
 
 ### Mixed load: split by responsibility {/* scale-split */}
 
-**Trigger:** one object is doing writes, read fan-out, and coordination at once. **Example:** a popular agent session has hundreds of watchers, and the agent spawns dozens of sub-agents.
+**Trigger:** one object is doing writes, read fan-out, and coordination at once. **Example:** an agent session serves read-only viewers while coordinating concurrent background runs.
 
 ![Split by responsibility. The session keeps the writes, a relay serves read-only viewers, and each sub-agent runs in its own object.](~/assets/images/durable-objects/architecture-guidance/17-split-by-responsibility.svg)
 
@@ -1250,7 +1240,7 @@ Name buckets by period (`audit:{tenantId}:{yyyy-mm}`). Only the current bucket r
 
 ```txt
 session:91 (source of truth, accepts all writes)
-  → publish events → session:91:viewers (read-only fan-out) → hundreds of watchers
+  → publish events → session:91:viewers (read-only fan-out) → viewers
   → spawn → run:a | run:b | run:… (one object per sub-agent, each ↔ its own sandbox)
   ⇠ each run reports its result on completion, not per token
 ```
@@ -1261,18 +1251,18 @@ session:91 (source of truth, accepts all writes)
 - A **viewer relay** (`session:{id}:viewers`) serves read-only audiences, using a fan-out tree if needed.
 - Each **sub-agent run** is its own object. It reports back to the session on completion, not on every token.
 
-<Aside type="caution" title="Anti-pattern: one object per tool call">
+:::caution[Anti-pattern: one object per tool call]
 
 Tool calls inside an agent loop need ordered, atomic checkpoints. Keep them inside the run object, or use [Workflows](/workflows/) when you need durable per-step retries.
 
-</Aside>
+:::
 
 ### When not to split further {/* when-not-to-split */}
 
 - The atom is within its limits with headroom. Sharding speculatively adds hops and complexity for no benefit.
 - The split would require a transaction across the new objects.
 - The split adds one upstream connection, or one round trip, per new object.
-- The new key is skewed. One celebrity, nominee, or tenant would still get most of the traffic.
+- The new key is skewed. One event type or tenant would still get most of the traffic.
 
 ## Build and deploy the control plane {/* build-control-plane */}
 
@@ -1294,19 +1284,19 @@ export default {
 
 		// Control plane: create a session. The registry is a D1 table, not a Durable Object.
 		if (request.method === "POST" && url.pathname === "/sessions") {
-			const { repo } = await request.json<{ repo: string }>();
+			const { title } = await request.json<{ title: string }>();
 			const id = crypto.randomUUID();
 			await env.DB.batch([
 				env.DB.prepare(
-					"INSERT INTO sessions (id, repo, status, created_at) VALUES (?, ?, 'active', ?)",
-				).bind(id, repo, Date.now()),
+					"INSERT INTO sessions (id, title, status, created_at) VALUES (?, ?, 'active', ?)",
+				).bind(id, title, Date.now()),
 				env.DB.prepare(
 					"INSERT INTO session_members (session_id, user_id) VALUES (?, ?)",
 				).bind(id, user.id),
 			]);
 			await env.SESSION.getByName(`session:${id}`).init({
 				id,
-				repo,
+				title,
 				createdBy: user.id,
 			});
 			return Response.json({ id }, { status: 201 });
@@ -1315,7 +1305,7 @@ export default {
 		// Control plane: list sessions without waking a single Durable Object
 		if (request.method === "GET" && url.pathname === "/sessions") {
 			const { results } = await env.DB.prepare(
-				`SELECT s.id, s.repo, s.status FROM sessions s
+				`SELECT s.id, s.title, s.status FROM sessions s
 				 JOIN session_members m ON m.session_id = s.id
 				 WHERE m.user_id = ? ORDER BY s.created_at DESC LIMIT 50`,
 			)
@@ -1343,7 +1333,7 @@ export default {
 
 </TypeScriptExample>
 
-The session object reports _lifecycle_ changes back to the index, such as merged, closed, or archived. Every token and message stays in its own SQLite database.
+The session object reports _lifecycle_ changes back to the index, such as completed, closed, or archived. Every token and message stays in its own SQLite database.
 
 <TypeScriptExample filename="session.ts">
 
@@ -1351,22 +1341,22 @@ The session object reports _lifecycle_ changes back to the index, such as merged
 import { DurableObject } from "cloudflare:workers";
 
 export class Session extends DurableObject<Env> {
-	async init(meta: { id: string; repo: string; createdBy: string }) {
+	async init(meta: { id: string; title: string; createdBy: string }) {
 		await this.ctx.storage.put("meta", meta);
 	}
 
-	// Called by the webhook Worker after it looks up PR → session in D1
-	async markMerged(prUrl: string) {
+	// Called by the webhook Worker after it looks up artifact → session in D1
+	async markCompleted(artifactUrl: string) {
 		this.ctx.storage.sql.exec(
-			"INSERT INTO events (type, data, at) VALUES ('merged', ?, ?)",
-			prUrl,
+			"INSERT INTO events (type, data, at) VALUES ('completed', ?, ?)",
+			artifactUrl,
 			Date.now(),
 		);
 		// Lifecycle change only: keep the D1 index current for listing and stats.
 		// Per-token or per-message traffic never goes to D1.
 		const meta = await this.ctx.storage.get<{ id: string }>("meta");
 		await this.env.DB.prepare(
-			"UPDATE sessions SET status = 'merged' WHERE id = ?",
+			"UPDATE sessions SET status = 'completed' WHERE id = ?",
 		)
 			.bind(meta!.id)
 			.run();
@@ -1469,14 +1459,14 @@ export default {
 
 ## Design checklist {/* design-checklist */}
 
-- **Control plane:** no object that every request or every tenant passes through. Authentication, routing, tenant lookup, and configuration live in Workers.
+- **Control plane:** prefer Workers for authentication, routing, tenant lookup, and configuration. Keep any coordinating Durable Objects bounded rather than routing every tenant through one object.
 - **Step 1:** you can name the atom in one sentence, and it is not "everything".
-- **Step 2:** peak requests per second, storage, and connections _per atom_ are within limits, with headroom. Nothing that fans in is a single object.
+- **Step 2:** each atom meets latency and throughput targets under load, with headroom for bursts. Storage stays within per-object limits, and outgoing connections stay within per-request limits.
 - **Step 3:** names are deterministic: `{class}:{atomId}[:{dimension}:{value}]`.
 - **Step 4:** parents are bounded (per tenant or workspace) and off the hot path.
 - **Step 5:** latency-sensitive objects have location hints; backend pools are spread across regions.
 - **Step 6:** you checked the pattern's _Not a fit when_ row.
-- **Step 7:** you know which layer you will add when an atom gets hot.
+- **Step 7:** you know which scale-out technique to use when a Durable Object gets hot.
 - **Build and deploy:** listing, search, and analytics never wake objects; deploying one class family does not reset unrelated objects.
 - Alarms are armed from one code path and back off when idle.
 - Critical state is written to SQLite before you acknowledge a request.
