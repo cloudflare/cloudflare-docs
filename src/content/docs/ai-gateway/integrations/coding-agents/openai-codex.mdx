@@ -81,6 +81,22 @@ Before you start, you need:
 
 </Steps>
 
+## Troubleshooting
+
+### Spend-limit enforcement returns HTTP 403
+
+When using model- or provider-scoped spend limits, Codex requests may return HTTP `403` with the following message:
+
+```
+Model or provider could not be resolved for spend-limit enforcement
+```
+As a temporary workaround, disable request compression in your Codex profile:
+[features]
+enable_request_compression = false
+Alternatively, disable it for a single session:
+codex --profile cloudflare-aig -c features.enable_request_compression=false
+This setting disables compression only for request bodies. Requests continue to route through AI Gateway and remain subject to configured spend limits.
+
 ## Use with Cloudflare Access
 
 If your gateway is protected by [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), Codex can authenticate with a short-lived Access token instead of a Cloudflare API token. Point the provider at your [custom domain](/ai-gateway/configuration/custom-domains/), and configure the provider's `auth` command to fetch the token with [`cloudflared`](/cloudflare-one/access-controls/authenticate-agents/#make-requests-with-cloudflared-access-curl) instead of passing a token through an environment variable.
