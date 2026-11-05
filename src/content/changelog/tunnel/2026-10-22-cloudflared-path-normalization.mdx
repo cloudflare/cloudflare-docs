@@ -7,7 +7,7 @@ products:
 date: 2026-10-22
 ---
 
-Starting 2027-02-08, new `cloudflared` releases will turn on URL normalization by default. This date replaces the original 2027-01-25 timeline. For the updated behavior in version `2026.11.0`, refer to the [URL normalization follow-up](/changelog/post/2026-11-04-cloudflared-matrix-path-parameters/). Test your path-based routing before that date, as this change may affect which ingress rule matches a request. Configurations without rules requiring Access validation are unaffected.
+Starting from version `2026.10.0`, [Cloudflare Tunnel](/tunnel/) can normalize URLs before matching ingress rules. This improves security for tunnels with rules that require Cloudflare Access validation. The URL path sent to your origin stays the same.
 
 In three months, starting 2027-01-25, new `cloudflared` releases will turn on URL normalization by default. Test your path-based routing before that date, as this change may affect which ingress rule matches a request. Configurations without rules requiring Access validation are unaffected.
 
