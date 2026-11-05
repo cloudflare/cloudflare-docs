@@ -28,6 +28,8 @@ Run `wrangler deploy` in a project without a Wrangler configuration file and Wra
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 For more information, refer to [Automatic project configuration](/workers/framework-guides/automatic-configuration/).
+
+To move an existing TanStack Start project from Vercel, refer to [Migrate TanStack Start from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/tanstack-start/).
 :::
 
 <AutoconfigDiagram
@@ -37,11 +39,6 @@ For more information, refer to [Automatic project configuration](/workers/framew
 			label: "main",
 			file: "wrangler.jsonc",
 			value: "@tanstack/react-start/server-entry",
-		},
-		{
-			label: "compatibility_flags",
-			file: "wrangler.jsonc",
-			value: "nodejs_compat",
 		},
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 	]}
@@ -109,7 +106,6 @@ Cloudflare does not support TanStack Start projects that use Rsbuild. If your ap
    	"$schema": "node_modules/wrangler/config-schema.json",
    	"name": "<YOUR_PROJECT_NAME>",
    	"compatibility_date": "$today",
-   	"compatibility_flags": ["nodejs_compat"],
    	"main": "@tanstack/react-start/server-entry",
    	"observability": {
    		"enabled": true,

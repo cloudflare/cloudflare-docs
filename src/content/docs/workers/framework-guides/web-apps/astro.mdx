@@ -37,6 +37,8 @@ import {
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
 
+To move an existing Astro project from Vercel, refer to [Migrate Astro from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/astro/).
+
 ## What is Astro?
 
 [Astro](https://astro.build/) is a JavaScript web framework designed for creating websites that display large amounts of content (such as blogs, documentation sites, or online stores).
@@ -89,7 +91,6 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 	configs={[
 		{ label: "main", file: "wrangler.jsonc", value: "dist/_worker.js/index.js" },
 		{ label: "assets", file: "wrangler.jsonc", value: "directory: ./dist, binding: ASSETS" },
-		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 		{ label: "adapter", file: "astro.config.mjs", value: "@astrojs/cloudflare" },
 	]}
@@ -173,7 +174,6 @@ If your Astro project uses [on demand rendering (also known as SSR)](https://doc
             "upload_source_maps": true,
         	// Update to today's date
         	"compatibility_date": "$today",
-        	"compatibility_flags": ["nodejs_compat"],
         	"assets": {
         		"binding": "ASSETS",
         		"directory": "./dist"
