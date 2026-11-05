@@ -1,0 +1,15 @@
+Set `CLOUDFLARE_API_HEADERS` to a JSON object of HTTP header names and string values. For example, to send `X-Custom-Header: value` with Cloudflare API requests, set this variable in your shell or CI environment:
+
+```sh
+export CLOUDFLARE_API_HEADERS='{"X-Custom-Header":"value"}'
+```
+
+In PowerShell, use:
+
+```powershell
+$env:CLOUDFLARE_API_HEADERS = '{"X-Custom-Header":"value"}'
+```
+
+Then run your Wrangler or `cf` command. These headers apply to Cloudflare API requests. They do not apply to local emulation or OAuth requests.
+
+Configured values override existing request headers, including authentication headers. Header names are case-insensitive. The following headers are protected and cannot be set through this variable: `Host`, `Content-Type`, `Content-Encoding`, `Content-Length`, `Connection`, `Transfer-Encoding`, `Upgrade`, `TE`, and `Trailer`.

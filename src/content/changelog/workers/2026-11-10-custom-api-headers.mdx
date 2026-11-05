@@ -1,0 +1,19 @@
+---
+title: Send custom API headers with Wrangler and Cloudflare CLI
+description: Set CLOUDFLARE_API_HEADERS to send custom HTTP headers with Cloudflare API requests from Wrangler and Cloudflare CLI.
+products:
+  - cf
+date: 2026-11-10
+---
+
+Wrangler 4.160.0 and Cloudflare CLI (`cf`) 1.0.0-beta.29 support custom headers for Cloudflare API requests. Use `CLOUDFLARE_API_HEADERS` to add headers or override most generated values, with the exception of protected body and transport headers.
+
+For example, to send `X-Custom-Header: value`, set:
+
+```sh
+export CLOUDFLARE_API_HEADERS='{"X-Custom-Header":"value"}'
+```
+
+Then run your Wrangler or `cf` command.
+
+For usage and restrictions, refer to the [Wrangler environment variable reference](/workers/wrangler/system-environment-variables/#custom-api-headers) and [Cloudflare CLI environment variable reference](/cf/environment-variables/#custom-api-headers).
