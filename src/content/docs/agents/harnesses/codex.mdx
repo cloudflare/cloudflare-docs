@@ -87,7 +87,9 @@ export class Coder extends DurableObject<Env> {
 		streams: this.streams,
 		sessions: this.sessions,
 		workspace: this.workspace,
-		model: createAI({ binding: this.env.AI, id: "default" })("openai/gpt-6.1-sol"),
+		model: createAI({ binding: this.env.AI, id: "default" })(
+			"openai/gpt-6.1-sol",
+		),
 	});
 
 	lifecycle = Lifecycle.install(this)
@@ -112,10 +114,12 @@ The adapter supports text, reasoning, and function tools. It does not support fi
 
 The example stores files in the Durable Object's SQLite-backed Workspace. It exposes two tools to the model:
 
-| Tool              | Inputs                                    | Behavior                                                                                  |
-| ----------------- | ----------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `workspace_write` | `path`, `content`                         | Write UTF-8 text, replacing the file if it exists.                                        |
-| `workspace_read`  | `path`, optional `offset` and `max_bytes` | Read text by byte range. Use the returned `next_offset` to continue reading a large file. |
+| Tool  | Inputs                                    | Behavior                                                                                  |
+| ----- | ----------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Write | `path`, `content`                         | Write UTF-8 text, replacing the file if it exists.                                        |
+| Read  | `path`, optional `offset` and `max_bytes` | Read text by byte range. Use the returned `next_offset` to continue reading a large file. |
+
+The example registers these tools as `workspace_write` and `workspace_read`.
 
 ## Submit a turn
 
