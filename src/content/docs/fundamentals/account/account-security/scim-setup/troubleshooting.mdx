@@ -10,7 +10,7 @@ products:
 
 ## Restore Super Administrator after group misconfiguration
 
-If you have removed all Super Administrators mistakenly, you can restore access by reapplying a policy with the **Super Administrator - All Privileges** permission group using the Account API token you created for SCIM provisioning.
+If you have removed all Super Administrators mistakenly, you can restore the role to account member(s) using the Account API Token you created for SCIM provisioning.
 
 First, fetch a list of account members and find the member ID for the user you want to restore Super Administrator access to via [list members](/api/resources/accounts/subresources/members/methods/list/).
 
