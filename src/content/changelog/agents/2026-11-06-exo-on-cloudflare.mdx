@@ -6,10 +6,27 @@ products:
 date: 2026-11-06
 ---
 
-You can run [Exo](/agents/harnesses/exo/), an open-source runtime for hosting agents behind an API, on Cloudflare. Define an agent in a Markdown file, choose its harness and model, and configure its tools, sandbox, and credentials.
+You can now run [Exo](/agents/harnesses/exo/) agents on Cloudflare, with Durable Objects coordinating conversations and Cloudflare Sandboxes running Linux tools. Define an agent in Markdown, then use Exo's CLI or HTTP API to run it.
 
-The Exo project's [Cloudflare adapter](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare) runs Rust orchestration as WebAssembly in Workers and SQLite-backed Durable Objects. Linux tools and the Codex harness run in Cloudflare Sandboxes backed by Containers. The Exo project maintains this integration independently of Cloudflare. It does not require the Agents SDK.
+After [deploying the Cloudflare adapter and configuring your Exo provider](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare#authentication-and-cli), add an `openai` vault credential and save this definition as `agent.md`:
 
-Each thread has its own Durable Object, with a persisted turn queue and recovery alarms. Sandbox checkpoints preserve working files, so conversation recovery and sandbox persistence are managed separately.
+```markdown
+---
+harness: basic
+model:
+  name: gpt-6.1-sol
+  credential: openai
+---
 
-Follow the [Exo guide](/agents/harnesses/exo/) for the architecture, recovery boundaries, and links to upstream setup instructions.
+Help the user with their task.
+```
+
+Run the agent against your Cloudflare deployment with Exo's CLI:
+
+```sh
+exo --provider cloudflare agent run --agent-file agent.md
+```
+
+The Exo project maintains the Cloudflare adapter independently of Cloudflare. It does not require the Agents SDK.
+
+Follow the [Exo guide](/agents/harnesses/exo/) for architecture, recovery behavior, and upstream setup instructions.
