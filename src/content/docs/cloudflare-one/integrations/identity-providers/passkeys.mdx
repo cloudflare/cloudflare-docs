@@ -29,7 +29,7 @@ If **Passkeys** is already listed under **Identity providers**, select it to rev
 
 2. Select **Add an identity provider**.
 3. Select **Passkeys**.
-4. (Optional) Turn on **Automatically prompt on the login page** to prompt returning passkey users when they open the login page.
+4. (Optional) Turn on **Automatically prompt on the login page** to open the browser's passkey prompt for returning users when they open the login page.
 5. Select **Save**.
 
 </Steps>
@@ -52,7 +52,7 @@ Send a `POST` request to the [Identity Providers endpoint](/api/resources/zero_t
 	}}
 />
 
-Set `config.login_page_auto_prompt` to `true` to turn on automatic prompts for returning passkey users.
+Set `config.login_page_auto_prompt` to `true` to turn on automatic browser prompts for returning passkey users.
 
 </TabItem>
 </Tabs>
@@ -105,7 +105,7 @@ Before enrolling, users need a compatible browser and passkey authenticator.
 
 After verifying the passkey, Access evaluates your application's policies. You do not need to enter your email address to sign in with a passkey.
 
-If automatic prompts are turned on, Access can start the passkey prompt for returning users. Users can cancel the prompt and choose another allowed login method. Supported browsers can also offer saved passkeys in the email field.
+If automatic browser prompts are turned on, Access can start the passkey prompt for returning users. Users can cancel the prompt and choose another allowed login method. Supported browsers can also offer saved passkeys in the email field.
 
 ## Manage passkeys
 
