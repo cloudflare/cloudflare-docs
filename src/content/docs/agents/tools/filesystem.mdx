@@ -323,7 +323,7 @@ OpenCodeWorkerd.create({
 | `read`      | Default caps  | Limits for `read`, such as `maxBytes`, `maxLines`, and `includeLineNumbers`.        |
 | `write`     | Default caps  | Limits for `write`.                                                                 |
 | `edit`      | Default caps  | Limits for `edit`.                                                                  |
-| `exec`      | Every backend | A map from backend ID to `{ description }`. Pass `{}` to leave out the `exec` tool. |
+| `exec`      | Every backend | Set `exec.backends` to a map from backend ID to `{ description }`. Pass `exec: { backends: {} }` to leave out the `exec` tool. |
 
 To let the model read and search files but not change them, pass `readonly: true`:
 
