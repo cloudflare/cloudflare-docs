@@ -45,6 +45,24 @@ HTTP tests run periodically from devices that have the [Cloudflare One Client](/
 
 Use these metrics together to identify where in the connection a problem occurs. For example, a high DNS response time with a normal server response time points to a DNS resolution issue rather than a problem with the target server.
 
+## User-Agent header
+
+On Windows, macOS and Linux, every HTTP test request, including requests that follow a redirect, carries a `User-Agent` header that identifies it as DEX test traffic:
+
+| System  | `User-Agent` value                  |
+| ------- | ----------------------------------- |
+| Windows | `cloudflare-dex/w-<CLIENT_VERSION>` |
+| macOS   | `cloudflare-dex/m-<CLIENT_VERSION>` |
+| Linux   | `cloudflare-dex/l-<CLIENT_VERSION>` |
+
+`<CLIENT_VERSION>` is the version of the Cloudflare One Client on the device. To find DEX test requests in your application logs, or to write a rule for them, match on the `cloudflare-dex/` prefix rather than a full value, since the version changes with every client update. For example, in a Cloudflare WAF custom rule: `starts_with(http.user_agent, "cloudflare-dex/")`.
+
+You cannot change this header or add other headers to an HTTP test. Clients earlier than MIN_VERSION do not send the `cloudflare-dex` User-Agent, so rules that match on it will not apply to those devices.
+
+:::caution
+Any HTTP client can send this `User-Agent`. Do not use it as the only condition for skipping security rules. Combine it with a condition that cannot be spoofed, such as your organization's Gateway egress IPs.
+:::
+
 ## Export DEX application test logs
 
 <Render
