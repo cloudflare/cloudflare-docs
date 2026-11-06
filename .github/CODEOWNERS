@@ -38,9 +38,9 @@ package.json @cloudflare/content-engineering
 
 # agent-lee
 
-/src/content/docs/agent-lee/ @Brayden @kczajkowski @cloudflare/product-owners
-/src/content/directory/agent-lee.yaml @Brayden @kczajkowski @cloudflare/product-owners
-/src/icons/agent-lee.svg @Brayden @kczajkowski @cloudflare/product-owners
+/src/content/docs/agent-lee/ @Brayden @kale-stew @cloudflare/product-owners
+/src/content/directory/agent-lee.yaml @Brayden @kale-stew @cloudflare/product-owners
+/src/icons/agent-lee.svg @Brayden @kale-stew @cloudflare/product-owners
 
 # agent-memory
 
