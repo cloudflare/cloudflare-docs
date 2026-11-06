@@ -20,10 +20,6 @@ When an action occurs, it is streamed through Cloudflare's audit logging pipelin
 
 For more detailed information about how the user-initiated actions are logged automatically, refer to the [Cloudflare Blog](https://blog.cloudflare.com/introducing-automatic-audit-logs/).
 
-:::note
-A transition plan from Audit Logs v1 to Audit Logs v2 will be communicated in due course.
-:::
-
 ## Key features
 
 Audit Logs (version 2) provide a unified and standardized system for tracking and recording actions across Cloudflare products. This system enhances transparency and accountability by offering comprehensive insights into user-initiated and system-initiated activities within your Cloudflare environment.
@@ -37,14 +33,8 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 ## Retention
 
 - Audit logs are retained for 18 months before being deleted. No additional setup is required.
-
 - In the Audit Logs v2 UI, queries are limited to the most recent 90 days for performance reasons. To access the full 18 months of data, use the API or [Logpush](/logs/logpush/).
-
 - Enterprise customers can use [Logpush](/logs/logpush/) to store audit logs beyond 18 months.
-
-:::note
-Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) are available at GA. These Beta logs will expire on ~April 9, 2026. Logs generated after GA will be retained for the full 18 months. Older logs remain available in Audit Logs v1.
-:::
 
 ## Access Audit Logs
 
@@ -104,10 +94,6 @@ To access audit logs in the Cloudflare dashboard, go to **Manage Account** > **A
 
 <DashButton url="/?to=/:account/audit-log" />
 
-:::note
-The Audit Logs v2 is shown by default. You can switch between Audit Logs v2 and v1 as needed.
-:::
-
 #### View actions
 
 By default, the Audit Logs v2 dashboard excludes `view` actions to reduce noise. This default filter (**Action type** is not `view`) applies to both account-level and organization-level audit logs. To include `view` actions, remove this filter. To show only `view` actions, set **Action type** to `view`.
@@ -134,7 +120,7 @@ Account analytics are available for account-level audit logs. They are not avail
 ### Logpush
 
 :::note
-For customers who already have a Logpush job set up for Audit Logs v1, note that a separate Logpush job must be configured for [Audit Logs v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (dataset). We will communicate the timeline for when Logpush Audit Logs v1 will be deprecated and turned off.
+For customers who already have a Logpush job set up for Audit Logs v1, a separate Logpush job must be configured for [Audit Logs v2](/logs/logpush/logpush-job/datasets/account/audit_logs_v2/) (dataset).
 :::
 
 To create a Logpush job:
@@ -275,7 +261,7 @@ If you are viewing account-level audit logs and the account belongs to an organi
 :::note
 Organization-level audit logs are separate from account-level audit logs. Actions performed within a specific account continue to be available via the account-level Audit Logs UI, Audit Logs v2 API, and Logpush.
 
-This release covers user-initiated actions only. Support for system-initiated actions and Logpush for organizations will be added in future releases.
+Organization-level audit logs currently cover user-initiated actions. System-initiated actions and Logpush are not currently available for organization-level audit logs.
 :::
 
 ## Example how to query Audit Logs
