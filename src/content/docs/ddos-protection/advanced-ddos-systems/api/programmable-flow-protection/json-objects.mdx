@@ -98,3 +98,50 @@ Supported fields:
 If the expression is empty or omitted, the rule applies to all UDP packets within its scope.
 
 For more information on rule settings, refer to [Rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings).
+
+## Parameters
+
+The `params` object contains all of the account's [parameter maps](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/#parameter-maps), keyed by name.
+
+```json
+{
+  "params": {
+    "source_policy": {
+      "id": 0,
+      "type": "map",
+      "key": "ipv4",
+      "value": "u8",
+      "entries": {
+        "192.0.2.1": 1,
+        "198.51.100.7": 2
+      }
+    },
+    "client_tokens": {
+      "id": 1,
+      "type": "map",
+      "key": "ipv6",
+      "value": "u64",
+      "entries": {
+        "2001:db8::1": 42,
+        "2001:db8::2": "18446744073709551615"
+      }
+    }
+  }
+}
+```
+
+| Field | Description |
+| --- | --- |
+| `id` | The ID that programs pass to `param_lookup`. IDs start at `0` and must be contiguous. |
+| `type` | Must be `map`. |
+| `key` | The key type: `ipv4` or `ipv6`. |
+| `value` | The value type: `u8`, `u16`, `u32`, or `u64`. |
+| `entries` | IP addresses and their values. Can be empty. |
+
+All fields are required.
+
+### Entries
+
+Each key must be a single IP address that matches the map's `key` type. Each value must be a non-negative integer that fits the map's `value` type.
+
+For `u64` maps, you can also write values as strings, such as `"18446744073709551615"`. Use strings for values above `9007199254740991`, because many JSON libraries round larger numbers.
