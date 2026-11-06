@@ -8,14 +8,23 @@ sidebar:
   order: 5
 ---
 
-import { Code, CopyPrompt, PackageManagers, Render, Steps } from "~/components";
+import {
+	Code,
+	CopyPromptButton,
+	PackageManagers,
+	Render,
+	Steps,
+} from "~/components";
 import source from "~/../public/web-bot-auth/playwright.mjs?raw";
 
 Sign browser requests through a Playwright [context route](https://playwright.dev/docs/api/class-browsercontext#browser-context-route). The private key stays in the Node.js process.
 
 Requires Node.js 24 or later and Playwright 1.46 or later. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
 
-<CopyPrompt text="Add Web Bot Auth to this project's Playwright browser context using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/playwright/. Block service workers, install the signing route before navigation, configure allowed origins, and test redirects are stopped. Never expose the private key to page scripts or commit it." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Add Web Bot Auth to this project's Playwright browser context using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/playwright/. Block service workers, install the signing route before navigation, configure allowed origins, and test redirects are stopped. Never expose the private key to page scripts or commit it."
+/>
 
 ## Add the signing route
 

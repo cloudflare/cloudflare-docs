@@ -10,7 +10,7 @@ tags:
   - Authentication
 ---
 
-import { CopyPrompt, Render, Steps } from "~/components";
+import { CopyPromptButton, Render, Steps } from "~/components";
 
 Web Bot Auth verifies bot identity using signed HTTP requests. Use it to authenticate [verified bots and agents](/bots/concepts/bot/verified-bots/).
 
@@ -18,7 +18,10 @@ It relies on IETF drafts: a [directory draft](https://datatracker.ietf.org/doc/h
 
 Generate a key, publish its public key, and register your bot. Then add a signing adapter to your HTTP client.
 
-<CopyPrompt text="Follow https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/ to add Web Bot Auth to this project. Choose the HTTP library integration, keep private keys in local secret storage, and test redirects, retries, and key changes. Never print or commit private keys." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Follow https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/ to add Web Bot Auth to this project. Choose the HTTP library integration, keep private keys in local secret storage, and test redirects, retries, and key changes. Never print or commit private keys."
+/>
 
 ## 1. Generate a valid signing key
 

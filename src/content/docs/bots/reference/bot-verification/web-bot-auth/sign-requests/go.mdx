@@ -8,14 +8,17 @@ sidebar:
   order: 4
 ---
 
-import { Code, CopyPrompt, Render, Steps } from "~/components";
+import { Code, CopyPromptButton, Render, Steps } from "~/components";
 import source from "~/../public/web-bot-auth/wba.go?raw";
 
 Wrap your HTTP transport with a signing [`RoundTripper`](https://pkg.go.dev/net/http#RoundTripper). Use it with a reusable `http.Client`.
 
 Requires Go 1.22 or later. The example uses the standard library. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
 
-<CopyPrompt text="Add Web Bot Auth to this project's Go HTTP client using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/go/. Use the signing RoundTripper, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Add Web Bot Auth to this project's Go HTTP client using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/go/. Use the signing RoundTripper, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key."
+/>
 
 ## Add the transport
 

@@ -8,14 +8,23 @@ sidebar:
   order: 1
 ---
 
-import { Code, CopyPrompt, PackageManagers, Render, Steps } from "~/components";
+import {
+	Code,
+	CopyPromptButton,
+	PackageManagers,
+	Render,
+	Steps,
+} from "~/components";
 import source from "~/../public/web-bot-auth/dispatcher.mjs?raw";
 
 Use a [custom dispatcher](https://nodejs.org/api/globals.html#custom-dispatcher) to sign requests from Node.js `fetch` or Undici. Keep one dispatcher for connection pooling.
 
 Requires Node.js 24 or later and Undici 7.x. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
 
-<CopyPrompt text="Integrate Web Bot Auth into this project's Node.js HTTP calls using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/node-fetch/. Use the dispatcher and shared signer, configure allowed origins, and test redirects and retries. Never print or commit the private key." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Integrate Web Bot Auth into this project's Node.js HTTP calls using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/node-fetch/. Use the dispatcher and shared signer, configure allowed origins, and test redirects and retries. Never print or commit the private key."
+/>
 
 ## Add the dispatcher
 
@@ -63,7 +72,7 @@ Pass the same dispatcher to `undici.request`. Consume or discard the response bo
 import { request } from "undici";
 
 const { statusCode, body } = await request("https://example.com/", {
-  dispatcher,
+	dispatcher,
 });
 console.log(statusCode, await body.text());
 ```

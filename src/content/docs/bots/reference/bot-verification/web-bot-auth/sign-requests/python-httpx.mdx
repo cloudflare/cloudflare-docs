@@ -8,14 +8,24 @@ sidebar:
   order: 2
 ---
 
-import { Code, CopyPrompt, Render, Steps, Tabs, TabItem } from "~/components";
+import {
+	Code,
+	CopyPromptButton,
+	Render,
+	Steps,
+	Tabs,
+	TabItem,
+} from "~/components";
 import source from "~/../public/web-bot-auth/httpx_transport.py?raw";
 
 Wrap an [HTTPX transport](https://www.python-httpx.org/advanced/transports/) to sign each outgoing request. Use the synchronous or asynchronous transport with your existing client.
 
 Requires Python 3.10 or later, HTTPX 0.28.x, and `cryptography`. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
 
-<CopyPrompt text="Add Web Bot Auth to this project's HTTPX client using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/python-httpx/. Select the sync or async transport, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Add Web Bot Auth to this project's HTTPX client using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/python-httpx/. Select the sync or async transport, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key."
+/>
 
 ## Add the transport
 

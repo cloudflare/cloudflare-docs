@@ -8,7 +8,14 @@ sidebar:
   order: 1
 ---
 
-import { Code, CopyPrompt, Details, Render, Tabs, TabItem } from "~/components";
+import {
+	Code,
+	CopyPromptButton,
+	Details,
+	Render,
+	Tabs,
+	TabItem,
+} from "~/components";
 import nodeSigner from "~/../public/web-bot-auth/signer.mjs?raw";
 import pythonSigner from "~/../public/web-bot-auth/signer.py?raw";
 
@@ -22,7 +29,10 @@ flowchart LR
   Cloudflare --> Website[Destination website]
 ```
 
-<CopyPrompt text="Read https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/ and its page for this project's HTTP client. Install the example adapter, configure allowed origins, load the Ed25519 private key from secret storage, and test signed requests, redirects, retries, and key changes. Never print or commit private keys." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Read https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/ and its page for this project's HTTP client. Install the example adapter, configure allowed origins, load the Ed25519 private key from secret storage, and test signed requests, redirects, retries, and key changes. Never print or commit private keys."
+/>
 
 ## Choose your HTTP client
 

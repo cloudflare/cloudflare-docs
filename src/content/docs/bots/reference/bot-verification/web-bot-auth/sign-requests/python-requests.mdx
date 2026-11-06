@@ -8,14 +8,17 @@ sidebar:
   order: 3
 ---
 
-import { Code, CopyPrompt, Render, Steps } from "~/components";
+import { Code, CopyPromptButton, Render, Steps } from "~/components";
 import source from "~/../public/web-bot-auth/requests_adapter.py?raw";
 
 Mount a [transport adapter](https://requests.readthedocs.io/en/latest/user/advanced/#transport-adapters) on your Requests session. The adapter signs the prepared URL immediately before sending it.
 
 Requires Python 3.10 or later, Requests 2.x, and `cryptography`. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
 
-<CopyPrompt text="Add Web Bot Auth to this project's Requests session using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/python-requests/. Mount the signing adapter, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key." />
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Add Web Bot Auth to this project's Requests session using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/python-requests/. Mount the signing adapter, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key."
+/>
 
 ## Add the adapter
 
