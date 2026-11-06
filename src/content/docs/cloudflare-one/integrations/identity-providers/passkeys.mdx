@@ -19,13 +19,15 @@ Passkeys use WebAuthn to authenticate users with a device, security key, or pass
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
 
+If **Passkeys** is already listed under **Identity providers**, select it to review its settings. Otherwise, add it:
+
 <Steps>
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
 
    <DashButton url="/?to=/:account/one/integrations/identity-providers" zeroTrust />
 
-2. Under **Your identity providers**, select **Add new identity provider**.
+2. Select **Add an identity provider**.
 3. Select **Passkeys**.
 4. (Optional) Turn on **Automatically prompt on the login page** to prompt returning passkey users when they open the login page.
 5. Select **Save**.
@@ -65,9 +67,10 @@ After adding the provider, allow it in your application's login methods.
 
    <DashButton url="/?to=/:account/access/apps" zeroTrust />
 
-2. Find your application and select **Edit**.
-3. In the application's **Login methods** settings, allow **Passkeys**. Applications configured to accept all available identity providers also accept passkeys.
-4. Save the application.
+2. Find your application, open its menu, and select **Edit**.
+3. Select **Login methods** to find the application's authentication settings.
+4. If **Accept all available identity providers** is turned off, add **Passkeys** under **Choose available identity providers for this application**. Keep any other login methods that users need.
+5. Select **Save**.
 
 </Steps>
 
