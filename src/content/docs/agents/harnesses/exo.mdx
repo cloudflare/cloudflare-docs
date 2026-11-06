@@ -51,6 +51,4 @@ The Codex integration reuses its app-server and thread while warm. Its sandbox i
 
 Follow the [Cloudflare adapter's build and deployment instructions](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare#build-and-deploy). They cover the Rust/WebAssembly build, R2, authentication, vault credentials, sandbox images, and live tests.
 
-The deployment can use a static bearer token or Cloudflare Access with Managed OAuth. Approved callers share the Exo account's agents and vaults. The adapter does not implement per-user authorization.
-
 Exo maintains this integration independently. Use its [source and tests](https://github.com/exoharness/exo/tree/main/exoharness/cloudflare) as the reference for supported tools, transports, and recovery behavior.
