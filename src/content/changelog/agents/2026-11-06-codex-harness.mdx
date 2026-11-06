@@ -8,7 +8,9 @@ date: 2026-11-06
 
 import { TypeScriptExample } from "~/components";
 
-An [experimental example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex) explores running the [Codex agent loop](/agents/harnesses/codex/) in a Durable Object using Agents SDK capabilities. It adapts Codex's Rust turn-processing code to WebAssembly. Conversations, files, and operation events persist across restarts.
+Run the [Codex agent loop](/agents/harnesses/codex/) in a Cloudflare Durable Object with this [experimental Agents SDK example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex). Conversations, files, and completed model and tool results persist across restarts, allowing the agent to recover after interruptions.
+
+The example adapts Codex’s Rust turn-processing code to WebAssembly and uses Agents SDK capabilities for storage and recovery.
 
 The harness combines Agents SDK capabilities for durable execution:
 
