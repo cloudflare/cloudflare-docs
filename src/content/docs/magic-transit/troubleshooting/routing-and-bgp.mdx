@@ -97,7 +97,7 @@ This section covers BGP peering sessions between your network and Cloudflare, es
 <AnchorHeading title="Solution" depth={4} />
 
 1. **Wait for propagation**: Allow up to five minutes for full global propagation. Changes propagate across Cloudflare quickly but external networks update at varying speeds.
-2. **Verify return path routing**: Ensure your network has routes to send return traffic back through Cloudflare for egress configurations. For ingress-only or direct server return configurations, route return traffic through your tunnels.
+2. **Verify return path routing**: Ensure your network has routes to send return traffic back through Cloudflare for egress configurations. For ingress-only configurations (aka Direct Server Return or DSR), route return traffic through your ISPs and ensure they are not using uRPF strict mode.
 3. **Check external visibility**: Use BGP looking glass tools such as [bgp.he.net](https://bgp.he.net) or [RIPE RIS](https://ris.ripe.net/) to confirm your prefix is visible from external networks.
 4. **Verify RPKI configuration**: If you use Resource Public Key Infrastructure (RPKI), confirm your Route Origin Authorization (ROA) records match your prefix and the ASN configuration in Cloudflare.
 
