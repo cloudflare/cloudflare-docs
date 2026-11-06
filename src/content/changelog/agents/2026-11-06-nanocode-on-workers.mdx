@@ -4,50 +4,8 @@ description: Embed a coding agent in your application with Nanocode's Rust/WebAs
 date: 2026-11-06
 ---
 
-import { TypeScriptExample } from "~/components";
+You can now run [Nanocode](https://github.com/gakonst/nanocode) coding agents in [Cloudflare Durable Objects](/durable-objects/), with persistent session history and recovery after interruptions.
 
-You can now run [Nanocode](https://github.com/gakonst/nanocode) coding agents in Cloudflare Durable Objects, with persistent session history and recovery after interruptions.
+Nanocode's Rust engine runs as WebAssembly and implements Codex and Claude Code prompt and tool conventions. Its Cloudflare host saves turn progress and tool results in SQLite and uses alarms to resume pending work. The Nanocode project maintains the host independently of Cloudflare; it does not require the Agents SDK.
 
-Its Rust engine runs as [WebAssembly](/workers/runtime-apis/webassembly/) inside a [Durable Object](/durable-objects/). Nanocode saves turn progress and tool results in SQLite, and uses alarms to resume pending work after an interruption. The Nanocode project maintains its Cloudflare host independently of Cloudflare; it does not require the Agents SDK.
-
-Nanocode implements Codex and Claude Code prompt and tool conventions. The example below selects its `codex` harness implementation with [Workers AI](/workers-ai/) model `glm-5.3`.
-
-After configuring the [reference Worker](https://github.com/gakonst/nanocode-cloudflare-durable) for Workers AI and loading your project files into its workspace, submit a review from your backend:
-
-<TypeScriptExample>
-
-```ts
-export async function reviewCode(origin: string, token: string) {
-	const response = await fetch(new URL("/sessions/auth-review/turns", origin), {
-		method: "POST",
-		headers: {
-			authorization: `Bearer ${token}`,
-			"content-type": "application/json",
-		},
-		body: JSON.stringify({
-			request_id: "auth-review-1",
-			prompt: "Read src/auth.ts, check for login bugs, and write review.md.",
-			provider: "codex",
-			model: "glm-5.3",
-			thinking: "low",
-		}),
-	});
-
-	if (!response.ok) {
-		throw new Error(`Review submission failed: ${response.status}`);
-	}
-	return response.json();
-}
-```
-
-</TypeScriptExample>
-
-Pass your deployment origin and its bearer token. HTTP `202` means the review is pending. Once the turn is stored:
-
-- **Retry the request:** Send the same request ID and input to retrieve the existing turn. Use a new ID for a new review.
-- **Return to the result:** Read `GET /sessions/auth-review/turns/auth-review-1` with the same bearer token.
-- **Reconnect your UI:** Resume the session's event stream from the last processed cursor to replay recorded progress.
-
-Recovery reuses committed tool results. A tool interrupted before recording its result has an unknown outcome, so external side effects still need reconciliation.
-
-Follow [Nanocode on Workers](/agents/harnesses/nanocode/) for deployment, authentication, event streaming, and recovery details.
+Start with the [reference Worker](https://github.com/gakonst/nanocode-cloudflare-durable) and follow [Nanocode on Workers](/agents/harnesses/nanocode/) for setup, models, and recovery limits.
