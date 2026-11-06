@@ -52,6 +52,30 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
+## Browser Integrity Check on Pages
+
+All requests to a Pages project are evaluated by [Browser Integrity Check](/waf/tools/browser-integrity-check/) (BIC) on the Cloudflare-managed `pages.dev` zone. This includes requests to your `*.pages.dev` subdomain and requests made through a [custom domain](/pages/configuration/custom-domains/).
+
+- You cannot turn off this check for a Pages project.
+- Turning off BIC in your own zone, or adding a [custom rule](/waf/custom-rules/skip/) or [configuration rule](/rules/configuration-rules/) that skips or turns off BIC, only affects your zone. It does not affect the check on the `pages.dev` zone.
+- Clients that send some default library `User-Agent` headers (for example, the default Python `urllib` user agent) receive an HTTP `403` response with [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
+
+To allow automated clients to reach your Pages project:
+
+1. **Recommended:** Configure the client to send a descriptive `User-Agent` header that identifies your application. The client does not need to send a browser user agent. For example, in Python:
+
+   ```python
+   import urllib.request
+
+   req = urllib.request.Request(
+       "https://example.com/data.json",
+       headers={"User-Agent": "my-app/1.0 (+https://example.com)"},
+   )
+   urllib.request.urlopen(req)
+   ```
+
+2. If you need full control over Browser Integrity Check, and your domain's nameservers are managed by Cloudflare, serve your site with [Workers static assets](/workers/static-assets/) on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in your zone. Your zone's Browser Integrity Check settings and rules then apply. Refer to [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/).
+
 ## Pages Functions
 
 - [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
