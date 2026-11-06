@@ -284,13 +284,29 @@ Cloudflare now restricts configured [endpoint host headers](/load-balancing/addi
 
 ### Cause
 
-You will receive this error when you attempt to delete a pool that is referenced by a load balancer [geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) region, or by a [pool set](/load-balancing/understand-basics/traffic-steering/pool-sets/).
+You will receive this error when you attempt to delete a pool that is still referenced by a load balancer. References can exist in the following locations:
+
+- **Geo steering region**: the pool is assigned to one or more geographic regions in the load balancer's geo steering configuration.
+- **Pool set**: the pool is a member of a [pool set](/load-balancing/understand-basics/traffic-steering/pool-sets/).
+- **Custom rule override**: the pool is referenced in a custom rule's `overrides.default_pools`, `overrides.pools`, or `overrides.fallback_pool` field. This applies to disabled rules as well as enabled ones.
+- **Random steering weights**: the pool is assigned a weight in `random_steering.pool_weights`.
 
 ### Solution
 
-For a geo steering reference, remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+To identify all references to a pool before attempting deletion, use the pool references endpoint:
 
-For a pool set reference, remove the pool from every pool set that references it, including any `overrides.pool_weights` and `overrides.fallback_pool` entries.
+```txt
+GET /accounts/{account_id}/load_balancers/pools/{pool_id}/references
+```
+
+This returns every load balancer and every field holding a reference to the pool, including references in disabled rules and random steering weights.
+
+Once you have identified the references, clear them as follows:
+
+- **Geo steering region**: remove the pool from the load balancer's geo steering configuration. If your load balancer no longer uses geo steering, you will need to [re-enable geo steering](/load-balancing/understand-basics/traffic-steering/steering-policies/geo-steering/) and then remove the pool.
+- **Pool set**: remove the pool from every pool set that references it.
+- **Custom rule override**: edit the rule (re-enable it temporarily if needed), remove the pool from the override field, and save.
+- **Random steering weights**: remove the pool from the `random_steering.pool_weights` map on the load balancer.
 
 ***
 

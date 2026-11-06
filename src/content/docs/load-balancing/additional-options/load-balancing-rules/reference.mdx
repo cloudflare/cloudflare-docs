@@ -182,6 +182,9 @@ Many of these fields are referenced from the [Rules language documentation](/rul
         Example value:
         <br /><code class="InlineCode">www.example.org</code>
         </p>
+        <p>
+        This field matches the value of the <code>Host</code> header only — it does not include the request path or query string. To match the URI path, use <code>http.request.uri.path</code> instead. If an <code>http.host</code> condition is not matching as expected, verify that the value does not include a port suffix and that the load balancer is in proxied mode — DNS-only load balancers support a reduced set of expression fields.
+        </p>
       </td>
     </tr>
     <tr id="field-http-referer">
