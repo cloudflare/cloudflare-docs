@@ -120,6 +120,44 @@ jobs:
       - name: Check component docs reference
         run: pnpm exec tsx bin/check-component-docs.ts
 
+      # Edits to published changelog posts only reach RSS subscribers through a
+      # frontmatter `updates` entry. WAF rule or action changes without one
+      # fail; other content edits get a reminder comment and don't fail.
+      - name: Check changelog updates entries
+        if: github.event_name == 'pull_request'
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          git fetch --no-tags --depth=1 origin "$BASE_SHA"
+          pnpm exec tsx bin/check-changelog-updates.ts "$BASE_SHA" --comment "$RUNNER_TEMP/changelog-updates.md"
+
+      - name: Comment on changelog updates
+        if: always() && github.event_name == 'pull_request'
+        # The token is read-only for PRs from forks, where the step's warnings
+        # and errors are still shown.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          body_file="$RUNNER_TEMP/changelog-updates.md"
+          # Missing when an earlier step failed before the check ran.
+          [ -f "$body_file" ] || exit 0
+
+          existing_id=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" --paginate \
+            --jq '.[] | select(.user.login == "github-actions[bot]") | select(.body | contains("<!-- changelog-updates-check -->")) | .id' | head -n1)
+
+          if [ -s "$body_file" ]; then
+            if [ -n "$existing_id" ]; then
+              gh api -X PATCH "repos/$REPO/issues/comments/$existing_id" -F body=@"$body_file" > /dev/null
+            else
+              gh api -X POST "repos/$REPO/issues/$PR_NUMBER/comments" -F body=@"$body_file" > /dev/null
+            fi
+          elif [ -n "$existing_id" ]; then
+            gh api -X DELETE "repos/$REPO/issues/comments/$existing_id"
+          fi
+
       - name: Tests
         run: pnpm run test:prebuild
 

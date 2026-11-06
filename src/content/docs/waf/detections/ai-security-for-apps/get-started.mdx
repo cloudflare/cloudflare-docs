@@ -107,7 +107,13 @@ Add the `cf-llm` label to the endpoint you added:
 
 Once you add a label to the endpoint, Cloudflare will start labeling incoming traffic for the endpoint with the label you selected.
 
-## 4. (Optional) Generate API traffic
+## 4. (Optional) Configure custom prompt extraction
+
+AI Security for Apps extracts prompts from common JSON request structures. If your application stores prompts in another supported request field or location, configure field extraction before generating test traffic.
+
+Field extraction lets you define expressions that return prompt values from supported request fields or locations. For instructions, refer to [Configure field extraction](/security/web-assets/field-extraction/).
+
+## 5. (Optional) Generate API traffic
 
 You may need to issue some `POST` requests to the endpoint so that there is some labeled traffic to review in the following step.
 
@@ -121,7 +127,7 @@ curl "https://<YOUR_HOSTNAME>/v1/messages" \
 
 The PII category for this request would be `EMAIL_ADDRESS`.
 
-## 5. Review labeled traffic and detection behavior
+## 6. Review labeled traffic and detection behavior
 
 Use [Security Analytics](/waf/analytics/security-analytics/) to validate that Cloudflare is correctly labeling traffic for the endpoint.
 
@@ -152,7 +158,7 @@ Use [Security Analytics](/waf/analytics/security-analytics/) to validate that Cl
 
 Alternatively, you can also create a custom rule with a _Log_ action (only available on Enterprise plans) to check for potentially harmful traffic related to LLM prompts. This rule will generate [security events](/waf/analytics/security-events/) that will allow you to validate your AI Security for Apps configuration.
 
-## 6. Mitigate harmful requests
+## 7. Mitigate harmful requests
 
 [Create a custom rule](/waf/custom-rules/create-dashboard/) that blocks requests where Cloudflare detected personally identifiable information (PII) in the incoming request (as part of an LLM prompt), returning a custom JSON body:
 

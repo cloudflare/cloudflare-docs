@@ -114,6 +114,7 @@ class Default(WorkerEntrypoint):
 - `put` <Type text="(key: string, value: ReadableStream | ArrayBuffer | ArrayBufferView | string | null | Blob, options?: R2PutOptions): Promise<R2Object | null>" />
 
   - Stores the given <code>value</code> and metadata under the associated <code>key</code>. Once the write succeeds, returns an `R2Object` containing metadata about the stored Object.
+  - If `value` is a `ReadableStream`, its length must be known: for example, a request body with a `Content-Length` header, or the readable half of a [`FixedLengthStream`](/workers/runtime-apis/streams/transformstream/#fixedlengthstream). Otherwise, `put()` throws `TypeError: Provided readable stream must have a known length (request/response body or readable half of FixedLengthStream)`. This includes a request body sent without `Content-Length` (chunked) and the readable side of a `TransformStream`. To store such a stream, buffer it first, for example with `await request.arrayBuffer()`, or pipe it through a `FixedLengthStream` if you know its length.
   - In the event that a precondition specified in <code>options</code> fails, <code>put()</code> returns `null`, and the object will not be stored.
   - R2 writes are strongly consistent. Once the Promise resolves, all subsequent read operations will see this key value pair globally.
 
@@ -254,6 +255,7 @@ A multipart upload can be completed or aborted at any time, either through the S
 - `uploadPart` <Type text="(partNumber: number, value: ReadableStream | ArrayBuffer | ArrayBufferView | string | Blob, options?: R2MultipartOptions): Promise<R2UploadedPart>" />
 
   - Uploads a single part with the specified part number to this multipart upload. Each part must be uniform in size with an exception for the final part which can be smaller.
+  - If `value` is a `ReadableStream`, its length must be known, as for `put()`. Otherwise, `uploadPart()` throws the same `TypeError`.
   - Returns an `R2UploadedPart` object containing the `etag` and `partNumber`. These `R2UploadedPart` objects are required when completing the multipart upload.
 
 - `abort` <Type text="(): Promise<void>" />

@@ -56,7 +56,7 @@ The following limits apply per account:
 | Image size                      | Same as [instance disk space](#instance-types) |
 | Total image storage per account | 50 GB [^1]                                     |
 
-[^1]: Delete container images with `wrangler containers delete` to free up space. If you delete a container image and then [roll back](/workers/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
+[^1]: Delete a tagged container image with [`wrangler containers images delete IMAGE:TAG`](/workers/wrangler/commands/containers/#containers-images-delete) to free up space. If you delete a container image and then [roll back](/workers/versions-and-deployments/rollbacks/) your Worker to a previous version, this version may no longer work.
 
 ## Outbound HTTP request body size
 

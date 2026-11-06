@@ -10,7 +10,7 @@ tags:
   - Private networks
 ---
 
-import { Render, TabItem, Tabs, APIRequest } from "~/components";
+import { DashButton, Render, TabItem, Tabs, APIRequest } from "~/components";
 
 Consider the following steps to learn how to configure Private Network Load Balancing solution, using [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) as the off-ramp to securely connect to your private or internal services.
 
@@ -25,8 +25,11 @@ The specific configuration steps can vary depending on your infrastructure and s
 
 To create a virtual network:
 
-1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Settings** > **WARP Client** and find the **Virtual networks** setting.
-2. Select **Add new** or **Manage** > **Create virtual network** to create virtual networks.
+1. In the Cloudflare dashboard, go to **Networking** > **Routes** > **Virtual networks**.
+
+   <DashButton url="/?to=/:account/magic-networks/routes/virtual-networks" />
+
+2. Select **Create virtual network**.
 3. Define your virtual network name and select **Save**.
 
 To assign the virtual network to the tunnel:

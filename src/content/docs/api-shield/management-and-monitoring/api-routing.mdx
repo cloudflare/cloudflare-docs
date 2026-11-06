@@ -6,9 +6,18 @@ products:
 title: API Routing
 sidebar:
   order: 4
+  badge:
+    variant: caution
+    text: Legacy
 ---
 
 import { Steps, DashButton } from "~/components";
+
+:::note[Legacy feature]
+
+API Routing is a legacy feature and is not available to new customers. Customers with existing access can continue to use the feature. Cloudflare will provide advance notice before deprecating API Routing.
+
+:::
 
 API Shield Routing allows you to expose a single external API that routes requests to different back-end services, even when those services use different paths or hostnames than your zone.
 
@@ -62,7 +71,7 @@ If API Shield returns unexpected results, check your Source Endpoint host, metho
 
 ## Availability
 
-API Shield Routing is currently in an open beta and is only available for Enterprise customers subscribed to API Shield. Enterprise customers who have not purchased API Shield can preview [API Shield as a non-contract service](https://dash.cloudflare.com/?to=/:account/:zone/security/api-shield) in the Cloudflare dashboard or by contacting your account team.
+API Shield Routing is only available to customers with existing access.
 
 ## Limitations
 

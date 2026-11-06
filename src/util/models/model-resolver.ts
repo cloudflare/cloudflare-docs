@@ -179,9 +179,13 @@ export function legacyToResolved(entry: LegacyEntry): ModelView {
 	const properties: Record<string, unknown> = {};
 	const propertiesList: { property_id: string; value: unknown }[] = [];
 	for (const p of d.properties ?? []) {
+		if (p.property_id === "zdr") continue;
 		properties[p.property_id] = p.value;
 		propertiesList.push({ property_id: p.property_id, value: p.value });
 	}
+	// All hosted Workers AI models support zero data retention.
+	properties.zdr = "true";
+	propertiesList.push({ property_id: "zdr", value: "true" });
 
 	const schema = (d.schema ?? {}) as { input?: unknown; output?: unknown };
 

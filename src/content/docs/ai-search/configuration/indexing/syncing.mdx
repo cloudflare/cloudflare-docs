@@ -12,15 +12,15 @@ AI Search automatically indexes your content for search. How indexing works depe
 
 ## External data sources
 
-For instances connected to a [website](/ai-search/configuration/data-source/website/) or [R2 bucket](/ai-search/configuration/data-source/r2/), AI Search creates jobs to sync your data source. Jobs run automatically on a schedule, every 6 hours by default, and process new, modified, or deleted files to keep your search index up to date.
+For instances connected to a [website](/ai-search/configuration/data-source/website/) or [R2 bucket](/ai-search/configuration/data-source/r2/), AI Search creates jobs to sync your data source. Jobs run automatically on a schedule, every 24 hours by default, and process new, modified, or deleted files to keep your search index up to date.
 
 You can view job status and history in the **Jobs** tab in the dashboard or using the [Instances API](/ai-search/api/instances/rest-api/).
 
 ### Sync interval
 
-By default, AI Search runs a sync job every 6 hours. To change how often scheduled syncs run, use the **Sync interval** setting in the dashboard, or set the `sync_interval` field when you [create](/ai-search/api/instances/workers-binding/#create) or [update](/ai-search/api/instances/workers-binding/#update) an instance through the Workers binding or [REST API](/ai-search/api/instances/rest-api/).
+By default, AI Search runs a sync job every 24 hours. To change how often scheduled syncs run, use the **Sync interval** setting in the dashboard, or set the `sync_interval` field when you [create](/ai-search/api/instances/workers-binding/#create) or [update](/ai-search/api/instances/workers-binding/#update) an instance through the Workers binding or [REST API](/ai-search/api/instances/rest-api/).
 
-The interval can be 15 minutes, 30 minutes, 1 hour, 2 hours, 4 hours, 6 hours, 12 hours, or 24 hours. In the API, `sync_interval` is specified in seconds. The allowed values are `900`, `1800`, `3600`, `7200`, `14400`, `21600` (the default), `43200`, and `86400`.
+The interval can be 15 minutes, 30 minutes, 1 hour, 2 hours, 4 hours, 6 hours, 12 hours, or 24 hours. In the API, `sync_interval` is specified in seconds. The allowed values are `900`, `1800`, `3600`, `7200`, `14400`, `21600`, `43200`, and `86400` (the default).
 
 ### Trigger syncs from automated pipelines
 

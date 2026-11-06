@@ -1,0 +1,76 @@
+---
+reviewed: 2026-11-02
+pcx_content_type: how-to
+title: Migrate a static site or SPA from Vercel to Cloudflare Workers
+description: Move a static site or single-page application from Vercel to Cloudflare Workers with a Wrangler configuration file that points to your build output.
+sidebar:
+  label: Static site or SPA
+  order: 7
+products:
+  - workers
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+This guide moves a static site or single-page application (SPA) from Vercel to Cloudflare Workers. Use it if your project does not render pages on the server. [Workers Static Assets](/workers/static-assets/) serves your build output, so you do not need a framework adapter.
+
+## Before you begin
+
+Review the steps in [Before you begin](/workers/static-assets/migration-guides/vercel-to-workers/#before-you-begin) that apply to every framework.
+
+## Migrate your site
+
+<Steps>
+
+1. In the Vercel dashboard, go to your project's **Settings** > **Build & Development settings**. Note the **Build Command** and **Output Directory** values.
+
+   ![Finding the Build Command and Output Directory fields](~/assets/images/workers/migrations/vercel-deploy-1.png)
+
+2. In the root of your project, create a Wrangler configuration file. Replace `<your-project-name>` with your project name, and `<your-build-directory>` with the output directory, for example `./dist`.
+
+   For a static site:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"name": "<your-project-name>",
+   	"compatibility_date": "$today",
+   	"assets": {
+   		"directory": "<your-build-directory>",
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+   For a single-page application, add `not_found_handling`:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"name": "<your-project-name>",
+   	"compatibility_date": "$today",
+   	"assets": {
+   		"directory": "<your-build-directory>",
+   		"not_found_handling": "single-page-application",
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+3. Build your project, then deploy it:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+4. To deploy on every push, [connect your repository to Workers Builds](/workers/ci-cd/builds/#connect-a-new-worker). Use the same build command as on Vercel, and use `npx wrangler deploy` as the deploy command.
+
+</Steps>
+
+## Related resources
+
+- [Static Assets](/workers/static-assets/)
+- [Single-page application routing](/workers/static-assets/routing/single-page-application/)
+- [Migrate from Vercel to Workers](/workers/static-assets/migration-guides/vercel-to-workers/)
