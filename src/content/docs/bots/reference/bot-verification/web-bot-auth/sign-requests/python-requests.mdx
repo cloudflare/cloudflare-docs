@@ -1,0 +1,76 @@
+---
+title: Python Requests
+description: Add Web Bot Auth signing to Python Requests with a session adapter that signs prepared requests and redirect hops.
+pcx_content_type: integration-guide
+products:
+  - bots
+sidebar:
+  order: 3
+---
+
+import { Code, CopyPrompt, Render, Steps } from "~/components";
+import source from "~/../public/web-bot-auth/requests_adapter.py?raw";
+
+Mount a [transport adapter](https://requests.readthedocs.io/en/latest/user/advanced/#transport-adapters) on your Requests session. The adapter signs the prepared URL immediately before sending it.
+
+Requires Python 3.10 or later, Requests 2.x, and `cryptography`. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
+
+<CopyPrompt text="Add Web Bot Auth to this project's Requests session using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/python-requests/. Mount the signing adapter, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key." />
+
+## Add the adapter
+
+<Steps>
+1. Install the dependencies in your Python environment.
+
+   ```sh
+   python -m pip install 'requests>=2.32,<3' cryptography
+   ```
+
+2. Save [requests_adapter.py](/web-bot-auth/requests_adapter.py) and the shared [signer.py](/web-bot-auth/signer.py) in your project.
+
+3. Mount the adapter for both schemes. This also clears inherited signature headers if a redirect changes to HTTP.
+
+   ```python title="fetch.py"
+   from pathlib import Path
+   import requests
+   from signer import Signer
+   from requests_adapter import WebBotAuthAdapter
+
+   signer = Signer(
+       Path("private-key.pem").read_bytes(),
+       "https://bot.example.com",
+       ["https://example.com", "https://crawltest.com"],
+   )
+
+   with requests.Session() as session:
+       adapter = WebBotAuthAdapter(signer)
+       session.mount("https://", adapter)
+       session.mount("http://", adapter)
+       response = session.get(
+           "https://crawltest.com/cdn-cgi/web-bot-auth",
+           timeout=30,
+       )
+       print(response.status_code, response.text)
+   ```
+
+   Replace the signature-agent origin with your own.
+
+4. Run `python fetch.py` and [check the response](#verify-the-request).
+</Steps>
+
+## Adapter source
+
+<Code code={source} lang="python" meta='title="requests_adapter.py"' />
+
+## Redirects and retries
+
+- Requests follows redirects through the session adapter. Each hop gets a new signature for its prepared URL and method.
+- Requests outside the allowed origins continue unsigned. Existing signature headers are removed.
+- Retry with another `session.get`, `session.post`, or `session.send` call. Recreate consumed bodies before retrying.
+- The adapter disables urllib3 retries because they run beneath the signing hook. Do not set `adapter.max_retries` after creating it.
+- Use this session for all signed calls. A standalone `requests.get` call does not use its adapter.
+- More specific session mounts can bypass the adapter. Mount a signing adapter on those prefixes too.
+
+## Verify the request
+
+<Render file="web-bot-auth-verify" product="bots" />

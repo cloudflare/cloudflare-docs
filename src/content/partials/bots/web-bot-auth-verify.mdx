@@ -1,0 +1,11 @@
+Send a signed request to `https://crawltest.com/cdn-cgi/web-bot-auth`. Add `https://crawltest.com` to your allowed origins first.
+
+| Status | Meaning | Next step |
+| --- | --- | --- |
+| `200` | Cloudflare recognizes the key and verifies the signature. | Test your destination URL. |
+| `400` | Cloudflare cannot process the signed request. | Check the three signature headers and covered components. |
+| `401` | The key is unknown, or signature verification failed. | Check registration, `keyid`, clock, and the exact outgoing URL. |
+
+A `401` does not prove your signature is correct. A local signature test checks the code; a `200` checks your registered identity.
+
+Web Bot Auth proves identity. Website owners still control access to their sites.

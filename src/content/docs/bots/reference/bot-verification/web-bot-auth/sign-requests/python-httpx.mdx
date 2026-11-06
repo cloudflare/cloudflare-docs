@@ -1,0 +1,92 @@
+---
+title: Python HTTPX
+description: Sign synchronous and asynchronous Python HTTPX requests with Web Bot Auth transport wrappers and per-hop signatures.
+pcx_content_type: integration-guide
+products:
+  - bots
+sidebar:
+  order: 2
+---
+
+import { Code, CopyPrompt, Render, Steps, Tabs, TabItem } from "~/components";
+import source from "~/../public/web-bot-auth/httpx_transport.py?raw";
+
+Wrap an [HTTPX transport](https://www.python-httpx.org/advanced/transports/) to sign each outgoing request. Use the synchronous or asynchronous transport with your existing client.
+
+Requires Python 3.10 or later, HTTPX 0.28.x, and `cryptography`. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
+
+<CopyPrompt text="Add Web Bot Auth to this project's HTTPX client using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/python-httpx/. Select the sync or async transport, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key." />
+
+## Add the transport
+
+<Steps>
+1. Install the dependencies in your Python environment.
+
+   ```sh
+   python -m pip install 'httpx>=0.28,<0.29' cryptography
+   ```
+
+2. Save [httpx_transport.py](/web-bot-auth/httpx_transport.py) and the shared [signer.py](/web-bot-auth/signer.py) in your project.
+
+3. Configure the signer. Replace the signature-agent origin with your own.
+
+   ```python title="fetch.py"
+   from pathlib import Path
+   import httpx
+   from signer import Signer
+   from httpx_transport import WebBotAuthTransport, AsyncWebBotAuthTransport
+
+   signer = Signer(
+       Path("private-key.pem").read_bytes(),
+       "https://bot.example.com",
+       ["https://example.com", "https://crawltest.com"],
+   )
+   ```
+
+4. Add a client to `fetch.py`, then run `python fetch.py`.
+
+   <Tabs>
+   <TabItem label="Synchronous">
+
+   ```python
+   transport = WebBotAuthTransport(signer)
+   with httpx.Client(transport=transport, follow_redirects=True) as client:
+       response = client.get("https://crawltest.com/cdn-cgi/web-bot-auth")
+       print(response.status_code, response.text)
+   ```
+
+   </TabItem>
+   <TabItem label="Asynchronous">
+
+   ```python
+   import asyncio
+
+   async def main():
+       transport = AsyncWebBotAuthTransport(signer)
+       async with httpx.AsyncClient(transport=transport, follow_redirects=True) as client:
+           response = await client.get("https://crawltest.com/cdn-cgi/web-bot-auth")
+           print(response.status_code, response.text)
+
+   asyncio.run(main())
+   ```
+
+   </TabItem>
+   </Tabs>
+</Steps>
+
+## Transport source
+
+<Code code={source} lang="python" meta='title="httpx_transport.py"' />
+
+## Redirects, retries, and proxies
+
+- Each redirect passes through the transport and gets a fresh signature. HTTPX follows redirects only when `follow_redirects=True`.
+- Requests outside the allowed origins continue unsigned.
+- Retry at the client call, so the signing transport runs again. The default wrapped transports use `retries=0`.
+- If you supply your own transport, keep its retries disabled. Set TLS and proxy options on that transport before wrapping it.
+- A client-level proxy or `mounts` entry can select a different transport. Wrap every selected transport; do not route around the signer.
+- Closing the client also closes its wrapped transport.
+
+## Verify the request
+
+<Render file="web-bot-auth-verify" product="bots" />
