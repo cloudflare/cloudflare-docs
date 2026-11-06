@@ -205,7 +205,7 @@ To get the name of a database, run `npx cf d1 get <database_id>` or `npx wrangle
 
 4. Find the index that fixes the query. To find the correct fix for each query pattern, refer to [Indexes and your bill](/d1/best-practices/use-indexes/#indexes-and-your-bill). For the example query, add an index on the `OrderId` column of the `OrderDetail` table.
 
-5. Create a [migration](/d1/reference/migrations/) for the index:
+5. If you use [D1 migrations](/d1/reference/migrations/) to manage your database schema, add the index with a migration. First, create a migration for the index:
 
    <Tabs syncKey="d1Insights">
    <TabItem label="Cloudflare CLI">
@@ -232,14 +232,14 @@ To get the name of a database, run `npx cf d1 get <database_id>` or `npx wrangle
 
    The command creates a file in the `migrations` directory. The number at the start of the file name depends on the migrations that you already have.
 
-6. Add the `CREATE INDEX` statement to the new migration file:
+   Add the `CREATE INDEX` statement to the new migration file:
 
    ```sql title="migrations/0001_add_orderdetail_orderid_index.sql"
    -- Migration number: 0001 	 2026-10-29T15:42:06.092Z
    CREATE INDEX IF NOT EXISTS idx_orderdetail_orderid ON OrderDetail (OrderId);
    ```
 
-7. Apply the migration to your remote database:
+   Apply the migration to your remote database:
 
    <Tabs syncKey="d1Insights">
    <TabItem label="Cloudflare CLI">
@@ -266,7 +266,7 @@ To get the name of a database, run `npx cf d1 get <database_id>` or `npx wrangle
    </TabItem>
    </Tabs>
 
-8. Make sure that D1 uses the new index. Put `EXPLAIN QUERY PLAN` in front of the query and run it:
+6. Make sure that D1 uses the new index. Put `EXPLAIN QUERY PLAN` in front of the query and run it:
 
    <Tabs syncKey="d1Insights">
    <TabItem label="Cloudflare CLI">
@@ -287,7 +287,7 @@ To get the name of a database, run `npx cf d1 get <database_id>` or `npx wrangle
 
    The line for the table that you added the index to should show `SEARCH ... USING INDEX`, not `SCAN`. For the example query, `SCAN OrderDetail` changes to `SEARCH OrderDetail USING INDEX idx_orderdetail_orderid (OrderId=?)`. For more information, refer to [Test an index](/d1/best-practices/use-indexes/#test-an-index).
 
-9. Make sure that the number of rows read decreases. Run the command from step 2 again with a shorter time period, such as `INTERVAL '1' HOUR` or `--time-period=1h`.
+7. Make sure that the number of rows read decreases. Run the command from step 2 again with a shorter time period, such as `INTERVAL '1' HOUR` or `--time-period=1h`.
 
    The results include all the queries in the time period. Queries that ran before you added the index increase the totals of a long time period.
 </Steps>
