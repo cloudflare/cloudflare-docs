@@ -52,7 +52,7 @@ Workflows cannot be deployed to Workers for Platforms namespaces, as Workflows d
 
 [^6]: Workflows will return a HTTP 429 rate limited error if you exceed the rate of new Workflow instance creation.
 
-[^7]: Only instances with a `running` state count towards the concurrency limits. Instances in the `waiting` state are excluded from these limits. Workers Paid cron-triggered Workflow instances have a separate one-hour cron concurrency budget per firing.
+[^7]: Instances in the `waiting` or `paused` state do not count towards the concurrency limits. Workers Paid cron-triggered Workflow instances have a separate one-hour cron concurrency budget per firing.
 
 [^8]: Each instance created or restarted counts towards this limit
 
@@ -68,7 +68,7 @@ In JavaScript Workflows, if you need to persist large binary output from a step,
 
 ### `waiting` instances do not count towards instance concurrency limits
 
-Instances that are in a `waiting` state — either sleeping via `step.sleep`, waiting for a retry, or waiting for an event via `step.waitForEvent` — do **not** count towards concurrency limits. This means you can have millions of Workflow instances sleeping or waiting for events simultaneously, as only actively `running` instances count toward your account's concurrent instance limit, and toward any [concurrency limit](/workflows/build/concurrency-limits/) set on the Workflow.
+Instances that are in a `waiting` state — either sleeping via `step.sleep`, waiting for a retry, or waiting for an event via `step.waitForEvent` — do **not** count towards concurrency limits. This means you can have millions of Workflow instances sleeping or waiting for events simultaneously, as instances in the `waiting` state do not count toward your account's concurrent instance limit, or toward any [concurrency limit](/workflows/build/concurrency-limits/) set on the Workflow.
 However, if your account or the Workflow is already at its concurrency limit, an instance that has been in a `waiting` state will be queued instead of resuming immediately.
 When an instance transitions from `running` to `waiting`, other `queued` instances will be scheduled (usually the oldest queued instance, on a best-effort basis). This state transition may not occur if the wait duration is very short.
 
