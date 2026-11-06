@@ -15,6 +15,7 @@ import type {
 	ModelBanner,
 	ModelCardData,
 	ModelExample,
+	ModelProvider,
 	ModelView,
 } from "./model-types";
 import { getModelAuthor } from "./model-helpers";
@@ -69,6 +70,7 @@ function buildView(args: {
 	modelId?: string;
 	requestFormats?: string[] | null;
 	pricing?: Record<string, unknown>;
+	modelProviders?: ModelProvider[] | null;
 	examples?: ModelExample[];
 	banner?: ModelBanner | null;
 	digest?: number | string;
@@ -100,6 +102,7 @@ function buildView(args: {
 		modelId: args.modelId,
 		requestFormats: args.requestFormats ?? null,
 		pricing: args.pricing,
+		modelProviders: args.modelProviders ?? null,
 		examples: args.examples,
 		banner: args.banner ?? null,
 		schema: args.schema,
@@ -166,6 +169,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 		modelId: model.model_id,
 		requestFormats: (model.request_formats as string[] | undefined) ?? null,
 		pricing: model.pricing,
+		modelProviders: (model.model_providers as ModelProvider[] | null | undefined) ?? null,
 		examples: (model.examples as ModelExample[] | undefined) ?? [],
 		banner: (model.banner as ModelBanner | null | undefined) ?? null,
 		digest: entry.digest,

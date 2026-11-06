@@ -45,6 +45,8 @@ const isPinned = pinnedIndex >= 0;
 // Author logo; initial-letter tile when the author id is unmapped.
 const authorLogo = authorData[model.author]?.logo;
 const pricing = formatModelPricing(model.pricing);
+// Format all providers serving this model
+const providers = (model.modelProviders ?? []).map(p => p.provider).join(", ");
 ---
 
 <div
@@ -69,6 +71,7 @@ const pricing = formatModelPricing(model.pricing);
 	data-model-context={model.properties.context_window ?? ""}
 	data-model-output={model.properties.max_output_tokens ?? ""}
 	data-model-pricing={pricing.join("\n")}
+	data-model-providers={providers}
 	data-model-capabilities={model.capabilities.join(", ")}
 	data-model-tags={model.tags.join(", ")}
 	data-model-zdr={model.properties.zdr === "true" ? "Yes" : "No"}
@@ -137,6 +140,12 @@ const pricing = formatModelPricing(model.pricing);
 		<p class="text-muted-foreground line-clamp-4 h-24 min-w-0 shrink-0 text-sm leading-relaxed [overflow-wrap:anywhere]">
 			{model.description}
 		</p>
+
+		{providers && (
+			<div class="text-muted-foreground mt-2 text-xs">
+				<span class="font-medium">Providers:</span> {providers}
+			</div>
+		)}
 	</a>
 	<div
 		data-model-card-footer
