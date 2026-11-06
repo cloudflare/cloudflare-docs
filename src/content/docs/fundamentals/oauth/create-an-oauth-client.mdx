@@ -69,7 +69,7 @@ After you create an OAuth client, Cloudflare displays the client secret if the c
 
 ## Select scopes
 
-OAuth scope names correspond to Cloudflare API token permission names. Use the Cloudflare API documentation to identify the permissions your client needs.
+OAuth scope names correspond to Cloudflare API token permission names. Use the [List OAuth scopes](/api/resources/oauth/subresources/scopes/methods/list/) endpoint as the source of truth for supported scopes, and use the Cloudflare API documentation to identify the permissions your client needs.
 
 <Tabs syncKey="dashPlusAPI">
 	<TabItem label="Dashboard">
@@ -94,9 +94,9 @@ OAuth scope names correspond to Cloudflare API token permission names. Use the C
 
 ## Supported OAuth flows
 
-Cloudflare OAuth clients support the OAuth 2.0 Authorization Code flow.
+Cloudflare OAuth clients that you create in the dashboard or API support the OAuth 2.0 Authorization Code flow.
 
-Cloudflare does not support Client Credentials, Implicit, Resource Owner Password Credentials, Device Authorization, or other OAuth grant types for third-party clients.
+Cloudflare does not support Client Credentials, Implicit, Resource Owner Password Credentials, Device Authorization, or other OAuth grant types for self-managed third-party clients. Some Cloudflare-owned clients, such as Wrangler, may use additional flows.
 
 ### Choose a flow
 
