@@ -1,7 +1,7 @@
 ---
 title: Content Security Policy
 pcx_content_type: reference
-description: Content Security Policy directives required for Turnstile widgets.
+description: Content Security Policy and Permissions-Policy guidance for Turnstile widgets.
 products:
   - turnstile
 tags:
@@ -32,3 +32,24 @@ You cannot set your own CSP and/or Referer-Policy via meta tags or [Transform ru
 If you are using [Turnstile in pre-clearance mode](/cloudflare-challenges/concepts/clearance/#pre-clearance-support-in-turnstile), Turnstile sets the `cf_clearance` cookie by doing a fetch request to a special endpoint in [`/cdn-cgi/`](/fundamentals/reference/cdn-cgi-endpoint/) of your domain.
 
 For this request to succeed, your `connect-src` directive must include `'self'`.
+
+## Permissions-Policy
+
+If your site sends a restrictive [`Permissions-Policy`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy) header, allow the features Turnstile's challenge iframe may request. The widget iframe's `allow` attribute currently lists:
+
+- `autoplay`
+- `fullscreen`
+- `gamepad`
+- `keyboard-map`
+- `picture-in-picture`
+
+When you deny these features by default, grant them to Cloudflare's challenge origin so the widget can load and complete challenges:
+
+```
+Permissions-Policy: autoplay=(self "https://challenges.cloudflare.com"), fullscreen=(self "https://challenges.cloudflare.com"), gamepad=(self "https://challenges.cloudflare.com"), keyboard-map=(self "https://challenges.cloudflare.com"), picture-in-picture=(self "https://challenges.cloudflare.com")
+```
+
+Which features are strictly required can change as the challenge UI evolves (for example, `gamepad` and `keyboard-map` were added after earlier widgets). If browsers report `potential-permissions-policy-violation` for `challenges.cloudflare.com`, compare the report's feature name against the list above and update your policy.
+
+Embedders that already set a broad policy such as `Permissions-Policy: *=(self)` do not need an extra entry for Turnstile.
+
