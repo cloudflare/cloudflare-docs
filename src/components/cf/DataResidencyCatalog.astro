@@ -1,0 +1,300 @@
+---
+/**
+ * DataResidencyCatalog — searchable reference of how each product interacts
+ * with each data residency control. Renders the `data-residency` collection;
+ * one record per product holds the status, requirements, functional impact,
+ * and verification date for every control.
+ */
+import { getCollection } from "astro:content";
+import { Aside } from "@/components/ui/aside";
+import { Badge } from "@/components/ui/badge";
+import { renderMarkdownInline } from "~/util/markdown";
+
+const controls = [
+	{
+		key: "regional_services",
+		name: "Regional Services",
+		scope: "Data Processing",
+	},
+	{ key: "storage", name: "Storage jurisdictions", scope: "Data Residency" },
+	{
+		key: "cmb",
+		name: "Customer Metadata Boundary",
+		scope: "Log Residency",
+	},
+	{ key: "gkm", name: "Geo Key Manager", scope: "Key Management" },
+] as const;
+
+const statuses = {
+	supported: { label: "Supported", variant: "success" },
+	requirements: { label: "With requirements", variant: "info" },
+	"not-supported": { label: "Not supported", variant: "danger" },
+	"out-of-scope": { label: "Out of scope", variant: "default" },
+	unassessed: { label: "Not assessed", variant: "warning" },
+} as const;
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+const groups = (await getCollection("data-residency"))
+	.map((c) => c.data)
+	.sort((a, b) => a.order - b.order);
+---
+
+<div class="not-content my-4 grid gap-3 md:grid-cols-[1fr_auto]">
+	<input
+		type="search"
+		id="residency-search"
+		aria-label="Search products"
+		placeholder="Search products, for example Workers or Gateway"
+		class="border-border bg-card focus:ring-primary w-full min-w-0 rounded-md border px-4 py-2 focus:border-transparent focus:ring-2 focus:outline-none"
+	/>
+	<select
+		id="residency-control"
+		aria-label="What do you need to keep in region?"
+		class="border-border bg-card rounded-md border px-3 py-2"
+	>
+		<option value="">All controls</option>
+		{controls.map((c) => (
+			<option value={c.key}>{c.scope}</option>
+		))}
+	</select>
+</div>
+
+<Aside type="note">
+	<p id="residency-count" aria-live="polite"></p>
+</Aside>
+
+<div id="residency-catalog" class="not-content">
+	{groups.map((group) => (
+		<details data-group open class="residency-group mt-6">
+			<summary class="mb-2 flex cursor-pointer items-center gap-2">
+				<span
+					class="residency-chevron text-muted-foreground"
+					aria-hidden="true"
+				>
+					▸
+				</span>
+				<h3 id={slug(group.category)} class="text-lg font-semibold">
+					{group.category}
+				</h3>
+			</summary>
+			<div class="border-border divide-border divide-y rounded-md border">
+				<div
+					class="residency-grid text-muted-foreground hidden gap-4 px-4 py-2 text-xs font-medium sm:grid"
+					aria-hidden="true"
+				>
+					<span>Product</span>
+					{controls.map((c) => (
+						<span data-control={c.key}>
+							<strong class="text-foreground font-bold">{c.scope}</strong>
+							<br />
+							<span class="font-normal">{c.name}</span>
+						</span>
+					))}
+				</div>
+				{group.entries.map((entry) => (
+					<details
+						id={slug(entry.product)}
+						data-row
+						data-search={`${entry.product} ${group.category}`.toLowerCase()}
+						class="group"
+					>
+						<summary class="residency-grid hover:bg-accent grid cursor-pointer items-center gap-4 px-4 py-3">
+							<span class="font-semibold">
+								{entry.product}
+								{entry.review && (
+									<span class="ml-1 align-middle">
+										<Badge text="Under review" variant="warning" />
+									</span>
+								)}
+							</span>
+							{controls.map((c) => {
+								const s = statuses[entry.controls[c.key].status];
+								return (
+									<span
+										data-control={c.key}
+										class="flex min-w-0 items-center gap-1 text-xs"
+									>
+										<span class="text-muted-foreground sm:hidden">
+											{c.scope}:
+										</span>
+										<Badge
+											text={s.label}
+											variant={s.variant}
+											class="py-1 leading-tight whitespace-normal"
+										/>
+									</span>
+								);
+							})}
+						</summary>
+						<div class="border-border divide-border mx-4 mb-4 divide-y rounded-md border">
+							{controls.map((c) => {
+								const ctl = entry.controls[c.key];
+								const s = statuses[ctl.status];
+								const details = [
+									...(ctl.requirements ?? []).map((t) => ["Requires", t]),
+									...(ctl.impact ?? []).map((t) => ["Impact", t]),
+									...(ctl.notes ?? []).map((t) => ["Note", t]),
+								];
+								return (
+									<div
+										data-control={c.key}
+										class="residency-detail grid gap-x-4 gap-y-2 px-4 py-3 text-sm"
+									>
+										<div>
+											<strong class="font-bold">{c.scope}</strong>
+											<div class="text-muted-foreground text-xs">{c.name}</div>
+										</div>
+										<div>
+											<Badge
+												text={s.label}
+												variant={s.variant}
+												class="py-1 leading-tight whitespace-normal"
+											/>
+										</div>
+										<div class="space-y-1.5">
+											{details.length > 0 ? (
+												details.map(([kind, text]) => (
+													<p>
+														<strong>{kind}:</strong>{" "}
+														<span set:html={renderMarkdownInline(text)} />
+													</p>
+												))
+											) : (
+												<p class="text-muted-foreground">
+													{ctl.status === "not-supported"
+														? "No reason documented."
+														: "No conditions documented."}
+												</p>
+											)}
+										</div>
+									</div>
+								);
+							})}
+						</div>
+						<p class="text-muted-foreground px-4 pb-4 text-xs">
+							{entry.last_verified
+								? `Last verified ${entry.last_verified}.`
+								: "Not yet re-verified since the previous compatibility matrix."}
+						</p>
+					</details>
+				))}
+			</div>
+		</details>
+	))}
+</div>
+
+<style>
+	@media (min-width: 640px) {
+		.residency-grid {
+			grid-template-columns: minmax(9rem, 1.2fr) repeat(4, minmax(0, 1fr));
+		}
+		#residency-catalog[data-filtered] .residency-grid {
+			grid-template-columns: minmax(9rem, 1.2fr) minmax(0, 3fr);
+		}
+	}
+	@media (min-width: 640px) {
+		.residency-detail {
+			grid-template-columns: 11rem 8.5rem minmax(0, 1fr);
+		}
+	}
+	#residency-catalog details[data-row] {
+		transition:
+			opacity 150ms ease,
+			filter 150ms ease;
+	}
+	#residency-catalog details[data-row][open] {
+		background: var(--color-accent);
+	}
+	#residency-catalog[data-focus] details[data-row]:not([open]) {
+		opacity: 0.35;
+		filter: saturate(0.2);
+	}
+	#residency-catalog[data-focus] details[data-row]:not([open]):hover {
+		opacity: 1;
+		filter: none;
+	}
+	.residency-chevron {
+		display: inline-block;
+		transition: transform 150ms ease;
+	}
+	.residency-group[open] > summary .residency-chevron {
+		transform: rotate(90deg);
+	}
+	#residency-catalog summary::-webkit-details-marker {
+		display: none;
+	}
+	#residency-catalog summary {
+		list-style: none;
+	}
+	#residency-catalog a {
+		color: var(--color-primary);
+		text-decoration: underline;
+	}
+</style>
+
+<script>
+	const search = document.querySelector<HTMLInputElement>("#residency-search");
+	const control =
+		document.querySelector<HTMLSelectElement>("#residency-control");
+	const catalog = document.querySelector<HTMLDivElement>("#residency-catalog");
+	const count =
+		document.querySelector<HTMLParagraphElement>("#residency-count");
+
+	function apply() {
+		if (!catalog) return;
+		const term = (search?.value ?? "").toLowerCase().trim();
+		const ctl = control?.value ?? "";
+
+		catalog.toggleAttribute("data-filtered", ctl !== "");
+		catalog.querySelectorAll<HTMLElement>("[data-control]").forEach((el) => {
+			el.hidden = ctl !== "" && el.dataset.control !== ctl;
+		});
+
+		let visible = 0;
+		catalog
+			.querySelectorAll<HTMLDetailsElement>("details[data-group]")
+			.forEach((group) => {
+				let groupVisible = 0;
+				group
+					.querySelectorAll<HTMLDetailsElement>("[data-row]")
+					.forEach((row) => {
+						const show = !term || (row.dataset.search ?? "").includes(term);
+						row.hidden = !show;
+						if (show) groupVisible++;
+					});
+				group.hidden = groupVisible === 0;
+				if (term && groupVisible > 0) group.open = true;
+				visible += groupVisible;
+			});
+
+		if (count)
+			count.textContent = `${visible} products shown. Select a product to see requirements and impact.`;
+	}
+
+	search?.addEventListener("input", apply);
+	control?.addEventListener("change", apply);
+	apply();
+
+	function openFromHash() {
+		const id = decodeURIComponent(location.hash.slice(1));
+		const target = id ? document.getElementById(id) : null;
+		if (!target || !catalog?.contains(target)) return;
+		const group = target.closest<HTMLDetailsElement>("details[data-group]");
+		if (group) group.open = true;
+		if (target instanceof HTMLDetailsElement) target.open = true;
+		target.scrollIntoView({ block: "start" });
+	}
+	function updateFocus() {
+		catalog?.toggleAttribute(
+			"data-focus",
+			!!catalog.querySelector("details[data-row][open]"),
+		);
+	}
+	catalog
+		?.querySelectorAll<HTMLDetailsElement>("details[data-row]")
+		.forEach((row) => row.addEventListener("toggle", updateFocus));
+
+	window.addEventListener("hashchange", openFromHash);
+	openFromHash();
+</script>

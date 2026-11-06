@@ -1,0 +1,84 @@
+category: Network Services
+order: 4
+entries:
+  - product: Argo Smart Routing
+    controls:
+      regional_services:
+        status: supported
+        notes:
+          - Argo selects only routes inside the configured region.
+      storage:
+        status: unassessed
+      cmb:
+        status: not-supported
+        notes:
+          - Argo cannot be used with Customer Metadata Boundary.
+      gkm:
+        status: supported
+    review: true
+  - product: Static IP/BYOIP
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - You can use Static IP/BYOIP with [Regionalized Spectrum Applications](/data-localization/regional-services/spectrum-applications/). You can also regionalize BYOIP prefixes at the IP layer with [Regionalized IP Bindings](/data-localization/regional-services/ip-bindings/).
+      storage:
+        status: unassessed
+      cmb:
+        status: out-of-scope
+      gkm:
+        status: out-of-scope
+  - product: Cloudflare Network Firewall
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Network Flow
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
+      gkm:
+        status: out-of-scope
+  - product: Magic Transit
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Cloudflare WAN
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: out-of-scope
+  - product: Spectrum
+    controls:
+      regional_services:
+        status: requirements
+        requirements:
+          - Only applies to HTTP/S Spectrum applications. Spectrum applications use a separate regionalization mechanism from the Regional Hostnames API. Configuring a regional hostname does not regionalize a Spectrum application on the same hostname. Contact your [Account Team](/support/contacting-cloudflare-support/) for Spectrum-specific regionalization.
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+      gkm:
+        status: supported
