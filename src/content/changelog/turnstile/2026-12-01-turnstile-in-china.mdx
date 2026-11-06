@@ -1,0 +1,43 @@
+---
+title: Turnstile in China
+description: Serve Turnstile challenges and validate tokens through endpoints within Mainland China.
+date: 2026-12-01
+---
+
+Turnstile in China is now available. Challenges and token validation use endpoints within Mainland China, eliminating cross-border network calls and making Turnstile 10x faster. For businesses serving customers in China, that means less waiting during signups, logins, and other protected interactions.
+
+When creating a widget, select **China** as its region via the [dashboard](/turnstile/get-started/widget-management/dashboard/), [API](/turnstile/get-started/widget-management/api/), or [Terraform](/turnstile/get-started/widget-management/terraform/). You cannot change the region after creating the widget.
+
+For example, select **China** for your **Widget region** in the dashboard:
+
+![Widget region options in the dashboard and a warning that the region cannot be changed after creation](~/assets/images/turnstile/china-widget-region.png)
+
+Or set `region` to `china` if using the API:
+
+```json
+{
+	"name": "Widget for China Domains",
+	"domains": ["example.cn"],
+	"mode": "managed",
+	"region": "china"
+}
+```
+
+During implementation, use the China-hosted script for client-side rendering and the China Siteverify endpoint on the same domain for server-side token validation.
+
+```html title="China client-side script"
+<script
+	src="https://challenges.cloudflare-cn.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
+```
+
+```shell title="China Siteverify request"
+curl https://challenges.cloudflare-cn.com/turnstile/v0/siteverify \
+  --request POST \
+  --data-urlencode "secret=YOUR_SECRET_KEY" \
+  --data-urlencode "response=TOKEN_FROM_WIDGET"
+```
+
+A China Network subscription is not required; contact your account team to request access. For more details on implementation, refer to [Get started with Turnstile](/turnstile/get-started/).
