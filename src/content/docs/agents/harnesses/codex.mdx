@@ -62,7 +62,7 @@ You need Git, Node.js 24 or later, pnpm, rustup, and a Cloudflare account. Model
 
 ## Configure the harness
 
-The example composes the harness with [Lifecycle](/agents/runtime/lifecycle/), `Tasks`, [Sessions](/agents/runtime/capabilities/sessions/), `Streams`, and a `Workspace` from `@cloudflare/computer`. Configure the harness in `src/server.ts` with `createAI`:
+The harness owns its `Tasks`, [Sessions](/agents/runtime/capabilities/sessions/), and `Streams` capabilities. Supply a model and a `Workspace` from `@cloudflare/computer`, then call `install()` to register the harness and its capabilities with [Lifecycle](/agents/runtime/lifecycle/) before startup. Configure the harness in `src/server.ts` with `createAI`:
 
 <TypeScriptExample>
 
@@ -71,32 +71,19 @@ import { DurableObject } from "cloudflare:workers";
 import { Workspace } from "@cloudflare/computer";
 import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/ai-sdk";
-import { Sessions } from "agents/sessions";
-import { Streams } from "agents/streams";
-import { Tasks } from "agents/tasks";
 import { CodexHarness } from "./codex-harness";
 
 export class Coder extends DurableObject<Env> {
-	tasks = new Tasks();
-	streams = new Streams();
-	sessions = new Sessions();
 	workspace = new Workspace({ storage: this.ctx.storage });
 
 	codex = new CodexHarness({
-		tasks: this.tasks,
-		streams: this.streams,
-		sessions: this.sessions,
 		workspace: this.workspace,
 		model: createAI({ binding: this.env.AI, id: "default" })(
 			"openai/gpt-6.1-sol",
 		),
 	});
 
-	lifecycle = Lifecycle.install(this)
-		.use(this.tasks)
-		.use(this.streams)
-		.use(this.sessions)
-		.use(this.codex);
+	lifecycle = this.codex.install(Lifecycle.install(this));
 }
 ```
 
