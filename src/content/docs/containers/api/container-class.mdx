@@ -705,19 +705,18 @@ import {
 export class MyContainer extends Container {
 	defaultPort = 8080;
 	enableInternet = true;
-
-    static outboundByHost = {
-    	"blocked.example.com": () => {
-    		return new Response("Blocked", { status: 403 });
-    	},
-    };
-
-    static outbound = async (request, _env, ctx) => {
-    	console.log(`[${ctx.containerId}] outbound:`, request.url);
-    	return fetch(request);
-    };
-
 }
+
+MyContainer.outboundByHost = {
+	"blocked.example.com": () => {
+		return new Response("Blocked", { status: 403 });
+	},
+};
+
+MyContainer.outbound = async (request, _env, ctx) => {
+	console.log(`[${ctx.containerId}] outbound:`, request.url);
+	return fetch(request);
+};
 
 export { ContainerProxy };
 
@@ -728,6 +727,10 @@ export default {
 };
 ```
 </TypeScriptExample>
+
+:::caution
+Assign `outbound`, `outboundByHost`, and `outboundHandlers` after the class declaration, for example `MyContainer.outboundByHost = { ... }`. If you declare them as static class fields (`static outboundByHost = { ... }`), the setter that registers the handlers never runs, so the handlers are never called. Requests to those hosts then go to the Internet when `enableInternet` is `true`, and fail when it is not.
+:::
 
 For more information, refer to [Handle outbound traffic](/containers/configuration/outbound-traffic/).
 
