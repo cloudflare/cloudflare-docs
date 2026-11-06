@@ -1936,6 +1936,7 @@ Source maps are uploaded by default for JavaScript and TypeScript Workers. Frame
   - When unset, Wrangler uploads source maps and skips any it cannot resolve. This is the default from Wrangler 4.150.0. Earlier versions only upload source maps when this is set to `true`.
   - When set to `true`, Wrangler fails the upload if a source map cannot be resolved.
   - When set to `false`, Wrangler does not upload source maps.
+  - This also covers WebAssembly modules. Wrangler uploads the source map named by a module's `sourceMappingURL` custom section, such as the one [`worker-build`](https://github.com/cloudflare/workers-rs/tree/main/worker-build) writes for Rust Workers built with `source-map = true`.
 
 Example:
 
