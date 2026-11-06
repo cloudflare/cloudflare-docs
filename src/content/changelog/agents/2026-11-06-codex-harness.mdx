@@ -19,7 +19,7 @@ The harness combines Agents SDK capabilities for durable execution:
 - `Streams` stores ordered events for replay after reconnecting.
 - `Workspace` provides tools to read and write persistent files.
 
-For example, use OpenAI's GPT-5.4 through AI Gateway. Configure the model with [`createAI`](/agents/models/ai-sdk/) and install the capabilities on a Durable Object:
+For example, use OpenAI's GPT-6.1 Sol through AI Gateway. Configure the model with [`createAI`](/agents/models/ai-sdk/) and install the capabilities on a Durable Object:
 
 <TypeScriptExample>
 
@@ -44,7 +44,7 @@ export class Coder extends DurableObject<Env> {
 		streams: this.streams,
 		sessions: this.sessions,
 		workspace: this.workspace,
-		model: createAI({ binding: this.env.AI, id: "default" })("openai/gpt-5.4"),
+		model: createAI({ binding: this.env.AI, id: "default" })("openai/gpt-6.1-sol"),
 	});
 
 	lifecycle = Lifecycle.install(this)
