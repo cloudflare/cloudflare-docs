@@ -16,6 +16,8 @@ The local Artifacts simulator lets you develop against a Git-compatible reposito
 
 When you run a Worker locally, the `artifacts` binding uses the local simulator unless you explicitly set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your existing development workflow relied on an implicit remote binding, set `remote = true` to keep using the deployed service.
 
+While `remote` is omitted, Wrangler, the Vite plugin and Workers Vitest warn that the binding uses the local simulator by default. Set `remote = true` to use deployed repos, or `remote = false` to keep the local simulator and silence the warning. In `cloudflare.config.ts`, the setting is `dev: { remote }`.
+
 | Setting                              | Binding destination        | Local Git installation            | Cloudflare credentials for local development |
 | ------------------------------------ | -------------------------- | --------------------------------- | -------------------------------------------- |
 | Omitted `remote` or `remote = false` | Local simulator            | Required                          | Not required                                 |

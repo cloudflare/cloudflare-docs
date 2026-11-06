@@ -44,6 +44,6 @@ return Response.json({
 
 The returned `remote` points to your local dev session, so you can use it with a standard Git client to clone and push.
 
-Local development requires Git 2.32 or later on your `PATH`. If you already use deployed Artifacts during local development, set `remote = true` on the binding to keep that behavior.
+Local development requires Git 2.32 or later on your `PATH`. If you already use deployed Artifacts during local development, set `remote = true` on the binding to keep that behavior. Until you set `remote`, development tools warn that the binding uses the local simulator by default.
 
 To get started, refer to [Local development](/artifacts/guides/local-development/).
