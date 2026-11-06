@@ -19,7 +19,13 @@ Authenticated Origin Pulls (AOP) helps ensure requests to your origin server com
 Authenticated Origin Pulls does not apply when your [SSL/TLS encryption mode](/ssl/origin-configuration/ssl-modes/) is set to **Off** or **Flexible**.
 :::
 
-Without AOP, anyone who discovers your origin server's IP address can send requests directly, bypassing Cloudflare and all its protections. When you combine AOP with the [Cloudflare Web Application Firewall (WAF)](/waf/), your origin only accepts requests that have passed through Cloudflare, which means every request is evaluated by the WAF before reaching your server.
+If your origin accepts unauthenticated public connections, anyone who discovers its IP address can send requests directly, bypassing Cloudflare and its protections. AOP lets your origin require a client certificate from Cloudflare.
+
+:::caution[Use your own certificate to identify your zone]
+For public HTTPS origins that rely on visitor IP headers for IP-based access restrictions or rate limiting, we recommend mutual TLS (mTLS) using zone-level or per-hostname AOP with [your own certificate](#when-to-use-your-own-certificate). Use a certificate dedicated to your zone or hostname, and configure your origin to require and verify client certificates. Reject requests with missing or untrusted certificates.
+
+Global AOP uses a certificate shared across Cloudflare accounts. When your origin validates it, it authenticates Cloudflare's network but does not identify your account or zone. Enabling AOP in Cloudflare alone does not enforce certificate validation at your origin.
+:::
 
 :::note[Not compatible with Cloudflare Tunnel]
 AOP is not compatible with origins connected through [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). Tunnel uses outbound-only connections from your origin, so there is no inbound listener for Cloudflare to present a client certificate to. If your origin is reachable through Cloudflare Tunnel, origin traffic is already authenticated using the tunnel's connector credentials, and AOP settings have no effect on that hostname.
@@ -48,7 +54,7 @@ AOP has three independent configuration levels. Each uses its own certificate an
 
 ## When to use your own certificate
 
-Global AOP uses a Cloudflare-provided certificate shared across all accounts, so it only proves a request came from the Cloudflare network — not from your account specifically. If you need to guarantee requests come from your account, set up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP with your own certificate.
+Global AOP uses a Cloudflare-provided certificate shared across all accounts. Validating this certificate authenticates the Cloudflare network but does not identify your account or zone. To distinguish traffic for your zone or hostname, set up [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP with a dedicated certificate, and enforce client certificate validation at your origin.
 
 Using your own certificate is also required for [FIPS](https://en.wikipedia.org/wiki/Federal_Information_Processing_Standards) compliance. For broader origin protection guidance, refer to [Protect your origin server](/fundamentals/security/protect-your-origin-server/).
 
