@@ -13,7 +13,7 @@ tags:
   - REST API
 ---
 
-import { CURL, Steps } from "~/components";
+import { CURL, Steps, Tabs, TabItem } from "~/components";
 
 Cloudflare Access can use a Cloudflare One Client session from another account in your [Cloudflare Organization](/fundamentals/organizations/). This is also called cross-account WARP authentication. Users remain enrolled in their source account while accessing applications in other accounts.
 
@@ -41,6 +41,8 @@ Trust is one-way. Granting B access to A's resources does not grant A access to 
 - For posture enforcement, [configure and verify a posture check](/cloudflare-one/reusable-components/posture-checks/) in A. Route the application and the relevant team domains through the client as described in that guide.
 
 The examples use `$SOURCE_ACCOUNT_ID` for A and `$APPLICATION_ACCOUNT_ID` for B. Use credentials authorized for the account in each request. Replace angle-bracketed placeholders in JSON bodies with your resource IDs and values.
+
+For the Cloudflare CLI examples, [install `cf` and sign in](/cf/get-started/). Each command sets `CLOUDFLARE_ACCOUNT_ID` to select the account for that request.
 
 ## 1. Grant the application account access
 
@@ -71,12 +73,25 @@ Configure sharing on the **source account**, not the application account.
 
 3. Read B's Zero Trust organization:
 
+   <Tabs syncKey="accessCLI">
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   CLOUDFLARE_ACCOUNT_ID="$APPLICATION_ACCOUNT_ID" cf zero-trust organization get
+   ```
+
+   </TabItem>
+   <TabItem label="API">
+
    <CURL
      url="https://api.cloudflare.com/client/v4/accounts/$APPLICATION_ACCOUNT_ID/access/organizations"
      headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
    />
 
-   After the sharing configuration is provisioned, `result.trusted_accounts` contains A's account ID. This is a read-only list of source accounts B can use. Do not set it directly on B.
+   </TabItem>
+   </Tabs>
+
+   After the sharing configuration is provisioned, `trusted_accounts` in the CLI output (`result.trusted_accounts` in the API response) contains A's account ID. This is a read-only list of source accounts B can use. Do not set it directly on B.
 
 </Steps>
 
@@ -85,6 +100,21 @@ To share with every account in your Cloudflare Organization instead, set `grant_
 ## 2. Create a reusable policy in the source account
 
 Create an Allow policy in A. This example allows one user and requires a successful posture check owned by A:
+
+<Tabs syncKey="accessCLI">
+<TabItem label="Cloudflare CLI">
+
+```sh
+CLOUDFLARE_ACCOUNT_ID="$SOURCE_ACCOUNT_ID" cf zero-trust access policies create --body '{
+  "name": "Allow enrolled user with required posture",
+  "decision": "allow",
+  "include": [{"email": {"email": "user@example.com"}}],
+  "require": [{"device_posture": {"integration_uid": "<SOURCE_POSTURE_CHECK_ID>"}}]
+}'
+```
+
+</TabItem>
+<TabItem label="API">
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/$SOURCE_ACCOUNT_ID/access/policies"
@@ -104,6 +134,9 @@ Create an Allow policy in A. This example allows one user and requires a success
 	}}
 />
 
+</TabItem>
+</Tabs>
+
 Save the returned policy `id`. For a client-authentication-only policy, omit the `require` array. Replace the email selector with the users or groups you want to allow.
 
 When B uses A's reusable policy, account-scoped resources in that policy resolve in A. This includes its posture check and lists. A retains ownership of the policy, and changes apply to applications that reference it.
@@ -111,6 +144,26 @@ When B uses A's reusable policy, account-scoped resources in that policy resolve
 ## 3. Attach the policy to an application
 
 Create a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/) in B with client authentication turned on:
+
+<Tabs syncKey="accessCLI">
+<TabItem label="Cloudflare CLI">
+
+```sh
+CLOUDFLARE_ACCOUNT_ID="$APPLICATION_ACCOUNT_ID" cf zero-trust access applications create --body '{
+  "name": "Internal dashboard",
+  "type": "self_hosted",
+  "domain": "internal.example.com",
+  "allow_authenticate_via_warp": true,
+  "policies": [{
+    "id": "<SOURCE_REUSABLE_POLICY_ID>",
+    "account_id": "<SOURCE_ACCOUNT_ID>",
+    "precedence": 1
+  }]
+}'
+```
+
+</TabItem>
+<TabItem label="API">
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/$APPLICATION_ACCOUNT_ID/access/apps"
@@ -131,6 +184,9 @@ Create a [self-hosted application](/cloudflare-one/access-controls/applications/
 	}}
 />
 
+</TabItem>
+</Tabs>
+
 The policy reference needs both its `id` and owning `account_id`. Attaching a source-account policy does not copy it into B.
 
 For an existing application, preserve its configuration and policy references when updating it. Setting `allow_authenticate_via_warp` to `true` turns on client authentication for that application. Explicit `false` turns it off, even if B's organization default is on. An omitted application setting inherits B's default.
@@ -144,6 +200,24 @@ B can also create its own policy rather than attach A's reusable policy. Choose 
 ### Reference a source-account posture check
 
 To keep the policy in B but use a posture check in A, set `account_id` on the `device_posture` rule:
+
+<Tabs syncKey="accessCLI">
+<TabItem label="Cloudflare CLI">
+
+```sh
+CLOUDFLARE_ACCOUNT_ID="$APPLICATION_ACCOUNT_ID" cf zero-trust access policies create --body '{
+  "name": "Require posture from source account",
+  "decision": "allow",
+  "include": [{"email": {"email": "user@example.com"}}],
+  "require": [{"device_posture": {
+    "integration_uid": "<SOURCE_POSTURE_CHECK_ID>",
+    "account_id": "<SOURCE_ACCOUNT_ID>"
+  }}]
+}'
+```
+
+</TabItem>
+<TabItem label="API">
 
 <CURL
 	url="https://api.cloudflare.com/client/v4/accounts/$APPLICATION_ACCOUNT_ID/access/policies"
@@ -163,6 +237,9 @@ To keep the policy in B but use a posture check in A, set `account_id` on the `d
 		],
 	}}
 />
+
+</TabItem>
+</Tabs>
 
 Attach the returned B-owned policy to your application. The selected posture account must be trusted by B and match the user's client enrollment account. A successful check from an unrelated account does not satisfy the rule.
 
