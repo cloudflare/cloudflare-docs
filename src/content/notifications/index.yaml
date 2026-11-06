@@ -231,10 +231,10 @@ entries:
     otherFilters: None.
 
   - name: Network Flow - DDoS Attack
-    audience: "[BYOIP](/byoip/) and [Spectrum](/spectrum/) customers with [Network Analytics](/analytics/network-analytics/) who want to receive a notification when Cloudflare has mitigated attacks that generate an average of at least 12,000 packets per second over a five-second period, with a duration of one minute or more."
-    availability: Purchase of Magic Transit and/or BYOIP.
+    audience: "[Network Flow](/network-flow/) customers who export sFlow data to Cloudflare and want to receive a notification when one of their sFlow DDoS attack rules detects a DDoS attack in their network traffic."
+    availability: "Purchase of Magic Transit and/or BYOIP. Requires an sFlow DDoS attack rule created through the [Network Flow Rules API](/api/resources/magic_network_monitoring/subresources/rules/)."
     associatedProducts: Magic Transit
-    nextSteps: No action needed. Refer to [DDoS alerts](/ddos-protection/reference/alerts/) for more information.
+    nextSteps: "Review the detected attack and the rule that triggered it. If the rule has auto-advertisement enabled, review the advertisement status for the affected prefixes. Refer to [sFlow DDoS attack rules](/network-flow/rules/s-flow-ddos-attack/) and [Network Flow rule notifications](/network-flow/rules/rule-notifications/) for more information."
     otherFilters: None.
 
   - name: Network Flow - Volumetric Attack
