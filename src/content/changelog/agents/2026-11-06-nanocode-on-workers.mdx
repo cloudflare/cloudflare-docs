@@ -6,7 +6,7 @@ date: 2026-11-06
 
 import { TypeScriptExample } from "~/components";
 
-[Nanocode](https://github.com/gakonst/nanocode) is an open-source harness for embedding coding agents in your application. It handles model calls, tool execution, and session history. Use it to build a code-review bot or a coding assistant that reads and edits project files.
+[Nanocode](https://github.com/gakonst/nanocode) is an open-source harness for embedding coding agents in your application. It handles model calls, tool execution, and session history.
 
 Its Rust engine runs as [WebAssembly](/workers/runtime-apis/webassembly/) inside a [Durable Object](/durable-objects/). Nanocode saves turn progress and tool results in SQLite, and uses alarms to resume pending work after an interruption. The Nanocode project maintains its Cloudflare host independently of Cloudflare; it does not require the Agents SDK.
 
