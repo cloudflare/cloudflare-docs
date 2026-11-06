@@ -151,7 +151,7 @@ These `@astrojs/vercel` options have Cloudflare equivalents:
 | `isr`                           | Astro route caching with `cacheCloudflare()`, or prerendering                                              |
 | `webAnalytics`, `speedInsights` | [Web Analytics](/web-analytics/). On a `workers.dev` URL, add the beacon script to your layout.            |
 
-## Known issues
+## Troubleshooting
 
 - **`astro add` fails with `Cannot find module '@astrojs/vercel'`.** Remove the Vercel import from your Astro configuration before you uninstall the package.
 - **`astro add` or `@astrojs/upgrade` exits without changes.** Both commands prompt for confirmation and exit when no terminal is attached. Pass `--yes` to `astro add`. Install `astro@latest` directly instead of using `@astrojs/upgrade`.

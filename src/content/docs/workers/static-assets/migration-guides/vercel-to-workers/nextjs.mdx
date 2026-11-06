@@ -123,7 +123,7 @@ These Vercel and Next.js features behave differently on vinext:
 | `vercel.json`                                    | Not read. Move its rules into `next.config`.                                                        |
 | `@vercel/kv`, `@vercel/blob`, `@vercel/postgres` | Not supported. Use [Workers KV](/kv/), [R2](/r2/), and [Hyperdrive](/hyperdrive/) or [D1](/d1/).    |
 
-## Known issues
+## Troubleshooting
 
 - **`vinext init` exits with `vinext init needs Cloudflare cache and image choices`.** Coding agents run without an interactive terminal. Pass `--cdn-cache`, `--data-cache`, and `--image-optimization`.
 - **The Worker uses the wrong name.** Pass `--name` to `vinext init`, or edit `worker.name` in `cloudflare.config.ts`. The `--name` option of `@vinext/cloudflare deploy` does not apply to `cloudflare.config.ts` projects.

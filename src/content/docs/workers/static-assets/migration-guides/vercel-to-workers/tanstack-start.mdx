@@ -139,7 +139,7 @@ When you finish, list the files you changed, the Vercel features without an equi
 
 To add [Cron Triggers](/workers/configuration/cron-triggers/), [Queues](/queues/), or [Durable Objects](/durable-objects/), create a custom server entrypoint. For more information, refer to [Custom entrypoints](/workers/framework-guides/web-apps/tanstack-start/#custom-entrypoints).
 
-## Known issues
+## Troubleshooting
 
 - **Assets are not cached.** Without `public/_headers`, Workers serves files in `/assets/` with `max-age=0, must-revalidate`.
 - **The server function format changes after a lockfile re-resolve.** Re-resolving dependencies can upgrade `seroval`, which changes the server function wire format. Convert old lockfiles instead.
