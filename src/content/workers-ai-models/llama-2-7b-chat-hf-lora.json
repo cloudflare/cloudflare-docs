@@ -12,6 +12,10 @@
         {
             "property_id": "lora",
             "value": "true"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-15"
         }
     ],
     "id": "7ed8d8e8-6040-4680-843a-aef402d6b013",

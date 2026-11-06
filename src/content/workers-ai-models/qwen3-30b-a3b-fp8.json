@@ -31,6 +31,10 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-15"
         }
     ],
     "id": "4090e54c-eee4-4221-b410-10c1c0f92f17",
