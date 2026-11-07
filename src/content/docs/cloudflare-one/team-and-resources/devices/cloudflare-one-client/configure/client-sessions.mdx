@@ -49,6 +49,10 @@ This timeout value does not apply to [device client session checks in Gateway po
 
 Users can now authenticate once with the Cloudflare One Client and have access to your Access applications for the configured period of time. The session timer resets when the user re-authenticates with the IdP used to enroll in the Cloudflare One Client.
 
+### Authenticate across accounts
+
+Users enrolled in one account can authenticate to Access applications in another account in the same Cloudflare Organization. The source account must grant the application account access to its resources, and the application must allow client authentication. Refer to [Cross-account client authentication and posture](/cloudflare-one/access-controls/policies/cross-account-access/) for API setup and policy examples.
+
 ## Force user interaction with IdP
 
 If the user has an active browser session with the IdP, the Cloudflare One Client will use the existing browser cookies to re-authenticate and the user will not be prompted to re-enter their credentials. You can override this behavior to require explicit user interaction in the IdP.

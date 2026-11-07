@@ -48,6 +48,10 @@ Gateway does not support device posture checks for the [Tanium Access integratio
 - `<your-team-name>.cloudflareaccess.com` if posture check is part of an Access policy.
 - The application protected by the Access or Gateway policy.
 
+## Posture checks across accounts
+
+An Access policy can use a posture check owned by another account in the same Cloudflare Organization. The source account must grant access to its resources, and the policy must reference the source check's account context. Refer to [Cross-account client authentication and posture](/cloudflare-one/access-controls/policies/cross-account-access/) for API setup. Sharing posture results does not authenticate the user.
+
 ## Policy enforcement rate
 
 Access detects changes in device posture at the same rate as the [polling frequency](#polling-frequency) configured for the posture check.
