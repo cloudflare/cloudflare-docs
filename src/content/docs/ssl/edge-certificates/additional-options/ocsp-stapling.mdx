@@ -1,0 +1,58 @@
+---
+pcx_content_type: concept
+description: Understand how Cloudflare handles OCSP stapling for edge certificates and what to do when a security scanner reports that OCSP stapling is not offered.
+products:
+  - ssl
+title: OCSP stapling
+sidebar:
+  order: 16
+tags:
+  - TLS
+---
+
+Cloudflare automatically performs OCSP stapling for edge certificates when the issuing certificate authority (CA) supports it. There is no dashboard setting to enable or configure OCSP stapling.
+
+## What is OCSP stapling
+
+OCSP (Online Certificate Status Protocol) is a mechanism for checking whether a TLS certificate has been revoked. Without stapling, a browser must contact the CA's OCSP responder directly during the TLS handshake to check the certificate's revocation status, which adds latency and exposes the user's browsing activity to the CA.
+
+OCSP stapling solves this by letting the server fetch a CA-signed OCSP response in advance and attach it to the TLS handshake. The browser can verify the response without contacting the CA.
+
+## Verify OCSP stapling status
+
+To check whether a Cloudflare edge certificate has a stapled OCSP response, run:
+
+```sh
+echo | openssl s_client -connect <your-domain>:443 -status 2>/dev/null | grep -A 10 "OCSP response"
+```
+
+A stapled response returns `OCSP Response Status: successful (0x0)`. If stapling is not active, the output shows `OCSP response: no response sent`.
+
+## Use OCSP stapling with a compliance requirement
+
+If OCSP stapling is a hard compliance or policy requirement for a hostname, upload a [custom certificate](/ssl/edge-certificates/custom-certificates/) from a CA that publishes an OCSP responder. Cloudflare staples the response from that CA's responder when the certificate's AIA extension includes a valid OCSP URI.
+
+Confirm with your CA that it supports OCSP stapling before ordering, as the industry continues to move toward CRL-based revocation.
+
+### OCSP must-staple
+
+By default, most clients — including major browsers — soft-fail when a stapled OCSP response is missing or invalid: they proceed with the TLS connection rather than rejecting it. This means a missing or stale staple does not cause a visible error for your visitors.
+
+If you require clients to reject connections when a valid OCSP response is not present, your custom certificate must include the **OCSP must-staple** extension (TLS Feature extension, RFC 7633). This extension signals to clients that the TLS handshake must not succeed unless a valid stapled OCSP response is included. Only upload a must-staple certificate if the issuing CA reliably serves OCSP responses — a CA outage will cause connection failures for all visitors.
+
+## Origin server configuration
+
+Enabling OCSP stapling on your origin server — for example, `ssl_stapling on` in nginx or `SSLUseStapling On` in Apache — applies to the TLS connection between your origin and Cloudflare, not the connection between Cloudflare and the visitor's browser.
+
+Cloudflare terminates TLS at the edge and presents its own certificate to visitors. Origin-side OCSP configuration has no effect on the stapling behavior that visitors see.
+
+## Why a scanner may report OCSP stapling as not offered
+
+If a security scanner or penetration test reports that OCSP stapling is not offered or not enabled for a Cloudflare-managed certificate, the most common cause is that the issuing CA does not publish an OCSP responder. This means the certificate's Authority Information Access (AIA) extension contains no OCSP URI — only a CRL distribution point.
+
+[CA/Browser Forum Ballot SC-063](https://cabforum.org/2023/07/14/ballot-sc063v4-make-ocsp-optional-require-crls-and-incentivize-automation/) made OCSP optional for publicly trusted CAs while requiring support for Certificate Revocation Lists (CRLs). As a result, major CAs have deprecated their OCSP infrastructure:
+
+- **Let's Encrypt** has ended its OCSP service. Certificates issued on Let's Encrypt chains include no OCSP URI and cannot have a stapled response.
+- **Google Trust Services** and **SSL.com** are progressively removing OCSP infrastructure in line with this industry direction.
+
+Without an OCSP URI in the certificate, Cloudflare has no OCSP responder to query and nothing to staple. The scanner finding is accurate but does not represent a vulnerability or a Cloudflare misconfiguration. Certificate revocation information remains available to browsers through CRLs, and the TLS session is equally secure.
