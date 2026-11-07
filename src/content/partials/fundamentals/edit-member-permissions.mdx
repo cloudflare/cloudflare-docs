@@ -22,27 +22,46 @@ To edit member permissions using the dashboard:
 
 </TabItem> <TabItem label="API">
 
-To edit member permissions using the API, get a [list of roles](/api/resources/accounts/subresources/roles/methods/list/) available for an account.
+To edit member permissions using the API, first get the permission group ID you want to assign from the [Permission Groups API](/api/resources/iam/subresources/permission_groups/).
 
-Then, send a [`PUT` request](/api/resources/accounts/subresources/members/methods/update/) to edit their permissions.
+Then send a [`PUT` request](/api/resources/accounts/subresources/members/methods/update/) with the member's full `policies` array.
+
+:::note
+This request replaces the member's existing policies. Include any current policies you want to keep along with the changes you are making.
+:::
 
 
 ```bash title="Request"
+export PERMISSION_GROUP_ID='...' # id from the permission_groups API response
 
 curl --request PUT \
   --url https://api.cloudflare.com/client/v4/accounts/{account_id}/members/{member_id} \
   --header 'Authorization: Bearer <API_TOKEN>' \
   --header 'Content-Type: application/json' \
   --data '{
-	  "roles": [
-	        {
-	            "id": "<ROLE_ID1>"
-	        },
-	        {
-	            "id": "<ROLE_ID2>"
-	        }
-	  	]
-		}'
+    "policies": [
+      {
+        "access": "allow",
+        "permission_groups": [
+          {
+            "id": "'"$PERMISSION_GROUP_ID"'"
+          }
+        ],
+        "resource_groups": [
+          {
+            "scope": {
+              "key": "com.cloudflare.api.account.{account_id}",
+              "objects": [
+                {
+                  "key": "*"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }'
 ```
 
 </TabItem> </Tabs>
