@@ -99,7 +99,13 @@ export default {
 
 A common pattern is to use Workers as the stateless entry point that routes requests to Durable Objects when coordination is needed. The Worker handles authentication, validation, and response formatting, while the Durable Object handles the stateful logic.
 
+### Prefer Workers for your control plane {/* keep-your-control-plane-in-workers */}
+
+Prefer Workers and supporting services for authentication, routing, registries, and configuration. Durable Objects can coordinate control-plane operations, but a single object on every request path can become a global bottleneck. Refer to [Architecture guidance](/durable-objects/best-practices/architecture-guidance/#control-plane) for recommendations and bounded coordinator patterns.
+
 ## Design and sharding
+
+For in-depth guidance on choosing coordination boundaries, sizing workloads, naming objects, and scaling them, refer to [Architecture guidance](/durable-objects/best-practices/architecture-guidance/).
 
 ### Model your Durable Objects around your "atom" of coordination
 
@@ -182,8 +188,8 @@ export default {
 		const id = env.CHAT_ROOM.idFromName("global");
 		const stub = env.CHAT_ROOM.get(id);
 
-    	await stub.sendMessage("room-123", "user-456", "Hello!");
-    	return new Response("Sent");
+	await stub.sendMessage("room-123", "user-456", "Hello!");
+	return new Response("Sent");
     },
 };
 
@@ -192,25 +198,17 @@ export default {
 
 ### Message throughput limits
 
-A single Durable Object can handle approximately **500-1,000 requests per second** for simple operations. This limit varies based on the work performed per request:
+Durable Objects have a documented [soft limit of 1,000 requests per second per object](/durable-objects/platform/limits/). This is not guaranteed throughput: the rate an object sustains depends on the work performed for each request, including CPU work, storage operations, and payload sizes.
 
-| Operation type | Throughput |
-|----------------|------------|
-| Simple pass-through (minimal parsing) | ~1,000 req/sec |
-| Moderate processing (JSON parsing, validation) | ~500-750 req/sec |
-| Complex operations (transformation, storage writes) | ~200-500 req/sec |
+Load-test your workload to choose a target rate with headroom below both the soft limit and the rate your object sustains. Apply that target to one atom's traffic, not the application's total traffic. For example, game sessions already distribute player updates across separate objects; only a session that becomes too busy needs further partitioning.
 
-When modeling your "atom," factor in the expected request rate. If your use case exceeds these limits, shard your workload across multiple Durable Objects.
+For independently partitionable writes, use the measured target to estimate an initial shard count, then test the sharded design:
 
-For example, consider a real-time game with 50,000 concurrent players sending 10 updates per second. This generates 500,000 requests per second total. You would need 500-1,000 game session Durable Objects—not one global coordinator.
-
-Calculate your sharding requirements:
-
+```txt
+Required shards = ceil(Peak requests/second for one atom / Target requests/second per shard)
 ```
 
-Required DOs = (Total requests/second) / (Requests per DO capacity)
-
-```
+Refer to [Size each atom](/durable-objects/best-practices/architecture-guidance/#step-2-size) for measurement guidance and [Scale a hot Durable Object](/durable-objects/best-practices/architecture-guidance/#step-7-scale) for scale-out patterns.
 
 ### Use deterministic IDs for predictable routing
 
@@ -276,10 +274,10 @@ export default {
 		const id = env.GAME_SESSION.newUniqueId();
 		const stub = env.GAME_SESSION.get(id);
 
-    	// Store the mapping: gameCode -> id.toString()
-    	// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
+	// Store the mapping: gameCode -> id.toString()
+	// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
 
-    	return Response.json({ gameId: id.toString() });
+	return Response.json({ gameId: id.toString() });
     },
 };
 
@@ -393,11 +391,11 @@ export default {
 		const gameId = url.searchParams.get("game") ?? "default";
 		const region = url.searchParams.get("region") ?? "wnam"; // Western North America
 
-    	// Provide a location hint for where this Durable Object should be created
-    	const id = env.GAME_SESSION.idFromName(gameId);
-    	const stub = env.GAME_SESSION.get(id, { locationHint: region });
+	// Provide a location hint for where this Durable Object should be created
+	const id = env.GAME_SESSION.idFromName(gameId);
+	const stub = env.GAME_SESSION.get(id, { locationHint: region });
 
-    	return new Response("Connected to game session");
+	return new Response("Connected to game session");
     },
 };
 

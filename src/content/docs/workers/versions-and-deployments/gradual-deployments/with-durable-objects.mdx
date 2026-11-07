@@ -41,6 +41,8 @@ Typically, a Worker bundle will define both the Durable Object class and a Worke
 You should ensure that API changes between your Durable Object and its Worker are [forwards and backwards compatible](/durable-objects/platform/known-issues/#code-updates) whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
 :::
 
+To deploy your control plane and Durable Object class families independently, refer to [Split Workers by class family](/durable-objects/best-practices/architecture-guidance/#split-workers-by-class-family).
+
 ## Durable Object class lifecycle changes
 
 Versions of Worker bundles that change Durable Object class lifecycle cannot be uploaded. This applies to both the declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field and the legacy [`migrations`](/durable-objects/reference/durable-object-class-migrations-legacy/) array. This is because Durable Object lifecycle changes are atomic operations. Once a lifecycle change is deployed, rollbacks cannot take place to any version prior to the one that included the change.
