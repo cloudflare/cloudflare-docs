@@ -58,7 +58,7 @@ Additional parameters for the data source.
     - `max_age` <Type text="number" /> <MetaInfo text="optional" />
       - How long, in seconds, the crawler reuses cached page content before it re-fetches from the origin. Valid values: `0` to `604800`. Defaults to `86400`.
     - `include_external_links` <Type text="boolean" /> <MetaInfo text="optional" />
-      - Whether to follow links that point to other domains. Defaults to `false`.
+      - Not supported. Must stay `false`. Setting it to `true` with `parse_type: discover` returns error `7102`. Defaults to `false`.
     - `include_subdomains` <Type text="boolean" /> <MetaInfo text="optional" />
       - Whether to follow links that point to subdomains of the source URL. Defaults to `false`.
   - `store_options` <Type text="object" /> <MetaInfo text="optional" />

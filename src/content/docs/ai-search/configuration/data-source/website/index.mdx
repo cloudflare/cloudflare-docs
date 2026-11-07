@@ -45,8 +45,8 @@ Configure these options during onboarding, or later in your instance settings un
 | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [Path filtering](#path-filtering)                                                              | Include and exclude URL patterns that decide which pages are crawled.                                                                                                    |
 | [Parse type](/ai-search/configuration/data-source/website/parse-types/)                        | How the crawler finds pages. **Sitemap** reads your XML sitemaps. **Discover** starts at the source URL and, by default, uses both your sitemaps and the links it finds. |
-| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) | Crawl a set of sitemap URLs that you choose instead of the ones AI Search discovers. Up to five URLs. Applies to the sitemap parse type only.                            |
-| [Discover options](/ai-search/configuration/data-source/website/parse-types/#discover-options) | Discovery source, page limit, crawl depth, cache age, and whether to follow external links and subdomains. Applies to the discover parse type only.                      |
+| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) | Crawl a set of sitemap URLs that you choose instead of the ones AI Search discovers. Up to 10 URLs. Applies to the sitemap parse type only.                              |
+| [Discover options](/ai-search/configuration/data-source/website/parse-types/#discover-options) | Discovery source, page limit, crawl depth, cache age, and whether to follow subdomains. Applies to the discover parse type only.                                         |
 | [Rendering mode](#rendering-mode)                                                              | Whether pages are downloaded as raw HTML or loaded in a headless browser first.                                                                                          |
 | [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/) | Custom HTTP headers sent with each request, so the crawler can reach pages behind authentication. Up to five headers.                                                    |
 | [Content selectors](/ai-search/configuration/data-source/website/content-selectors/)           | Restrict indexing to the elements that a CSS selector matches, so you skip navigation, sidebars, and footers.                                                            |
@@ -103,8 +103,8 @@ The regular AI Search [limits](/ai-search/platform/limits-pricing/) apply when u
 | Pages per crawl, [`discover` parse type](/ai-search/configuration/data-source/website/parse-types/#discover)         | 100,000                           |
 | Crawl depth, [`discover` parse type](/ai-search/configuration/data-source/website/parse-types/#page-limit-and-depth) | 100,000 link hops (defaults to 5) |
 | Cached page age, [`discover` parse type](/ai-search/configuration/data-source/website/parse-types/#cache-age)        | 604,800 seconds (7 days)          |
-| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) URLs                  | 5 per instance                    |
-| [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/)                       | 5 per instance                    |
+| [Specific sitemap](/ai-search/configuration/data-source/website/parse-types/#specific-sitemap) URLs                  | 10 per instance                   |
+| [Authentication headers](/ai-search/configuration/data-source/website/authentication-headers/)                       | 10 per instance                   |
 | [Content selector](/ai-search/configuration/data-source/website/content-selectors/) entries                          | 10 per instance                   |
 | Content selector path pattern and selector length                                                                    | 200 characters each               |
 
