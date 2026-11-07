@@ -1,0 +1,45 @@
+---
+title: Set a concurrency limit for each Workflow
+description: Cap how many instances of a single Workflow run at the same time by setting a concurrency limit in your Wrangler configuration.
+products:
+  - workflows
+  - workers
+date: 2026-08-27
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now set a [concurrency limit](/workflows/build/concurrency-limits/) on an individual Workflow, capping how many of its instances run at the same time. Previously, every Workflow in an account shared the account's [concurrency limit](/workflows/reference/limits/). Keeping a single Workflow below a lower ceiling meant building your own queue, semaphore, or backoff logic inside your steps.
+
+Set `concurrency.limit` on a `workflows` binding and redeploy:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"concurrency": {
+				"limit": 10,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+With this configuration, no more than 10 instances of `MyWorkflow` run at once, no matter how many you create. Instances above the limit are not rejected. They are queued and start automatically as running instances finish or move to the `waiting` state.
+
+Use a concurrency limit when a Workflow depends on something with its own limits. For example, use it for a database that degrades past a certain number of concurrent writers, or a third-party API that limits concurrent connections. It also stops one high-volume Workflow from using all of your account's concurrency and delaying instances of your other Workflows. Set the limit to the concurrency your dependency can sustain, not the highest value it can briefly handle.
+
+The limit must be a positive integer, and cannot be higher than your account's concurrency limit. A Workflow's concurrency limit can only make it more restrictive. It does not raise your account limit. Lowering the limit does not stop instances that are already running. Workflows without a limit behave as before.
+
+Each deploy sets the limit from your configuration, so deploying without `concurrency` removes any existing limit.
+
+Per-workflow concurrency limits require Wrangler 4.127.0 or above.
+
+For more information, refer to [Concurrency limits](/workflows/build/concurrency-limits/).
