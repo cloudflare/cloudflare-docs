@@ -30,6 +30,12 @@ import {
 	mapConcurrentOrdered,
 } from "./catalog-import-utils";
 
+interface CatalogModelProvider {
+	provider: string;
+	ordinal: number;
+	pricing: Record<string, unknown> | null;
+}
+
 interface CatalogModel {
 	model_id: string;
 	provider_id: string | null;
@@ -85,6 +91,9 @@ interface CatalogModel {
 	created_at?: string;
 	updated_at?: string;
 	pricing?: Record<string, unknown>;
+	// Provider information with priority ordering. Optional because older
+	// catalog API responses omit the field entirely.
+	model_providers?: CatalogModelProvider[] | null;
 }
 
 interface CatalogListResponse {

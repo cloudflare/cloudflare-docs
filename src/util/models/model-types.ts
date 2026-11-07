@@ -7,6 +7,13 @@ export interface CodeSnippet {
 	code: string;
 }
 
+/** Provider information with pricing details, ordered by priority. */
+export interface ModelProvider {
+	provider: string;
+	ordinal: number;
+	pricing: Record<string, unknown> | null;
+}
+
 /**
  * One `examples[]` entry. The first example powers the Usage section; the rest
  * render in the Examples disclosure list.
@@ -73,6 +80,8 @@ export interface ModelView {
 	/** Accepted request formats (e.g. `["responses","chat-completions"]`). Catalog-only. */
 	requestFormats?: string[] | null;
 	pricing?: Record<string, unknown>;
+	/** Provider information with priority ordering. Catalog-only. */
+	modelProviders?: ModelProvider[] | null;
 	/** Usage (first) + Examples list (rest). Catalog-only. */
 	examples?: ModelExample[];
 	/** In-page notice. Catalog-only. */
