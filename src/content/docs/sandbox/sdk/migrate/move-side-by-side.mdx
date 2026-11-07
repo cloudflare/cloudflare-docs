@@ -16,7 +16,7 @@ Run a Sandbox SDK 1.0 class next to your 0.12 class in the same Worker, and move
 
 ## Before you start
 
-- Your application runs `@cloudflare/sandbox` 0.12.10, with a class and binding named `Sandbox`.
+- Your application runs `@cloudflare/sandbox` 0.12.14, with a class and binding named `Sandbox`.
 - Your 1.0 class is written under a new name, such as `SandboxV1`. Choose a name you want to keep, because renaming a class later is another class migration. For the class, refer to [Replace the Sandbox class](/sandbox/sdk/migrate/replace-the-sandbox-class/).
 - You have a staging copy of the Worker with its own Wrangler configuration file, a different Worker `name`, and a different `name` for each container.
 
@@ -30,9 +30,9 @@ Keep the 0.12 exports, variables, and secrets that other migration pages tell yo
 
 1. Install version 1 of the package, and keep 0.12 under the alias `sandbox-0x`:
 
-   <PackageManagers pkg="@cloudflare/sandbox sandbox-0x@npm:@cloudflare/sandbox@0.12.10" />
+   <PackageManagers pkg="@cloudflare/sandbox sandbox-0x@npm:@cloudflare/sandbox@0.12.14" />
 
-   Your package manager can save a version range. In `package.json`, set `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.10`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
+   Your package manager can save a version range. In `package.json`, set `sandbox-0x` to `npm:@cloudflare/sandbox@0.12.14`, so the 0.12 code stays on that version. In your 0.12 code, change each import from `@cloudflare/sandbox` to `sandbox-0x`.
 
 2. Give the 0.12 class a method that reports whether its container runs, and one that returns the storage that your 1.0 code reads. If your code exports the class from the package, replace that export with a subclass:
 
