@@ -1,0 +1,20 @@
+---
+title: Distribution heatmaps for Workers Observability
+description: Visualize numeric fields like request latency over time to identify outliers, clusters, and long-tail behavior.
+products:
+  - workers
+date: 2026-08-28
+---
+
+import heatmapImage from "~/assets/images/changelog/workers/observability/2026-08-28-distribution-heatmaps.png";
+
+Workers Observability now supports distribution heatmaps for numeric fields. Heatmaps visualize how values such as request latency change over time, making outliers, multiple clusters, and long-tail behavior easier to identify than with averages alone.
+
+Distribution heatmaps provide additional context when investigating performance issues. You can hover to examine values, zoom into a specific time range, and select an area to view the events and traces associated with slow requests.
+
+<img
+	src={heatmapImage.src}
+	alt="Workers Observability distribution heatmap for request latency, showing relative event density and hover details for a selected region."
+/>
+
+To learn more and get started, refer to [Workers Observability](/workers/observability/).
