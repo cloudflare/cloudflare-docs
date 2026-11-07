@@ -374,6 +374,24 @@ Green Compute can be configured at the account level:
 4. Select **Green Compute**.
 5. Select **Confirm**.
 
+## Recovering from a failed trigger registration
+
+If a Cron Trigger was created or modified during a platform incident, it may not have registered correctly in the Cloudflare control plane. After the incident resolves, affected triggers remain inactive — the platform does not automatically retry registration.
+
+To recover, redeploy your Worker:
+
+```sh
+npx wrangler deploy
+```
+
+Alternatively, in the Cloudflare dashboard:
+
+1. Go to **Workers & Pages** and select your Worker.
+2. Select **Settings** > **Triggers**.
+3. Delete the affected Cron Trigger and re-add it with the same cron expression.
+
+After redeployment, allow up to 15 minutes for the trigger to propagate before expecting the next scheduled execution.
+
 ## Related resources
 
 - [Triggers](/workers/wrangler/configuration/#triggers) - Review Wrangler configuration file syntax for Cron Triggers.
