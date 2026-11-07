@@ -323,6 +323,35 @@ async function readCommitHistory(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
+### `diff(from, to, opts?)`
+
+- `from` <Type text="string | null" /> <MetaInfo text="required" /> — Branch, tag, or full commit hash. Use `null` to compare against an empty tree.
+- `to` <Type text="string" /> <MetaInfo text="required" /> — Branch, tag, or full commit hash.
+- `opts.limit` <Type text="number" /> <MetaInfo text="optional (default: 100, range: 1–1000)" />
+- `opts.cursor` <Type text="string" /> <MetaInfo text="optional" /> — Opaque cursor from the previous page.
+- Returns <Type text="Promise<ArtifactsDiffResult>" />
+
+`diff()` compares snapshots, including unrelated histories. The result contains resolved `from` and `to` commit hashes, a `changes` array, and a `cursor` only when more results remain. Tags resolve to commits; `null` remains `null`. There is no total count. Continue with the returned hashes and cursor to keep pagination stable if a branch moves.
+
+Each change contains `path`, `status` (`added`, `modified`, `deleted`, or `type_changed`), and the applicable `oldMode`, `newMode`, `oldHash`, and `newHash`. Results include files, symlinks, and gitlinks, sorted by raw path bytes. Renames appear as a deletion and an addition; executable-bit changes are `modified`. Identical commits return no changes.
+
+Missing refs or commits throw `NOT_FOUND`. Invalid arguments, non-commit hashes, or cursors for another resolved pair throw `INVALID_INPUT`. Comparisons exceeding the memory budget throw `MEMORY_LIMIT`. Refer to [error codes](/artifacts/api/errors/) for unexpected failures.
+
+<TypeScriptExample>
+
+```ts
+async function compareCommits(
+	artifacts: Artifacts,
+	before: string,
+	after: string,
+) {
+	using repo = await artifacts.get("starter-repo");
+	return await repo.diff(before, after);
+}
+```
+
+</TypeScriptExample>
+
 ### `readCommit(hash)`
 
 - `hash` <Type text="string" /> <MetaInfo text="required" /> — Commit SHA-1 hash.
