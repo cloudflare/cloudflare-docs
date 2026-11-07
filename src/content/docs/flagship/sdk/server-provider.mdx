@@ -83,20 +83,50 @@ const showNewCheckout = await client.getBooleanValue("new-checkout", false, {
 
 ## Configuration options
 
-| Option         | Type          | Required | Description                                                                                                                                    |
-| -------------- | ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| `binding`      | `Flagship`    | No       | The Flagship binding from `env.FLAGS`. Use this inside a Worker for best performance. The binding handles authentication automatically.        |
-| `appId`        | `string`      | No       | The Flagship app ID from the Cloudflare dashboard. Required when not using a binding.                                                          |
-| `accountId`    | `string`      | No       | Your Cloudflare account ID. Required when using `appId`.                                                                                       |
-| `authToken`    | `string`      | No       | A Cloudflare [API token](/flagship/api-tokens/) with Flagship Evaluate or Flagship App Evaluate permission. Required when not using a binding. |
-| `fetchOptions` | `RequestInit` | No       | Custom fetch options applied to HTTP requests.                                                                                                 |
-| `timeout`      | `number`      | No       | Request timeout in milliseconds. Defaults to `5000`.                                                                                           |
-| `retries`      | `number`      | No       | Retry attempts on transient errors. Defaults to `1` and is capped at `10`.                                                                     |
-| `retryDelay`   | `number`      | No       | Delay between retries in milliseconds. Defaults to `1000` and is capped at `30000`.                                                            |
-| `cacheTtl`     | `number`      | No       | Cache TTL in milliseconds. Enables response caching when greater than `0`.                                                                     |
-| `cacheMaxSize` | `number`      | No       | Maximum cached entries. Defaults to `1000` when `cacheTtl` is set.                                                                             |
+| Option            | Type          | Required | Description                                                                                                                                    |
+| ----------------- | ------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binding`         | `Flagship`    | No       | The Flagship binding from `env.FLAGS`. Use this inside a Worker for best performance. The binding handles authentication automatically.        |
+| `appId`           | `string`      | No       | The Flagship app ID from the Cloudflare dashboard. Required when not using a binding.                                                          |
+| `accountId`       | `string`      | No       | Your Cloudflare account ID. Required when using `appId`.                                                                                       |
+| `authToken`       | `string`      | No       | A Cloudflare [API token](/flagship/api-tokens/) with Flagship Evaluate or Flagship App Evaluate permission. Required when not using a binding. |
+| `fetchOptions`    | `RequestInit` | No       | Custom fetch options applied to HTTP requests.                                                                                                 |
+| `timeout`         | `number`      | No       | Request timeout in milliseconds. Defaults to `5000`.                                                                                           |
+| `retries`         | `number`      | No       | Retry attempts on transient errors. Defaults to `1` and is capped at `10`.                                                                     |
+| `retryDelay`      | `number`      | No       | Delay between retries in milliseconds. Defaults to `1000` and is capped at `30000`.                                                            |
+| `cacheTtl`        | `number`      | No       | Cache TTL in milliseconds. Enables response caching when greater than `0`.                                                                     |
+| `localEvaluation` | `boolean`     | No       | Downloads flag definitions and evaluates flags in-process. Requires `appId` and `accountId`. Defaults to `false`.                              |
+| `refreshInterval` | `number`      | No       | Minimum time between local evaluation refreshes in milliseconds. Defaults to `30000`.                                                          |
+| `cacheMaxSize`    | `number`      | No       | Maximum cached entries. Defaults to `1000` when `cacheTtl` is set.                                                                             |
 
 Provide either `binding` or `appId`, `accountId`, and `authToken`.
+
+## Local evaluation
+
+With local evaluation, the provider downloads the app's flag definitions and evaluates flags in-process. No network request is made per evaluation. Local evaluation works in Node.js and other runtimes that support the Fetch API, and cannot be combined with a binding.
+
+Local evaluation requires an API token with Flagship Read or Flagship App Read permission. Local evaluations do not appear in Flagship analytics.
+
+<TypeScriptExample>
+
+```ts
+await OpenFeature.setProviderAndWait(
+	new FlagshipServerProvider({
+		appId: "<APP_ID>",
+		accountId: "<ACCOUNT_ID>",
+		authToken: "<READ_API_TOKEN>",
+		localEvaluation: true,
+		refreshInterval: 30_000,
+	}),
+);
+```
+
+</TypeScriptExample>
+
+The provider downloads the definitions when OpenFeature initializes it. If the first download fails, initialization fails and the provider reports the `ERROR` status. A `401` or `403` response reports `FATAL`.
+
+The provider refreshes definitions lazily. When an evaluation runs and the downloaded definitions are older than `refreshInterval`, the provider starts a refresh in the background and evaluates against the current definitions. If a refresh fails, the provider keeps serving the last downloaded definitions and emits the `PROVIDER_STALE` event. It emits `PROVIDER_READY` again when a refresh succeeds.
+
+`accountId` is always required, including when you set `endpoint`. Local evaluation cannot be combined with `cacheTtl` or `binding`.
 
 ## Response caching
 
