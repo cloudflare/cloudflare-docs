@@ -6,7 +6,7 @@ products:
   - workers
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components";
+import { TabItem, Tabs, TypeScriptExample, WranglerConfig } from "~/components";
 
 The Rate Limiting API lets you define rate limits and write code around them in your Worker.
 
@@ -97,10 +97,11 @@ export default {
 
 </TabItem> </Tabs>
 
-The `limit()` API accepts a single argument — a configuration object with the `key` field.
+The `limit()` API accepts a single argument — a configuration object with the `key` field and an optional `delta` field.
 
 - The key you provide can be any `string` value.
 - A common pattern is to define your key by combining a string that uniquely identifies the actor initiating the request (ex: a user ID or customer ID) and a string that identifies a specific resource (ex: a particular API route).
+- The `delta` sets how much the call counts toward the limit, and defaults to `1`. Refer to [Weighted requests](#weighted-requests).
 
 You can define and configure multiple rate limiting configurations per Worker, which allows you to define different limits against incoming request and/or user parameters as needed to protect your application or upstream APIs.
 
@@ -145,7 +146,7 @@ A rate limiting binding has the following settings:
 | --------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `namespace_id`  | `string` | A string containing a positive integer that uniquely defines this rate limiting namespace within your Cloudflare account (for example, `"1001"`). Although the value must be a valid integer, it is specified as a string. This is intentional. |
 | `simple`        | `object` | The rate limit configuration. `simple` is the only supported type.                                                                                                                                                                              |
-| `simple.limit`  | `number` | The request threshold for calls to `limit()` within the given `period`, per Cloudflare location. Requests can exceed this threshold; refer to [Accuracy](#accuracy).                                                                            |
+| `simple.limit`  | `number` | The request threshold for calls to `limit()` within the given `period`, per Cloudflare location. Each call counts as its `delta`, which defaults to `1`. Requests can exceed this threshold; refer to [Accuracy](#accuracy).                    |
 | `simple.period` | `number` | The duration of the rate limit window, in seconds. Must be either `10` or `60`.                                                                                                                                                                 |
 
 :::note
@@ -175,6 +176,46 @@ For example, to apply a rate limit of 1500 requests per minute, you would define
 ```
 
 </WranglerConfig>
+
+## Weighted requests
+
+By default, each call to `limit()` counts as one request. To count a call as more than one request, pass a `delta`. For example, you can make an expensive route use more of the limit than a cheap one:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export default {
+  async fetch(request, env): Promise<Response> {
+    const { pathname } = new URL(request.url);
+
+    // A search costs 10 times as much as any other request
+    const delta = pathname.startsWith("/search") ? 10 : 1;
+
+    const { success } = await env.MY_RATE_LIMITER.limit({
+      key: pathname,
+      delta,
+    });
+    if (!success) {
+      return new Response("Rate limit exceeded", { status: 429 });
+    }
+
+    return new Response("Success!");
+  },
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+The `delta` must be a positive integer. Other values can cause `limit()` to throw an error.
+
+The rate limit decision uses the count before the call:
+
+- A call succeeds while the count is below the limit, even if its `delta` takes the count past the limit.
+- A call that returns `success: false` does not add to the count.
+
+Weighted counts are approximate, like other counts. Refer to [Accuracy](#accuracy).
+
+To use `delta` in local development, use version 4.157.0 or later of the [Wrangler CLI](/workers/wrangler/).
 
 ## Best practices
 
