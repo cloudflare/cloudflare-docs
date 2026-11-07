@@ -85,6 +85,8 @@ With local evaluation, the provider downloads the app's flag definitions and eva
 Local evaluation requires an API token with Flagship Read or Flagship App Read permission. Local evaluations do not appear in Flagship analytics.
 
 ```go
+import "time"
+
 provider, err := flagship.NewProvider(flagship.Options{
 	AppID:           "<APP_ID>",
 	AccountID:       "<ACCOUNT_ID>",
