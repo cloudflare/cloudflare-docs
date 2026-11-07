@@ -235,7 +235,7 @@ git -C artifacts-clone log --oneline -1
 
 You should see the commit you pushed in the previous step.
 
-Use the `remote` URL returned by your Worker after each dev-server restart. The local loopback port can change.
+The local Git port is saved with your local state and reused after a dev-server restart. If it changes because another process took it, use the new `remote` URL returned by your Worker.
 
 ## 7. Deploy your Worker
 

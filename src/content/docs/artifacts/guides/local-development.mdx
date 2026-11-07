@@ -63,17 +63,19 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
 
    Use the same Wrangler config file with the Cloudflare Vite plugin or Workers Vitest. For a Worker example that creates a repo, refer to [Get started with Workers](/artifacts/get-started/workers/).
 
-4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP and a port selected for this dev session. Get a fresh URL from the binding after restarting the dev server instead of hardcoding the port:
+4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP. Wrangler prints each namespace's Git remote prefix at startup. The port is saved with your local state and reused after a restart, so clones keep working. If another process has taken the port, the dev server picks a new one; get the new URL from the binding and run `git remote set-url origin <remote>` in existing clones:
 
    ```sh
    git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
    ```
 
-   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username and the repo token as the password.
+   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username and the repo token as the password. Snippets elsewhere in these docs that strip `https://` from the remote do not apply to the local `http://` remote.
 
 </Steps>
 
 ## Keep or reset local repositories
+
+As in production, a push that contains a file larger than 32 MB is rejected, and reading a larger file throws an `ArtifactsError` with code `MEMORY_LIMIT`. `listTokens()` includes revoked and expired tokens with their `state`.
 
 Local repository metadata and Git objects persist under your dev tool's resource persistence directory. For Wrangler, this is typically `.wrangler/state/` when persistence is on. Use the same project root and persistence settings to keep data across restarts. Turning off persistence, such as with Vite's `persistState: false`, makes the data temporary.
 
