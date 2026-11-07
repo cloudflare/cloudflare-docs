@@ -107,7 +107,7 @@ defer openfeature.Shutdown()
 
 The provider downloads the definitions when OpenFeature initializes it. If the first download fails, initialization returns an error and the provider reports the `ERROR` status. A background goroutine refreshes the definitions every `RefreshInterval`. If a background refresh fails, the provider keeps serving the last downloaded definitions. Calling `Shutdown` stops the goroutine.
 
-Local evaluation cannot be combined with `CacheTTL`. `AccountID` is always required, including when you set `Endpoint`.
+Local evaluation cannot be combined with `CacheTTL`. `AccountID` is always required. If you set `Endpoint` instead of `AppID`, the URL path must end in `/evaluate` so the provider can derive the definitions URL.
 
 ## Response caching
 
