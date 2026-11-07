@@ -265,3 +265,161 @@ entries:
           - Logs / Analytics not available outside US region when using Customer Metadata Boundary.
       gkm:
         status: out-of-scope
+  - product: Agents
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Artifacts
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Basin
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Browser Run
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Containers
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Email Service
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Hyperdrive
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: K2
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: RealtimeKit
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Sandboxes
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: TURN / SFU
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Workers for Platforms
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Workers Observability
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Queues
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: requirements
+        requirements:
+          - Set a [jurisdiction](/queues/configuration/data-location/) (`eu`, `us`, or `fedramp`) when you create the queue. The jurisdiction restricts where Queues stores and processes messages.
+        notes:
+          - Workers can produce to and consume from a restricted queue from any location.
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Workflows
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: requirements
+        requirements:
+          - Set a [jurisdiction](/workflows/reference/data-location/) on the Workflow when you create it. The jurisdiction controls where Workflow instances run and persist data, and cannot be changed later.
+        impact:
+          - Workflow settings are stored outside the selected jurisdiction.
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
