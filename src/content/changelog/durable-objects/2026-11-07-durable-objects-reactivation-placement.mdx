@@ -1,0 +1,13 @@
+---
+title: Improved placement for reactivated Durable Objects
+description: Cloudflare has improved Durable Object placement after inactivity, which can reduce cold starts for SQLite-backed Durable Objects.
+date: 2026-11-07
+---
+
+Cloudflare has improved how it chooses where to start a Durable Object after the object has been inactive.
+
+This can make cold starts less frequent for SQLite-backed Durable Objects that are reactivated soon after going idle. Actual results depend on your workload and traffic patterns.
+
+The change is live in all regions. No action is needed by customers to see benefits from this change.
+
+To learn more about how Durable Objects are placed, refer to [Data location](/durable-objects/reference/data-location/).
