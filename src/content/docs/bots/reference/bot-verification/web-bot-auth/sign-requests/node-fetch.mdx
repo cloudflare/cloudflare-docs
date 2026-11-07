@@ -1,0 +1,91 @@
+---
+title: Node.js fetch and Undici
+description: Sign Node.js fetch and Undici requests with a Web Bot Auth dispatcher that signs each request and redirect hop.
+pcx_content_type: integration-guide
+products:
+  - bots
+sidebar:
+  order: 1
+---
+
+import {
+	Code,
+	CopyPromptButton,
+	PackageManagers,
+	Render,
+	Steps,
+} from "~/components";
+import source from "~/../public/web-bot-auth/dispatcher.mjs?raw";
+
+Use a [custom dispatcher](https://nodejs.org/api/globals.html#custom-dispatcher) to sign requests from Node.js `fetch` or Undici. Keep one dispatcher for connection pooling.
+
+Requires Node.js 24 or later and Undici 7.x. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
+
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Integrate Web Bot Auth into this project's Node.js HTTP calls using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/node-fetch/. Use the dispatcher and shared signer, configure allowed origins, and test redirects and retries. Never print or commit the private key."
+/>
+
+## Add the dispatcher
+
+<Steps>
+1. Install Undici.
+
+   <PackageManagers pkg="undici@7" />
+
+2. Save [dispatcher.mjs](/web-bot-auth/dispatcher.mjs) and the shared [signer.mjs](/web-bot-auth/signer.mjs) in your project.
+
+3. Create the dispatcher with your key and allowed origins. Replace the signature-agent origin with your own.
+
+   ```js title="fetch.mjs"
+   import { readFile } from "node:fs/promises";
+   import { createWebBotAuthDispatcher } from "./dispatcher.mjs";
+
+   const dispatcher = createWebBotAuthDispatcher({
+     privateKey: await readFile("./private-key.pem"),
+     signatureAgent: "https://bot.example.com",
+     allowedOrigins: ["https://example.com", "https://crawltest.com"],
+   });
+
+   try {
+     const response = await fetch("https://crawltest.com/cdn-cgi/web-bot-auth", {
+       dispatcher,
+     });
+     console.log(response.status, await response.text());
+   } finally {
+     await dispatcher.close();
+   }
+   ```
+
+4. Run `node fetch.mjs` and [check the response](#verify-the-request).
+</Steps>
+
+## Dispatcher source
+
+<Code code={source} lang="js" meta='title="dispatcher.mjs"' />
+
+## Use Undici directly
+
+Pass the same dispatcher to `undici.request`. Consume or discard the response body before closing the dispatcher.
+
+```js
+import { request } from "undici";
+
+const { statusCode, body } = await request("https://example.com/", {
+	dispatcher,
+});
+console.log(statusCode, await body.text());
+```
+
+## Redirects and retries
+
+- Node.js `fetch` dispatches each redirect hop through the signer. A redirected request gets a new signature for its URL and method.
+- Undici `request` does not follow redirects by default. Keep that default, or follow each redirect with another `request` call through this dispatcher.
+- Redirects outside `allowedOrigins` continue without Web Bot Auth headers.
+- Retry by calling `fetch` or `request` again. Do not place retry handling inside the wrapped dispatcher, where it could reuse old signatures.
+- Pass `signal` and streaming bodies as usual. Recreate consumed bodies before retrying.
+- This example owns the wrapped dispatcher. `close()` and `destroy()` forward to it.
+
+## Verify the request
+
+<Render file="web-bot-auth-verify" product="bots" />

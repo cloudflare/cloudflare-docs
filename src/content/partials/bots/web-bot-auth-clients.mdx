@@ -1,0 +1,7 @@
+| HTTP client | Integration | Redirect behavior |
+| --- | --- | --- |
+| [Node.js `fetch` / Undici](/bots/reference/bot-verification/web-bot-auth/sign-requests/node-fetch/) | Custom dispatcher | Signs each `fetch` redirect hop. |
+| [Python HTTPX](/bots/reference/bot-verification/web-bot-auth/sign-requests/python-httpx/) | Sync and async transports | Signs each hop when you enable redirects. |
+| [Python Requests](/bots/reference/bot-verification/web-bot-auth/sign-requests/python-requests/) | Session adapter | Signs each redirect hop. |
+| [Go `net/http`](/bots/reference/bot-verification/web-bot-auth/sign-requests/go/) | `RoundTripper` | Signs each redirect hop. |
+| [Playwright](/bots/reference/bot-verification/web-bot-auth/sign-requests/playwright/) | Browser context route | Stops redirects. Navigate to the final URL. |
