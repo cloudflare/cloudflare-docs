@@ -25,36 +25,115 @@ Without regular maintenance, tables can suffer from:
 
 By enabling automatic table maintenance, Basin Catalog ensures your tables remain optimized without having to manually run them yourself.
 
-## View and queue table maintenance
+## How table maintenance runs
 
-The **Maintenance** tab for each table shows the compaction and snapshot expiration configuration, schedule, and next eligibility time. It also provides a paginated history of maintenance runs with their status and duration.
+Table maintenance runs on a schedule for each table. The maintenance interval is one hour and cannot be changed. After a run, a table becomes eligible for its next run when the interval ends. The scheduler then claims the table when it next polls for work. The eligibility time is the earliest time a run can start, not a guaranteed start time.
+
+Each run does these operations in order:
+
+1. **Manifest optimization**: As the first step of compaction, rewrites and clusters manifest files by partition. Tables with well-clustered manifests are skipped.
+2. **Compaction**: Combines small data files, if compaction is turned on.
+3. **Snapshot expiration**: Expires old snapshots and deletes unreferenced files, if snapshot expiration is turned on.
+
+The scheduler skips tables that did not change since the last run. Table maintenance also needs a [maintenance credential](/basin-catalog/manage-catalogs/#manage-the-maintenance-credential). If the catalog has no valid credential, maintenance does not run.
+
+### Turn on maintenance for existing tables
+
+When you turn on compaction or snapshot expiration for a catalog, Basin Catalog configures up to 50 existing tables. Tables that already have maintenance turned on do not count toward this limit. Tables that you create later are configured automatically.
+
+If a catalog has more than 50 tables when you turn on maintenance, turn on maintenance for the remaining tables individually. For more information, refer to [Manage catalogs](/basin-catalog/manage-catalogs/#enable-compaction).
+
+Before you turn on maintenance for a table, turn it on for the catalog. Otherwise, the request fails with error `40012` for compaction or `40013` for snapshot expiration.
+
+## View table maintenance
+
+The **Maintenance** tab for each table shows the compaction and snapshot expiration configuration, the maintenance interval, and the next eligibility time. It also shows a history of maintenance runs.
 
 <Steps>
 1. In the Cloudflare dashboard, go to **Basin Catalog**.
 
    <DashButton url="/?to=/:account/data-catalog/overview" />
-2. Select a catalog, then select the **Explorer** tab. The **Explorer** tab opens by default.
+2. Select a catalog. The **Explorer** tab opens by default.
 3. Select a table.
 4. Select the **Maintenance** tab.
 </Steps>
 
 ![Maintenance tab for a Basin Catalog table showing schedules and recent runs](~/assets/images/r2-data-catalog/table-maintenance-view.png)
 
-The **Recent runs** section displays five runs per page. Expand a run to view metrics for its manifest rewrite, compaction, and snapshot expiration operations. For manually queued runs, the expanded details include a searchable `request_id`.
+### Recent runs
 
-### Queue compaction manually
+The **Recent runs** section lists maintenance runs for the table, with the newest run first. It shows five runs per page. While a run is in progress, the list refreshes every five seconds.
 
-Manual queueing requests compaction for the selected table. The request enters the same queue used by automatic maintenance and starts when the scheduler next polls for eligible work.
+Each run has one of these statuses:
+
+| Status      | Description                                                    |
+| ----------- | -------------------------------------------------------------- |
+| Running     | The run is in progress.                                        |
+| Succeeded   | The run completed.                                             |
+| Failed      | The run stopped because of an error.                           |
+| Interrupted | The run stopped before it completed.                           |
+| Timed out   | The run did not complete within its time limit.                |
+| Cancelled   | The run was cancelled.                                         |
+
+Expand a run to view its outcome, a message, and the results of each operation:
+
+- **Rewrite manifests**: The number of manifest files kept and replaced.
+- **Compaction**: The number and size of input and output files. If compaction was skipped, the reason.
+- **Snapshot expiration**: The number of snapshots expired.
+
+Compaction can commit part of its work if it reaches its time limit. A later run compacts the remaining files.
+
+### Search runs by request ID
+
+Each manually queued run has a request ID. Runs that the scheduler starts do not have a request ID.
+
+To find a manually queued run, enter its request ID in **Search by request ID**. The dashboard searches the current page first. If there is no match, it searches up to 10 pages of recent runs.
+
+## Queue table maintenance manually
+
+You can queue a maintenance run for a table instead of waiting for the next scheduled run. A queued run includes the same operations as a scheduled run.
+
+Queueing makes the table eligible for the scheduler at the next poll. It does not start the run immediately. If the table has no work to do, the run can complete without changes.
+
+To queue maintenance for a table, at least one of compaction or snapshot expiration must be turned on for the table and the catalog. You also need edit permissions for R2.
 
 <Steps>
-1. From the table's **Maintenance** tab, select **Queue maintenance**.
-2. In the confirmation dialog, select **Queue maintenance**.
+1. In the Cloudflare dashboard, go to **Basin Catalog**.
+
+   <DashButton url="/?to=/:account/data-catalog/overview" />
+2. Select a catalog, then select a table in the **Explorer** tab.
+3. Select the **Maintenance** tab.
+4. Select **Start maintenance**.
+5. In the **Queue maintenance** dialog, select **Queue maintenance**.
 </Steps>
 
-The dashboard checks your permissions before accepting the request. Queueing can also return the following errors:
+The dashboard shows the request ID of the queued run. Use the request ID to [find the run](#search-runs-by-request-id) in **Recent runs**.
 
-- `40903`: A maintenance executor conflict prevents the request from being queued.
-- `42901`: The daily accepted-request limit has been reached.
+Each table accepts up to 24 manual requests per UTC day, across all maintenance types. Queueing can return these errors:
+
+| Error   | Description                                                                                      |
+| ------- | ------------------------------------------------------------------------------------------------ |
+| `40903` | A maintenance run for the table is in progress. Wait for the run to complete, then try again.     |
+| `42901` | The table reached its limit of 24 accepted requests for the UTC day. Try again after 00:00 UTC.   |
+
+### Queue maintenance with the API
+
+You can also queue maintenance with the [Cloudflare API](/api/resources/basin_catalog/). Set `<CONFIGURATION_TYPE>` to `compaction` or `snapshot_expiration`. The optional `request_id` is a UUID. If you send the same `request_id` again, Basin Catalog returns the original result and does not queue another run.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/basin-catalog/<BUCKET_NAME>/namespaces/<NAMESPACE>/tables/<TABLE>/maintenance-configs/<CONFIGURATION_TYPE>/queue" \
+  --request POST \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{ "request_id": "5f0c7e2a-3b1d-4c8e-9a6f-2d4b8e1c7a90" }'
+```
+
+To list maintenance runs for a table, send a `GET` request to the `maintenance-runs` endpoint. Use `page_size` and `page_token` to page through results.
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/basin-catalog/<BUCKET_NAME>/namespaces/<NAMESPACE>/tables/<TABLE>/maintenance-runs?page_size=50" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
 
 ## Why do I need compaction?
 
@@ -68,7 +147,9 @@ Every write operation in [Apache Iceberg](https://iceberg.apache.org/), no matte
 
 ## Basin Catalog automatic compaction
 
-Basin Catalog can now [manage compaction](/basin-catalog/manage-catalogs/) for Apache Iceberg tables stored in R2. When enabled, compaction runs automatically and combines new files that have not been compacted yet.
+Basin Catalog can [manage compaction](/basin-catalog/manage-catalogs/) for Apache Iceberg tables stored in R2. When enabled, compaction runs automatically and combines new files that have not been compacted yet.
+
+New catalogs have compaction turned on with a target file size of 128 MB. Compaction does not run until the catalog has a [maintenance credential](/basin-catalog/manage-catalogs/#manage-the-maintenance-credential).
 
 Compacted files are prefixed with `compacted-` in the `/data/` directory of a respective table.
 
@@ -112,7 +193,7 @@ For more details on managing compaction, refer to [Manage catalogs](/basin-catal
 
 ### Choose the right target file size
 
-You can configure the target file size for compaction. Currently, the minimum is 64 MB and the maximum is 512 MB.
+You can configure the target file size for compaction. Allowed values are 64 MB, 128 MB, 256 MB, and 512 MB. The default is 128 MB.
 
 Different compute engines have different optimal file sizes, so check their documentation.
 
@@ -138,10 +219,20 @@ Every write to an Iceberg table—whether an insert, update, or delete—creates
 
 Snapshot expiration uses two parameters to determine which snapshots to remove:
 
-- `--older-than-days`: Remove snapshots older than this many days (default: 30 days)
-- `--retain-last`: Always keep this minimum number of recent snapshots (default: 5 snapshots)
+- **Maximum snapshot age** (`--older-than-days` in Wrangler): Remove snapshots older than this age.
+- **Minimum snapshots to keep** (`--retain-last` in Wrangler): Always keep this minimum number of recent snapshots.
 
 Both conditions must be met for a snapshot to be expired. This ensures you always retain recent snapshots even if they are older than the age threshold.
+
+Snapshot expiration is turned off for new catalogs. If you do not set the parameters when you turn it on, the defaults depend on how you turn it on:
+
+| Method                                       | Maximum snapshot age | Minimum snapshots to keep |
+| -------------------------------------------- | -------------------- | ------------------------- |
+| Dashboard                                    | 7 days               | 3                         |
+| Wrangler, catalog level                      | 30 days              | 5                         |
+| Cloudflare API, with the parameters omitted  | 7 days               | 100                       |
+
+Each run expires up to 10,000 snapshots. Snapshot expiration also deletes data files that are no longer referenced by any snapshot. It does not remove unused schemas or partition specs.
 
 ### Examples
 
@@ -190,6 +281,8 @@ These are generic recommendations, make sure to consider:
 
 ## Current limitations
 
-- Only data files stored in parquet format are currently supported with compaction.
+- Only data files stored in Parquet format are currently supported with compaction.
 - Files that were not previously referenced by a snapshot will not be cleaned up (orphaned files).
-- Minimum target file size for compaction is 64 MB and maximum is 512 MB.
+- Compaction target file size must be 64 MB, 128 MB, 256 MB, or 512 MB.
+- Compaction skips Iceberg version 3 tables that have a non-primitive `initial-default` value.
+- The maintenance interval is one hour and cannot be changed.

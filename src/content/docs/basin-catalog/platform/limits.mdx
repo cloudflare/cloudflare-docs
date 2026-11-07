@@ -1,0 +1,75 @@
+---
+title: Limits
+description: Naming rules, request limits, rate limits, and table maintenance limits for Basin Catalog.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - basin-catalog
+---
+
+## Catalogs
+
+| Feature                    | Limit                          |
+| -------------------------- | ------------------------------ |
+| Catalogs per R2 bucket     | 1                              |
+| Supported bucket locations | Default jurisdiction only [^1] |
+| Force delete of a catalog  | 25,000 metadata objects [^2]   |
+
+[^1]: Basin Catalog does not support buckets in the EU, FedRAMP, or FedRAMP High jurisdictions.
+
+[^2]: To delete a larger catalog, drop its tables and namespaces first. Refer to [Delete a catalog](/basin-catalog/manage-catalogs/#delete-a-catalog).
+
+## Namespaces, tables, and views
+
+| Feature                               | Limit                                      |
+| ------------------------------------- | ------------------------------------------ |
+| Namespace depth                       | 5 levels                                   |
+| Characters not allowed in a namespace | `.` (period)                               |
+| Reserved namespace names [^3]         | `system`, `examples`, `information_schema` |
+| Empty namespace, table, or view names | Not allowed                                |
+| Iceberg table format versions         | 1, 2, and 3                                |
+
+[^3]: Reserved names apply to the first level of a namespace and are not case-sensitive.
+
+Basin Catalog also reserves some table and namespace properties. For more information, refer to [Table properties](/basin-catalog/reference/table-properties/).
+
+## Requests
+
+| Feature                                   | Limit                         |
+| ----------------------------------------- | ----------------------------- |
+| Page size for list operations             | 100 by default, 1,000 maximum |
+| Tables in one `commitTransaction` request | 7,500                         |
+| Iceberg REST API request timeout          | 40 seconds                    |
+
+## Rate limits
+
+Basin Catalog rate limits write operations for each catalog. Read operations, such as `loadTable` and `listTables`, are not rate limited.
+
+Each limit applies over a 60-second window:
+
+| Operations                                                                                   | Limit per catalog         |
+| -------------------------------------------------------------------------------------------- | ------------------------- |
+| All write operations combined                                                                | 120                       |
+| `createTable`, `registerTable`, `commitTransaction`, and `createView`                        | 10                        |
+| `createNamespace`, `dropNamespace`, `dropTable`, `renameTable`, `dropView`, and `renameView` | 20                        |
+| `updateTable` and `replaceView`                                                              | 20 for each table or view |
+
+A request over a limit returns `429` with the error type `TooManyRequestsException` and a `Retry-After: 60` header.
+
+`updateNamespaceProperties` counts only toward the limit for all write operations combined.
+
+## Table maintenance
+
+| Feature                                                         | Limit                         |
+| --------------------------------------------------------------- | ----------------------------- |
+| Maintenance interval                                            | 1 hour                        |
+| Compaction target file size                                     | 64, 128, 256, or 512 MB       |
+| Snapshots expired in one maintenance run                        | 10,000                        |
+| Manually queued maintenance requests                            | 24 per table per UTC day [^4] |
+| Existing tables configured when you turn on catalog maintenance | 50 [^5]                       |
+| Maintenance runs returned per page by the API                   | 50 by default, 100 maximum    |
+
+[^4]: The limit applies to accepted requests across all maintenance types. It resets at 00:00 UTC.
+
+[^5]: Tables that you create after you turn on catalog maintenance are configured automatically. Refer to [Turn on maintenance for existing tables](/basin-catalog/table-maintenance/#turn-on-maintenance-for-existing-tables).
