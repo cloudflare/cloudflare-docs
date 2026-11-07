@@ -256,6 +256,10 @@ Presigned URLs work with the S3 API domain (`<ACCOUNT_ID>.r2.cloudflarestorage.c
 
 If you need authentication with R2 buckets accessed via custom domains (public buckets), use the [WAF HMAC validation feature](/ruleset-engine/rules-language/functions/#hmac-validation) (requires Pro plan or above).
 
+## Local development
+
+To test presigned requests locally, configure your S3 client with the [local S3-compatible endpoint and credentials](/r2/local-development/#serve-buckets-over-the-s3-api). Generate URLs using that endpoint and path-style addressing. The local endpoint accepts signed requests for local buckets only.
+
 ## Related resources
 
 <LinkCard
