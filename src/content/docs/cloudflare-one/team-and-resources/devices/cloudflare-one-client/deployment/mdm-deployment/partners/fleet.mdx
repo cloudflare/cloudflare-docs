@@ -145,3 +145,116 @@ sudo apt-get -y update && sudo apt-get -y install cloudflare-warp
 ```
 
 To install the Cloudflare One Client on other Linux distributions, refer to the [package repository](https://pkg.cloudflareclient.com/).
+
+## Android
+
+Fleet can deploy the Cloudflare One Agent to Android devices as a managed app and configure it with a managed configuration file. This guide covers fully managed (company-owned) devices.
+
+### Prerequisites
+
+- [Android MDM turned on in Fleet](https://fleetdm.com/guides/android-mdm-setup) and Android devices enrolled in the Fleet team that requires the Cloudflare One Agent.
+- A Zero Trust organization with [device enrollment permissions](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/device-enrollment/) that allow your users to enroll.
+- A web browser installed on the device. The Cloudflare One Agent opens a browser to sign in, and a fully managed device might not have one available by default. Add a browser such as [Chrome](https://play.google.com/store/apps/details?id=com.android.chrome) to the same Fleet team.
+
+### 1. Create a managed configuration file
+
+Create a JSON file with your desired [deployment parameters](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/). Fleet takes the app's settings as a plain JSON object under `managedConfiguration`. Place the Cloudflare One Agent parameters inside `app_config_bundle_list`:
+
+```json
+{
+  "managedConfiguration": {
+    "app_config_bundle_list": [
+      {
+        "organization": "your-team-name",
+        "service_mode": "warp",
+        "switch_locked": true,
+        "auto_connect": 0
+      }
+    ]
+  }
+}
+```
+
+:::note
+If you are converting a configuration from the [Intune example](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/partners/intune/#android), remove the `managedProperty` and `value*` wrappers. Each `valueBundleArray` becomes a JSON array of objects.
+:::
+
+### 2. Add the Cloudflare One Agent to Fleet
+
+Add the Cloudflare One Agent (`com.cloudflare.cloudflareoneagent`) from Google Play as an Android app for the team, and set its managed configuration to the file you created. For the steps in the Fleet admin console and REST API, refer to the [Fleet documentation](https://fleetdm.com/guides/install-app-store-apps).
+
+To deploy with GitOps, add the app to the team's `software.app_store_apps` list:
+
+```yaml
+software:
+  app_store_apps:
+    - app_store_id: com.cloudflare.cloudflareoneagent
+      platform: android
+      self_service: true
+      setup_experience: true
+      configuration:
+        path: ../platforms/android/managed-app-configurations/cloudflare-one-agent.json
+    - app_store_id: com.android.chrome
+      platform: android
+      self_service: true
+      setup_experience: true
+```
+
+With `setup_experience: true`, Fleet installs the apps while a device enrolls. This only applies to devices that enroll after you add it. Install the app on devices that are already enrolled as described in the next step.
+
+### 3. Install the Cloudflare One Agent with Fleet
+
+To deploy the app to a host that is already enrolled:
+
+1. In the Fleet admin console, go to **Hosts**.
+2. Select the host that requires the Cloudflare One Agent.
+3. Go to **Software** and search for `Cloudflare`.
+4. Select **Actions** > **Install**.
+
+Changes to the managed configuration apply to the installed app without reinstalling it. Fleet shows the app as pending until the configuration reaches the device.
+
+After the app opens, the user signs in to your Zero Trust organization. <Render file="warp/connectivity-status-check" product="cloudflare-one" />
+
+### 4. (Optional) Use per-app VPN
+
+[Per-app VPN](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#per-app-vpn-parameters-android) sends traffic from only the apps you choose through the Cloudflare One Client. It requires Cloudflare One Agent version 2.3 or greater.
+
+Add a `tunneled_apps` array to the managed configuration. Each entry has an `app_identifier` (the app's package name) and, for browsers, `is_browser`:
+
+```json
+{
+  "managedConfiguration": {
+    "app_config_bundle_list": [
+      {
+        "organization": "your-team-name",
+        "service_mode": "warp",
+        "tunneled_apps": [
+          {
+            "app_identifier": "com.android.chrome",
+            "is_browser": true
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+To check that it works, open `https://www.cloudflare.com/cdn-cgi/trace` in a tunneled app and in an app that is not in `tunneled_apps`. In the tunneled app, the response includes `warp=plus`. In the other app, it includes `warp=off`.
+
+### 5. (Optional) Use always-on VPN
+
+To keep the Cloudflare One Client connected, set the Cloudflare One Agent as the always-on VPN with a Fleet Android configuration profile:
+
+```json
+{
+  "alwaysOnVpnPackage": {
+    "packageName": "com.cloudflare.cloudflareoneagent",
+    "lockdownEnabled": false
+  }
+}
+```
+
+Add the profile to the team as an Android configuration profile. For the steps, refer to the [Fleet documentation](https://fleetdm.com/guides/custom-os-settings). Always-on VPN requires `use_in_app_webview` set to `true` in the managed configuration.
+
+Set `lockdownEnabled` to `true` to block all network traffic on the device while the VPN is not connected. Verify always-on VPN with lockdown disabled before you turn lockdown on. If the Cloudflare One Agent cannot connect while lockdown is on, the device has no network access and cannot receive configuration changes from Fleet.
