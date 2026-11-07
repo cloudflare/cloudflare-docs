@@ -1,0 +1,61 @@
+---
+{}
+---
+
+import { Tabs, TabItem } from "~/components";
+
+### `draw`
+
+Adds a text or image overlay. Overlays are drawn in the order they appear; the last overlay is the topmost layer.
+
+:::note
+
+The URL interface supports `draw` only in transformation URLs for remote images.
+
+To watermark a hosted image, configure the overlay in a [predefined variant](/images/optimization/hosted-images/create-variants/) or use the [Images binding in Workers](/images/optimization/binding/).
+
+:::
+
+An overlay can be configured with the following settings:
+
+| Setting | Applies to | Description |
+| --- | --- | --- |
+| `url` | Image | Sets the absolute URL of the overlay image. Must be percent-encoded when using the URL interface. |
+| `text` | Text | Sets the text string to render. |
+| `font` | Text | Sets the font used to render the text. Must be percent-encoded when using the URL interface. |
+| `color` | Text | Sets the fill color for the text. |
+| `size` | Text | Sets the font size in pixels. |
+| `top`, `right`, `bottom`, `left` | Both | Positions the overlay as an offset, in pixels, to the specified edge. |
+| `opacity` | Both | Sets the overlay opacity from `0.0` to `1.0`. |
+| `repeat` | Both | Repeats the overlay horizontally, vertically, or in both directions. |
+| `composite` | Both | Controls how the overlay blends with the base image. |
+
+The `draw` parameter also accepts additional optimization settings, such as `width`, `height`, `blur`, and `rotate`.
+
+<Tabs>
+  <TabItem label="URL format">
+  ```txt
+  draw=((url=https%3A%2F%2Fexample.com%2Flogo.png,bottom=5,right=5,width=100))
+  ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {
+    image: {
+      draw: [
+        {
+          url: "https://example.com/logo.png",
+          bottom: 5,
+          right: 5,
+          width: 100,
+        },
+      ],
+    },
+  }
+  ```
+  </TabItem>
+</Tabs>
+
+For detailed setting descriptions and additional examples, refer to [Draw overlays and watermarks](/images/optimization/draw-overlays/).
+
+For binding-specific methods and image sources, refer to [Optimize with Workers](/images/optimization/binding/).

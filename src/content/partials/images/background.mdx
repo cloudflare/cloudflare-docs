@@ -10,13 +10,29 @@ import backgroundImg from "~/assets/images/images/examples/background-red.jpg";
 
 Specifies an opaque or transparent color to fill blank or transparent pixels in the image. The default is `%23FFFFFF` (white).
 
-Accepts the following properties:
+Accepts a color value in the following formats:
 
 - A HEX color code, formatted as `%23RRGGBB`.
 - A CSS color name, e.g. `white` or `red`.
 - An `rgb()` or `rgba()` CSS color function, e.g. `rgba(250,40,145,0.5)`.
 
 The background color is visible in images with transparent pixels, including images that are resized with `fit=pad`.
+
+<Tabs>
+  <TabItem label="URL format">
+  ```txt
+  background=%23ff0000
+  background=red
+  background=rgb%28240%2C40%2C145%29
+  ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {background: "#RRGGBB"}}
+  cf: {image: {background: "rgba(240,40,145,0)"}}
+  ```
+  </TabItem>
+</Tabs>
 
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
@@ -38,19 +54,3 @@ The background color is visible in images with transparent pixels, including ima
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-  ```txt
-background=%23ff0000
-background=red
-background=rgb%28240%2C40%2C145%29
-```
-</TabItem>
-<TabItem label="Workers">
-```js
-cf: {image: {background: "#RRGGBB"}}
-cf: {image: {background: "rgba(240,40,145,0)"}}
-```
-  </TabItem>
-</Tabs>

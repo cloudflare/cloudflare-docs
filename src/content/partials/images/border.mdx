@@ -7,23 +7,45 @@ import { Tabs, TabItem} from "~/components"
 
 Adds a border around the image.
 
-:::note
-This feature is available only in Workers.
-:::
+Accepts the following settings:
 
-Accepts the following properties:
-
-- `color` — Sets the color of the border. Accepts any valid CSS color value, for example `#FF0000`, `rgb(0,0,0)`, or `red`.
-- `width` — Sets the uniform border, in pixels, on all four sides.
-- `top`, `right`, `bottom`, `left` — Sets the border width, in pixels, for individual sides.
+| Setting | Description | Accepted values |
+| --- | --- | --- |
+| `color` | Sets the color of the border. | Any valid CSS color |
+| `width` | Sets the uniform border, in pixels, on all four sides. | Integer |
+| `top`, `right`, `bottom`, `left` | Sets the border width, in pixels, for individual sides. | Integer |
 
 The border is applied after the image has been resized. The border width automatically scales with the [`dpr`](/images/optimization/features#dpr) parameter to ensure sharpness on high-resolution screens.
 
 <Tabs>
+  <TabItem label="URL format">
+  ```txt
+  border=(color=%23ffffff,width=10)
+  border=(color=rgba(0,0,0,0),top=5,right=10,bottom=5,left=10)
+  ```
+  </TabItem>
   <TabItem label="Workers">
   ```js
-  cf: {image: {border: {color: "rgb(0,0,0,0)", top: 5, right: 10, bottom: 5, left: 10}}}
-  cf: {image: {border: {color: "#FFFFFF", width: 10}}}
+  cf: {
+    image: {
+      border: {
+        color: "rgba(0,0,0,0)",
+        top: 5,
+        right: 10,
+        bottom: 5,
+        left: 10,
+      },
+    },
+  }
+
+  cf: {
+    image: {
+      border: {
+        color: "#FFFFFF",
+        width: 10,
+      },
+    },
+  }
   ```
   </TabItem>
 </Tabs>
