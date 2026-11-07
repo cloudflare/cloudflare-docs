@@ -1,0 +1,165 @@
+---
+title: Conditional operations
+description: Use conditional headers on R2 S3 API writes, including create-only PutObject and CompleteMultipartUpload requests.
+pcx_content_type: reference
+sidebar:
+  order: 2
+products:
+  - r2
+---
+
+R2 supports conditional headers on S3 API write operations. A conditional write only commits if the current state of the destination key matches the conditions you specify. For example, use `If-None-Match: *` to create an object only if its key does not exist yet.
+
+## Supported operations
+
+The following write operations accept conditional headers:
+
+| Operation                    | Supported headers                                                                                                                       |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `CreateMultipartUpload`[^create] | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                             |
+| `CompleteMultipartUpload`    | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                 |
+| `CopyObject`[^copy]          | `cf-copy-destination-if-match`, `cf-copy-destination-if-none-match`, `cf-copy-destination-if-modified-since`, `cf-copy-destination-if-unmodified-since` |
+| `PutObject`                  | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                 |
+
+[^create]: Conditions on `CreateMultipartUpload` are an early check at initiation only. They are not retained with the upload. For details, refer to [Conditions on `CreateMultipartUpload`](#conditions-on-createmultipartupload).
+
+[^copy]: `CopyObject` uses R2-specific headers for conditions on the destination object. These are separate from the standard `x-amz-copy-source-if-*` headers, which apply to the source object. For details, refer to [Conditional operations in `CopyObject` for the destination object](/r2/api/s3/extensions/#conditional-operations-in-copyobject-for-the-destination-object).
+
+## Condition values
+
+Each conditional header compares the object currently stored at the destination key against the value you send. The write commits only if every condition passes:
+
+| Header                | Value                                  | Write succeeds when                                                           | If the key does not exist |
+| --------------------- | -------------------------------------- | ----------------------------------------------------------------------------- | ------------------------- |
+| `If-Match`            | `*`, or one or more ETags              | The current ETag matches one of the listed ETags. `*` matches any object.     | Fails                     |
+| `If-None-Match`       | `*`, or one or more ETags              | The current ETag matches none of the listed ETags. `*` matches any object.    | Succeeds                  |
+| `If-Modified-Since`   | HTTP date                              | The object was last modified after the given date.                            | Fails                     |
+| `If-Unmodified-Since` | HTTP date                              | The object was not modified after the given date.                             | Succeeds                  |
+
+The following rules apply when evaluating conditions:
+
+- Wrap each ETag in double quotes, and separate multiple ETags with commas. For example, `If-Match: "bce6bf66aeb76c7040fdd5f4eccb78e6", "8165449fc15bbf43d3b674595cbcc406"`.
+- `If-Match` uses strong comparison, so weak ETags (`W/"..."`) never match. `If-None-Match` uses weak comparison.
+- Send dates in HTTP date format, for example `Wed, 21 Oct 2026 07:28:00 GMT`. R2 compares dates at one-second precision.
+- When an object exists at the key, `If-Modified-Since` is ignored if `If-None-Match` is also present and passes. Likewise, `If-Unmodified-Since` is ignored if `If-Match` is also present and passes. When the key does not exist, `If-Modified-Since` always fails.
+
+### Example: update an object only if it has not changed
+
+To avoid overwriting changes made by another client, read the object's current ETag, then send it in `If-Match` with the write. If another client modified the object in the meantime, the ETag no longer matches and the write fails with `412 PreconditionFailed`:
+
+```sh
+aws s3api put-object \
+  --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com \
+  --bucket <BUCKET> \
+  --key <KEY> \
+  --body <FILE> \
+  --if-match '"<ETAG>"'
+```
+
+## Atomicity
+
+R2 evaluates conditional headers atomically against the committed bucket state, as part of the same write that commits the object:
+
+- The condition is evaluated at the moment the write commits, never against an older snapshot.
+- Competing conditional writes to the same key are serialized. When two or more clients concurrently write a previously absent key with `If-None-Match: *`, at most one request succeeds while its object exists. Every other request that is evaluated while that object exists fails with `412 PreconditionFailed`. If the object is deleted before another pending request commits, that request can also succeed, because the key is absent again.
+- A write without conditional headers always overwrites any existing object at the key.
+
+For more information, refer to [Consistency model](/r2/reference/consistency/#conditional-writes).
+
+## Conditional multipart uploads
+
+To create a multipart object only if its key does not exist, send `If-None-Match: *` on `CompleteMultipartUpload`. Use this for objects larger than the `PutObject` size limit.
+
+Send the conditional header on the `CompleteMultipartUpload` request itself. Conditions sent only on `CreateMultipartUpload` do not provide create-only semantics. For details, refer to [Conditions on `CreateMultipartUpload`](#conditions-on-createmultipartupload).
+
+The following example completes a two-part upload only if `<KEY>` does not exist in `<BUCKET>`. The request must be signed with [AWS Signature Version 4](https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html):
+
+```http
+POST /<BUCKET>/<KEY>?uploadId=<UPLOAD_ID> HTTP/1.1
+Host: <ACCOUNT_ID>.r2.cloudflarestorage.com
+If-None-Match: *
+Content-Type: application/xml
+
+<CompleteMultipartUpload>
+  <Part>
+    <PartNumber>1</PartNumber>
+    <ETag>"bce6bf66aeb76c7040fdd5f4eccb78e6"</ETag>
+  </Part>
+  <Part>
+    <PartNumber>2</PartNumber>
+    <ETag>"8165449fc15bbf43d3b674595cbcc406"</ETag>
+  </Part>
+</CompleteMultipartUpload>
+```
+
+With the AWS CLI, pass the `--if-none-match` option:
+
+```sh
+aws s3api complete-multipart-upload \
+  --endpoint-url https://<ACCOUNT_ID>.r2.cloudflarestorage.com \
+  --bucket <BUCKET> \
+  --key <KEY> \
+  --upload-id <UPLOAD_ID> \
+  --multipart-upload file://parts.json \
+  --if-none-match "*"
+```
+
+The atomicity guarantees apply to multipart completion:
+
+- If two clients each complete a different upload for the same absent key with `If-None-Match: *`, at most one completion succeeds while its object exists. If that object is deleted before the other completion commits, the other completion can also succeed.
+- If any other write creates the key after the upload was initiated, a completion with `If-None-Match: *` fails as long as that object still exists when the completion is evaluated.
+- A `CompleteMultipartUpload` request without conditional headers overwrites any existing object at the key, regardless of conditions sent on `CreateMultipartUpload`.
+
+### Conditions on `CreateMultipartUpload`
+
+R2 evaluates conditional headers on `CreateMultipartUpload` against the object at the key when the upload is initiated. If a condition fails, the request returns `412 PreconditionFailed` and no upload ID is created, so there is nothing to abort.
+
+This check only applies at initiation. Conditions are not stored with the upload ID and are not re-evaluated when the upload completes. An upload that passes the check can still overwrite an object created later, unless `CompleteMultipartUpload` carries its own conditions.
+
+To enforce create-only semantics, always send the conditions on `CompleteMultipartUpload`. You can also send them on `CreateMultipartUpload` to avoid uploading parts for a key that already exists.
+
+## Condition failures
+
+When a condition is not met, R2 returns a `412` status code with the following error:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>PreconditionFailed</Code>
+  <Message>At least one of the pre-conditions you specified did not hold.</Message>
+</Error>
+```
+
+A condition failure on `CompleteMultipartUpload` aborts the upload. The upload ID cannot be used again, and its uploaded parts are discarded. Subsequent `UploadPart`, `ListParts`, and `CompleteMultipartUpload` requests for that upload ID return `404 NoSuchUpload`. `AbortMultipartUpload` on that upload ID still succeeds. To retry, start a new multipart upload and upload the parts again.
+
+## Reconcile an ambiguous write
+
+If a write request times out or the connection drops before you receive a response, the write may still commit. A `HeadObject` request that returns `404 NoSuchKey` during this time does not prove that the write failed. For more information, refer to [Negative reads and in-flight writes](/r2/reference/consistency/#negative-reads-and-in-flight-writes).
+
+The procedures in this section assume the original write used `If-None-Match: *`.
+
+### Identify your write
+
+An ETag identifies object content, not the client that wrote it. Two clients that upload identical content produce the same ETag. To tell your write apart from others, attach a unique value as custom metadata, for example `x-amz-meta-write-id: <UUID>`. Send it on `PutObject`, or on `CreateMultipartUpload` for multipart uploads. A `HeadObject` request returns the value in the `x-amz-meta-write-id` response header.
+
+### Reconcile an ambiguous `PutObject`
+
+Retry the same `PutObject` request, including `If-None-Match: *` and the same `x-amz-meta-write-id` value. Depending on the response:
+
+- **`200 OK`**: The retry committed your object. The original request cannot commit while an object exists at the key.
+- **`412 PreconditionFailed`**: An object already exists at the key. Send a `HeadObject` request and compare its `x-amz-meta-write-id` value with yours. If the values match, the original request committed. If the values differ, another client created the object. If `HeadObject` returns `404 NoSuchKey`, the object was deleted after the retry. In both of these cases, your original request may still be pending. It cannot commit while another object exists at the key, but it can commit if the key becomes absent before the original request completes.
+
+### Reconcile an ambiguous completion
+
+R2 continues processing a `CompleteMultipartUpload` request after the client disconnects. To determine the outcome, retry the same `CompleteMultipartUpload` request with the same upload ID, part list, and conditional headers. Depending on the response:
+
+- **`200 OK`**: The retry committed your object. The original request can no longer commit, because an upload ID can only be completed once.
+- **`412 PreconditionFailed`**: Another object already exists at the key. Your upload was not committed and is now aborted.
+- **`404 NoSuchUpload`**: The upload is no longer in progress. Either the original completion committed the object, or the upload was aborted. An upload can be aborted by a failed condition, an `AbortMultipartUpload` request, or [lifecycle expiration](/r2/buckets/object-lifecycles/).
+
+R2 removes an upload in the same atomic commit that either creates the object or aborts the upload. After any request returns `404 NoSuchUpload` for an upload ID, no pending completion for that upload ID can commit. A `HeadObject` request made after that point shows the current state of the key. Compare its `x-amz-meta-write-id` value with the value you sent on `CreateMultipartUpload`:
+
+- **Values match**: Your upload was committed.
+- **Values differ, or the key does not exist**: Your upload was not committed, or the object was deleted or overwritten after it was committed.
+
+If you did not attach a unique metadata value, you can compare the `ETag` with the ETag expected for your parts instead. For details, refer to [Multipart upload ETags](/r2/objects/upload-objects/#etags). A matching ETag shows that the object at the key has the same content as your upload, but it cannot show which client wrote it.
