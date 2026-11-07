@@ -55,11 +55,15 @@ The asset upload flow can be distilled into three distinct phases:
 
 1. Registration of a manifest
 2. Upload of the assets
-3. Deployment of the Worker
+3. Attach the assets when creating a Worker version
+
+The [Version upload API](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) creates a version without deploying it. The [Script upload API](/api/resources/workers/subresources/scripts/methods/update/) creates a version and deploys it. Refer to [Deployment management](/workers/versions-and-deployments/deployment-management/) to separate version creation from deployment.
 
 ## Upload manifest
 
 The asset manifest is a ledger which keeps track of files we want to use in our Worker. This manifest is used to track assets associated with each Worker version, and eliminate the need to upload unchanged files prior to a new upload.
+
+Include every file path the new version needs, including unchanged files. Cloudflare reuses files you have already uploaded, but does not add their paths to the new manifest automatically. Uploading new files does not change earlier versions' assets. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
 
 The [manifest upload request](/api/resources/workers/subresources/scripts/subresources/assets/subresources/upload/methods/create/) describes each file which we intend to upload. Each file is its own key representing the file path and name, and is an object which contains metadata about the file.
 
@@ -151,7 +155,9 @@ The provided `Content-Type` header of each file part will be attached when event
 
 The `Authorization` header must be provided as a bearer token, using the JWT (upload token) from the aforementioned manifest upload call.
 
-Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token which can be used to create a deployment of a Worker with this set of assets. This completion token is valid for 1 hour.
+Once every file in the manifest has been uploaded, a status code of 201 will be returned, with the `jwt` field present. This JWT is a final "completion" token used to attach this asset set to a Worker version. This completion token is valid for 1 hour.
+
+The completion token confirms that asset upload is complete. You must still attach the assets to a Worker version and deploy it to receive production traffic. The deployment change takes time to reach every location on the network.
 
 ## Create/Deploy New Version
 
@@ -168,6 +174,8 @@ Once every file in the manifest has been uploaded, a status code of 201 will be 
 ```
 
 If this is a Worker which already has assets, and you wish to just re-use the existing set of assets, we do not have to specify the completion token again. Instead, we can pass the boolean `keep_assets` option.
+
+`keep_assets` reuses the existing asset set. To include both old and new files, submit a manifest with all required paths. Then attach the completion token for that upload.
 
 ```bash title="Example Worker Metadata Specifying keep_assets"
 {
