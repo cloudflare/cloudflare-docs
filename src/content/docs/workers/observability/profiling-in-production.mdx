@@ -25,6 +25,8 @@ Your Worker or Durable Object instance needs traffic before and during the captu
 
 Send requests that exercise the code you want to investigate. Capturing a profile does not invoke your code for you.
 
+A successful capture does not establish that the profile includes a particular request. Sending only one request during the capture does not guarantee that the capture includes that request.
+
 The historical log time range and filters do not control capture. A profile records activity during the selected capture duration, not past requests shown in logs.
 
 ## Enable source maps
