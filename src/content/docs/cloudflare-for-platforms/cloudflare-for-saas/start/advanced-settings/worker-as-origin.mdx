@@ -29,32 +29,25 @@ For example, if you have:
 When a visitor requests `mystore.customer.com`, Cloudflare routes that request through your zone. The `*/*` route pattern matches all traffic entering your zone, including traffic from custom hostnames like `mystore.customer.com`.
 
 :::note
-You do not need to add individual Worker routes for each custom hostname. The wildcard route pattern (`*/*`) matches all traffic, subject to route precedence, entering your zone, including traffic from customer vanity domains.
-
-O2O custom hostnames and route exclusions
-A */* route matches custom hostname traffic, but it does not guarantee Worker invocation when a more specific route also matches. The most specific route takes precedence, including routes with Worker set to None.
-
-In an orange-to-orange (O2O) setup, where the custom hostname is a proxied CNAME to your SaaS target, route evaluation can use the CNAME target hostname.
-
-For example, suppose mystore.customer.com is a proxied CNAME to service.saasprovider.com, and your SaaS zone has:
-
-| Route | Worker |
-| --- | --- |
-| `*/*` | SaaS Worker |
-| `*.saasprovider.com/*` | None |
-
-The *.saasprovider.com/* exclusion can match the CNAME target and override */*, causing requests to bypass the Worker. If the fallback origin is originless, this can result in an origin connection error such as 522.
-
-To allow O2O traffic through the Worker while retaining the broader exclusion, add a more specific route for the SaaS target:
-
-| Route | Worker |
-| --- | --- |
-| `*/*` | SaaS Worker |
-| `*.saasprovider.com/*` | None |
-| `service.saasprovider.com/*` | SaaS Worker |
-
-Do not exclude your SaaS CNAME target with a Workers-disabled route unless you intend O2O traffic to bypass the Worker. For details about CNAME-target versus custom-hostname routing and customer DNS proxy settings, refer to O2O behavior.
+You do not need a separate Worker route for each custom hostname. The `*/*` route matches all traffic entering your zone, but a more specific route can override it.
 :::
+
+### When customers also use Cloudflare
+
+When a customer enables Cloudflare proxying on a CNAME record pointing to your SaaS hostname, Worker routes can match that target hostname.
+
+For example, suppose `mystore.customer.com` points to `service.saasprovider.com`, with proxying enabled. Your SaaS zone has these routes:
+
+| Route                  | Worker      |
+| ---------------------- | ----------- |
+| `*/*`                  | SaaS Worker |
+| `*.saasprovider.com/*` | None        |
+
+The more specific `*.saasprovider.com/*` route matches the target hostname, so these requests bypass your Worker. If your fallback origin has no origin server, requests can fail with a `522` error.
+
+To send these requests to your Worker, add the route `service.saasprovider.com/*` and assign your SaaS Worker to it. Other hostnames covered by the exclusion will continue to bypass the Worker.
+
+For more information, refer to [how customer DNS proxy settings affect Worker routing](/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/#o2o-behavior).
 
 ## Set up a Worker as your fallback origin
 
@@ -103,5 +96,5 @@ If you need per-hostname origin routing, implement it within your Worker using `
 
 ## Related resources
 
-- [Hostname routing](/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/) - Learn about advanced routing patterns, including dispatch Workers and O2O behavior.
+- [Hostname routing](/cloudflare-for-platforms/workers-for-platforms/configuration/hostname-routing/) - Route traffic with dispatch Workers and handle customers who also use Cloudflare.
 - [Workers routes](/workers/configuration/routing/routes/) - Learn more about route pattern matching and validity rules.
