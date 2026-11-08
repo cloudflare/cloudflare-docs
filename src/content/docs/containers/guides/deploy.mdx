@@ -63,6 +63,21 @@ For rollout flags and step configuration, refer to [Rollouts](/containers/config
 
 To connect a repository, refer to [Workers Builds](/workers/ci-cd/builds/).
 
+### Push images before activating Worker code
+
+For the `default` [scheduling policy](/containers/configuration/scheduling-policy/), you can move image build and push failures ahead of Worker activation. Set your production **Deploy command** to a script that runs these steps in order from your Workers Builds [root directory](/workers/ci-cd/builds/configuration/):
+
+<Steps>
+
+1. Build and push every image for the release with a unique release tag. You can [install `cf`](/cf/get-started/) and use `cf containers build <DIRECTORY> --tag <IMAGE>:<RELEASE_TAG> --push`, or the existing [CI image-push commands](/containers/guides/image-management/#push-images-with-ci).
+2. Stop the script with a nonzero exit code if any build or push fails. For example, connect commands with `&&` rather than continuing after a failure.
+3. Set each `containers[].image` in the Wrangler configuration used by the script to its successfully published `registry.cloudflare.com` image reference, rather than a Dockerfile path. Refer to [pre-built images](/containers/guides/image-management/#use-pre-built-container-images).
+4. Run `wrangler deploy` only after all images have been pushed and the configuration references those images.
+
+</Steps>
+
+This sequence does not make the rollout transactional. Worker activation and container rollout remain separate, and new Worker code can still run while older container instances are being replaced.
+
 ### Before production
 
 - **`wrangler deploy`** publishes container images (when needed) and rolls out container instances for the Worker you deploy.
