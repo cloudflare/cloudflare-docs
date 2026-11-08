@@ -542,6 +542,10 @@ The blocking error `tombstone_delete_class_still_in_code` (specific to `deleted`
 - **Rollbacks cannot cross a lifecycle change.** You cannot roll back to a version deployed before an `exports`-driven lifecycle change. Refer to [Rollbacks - Bindings](/workers/versions-and-deployments/rollbacks/#bindings).
 - **Storage backends are immutable once provisioned.** You cannot change a namespace's `storage` value in place; delete and re-provision instead.
 
+### Direct API updates
+
+The configuration examples on this page describe full deployments with `wrangler deploy`. For direct API updates, refer to the contract for the endpoint you use, such as [Patch Worker Script and Version Settings](/api/resources/workers/subresources/scripts/subresources/script_and_version_settings/methods/edit/). Do not assume that omitting `exports` has the same effect in a settings update, a code upload, and a version upload.
+
 ## Migrate from the legacy `migrations` flow
 
 Existing Workers using the [`migrations` array](/durable-objects/reference/durable-object-class-migrations-legacy/) can move to `exports` without any data migration. The provisioned namespaces remain in place; only the configuration shape changes.
