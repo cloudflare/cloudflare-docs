@@ -17,7 +17,6 @@ import {
 	PackageManagers,
 	Steps,
 	TypeScriptExample,
-	WranglerConfig,
 } from "~/components";
 
 This example runs a bidirectional gRPC server in a Cloudflare Container. A Spectrum application sends each public TCP connection to a Worker, and the Worker forwards the raw byte stream through a Durable Object to the container.
@@ -48,31 +47,22 @@ flowchart LR
 
 - Access to [Cloudflare Containers](/containers/).
 - [Node.js](https://nodejs.org/) and a Node.js package manager.
+- The [Cloudflare CLI (`cf`)](/cf/get-started/) installed.
 - A Docker-compatible CLI and engine installed and running. Refer to [Containers local development](/containers/guides/local-dev/) for setup and troubleshooting.
 - A domain on Cloudflare on a Pro or Business plan, or with Spectrum Enterprise enabled, in the same account as the Worker.
 - A TLS certificate and private key for the gRPC hostname. The container terminates TLS.
 
 ## Create the project
 
-Create a directory for the example:
+Create a Worker project with the Cloudflare CLI:
 
 ```sh
-mkdir -p grpc-in-container/{src,proto,container}
+cf init grpc-in-container --package-manager npm
 cd grpc-in-container
+mkdir -p proto container
 ```
 
-Create `package.json`:
-
-```json
-{
-	"name": "grpc-in-container",
-	"private": true,
-	"devDependencies": {
-		"@types/node": "^24.0.0",
-		"wrangler": "^4.156.0"
-	}
-}
-```
+`cf init` installs the Worker dependencies and creates `cloudflare.config.ts`, `vite.config.ts`, `tsconfig.json`, and `src/index.ts`. Keep the generated Vite and TypeScript configuration. Replace the Worker configuration and entrypoint with the versions below.
 
 Create `container/package.json`:
 
@@ -224,49 +214,67 @@ CMD ["node", "container/server.js"]
 
 `EXPOSE 50051` documents the port used by the gRPC server. The Worker connects to this port with `getTcpPort(50051)`.
 
+Create `.dockerignore` so local dependencies, generated files, and TLS credentials stay out of the image build context:
+
+```txt title=".dockerignore"
+**/node_modules
+.cloudflare
+.git
+.dev.vars*
+.env*
+certs
+secrets.json
+```
+
 ## Configure Workers and Containers
 
-Create `wrangler.jsonc`:
+Replace `cloudflare.config.ts`:
 
-<WranglerConfig>
-```jsonc
-{
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "grpc-in-container",
-	"main": "src/index.ts",
-	"compatibility_date": "$today",
-	"compatibility_flags": ["nodejs_compat"],
-	"connect": [{ "protocol": "tcp", "port": 8788 }],
-	"observability": {
-		"enabled": true,
-	},
-	"containers": [
-		{
-			"class_name": "GrpcContainer",
-			"image": "./Dockerfile",
-			"max_instances": 1,
-			"instance_type": "lite",
+```ts title="cloudflare.config.ts"
+import {
+	bindings,
+	defineConfig,
+	defineContainer,
+	exports,
+	triggers,
+} from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+const grpcContainer = defineContainer({
+	name: "grpc-in-container",
+	image: { dockerfile: "./Dockerfile" },
+	maxInstances: 1,
+	instanceType: "lite",
+});
+
+export default defineConfig({
+	worker: {
+		name: "grpc-in-container",
+		compatibilityDate: "2026-11-08",
+		compatibilityFlags: ["nodejs_compat"],
+		entrypoint,
+		observability: { enabled: true },
+		triggers: [triggers.connect({ protocol: "tcp", port: 8788 })],
+		exports: {
+			GrpcContainer: exports.durableObject({
+				storage: "sqlite",
+				container: grpcContainer,
+			}),
 		},
-	],
-	"durable_objects": {
-		"bindings": [
-			{
-				"name": "GRPC_CONTAINER",
-				"class_name": "GrpcContainer",
-			},
-		],
-	},
-	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["GrpcContainer"],
+		env: {
+			GRPC_CONTAINER: bindings.durableObject({
+				worker: "grpc-in-container",
+				exportName: "GrpcContainer",
+			}),
+			GRPC_TLS_CERT: bindings.secret(),
+			GRPC_TLS_KEY: bindings.secret(),
 		},
-	],
-}
+	},
+	containers: [grpcContainer],
+});
 ```
-</WranglerConfig>
 
-The Worker uses one Durable Object name, `grpc-demo`, to route connections to the same Container instance. The `connect` configuration opens the local TCP listener on port `8788`.
+The Worker uses one Durable Object name, `grpc-demo`, to route connections to the same Container instance. The `triggers.connect()` configuration opens the local TCP listener on port `8788`. Local development uses plaintext; TLS credentials are uploaded before exposing the public endpoint.
 
 ## Forward sockets to the container
 
@@ -430,11 +438,7 @@ call.end();
 ## Run the example locally
 
 <Steps>
-1. Install the Worker dependencies:
-
-   <PackageManagers type="install" />
-
-2. Install the gRPC dependencies in the `container` directory:
+1. Install the gRPC dependencies in the `container` directory:
 
    ```sh
    cd container
@@ -448,24 +452,28 @@ call.end();
    cd ..
    ```
 
-3. Generate Worker types:
+2. Generate Worker types:
 
-   <PackageManagers type="exec" pkg="wrangler" args="types" />
+   ```sh
+   cf workers types
+   ```
 
-4. Start Wrangler:
+3. Start local development:
 
-   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+   ```sh
+   cf dev
+   ```
 
-   Wrangler builds the container image during startup. The `connect` configuration opens the raw TCP listener on port `8788`. The Durable Object starts the container when the first connection arrives.
+   The Cloudflare Vite plugin builds the container image during startup. The `triggers.connect()` configuration opens the raw TCP listener on port `8788`. The Durable Object starts the container when the first connection arrives. Missing `GRPC_TLS_CERT` and `GRPC_TLS_KEY` warnings are expected for this plaintext local test; configure both secrets before exposing the public endpoint.
 
-5. In another terminal, run the gRPC client against the raw TCP listener:
+4. In another terminal, run the gRPC client against the raw TCP listener:
 
    ```sh
    node container/client.js localhost:8788
    ```
 </Steps>
 
-Wrangler logs `Worker received TCP connection` and `Durable Object received TCP connection`. The client receives four responses:
+The development server logs `Worker received TCP connection` and `Durable Object received TCP connection`. The client receives four responses:
 
 ```txt
 hello from the container gRPC server
@@ -480,19 +488,20 @@ goodbye from the container gRPC server
 ## Deploy the example
 
 <Steps>
-1. Deploy the Worker and Container:
+1. Sign in and deploy the Worker and Container:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+   ```sh
+   cf auth login
+   cf deploy
+   ```
 
    Container provisioning can take several minutes. When redeploying, wait for the [Container rollout](/containers/configuration/rollouts/) to finish before testing.
 
 2. Find the deployed Worker's tag:
 
-   <PackageManagers
-      type="dlx"
-      pkg="cf@latest"
-      args="workers scripts search --name <WORKER_NAME>"
-   />
+   ```sh
+   cf workers scripts search --name grpc-in-container
+   ```
 
    A Worker tag is the immutable 32-character identifier that Cloudflare assigns to a Worker. It is different from the Worker name. Copy the Worker ID returned by the command. The Spectrum API uses this value as `origin_worker_id`.
 
