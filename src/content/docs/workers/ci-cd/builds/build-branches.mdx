@@ -50,7 +50,7 @@ After switching, you cannot return to the previous preview model, which uses pro
    ![Dialog showing Preview settings confirmation and the new Worker Previews command](~/assets/images/workers/ci-cd/builds/switch-to-worker-previews.png)
 
 2. Configure the variables, secrets, and bindings your Worker needs for Previews. Previews do not use production settings. For instructions, refer to [Get started](/workers/previews/get-started/#step-1-configure-preview-settings).
-3. Review the new Preview command. Workers Builds replaces the current command with `npx wrangler preview`. Custom commands must invoke `npx wrangler preview`.
+3. Review the new Preview command. Workers Builds replaces the current command with `npx wrangler preview`. Custom commands must invoke `npx wrangler preview` or `npx cf previews deploy` (`cf` 1.0.0-beta.18 or later).
 4. Select **Switch to Worker Previews**.
 </Steps>
 
