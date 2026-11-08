@@ -24,6 +24,10 @@ A [Preview URL](/workers/previews/) will be provided for builds which perform `w
 
 Subsequent pushes to the same branch update the same Preview URL. Each deployment also gets an immutable Deployment URL for testing one exact deployment.
 
+The comment lists URLs for every host enabled for Previews on your Worker. This can be a [custom domain, `workers.dev`, or both](/workers/previews/custom-domains/). A custom domain alone is enough.
+
+If the comment shows **No Preview URL** for a successful build, refer to [Troubleshooting](/workers/ci-cd/builds/troubleshoot/#pull-request-comment-shows-no-preview-url).
+
 Comment history reveals any builds completed earlier while the PR was open.
 
 ![GitHub pull request comment history](~/assets/images/workers/platform/ci-cd/github-pull-request-comment-history.png)
