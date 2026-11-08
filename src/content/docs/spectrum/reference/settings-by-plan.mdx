@@ -33,3 +33,5 @@ Spectrum properties requiring an Enterprise plan:
 
 Review the [Spectrum API documentation](/api/resources/spectrum/subresources/apps/methods/list/) for example API requests.
 
+For [Worker-origin applications](/spectrum/how-to/route-tcp-traffic-to-a-worker/) on Pro and Business zones without Spectrum Enterprise, send only `dns`, `protocol`, `traffic_type`, and `origin_worker_id`. Omit the Enterprise-only fields in this table, even when setting them to `false` or `off`. These applications pass TCP traffic through without TLS termination.
+

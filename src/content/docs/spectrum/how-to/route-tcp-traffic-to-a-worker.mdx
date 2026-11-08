@@ -1,0 +1,172 @@
+---
+pcx_content_type: how-to
+title: Route TCP traffic to a Worker
+description: Create a Spectrum application that sends inbound TCP connections to a Cloudflare Worker.
+products:
+  - spectrum
+  - workers
+sidebar:
+  order: 1
+reviewed: 2026-09-24
+---
+
+import {
+	APIRequest,
+	DashButton,
+	PackageManagers,
+	Steps,
+	TabItem,
+	Tabs,
+} from "~/components";
+
+You can use a Cloudflare Worker as the origin of a Spectrum TCP application. Spectrum accepts the public TCP connection and invokes the Worker's [`connect()` handler](/workers/runtime-apis/handlers/connect/) with a bidirectional socket.
+
+:::note[Public beta]
+Spectrum applications with Worker origins are in public beta.
+:::
+
+Worker origins support use cases such as:
+
+- Routing bidirectional protocols, including gRPC, to a [Cloudflare Container](/containers/examples/bidirectional-grpc/).
+- Exposing existing TCP applications in Containers without rewriting them as HTTP services.
+- Running MQTT, multiplayer game, and custom binary protocol servers in Containers.
+- Receiving device, telemetry, or syslog data over TCP and sending it to Cloudflare storage or queues.
+- Implementing lightweight TCP services directly in Workers.
+
+## Prerequisites
+
+Before creating the Spectrum application:
+
+- Add a domain to Cloudflare and ensure Cloudflare is authoritative for its DNS.
+- Use a Pro or Business zone, or a zone with Spectrum Enterprise enabled. Free zones are not supported. Spectrum Enterprise access is separate from a zone's Enterprise plan.
+- In the same account as the zone, deploy a Worker that exports a [`connect()` handler](/workers/runtime-apis/handlers/connect/).
+- For API and CLI configuration, find the Worker's immutable 32-character tag. The tag is different from the Worker name.
+
+Without Spectrum Enterprise, Pro and Business zones support one Worker-origin application per zone, on one TCP port. This application is in addition to existing plan-supported applications, such as SSH or Minecraft. Refer to [Protocols per plan](/spectrum/protocols-per-plan/) for availability.
+
+Review your Spectrum subscription charges and [Workers pricing](/workers/platform/pricing/) before deploying. Workers usage is billed separately from Spectrum.
+
+The setup in this guide passes TCP traffic through without terminating TLS. Requests without Spectrum Enterprise must omit the `tls` field. To encrypt the connection, terminate TLS in the service behind the Worker, or use [Spectrum Enterprise TLS termination](#terminate-tls-with-spectrum-enterprise).
+
+## Create the Spectrum application
+
+Choose the dashboard, Cloudflare CLI, or API procedure.
+
+<Tabs syncKey="dashPlusAPI">
+
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Spectrum**.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Select **Create an application**.
+3. For **Application type**, select **TCP**.
+4. For **Domain**, enter the hostname that clients will connect to.
+5. For **Edge port**, enter a single TCP port.
+6. For **Origin**, select **Worker**.
+7. Select the Worker that will receive the connections.
+8. If **Edge TLS termination** is available, select **Off** to pass the TCP payload to the Worker without TLS termination.
+9. Select **Add**.
+</Steps>
+
+</TabItem>
+
+<TabItem label="Cloudflare CLI">
+
+<Steps>
+1. To find the Worker tag, search for the deployed Worker:
+
+   <PackageManagers
+      type="dlx"
+      pkg="cf@latest"
+      args="workers scripts search --name <WORKER_NAME>"
+   />
+
+   Copy the Worker ID, also called the Worker tag, from the result.
+
+2. Create the Spectrum application:
+
+   <PackageManagers
+      type="dlx"
+      pkg="cf@latest"
+      args={`spectrum apps create --zone example.com --body '{"dns":{"type":"CNAME","name":"tcp.example.com"},"protocol":"tcp/50051","traffic_type":"worker","origin_worker_id":"<WORKER_TAG>"}'`}
+   />
+
+   Replace the zone, hostname, port, and Worker tag with your values. The explicit `--body` sends only the fields supported without Spectrum Enterprise. Additional CLI defaults, such as `tls` or `proxy_protocol`, require Spectrum Enterprise.
+</Steps>
+
+</TabItem>
+
+<TabItem label="API">
+
+<Steps>
+1. Find the Worker tag with the [List Workers endpoint](/api/resources/workers/subresources/scripts/methods/list/):
+
+   <APIRequest
+      path="/accounts/{account_id}/workers/scripts"
+      method="GET"
+   />
+
+   In the response, find the Worker by its `id` and copy its `tag`.
+
+2. Create the Spectrum application:
+
+   <APIRequest
+      path="/zones/{zone_id}/spectrum/apps"
+      method="POST"
+      json={{
+        dns: {
+          type: "CNAME",
+          name: "tcp.example.com",
+        },
+        protocol: "tcp/50051",
+        traffic_type: "worker",
+        origin_worker_id: "<WORKER_TAG>",
+      }}
+   />
+</Steps>
+
+</TabItem>
+
+</Tabs>
+
+## Configuration constraints
+
+Spectrum applications with a Worker origin have the following constraints:
+
+- The application protocol must be TCP on a single port. Port ranges and UDP are not supported.
+- `traffic_type` must be `worker`.
+- `origin_worker_id` must contain the target Worker's tag, not its name.
+- On Pro and Business zones without Spectrum Enterprise, omit `tls`. Spectrum does not terminate TLS for these applications.
+- With Spectrum Enterprise, `tls` can be `off` or `flexible`.
+- Do not set `origin_direct`, `origin_dns`, `origin_port`, `virtual_network_id`, Proxy Protocol, or Argo Smart Routing.
+
+Refer to [Configuration options](/spectrum/reference/configuration-options/#worker-origin) for details.
+
+## Verify the connection
+
+To test the plaintext [echo handler](/workers/runtime-apis/handlers/connect/#syntax), run:
+
+```sh
+nc tcp.example.com 50051
+```
+
+Enter a message and confirm the Worker echoes it. If your service terminates TLS behind the Worker, use that service's TLS client instead.
+
+The Spectrum application sends the connection to the Worker's `connect()` handler. Review the Worker's [real-time logs](/workers/observability/logs/real-time-logs/) to confirm the handler ran.
+
+## Terminate TLS with Spectrum Enterprise
+
+Spectrum Enterprise applications can use `tls: "flexible"` to terminate TLS at Cloudflare. Spectrum sends the decrypted TCP payload to the Worker. This mode requires an active [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) covering the Spectrum hostname. [Universal SSL is not supported](/spectrum/reference/limitations/#universal-ssl).
+
+In the dashboard, select **Flexible** for **Edge TLS termination**. For API or CLI configuration, add `"tls":"flexible"` to the request body. Do not include this field unless Spectrum Enterprise is enabled.
+
+To test the echo handler with Spectrum TLS termination, run:
+
+```sh
+openssl s_client -connect tcp.example.com:50051 -servername tcp.example.com -quiet
+```
+
+For an end-to-end bidirectional gRPC example, refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/).

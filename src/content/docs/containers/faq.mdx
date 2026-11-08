@@ -108,6 +108,12 @@ Not today, though Cloudflare plans to add built-in autoscaling in a future relea
 Until then, use `getRandom` for simple stateless routing and specific instance IDs when you need
 explicit control over container lifecycle.
 
+## Can a Container receive inbound TCP or gRPC traffic?
+
+Yes. Inbound TCP connections to Workers are in public beta. A Spectrum application sends the connection to a Worker's [`connect()` handler](/workers/runtime-apis/handlers/connect/), which can forward the raw socket to a process running in a Container.
+
+Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/) for a complete example.
+
 ## What are cold starts? How fast are they?
 
 A cold start is when a container instance is started from a completely stopped state.

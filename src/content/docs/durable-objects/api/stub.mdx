@@ -8,7 +8,13 @@ products:
   - durable-objects
 ---
 
-import { Render, GlossaryTooltip, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	GlossaryTooltip,
+	Tabs,
+	TabItem,
+	TypeScriptExample,
+} from "~/components";
 
 ## Description
 
@@ -78,6 +84,55 @@ assert stub.name == "foo", "This should always be true"
 
 </Tabs>
 
+## Methods
+
+### `connect`
+
+:::note[Public beta]
+Raw TCP connections to Workers and Durable Objects are in public beta.
+:::
+
+`connect(address, options)` opens a raw TCP connection to the Durable Object and invokes its [`connect()` handler](/durable-objects/api/base/#connect).
+
+```ts
+connect(address: SocketAddress | string, options?: SocketOptions): Socket
+```
+
+#### Parameters
+
+- `address` (`SocketAddress | string`) — A logical address in `host:port` format. The Durable Object receives this value as the socket's `localAddress`.
+- `options` (`SocketOptions`, optional) — Socket configuration. Refer to [`SocketOptions`](/workers/runtime-apis/tcp-sockets/#socketoptions).
+
+#### Return values
+
+Returns a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket).
+
+#### Example
+
+<TypeScriptExample>
+```ts
+export default {
+	async connect(socket: Socket, env: Env): Promise<void> {
+		const stub = env.TCP_SESSION.getByName("shared-session");
+		const durableObjectSocket = stub.connect("tcp-session:8080", {
+			allowHalfOpen: true,
+		});
+
+		try {
+			await durableObjectSocket.opened;
+			await Promise.all([
+				socket.readable.pipeTo(durableObjectSocket.writable),
+				durableObjectSocket.readable.pipeTo(socket.writable),
+			]);
+		} finally {
+			await Promise.allSettled([socket.close(), durableObjectSocket.close()]);
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
 ## Related resources
 
 - [Durable Objects: Easy, Fast, Correct – Choose Three](https://blog.cloudflare.com/durable-objects-easy-fast-correct-choose-three/).
+- [Connect handler](/workers/runtime-apis/handlers/connect/).

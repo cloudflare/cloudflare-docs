@@ -1,96 +1,165 @@
 ---
 pcx_content_type: configuration
-title: Connect Handler
-description: Handle inbound TCP connections forwarded to a Worker using the connect() handler.
+title: Connect handler
+description: Handle inbound TCP connections and bidirectional protocols such as gRPC in a Cloudflare Worker with the connect() handler.
 products:
   - workers
+  - spectrum
+reviewed: 2026-09-24
 ---
 
-import { TabItem, Tabs } from "~/components";
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
-## Background
+The `connect()` handler receives inbound TCP connections as a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket). Use the socket's readable and writable streams to inspect data, implement a TCP protocol, or proxy the connection to another service.
 
-Export a `connect()` handler to let a Worker accept an inbound TCP connection and read and write raw bytes on it. The handler receives a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) object, the same type returned by [`connect()` from `cloudflare:sockets`](/workers/runtime-apis/tcp-sockets/) for outbound connections.
-
-A Worker receives a connection in its `connect()` handler when another Worker forwards a TCP connection to it over a [service binding](/workers/runtime-apis/bindings/service-bindings/), by calling `connect()` on the binding:
-
-```js
-// Worker A forwards a TCP connection to Worker B over a service binding
-export default {
-	async fetch(request, env) {
-		const socket = env.BACKEND.connect("example.com:1234");
-		// Read from and write to socket.readable / socket.writable
-		return new Response(socket.readable);
-	},
-};
-```
-
-:::note
-
-Direct inbound TCP connections from the public Internet, for example by using the HTTP `CONNECT` method against a Worker's public URL, are not supported at present. A `connect()` handler only receives connections forwarded from another Worker over a service binding.
-
+:::note[Public beta]
+Inbound TCP connections to Workers are in public beta. Use a [Spectrum application with a Worker origin](/spectrum/how-to/route-tcp-traffic-to-a-worker/) to send public TCP connections to this handler. Sending an HTTP `CONNECT` request to a Worker's public URL does not invoke this handler.
 :::
 
 ## Syntax
 
-<Tabs>
-<TabItem label="JavaScript" icon="seti:javascript">
-
-```js
-export default {
-	async connect(socket, env, ctx) {
-		const writer = socket.writable.getWriter();
-		await writer.write(new TextEncoder().encode("hello"));
-		await writer.close();
-	},
-};
-```
-
-</TabItem>
-<TabItem label="TypeScript" icon="seti:typescript">
-
+<TypeScriptExample filename="src/index.ts">
 ```ts
-interface Env {}
-
 export default {
-	async connect(socket: Socket, env: Env, ctx: ExecutionContext) {
-		const writer = socket.writable.getWriter();
-		await writer.write(new TextEncoder().encode("hello"));
-		await writer.close();
+	async connect(
+		socket: Socket,
+		env: Env,
+		ctx: ExecutionContext,
+	): Promise<void> {
+		const { remoteAddress, localAddress } = await socket.opened;
+		console.log("TCP connection opened", {
+			remoteAddress,
+			localAddress,
+		});
+
+		await socket.readable.pipeTo(socket.writable);
 	},
 } satisfies ExportedHandler<Env>;
 ```
+</TypeScriptExample>
 
-</TabItem>
-</Tabs>
+The example echoes each byte back to the client. Await all stream operations that must remain active for the connection. When the handler's returned promise settles, the inbound socket closes. A Worker without a `connect()` handler rejects forwarded TCP connections.
 
-You can also implement `connect()` as a method on a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) class, which lets a single Worker expose a `connect()` handler alongside other RPC methods:
+### Parameters
 
-```js
+- `socket` (`Socket`) — The established inbound connection.
+  - `socket.readable` contains bytes sent by the client.
+  - `socket.writable` sends bytes to the client.
+  - `socket.opened` resolves to [`SocketInfo`](/workers/runtime-apis/tcp-sockets/#socketinfo). For inbound connections, `remoteAddress` identifies the client when available, and `localAddress` identifies the requested destination.
+    For service bindings, `localAddress` contains the address the caller passed to `connect()`.
+  - `socket.closed` settles when the connection closes.
+- `env` (`Env`) — The Worker's [bindings](/workers/runtime-apis/bindings/).
+- `ctx` (`ExecutionContext`) — The handler's [execution context](/workers/runtime-apis/context/).
+
+### Return value
+
+The handler returns `void` or `Promise<void>`. Keep the returned promise pending while the Worker is processing the connection.
+
+Inbound sockets preserve TCP half-closes. When a client closes its writable side, the Worker can continue sending data through `socket.writable`. Set `allowHalfOpen: true` on outbound sockets when a proxy must preserve this behavior.
+
+## Deploy the Worker
+
+The TCP `connect()` handler does not require a compatibility flag. Deploy the Worker before selecting it as a Spectrum origin.
+
+## Forward connections between Workers
+
+Another Worker can open a TCP connection through a [service binding](/workers/runtime-apis/bindings/service-bindings/). This caller returns the bytes sent by the receiving Worker:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+export default {
+	fetch(request, env) {
+		const socket = env.BACKEND.connect("backend:1234");
+		return new Response(socket.readable);
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+The receiving Worker can export a `connect()` handler or implement it on a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) class. Configure the `BACKEND` binding to target this entrypoint:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
 import { WorkerEntrypoint } from "cloudflare:workers";
 
 export class Backend extends WorkerEntrypoint {
-	async connect(socket) {
+	async connect(socket: Socket): Promise<void> {
 		const writer = socket.writable.getWriter();
-		await writer.write(new TextEncoder().encode("hello"));
+		await writer.write(new TextEncoder().encode("Hello from Worker B\n"));
 		await writer.close();
 	}
 }
 ```
+</TypeScriptExample>
 
-### Parameters
+## Proxy a TCP connection
 
-- `socket` Socket
-  - The inbound [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) used to read and write raw bytes on the connection.
-  - [`socket.opened`](/workers/runtime-apis/tcp-sockets/#socket) resolves with a [`SocketInfo`](/workers/runtime-apis/tcp-sockets/#socketinfo) object. On a `connect()` handler, `localAddress` is set to the address the caller passed to `connect()` on the service binding.
-- `env` object
-  - The [bindings](/workers/runtime-apis/bindings/) available to the Worker.
-- `ctx` object
-  - The context associated with the Worker, containing [`waitUntil()`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException()`](/workers/runtime-apis/context/#passthroughonexception).
+The following handler creates an outbound TCP socket and pipes data in both directions:
 
-A Worker that does not export a `connect()` handler rejects any connection forwarded to it.
+<TypeScriptExample filename="src/index.ts">
+```ts
+import { connect } from "cloudflare:sockets";
 
-## Related resources
+export default {
+	async connect(socket: Socket): Promise<void> {
+		const upstream = connect(
+			{ hostname: "origin.example.com", port: 5432 },
+			{ allowHalfOpen: true },
+		);
 
-- [TCP sockets](/workers/runtime-apis/tcp-sockets/) — Create outbound TCP connections and work with the `Socket` API.
-- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — Call one Worker from another, including forwarding TCP connections with `connect()`.
+		try {
+			await upstream.opened;
+			await Promise.all([
+				socket.readable.pipeTo(upstream.writable),
+				upstream.readable.pipeTo(socket.writable),
+			]);
+		} finally {
+			await Promise.allSettled([socket.close(), upstream.close()]);
+		}
+	},
+} satisfies ExportedHandler;
+```
+</TypeScriptExample>
+
+Set `allowHalfOpen: true` on intermediate sockets when either side must continue sending after receiving an end-of-file signal.
+
+Outbound TCP connections to Cloudflare IP addresses are blocked. Do not connect the Worker back to its own Spectrum hostname. Refer to [TCP socket considerations](/workers/runtime-apis/tcp-sockets/#considerations).
+
+## Local development
+
+Configure a raw TCP listener in `wrangler.jsonc` for your `connect()` handler:
+
+<WranglerConfig>
+```jsonc
+{
+	"connect": [{ "protocol": "tcp", "port": 8788 }],
+}
+```
+</WranglerConfig>
+
+<Steps>
+1. Start local development:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+2. Connect a TCP client to port `8788`:
+
+   ```sh
+   echo "Hello, Worker" | nc localhost 8788
+   ```
+</Steps>
+
+Wrangler serves HTTP on port `8787` by default. The separate TCP port is set by the `connect` configuration; it does not follow the HTTP port automatically.
+
+For example, to test a local gRPC client, connect it to `localhost:8788`. Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/) for a complete example.
+
+## Expose the Worker publicly
+
+Create a Spectrum application with the Worker as its origin. Spectrum accepts connections on the configured hostname and edge port, then invokes this handler.
+
+Refer to [Route TCP traffic to a Worker](/spectrum/how-to/route-tcp-traffic-to-a-worker/) for dashboard, Cloudflare CLI, and REST API instructions.

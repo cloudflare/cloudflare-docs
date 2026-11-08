@@ -30,7 +30,11 @@ Some properties of `Request` control the behavior of `fetch()` on the client sid
 
 ### `connect()`
 
-The `connect()` method of the `WorkerEntrypoint` class is reserved for accepting a socket-like connection forwarded from another Worker. Implement it to handle inbound TCP connections — refer to the [connect handler](/workers/runtime-apis/handlers/connect/) documentation. You can also [open a TCP socket from a Worker](/workers/runtime-apis/tcp-sockets/) or connect directly to databases over a TCP socket with [Hyperdrive](/hyperdrive/get-started/).
+The `connect()` method is reserved for handling a raw socket connection. Implement it on a `WorkerEntrypoint` or `DurableObject` to receive a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket).
+
+On the client side, call `connect()` on a service binding or Durable Object stub to open the socket. Refer to the [`connect()` handler](/workers/runtime-apis/handlers/connect/) and [`DurableObjectStub.connect()`](/durable-objects/api/stub/#connect) for details.
+
+Inbound TCP connections and Spectrum applications with Worker origins are in public beta. For a gRPC example, refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/).
 
 ## Disallowed Method Names
 
