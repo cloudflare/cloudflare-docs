@@ -21,6 +21,10 @@ You can separate these steps so that uploading a version and deploying it are in
 
 ## Upload a version without deploying
 
+:::note[Interrupted uploads]
+A client connection error or missing response alone does not establish whether a [version upload](/api/resources/workers/subresources/scripts/subresources/versions/methods/create/) completed. Repeating the upload may create another version. Uploading a version and deploying it are separate operations.
+:::
+
 ### Via Wrangler
 
 Use the [`wrangler versions upload`](/workers/wrangler/commands/workers/#versions-upload) command:
