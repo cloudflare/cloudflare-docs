@@ -51,6 +51,7 @@ flowchart LR
 - A Docker-compatible CLI and engine installed and running. Refer to [Containers local development](/containers/guides/local-dev/) for setup and troubleshooting.
 - A domain on Cloudflare on a Pro or Business plan, or with Spectrum Enterprise enabled, in the same account as the Worker.
 - A TLS certificate and private key for the gRPC hostname. The container terminates TLS.
+- A [Secrets Store](/secrets-store/integrations/workers/#before-you-begin) in the same account, with permission to create secrets and deploy bindings.
 
 ## Create the project
 
@@ -154,24 +155,22 @@ function chat(call) {
 	});
 }
 
-// PEM values come from Worker secrets, never from the image.
+// PEM values come from Secrets Store through the Durable Object.
 const cert = process.env.GRPC_TLS_CERT;
 const key = process.env.GRPC_TLS_KEY;
-if (Boolean(cert) !== Boolean(key)) {
+if (!cert || !key) {
 	throw new Error("Set both GRPC_TLS_CERT and GRPC_TLS_KEY");
 }
-const credentials = cert
-	? grpc.ServerCredentials.createSsl(
-			null,
-			[
-				{
-					private_key: Buffer.from(key),
-					cert_chain: Buffer.from(cert),
-				},
-			],
-			false,
-		)
-	: grpc.ServerCredentials.createInsecure();
+const credentials = grpc.ServerCredentials.createSsl(
+	null,
+	[
+		{
+			private_key: Buffer.from(key),
+			cert_chain: Buffer.from(cert),
+		},
+	],
+	false,
+);
 
 const server = new grpc.Server();
 server.addService(proto.ByteStream.service, { Chat: chat });
@@ -223,10 +222,11 @@ Create `.dockerignore` so local dependencies, generated files, and TLS credentia
 .dev.vars*
 .env*
 certs
-secrets.json
 ```
 
 ## Configure Workers and Containers
+
+Find your store ID in the [Secrets Store dashboard](https://dash.cloudflare.com/?to=/:account/secrets-store/) or run `cf secrets-store stores list` after signing in with `cf auth login`. Replace `<SECRETS_STORE_ID>` in both bindings below with that ID.
 
 Replace `cloudflare.config.ts`:
 
@@ -266,15 +266,21 @@ export default defineConfig({
 				worker: "grpc-in-container",
 				exportName: "GrpcContainer",
 			}),
-			GRPC_TLS_CERT: bindings.secret(),
-			GRPC_TLS_KEY: bindings.secret(),
+			GRPC_TLS_CERT: bindings.secretsStoreSecret({
+				storeId: "<SECRETS_STORE_ID>",
+				secretName: "GRPC_TLS_CERT",
+			}),
+			GRPC_TLS_KEY: bindings.secretsStoreSecret({
+				storeId: "<SECRETS_STORE_ID>",
+				secretName: "GRPC_TLS_KEY",
+			}),
 		},
 	},
 	containers: [grpcContainer],
 });
 ```
 
-The Worker uses one Durable Object name, `grpc-demo`, to route connections to the same Container instance. The `triggers.connect()` configuration opens the local TCP listener on port `8788`. Local development uses plaintext; TLS credentials are uploaded before exposing the public endpoint.
+The Worker uses one Durable Object name, `grpc-demo`, to route connections to the same Container instance. The `triggers.connect()` configuration opens the local TCP listener on port `8788`. Both local development and the public endpoint use TLS. The Durable Object reads the certificate and private key from Secrets Store before starting the container.
 
 ## Forward sockets to the container
 
@@ -284,8 +290,6 @@ Create `src/index.ts`:
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
-
-type GrpcEnv = Env & { GRPC_TLS_CERT?: string; GRPC_TLS_KEY?: string };
 
 const CONTAINER_INSTANCE = "grpc-demo";
 const GRPC_PORT = 50051;
@@ -297,7 +301,7 @@ const SOCKET_OPTIONS: SocketOptions = {
 	secureTransport: "off",
 };
 
-export class GrpcContainer extends DurableObject<GrpcEnv> {
+export class GrpcContainer extends DurableObject<Env> {
 	async connect(socket: Socket): Promise<void> {
 		console.log("Durable Object received TCP connection");
 		const container = this.ctx.container;
@@ -307,16 +311,21 @@ export class GrpcContainer extends DurableObject<GrpcEnv> {
 
 		await this.ctx.blockConcurrencyWhile(async () => {
 			if (!container.running) {
+				const [cert, key] = await Promise.all([
+					this.env.GRPC_TLS_CERT.get(),
+					this.env.GRPC_TLS_KEY.get(),
+				]);
+				if (!cert || !key) {
+					throw new Error(
+						"Both TLS secrets must be configured in Secrets Store",
+					);
+				}
 				container.start({
 					enableInternet: false,
 					env: {
 						GRPC_PORT: String(GRPC_PORT),
-						...(this.env.GRPC_TLS_CERT
-							? { GRPC_TLS_CERT: this.env.GRPC_TLS_CERT }
-							: {}),
-						...(this.env.GRPC_TLS_KEY
-							? { GRPC_TLS_KEY: this.env.GRPC_TLS_KEY }
-							: {}),
+						GRPC_TLS_CERT: cert,
+						GRPC_TLS_KEY: key,
 					},
 				});
 				await scheduler.wait(CONTAINER_STARTUP_GRACE_MS);
@@ -435,6 +444,22 @@ call.write({ payload: Buffer.from("second message\n") });
 call.end();
 ```
 
+## Prepare TLS credentials
+
+Keep the private key out of the image and repository. Add `certs/` to `.gitignore`; the `.dockerignore` above already excludes it.
+
+For a reproducible local test, create a short-lived self-signed certificate. Replace `grpc.example.com` with your public hostname. The `localhost` subject alternative name also lets you test locally:
+
+```sh
+mkdir -p certs
+openssl req -x509 -newkey rsa:2048 -nodes -days 2 \
+  -keyout certs/key.pem -out certs/cert.pem \
+  -subj "/CN=grpc.example.com" \
+  -addext "subjectAltName=DNS:grpc.example.com,DNS:localhost"
+```
+
+For production, obtain a PEM certificate chain and private key from a CA trusted by your clients.
+
 ## Run the example locally
 
 <Steps>
@@ -452,24 +477,33 @@ call.end();
    cd ..
    ```
 
-2. Generate Worker types:
+2. Seed the local Secrets Store with the test certificate and key. Replace `<SECRETS_STORE_ID>` with the same ID used in `cloudflare.config.ts`:
+
+   ```sh
+   npx wrangler secrets-store secret create <SECRETS_STORE_ID> --name GRPC_TLS_CERT --scopes workers --persist-to .cloudflare/state < certs/cert.pem
+   npx wrangler secrets-store secret create <SECRETS_STORE_ID> --name GRPC_TLS_KEY --scopes workers --persist-to .cloudflare/state < certs/key.pem
+   ```
+
+   These commands create local values only. `cf` does not yet support creating local Secrets Store values, so use Wrangler for this step. The persistence directory matches the Cloudflare Vite plugin. Production secrets are not available locally.
+
+3. Generate Worker types:
 
    ```sh
    cf workers types
    ```
 
-3. Start local development:
+4. Start local development:
 
    ```sh
    cf dev
    ```
 
-   The Cloudflare Vite plugin builds the container image during startup. The `triggers.connect()` configuration opens the raw TCP listener on port `8788`. The Durable Object starts the container when the first connection arrives. Missing `GRPC_TLS_CERT` and `GRPC_TLS_KEY` warnings are expected for this plaintext local test; configure both secrets before exposing the public endpoint.
+   The Cloudflare Vite plugin builds the container image during startup. The `triggers.connect()` configuration opens the raw TCP listener on port `8788`. The Durable Object starts the container when the first connection arrives.
 
-4. In another terminal, run the gRPC client against the raw TCP listener:
+5. In another terminal, run the gRPC client against the raw TCP listener:
 
    ```sh
-   node container/client.js localhost:8788
+   GRPC_TLS=1 GRPC_CA_FILE=certs/cert.pem node container/client.js localhost:8788
    ```
 </Steps>
 
@@ -488,42 +522,37 @@ goodbye from the container gRPC server
 ## Deploy the example
 
 <Steps>
-1. Sign in and deploy the Worker and Container:
+1. Upload the certificate and private key to your account's Secrets Store with the `workers` scope. Use the same store ID and secret names as the bindings in `cloudflare.config.ts`.
+
+   Create request files without printing the PEM values:
 
    ```sh
+   node --input-type=module -e 'import fs from "node:fs"; for (const [name, file] of [["GRPC_TLS_CERT", "cert"], ["GRPC_TLS_KEY", "key"]]) { fs.writeFileSync(`certs/${file}-secret.json`, JSON.stringify({name, value: fs.readFileSync(`certs/${file}.pem`, "utf8"), scopes: ["workers"]}), {mode: 0o600}); }'
    cf auth login
+   cf secrets-store secrets create <SECRETS_STORE_ID> --body @certs/cert-secret.json
+   cf secrets-store secrets create <SECRETS_STORE_ID> --body @certs/key-secret.json
+   rm certs/cert-secret.json certs/key-secret.json
+   ```
+
+   These commands create remote secrets. Use your CA-issued certificate and key for production.
+
+2. Deploy the Worker and Container:
+
+   ```sh
    cf deploy
    ```
 
    Container provisioning can take several minutes. When redeploying, wait for the [Container rollout](/containers/configuration/rollouts/) to finish before testing.
 
-2. Find the deployed Worker's tag:
+   The Durable Object calls `.get()` on each [Secrets Store binding](/secrets-store/integrations/workers/) and passes the PEM values to `container.start({ env: ... })`. If either secret is unavailable, the container does not start. After [rotating the secrets](/secrets-store/manage-secrets/), restart existing containers so the Durable Object reads the new values. A running container retains its startup environment.
+
+3. Find the deployed Worker's tag:
 
    ```sh
    cf workers scripts search --name grpc-in-container
    ```
 
    A Worker tag is the immutable 32-character identifier that Cloudflare assigns to a Worker. It is different from the Worker name. Copy the Worker ID returned by the command. The Spectrum API uses this value as `origin_worker_id`.
-
-3. Configure TLS before exposing the public endpoint. Obtain a PEM certificate chain and private key for your hostname from a CA trusted by your clients. Keep the private key out of the image and repository.
-
-   For a reproducible test, create a short-lived self-signed certificate. Replace `grpc.example.com` with your hostname:
-
-   ```sh
-   mkdir -p certs
-   openssl req -x509 -newkey rsa:2048 -nodes -days 2 \
-     -keyout certs/key.pem -out certs/cert.pem \
-     -subj "/CN=grpc.example.com" -addext "subjectAltName=DNS:grpc.example.com"
-   ```
-
-   Add `certs/` and `secrets.json` to `.gitignore` and `.dockerignore`. Create a secret file without printing the key and upload both secrets:
-
-   ```sh
-   node --input-type=module -e 'import fs from "node:fs"; fs.writeFileSync("secrets.json", JSON.stringify({GRPC_TLS_CERT: {type: "secret_text", text: fs.readFileSync("certs/cert.pem", "utf8")}, GRPC_TLS_KEY: {type: "secret_text", text: fs.readFileSync("certs/key.pem", "utf8")}}), {mode: 0o600})'
-   cf workers secrets bulk --worker grpc-in-container --file secrets.json
-   ```
-
-   The Durable Object passes these secrets to the container at startup. Restart an existing container after certificate rotation. Without the secrets, the server uses plaintext for local development only.
 
 4. [Create a Spectrum application with the Worker as its origin](/spectrum/how-to/route-tcp-traffic-to-a-worker/) and use:
    - Your public hostname, such as `grpc.example.com`, for `dns.name`.
