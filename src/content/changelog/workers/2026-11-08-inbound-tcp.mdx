@@ -24,9 +24,7 @@ flowchart LR
 
 ## Forward a Worker socket to a Durable Object
 
-Spectrum sends public TCP connections to your Worker's `connect()` handler. Read and write bytes directly, implement a custom TCP protocol, or forward the connection to a Durable Object.
-
-The Worker below opens a socket to the `GrpcContainer` Durable Object and pipes bytes in both directions:
+Spectrum sends public TCP connections to your Worker's `connect()` handler. The Worker opens a socket to the `GrpcContainer` Durable Object and pipes bytes in both directions:
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -87,29 +85,11 @@ export class GrpcContainer extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-These snippets show the socket forwarding path. The [complete gRPC example](/containers/examples/bidirectional-grpc/) also configures the bindings, reads TLS credentials from Secrets Store, starts the Container, and waits for its server to become ready.
-
 `allowHalfOpen: true` preserves TCP half-closes. The Worker and Durable Object forward encrypted bytes; the Container terminates TLS and handles HTTP/2 and gRPC.
 
 ## Run bidirectional gRPC in the Container
 
-Run an existing gRPC server in any language, including services for real-time voice applications. For example, this service accepts a stream of messages and returns a stream of responses:
-
-```protobuf title="proto/bytes.proto"
-syntax = "proto3";
-
-package cloudflare.grpcdemo;
-
-service ByteStream {
-  rpc Chat(stream ByteChunk) returns (stream ByteChunk);
-}
-
-message ByteChunk {
-  bytes payload = 1;
-}
-```
-
-Inside the Container, a Node.js server using `@grpc/grpc-js` and `@grpc/proto-loader` implements `Chat`. It sends a greeting, echoes each message as it arrives, and sends a final response when the client finishes its request stream:
+Run an existing gRPC server in any language, including services for real-time voice applications. This Node.js snippet shows the streaming handler and service registration. It sends a greeting, echoes incoming messages, and sends a final response when the client finishes:
 
 ```js title="container/server.js"
 const path = require("node:path");
@@ -144,25 +124,8 @@ function chat(call) {
 	call.on("error", (error) => console.error("gRPC stream error", error));
 }
 
-// The Durable Object passes these PEM values from Secrets Store at startup.
-const cert = process.env.GRPC_TLS_CERT;
-const key = process.env.GRPC_TLS_KEY;
-if (!cert || !key) {
-	throw new Error("Set both GRPC_TLS_CERT and GRPC_TLS_KEY");
-}
-const credentials = grpc.ServerCredentials.createSsl(
-	null,
-	[{ private_key: Buffer.from(key), cert_chain: Buffer.from(cert) }],
-	false,
-);
-
 const server = new grpc.Server();
 server.addService(proto.ByteStream.service, { Chat: chat });
-server.bindAsync("0.0.0.0:50051", credentials, (error) => {
-	if (error) throw error;
-});
 ```
 
-Both sides can send messages independently over the same connection. The Worker and Durable Object route the socket without parsing gRPC messages.
-
-To get started, [route TCP traffic to a Worker](/spectrum/how-to/route-tcp-traffic-to-a-worker/) or build the [bidirectional gRPC example](/containers/examples/bidirectional-grpc/).
+Follow the [complete gRPC example](/containers/examples/bidirectional-grpc/) for the protobuf definition, bindings, Spectrum routing, Secrets Store TLS credentials, and Container startup and readiness checks.
