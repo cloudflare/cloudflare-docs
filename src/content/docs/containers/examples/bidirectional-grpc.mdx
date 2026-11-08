@@ -13,7 +13,7 @@ products:
 ---
 
 import {
-	CopyPrompt,
+	CopyPromptButton,
 	PackageManagers,
 	Steps,
 	TypeScriptExample,
@@ -28,7 +28,10 @@ Inbound TCP connections to Workers are in public beta.
 
 To have an AI coding agent deploy the example and create the Spectrum application, copy this prompt into your agent:
 
-<CopyPrompt text="Follow https://developers.cloudflare.com/containers/examples/bidirectional-grpc/ to deploy the demo app, then use the cf CLI to create a Spectrum application, with the Worker you just deployed as the origin. Ask me for any missing account, zone, or hostname details, and test the gRPC connection end to end." />
+<CopyPromptButton
+	tooltip="Deploy the bidirectional gRPC example"
+	prompt="Follow https://developers.cloudflare.com/containers/examples/bidirectional-grpc/ to deploy the demo app, then use the cf CLI to create a Spectrum application, with the Worker you just deployed as the origin. Ask me for any missing account, zone, or hostname details, and test the gRPC connection end to end."
+/>
 
 The Worker does not parse gRPC. It pipes the client's HTTP/2 byte stream to the container in both directions:
 
