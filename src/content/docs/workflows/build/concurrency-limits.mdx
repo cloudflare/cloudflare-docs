@@ -10,17 +10,17 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-## Per Workflow concurrency limits
+## Per-Workflow concurrency limits
 
-By default, instances of a Workflow can run concurrently up to your account's [concurrency limit](/workflows/reference/limits/), which is shared by every Workflow in the account. A per workflow concurrency limit caps how many instances of a single Workflow run at the same time. Instances above the limit are not rejected. They are queued and start automatically as running instances finish.
+By default, instances of a Workflow can run concurrently up to your account's [concurrency limit](/workflows/reference/limits/), which is shared by every Workflow in the account. A per-Workflow concurrency limit caps how many instances of a single Workflow run at the same time. Instances above the limit are not rejected. They are queued and start automatically as running instances finish.
 
-Use a per workflow concurrency limit to:
+Use a per-Workflow concurrency limit to:
 
 - Protect a downstream dependency, such as a database or third-party API, that degrades or rate limits past a certain number of concurrent requests.
 - Spread bursts of expensive calls over time, instead of making them all at once.
 - Stop one high-volume Workflow from using all of your account's concurrency and delaying instances of your other Workflows.
 
-### Set a workflow concurrency limit
+### Set a per-Workflow concurrency limit
 
 Configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration, then deploy your Worker:
 
@@ -61,7 +61,7 @@ Concurrency limits are not applied in local development.
 
 :::
 
-### How workflow concurrency limits are applied
+### How per-Workflow concurrency limits are applied
 
 - **Instances above the limit are queued, not rejected.** They have the `queued` [status](/workflows/build/workers-api/#instancestatus) and start automatically as running instances finish. Queued instances start in the order they were queued, on a best-effort basis.
 - **`waiting` and `paused` instances do not count towards the limit.** An instance that sleeps, waits to retry a step, or waits for an event with `step.waitForEvent` moves to the `waiting` status and frees its slot, but not immediately. During short waits, the instance stays `running` and keeps its slot. `paused` instances do not count either. Instances that are `running`, finishing their current work before pausing (`waitingForPause`), or running rollback handlers count towards the limit. When a `waiting` or `paused` instance is ready to continue, it is queued again if your account or the Workflow is at its limit.
@@ -71,11 +71,17 @@ Concurrency limits are not applied in local development.
 - **Workflows without a limit are not affected.** Only your account's concurrency limit applies to them.
 - **Instances created by `schedules` are not held back during their cron concurrency budget.** On Workers Paid, an instance created by a [cron schedule](/workflows/build/trigger-workflows/#schedule-a-workflow-directly) is not held back by the limit and does not use a slot for up to one hour per firing, so it can run even when the Workflow is at its limit. After that budget is used, the instance yields and is queued until both your account and the Workflow have a free slot.
 
-### Change or remove a workflow limit
+### Change or remove a per-Workflow concurrency limit
 
 To change the limit, update `concurrency.limit` and redeploy your Worker.
 
-To remove the limit, remove `concurrency` from your Wrangler configuration and run `wrangler deploy`. Each deploy sets the limit from your configuration, so deploying without `concurrency` removes any existing limit.
+To remove the limit, remove `concurrency` from your Wrangler configuration and run `wrangler deploy`.
+
+:::caution
+
+Each deploy sets the limit from your configuration. Keep `concurrency.limit` in your configuration on every deploy. If you deploy without it, the Workflow's concurrency limit is removed.
+
+:::
 
 ## Related resources
 

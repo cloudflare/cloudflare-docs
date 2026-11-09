@@ -883,13 +883,13 @@ await this.rejectWorkflow(instanceId, { reason: "Request denied" });
 
 ## Limitations
 
-| Constraint           | Limit                                                                                        |
-| -------------------- | -------------------------------------------------------------------------------------------- |
-| Maximum steps        | 10,000 per workflow (default) / configurable up to 25,000                                    |
-| State size           | 10 MB per workflow                                                                           |
-| Event wait time      | 1 year maximum                                                                               |
-| Step execution time  | 30 minutes per step                                                                          |
-| Concurrent instances | Account limit by default / configurable [per workflow](/workflows/build/concurrency-limits/) |
+| Constraint           | Limit                                                                                                                        |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Maximum steps        | 10,000 per workflow (default) / configurable up to 25,000                                                                    |
+| State size           | 10 MB per workflow                                                                                                           |
+| Event wait time      | 1 year maximum                                                                                                               |
+| Step execution time  | 30 minutes per step                                                                                                          |
+| Concurrent instances | Account limit by default / configurable [per workflow](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits) |
 
 Workflows cannot open WebSocket connections directly. Use `broadcastToClients()` to communicate with connected clients through the Agent.
 
