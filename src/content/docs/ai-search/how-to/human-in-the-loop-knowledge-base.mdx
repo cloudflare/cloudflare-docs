@@ -222,7 +222,7 @@ export class KnowledgeAgent extends DurableObject<Env> {
 					"saveDocument({ name, content }) saves a new document after a person approves it. " +
 					"Search before you save. If a save is rejected, stop and tell the user.",
 				prompt,
-				tools: createAITools({ workspace: this.workspace, exec: { codemode: {} } }),
+				tools: createAITools({ workspace: this.workspace, exec: { backends: { codemode: {} } } }),
 				stopWhen: stepCountIs(10),
 			});
 			return Response.json({ text });
