@@ -1434,7 +1434,7 @@ The following options are available:
 - `image_build_context` <Type text="string" /> <MetaInfo text="optional" />
   - The build context of the application, by default it is the directory of `image`.
 - `image_vars` <Type text="Record<string, string>" /> <MetaInfo text="optional" />
-  - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [use secret bindings or `envVars` on the Container class](/containers/examples/env-vars-and-secrets/).
+  - Build-time variables, equivalent to using `--build-arg` with `docker build`. If you want to provide environment variables to your container at _runtime_, you should [pass them to `ctx.container.start()`](/containers/examples/env-vars-and-secrets/).
 - `rollout_active_grace_period` <Type text="number" /> <MetaInfo text="optional" />
   - During a [rollout](/containers/configuration/rollouts/), minimum seconds a container instance must already have been connected to its Durable Object before it may be replaced. Defaults to `0`. Still applies with `--containers-rollout=immediate`.
 - `rollout_step_percentage` <Type text="number | number[]" /> <MetaInfo text="optional" />
