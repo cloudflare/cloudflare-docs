@@ -9,7 +9,20 @@ import rotateImg from "~/assets/images/images/examples/rotate-180.jpg";
 
 Rotates an image by a number of degrees. Accepts `90`, `180`, or `270`. The default is `0` (no rotation).
 
-Rotation is performed before resizing; `width` and `height` options will refer to the axes after the image is rotated.
+Rotation is performed before resizing; [`width`](#width) and [`height`](#height) options will refer to the axes after the image is rotated.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    rotate=180
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {rotate: 180}}
+  ```
+  </TabItem>
+</Tabs>
 
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
@@ -30,16 +43,3 @@ Rotation is performed before resizing; `width` and `height` options will refer t
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    rotate=90
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {rotate: 90}}
-  ```
-  </TabItem>
-</Tabs>

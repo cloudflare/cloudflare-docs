@@ -5,57 +5,134 @@ import { Tabs, TabItem} from "~/components"
 
 ### `trim`
 
-Removes pixels around the sides of an image.
+Removes pixels around the sides of an image. You can trim an image based on its [border color](#trim-border), remove pixels from [individual sides](#trim-side), or preserve a [rectangular area](#trim-rectangle).
 
-This feature can be used to trim an image by its border colors or by a specified number of pixels from its side(s).
+The `left` and `top` settings are used both to trim individual sides and to preserve a rectangle. Their meaning depends on the trim form:
 
-Trim takes into account the [`dpr`](#dpr) parameter and is performed before resizing and rotation.
+- When trimming individual sides, `left` and `top` specify the amount removed from the corresponding edge.
+- When preserving a rectangle, `left` and `top` specify the position of the rectangle’s upper-left corner. The `width` and `height` settings define the size of the preserved area.
 
+Trim accounts for the [`dpr`](#dpr) setting and runs before resizing and rotation.
+
+<a id="trim-border"></a>
 #### `border`
 
-Automatically trims the sides of the image based on its border color.
+Automatically trims the sides of the image based on its border color. By default, Cloudflare detects the border color automatically.
 
-The `trim=border` option can be further adjusted using the following parameters:
+To configure border detection, set `mode` to `border` and specify the following settings:
 
-- `trim.border.color` — Selects the border color to trim. Accepts any CSS color using CSS4 modern syntax. If omitted, the color is detected automatically.
-- `trim.border.tolerance` — Sets how closely the detected pixels must match in color. Accepts an integer between `0` (doesn't need to match) and 255 (must match exactly).
-- `trim.border.keep` — Specifies the number of pixels of the original border to leave untrimmed.
-
-#### `top;right;bottom;left`
-
-Specifies the number of pixels to remove from the sides of an image. Accepts four values, separated by a semicolon, to set the trim on all four sides of an image at once.
-
-All trim values accept either an integer (pixel count) or a decimal between `0` and `1` representing a fraction of the image dimension. For example, `0.25` trims 25% from that side.
-
-Trim can also be applied to a specific side using the following parameters:
-
-- `trim.top` — Removes pixels from the top of the image.
-- `trim.left` — Removes pixels from the left of the image.
-- `trim.height` — Sets the height of the image from the top edge, then trims everything below.
-- `trim.width` — Sets the width of the image from the left edge, then trims everything to the right.
+| Setting | Description | Accepted values |
+| --- | --- | --- |
+| `mode` | Applies border-based trimming. | `border` |
+| `color` | Sets the border color to trim. If omitted, Images detects the color automatically. | Any valid CSS color |
+| `tolerance` | Sets how closely pixels must match the border color. | Integer from `0` (no match required) to `255` (must match exactly) |
+| `keep` | Sets the number of pixels from the original border to leave untrimmed. | Positive integer |
 
 <Tabs>
   <TabItem label="URL format">
     ```txt
     trim=border
-    trim.height=800
-    // This sets the height of the image to 800 pixels from the top of the image, then trims everything below that point
-
-    trim.left=800
-    // This removes 800 pixels from the left of the image
-
-    trim=0.1;0.2;0.1;0.2
-    // This trims 10% from the top and bottom, and 20% from the left and right
-
-    trim.top=0.25
-    // This trims 25% of the image height from the top
+    trim=(mode=border,color=%23ffffff,tolerance=10,keep=5)
     ```
   </TabItem>
   <TabItem label="Workers">
   ```js
-  cf: {image: {trim: {top: 12, right: 78, bottom: 34, left: 56, width: 678, height: 678}}}
-  // Using decimals to trim 10% from each side:
-  cf: {image: {trim: {top: 0.1, right: 0.1, bottom: 0.1, left: 0.1}}}
+  cf: {
+    image: {
+      trim: "border",
+    },
+  }
+
+  cf: {
+    image: {
+      trim: {
+        mode: "border",
+        color: "#ffffff",
+        tolerance: 10,
+        keep: 5,
+      },
+    },
+  }
+  ```
+  </TabItem>
+</Tabs>
+
+<a id="trim-side"></a>
+#### `top`, `right`, `bottom`, `left`
+
+Sets how much to remove from each side of the image. Each setting accepts an integer pixel count or a decimal value between `0.0` and `1.0` that represents a fraction of the image dimension.
+
+To trim 10% from the top and bottom and 20% from the left and right:
+
+<Tabs>
+  <TabItem label="URL format">
+  ```txt
+  trim=(top=0.1,right=0.2,bottom=0.1,left=0.2)
+  ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  // Trims 10% from the top and bottom, and 20% from the left and right
+  cf: {
+    image: {
+      trim: {
+        top: 0.1,
+        right: 0.2,
+        bottom: 0.1,
+        left: 0.2,
+      },
+    },
+  }
+  ```
+  </TabItem>
+</Tabs>
+
+To remove 800 pixels from the left side:
+
+<Tabs>
+  <TabItem label="URL format">
+  ```txt
+  trim=(left=800)
+  ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {
+    image: {
+      trim: {
+        left: 800,
+      },
+    },
+  }
+  ```
+  </TabItem>
+</Tabs>
+
+<a id="trim-rectangle"></a>
+#### `width`, `height`, `left`, `top`
+
+Preserves a rectangular area of the image. `left` and `top` locate the area's upper-left corner within the source image. From that point, `width` sets how far the area extends to the right and `height` sets how far it extends down.
+
+To remove 10 pixels from the left and top edges and preserve a 500x300 pixel area:
+
+<Tabs>
+  <TabItem label="URL format">
+  ```txt
+  trim=(left=10,top=10,width=500,height=300)
+  ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {
+    image: {
+      trim: {
+        left: 10,
+        top: 10,
+        width: 500,
+        height: 300,
+      },
+    },
+  }
   ```
   </TabItem>
 </Tabs>

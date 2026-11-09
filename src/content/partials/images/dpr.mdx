@@ -13,6 +13,19 @@ Modern devices have more physical pixels than CSS pixels. If you serve a 300px i
 
 The `dpr` parameter can be used with `srcset` to [serve responsive images](/images/optimization/make-responsive-images/).
 
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    dpr=1
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {dpr: 1}}
+  ```
+  </TabItem>
+</Tabs>
+
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
     <td style="width:50%; border:none; vertical-align:bottom">
@@ -33,16 +46,3 @@ The `dpr` parameter can be used with `srcset` to [serve responsive images](/imag
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    dpr=1
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {dpr: 1}}
-  ```
-  </TabItem>
-</Tabs>

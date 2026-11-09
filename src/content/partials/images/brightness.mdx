@@ -14,6 +14,19 @@ Adjusts the image's overall luminance using a multiplier.
 - `< 1.0` — Darkens the image, e.g. `0.5` is half as bright.
 - `> 1.0` — Lightens the image, e.g. `2` is twice as bright.
 
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    brightness=0.5
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {brightness: 0.5}}
+  ```
+  </TabItem>
+</Tabs>
+
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
     <td style="width:33%; border:none; vertical-align:bottom">
@@ -40,16 +53,3 @@ Adjusts the image's overall luminance using a multiplier.
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    brightness=0.5
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {brightness: 0.5}}
-  ```
-  </TabItem>
-</Tabs>

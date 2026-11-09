@@ -9,6 +9,19 @@ import sharpenImg from "~/assets/images/images/examples/sharpen-5.jpg";
 
 Applies a sharpening filter to enhance edge definition in an image. Accepts a decimal value from `0` (no sharpening) to `10` (maximum sharpening). The default is `0`. The recommended value for downscaled images is `1`. 
 
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    sharpen=5
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {sharpen: 5}}
+  ```
+  </TabItem>
+</Tabs>
+
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
     <td style="width:50%; border:none; vertical-align:bottom">
@@ -28,16 +41,3 @@ Applies a sharpening filter to enhance edge definition in an image. Accepts a de
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    sharpen=2
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {sharpen: 2}}
-  ```
-  </TabItem>
-</Tabs>
