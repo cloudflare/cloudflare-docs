@@ -169,6 +169,14 @@ this.registry.install({
 
 For more information on creating and configuring extensions, including skills and replay safety, refer to [Extensions](/agents/harnesses/pi/extensions/).
 
+## Connect a workspace
+
+A [Cloudflare Computer](/agents/tools/workspace/) `Workspace` gives Pi a durable filesystem. It stores files in the same Durable Object's SQLite database as Pi's transcript, so the files survive eviction and restarts with the session. With a backend, it also gives the model an `exec` tool that runs JavaScript against those files in a [Dynamic Worker](/dynamic-workers/).
+
+Create the `Workspace` as a field on the Durable Object. Then turn its tools into Pi tool registrations with `createPiTools()` from `@cloudflare/computer/tools/pi-ai`, and install them in an extension, as in the previous section. Refer to [Workspace tools with Pi](/agents/tools/workspace/#pi) for the code, and to the [Quick start](/agents/getting-started/quick-start/) for a complete agent.
+
+Mark each workspace tool's `replay` setting. Reads, searches, whole-file writes, and deletes are safe to run again after an eviction. `edit` and `exec` are not, so Pi gives the model an interrupted result for those instead of running them twice.
+
 ## Send prompts
 
 `harness.prompt()` submits to the root session and waits for the answer. It returns the final assistant `text`, the `status`, and the session's transcript as `messages`.
