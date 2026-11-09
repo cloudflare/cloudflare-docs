@@ -67,19 +67,11 @@ To ensure a successful validation, the visitor must initiate the request and sub
 
 Turnstile tokens are intended for single use, but token-reuse detection is eventually consistent. Redemption state takes time to propagate across Cloudflare's global network.
 
-:::caution[Proposed service-level objective]
-
 The following objective is proposed and requires end-to-end validation and approval before publication. It is not an existing service commitment.
 
-Our service-level objective is to reject at least **99% of repeat validation requests received five seconds or more after the first successful validation**. Intentional retries using the same `idempotency_key` are excluded.
-
-:::
+The proposed service-level objective is to reject at least **99% of repeat validation requests received five seconds or more after the first successful validation**. Intentional retries using the same `idempotency_key` are excluded.
 
 Multiple validations submitted close together may succeed before redemption state propagates across the network. This includes both concurrent requests and closely spaced sequential requests.
-
-**Five seconds is an objective, not a guaranteed maximum replay window**, and Siteverify does not provide an atomic at-most-once guarantee. This does not extend the token's five-minute validity period.
-
-Applications requiring an operation to execute only once must enforce server-side deduplication or application-level idempotency. Do not rely on Siteverify token-reuse detection as your only protection against duplicate operations.
 
 ---
 
