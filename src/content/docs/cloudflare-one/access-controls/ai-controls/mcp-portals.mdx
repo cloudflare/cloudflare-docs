@@ -80,20 +80,7 @@ An upstream server can record this header in logs or use it for diagnostics. Do 
 
 ### Built-in portal tools
 
-Every portal exposes the following built-in tools to MCP clients, in addition to the upstream server tools:
-
-| Tool                          | Description                                                                                         |
-| ----------------------------- | --------------------------------------------------------------------------------------------------- |
-| `portal_list_servers`         | Lists all available upstream servers with their ID, name, and whether they are currently turned on. |
-| `portal_toggle_servers`       | Opens a URL-based server selection page where you can turn servers on or off.                       |
-| `portal_toggle_single_server` | Turns a single server on or off by server ID, without leaving the MCP client.                       |
-
-When [context optimization](#optimize-context) is turned on, additional tools are exposed depending on the mode:
-
-| Mode                 | Additional tools                                                                     |
-| -------------------- | ------------------------------------------------------------------------------------ |
-| `minimize_tools`     | `portal_query_tools` — Search tools by regex pattern and return full definitions.    |
-| `search_and_execute` | `portal_query_tools` and `portal_execute` — Search tools and execute them via proxy. |
+Portals expose built-in tools for server selection and tool discovery. Refer to [Portal-native tools](#portal-native-tools) for the tool names and their availability in each connection mode.
 
 ### Session lifecycle
 
@@ -185,24 +172,24 @@ Manual credentials require per-user authentication. Leave **Require user auth** 
 
 The MCP server status indicates the server's connection and tool and prompt synchronization status in Cloudflare Access.
 
-| Status        | Description                                                                                                                                                                                         |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                              |
-| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).                |
-| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                      |
-| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.              |
+| Status        | Description                                                                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                                        |
+| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
+| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                   |
+| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.         |
 
 #### Error details
 
 When an MCP server is in the **Error** or **Sync required** state, hover over its status in the dashboard to view available diagnostic information. The API returns these details in the `error_details` object:
 
-| Field         | Description                                                                                                            |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| `status_code` | The HTTP status code returned by the MCP server, if available.                                                         |
-| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                                      |
-| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                                     |
-| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed.                       |
-| `cause`       | The underlying error message.                                                                                          |
+| Field         | Description                                                                                      |
+| ------------- | ------------------------------------------------------------------------------------------------ |
+| `status_code` | The HTTP status code returned by the MCP server, if available.                                   |
+| `mcp_code`    | The MCP protocol error code, if the server returned an MCP error.                                |
+| `retryable`   | Whether the error is likely to be temporary and the connection is worth retrying.                |
+| `is_upstream` | `true` if the MCP server returned the error; `false` if the connection to the MCP server failed. |
+| `cause`       | The underlying error message.                                                                    |
 
 If `is_upstream` is `true`, use `status_code`, `mcp_code`, and `cause` to troubleshoot the MCP server. If it is `false`, verify that the server URL is correct and reachable. Retry the sync when `retryable` is `true`; otherwise, correct the reported cause before trying again. Reauthenticate the server only when the error points to expired or invalid credentials.
 
@@ -244,15 +231,15 @@ OAuth providers typically exact-match the full URI, including the path.
 
 If your upstream OAuth provider restricts redirect URIs, add the URLs that match your server's configuration:
 
-| OAuth configuration | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider |
-| --- | --- | --- |
-| Automatic (DCR) | No | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server. |
-| Automatic (DCR) | Yes | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
-| Manual OAuth credentials | Not available | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration. |
+| OAuth configuration                  | **Use the Cloudflare-hosted OAuth callback** on? | Redirect URIs to allowlist at the upstream provider                                                                                                                                                                                   |
+| ------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Automatic (DCR)                      | No                                               | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://<your-portal-hostname>/servers-callback` for each portal using this server.   |
+| Automatic (DCR)                      | Yes                                              | The [dashboard callback URL](#dashboard-callback-url) for administrator authorization. If users authorize with their own credentials, also add `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. |
+| Manual OAuth credentials (dashboard) | Not available                                    | `https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback`. The dashboard DCR callback URL is not used for this configuration.                                                                             |
 
 For automatic (DCR) servers, expand **Advanced settings** to access the **Use the Cloudflare-hosted OAuth callback** setting.
 
-For manual OAuth configured through the API, register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url) with the upstream provider. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare uses the shared callback URL regardless of the value of `registration_info.redirect_uris`, so you can omit this field. You cannot override the shared callback URL.
+For manual OAuth configured through the API, the recommended configuration is to register the [shared Cloudflare callback URL](#shared-cloudflare-callback-url), set `is_shared_oauth_callback_enabled` to `true`, and omit `registration_info.redirect_uris`. If you provide that array, Cloudflare uses its first URI for per-user authorization instead, even when the shared callback setting is on. To use a portal-specific callback, register and provide `https://<your-portal-hostname>/servers-callback`.
 
 #### Dashboard callback URL
 
@@ -286,7 +273,7 @@ Use `/servers-callback`, not `/server-callback`, for automatic (DCR) servers whe
 
 #### Shared Cloudflare callback URL
 
-When you configure an MCP server with manual OAuth credentials in the dashboard, Cloudflare uses the following shared callback URL for dashboard and per-user authorization:
+When you configure an MCP server with manual OAuth credentials in the dashboard, Cloudflare uses the following shared callback URL for per-user authorization:
 
 ```txt
 https://oauth-callbacks.cloudflareaccess.com/cdn-cgi/access/outbound-oauth-callback
@@ -310,7 +297,9 @@ To create an MCP server portal:
 4. Under **Custom domain**, select a domain from an active zone in your account. You can optionally specify a subdomain.
 5. [Add MCP servers](#add-an-mcp-server) to the portal.
 6. (Optional) Under **MCP servers**, [configure the tools and prompts](#manage-tools-and-prompts) available through the portal.
-7. (Optional) Configure **Require user auth** for servers that support OAuth: - `Enabled`: (default) User will be prompted to utilize their own login credentials to establish a connection with the MCP server. - `Disabled`: Users who are connected to the portal will automatically have access to the MCP server via its [admin credential](#reauthenticate-the-mcp-server).
+7. (Optional) Configure **Require user auth** for servers that support OAuth:
+   - **On** (default): Users connect with their own upstream credentials.
+   - **Off**: The portal connects using the server's [admin credential](#reauthenticate-the-mcp-server). Servers with manual OAuth credentials require this setting to remain on.
 8. Add [Access policies](/cloudflare-one/access-controls/policies/) to define the users who can connect to the portal URL.
 
    :::caution
@@ -354,7 +343,7 @@ To hide specific tools or prompts from portal users:
 2. Find the portal you want to configure, then select the three dots > **Edit**.
 3. Under **Servers**, find the server you want to configure. Select the value in **Tools authorized** or **Prompts authorized** (for example, `10/10`).
 4. Turn off the **Status** toggle next to each tool or prompt that you want to hide.
-5. Select **Back to portal**, then select **Save MCP server portal**.
+5. Close the tool or prompt list, then select **Save portal**.
 
 </Steps>
 
@@ -399,16 +388,18 @@ Aliases let you give tools and prompts clearer names in the portal. Use aliases 
 - Add or improve descriptions so AI agents select the correct tool.
 - Standardize naming across multiple MCP servers in a portal.
 
-Alias names must be 1-40 characters and can only contain letters, numbers, hyphens, and underscores. Names must start and end with an alphanumeric character. The value must match `^[a-zA-Z0-9]+([_-][a-zA-Z0-9]+)*$`. For example, `search_customer_records` or `get-user-profile`. No two tools or prompts on the same server can share the same name, whether that name is an alias or the original upstream name.
+Alias names must be 1-40 characters and match `^[a-zA-Z0-9]+([_-][a-zA-Z0-9]+)*$`. Use alphanumeric sections separated by a single hyphen or underscore, such as `search_customer_records` or `get-user-profile`. Within each server's tool list or prompt list, an alias must not duplicate another alias or an original name.
 
 #### Alias precedence
 
 You can set aliases at two levels. Portal-level aliases take precedence over server-level aliases.
 
-| Level            | Field          | Scope                                                         |
-| ---------------- | -------------- | ------------------------------------------------------------- |
-| **Server-level** | `alias`        | Applies across all portals that include this server           |
-| **Portal-level** | `portal_alias` | Applies only within a specific portal; overrides server-level |
+| Level            | Field   | Scope                                                         |
+| ---------------- | ------- | ------------------------------------------------------------- |
+| **Server-level** | `alias` | Applies across all portals that include this server           |
+| **Portal-level** | `alias` | Applies only within a specific portal; overrides server-level |
+
+Use `alias` in write requests at either level. API responses distinguish the levels with `server_alias` and `portal_alias`.
 
 When multiple names exist, the portal resolves them in this order: `portal_alias` > `server_alias` > `alias` > original tool name.
 
@@ -429,6 +420,7 @@ To set an alias that applies to a specific portal:
 5. Find the tool or prompt you want to modify, then select the three dots > **Edit**.
 6. In the modal, update the **Name** and **Description** as needed.
 7. Select **Confirm**.
+8. Close the tool or prompt list, then select **Save portal**.
 
 </TabItem> <TabItem label="Server-level alias">
 
@@ -602,6 +594,7 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 	method="POST"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
+		id: "engineering",
 		name: "Engineering Portal",
 		hostname: "mcp.example.com",
 		code_mode: "opt_in",
@@ -624,6 +617,7 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 	method="POST"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
+		id: "github",
 		name: "GitHub MCP Server",
 		hostname: "https://github-mcp.example.workers.dev/mcp",
 		auth_type: "oauth",
@@ -632,11 +626,11 @@ Unlike the dashboard, the API does not automatically create a DNS record for you
 
 The `auth_type` field accepts the following values:
 
-| Value             | Description                                                                                                                                          |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                   |
+| Value             | Description                                                                                                                                                                                               |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `oauth`           | The server requires OAuth authentication. You can use DCR or provide manual OAuth credentials.                                                                                                            |
 | `bearer`          | The server uses a static bearer token or custom authentication headers. Provide the credentials in `auth_credentials` (refer to [Bearer authentication credentials](#bearer-authentication-credentials)). |
-| `unauthenticated` | The server does not require authentication.                                                                                                          |
+| `unauthenticated` | The server does not require authentication.                                                                                                                                                               |
 
 #### Manual OAuth credentials
 
@@ -663,11 +657,11 @@ The decoded `auth_credentials` object must contain:
 - `auth_mode`: Must be `manual`.
 - `config.authorization_endpoint` and `config.token_endpoint`: The upstream provider's OAuth endpoints. `issuer` and `revocation_endpoint` are optional.
 - `registration_info.client_id`: The client ID issued by the upstream provider.
-- `registration_info.redirect_uris`: Cloudflare uses only the first URI in the array. When `is_shared_oauth_callback_enabled` is `true`, omit this field. Cloudflare adds the [shared callback URL](#shared-cloudflare-callback-url).
+- `registration_info.redirect_uris`: Cloudflare uses the first URI in this array for per-user authorization. To use the [shared callback URL](#shared-cloudflare-callback-url), omit this field and set `is_shared_oauth_callback_enabled` to `true`.
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
 
-Before you create the server, add the [shared callback URL](#shared-cloudflare-callback-url) to the upstream provider's allowed redirect URIs. Set `is_shared_oauth_callback_enabled` to `true`. Cloudflare then uses the shared callback for dashboard authorization and for users who connect through any portal that contains the server.
+Before you create the server, add the [shared callback URL](#shared-cloudflare-callback-url) to the upstream provider's allowed redirect URIs. With the example configuration, Cloudflare uses this callback for users who connect through any portal that contains the server. Manual OAuth servers do not authorize an admin credential during setup.
 
 Do not include `client_secret` or OAuth tokens inside `auth_credentials`. Send `client_secret` as the separate sibling field shown above.
 
@@ -683,8 +677,8 @@ The `auth_credentials` field accepts two forms:
 
   ```json
   {
-    "auth_type": "bearer",
-    "auth_credentials": "your-bearer-token"
+  	"auth_type": "bearer",
+  	"auth_credentials": "your-bearer-token"
   }
   ```
 
@@ -692,8 +686,8 @@ The `auth_credentials` field accepts two forms:
 
   ```json
   {
-    "auth_type": "bearer",
-    "auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
+  	"auth_type": "bearer",
+  	"auth_credentials": "{\"headers\":{\"X-Api-Key\":\"<api-key>\",\"X-Client-Id\":\"<client-id>\"}}"
   }
   ```
 
@@ -844,7 +838,7 @@ The provider marks the service token's `client_secret` as sensitive, but Terrafo
 
 [Code Mode](/agents/tools/codemode/) reduces context window usage by replacing upstream tool definitions with two tools for search and code execution. The connected AI agent writes JavaScript that calls typed `codemode.*` methods. The generated code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment. Authentication credentials and environment variables remain outside the model context.
 
-Code Mode is useful for portals with many MCP servers or tools. Context window usage stays fixed as the portal adds tools.
+Code Mode is useful for portals with many MCP servers or tools. The client initially receives two Code Mode tool definitions instead of the upstream tool catalog. Tool definitions and results retrieved during execution can still consume context.
 
 ### Code Mode policies
 
@@ -865,20 +859,16 @@ MCP portals do not support upstream MCP servers that have their own Code Mode tu
 
 ### Configure a Code Mode policy
 
-<Steps>
-1. Get your existing MCP portal configuration:
+Send a `PUT` request to the [Update an MCP Portal](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/update/) endpoint with `code_mode` set to `off`, `opt_in`, `default_on`, or `enforced`:
 
-   <CURL
+<CURL
 	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/ai-controls/mcp/portals/{id}"
-	method="GET"
+	method="PUT"
 	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
-   />
+	json={{ code_mode: "enforced" }}
+/>
 
-2. Add `code_mode` to the response body. Set the value to `off`, `opt_in`, `default_on`, or `enforced`.
-3. Send the complete body in a `PUT` request to the [Update a MCP Portal](/api/resources/zero_trust/subresources/access/subresources/ai_controls/subresources/mcp/subresources/portals/methods/update/) endpoint. Including the complete body prevents other portal settings from being overwritten.
-</Steps>
-
-The `allow_code_mode` API field is deprecated. Use `code_mode` for new integrations.
+Omit `servers` to leave the portal's server mappings unchanged. Do not copy the deprecated `allow_code_mode` field from a read response into this request. If you send both fields and they disagree, the API returns `400`.
 
 ### Connect with Code Mode
 
@@ -1130,7 +1120,7 @@ curl https://<subdomain>.<domain>/mcp \
   --data '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"service-token-test","version":"1.0.0"}}}'
 ```
 
-For `mcp-remote`, pass the credentials through environment variables instead of storing them in the MCP client configuration:
+For `mcp-remote`, set `ACCESS_CLIENT_ID` and `ACCESS_CLIENT_SECRET` in the environment that launches your MCP client. The client must pass these variables to the `mcp-remote` process. Reference them in the configuration without storing their values there:
 
 ```json title="MCP client configuration for service token connections"
 {
@@ -1145,11 +1135,7 @@ For `mcp-remote`, pass the credentials through environment variables instead of 
 				"CF-Access-Client-Id:${ACCESS_CLIENT_ID}",
 				"--header",
 				"CF-Access-Client-Secret:${ACCESS_CLIENT_SECRET}"
-			],
-			"env": {
-				"ACCESS_CLIENT_ID": "<CLIENT_ID>",
-				"ACCESS_CLIENT_SECRET": "<CLIENT_SECRET>"
-			}
+			]
 		}
 	}
 }
@@ -1161,7 +1147,7 @@ Service tokens do not support per-user OAuth with upstream MCP servers. The port
 
 ### Device authentication
 
-MCP server portals require a browser-based authentication flow. [Device authentication](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) (picking up identity from the Cloudflare One Client without a browser redirect) is not currently supported for MCP portals. Users must complete the Access login flow in a browser when first connecting.
+User-based connections require a browser-based Access login when first connecting. [Device authentication](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/) cannot replace that flow. For machine-to-machine access without a browser login, [connect with a service token](#connect-with-a-service-token).
 
 ## Optimize context
 
@@ -1171,9 +1157,7 @@ To use context optimization, append the `optimize_context` query parameter to yo
 
 ### Minimize tools
 
-The `minimize_tools` option strips tool descriptions and input schemas from all upstream tools, leaving only their names. The portal exposes a special `query` tool that agents use to search and retrieve full tool definitions on demand. Agents can discover tools without loading all definitions upfront.
-
-This option provides up to 5x savings in token usage, though querying tool definitions before use adds a small amount of overhead.
+The `minimize_tools` option minimizes upstream tool descriptions and input schemas. Agents use `portal_query_tools` to retrieve full definitions before calling a tool, rather than loading the full catalog upfront.
 
 To connect with `minimize_tools`, use the following portal URL:
 
@@ -1195,9 +1179,9 @@ For MCP clients with server configuration files:
 
 ### Search and execute
 
-The `search_and_execute` option hides all upstream tools and exposes only two tools to the agent: `query` and `execute`. The `query` tool searches and retrieves tool definitions. The `execute` tool runs the upstream tools. The generated code runs in an isolated [Dynamic Worker](/dynamic-workers/) environment, which keeps authentication credentials and environment variables out of the model context.
+The `search_and_execute` option hides upstream tools from the tool list. Agents use `portal_query_tools` to find tools and retrieve their definitions, then call `portal_execute` with a tool name and arguments. The portal's [server-selection tools](#portal-native-tools) remain available.
 
-This option reduces the initial token cost of portal tools to a small constant, regardless of how many tools are available. However, the agent becomes fully reliant on `query` to discover tools before it can call them.
+Unlike [Code Mode](#code-mode), this option does not require the agent to write JavaScript. It reduces the initial tool catalog, but discovery calls and results still consume context.
 
 To connect with `search_and_execute`, use the following portal URL:
 
@@ -1217,7 +1201,7 @@ For MCP clients with server configuration files:
 }
 ```
 
-For more information on the Code Mode pattern behind `search_and_execute`, refer to [Code Mode](/agents/tools/codemode/).
+For JavaScript-based tool composition, use [Code Mode](#code-mode) instead.
 
 ## Manage portal sessions
 
@@ -1295,7 +1279,7 @@ MCP server portals have the following known limitations:
 - **Only remote HTTP MCP servers are supported.** MCP servers that use [stdio transport only](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) (for example, `github/github-mcp-server`) do not expose a remote HTTP endpoint and cannot be added to an MCP server portal. To use a stdio-only server, you must self-host it behind an HTTP endpoint and authenticate with a [bearer token or custom headers](#create-an-mcp-server).
 - **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
 - **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
-- **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
+- **Admin OAuth credentials may require reauthentication.** Cloudflare refreshes expired admin access tokens when a valid refresh token is available. If refresh fails, capability synchronization and requests using the admin credential can fail. Users with valid per-user credentials may continue to connect. Check the [error details](#error-details) and [reauthenticate the server](#reauthenticate-the-mcp-server) when credentials are invalid.
 - **Upstream MCP tool calls time out after 60 seconds.** The portal returns an error if the upstream server does not respond before the timeout. For longer operations, return a job ID immediately. Expose separate tools to check the operation status and retrieve results.
 - **Each portal supports up to 120 MCP servers.**
 
@@ -1339,7 +1323,9 @@ A `522` error indicates that Cloudflare cannot reach the portal's origin. This t
 
 ### An MCP server is stuck in `Waiting` status.
 
-The `Waiting` status means Cloudflare is attempting to connect to the upstream MCP server and fetch its tools and prompts. If the server stays in this status:
+For a server with manual OAuth credentials, **Waiting** is expected until the first user completes upstream OAuth. Complete that flow through a portal with **Require user auth** turned on; background or manual synchronization does not populate the capabilities.
+
+For other servers, `Waiting` means Cloudflare is attempting to connect and fetch tools and prompts. If the server stays in this status:
 
 1. Verify that the upstream MCP server URL is correct and the server is reachable.
 2. Check that the upstream server supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) or SSE transport. The portal will attempt multiple connection strategies automatically.
