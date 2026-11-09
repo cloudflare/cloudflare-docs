@@ -70,9 +70,11 @@ Email Service rejects the entire send request if it contains a disallowed header
 
 ### Automated message identification
 
-| Header           | RFC                                                       | Notes                                                     |
-| ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |
-| `Auto-Submitted` | [RFC 3834](https://datatracker.ietf.org/doc/html/rfc3834) | Values: `auto-generated`, `auto-replied`, `auto-notified` |
+| Header           | RFC                                                       | Notes                                                                        |
+| ---------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `Auto-Submitted` | [RFC 3834](https://datatracker.ietf.org/doc/html/rfc3834) | Values include `no`, `auto-generated`, `auto-replied`, and extension tokens. |
+
+[RFC 5436](https://datatracker.ietf.org/doc/html/rfc5436) defines `auto-notified` for Sieve notifications. This value requires an `owner-email` or `owner-token` parameter.
 
 ### Content and display
 
@@ -80,7 +82,7 @@ Email Service rejects the entire send request if it contains a disallowed header
 | ------------------ | --------------------------------------------------------- | --------------------------------------------------------- |
 | `Content-Language` | [RFC 3282](https://datatracker.ietf.org/doc/html/rfc3282) | Language of content (for example, `en`, `fr`)             |
 | `Keywords`         | [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) | Message keywords (comma-separated for multiple values)    |
-| `Comments`         | [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) | Additional comments (comma-separated for multiple values) |
+| `Comments`         | [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) | Free-form comments (unstructured text)                    |
 | `Importance`       | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Values: `high`, `normal`, `low`                           |
 | `Priority`         | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Values: `normal`, `non-urgent`, `urgent`                  |
 | `Sensitivity`      | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Values: `personal`, `private`, `company-confidential`     |
@@ -88,11 +90,11 @@ Email Service rejects the entire send request if it contains a disallowed header
 
 ### Delivery and notification
 
-| Header                          | RFC                                                       | Notes                                                    |
-| ------------------------------- | --------------------------------------------------------- | -------------------------------------------------------- |
-| `Require-Recipient-Valid-Since` | [RFC 7293](https://datatracker.ietf.org/doc/html/rfc7293) | Address reuse protection                                 |
-| `Expires`                       | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Date and time after which the message is no longer valid |
-| `Reply-By`                      | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156) | Date and time by which a reply is requested              |
+| Header                          | RFC                                                         | Notes                                                                 |
+| ------------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------------- |
+| `Require-Recipient-Valid-Since` | [RFC 7293](https://datatracker.ietf.org/doc/html/rfc7293)   | Recipient address followed by `;` and an RFC 5322 `date-time`         |
+| `Expires`                       | [RFC 10080](https://datatracker.ietf.org/doc/html/rfc10080) | Expiration time in RFC 5322 `date-time` format                        |
+| `Reply-By`                      | [RFC 2156](https://datatracker.ietf.org/doc/html/rfc2156)   | Requested reply deadline in RFC 5322 `date-time` format               |
 
 ### Modern standards
 
@@ -184,7 +186,7 @@ The total payload is calculated as `sum(len(name) + 2 + len(value) + 2)` for all
 2. **Header values** — UTF-8 allowed, maximum 2,048 bytes, no bare CR/LF. Empty values are rejected.
 3. **Case-insensitive matching** — Header names are matched case-insensitively per [RFC 5322 §2.2](https://datatracker.ietf.org/doc/html/rfc5322#section-2.2). The canonical casing from the allowlist is used in the generated message.
 4. **Proper line folding** — Long headers are folded at 78 characters per RFC 5322 using CRLF+WSP, not MIME encoding.
-5. **Single occurrence** — The `headers` type is `{ [key]: string }`, so each header name can appear at most once. For headers that support multiple values (such as `Keywords` or `Comments`), use comma-separated values in a single string.
+5. **Single occurrence** — The `headers` type is `{ [key]: string }`, so each header name can appear at most once. For headers that support multiple values (such as `Keywords`), use comma-separated values in a single string.
 
 ## Error codes
 
