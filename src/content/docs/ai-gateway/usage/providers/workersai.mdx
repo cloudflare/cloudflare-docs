@@ -79,3 +79,9 @@ Workers AI supports the following parameters for AI gateways:
   - Controls whether the request should [skip the cache](/ai-gateway/features/caching/#skip-cache-cf-aig-skip-cache).
 - `cacheTtl` number
   - Controls the [Cache TTL](/ai-gateway/features/caching/#cache-ttl-cf-aig-cache-ttl).
+
+:::note
+The Workers binding cannot send an input that is a `ReadableStream` or `FormData`, or an object whose `body` is one (such as `{ body, contentType }`), through AI Gateway. With the `gateway` option set, `env.AI.run()` throws `AiInternalError: AI Gateway does not support ReadableStreams yet.` before it sends the request, so the request does not appear in your gateway logs.
+
+This affects audio passed as `{ body, contentType }`, for example to `@cf/deepgram/nova-3`, and multipart models such as `@cf/black-forest-labs/flux-2-klein-4b`. Call these models without the `gateway` option, or send audio as a base64 string to a model that accepts one, such as `@cf/openai/whisper-large-v3-turbo`.
+:::
