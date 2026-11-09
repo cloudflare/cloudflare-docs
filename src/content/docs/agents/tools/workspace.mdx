@@ -646,7 +646,7 @@ Two more backends run shell commands instead of JavaScript modules. For a shell 
 | [Worker shell](#worker-shell)                  | `@cloudflare/computer/backends/worker-shell` | A bash-like shell with a fixed set of commands, in a Dynamic Worker | Experimental |
 | [Container](#container)                        | `@cloudflare/computer/backends/container`    | Real binaries, `npm`, and `node` in a Linux container               | Experimental |
 
-A workspace can have several backends. Give each one an `id`. `exec()` uses the first backend unless the caller names another with the `backend` option, and the model chooses between them from the descriptions in the `exec` tool. To change what the model reads about each backend, pass `exec` to the tool adapter, for example `exec: { shell: { description: "Try this first." } }`.
+A workspace can have several backends. Give each one an `id`. `exec()` uses the first backend unless the caller names another with the `backend` option, and the model chooses between them from the descriptions in the `exec` tool. To change what the model reads about each backend, pass `exec` to the tool adapter, for example `exec: { backends: { shell: { description: "Try this first." } } }`.
 
 ### Worker shell
 
