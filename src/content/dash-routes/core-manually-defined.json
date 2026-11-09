@@ -1,5 +1,10 @@
 [
 	{
+		"deeplink": "/?to=/:account/:zone/agent-readiness/markdown-for-agents",
+		"name": "Markdown for Agents",
+		"parent": ["Agent Readiness"]
+	},
+	{
 		"deeplink": "/?to=/:account/rules/simulator",
 		"name": "Rules simulator",
 		"parent": ["Rules"]
