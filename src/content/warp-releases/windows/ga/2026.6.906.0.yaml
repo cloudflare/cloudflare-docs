@@ -1,0 +1,6 @@
+releaseNotes: This hotfix addresses an issue building trusted certificate chains.
+version: 2026.6.906.0
+releaseDate: 2026-11-09T19:39:25.488Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/windows/version/2026.6.906.0
+packageSize: 60641280
+platformName: Windows
