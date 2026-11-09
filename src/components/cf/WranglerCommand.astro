@@ -17,6 +17,7 @@ import CfCommand from "./CfCommand.astro";
 import CommandReference from "./CommandReference.astro";
 import {
 	formatCommandInvocation,
+	kebabCaseFlagNames,
 	type HeadingLevel,
 } from "./command-reference";
 
@@ -65,10 +66,11 @@ const epilogue = definition.metadata.epilogue;
 const experimental = definition.metadata.status === "experimental";
 
 const headingId = command.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const args = kebabCaseFlagNames(definition.args, definition.positionalArgs);
 const invocation = formatCommandInvocation(
 	command,
 	definition.positionalArgs,
-	definition.args,
+	args,
 );
 const cfCommands =
 	cfCommand === undefined
@@ -111,7 +113,7 @@ if (new Set(normalizedCfCommands).size !== normalizedCfCommands.length) {
 				mode="wrangler"
 				epilogue={epilogue}
 				experimental={experimental}
-				args={definition.args}
+				args={args}
 				globalFlags={globalFlags}
 				positionals={definition.positionalArgs}
 			/>
@@ -137,7 +139,7 @@ if (new Set(normalizedCfCommands).size !== normalizedCfCommands.length) {
 		mode="wrangler"
 		epilogue={epilogue}
 		experimental={experimental}
-		args={definition.args}
+		args={args}
 		globalFlags={globalFlags}
 		positionals={definition.positionalArgs}
 	/>

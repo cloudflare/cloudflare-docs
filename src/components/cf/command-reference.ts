@@ -22,6 +22,21 @@ export function formatCommandArgumentName(
 		: `[${key.toUpperCase()}]`;
 }
 
+export function kebabCaseFlagNames(
+	args: Record<string, CommandArgumentDefinition> = {},
+	positionals: readonly string[] = [],
+) {
+	const positionalSet = new Set(positionals);
+	return Object.fromEntries(
+		Object.entries(args).map(([key, definition]) => {
+			const kebabKey = key.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+			return positionalSet.has(key) || definition.positional || kebabKey in args
+				? [key, definition]
+				: [kebabKey, definition];
+		}),
+	);
+}
+
 export function formatCommandInvocation(
 	command: string,
 	positionals: readonly string[] = [],
