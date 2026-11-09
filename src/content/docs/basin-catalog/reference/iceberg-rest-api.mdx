@@ -1,0 +1,157 @@
+---
+title: Iceberg REST API compatibility
+description: Review which Apache Iceberg REST catalog operations, parameters, and headers Basin Catalog supports.
+pcx_content_type: reference
+sidebar:
+  order: 1
+products:
+  - basin-catalog
+---
+
+Basin Catalog implements the [Apache Iceberg REST catalog specification](https://github.com/apache/iceberg/blob/apache-iceberg-1.12.0/open-api/rest-catalog-open-api.yaml). Our commitment is to stay as close to the specification as possible. Any Iceberg client that follows the specification should work with Basin Catalog without Cloudflare-specific code.
+
+To keep this commitment, Basin Catalog follows these rules:
+
+- Standard Iceberg endpoints do not get custom query parameters, headers, or response fields.
+- Cloudflare-specific settings for a table, view, or namespace use [reserved Iceberg properties](/basin-catalog/reference/table-properties/).
+- Catalog-level settings, such as table maintenance and catalog deletion, use the [Cloudflare API](/api/resources/basin_catalog/), Wrangler, or the dashboard. The Iceberg specification does not define catalog management operations.
+
+This page compares Basin Catalog with the REST catalog specification published with Apache Iceberg 1.12.0.
+
+## How to read this page
+
+Each operation has one of these statuses:
+
+✅ Supported <br/>
+🚧 Supported, with differences described in the **Notes** column <br/>
+❌ Not supported
+
+## Connection details
+
+Iceberg clients need two values to connect. Both are shown in the dashboard and returned by `wrangler basin catalog get <BUCKET_NAME>`:
+
+| Value          | Format                                                             |
+| -------------- | ------------------------------------------------------------------ |
+| Catalog URI    | `https://catalog.cloudflarestorage.com/<ACCOUNT_ID>/<BUCKET_NAME>` |
+| Warehouse name | `<ACCOUNT_ID>_<BUCKET_NAME>`                                       |
+
+Clients send the warehouse name to `GET /v1/config`. The response returns a `prefix` override that the client uses for all other requests. Iceberg clients handle the prefix for you.
+
+Basin Catalog authenticates requests with a Cloudflare API token sent as a bearer token. For the required permissions, refer to [Authenticate your Iceberg engine](/basin-catalog/manage-catalogs/#authenticate-your-iceberg-engine).
+
+## Configuration
+
+| Operation                            | Status | Notes                                                                                                                |
+| ------------------------------------ | ------ | -------------------------------------------------------------------------------------------------------------------- |
+| `getConfig` (`GET /v1/config`)       | ✅     | The `warehouse` query parameter is required. The `endpoints` field lists the operations that Basin Catalog supports. |
+| `getToken` (`POST /v1/oauth/tokens`) | ❌     | This endpoint is deprecated in the specification. Send a Cloudflare API token as a bearer token instead.             |
+
+## Namespaces
+
+| Operation                                                                  | Status | Notes                                                                                                                                  |
+| -------------------------------------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `listNamespaces` (`GET /v1/{prefix}/namespaces`)                           | ✅     | Supports `parent`, `pageToken`, and `pageSize`.                                                                                        |
+| `createNamespace` (`POST /v1/{prefix}/namespaces`)                         | ✅     | Refer to [Limits](/basin-catalog/platform/limits/) for naming rules.                                                                   |
+| `loadNamespaceMetadata` (`GET /v1/{prefix}/namespaces/{namespace}`)        | ✅     |                                                                                                                                        |
+| `namespaceExists` (`HEAD /v1/{prefix}/namespaces/{namespace}`)             | ✅     |                                                                                                                                        |
+| `dropNamespace` (`DELETE /v1/{prefix}/namespaces/{namespace}`)             | ✅     | The namespace must be empty. A namespace that contains tables, views, or child namespaces returns `409`, as the specification defines. |
+| `updateProperties` (`POST /v1/{prefix}/namespaces/{namespace}/properties`) | ✅     | Property keys must be lowercase. The `location` property cannot be changed or removed.                                                 |
+
+## Tables
+
+| Operation                                                                                | Status | Notes                                                                                                                                          |
+| ---------------------------------------------------------------------------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `listTables` (`GET /v1/{prefix}/namespaces/{namespace}/tables`)                          | ✅     | Supports `pageToken` and `pageSize`.                                                                                                           |
+| `createTable` (`POST /v1/{prefix}/namespaces/{namespace}/tables`)                        | ✅     | Supports `stage-create`. The table location must not already contain files.                                                                    |
+| `registerTable` (`POST /v1/{prefix}/namespaces/{namespace}/register`)                    | ✅     | The metadata file must be inside the catalog bucket.                                                                                           |
+| `loadTable` (`GET /v1/{prefix}/namespaces/{namespace}/tables/{table}`)                   | 🚧     | Always returns all snapshots. The `snapshots` and `referenced-by` query parameters and the `If-None-Match` header have no effect.              |
+| `updateTable` (`POST /v1/{prefix}/namespaces/{namespace}/tables/{table}`)                | 🚧     | Refer to [Table commits](#table-commits).                                                                                                      |
+| `dropTable` (`DELETE /v1/{prefix}/namespaces/{namespace}/tables/{table}`)                | ✅     | Supports `purgeRequested`. Data files are deleted after a grace period. Refer to [Purge a table](/basin-catalog/deleting-data/#purge-a-table). |
+| `tableExists` (`HEAD /v1/{prefix}/namespaces/{namespace}/tables/{table}`)                | ✅     |                                                                                                                                                |
+| `renameTable` (`POST /v1/{prefix}/tables/rename`)                                        | ✅     |                                                                                                                                                |
+| `unregisterTable` (`POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/unregister`) | ❌     |                                                                                                                                                |
+| `loadCredentials` (`GET /v1/{prefix}/namespaces/{namespace}/tables/{table}/credentials`) | ✅     | Refer to [Storage credentials](#storage-credentials).                                                                                          |
+| `reportMetrics` (`POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/metrics`)      | 🚧     | Basin Catalog accepts the report and returns `204`, but does not store it.                                                                     |
+| `commitTransaction` (`POST /v1/{prefix}/transactions/commit`)                            | ✅     | Each change must include a unique table identifier. A transaction can include up to 7,500 tables.                                              |
+
+### Table commits
+
+Basin Catalog checks every requirement type in the specification. A failed requirement returns `409`, and the client can retry the commit.
+
+Basin Catalog supports every update action in the specification, with these exceptions:
+
+| Update action                                    | Behavior                                                                                                          |
+| ------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `add-encryption-key` and `remove-encryption-key` | Returns `501`. Table encryption is not supported.                                                                 |
+| `assign-uuid`                                    | Returns `400` if the UUID is different from the current UUID.                                                     |
+| `set-location`                                   | Returns `400` if the location is different from the current location.                                             |
+| `set-properties` and `remove-properties`         | Some properties are reserved or blocked. Refer to [Table properties](/basin-catalog/reference/table-properties/). |
+
+If two commits to the same table pass their requirement checks at the same time, Basin Catalog retries the losing commit up to two times. If the commit still fails, Basin Catalog returns `400` with the error type `ConcurrentUpdateError`.
+
+## Views
+
+| Operation                                                                 | Status | Notes |
+| ------------------------------------------------------------------------- | ------ | ----- |
+| `listViews` (`GET /v1/{prefix}/namespaces/{namespace}/views`)             | ✅     |       |
+| `createView` (`POST /v1/{prefix}/namespaces/{namespace}/views`)           | ✅     |       |
+| `loadView` (`GET /v1/{prefix}/namespaces/{namespace}/views/{view}`)       | ✅     |       |
+| `replaceView` (`POST /v1/{prefix}/namespaces/{namespace}/views/{view}`)   | ✅     |       |
+| `dropView` (`DELETE /v1/{prefix}/namespaces/{namespace}/views/{view}`)    | ✅     |       |
+| `viewExists` (`HEAD /v1/{prefix}/namespaces/{namespace}/views/{view}`)    | ✅     |       |
+| `renameView` (`POST /v1/{prefix}/views/rename`)                           | ✅     |       |
+| `registerView` (`POST /v1/{prefix}/namespaces/{namespace}/register-view`) | ❌     |       |
+
+## Scan planning
+
+Basin Catalog does not support server-side scan planning. These operations are not listed in the `GET /v1/config` response, so Iceberg clients plan scans on the client side.
+
+| Operation                                                                                       | Status |
+| ----------------------------------------------------------------------------------------------- | ------ |
+| `planTableScan` (`POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/plan`)                | ❌     |
+| `fetchPlanningResult` (`GET /v1/{prefix}/namespaces/{namespace}/tables/{table}/plan/{plan-id}`) | ❌     |
+| `cancelPlanning` (`DELETE /v1/{prefix}/namespaces/{namespace}/tables/{table}/plan/{plan-id}`)   | ❌     |
+| `fetchScanTasks` (`POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/tasks`)              | ❌     |
+
+## Functions
+
+| Operation                                                                       | Status |
+| ------------------------------------------------------------------------------- | ------ |
+| `listFunctions` (`GET /v1/{prefix}/namespaces/{namespace}/functions`)           | ❌     |
+| `loadFunction` (`GET /v1/{prefix}/namespaces/{namespace}/functions/{function}`) | ❌     |
+
+## Storage credentials
+
+Basin Catalog vends credentials for the underlying R2 bucket. The `loadTable`, `createTable`, and `loadCredentials` responses include S3-compatible credentials in `config` and `storage-credentials`.
+
+The vended credentials have the same R2 storage permissions as the API token that made the request. For more information, refer to [Authenticate your Iceberg engine](/basin-catalog/manage-catalogs/#authenticate-your-iceberg-engine).
+
+| Feature                                                                                        | Status | Notes                                                                                            |
+| ---------------------------------------------------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------ |
+| Vended credentials                                                                             | ✅     | Basin Catalog returns credentials whether or not the client sends `X-Iceberg-Access-Delegation`. |
+| Remote signing (`signRequest`, `POST /v1/{prefix}/namespaces/{namespace}/tables/{table}/sign`) | ❌     | Responses set `s3.remote-signing-enabled` to `false`.                                            |
+
+## Request headers and parameters
+
+| Feature                       | Status | Notes                                                   |
+| ----------------------------- | ------ | ------------------------------------------------------- |
+| `Authorization: Bearer`       | ✅     | Use a Cloudflare API token.                             |
+| Pagination                    | ✅     | `pageSize` defaults to 100. The maximum is 1,000.       |
+| `X-Iceberg-Access-Delegation` | 🚧     | Basin Catalog always uses vended credentials.           |
+| `Idempotency-Key`             | ❌     | The header has no effect. A retried request runs again. |
+| `If-None-Match` and `ETag`    | ❌     | `loadTable` always returns the full table metadata.     |
+| `purgeRequested`              | ✅     | Supported on `dropTable` and `dropView`.                |
+
+Basin Catalog rejects some query parameters that other catalogs add to the specification. `dropNamespace` returns `400` for `recursive`, `force`, and `purge`. `dropTable` and `dropView` return `400` for `force`.
+
+## Table format versions
+
+Basin Catalog supports Iceberg table format versions 1, 2, and 3. New tables use version 2 unless the client sets `format-version` when it creates the table.
+
+Version 3 tables support deletion vectors, row lineage, and default values. Automatic compaction skips version 3 tables that have a non-primitive `initial-default` value.
+
+## Errors
+
+Basin Catalog returns errors in the Iceberg `IcebergErrorResponse` format. Authentication errors are an exception. Requests with a missing or invalid API token return `401` with a plain text body. Requests with a token that does not have the required permissions return `403` with a plain text body.
+
+Rate-limited requests return `429` with the error type `TooManyRequestsException` and a `Retry-After` header. For the rate limits, refer to [Limits](/basin-catalog/platform/limits/#rate-limits).
