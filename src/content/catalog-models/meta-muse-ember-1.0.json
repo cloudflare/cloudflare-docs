@@ -41,7 +41,7 @@
 				"id": "resp_6af15b9fd8d1276417fe40de",
 				"object": "response",
 				"created_at": 1794202527,
-				"model": "frantic-ferret",
+				"model": "muse-ember-1.0",
 				"output": [
 					{
 						"type": "reasoning",
@@ -119,7 +119,7 @@
 				"id": "resp_6af15ba2d8c9dfbcd7de4788",
 				"object": "response",
 				"created_at": 1794202530,
-				"model": "frantic-ferret",
+				"model": "muse-ember-1.0",
 				"output": [
 					{
 						"type": "reasoning",
@@ -201,7 +201,7 @@
 				"id": "resp_6af15ba26c54eff387aa4131",
 				"object": "response",
 				"created_at": 1794202530,
-				"model": "frantic-ferret",
+				"model": "muse-ember-1.0",
 				"output": [
 					{
 						"type": "reasoning",
