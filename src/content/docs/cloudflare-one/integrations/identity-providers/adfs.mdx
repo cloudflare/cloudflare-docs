@@ -39,31 +39,18 @@ Run the Add Relying Party Trust wizard to begin SAML AD integration with Cloudfl
 To create a Relying Party Trust:
 
 1. In **Windows Server**, launch the **ADFS Management** tool.
-
 2. Select the **Relying Party Trusts** folder.
-
 3. On the **Actions** sidebar, select **Add Relying Party Trust**. The **Add Relying Party Trust Wizard** launches.
-
 4. In the left menu, choose **Select Data Source**.
-
 5. Select the **Enter data about the relying party manually** option.
-
 6. Select **Next**.
-
 7. Enter a **Display name**. We suggest you use a recognizable name. Include any information regarding this connection in the **Notes** field.
-
 8. Select **Next**. The **Choose Profile** step displays.
-
 9. Select the **AD FS profile** option.
-
 10. Select **Next**. The **Configure Certificate** step displays.
-
 11. Leave the **Certificate** options at their defaults.
-
 12. Select **Next**. The **Configure URL** step displays.
-
 13. Select the **Enable support for the SAML 2.0 WebSSO protocol** option.
-
 14. In the **Relying party SAML 2.0 SSO service URL** field, enter the following URL:
 
     ```txt
@@ -77,17 +64,11 @@ To create a Relying Party Trust:
     ![Add relying party trust wizard with callback URL pasted into open form field](~/assets/images/cloudflare-one/identity/adfs/adfs-7.png)
 
 16. Paste your callback URL in the **Relying party trust identifier** field.
-
 17. Select **Next**. In the **Configure Multi-factor Authentication Now?** step, you can configure multi-factor authentication.
-
 18. Select **Next**. The **Choose Issuance Authorization Rules** step displays.
-
 19. Select the **Permit all users to access this relying party** option.
-
 20. Select **Next**. The **Ready to Add Trust** step displays.
-
 21. Review your settings.
-
 22. Select **Next**. Cloudflare now relies on AD FS for user-identity authorization.
 
 The **Edit Claim Rules for CF Login** screen automatically displays.
@@ -101,15 +82,10 @@ If you closed the Add Relying Trust wizard, use Explorer to find the **Relying P
 To create Claim Rules:
 
 1. In the **Edit Claim Rules for CF Login** window, select **Add Rule**. The **Choose Rule Type** step displays.
-
 2. In the **Claim rule template** field, select **Send LDAP Attributes as Claims** from the drop-down list.
-
 3. Select **Next**. The **Edit Rule — Send Email** step displays.
-
 4. Enter a descriptive **Claim rule name**.
-
 5. Select **Active Directory** from the **Attribute store** drop-down list.
-
 6. Select **E-mail-Addresses** from the **LDAP Attribute** and **Outgoing Claim Type** drop-down lists.
 
 :::note[AD FS groups]
@@ -118,21 +94,13 @@ If you wish to use AD FS groups in your SAML claims, use `token-groups - unquali
 :::
 
 7. Select **OK**. You return to the **Choose Rule Type** step.
-
 8. Select **Transform an Incoming Claim** from the **Claim rule template** drop-down list to create the second rule.
-
 9. Select **Next**. The **Edit - Create Transient Name Identifier** window displays.
-
 10. Enter a descriptive **Claim rule name**.
-
 11. Select **E-Mail Address** from the **Incoming claim type** drop-down list.
-
 12. Select **Name ID** from the **Outgoing claim type** drop-down list.
-
 13. Select **Transient Identifier** from the **Outgoing name ID format** drop-down list.
-
 14. Ensure that the **Pass through all claim values** option is selected.
-
 15. Select **OK**.
 
 Both Claim Rules are now available to export to your Cloudflare Access account.
@@ -144,25 +112,17 @@ Now you'll configure Cloudflare to recognize AD FS by extracting the _token-sign
 To export the certificate:
 
 1. Within the AD FS management console, select the **Service** under AD FS and choose the **Certificates** folder which contains the certificate to export.
-
 2. In the **Certificates** card, right-click on the entry under **Token-signing**, and select **View certificate**. The **Certificates** window displays.
 
    ![Certificates window with token-signing certificate selected](~/assets/images/cloudflare-one/identity/adfs/adfs-16.png)
 
 3. Select the **Details** tab, and select the **Copy to File** option.
-
 4. The **Certificate Export Wizard** displays.
-
 5. Select **Next**. The **Export File Format** window displays.
-
 6. Select the **Base-64 encoded X.509 (.CER)** option.
-
 7. Select **Next**.
-
 8. Enter a name for the file.
-
 9. Select **Next**.
-
 10. Select **Finish**.
 
     Note the file path for later.
@@ -171,7 +131,7 @@ To export the certificate:
 
 To ensure that AD FS signs the full response when communicating with Cloudflare, open your local **PowerShell** and enter the following command:
 
-```bash
+```powershell
 Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSignature "MessageAndAssertion"
 ```
 
@@ -180,26 +140,24 @@ Set-ADFSRelyingPartyTrust -TargetName "Name of RPT Display Name" -SamlResponseSi
 To enable Cloudflare One to accept the claims and assertions sent from AD FS, follow these steps:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
-
 2. Under **Your identity providers**, select **Add new identity provider**.
-
 3. Select **SAML**.
-
 4. Enter an IdP **Name**.
-
 5. Under **Single Sign On URL** enter:
 
    ```txt
    https://hostnameOfADFS/adfs/ls/
    ```
 
-   This is the default location. You can find your federation service identifier in AD FS.
+   This is the default AD FS sign-in endpoint. It is separate from the federation service identifier used in the next step.
 
-6. In the **IdP Entity ID or Issuer URL** field, enter your Cloudflare Zero Trust team domain and include this callback at the end of the path: `/cdn-cgi/access/callback`. For example:
+6. In **IdP Entity ID or Issuer URL**, enter your AD FS federation service identifier, not the Cloudflare callback URL. To retrieve the identifier, run the following command on the AD FS server:
 
-   ```txt
-   https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback
+   ```powershell
+   (Get-AdfsProperties).Identifier
    ```
+
+   Use the value exactly as configured in AD FS. It identifies your identity provider; the Cloudflare callback URL identifies the service provider endpoint.
 
 7. Under **Signing certificate**, paste the exported certificate.
 
@@ -224,7 +182,6 @@ To get your Cloudflare metadata file:
    In Cloudflare Access, you can find a link to this URL in the **Edit a SAML identity provider** dialog. The link returns a web page with your SAML SP data in XML format.
 
 2. Save the file in XML format.
-
 3. Upload the XML document to your **Active Directory** account.
 
 ## Example API Configuration
@@ -232,7 +189,7 @@ To get your Cloudflare metadata file:
 ```json
 {
 	"config": {
-		"issuer_url": "https://<your-team-name>.cloudflareaccess.com/",
+		"issuer_url": "http://adfs.example.com/adfs/services/trust",
 		"sso_target_url": "https://adfs.example.com/adfs/ls/",
 		"attributes": ["email"],
 		"email_attribute_name": "",
