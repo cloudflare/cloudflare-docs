@@ -26,7 +26,7 @@ Cloudflare Access logs an authentication event whenever a user or service attemp
 
 [Identity-based authentication](#identity-based-authentication) refers to login attempts that were evaluated based on who the user is — for example, their email address, identity provider (IdP) group, SAML group, or OIDC claim.
 
-[Non-identity authentication](#non-identity-authentication) refers to login attempts that were evaluated based on context rather than user identity — for example, IP address, device posture, country, valid certificate, or service token.
+[Non-identity authentication](#non-identity-authentication) refers to requests evaluated without a user's identity-provider login, such as service-token or mTLS authentication through a Service Auth policy. Identity-based policies can also use contextual rules such as IP address or country.
 
 :::note
 Authentication logs do not capture the user's actions during a self-hosted or SaaS application session. To audit individual requests made during a session, refer to [Per-request logs](#per-request-logs).
@@ -55,7 +55,7 @@ To view logs for identity-based authentication events:
 
 </TabItem> <TabItem label="API">
 
-The [Access authentication logs](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) API endpoint provides a custom URL to export audit log events for your account.
+The [Access authentication logs](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) API endpoint returns authentication events for your account.
 
 <APIRequest
 	path="/accounts/{account_id}/access/logs/access_requests"
@@ -127,7 +127,14 @@ Cloudflare Access logs the following information when the user authenticates to 
 
 ### Non-identity authentication
 
-To retrieve logs for non-identity authentication events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/). These logs are not available in the Cloudflare One dashboard.
+To include non-identity authentication events in the dashboard:
+
+1. Open the [Access authentication log viewer](#view-access-authentication-logs).
+2. Set the **Service auth logs** filter to **Show service auth logs**.
+
+This includes non-identity events alongside identity-based events. The default **Hide service auth logs** setting excludes non-identity events.
+
+You can also include these events through the [Access authentication logs API](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) with `non_identity=true`, or query them using the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
 
 ## Per-request logs
 
@@ -143,30 +150,17 @@ When a user requests a URL, Access appends the user identity from that token as 
 
 ```json
 {
-   "ClientIP": "198.51.100.206",
-   "ClientRequestHost": "jira.widgetcorp.tech",
-   "ClientRequestMethod": "GET",
-   "ClientRequestURI": "/secure/Dashboard/jspa",
-   "ClientRequestUserAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
-   "EdgeEndTimestamp": "2019-11-10T09:51:07Z",
-   "EdgeResponseBytes": 4600,
-   "EdgeResponseStatus": 200,
-   "EdgeStartTimestamp": "2019-11-10T09:51:07Z",
-   "RayID": "5y1250bcjd621y99",
-   "RequestHeaders":{"cf-access-user":"srhea"}
-},
-{
-   "ClientIP": "198.51.100.206",
-   "ClientRequestHost": "jira.widgetcorp.tech",
-   "ClientRequestMethod": "GET",
-   "ClientRequestURI": "/browse/EXP-12",
-   "ClientRequestUserAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
-   "EdgeEndTimestamp": "2019-11-10T09:51:27Z",
-   "EdgeResponseBytes": 4570,
-   "EdgeResponseStatus": 200,
-   "EdgeStartTimestamp": "2019-11-10T09:51:27Z",
-   "RayID": "yzrCqUhRd6DVz72a",
-   "RequestHeaders":{"cf-access-user":"srhea"}
+	"ClientIP": "198.51.100.206",
+	"ClientRequestHost": "jira.widgetcorp.tech",
+	"ClientRequestMethod": "GET",
+	"ClientRequestURI": "/secure/Dashboard/jspa",
+	"ClientRequestUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
+	"EdgeEndTimestamp": "2019-11-10T09:51:07Z",
+	"EdgeResponseBytes": 4600,
+	"EdgeResponseStatus": 200,
+	"EdgeStartTimestamp": "2019-11-10T09:51:07Z",
+	"RayID": "5d1250bcad621d99",
+	"RequestHeaders": { "cf-access-user": "srhea" }
 }
 ```
 
