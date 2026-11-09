@@ -41,7 +41,7 @@ Typically, a Worker bundle will define both the Durable Object class and a Worke
 You should ensure that API changes between your Durable Object and its Worker are [forwards and backwards compatible](/durable-objects/platform/known-issues/#code-updates) whether you are using gradual deployments or not. However, using gradual deployments will make it even more likely that different versions of your Durable Objects and its Worker will interact with each other.
 :::
 
-To deploy your control plane and Durable Object class families independently, refer to [Split Workers by class family](/durable-objects/best-practices/architecture-guidance/#split-workers-by-class-family).
+To deploy your request-serving Worker and Durable Object class families independently, refer to [Split Workers by class family](/durable-objects/best-practices/architecture-guidance/#split-workers-by-class-family).
 
 ## Durable Object class lifecycle changes
 

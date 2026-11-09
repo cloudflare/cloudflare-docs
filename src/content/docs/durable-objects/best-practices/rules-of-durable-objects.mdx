@@ -99,13 +99,13 @@ export default {
 
 A common pattern is to use Workers as the stateless entry point that routes requests to Durable Objects when coordination is needed. The Worker handles authentication, validation, and response formatting, while the Durable Object handles the stateful logic.
 
-### Prefer Workers for your control plane {/* keep-your-control-plane-in-workers */}
+### Separate control-plane changes from resource traffic {/* keep-your-control-plane-in-workers */}
 
-Prefer Workers and supporting services for authentication, routing, registries, and configuration. Durable Objects can coordinate control-plane operations, but a single object on every request path can become a global bottleneck. Refer to [Architecture guidance](/durable-objects/best-practices/architecture-guidance/#control-plane) for recommendations and bounded coordinator patterns.
+Durable Objects can serve both control-plane and data-plane roles. An account object can coordinate configuration and resource creation while separate objects handle each resource's traffic. Publish configuration outward, and avoid making routine resource requests write to or synchronously depend on a shared control-plane object. Refer to [Architecture guidance](/durable-objects/best-practices/architecture-guidance/#control-plane) for the design principles and [Architecture examples](/durable-objects/best-practices/architecture-examples/#control-and-data-planes) for a worked topology.
 
 ## Design and sharding
 
-For in-depth guidance on choosing coordination boundaries, sizing workloads, naming objects, and scaling them, refer to [Architecture guidance](/durable-objects/best-practices/architecture-guidance/).
+For in-depth guidance on choosing coordination boundaries, sizing workloads, naming objects, and scaling them, refer to [Architecture guidance](/durable-objects/best-practices/architecture-guidance/). For worked designs that combine these decisions, refer to [Architecture examples](/durable-objects/best-practices/architecture-examples/).
 
 ### Model your Durable Objects around your "atom" of coordination
 
@@ -270,15 +270,11 @@ export class GameSession extends DurableObject<Env> {
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		// newUniqueId() creates a random ID - useful when creating new instances
-		// You must store this ID somewhere (e.g., D1) to find it again later
 		const id = env.GAME_SESSION.newUniqueId();
 		const stub = env.GAME_SESSION.get(id);
 
-	// Store the mapping: gameCode -> id.toString()
-	// await env.DB.prepare("INSERT INTO games (code, do_id) VALUES (?, ?)").bind(gameCode, id.toString()).run();
-
-	return Response.json({ gameId: id.toString() });
-    },
+		return Response.json({ gameId: id.toString() });
+	},
 };
 
 ```
@@ -563,7 +559,7 @@ Durable Objects provide multiple state management layers, each with different ch
 | ---------------------------- | -------- | ---------------------------- | --------------------------- |
 | In-memory (class properties) | Fastest  | Lost on eviction or crash    | Caching, active connections |
 | SQLite storage               | Fast     | Durable across restarts      | Primary data storage        |
-| External (R2, D1)            | Variable | Durable, cross-DO accessible | Large files, shared data    |
+| External (R2)                | Variable | Durable, cross-DO accessible | Large files, shared data    |
 
 In-memory state is **not preserved** if the Durable Object is evicted from memory due to inactivity, or if it crashes from an uncaught exception. Always persist important state to SQLite storage.
 

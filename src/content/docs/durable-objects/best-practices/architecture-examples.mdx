@@ -1,0 +1,623 @@
+---
+title: Architecture examples
+description: Illustrative Durable Objects architectures for account control, real-time fan-out, coordinated ingestion, sessions, agents, and multi-tenant applications.
+pcx_content_type: concept
+sidebar:
+  order: 2.5
+products:
+  - durable-objects
+---
+
+import { Details, Render, TypeScriptExample } from "~/components";
+
+These examples combine Durable Objects with other Cloudflare services. Use [Architecture guidance](/durable-objects/best-practices/architecture-guidance/) to choose coordination boundaries, estimate capacity, and plan routing before adapting an example.
+
+The designs are illustrative, not reproductions of customer architectures. Names, shard counts, batch sizes, and timer values are hypothetical, not recommended defaults. Code fragments focus on individual responsibilities; authentication, schema setup, retries, and recovery still need an application-specific design unless shown.
+
+## Choose an example
+
+| Requirement                                                              | Example                                                          |
+| ------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| Account configuration manages many independent resources                 | [Account control and resource traffic](#control-and-data-planes) |
+| One upstream stream serves many read-only viewers                        | [Fan out](#pattern-fan-out-hub)                                  |
+| Bursty writes require application-specific deduplication or coordination | [Fan in](#pattern-ingest-buffer)                                 |
+| Several clients share a long-lived collaborative session                 | [Session per Durable Object](#pattern-session)                   |
+| Independent conversations and background agent runs belong to one user   | [Per-user constellation](#pattern-per-user)                      |
+| Many quiet entities share a changing, uneven workload                    | [Shared shards placed by load](#pattern-place-by-load)           |
+| Customers deploy their own code                                          | [Workers for Platforms](#workers-for-platforms)                  |
+
+## Separate account control from resource traffic {/* control-and-data-planes */}
+
+Use this design when account configuration changes less often than users read or update individual resources. Durable Objects serve **both** planes: one object coordinates an account's administrative state, while separate objects own documents, rooms, or sessions.
+
+| Decision           | Guidance                                                                                                                                                        |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Use when           | Administrative changes need coordinated account state, and independent resources receive most application traffic.                                              |
+| Not a fit when     | Every resource operation must atomically change the same account state. That shared coordination requirement needs a different capacity and consistency design. |
+| Control-plane unit | One account's configuration and resource lifecycle, such as `account:{id}`.                                                                                     |
+| Data-plane unit    | One document, room, or session, such as `account:{id}:doc:{docId}`.                                                                                             |
+| Propagation        | Publish small configuration through KV Instant, and larger blobs through KV or R2 with optional Workers Cache.                                                  |
+| Analytics          | Send observations to Basin Pipelines and query the resulting R2 data with Basin SQL.                                                                            |
+| Scale-out path     | Scale resource objects independently. Split account control objects only when their own load requires it.                                                       |
+
+![Account Durable Objects publish through propagation layers to separate stateless and stateful data-plane groups, with an independent analytics path.](~/assets/images/durable-objects/architecture-guidance/01-control-plane-model.svg)
+
+<Details header="Diagram as text">
+
+```txt
+CONTROL PLANE
+  Account administrators → Config API → one Durable Object per account ID
+  Account objects own authoritative configuration and resource lifecycle state.
+
+PROPAGATION
+  Account objects → KV Instant: small configuration and hostname-to-account mapping
+  Account objects → KV / R2: larger blobs, with optional Workers Cache
+
+DATA PLANE
+  End users → stateless Workers: authentication, routing, transforms
+  End users → stateful Durable Objects: one room / document / session per object
+  KV Instant → stateless Workers: read configuration
+  KV / R2 → stateful Durable Objects: get blobs
+  The two groups are separate responsibilities, not a mandatory sequential chain.
+  No direct calls or writes go from the data plane to the control plane in this pattern.
+
+ANALYTICS
+  Data-plane usage events → Pipelines → R2 / Basin → scheduled job
+  Scheduled job → Config API: reads summaries and decides on configuration changes
+  Analytics queries and feedback are not on the user request path.
+```
+
+</Details>
+
+<Render file="kv-instant-beta" product="kv" />
+
+The arrows identify logical responsibilities, not separate public endpoints or required Worker deployments. Durable Objects [receive requests through Workers or other Durable Objects](/durable-objects/get-started/#3-instantiate-and-communicate-with-a-durable-object), not directly from the Internet. The prohibition on direct data-plane-to-control-plane calls applies to this design; it is not a platform restriction on Durable Objects.
+
+### Administrative changes
+
+The configuration API authenticates administrators and selects the account's control object by name. That object coordinates changes to its own authoritative state, such as account settings and the resources it manages.
+
+Publish small, read-heavy configuration through [KV Instant](/kv/get-started/#kv-instant-namespaces). Publish larger blobs through KV or R2, with optional [Workers Cache](/workers/runtime-apis/cache/) for repeated reads. Treat publication as a separate operation: a local storage transaction and an external write do not form one transaction. Persist enough state to retry a failed publication, and use configuration versions to make retries and transitions safe.
+
+### Resource requests
+
+Stateless Workers handle authentication, routing, and transforms using published configuration. Resource Durable Objects store application data and coordinate concurrent clients, using published blobs where needed. Neither responsibility needs to update the account's administrative configuration for each request.
+
+KV Instant proactively propagates small configurations and has [mode-specific limits](/kv/platform/limits/#workers-kv-instant). Classic KV is [eventually consistent](/kv/concepts/how-kv-works/#consistency). Define how readers handle older or missing configuration for the mode you use. Do not infer an instantaneous global revocation guarantee from the diagram; choose a suitably consistent check when an authorization change must take effect immediately everywhere.
+
+The deployment can share Worker scripts or use separate ones. The diagram separates responsibilities, not mandatory deployment units. Refer to [Deploy related classes independently](/durable-objects/best-practices/architecture-guidance/#build-control-plane) for deployment trade-offs.
+
+### Analytics and feedback
+
+Use [Basin Pipelines](/basin-pipelines/) to ingest analytical events and deliver them to R2. [Basin SQL](/basin-sql/) queries Iceberg tables managed by [Basin Catalog](/basin-catalog/). Durable Objects remain appropriate for operational counters or state that needs coordination, but are not the default collection point for all application analytics.
+
+Keep event export off the synchronous request path, and define delivery, retry, sampling, and loss requirements explicitly. Background execution does not itself guarantee delivery. If automated feedback changes configuration, submit it through the administrative API rather than letting resource requests mutate control-plane state directly.
+
+For the underlying design choices, refer to [Separate control and data planes](/durable-objects/best-practices/architecture-guidance/#control-plane) and [Account for propagation consistency](/durable-objects/best-practices/architecture-guidance/#configuration-propagation). The existing [control and data plane reference architecture](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/) also shows Durable Objects in both roles.
+
+## Fan out (e.g., hubs at the edge) {/* pattern-fan-out-hub */}
+
+Deliver one live stream, such as inventory or service status updates, to many clients without every client holding its own connection to your origin.
+
+| Decision            | Guidance                                                                                                                                      |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Use when            | One upstream stream is delivered to many read-only subscribers, spread across regions.                                                        |
+| Not a fit when      | Subscribers write shared state that must stay consistent globally, or each topic has only a few subscribers (one object per topic is enough). |
+| Atom                | One topic in one region                                                                                                                       |
+| Name                | `topic:{topicId}:{region}`                                                                                                                    |
+| Supporting services | Worker authenticates the client and picks the region; KV for topic config                                                                     |
+| Scale-out path      | [Fan-out tree](/durable-objects/best-practices/architecture-guidance/#scale-fan-out-tree) beneath a hot regional hub                          |
+
+![Fan out with hubs at the edge. Each hub pulls an update from the origin once, then broadcasts it to nearby subscribers.](~/assets/images/durable-objects/architecture-guidance/08-fan-out-hubs-at-the-edge.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Origin (one live data stream)
+  → about 1 upstream connection per hub
+     → topic:feed-1:wnam  → client WebSockets (WebSocket Hibernation)
+     → topic:feed-1:weur  → client WebSockets
+     → topic:feed-2:wnam  → client WebSockets
+Each update crosses the long-haul link once per hub, not once per client.
+```
+
+</Details>
+
+1. The Worker authenticates the client, picks the region, and routes it to `topic:{id}:{region}` with a location hint.
+2. The hub accepts the client socket with [WebSocket Hibernation](/durable-objects/best-practices/websockets/).
+3. The hub opens _one_ upstream connection when its first subscriber arrives, and closes it when the last one leaves.
+4. Each update crosses the long-haul link once per regional hub, not once per client, and is broadcast locally.
+
+<TypeScriptExample filename="topic-hub.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class TopicHub extends DurableObject<Env> {
+	private upstream: WebSocket | null = null;
+
+	async fetch(request: Request): Promise<Response> {
+		const topic = new URL(request.url).searchParams.get("topic")!;
+		const [client, server] = Object.values(new WebSocketPair());
+
+		// Hibernation API: the runtime holds subscriber sockets for us
+		this.ctx.acceptWebSocket(server);
+		await this.ensureUpstream(topic);
+		return new Response(null, { status: 101, webSocket: client });
+	}
+
+	// One connection to the origin per hub, however many subscribers it has
+	private async ensureUpstream(topic: string) {
+		if (this.upstream) return;
+		const res = await fetch(`${this.env.ORIGIN_URL}/topics/${topic}`, {
+			headers: { Upgrade: "websocket" },
+		});
+		const ws = res.webSocket;
+		if (!ws) throw new Error("Origin refused the WebSocket upgrade");
+		ws.accept();
+		ws.addEventListener("message", (event) => this.broadcast(event.data));
+		ws.addEventListener("close", () => (this.upstream = null));
+		this.upstream = ws;
+	}
+
+	private broadcast(message: string | ArrayBuffer) {
+		for (const socket of this.ctx.getWebSockets()) {
+			try {
+				socket.send(message);
+			} catch {
+				// Subscriber already gone; the runtime cleans it up
+			}
+		}
+	}
+
+	async webSocketClose(ws: WebSocket, code: number) {
+		ws.close(code);
+		// Close the upstream link when the last subscriber leaves
+		if (this.ctx.getWebSockets().length <= 1) this.upstream?.close();
+	}
+}
+```
+
+</TypeScriptExample>
+
+While the upstream socket is open, the hub stays in memory and cannot hibernate. That is expected while subscribers are connected.
+
+**Public case study:** [Kaizen Gaming](https://www.cloudflare.com/case-studies/kaizen-gaming/) describes a real-time distribution use case. This example is a generalized design, not a reproduction of that deployment.
+
+## Fan in (e.g., ingestion buffer) {/* pattern-ingest-buffer */}
+
+Accept bursts of application work that needs shard-local deduplication or coordination before a backend processes it.
+
+For standard analytical event ingestion, start with [Basin Pipelines](/basin-pipelines/). For asynchronous work delivery without custom coordination, consider [Queues](/queues/). This example adds Durable Objects only for application-specific buffer state and deduplication.
+
+| Decision            | Guidance                                                                                                                    |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Use when            | Writes arrive in bursts, the backend needs a steady rate, and writes can be acknowledged before the backend processes them. |
+| Not a fit when      | The writer needs the backend's result synchronously, or strict ordering across all writers matters.                         |
+| Atom                | One application work stream, one shard                                                                                      |
+| Name                | `stream:{streamId}:shard:{n}`                                                                                               |
+| Supporting services | Worker validates and routes; KV holds per-stream config (shard count, layout version)                                       |
+| Scale-out path      | [More hash shards](/durable-objects/best-practices/architecture-guidance/#scale-hash-shards), versioned in the name         |
+
+![Fan in through an ingestion buffer. Shards absorb bursts and flush batches to R2, and the backend drains them at its own pace.](~/assets/images/durable-objects/architecture-guidance/09-fan-in-ingestion-buffer.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Application producers
+  → Worker: validate, authenticate, hash to shard
+  → stream:7:shard:0 | stream:7:shard:1 | stream:7:shard:2  (each: SQLite buffer + flush alarm)
+  → alarm flushes batches → R2 batch objects (absorbs the peak)
+  → steady, controlled drain → backend systems (capacity determines the drain rate)
+KV holds per-stream config (shard count, layout version).
+```
+
+</Details>
+
+1. The Worker validates the event and routes it to a shard using a hash of the event ID. Retries reach the same shard within a layout; retain the original layout when retrying across a layout change.
+2. The shard appends the write to SQLite and sets an alarm.
+3. The alarm flushes a batch to R2 (or [Queues](/queues/)). The backend drains batches at its own pace.
+4. Choose retention, replay, and recovery requirements before acknowledging events. The buffer alone is not an end-to-end delivery guarantee.
+
+The batch size and flush interval below are example settings. Tune both against your latency target and backend capacity.
+
+<TypeScriptExample filename="ingest-shard.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const MAX_BATCH = 100;
+const FLUSH_AFTER_MS = 10_000;
+
+export class IngestShard extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(`
+				CREATE TABLE IF NOT EXISTS events (
+					event_id TEXT PRIMARY KEY,
+					payload TEXT NOT NULL,
+					received_at INTEGER NOT NULL,
+					flushed INTEGER NOT NULL DEFAULT 0
+				)`);
+		});
+	}
+
+	async record(eventId: string, payload: string): Promise<boolean> {
+		// The primary key makes duplicate events a no-op
+		const inserted = this.ctx.storage.sql
+			.exec(
+				"INSERT INTO events (event_id, payload, received_at) VALUES (?, ?, ?) ON CONFLICT DO NOTHING RETURNING event_id",
+				eventId,
+				payload,
+				Date.now(),
+			)
+			.toArray();
+		if (inserted.length === 0) return false;
+
+		if ((await this.ctx.storage.getAlarm()) === null) {
+			await this.ctx.storage.setAlarm(Date.now() + FLUSH_AFTER_MS);
+		}
+		return true;
+	}
+
+	async alarm() {
+		const batch = this.ctx.storage.sql
+			.exec<{ rowid: number; event_id: string; payload: string }>(
+				"SELECT rowid, event_id, payload FROM events WHERE flushed = 0 ORDER BY rowid LIMIT ?",
+				MAX_BATCH,
+			)
+			.toArray();
+		if (batch.length === 0) return;
+
+		// If this write fails, the alarm throws and is retried automatically
+		const key = `batches/${this.ctx.id}/${batch[0].rowid}.json`;
+		await this.env.BATCHES.put(key, JSON.stringify(batch));
+
+		this.ctx.storage.sql.exec(
+			"UPDATE events SET flushed = 1 WHERE flushed = 0 AND rowid <= ?",
+			batch[batch.length - 1].rowid,
+		);
+		// More waiting? Flush again soon.
+		if (batch.length === MAX_BATCH)
+			await this.ctx.storage.setAlarm(Date.now() + 1_000);
+	}
+}
+```
+
+</TypeScriptExample>
+
+If the R2 write succeeds but the alarm fails before it marks rows as flushed, the batch is written again on retry. Make the backend idempotent by deduplicating on `event_id`.
+
+## Session per Durable Object (e.g., coding-agent session) {/* pattern-session */}
+
+A long-lived, multiplayer work session, such as a coding-agent session, a document, or a design file, that streams in real time to several clients and integrations at once.
+
+| Decision            | Guidance                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Use when            | A unit of work lasts minutes to days, has its own history, and is watched or edited by several clients (web, mobile, CLI, webhooks). |
+| Not a fit when      | Sessions must change shared state atomically across objects, or every request needs coordination across all sessions.                |
+| Atom                | One session and the artifact it produces                                                                                             |
+| Name                | `session:{sessionId}`; sub-agents get their own `session:{id}`                                                                       |
+| Supporting services | Worker handles OAuth, membership, and webhooks; a scoped directory Durable Object manages session creation and listing               |
+| Scale-out path      | [Split by responsibility](/durable-objects/best-practices/architecture-guidance/#scale-split): viewer relay and child run objects    |
+
+![Clients and a job runner exchange events through a session object. A separate directory Durable Object handles session creation and listing.](~/assets/images/durable-objects/architecture-guidance/10-session-per-object.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Web app | mobile app | CLI client | external webhooks
+  → Worker: OAuth, membership check, session ID from the request
+      ↔ directory Durable Object: session creation and listing only
+  → getByName("session:91")
+      holds: SQLite (messages, events, artifact state) + hibernated WebSockets for every client
+      ↔ job runner (executes work, streams events in)
+      → external integration (publishes an artifact)
+      ⇢ spawns session:92, session:93 (sub-agents)
+```
+
+</Details>
+
+- **Every session gets its own object and its own SQLite database**, holding messages, events, and artifact state. This separates session state and coordination.
+- **All clients meet in the session object:** web app, mobile app, and CLI. They share the session's event stream. The [Agents SDK](/agents/) provides hibernation and streaming support for agent applications.
+- **The job runner streams events into the session**, which persists them and fans them out.
+- **Sub-agents are new session objects.** The parent session stores its children's IDs, which keeps the parent bounded.
+- **Separate administrative state from session traffic.** A Worker validates an incoming webhook and calls the session object identified by the request. A scoped directory Durable Object handles session creation and listing without sitting on the session's event path. Store larger artifacts or archived session state in R2. Account configuration can live in a separate control-plane Durable Object, as shown in [Account control and resource traffic](#control-and-data-planes).
+
+For example, a background coding agent can give every session its own Durable Object and SQLite database to isolate session state and coordinate concurrent streams.
+
+## Per-user constellation (e.g., agent loop per Durable Object) {/* pattern-per-user */}
+
+A consumer AI assistant where each user has several independent, stateful things (memory, conversations, scheduled tasks), and every agent run can take minutes and call many tools.
+
+| Decision            | Guidance                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Use when            | Each user has several independent stateful facets, and long-running agent loops must not block interactive chat.                     |
+| Not a fit when      | The user's facets must change atomically together (keep them in one object), or the natural boundary is a tenant rather than a user. |
+| Atom                | User facet, conversation, and agent run, each as its own class                                                                       |
+| Name                | `user:{id}:profile`, `user:{id}:inbox`, `conv:{id}`, `run:{id}`                                                                      |
+| Supporting services | Worker authenticates and routes by name; a per-user Durable Object tracks conversation and run identifiers                           |
+| Scale-out path      | Rarely needed per user. Split long runs into resumable steps, or use [Workflows](/workflows/)                                        |
+
+![Per-user constellation. A user owns several small objects with separate jobs, and every agent loop runs in its own object.](~/assets/images/durable-objects/architecture-guidance/11-per-user-constellation.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Worker (auth, route by name) → objects for one user's independent responsibilities:
+  user:u1:profile    memory, preferences
+  user:u1:inbox      notifications
+  user:u1:schedule   alarms, reminders
+  conv:c1, conv:c2   history, live sockets (one per conversation)
+  run:r1, r2, r3     one agent loop each (checkpoint + alarm)
+conv:* starts runs → run:*; each run streams progress back to its conversation. Idle objects can hibernate.
+```
+
+</Details>
+
+- **Separate independent responsibilities.** Use separate objects for conversations, notifications, and background runs when they do not need shared atomic updates. Choose boundaries from the work, not a fixed number of objects per user.
+- **Every agent loop is its own object.** It checkpoints after each step, uses alarms to continue (and to resume after an eviction), and reports progress to its conversation. One step per alarm keeps each invocation inside the 15-minute alarm wall-time limit.
+- **Let idle objects hibernate.** Hibernation avoids duration charges while an object is hibernated; request and storage charges can still apply. Refer to [Pricing](/durable-objects/platform/pricing/).
+
+<TypeScriptExample filename="agent-run.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+type RunState = {
+	conversationId: string;
+	messages: unknown[]; // for long transcripts, store messages as SQL rows instead
+	step: number;
+	done: boolean;
+};
+
+// Your model + tool-calling code
+declare function runOneStep(
+	env: Env,
+	messages: unknown[],
+): Promise<{
+	newMessages: unknown[];
+	summary: string;
+	finished: boolean;
+}>;
+
+export class AgentRun extends DurableObject<Env> {
+	async start(conversationId: string, prompt: string) {
+		await this.ctx.storage.put<RunState>("state", {
+			conversationId,
+			messages: [{ role: "user", content: prompt }],
+			step: 0,
+			done: false,
+		});
+		// Run the loop in alarms, outside the caller's request
+		await this.ctx.storage.setAlarm(Date.now());
+	}
+
+	async alarm() {
+		const state = await this.ctx.storage.get<RunState>("state");
+		if (!state || state.done) return;
+
+		// One step per alarm keeps every invocation short and resumable
+		const result = await runOneStep(this.env, state.messages);
+		state.messages.push(...result.newMessages);
+		state.step++;
+		state.done = result.finished || state.step >= 50;
+		await this.ctx.storage.put("state", state); // checkpoint first
+
+		// Report progress to the conversation that owns this run
+		await this.env.CONVERSATION.getByName(
+			`conv:${state.conversationId}`,
+		).onRunProgress(this.ctx.id.toString(), result.summary, state.done);
+
+		if (!state.done) await this.ctx.storage.setAlarm(Date.now());
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Shared shards placed by load (e.g., background jobs) {/* pattern-place-by-load */}
+
+A platform runs millions of small entities (jobs, workflow instances, devices), and each one has a little background work. Pinning each entity to a fixed shard by hash looks even on paper. In practice, a few hot entities land on the same shard while other shards sit idle, and there is no way to move them.
+
+| Decision            | Guidance                                                                                                                                              |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Use when            | There are very many small entities, each with occasional background work, and load per entity is highly skewed and changes over time.                 |
+| Not a fit when      | Each entity is busy enough to deserve its own object (use one object per atom), or entities need transactions across each other.                      |
+| Atom                | A shared shard by default; the entity itself once it is hot                                                                                           |
+| Name                | `shared:{n}`, promoted to `entity:{id}`                                                                                                               |
+| Supporting services | Control coordinator publishes a placement map to KV, or a larger versioned snapshot to R2; request Workers read it without consulting the coordinator |
+| Scale-out path      | Promote hot entities; add shared shards behind a new layout version                                                                                   |
+
+![Placing by load. Fixed entity-to-shard mappings let hot entities pile onto one shard. Shared shards plus promotion keep load even.](~/assets/images/durable-objects/architecture-guidance/12-place-by-load.svg)
+
+<Details header="Diagram as text">
+
+```txt
+WRONG: Worker: shard = hash(entity) % 4
+       shard 0 holds 3 hot entities; shards 1 and 2 are idle; shard 3 holds 1 quiet entity
+       hot entities collide and cannot be moved
+RIGHT: Worker + cached placement map (KV)
+       → shared:0, shared:1 (many quiet entities each)
+       → entity:e7 (dedicated object; promoted from a shared shard when it got hot)
+```
+
+</Details>
+
+- **Shared by default.** New entities start on a shared shard, so millions of quiet entities do not need millions of always-busy objects.
+- **Dedicated when hot.** When an entity crosses a load threshold, promote it to its own object and record that in the placement map.
+- **Hand off carefully.** Coordinate ownership transfer, stop or forward writes at the old owner, and copy state before publishing a new placement. Keep the old owner able to forward requests while cached placements remain. Copying state and updating KV alone does not provide an atomic migration.
+
+The routing fragment uses the deterministic `shardFor()` helper from [Recommended naming pattern](/durable-objects/best-practices/architecture-guidance/#compound-names). The placement coordinator publishes routing changes; the request Worker only reads them.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+const SHARED_SHARDS = 16;
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { entityId, payload } = await request.json<{
+			entityId: string;
+			payload: unknown;
+		}>();
+
+		// Most entities have no entry and live on a shared shard.
+		// When an entity gets hot, it is promoted and gets an entry
+		// pointing at its own dedicated object.
+		const dedicated = await env.PLACEMENT.get(`entity:${entityId}`, {
+			cacheTtl: 60,
+		});
+		const name = dedicated ?? `shared:${shardFor(entityId, SHARED_SHARDS)}`;
+
+		const result = await env.ENGINE.getByName(name).handle(entityId, payload);
+		return Response.json(result);
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Run background work with one alarm per object {/* alarms-at-scale */}
+
+Each Durable Object has exactly one alarm. A shared shard may host thousands of entities that each need timers, so treat the alarm as a scheduler:
+
+- **Persist work first, execute second.** Write each timer as a row in SQLite before you arm the alarm, so an eviction never loses scheduled work.
+- **Exactly one code path arms the alarm.** It reads the earliest due timer and sets the alarm for that time. Do not let each owner call `setAlarm()` directly, because each call replaces the previous alarm.
+- **Back off when idle.** Idle alarms still wake the object and cost work. Use a short interval only while draining a backlog, and a long interval (or none) when there is nothing to do.
+
+<TypeScriptExample filename="engine-shard.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+const BATCH = 50;
+const DRAIN_MS = 1_000; // short interval while working through a backlog
+const IDLE_MS = 30 * 60 * 1000; // long housekeeping interval when idle
+
+export class EngineShard extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(
+				"CREATE TABLE IF NOT EXISTS timers (entity_id TEXT NOT NULL, task TEXT NOT NULL, due_at INTEGER NOT NULL)",
+			);
+		});
+	}
+
+	// Many entities share this object and each can have timers,
+	// but there is only one physical alarm. Timers are rows in SQLite.
+	async schedule(entityId: string, task: string, dueAt: number) {
+		this.ctx.storage.sql.exec(
+			"INSERT INTO timers (entity_id, task, due_at) VALUES (?, ?, ?)",
+			entityId,
+			task,
+			dueAt,
+		); // persist the work first...
+		await this.armAlarm(); // ...then arm the alarm
+	}
+
+	// The only code path that sets the alarm
+	private async armAlarm(backlog = false) {
+		const { next } = this.ctx.storage.sql
+			.exec<{ next: number | null }>("SELECT MIN(due_at) AS next FROM timers")
+			.one();
+		const now = Date.now();
+		const target =
+			next === null
+				? now + IDLE_MS // nothing pending: back off to a long idle check
+				: Math.max(next, backlog ? now + DRAIN_MS : now);
+		const current = await this.ctx.storage.getAlarm();
+		if (current === null || target < current) {
+			await this.ctx.storage.setAlarm(target);
+		}
+	}
+
+	async alarm() {
+		const due = this.ctx.storage.sql
+			.exec<{ id: number; entity_id: string; task: string }>(
+				"SELECT rowid AS id, entity_id, task FROM timers WHERE due_at <= ? ORDER BY due_at LIMIT ?",
+				Date.now(),
+				BATCH,
+			)
+			.toArray();
+
+		for (const timer of due) {
+			await this.runTask(timer.entity_id, timer.task);
+			this.ctx.storage.sql.exec("DELETE FROM timers WHERE rowid = ?", timer.id);
+		}
+		// A full batch means more is waiting: pace the drain.
+		// Otherwise sleep until the next timer, or the idle check.
+		await this.armAlarm(due.length === BATCH);
+	}
+
+	private async runTask(entityId: string, task: string) {
+		// Execute one step of this entity's work
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Workers for Platforms (e.g., tenant-deployed code) {/* workers-for-platforms */}
+
+If your customers deploy their own code, [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) separates deployment administration from runtime dispatch:
+
+![Workers for Platforms, with distinct Workers logos and Durable Objects icons. The control plane has separate tenant registry objects. Runtime dispatch selects tenant A's Worker and document objects or tenant B's Worker and cart objects.](~/assets/images/durable-objects/architecture-guidance/19-workers-for-platforms.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Worker logos identify Workers; each Durable Objects icon and box identifies a separate object.
+Control plane: platform API Worker → deploy tenant code; update tenant A and tenant B registry DOs
+  → publish hostname-to-script configuration to KV
+Data plane: tenant users → dispatch Worker (tenant lookup, auth, per-plan limits)
+  ← KV: published hostname → tenant mapping
+  → DISPATCHER.get(script) → dispatch namespace "production"
+       tenant-a user Worker → tenant A's Durable Objects (doc:1, doc:2)
+       tenant-b user Worker → tenant B's Durable Objects (cart:9, cart:10)
+Dispatch does not call the deployment API or update the authoritative tenant registry per request.
+```
+
+</Details>
+
+- The **dispatch Worker** resolves the tenant (for example, hostname → tenant in KV), enforces authentication and per-plan [custom limits](/cloudflare-for-platforms/workers-for-platforms/configuration/custom-limits/), and dispatches to the tenant's user Worker.
+- Each **user Worker** reaches its tenant's Durable Objects through its own [bindings](/cloudflare-for-platforms/workers-for-platforms/configuration/bindings/). Alternatively, the dispatch Worker can pass a tenant-scoped RPC stub to a platform-owned object through [dynamic dispatch props](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/).
+- A **platform API Worker** deploys tenant code and manages the authoritative tenant registry, in scoped Durable Objects, with larger configuration snapshots in R2. It publishes the mapping used by dispatch Workers.
+- **Runtime dispatch is data-plane work.** Tenant lookup, policy enforcement, and forwarding each request do not make the dispatch Worker a control plane.
+- Keep all customers in one dispatch namespace (for example, `production`). Do not create a namespace per customer.
+
+<TypeScriptExample filename="dispatch-worker.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const host = new URL(request.url).hostname;
+		const tenant = await env.TENANTS.get<{ script: string; plan: string }>(
+			host,
+			"json",
+		);
+		if (!tenant) return new Response("Unknown site", { status: 404 });
+
+		// Enforce per-plan limits, then hand the request to the tenant's own Worker.
+		// That Worker reaches its own Durable Objects; the platform never proxies through one.
+		const limits =
+			tenant.plan === "free"
+				? { cpuMs: 10, subRequests: 5 }
+				: { cpuMs: 50, subRequests: 50 };
+		const userWorker = env.DISPATCHER.get(tenant.script, {}, { limits });
+		return userWorker.fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+The hostname mapping inherits [KV's consistency model](/kv/concepts/how-kv-works/#consistency). Account for stale mappings during deployment or tenant removal. For the design principles, refer to [Configuration propagation](/durable-objects/best-practices/architecture-guidance/#configuration-propagation).
+
+## Next steps
+
+- Use [Architecture guidance](/durable-objects/best-practices/architecture-guidance/) to size and adapt these designs.
+- Review [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) for storage, RPC, alarms, and lifecycle practices.
+- Check [Durable Objects limits](/durable-objects/platform/limits/) before load-testing.
