@@ -369,7 +369,7 @@ When an agent uses [Code Mode](/agents/concepts/code-mode/), the model's code ca
 <TypeScriptExample>
 
 ```ts
-new WorkerJavaScriptBackend({
+new CodemodeBackend({
 	loader: this.env.LOADER,
 	onInterrupt: "replay",
 	modules: {

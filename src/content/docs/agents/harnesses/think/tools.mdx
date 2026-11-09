@@ -59,7 +59,7 @@ The default Workspace has no execution backends, so there is no `exec` tool unti
 ```ts
 import { Think } from "@cloudflare/think";
 import { Workspace } from "@cloudflare/computer";
-import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
 import { createGitClient } from "@cloudflare/computer/git";
 import { createGitModule } from "@cloudflare/computer/modules/git";
 
@@ -68,7 +68,7 @@ export class MyAgent extends Think<Env> {
 		storage: this.ctx.storage,
 		git: createGitClient(),
 		backends: [
-			new WorkerJavaScriptBackend({
+			new CodemodeBackend({
 				id: "js",
 				loader: this.env.LOADER,
 				access: "read-write",
@@ -108,7 +108,7 @@ Give a JavaScript backend a `codemode:tools` module, and code the model runs wit
 import { createToolBindings } from "@cloudflare/computer/modules/tools";
 import { forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
 
-new WorkerJavaScriptBackend({
+new CodemodeBackend({
 	id: "js",
 	loader: this.env.LOADER,
 	modules: {

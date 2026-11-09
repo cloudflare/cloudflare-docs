@@ -122,7 +122,7 @@ Create `src/server.ts`:
 ```ts
 import { DurableObject } from "cloudflare:workers";
 import { Workspace, type WorkspaceModuleFunctions } from "@cloudflare/computer";
-import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
 import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
 import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/ai-sdk";
@@ -141,7 +141,7 @@ export class KnowledgeAgent extends DurableObject<Env> {
 	workspace = new Workspace({
 		storage: this.ctx.storage,
 		backends: [
-			new WorkerJavaScriptBackend({
+			new CodemodeBackend({
 				loader: this.env.LOADER,
 				// Record each run in a journal, so it can pause for approval and resume.
 				onInterrupt: "replay",
@@ -222,7 +222,7 @@ export class KnowledgeAgent extends DurableObject<Env> {
 					"saveDocument({ name, content }) saves a new document after a person approves it. " +
 					"Search before you save. If a save is rejected, stop and tell the user.",
 				prompt,
-				tools: createAITools({ workspace: this.workspace, exec: { "worker-javascript": {} } }),
+				tools: createAITools({ workspace: this.workspace, exec: { codemode: {} } }),
 				stopWhen: stepCountIs(10),
 			});
 			return Response.json({ text });
@@ -268,7 +268,7 @@ export default {
 
 The agent has three parts:
 
-- **The workspace.** A Computer `Workspace` with one `WorkerJavaScriptBackend`. `onInterrupt: "replay"` journals each run, which lets a run pause and resume. `satisfies WorkspaceModuleFunctions` gives the module's functions their argument types.
+- **The workspace.** A Computer `Workspace` with one `CodemodeBackend`. `onInterrupt: "replay"` journals each run, which lets a run pause and resume. `satisfies WorkspaceModuleFunctions` gives the module's functions their argument types.
 - **The `codemode:kb` module.** `search` and `saveDocument` call AI Search with the agent's binding. The model's code never sees the binding. `saveDocument` checks its argument before it pauses, because the argument comes from model-written code. It passes `ctx.callId` on, so a replay after a restart does not upload the same document twice.
 - **The HTTP API.** `/ask` runs one model turn. `createAITools()` gives the model the `exec` tool. `/pending` and `/respond` drive the approval, and `/saved` and `/rollback` undo a save.
 

@@ -67,7 +67,7 @@ After, with Computer:
 
 ```ts
 import { Workspace } from "@cloudflare/computer";
-import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
 import { createToolBindings } from "@cloudflare/computer/modules/tools";
 import { createAITools, forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
 import { streamText } from "ai";
@@ -75,7 +75,7 @@ import { streamText } from "ai";
 const workspace = new Workspace({
 	storage: this.ctx.storage,
 	backends: [
-		new WorkerJavaScriptBackend({
+		new CodemodeBackend({
 			loader: this.env.LOADER,
 			modules: {
 				"codemode:tools": createToolBindings(forAISDKTools(() => myTools)),

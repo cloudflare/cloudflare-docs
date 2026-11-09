@@ -16,7 +16,7 @@ import {
 
 [Cloudflare Computer](https://github.com/cloudflare/computer) is the recommended way to add [Code Mode](/agents/concepts/code-mode/) to an agent. It gives the model an `exec` tool that runs JavaScript in a [Dynamic Worker](/dynamic-workers/). You decide what that code can reach by passing it modules. Each module is imported under a `codemode:` name, and its functions run in your agent.
 
-Computer runs code with `WorkerJavaScriptBackend` from [`@cloudflare/codemode`](/agents/runtime/code-mode/executor/), and adds a persistent file system, the model-facing tools, and prebuilt modules. For the file system and file tools, refer to [File system](/agents/tools/filesystem/).
+Computer runs code with `CodemodeBackend` from `@cloudflare/computer/backends/codemode`, and adds a persistent file system, the model-facing tools, and prebuilt modules. To run code without a workspace, refer to [Use the executor](/agents/runtime/code-mode/executor/). For the file system and file tools, refer to [Workspace](/agents/tools/workspace/).
 
 ## Install
 
@@ -38,14 +38,14 @@ The AI SDK tools also need `ai`. Your Worker needs the `nodejs_compat` [compatib
 
 ## Give the model an exec tool
 
-Create a `Workspace` with a `WorkerJavaScriptBackend`, and pass its tools to the model. Once the workspace has a backend, the tools include `exec`:
+Create a `Workspace` with a `CodemodeBackend`, and pass its tools to the model. Once the workspace has a backend, the tools include `exec`:
 
 <TypeScriptExample filename="src/server.ts">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
 import { Workspace } from "@cloudflare/computer";
-import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
 import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
 import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/ai-sdk";
@@ -57,7 +57,7 @@ export class OrdersAgent extends DurableObject<Env> {
 	workspace = new Workspace({
 		storage: this.ctx.storage,
 		backends: [
-			new WorkerJavaScriptBackend({
+			new CodemodeBackend({
 				loader: this.env.LOADER,
 				modules: {
 					"codemode:orders": {
@@ -110,7 +110,7 @@ A host module is an object of functions under a `codemode:` name. Each function 
 <TypeScriptExample>
 
 ```ts
-new WorkerJavaScriptBackend({
+new CodemodeBackend({
 	loader: this.env.LOADER,
 	modules: {
 		"codemode:billing": {
@@ -138,7 +138,7 @@ import { createToolBindings } from "@cloudflare/computer/modules/tools";
 import { forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
 import { myTools } from "./tools"; // An AI SDK ToolSet
 
-new WorkerJavaScriptBackend({
+new CodemodeBackend({
 	loader: this.env.LOADER,
 	modules: {
 		"codemode:tools": createToolBindings(forAISDKTools(() => myTools)),
@@ -176,7 +176,7 @@ Tools from MCP servers reach the code the same way. Connect servers with the [`M
 ```ts
 import { DurableObject } from "cloudflare:workers";
 import { Workspace } from "@cloudflare/computer";
-import { WorkerJavaScriptBackend } from "@cloudflare/computer/backends/worker-javascript";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
 import { createToolBindings } from "@cloudflare/computer/modules/tools";
 import { forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
 import { Lifecycle } from "agents/lifecycle";
@@ -189,7 +189,7 @@ export class ResearchAgent extends DurableObject<Env> {
 	workspace = new Workspace({
 		storage: this.ctx.storage,
 		backends: [
-			new WorkerJavaScriptBackend({
+			new CodemodeBackend({
 				loader: this.env.LOADER,
 				modules: {
 					"codemode:tools": createToolBindings(
@@ -213,7 +213,7 @@ To let code call an HTTP API, write a host module that holds the credentials and
 <TypeScriptExample>
 
 ```ts
-new WorkerJavaScriptBackend({
+new CodemodeBackend({
 	loader: this.env.LOADER,
 	modules: {
 		"codemode:github": {
@@ -273,7 +273,7 @@ A host module function can pause a run until a person answers, for example to ap
 <TypeScriptExample>
 
 ```ts
-new WorkerJavaScriptBackend({
+new CodemodeBackend({
 	loader: this.env.LOADER,
 	onInterrupt: "replay",
 	modules: {
@@ -292,15 +292,15 @@ new WorkerJavaScriptBackend({
 
 </TypeScriptExample>
 
-List waiting calls with `workspace.runtime.pending()`, and answer one with `workspace.runtime.respond()`. For the details and current limits, refer to [Wait for an answer](/agents/tools/filesystem/#wait-for-an-answer).
+List waiting calls with `workspace.runtime.pending()`, and answer one with `workspace.runtime.respond()`. For the details and current limits, refer to [Wait for an answer](/agents/tools/workspace/#wait-for-an-answer).
 
 ## Use Computer with a harness
 
 - [Think](/agents/harnesses/think/) has a workspace at `this.workspace` and adds `exec` once the workspace has a backend. Refer to [Call the agent's tools from code](/agents/harnesses/think/tools/#call-the-agents-tools-from-code).
-- [Pi](/agents/harnesses/pi/) takes the workspace tools from `createPiTools()`. Build `codemode:tools` with `forPiTools()`. Refer to [File system](/agents/tools/filesystem/#pi).
+- [Pi](/agents/harnesses/pi/) takes the workspace tools from `createPiTools()`. Build `codemode:tools` with `forPiTools()`. Refer to [File system](/agents/tools/workspace/#pi).
 
 ## Related resources
 
-- [File system](/agents/tools/filesystem/): the workspace, file tools, backend options, and resuming runs after a restart.
+- [Workspace](/agents/tools/workspace/): the workspace, file tools, backend options, and resuming runs after a restart.
 - [Use the executor](/agents/runtime/code-mode/executor/): run code without a workspace.
 - [Computer documentation](https://github.com/cloudflare/computer/tree/main/docs): the full interfaces of every module.
