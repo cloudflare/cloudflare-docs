@@ -5,6 +5,8 @@ pcx_content_type: overview
 sidebar:
   badge: Experimental
   order: 10.5
+  group:
+    hideIndex: false
 products:
   - agents
 reviewed: 2026-11-06
@@ -17,6 +19,8 @@ import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 The CLI owns the agent loop. The harness stores sessions, operations, transcripts, and CLI resume state in the Durable Object's SQLite database. [Lifecycle](/agents/runtime/lifecycle/) jobs reconnect to running containers and recover queued work.
 
 Start from the [complete Container harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/container) for HTTP routes, event streaming, and both CLI presets. For a new agent whose loop runs inside a Durable Object, start with [Pi](/agents/harnesses/pi/).
+
+For every option, method, event, and type, refer to the [API reference](/agents/harnesses/container/api/).
 
 ## Create a project
 
@@ -140,6 +144,91 @@ Use `version` to select a CLI version and `setup` to install additional packages
 
 For another CLI, use `containerAgent()` with your own image and an adapter built with `agents/harness/container/runtime`. Refer to the [custom CLI example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/container#another-cli).
 
+## Customize the CLI
+
+Add `setup` steps to a preset to install plugins, settings, or a different build of the CLI. The steps run once, on the first start, and their result is kept in the setup snapshot.
+
+A step runs as `root` by default. A step with `user: "agent"` runs as the user the CLI runs as, in its home. Every session's home starts as a copy of that home, so files such as `CLAUDE.md`, `~/.claude/settings.json`, skills, and `~/.codex/config.toml` work the way they do on your laptop:
+
+<TypeScriptExample>
+
+```ts
+claudeCode({
+	baseUrl: `${this.env.AI_GATEWAY_URL}/anthropic`,
+	apiKey: this.env.AI_GATEWAY_TOKEN,
+	appendSystemPrompt: "Run the tests before you report a change as done.",
+	setup: [
+		{
+			name: "install review plugin",
+			user: "agent",
+			command: [
+				"sh",
+				"-c",
+				"claude plugin marketplace add my-org/plugins && claude plugin install review@plugins",
+			],
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+Changing `setup`, the CLI version, or the Agents SDK version takes effect when a container next starts. A container that runs when you deploy keeps its old setup until it stops. The next container sets up from scratch, and starts without the previous workspace snapshot.
+
+:::caution
+A token that a setup step uses, for example to clone a private repository, stays in the snapshot. The agent can read it. Prefer public sources or short-lived URLs.
+:::
+
+## Run another CLI
+
+To run a CLI that has no preset, build an image whose entrypoint serves the harness daemon, and pass it to `containerAgent()`. Describe the CLI with `cliAdapter()` from `agents/harness/container/runtime`:
+
+<TypeScriptExample filename="daemon.ts">
+
+```ts
+import { cliAdapter, serveFromEnv } from "agents/harness/container/runtime";
+
+await serveFromEnv(
+	cliAdapter({
+		id: "my-agent",
+		// Where the CLI keeps its sessions, relative to $HOME.
+		stateDirs: [".my-agent/sessions"],
+		command: (turn) => ({
+			argv: [
+				"my-agent",
+				"--json",
+				...(turn.state.id ? ["--resume", turn.state.id] : []),
+			],
+			stdin: turn.prompt,
+		}),
+		parser: () => ({
+			// Turn one line of output into events, state, and an outcome.
+			line: (text) => parseMyAgentLine(JSON.parse(text)),
+			end: ({ code }) => ({ status: "unanswered", reason: `exit ${code}` }),
+		}),
+	}),
+);
+```
+
+</TypeScriptExample>
+
+Declare the image in Wrangler under `images`, and select it with `ctx.container.images`:
+
+<TypeScriptExample>
+
+```ts
+import { containerAgent } from "agents/harness/container";
+
+containerAgent({
+	image: this.ctx.container.images.agent,
+	adapter: "my-agent",
+});
+```
+
+</TypeScriptExample>
+
+The adapter persists everything the CLI writes under `stateDirs`, and every `state` value the parser reports, to the Durable Object while a turn runs. A new container restores both before its first turn.
+
 ## Run locally
 
 Add your provider key to `.dev.vars`, which must be excluded from version control:
@@ -259,6 +348,21 @@ Call `await this.harness.stop()` to snapshot and stop a container explicitly. Pr
 [Container snapshots](/containers/guides/snapshots/) preserve files, not memory or running processes. They expire 30 days after their last restore and are tied to an image version. If a snapshot expires, fails, or no longer matches the setup, startup may fall back to a clean filesystem. Keep files that must survive these cases in separate durable storage.
 
 The built-in presets use the container's filesystem. They do not include a [Cloudflare Computer Workspace integration](/agents/tools/filesystem/).
+
+## Security
+
+The container is the sandbox. Claude Code runs with `--dangerously-skip-permissions`, and Codex runs with `--dangerously-bypass-approvals-and-sandbox`, so neither CLI stops to ask before it runs a command. Treat everything in the container as readable by the agent, and keep credentials out of it.
+
+- Put authentication in front of every route that reaches the harness.
+- Use `allowedTools` and `disallowedTools` on `claudeCode()` to limit Claude Code's tools.
+- Set `enableInternet: false` with a custom image to stop commands reaching the Internet.
+
+## Limits
+
+- One container runs per Durable Object, shared by every session in that object.
+- Image parts in a prompt are not passed to the CLI. Only text reaches it.
+- Events reach listeners only in the Durable Object that runs the harness.
+- For instance sizes and container limits, refer to [Containers limits](/containers/platform/limits/).
 
 ## Deploy
 

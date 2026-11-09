@@ -1,0 +1,320 @@
+---
+title: API reference
+pcx_content_type: reference
+description: Options, methods, presets, events, and types for ContainerHarness in agents/harness/container.
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+This page lists the API of `agents/harness/container`. For setup and concepts, refer to [Container harness](/agents/harnesses/container/).
+
+:::caution[Experimental]
+`agents/harness/container` is experimental. Its API may change in any release.
+:::
+
+The package has three entry points:
+
+| Entry point                        | Use it for                                                                                   |
+| ---------------------------------- | -------------------------------------------------------------------------------------------- |
+| `agents/harness/container`         | `ContainerHarness`, presets, `ContainerEgress`, and types. Import it in your Worker.         |
+| `agents/harness/container/runtime` | The daemon's Node.js runtime and `cliAdapter()`, for a custom image that brings its own CLI. |
+| `agents/harness/container/daemon`  | The daemon core without a runtime, for adapters that do not run on Node.js.                  |
+
+## `ContainerHarness`
+
+`ContainerHarness` is a [Lifecycle capability](/agents/runtime/lifecycle/). Create one per Durable Object, and install it with `Lifecycle.install(this).use(harness)`.
+
+<TypeScriptExample>
+
+```ts
+import { ContainerHarness, claudeCode } from "agents/harness/container";
+
+const harness = new ContainerHarness({
+	container: this.ctx.container,
+	egress: this.ctx.exports.ContainerEgress,
+	agent: claudeCode({ apiKey: this.env.ANTHROPIC_API_KEY }),
+});
+```
+
+</TypeScriptExample>
+
+### Options
+
+`new ContainerHarness(options)` takes these options:
+
+| Option            | Type                       | Default            | Description                                                                                                                                                      |
+| ----------------- | -------------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `container`       | `Container`                | —                  | Required. The object's container, `ctx.container`.                                                                                                               |
+| `agent`           | `ContainerAgent`           | —                  | Required. What runs in the container. Build it with [`claudeCode()`](#claudecode), [`codex()`](#codex), or [`containerAgent()`](#containeragent).                |
+| `egress`          | `ContainerEgressBinding`   | —                  | `ctx.exports.ContainerEgress`. Required when the agent has egress routes, which every preset does. The constructor throws without it.                            |
+| `instance`        | `ContainerInstance`        | `"standard-1"`     | The instance size: `"lite"`, `"standard-1"` to `"standard-4"`, or `{ vcpu, memoryMib, diskMb }`.                                                                 |
+| `enableInternet`  | `boolean`                  | `true`             | Whether the container can reach hosts other than its egress routes. Managed images need it to install the CLI.                                                   |
+| `idleTimeoutMs`   | `number`                   | `300000`           | How long the container runs after its last work. The harness then snapshots and stops it. The maximum is six hours less two minutes.                             |
+| `startTimeoutMs`  | `number`                   | `60000`            | How long a new container has to answer before the start counts as failed.                                                                                        |
+| `defaults`        | `ContainerSessionDefaults` | The agent's values | What a new session starts with: `model`, the CLI's model name, and `options`, passed to the adapter.                                                             |
+| `onContainerLost` | `"fail"` or `"retry"`      | `"fail"`           | What happens to a running operation when its container stops. `"fail"` ends it with `container_lost`. `"retry"` runs it again from the start in a new container. |
+| `port`            | `number`                   | `8080`             | The port the daemon listens on in the container.                                                                                                                 |
+| `storePrefix`     | `string`                   | `"container_"`     | The table prefix for the session store in the object's SQLite database.                                                                                          |
+
+The constructor throws when `idleTimeoutMs` is out of range, when an egress route's upstream is not an `https:` URL, or when the agent has egress routes and `egress` is missing.
+
+### Methods
+
+Methods that take a `session` option use the root session when you leave it out.
+
+| Method                        | Returns                                | Description                                                                                                            |
+| ----------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `prompt(input, options?)`     | `Promise<ContainerPromptResponse>`     | Submit a prompt and wait for it to settle. Returns the result and the session's transcript.                            |
+| `submit(input, options?)`     | `Promise<ContainerReceipt>`            | Durably submit a prompt. Resolves once it is stored, before the CLI runs.                                              |
+| `wait(operationId, options?)` | `Promise<ContainerOperationResult>`    | Wait for an operation to settle. Options: `session`, and `signal`, which stops only the wait.                          |
+| `abort(options?)`             | `Promise<boolean>`                     | Abort one operation with `operationId`, or every open operation in the session without it.                             |
+| `messages(options?)`          | `Promise<ContainerMessage[]>`          | The session's transcript since its latest reset.                                                                       |
+| `pending(options?)`           | `Promise<ContainerPendingOperation[]>` | Queued and running operations, oldest first. Without `session`, lists every session.                                   |
+| `session(id?)`                | `ContainerSession`                     | A handle to an existing session. Does no I/O.                                                                          |
+| `container()`                 | `Promise<{ running, runtimeId }>`      | Whether the container runs, and the ID the harness started it with.                                                    |
+| `stop()`                      | `Promise<void>`                        | Snapshot and stop the container now. Sessions survive. Running operations are reconciled as if the container had died. |
+
+`harness.sessions` is a [`ContainerSessions`](#containersessions) object for every session in the Durable Object.
+
+### Submit options
+
+`prompt()` and `submit()` take these options:
+
+| Option        | Type                      | Description                                                                                                                                                                                               |
+| ------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `session`     | `string`                  | The session. Default: `"root"`.                                                                                                                                                                           |
+| `operationId` | `string`                  | An idempotency key. Submitting the same ID twice in one session returns the first receipt, with `accepted: false`. Default: a random UUID.                                                                |
+| `whenBusy`    | `"followUp"` or `"steer"` | What a submission does while the session runs. `"followUp"`, the default, runs after the current run. `"steer"` joins the running turn when the adapter supports it, and otherwise queues as a follow-up. |
+
+The Claude Code and Codex adapters do not support steering.
+
+## `ContainerSession`
+
+A handle to one session. Get one from `harness.session(id)`, `harness.sessions.get(id)`, `sessions.create()`, or `sessions.fork()`.
+
+| Member                       | Returns                             | Description                                                                                                                            |
+| ---------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                         | `string`                            | The session ID.                                                                                                                        |
+| `submit(input, options?)`    | `Promise<ContainerReceipt>`         | Durably submit a prompt.                                                                                                               |
+| `prompt(input, options?)`    | `Promise<ContainerPromptResponse>`  | Submit, wait, and return the result and transcript.                                                                                    |
+| `steer(input, options?)`     | `Promise<ContainerReceipt>`         | Submit with `whenBusy: "steer"`.                                                                                                       |
+| `wait(operationId, signal?)` | `Promise<ContainerOperationResult>` | Wait for an operation. Aborting `signal` stops only the wait.                                                                          |
+| `abort(operationId?)`        | `Promise<boolean>`                  | Abort one operation, or all of the session's open operations. Returns `false` when the given operation was not open.                   |
+| `reset(handoff?)`            | `Promise<void>`                     | Start a new CLI session without the old history. `handoff` is added to the start of the next prompt. Throws while the session is busy. |
+| `setModel(model)`            | `Promise<void>`                     | Change the session's model, by the CLI's model name.                                                                                   |
+| `messages()`                 | `Promise<ContainerMessage[]>`       | The transcript since the latest reset.                                                                                                 |
+| `events()`                   | `Promise<ContainerEventStream>`     | A snapshot of the session, then live events. Refer to [Events](#events).                                                               |
+| `busy()`                     | `Promise<boolean>`                  | Whether the session has queued or running operations.                                                                                  |
+
+Every method except `id` throws for a session that was never created.
+
+## `ContainerSessions`
+
+Every session in the Durable Object, from `harness.sessions`.
+
+| Method       | Returns                           | Description                                                                                         |
+| ------------ | --------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `get(id)`    | `ContainerSession`                | A handle to a session.                                                                              |
+| `create()`   | `Promise<ContainerSession>`       | A new top-level session with the harness defaults, and a random UUID as its ID.                     |
+| `fork(from)` | `Promise<ContainerSession>`       | A new session that continues `from`'s transcript and CLI session on a branch of its own.            |
+| `list()`     | `Promise<ContainerSessionInfo[]>` | Every session, oldest first, with its `id`, its `parent` if it is a fork, and whether it is `busy`. |
+
+The root session's ID is exported as `ROOT_SESSION`.
+
+## Presets
+
+A preset returns a `ContainerAgent`: the adapter the daemon runs, how the container is built, the environment the CLI sees, and the egress routes that carry credentials. Pass it to the harness as `agent`.
+
+Every preset that calls a model provider takes these connection options:
+
+| Option    | Type                     | Description                                                                                                    |
+| --------- | ------------------------ | -------------------------------------------------------------------------------------------------------------- |
+| `apiKey`  | `string`                 | Sent the way the provider expects: `x-api-key` for Anthropic, `Authorization: Bearer` for OpenAI.              |
+| `baseUrl` | `string`                 | The upstream for model requests, such as an AI Gateway URL. Must be `https:`. Default: the provider's own API. |
+| `headers` | `Record<string, string>` | More headers on every model request, such as `cf-aig-authorization` or gateway metadata.                       |
+
+These values stay in the Durable Object. `ContainerEgress` adds them to each request after it leaves the container.
+
+### `claudeCode()`
+
+Installs [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) from npm on the managed image.
+
+| Option               | Type          | Default               | Description                                                                       |
+| -------------------- | ------------- | --------------------- | --------------------------------------------------------------------------------- |
+| `model`              | `string`      | `"claude-sonnet-4-5"` | The default model for new sessions.                                               |
+| `version`            | `string`      | A pinned release      | The `@anthropic-ai/claude-code` version to install.                               |
+| `appendSystemPrompt` | `string`      | —                     | Passed to `--append-system-prompt`.                                               |
+| `allowedTools`       | `string[]`    | —                     | Passed to `--allowedTools`.                                                       |
+| `disallowedTools`    | `string[]`    | —                     | Passed to `--disallowedTools`.                                                    |
+| `maxTurns`           | `number`      | —                     | Passed to `--max-turns`.                                                          |
+| `setup`              | `SetupStep[]` | —                     | More [setup steps](#setup-steps), run after the install and kept in the snapshot. |
+
+### `codex()`
+
+Installs [Codex](https://developers.openai.com/codex/cli) from npm on the managed image.
+
+| Option    | Type          | Default          | Description                                                                       |
+| --------- | ------------- | ---------------- | --------------------------------------------------------------------------------- |
+| `model`   | `string`      | `"gpt-5.1"`      | The default model for new sessions.                                               |
+| `version` | `string`      | A pinned release | The `@openai/codex` version to install.                                           |
+| `config`  | `string[]`    | —                | Extra `-c key=value` configuration overrides.                                     |
+| `setup`   | `SetupStep[]` | —                | More [setup steps](#setup-steps), run after the install and kept in the snapshot. |
+
+### `containerAgent()`
+
+Runs an image you built, whose entrypoint serves the daemon with [`serveFromEnv()`](#runtime).
+
+| Option    | Type                     | Description                                                                                      |
+| --------- | ------------------------ | ------------------------------------------------------------------------------------------------ |
+| `image`   | `string`                 | Required. The image, such as `ctx.container.images.agent`.                                       |
+| `adapter` | `string`                 | Required. The ID of the adapter the daemon runs.                                                 |
+| `env`     | `Record<string, string>` | Environment for the daemon and the CLI. Do not put secrets here.                                 |
+| `egress`  | `EgressRoute[]`          | Hosts to intercept and forward with credentials. Refer to [`ContainerEgress`](#containeregress). |
+| `model`   | `string`                 | The default model for new sessions.                                                              |
+| `options` | JSON value               | Adapter options for new sessions.                                                                |
+
+### `echoAgent()`
+
+Runs an adapter that echoes each prompt, with no CLI, model, or credentials. Use it to test the path from the Durable Object to the container.
+
+### Setup steps
+
+A `SetupStep` is one command, run once in a fresh managed container and kept in its snapshot:
+
+| Field     | Type                  | Description                                                                                                                  |
+| --------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `name`    | `string`              | What the step does, for error messages.                                                                                      |
+| `command` | `string[]`            | The command and its arguments.                                                                                               |
+| `user`    | `"root"` or `"agent"` | Who runs it. Default `"root"`. `"agent"` runs it as the CLI's user with `HOME=/home/agent`, which every session home copies. |
+
+The setup snapshot is keyed by the image, the steps, and the daemon build. Changing any of them sets up a fresh container on the next start.
+
+## `ContainerEgress`
+
+A `WorkerEntrypoint` that forwards the container's model requests with real credentials. Export it from your Worker's main module, and pass `ctx.exports.ContainerEgress` to the harness:
+
+```ts
+export { ContainerEgress } from "agents/harness/container";
+```
+
+For each intercepted request, `ContainerEgress` finds the route for the request's host, removes the headers in `strip`, sets the headers in `headers`, and forwards the request to `upstream` with the original path and query. It does not follow redirects. A host without a route gets a `403` response.
+
+An `EgressRoute` has these fields:
+
+| Field      | Type                     | Description                                                                   |
+| ---------- | ------------------------ | ----------------------------------------------------------------------------- |
+| `host`     | `string`                 | The placeholder hostname the CLI calls, such as `anthropic.harness.internal`. |
+| `upstream` | `string`                 | The real base URL. Must be `https:`.                                          |
+| `headers`  | `Record<string, string>` | Headers to set on the forwarded request, such as credentials.                 |
+| `strip`    | `string[]`               | Headers to remove from the CLI's request, such as its placeholder key.        |
+
+## Results
+
+### `ContainerReceipt`
+
+Returned by `submit()` once the prompt is stored:
+
+| Field         | Type      | Description                                           |
+| ------------- | --------- | ----------------------------------------------------- |
+| `operationId` | `string`  | The operation ID.                                     |
+| `session`     | `string`  | The session ID.                                       |
+| `accepted`    | `boolean` | `false` when this operation ID was already submitted. |
+
+### `ContainerOperationResult`
+
+Returned by `wait()`. `prompt()` returns the same fields plus `messages`, the session's transcript after the operation.
+
+| Field         | Type                       | Description                            |
+| ------------- | -------------------------- | -------------------------------------- |
+| `operationId` | `string`                   | The operation ID.                      |
+| `session`     | `string`                   | The session ID.                        |
+| `status`      | `"done"` or `"unanswered"` | Whether the CLI answered.              |
+| `text`        | `string`                   | The final assistant text, when `done`. |
+| `reason`      | `string`                   | Why an operation ended `unanswered`.   |
+
+An unanswered operation has one of these reasons, or a reason from the adapter, such as `exit 1`:
+
+| Reason                  | Meaning                                                                |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `aborted`               | `abort()` stopped it.                                                  |
+| `container_lost`        | Its container stopped while it ran, and `onContainerLost` is `"fail"`. |
+| `container_unavailable` | No container could be started after five attempts.                     |
+| `not_found`             | No operation with this ID exists in the session.                       |
+
+### `ContainerMessage`
+
+A transcript message. Every adapter produces the same format:
+
+| Field         | Type                      | Description                                           |
+| ------------- | ------------------------- | ----------------------------------------------------- |
+| `id`          | `string`                  | The message ID. An updated message keeps its ID.      |
+| `role`        | `"user"` or `"assistant"` | Who wrote it.                                         |
+| `parts`       | `ContainerPart[]`         | The content, in order.                                |
+| `operationId` | `string`                  | The operation the message belongs to.                 |
+| `createdAt`   | `number`                  | When it was created, in milliseconds since the epoch. |
+
+A part is one of these types:
+
+| Type          | Fields                                                                                     |
+| ------------- | ------------------------------------------------------------------------------------------ |
+| `"text"`      | `text`                                                                                     |
+| `"reasoning"` | `text`                                                                                     |
+| `"image"`     | `mediaType`, `data`                                                                        |
+| `"tool"`      | `toolCallId`, `toolName`, `input`, `state` (`"running"`, `"done"`, or `"error"`), `output` |
+
+## Events
+
+`session.events()` returns a `ContainerEventStream`:
+
+| Member            | Description                                                                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------ |
+| `snapshot`        | The session when the stream opened: `session`, `messages`, `pending`, and `busy`.                |
+| `start(listener)` | Start delivering events in batches, including any that arrived after the snapshot. Call it once. |
+| `stop()`          | Stop delivering events. Call it when you are done, whether or not you called `start()`.          |
+
+Each event has a `type`:
+
+| Type                | Fields                                                  | Description                                                         |
+| ------------------- | ------------------------------------------------------- | ------------------------------------------------------------------- |
+| `"text-delta"`      | `messageId`, `delta`, `operationId`                     | Live text for an assistant message that is still being written.     |
+| `"reasoning-delta"` | `messageId`, `delta`, `operationId`                     | Live reasoning for an assistant message.                            |
+| `"message"`         | `message`, `operationId`                                | A finished or updated transcript message. Stored in the transcript. |
+| `"usage"`           | `inputTokens`, `outputTokens`, `costUsd`, `operationId` | Token and cost figures, as the CLI reports them.                    |
+| `"log"`             | `level`, `message`, `operationId`                       | A log line from the adapter.                                        |
+| `"raw"`             | `value`, `operationId`                                  | An adapter event with no mapping.                                   |
+| `"operation-start"` | `operationId`                                           | An operation started running in the container.                      |
+| `"operation-end"`   | `result`                                                | An operation settled, with the result `wait()` returns.             |
+| `"container"`       | `status`                                                | The container is `"starting"`, `"ready"`, `"lost"`, or `"stopped"`. |
+
+An event can repeat what the snapshot already shows. Apply messages by ID. Events reach listeners only in the isolate that runs the harness, so serve them to clients from the Durable Object.
+
+## Runtime
+
+`agents/harness/container/runtime` runs the daemon in a custom image. It is Node.js only.
+
+| Export                  | Description                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------ |
+| `serveFromEnv(adapter)` | Serve the daemon with the token, runtime ID, and port the harness passes in the container environment. |
+| `serve(options)`        | Serve the daemon with explicit options.                                                                |
+| `cliAdapter(options)`   | An adapter for a CLI that runs one turn per process and prints JSON lines.                             |
+| `claudeCodeCli()`       | The Claude Code adapter the preset uses.                                                               |
+| `codexCli()`            | The Codex adapter the preset uses.                                                                     |
+
+`cliAdapter()` takes these options:
+
+| Option           | Type                   | Description                                                                                                                          |
+| ---------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `id`             | `string`               | Required. The adapter ID, matched by `containerAgent({ adapter })`.                                                                  |
+| `command`        | `(turn) => CliCommand` | Required. The `argv`, optional `stdin`, and optional `env` for one turn.                                                             |
+| `parser`         | `(turn) => CliParser`  | Required. Turns each stdout line into `events`, `state`, and an `outcome`, and gives the outcome when the process exits without one. |
+| `stateDirs`      | `string[]`             | Directories under `$HOME` where the CLI keeps its sessions. Persisted to the Durable Object and restored in a new container.         |
+| `cwd`            | `string`               | The working directory. Default `/workspace`.                                                                                         |
+| `skeleton`       | `string`               | A home directory that every session home starts as a copy of.                                                                        |
+| `user`           | `{ uid, gid }`         | Run the CLI as this user. Default: the daemon's user.                                                                                |
+| `syncIntervalMs` | `number`               | How often a running turn's state is persisted. Default five seconds.                                                                 |
+
+A `CliTurn` gives `command` and `parser` the `operationId`, the prompt text as `prompt`, the session's `settings`, and the `state` values earlier turns reported, such as the CLI's own session ID.
