@@ -57,12 +57,25 @@ them. Chain those steps with `cf build` in your own script instead:
 }
 ```
 
-When `cf` runs a framework command, it forwards `--mode` and rejects other
-arguments. For example, `cf dev --port 8788` fails in a Vite project. Set the
-option in the framework's configuration, such as `server.port` in
-`vite.config.ts`, or run the framework command directly. When `cf` uses an
-installed build tool instead, `cf dev` forwards extra arguments to it, and the
-tool rejects arguments it does not support. `cf build` accepts only `--mode`.
+`cf dev` forwards extra arguments to the selected development server. This
+applies to framework commands and installed Cloudflare build tools. For example,
+to set the port and host in a Vite project, run:
+
+```sh
+cf dev --port 8788 --host 127.0.0.1
+```
+
+Use `--` to separate server arguments from `cf` options:
+
+```sh
+cf dev -- --port 8788 --host 127.0.0.1
+```
+
+Supported arguments depend on the selected development server. The server rejects
+arguments it does not support. The `--` separator does not bypass this validation.
+
+`cf build` forwards only `--mode`. For framework support for `--mode`, refer to
+[Modes](#modes).
 
 ## Automatic configuration
 
@@ -430,12 +443,12 @@ then run the command again.
 
 ### Arguments are rejected
 
-```txt
-Arguments cannot currently be forwarded to the detected dev command `npx vite`. Run that command directly with the required arguments.
-```
+Check which development server `cf dev` selects and which arguments it supports.
+If a server argument conflicts with a `cf` option, pass it after `--`. The
+selected server still rejects unsupported arguments and invalid values.
 
-`cf` runs the framework's command and forwards only `--mode`. Set the option in
-the framework's configuration, or run the framework command directly.
+If `cf` reports that arguments cannot be forwarded to a detected dev command,
+update your `cf` installation. Refer to [Install and sign in](/cf/get-started/).
 
 ### A framework rejects `--mode`
 
