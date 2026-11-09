@@ -22,18 +22,20 @@ The container runtime automatically sets the following variables:
 
 ## User-defined environment variables
 
-You can set environment variables when defining a Container in your Worker, or when starting a container instance.
+Pass environment variables in the `env` option when you start a container instance with [`ctx.container.start()`](/containers/api/durable-object-container/#start):
 
-For example:
-
-```javascript
-class MyContainer extends Container {
-	defaultPort = 4000;
-	envVars = {
+```js
+const container = this.ctx.container;
+container.start({
+	image: container.images.base,
+	enableInternet: false,
+	env: {
 		MY_CUSTOM_VAR: "value",
 		ANOTHER_VAR: "another_value",
-	};
-}
+	},
+});
 ```
+
+Processes that you start with [`exec()`](/containers/api/durable-object-container/#exec) do not receive these variables, except `PATH`. Pass them in the `env` option of `exec()` instead.
 
 More details about defining environment variables and secrets can be found in [this example](/containers/examples/env-vars-and-secrets).

@@ -735,10 +735,11 @@
 # Containers
 /containers/beta-info/ /containers/faq/ 301
 # Containers API
-/containers/container-package/ /containers/api/container-class/ 301
+/containers/api/container-class/ /containers/api/durable-object-container/ 301
+/containers/container-package/ /containers/api/durable-object-container/ 301
 /containers/durable-object-methods/ /containers/api/durable-object-container/ 301
-/containers/container-class/ /containers/api/container-class/ 301
-/containers/reference/container-class/ /containers/api/container-class/ 301
+/containers/container-class/ /containers/api/durable-object-container/ 301
+/containers/reference/container-class/ /containers/api/durable-object-container/ 301
 /containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301
 /durable-objects/api/container/ /containers/api/durable-object-container/ 301
 # Containers IA rework: loose pages folded into core sections
