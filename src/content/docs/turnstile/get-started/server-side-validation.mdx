@@ -67,9 +67,7 @@ To ensure a successful validation, the visitor must initiate the request and sub
 
 Turnstile tokens are intended for single use, but token-reuse detection is eventually consistent. Redemption state takes time to propagate across Cloudflare's global network.
 
-The following objective is proposed and requires end-to-end validation and approval before publication. It is not an existing service commitment.
-
-The proposed service-level objective is to reject at least **99% of repeat validation requests received five seconds or more after the first successful validation**. Intentional retries using the same `idempotency_key` are excluded.
+The service-level objective is to reject at least **99% of repeat validation requests received five seconds or more after the first successful validation**. Intentional retries using the same `idempotency_key` are excluded.
 
 Multiple validations submitted close together may succeed before redemption state propagates across the network. This includes both concurrent requests and closely spaced sequential requests.
 
@@ -583,15 +581,15 @@ if (result.valid) {
 
 ### Error codes reference
 
-| Error code               | Description                                           | Action required                                   |
-| ------------------------ | ----------------------------------------------------- | ------------------------------------------------- |
-| `missing-input-secret`   | Secret parameter not provided                         | Ensure secret key is included                     |
-| `invalid-input-secret`   | Secret key is invalid or expired                      | Check your secret key in the Cloudflare dashboard |
-| `missing-input-response` | Response parameter was not provided                   | Ensure token is included                          |
-| `invalid-input-response` | Token is invalid, malformed, or expired               | User should retry the challenge                   |
-| `bad-request`            | Request is malformed                                  | Check request format and parameters               |
-| `timeout-or-duplicate`   | Token has expired or an earlier redemption is visible | Generate a new token for a new validation request |
-| `internal-error`         | Internal error occurred                               | Retry the request                                 |
+| Error code               | Description                                     | Action required                                   |
+| ------------------------ | ----------------------------------------------- | ------------------------------------------------- |
+| `missing-input-secret`   | Secret parameter not provided                   | Ensure secret key is included                     |
+| `invalid-input-secret`   | Secret key is invalid or expired                | Check your secret key in the Cloudflare dashboard |
+| `missing-input-response` | Response parameter was not provided             | Ensure token is included                          |
+| `invalid-input-response` | Token is invalid, malformed, or expired         | User should retry the challenge                   |
+| `bad-request`            | Request is malformed                            | Check request format and parameters               |
+| `timeout-or-duplicate`   | Token has expired or has already been validated | Generate a new token for a new validation request |
+| `internal-error`         | Internal error occurred                         | Retry the request                                 |
 
 ---
 
