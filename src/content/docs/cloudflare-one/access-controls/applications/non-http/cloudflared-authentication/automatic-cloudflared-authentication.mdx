@@ -7,14 +7,14 @@ title: Enable automatic cloudflared authentication
 sidebar:
   order: 2
 tags:
-- Authentication
+  - Authentication
 ---
 
 When users connect to an Access application through `cloudflared`, the browser prompts them to allow access by displaying this page:
 
 ![Access request prompt page displayed after logging in with cloudflared.](~/assets/images/cloudflare-one/applications/non-http/access-screen.png)
 
-Automatic `cloudflared` authentication allows users to skip this login page if they already have an active IdP session.
+Automatic `cloudflared` authentication skips this approval page once the user has a valid Access application session. It does not bypass authentication or your Access policies. Users without a valid session must still complete the login flow.
 
 To enable automatic `cloudflared` authentication:
 
@@ -24,4 +24,4 @@ To enable automatic `cloudflared` authentication:
 4. Turn on **Allow automatic Cloudflared authentication**.
 5. Select **Save**.
 
-This option will still prompt a browser window in the background, but authentication will now happen automatically.
+`cloudflared` still opens a browser to complete authentication, but users do not need to approve the connection on this page.
