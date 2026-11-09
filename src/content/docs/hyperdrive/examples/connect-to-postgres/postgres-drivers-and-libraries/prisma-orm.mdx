@@ -30,10 +30,10 @@ Initialize Prisma ORM in your Worker project:
 <PackageManagers
 	type="dlx"
 	pkg="prisma@latest"
-	args="orm init --yes --target postgres --authoring psl"
+	args="orm init --yes --target postgres --authoring psl --write-env"
 />
 
-The command installs `@prisma/orm-postgres`, which includes the `pg` driver, and the Prisma CLI. It also creates `src/prisma/contract.prisma` for your data model and `prisma.config.ts`, which reads `DATABASE_URL` from `.env`.
+The command installs `@prisma/orm-postgres`, which includes the `pg` driver, and the Prisma CLI. It also creates `src/prisma/contract.prisma` for your data model, `prisma.config.ts`, which reads `DATABASE_URL` from `.env`, and a `.env` file with a placeholder `DATABASE_URL`.
 
 Add the required Node.js compatibility flags and Hyperdrive binding to your Wrangler configuration file:
 
@@ -58,7 +58,7 @@ model User {
 
 ### 2.2. Set up environment variables
 
-Add your database connection string to the `.env` file. The Prisma CLI uses it to create and update tables, connecting to the database directly rather than through Hyperdrive:
+Replace the placeholder `DATABASE_URL` in the `.env` file with your database connection string. The Prisma CLI uses it to create and update tables, connecting to the database directly rather than through Hyperdrive:
 
 ```txt title=".env"
 DATABASE_URL="postgres://user:password@host:port/database"
