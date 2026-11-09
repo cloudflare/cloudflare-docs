@@ -27,19 +27,31 @@ export function formatCommandInvocation(
 	positionals: readonly string[] = [],
 	args: Record<string, CommandArgumentDefinition> = {},
 ) {
-	const suffix = positionals
-		.map((key) => {
-			const definition = args[key];
-			if (!definition) {
-				throw new Error(
-					`Command "${command}" is missing its positional argument definition for "${key}".`,
-				);
-			}
-			return formatCommandArgumentName(key, {
-				...definition,
-				positional: true,
-			});
-		})
-		.join(" ");
-	return suffix ? `${command} ${suffix}` : command;
+	const positionalParts = positionals.map((key) => {
+		const definition = args[key];
+		if (!definition) {
+			throw new Error(
+				`Command "${command}" is missing its positional argument definition for "${key}".`,
+			);
+		}
+		return formatCommandArgumentName(key, {
+			...definition,
+			positional: true,
+		});
+	});
+	const positionalSet = new Set(positionals);
+	const requiredFlagParts = Object.entries(args)
+		.filter(
+			([key, definition]) =>
+				definition.demandOption &&
+				!definition.hidden &&
+				!definition.positional &&
+				!positionalSet.has(key),
+		)
+		.map(([key, definition]) =>
+			definition.type === "boolean"
+				? `--${key}`
+				: `--${key} <${key.toUpperCase()}>`,
+		);
+	return [command, ...positionalParts, ...requiredFlagParts].join(" ");
 }
