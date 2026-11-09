@@ -1,0 +1,21 @@
+---
+title: Markdown for Agents analytics and tracing
+description: Markdown for Agents leaves beta with dashboard analytics, sampled logs, a conversion playground, GraphQL analytics, and Cloudflare Traces support.
+date: 2026-11-09
+---
+
+[Markdown for Agents](/fundamentals/reference/markdown-for-agents/) is generally available, with new tools to monitor conversions and investigate partial or failed output.
+
+In the Cloudflare dashboard, select your zone and go to **Agent Readiness** > **Markdown for Agents**:
+
+- **Analytics** shows conversion outcomes, estimated token reduction, top converted pages, top user agents, failure reasons, content limits, and pages with partial or failed conversions.
+- **Logs** provides sampled conversion events with outcome, failure reason, and content-limit filters.
+- **Playground** requests Markdown for a page on your zone and compares it with HTML. Inspect the Markdown, preview, response headers, and estimated token reduction.
+
+![Markdown for Agents dashboard showing conversion totals, full conversion rate, estimated token reduction, and conversions over time.](~/assets/images/fundamentals/markdown-for-agents-analytics.png)
+
+The [GraphQL Analytics API](/fundamentals/reference/markdown-for-agents/#graphql-analytics-api) exposes the same analytics through `markdownForAgentsAdaptiveGroups` at zone and account scope. Query conversion totals, outcomes, estimated token savings, and page diagnostics over the last seven days. Counts are sample-weighted estimates. Token savings use byte-based estimates from full conversions, not tokenizer counts.
+
+[Cloudflare Traces](/fundamentals/reference/markdown-for-agents/#cloudflare-traces) includes a `markdown_conversion` span for sampled streaming conversions. Inspect conversion outcomes, input and output bytes, converter CPU time, and content-limit flags alongside the rest of the request timeline.
+
+For details and a GraphQL query example, refer to the [Markdown for Agents documentation](/fundamentals/reference/markdown-for-agents/).
