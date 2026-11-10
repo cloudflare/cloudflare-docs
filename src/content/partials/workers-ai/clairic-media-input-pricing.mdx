@@ -1,0 +1,24 @@
+---
+{}
+---
+
+:::note[How media inputs are billed]
+
+Clairic converts media inputs to input tokens and bills them at the model's input token rate. Clairic does not charge for output tokens. For per-model rates, refer to [pricing](/workers-ai/platform/pricing/).
+
+Clairic answers each `text` field in its own pass, and all other fields share one pass. Every pass includes the full `state` and all images, so their tokens are billed once per pass. `usage.passes` reports the number of passes.
+
+Images are tokenized as follows:
+
+1. **Resize**: The image keeps its aspect ratio, but:
+   - Each side is rounded to a multiple of 32 pixels.
+   - If the area is under about 65,000 pixels (256x256), it is scaled up to reach that.
+   - Larger images are not scaled down.
+2. **Count patches**: Each 32x32-pixel block is one token: `tokens = (width / 32) x (height / 32)`.
+3. **Add markers**: 2 tokens are added to mark where the image starts and ends.
+
+Each request accepts up to 4 images (4 MiB each, 8 MiB combined).
+
+Media tokens count toward the model's context window on every pass, together with the fields. If they exceed the context window, all fields share one pass. If they still exceed it, the request fails. Otherwise, the text `state` is truncated to fit the remaining space.
+
+:::
