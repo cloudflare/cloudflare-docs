@@ -1262,6 +1262,10 @@ To bind Workflows to your Worker, assign an array of the below object to the `wo
   - `success_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that complete successfully or are terminated, as a duration string such as `"3 days"` or a whole number of milliseconds.
   - `error_retention` <Type text="string | number" /> <MetaInfo text="optional" /> — How long to retain instances that end in an errored state, as a duration string such as `"7 days"` or a whole number of milliseconds.
   - Retention is capped at the [retention limit](/workflows/reference/limits/) for your account.
+- `concurrency` <Type text="object" /> <MetaInfo text="optional" />
+  - `limit` <Type text="number" /> <MetaInfo text="optional" /> — The maximum number of instances of this Workflow that can run at the same time. Must be a positive integer, no higher than your account's [concurrency limit](/workflows/reference/limits/). Instances above the limit are queued. Refer to [Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits).
+  - Cannot be combined with `script_name`.
+  - Requires Wrangler 4.127.0 or above.
 - `jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction that the instances of this Workflow run and store data in. Valid values: `"eu"`, `"fedramp"`, `"us"`. Refer to [Data location](/workflows/reference/data-location/).
   - Set when the Workflow is created, and cannot be changed afterwards. Cannot be combined with `script_name`.
@@ -1301,6 +1305,8 @@ Each Workflow entry in `exports` is keyed by the name of a class that extends `W
   - The name of the Workflow. Two entries in `exports` cannot use the same name.
 - `limits` <Type text="object" /> <MetaInfo text="optional" />
   - `steps` <Type text="number" /> <MetaInfo text="optional" /> — The maximum number of steps a Workflow instance can run. Refer to [Workflow step limits](/workflows/build/workers-api/#workflow-step-limits).
+- `concurrency` <Type text="object" /> <MetaInfo text="optional" />
+  - `limit` <Type text="number" /> <MetaInfo text="optional" /> — The maximum number of instances of this Workflow that can run at the same time. Accepts the same values as the [`workflows` binding](#workflows). Refer to [Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits).
 - `schedules` <Type text="string | string[]" /> <MetaInfo text="optional" />
   - One or more cron schedules that create new instances of this Workflow automatically. Refer to [Schedule a Workflow directly](/workflows/build/trigger-workflows/#schedule-a-workflow-directly).
 - `default_retention` <Type text="object" /> <MetaInfo text="optional" />
