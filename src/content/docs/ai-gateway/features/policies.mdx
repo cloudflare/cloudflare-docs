@@ -1,7 +1,7 @@
 ---
 pcx_content_type: configuration
 title: Policies
-description: Use identity-based policies to control which users can call which models and providers on your AI Gateway, and how much each user or group can spend.
+description: Use identity-based policies to control which users can call which models and providers on your AI Gateway, and how much each user or team can spend.
 sidebar:
   order: 4
   badge: Beta
@@ -17,8 +17,8 @@ Use policies to:
 
 - Give a team or an email domain a shared monthly budget.
 - Cap spend for each individual user.
-- Block a group from using expensive models.
-- Allow only specific models for a group.
+- Block specific users or teams from using expensive models.
+- Allow only specific models for a team.
 
 Policies differ from gateway-level [spend limits](/ai-gateway/features/spend-limits/), which split budgets by request metadata only. Policies use the verified identity of the caller from [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), and can also block or allow access to models.
 
@@ -106,32 +106,33 @@ Spend caps use a calendar-based time window aligned to UTC. When the window rese
 
 ### Conditions
 
-Conditions are optional. Use them to target requests by attributes that the **Who** setting does not cover, such as a user's identity provider (IdP) group or country.
+Conditions are optional. Use them to target requests by attributes that the **Who** setting does not cover, such as a custom metadata value or the request country.
 
 In the dashboard, use the **Builder** tab to add conditions on these fields:
 
 - **Country**
 - **User email**
 - **User ID**
-- **User groups**
 
 To write the expression directly, use the **Raw CEL** tab. A condition must return a boolean.
 
-The following identity fields are available in conditions and actor strings:
+Conditions and actor strings can only use the fields that Cloudflare Access injects into its JWT, the request country, and custom metadata:
 
 | Field               | Source                                                                                 |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | `cf.user.id`        | The `sub` claim of the Cloudflare Access JWT.                                          |
-| `cf.user.email`     | The email address in the Cloudflare Access JWT.                                        |
-| `cf.user.groups`    | The IdP groups in the Cloudflare Access JWT.                                           |
-| `cf.custom.<claim>` | Custom claims in the Cloudflare Access JWT.                                            |
+| `cf.user.email`     | The `email` claim of the Cloudflare Access JWT. Empty for service tokens.              |
+| `cf.common_name`    | The `common_name` claim of the Cloudflare Access JWT, set for service tokens.          |
+| `cf.custom.<claim>` | A claim in the `custom` object of the Cloudflare Access JWT.                           |
 | `cf.country`        | The two-letter country code of the request.                                            |
 | `metadata.<key>`    | A key from the [`cf-aig-metadata`](/ai-gateway/observability/custom-metadata/) header. |
+
+The model and provider of the request are not available in conditions. Use [Resources](#resources) to match them.
 
 The following are examples of valid conditions:
 
 ```txt
-"contractors" in cf.user.groups
+metadata.team == "contractors"
 cf.user.email.endsWith("@example.com")
 cf.country == "US"
 metadata.environment == "production"
@@ -174,10 +175,6 @@ If a block policy references an identity field that is missing from the request,
 
 The policy takes effect as soon as you create it. To change a policy, select the edit icon next to it. To remove a policy, select the delete icon.
 
-The following example blocks users in the `contractors` IdP group from all Claude Opus models:
-
-![Create a policy form that blocks the anthropic/claude-opus-* models when the user groups contain contractors](~/assets/images/ai-gateway/policies-block-policy.png)
-
 ## Test policies
 
 Use **Test policies** on the **Policies** tab to check how your policies handle a request before real traffic reaches them. Testing does not send a request to a provider or record any spend.
@@ -192,8 +189,6 @@ Use **Test policies** on the **Policies** tab to check how your policies handle 
 
 The result shows whether the request is allowed or blocked.
 
-![Test policies panel showing that a request from a user in the contractors group to anthropic/claude-opus-4-7 is blocked](~/assets/images/ai-gateway/policies-test.png)
-
 Test results do not account for spend already recorded against a budget.
 
 ## Send identity with requests
@@ -202,7 +197,7 @@ Policies need identity data on each request. You can provide it in two ways.
 
 ### With Cloudflare Access
 
-Put your gateway behind [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/). AI Gateway validates the Access JWT on each request and makes `cf.user.id`, `cf.user.email`, `cf.user.groups`, and `cf.custom.*` available to policies. Clients cannot forge these values.
+Put your gateway behind [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/). AI Gateway validates the Access JWT on each request and makes `cf.user.id`, `cf.user.email`, `cf.common_name`, and `cf.custom.*` available to policies. Clients cannot forge these values.
 
 ### With custom metadata
 
@@ -352,7 +347,7 @@ Add `?includeStaging=true` to include staged drafts. Drafts include `"staging": 
 		name: "Block contractors from Claude Opus",
 		actor: "company:all",
 		resource: { model: "anthropic/claude-opus-*" },
-		condition: '"contractors" in cf.user.groups',
+		condition: 'metadata.team == "contractors"',
 		action: { type: "block" },
 	}}
 />
@@ -367,7 +362,7 @@ Without `commit=true`, AI Gateway saves the policy as a draft. The response incl
 		"name": "Block contractors from Claude Opus",
 		"actor": "company:all",
 		"resource": { "model": "anthropic/claude-opus-*" },
-		"condition": "\"contractors\" in cf.user.groups",
+		"condition": "metadata.team == \"contractors\"",
 		"action": { "type": "block" },
 		"created_at": 1791244512,
 		"updated_at": 1791244512
@@ -457,8 +452,10 @@ If any draft fails to commit, `success` is `false` and `result.errors` lists eac
 				user: {
 					id: "test-user-123",
 					email: "alice@example.com",
-					groups: ["engineering"],
 				},
+			},
+			metadata: {
+				team: "engineering",
 			},
 		},
 		model: "openai/gpt-5.5",
@@ -517,7 +514,7 @@ A request from an engineer must pass both budgets:
 		"name": "Engineering budget",
 		"actor": "team:engineering",
 		"resource": "*",
-		"condition": "\"engineering\" in cf.user.groups",
+		"condition": "metadata.team == \"engineering\"",
 		"action": {
 			"type": "limit",
 			"amount": 10000,
@@ -538,7 +535,7 @@ The team shares one budget. The second policy stops any one person from using al
 		"name": "Finance budget",
 		"actor": "team:finance",
 		"resource": "*",
-		"condition": "\"finance\" in cf.user.groups",
+		"condition": "metadata.team == \"finance\"",
 		"action": {
 			"type": "limit",
 			"amount": 10000,
@@ -550,7 +547,7 @@ The team shares one budget. The second policy stops any one person from using al
 		"name": "Finance per-user cap",
 		"actor": "user:{cf.user.email}",
 		"resource": "*",
-		"condition": "\"finance\" in cf.user.groups",
+		"condition": "metadata.team == \"finance\"",
 		"action": {
 			"type": "limit",
 			"amount": 400,
@@ -563,7 +560,7 @@ The team shares one budget. The second policy stops any one person from using al
 
 ### Higher cap for one user
 
-Both policies resolve to the same bucket for `alice@example.com`, so the higher amount applies to that user. Other members of the group keep the default cap:
+Both policies resolve to the same bucket for `alice@example.com`, so the higher amount applies to that user. Other members of the team keep the default cap:
 
 ```json
 [
@@ -571,7 +568,7 @@ Both policies resolve to the same bucket for `alice@example.com`, so the higher 
 		"name": "Research default",
 		"actor": "user:{cf.user.email}",
 		"resource": "*",
-		"condition": "\"research\" in cf.user.groups",
+		"condition": "metadata.team == \"research\"",
 		"action": {
 			"type": "limit",
 			"amount": 400,
@@ -603,7 +600,7 @@ This policy blocks interns from every model except those listed. Interns still n
 	"name": "Interns allowlist",
 	"actor": "company:all",
 	"resource": { "model": ["openai/gpt-5.5-mini", "anthropic/claude-haiku-*"] },
-	"condition": "\"interns\" in cf.user.groups",
+	"condition": "metadata.team == \"interns\"",
 	"action": { "type": "block", "except": true }
 }
 ```
