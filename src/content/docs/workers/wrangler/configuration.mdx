@@ -1326,7 +1326,7 @@ Each Workflow entry in `exports` is keyed by the name of a class that extends `W
   - The jurisdiction that the instances of this Workflow run and store data in. Accepts the same values as the [`workflows` binding](#workflows).
   - Requires Wrangler 4.152.0 or above.
 
-A Workflow can be declared both as a `workflows` binding and as an export. Both declarations must use the same class, and cannot set the same field to different values.
+A Workflow declared in `exports` can also have a `workflows` binding that uses the same class. From Wrangler 4.162.0, the binding cannot set the Workflow's settings. Set them on the export.
 
 A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
 
