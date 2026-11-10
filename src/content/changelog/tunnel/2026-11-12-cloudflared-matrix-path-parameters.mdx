@@ -4,7 +4,7 @@ description: cloudflared 2026.11.0 extends URL normalization to path parameters.
 products:
   - tunnel
   - cloudflare-tunnel-sase
-date: 2026-11-04
+date: 2026-11-12
 ---
 
 Starting from version `2026.11.0`, [Cloudflare Tunnel](/tunnel/) extends the [URL normalization introduced in `2026.10.0`](/changelog/post/2026-10-22-cloudflared-path-normalization/). Normalization now handles semicolon-delimited path parameters before matching ingress rules. This improves security for tunnels with rules that require Cloudflare Access validation. The URL path sent to your origin stays the same.
