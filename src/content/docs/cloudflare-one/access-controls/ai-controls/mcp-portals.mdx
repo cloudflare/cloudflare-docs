@@ -44,7 +44,7 @@ The following diagram shows how requests flow through an MCP server portal.
 4. When the user calls a tool, the portal identifies the target server from the [tool namespace](#tool-namespacing), attaches the appropriate credentials, and proxies the request. If [Gateway routing](#route-portal-traffic-through-gateway) is turned on, the request passes through Cloudflare Gateway for HTTP logging and DLP inspection.
 5. The upstream server processes the request and returns a response through the same path.
 
-For servers that use Dynamic Client Registration (DCR), background synchronization of tools and prompts runs approximately every two hours using admin credentials. When server-level Gateway routing is turned on, DCR and background synchronization route through Gateway.
+For OAuth servers with admin credentials, background synchronization of tools and prompts runs approximately every two hours. This includes servers that use Dynamic Client Registration (DCR) or manual OAuth credentials. When server-level Gateway routing is turned on, DCR and background synchronization route through Gateway.
 
 ### Transport
 
@@ -157,12 +157,15 @@ Use manual OAuth credentials when the upstream provider does not support [OAuth 
 8. (Optional) Enter the space-separated **Scope** values requested from users.
 9. (Optional) Enter the **Token endpoint auth method** expected by the provider. Supported values are `client_secret_post` and `client_secret_basic`.
 10. Select **Save server**.
+11. Complete the upstream OAuth flow as an administrator to authorize the server.
 
 </Steps>
 
 Cloudflare stores the client secret encrypted and does not return it through the dashboard or API. When editing the server, leave **Client secret** blank to keep the existing value. To rotate the secret, create or activate the replacement at the upstream provider, enter the new value, and save the server.
 
-Manual credentials require per-user authentication. Leave **Require user auth** enabled when you add the server to a portal. The server remains in **Waiting** status until the first user completes upstream OAuth. Cloudflare then retrieves the server's tools and prompts and changes its status to **Ready**.
+After successful admin registration, Cloudflare synchronizes the server's tools and prompts and changes its status to **Ready**. This does not require an end user to connect through a portal.
+
+Manual credentials require per-user authentication. Leave **Require user auth** enabled when you add the server to a portal. End users authorize the server separately through the portal, using their own upstream accounts.
 
 ### MCP Apps
 
@@ -172,12 +175,12 @@ Manual credentials require per-user authentication. Leave **Require user auth** 
 
 The MCP server status indicates the server's connection and tool and prompt synchronization status in Cloudflare Access.
 
-| Status        | Description                                                                                                                                                                          |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                                        |
-| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server). |
-| Waiting       | The server's tools and prompts are being synchronized. A server with manual OAuth credentials remains in this state until its first user completes upstream OAuth.                   |
-| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that the server will connect or return resources when queried.         |
+| Status        | Description                                                                                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Error         | The server could not be reached or returned an error. Refer to [error details](#error-details) to identify and fix the cause.                                                               |
+| Sync Required | The server's OAuth credentials can no longer be refreshed and the server needs to be reauthenticated. To fix the issue, [reauthenticate the server](#reauthenticate-the-mcp-server).        |
+| Waiting       | The server's tools and prompts are being synchronized. For OAuth servers, admin authorization may be incomplete.                                                                            |
+| Ready         | The server connected successfully and its tools and prompts were synchronized. This status does not guarantee that an end user can connect through a portal and retrieve tools and prompts. |
 
 #### Error details
 
@@ -205,7 +208,7 @@ You will be redirected to log in to your OAuth provider. The account used to aut
 
 ### Synchronize the MCP server
 
-For servers that use DCR, Cloudflare Access synchronizes tools and prompts approximately every two hours. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
+For OAuth servers with admin credentials, Cloudflare Access synchronizes tools and prompts approximately every two hours. This includes servers that use DCR or manual OAuth credentials. During synchronization, Cloudflare connects to your MCP server using the [admin credential](#reauthenticate-the-mcp-server) and fetches the current list of tools and prompts. If the admin credential's OAuth access token has expired, Cloudflare refreshes it automatically using the stored refresh token before connecting.
 
 Resources are not synchronized or stored. When an MCP client sends a `resources/list` request, the portal fetches resources live from the upstream servers. Servers that cannot connect or respond are omitted from the result.
 
@@ -661,7 +664,9 @@ The decoded `auth_credentials` object must contain:
 - `registration_info.token_endpoint_auth_method`: Optional. Accepted values are `none`, `client_secret_post`, and `client_secret_basic`.
 - `registration_info.scope`: Optional space-delimited scope string.
 
-Before you create the server, add the [shared callback URL](#shared-cloudflare-callback-url) to the upstream provider's allowed redirect URIs. With the example configuration, Cloudflare uses this callback for users who connect through any portal that contains the server. Manual OAuth servers do not authorize an admin credential during setup.
+Before you create the server, add the [shared callback URL](#shared-cloudflare-callback-url) to the upstream provider's allowed redirect URIs. With the example configuration, Cloudflare uses this callback for users who connect through any portal that contains the server.
+
+After creating the server, [authorize it as an administrator](#reauthenticate-the-mcp-server) in the dashboard to synchronize its tools and prompts. End-user authorization through a portal is a separate flow.
 
 Do not include `client_secret` or OAuth tokens inside `auth_credentials`. Send `client_secret` as the separate sibling field shown above.
 
@@ -1278,7 +1283,6 @@ MCP server portals have the following known limitations:
 
 - **Only remote HTTP MCP servers are supported.** MCP servers that use [stdio transport only](https://modelcontextprotocol.io/specification/2025-11-25/basic/transports) (for example, `github/github-mcp-server`) do not expose a remote HTTP endpoint and cannot be added to an MCP server portal. To use a stdio-only server, you must self-host it behind an HTTP endpoint and authenticate with a [bearer token or custom headers](#create-an-mcp-server).
 - **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
-- **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
 - **Admin OAuth credentials may require reauthentication.** Cloudflare refreshes expired admin access tokens when a valid refresh token is available. If refresh fails, capability synchronization and requests using the admin credential can fail. Users with valid per-user credentials may continue to connect. Check the [error details](#error-details) and [reauthenticate the server](#reauthenticate-the-mcp-server) when credentials are invalid.
 - **Upstream MCP tool calls time out after 60 seconds.** The portal returns an error if the upstream server does not respond before the timeout. For longer operations, return a job ID immediately. Expose separate tools to check the operation status and retrieve results.
 - **Each portal supports up to 120 MCP servers.**
@@ -1323,9 +1327,9 @@ A `522` error indicates that Cloudflare cannot reach the portal's origin. This t
 
 ### An MCP server is stuck in `Waiting` status.
 
-For a server with manual OAuth credentials, **Waiting** is expected until the first user completes upstream OAuth. Complete that flow through a portal with **Require user auth** turned on; background or manual synchronization does not populate the capabilities.
+For OAuth servers, including servers with manual OAuth credentials, complete [admin authorization](#reauthenticate-the-mcp-server) in the dashboard. End-user authorization through a portal does not replace admin registration.
 
-For other servers, `Waiting` means Cloudflare is attempting to connect and fetch tools and prompts. If the server stays in this status:
+The **Waiting** status means Cloudflare is attempting to connect and fetch tools and prompts. If the server stays in this status:
 
 1. Verify that the upstream MCP server URL is correct and the server is reachable.
 2. Check that the upstream server supports [Streamable HTTP](https://spec.modelcontextprotocol.io/specification/2025-03-26/basic/transports/#streamable-http) or SSE transport. The portal will attempt multiple connection strategies automatically.
