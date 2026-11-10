@@ -1,0 +1,15 @@
+---
+link: "/realtime/realtimekit/release-notes/noise-cancellation/"
+productName: RealtimeKit Noise Cancellation
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-11-09"
+    title: RealtimeKit Noise Cancellation 0.1.0
+    description: |-
+      **Features**
+
+      - Initial release of [`@cloudflare/realtimekit-noise-cancellation`](https://www.npmjs.com/package/@cloudflare/realtimekit-noise-cancellation), adding noise cancellation for web applications.
+      - Supports Safari, Firefox, Chrome, and Edge.
+      - Supports mobile web.
+
+      Refer to [Noise Cancellation](/realtime/realtimekit/humans/core/noise-cancellation/) for setup and usage.
