@@ -52,8 +52,6 @@ Use [Flue](https://flueframework.com/) for a TypeScript hooks API built on Pi, w
 
 Use the [Container harness](/agents/harnesses/container/) to run Claude Code or Codex with their native tools in a Linux container. A Durable Object stores sessions and coordinates recovery. Container loss fails the interrupted turn by default; optional retry reruns it. Workspace recovery uses filesystem snapshots, so edits since the last snapshot can be lost.
 
-[Build your own harness](/agents/harnesses/build-your-own/) when you need control over model calls, message formats, or tool execution. Compose it from the [Agents SDK runtime](/agents/runtime/) capabilities.
-
 Explore the experimental [Codex](/agents/harnesses/codex/) example for a Rust/WebAssembly loop with SDK persistence, or the [self-modifying](/agents/harnesses/self-modifying/) example for an agent that edits its own TypeScript harness.
 
 [Nanocode](/agents/harnesses/nanocode/) and [Exo](/agents/harnesses/exo/) provide their own runtimes for running agents on Cloudflare.
