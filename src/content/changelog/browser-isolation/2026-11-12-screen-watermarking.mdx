@@ -1,0 +1,18 @@
+---
+title: Use screen watermarking with Browser Isolation to protect sensitive data (beta)
+description: Visible watermarks in Browser Isolation deter data exfiltration via screenshots and enable forensic tracing when leaks occur.
+products:
+  - browser-isolation
+  - cloudflare-one
+date: 2026-11-12
+---
+
+Browser Isolation now supports visible watermarking in beta. When a user views sensitive content through an HTTP isolation policy, a watermark overlays identifying metadata on every page. This includes the user ID, timestamp, rule ID, company name, or company logo. The watermark tiles across the full viewport and stays fixed on the browser window, so even a cropped screenshot carries traceable information.
+
+You create watermark configurations once and reference them from one or more isolation policies. You can upload a custom image or have Cloudflare render one from metadata fields. Each account can have multiple configurations.
+
+If a watermark cannot be rendered, the page is blocked. Unwatermarked content is never served when a watermark policy is active.
+
+To get started, go to **Reusable components** > **Watermarks** in the Zero Trust dashboard to create your first watermark. Then go to **Traffic controls** > **Firewall policies** > **HTTP** to reference it from an isolation policy under **Isolation settings** > **Watermarks**.
+
+For more information, refer to [Watermarks](/cloudflare-one/reusable-components/watermarks/).

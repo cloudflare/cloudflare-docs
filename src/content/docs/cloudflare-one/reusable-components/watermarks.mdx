@@ -1,0 +1,92 @@
+---
+pcx_content_type: how-to
+description: Create visible watermark configurations and apply them to HTTP isolation policies to deter and trace screenshots of sensitive websites.
+products:
+  - cloudflare-one
+  - browser-isolation
+title: Watermarks
+sidebar:
+  badge:
+    text: Beta
+    variant: caution
+  order: 3
+---
+
+import { Badge, Steps } from "~/components";
+
+:::note
+Watermarks require the Browser Isolation add-on, available on Zero Trust Pay-as-you-go and Enterprise plans.
+:::
+
+Watermarks overlay identifying information on top of [isolated browser sessions](/cloudflare-one/remote-browser-isolation/). When users view sensitive content through Browser Isolation, the watermark tiles across the full page and stays fixed on the screen. This serves two purposes:
+
+- **Deterrence.** Users see their identity embedded in the page, discouraging screenshots or photographs.
+- **Forensic traceability.** If a screenshot of watermarked content surfaces externally, the embedded metadata helps security teams trace it back to a specific user and session.
+
+Watermark configurations are reusable objects. You create them once and then reference them from one or more [isolation policies](/cloudflare-one/remote-browser-isolation/isolation-policies/#watermarks).
+
+## Create a watermark
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Reusable components** > **Watermarks**.
+2. Select **Create a watermark**.
+3. Enter a descriptive **Name** for the watermark.
+4. Choose a creation mode:
+    - **Cloudflare-rendered**: Select the metadata fields to display. All fields are optional:
+        - **Date and timestamp** — the current date and time of the session.
+        - **User ID** — the hex identifier of the authenticated user.
+        - **Rule ID** — the identifier of the isolation policy that triggered the watermark.
+        - **Company name** — a custom text string for your organization name.
+        - **Company logo** — upload your organization logo.
+    - **Custom image**: Upload a bitmap image (PNG or JPEG). The image must be 200 KB or smaller, with dimensions between 128 and 700 pixels on each axis.
+5. (Optional) For custom images, add text to display beneath the image.
+6. Use the preview panel to verify that the watermark is legible on both light and dark backgrounds.
+7. Select **Save**.
+</Steps>
+
+You can create multiple watermark configurations per account, for example one for finance applications and another for contractor access.
+
+## Apply a watermark to an isolation policy
+
+After you create a watermark, reference it from any Gateway HTTP policy that uses the _Isolate_ action. The **Watermarks** field appears under **Isolation settings** for every isolation policy. No watermark is applied unless you explicitly select one.
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Traffic controls** > **Firewall policies** > **HTTP**.
+2. Create a new policy or edit an existing policy with the _Isolate_ action.
+3. In **Isolation settings** > **Watermarks**, select a watermark configuration from the dropdown.
+4. Select **Save**.
+</Steps>
+
+The watermark appears on every page loaded through this isolation policy. It tiles across the full viewport so that even a cropped screenshot contains identifying information.
+
+For more information on isolation policy settings, refer to [Isolation policies](/cloudflare-one/remote-browser-isolation/isolation-policies/#watermarks).
+
+## Edit a watermark
+
+<Steps>
+1. In **Reusable components** > **Watermarks**, find the watermark you want to modify.
+2. Select the three-dot menu and choose **Edit**.
+3. Update the configuration and select **Save**.
+</Steps>
+
+Changes take effect on the next page load within active isolated sessions. Existing pages are not force-refreshed.
+
+## Delete a watermark
+
+<Steps>
+1. In **Reusable components** > **Watermarks**, find the watermark you want to remove.
+2. Select the three-dot menu and choose **Delete**.
+3. Confirm the deletion.
+</Steps>
+
+Before deleting a watermark, remove it from any isolation policies that reference it. If a policy references a deleted watermark, the policy will fail closed — the page will not load rather than serving unwatermarked content.
+
+## Non-identity sessions
+
+When a user connects through a non-identity on-ramp (for example, [clientless web isolation](/cloudflare-one/remote-browser-isolation/setup/clientless-browser-isolation/) without Access), the user ID field is omitted from the watermark rather than displaying an empty value. All other configured fields still appear.
+
+## Limitations
+
+- Watermarks are visible overlays only. Invisible (steganographic) watermarking is not supported.
+- Watermarks apply to isolated browser sessions. They do not embed into downloaded files or printed output.
+- The watermark preview is available in the dashboard only. There is no API endpoint for rendered previews.

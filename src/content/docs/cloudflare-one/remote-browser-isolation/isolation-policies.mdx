@@ -140,6 +140,14 @@ The keyboard setting and clipboard settings compose independently. The following
 - _Allow_: (Default) Users can print isolated web pages to their local machine.
 - _Do not allow_: Prohibits users from printing isolated web pages to their local machine.
 
+### Watermarks <Badge text="Beta" variant="note" />
+
+The **Watermarks** field appears under **Isolation settings** for every HTTP policy with the _Isolate_ action. Use it to overlay a visible [watermark](/cloudflare-one/reusable-components/watermarks/) on isolated pages to deter and trace screenshots of sensitive content. The watermark tiles across the full viewport and stays fixed on the browser window.
+
+No watermark is applied unless one is explicitly configured for a policy.
+
+Watermark configurations are created and managed in [**Reusable components** > **Watermarks**](/cloudflare-one/reusable-components/watermarks/). If a policy references a watermark that cannot be rendered, the page is blocked rather than served without a watermark.
+
 ## Custom block dialog <Badge text="Beta" variant="note" />
 
 With custom block dialogs, you can host a custom block page when users are blocked from taking specific actions, like [copying](/cloudflare-one/remote-browser-isolation/isolation-policies/#copy-from-remote-to-client), [pasting](/cloudflare-one/remote-browser-isolation/isolation-policies/#paste-from-client-to-remote), [downloading](/cloudflare-one/remote-browser-isolation/isolation-policies/#file-downloads), [uploading](/cloudflare-one/remote-browser-isolation/isolation-policies/#file-uploads), [performing keyboard inputs](/cloudflare-one/remote-browser-isolation/isolation-policies/#keyboard), or [printing](/cloudflare-one/remote-browser-isolation/isolation-policies/#printing), within an isolated browser session.
