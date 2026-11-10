@@ -1,150 +1,178 @@
 ---
 title: Codex
-description: Explore an experimental example that runs the Codex agent loop as WebAssembly in a Durable Object, with persistent conversations, files, and recovery.
-pcx_content_type: overview
+description: Run OpenAI Codex on Cloudflare. The CLI runs in a Container, with its own tools and configuration, and a Durable Object keeps its sessions and credentials.
+pcx_content_type: get-started
 sidebar:
   badge: Experimental
   order: 13
 products:
   - agents
-reviewed: 2026-10-27
 ---
 
-import { PackageManagers, Steps, TypeScriptExample } from "~/components";
+import { PackageManagers, Render, Steps, TypeScriptExample } from "~/components";
 
-The experimental [Codex harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex) adapts Codex's Rust turn-processing and protocol code to WebAssembly inside a Cloudflare Durable Object. Agents SDK capabilities provide persistent conversations, file tools, and recovery after interruptions.
+Run [OpenAI Codex](https://developers.openai.com/codex/cli/) on Cloudflare, with its tools and configuration, the way it runs on your laptop.
 
-`CodexHarness` is example code, not an exported Agents SDK harness. It uses internal SDK APIs. Start from the complete example, which includes its TypeScript source and WebAssembly build. For the full Codex CLI with a Linux shell and repository tools, use the [Container harness](/agents/harnesses/container/) for durable session orchestration, or refer to [Run Codex in a sandbox](/sandbox/coding-agents/codex/).
+<Render file="container-harness-how" product="agents" params={{ cli: "Codex" }} />
 
-## Run the example
+To start from a complete app, with HTTP routes and event streaming, use the [Container harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/container).
 
-You need Git, Node.js 24 or later, pnpm, rustup, and a Cloudflare account. Model calls use remote [Workers AI](/workers-ai/) through your account, including during local development.
+## Create a project
+
+You need Node.js 24 or later, the [Cloudflare CLI](/cf/get-started/), and an OpenAI API key. Local container development also needs Docker running.
 
 <Steps>
-1. Clone the Agents SDK repository and open its root directory:
+1. Create a Worker project:
 
    ```sh
-   git clone https://github.com/cloudflare/agents.git
-   cd agents
+   cf init codex-agent
+   cd codex-agent
    ```
 
-2. Install dependencies and build the local SDK:
+2. Install the Agents SDK:
 
-   <PackageManagers type="install" managers={["pnpm"]} />
-
-   <PackageManagers type="exec" pkg="nx" args="run agents:build" managers={["pnpm"]} />
-
-3. Open the example directory and install its Rust toolchain:
-
-   ```sh
-   cd examples/next/harnesses/codex
-   rustup toolchain install 1.95.0 --target wasm32-unknown-unknown
-   ```
-
-4. Sign in with the [Cloudflare CLI](/cf/get-started/), then start the app:
-
-   ```sh
-   cf auth login
-   ```
-
-   <PackageManagers type="run" args="start" managers={["pnpm"]} />
-
-   The start script builds the WebAssembly module before starting Vite. If you have access to multiple accounts, set `CLOUDFLARE_ACCOUNT_ID` before starting.
-
-5. Open the printed local URL and send a prompt:
-
-   ```txt
-   Write a short README to /codex/result.txt, then read it back.
-   ```
-
-   After the turn finishes, reload the page. The conversation and file remain available from durable storage.
+   <PackageManagers pkg="agents@latest" />
 </Steps>
 
-## Configure the harness
+Replace `cloudflare.config.ts`. It declares a SQLite-backed Durable Object with a container on the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), the `ContainerEgress` entrypoint, and the API key secret:
 
-The harness owns its `Tasks`, [Sessions](/agents/runtime/capabilities/sessions/), and `Streams` capabilities. Supply a model and a `Workspace` from `@cloudflare/computer`, then call `install()` to register the harness and its capabilities with [Lifecycle](/agents/runtime/lifecycle/) before startup. Configure the harness in `src/server.ts` with `createAI`:
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig, defineContainer, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
 
-<TypeScriptExample>
+const container = defineContainer({
+	name: "codex",
+	schedulingPolicy: "durable-object",
+});
+
+export default defineConfig({
+	worker: {
+		name: "codex-agent",
+		entrypoint,
+		compatibilityDate: "2026-11-06",
+		compatibilityFlags: ["nodejs_compat"],
+		exports: {
+			CodexAgent: exports.durableObject({ storage: "sqlite", container }),
+			ContainerEgress: exports.worker(),
+		},
+		env: {
+			OPENAI_API_KEY: bindings.secret(),
+		},
+	},
+	containers: [container],
+});
+```
+
+## Create the agent
+
+Create the harness with the `codex()` preset, and add it to the Lifecycle:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
-import { Workspace } from "@cloudflare/computer";
+import { ContainerHarness, codex } from "agents/harness/container";
 import { Lifecycle } from "agents/lifecycle";
-import { createAI } from "agents/models/ai-sdk";
-import { CodexHarness } from "./codex-harness";
 
-export class Coder extends DurableObject<Env> {
-	workspace = new Workspace({ storage: this.ctx.storage });
+export { ContainerEgress } from "agents/harness/container";
 
-	codex = new CodexHarness({
-		workspace: this.workspace,
-		model: createAI({ binding: this.env.AI, id: "default" })(
-			"openai/gpt-6.1-sol",
-		),
+export class CodexAgent extends DurableObject<Env> {
+	harness = new ContainerHarness({
+		container: containerOf(this.ctx),
+		egress: this.ctx.exports.ContainerEgress,
+		agent: codex({ apiKey: this.env.OPENAI_API_KEY }),
 	});
 
-	lifecycle = this.codex.install(Lifecycle.install(this));
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return Response.json(await this.harness.messages());
+		}
+		const { prompt } = await request.json<{ prompt: string }>();
+		const result = await this.harness.prompt(prompt);
+		return Response.json({ status: result.status, text: result.text });
+	}
 }
+
+function containerOf(ctx: DurableObjectState): Container {
+	if (!ctx.container) throw new Error("Configure a container for CodexAgent");
+	return ctx.container;
+}
+
+export default {
+	async fetch(request: Request, _env: Env, ctx: ExecutionContext) {
+		return ctx.exports.CodexAgent.getByName("demo").fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
-The complete server also installs `WebSockets` for the browser connection. Its Wrangler configuration includes the `AI` binding and a SQLite-backed `Coder` Durable Object.
+To send model requests through [AI Gateway](/ai-gateway/), pass the gateway's OpenAI URL as `baseUrl`. With [Unified Billing](/ai-gateway/features/unified-billing/), pass the gateway token as `apiKey`. With [stored provider keys](/ai-gateway/configuration/bring-your-own-keys/), pass it in a `cf-aig-authorization` header in `headers` instead.
 
-### Models
+## Customize Codex
 
-The harness accepts an AI SDK `LanguageModelV4`. Use [`createAI`](/agents/models/ai-sdk/) to configure Workers AI or AI Gateway models. The configuration above uses OpenAI's GPT-6.1 Sol through AI Gateway. To use it, configure the `default` gateway with [Unified Billing](/ai-gateway/features/unified-billing/) or a [stored OpenAI API key](/ai-gateway/configuration/bring-your-own-keys/).
+`codex()` takes these options:
 
-The adapter supports text, reasoning, and function tools. It does not support file responses, provider-executed tools, or tool approval requests.
+| Option    | Description                                                        |
+| --------- | ------------------------------------------------------------------ |
+| `model`   | The model new sessions start with. `session.setModel()` changes it |
+| `config`  | Extra `-c key=value` overrides, passed to every `codex exec` run   |
+| `version` | The `@openai/codex` version to install                             |
+| `setup`   | Commands that run once on the first start, kept in the snapshot    |
 
-### File tools
-
-The example stores files in the Durable Object's SQLite-backed Workspace. It exposes two tools to the model:
-
-| Tool  | Inputs                                    | Behavior                                                                                  |
-| ----- | ----------------------------------------- | ----------------------------------------------------------------------------------------- |
-| Write | `path`, `content`                         | Write UTF-8 text, replacing the file if it exists.                                        |
-| Read  | `path`, optional `offset` and `max_bytes` | Read text by byte range. Use the returned `next_offset` to continue reading a large file. |
-
-The example registers these tools as `workspace_write` and `workspace_read`.
-
-## Submit a turn
-
-Inside a method on the example's `Coder` object, submit a prompt:
+Use `config` for single settings, and `setup` to write `~/.codex/config.toml`, `AGENTS.md`, or MCP server configuration. A step with `user: "agent"` runs as the user Codex runs as, in its home. Every session's home starts as a copy of that home:
 
 <TypeScriptExample>
 
 ```ts
-const receipt = await this.codex.submit({
-	prompt: "Write a short README to /codex/result.txt.",
-	operationId: "readme-1",
+codex({
+	apiKey: this.env.OPENAI_API_KEY,
+	config: ['model_reasoning_effort="high"'],
+	setup: [
+		{
+			name: "write AGENTS.md",
+			user: "agent",
+			command: [
+				"sh",
+				"-c",
+				"mkdir -p ~/.codex && printf '%s\\n' 'Use pnpm. Keep commits small.' > ~/.codex/AGENTS.md",
+			],
+		},
+	],
 });
-
-const operation = await this.codex.snapshot(receipt.operationId);
 ```
 
 </TypeScriptExample>
 
-`submit()` returns after durably accepting the prompt, before the model finishes. Its receipt contains `operationId`, `streamId`, and `accepted`. Reuse an operation ID when retrying the same prompt; an existing operation returns `accepted: false`.
+Changing `setup` or `version` takes effect when a container next starts. That container sets up from scratch, without the previous snapshot. A token that a setup step uses stays in the snapshot, where the agent can read it.
 
-Use `snapshot()` to check whether the operation is `queued`, `running`, `completed`, or `failed`. A completed operation includes `output`; a failed operation includes `error`.
+## Run locally
 
-## Events and recovery
+Add your API key to `.dev.vars`, and keep that file out of version control:
 
-The browser connects with `useAgent` from `agents/react`. The example's [session hook](https://github.com/cloudflare/agents/blob/main/examples/next/harnesses/codex/src/use-codex-session.ts) receives a snapshot, subscribes to operation events, and resumes from the next unread sequence after reconnecting.
+```txt title=".dev.vars"
+OPENAI_API_KEY="<OPENAI_API_KEY>"
+```
 
-`Streams` persists the events for replay. Model response events become available after that model round finishes.
+Start Docker, then run `cf dev`. Send a prompt to the agent named `demo`, using the port that `cf dev` prints:
 
-`Tasks` journals model and tool steps. After a restart, completed steps reuse their stored results. Interrupted steps can execute again, including model calls. Tools with external side effects need their own retry and deduplication strategy.
+```sh
+curl http://localhost:5173/ \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"Write hello.txt containing hi, then read it back."}'
+```
 
-`Sessions` stores the transcript and compacts the model context. Configure `compaction` in `CodexHarness` options to adjust this behavior.
+The first prompt takes longer, because the harness installs Codex and takes the setup snapshot. Later containers start from that snapshot.
 
-`maxRounds` sets the **maximum number of model rounds per turn**, with a default of `128`. A model round consists of one model call and any tool calls it requests.
+<Render file="container-harness-sessions" product="agents" />
 
 ## Deploy
 
-From the example directory, run:
+After you add authentication, deploy with the [Cloudflare CLI](/cf/get-started/) and supply the secret from a [secrets file](/cf/projects/#deploy):
 
-<PackageManagers type="run" args="deploy" managers={["pnpm"]} />
-
-The script builds the WebAssembly module and Worker before deploying. The example routes are unauthenticated. Add authentication before exposing user sessions.
+```sh
+cf auth login
+cf deploy --secrets-file .dev.vars
+```
