@@ -151,6 +151,7 @@ Outbound routing lasts until the browser session closes. It also applies when a 
 - Use `outboundByHost` with Browser Run binding methods only. It is not supported by REST endpoints or legacy HTTP-only bindings.
 - You cannot add or change outbound routes after `acquire()` or `launch()`. To use different routes, start a new session.
 - Outbound routing applies to the hostnames in the map. Requests to other hostnames use the browser's normal network path.
+- Session [guardrails](/browser-run/features/guardrails/) do not check hostnames in `outboundByHost`, and they do not limit the requests that your outbound Worker makes with `fetch()`.
 
 ## Next steps
 

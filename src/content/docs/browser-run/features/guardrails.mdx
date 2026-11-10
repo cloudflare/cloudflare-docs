@@ -21,6 +21,8 @@ This allows you to:
 
 Session guardrails apply to browser sessions created with [Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), or [Chrome DevTools Protocol (CDP)](/browser-run/cdp/). They are unavailable for [Quick Actions](/browser-run/quick-actions/).
 
+Guardrails do not apply to hostnames that you route to an [outbound Worker](/browser-run/features/outbound-workers/) with `outboundByHost`. Requests for those hostnames go to your Worker instead of the network, and your Worker decides what to fetch and return.
+
 ## Set up guardrails
 
 Add the hostname the browser will visit and any hostnames required for redirects, APIs, scripts, images, or fonts. For common or shared hostnames, use a domain set instead of listing each hostname individually.
