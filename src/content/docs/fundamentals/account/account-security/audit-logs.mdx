@@ -50,6 +50,8 @@ Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) a
 
 Audit logs record actions that administrators and Cloudflare systems take on your account. They are not Customer Logs, so [Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/) commitments do not apply to them.
 
+However, Audit Logs v2 is available in Cloudflare's [FedRAMP High authorized environment](https://www.cloudflare.com/cloudflare-for-government/). For FedRAMP High accounts, Cloudflare processes and stores Audit Logs v2 data only in the United States.
+
 If your account uses CMB, Audit Logs v2 stores your audit logs only in your selected region. Before Cloudflare stores them:
 
 - Many actions are processed in Cloudflare's US core data center because the APIs that perform them run there. Cloudflare creates the audit logs for those actions in that data center.
