@@ -27,9 +27,10 @@ export interface FacetGroup {
 }
 
 /**
- * Model names pinned to the top of the catalog. Pinned models sort first (by
- * array index) in both directions; the rest sort by `created_at`. No-op if none
- * are present.
+ * Model names pinned to the top of the catalog, in order. Pinned models sort
+ * first in both directions; the rest sort by `created_at`. Models with the
+ * API's `pinned` flag sort right after these (see `pinnedIndexFor`). Delete
+ * this list once `@cf/*` rows from the unified endpoint carry the flag.
  */
 export const pinnedModelNames: string[] = [
 	"@cf/cloudflare/clef",

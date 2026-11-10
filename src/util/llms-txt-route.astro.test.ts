@@ -1,36 +1,24 @@
 import { describe, expect, test, vi } from "vitest";
 
 import { GET, getStaticPaths } from "../pages/[...product]/llms.txt";
-import { getLegacyModels } from "./models";
+import { getHostedModels } from "./models";
 
-const models = [
-	{
-		id: "model-a",
-		digest: "model-a-digest",
-		data: {
-			name: "@cf/example/model-a",
-			description: "The first model.",
-			task: { name: "Text generation" },
-			tags: [],
-			properties: [],
-			schema: {},
-		},
+const hostedModel = (id: string, description: string) => ({
+	id,
+	digest: `${id}-digest`,
+	data: {
+		model_id: `@cf/example/${id}`,
+		name: id,
+		task: "Text Generation",
+		description,
+		tags: [],
+		schema: {},
 	},
-	{
-		id: "model-b",
-		digest: "model-b-digest",
-		data: {
-			name: "@cf/example/model-b",
-			description: "The second model.",
-			task: { name: "Text generation" },
-			tags: [],
-			properties: [],
-			schema: {},
-		},
-	},
-];
+});
 
 const catalogModels = [
+	hostedModel("model-a", "The first model."),
+	hostedModel("model-b", "The second model."),
 	{
 		id: "openai-tts-1",
 		digest: "tts-digest",
@@ -151,7 +139,6 @@ vi.mock("astro:content", () => ({
 				},
 			];
 		}
-		if (id === "workers-ai-models") return models;
 		if (id === "catalog-models") return catalogModels;
 		return [];
 	}),
@@ -170,7 +157,7 @@ describe("Workers AI llms.txt", () => {
 			url: new URL("https://developers.cloudflare.com/workers-ai/llms.txt"),
 		} as never);
 		const body = await response.text();
-		const publishedModels = await getLegacyModels();
+		const publishedModels = await getHostedModels();
 
 		expect(body.match(/^## Models$/gm)).toHaveLength(1);
 		expect(body.split("/workers-ai/models/index.md")).toHaveLength(2);
@@ -181,7 +168,7 @@ describe("Workers AI llms.txt", () => {
 		}
 	});
 
-	test("/ai/ lists catalog and legacy models once, keeping multi-segment slugs", async () => {
+	test("/ai/ lists hosted and proxied models once, keeping multi-segment slugs", async () => {
 		const paths = await getStaticPaths();
 		const ai = paths.find((path) => path.params.product === "ai");
 		expect(ai).toBeDefined();

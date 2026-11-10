@@ -1,9 +1,9 @@
 ---
 import { Aside } from "~/components";
 import ModelCatalog from "~/components/models/ModelCatalog.astro";
-import { getLegacyModels, toModelCardData } from "~/util/models";
+import { getHostedModels, toModelCardData } from "~/util/models";
 
-const models = (await getLegacyModels()).map(toModelCardData);
+const models = (await getHostedModels()).map(toModelCardData);
 ---
 
 <ModelCatalog models={models} basePath="/workers-ai/models">

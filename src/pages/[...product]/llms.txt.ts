@@ -19,7 +19,7 @@ import {
 } from "../../util/llms-txt";
 import { isExternalRedirect, resolveRedirect } from "../../util/redirects";
 import { isDisallowedByRobots } from "../../util/robots";
-import { getLegacyModels, getResolvedModels } from "../../util/models";
+import { getHostedModels, getResolvedModels } from "../../util/models";
 
 const DIRECTORY_PROSE_THRESHOLD = 250;
 
@@ -50,7 +50,7 @@ function toModelEntry(slugOf: (model: ResolvedModel) => string) {
 export const getStaticPaths = (async () => {
 	const directory = await getCollection("directory");
 	const docs = await getCollection("docs");
-	const workersAiModels = await getLegacyModels();
+	const workersAiModels = await getHostedModels();
 	const allModels = await getResolvedModels();
 	const documentIds = new Set(docs.map((page) => page.id));
 

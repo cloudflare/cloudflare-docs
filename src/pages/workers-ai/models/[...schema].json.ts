@@ -3,15 +3,15 @@
  *
  * `detectApiModes` splits the schema into per-mode `{mode.id}-input/-output.json`
  * when it has modes, else a single `schema-input/-output.json`. Bound to
- * `getLegacyModels` with the short slug.
+ * `getHostedModels` with the short slug.
  */
 import type { APIRoute, GetStaticPaths, InferGetStaticPropsType } from "astro";
-import { getLegacyModels, detectApiModes } from "~/util/models";
+import { getHostedModels, detectApiModes } from "~/util/models";
 
 export const prerender = true;
 
 export const getStaticPaths = (async () => {
-	const models = await getLegacyModels();
+	const models = await getHostedModels();
 	const paths: {
 		params: { schema: string };
 		props: { schema: unknown };

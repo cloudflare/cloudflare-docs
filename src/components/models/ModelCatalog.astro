@@ -427,7 +427,9 @@ const facetMatchMaps = Object.fromEntries(
 		const bPinned = b.pinnedIndex >= 0;
 		if (aPinned && !bPinned) return -1;
 		if (!aPinned && bPinned) return 1;
-		if (aPinned && bPinned) return a.pinnedIndex - b.pinnedIndex;
+		// Equal tiers (models pinned by the API flag) fall through to date.
+		if (aPinned && bPinned && a.pinnedIndex !== b.pinnedIndex)
+			return a.pinnedIndex - b.pinnedIndex;
 		return a.date === b.date ? 0 : (a.date < b.date ? -1 : 1) * dir;
 	}
 
