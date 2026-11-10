@@ -1,14 +1,17 @@
 ---
 title: Improved Request Routing to Durable Objects
-description: Cloudflare has reduced network round trips when connecting to Durable Objects through forwarding records, which can reduce connection latency.
+description: Cloudflare has reduced duplicate connection work during Durable Object relocation lookups, which can reduce p99 latency for affected connections.
 date: 2026-11-10
 ---
 
 Cloudflare has reduced the number of round trips needed to connect to a Durable Object when a location lookup follows a forwarding record to another data center.
 
-When an object's destination isn't cached in Cloudflare's network, the first data center contacted may have a forwarding record pointing to another data center. The first location can now return the intended destination directly, allowing the caller to establish the connection.
+When an object's destination isn't cached in Cloudflare's network, the first data center contacted may have a forwarding record pointing to another data center.
 
-Streamlining the intermediate connections can reduce connection setup latency. Actual results depend on your workload and traffic patterns.
+- **Before:** The first data center acquired a connection to the object at the destination and proxied it back to the caller. The caller then acquired its own direct connection to the object.
+- **Now:** The first data center returns the destination directly, without first acquiring a connection to the object. The caller then establishes the direct connection, avoiding the intermediate connection and duplicate acquisition.
+
+Skipping this intermediate connection can reduce p99 (99th-percentile) connection latency for these relocation-related requests. Actual results depend on your workload and traffic patterns.
 
 No code or configuration changes are required to benefit from this improvement.
 
