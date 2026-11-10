@@ -362,7 +362,7 @@ These integrations accept an SDK v2 `McpServer`. Serve them with `createMcpHandl
 
 These integrations still produce or require SDK v1 servers:
 
-- The Code Mode `codeMcpServer` and `openApiMcpServer` helpers. Refer to [Build a Code Mode MCP server](/agents/model-context-protocol/guides/build-codemode-mcp-server/).
+- The `codeMcpServer` and `openApiMcpServer` helpers from the [legacy Code Mode API](/agents/runtime/code-mode/legacy/).
 - The `mppx` `Transport.mcpSdk()` payment transport. Refer to [Accept payments](/agents/tools/payments/mpp/accept-payments/).
 
 Serve their output with `createLegacyMcpHandler`, building a new server for each request, until they produce SDK v2 servers. The Code Mode MCP connector and `withX402Client` accept either client generation.
