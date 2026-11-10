@@ -50,7 +50,7 @@ Use [Pi](/agents/harnesses/pi/) when you want Pi Durable to own the loop, transc
 
 Use [Flue](https://flueframework.com/) for a TypeScript hooks API built on Pi, with automatic recovery and a [Cloudflare target](https://flueframework.com/docs/guide/cloudflare-target/) that uses the Agents SDK.
 
-Use [Claude Code](/agents/harnesses/claude-code/) or [Codex](/agents/harnesses/codex/) to run those CLIs with their native tools, plugins, and settings in a Linux container. A Durable Object stores sessions and coordinates recovery. Container loss fails the interrupted turn by default; optional retry reruns it. Workspace recovery uses filesystem snapshots, so edits since the last snapshot can be lost.
+Use [Claude Code](/agents/harnesses/claude-code/) or [Codex](/agents/harnesses/codex/) to run those CLIs with their native tools, plugins, and settings in a Linux container. A Durable Object stores sessions and coordinates recovery. Container loss fails the interrupted turn by default. Optional retry reruns it. Workspace recovery uses filesystem snapshots, so edits since the last snapshot can be lost.
 
 [Build your own harness](/agents/harnesses/build-your-own/) when you need control over model calls, message formats, or tool execution. Compose it from the [Agents SDK runtime](/agents/runtime/) capabilities.
 
