@@ -75,16 +75,6 @@ The harnesses in the Agents SDK take work in the same way. You send a prompt and
 
 To compare Pi with Think, OpenCode, the Container harness, and the other harnesses by where they run and how they recover, refer to [Compare harnesses](/agents/harnesses/#compare-harnesses).
 
-**Build your own** when you need full control over the model call, the message format, or the tool loop. Start from a Durable Object with the [Lifecycle](/agents/runtime/lifecycle/), and add the [capabilities](/agents/runtime/capabilities/) a harness would otherwise give you:
-
-- [`Sessions`](/agents/runtime/capabilities/sessions/) for the transcript.
-- [`Streams`](/agents/runtime/capabilities/streams/) for replies that clients can resume after a disconnect.
-- [`WebSockets`](/agents/runtime/capabilities/websockets/) to connect your frontend.
-- [`Scheduler`](/agents/runtime/capabilities/scheduler/) to run work later.
-- [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) to give the model MCP tools.
-
-To write the loop itself as a capability, refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
-
 ## The harness and the runtime
 
 The harness decides what the agent does on each turn. The [runtime](/agents/runtime/) decides where the agent lives and how it stays durable: [routing](/agents/runtime/routing/) sends each request to the right Durable Object, the Lifecycle starts the harness and its capabilities, and [observability](/agents/runtime/observability/) traces what happened.
