@@ -32,17 +32,17 @@ In addition to the predefined instance types, you can configure custom instance 
 
 Refer to the [Wrangler configuration documentation](/workers/wrangler/configuration/#custom-instance-types) or [scheduling policy documentation](/containers/configuration/scheduling-policy/#choose-an-instance-size-at-runtime) for examples.
 
-Custom instance types have the following constraints:
+Custom instance types using the `durable_object` scheduling policy have the following minimums:
 
-| Resource             | Limit                         |
-| -------------------- | ----------------------------- |
-| Minimum vCPU         | 1                             |
-| Maximum vCPU         | 4                             |
-| Maximum Memory       | 12 GiB                        |
-| Maximum Disk         | 20 GB                         |
-| Memory to vCPU ratio | Minimum 3 GiB memory per vCPU |
+| Resource | Minimum          |
+| -------- | ---------------- |
+| vCPU     | 1/16 (`0.0625`)  |
+| Memory   | 256 MiB          |
+| Disk     | 2 GB (`2000` MB) |
 
-For workloads requiring less than 1 vCPU, use the predefined instance types such as `lite` or `basic`.
+Maximum resources per instance are subject to your [account limits](#account-limits).
+
+If you encounter different constraints, your application may be using the legacy `default` scheduling policy. [Migrate to the `durable_object` scheduling policy](/containers/guides/migrate-to-durable-object-scheduling-policy/) to use these minimums.
 
 ## Account limits
 
@@ -50,6 +50,9 @@ The following limits apply per account:
 
 | Resource                        | Limit                                          |
 | ------------------------------- | ---------------------------------------------- |
+| vCPU per instance               | 4                                              |
+| Memory per instance             | 12 GiB                                         |
+| Disk per instance               | 20 GB                                          |
 | Concurrent memory               | 6 TiB                                          |
 | Concurrent vCPU                 | 1,500                                          |
 | Concurrent disk                 | 30 TB                                          |
