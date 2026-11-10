@@ -1,6 +1,6 @@
 ---
-title: MCP Client
-description: Connect Agents to external MCP servers to use their tools, resources, and prompts over the Model Context Protocol.
+title: MCP client on the Agent class
+description: Connect an Agent to external MCP servers with addMcpServer() to use their tools, resources, and prompts over the Model Context Protocol.
 pcx_content_type: reference
 tags:
   - MCP
@@ -27,7 +27,9 @@ The MCP client capability lets your agent:
 
 :::note
 
-This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
+This page covers the MCP client methods of the [`Agent` class](/agents/agent-class/), such as `addMcpServer()`. The client itself is the `MCPClientManager` capability, which also runs on a plain Durable Object. Refer to the [MCP client capability](/agents/runtime/capabilities/mcp-client-manager/).
+
+To create your own MCP server, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
 :::
 
@@ -175,6 +177,8 @@ await this.addMcpServer("internal", "https://internal-mcp.example.com/mcp", {
 
 </TypeScriptExample>
 
+The headers are sent with every request, including the SSE stream. They are stored with the server in plain text in the Durable Object's SQLite storage, so a restored connection sends them too.
+
 ### URL security
 
 MCP server URLs are validated before connection to prevent Server-Side Request Forgery (SSRF). The following URL targets are blocked:
@@ -193,7 +197,23 @@ Loopback addresses (`localhost`, `127.x.x.x`, `[::1]`) are **allowed** for local
 `addMcpServer()` returns the connection state:
 
 - `ready` - Server connected and tools discovered
-- `authenticating` - Server requires OAuth; redirect user to `authUrl`
+- `authenticating` - Server requires OAuth; redirect user to `authUrl`. This includes servers that accept the MCP handshake without a token but need one to list tools, prompts, or resources.
+
+Calling `addMcpServer()` again for a server that is already registered does not connect it again:
+
+- `ready`: returns the server as is.
+- `authenticating`: returns the link the server is waiting on, or replaces a link that expired.
+- `failed`: throws the recorded error. Call [`reconnectMcpServer()`](#reconnectmcpserver) to try again.
+
+If the server is still connecting, for example while it is restored after the agent wakes, the call waits for that attempt and returns its result. Pass a stable `id`, so the server keeps the same ID everywhere.
+
+### Failures and reconnecting
+
+Each connection makes a few quick attempts with the `retry` options. If they all fail, the server is `failed` with the error, and the failure is stored with the server. Nothing retries it on a timer, and later wakes show the same `failed` state without contacting the server. When a wake finds a server that was not failed, the agent connects it again in the background with the same quick attempts.
+
+Failures where authorization was refused skip the quick attempts, because retrying cannot help: a `401` the agent cannot answer with a link (such as a revoked static token in `transport.headers`), a `403`, an OAuth error such as `invalid_target` or `access_denied`, or a rejected client registration. The server is `failed` with `Authorization was refused: …`. A callback where the user denied access is recorded the same way. For the full list, refer to [Failures and reconnecting](/agents/runtime/capabilities/mcp-client-manager/#failures-and-reconnecting) on the `MCPClientManager` page.
+
+To try a failed server again, for example from a **Reconnect** button, call `reconnectMcpServer(id)` from a [callable method](/agents/agent-class/callable-methods/). It forgets why the server failed and its pending link, then connects now. It returns the same result as `addMcpServer()`, including a fresh `authUrl` when the user needs to authorize again.
 
 ## OAuth authentication
 
@@ -252,6 +272,14 @@ https://{host}/{agentsPrefix}/{agent-name}/{instance-name}/callback
 For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
 
 OAuth tokens are securely stored in SQLite, and persist across agent restarts.
+
+A server waiting for authorization keeps its link across wakes, until the user completes it or you call `reconnectMcpServer(id)`. Whether an old link still works is up to the authorization server. The default OAuth provider accepts a callback for 10 minutes. If the user completes a link that no longer works, the callback reports the error and the server keeps waiting. Call `reconnectMcpServer(id)` to get a fresh link.
+
+### Re-authorization during a session
+
+A request can need authorization again after the server is `ready`: a tool call that needs a scope the grant lacks (`403 insufficient_scope`), or a `401` whose token refresh fails. `this.mcp.callTool()`, `readResource()`, and `getPrompt()` then throw `MCPAuthorizationRequiredError` from `agents/mcp/client`, with `serverId` and a new `authUrl`. Tools from `getAITools()` call `callTool()`, so their `execute` throws the same error. The server moves to `authenticating` and its `auth_url` is saved, so clients see the new link through `getMcpServers()`. Send the user to `error.authUrl`. The normal OAuth callback completes the flow and reconnects.
+
+During a scope step-up, the session keeps its current grant, so requests it already covers keep working. If the user declines, the server goes back to `ready`. Re-authorization stops after three authorizations for the same scopes within an hour, and the server is `failed` until you call `reconnectMcpServer(id)`. For an example, refer to [Re-authorize during a session](/agents/runtime/capabilities/mcp-client-manager/#re-authorize-during-a-session).
 
 ### Protecting instance names in OAuth callbacks
 
@@ -666,6 +694,7 @@ function Dashboard() {
 	const [tools, setTools] = useState([]);
 	const [servers, setServers] = useState({});
 
+	// reconnectServer is a callable method that calls this.reconnectMcpServer(id)
 	const agent = useAgent({
 		agent: "MyAgent",
 		onMcpUpdate: (mcpState) => {
@@ -680,6 +709,19 @@ function Dashboard() {
 			{Object.entries(servers).map(([id, server]) => (
 				<div key={id}>
 					{server.name}: {server.state}
+					{server.state === "authenticating" && server.auth_url && (
+						<a href={server.auth_url} target="_blank">
+							Authorize
+						</a>
+					)}
+					{server.state === "failed" && (
+						<>
+							{server.error}
+							<button onClick={() => agent.call("reconnectServer", [id])}>
+								Reconnect
+							</button>
+						</>
+					)}
 				</div>
 			))}
 
@@ -775,6 +817,22 @@ A Promise that resolves to a discriminated union based on connection state:
 - When `state` is `"ready"`:
   - `id` (string) — Unique identifier for this server connection
   - `state` (`"ready"`) — Server is fully connected and operational
+
+### `reconnectMcpServer()`
+
+Try a failed server again. It forgets the recorded failure, the pending authorization link, and the re-authorization budget, then connects now.
+
+```ts
+async reconnectMcpServer(id: string): Promise<AddMcpServerResult>
+```
+
+#### Parameters
+
+- `id` (string, required) — Server connection ID returned from `addMcpServer()`
+
+#### Returns
+
+The same result as `addMcpServer()`: `ready`, or `authenticating` with a fresh `authUrl`. Throws when the server fails again.
 
 ### `removeMcpServer()`
 
@@ -1031,235 +1089,33 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
-## Advanced: MCPClientManager
+## Use `MCPClientManager` directly
 
-For fine-grained control, use `this.mcp` directly:
+`this.mcp` is an `MCPClientManager` from `agents/mcp/client`, a Lifecycle capability. The `Agent` class installs it, and `addMcpServer()`, `removeMcpServer()`, and `getMcpServers()` wrap its methods. Call `this.mcp` directly when you need control over each step: register a server with `registerServer()`, connect with `connectToServer()`, discover its capabilities with `discoverIfConnected()`, and subscribe to `onServerStateChanged`.
 
-### Step-by-step connection
-
-<TypeScriptExample>
-
-```ts
-// 1. Register the server (saves to storage and creates in-memory connection)
-const id = "my-server";
-await this.mcp.registerServer(id, {
-	url: "https://mcp.example.com/mcp",
-	name: "My Server",
-	callbackUrl: "https://my-worker.workers.dev/agents/my-agent/default/callback",
-	transport: { type: "auto" },
-});
-
-// 2. Connect (initializes transport, handles OAuth if needed)
-const connectResult = await this.mcp.connectToServer(id);
-
-if (connectResult.state === "failed") {
-	console.error("Connection failed:", connectResult.error);
-	return;
-}
-
-if (connectResult.state === "authenticating") {
-	console.log("OAuth required:", connectResult.authUrl);
-	return;
-}
-
-// 3. Discover capabilities (transitions from "connected" to "ready")
-if (connectResult.state === "connected") {
-	const discoverResult = await this.mcp.discoverIfConnected(id);
-
-	if (!discoverResult?.success) {
-		console.error("Discovery failed:", discoverResult?.error);
-	}
-}
-```
-
-</TypeScriptExample>
-
-### Event subscription
-
-<TypeScriptExample>
-
-```ts
-// Listen for state changes (onServerStateChanged is an Event<void>)
-const disposable = this.mcp.onServerStateChanged(() => {
-	console.log("MCP server state changed");
-	this.broadcastMcpServers(); // Notify connected clients
-});
-
-// Clean up the subscription when no longer needed
-// disposable.dispose();
-```
-
-</TypeScriptExample>
+The same capability runs on a plain Durable Object, without the `Agent` class. For its full API, including step-by-step connections, events, lifecycle methods, `listTools()`, and `getAITools()` filters, refer to the [MCP client capability](/agents/runtime/capabilities/mcp-client-manager/).
 
 :::note
 MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/agent-class/protocol-messages/) returned `false`.
 :::
 
-### Lifecycle methods
-
-#### `this.mcp.registerServer()`
-
-Register a server without immediately connecting.
-
-```ts
-async registerServer(
-  id: string,
-  options: {
-    url: string;
-    name: string;
-    callbackUrl: string;
-    clientOptions?: ClientOptions;
-    transportOptions?: TransportOptions;
-  }
-): Promise<string>
-```
-
-#### `this.mcp.connectToServer()`
-
-Establish a connection to a previously registered server.
-
-```ts
-async connectToServer(id: string): Promise<MCPConnectionResult>
-
-type MCPConnectionResult =
-  | { state: "failed"; error: string }
-  | { state: "authenticating"; authUrl: string }
-  | { state: "connected" }
-```
-
-#### `this.mcp.discoverIfConnected()`
-
-Check server capabilities if a connection is active.
-
-```ts
-async discoverIfConnected(
-  serverId: string,
-  options?: { timeoutMs?: number }
-): Promise<MCPDiscoverResult | undefined>
-
-type MCPDiscoverResult = {
-  success: boolean;
-  state: MCPConnectionState;
-  error?: string;
-}
-```
-
-#### `this.mcp.waitForConnections()`
-
-Wait for all in-flight MCP connection and discovery operations to settle. This is useful when you need `this.mcp.getAITools()` to return the full set of tools immediately after the agent wakes from hibernation.
-
-```ts
-// Wait indefinitely
-await this.mcp.waitForConnections();
-
-// Wait with a timeout (milliseconds)
-await this.mcp.waitForConnections({ timeout: 10_000 });
-```
-
-:::note
-`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/agent-class/communication-channels/chat/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
-:::
-
-#### `this.mcp.closeConnection()`
-
-Close the connection to a specific server while keeping it registered.
-
-```ts
-async closeConnection(id: string): Promise<void>
-```
-
-#### `this.mcp.closeAllConnections()`
-
-Close all active server connections while preserving registrations.
-
-```ts
-async closeAllConnections(): Promise<void>
-```
-
-#### `this.mcp.listTools()`
-
-Get raw MCP tool records without converting their schemas to Zod.
-
-```ts
-listTools(filter?: MCPServerFilter): Array<Tool & { serverId: string }>
-```
-
-Use this method for catalog discovery and inspection. Pass an `MCPServerFilter` to limit the returned tools to specific connections.
-
-#### `this.mcp.getAITools()`
-
-Get all discovered MCP tools in a format compatible with the AI SDK.
-
-```ts
-getAITools(filter?: MCPServerFilter): ToolSet
-```
-
-Tools are automatically namespaced by server ID to prevent conflicts when multiple MCP servers expose tools with the same name.
-
-`getAITools()` reuses converted schemas for the current catalog on each live connection. It converts schemas again after discovery replaces the catalog or the live connection changes. Each call returns fresh tool records and execute functions. Use `this.mcp.listTools()` when you only need the raw catalog.
-
-Pass an `MCPServerFilter` to scope the returned tools to a subset of connected servers:
-
-<TypeScriptExample>
-
-```ts
-// Tools from a specific server only
-const githubTools = this.mcp.getAITools({ serverId: "github" });
-
-// Tools from multiple servers
-const tools = this.mcp.getAITools({ serverId: ["github", "notion"] });
-
-// Tools from servers matching a name
-const tools = this.mcp.getAITools({ serverName: "GitHub" });
-
-// Only tools from servers that are ready
-const tools = this.mcp.getAITools({ state: "ready" });
-```
-
-</TypeScriptExample>
-
-The filter type is available from `agents/mcp/client`:
-
-```ts
-import type { MCPServerFilter } from "agents/mcp/client";
-
-type MCPServerFilter = {
-	serverId?: string | string[];
-	serverName?: string | string[];
-	state?: MCPConnectionState | MCPConnectionState[];
-};
-```
-
-All specified filter criteria are AND'd together. The same filter parameter is accepted by `listTools()`, `listPrompts()`, `listResources()`, and `listResourceTemplates()`.
-
 ## Error handling
 
-Use error detection utilities to handle connection errors:
+Handle MCP errors by where they come from:
 
-<TypeScriptExample>
+- `addMcpServer()` returns `authenticating` when the user needs to authorize, and throws when the connection fails. The error message names `reconnectMcpServer()` for a server that is already `failed`.
+- `this.mcp.callTool()`, `readResource()`, and `getPrompt()` throw `MCPAuthorizationRequiredError` when the user needs to authorize again. Send the user to `error.authUrl`. Refer to [Re-authorization during a session](#re-authorization-during-a-session).
+- Calls for a `serverId` with no connection, because it was never registered, was removed, or is still being restored, throw `MCPConnectionNotFoundError`. Call `this.mcp.waitForConnections()` before you rely on restored servers.
 
-```ts
-import { isUnauthorized, isTransportNotImplemented } from "agents";
-
-export class MyAgent extends Agent {
-	async onRequest(request: Request) {
-		try {
-			await this.addMcpServer("Server", "https://mcp.example.com/mcp");
-		} catch (error) {
-			if (isUnauthorized(error)) {
-				return new Response("Authentication required", { status: 401 });
-			} else if (isTransportNotImplemented(error)) {
-				return new Response("Transport not supported", { status: 400 });
-			}
-			throw error;
-		}
-	}
-}
-```
-
-</TypeScriptExample>
+Both error classes come from `agents/mcp/client`.
 
 ## Next steps
+
+<LinkCard
+	title="MCP client capability"
+	href="/agents/runtime/capabilities/mcp-client-manager/"
+	description="Use MCPClientManager on any Durable Object."
+/>
 
 <LinkCard
 	title="Creating MCP servers"

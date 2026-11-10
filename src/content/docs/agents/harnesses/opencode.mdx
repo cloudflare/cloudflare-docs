@@ -284,6 +284,10 @@ Bundle plugins with the Worker and pass them in the factory's `plugins` array al
 
 OpenCode wraps plugin tools in its `execute` code-mode tool, so tool calls may appear as `execute` in events. Refer to [OpenCode plugin tools](https://opencode.ai/v2/docs/build/plugins/#tools) for schemas and tool output.
 
+## Connect a workspace
+
+OpenCode's Workers profile has no local filesystem or process, so its `read`, `write`, `edit`, `patch`, `glob`, `grep`, and `shell` tools cannot run in a Durable Object. To give OpenCode files that survive restarts, register the tools of a [Cloudflare Computer](/agents/tools/workspace/) `Workspace` through a plugin. The plugin removes OpenCode's local tools and adds the workspace tools from `createPiTools()`. Refer to [Workspace tools with OpenCode](/agents/tools/workspace/#opencode) for the plugin.
+
 ## Connect an MCP server
 
 Register a remote MCP server through a plugin. This example connects to the [Cloudflare documentation MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/):

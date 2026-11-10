@@ -1,6 +1,6 @@
 ---
 title: Web fetch
-description: Give your agent a web fetch tool with document conversion, pagination, and request controls. Use Pi Durable, AI SDK, TanStack AI, or your own harness.
+description: Give your agent a web fetch tool with document conversion, pagination, and request controls. Use Think, Pi Durable, AI SDK, TanStack AI, or your own harness.
 pcx_content_type: integration-guide
 sidebar:
   order: 3
@@ -17,7 +17,7 @@ import {
 
 Give your agent a `web_fetch` tool to read a URL. The Agents SDK handles the work around the HTTP request: converting documents into readable text, splitting long pages into smaller results, and controlling which URLs the model can fetch.
 
-Use the supplied adapters with [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. For another harness, use the public fetch, pagination, and formatting functions in `agents/webfetch`.
+Use the supplied adapters with [Think](/agents/harnesses/think/), [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. For another harness, use the public fetch, pagination, and formatting functions in `agents/webfetch`.
 
 ## What the tool adds
 
@@ -60,6 +60,36 @@ These examples require Agents SDK 0.28.0 or later and an existing harness. For a
 3. Register the tool with your harness using one of the examples that follow.
 
 </Steps>
+
+### Think
+
+[Think](/agents/harnesses/think/) uses AI SDK tools. Return the AI SDK adapter from `getTools()`, and Think adds it to every turn. This example gives a research agent both `web_search` and `web_fetch`:
+
+<TypeScriptExample>
+
+```ts
+import { Think } from "@cloudflare/think";
+import { createAI } from "agents/models/ai-sdk";
+import { webFetchTool } from "agents/webfetch/ai-sdk";
+import { webSearchTool } from "agents/websearch/ai-sdk";
+
+export class ResearchAgent extends Think<Env> {
+	getModel() {
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
+	}
+
+	getTools() {
+		return {
+			web_search: webSearchTool({ binding: this.env.AI }),
+			web_fetch: webFetchTool({ binding: this.env.AI }),
+		};
+	}
+}
+```
+
+</TypeScriptExample>
+
+The [AI SDK](#ai-sdk) notes that follow also apply to Think.
 
 ### Pi Durable
 

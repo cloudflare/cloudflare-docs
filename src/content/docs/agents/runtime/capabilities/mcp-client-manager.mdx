@@ -16,7 +16,7 @@ import { PackageManagers, Render, TypeScriptExample } from "~/components";
 
 Install the Agents SDK and the MCP client package:
 
-<PackageManagers pkg="agents @modelcontextprotocol/client@2.3.1" />
+<PackageManagers pkg="agents @modelcontextprotocol/client@2.4.0" />
 
 Construct the manager with a client name and version, which it sends to servers during the handshake. Then install it on the [Lifecycle](/agents/runtime/lifecycle/):
 
@@ -85,15 +85,15 @@ Adding a server takes three calls:
 
 `registerServer()` accepts these options:
 
-| Option        | Description                                                                                                                                     |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `url`         | The server URL. Private and internal addresses are refused                                                                                      |
-| `name`        | A display name                                                                                                                                  |
-| `callbackUrl` | Where the OAuth provider sends the user back. Route it to the same named object                                                                 |
-| `transport`   | `type` is `"auto"`, `"streamable-http"`, or `"sse"`. Also takes `authProvider` and the MCP transport options, such as `requestInit` for headers |
-| `client`      | MCP client options, such as the `capabilities` to advertise                                                                                     |
-| `clientId`    | A pre-registered OAuth client ID                                                                                                                |
-| `retry`       | Retry policy for connecting and reconnecting. Defaults to three attempts, 500 ms base, 5 s maximum                                              |
+| Option        | Description                                                                                                                         |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `url`         | The server URL. Private and internal addresses are refused                                                                          |
+| `name`        | A display name                                                                                                                      |
+| `callbackUrl` | Where the OAuth provider sends the user back. Route it to the same named object                                                     |
+| `transport`   | `type` is `"auto"`, `"streamable-http"`, or `"sse"`. Also takes `authProvider`, `headers`, and the MCP transport options            |
+| `client`      | MCP client options, such as the `capabilities` to advertise                                                                         |
+| `clientId`    | A pre-registered OAuth client ID                                                                                                    |
+| `retry`       | How many quick attempts a connection makes before the server counts as failed. Defaults to three attempts, 500 ms base, 5 s maximum |
 
 `connectToServer()` returns one of these states:
 
@@ -105,7 +105,27 @@ Adding a server takes three calls:
 
 `discoverIfConnected(id, { timeoutMs? })` waits up to 30 seconds by default and returns `{ success, state, error? }`.
 
-The server stays registered after the object leaves memory. On the next start, the manager reconnects to every stored server in the background.
+The server stays registered after the object leaves memory. On the next start, the manager reconnects to every stored HTTP and RPC server in the background, so startup never waits on an MCP server.
+
+`transport.headers` are sent with every request, including the SSE stream, for servers that take a static credential instead of OAuth. They are stored with the server in plain text, so a restored connection sends them too.
+
+Work for one server runs one operation at a time. `connectToServer()`, `discoverIfConnected()`, OAuth callbacks, and the restore after a wake wait for each other instead of interleaving. Work for different servers runs in parallel.
+
+## Failures and reconnecting
+
+Each connection makes a few quick attempts with the server's `retry` options. If they all fail, because the server is down, times out, or returns an error, the server is `"failed"` and the error is stored with it. Nothing retries it on a timer. Later wakes show the same failed state without contacting the server.
+
+Retrying cannot help when authorization was refused, so these failures skip the quick attempts:
+
+- The server answers `401` and the manager cannot send the user to authorize, for example a revoked static token in `transport.headers`, or no `callbackUrl`.
+- The server answers `403`. A `403` with `error="insufficient_scope"` starts a [step-up](#re-authorize-during-a-session) first, and only counts as refused when no step-up is possible.
+- The authorization server refuses with an OAuth error such as `invalid_target`, `invalid_scope`, or `access_denied`. An expired or revoked refresh token (`invalid_grant`) starts a new authorization instead, and `server_error` or `temporarily_unavailable` count as an outage.
+- The authorization server rejects dynamic client registration with a `4xx` other than `429`.
+- The server still answers `401` right after the user authorized.
+
+A refused server is `"failed"` with `Authorization was refused: …`. A callback where the user denied access is recorded the same way, so a later wake does not start a flow the user just turned down.
+
+To try a failed server again, for example from a **Reconnect** button, call `connectToServer(id)`. It clears the recorded failure and the step-up budget, then connects.
 
 ## Handle OAuth
 
@@ -137,7 +157,55 @@ export class ToolAgent extends DurableObject<Env> {
 
 On failure, the manager adds the error to the `errorRedirect` URL as an `error` query parameter. Pass `customHandler: (result) => Response` instead to return your own page, such as one that closes an OAuth popup. The error text can come from the OAuth provider, so escape it before you render it.
 
-For your own OAuth storage, pass `createAuthProvider` to the constructor or `transport.authProvider` to `registerServer()`. For more information, refer to [OAuth for MCP clients](/agents/model-context-protocol/guides/oauth-mcp-client/).
+A server waiting for authorization keeps its link across wakes, until the user completes it. Whether an old link still works is up to the authorization server. The default OAuth provider accepts a callback for 10 minutes.
+
+For your own OAuth storage, pass `createAuthProvider` to the constructor or `transport.authProvider` to `registerServer()`. To identify your client with an OAuth Client ID Metadata Document instead of dynamic client registration, pass `clientMetadataUrl` to `DurableObjectOAuthClientProvider`. It is used with authorization servers that advertise `client_id_metadata_document_supported`. For more information, refer to [OAuth for MCP clients](/agents/model-context-protocol/guides/oauth-mcp-client/).
+
+### Re-authorize during a session
+
+A request can need authorization again after the server is `"ready"`: a tool call that needs a scope the grant lacks (`403 insufficient_scope`), or a `401` whose token refresh fails. `callTool()`, `readResource()`, and `getPrompt()` then throw `MCPAuthorizationRequiredError` from `agents/mcp/client`, with the server's `serverId` and a new `authUrl`. The server moves to `"authenticating"`, so clients that list servers see the new link too. Send the user to `authUrl`. The normal callback completes the flow and reconnects, and the request can run again once the server is `"ready"`.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import {
+	MCPAuthorizationRequiredError,
+	MCPClientManager,
+} from "agents/mcp/client";
+
+export class ToolAgent extends DurableObject<Env> {
+	readonly mcp = new MCPClientManager("tool-agent", "1.0.0");
+	readonly lifecycle = Lifecycle.install(this).use(this.mcp);
+
+	async deploy() {
+		await this.lifecycle.start();
+		try {
+			return await this.mcp.callTool({
+				serverId: "github",
+				name: "deploy",
+				arguments: {},
+			});
+		} catch (error) {
+			if (error instanceof MCPAuthorizationRequiredError) {
+				return { needsAuthorization: true, authUrl: error.authUrl };
+			}
+			throw error;
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+During a scope step-up, the session keeps its current grant, so requests the grant already covers keep working while the user decides. If the user declines, the server goes back to `"ready"` on that grant.
+
+A request to a server that is waiting for its first authorization also throws `MCPAuthorizationRequiredError`, with the link it is waiting on. A request for a `serverId` with no connection, because it was never registered, was removed, or is still being restored, throws `MCPConnectionNotFoundError`.
+
+Re-authorization is limited, as the MCP authorization specification asks. If the user completes three authorizations for the same scopes within an hour and the server still asks for them, the server moves to `"failed"` with an error that names the scopes. It stays failed until you call `connectToServer(id)`.
+
+`MCPAuthorizationRequiredError` extends the MCP SDK's `UnauthorizedError`, so existing `instanceof UnauthorizedError` checks still match.
 
 ## Use tools, prompts, and resources
 
@@ -154,7 +222,7 @@ For your own OAuth storage, pass `createAuthProvider` to the constructor or `tra
 
 A `filter` limits the results by `serverId`, `serverName`, or connection `state`. Each field takes one value or an array.
 
-The manager reconnects in the background after a wake. Call `waitForConnections()` before you read tools, so that servers that are still reconnecting are included. It never rejects. Without a `timeout`, it waits until every pending connection settles.
+The manager reconnects HTTP and RPC servers in the background after a wake. Call `waitForConnections()` before you read tools, so that servers that are still reconnecting are included. It never rejects. Without a `timeout`, it waits until every pending connection settles.
 
 <TypeScriptExample>
 
@@ -228,15 +296,15 @@ Configure the handlers in `onStart()`, so they are in place after every wake. Th
 
 ## Manage servers
 
-| Method                           | Description                                                                                   |
-| -------------------------------- | --------------------------------------------------------------------------------------------- |
-| `listServers()`                  | Returns every stored server                                                                   |
-| `mcpConnections[id]`             | The live connection. `connectionState` reports its state                                      |
-| `closeConnection(id)`            | Closes one connection and keeps the server stored                                             |
-| `closeAllConnections()`          | Closes every connection and keeps the servers stored                                          |
-| `removeServer(id)`               | Closes the connection and deletes the server                                                  |
-| `onServerStateChanged(listener)` | Calls `listener` when a server is added, connects, fails, or is removed. Returns a disposable |
-| `onObservabilityEvent(listener)` | Calls `listener` for each `mcp:client:*` event                                                |
+| Method                           | Description                                                                                                                                             |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `listServers()`                  | Returns every stored server                                                                                                                             |
+| `mcpConnections[id]`             | The live connection. `connectionState` reports its state                                                                                                |
+| `closeConnection(id)`            | Closes one connection and keeps the server stored                                                                                                       |
+| `closeAllConnections()`          | Closes every connection and keeps the servers stored                                                                                                    |
+| `removeServer(id)`               | Closes the connection and deletes the server. A server added again under the same ID starts clean, even while work for the removed one is still running |
+| `onServerStateChanged(listener)` | Calls `listener` when a server is added, connects, fails, or is removed. Returns a disposable                                                           |
+| `onObservabilityEvent(listener)` | Calls `listener` for each `mcp:client:*` event                                                                                                          |
 
 For example, push the server list to connected clients whenever it changes:
 

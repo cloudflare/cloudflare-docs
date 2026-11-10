@@ -17,7 +17,9 @@ Both examples require:
 
 ## OpenCode plugin
 
-OpenCode plugins expose tools to the agent. To create an `x402-fetch` tool that handles 402 responses, create `.opencode/plugins/x402-payment.ts`:
+OpenCode plugins expose tools to the agent. To create an `x402-fetch` tool that handles 402 responses, create `.opencode/plugins/x402-payment.ts`.
+
+This plugin uses the plugin API of the OpenCode 1.x CLI, from `@opencode-ai/plugin`. OpenCode V2 plugins use a different API, from `@opencode/plugin`.
 
 ```ts
 // Use base-sepolia for testing. Get test USDC from https://faucet.circle.com/

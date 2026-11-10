@@ -258,7 +258,7 @@ Call `await this.harness.stop()` to snapshot and stop a container explicitly. Pr
 
 [Container snapshots](/containers/guides/snapshots/) preserve files, not memory or running processes. They expire 30 days after their last restore and are tied to an image version. If a snapshot expires, fails, or no longer matches the setup, startup may fall back to a clean filesystem. Keep files that must survive these cases in separate durable storage.
 
-The built-in presets use the container's filesystem. They do not include a [Cloudflare Computer Workspace integration](/agents/tools/filesystem/).
+The built-in presets use the container's filesystem. They do not include a [Cloudflare Computer Workspace integration](/agents/tools/workspace/).
 
 ## Deploy
 

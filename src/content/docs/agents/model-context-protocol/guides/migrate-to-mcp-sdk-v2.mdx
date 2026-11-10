@@ -37,15 +37,15 @@ Install only the MCP package generations that your application imports. Keep the
 
 For a stateless server:
 
-<PackageManagers pkg="agents @modelcontextprotocol/server@2.3.1 zod" />
+<PackageManagers pkg="agents @modelcontextprotocol/server@2.4.0 zod" />
 
 For a temporary legacy lane:
 
-<PackageManagers pkg="agents @modelcontextprotocol/sdk@1.32.1 zod" />
+<PackageManagers pkg="agents @modelcontextprotocol/sdk@1.32.2 zod" />
 
 For an Agent that connects to MCP servers:
 
-<PackageManagers pkg="agents @modelcontextprotocol/client@2.3.1" />
+<PackageManagers pkg="agents @modelcontextprotocol/client@2.4.0" />
 
 `@modelcontextprotocol/server` and `@modelcontextprotocol/sdk` are optional peer dependencies of `agents`, so your package manager does not install them automatically. Add them to your own `package.json` when you use them. `@modelcontextprotocol/client` is a required peer, because every Agent includes the MCP client. Update the exact MCP versions with the Agents release that supports them.
 
