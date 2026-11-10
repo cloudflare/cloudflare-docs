@@ -57,13 +57,13 @@ This is only useful if you are creating buckets on demand because you do not kno
 
 Add a `cf-create-bucket-if-missing` header with the value `true` to implicitly create the bucket if it does not exist yet. Refer to [Auto-creating buckets on upload](#auto-creating-buckets-on-upload) for a more detailed explanation of when to add this header.
 
-### Conditional operations in `PutObject`
+## CreateMultipartUpload
 
-`PutObject` supports the standard S3 conditional headers `If-Match`, `If-None-Match`, `If-Modified-Since`, and `If-Unmodified-Since`. `If-None-Match: *` in particular is commonly used to implement "create-once" semantics: the write only succeeds if the key does not exist yet.
+### Conditional headers
 
-These conditions are evaluated atomically, as part of the same write that commits the object. If two or more clients concurrently issue `PutObject` with `If-None-Match: *` for a previously absent key, at most one request succeeds and every other request fails with a `412 PreconditionFailed` error code. Competing conditional writes can never both observe success.
+R2 supports `If-Match`, `If-None-Match`, `If-Modified-Since`, and `If-Unmodified-Since` on `CreateMultipartUpload`. R2 evaluates these conditions against the destination object when the upload is initiated. Amazon S3 does not support conditional headers on this operation.
 
-A negative read (`NoSuchKey`) is not proof that a prior write failed if that write's outcome is unknown — an in-flight write may still commit after the read returns. Refer to [Consistency model](/r2/reference/consistency/#negative-reads-and-in-flight-writes) for details.
+These conditions are not retained for upload completion. To enforce a condition when the object is committed, also send it on `CompleteMultipartUpload`. Refer to [Conditions on `CreateMultipartUpload`](/r2/api/s3/conditional-operations/#conditions-on-createmultipartupload) for details.
 
 ## CopyObject
 
