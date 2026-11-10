@@ -51,7 +51,7 @@ Some SaaS applications provide the Redirect URL after you [configure the SSO pro
 12. <Render file="access/access-choose-idps-default" product="cloudflare-one" />
 13. (Optional) Go to **Additional settings** to customize the application experience:
 
-    - **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). If **Show application in App Launcher** is enabled, then you must enter an **App Launcher URL**. The App Launcher URL is provided by the SaaS application. It may match the base URL portion of **Redirect URL** (`https://<INSTANCE-NAME>.example-app.com`) but could be a different value.
+    - **App Launcher customization**: Configure how this application appears to users in the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/). If **Show application in App Launcher** is enabled, then you must enter an **App Launcher URL**. Use the SaaS application's login URL, where users start authentication. This may be the application's base URL (`https://<INSTANCE-NAME>.example-app.com`) or a dedicated SSO login endpoint. It can differ from **Redirect URL**, which receives the authentication response after sign-in.
     - <Render file="access/access-block-page" product="cloudflare-one" />
 
 14. Select **Create**.
@@ -97,7 +97,7 @@ To add additional OIDC claims onto the ID token sent to your SaaS application, c
 
 The **Access token lifetime** controls how long the OIDC access token is valid. If your SaaS application supports refresh tokens, you can configure a longer **Refresh token lifetime** so it can request new access tokens without another browser login.
 
-The SaaS application sends its refresh token to the Access token endpoint. Access checks the user's stored identity against your Access policies and verifies that the session has not been revoked before issuing new tokens. This exchange does not require the browser's global session cookie.
+The SaaS application sends its refresh token to the Access token endpoint. Access checks the user's stored identity against your Access policies and verifies that the session has not been revoked before issuing new tokens. This exchange does not require the browser's [global session cookie](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/#access-jwts).
 
 If the refresh token expires or the refresh request fails, the SaaS application must restart authorization. Whether the user must log in again depends on their Access and identity provider sessions. The SaaS application's own session duration is separate from these token lifetimes.
 
