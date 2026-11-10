@@ -20,7 +20,7 @@ Use policies to:
 - Block specific users or teams from using expensive models.
 - Allow only specific models for a team.
 
-Policies differ from gateway-level [spend limits](/ai-gateway/features/spend-limits/), which split budgets by request metadata only. Policies use the verified identity of the caller from [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), and can also block or allow access to models.
+Policies replace the [spend limits](/ai-gateway/features/spend-limits/) in gateway settings. In addition to everything spend limits can do with request metadata, policies can use the verified identity of the caller from [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), and can block or allow access to models. If you use spend limits today, [migrate to policies](#migrate-from-spend-limits).
 
 ![Policies tab listing a company-wide spend cap, an email domain spend cap, and a policy that blocks Claude Opus models](~/assets/images/ai-gateway/policies-list.png)
 
@@ -40,9 +40,9 @@ When a gateway has at least one policy, requests that do not match any policy ar
 
 :::
 
-:::note[Cached responses skip policies]
+:::note[Cached responses skip spend caps]
 
-AI Gateway checks the [cache](/ai-gateway/features/caching/) before it evaluates policies. A request served from the cache is not evaluated by any policy, including block policies, and does not count toward a budget. If you use policies to block access to a model, turn off caching for that traffic.
+When AI Gateway serves a response from the [cache](/ai-gateway/features/caching/), it still rejects the request with a `403` if a block policy matches or no policy matches. It does not check spend caps, and the request does not count toward a budget.
 
 :::
 
@@ -605,11 +605,43 @@ This policy blocks interns from every model except those listed. Interns still n
 }
 ```
 
+## Migrate from spend limits
+
+Policies replace the spend limits configured in **Settings** > **Spend limits**. Both features are enforced while both are configured, so a request must pass your spend limit rules and your policies.
+
+The following table maps spend limit rules to policies:
+
+| Spend limit rule                                | Policy equivalent                                                                                        |
+| ----------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| No dimensions (one shared budget)               | **Who**: **Everyone**                                                                                    |
+| Metadata dimension, **Split by value**          | **Who**: **Actor bucket** with the key in braces, such as `user:{metadata.user_id}`                      |
+| `cf.user_id` metadata dimension, split by value | **Who**: **Actor bucket** set to `user:{cf.user.id}`, or **User** to cap one user by email               |
+| Metadata dimension, **Filter by value**         | A condition, such as `metadata.environment == "production"`                                              |
+| Model or provider, **Filter by value**          | **Resources**: **Model** or **Provider**                                                                 |
+| Model or provider, **Split by value**           | One policy for each model or provider. A policy that lists several models shares one budget across them. |
+
+To migrate:
+
+<Steps>
+
+1. Add a policy that covers all traffic you want to allow, such as a spend cap or **Allow without a cap** for **Everyone** on **All models and providers**. After you add the first policy, AI Gateway blocks any request that does not match a policy.
+2. Recreate each spend limit rule as a policy, using the table above.
+3. Use [Test policies](#test-policies) to check that the policies allow and block the requests you expect.
+4. Delete your spend limit rules in **Settings** > **Spend limits**.
+
+</Steps>
+
+Policies differ from spend limits in the following ways:
+
+- **Calendar windows only.** Policies reset hourly, daily, weekly, or monthly on UTC boundaries. Refer to [Action](#action).
+- **No dynamic route fallbacks.** A spend limit on a model inside a [dynamic route](/ai-gateway/features/routing/dynamic-routing/) can make the route fall back to another model. A policy rejects the whole request instead.
+
 ## Limitations
 
 - **Cost is estimated.** Spend is based on the [cost AI Gateway calculates](/ai-gateway/observability/costs/) for each request, including any [custom cost](/ai-gateway/configuration/custom-costs/). Requests for models without known pricing do not count toward a budget. Refer to your provider dashboard for exact billing.
 - **Budgets can be exceeded slightly.** AI Gateway records the cost of a request after it completes. Concurrent requests can push spend over the limit before enforcement catches up.
-- **Cached responses skip policies.** Requests served from the [cache](/ai-gateway/features/caching/) are not evaluated by policies, including block policies, and do not count toward a budget.
+- **Cached responses skip spend caps.** Requests served from the [cache](/ai-gateway/features/caching/) are still subject to block policies, but are not checked against spend caps and do not count toward a budget.
+- **No dynamic route fallbacks.** AI Gateway evaluates policies once per request, before a [dynamic route](/ai-gateway/features/routing/dynamic-routing/) runs. A policy that blocks or caps a request rejects the whole request instead of falling back to another model in the route.
 - **Changes take time to propagate.** A new or updated policy can take up to 15 minutes to apply everywhere.
 - **Failures allow traffic.** If AI Gateway cannot evaluate policies or read current spend, it allows the request.
 - **No remaining-budget headers.** Responses do not include headers that report remaining budget.
