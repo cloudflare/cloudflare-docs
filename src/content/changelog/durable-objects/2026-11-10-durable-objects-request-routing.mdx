@@ -4,14 +4,15 @@ description: Cloudflare has reduced duplicate connection work during Durable Obj
 date: 2026-11-10
 ---
 
-Cloudflare has reduced the number of round trips needed to connect to a Durable Object when a location lookup follows a forwarding record to another data center.
+Cloudflare has reduced the number of round trips needed to connect to a Durable Object by one when a location lookup follows a forwarding record to another data center.
 
 When an object's destination isn't cached in Cloudflare's network, the first data center contacted may have a forwarding record pointing to another data center.
 
-- **Before:** The first data center acquired a connection to the object at the destination and proxied it back to the caller. The caller then acquired its own direct connection to the object.
-- **Now:** The first data center returns the destination directly, without first acquiring a connection to the object. The caller then establishes the direct connection, avoiding the intermediate connection and duplicate acquisition.
+Previously, the first data center acquired a connection to the object at the destination and proxied it back to the caller. The caller then established its own direct connection to the object.
 
-Skipping this intermediate connection can reduce p99 (99th-percentile) connection latency for these relocation-related requests. Actual results depend on your workload and traffic patterns.
+Now, the first data center returns the destination directly, without first acquiring a connection to the object. The caller then establishes a direct connection, avoiding the intermediate connection and duplicate acquisition.
+
+Skipping this intermediate connection can reduce p99 connection latency for these relocation-related requests. Actual results depend on your workload and traffic patterns.
 
 No code or configuration changes are required to benefit from this improvement.
 
