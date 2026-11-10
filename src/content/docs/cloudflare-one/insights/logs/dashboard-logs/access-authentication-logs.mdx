@@ -26,7 +26,7 @@ Cloudflare Access logs an authentication event whenever a user or service attemp
 
 [Identity-based authentication](#identity-based-authentication) refers to login attempts that were evaluated based on who the user is — for example, their email address, identity provider (IdP) group, SAML group, or OIDC claim.
 
-[Non-identity authentication](#non-identity-authentication) refers to requests evaluated without a user's identity-provider login. These checks can use IP address, device posture, country, a valid client certificate, or a service token.
+[Non-identity authentication](#non-identity-authentication) refers to requests allowed by a **Service Auth** policy. These policies can check service tokens, client certificates, IP addresses, country, or device posture.
 
 :::note
 Authentication logs do not capture the user's actions during a self-hosted or SaaS application session. To audit individual requests made during a session, refer to [Per-request logs](#per-request-logs).
@@ -132,12 +132,12 @@ To include non-identity authentication events in the dashboard:
 1. Open the [Access authentication log viewer](#view-access-authentication-logs).
 2. Set the **Service auth logs** filter to **Show service auth logs**.
 
-This includes successful non-identity events alongside identity-based events. The default **Hide service auth logs** setting excludes non-identity events.
+This includes non-identity events alongside identity-based events. The default **Hide service auth logs** setting excludes non-identity events.
 
-You can also include these events through the [Access authentication logs API](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) with `non_identity=true`, or query them using the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+The [Access authentication logs API](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) includes non-identity events by default. To exclude them, set `non_identity=false`.
 
 :::note[Blocked non-identity events]
-Blocked non-identity authentication events are always excluded from the dashboard and the Access authentication logs REST API because they can produce very large datasets. These events are only available through the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+The dashboard and the Access authentication logs REST API usually do not show blocked non-identity events. Some blocked service-token requests are included. To retrieve blocked non-identity events, use the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
 :::
 
 ## Per-request logs
