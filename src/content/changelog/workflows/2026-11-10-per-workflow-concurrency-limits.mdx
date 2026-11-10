@@ -4,7 +4,7 @@ description: Cap how many instances of a single Workflow run at the same time by
 products:
   - workflows
   - workers
-date: 2026-08-27
+date: 2026-11-10
 ---
 
 import { WranglerConfig } from "~/components";
@@ -31,6 +31,8 @@ For example, to allow only 10 instances of a Workflow to run at a time, set `con
 ```
 
 </WranglerConfig>
+
+You can also set `concurrency` on a Workflow declared in [`exports`](/workflows/build/workers-api/#declare-workflows-in-exports), or with `exports.workflow()` in [`@cloudflare/config`](/cf/projects/cloudflare-config/).
 
 Instances above the limit are not rejected. They are queued and start automatically as running instances finish or move to the `waiting` state.
 
