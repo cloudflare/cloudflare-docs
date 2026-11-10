@@ -1,6 +1,6 @@
 ---
 title: Harness
-description: A harness is the agent loop around a model. Learn what a harness does, where its pieces run on Cloudflare, and which harness to start with.
+description: A harness is the agent loop around a model. Learn what a harness does, how its brain and hands split across Cloudflare, and which harness to start with.
 pcx_content_type: concept
 sidebar:
   order: 3
@@ -12,58 +12,56 @@ import { LinkCard } from "~/components";
 
 A harness is a model in a loop. It sends the conversation to the model, runs the tools the model asks for, feeds the results back, and repeats until the model is done. Everything that makes an agent more than a single model call lives in the harness, or is reached through it.
 
+On Cloudflare, the harness is the [capability](/agents/runtime/capabilities/) that runs the agent loop inside a [Durable Agent](/agents/getting-started/quick-start/). It is the unit of compute for an agent, and the Agents SDK exists to make harnesses run well on Cloudflare.
+
 ## What a harness does
 
 A harness usually provides:
 
 - **The loop.** It calls the model, runs tool calls, handles their results, and decides whether to continue or stop.
-- **A transcript.** It stores the session: every message, tool call, and result, so the next turn has the context of the last one.
+- **Memory.** It stores the session, every message, tool call, and result, so the next turn has the context of the last one. Many harnesses also keep notes the model reads on every turn, such as facts about the user.
 - **Tools.** It gives the model a set of tools, and runs them when the model asks.
 - **Skills.** It loads instructions and resources on demand, so the model only reads them when a task needs them.
 - **Extensions.** It has a way to customize the loop, such as adding tools, system prompt sections, or hooks, without forking the harness.
+- **Durable work.** It schedules work that has to finish, such as a run cut off by an eviction or a deploy, or a follow-up that is due later. The [Lifecycle](/agents/runtime/lifecycle/) job queue wakes the Durable Object, and the harness picks up where it stopped.
 - **Input and output.** It has an API to send prompts in and get answers, events, and the transcript out.
 
-## Where the pieces live
+## The brain and the hands
 
-A harness is not one process. Its pieces can run in different places, and where each one runs decides what survives a crash, where credentials live, and what you pay for while the agent waits.
+An agent has two halves. Anthropic calls them the brain and the hands, in [Scaling Managed Agents](https://www.anthropic.com/engineering/managed-agents):
 
-It helps to name three parts:
+- **The brain** is the loop and its memory. The loop decides what to do next. The memory is everything it decides from: the session, and any notes it keeps.
+- **The hands** are the tools: a file system, a shell, a browser, an MCP server, or an API.
 
-| Part        | What it is                                                                                      |
-| ----------- | ----------------------------------------------------------------------------------------------- |
-| The loop    | The harness code that calls the model and routes tool calls.                                   |
-| The session | The durable record of what happened: prompts, model output, tool calls, and results.           |
-| The hands   | Where the agent acts: a file system, a shell, a browser, or an API.                            |
+The loop and the memory belong together, because every turn reads and extends the memory. They do not have to run in the same place. A stateless loop can load its memory from storage at the start of a turn and write it back at the end.
 
-Anthropic describes the same split as [decoupling the brain from the hands](https://www.anthropic.com/engineering/managed-agents).
+On Cloudflare, a [Durable Object](/durable-objects/) makes it easy to keep them together. The loop runs in the object, and the memory lives in the same object's SQLite database, so a turn reads its memory without a network call, and both survive eviction together. The hands attach to the object as tools, and run wherever the work needs to.
 
-On Cloudflare, each agent is a [Durable Object](/durable-objects/):
+### A workspace spans several parts of the platform
 
-- **The loop** runs in the Durable Object. The [Lifecycle](/agents/runtime/lifecycle/) starts it, and wakes the object to finish a run after an eviction, a deploy, or a crash.
-- **The session** lives in the Durable Object's SQLite database, next to the loop.
-- **The hands** attach to the object as tools, and run wherever the work needs to.
-
-### A workspace spans several pieces
-
-The hands are often more than one thing. A [workspace](/agents/tools/filesystem/) from Cloudflare Computer is a good example. To the harness it is one set of tools, such as `read`, `write`, `grep`, and `exec`. Underneath, it coordinates three parts of the platform:
+The hands are often more than one thing. A [workspace](/agents/tools/filesystem/) from Cloudflare Computer is a good example. To the harness it is one set of tools, such as `read`, `write`, `edit`, and `exec`. Underneath, it uses three parts of the platform:
 
 - **Durable Objects** hold the files. A `Workspace` stores every file in the same SQLite database as the session, so files survive eviction the same way the transcript does.
 - **Workers** run code. The JavaScript backend runs each `exec` call in a new [Dynamic Worker](/dynamic-workers/), which can read and write the workspace files but not the agent's bindings or credentials.
 - **Containers** run Linux. When a task needs a shell or native binaries, a [sandbox](/agents/tools/sandbox/) attaches a [Container](/containers/) to the object. It starts for a command and stops when the agent goes quiet.
 
-Because each piece runs separately, a failure stays small. If a container dies, one tool call fails and the model decides what to do next. The session and the loop are still in the Durable Object.
+Because each part runs separately, a failure stays small. If a container dies, one tool call fails and the model decides what to do next. The brain is still in the Durable Object.
 
 ### When the loop runs in a container
 
-Some harnesses are command-line programs, such as Claude Code or Codex. They own their loop, tools, and session files, and expect a Linux machine, so they cannot run in a Durable Object. The [Container harness](/agents/harnesses/container/) runs the CLI in a container, and keeps the session and credentials in the Durable Object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session.
+Coding agent CLIs, such as Claude Code and Codex, ship as native binaries. Each one owns its loop, its tools, and its session files, and expects a POSIX file system and a shell. A Durable Object has neither. You could patch a CLI to run without them, but it is a lot of work and the result is slower.
 
-| Arrangement                 | Loop runs in   | Session lives in | If the container dies                                                |
-| --------------------------- | -------------- | ---------------- | -------------------------------------------------------------------- |
-| Loop in the Durable Object  | Durable Object | Durable Object   | One tool call fails. The run continues.                              |
-| Loop in a container         | Container      | Durable Object   | The turn fails, or reruns if you turn on retry. The session resumes. |
-| Everything in one container | Container      | Container        | The session and the run are lost.                                    |
+The [Container harness](/agents/harnesses/container/) runs the CLI in a container instead, and keeps the session and the credentials in the Durable Object. Here the loop and the memory are split: the loop runs in the container, and the memory lives in the object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session.
 
-Keep the loop in the Durable Object when you control the agent loop. Run the loop in a container when you want a specific CLI agent with its own tools, plugins, and settings.
+The loop itself is not what keeps a CLI out of a Durable Object. The [Codex harness](/agents/harnesses/codex/) compiles Codex's Rust turn loop to WebAssembly and runs it in a Durable Object. What it leaves behind are the CLI's file and shell tools, so it gives the loop workspace tools instead.
+
+| Arrangement                 | Loop runs in   | Memory lives in | If the container dies                                                |
+| --------------------------- | -------------- | --------------- | -------------------------------------------------------------------- |
+| Loop in the Durable Object  | Durable Object | Durable Object  | One tool call fails. The run continues.                              |
+| Loop in a container         | Container      | Durable Object  | The turn fails, or reruns if you turn on retry. The session resumes. |
+| Everything in one container | Container      | Container       | The session and the run are lost.                                    |
+
+Keep the loop in the Durable Object when you can. Run the loop in a container when you want a specific CLI agent with its own tools, plugins, and settings.
 
 ## One API across harnesses
 
@@ -71,13 +69,13 @@ The harnesses in the Agents SDK take work in the same way. You send a prompt and
 
 ## Choose a harness
 
-**Start with [Pi](/agents/harnesses/pi/).** The Pi harness runs [Pi Durable](https://earendil.com/posts/pi-durable/), and Pi includes most of what you would otherwise build yourself: sessions and the transcript, a tool registry and [extensions](/agents/harnesses/pi/extensions/), skills, an event stream for clients, and recovery after an eviction, with replay rules for each tool.
+**Start with [Pi](/agents/harnesses/pi/).** The Pi harness runs [Pi Durable](https://earendil.com/posts/pi-durable/), and Pi includes most of what an agent needs: sessions and the transcript, a tool registry and [extensions](/agents/harnesses/pi/extensions/), skills, an event stream for clients, and recovery after an eviction, with replay rules for each tool.
 
 To compare Pi with Think, OpenCode, the Container harness, and the other harnesses by where they run and how they recover, refer to [Compare harnesses](/agents/harnesses/#compare-harnesses).
 
 ## The harness and the runtime
 
-The harness decides what the agent does on each turn. The [runtime](/agents/runtime/) decides where the agent lives and how it stays durable: [routing](/agents/runtime/routing/) sends each request to the right Durable Object, the Lifecycle starts the harness and its capabilities, and [observability](/agents/runtime/observability/) traces what happened.
+The harness answers "what does this agent do on each turn?" The [runtime](/agents/runtime/) answers "where does this agent live and how does it stay durable?" [Routing](/agents/runtime/routing/) sends each request to the right Durable Object, the Lifecycle starts the harness and the other capabilities, and [observability](/agents/runtime/observability/) traces what happened.
 
 With a harness, the parts of the runtime you work with directly are usually routing, [`WebSockets`](/agents/runtime/capabilities/websockets/), and observability. For more information, refer to [If you use a harness](/agents/runtime/#if-you-use-a-harness).
 
@@ -90,9 +88,9 @@ With a harness, the parts of the runtime you work with directly are usually rout
 />
 
 <LinkCard
-	title="File system"
-	href="/agents/tools/filesystem/"
-	description="Give an agent a Cloudflare Computer workspace, with file tools and a JavaScript runtime."
+	title="Harnesses"
+	href="/agents/harnesses/"
+	description="Compare harnesses by where they run, how they recover, and how they reach files."
 />
 
 <LinkCard
