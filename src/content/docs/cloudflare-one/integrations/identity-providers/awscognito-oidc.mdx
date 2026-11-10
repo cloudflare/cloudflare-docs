@@ -31,26 +31,17 @@ The following Amazon Cognito values are required to set up the integration:
 To retrieve those values:
 
 1. Log in to your Amazon Cognito admin portal.
-
 2. Go to **User pools** and select your user pool.
-
 3. Select the **App integration** tab.
-
 4. Under **Domain**, copy your user pool domain or [configure a new domain](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html).
-
 5. Make note of the following [Amazon Cognito OIDC endpoints](https://docs.aws.amazon.com/cognito/latest/developerguide/federation-endpoints.html):
    - **Auth URL**: `https://<your user pool domain>/oauth2/authorize`
    - **Token URL**: `https://<your user pool domain>/oauth2/token`
    - **Certificate (key) URL**: `https://cognito-idp.<region>.amazonaws.com/<your user pool ID>/.well-known/jwks.json` (This is the **Token signing key URL** shown in **User pool overview**.)
-
 6. Under **App client list**, select **Create app client**.
-
 7. For **App type**, select **Confidential client**.
-
 8. Enter an **App client name** for your application.
-
 9. Ensure that **Generate a client secret** is selected.
-
 10. Configure the following **Hosted UI settings**:
     1. In **Allowed callback URLs**, add the following URL:
 
@@ -61,31 +52,21 @@ To retrieve those values:
        <Render file="find-team-name" product="cloudflare-one" />
 
     2. Select **Identity providers** to use with this app client. At minimum, enable **Cognito user pool** as a provider.
-
     3. For **OAuth 2.0 grant types**, select **Authorization code grant**.
-
     4. For **OpenID Connect scopes**, select **OpenID**, **Email**, and **Profile**.
 
 11. Select **Create app client**.
-
 12. Next, select the app client you just created.
-
 13. Copy its **Client ID** and **Client secret**.
 
 ### 2. Add Amazon Cognito as an identity provider
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
-
 2. Under **Your identity providers**, select **Add new identity provider**.
-
 3. Select **OpenID Connect**.
-
 4. Name your identity provider and fill in the required fields with the information obtained from Amazon Cognito.
-
-5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
-
+5. (Optional) Enable [Proof Key for Code Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 6. (Optional) Under **Optional configurations**, enter [custom OIDC claims](/cloudflare-one/integrations/identity-providers/generic-oidc/#custom-oidc-claims) that you wish to add to users' identity.
-
 7. Select **Save**.
 
 To [test](/cloudflare-one/integrations/identity-providers/#test-idps-in-cloudflare-one) that your connection is working, select **Test**.
