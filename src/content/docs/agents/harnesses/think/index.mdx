@@ -159,7 +159,7 @@ Both Think and [`AIChatAgent`](/agents/agent-class/communication-channels/chat/c
 
 **AIChatAgent** is a protocol adapter. You override `onChatMessage` and are responsible for calling `streamText`, wiring tools, converting messages, and returning a `Response`. AIChatAgent handles the plumbing — message persistence, streaming, abort, resume — but the LLM call is entirely your concern.
 
-**Think** is an opinionated framework. It makes decisions for you: `getModel()` returns the model, `getSystemPrompt()` or `configureContext()` sets the prompt, `getTools()` returns tools. Think runs the complete agentic loop itself; there is no `onChatMessage` to override. You override individual pieces and lifecycle hooks, not the whole pipeline.
+**Think** is an opinionated framework. It makes decisions for you: `getModel()` returns the model, `getSystemPrompt()` or `configureContext()` sets the prompt, `getTools()` returns tools. Think runs the complete agentic loop itself. There is no `onChatMessage` to override. You override individual pieces and lifecycle hooks, not the whole pipeline.
 
 | Concern                | AIChatAgent                                                      | Think                                                               |
 | ---------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------- |

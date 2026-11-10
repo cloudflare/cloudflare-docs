@@ -13,7 +13,7 @@ import { TypeScriptExample } from "~/components";
 Think splits memory into two parts:
 
 - **The conversation.** Think stores every message in the agent's SQLite database, as a tree, so regenerated answers are kept as branches. `configureSession()` sets how long conversations are compacted and searched.
-- **The system prompt.** Think builds the system prompt from context blocks: labelled sections such as a fixed identity, or a `memory` block the model can write to. `configureContext()` declares them.
+- **The system prompt.** `configureContext()` declares context blocks: labelled sections such as a fixed identity, or a `memory` block the model can write to. Think builds the system prompt from those blocks, and keeps track of each section, including blocks you add later.
 
 ## Declare context blocks
 
@@ -41,8 +41,8 @@ export class MyAgent extends Think<Env> {
 
 </TypeScriptExample>
 
-- A block with a `provider` reads its text from the provider. The `soul` block above is read-only.
-- A block without a `provider` is stored in the agent's SQLite database, and the model can write to it with the `set_context` tool. The `memory` block above keeps up to 2,000 tokens of facts across hibernation and restarts.
+- A block with a `provider` reads its text from the provider. The `soul` block in this example is read-only.
+- A block without a `provider` is stored in the agent's SQLite database, and the model can write to it with the `set_context` tool. The `memory` block in this example keeps up to 2,000 tokens of facts across hibernation and restarts.
 - `maxTokens` caps a block's size, and `description` tells the model what belongs in it.
 
 `ContextConfig` comes from `agents/context`, an experimental library that builds the prompt from blocks. The assembled blocks are available as `this.context` once the agent has started.
@@ -135,12 +135,6 @@ export class SmallModelAgent extends Think<Env> {
 </TypeScriptExample>
 
 Set `truncationStep` to `Infinity` to turn read-time truncation off. Pair that with compaction, so the context stays bounded.
-
-## Upgrade from Think 0.17
-
-Agents written for Think 0.17 configured context blocks in `configureSession()` with `withContext()` and `withCachedPrompt()`. That chain still works, but it is deprecated. Move the blocks into `configureContext()`, and read them from `this.context`. Blocks from both are merged, `configureContext()` first.
-
-The upgrade also migrates storage the first time each agent wakes, and the migration cannot be rolled back. Refer to [Upgrading from 0.17](https://github.com/cloudflare/agents/blob/main/docs/think/index.md#upgrading-from-017) before you deploy.
 
 ## Related resources
 
