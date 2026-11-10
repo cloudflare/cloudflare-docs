@@ -1,0 +1,238 @@
+---
+title: Cross-account client authentication and posture
+description: Use Cloudflare One Client identities, reusable policies, and device posture checks across accounts in your Cloudflare Organization.
+pcx_content_type: how-to
+products:
+  - cloudflare-one
+sidebar:
+  label: Cross-account access
+  order: 3
+tags:
+  - Authentication
+  - Posture
+  - REST API
+---
+
+import { CURL, Steps } from "~/components";
+
+Cloudflare Access can use a Cloudflare One Client session from another account in your [Cloudflare Organization](/fundamentals/organizations/). This is also called cross-account WARP authentication. Users remain enrolled in their source account while accessing applications in other accounts.
+
+Client authentication and device posture answer different questions. Client authentication identifies the user from their enrollment session. Device posture checks whether their device meets a policy requirement. You can require both for an application.
+
+## How account trust works
+
+This guide uses two accounts:
+
+| Account                 | Owns                                                        |
+| ----------------------- | ----------------------------------------------------------- |
+| Source account (A)      | Client enrollment, user identity, and device posture checks |
+| Application account (B) | The Access application and its attached policies            |
+
+An administrator in A grants B permission to use A's Access resources. B can then attach A's reusable policies or reference A's posture checks in its own policies.
+
+Trust is one-way. Granting B access to A's resources does not grant A access to B's resources. It also does not allow every user in A into B's applications. Each application's policies still determine access.
+
+## Prerequisites
+
+- Both accounts belong to the same Cloudflare Organization and have Zero Trust configured.
+- Cross-account Access resource sharing is turned on for your organization.
+- Your API credentials can manage Access organization settings and resource sharing in A, and policies and applications in B. Reading a policy or posture configuration in A requires access to A.
+- Users have [enrolled the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/) in A. For client authentication, configure [client sessions in Access](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) in A and have users reauthenticate if necessary.
+- For posture enforcement, [configure and verify a posture check](/cloudflare-one/reusable-components/posture-checks/) in A. Route the application and the relevant team domains through the client as described in that guide.
+
+The examples use `$SOURCE_ACCOUNT_ID` for A and `$APPLICATION_ACCOUNT_ID` for B. Use credentials authorized for the account in each request. Replace angle-bracketed placeholders in JSON bodies with your resource IDs and values.
+
+## 1. Grant the application account access
+
+Configure sharing on the **source account**, not the application account.
+
+<Steps>
+
+1. Read and save A's existing trust settings:
+
+   <CURL
+     url="https://api.cloudflare.com/client/v4/accounts/$SOURCE_ACCOUNT_ID/access/organizations/trust_settings"
+     headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+   />
+
+2. Add B to the complete list of accounts allowed to use A's resources:
+
+   <CURL
+     url="https://api.cloudflare.com/client/v4/accounts/$SOURCE_ACCOUNT_ID/access/organizations/trust_settings"
+     method="PATCH"
+     headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+     json={{
+       grant_trust_to_all_accounts_in_org: false,
+       trusting_accounts: ["<APPLICATION_ACCOUNT_ID>"],
+     }}
+   />
+
+   This example is for an account without existing recipients. If A already shares resources with other accounts, include their IDs too. The `trusting_accounts` array replaces the explicit list; it does not append an account.
+
+3. Read B's Zero Trust organization:
+
+   <CURL
+     url="https://api.cloudflare.com/client/v4/accounts/$APPLICATION_ACCOUNT_ID/access/organizations"
+     headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+   />
+
+   After the sharing configuration is provisioned, `result.trusted_accounts` contains A's account ID. This is a read-only list of source accounts B can use. Do not set it directly on B.
+
+</Steps>
+
+To share with every account in your Cloudflare Organization instead, set `grant_trust_to_all_accounts_in_org` to `true` on A. Review the scope before granting organization-wide access.
+
+## 2. Create a reusable policy in the source account
+
+Create an Allow policy in A. This example allows one user and requires a successful posture check owned by A:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$SOURCE_ACCOUNT_ID/access/policies"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "Allow enrolled user with required posture",
+		decision: "allow",
+		include: [{ email: { email: "user@example.com" } }],
+		require: [
+			{
+				device_posture: {
+					integration_uid: "<SOURCE_POSTURE_CHECK_ID>",
+				},
+			},
+		],
+	}}
+/>
+
+Save the returned policy `id`. For a client-authentication-only policy, omit the `require` array. Replace the email selector with the users or groups you want to allow.
+
+When B uses A's reusable policy, account-scoped resources in that policy resolve in A. This includes its posture check and lists. A retains ownership of the policy, and changes apply to applications that reference it.
+
+## 3. Attach the policy to an application
+
+Create a [self-hosted application](/cloudflare-one/access-controls/applications/http-apps/) in B with client authentication turned on:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$APPLICATION_ACCOUNT_ID/access/apps"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "Internal dashboard",
+		type: "self_hosted",
+		domain: "internal.example.com",
+		allow_authenticate_via_warp: true,
+		policies: [
+			{
+				id: "<SOURCE_REUSABLE_POLICY_ID>",
+				account_id: "<SOURCE_ACCOUNT_ID>",
+				precedence: 1,
+			},
+		],
+	}}
+/>
+
+The policy reference needs both its `id` and owning `account_id`. Attaching a source-account policy does not copy it into B.
+
+For an existing application, preserve its configuration and policy references when updating it. Setting `allow_authenticate_via_warp` to `true` turns on client authentication for that application. Explicit `false` turns it off, even if B's organization default is on. An omitted application setting inherits B's default.
+
+Cross-account reusable policies apply to client authentication. They do not configure an identity provider in B. To share an IdP configuration for browser-based sign-in, use [IdP federation](/cloudflare-one/integrations/identity-providers/idp-federation/).
+
+## Use a policy owned by the application account
+
+B can also create its own policy rather than attach A's reusable policy. Choose the account context that matches the resources your rules use.
+
+### Reference a source-account posture check
+
+To keep the policy in B but use a posture check in A, set `account_id` on the `device_posture` rule:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$APPLICATION_ACCOUNT_ID/access/policies"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "Require posture from source account",
+		decision: "allow",
+		include: [{ email: { email: "user@example.com" } }],
+		require: [
+			{
+				device_posture: {
+					integration_uid: "<SOURCE_POSTURE_CHECK_ID>",
+					account_id: "<SOURCE_ACCOUNT_ID>",
+				},
+			},
+		],
+	}}
+/>
+
+Attach the returned B-owned policy to your application. The selected posture account must be trusted by B and match the user's client enrollment account. A successful check from an unrelated account does not satisfy the rule.
+
+The `account_id` field selects one account, not an allowlist. It is supported on `device_posture` rules in Include, Require, and Exclude. Put a mandatory check in Require so that another Include rule cannot satisfy the policy without it.
+
+Posture enforcement does not authenticate a user. If client authentication is off, users must still sign in through an identity provider accepted by the application.
+
+### Resolve a policy's resources in the source account
+
+To author a policy in B whose account-scoped resources resolve in A, set `policy_resolution_account_id` when creating or updating the policy. For example, this policy uses an email list from A:
+
+```json
+{
+	"name": "Allow source-account email list",
+	"decision": "allow",
+	"policy_resolution_account_id": "<SOURCE_ACCOUNT_ID>",
+	"include": [
+		{
+			"email_list": {
+				"id": "<SOURCE_EMAIL_LIST_ID>"
+			}
+		}
+	]
+}
+```
+
+A must be trusted by B. The policy remains owned and editable in B. You cannot set `policy_resolution_account_id` on a reusable policy that another account uses. You also cannot attach a source-account reusable policy that itself has this setting.
+
+These fields select different account contexts:
+
+| Field                          | Where to set it                      | Purpose                                                       |
+| ------------------------------ | ------------------------------------ | ------------------------------------------------------------- |
+| `trusting_accounts`            | A's trust settings                   | Accounts allowed to use A's resources                         |
+| `trusted_accounts`             | B's organization response, read-only | Source accounts available to B                                |
+| `policies[].account_id`        | B's application                      | Owner of a referenced reusable policy                         |
+| `device_posture.account_id`    | A policy rule                        | Owner of that posture check                                   |
+| `policy_resolution_account_id` | A B-owned policy                     | Source account for the policy's resource and identity context |
+
+## Verify access
+
+<Steps>
+
+1. Keep the client enrolled and connected to A. Confirm the user has a valid client authentication session in A.
+2. Open B's application in a fresh browser session without an existing Access application cookie. Confirm an allowed user can access it without a separate IdP sign-in. Policies that require further interaction can still prompt the user.
+3. With a test user or device that fails the policy, confirm access is denied. For posture checks, verify both a passing and failing result from A.
+
+</Steps>
+
+An existing Access cookie or a normal IdP login can hide a client authentication failure. Test those sign-in methods separately. Switching client enrollment to B does not test cross-account access.
+
+## Change or remove sharing
+
+The trust-settings endpoint supports these operations:
+
+| Method   | Behavior                                                                                                                                   |
+| -------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `GET`    | Read A's sharing mode and explicit recipients                                                                                              |
+| `PATCH`  | Update the supplied settings. A supplied `trusting_accounts` array replaces the explicit list                                              |
+| `PUT`    | Replace the settings. `grant_trust_to_all_accounts_in_org` is required. When it is `false`, an omitted `trusting_accounts` clears the list |
+| `DELETE` | Reset sharing to no recipients and turn off organization-wide sharing                                                                      |
+
+The explicit list accepts up to 100 unique account IDs. With `PATCH`, setting only `grant_trust_to_all_accounts_in_org` to `false` does not clear an existing explicit list. With `PUT`, do not combine `true` with a nonempty explicit list.
+
+Before withdrawing access, remove or replace policies and posture references that depend on the source account. Read both accounts back after the change and test a fresh request. Do not assume that changing trust immediately terminates previously issued application sessions or active connections.
+
+## Limitations and troubleshooting
+
+- Client authentication supports Allow and Block policies. Bypass and Service Auth do not use a user's client identity.
+- Policies with additional login requirements, such as MFA, purpose justification, or temporary authentication, can require the normal login flow instead of silent authentication.
+- The [client session limitations](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#limitations), including Binding Cookie incompatibility, also apply.
+- If client authentication fails, check B's `trusted_accounts`, the application's client-authentication setting, and the validity of A's client session. A connected tunnel alone does not establish an authenticated identity session.
+- If a rule fails unexpectedly, check the policy's account context, the posture check's owning account, and its result in A. Lists and posture IDs with similar names in B are different resources.
+- If requests to the trust-settings endpoint are rejected, check the credentials' Access organization and resource-sharing permissions, account membership in the Cloudflare Organization, and feature availability.

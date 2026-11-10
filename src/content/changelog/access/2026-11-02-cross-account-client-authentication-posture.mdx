@@ -1,0 +1,26 @@
+---
+title: Use client authentication and device posture across accounts
+description: Use Cloudflare One Client identities, reusable policies, and posture checks across accounts in the same Cloudflare Organization.
+date: 2026-11-02
+products:
+  - cloudflare-one
+---
+
+Cloudflare Access supports client authentication and device posture across accounts in the same Cloudflare Organization. Users can remain enrolled in one account while accessing applications in another, without a separate client enrollment.
+
+The source account grants specific accounts, or the entire organization, permission to use its Access resources. Application administrators can attach a source account's reusable policy or reference its posture checks in a policy they own. Application policies still determine which users can access each resource.
+
+For a policy that requires a posture check from a trusted source account, specify the owning account on the rule:
+
+```json
+{
+	"device_posture": {
+		"integration_uid": "<SOURCE_POSTURE_CHECK_ID>",
+		"account_id": "<SOURCE_ACCOUNT_ID>"
+	}
+}
+```
+
+Client authentication and posture enforcement are separate controls. Requiring a passing posture check does not replace user authentication.
+
+For prerequisites, trust settings, and API examples, refer to [Cross-account client authentication and posture](/cloudflare-one/access-controls/policies/cross-account-access/).
