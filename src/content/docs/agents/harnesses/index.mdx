@@ -23,7 +23,7 @@ Harnesses sit on top of the Agents SDK runtime:
 
 The runtime answers “where does this agent live and how does it stay durable?” The harness answers “what does this agent do on each turn?”
 
-Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. The Container harness uses a SQLite-backed `HarnessStore`. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
+Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. Claude Code and Codex keep their records in a SQLite-backed `HarnessStore`. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
 
 ## Compare harnesses
 
@@ -36,9 +36,9 @@ Conversation storage depends on the harness. Pi and OpenCode manage their own tr
 | [Pi](/agents/harnesses/pi/)                                        | Durable Objects via the Agents SDK                            | 🟢 Automatically resumes interrupted work                                    | 🟢 Supported               |
 | [Flue](https://flueframework.com/)                                 | Durable Objects via the Agents SDK                            | 🟢 Automatically resumes interrupted work                                    | 🟢 Supported               |
 | [OpenCode](/agents/harnesses/opencode/)                            | Durable Objects via the Agents SDK                            | 🟡 Resumes interrupted work                                                  | 🟡 Example plugin          |
-| [Container harness](/agents/harnesses/container/) (Experimental)   | Linux container driven by a Durable Object via the Agents SDK | 🟡 Reattaches after object restart; container loss fails or retries the turn | 🔴 No built-in integration |
+| [Claude Code](/agents/harnesses/claude-code/) (Experimental)       | Linux container driven by a Durable Object via the Agents SDK | 🟡 Reattaches after object restart; container loss fails or retries the turn | 🔴 No built-in integration |
+| [Codex](/agents/harnesses/codex/) (Experimental)                   | Linux container driven by a Durable Object via the Agents SDK | 🟡 Reattaches after object restart; container loss fails or retries the turn | 🔴 No built-in integration |
 | [Think](/agents/harnesses/think/) (Experimental)                   | Durable Objects via the Agents SDK                            | 🟡 Continues from saved output                                               | 🟢 Supported               |
-| [Codex](/agents/harnesses/codex/) (Experimental)                   | Wasm in Durable Objects via the Agents SDK                    | 🟡 Resumes work; interrupted steps may rerun                                 | 🟡 File tools in example   |
 | [Nanocode](/agents/harnesses/nanocode/) (Pre-1.0)                  | Wasm in its own Durable Object host                           | 🟡 Resumes turns; some tools cannot recover                                  | 🟡 Custom adapter needed   |
 | [Exo](/agents/harnesses/exo/) (Pre-1.0)                            | Wasm in Durable Objects + Linux sandbox                       | 🟡 Resumes turns; interrupted tools may fail                                 | 🔴 No integration          |
 | [Self-modifying](/agents/harnesses/self-modifying/) (Experimental) | Durable Objects via the Agents SDK + Dynamic Workers          | 🟡 Resumes turns; custom tools may rerun                                     | 🟡 Workspace in example    |
@@ -50,11 +50,11 @@ Use [Pi](/agents/harnesses/pi/) when you want Pi Durable to own the loop, transc
 
 Use [Flue](https://flueframework.com/) for a TypeScript hooks API built on Pi, with automatic recovery and a [Cloudflare target](https://flueframework.com/docs/guide/cloudflare-target/) that uses the Agents SDK.
 
-Use the [Container harness](/agents/harnesses/container/) to run Claude Code or Codex with their native tools in a Linux container. A Durable Object stores sessions and coordinates recovery. Container loss fails the interrupted turn by default; optional retry reruns it. Workspace recovery uses filesystem snapshots, so edits since the last snapshot can be lost.
+Use [Claude Code](/agents/harnesses/claude-code/) or [Codex](/agents/harnesses/codex/) to run those CLIs with their native tools, plugins, and settings in a Linux container. A Durable Object stores sessions and coordinates recovery. Container loss fails the interrupted turn by default; optional retry reruns it. Workspace recovery uses filesystem snapshots, so edits since the last snapshot can be lost.
 
 [Build your own harness](/agents/harnesses/build-your-own/) when you need control over model calls, message formats, or tool execution. Compose it from the [Agents SDK runtime](/agents/runtime/) capabilities.
 
-Explore the experimental [Codex](/agents/harnesses/codex/) example for a Rust/WebAssembly loop with SDK persistence, or the [self-modifying](/agents/harnesses/self-modifying/) example for an agent that edits its own TypeScript harness.
+Explore the experimental [self-modifying](/agents/harnesses/self-modifying/) example for an agent that edits its own TypeScript harness.
 
 [Nanocode](/agents/harnesses/nanocode/) and [Exo](/agents/harnesses/exo/) provide their own runtimes for running agents on Cloudflare.
 
