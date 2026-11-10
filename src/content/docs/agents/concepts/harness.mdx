@@ -51,9 +51,9 @@ Because each part runs separately, a failure stays small. If a container dies, o
 
 Coding agent CLIs, such as Claude Code and Codex, ship as native binaries. Each one owns its loop, its tools, and its session files, and expects a POSIX file system and a shell. A Durable Object has neither. You could patch a CLI to run without them, but it is a lot of work and the result is slower.
 
-The [Container harness](/agents/harnesses/container/) runs the CLI in a container instead, and keeps the session and the credentials in the Durable Object. Here the loop and the memory are split: the loop runs in the container, and the memory lives in the object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session.
+The Agents SDK runs these CLIs in a container instead, with `ContainerHarness`, and keeps the session and the credentials in the Durable Object. Here the loop and the memory are split: the loop runs in the container, and the memory lives in the object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session. To run one, refer to [Claude Code](/agents/harnesses/claude-code/) or [Codex](/agents/harnesses/codex/).
 
-The loop itself is not what keeps a CLI out of a Durable Object. The [Codex harness](/agents/harnesses/codex/) compiles Codex's Rust turn loop to WebAssembly and runs it in a Durable Object. What it leaves behind are the CLI's file and shell tools, so it gives the loop workspace tools instead.
+The loop itself is not what keeps a CLI out of a Durable Object. Codex's Rust turn loop, for example, compiles to WebAssembly and runs in a Durable Object. What does not come along are the CLI's file and shell tools, which need a real file system.
 
 | Arrangement                 | Loop runs in   | Memory lives in | If the container dies                                                |
 | --------------------------- | -------------- | --------------- | -------------------------------------------------------------------- |
@@ -71,7 +71,7 @@ The harnesses in the Agents SDK take work in the same way. You send a prompt and
 
 **Start with [Pi](/agents/harnesses/pi/).** The Pi harness runs [Pi Durable](https://earendil.com/posts/pi-durable/), and Pi includes most of what an agent needs: sessions and the transcript, a tool registry and [extensions](/agents/harnesses/pi/extensions/), skills, an event stream for clients, and recovery after an eviction, with replay rules for each tool.
 
-To compare Pi with Think, OpenCode, the Container harness, and the other harnesses by where they run and how they recover, refer to [Compare harnesses](/agents/harnesses/#compare-harnesses).
+To compare Pi with Think, OpenCode, Claude Code, Codex, and the other harnesses by where they run and how they recover, refer to [Compare harnesses](/agents/harnesses/#compare-harnesses).
 
 ## The harness and the runtime
 
