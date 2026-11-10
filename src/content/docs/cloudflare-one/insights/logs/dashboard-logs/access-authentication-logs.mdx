@@ -26,7 +26,7 @@ Cloudflare Access logs an authentication event whenever a user or service attemp
 
 [Identity-based authentication](#identity-based-authentication) refers to login attempts that were evaluated based on who the user is — for example, their email address, identity provider (IdP) group, SAML group, or OIDC claim.
 
-[Non-identity authentication](#non-identity-authentication) refers to requests evaluated without a user's identity-provider login, such as service-token or mTLS authentication through a Service Auth policy. Identity-based policies can also use contextual rules such as IP address or country.
+[Non-identity authentication](#non-identity-authentication) refers to requests evaluated without a user's identity-provider login. These checks can use IP address, device posture, country, a valid client certificate, or a service token.
 
 :::note
 Authentication logs do not capture the user's actions during a self-hosted or SaaS application session. To audit individual requests made during a session, refer to [Per-request logs](#per-request-logs).
@@ -132,9 +132,13 @@ To include non-identity authentication events in the dashboard:
 1. Open the [Access authentication log viewer](#view-access-authentication-logs).
 2. Set the **Service auth logs** filter to **Show service auth logs**.
 
-This includes non-identity events alongside identity-based events. The default **Hide service auth logs** setting excludes non-identity events.
+This includes successful non-identity events alongside identity-based events. The default **Hide service auth logs** setting excludes non-identity events.
 
 You can also include these events through the [Access authentication logs API](/api/resources/zero_trust/subresources/access/subresources/logs/subresources/access_requests/methods/list/) with `non_identity=true`, or query them using the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+
+:::note[Blocked non-identity events]
+Blocked non-identity authentication events are always excluded from the dashboard and the Access authentication logs REST API because they can produce very large datasets. These events are only available through the [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-access-login-events/).
+:::
 
 ## Per-request logs
 
