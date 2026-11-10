@@ -4,6 +4,8 @@ description: Generate downloadable video files faster without implementation cha
 date: 2026-11-10
 ---
 
+import { APIRequest } from "~/components";
+
 Generating [MP4 downloads from Cloudflare Stream](/stream/viewing-videos/download-videos/#generate-downloadable-mp4-files) is now up to 40% faster, with no changes to your implementation required. This improvement is most impactful for on-demand videos over 1 minute in duration.
 
 You can generate an MP4 download in the Dashboard, with the [`cf`, the Cloudflare CLI](/cf/) CLI, or by sending a `POST` request.
@@ -12,11 +14,11 @@ You can generate an MP4 download in the Dashboard, with the [`cf`, the Cloudflar
 cf stream videos downloads create default --identifier "$VIDEO_UID"
 ```
 
-```bash title="REST API"
-curl -X POST \
-  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/stream/$VIDEO_UID/downloads/default" \
-  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<APIRequest
+	path="/accounts/{account_id}/stream/{identifier}/downloads/{download_type}"
+	method="POST"
+	parameters={{ download_type: "default" }}
+/>
 
 Both of these response include the download URL and processing progress:
 
