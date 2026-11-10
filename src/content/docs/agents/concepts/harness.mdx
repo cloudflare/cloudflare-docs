@@ -51,7 +51,7 @@ Because each part runs separately, a failure stays small. If a container dies, o
 
 Coding agent CLIs, such as Claude Code and Codex, ship as native binaries. Each one owns its loop, its tools, and its session files, and expects a POSIX file system and a shell. A Durable Object has neither. You could patch a CLI to run without them, but it is a lot of work and the result is slower.
 
-The Agents SDK runs these CLIs in a container instead, with `ContainerHarness`, and keeps the session and the credentials in the Durable Object. Here the loop and the memory are split: the loop runs in the container, and the memory lives in the object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session. To run one, refer to [Claude Code](/agents/harnesses/claude-code/) or [Codex](/agents/harnesses/codex/).
+The Agents SDK runs these CLIs in a container instead, with `ContainerHarness`, and keeps the session and the credentials in the Durable Object. Here the loop and the memory are split: the loop runs in the container, and the memory lives in the object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session. To run one, refer to [Harnesses](/agents/harnesses/).
 
 The loop itself is not what keeps a CLI out of a Durable Object. Codex's Rust turn loop, for example, compiles to WebAssembly and runs in a Durable Object. What does not come along are the CLI's file and shell tools, which need a real file system.
 
