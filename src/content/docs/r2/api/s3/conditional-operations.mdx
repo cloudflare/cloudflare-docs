@@ -14,16 +14,16 @@ R2 supports conditional headers on S3 API write operations. A conditional write 
 
 The following write operations accept conditional headers:
 
-| Operation                    | Supported headers                                                                                                                       |
-| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `CreateMultipartUpload`[^create] | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                             |
-| `CompleteMultipartUpload`    | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                 |
-| `CopyObject`[^copy]          | `cf-copy-destination-if-match`, `cf-copy-destination-if-none-match`, `cf-copy-destination-if-modified-since`, `cf-copy-destination-if-unmodified-since` |
-| `PutObject`                  | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                 |
+| Operation                        | Supported headers                                                                                                                                       |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CreateMultipartUpload`[^create] | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                                 |
+| `CompleteMultipartUpload`        | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                                 |
+| `CopyObject`[^copy]              | `cf-copy-destination-if-match`, `cf-copy-destination-if-none-match`, `cf-copy-destination-if-modified-since`, `cf-copy-destination-if-unmodified-since` |
+| `PutObject`                      | `If-Match`, `If-None-Match`, `If-Modified-Since`, `If-Unmodified-Since`                                                                                 |
 
 [^create]: Conditions on `CreateMultipartUpload` are an early check at initiation only. They are not retained with the upload. For details, refer to [Conditions on `CreateMultipartUpload`](#conditions-on-createmultipartupload).
 
-[^copy]: `CopyObject` uses R2-specific headers for conditions on the destination object. These are separate from the standard `x-amz-copy-source-if-*` headers, which apply to the source object. For details, refer to [Conditional operations in `CopyObject` for the destination object](/r2/api/s3/extensions/#conditional-operations-in-copyobject-for-the-destination-object).
+[^copy]: Destination conditions on `CopyObject` are in beta. `CopyObject` uses R2-specific headers for conditions on the destination object. These are separate from the standard `x-amz-copy-source-if-*` headers, which apply to the source object. R2 checks source conditions when it selects the source object and destination conditions when it commits the copy, so the two sets of conditions are not evaluated atomically. For details, refer to [Conditional operations in `CopyObject` for the destination object](/r2/api/s3/extensions/#conditional-operations-in-copyobject-for-the-destination-object).
 
 ## Condition values
 
@@ -120,7 +120,7 @@ To enforce create-only semantics, always send the conditions on `CompleteMultipa
 
 ## Condition failures
 
-When a condition is not met, R2 returns a `412` status code with the following error:
+When a condition is not met, R2 returns a `412` status code with the following error, unless a bucket lock rule blocks the write first:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -131,6 +131,8 @@ When a condition is not met, R2 returns a `412` status code with the following e
 ```
 
 A condition failure on `CompleteMultipartUpload` aborts the upload. The upload ID cannot be used again, and its uploaded parts are discarded. Subsequent `UploadPart`, `ListParts`, and `CompleteMultipartUpload` requests for that upload ID return `404 NoSuchUpload`. `AbortMultipartUpload` on that upload ID still succeeds. To retry, start a new multipart upload and upload the parts again.
+
+If a [bucket lock rule](/r2/buckets/bucket-locks/) protects the existing object at the key, R2 returns `409 ObjectLockedByBucketPolicy` instead of `412 PreconditionFailed`, even when a conditional header would also fail. A `409` is not a condition failure, so on `CompleteMultipartUpload` R2 does not abort the upload or discard its uploaded parts. For more information, refer to [Error codes](/r2/api/error-codes/).
 
 ## Reconcile an ambiguous write
 
@@ -155,6 +157,7 @@ R2 continues processing a `CompleteMultipartUpload` request after the client dis
 
 - **`200 OK`**: The retry committed your object. The original request can no longer commit, because an upload ID can only be completed once.
 - **`412 PreconditionFailed`**: Another object already exists at the key. Your upload was not committed and is now aborted.
+- **`409 ObjectLockedByBucketPolicy`**: A bucket lock rule protects the object at the key. The retry did not commit your object and did not abort the upload. A `409` does not show whether the original request committed or whether the upload is still in progress. Send a `HeadObject` request and compare its `x-amz-meta-write-id` value with yours to check whether the original request committed. Refer to [Error codes](/r2/api/error-codes/).
 - **`404 NoSuchUpload`**: The upload is no longer in progress. Either the original completion committed the object, or the upload was aborted. An upload can be aborted by a failed condition, an `AbortMultipartUpload` request, or [lifecycle expiration](/r2/buckets/object-lifecycles/).
 
 R2 removes an upload in the same atomic commit that either creates the object or aborts the upload. After any request returns `404 NoSuchUpload` for an upload ID, no pending completion for that upload ID can commit. A `HeadObject` request made after that point shows the current state of the key. Compare its `x-amz-meta-write-id` value with the value you sent on `CreateMultipartUpload`:
