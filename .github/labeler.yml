@@ -7,7 +7,7 @@
 #   src/content/release-notes/{slug}.yaml release notes
 #   src/content/changelog/**              changelog entries (product:changelog)
 #   src/content/changelog/{slug}/**       per-product changelog entries
-#   src/content/{workers-ai-models,compatibility-flags,fields,catalog-models}
+#   src/content/{compatibility-flags,fields}
 #
 # Regenerate with: pnpm run generate:labeler
 #
@@ -90,7 +90,7 @@ product:ai-gateway:
           - src/content/partials/ai-gateway/**
           - src/assets/images/ai-gateway/**
           - src/content/changelog/ai-gateway/**
-          - src/content/catalog-models/**
+          - src/content/collections/models.ts
 
 product:ai-search:
   - changed-files:
@@ -1199,7 +1199,7 @@ product:workers-ai:
           - src/assets/images/workers-ai/**
           - src/content/release-notes/workers-ai.yaml
           - src/content/changelog/workers-ai/**
-          - src/content/workers-ai-models/**
+          - src/content/collections/models.ts
 
 product:workers-vpc:
   - changed-files:

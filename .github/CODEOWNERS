@@ -1115,10 +1115,8 @@ package.json @cloudflare/content-engineering
 
 # workers-ai
 
-/bin/fetch-catalog-models.ts @abhishekkankani @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
 /src/components/models/ @ethulia @kflansburg @mchenco @shridharathi @oiricaud @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
-/src/content/catalog-models/ @abhishekkankani @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
-/src/content/workers-ai-models/ @craigsdennis @ethulia @kflansburg @mchenco @shridharathi @oiricaud @superhighfives @cloudflare/product-owners
+/src/content/collections/models.ts @abhishekkankani @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners @cloudflare/content-engineering
 /src/pages/workers-ai/models/ @ethulia @kflansburg @mchenco @shridharathi @oiricaud @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/util/models/ @ethulia @kflansburg @mchenco @shridharathi @oiricaud @superhighfives @cloudflare/product-owners @cloudflare/content-engineering
 /src/content/docs/workers-ai/ @aninibread @craigsdennis @ethulia @kflansburg @mattrothenberg @mchenco @rita3ko @shridharathi @oiricaud @superhighfives @zeke @cloudflare/product-owners

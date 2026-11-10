@@ -3,7 +3,8 @@ import { parse } from "node-html-parser";
 import { describe, expect, test } from "vitest";
 
 import type { ModelCardData } from "~/util/models";
-import { legacyToResolved } from "~/util/models/model-resolver";
+import { catalogToResolved } from "~/util/models/model-resolver";
+import { pinnedModelNames } from "~/util/models/facets";
 import ModelCard from "./ModelCard.astro";
 
 const model: ModelCardData = {
@@ -28,6 +29,7 @@ const model: ModelCardData = {
 		{ property_id: "function_calling", value: "true" },
 		{ property_id: "reasoning", value: "true" },
 	],
+	pinnedIndex: -1,
 };
 
 const truncationClasses = (className: string | undefined): string[] =>
@@ -43,17 +45,27 @@ describe("ModelCard", () => {
 	test.each([undefined, "false", "true"])(
 		"shows hosted models as ZDR when the incoming property is %s",
 		async (zdr) => {
-			const hostedModel = legacyToResolved({
+			const hostedModel = catalogToResolved({
 				id: "hosted-fixture",
-				collection: "workers-ai-models",
+				collection: "catalog-models",
 				data: {
-					id: "hosted-fixture",
-					name: "@cf/fixture/hosted-model",
+					model_id: "@cf/fixture/hosted-model",
+					provider_id: "workers-ai",
+					name: "Hosted model",
 					description: "A hosted model",
-					task: { name: "Text Generation" },
+					task: "Text Generation",
 					tags: [],
-					properties:
-						zdr === undefined ? [] : [{ property_id: "zdr", value: zdr }],
+					context_length: null,
+					max_output_tokens: null,
+					pricing: {},
+					supports_async: false,
+					...(zdr === undefined ? {} : { zdr: zdr === "true" }),
+					examples: [],
+					metadata: {},
+					external_info: null,
+					terms: null,
+					cover_image_url: null,
+					schema_version: null,
 				},
 			});
 			const container = await AstroContainer.create();
@@ -130,5 +142,38 @@ describe("ModelCard", () => {
 		expect(compareRow?.textContent).not.toContain("Context:");
 		expect(compareRow?.textContent).not.toContain("Maximum output:");
 		expect(compareRow?.textContent).not.toContain("Pricing listed");
+	});
+
+	test("orders pinned models: hardcoded list first, then the API flag", () => {
+		const resolve = (modelId: string, pinned?: boolean) =>
+			catalogToResolved({
+				id: modelId,
+				collection: "catalog-models",
+				data: {
+					model_id: modelId,
+					provider_id: null,
+					name: modelId,
+					description: "",
+					task: "Text Generation",
+					tags: [],
+					context_length: null,
+					max_output_tokens: null,
+					pricing: {},
+					supports_async: false,
+					examples: [],
+					metadata: {},
+					external_info: null,
+					terms: null,
+					cover_image_url: null,
+					schema_version: null,
+					...(pinned === undefined ? {} : { pinned }),
+				},
+			}).pinnedIndex;
+
+		expect(resolve(pinnedModelNames[0])).toBe(0);
+		expect(resolve(pinnedModelNames[0], false)).toBe(0);
+		expect(resolve("openai/gpt-5", true)).toBe(pinnedModelNames.length);
+		expect(resolve("openai/gpt-5", false)).toBe(-1);
+		expect(resolve("openai/gpt-5")).toBe(-1);
 	});
 });
