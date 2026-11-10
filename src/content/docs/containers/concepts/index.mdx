@@ -16,7 +16,6 @@ import { ContainerConnectivity } from "~/components/react/container/ContainerCon
 import { ContainerIsolation } from "~/components/react/container/ContainerIsolation";
 import { ContainerRequestPath } from "~/components/react/container/ContainerRequestPath";
 import { ContainerLifecycle } from "~/components/react/container/ContainerLifecycle";
-import { ContainerPlacement } from "~/components/react/container/ContainerPlacement";
 
 A Cloudflare Container runs your container image in a full Linux environment on Cloudflare's network, alongside a Worker. The Worker handles incoming HTTP requests, while the Container provides the runtime, binaries, and languages your application needs. Together, they let you run Linux workloads without managing the underlying infrastructure.
 
@@ -72,15 +71,11 @@ For more information, refer to [Pricing](/containers/platform/pricing/).
 
 ## Placement
 
-_Place instances near users or within constraints._
+_Start instances in eligible locations._
 
-Cloudflare places Container instances across its network, helping applications serve users from suitable locations. You can constrain placement by region or jurisdiction when your workload has location or data residency requirements. You can also run multiple instances when your application needs more capacity.
+When a Durable Object starts a Container, Cloudflare selects a suitable location based on request routing, available capacity, and image availability. The Container and its Durable Object may run in different locations.
 
-<ContainerPlacement client:visible>
-
-Instances can run in different Cloudflare locations, and requests can be routed to an available instance. Placement constraints can keep instances within a region or jurisdiction when location matters to your application.
-
-</ContainerPlacement>
+With the `durable_object` scheduling policy, the Durable Object's jurisdiction determines eligible Container locations. Your application can start multiple Container instances when it needs more capacity.
 
 For more information, refer to [Placement](/containers/concepts/placement/).
 
@@ -118,7 +113,7 @@ When you are ready to build, start with a deployed Container or explore the avai
 ## Related resources
 
 - [Lifecycle of a Container](/containers/concepts/architecture/): the deep dive on deployment, routing, and shutdown.
-- [Placement](/containers/concepts/placement/): where instances run and how to constrain them.
+- [Placement](/containers/concepts/placement/): where instances run and how Durable Object jurisdiction affects placement.
 - [Connect to Workers and bindings](/containers/configuration/workers-connections/): reaching Cloudflare resources from a container.
 - [Limits and instance types](/containers/platform/limits/) and [Pricing](/containers/platform/pricing/): sizes, account limits, and billing.
 - [Rollouts](/containers/configuration/rollouts/): how new versions roll out across instances.

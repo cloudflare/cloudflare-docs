@@ -8,7 +8,7 @@ products:
   - containers
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { WranglerConfig } from "~/components";
 
 ## How do Container logs work?
 
@@ -60,31 +60,9 @@ You can export container logs via [Logpush](/logs/logpush/) to your preferred de
 
 ## How are container instance locations selected?
 
-When initially deploying a Container, Cloudflare will select various locations across our
-network to deploy instances to. These locations will span multiple regions.
+With the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), Cloudflare selects a suitable location when your Durable Object calls `this.ctx.container.start()`. Placement takes into account the Durable Object's jurisdiction, available capacity, and cached images.
 
-When a Container instance is requested with `this.ctx.container.start`, the nearest free
-container instance will be selected from the pre-initialized locations. This will
-likely be in the same region as the external request, but may not be. Once the container
-instance is running, any future requests will be routed to the initial location.
-
-An Example:
-
-- A user deploys a Container. Cloudflare automatically readies instances across its Network.
-- A request is made from a client in Bariloche, Argentina. It reaches the Worker in
-  Cloudflare's location in Neuquen, Argentina.
-- This Worker request calls `MY_CONTAINER.get("session-1337")` which brings up a Durable
-  Object, which then calls `this.ctx.container.start`.
-- This requests the nearest free Container instance.
-- Cloudflare recognizes that an instance is free in Buenos Aires, Argentina, and
-  starts it there.
-- A different user needs to route to the same container. This user's request reaches
-  the Worker running in Cloudflare's location in San Diego.
-- The Worker again calls `MY_CONTAINER.get("session-1337")`.
-- If the initial container instance is still running, the request is routed to the location
-  in Buenos Aires. If the initial container has gone to sleep, Cloudflare will once
-  again try to find the nearest "free" instance of the Container, likely
-  one in North America, and start an instance there.
+While the container is running, requests through its Durable Object reach that same instance. After it stops, a later start may select a different location. For more information, refer to [Placement](/containers/concepts/placement/).
 
 ## How do container updates and rollouts work?
 
@@ -140,8 +118,7 @@ SSD-like performance while using FUSE.
 
 ## What happens if I run out of memory?
 
-If you run out of memory, your instance will throw an Out of Memory (OOM) error and
-will be restarted.
+If an out-of-memory (OOM) condition stops an instance that uses the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), its Durable Object must start it again.
 
 Containers do not use swap memory.
 
@@ -170,24 +147,24 @@ For implementation details, refer to [Environment variables and secrets](/contai
 
 ## Can I run Docker inside a container (Docker-in-Docker)?
 
-Yes. Use the `docker:dind` image, and start the Docker daemon with iptables and IP forwarding turned off:
+Yes. With the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), Docker can use bridge networking, iptables, and IP forwarding. Use the `docker:dind` image:
 
 ```dockerfile title="Dockerfile"
 FROM docker:dind
 
-# Start dockerd with iptables and IP forwarding turned off, then run your app
-ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd --iptables=false --ip6tables=false --ip-forward=false & exec /path/to/your-app"]
+# Start dockerd, then run your app
+ENTRYPOINT ["sh", "-c", "dockerd-entrypoint.sh dockerd & exec /path/to/your-app"]
 ```
-
-This Dockerfile works with both [scheduling policies](/containers/configuration/scheduling-policy/). Containers that use the `durable_object` policy cannot turn on IP forwarding. In those containers, the Docker daemon exits on startup unless you pass `--ip-forward=false`.
 
 Run the Docker daemon as `root`. Rootless Docker does not start in Containers.
 
-If your application needs to wait for dockerd to become ready before using Docker, use an entrypoint script instead of the inline command above:
+If your application needs to wait for dockerd to become ready before using Docker, replace the inline command with an entrypoint script that starts the daemon and waits for it:
 
 ```sh title="entrypoint.sh"
 #!/bin/sh
 set -eu
+
+dockerd-entrypoint.sh dockerd &
 
 # Wait for dockerd to be ready
 until docker version >/dev/null 2>&1; do
@@ -196,12 +173,6 @@ done
 
 exec /path/to/your-app
 ```
-
-<Render file="dind-network-host-caveat" product="containers" />
-
-{/* Remove the second and third sentences when the linked example passes --ip-forward=false. */}
-
-For a complete working example, refer to the [Docker-in-Docker Containers example](https://github.com/th0m/containers-dind). The example uses the `default` scheduling policy. To run it with `scheduling_policy: "durable_object"`, add `--ip-forward=false` to its `dockerd` flags.
 
 ## How do I allow or disallow egress from my container?
 
