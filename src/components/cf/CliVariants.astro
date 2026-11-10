@@ -1,0 +1,40 @@
+---
+/**
+ * CliVariants — Wrangler and cf versions of the same passage, such as a
+ * paragraph, a list of steps or a whole procedure. Readers switch between
+ * them with the shared CLI selector, and their choice applies site-wide.
+ *
+ * Usage:
+ *   <CliVariants>
+ *   <CliVariant cli="wrangler">…</CliVariant>
+ *   <CliVariant cli="cf">…</CliVariant>
+ *   </CliVariants>
+ *
+ * Renders the same scope markup as `CliPreferenceSwitch`. Children render
+ * once to HTML so they can be validated without rendering them twice, which
+ * would change generated IDs.
+ */
+import CliPreferenceSelector from "../ui/cli-preference/CliPreferenceSelector.astro";
+import { validateCliVariants } from "./cli-variants";
+
+interface Props {
+	/**
+	 * Heading ID to keep on the visible variant when both variants start with
+	 * the same heading, so links to that heading keep working.
+	 */
+	anchorId?: string;
+}
+
+const { anchorId } = Astro.props;
+const html = await Astro.slots.render("default");
+const problem = validateCliVariants(html);
+
+if (problem) {
+	throw new Error(`[CliVariants] ${problem} (on "${Astro.url.pathname}")`);
+}
+---
+
+<div data-nb-cli-preference-scope data-nb-cli-anchor={anchorId} class="w-full">
+	<CliPreferenceSelector />
+	<Fragment set:html={html} />
+</div>
