@@ -1,0 +1,11 @@
+---
+title: Partitioned cookie support for Bot Management
+description: Cloudflare now supports partitioned storage for the Bot Management cookie in compatible cross-site contexts.
+date: 2026-11-09
+---
+
+Cloudflare now adds the `Partitioned` attribute to the `__cf_bm` cookie on compatible HTTPS requests. The attribute is added only when the cookie can also be issued with `SameSite=None` and `Secure`.
+
+When users access your content through an `<iframe>` on another site, the browser handles `__cf_bm` as a third-party cookie. Browser privacy controls may block third-party cookies. Adding `Partitioned` allows the `__cf_bm` cookie to persist within that top-level site. This means that Bot Management can preserve continuity across requests, even when your content is embedded on another site.
+
+For more information, refer to [Cloudflare cookies](/fundamentals/reference/policies-compliances/cloudflare-cookies/#__cf_bm-cookie-for-cloudflare-bot-products).
