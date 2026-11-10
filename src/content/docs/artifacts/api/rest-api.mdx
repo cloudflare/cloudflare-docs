@@ -81,7 +81,7 @@ Returned repo tokens are secrets. Do not log them or store them in long-lived re
 
 ```ts
 export type NamespaceName = string;
-export type Jurisdiction = "eu" | "us";
+export type Jurisdiction = "unrestricted" | "eu" | "us" | "fedramp";
 export type RepoName = string;
 export type BranchName = string;
 export type Scope = "read" | "write";
@@ -164,7 +164,7 @@ Use the account-level base URL.
 Request body:
 
 - `namespace` <Type text="NamespaceName" /> <MetaInfo text="required" />
-- `jurisdiction` <Type text='"eu" | "us"' /> <MetaInfo text="optional (default: unrestricted)" />
+- `jurisdiction` <Type text='"unrestricted" | "eu" | "us" | "fedramp"' /> <MetaInfo text="optional (default: unrestricted)" />
 
 ```bash
 curl --request POST "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces" \
@@ -274,7 +274,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
+		"token": "art_v2_x_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
 	"errors": [],
@@ -457,7 +457,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
-		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
+		"token": "art_v2_x_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
 		"objects": 128
 	},
 	"success": true,
@@ -511,7 +511,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/react-mirror.git",
-		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
+		"token": "art_v2_x_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
 	},
 	"success": true,
 	"errors": [],
@@ -684,7 +684,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
 {
 	"result": {
 		"id": "0123456789abcdef",
-		"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+		"plaintext": "art_v2_x_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 		"scope": "read",
 		"expires_at": "<ISO_TIMESTAMP>"
 	},

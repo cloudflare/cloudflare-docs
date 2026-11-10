@@ -17,15 +17,29 @@ This is a list of Artifacts errors.
 
 | Name | Code | Description |
 |------|------|-------------|
-| `ALREADY_EXISTS` | 10201 | The target repository already exists in the namespace. |
-| `NOT_FOUND` | 10200 | The repository or remote resource does not exist. |
-| `IMPORT_IN_PROGRESS` | 10302 | The repository is still being imported and is not yet available. |
-| `FORK_IN_PROGRESS` | 10303 | The repository is still being forked and is not yet available. |
+| `AUTH_REQUIRED` | 10000 | The request did not include credentials. |
+| `AUTH_MALFORMED` | 10001 | The `Authorization` header or token is malformed. |
+| `AUTH_INVALID` | 10002 | The credentials are invalid, expired, or revoked. |
+| `AUTH_INSUFFICIENT_SCOPE` | 10003 | The credentials do not grant the required permission, for example a `read` token used for `git push`. |
+| `GATE_DENIED` | 10004 | Access to Artifacts is denied for the account, for example because Artifacts is not enabled. |
 | `INVALID_INPUT` | 10100 | A request parameter is missing, malformed, or outside the accepted range. |
 | `INVALID_REPO_NAME` | 10101 | The repository name does not meet naming requirements. |
+| `INVALID_TOKEN_FORMAT` | 10102 | The token does not match a supported token format. |
 | `INVALID_TTL` | 10103 | The token TTL is outside the allowed range (60–31,536,000 seconds). |
 | `INVALID_URL` | 10104 | The source URL does not point to a valid git repository. |
+| `BRANCH_NOT_FOUND` | 10105 | The requested branch does not exist in the source repository. |
 | `REMOTE_AUTH_REQUIRED` | 10106 | The remote repository requires authentication. |
-| `UPSTREAM_UNAVAILABLE` | 10401 | The remote git server could not be reached. |
-| `MEMORY_LIMIT` | 10402 | The operation exceeds service memory limits. |
+| `REQUEST_TIMEOUT` | 10107 | A Git push upload stalled and the request timed out. |
+| `NOT_FOUND` | 10200 | The repository or remote resource does not exist. |
+| `ALREADY_EXISTS` | 10201 | The target repository already exists in the namespace. |
+| `NAMESPACE_NOT_EMPTY` | 10202 | The namespace still contains repositories. Delete its repositories before deleting the namespace. |
+| `FORK_FAILED` | 10300 | The fork could not be completed. |
+| `IMPORT_FAILED` | 10301 | The import could not be completed. |
+| `IMPORT_IN_PROGRESS` | 10302 | The repository is still being imported and is not yet available. |
+| `FORK_IN_PROGRESS` | 10303 | The repository is still being forked and is not yet available. |
+| `CREATE_IN_PROGRESS` | 10304 | The repository is still being created and is not yet available. |
+| `NAMESPACE_DELETION_IN_PROGRESS` | 10305 | The namespace is being deleted. Retry after deletion completes. |
+| `NAMESPACE_ACTIVATION_IN_PROGRESS` | 10306 | The namespace is still being created. Retry the request shortly. |
 | `INTERNAL_ERROR` | 10400 | An unexpected internal error occurred. |
+| `UPSTREAM_UNAVAILABLE` | 10401 | The remote git server could not be reached. |
+| `MEMORY_LIMIT` | 10402 | The operation exceeds service memory or size limits. |
