@@ -219,7 +219,7 @@ Connection states flow: `authenticating` (needs OAuth) → `connecting` (complet
 
 ## Handle failures
 
-When OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field. Display this error in your UI and allow users to retry:
+When OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field. The server stays failed across wakes, and nothing retries it on a timer. Display the error in your UI, and let users retry with `reconnectMcpServer(serverId)`, which forgets the failure and its pending link and connects again. This example calls a `/reconnect` route on the agent that does that:
 
 <TypeScriptExample>
 
@@ -242,21 +242,11 @@ function App() {
 		onMcpUpdate: setMcpState,
 	});
 
-	const handleRetry = async (
-		serverId: string,
-		serverUrl: string,
-		name: string,
-	) => {
-		// Remove failed connection
-		await fetch(`/agents/my-agent/session-id/disconnect`, {
+	const handleRetry = async (serverId: string) => {
+		// The agent's /reconnect route calls this.reconnectMcpServer(serverId)
+		const response = await fetch(`/agents/my-agent/session-id/reconnect`, {
 			method: "POST",
 			body: JSON.stringify({ serverId }),
-		});
-
-		// Retry connection
-		const response = await fetch(`/agents/my-agent/session-id/connect`, {
-			method: "POST",
-			body: JSON.stringify({ serverUrl, name }),
 		});
 		const { authUrl } = await response.json();
 		if (authUrl) window.open(authUrl, "_blank");
@@ -271,7 +261,7 @@ function App() {
 						<div>
 							{server.error && <p className="error">{server.error}</p>}
 							<button
-								onClick={() => handleRetry(id, server.server_url, server.name)}
+								onClick={() => handleRetry(id)}
 							>
 								Retry Connection
 							</button>
@@ -293,7 +283,7 @@ Common failure reasons:
 - **Permission denied**: User lacks required permissions
 - **Expired session**: OAuth session timed out
 
-Failed connections remain in state until removed with `removeMcpServer(serverId)`. The error message is automatically escaped to prevent XSS attacks, so it is safe to display directly in your UI.
+A callback where the user denied access is recorded as a failure too, so a later wake does not start the flow again. Failed connections remain in state until you call `reconnectMcpServer(serverId)` or remove them with `removeMcpServer(serverId)`. The error message is automatically escaped to prevent XSS attacks, so it is safe to display directly in your UI.
 
 ## Complete example
 
