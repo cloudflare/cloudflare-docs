@@ -22,6 +22,8 @@ Use the GraphQL Analytics API to review data for Cloudflare Network Firewall (fo
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 
+For GraphQL nodes by ruleset phase, refer to [Network Firewall analytics](/cloudflare-network-firewall/about/analytics/#verdict-and-outcome).
+
 ## Obtain Cloudflare Account ID
 
 To construct a Network Firewall GraphQL query for an object, you will need a Cloudflare Account ID
@@ -118,7 +120,7 @@ query MagicFirewallObtainRules(
 
 Use the example below to display the total number of packets and bits for the top 10 traffic streams that Network Firewall IDS has detected in the last hour.
 
-By setting `verdict` to `drop` and `outcome` as `pass`, we are filtering for traffic that was marked as a detection (i.e. verdict was drop) but was not dropped (for example, outcome was `pass`). This is because currently, Network Firewall IDS only detects malicious traffic but does not drop the traffic.
+By setting `verdict` to `drop` and `outcome` as `pass`, we are filtering for traffic that was marked as a detection (that is, verdict was drop) but was not dropped (for example, outcome was `pass`). This is because currently, Network Firewall IDS only detects malicious traffic but does not drop the traffic.
 
 For each stream, display the:
 

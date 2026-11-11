@@ -11,4 +11,59 @@ head:
 
 ## GraphQL Analytics
 
-Use the GraphQL Analytics API to view data for requests passing through Cloudflare's network. For more information about using the GraphQL Analytics API and getting started, refer to [GraphQL Analytics API](/analytics/graphql-api/tutorials/querying-network-firewall-samples/).
+Use the GraphQL Analytics API to view data for requests passing through Cloudflare's network. For more information about using the GraphQL Analytics API and getting started, refer to [GraphQL Analytics API](/analytics/graphql-api/) and the [GraphQL API network firewall samples tutorial](/analytics/graphql-api/tutorials/querying-network-firewall-samples/).
+
+Refer to the [Network Firewall GraphQL Analytics tutorial](/cloudflare-network-firewall/tutorials/graphql-analytics/) for sample queries for each Network Firewall phase.
+
+### Verdict and outcome
+
+Use `verdict` and `outcome` values to filter GraphQL queries. The `verdict` describes the rule evaluation or detection. For example, when a packet matches a drop rule expression, `verdict` is set to "`drop`".
+The `outcome` describes the actual action that the system took. Samples matching a drop rule will set `outcome` to `drop`. But if the rule was disabled, the packet is not dropped, so `outcome` is set to "`pass`".
+
+Each [Network Firewall phase](/ruleset-engine/reference/phases-list/#network-layer) uses these values slightly differently.
+
+#### Custom and managed phases
+
+Custom rules use phase `magic_transit`. Managed rules use phase `magic_transit_managed`. Both use the `magicFirewallNetworkAnalyticsAdaptiveGroups` GraphQL node.
+
+For packets matching custom rules, the values depend on the rule's status and action:
+
+- A disabled custom rule has `verdict=drop` and `outcome=pass`, regardless of its action.
+- An enabled Block rule has `verdict=drop` and `outcome=drop`.
+- An enabled Skip rule has `verdict=pass` and `outcome=pass`.
+
+Managed rules use the effective action. Block and Skip use the same values as enabled custom rules.
+
+A managed rule with a Log action has `verdict=drop` and `outcome=pass`. Disabled managed rules do not produce matching-rule samples.
+
+
+#### IDS
+
+The Intrusion Detection System (IDS) is phase `magic_transit_ids_managed` and uses the `magicIDPSNetworkAnalyticsAdaptiveGroups` GraphQL node.
+It detects signatures but does not block packets.
+
+If a packet matches an IDS signature, `verdict=drop` and `outcome=pass`.
+If a packet matches no signatures, `verdict=pass` and `outcome=pass`.
+
+#### Rate limiting (beta)
+
+Rate limiting is phase `magic_transit_ratelimit` and uses the `magicFirewallRateLimitNetworkAnalyticsAdaptiveGroups` GraphQL node.
+
+Each rate limiting rule has a budget, over which packets are dropped. Each rule can only have `action=block`.
+But a rate limiting rule can be disabled.
+
+
+Packets matching a disabled rule (that is, `enabled=false`) will show up with `verdict=drop` and `outcome=pass`.
+Packets matching a rate limiting rule but allowed within the budget will show up with `verdict=pass` and `outcome=pass`.
+Packets matching a rate limiting rule but dropped over the budget will show up with `verdict=drop` and `outcome=drop`.
+
+### Default samples
+
+After Custom/Managed rules are run, any packets that went through the systems without matching any enabled pass/drop rules are sampled and reported with an empty rule ID.
+These samples are called default samples. Default samples are useful to understand which packets are slipping through the system.
+That is, a query to look at packets the Custom/Managed system allowed = Packets that matched an enabled pass rule + Default samples.
+
+The rate limiting system also produces default samples. These samples provide an estimate of the number of packets that exited the system without being dropped.
+A packet can pass through the system while matching multiple rules and be allowed each time because it is under the budget.
+So a query that counts packets that matched all enabled pass rules will overcount.
+So a query to look at packets that the rate limiting system allowed = Default samples only.
