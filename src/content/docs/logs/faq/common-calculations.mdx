@@ -23,4 +23,4 @@ To approximate bytes served by the origin, use the `CacheResponseBytes` field in
 
 Bandwidth (or data transfer) can be calculated by adding the `EdgeResponseBytes` field in HTTP request logs. There are some types of requests that are not factored into bandwidth calculations. In order to only include relevant requests in calculations, add the filter `ClientRequestSource = 'eyeball'`.
 
-
+`EdgeResponseBytes` counts response bytes when Cloudflare sends them, so for requests that the client cancels before the response is complete, it can include data the client never received. Refer to [Responses the client stops reading](/cache/troubleshooting/edge-vs-cache-response-bytes/#responses-the-client-stops-reading).
