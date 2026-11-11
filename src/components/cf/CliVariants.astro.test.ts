@@ -33,6 +33,13 @@ test("renders both variants inside one CLI preference scope", async () => {
 	expect(scope?.querySelector('[data-nb-cli-variant="cf"]')?.textContent).toBe(
 		"Run cf.",
 	);
+	expect(
+		scope?.querySelectorAll("[data-nb-cli-guidance], [data-nb-cli-variant]"),
+	).toEqual([
+		scope?.querySelector("[data-nb-cli-guidance]"),
+		scope?.querySelector('[data-nb-cli-variant="cf"]'),
+		scope?.querySelector('[data-nb-cli-variant="wrangler"]'),
+	]);
 });
 
 test("fails the build when a variant is missing", async () => {
@@ -56,7 +63,10 @@ test("CliVariant renders a marked panel for its CLI", async () => {
 
 	expect(panel?.getAttribute("data-nb-cli-variant")).toBe("cf");
 	expect(panel?.getAttribute("data-cli-variants-item")).toBe("cf");
-	expect(panel?.textContent).toBe("Run cf.");
+	expect(panel?.querySelector("[data-nb-cli-label]")?.textContent.trim()).toBe(
+		"Cloudflare CLI",
+	);
+	expect(panel?.lastElementChild?.textContent).toBe("Run cf.");
 });
 
 test("CliVariant rejects an unknown CLI", async () => {

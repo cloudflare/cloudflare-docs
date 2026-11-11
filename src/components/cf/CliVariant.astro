@@ -7,6 +7,7 @@
  * show or hide it. `data-cli-variants-item` lets the parent count its own
  * children without counting variants rendered by nested components.
  */
+import CliVariantLabel from "../ui/cli-preference/CliVariantLabel.astro";
 import type { CliPreference } from "../ui/cli-preference/cli-preference";
 
 interface Props {
@@ -23,5 +24,6 @@ if (cli !== "wrangler" && cli !== "cf") {
 ---
 
 <div data-nb-cli-variant={cli} data-cli-variants-item={cli}>
+	<CliVariantLabel cli={cli} />
 	<slot />
 </div>

@@ -124,6 +124,7 @@ cf auth login
 - Leave a blank line after each opening `<CliVariant>` tag and before each closing tag so the content is parsed as Markdown.
 - Do not nest `CliVariants`, and do not put components with their own CLI selector (`cfCommand`, `cfConfig`, `cfNamespace`) inside a variant – the build fails. Write the cf command directly in the cf variant.
 - Keep headings outside the component. If both variants must start with the same heading, pass its ID as `anchorId` on `CliVariants`.
+- The page's Markdown version includes both variants, cf first, each labelled, after a sentence telling agents to use `cf` for new projects and the project's existing CLI otherwise. Do not write that guidance yourself.
 
 ---
 

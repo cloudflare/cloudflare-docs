@@ -14,8 +14,9 @@
  * once to HTML so they can be validated without rendering them twice, which
  * would change generated IDs.
  */
+import CliPreferenceGuidance from "../ui/cli-preference/CliPreferenceGuidance.astro";
 import CliPreferenceSelector from "../ui/cli-preference/CliPreferenceSelector.astro";
-import { validateCliVariants } from "./cli-variants";
+import { orderCliVariants, validateCliVariants } from "./cli-variants";
 
 interface Props {
 	/**
@@ -36,5 +37,6 @@ if (problem) {
 
 <div data-nb-cli-preference-scope data-nb-cli-anchor={anchorId} class="w-full">
 	<CliPreferenceSelector />
-	<Fragment set:html={html} />
+	<CliPreferenceGuidance />
+	<Fragment set:html={orderCliVariants(html)} />
 </div>

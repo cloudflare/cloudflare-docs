@@ -154,18 +154,18 @@ const primitives = [
 
 					{p.cfCommand ? (
 						<>
-							<div data-nb-cli-variant="wrangler">
-								<CommandBlock
-									id={`${sectionId}-cmd-${p.id}-wrangler`}
-									command={p.command}
-									rounded
-									class="mb-6 max-w-[680px]"
-								/>
-							</div>
 							<div data-nb-cli-variant="cf">
 								<CommandBlock
 									id={`${sectionId}-cmd-${p.id}-cf`}
 									command={p.cfCommand}
+									rounded
+									class="mb-6 max-w-[680px]"
+								/>
+							</div>
+							<div data-nb-cli-variant="wrangler">
+								<CommandBlock
+									id={`${sectionId}-cmd-${p.id}-wrangler`}
+									command={p.command}
 									rounded
 									class="mb-6 max-w-[680px]"
 								/>
