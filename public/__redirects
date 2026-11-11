@@ -395,6 +395,7 @@
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
+/agents/harnesses/container/ /agents/harnesses/claude-code/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
@@ -411,6 +412,10 @@
 /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-metrics/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/ 301
 
 # AI Gateway
+/ai-gateway/features/auto-router/ /ai-gateway/features/routing/auto-router/ 301
+/ai-gateway/features/dynamic-routing/ /ai-gateway/features/routing/dynamic-routing/ 301
+/ai-gateway/features/dynamic-routing/json-configuration/ /ai-gateway/features/routing/dynamic-routing/json-configuration/ 301
+/ai-gateway/features/dynamic-routing/usage/ /ai-gateway/features/routing/dynamic-routing/usage/ 301
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
@@ -731,10 +736,11 @@
 # Containers
 /containers/beta-info/ /containers/faq/ 301
 # Containers API
-/containers/container-package/ /containers/api/container-class/ 301
+/containers/api/container-class/ /containers/api/durable-object-container/ 301
+/containers/container-package/ /containers/api/durable-object-container/ 301
 /containers/durable-object-methods/ /containers/api/durable-object-container/ 301
-/containers/container-class/ /containers/api/container-class/ 301
-/containers/reference/container-class/ /containers/api/container-class/ 301
+/containers/container-class/ /containers/api/durable-object-container/ 301
+/containers/reference/container-class/ /containers/api/durable-object-container/ 301
 /containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301
 /durable-objects/api/container/ /containers/api/durable-object-container/ 301
 # Containers IA rework: loose pages folded into core sections

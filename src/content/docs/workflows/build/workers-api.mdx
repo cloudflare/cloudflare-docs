@@ -325,9 +325,34 @@ steps = 25_000
 
 Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
 
+## Workflow concurrency limits
+
+To cap how many instances of a single Workflow run at the same time, configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"concurrency": {
+				"limit": 10,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Instances above the limit are queued and start automatically as running instances finish. The limit cannot be higher than your account's [concurrency limit](/workflows/reference/limits/). Refer to [Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits) for how limits are applied, and how to change or remove them.
+
 ## Default instance retention
 
-By default, the state of a finished Workflow instance is retained for the maximum [retention period](/workflows/reference/limits/) available on your account. To retain instances for a shorter period, configure `default_retention` on the Workflow binding in your Wrangler configuration:
+By default, the state of a finished Workflow instance is retained for 3 days on the Workers Free plan. On the Workers Paid plan, instance state is retained for 7 days by default. Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/) keep their existing 30-day default. To retain instances for a different period, up to your account's [retention limit](/workflows/reference/limits/), configure `default_retention` on the Workflow binding in your Wrangler configuration:
 
 <WranglerConfig>
 
@@ -398,7 +423,7 @@ Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `
 
 </WranglerConfig>
 
-A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, `default_retention`, and `jurisdiction`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `concurrency`, `schedules`, `default_retention`, and `jurisdiction`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
 
 You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
 
@@ -825,7 +850,7 @@ interface WorkflowInstanceCreateOptions {
 	params?: unknown;
 	/**
 	 * The retention policy for the Workflow instance.
-	 * Defaults to the maximum retention period available for the owner's account.
+	 * Defaults to the Workflow's `default_retention`, then the account default, then the plan default (3 days on Workers Free, 7 days on Workers Paid).
 	 */
 	retention?: {
 		/**
@@ -843,7 +868,7 @@ interface WorkflowInstanceCreateOptions {
 type WorkflowRetentionDuration = WorkflowSleepDuration;
 ```
 
-If `retention` is not set, instance state is retained for the [`default_retention`](/workflows/build/workers-api/#default-instance-retention) configured on the Workflow binding. If the binding does not set a default either, instance state is retained for the maximum retention period available on your account (3 days on the Workers Free plan, 30 days on the Workers Paid plan). Refer to the [retention limit](/workflows/reference/limits/) for more information.
+If `retention` is not set, instance state is retained for the [`default_retention`](/workflows/build/workers-api/#default-instance-retention) configured on the Workflow binding. If the binding does not set a default either, the account-level default applies, if one is set. Otherwise, instance state is retained for 3 days on the Workers Free plan, or 7 days on the Workers Paid plan (30 days for Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/)). Refer to the [retention limit](/workflows/reference/limits/) for more information.
 
 The following example creates an instance that retains state for 1 day after success and 7 days after an error:
 

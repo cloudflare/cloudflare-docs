@@ -11,7 +11,7 @@ sidebar:
   label: MCP server portals
 ---
 
-import { Render, Tabs, TabItem, CURL, Steps } from "~/components";
+import { Render, Tabs, TabItem, CURL, Steps, DashButton } from "~/components";
 
 An MCP server portal centralizes multiple [Model Context Protocol (MCP) servers](https://www.cloudflare.com/learning/ai/what-is-model-context-protocol-mcp/) onto a single HTTP endpoint.
 
@@ -345,14 +345,18 @@ When you add an MCP server to a portal, all of its tools and prompts are availab
 
 To hide specific tools or prompts from portal users:
 
+<Steps>
+
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **MCP Portals**.
+
+   <DashButton url="/?to=/:account/access/ai-controls/mcp-server-portal" zeroTrust />
+
 2. Find the portal you want to configure, then select the three dots > **Edit**.
-3. Under **Servers**, select the server name to open its tools panel.
-4. Scroll down to the **Tools** section, then turn off the toggle next to any tool or prompt that you want to hide from users.
+3. Under **Servers**, find the server you want to configure. Select the value in **Tools authorized** or **Prompts authorized** (for example, `10/10`).
+4. Turn off the **Status** toggle next to each tool or prompt that you want to hide.
+5. Select **Back to portal**, then select **Save MCP server portal**.
 
-   ![The tools panel for an MCP server shows a list of tools with a toggle next to each one.](~/assets/images/cloudflare-one/applications/mcp-portal-manage-tools.png)
-
-5. Select **Save**.
+</Steps>
 
 Turned-off tools will not appear in the portal's tool list. Users will not be able to call them.
 
@@ -989,7 +993,38 @@ The agent can retry the request, but it will continue to be blocked until the co
 
 Users can connect to your MCP server running at `https://<subdomain>.<domain>/mcp` using [Workers AI Playground](https://playground.ai.cloudflare.com/), [MCP inspector](https://github.com/modelcontextprotocol/inspector), or [other MCP clients](/agents/model-context-protocol/guides/remote-mcp-server/#connect-from-an-mcp-client) that support remote MCP servers.
 
+### Connect Claude Desktop
+
+<Steps>
+
+1. Go to **Zero Trust** > **Access controls** > **MCP Portals**.
+
+   <DashButton url="/?to=/:account/access/ai-controls/mcp-server-portal" zeroTrust />
+
+2. Find the portal you want to connect, then select the three dots > **Edit**.
+3. In **Advanced settings**, add `https://claude.ai/api/mcp/auth_callback` to **Allowed redirect URIs**, then select **Save**.
+4. Add a custom connector in Claude:
+
+   a. For Free, Pro, and Max plans, go to **Customize** > **Connectors**. Select **+ Add** > **Add custom connector**.
+
+   b. For Team and Enterprise plans, an owner must go to **Organization settings** > **Connectors**. Select **Add** > **Custom** > **Web**.
+
+5. Enter `https://<subdomain>.<domain>/mcp` as the MCP server URL. Complete the remaining connector settings, then select **Add**.
+6. For Team and Enterprise plans, go to **Customize** > **Connectors**. Find the new connector, then select **Connect**.
+
+</Steps>
+
+For plan-specific instructions, refer to [Claude's custom connector guide](https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp).
+
+:::note
+Claude connects to remote MCP servers from Anthropic's cloud infrastructure, including when you use Claude Desktop. The connection does not pass through the Cloudflare One Client on the user's device. Do not add a Cloudflare root certificate to the Claude connector.
+:::
+
+### Test in Workers AI Playground
+
 To test in Workers AI Playground:
+
+<Steps>
 
 1. Go to [Workers AI Playground](https://playground.ai.cloudflare.com/).
 2. Under **MCP Servers**, enter `https://<subdomain>.<domain>/mcp` for the portal URL.
@@ -997,6 +1032,8 @@ To test in Workers AI Playground:
 4. In the popup window, log in to your Cloudflare Access identity provider.
 5. The popup window will list the MCP servers in the portal that require authentication. For each of these MCP servers, select **Connect** and follow the login prompts.
 6. Select **Done** to complete the portal authentication process.
+
+</Steps>
 
 Workers AI Playground will show a **Connected** status and list the available tools. You can now ask the AI model to complete a task using an available tool. Requests made to an MCP server will appear in your [portal logs](#view-portal-logs).
 
@@ -1007,6 +1044,19 @@ For MCP clients with server configuration files, add the portal as a remote HTTP
 	"mcpServers": {
 		"example-mcp-server": {
 			"url": "https://<subdomain>.<domain>/mcp"
+		}
+	}
+}
+```
+
+For clients that do not support remote MCP servers directly, use `mcp-remote` as a local bridge:
+
+```json title="MCP client configuration using mcp-remote"
+{
+	"mcpServers": {
+		"example-mcp-server": {
+			"command": "npx",
+			"args": ["-y", "mcp-remote@latest", "https://<subdomain>.<domain>/mcp"]
 		}
 	}
 }
@@ -1024,7 +1074,7 @@ The homepage shows:
 
 - The portal name and your organization branding (if configured in Cloudflare Access)
 - The MCP endpoint URL with a copy button
-- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients with OS-specific file paths
+- Per-client connection instructions for Claude Desktop, Workers AI Playground, OpenCode, Windsurf, and other MCP clients
 
 Authenticated users see their email address and a **Sign out** button in the session bar. Users who are not authenticated can still view the homepage and connection instructions.
 
@@ -1246,7 +1296,8 @@ MCP server portals have the following known limitations:
 - **Some MCP servers block proxy-based clients.** Certain MCP servers reject requests from proxy-based clients like MCP server portals, returning a `403` error on the registration endpoint. These servers are not compatible with MCP server portals until those providers add Cloudflare as a supported MCP client.
 - **Manual OAuth capabilities are captured during the first user authorization.** Servers configured with [manual OAuth credentials](#configure-manual-oauth-credentials) remain in **Waiting** status until a user completes upstream OAuth. Cloudflare stores the tools and prompts returned during that connection. Background and manual capability synchronization do not refresh them.
 - **Admin OAuth tokens can expire silently.** The admin credential used to [authenticate an MCP server](#reauthenticate-the-mcp-server) is subject to the upstream provider's token expiration policy. When the token expires, the server status changes to **Error** or **Sync required** and the server will not appear in the portal for end users. Admins are not notified when this happens. Periodically check the [server status](#server-status) and [reauthenticate](#reauthenticate-the-mcp-server) servers that show an error.
-- **Each portal supports up to 80 MCP servers.**
+- **Upstream MCP tool calls time out after 60 seconds.** The portal returns an error if the upstream server does not respond before the timeout. For longer operations, return a job ID immediately. Expose separate tools to check the operation status and retrieve results.
+- **Each portal supports up to 120 MCP servers.**
 
 ## Policy limitations
 

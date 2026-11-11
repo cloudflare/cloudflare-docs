@@ -1,0 +1,318 @@
+---
+/* `role="list"` on the lists below is intentional, not redundant: Safari
+   + VoiceOver drop the implicit list role when `list-style: none` is
+   applied, so the explicit role is required to preserve list semantics
+   for screen reader users. */
+/* eslint-disable astro/jsx-a11y/no-redundant-roles */
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+const sources = [
+	{
+		label: "Internet",
+		icon: "ph:globe",
+		iconClass: "node-icon internet-icon",
+	},
+	{
+		label: "Cloudflare One Client",
+		icon: "warp-client",
+		iconClass: "node-icon client-icon",
+	},
+	{
+		label: "Cloudflare WAN",
+		icon: "cloudflare-wan",
+		iconClass: "node-icon wan-icon",
+	},
+] as const;
+
+const dataCenters = [
+	{ name: "Data center 1", tunnel: "Tunnel 1" },
+	{ name: "Data center 2", tunnel: "Tunnel 2" },
+];
+---
+
+<figure
+	class="tunnel-lb-diagram not-content"
+	aria-label="Load balancing traffic to applications behind Cloudflare Tunnel: traffic from the Internet, the Cloudflare One Client, and Cloudflare WAN reaches a Cloudflare load balancer, which steers it to one of two data centers. Each data center has its own tunnel and load balancer pool, and cloudflared forwards traffic to two app servers."
+>
+	<div class="diagram">
+		<ul class="row sources-row" role="list">
+			{sources.map((source) => (
+				<li class="node-card">
+					<div class="node-header">
+						<span class={source.iconClass} aria-hidden="true">
+							<Icon name={source.icon} />
+						</span>
+						<span class="node-title">{source.label}</span>
+					</div>
+				</li>
+			))}
+		</ul>
+
+		<div class="row single-row">
+			<div class="node-card lb-card">
+				<div class="node-header">
+					<span class="node-icon lb-icon" aria-hidden="true">
+						<Icon name="load-balancing" />
+					</span>
+					<a class="node-title" href="/load-balancing/">
+						Cloudflare Load Balancer
+					</a>
+				</div>
+				<p class="node-caption">
+					Steers traffic to healthy tunnels, with one pool per tunnel
+				</p>
+			</div>
+		</div>
+
+		<ul class="row dc-row" role="list">
+			{dataCenters.map((dc) => (
+				<li class="node-card">
+					<span class="dc-name">{dc.name}</span>
+					<div class="node-header">
+						<span class="node-icon tunnel-icon" aria-hidden="true">
+							<Icon name="tunnel" />
+						</span>
+						<span class="node-title">{dc.tunnel}</span>
+					</div>
+					<p class="node-caption">
+						<code>cloudflared</code> forwards traffic to your app servers
+					</p>
+					<ul class="server-list" role="list">
+						<li class="server">App server</li>
+						<li class="server">App server</li>
+					</ul>
+				</li>
+			))}
+		</ul>
+	</div>
+</figure>
+
+<style>
+	.tunnel-lb-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-caption: light-dark(#737373, #a3a3a3);
+		--map-brand: #f6821f;
+		--map-lb: light-dark(#0ea5e9, #38bdf8);
+		--map-tunnel: light-dark(#0891b2, #67e8f9);
+		--map-wan: light-dark(#db2777, #f9a8d4);
+		--map-internet: light-dark(#10b981, #34d399);
+
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 1.5rem 0;
+		padding: 22px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 14px 14px;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.tunnel-lb-diagram a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.diagram {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+	}
+
+	.row {
+		position: relative;
+		display: grid;
+		gap: 16px;
+		align-items: stretch;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.row::before {
+		content: "";
+		position: absolute;
+		top: -14px;
+		left: 50%;
+		width: 2px;
+		height: 12px;
+		background: var(--map-line);
+	}
+
+	.row:first-child::before {
+		display: none;
+	}
+
+	.sources-row {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.single-row {
+		grid-template-columns: minmax(0, 1fr);
+		justify-items: center;
+	}
+
+	.single-row .node-card {
+		width: 100%;
+		max-width: 420px;
+	}
+
+	.dc-row {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.node-card {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 12px 14px;
+		border: 1px solid var(--map-line);
+		border-radius: 10px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		color: var(--map-text);
+	}
+
+	.lb-card {
+		border-color: color-mix(in srgb, var(--map-lb) 40%, var(--map-line));
+	}
+
+	.node-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+	}
+
+	.node-title {
+		min-width: 0;
+		color: var(--map-text);
+		font-size: 14px;
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		text-align: center;
+	}
+
+	a.node-title {
+		transition: color 150ms ease;
+	}
+
+	a.node-title:hover {
+		color: var(--map-brand);
+	}
+
+	.node-icon {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 28px;
+		height: 28px;
+		border-radius: 7px;
+	}
+
+	.node-icon :global(svg) {
+		width: 18px;
+		height: 18px;
+		fill: currentColor;
+	}
+
+	.internet-icon {
+		background: color-mix(in srgb, var(--map-internet) 14%, transparent);
+		color: var(--map-internet);
+	}
+
+	.client-icon {
+		background: color-mix(in srgb, var(--map-brand) 14%, transparent);
+		color: var(--map-brand);
+	}
+
+	.wan-icon {
+		background: color-mix(in srgb, var(--map-wan) 14%, transparent);
+		color: var(--map-wan);
+	}
+
+	.lb-icon {
+		background: color-mix(in srgb, var(--map-lb) 14%, transparent);
+		color: var(--map-lb);
+	}
+
+	.tunnel-icon {
+		background: color-mix(in srgb, var(--map-tunnel) 14%, transparent);
+		color: var(--map-tunnel);
+	}
+
+	.node-caption {
+		margin: 0;
+		color: var(--map-caption);
+		font-size: 12px;
+		line-height: 1.5;
+		text-align: center;
+	}
+
+	code {
+		display: inline;
+		padding: 1px 6px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	.dc-name {
+		align-self: center;
+		padding: 2px 8px;
+		border: 1px dashed var(--map-line);
+		border-radius: 9999px;
+		color: var(--map-strong);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		font-weight: 500;
+	}
+
+	.server-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 6px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.server {
+		margin: 0;
+		padding: 6px 8px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-elevated);
+		color: var(--map-text);
+		font-size: 12px;
+		text-align: center;
+	}
+
+	@media (max-width: 52rem) {
+		.sources-row,
+		.dc-row {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

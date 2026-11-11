@@ -4,6 +4,10 @@
         {
             "property_id": "info",
             "value": "https://huggingface.co/Lykon/DreamShaper"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-20"
         }
     ],
     "id": "7912c0ab-542e-44b9-b9ee-3113d226a8b5",

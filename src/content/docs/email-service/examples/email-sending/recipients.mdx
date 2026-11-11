@@ -20,11 +20,11 @@ Email Service lets you specify recipients in several ways — multiple recipient
 
 ```ts
 const response = await env.EMAIL.send({
-	to: ["user1@example.com", "user2@example.com", "user3@example.com"],
-	from: { email: "newsletter@yourdomain.com", name: "Newsletter Team" },
-	subject: "Monthly Newsletter",
-	html: "<h1>This month's updates</h1>",
-	text: "This month's updates",
+	to: ["customer@example.com", "accounts@example.com"],
+	from: { email: "orders@yourdomain.com", name: "Orders" },
+	subject: "Order #12345 confirmed",
+	html: "<h1>Your order is confirmed</h1>",
+	text: "Your order is confirmed.",
 });
 ```
 
@@ -36,11 +36,11 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
-    "to": ["user1@example.com", "user2@example.com"],
-    "from": { "address": "newsletter@yourdomain.com", "name": "Newsletter Team" },
-    "subject": "Monthly Newsletter",
-    "html": "<h1>This month'\''s updates</h1>",
-    "text": "This month'\''s updates"
+    "to": ["customer@example.com", "accounts@example.com"],
+    "from": { "address": "orders@yourdomain.com", "name": "Orders" },
+    "subject": "Order #12345 confirmed",
+    "html": "<h1>Your order is confirmed</h1>",
+    "text": "Your order is confirmed."
   }'
 ```
 
@@ -51,19 +51,19 @@ List every recipient in the `To` header and pass one `--mail-rcpt` flag per addr
 
 ```sh
 cat > mail.txt <<EOF
-From: Newsletter Team <newsletter@yourdomain.com>
-To: user1@example.com, user2@example.com
-Subject: Monthly Newsletter
+From: Orders <orders@yourdomain.com>
+To: customer@example.com, accounts@example.com
+Subject: Order #12345 confirmed
 
-This month's updates
+Your order is confirmed.
 EOF
 
 curl --ssl-reqd \
   --url "smtps://smtp.mx.cloudflare.net:465" \
   --user "api_token:<API_TOKEN>" \
-  --mail-from "newsletter@yourdomain.com" \
-  --mail-rcpt "user1@example.com" \
-  --mail-rcpt "user2@example.com" \
+  --mail-from "orders@yourdomain.com" \
+  --mail-rcpt "customer@example.com" \
+  --mail-rcpt "accounts@example.com" \
   --upload-file mail.txt
 ```
 
@@ -205,9 +205,9 @@ Combine plain addresses and named addresses in the same `to` field.
 const response = await env.EMAIL.send({
 	to: ["plain@example.com", { email: "jane@example.com", name: "Jane Doe" }],
 	from: "support@yourdomain.com",
-	subject: "Team update",
-	html: "<h1>Monthly update</h1>",
-	text: "Monthly update",
+	subject: "Support request #12345 updated",
+	html: "<h1>Your support request was updated</h1>",
+	text: "Your support request was updated.",
 });
 ```
 
@@ -224,9 +224,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
       { "address": "jane@example.com", "name": "Jane Doe" }
     ],
     "from": "support@yourdomain.com",
-    "subject": "Team update",
-    "html": "<h1>Monthly update</h1>",
-    "text": "Monthly update"
+    "subject": "Support request #12345 updated",
+    "html": "<h1>Your support request was updated</h1>",
+    "text": "Your support request was updated."
   }'
 ```
 
@@ -237,9 +237,9 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/s
 cat > mail.txt <<EOF
 From: support@yourdomain.com
 To: plain@example.com, Jane Doe <jane@example.com>
-Subject: Team update
+Subject: Support request #12345 updated
 
-Monthly update
+Your support request was updated.
 EOF
 
 curl --ssl-reqd \

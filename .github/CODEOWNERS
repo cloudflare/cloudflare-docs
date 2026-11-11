@@ -38,9 +38,9 @@ package.json @cloudflare/content-engineering
 
 # agent-lee
 
-/src/content/docs/agent-lee/ @Brayden @kczajkowski @cloudflare/product-owners
-/src/content/directory/agent-lee.yaml @Brayden @kczajkowski @cloudflare/product-owners
-/src/icons/agent-lee.svg @Brayden @kczajkowski @cloudflare/product-owners
+/src/content/docs/agent-lee/ @Brayden @kale-stew @cloudflare/product-owners
+/src/content/directory/agent-lee.yaml @Brayden @kale-stew @cloudflare/product-owners
+/src/icons/agent-lee.svg @Brayden @kale-stew @cloudflare/product-owners
 
 # agent-memory
 
@@ -87,13 +87,13 @@ package.json @cloudflare/content-engineering
 
 # ai-gateway
 
-/src/content/docs/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/content/partials/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/assets/images/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/content/changelog/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/content/glossary/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/icons/ai-gateway.svg @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/docs/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/partials/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/assets/images/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/changelog/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/glossary/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/icons/ai-gateway.svg @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
 
 # ai-search
 

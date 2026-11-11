@@ -55,7 +55,8 @@ Use CIDR routes to forward traffic from your mesh node to devices on your local 
 4. Select **Add route**.
 5. Enter the private CIDR you want to route through this node (for example, `10.0.0.0/24`).
 6. (Optionally) add a description for the route.
-7. Select **Add route**.
+7. (Optionally) in **Virtual network**, select the [virtual network](/cloudflare-one/networks/virtual-networks/) for the route. The default virtual network is preselected.
+8. Select **Add route**.
 
 </TabItem> <TabItem label="API">
 
@@ -66,10 +67,15 @@ Use CIDR routes to forward traffic from your mesh node to devices on your local 
     network: "10.0.0.0/24",
     tunnel_id: "{mesh_node_id}",
     comment: "Staging subnet",
+    virtual_network_id: "{virtual_network_id}",
   }}
 />
 
+`virtual_network_id` is optional. If you omit it, the route uses your default virtual network.
+
 </TabItem> </Tabs>
+
+Within a virtual network, a CIDR can be assigned to only one Mesh node or [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/). To route overlapping IP ranges at different sites, assign each site's route to a different virtual network. Client devices reach a route only while they are connected to the route's virtual network.
 
 ### Edit a route
 
@@ -77,7 +83,7 @@ Use CIDR routes to forward traffic from your mesh node to devices on your local 
 
 1. Go to **Networking** > **Mesh** > select your node > **Routes** tab.
 2. Select the edit icon next to the route you want to modify.
-3. Update the CIDR or description.
+3. Update the CIDR, description, or virtual network.
 4. Select **Save**.
 
 </TabItem> <TabItem label="API">
@@ -88,8 +94,11 @@ Use CIDR routes to forward traffic from your mesh node to devices on your local 
   json={{
     network: "10.0.0.0/24",
     comment: "Updated description",
+    virtual_network_id: "{virtual_network_id}",
   }}
 />
+
+Omit `virtual_network_id` to keep the route's current virtual network.
 
 </TabItem> </Tabs>
 

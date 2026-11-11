@@ -1,0 +1,878 @@
+{
+	"model_id": "meta/muse-ember-1.0",
+	"provider_id": "meta",
+	"name": "Muse Ember 1.0",
+	"description": "Muse Ember 1.0 is Meta's fast, efficient model with top-tier speed for its class, built for subagent workloads.",
+	"task": "Text Generation",
+	"tags": [
+		"Text Generation",
+		"Reasoning",
+		"Multimodal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.1,
+		"Cached input tokens (per 1M)": 0.004,
+		"Output tokens (per 1M)": 0.5
+	},
+	"examples": [
+		{
+			"name": "Pull Request Summary",
+			"description": "Summarize a code change for a reviewer, the kind of short task a subagent handles.",
+			"input": {
+				"input": [
+					{
+						"role": "system",
+						"content": "You are a code review assistant. Be brief and concrete."
+					},
+					{
+						"role": "user",
+						"content": "Summarize this change for a reviewer in three bullet points, then list one risk.\n\n- function getUser(id) {\n-   return db.query('SELECT * FROM users WHERE id = ' + id)\n- }\n+ function getUser(id: string) {\n+   return db.query('SELECT * FROM users WHERE id = $1', [id])\n+ }"
+					}
+				],
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "- Adds TypeScript type `id: string` to `getUser`\n- Replaces string-concatenated SQL with parameterized `$1` query\n- Passes `id` as bound parameter `[id]` instead of interpolating into query string\n\nRisk: Existing callers passing numeric IDs will break and need conversion to string."
+			},
+			"raw_response": {
+				"id": "resp_6af15b9fd8d1276417fe40de",
+				"object": "response",
+				"created_at": 1794202527,
+				"model": "muse-ember-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6af15b9fd8d1276417fe40de:rs_a0a00107-60ea-4bdd-904a-2fa7c88d8772",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_f8f9a657-5c16-4843-8442-0149157fe043",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "- Adds TypeScript type `id: string` to `getUser`\n- Replaces string-concatenated SQL with parameterized `$1` query\n- Passes `id` as bound parameter `[id]` instead of interpolating into query string\n\nRisk: Existing callers passing numeric IDs will break and need conversion to string.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 111,
+					"output_tokens": 488,
+					"total_tokens": 599,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 412
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "default",
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1794202527,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-ember-1.0',\n  {\n    input: [\n      {\n        role: 'system',\n        content: 'You are a code review assistant. Be brief and concrete.'\n      },\n      {\n        role: 'user',\n        content: 'Summarize this change for a reviewer in three bullet points, then list one risk.\\n\\n- function getUser(id) {\\n-   return db.query(\\'SELECT * FROM users WHERE id = \\' + id)\\n- }\\n+ function getUser(id: string) {\\n+   return db.query(\\'SELECT * FROM users WHERE id = $1\\', [id])\\n+ }'\n      }\n    ],\n    max_output_tokens: 4096\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-ember-1.0\",\n  \"input\": {\n    \"input\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are a code review assistant. Be brief and concrete.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": \"Summarize this change for a reviewer in three bullet points, then list one risk.\\n\\n- function getUser(id) {\\n-   return db.query('\\''SELECT * FROM users WHERE id = '\\'' + id)\\n- }\\n+ function getUser(id: string) {\\n+   return db.query('\\''SELECT * FROM users WHERE id = $1'\\'', [id])\\n+ }\"\n      }\n    ],\n    \"max_output_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Structured Extraction",
+			"description": "Pull structured fields out of free text as JSON.",
+			"input": {
+				"input": "Extract the vendor, invoice number, total and due date from this text as a JSON object with keys vendor, invoice_number, total and due_date: 'Invoice INV-20431 from Northwind Supplies. Amount due: $1,284.50, payable by 15 December 2026.'",
+				"max_output_tokens": 4096
+			},
+			"output": {
+				"text": "{\"vendor\": \"Northwind Supplies\", \"invoice_number\": \"INV-20431\", \"total\": 1284.50, \"due_date\": \"2026-12-15\"}"
+			},
+			"raw_response": {
+				"id": "resp_6af15ba2d8c9dfbcd7de4788",
+				"object": "response",
+				"created_at": 1794202530,
+				"model": "muse-ember-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6af15ba2d8c9dfbcd7de4788:rs_e6a38195-817d-413a-9cfc-76e2a970d5c3",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_13055692-402b-4d72-8494-06d9912379ad",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "{\"vendor\": \"Northwind Supplies\", \"invoice_number\": \"INV-20431\", \"total\": 1284.50, \"due_date\": \"2026-12-15\"}",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 68,
+					"output_tokens": 975,
+					"total_tokens": 1043,
+					"input_tokens_details": {
+						"cached_tokens": 0
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 927
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "default",
+				"background": false,
+				"tools": [],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1794202530,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true,
+				"max_output_tokens": 4096
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-ember-1.0',\n  {\n    input: 'Extract the vendor, invoice number, total and due date from this text as a JSON object with keys vendor, invoice_number, total and due_date: \\'Invoice INV-20431 from Northwind Supplies. Amount due: $1,284.50, payable by 15 December 2026.\\'',\n    max_output_tokens: 4096\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-ember-1.0\",\n  \"input\": {\n    \"input\": \"Extract the vendor, invoice number, total and due date from this text as a JSON object with keys vendor, invoice_number, total and due_date: '\\''Invoice INV-20431 from Northwind Supplies. Amount due: $1,284.50, payable by 15 December 2026.'\\''\",\n    \"max_output_tokens\": 4096\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Web Search Grounding",
+			"description": "Use Meta's Responses API web search grounding to answer a current-events question with citations.",
+			"input": {
+				"input": "Who won the most recent Formula 1 race? Include the race date and cite the sources.",
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				]
+			},
+			"output": {
+				"text": "Checking the latest Formula 1 results \u2014 I'll search for the most recent race winner and date."
+			},
+			"raw_response": {
+				"id": "resp_6af15ba26c54eff387aa4131",
+				"object": "response",
+				"created_at": 1794202530,
+				"model": "muse-ember-1.0",
+				"output": [
+					{
+						"type": "reasoning",
+						"id": "rs_6af15ba26c54eff387aa4131:rs_7d56d543-8961-4750-ab3d-3f27b8ae62eb",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_403a9fad-7cf9-4eeb-933e-c7012c0f913d",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Checking the latest Formula 1 results \u2014 I'll search for the most recent race winner and date.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_3c2a946e-d2a0-425a-8b4a-c51b2c3d843b",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "most recent Formula 1 race winner 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_03c7e2f3-3b06-47b8-8a8d-3a9c2befe773",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "latest F1 race result winner date November 2026"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_8fb3d702-9f0d-4d74-8015-f51483792f3d",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "Formula 1 2026 race results latest Grand Prix"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6af15ba26c54eff387aa4131:rs_dbf67722-1fc9-4217-8aa4-8b62e27a473c",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_481e77fa-b19b-4be1-881c-112215755e9b",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "Search results point to the S\u00e3o Paulo GP on 8 November, won by Lando Norris. I'll open the official FIA and Formula 1 reports to verify.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_bf230267-f5bc-4535-aaa9-845a88d354d3",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.fia.com/news/f1-norris-triumphs-sao-paulo-mercedes-secure-2026-constructors-championship"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_88a79261-b5eb-4037-82d5-ca363439db15",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.formula1.com/en/latest/article/norris-beats-verstappen-in-wet-sao-paulo-gp-thriller-as-mercedes-win-constructors-championship.7JN7MXLZf5lk5l0C3gfKGI"
+						}
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_82c96013-1b32-46ba-a363-520e86b0bb1a",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://journalarta.com/en/2026/11/09/f1-brazilian-gp-norris-wins-mercedes-constructors-title/"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6af15ba26c54eff387aa4131:rs_6a615b25-9ba2-4881-aa5a-f189d557c612",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "rs_82f9bf2f-d7ea-4d17-a3ac-033fe53964fa",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "The official reports confirm Norris's win. Now I'll verify no race has been held since S\u00e3o Paulo by checking the upcoming calendar.",
+								"annotations": [],
+								"logprobs": []
+							}
+						],
+						"phase": "commentary",
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_06611739-fa63-4078-9233-e66549cfcabb",
+						"status": "completed",
+						"action": {
+							"type": "search",
+							"query": "2026 Formula 1 calendar Las Vegas Grand Prix November 21 Qatar Abu Dhabi remaining races"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6af15ba26c54eff387aa4131:rs_3ae6352b-8102-41f7-924d-871f0ab6d2d4",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "web_search_call",
+						"id": "ws_call_3b2be896-a793-4004-8422-6ea3fd0d8414",
+						"status": "completed",
+						"action": {
+							"type": "open_page",
+							"url": "https://www.formula1.com/en/results/2026/races"
+						}
+					},
+					{
+						"type": "reasoning",
+						"id": "rs_6af15ba26c54eff387aa4131:rs_ec146eb4-1e44-4a1c-b2d3-027ba0ae5cae",
+						"summary": [],
+						"status": "completed"
+					},
+					{
+						"type": "message",
+						"id": "msg_8ed51611-03b0-4e76-b1b4-359b87e296ee",
+						"role": "assistant",
+						"content": [
+							{
+								"type": "output_text",
+								"text": "**Lando Norris (McLaren) won the most recent Formula 1 race \u2014 the S\u00e3o Paulo/Brazilian Grand Prix on Sunday, 8 November 2026**.\n\nFormula 1\u2019s official 2026 results list \u201cBrazil | 08 Nov | Lando Norris NOR | McLaren\u201d, and the FIA reports that Norris \u201cconverted pole position into victory\u201d at S\u00e3o Paulo, finishing 14.6 seconds clear of Max Verstappen. The next race was scheduled for Las Vegas on 20\u201322 November, confirming S\u00e3o Paulo was the latest race held.",
+								"annotations": [
+									{
+										"type": "url_citation",
+										"url": "https://journalarta.com/en/2026/11/09/f1-brazilian-gp-norris-wins-mercedes-constructors-title/",
+										"start_index": 0,
+										"end_index": 125,
+										"title": "Norris Wins Brazilian Grand Prix as Mercedes Clinch Constructors' Title \u2014 JournalArta Global"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.formula1.com/en/results/2026/races",
+										"start_index": 128,
+										"end_index": 213,
+										"title": "2026 RACE RESULTS"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.fia.com/news/f1-norris-triumphs-sao-paulo-mercedes-secure-2026-constructors-championship",
+										"start_index": 213,
+										"end_index": 346,
+										"title": "F1 \u2013 Norris triumphs in S\u00e3o Paulo as Mercedes secure 2026 Constructors\u2019 Championship"
+									},
+									{
+										"type": "url_citation",
+										"url": "https://www.formula1.com/en/latest/article/norris-beats-verstappen-in-wet-sao-paulo-gp-thriller-as-mercedes-win-constructors-championship.7JN7MXLZf5lk5l0C3gfKGI",
+										"start_index": 348,
+										"end_index": 454,
+										"title": "2026 Formula 1 Sao Paulo Grand Prix report: Lando Norris beats Max Verstappen in wet Sao Paulo GP thriller as Mercedes win title"
+									}
+								],
+								"logprobs": []
+							}
+						],
+						"status": "completed"
+					}
+				],
+				"status": "completed",
+				"usage": {
+					"input_tokens": 52979,
+					"output_tokens": 2040,
+					"total_tokens": 55019,
+					"input_tokens_details": {
+						"cached_tokens": 12499
+					},
+					"output_tokens_details": {
+						"reasoning_tokens": 1219
+					}
+				},
+				"top_logprobs": 0,
+				"temperature": 1,
+				"top_p": 1,
+				"service_tier": "default",
+				"background": false,
+				"tools": [
+					{
+						"type": "web_search"
+					}
+				],
+				"tool_choice": "auto",
+				"truncation": "disabled",
+				"completed_at": 1794202538,
+				"error": null,
+				"incomplete_details": null,
+				"instructions": null,
+				"parallel_tool_calls": true,
+				"store": true
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'meta/muse-ember-1.0',\n  {\n    input: 'Who won the most recent Formula 1 race? Include the race date and cite the sources.',\n    tools: [\n      {\n        type: 'web_search'\n      }\n    ]\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"meta/muse-ember-1.0\",\n  \"input\": {\n    \"input\": \"Who won the most recent Formula 1 race? Include the race date and cite the sources.\",\n    \"tools\": [\n      {\n        \"type\": \"web_search\"\n      }\n    ]\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://dev.meta.ai/docs/models",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Input Modalities": "Text, image",
+		"Output Modalities": "Text"
+	},
+	"request_formats": [
+		"responses",
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "meta",
+			"pricing": {
+				"input_tokens": 0.1,
+				"input_cached_tokens": 0.004,
+				"output_tokens": 0.5
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-11-09 19:21:59",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high",
+										"xhigh",
+										"max"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				}
+			]
+		}
+	}
+}

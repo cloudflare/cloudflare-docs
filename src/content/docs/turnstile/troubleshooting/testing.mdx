@@ -128,12 +128,14 @@ Production secret keys will reject the dummy token. You must also use a dummy se
 {
   "success": true,
   "challenge_ts": "2022-02-28T15:14:30.096Z",
-  "hostname": "localhost",
-  "error-codes": [],
-  "action": "test",
-  "cdata": "test-data"
+  "hostname": "example.com",
+  "error-codes": []
 }
 ```
+
+:::note
+A successful validation with a test secret key always returns `example.com` as the `hostname`, and the response does not include `action` or `cdata`. If your server-side validation checks `hostname`, `action`, or `cdata` against your own values, test those checks with your real sitekey and secret key.
+:::
 
 ```json title="Failure response"
 {

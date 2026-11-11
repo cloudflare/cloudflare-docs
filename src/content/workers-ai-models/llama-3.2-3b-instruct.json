@@ -27,6 +27,10 @@
         {
             "property_id": "terms",
             "value": "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/LICENSE"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-20"
         }
     ],
     "id": "d9dc8363-66f4-4bb0-8641-464ee7bfc131",

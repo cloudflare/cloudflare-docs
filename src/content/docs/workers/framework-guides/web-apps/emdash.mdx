@@ -1,0 +1,203 @@
+---
+pcx_content_type: how-to
+title: EmDash
+sidebar:
+  order: 2.5
+tags: ["full-stack", "Astro"]
+description: Deploy EmDash, an open-source CMS built on Astro, to Cloudflare Workers with D1 for content and R2 for media.
+products:
+  - workers
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+[EmDash](https://emdashcms.com/) is an open-source, full-stack content management system (CMS) for [Astro](/workers/framework-guides/web-apps/astro/). An EmDash site runs on Workers, stores content in [D1](/d1/), and stores media in [R2](/r2/). It includes an admin panel, a plugin system, and a Model Context Protocol (MCP) server for editing content from AI tools.
+
+The source code is available on [GitHub](https://github.com/emdash-cms/emdash).
+
+You need Node.js 22.23.4 or later and a Cloudflare account.
+
+## Create an EmDash site
+
+<Steps>
+
+1. Create a project with [`create-emdash`](https://www.npmjs.com/package/create-emdash):
+
+   <PackageManagers type="create" pkg="emdash@latest" args="my-emdash-site" />
+
+2. When prompted, choose the following options:
+
+   - **Where will you deploy?** Cloudflare Workers
+   - **Which template?** Starter, Blog, Marketing, or Portfolio
+   - **Install dependencies?** Yes
+   - **Enable sandboxed plugins?** No. You can turn them on later. For more information, refer to [Sandboxed plugins](#sandboxed-plugins).
+
+   The scaffolder writes a generated `EMDASH_ENCRYPTION_KEY` to a `.env` file. Do not commit this file.
+
+3. Go to the project directory:
+
+   ```sh
+   cd my-emdash-site
+   ```
+
+</Steps>
+
+To create a project without prompts, pass the template and platform as flags:
+
+<PackageManagers
+	type="create"
+	pkg="emdash@latest"
+	args="my-emdash-site --template cloudflare:starter --yes"
+/>
+
+## Cloudflare products EmDash uses
+
+An EmDash site uses the following Cloudflare products:
+
+| Product                                                | Binding   | Purpose                                              | Configured in                           |
+| ------------------------------------------------------ | --------- | ---------------------------------------------------- | --------------------------------------- |
+| [D1](/d1/)                                             | `DB`      | Stores content, users, and settings                  | `wrangler.jsonc`                        |
+| [R2](/r2/)                                             | `MEDIA`   | Stores uploaded media                                | `wrangler.jsonc`                        |
+| [Cron Triggers](/workers/configuration/cron-triggers/) | —         | Runs scheduled publishing, plugin tasks, and backups | `wrangler.jsonc`                        |
+| [Workers KV](/kv/)                                     | `SESSION` | Stores Astro sessions                                | Added by `@astrojs/cloudflare` at build |
+| [Images](/images/optimization/binding/)                | `IMAGES`  | Resizes and optimizes media                          | Added by `@astrojs/cloudflare` at build |
+| [Workers Static Assets](/workers/static-assets/)       | `ASSETS`  | Serves the built front end and admin panel files     | Added by `@astrojs/cloudflare` at build |
+| [Dynamic Workers](/dynamic-workers/)                   | `LOADER`  | Runs sandboxed plugins in isolation (optional)       | `wrangler.jsonc`                        |
+
+The template configures the D1, R2, and Cron Trigger bindings in `wrangler.jsonc`:
+
+<WranglerConfig>
+
+```toml
+name = "my-emdash-site"
+main = "./src/worker.ts"
+compatibility_date = "$today"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "my-emdash-site"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "my-emdash-media"
+
+[triggers]
+crons = ["* * * * *"]
+```
+
+</WranglerConfig>
+
+The template pins an earlier compatibility date and sets the `nodejs_compat` flag. Keep the flag unless you update the compatibility date to `2026-08-04` or later, which turns on Node.js compatibility by default.
+
+EmDash connects to these bindings by name in `astro.config.mjs`. The binding names in both files must match:
+
+```js title="astro.config.mjs"
+import cloudflare from "@astrojs/cloudflare";
+import react from "@astrojs/react";
+import { d1, r2 } from "@emdash-cms/cloudflare";
+import { defineConfig } from "astro/config";
+import emdash from "emdash/astro";
+
+export default defineConfig({
+	output: "server",
+	adapter: cloudflare(),
+	integrations: [
+		react(),
+		emdash({
+			database: d1({ binding: "DB", session: "auto", coalesce: true }),
+			storage: r2({ binding: "MEDIA" }),
+		}),
+	],
+});
+```
+
+The Worker entry point in `src/worker.ts` exports a `scheduled` handler. The Cron Trigger calls this handler to publish scheduled content. Keep both the Cron Trigger and the handler, or scheduled entries do not go live.
+
+## Preview and deploy
+
+<Steps>
+
+1. Build the site:
+
+   <PackageManagers type="run" args="build" />
+
+2. Preview the site:
+
+   <PackageManagers type="exec" pkg="wrangler" args="dev" />
+
+   Open the local URL that Wrangler prints. To start the setup wizard, go to `/_emdash/admin/`.
+
+3. Deploy the site:
+
+   <PackageManagers type="run" args="deploy" />
+
+   On the first deploy, Wrangler creates the D1 database, R2 bucket, and KV namespace that the site uses.
+
+4. Open the `workers.dev` URL that Wrangler prints, then go to `/_emdash/admin/` to complete setup.
+
+</Steps>
+
+:::caution
+The first person to finish the setup wizard becomes the administrator. Complete setup right after you deploy.
+
+Passkeys only work on the hostname where you create them. To use a custom domain, run setup on that domain, or set `EMDASH_SITE_URL` to it before setup.
+:::
+
+To use encrypted plugin settings in production, upload the encryption key from `.env` as a [secret](/workers/configuration/secrets/):
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="secret put EMDASH_ENCRYPTION_KEY"
+/>
+
+## Sandboxed plugins
+
+EmDash can run plugins in isolated sandboxes with [Dynamic Workers](/dynamic-workers/). Sandboxed plugins cannot access environment variables or the file system.
+
+:::note
+Dynamic Workers are only available on the [Workers Paid plan](/workers/platform/pricing/).
+:::
+
+To turn on sandboxed plugins:
+
+<Steps>
+
+1. In `wrangler.jsonc`, uncomment the `worker_loaders` binding:
+
+   <WranglerConfig>
+
+   ```toml
+   [[worker_loaders]]
+   binding = "LOADER"
+   ```
+
+   </WranglerConfig>
+
+2. In `astro.config.mjs`, import `sandbox` and pass it to EmDash as `sandboxRunner`:
+
+   ```js title="astro.config.mjs" {1,6}
+   import { d1, r2, sandbox } from "@emdash-cms/cloudflare";
+
+   emdash({
+   	database: d1({ binding: "DB", session: "auto", coalesce: true }),
+   	storage: r2({ binding: "MEDIA" }),
+   	sandboxRunner: sandbox(),
+   });
+   ```
+
+3. Build and deploy the site again.
+
+</Steps>
+
+## Build with AI tools
+
+Each EmDash template for Cloudflare includes an `AGENTS.md` file, agent skills, and an MCP configuration for the [EmDash documentation](https://docs.emdashcms.com/docs-mcp/). AI coding tools that read these files can work with EmDash without extra setup.
+
+Each deployed site also includes an [MCP server](https://docs.emdashcms.com/reference/mcp-server/). Connect an MCP client to draft, edit, and schedule content.
+
+## Next steps
+
+- [Deploy to Cloudflare](https://docs.emdashcms.com/deployment/cloudflare/) in the EmDash documentation covers caching, custom domains, email, Cloudflare Access, and preview deployments.
+- [Migrate from WordPress](https://docs.emdashcms.com/migration/from-wordpress/) imports posts, pages, and media from a WordPress export.
+- [Astro on Workers](/workers/framework-guides/web-apps/astro/) covers the Astro adapter, bindings, and sessions.

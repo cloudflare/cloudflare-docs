@@ -31,6 +31,10 @@
         {
             "property_id": "terms",
             "value": "https://www.nvidia.com/en-us/agreements/enterprise-software/nvidia-nemotron-open-model-license/"
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-20"
         }
     ],
     "id": "43dbadb4-2b0a-47e9-8479-34a49b971f1e",

@@ -64,6 +64,10 @@
                     "currency": "USD"
                 }
             ]
+        },
+        {
+            "property_id": "planned_deprecation_date",
+            "value": "2026-11-20"
         }
     ],
     "id": "95666467-f984-4211-b48a-7c246dd4adb7",
