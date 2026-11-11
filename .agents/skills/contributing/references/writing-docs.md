@@ -41,7 +41,7 @@ Read `choosing-components.md`. It starts with a reverse-lookup table (the data y
 
 Mandatory mappings (do not use bare fences for these):
 
-- Workers JS/TS → `TypeScriptExample`
+- Workers JS/TS → `TypeScriptExample` (type-only snippets → plain `ts` fence)
 - Wrangler config → `WranglerConfig` (TOML or JSON input, `$today` for `compatibility_date`)
 - Package install/exec → `PackageManagers`
 - Multi-step procedure → `Steps`

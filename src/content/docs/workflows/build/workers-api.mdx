@@ -694,8 +694,6 @@ const result = await env.MY_WORKFLOW.createBatch({
 
 `options` takes one of the following shapes:
 
-<TypeScriptExample omitTabs>
-
 ```ts
 type WorkflowBatchCreateOptions =
 	| {
@@ -711,13 +709,9 @@ type WorkflowBatchCreateOptions =
 	  };
 ```
 
-</TypeScriptExample>
-
 `count` must be an integer from 1 to 100. `instances` must contain from 1 to 100 entries. You cannot pass both `count` and `instances` in the same call.
 
 The operation returns the created instances and per-instance errors:
-
-<TypeScriptExample omitTabs>
 
 ```ts
 type WorkflowBatchCreateResult = {
@@ -730,8 +724,6 @@ type WorkflowBatchCreateResult = {
 	}[];
 };
 ```
-
-</TypeScriptExample>
 
 `created` contains a `WorkflowInstance` for each created instance, in input order. `errors` contains the entries that were not created. Each error includes the position of the entry in the input (`index`), its `id` if one was provided, and an error code and message.
 
@@ -789,8 +781,6 @@ const result = await env.MY_WORKFLOW.deleteBatch([
 
 The operation returns successes and per-instance failures:
 
-<TypeScriptExample>
-
 ```ts
 type WorkflowBatchDeleteResult = {
 	deleted: { id: string }[];
@@ -801,8 +791,6 @@ type WorkflowBatchDeleteResult = {
 	}[];
 };
 ```
-
-</TypeScriptExample>
 
 `deleted` contains the IDs that were deleted successfully. `errors` contains failures identified by instance ID, with a stable error code and message.
 

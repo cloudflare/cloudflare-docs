@@ -39,6 +39,21 @@ These cannot be extracted by `TypeScriptExample` so they must be moved to the [`
 ````
 :::
 
+## Type definitions
+
+Do not use `TypeScriptExample` for a snippet that only contains types, such as a `type` alias, an `interface`, or a `declare` statement. Types have no JavaScript equivalent, so the JavaScript tab would be empty. Use a plain `ts` code block instead:
+
+````mdx
+```ts
+type WorkflowInstanceEvent = {
+	instanceId: string;
+	timestamp: string;
+};
+```
+````
+
+The build fails if a `TypeScriptExample` produces an empty JavaScript tab.
+
 ## Component
 
 ````mdx
@@ -90,6 +105,33 @@ An optional filename, ending in `.ts`.
 **type:** `boolean`
 
 If set to `true`, a [`Run Worker in Playground`](/style-guide/style-and-grammar/formatting/code-block-guidelines/#workers-playground) button will appear on the JavaScript tab.
+
+### `omitTabs`
+
+**type:** `boolean`
+
+If set to `true`, the JavaScript and TypeScript tabs render without their own `Tabs` wrapper. Use this to place them inside a parent `Tabs` component next to other languages, for example a Python tab:
+
+````mdx
+<Tabs syncKey="workersExamples">
+
+<TypeScriptExample omitTabs={true}>
+```ts
+export class MyDurableObject extends DurableObject<Env> {}
+```
+</TypeScriptExample>
+
+<TabItem label="Python">
+```python
+class MyDurableObject(DurableObject):
+    pass
+```
+</TabItem>
+
+</Tabs>
+````
+
+`omitTabs` does not hide the JavaScript version. Outside a parent `Tabs` component, both code blocks render one after the other.
 
 ### `code`
 
