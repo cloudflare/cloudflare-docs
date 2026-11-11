@@ -20,16 +20,16 @@ const toggleClass =
 <div
 	data-nb-cli-control
 	style="visibility: hidden"
-	class:list={["mb-2 flex min-w-0 items-center justify-end gap-2", className]}
+	class:list={["mb-2 flex min-w-0 items-center justify-start gap-2", className]}
 >
 	<span
 		aria-hidden="true"
-		data-label="Select your preferred CLI"
+		data-label="Select CLI"
 		class="text-muted-foreground text-xs font-medium before:content-[attr(data-label)]"
 	></span>
 	<div
 		role="group"
-		aria-label="Select your preferred CLI for the examples on this page"
+		aria-label="Select a CLI for the examples on this page"
 		class="ring-border/70 inline-flex h-6.5 max-w-full min-w-0 rounded-md bg-[var(--nb-surface-sunken)] px-0.5 ring"
 	>
 		{options.map(({ value, label }) => (
