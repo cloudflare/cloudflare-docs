@@ -8,28 +8,31 @@ products:
   - ai-search
 ---
 
+import { Badge } from "~/components";
+
 You can customize how your AI Search instance indexes your data, retrieves results, and generates responses. Some settings can be updated after the instance is created, while others are fixed at creation time.
 
 ## Data source
 
-| Configuration                                                              | Editable after creation | Description                                              |
-| -------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------- |
-| [Built-in storage](/ai-search/configuration/data-source/built-in-storage/) | n/a                     | Upload files directly to an instance                     |
-| [Website](/ai-search/configuration/data-source/website/)                   | no                      | Connect a domain you own to index website pages          |
-| [R2 Bucket](/ai-search/configuration/data-source/r2/)                      | no                      | Connect a Cloudflare R2 bucket to index stored documents |
+| Configuration                                                                                                | Editable after creation | Description                                              |
+| ------------------------------------------------------------------------------------------------------------ | ----------------------- | -------------------------------------------------------- |
+| [Built-in storage](/ai-search/configuration/data-source/built-in-storage/)                                   | n/a                     | Upload files directly to an instance                     |
+| [Website](/ai-search/configuration/data-source/website/)                                                     | no                      | Connect a domain you own to index website pages          |
+| [R2 Bucket](/ai-search/configuration/data-source/r2/)                                                        | no                      | Connect a Cloudflare R2 bucket to index stored documents |
+| [D1 database](/ai-search/configuration/data-source/d1/) <Badge text="Beta" variant="caution" size="small" /> | no                      | Connect a Cloudflare D1 database to index query results  |
 
 ## Indexing
 
-| Configuration                                                             | Editable after creation | Description                                                     |
-| ------------------------------------------------------------------------- | ----------------------- | --------------------------------------------------------------- |
-| [Vector search](/ai-search/configuration/indexing/vector-search/)         | yes                     | Vector search and the built-in vector index                     |
-| [Path filtering](/ai-search/configuration/indexing/path-filtering/)       | yes                     | Include or exclude specific paths from indexing                 |
-| [Chunking](/ai-search/configuration/indexing/chunking/)                   | yes                     | Number of tokens per chunk and overlap between chunks           |
-| [Syncing](/ai-search/configuration/indexing/syncing/)                     | yes                     | Sync jobs and indexing controls                                 |
-| [Keyword search](/ai-search/configuration/indexing/keyword-search/)       | yes                     | Enable keyword (BM25) search for exact term matching            |
-| [Hybrid search](/ai-search/configuration/indexing/hybrid-search/)         | yes                     | Combine vector and keyword search with configurable fusion      |
-| [Metadata attributes](/ai-search/configuration/indexing/metadata/)        | yes                     | Define built-in and custom metadata fields                      |
-| [Service API token](/ai-search/configuration/indexing/service-api-token/) | yes                     | API token that grants AI Search permission to access R2 buckets |
+| Configuration                                                             | Editable after creation | Description                                                                      |
+| ------------------------------------------------------------------------- | ----------------------- | -------------------------------------------------------------------------------- |
+| [Vector search](/ai-search/configuration/indexing/vector-search/)         | yes                     | Vector search and the built-in vector index                                      |
+| [Path filtering](/ai-search/configuration/indexing/path-filtering/)       | yes                     | Include or exclude specific paths from indexing                                  |
+| [Chunking](/ai-search/configuration/indexing/chunking/)                   | yes                     | Number of tokens per chunk and overlap between chunks                            |
+| [Syncing](/ai-search/configuration/indexing/syncing/)                     | yes                     | Sync jobs and indexing controls                                                  |
+| [Keyword search](/ai-search/configuration/indexing/keyword-search/)       | yes                     | Enable keyword (BM25) search for exact term matching                             |
+| [Hybrid search](/ai-search/configuration/indexing/hybrid-search/)         | yes                     | Combine vector and keyword search with configurable fusion                       |
+| [Metadata attributes](/ai-search/configuration/indexing/metadata/)        | yes                     | Define built-in and custom metadata fields                                       |
+| [Service API token](/ai-search/configuration/indexing/service-api-token/) | yes                     | API token that grants AI Search permission to access R2 buckets and D1 databases |
 
 ## Retrieval
 
