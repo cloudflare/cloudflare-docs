@@ -1,0 +1,17 @@
+---
+/**
+ * CliVariantLabel — names a variant for agents. Hidden on the page like
+ * `CliPreferenceGuidance`, and kept in the Markdown version.
+ */
+import type { CliPreference } from "./cli-preference";
+
+interface Props {
+	cli: CliPreference;
+}
+
+const { cli } = Astro.props;
+---
+
+<p data-nb-cli-label class="sr-only" aria-hidden="true">
+	{cli === "cf" ? "Cloudflare CLI" : "Wrangler"}
+</p>

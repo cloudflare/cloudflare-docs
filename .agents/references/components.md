@@ -91,6 +91,43 @@ database_id = "<unique-ID-for-your-database>"
 
 ---
 
+## CliVariants / CliVariant
+
+Shows Wrangler and Cloudflare CLI (`cf`) versions of the same passage – a paragraph, a list of steps, or a short procedure – behind the shared CLI selector. Use it when the prose differs between the CLIs. For a single command or config block, use `cfCommand` / `cfConfig` / `cfNamespace` on the existing components instead.
+
+````mdx
+import { CliVariant, CliVariants } from "~/components";
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Sign in with Wrangler:
+
+```sh
+npx wrangler login
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Sign in with `cf`:
+
+```sh
+cf auth login
+```
+
+</CliVariant>
+</CliVariants>
+````
+
+- Exactly one `cli="wrangler"` and one `cli="cf"` child, with all content inside them. The build fails otherwise.
+- Leave a blank line after each opening `<CliVariant>` tag and before each closing tag so the content is parsed as Markdown.
+- Do not nest `CliVariants`, and do not put components with their own CLI selector (`cfCommand`, `cfConfig`, `cfNamespace`) inside a variant – the build fails. Write the cf command directly in the cf variant.
+- Keep headings outside the component. If both variants must start with the same heading, pass its ID as `anchorId` on `CliVariants`.
+- The page's Markdown version includes both variants, cf first, each labelled, after a sentence telling agents to use `cf` for new projects and the project's existing CLI otherwise. Do not write that guidance yourself.
+
+---
+
 ## PackageManagers
 
 Shows a command across npm, yarn, pnpm, and bun in synced tabs. **Required for package install/exec commands** — do not use bare `sh` fences for these.
