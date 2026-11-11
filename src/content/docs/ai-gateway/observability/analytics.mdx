@@ -29,7 +29,7 @@ view the following analytics:
 
 </TabItem> <TabItem label="graphql">
 
-You can use GraphQL to query your usage data outside of the AI Gateway dashboard. To run the example below, save a [Cloudflare API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the AI Gateway Read permission in the `CLOUDFLARE_API_TOKEN` environment variable, and replace `<ACCOUNT_ID>` with your account ID. Set `start` and `end` to a range of up to 32 days within the last 62 days.
+You can use GraphQL to query your usage data outside of the AI Gateway dashboard. To run this request, save a [Cloudflare API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the Account Analytics Read permission in the `CLOUDFLARE_API_TOKEN` environment variable, and replace `<ACCOUNT_ID>` with your account ID. Set `start` and `end` to a range of up to 32 days within the last 62 days.
 
 ```bash title="Request"
 curl https://api.cloudflare.com/client/v4/graphql \
@@ -52,7 +52,7 @@ curl https://api.cloudflare.com/client/v4/graphql \
 
 To see requests and cost for each value of one [custom metadata](/ai-gateway/observability/custom-metadata/) key, such as a team or user ID, query the GraphQL Analytics API and add `metadataValue(key: "<key>")` to `dimensions`. This example groups by a `team` key across every gateway and provider in the account, and returns up to 1,000 values ordered by cost. To use another key, change the `key` argument; keys can be up to 128 characters of letters, digits, and `_ . $ : / -`. To narrow the results, add `gateway: "<GATEWAY_NAME>"` or `provider: "workers-ai"` to the filter.
 
-Save an [API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the AI Gateway Read permission in `CLOUDFLARE_API_TOKEN`, replace `<ACCOUNT_ID>`, and set `start` and `end` to a range of up to 32 days within the last 62 days.
+Save an [API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the Account Analytics Read permission in `CLOUDFLARE_API_TOKEN`, replace `<ACCOUNT_ID>`, and set `start` and `end` to a range of up to 32 days within the last 62 days.
 
 ```bash title="Request"
 curl https://api.cloudflare.com/client/v4/graphql \
