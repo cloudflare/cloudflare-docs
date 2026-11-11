@@ -136,8 +136,8 @@ query MagicFirewallObtainIDS($accountTag: string!, $start: Time, $end: Time) {
 				filter: {
 					datetime_geq: $start
 					datetime_leq: $end
-					verdict: drop
-					outcome: pass
+					verdict: "drop"
+					outcome: "pass"
 				}
 				limit: 10
 				orderBy: [avg_packetRateFiveMinutes_DESC]
@@ -177,6 +177,37 @@ query MagicFirewallTraffic($accountTag: string!, $start: Time, $end: Time) {
 					ipDestinationAddress
 					ipSourceAddress
 					verdict
+				}
+			}
+		}
+	}
+}
+```
+
+### Obtain rate limiting analytics (beta)
+
+:::note
+For Cloudflare Advanced Network Firewall customers, rate limiting (beta) is available by request through the account team.
+:::
+
+Use this query to estimate packets that pass rate limiting per data center. It uses default samples to avoid double counting and returns up to 10 data centers, ordered by packet count.
+
+In GraphiQL, provide your account ID as `accountTag` and the time range as `start` and `end` in the query variables.
+
+```graphql graphql-api-explorer
+query MagicFirewallRateLimit($accountTag: string!, $start: Time, $end: Time) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			magicFirewallRateLimitNetworkAnalyticsAdaptiveGroups(
+				filter: { datetime_geq: $start, datetime_leq: $end, outcome: "pass", ruleId: "" }
+				limit: 10
+				orderBy: [sum_packets_DESC]
+			) {
+				sum {
+					count: packets
+				}
+				dimensions {
+					metric: coloName
 				}
 			}
 		}
