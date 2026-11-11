@@ -22,6 +22,30 @@ test("renders the guidance, then cf, then Wrangler", async () => {
 	]);
 });
 
+test("labels each variant and keeps the selector out of the text", async () => {
+	const container = await AstroContainer.create();
+	const scope = parse(
+		await container.renderToString(CliPreferenceSwitch, {
+			slots: { wrangler: "<p>Run Wrangler.</p>", cf: "<p>Run cf.</p>" },
+		}),
+	).querySelector("[data-nb-cli-preference-scope]");
+	const text = (selector: string) =>
+		scope?.querySelector(selector)?.textContent.replace(/\s+/g, " ").trim();
+
+	expect(text('[data-nb-cli-variant="cf"] [data-nb-cli-label]')).toBe(
+		"Cloudflare CLI",
+	);
+	expect(text('[data-nb-cli-variant="wrangler"] [data-nb-cli-label]')).toBe(
+		"Wrangler",
+	);
+	expect(text("[data-nb-cli-control]")).toBe("");
+	expect(
+		scope
+			?.querySelectorAll("[data-nb-cli-toggle]")
+			.map((toggle) => toggle.getAttribute("aria-label")),
+	).toEqual(["Wrangler", "CF"]);
+});
+
 test("the guidance is hidden from readers and names both CLIs", async () => {
 	const container = await AstroContainer.create();
 	const guidance = parse(

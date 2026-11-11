@@ -63,7 +63,10 @@ test("CliVariant renders a marked panel for its CLI", async () => {
 
 	expect(panel?.getAttribute("data-nb-cli-variant")).toBe("cf");
 	expect(panel?.getAttribute("data-cli-variants-item")).toBe("cf");
-	expect(panel?.textContent).toBe("Run cf.");
+	expect(panel?.querySelector("[data-nb-cli-label]")?.textContent.trim()).toBe(
+		"Cloudflare CLI",
+	);
+	expect(panel?.lastElementChild?.textContent).toBe("Run cf.");
 });
 
 test("CliVariant rejects an unknown CLI", async () => {
