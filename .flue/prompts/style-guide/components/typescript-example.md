@@ -9,7 +9,7 @@ description: Rules for the TypeScriptExample component used in Workers docs.
 - If a `filename` prop does not end in `.ts` → `filename` must end in `.ts`; the JS tab shows the `.js` equivalent automatically.
 - If Code options (e.g. `collapse`) are set directly on the inner fence → pass them via the `code` prop on `<TypeScriptExample>` instead.
 - If a `<TypeScriptExample>` contains only types (`type`, `interface`, `declare`) → use a plain ` ```ts ` fence instead. The JS tab would be empty, and the build fails on it.
-- If `omitTabs` is set and the `<TypeScriptExample>` is not inside a parent `<Tabs>` → remove `omitTabs`. It does not hide the JS version; without a parent `<Tabs>`, the JS and TS blocks render one after the other.
+- If `omitTabs` is set and the `<TypeScriptExample>` is not inside a parent `<Tabs>` → remove `omitTabs`. Without a parent `<Tabs>`, the JS and TS blocks render one after the other.
 
 ## Example
 

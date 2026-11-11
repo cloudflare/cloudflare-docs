@@ -56,7 +56,7 @@ Props:
 
 - `filename` — optional, must end in `.ts`. The JS tab shows the `.js` equivalent.
 - `playground` — boolean. Adds "Run Worker in Playground" button to the JS tab.
-- `omitTabs` — boolean. Renders the JavaScript and TypeScript `TabItem`s without their own `Tabs` wrapper, so you can place them inside a parent `<Tabs syncKey="workersExamples">` next to other languages, such as a Python `TabItem`. It does not hide the JavaScript version: outside a parent `Tabs`, both blocks render one after the other.
+- `omitTabs` — boolean. Renders the JavaScript and TypeScript `TabItem`s without their own `Tabs` wrapper, so you can place them inside a parent `<Tabs syncKey="workersExamples">` next to other languages, such as a Python `TabItem`.
 - `code` — object. Astro `Code` component props (e.g. `{ collapse: "1-2" }`). Apply to both tabs.
 
 Note: Code fence options (`collapse={1-2}`, etc.) cannot be set on the fence directly — pass them via the `code` prop instead.
