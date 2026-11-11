@@ -1,0 +1,11 @@
+---
+title: Malicious uploads detection flags non-multipart Content-Type headers with a boundary
+description: Requests whose Content-Type header has a boundary parameter but no multipart media type now set cf.waf.content_scan.has_failed.
+products:
+  - waf
+date: 2026-10-28
+---
+
+The [malicious uploads detection](/waf/detections/malicious-uploads/) now sets `cf.waf.content_scan.has_failed` to `true` for requests whose `Content-Type` header has a `boundary` parameter but type is not `multipart/*`, for example `application/json; boundary=example`. The body of these requests is not scanned .
+
+For more information, refer to [Multipart requests](/waf/detections/malicious-uploads/#multipart-requests).

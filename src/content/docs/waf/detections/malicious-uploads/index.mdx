@@ -66,6 +66,12 @@ Content scanning can check the following content objects for malicious content:
 - Portions of the request body for multipart requests encoded as `multipart/form-data` or `multipart/mixed`
 - Specific JSON properties in the request body (containing, for example, files encoded in Base64) according to the [custom scan expressions](#custom-scan-expressions) you provide
 
+### Multipart requests
+
+The request's `Content-Type` header is used to decide whether to parse the body as a multipart request. If the type is `multipart/form-data` or `multipart/mixed`, Cloudflare scans each part as a separate content object. Otherwise, the request body is treated as a single content object.
+
+A `boundary` parameter only applies to multipart types. If the `Content-Type` header has a `boundary` parameter but its type is not `multipart/*` (for example, `application/json; boundary=example`), the body will not be scanned and the field `cf.waf.content_scan.has_failed` is set to `true`.
+
 ### Size limit
 
 The content scanner inspects up to the first 50 MB of a request body. When a request contains more than one content object, for example a submitted HTML form with several file inputs, all the content objects share this 50 MB.
