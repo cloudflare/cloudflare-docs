@@ -28,7 +28,7 @@ These designs illustrate best practices for using Durable Objects effectively an
 
 ## Separate account control from resource traffic {/* control-and-data-planes */}
 
-Use this design when account configuration changes less often than users read or update individual resources. Durable Objects serve **both** planes: one object coordinates an account's administrative state, while separate objects own documents, rooms, or sessions.
+This example applies the [recommended control and data plane architecture](/durable-objects/best-practices/architecture-guidance/#control-plane) to account administration and resource traffic. One Durable Object coordinates an account's administrative state, while separate objects own documents, rooms, or sessions. Use it when configuration changes less often than users read or update individual resources.
 
 | Decision           | Guidance                                                                                                                                                        |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -40,38 +40,7 @@ Use this design when account configuration changes less often than users read or
 | Analytics          | Send observations to Basin Pipelines and query the resulting R2 data with Basin SQL.                                                                            |
 | Scale-out path     | Scale resource objects independently. Split account control objects only when their own load requires it.                                                       |
 
-![Account Durable Objects publish through propagation layers to separate stateless and stateful data-plane groups, with an independent analytics path.](~/assets/images/durable-objects/architecture-guidance/01-control-plane-model.svg)
-
-<Details header="Diagram as text">
-
-```txt
-CONTROL PLANE
-  Account administrators → Config API → one Durable Object per account ID
-  Account objects own authoritative configuration and resource lifecycle state.
-
-PROPAGATION
-  Account objects → KV Instant: small configuration and hostname-to-account mapping
-  Account objects → KV / R2: larger blobs, with optional Workers Cache
-
-DATA PLANE
-  End users → stateless Workers: authentication, routing, transforms
-  End users → stateful Durable Objects: one room / document / session per object
-  KV Instant → stateless Workers: read configuration
-  KV / R2 → stateful Durable Objects: get blobs
-  The two groups are separate responsibilities, not a mandatory sequential chain.
-  No direct calls or writes go from the data plane to the control plane in this pattern.
-
-ANALYTICS
-  Data-plane usage events → Pipelines → R2 / Basin → scheduled job
-  Scheduled job → Config API: reads summaries and decides on configuration changes
-  Analytics queries and feedback are not on the user request path.
-```
-
-</Details>
-
 <Render file="kv-instant-beta" product="kv" />
-
-The arrows identify logical responsibilities, not separate public endpoints or required Worker deployments. Durable Objects [receive requests through Workers or other Durable Objects](/durable-objects/get-started/#3-instantiate-and-communicate-with-a-durable-object), not directly from the Internet. The prohibition on direct data-plane-to-control-plane calls applies to this design; it is not a platform restriction on Durable Objects.
 
 ### Administrative changes
 
@@ -85,7 +54,7 @@ Stateless Workers handle authentication, routing, and transforms using published
 
 KV Instant proactively propagates small configurations and has [mode-specific limits](/kv/platform/limits/#workers-kv-instant). Classic KV is [eventually consistent](/kv/concepts/how-kv-works/#consistency). Define how readers handle older or missing configuration for the mode you use. Do not infer an instantaneous global revocation guarantee from the diagram; choose a suitably consistent check when an authorization change must take effect immediately everywhere.
 
-The deployment can share Worker scripts or use separate ones. The diagram separates responsibilities, not mandatory deployment units. Refer to [Deploy related classes independently](/durable-objects/best-practices/architecture-guidance/#build-control-plane) for deployment trade-offs.
+The deployment can share Worker scripts or use separate ones. The pattern separates responsibilities, not mandatory deployment units. Refer to [Deploy related classes independently](/durable-objects/best-practices/architecture-guidance/#build-control-plane) for deployment trade-offs.
 
 ### Analytics and feedback
 
@@ -93,7 +62,7 @@ Use [Basin Pipelines](/basin-pipelines/) to ingest analytical events and deliver
 
 Keep event export off the synchronous request path, and define delivery, retry, sampling, and loss requirements explicitly. Background execution does not itself guarantee delivery. If automated feedback changes configuration, submit it through the administrative API rather than letting resource requests mutate control-plane state directly.
 
-For the underlying design choices, refer to [Separate control and data planes](/durable-objects/best-practices/architecture-guidance/#control-plane) and [Account for propagation consistency](/durable-objects/best-practices/architecture-guidance/#configuration-propagation). The existing [control and data plane reference architecture](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/) also shows Durable Objects in both roles.
+For the underlying design choices, refer to [Apply the separation pattern](/durable-objects/best-practices/architecture-guidance/#apply-separation-pattern) and [Account for propagation consistency](/durable-objects/best-practices/architecture-guidance/#configuration-propagation). The existing [control and data plane reference architecture](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/) also shows Durable Objects in both roles.
 
 ## Fan out (for example, hubs at the edge) {/* pattern-fan-out-hub */}
 
@@ -165,6 +134,13 @@ export class TopicHub extends DurableObject<Env> {
 		const ws = res.webSocket;
 		if (!ws) throw new Error("Origin refused the WebSocket upgrade");
 		ws.accept();
+		const hasSubscribers = this.ctx
+			.getWebSockets()
+			.some((socket) => socket.readyState === WebSocket.OPEN);
+		if (!hasSubscribers) {
+			ws.close(1000, "No subscribers");
+			return;
+		}
 		ws.addEventListener("message", (event) => this.broadcast(event.data));
 		ws.addEventListener("close", () => {
 			if (this.upstream === ws) this.upstream = null;

@@ -8,11 +8,57 @@ products:
   - durable-objects
 ---
 
-import { Details, TypeScriptExample, WranglerConfig } from "~/components";
+import { Details, Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 Durable Objects provide stateful coordination in both control planes and data planes. Applications scale best by distributing independent work across many objects, rather than requiring every request to pass through one object.
 
 Use this page for guidance on how to choose coordination boundaries, size workloads, route requests, and plan for growth. For worked designs that apply these decisions, refer to [Architecture examples](/durable-objects/best-practices/architecture-examples/).
+
+## Recommended architecture: separate control and data planes {/* control-plane */}
+
+Use this common pattern as a starting point for applications with shared account configuration and many independent resources. It shows how Durable Objects work with other Cloudflare developer platform services, keeping administrative coordination separate from live resource traffic.
+
+![Account Durable Objects publish through propagation layers to separate stateless and stateful data-plane groups, with an independent analytics path.](~/assets/images/durable-objects/architecture-guidance/01-control-plane-model.svg)
+
+<Details header="Diagram as text">
+
+```txt
+CONTROL PLANE
+  Account administrators → Config API → one Durable Object per account ID
+  Account objects own authoritative configuration and resource lifecycle state.
+
+PROPAGATION
+  Account objects → KV Instant: small configuration and hostname-to-account mapping
+  Account objects → KV / R2: larger blobs, with optional Workers Cache
+
+DATA PLANE
+  End users → stateless Workers: authentication, routing, transforms
+  End users → stateful Durable Objects: one room / document / session per object
+  KV Instant → stateless Workers: read configuration
+  KV / R2 → stateful Durable Objects: get blobs
+  The two groups are separate responsibilities, not a mandatory sequential chain.
+  No direct calls or writes go from the data plane to the control plane in this pattern.
+
+ANALYTICS
+  Data-plane usage events → Pipelines → R2 / Basin → scheduled job
+  Scheduled job → Config API: reads summaries and decides on configuration changes
+  Analytics queries and feedback are not on the user request path.
+```
+
+</Details>
+
+- **Control plane:** Account-scoped Durable Objects coordinate configuration and resource lifecycle changes through an administrative API.
+- **Propagation:** Publish small configuration through KV and larger blobs through KV or R2, so readers do not need to query the account's control object for every request.
+- **Data plane:** Workers handle stateless authentication, routing, and transforms. Separate Durable Objects coordinate each room, document, or session and own its application state.
+- **Analytics:** Export usage events through Pipelines to R2 and Basin. A scheduled job can read summaries and propose configuration changes through the administrative API, outside the resource request path.
+
+The recommendation is to separate responsibilities, not to reserve Durable Objects for only one plane. Adapt the services and coordination boundaries to your workload; not every application needs every component shown.
+
+The arrows show logical responsibilities, not separate public endpoints or required Worker deployments. Durable Objects [receive requests through Workers or other Durable Objects](/durable-objects/get-started/#3-instantiate-and-communicate-with-a-durable-object), not directly from the Internet. Keeping routine data-plane traffic out of the control plane is the design choice illustrated here, not a platform restriction.
+
+<Render file="kv-instant-beta" product="kv" />
+
+For a worked design that follows the administrative, resource, and analytics flows, refer to [Account control and resource traffic](/durable-objects/best-practices/architecture-examples/#control-and-data-planes).
 
 ## Starting considerations {/* decision-summary */}
 
@@ -48,7 +94,7 @@ Use this page for guidance on how to choose coordination boundaries, size worklo
 | Hub, relay, leaf  | Broadcast roles: a hub receives an upstream stream, a relay forwards updates, and leaves hold client connections.                                                                         |
 | Bounded parent    | An object that coordinates a defined set of children, such as one account's resources. Its role depends on the operations it owns.                                                        |
 
-## Separate control and data planes {/* control-plane */}
+## Apply the separation pattern {/* apply-separation-pattern */}
 
 Control plane and data plane describe **responsibilities, not products**. A Worker can expose administrative APIs or serve user traffic. A Durable Object can coordinate account configuration or own a live document. Using a Durable Object for the control plane is not itself an anti-pattern.
 
