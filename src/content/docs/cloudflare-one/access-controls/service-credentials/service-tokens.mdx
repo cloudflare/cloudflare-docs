@@ -377,3 +377,9 @@ To configure a service token expiration alert:
 6. Select **Save**.
 
 Your alert has been set and is now visible on the **Notifications** page.
+
+## Receive leaked service token alerts
+
+Cloudflare sends an email when a secret scanning partner, such as GitHub, reports a leaked service token. To restore access, [rotate the leaked secret and re-enable the token](#recover-a-leaked-service-token).
+
+Cloudflare automatically creates a leaked service token alert. By default, it emails account Super Administrators and the token creator, when their email address is available. You can [edit the alert](/notifications/get-started/#manage-alerts) to change its email recipients.

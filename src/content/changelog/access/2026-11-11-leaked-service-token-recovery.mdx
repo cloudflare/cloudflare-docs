@@ -13,4 +13,6 @@ Leaked secrets do not support a rotation grace period. When you rotate one, the 
 
 For API rotations, omit `previous_client_secret_expires_at`. A future expiration returns `400`. Attempting to re-enable the token before rotation returns `409`.
 
+![Leaked service token rotation dialog warning that the current secret is revoked immediately and the token remains disabled.](~/assets/images/cloudflare-one/access/leaked-service-token-rotation.png)
+
 For recovery steps and leak metadata fields, refer to [Recover a leaked service token](/cloudflare-one/access-controls/service-credentials/service-tokens/#recover-a-leaked-service-token).
