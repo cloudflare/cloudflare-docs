@@ -188,12 +188,18 @@ export function legacyToResolved(entry: LegacyEntry): ModelView {
 	propertiesList.push({ property_id: "zdr", value: "true" });
 
 	const schema = (d.schema ?? {}) as { input?: unknown; output?: unknown };
+	const displayNames: Record<string, string> = {
+		"@cf/cloudflare/clef": "Clef",
+		"@cf/cloudflare/clef-flash": "Clef-flash",
+		"@cf/cloudflare/clef-omni": "Clef-omni",
+		"@cf/cloudflare/clairic": "Clairic",
+	};
 
 	return buildView({
 		id: entry.id,
 		name: d.name,
 		slug: d.name,
-		displayName: d.name.split("/").at(-1) ?? d.name,
+		displayName: displayNames[d.name] ?? d.name.split("/").at(-1) ?? d.name,
 		dataSource: "legacy",
 		source: typeof d.source === "number" ? d.source : 1,
 		hosting: "hosted",
