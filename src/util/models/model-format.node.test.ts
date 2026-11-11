@@ -3,9 +3,28 @@ import {
 	formatCompactTokens,
 	formatModelPricing,
 	formatModelReasoning,
+	formatProviderPricing,
 } from "./model-format";
 
 describe("model display formatting", () => {
+	it("formats tiered model_providers pricing with a tier prefix", () => {
+		// Shape returned by the catalog API for minimax/m3.
+		expect(
+			formatProviderPricing({
+				under_512k: { input_tokens: 0.3, output_tokens: 1.2 },
+				over_512k: { input_tokens: 0.6 },
+			}),
+		).toEqual([
+			"Under 512k · Input (per 1M tokens): $0.30",
+			"Under 512k · Output (per 1M tokens): $1.20",
+			"Over 512k · Input (per 1M tokens): $0.60",
+		]);
+		expect(formatProviderPricing({ input_tokens: 1 })).toEqual([
+			"Input (per 1M tokens): $1.00",
+		]);
+		expect(formatProviderPricing(null)).toEqual([]);
+	});
+
 	it("formats token counts compactly", () => {
 		expect(formatCompactTokens(200_000)).toBe("200K tokens");
 		expect(formatCompactTokens(null)).toBeNull();

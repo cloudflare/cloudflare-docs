@@ -93,10 +93,13 @@ export function formatModelReasoning(
 }
 
 export function formatModelPricing(
-	pricing: Record<string, unknown> | undefined,
+	pricing: Record<string, unknown> | null | undefined,
+	tier?: string,
 ): string[] {
 	return Object.entries(pricing ?? {}).flatMap(([label, value]) => {
-		const displayLabel = formatPricingLabel(label);
+		const displayLabel = tier
+			? `${tier} · ${formatPricingLabel(label)}`
+			: formatPricingLabel(label);
 		if (typeof value === "number" && Number.isFinite(value) && value >= 0) {
 			return [`${displayLabel}: ${modelCurrencyFormatter.format(value)}`];
 		}
@@ -105,6 +108,29 @@ export function formatModelPricing(
 		}
 		return [];
 	});
+}
+
+/**
+ * `model_providers[].pricing` as display lines. Unlike top-level `pricing`,
+ * nested objects here are pricing tiers (e.g. `under_512k.input_tokens`), so
+ * each tier's key becomes a label prefix: "Under 512k · Input (per 1M tokens)".
+ */
+export function formatProviderPricing(
+	pricing: Record<string, unknown> | null | undefined,
+): string[] {
+	return Object.entries(pricing ?? {}).flatMap(([label, value]) =>
+		value !== null && typeof value === "object" && !Array.isArray(value)
+			? formatModelPricing(
+					value as Record<string, unknown>,
+					formatTierLabel(label),
+				)
+			: formatModelPricing({ [label]: value }),
+	);
+}
+
+function formatTierLabel(label: string): string {
+	const normalized = label.replaceAll("_", " ").replace(/\s+/g, " ").trim();
+	return normalized.charAt(0).toUpperCase() + normalized.slice(1);
 }
 
 function formatPricingLabel(label: string): string {
@@ -116,9 +142,12 @@ function formatPricingLabel(label: string): string {
 	}
 
 	const normalized = label.replaceAll("_", " ").replace(/\s+/g, " ").trim();
+	// Bare `input_tokens`-style keys (from `model_providers` pricing) are
+	// per 1M tokens, like the explicit `per_1m_*` keys they replace.
 	const tokenPrice =
 		/^per (?:1)?m (.+?) tokens$/i.exec(normalized) ??
-		/^(.+?) tokens \(per (?:1)?m\)$/i.exec(normalized);
+		/^(.+?) tokens \(per (?:1)?m\)$/i.exec(normalized) ??
+		/^(.+?) tokens$/i.exec(normalized);
 	if (tokenPrice) {
 		const descriptor = tokenPrice[1];
 		const displayDescriptor =

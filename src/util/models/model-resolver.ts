@@ -37,6 +37,56 @@ function pinnedIndexFor(name: string, pinned: boolean | undefined): number {
 	return pinned ? pinnedModelNames.length : -1;
 }
 
+const hasPricing = (
+	pricing: Record<string, unknown> | null | undefined,
+): pricing is Record<string, unknown> =>
+	!!pricing && Object.keys(pricing).length > 0;
+
+/**
+ * Providers serving a model, in priority order. `model_providers` is the new
+ * field; `provider_details` is the older one it replaces, so it fills in
+ * while the API migrates. A provider without its own pricing falls back to
+ * the model's top-level `pricing` when it is the only provider (that price is
+ * the model's single price), then to its `provider_details` entry. Not
+ * `provider_id`: that names the model's author, which can differ from the
+ * serving provider (e.g. `google` vs `google-vertex-ai`).
+ */
+function resolveModelProviders(
+	model: Record<string, any>,
+	providerNames: ReadonlyMap<string, string>,
+): ModelProvider[] | null {
+	const details = (model.provider_details ?? []) as Array<{
+		id: string;
+		pricing?: Record<string, unknown> | null;
+	}>;
+	const providers: ModelProvider[] = model.model_providers
+		? [...(model.model_providers as ModelProvider[])]
+		: details.map((detail, ordinal) => ({
+				provider: detail.id,
+				ordinal,
+				pricing: null,
+			}));
+	if (providers.length === 0) return null;
+
+	const soleProvider = providers.length === 1;
+	return providers
+		.sort((x, y) => x.ordinal - y.ordinal)
+		.map((provider) => {
+			const name = providerNames.get(provider.provider) ?? provider.provider;
+			if (hasPricing(provider.pricing)) return { ...provider, name };
+			const detailPricing = details.find(
+				(detail) => detail.id === provider.provider,
+			)?.pricing;
+			const pricing =
+				soleProvider && hasPricing(model.pricing)
+					? model.pricing
+					: hasPricing(detailPricing)
+						? detailPricing
+						: null;
+			return { ...provider, name, pricing };
+		});
+}
+
 function buildView(args: {
 	id: string;
 	name: string;
@@ -105,7 +155,10 @@ function buildView(args: {
  * async_queue, zdr, then metadata flags) in a fixed order so badges/facets
  * work uniformly across both sources.
  */
-export function catalogToResolved(entry: CatalogEntry): ModelView {
+export function catalogToResolved(
+	entry: CatalogEntry,
+	providerNames: ReadonlyMap<string, string> = new Map(),
+): ModelView {
 	const model = entry.data as Record<string, any>;
 	const hosted = isHostedModelId(model.model_id);
 	const properties: Record<string, unknown> = {};
@@ -159,12 +212,7 @@ export function catalogToResolved(entry: CatalogEntry): ModelView {
 		modelId: model.model_id,
 		requestFormats: (model.request_formats as string[] | undefined) ?? null,
 		pricing: model.pricing,
-		// Sorted here so every consumer lists providers in priority order.
-		modelProviders: model.model_providers
-			? [...(model.model_providers as ModelProvider[])].sort(
-					(x, y) => x.ordinal - y.ordinal,
-				)
-			: null,
+		modelProviders: resolveModelProviders(model, providerNames),
 		examples: (model.examples as ModelExample[] | undefined) ?? [],
 		banner: (model.banner as ModelBanner | null | undefined) ?? null,
 		pinned: model.pinned === true,
@@ -178,8 +226,17 @@ export const isHostedModelId = (modelId: string): boolean =>
 
 /** Every model, hosted and proxied. Feeds `/ai/models`. */
 export async function getResolvedModels(): Promise<ModelView[]> {
-	const entries = await getCollection("catalog-models");
-	return entries.map(catalogToResolved);
+	const [entries, providers] = await Promise.all([
+		getCollection("catalog-models"),
+		getCollection("catalog-providers"),
+	]);
+	// Provider ids and their aliases → display name.
+	const providerNames = new Map(
+		providers.flatMap(({ data }) =>
+			[data.id, ...data.aliases].map((id) => [id, data.name] as const),
+		),
+	);
+	return entries.map((entry) => catalogToResolved(entry, providerNames));
 }
 
 /** Only Cloudflare-hosted (`@cf/*`) models. Feeds `/workers-ai/models`. */

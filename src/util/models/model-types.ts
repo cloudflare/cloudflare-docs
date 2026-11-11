@@ -10,6 +10,8 @@ export interface CodeSnippet {
 /** Provider information with pricing details, ordered by priority. */
 export interface ModelProvider {
 	provider: string;
+	/** Display name from the catalog's providers list; falls back to `provider`. */
+	name?: string;
 	ordinal: number;
 	pricing: Record<string, unknown> | null;
 }

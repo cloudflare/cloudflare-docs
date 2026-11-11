@@ -47,7 +47,8 @@ export async function mapConcurrentOrdered<T, R>(
  */
 export type CatalogModel = {
 	model_id: string;
-	provider_id: string | null;
+	// Being removed from the API in favor of `model_providers`.
+	provider_id?: string | null;
 	name: string;
 	description: string;
 	task: string;
@@ -273,6 +274,26 @@ type ApiOptions = {
 
 const accountAiUrl = (options: ApiOptions): string =>
 	`${options.baseUrl ?? "https://api.cloudflare.com"}/client/v4/accounts/${options.accountId}/ai`;
+
+/** A model author or serving provider from `/ai/catalog/providers`. */
+export type CatalogProvider = {
+	id: string;
+	name: string;
+	aliases?: string[];
+	website_url?: string | null;
+	description?: string | null;
+	icons?: Record<string, string | null>;
+};
+
+/** Every provider the catalog CMS knows, with display names and icons. */
+export async function fetchCatalogProviders(
+	options: ApiOptions,
+): Promise<CatalogProvider[]> {
+	return fetchAllPages<CatalogProvider>(
+		`${accountAiUrl(options)}/catalog/providers`,
+		{ Authorization: `Bearer ${options.token}` },
+	);
+}
 
 /**
  * Fetches every public catalog (proxied) model with full details. The list
