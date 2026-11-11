@@ -1,0 +1,48 @@
+---
+title: Cloud networking
+pcx_content_type: reference
+description: Connect cloud networks using provider-specific configuration guides.
+products:
+  - cloudflare-wan
+---
+
+Connect your cloud networks to [Cloudflare WAN](/cloudflare-wan/) using Internet Protocol Security (IPsec) tunnels or Cloud Interconnect. Use Border Gateway Protocol (BGP) to exchange routes dynamically, or configure static routes.
+
+## Choose a connection
+
+Choose a connection based on your network requirements:
+
+| Connection | Transport | Configuration |
+| --- | --- | --- |
+| IPsec tunnels | Encrypted tunnels over the public Internet | Configure your cloud provider's virtual private network (VPN) gateway and matching Cloudflare WAN tunnels. |
+| Cloud Interconnect | Private connectivity through [Cloudflare Network Interconnect (CNI)](/network-interconnect/) | Connect through your cloud provider's interconnect service. Contact your account team to start provisioning. |
+
+## Find a provider guide
+
+The guides describe specific configurations, not every supported routing option:
+
+| Cloud provider | IPsec configuration | Routing in the guide |
+| --- | --- | --- |
+| Alibaba Cloud | [VPN Gateway](/cloudflare-wan/configuration/third-party/alibaba-cloud/) | Static routes |
+| Amazon Web Services (AWS) | [Transit Gateway](/cloudflare-wan/configuration/third-party/aws/) | BGP with redundant tunnels, including a Terraform reference deployment |
+| Google Cloud | [Cloud VPN](/cloudflare-wan/configuration/third-party/google/) | Static routes with Classic VPN |
+| Microsoft Azure | [VPN Gateway](/cloudflare-wan/configuration/third-party/azure/azure-vpn-gateway/) | Static routes |
+| Microsoft Azure | [Virtual WAN](/cloudflare-wan/configuration/third-party/azure/azure-virtual-wan/) | Static routes |
+| Oracle Cloud | [Site-to-Site VPN](/cloudflare-wan/configuration/third-party/oracle/) | Static routes |
+
+For private connectivity, use the following Cloud Interconnect guides:
+
+| Cloud provider | Configuration | Requirements |
+| --- | --- | --- |
+| AWS | [Direct Connect (beta)](/network-interconnect/get-started/#aws-direct-connect-beta) | Dedicated Direct Connect. Hosted Direct Connect is not supported. |
+| Google Cloud | [Cloud Interconnect](/network-interconnect/get-started/#google-cloud-interconnect) | Follow the [routing requirements](/network-interconnect/get-started/#gcp-next-steps) after provisioning the connection. |
+
+## Configure routing
+
+[BGP over IPsec](/cloudflare-wan/configuration/how-to/configure-routes/#configure-bgp-routes) requires [Unified Routing](/cloudflare-wan/reference/traffic-steering/#unified-routing). Your cloud gateway must initiate the BGP session toward Cloudflare.
+
+BGP over CNI with Dataplane v2 is in closed beta and unavailable to new customers. Refer to [Configure BGP for an interconnect](/cloudflare-wan/configuration/how-to/configure-routes/#set-up-bgp-for-an-interconnect) for its requirements.
+
+The Google Cloud Interconnect guide uses static routes toward Google Cloud. Cloudflare ignores routes advertised by Google Cloud Router in that configuration.
+
+For configurations that use static routes, refer to [Configure static routes](/cloudflare-wan/configuration/how-to/configure-routes/#configure-static-routes).
