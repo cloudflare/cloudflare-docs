@@ -7,6 +7,7 @@
  */
 import {
 	formatModelPricing,
+	formatProviderPricing,
 	formatModelReasoning,
 	modelCurrencyFormatter,
 	type ModelView,
@@ -241,13 +242,11 @@ const reasoning = formatModelReasoning(
 					<td>
 						<ul class="m-0 list-none p-0">
 							{modelProviders.map((provider) => {
-								const providerPricing = formatModelPricing(
-									provider.pricing ?? {},
-								);
+								const providerPricing = formatProviderPricing(provider.pricing);
 								return (
 									<li class="border-border m-0 border-b py-2 first:pt-0 last:border-b-0 last:pb-0">
-										<div class="font-medium mb-1 capitalize">
-											{provider.provider}
+										<div class="font-medium mb-1">
+											{provider.name ?? provider.provider}
 										</div>
 										{providerPricing.length > 0 && (
 											<ul class="m-0 ml-4 list-none p-0">

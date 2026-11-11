@@ -46,7 +46,7 @@ const authorLogo = authorData[model.author]?.logo;
 const pricing = formatModelPricing(model.pricing);
 // Format all providers serving this model
 const providers = (model.modelProviders ?? [])
-	.map((p) => p.provider)
+	.map((p) => p.name ?? p.provider)
 	.join(", ");
 ---
 

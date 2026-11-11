@@ -16,7 +16,10 @@ import { productAvailabilityCollectionConfig } from "~/content/collections/produ
 import { granularControlApplicationsCollectionConfig } from "~/content/collections/granular-control-applications";
 import { mcpServersCollectionConfig } from "~/content/collections/mcp-servers";
 import { skillsManifestCollectionConfig } from "~/content/collections/skills-manifest";
-import { catalogModelsLoader } from "~/content/collections/models";
+import {
+	catalogModelsLoader,
+	catalogProvidersLoader,
+} from "~/content/collections/models";
 
 // Extend the default docs schema with the CF-specific frontmatter keys the
 // content uses. The schema is permissive — these fields just need to validate
@@ -380,12 +383,26 @@ export const collections = {
 	// validate and reads never go `undefined`) and the object is
 	// `.looseObject()` so heavy/extra fields (full examples, code_snippets,
 	// raw_response, etc.) carry through untyped.
+	// Model authors and serving providers from the catalog CMS, used for
+	// display names. `aliases` maps other ids (e.g. `google-vertex-ai`) to one
+	// provider.
+	"catalog-providers": defineCollection({
+		loader: catalogProvidersLoader(),
+		schema: z.looseObject({
+			id: z.string(),
+			name: z.string(),
+			aliases: z.array(z.string()).default([]),
+			website_url: z.string().nullish(),
+			description: z.string().nullish(),
+			icons: z.record(z.string(), z.string().nullable()).optional(),
+		}),
+	}),
 	"catalog-models": defineCollection({
 		loader: catalogModelsLoader(),
 		schema: z.looseObject({
 			// Identification
 			model_id: z.string(),
-			provider_id: z.string().nullable(),
+			provider_id: z.string().nullish(),
 			name: z.string(),
 
 			// Content

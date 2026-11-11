@@ -176,4 +176,81 @@ describe("ModelCard", () => {
 		expect(resolve("openai/gpt-5", false)).toBe(-1);
 		expect(resolve("openai/gpt-5")).toBe(-1);
 	});
+
+	test("fills provider pricing from top-level pricing and provider_details", () => {
+		const providerNames = new Map([["google-vertex-ai", "Google"]]);
+		const resolve = (fields: Record<string, unknown>) =>
+			catalogToResolved(
+				{
+					id: "fixture",
+					collection: "catalog-models",
+					data: {
+						model_id: "google/gemini-3-flash",
+						provider_id: "google",
+						name: "Gemini",
+						description: "",
+						task: "Text Generation",
+						tags: [],
+						context_length: null,
+						max_output_tokens: null,
+						pricing: { "Input tokens (per 1M)": 1 },
+						supports_async: false,
+						examples: [],
+						metadata: {},
+						external_info: null,
+						terms: null,
+						cover_image_url: null,
+						schema_version: null,
+						...fields,
+					},
+				},
+				providerNames,
+			).modelProviders;
+
+		// Sole provider without pricing: use the model's top-level pricing.
+		expect(
+			resolve({
+				model_providers: [
+					{ provider: "google-vertex-ai", ordinal: 0, pricing: null },
+				],
+			}),
+		).toEqual([
+			{
+				provider: "google-vertex-ai",
+				name: "Google",
+				ordinal: 0,
+				pricing: { "Input tokens (per 1M)": 1 },
+			},
+		]);
+
+		// No model_providers yet: derive providers from provider_details.
+		expect(
+			resolve({
+				provider_details: [{ id: "google-vertex-ai", pricing: null }],
+			}),
+		).toEqual([
+			{
+				provider: "google-vertex-ai",
+				name: "Google",
+				ordinal: 0,
+				pricing: { "Input tokens (per 1M)": 1 },
+			},
+		]);
+
+		// Several providers: top-level pricing is ambiguous, so use each
+		// provider's provider_details entry, and keep ordinal order.
+		expect(
+			resolve({
+				model_providers: [
+					{ provider: "b", ordinal: 1, pricing: null },
+					{ provider: "a", ordinal: 0, pricing: { input_tokens: 3 } },
+				],
+				provider_details: [{ id: "b", pricing: { input_tokens: 2 } }],
+			}),
+		).toEqual([
+			// Unknown to the providers list: the id doubles as the name.
+			{ provider: "a", name: "a", ordinal: 0, pricing: { input_tokens: 3 } },
+			{ provider: "b", name: "b", ordinal: 1, pricing: { input_tokens: 2 } },
+		]);
+	});
 });
