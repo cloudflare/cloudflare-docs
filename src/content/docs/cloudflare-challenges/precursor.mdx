@@ -38,6 +38,21 @@ The selected mode controls how Precursor uses its signals:
 
 The Precursor Interstitial is a lightweight Challenge shown before a visitor continues to your site. It establishes a verified Precursor session and grants Challenge clearance if the visitor does not already have one.
 
+## Phase order
+
+Precursor runs at two points in the [request handling process](/ruleset-engine/about/phases/):
+
+1. **Rule and mode evaluation** — before [WAF custom rules](/waf/custom-rules/) (`http_request_firewall_custom` phase). Cloudflare evaluates the selected Precursor mode and your Interstitial Rules to determine whether a request requires a Precursor Interstitial.
+2. **Interstitial enforcement** — after WAF custom rules and before [rate limiting rules](/waf/rate-limiting-rules/) (`http_ratelimit` phase). Cloudflare serves the Precursor Interstitial to requests that require one.
+
+Requests that establish a verified session, or that do not require an interstitial, continue through the remaining security phases, including rate limiting rules, [WAF Managed Rules](/waf/managed-rules/), and [Super Bot Fight Mode](/bots/get-started/super-bot-fight-mode/).
+
+### Exemptions
+
+[WAF skip options](/waf/custom-rules/skip/options/) do not apply to Precursor. A custom rule with a **Skip** action does not exempt traffic from Precursor or the Precursor Interstitial.
+
+To exempt specific requests from the interstitial, use **Interstitial Rules** with **Show Interstitial** set to off. Refer to [Use Precursor with APIs](#use-precursor-with-apis) for common exemption patterns.
+
 ## Get started
 
 To configure Precursor for your zone:

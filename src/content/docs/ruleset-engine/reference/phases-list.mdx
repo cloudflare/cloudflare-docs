@@ -42,7 +42,9 @@ The phases execute in the order they appear in the table.
 | `http_config_settings`             | [Configuration Rules](/rules/configuration-rules/)                               |
 | `http_request_origin`              | [Origin Rules](/rules/origin-rules/)                                             |
 | `ddos_l7`\*                        | [HTTP DDoS Attack Protection](/ddos-protection/managed-rulesets/http/)           |
+| _N/A_ (internal phase)§            | [Precursor](/cloudflare-challenges/precursor/) rule and mode evaluation          |
 | `http_request_firewall_custom`     | [Custom rules (Web Application Firewall)](/waf/custom-rules/)                    |
+| _N/A_ (internal phase)§            | [Precursor Interstitial](/cloudflare-challenges/precursor/) enforcement          |
 | `http_ratelimit`                   | [Rate limiting rules (WAF)](/waf/rate-limiting-rules/)                           |
 | _N/A_ (internal mitigation phase)‡ | [API Shield](/api-shield/)                                                       |
 | `http_request_firewall_managed`    | [WAF Managed Rules](/waf/managed-rules/)                                         |
@@ -60,6 +62,8 @@ The phases execute in the order they appear in the table.
 † _Detections run at this phase. Detection results are available to later phases._
 
 ‡ _Mitigation actions can run at this stage if configured._
+
+§ _Precursor evaluates the selected mode and Interstitial Rules before WAF custom rules, and enforces the Precursor Interstitial after WAF custom rules and before rate limiting rules. Refer to [Precursor](/cloudflare-challenges/precursor/#phase-order)._
 
 For Cloudflare Access, the `Cloudflare Access` row refers to Access application checking. Access enforcement and handling run in later internal phases, after Bulk Redirects.
 
