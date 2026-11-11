@@ -1,0 +1,40 @@
+---
+title: Add noise cancellation to RealtimeKit web apps
+description: Filter background noise from participants' microphones in RealtimeKit web apps with the new @cloudflare/realtimekit-noise-cancellation package.
+products:
+  - realtime
+date: 2026-11-11
+---
+
+import { PackageManagers } from "~/components";
+
+You can now add [noise cancellation](/realtime/realtimekit/humans/core/noise-cancellation/) to [RealtimeKit](/realtime/realtimekit/) web apps with the new `@cloudflare/realtimekit-noise-cancellation` package. RealtimeKit is a high-level SDK for adding real-time audio and video components, such as video meetings, to your web or mobile app.
+
+Install the package:
+
+<PackageManagers pkg="@cloudflare/realtimekit-noise-cancellation" />
+
+After you [initialize the meeting](/realtime/realtimekit/humans/core/), pass it to `init()`:
+
+```js
+import { RealtimeKitNoiseCancellation } from "@cloudflare/realtimekit-noise-cancellation";
+
+// Enables automatically when the mic is available, without delaying join.
+void RealtimeKitNoiseCancellation.init({ meeting }).catch(console.warn);
+```
+
+## How it works
+
+- Filters background noise in the participant's browser, before their audio is sent to the meeting.
+- Turns on automatically after `init()`, as soon as the participant's microphone is on.
+- Keeps running through mute, unmute, and reconnects, and cleans up when the participant leaves.
+- Never unmutes the microphone.
+
+Noise cancellation works in React, Angular, and JavaScript apps on Chrome, Edge, Firefox, and Safari, including mobile browsers. The RealtimeKit iOS and Android SDKs do not yet support it.
+
+## Learn more
+
+- [Noise Cancellation](/realtime/realtimekit/humans/core/noise-cancellation/): setup for React, Angular, and JavaScript, plus the full API
+- [Noise cancellation example](https://github.com/cloudflare/realtimekit-web-examples/tree/main/react-examples/examples/with-noise-cancellation): RealtimeKit's default meeting UI with noise cancellation turned on, also available in Angular and HTML in the same repository
+- [RealtimeKit release notes](/realtime/realtimekit/release-notes/)
+- [RealtimeKit quickstart](/realtime/realtimekit/quickstart/)
