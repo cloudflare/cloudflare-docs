@@ -2570,6 +2570,7 @@ entries:
       - `"managed_challenge"`
       - `"iuam"`
       - `"legacy_challenge"`
+      - `"precursor_interstitial"`
       - `"ip_ban"`
       - `"waf"`
       - `"5xx"`
@@ -2577,6 +2578,8 @@ entries:
       - `"always_online"`
       - `"country_challenge"`
       - `"ratelimit"`
+
+      The `"precursor_interstitial"` value identifies a [Precursor interstitial](/cloudflare-challenges/precursor/). It is distinct from `"managed_challenge"` and `"iuam"`.
 
       You can use this field to customize the response for a specific type of error (for example, all 1XXX errors or all WAF block actions).
 

@@ -42,7 +42,7 @@ If you have a [Transform Rule](/rules/transform/) that modifies HTTP response he
 To prevent this, modify your Transform Rule expression to exclude challenge page responses. Add the following condition to the beginning of your expression:
 
 ```txt wrap
-not cf.response.error_type in {"managed_challenge" "iuam" "legacy_challenge" "country_challenge"}
+not cf.response.error_type in {"managed_challenge" "iuam" "legacy_challenge" "country_challenge" "precursor_interstitial"}
 ```
 
 This expression skips your header modifications when Cloudflare serves a challenge page, so the challenge scripts load correctly.
