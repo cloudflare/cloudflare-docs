@@ -1,0 +1,46 @@
+---
+title: Serve a Worker's static assets from a URL path like /blog/
+description: Set assets.base_path to serve Workers Static Assets from a URL path prefix without moving your files into a matching directory.
+products:
+  - workers
+  - cf
+date: 2026-11-11
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now serve your Worker's [static assets](/workers/static-assets/) from a URL path prefix, such as `example.com/blog/`, without changing your build output.
+
+Previously, to serve assets from `/blog/`, you had to nest your files in a matching `blog` directory. Now, set `assets.base_path` in your Wrangler configuration file, or `worker.assets.basePath` in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), and keep your files at the root of your asset directory.
+
+Use [Wrangler 4.148.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.148.0) or later. With `cloudflare.config.ts`, use [`cf` 1.0.0-beta.13](https://github.com/cloudflare/cf/releases/tag/cf%401.0.0-beta.13) or later.
+
+For example, this configuration serves your built assets from `/blog/`:
+
+<WranglerConfig
+	cfConfig={`import { defineConfig } from "cf/config";
+
+export default defineConfig({
+  worker: {
+    name: "blog",
+    compatibilityDate: "$today",
+    assets: {
+      basePath: "/blog",
+    },
+  },
+});`}
+>
+
+```toml
+[assets]
+directory = "./dist"
+base_path = "/blog"
+```
+
+</WranglerConfig>
+
+Requests to `/blog/` serve `dist/index.html`, and requests to `/blog/posts/post1` serve `dist/posts/post1.html`. Requests outside `/blog/` do not match your static assets and run your Worker, if it has one.
+
+Paths in `_headers`, `_redirects`, and `run_worker_first` use the full public path, including `/blog`. If you build with the [Cloudflare Vite plugin](/workers/vite-plugin/), also set Vite's `base` option to `/blog/`.
+
+For more information, refer to [Serving a subdirectory](/workers/static-assets/routing/advanced/serving-a-subdirectory/).
