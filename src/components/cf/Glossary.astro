@@ -10,7 +10,7 @@
  * swapped for Nimbus tokens.
  */
 import { getCollection } from "astro:content";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 
 interface Props {
 	product?: string;
@@ -50,36 +50,32 @@ const INITIAL_VISIBLE_ROWS = 20;
 			</tr>
 		</thead>
 		<tbody>
-			{
-				terms.map((entry, idx) => (
-					<tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
-						<td>{entry.term}</td>
-						<td
-							set:html={marked.parse(
-								entry.general_definition.charAt(0).toUpperCase() +
-									entry.general_definition.slice(1),
-							)}
-						/>
-						{!product && <td>{entry.product}</td>}
-					</tr>
-				))
-			}
+			{terms.map((entry, idx) => (
+				<tr class:list={[{ hidden: idx > INITIAL_VISIBLE_ROWS }]}>
+					<td>{entry.term}</td>
+					<td
+						set:html={renderMarkdown(
+							entry.general_definition.charAt(0).toUpperCase() +
+								entry.general_definition.slice(1),
+						)}
+					/>
+					{!product && <td>{entry.product}</td>}
+				</tr>
+			))}
 		</tbody>
 	</table>
 </div>
 
-{
-	terms.length > INITIAL_VISIBLE_ROWS && (
-		<div class="flex items-center justify-center">
-			<button
-				id="glossary-button"
-				class="bg-primary text-primary-foreground h-12 cursor-pointer rounded-md px-6 font-medium"
-			>
-				View more terms
-			</button>
-		</div>
-	)
-}
+{terms.length > INITIAL_VISIBLE_ROWS && (
+	<div class="flex items-center justify-center">
+		<button
+			id="glossary-button"
+			class="bg-primary text-primary-foreground h-12 cursor-pointer rounded-md px-6 font-medium"
+		>
+			View more terms
+		</button>
+	</div>
+)}
 
 <script>
 	const button = document.querySelector<HTMLButtonElement>("#glossary-button");

@@ -1,0 +1,21 @@
+---
+title: Improved SCIM 2.0 group synchronization
+description: Dashboard SCIM now supports replacing groups using HTTP PUT for full-state group synchronization.
+products:
+  - fundamentals
+date: 2026-08-21
+---
+
+Dashboard SCIM now supports replacing groups using HTTP `PUT`, as defined by [RFC 7644 section 3.5.1](https://datatracker.ietf.org/doc/html/rfc7644#section-3.5.1). This allows identity providers to synchronize a group's full state, including its display name, external ID, and members, in a single request.
+
+**What's New**
+
+**Group replacement via `PUT`**: Full-state group synchronization improves compatibility with identity providers that use replacement semantics and helps keep Cloudflare groups aligned with their source identity provider.
+
+:::note
+SCIM provisioning for the Cloudflare dashboard is available to Enterprise customers. You must be a Super Administrator to complete the initial setup.
+:::
+
+For more information:
+
+- [SCIM provisioning overview](/fundamentals/account/account-security/scim-setup/)

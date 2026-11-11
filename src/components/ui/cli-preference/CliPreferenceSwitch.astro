@@ -1,0 +1,24 @@
+---
+import CliPreferenceGuidance from "./CliPreferenceGuidance.astro";
+import CliPreferenceSelector from "./CliPreferenceSelector.astro";
+import CliVariantLabel from "./CliVariantLabel.astro";
+
+interface Props {
+	anchorId?: string;
+}
+
+const { anchorId } = Astro.props;
+---
+
+<div data-nb-cli-preference-scope data-nb-cli-anchor={anchorId} class="w-full">
+	<CliPreferenceSelector />
+	<CliPreferenceGuidance />
+	<div data-nb-cli-variant="cf">
+		<CliVariantLabel cli="cf" />
+		<slot name="cf" />
+	</div>
+	<div data-nb-cli-variant="wrangler">
+		<CliVariantLabel cli="wrangler" />
+		<slot name="wrangler" />
+	</div>
+</div>

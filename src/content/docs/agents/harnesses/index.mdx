@@ -1,6 +1,6 @@
 ---
 title: Harnesses
-description: Understand agent harnesses — the loop that controls planning, tool use, and response flow.
+description: Compare agent harnesses on Cloudflare by execution environment, recovery behavior, and persistent workspace integration.
 pcx_content_type: concept
 sidebar:
   order: 5
@@ -10,32 +10,55 @@ import { LinkCard } from "~/components";
 
 A harness is the loop that makes an agent behave like an agent instead of a single model call.
 
+For what a harness does and how to choose one, refer to [Harness](/agents/concepts/harness/) in Concepts.
+
 It is responsible for the turn-by-turn work around the model: building the prompt, loading memory, selecting tools, handling tool results, streaming responses, persisting messages, and deciding whether the agent should continue or stop.
 
-You can build this loop yourself on top of the [Agents SDK runtime](/agents/runtime/agents-api/), or use an opinionated harness like [Project Think](/agents/harnesses/think/).
+Most people building new agents should start with the [Pi harness](/agents/harnesses/pi/). To explore other approaches, compare where each harness runs, how it recovers, and how it accesses files.
 
-## How harnesses fit
+## How harnesses fit with the Agents SDK
 
 Harnesses sit on top of the Agents SDK runtime:
 
-- **The runtime** gives the agent durable infrastructure: the [`Agent` class](/agents/runtime/lifecycle/agent-class/), [state](/agents/runtime/lifecycle/state/), [sessions](/agents/runtime/lifecycle/sessions/), [routing](/agents/runtime/communication/routing/), [WebSockets](/agents/runtime/communication/websockets/), [scheduling](/agents/runtime/execution/schedule-tasks/), [fibers](/agents/runtime/execution/durable-execution/), and [observability](/agents/runtime/operations/observability/).
+- **The runtime** coordinates [startup and durable jobs](/agents/runtime/lifecycle/), [routing](/agents/runtime/routing/), and the [capabilities](/agents/runtime/capabilities/) you install. These can add WebSocket connections, shared state, scheduling, and MCP connections. Use [observability](/agents/runtime/observability/) to trace model calls and inspect runtime events.
 - **The harness** gives the agent behavior: model calls, prompt construction, tool selection, stream handling, memory strategy, and lifecycle hooks.
 
 The runtime answers “where does this agent live and how does it stay durable?” The harness answers “what does this agent do on each turn?”
 
+Conversation storage depends on the harness. Pi and OpenCode manage their own transcripts. Claude Code and Codex keep their records in a SQLite-backed `HarnessStore`. Think and `AIChatAgent` install the SDK's `Sessions` capability. To find the APIs relevant to your agent, refer to [Choose capabilities](/agents/runtime/capabilities/#choose-capabilities).
+
+## Compare harnesses
+
+**Durability** means the harness saves agent progress and can resume work after a crash, restart, or deployment. For SDK integrations, [Lifecycle](/agents/runtime/lifecycle/) coordinates startup and recovery jobs.
+
+[Cloudflare Computer](/agents/tools/filesystem/) provides persistent files and file tools for agents. Agents can return to files they created or edited across turns, even after a restart.
+
+| Harness                                                            | Runs in                                                       | Durability                                                                   | Cloudflare Computer        |
+| ------------------------------------------------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------- | -------------------------- |
+| [Pi](/agents/harnesses/pi/)                                        | Durable Objects via the Agents SDK                            | 🟢 Automatically resumes interrupted work                                    | 🟢 Supported               |
+| [Flue](https://flueframework.com/)                                 | Durable Objects via the Agents SDK                            | 🟢 Automatically resumes interrupted work                                    | 🟢 Supported               |
+| [OpenCode](/agents/harnesses/opencode/)                            | Durable Objects via the Agents SDK                            | 🟡 Resumes interrupted work                                                  | 🟡 Example plugin          |
+| [Claude Code](/agents/harnesses/claude-code/) (Experimental)       | Linux container driven by a Durable Object via the Agents SDK | 🟡 Reattaches after object restart; container loss fails or retries the turn | 🔴 No built-in integration |
+| [Codex](/agents/harnesses/codex/) (Experimental)                   | Linux container driven by a Durable Object via the Agents SDK | 🟡 Reattaches after object restart; container loss fails or retries the turn | 🔴 No built-in integration |
+| [Think](/agents/harnesses/think/) (Experimental)                   | Durable Objects via the Agents SDK                            | 🟡 Continues from saved output                                               | 🟢 Supported               |
+| [Nanocode](/agents/harnesses/nanocode/) (Pre-1.0)                  | Wasm in its own Durable Object host                           | 🟡 Resumes turns; some tools cannot recover                                  | 🟡 Custom adapter needed   |
+| [Exo](/agents/harnesses/exo/) (Pre-1.0)                            | Wasm in Durable Objects + Linux sandbox                       | 🟡 Resumes turns; interrupted tools may fail                                 | 🔴 No integration          |
+| [Self-modifying](/agents/harnesses/self-modifying/) (Experimental) | Durable Objects via the Agents SDK + Dynamic Workers          | 🟡 Resumes turns; custom tools may rerun                                     | 🟡 Workspace in example    |
+| [Coding agent CLIs without a harness](/sandbox/coding-agents/)     | Linux sandbox                                                 | 🔴 No automatic recovery in these examples                                   | 🔴 No integration          |
+
 ## Choose an approach
 
-Use a build-your-own harness when you need full control over the model call, message format, tool loop, or UI protocol. This is the right approach when you want to compose low-level APIs directly from the Agents SDK.
+Use [Pi](/agents/harnesses/pi/) when you want Pi Durable to own the loop, transcript, and recovery. Use [OpenCode](/agents/harnesses/opencode/) for OpenCode's sessions, tools, and plugins, or [Think](/agents/harnesses/think/) for an AI SDK chat agent with built-in Workspace tools.
 
-Use Project Think when you want an opinionated chat-agent harness with defaults for memory, workspace tools, streaming, lifecycle hooks, sub-agent RPC, and durable chat recovery.
+Use [Flue](https://flueframework.com/) for a TypeScript hooks API built on Pi, with automatic recovery and a [Cloudflare target](https://flueframework.com/docs/guide/cloudflare-target/) that uses the Agents SDK.
 
-## Current harnesses
+Use [Claude Code](/agents/harnesses/claude-code/) or [Codex](/agents/harnesses/codex/) to run those CLIs with their native tools, plugins, and settings in a Linux container. A Durable Object stores sessions and coordinates recovery. Container loss fails the interrupted turn by default. Optional retry reruns it. Workspace recovery uses filesystem snapshots, so edits since the last snapshot can be lost.
 
-<LinkCard
-	title="Project Think"
-	href="/agents/harnesses/think/"
-	description="An opinionated chat agent harness with built-in tools, persistent memory, lifecycle hooks, streaming, and sub-agent RPC."
-/>
+[Build your own harness](/agents/harnesses/build-your-own/) when you need control over model calls, message formats, or tool execution. Compose it from the [Agents SDK runtime](/agents/runtime/) capabilities.
+
+Explore the experimental [self-modifying](/agents/harnesses/self-modifying/) example for an agent that edits its own TypeScript harness.
+
+[Nanocode](/agents/harnesses/nanocode/) and [Exo](/agents/harnesses/exo/) provide their own runtimes for running agents on Cloudflare.
 
 ## What a harness usually owns
 
@@ -52,18 +75,18 @@ A harness usually owns:
 
 <LinkCard
 	title="Agents SDK runtime"
-	href="/agents/runtime/agents-api/"
-	description="Build your own harness directly on the Agent class."
+	href="/agents/runtime/"
+	description="Compose a harness on a Durable Object with Lifecycle and optional capabilities."
 />
 
 <LinkCard
 	title="Sessions"
-	href="/agents/runtime/lifecycle/sessions/"
+	href="/agents/runtime/capabilities/sessions/"
 	description="Store conversation context and memory across turns."
 />
 
 <LinkCard
 	title="Durable execution with fibers"
-	href="/agents/runtime/execution/durable-execution/"
+	href="/agents/agent-class/durable-execution/"
 	description="Recover long-running agent work after Durable Object eviction."
 />

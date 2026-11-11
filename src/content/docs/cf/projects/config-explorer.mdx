@@ -1,0 +1,29 @@
+---
+title: Configuration explorer
+description: See how cloudflare.config.ts describes each part of an application, and what each typed field means.
+pcx_content_type: reference
+sidebar:
+  order: 3
+products:
+  - cf
+  - workers
+---
+
+import { AnnotatedConfigExplorer } from "~/components";
+
+`cloudflare.config.ts` is a TypeScript file, so every field has a type and a
+description. Use the configuration explorer to see how the file describes the
+main parts of an application: project settings, the Worker, bindings,
+triggers, and exports.
+
+Select a category, then select a highlighted field to see its type,
+description, default value, and accepted options. Editors with TypeScript
+support show the same information in autocomplete and hover text as you write
+the file, and type checking flags values that do not match.
+
+To learn how to structure a project's configuration, refer to
+[Programmatic configuration](/cf/projects/cloudflare-config/). To return
+different configuration for each environment, refer to
+[Modes](/cf/projects/#modes).
+
+<AnnotatedConfigExplorer />

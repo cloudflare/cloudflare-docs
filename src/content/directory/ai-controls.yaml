@@ -1,0 +1,12 @@
+id: esLVJh
+name: AI controls
+
+entry:
+  title: AI controls
+  group: Cloudflare One
+  url: /cloudflare-one/access-controls/ai-controls/
+
+meta:
+  title: Cloudflare One AI controls docs
+  description: Centralize MCP servers behind a single endpoint and apply Access policies to AI tool traffic
+  author: "@cloudflare"

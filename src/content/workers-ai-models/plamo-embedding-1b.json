@@ -1,7 +1,19 @@
 {
+    "name": "@cf/pfnet/plamo-embedding-1b",
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.0186,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "id": "bc2b61f6-7eb3-4cdf-94f5-ffc128bd6aa4",
     "source": 1,
-    "name": "@cf/pfnet/plamo-embedding-1b",
     "description": "PLaMo-Embedding-1B is a Japanese text embedding model developed by Preferred Networks, Inc.\n\nIt can convert Japanese text input into numerical vectors and can be used for a wide range of applications, including information retrieval, text classification, and clustering.",
     "task": {
         "id": "0137cdcf-162a-4108-94f2-1ca59e8c65ee",
@@ -10,18 +22,6 @@
     },
     "created_at": "2025-09-24 18:42:05.576",
     "tags": [],
-    "properties": [
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per M input tokens",
-                    "price": 0.019,
-                    "currency": "USD"
-                }
-            ]
-        }
-    ],
     "schema": {
         "input": {
             "type": "object",
@@ -73,5 +73,6 @@
                 "shape"
             ]
         }
-    }
+    },
+    "deprecated": false
 }

@@ -1,0 +1,104 @@
+---
+title: "WAF Release - 2026-10-22 - Emergency - Cloudflare Managed Ruleset"
+description: Cloudflare Managed Ruleset 2026-10-22 emergency release
+date: 2026-10-22
+---
+
+import { RuleID } from "~/components";
+
+This emergency release updates the names and metadata of seven existing rules in the Cloudflare Managed Ruleset to identify CVE-2026-109618 and CVE-2026-109619. Detection logic and rule actions remain unchanged.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="c1d409ad838f47f59446f21cc438d5dd" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619)</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="f9a45927414245e3a64bb12d0a0c2f64" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #2</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="771c654ae1154d4daa72f4e1545d163c" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #3</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="217005865f0145f392300bac212afcc9" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #4</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="38efdb17ea594501bb55a1d71867b12e" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #5</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="4148ae686fdb4d01be673fab9d9c073d" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #6</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="1389aa259617437392ce149c48143645" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619) #7</td>
+			<td>Block</td>
+			<td>N/A</td>
+			<td>Rule metadata description refined. Detection unchanged.</td>
+		</tr>
+	</tbody>
+</table>
+
+For more information, refer to [WAF Managed Rules](/waf/managed-rules/).

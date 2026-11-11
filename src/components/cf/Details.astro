@@ -3,9 +3,9 @@
  * Details — collapsible disclosure with a markdown-capable header.
  *
  * CF source: cloudflare-docs/src/components/Details.astro — 1:1 port
- * (header is rendered through `marked` so inline code/links work).
+ * (header is rendered through Sätteri so inline code/links work).
  */
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 
 interface Props {
 	header: string;
@@ -21,7 +21,10 @@ const { header, open, id } = Astro.props;
 	id={id}
 	class="border-border my-4 rounded-lg border px-4 py-2"
 >
-	<summary class="cursor-pointer font-medium" set:html={marked.parse(header)} />
+	<summary
+		class="cursor-pointer font-medium"
+		set:html={renderMarkdown(header)}
+	/>
 	<slot />
 </details>
 

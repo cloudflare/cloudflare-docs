@@ -1,0 +1,57 @@
+---
+pcx_content_type: navigation
+title: RtkFileMessageView
+description: API reference for RtkFileMessageView component (React Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-file-message-view/rtk-file-message-view.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A component which renders a file message.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon pack |
+| `name` | `string` | ✅ | - | Name of the file |
+| `size` | `number` | ✅ | - | Size of the file |
+| `url` | `string` | ✅ | - | Url of the file |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkFileMessageView } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkFileMessageView />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkFileMessageView } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkFileMessageView
+      name="example"
+      size={42}
+      url="example"
+    />
+  );
+}
+```
+

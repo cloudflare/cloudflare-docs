@@ -1,0 +1,165 @@
+---
+reviewed: 2026-11-02
+pcx_content_type: how-to
+title: Migrate Astro from Vercel to Cloudflare Workers
+description: Migrate an Astro SSR application from Vercel to Cloudflare Workers. Replace @astrojs/vercel with @astrojs/cloudflare. Includes a prompt for your coding agent.
+sidebar:
+  label: Astro
+  order: 1
+products:
+  - workers
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+This guide moves an [Astro](https://astro.build/) application from Vercel to Cloudflare Workers. You replace `@astrojs/vercel` with [`@astrojs/cloudflare`](https://docs.astro.build/en/guides/integrations-guide/cloudflare/).
+
+A fully static Astro site does not need an adapter. A Wrangler configuration file that points to `./dist` is enough. Refer to [Migrate a static site or SPA from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/static-site/).
+
+The adapter version depends on your Astro major version:
+
+| Astro version | Adapter                  |
+| ------------- | ------------------------ |
+| 5             | `@astrojs/cloudflare@12` |
+| 6             | `@astrojs/cloudflare@13` |
+| 7             | `@astrojs/cloudflare@14` |
+
+This guide targets Astro 7. Route caching, which replaces Vercel ISR, requires Astro 7.
+
+## Before you begin
+
+- If your project uses Astro 5 or 6, upgrade to Astro 7 first, and commit the upgrade separately.
+- Remove the `@astrojs/vercel` import from `astro.config.*` before you run `astro add cloudflare`. Otherwise, the command fails because it cannot load your configuration.
+- Review the steps in [Before you begin](/workers/static-assets/migration-guides/vercel-to-workers/#before-you-begin) that apply to every framework.
+
+## Migrate with a coding agent
+
+Copy this prompt into your coding agent. The agent stops before it deploys.
+
+```txt
+Migrate this Astro project from Vercel to Cloudflare Workers (Workers with Static Assets, not Pages).
+
+1. Install dependencies with the repository's package manager. Read package.json and astro.config.*. Note the Astro major version, whether any page renders on demand (output: 'server' or prerender = false), and the @astrojs/vercel options in use (isr, imageService, webAnalytics, speedInsights, edgeMiddleware, maxDuration). Search src/ for Cache-Control, s-maxage, stale-while-revalidate, Astro.locals.runtime, Astro.session, and @vercel/* imports.
+2. On Astro 5 or 6, upgrade to Astro 7 first. `npx @astrojs/upgrade` asks for confirmation and does nothing without a terminal, so run `npm i astro@latest` and update other @astrojs/* packages. Build once with the Vercel adapter, fix upgrade errors (for example, replace `astro/client-image` with `astro/client` in src/env.d.ts), and commit the upgrade separately.
+3. For a fully static site, uninstall @astrojs/vercel and remove it from astro.config. Create wrangler.jsonc with "name", "compatibility_date": "<today>", and "assets": { "directory": "./dist" }. Add "not_found_handling": "404-page" if there is a 404 page. Then go to step 7.
+4. For on-demand rendering, first delete the @astrojs/vercel import and the `adapter: vercel(...)` option from astro.config. Then run `npm uninstall @astrojs/vercel && npx astro add cloudflare --yes && npm i -D wrangler`. Without --yes, astro add does nothing without a terminal.
+5. astro add creates wrangler.jsonc with "name": "example". Set "name" to the repository name, "main" to "@astrojs/cloudflare/entrypoints/server", "compatibility_date" to today, "compatibility_flags" to ["global_fetch_strictly_public"], "assets" to { "binding": "ASSETS", "directory": "./dist" }, and "observability" to { "enabled": true }. Do not add nodejs_compat. A compatibility date of 2026-08-04 or later already enables it. If the app does not use Astro.session, set `session: false` in astro.config to avoid creating a KV namespace. If astro add set tsconfig.json "include" to only ["./worker-configuration.d.ts"], change it to [".astro/types.d.ts", "**/*", "./worker-configuration.d.ts"]. Add .wrangler/ and .dev.vars* to .gitignore.
+6. Replace Astro.locals.runtime.env with `import { env } from "cloudflare:workers"`, Astro.locals.runtime.cf with Astro.request.cf, Astro.locals.runtime.ctx with Astro.locals.cfContext, and Astro.locals.runtime.caches with the global caches. Run `npx wrangler types`.
+7. Remove Vercel:
+   - Delete vercel.json, .vercel/, @vercel/* packages, and Vercel analytics components.
+   - Port redirects to the astro config `redirects` option or public/_redirects. Port headers to public/_headers.
+   - For crons, add triggers.crons to wrangler.jsonc and create src/worker.ts that exports { fetch: (req, env, ctx) => handle(req, env, ctx), scheduled }, with handle imported from "@astrojs/cloudflare/handler". Set "main" to that file.
+   - A Worker does not cache its own responses based on Cache-Control: s-maxage. Replace Vercel isr and every page that sets s-maxage or stale-while-revalidate with Astro route caching: add `cache: { provider: cacheCloudflare() }` to astro.config (import cacheCloudflare from '@astrojs/cloudflare/cache') and call `Astro.cache.set({ maxAge, swr })` in the route. Tell me about the behavior change.
+   - If webAnalytics or speedInsights was on, ask me before you create a Cloudflare Web Analytics site. On workers.dev, add the beacon script to every page.
+8. Keep the default imageService 'cloudflare-binding' if <Image> is used on on-demand pages. Use imageService: 'compile' only if every image is on a prerendered page. Do not use sharp at runtime.
+9. Set these scripts: preview="astro build && astro preview", deploy="astro build && wrangler deploy", and cf-typegen="wrangler types". Remove the "generate-types" script that astro add creates.
+10. Run `npx astro build`, then `npx astro preview --port <port>`. Astro 7 runs the preview in the background, so stop it with `npx astro preview stop`. Check SSR routes, endpoints that use bindings, images (/_image returns image/webp), and cached routes.
+
+Rules: work on a new git branch; store local secrets in a gitignored .dev.vars file with placeholder values; never print secret values; do not deploy, log in, or change DNS.
+When you finish, list the files you changed, the Vercel features without an equivalent, the secrets I must set with `npx wrangler secret put <NAME>`, and the deploy command. Tell me to check cached routes after deploying with `curl -sI <url> | grep cf-cache-status`.
+```
+
+## Migrate manually
+
+<Steps>
+
+1. If your project uses Astro 5 or 6, upgrade Astro:
+
+   <PackageManagers pkg="astro@latest" />
+
+   Build once with the Vercel adapter and fix any errors. For example, replace `astro/client-image` with `astro/client` in `src/env.d.ts`.
+
+2. Delete the `@astrojs/vercel` import and the `adapter: vercel(...)` option from `astro.config.*`. Then replace the adapter:
+
+   <PackageManagers type="remove" pkg="@astrojs/vercel" />
+
+   <PackageManagers type="exec" pkg="astro" args="add cloudflare --yes" />
+
+   <PackageManagers pkg="wrangler" dev />
+
+3. Edit the Wrangler configuration file that `astro add` created. Change `name` from `example` to your project name. You do not need `nodejs_compat` in `compatibility_flags`, because a compatibility date of `2026-08-04` or later enables Node.js compatibility by default:
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "./node_modules/wrangler/config-schema.json",
+   	"name": "<YOUR_PROJECT_NAME>",
+   	"main": "@astrojs/cloudflare/entrypoints/server",
+   	"compatibility_date": "$today",
+   	"compatibility_flags": ["global_fetch_strictly_public"],
+   	"assets": {
+   		"binding": "ASSETS",
+   		"directory": "./dist",
+   	},
+   	"observability": {
+   		"enabled": true,
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+4. Replace Vercel ISR and `s-maxage` caching with Astro route caching. Add the Cloudflare cache provider to `astro.config.ts`:
+
+   ```ts title="astro.config.ts"
+   import { defineConfig } from "astro/config";
+   import cloudflare from "@astrojs/cloudflare";
+   import { cacheCloudflare } from "@astrojs/cloudflare/cache";
+
+   export default defineConfig({
+   	output: "server",
+   	adapter: cloudflare(),
+   	cache: { provider: cacheCloudflare() },
+   });
+   ```
+
+   Then cache each route that set `s-maxage`:
+
+   ```astro title="src/pages/example.astro"
+   ---
+   Astro.cache.set({ maxAge: 10, swr: 31536000 });
+   ---
+   ```
+
+5. Replace `Astro.locals.runtime.env` with `import { env } from "cloudflare:workers"`, then generate types:
+
+   <PackageManagers type="exec" pkg="wrangler" args="types" />
+
+6. Build and preview your application locally. Astro 7 runs the preview in the background. Stop it with `npx astro preview stop`.
+
+   <PackageManagers type="exec" pkg="astro" args="build" />
+
+   <PackageManagers type="exec" pkg="astro" args="preview" />
+
+7. Delete `vercel.json` and deploy your application:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" />
+
+</Steps>
+
+On the first deploy, Wrangler creates a KV namespace for the `SESSION` binding and attaches an `IMAGES` binding. To skip the KV namespace, set `session: false` in your Astro configuration.
+
+## Map Vercel adapter options
+
+These `@astrojs/vercel` options have Cloudflare equivalents:
+
+| Vercel adapter option           | Cloudflare equivalent                                                                                      |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `edgeMiddleware`, `maxDuration` | Remove. Middleware runs in the same Worker.                                                                |
+| `imageService`                  | The default `imageService: 'cloudflare-binding'` uses the [Images binding](/images/optimization/binding/). |
+| `isr`                           | Astro route caching with `cacheCloudflare()`, or prerendering                                              |
+| `webAnalytics`, `speedInsights` | [Web Analytics](/web-analytics/). On a `workers.dev` URL, add the beacon script to your layout.            |
+
+## Known issues
+
+- **`astro add` fails with `Cannot find module '@astrojs/vercel'`.** Remove the Vercel import from your Astro configuration before you uninstall the package.
+- **`astro add` or `@astrojs/upgrade` exits without changes.** Both commands prompt for confirmation and exit when no terminal is attached. Pass `--yes` to `astro add`. Install `astro@latest` directly instead of using `@astrojs/upgrade`.
+- **The Worker is named `example`.** `astro add` creates a Wrangler configuration file with a placeholder name. Set `name` before you deploy.
+- **Pages that set `s-maxage` are rendered on every request.** Workers does not cache a Worker's own responses based on `Cache-Control`. Use route caching with `cacheCloudflare()`.
+- **`astro add cloudflare` fails with `ERESOLVE` on Astro 5.** It installs the latest adapter, which requires Astro 7. Upgrade Astro, or install `@astrojs/cloudflare@12` manually.
+
+## Related resources
+
+- [Astro framework guide](/workers/framework-guides/web-apps/astro/)
+- [Migrate from Vercel to Workers](/workers/static-assets/migration-guides/vercel-to-workers/)

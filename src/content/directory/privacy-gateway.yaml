@@ -1,13 +1,13 @@
 id: mxTnLg
-name: Privacy Gateway
+name: Cloudflare OHTTP Relay
 
 entry:
-  title: Privacy Gateway
-  url: /privacy-gateway/
+  title: Cloudflare OHTTP Relay
+  url: /ohttp-relay/
   group: Developer platform
   additional_groups: [Privacy]
 
 meta:
-  title: Cloudflare Privacy Gateway docs
+  title: Cloudflare OHTTP Relay docs
   description: Implement the Oblivious HTTP IETF standard to improve client privacy
   author: "@cloudflare"

@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { Tabs, TabItem, Details, APIRequest } from '~/components';
+import { Tabs, TabItem, Details, CURL } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
@@ -15,9 +14,11 @@ import { Tabs, TabItem, Details, APIRequest } from '~/components';
 
 4. Choose a **Service Token Duration**. This sets the expiration date for the token.
 
-5. Select **Generate token**. You will see the generated Client ID and Client Secret for the service token, as well as their respective request headers.
+5. (Optional) In **Tags**, select **Add tag** and enter a key-value pair, such as `environment: production`. You can add up to five tags.
 
-6. Copy the Client Secret.
+6. Select **Generate token**. You will see the generated Client ID and Client Secret for the service token, as well as their respective request headers.
+
+7. Copy the Client Secret.
 
    :::caution
    This is the only time Cloudflare Access will display the Client Secret. If you lose the Client Secret, you must generate a new service token.
@@ -27,12 +28,16 @@ import { Tabs, TabItem, Details, APIRequest } from '~/components';
 
 1. Make a `POST` request to the [Access Service Tokens](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/create/) endpoint:
 
-	<APIRequest
-		path="/accounts/{account_id}/access/service_tokens"
+	<CURL
+		url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens"
 		method="POST"
+		headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 			json={{
 			name: "CI/CD token",
-			duration: "8760h"
+			duration: "8760h",
+			tags: {
+				environment: "production",
+			},
 		}}
 	/>
 

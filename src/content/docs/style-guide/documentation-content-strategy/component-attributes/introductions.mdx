@@ -1,0 +1,74 @@
+---
+pcx_content_type: concept
+title: Introductions
+description: "Write the introductory parts of a page: context, introduction, and intended audience."
+products:
+  - style-guide
+---
+
+import { PublicStats } from "~/components";
+
+The introductory parts of a page sit at the top and tell a reader what the page covers, who it is for, and whether to keep reading. This page covers three: context, introduction, and intended audience.
+
+## Context
+
+An introductory paragraph immediately following the page title that explains what a reader can expect from the content, whether steps, concepts, FAQs, or reference materials.
+
+**Used in**: [How to](/style-guide/documentation-content-strategy/content-types/how-to/), [Configuration](/style-guide/documentation-content-strategy/content-types/configuration/), [FAQ](/style-guide/documentation-content-strategy/content-types/faq/), [Concept](/style-guide/documentation-content-strategy/content-types/concept/), [Reference](/style-guide/documentation-content-strategy/content-types/reference/), [Tutorial](/style-guide/documentation-content-strategy/content-types/tutorial/)
+
+Structure varies by content type:
+
+- **How to**: an introductory paragraph on the steps and what they accomplish. Provide context that is not in the section heading. End with a colon if it immediately precedes the steps, or a period if there is more material such as a note between the context and the procedure. Do not use a partial sentence that the numbered steps complete.
+- **Configuration**: a paragraph right after the title that introduces the feature, contextualizes the configurations the reader will encounter, and links to other relevant documentation.
+- **FAQ**: an introductory paragraph on the section and what a reader can expect from it.
+- **Concept**: a brief description of why a reader should care about this information.
+- **Reference**: an introductory paragraph on how and why a reader might use the information on the page.
+- **Tutorial**: an introductory paragraph on the reader's goal and how they will accomplish it in the tutorial. Consider including the intended audience.
+
+## Introduction
+
+An overview of what the content will cover, used in lengthier documents to help a reader understand whether to invest time in reading it.
+
+**Used in**: [Reference architecture](/style-guide/documentation-content-strategy/content-types/reference-architecture/), [Design guide](/style-guide/documentation-content-strategy/content-types/design-guide/)
+
+No longer than half a page, usually one to three paragraphs. The first paragraph should quickly and clearly explain the topic, and the last paragraph should explain what the document contains.
+
+For example:
+
+Cloudflare One is a secure access service edge (SASE) platform that protects enterprise applications, users, devices, and networks. By progressively adopting Cloudflare One, organizations can move away from their patchwork of hardware appliances and other point solutions and instead consolidate security and networking capabilities on one unified control plane. Such network and security transformation helps address key challenges modern businesses face, including:
+
+- Securing access for any user to any resource with Zero Trust practices
+- Defending against cyber threats, including multi-channel phishing and ransomware attacks
+- Protecting data in order to comply with regulations and prevent leaks
+- Simplifying connectivity across offices, data centers, and cloud environments
+
+Cloudflare One is built on Cloudflare's connectivity cloud, a unified, intelligent platform of programmable cloud-native services that enable any-to-any connectivity between all networks (enterprise and Internet), cloud environments, applications, and users. It is one of the largest global networks, with data centers spanning hundreds of cities worldwide and interconnection with <PublicStats id="network_peers" />.
+
+This document describes a reference architecture for organizations working towards a SASE architecture, and shows how Cloudflare One enables such security and networking transformation.
+
+## Intended audience
+
+A summary of who the content is aimed at and what a reader will learn. Combined with the context or introduction, it gives a reader an understanding of what the page is about and whether the content is relevant for their role.
+
+**Used in**: [Reference architecture](/style-guide/documentation-content-strategy/content-types/reference-architecture/), [Design guide](/style-guide/documentation-content-strategy/content-types/design-guide/)
+
+Begin with the subtitle **Who is this for?** and keep it to one to three paragraphs. The first paragraph should describe the type of person this document was written for. If the document relies on existing knowledge, link to three to five resources the reader can consume first. The final paragraph should contain two to three specific bullets on what the reader will learn.
+
+For example:
+
+**Who is this for?**
+
+This reference architecture is designed for IT or security professionals with some responsibility over or familiarity with their organization's existing infrastructure. It is useful to have some experience with technologies important to securing hybrid work, including identity providers (IdPs), user directories, single sign on (SSO), endpoint security or management, firewalls, routers, and point solutions.
+
+To build a stronger baseline understanding of Cloudflare, we recommend the following resources:
+
+- What is Cloudflare? | Website (5 minute read) or video (2 minutes)
+- Solution Brief: Cloudflare One (3 minute read)
+- Whitepaper: Reference Architecture for Internet-Native Transformation (10 minute read)
+- Blog: Zero Trust, SASE, and SSE: foundational concepts for your next-generation network (14 minute read)
+
+Those who read this reference architecture will learn:
+
+- How Cloudflare One protects an organization's employees, devices, applications, data, and networks
+- How Cloudflare One fits into existing infrastructure, and how to approach migration to a SASE architecture
+- How to plan for deploying Cloudflare One

@@ -24,7 +24,7 @@ You can find all details on how to [configure][3] a client here.
 Click on the editing pane of GraphiQL and add this base query, replacing
 `zone-id` with your Cloudflare zone ID:
 
-![Adding a base query in the GraphiQL pane][4]
+![Adding a base query in the GraphiQL pane](~/assets/images/analytics/graphiql-base-query.png)
 
 :::note[Note]
 
@@ -42,7 +42,7 @@ cursor in the query, in this case on the line below `zones`, and start entering
 a value to engage the feature. For example, when you type `firewall`, a popup
 menu displays the datasets that return firewall information:
 
-![GraphiQL word completion assistant to query building][5]
+![GraphiQL word completion assistant to query building](~/assets/images/analytics/graphiql-word-completion.png)
 
 The text at the bottom of the list displays a short description of the data that
 the node returns.
@@ -56,13 +56,13 @@ Hover your mouse over a field to display a tooltip that describes the dataset.
 In this example, hovering over the `firewallEventsAdaptive` node displays this
 description:
 
-![Hovering the mouse over a field to display its description][6]
+![Hovering the mouse over a field to display its description](~/assets/images/analytics/graphiql-set-up-base-query.png)
 
 To display information about the dataset, including required parameters, select
 the dataset name (blue text). The **Documentation Explorer** opens and displays
 details about the dataset:
 
-![Documentation Explorer window displaying dataset details][7]
+![Documentation Explorer window displaying dataset details](~/assets/images/analytics/graphiql-parameters.png)
 
 Note that the `filter` and `limit` arguments are required, as indicated by the
 exclamation mark (`!`) after their type definitions (gold text). In this
@@ -73,12 +73,12 @@ To browse a list of supported filter fields, select the filter type definition
 (gold text) in the Documentation Explorer. In this example, the type is
 `ZoneFirewallEventsAdaptiveFilter_InputObject`:
 
-![Browsing GraphiQL filter fields][8]
+![Browsing GraphiQL filter fields](~/assets/images/analytics/graphiql-filter-fields.png)
 
 This example query shows the required `filter` and `limit` arguments for
 `firewallEventsAdaptive` (as well as for the rest of GraphQL nodes):
 
-![Example of GraphiQL query arguments][9]
+![Example of GraphiQL query arguments](~/assets/images/analytics/graphiql-filter-values.png)
 
 ## Define the fields used by your query
 
@@ -86,11 +86,11 @@ To browse the fields you can use with your query, hover your cursor over the
 dataset name in your query, and in the tooltip that displays, select the data
 type definition (gold text):
 
-![Hovering the mouse over a dataset to display available fields][10]
+![Hovering the mouse over a dataset to display available fields](~/assets/images/analytics/graphiql-set-up-base-query.png)
 
 **The Documentation Explorer** opens and displays a list of fields:
 
-![Documentation Explorer window displaying list of fields][11]
+![Documentation Explorer window displaying list of fields](~/assets/images/analytics/graphiql-return-fields.png)
 
 To add the data fields that you want to read, type an opening brace (`{`) after
 the closing parenthesis for the parameters, then start typing the name of a
@@ -99,13 +99,13 @@ field that you want to fetch. Use word completion to choose a field.
 This example query returns the `action`, `datetime`, `clientRequestHTTPHost`,
 and `userAgent` fields:
 
-![Example query with return fields][12]
+![Example query with return fields](~/assets/images/analytics/graphiql-query-return-field-values.png)
 
 Once you have entered all the fields you want to query, select the **Play**
 button to submit the query. The response pane will contain the data fetched from
 the configured GraphQL API endpoint:
 
-![GraphiQL response pane][13]
+![GraphiQL response pane](~/assets/images/analytics/create-query-fw-data-set-play.png)
 
 ## Variable substitution
 
@@ -125,32 +125,10 @@ a JSON object that defines your variables.
 
 This example query uses the `zoneTag` query variable to represent the zone ID:
 
-![Example of GraphiQL query variables][14]
+![Example of GraphiQL query variables](~/assets/images/analytics/graphiql-query-variables.png)
 
 [1]: /analytics/graphql-api/getting-started/querying-basics/
 
 [2]: https://github.com/graphql/graphiql/tree/main/packages/graphiql#readme
 
 [3]: /analytics/graphql-api/getting-started/authentication/graphql-client-headers/
-
-[4]: ~/assets/images/analytics/graphiql-base-query.png
-
-[5]: ~/assets/images/analytics/graphiql-word-completion.png
-
-[6]: ~/assets/images/analytics/graphiql-set-up-base-query.png
-
-[7]: ~/assets/images/analytics/graphiql-parameters.png
-
-[8]: ~/assets/images/analytics/graphiql-filter-fields.png
-
-[9]: ~/assets/images/analytics/graphiql-filter-values.png
-
-[10]: ~/assets/images/analytics/graphiql-set-up-base-query.png
-
-[11]: ~/assets/images/analytics/graphiql-return-fields.png
-
-[12]: ~/assets/images/analytics/graphiql-query-return-field-values.png
-
-[13]: ~/assets/images/analytics/create-query-fw-data-set-play.png
-
-[14]: ~/assets/images/analytics/graphiql-query-variables.png

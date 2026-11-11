@@ -10,10 +10,13 @@ import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { getEntries, render } from "astro:content";
 
 import ChangelogLayout from "~/layouts/ChangelogLayout.astro";
+import ChangelogUpdates from "~/components/changelog/ChangelogUpdates.astro";
 import Header from "~/components/changelog/Header.astro";
 import ProductPills from "~/components/changelog/ProductPills.astro";
+import { PageActions } from "~/components/ui/page-actions";
 import { components } from "~/mdx-components";
-import { getOgImage } from "~/util/og";
+import { liveUpdates } from "~/util/changelog-git";
+import { changelogOgImage } from "~/util/og";
 
 export const prerender = true;
 
@@ -24,6 +27,7 @@ export const getStaticPaths = (async () => {
 	return notes.map((note) => ({
 		params: { slug: note.id },
 		props: { note },
+		cacheKey: String(note.digest ?? note.id),
 	}));
 }) satisfies GetStaticPaths;
 
@@ -43,6 +47,9 @@ const dateLabel = date.toLocaleDateString("en-US", {
 	timeZone: "UTC",
 });
 
+const lastUpdated =
+	liveUpdates(note.data.updates, note.filePath)[0]?.liveAt ?? date;
+
 const { Content } = await render(note);
 ---
 
@@ -50,8 +57,8 @@ const { Content } = await render(note);
 	title={title}
 	description={description}
 	noindex={note.data.hidden}
-	socialImage={await getOgImage(note)}
-	lastUpdated={date}
+	socialImage={await changelogOgImage(note)}
+	lastUpdated={lastUpdated}
 	meta={{
 		titleSuffix: "Changelog",
 		product: primaryProduct?.data.entry?.title,
@@ -61,17 +68,13 @@ const { Content } = await render(note);
 		datePublished: date,
 	}}
 >
-	{
-		/* Same masthead as the main changelog (title + tagline + RSS), no product
-      dropdown. The back link sits above the post entry below. */
-	}
+	{/* Same masthead as the main changelog (title + tagline + RSS), no product
+      dropdown. The back link sits above the post entry below. */}
 	<Header rssHref="/changelog/rss/index.xml" showFilter={false} />
 
-	{
-		/* Horizontal padding matches the masthead toolbar: none below md (the column
+	{/* Horizontal padding matches the masthead toolbar: none below md (the column
       already has a 1.5rem gutter), then --body-x at md/lg. No timeline spine to
-      clear on a post, so mobile stays flush to the column instead of over-padded. */
-	}
+      clear on a post, so mobile stays flush to the column instead of over-padded. */}
 	<div class="md:px-14 lg:px-16">
 		<a
 			href="/changelog"
@@ -98,13 +101,19 @@ const { Content } = await render(note);
 				{title}
 			</h2>
 
-			{
-				products.length > 0 && (
-					<div class="mt-4">
-						<ProductPills products={products} />
-					</div>
-				)
-			}
+			{products.length > 0 && (
+				<div class="mt-4">
+					<ProductPills products={products} />
+				</div>
+			)}
+
+			<PageActions class="mt-4" />
+
+			<ChangelogUpdates
+				updates={note.data.updates}
+				filePath={note.filePath}
+				class="mt-6"
+			/>
 
 			<div class="docs-content nb-cl-prose mt-9 max-w-none">
 				<Content components={components} />

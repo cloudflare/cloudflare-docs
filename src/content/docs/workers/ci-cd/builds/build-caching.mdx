@@ -22,12 +22,14 @@ The following shows which package managers and frameworks are supported for depe
 
 Workers build cache will cache the global cache directories of the following package managers:
 
-| Package Manager               | Directories cached   |
-| ----------------------------- | -------------------- |
-| [npm](https://www.npmjs.com/) | `.npm`               |
-| [yarn](https://yarnpkg.com/)  | `.cache/yarn`        |
-| [pnpm](https://pnpm.io/)      | `.pnpm-store`        |
-| [bun](https://bun.sh/)        | `.bun/install/cache` |
+| Package Manager               | Directories cached                        |
+| ----------------------------- | ----------------------------------------- |
+| [npm](https://www.npmjs.com/) | `.npm`                                    |
+| [yarn](https://yarnpkg.com/)  | `.cache/yarn`                             |
+| [pnpm](https://pnpm.io/)      | `.pnpm-store`, `.local/share/pnpm/store` |
+| [bun](https://bun.sh/)        | `.bun/install/cache`                      |
+
+If you configure pnpm to use a different store directory, Workers Builds does not cache it.
 
 ### Frameworks
 

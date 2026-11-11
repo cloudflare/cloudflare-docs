@@ -1,0 +1,58 @@
+---
+pcx_content_type: navigation
+title: rtk-controlbar
+description: API reference for rtk-controlbar component (Web Components (HTML) Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-controlbar/rtk-controlbar.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+Controlbar component provides you with various designs as variants.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `config` | `UIConfig1` | ❌ | `createDefaultConfig()` | Config |
+| `disableRender` | `boolean` | ✅ | - | Whether to render the default UI |
+| `iconPack` | `IconPack1` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `'solid' \| 'boxed'` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<rtk-controlbar></rtk-controlbar>
+```
+
+### With Properties
+
+```html
+<rtk-controlbar
+ size="md">
+</rtk-controlbar>
+```
+
+
+```html
+<script>
+  const el = document.querySelector("rtk-controlbar");
+
+  el.meeting = meeting;
+  el.disableRender = true;
+</script>
+```

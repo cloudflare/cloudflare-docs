@@ -22,6 +22,8 @@ import {
 
 The Query Builder helps you write structured queries to investigate and visualize your telemetry data. The Query Builder searches the Workers Observability dataset, which currently includes all logs stored by [Workers Logs](/workers/observability/logs/workers-logs/).
 
+You can also run the same queries programmatically using the [Workers Observability REST API](/api/resources/workers/subresources/observability/), which exposes endpoints to list dataset keys, run a query, and list the values for a key.
+
 The Query Builder can be found in the **Observability** page of the Cloudflare dashboard:
 
 <DashButton url="/?to=/:account/workers-and-pages/observability" />
@@ -138,7 +140,7 @@ Limit restricts the number of results returned. When paired with [Order By](/wor
 
 ### Select time range
 
-When you select a time range, you specify the time interval where you want to look for matching events. The retention period is dependent on your [plan type](/workers/observability/logs/workers-logs/#pricing).
+When you select a time range, you specify the time interval where you want to look for matching events. Logs and traces are retained for seven days.
 
 ## Viewing query results
 
@@ -152,7 +154,7 @@ The **Visualizations** tab shows graphs and a summary table for the query.
 
 ### Invocations tab
 
-The **Invocations** tab shows all logs, grouped by by the invocation, and ordered by timestamp. Only invocations matching the query criteria are returned.
+The **Invocations** tab shows all logs, grouped by the invocation, and ordered by timestamp. Only invocations matching the query criteria are returned.
 
 ![Invocations Overview](~/assets/images/workers-observability/wobs_invocation_logs_full_list_122.png)
 

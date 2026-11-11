@@ -36,22 +36,14 @@ When AI Security for Apps is enabled, it automatically evaluates prompts against
 
 <Details header="Default unsafe topic categories">
 
-| Category | Description               |
-| -------- | ------------------------- |
-| `S1`     | Violent crimes            |
-| `S2`     | Non-violent crimes        |
-| `S3`     | Sex-related crimes        |
-| `S4`     | Child sexual exploitation |
-| `S5`     | Defamation                |
-| `S6`     | Specialized advice        |
-| `S7`     | Privacy                   |
-| `S8`     | Intellectual property     |
-| `S9`     | Indiscriminate weapons    |
-| `S10`    | Hate                      |
-| `S11`    | Suicide and self-harm     |
-| `S12`    | Sexual content            |
-| `S13`    | Elections                 |
-| `S14`    | Code interpreter abuse    |
+| Category                  | Description                                                                                                                                                                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `VIOLENCE_AND_WEAPONS`    | Content that promotes, glorifies, threatens, or provides instructions for physical violence or the acquisition, creation, or use of weapons.                                                                                      |
+| `NON_VIOLENT_CRIME`       | Content that encourages or facilitates nonviolent crimes, including fraud, theft, hacking, and the illegal drug trade.                                                                                                            |
+| `SEXUAL_CONTENT`          | Sexually explicit or suggestive content, including sexual exploitation, trafficking, assault, harassment, and other non-consensual sexual acts involving adults.                                                                  |
+| `CHILD_SAFETY`            | Content that sexualizes, exploits, abuses, grooms, or otherwise endangers minors.                                                                                                                                                 |
+| `HATE_AND_DISCRIMINATION` | Content that attacks, demeans, discriminates against, or incites hatred toward people based on protected characteristics. This category also includes content that promotes dishonesty, manipulation, or professional misconduct. |
+| `SELF_HARM_AND_SUICIDE`   | Content that encourages, glorifies, or provides instructions for self-harm or suicide.                                                                                                                                            |
 
 </Details>
 
@@ -120,8 +112,8 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/custom-top
         "topic": "seeking financial advice"
       },
       {
-        "label": "hr-internal",
-        "topic": "asking about internal HR policies"
+        "label": "job-seeking",
+        "topic": "asking for résumé advice"
       }
     ]
   }'
@@ -142,12 +134,20 @@ curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/custom-top
 
 ### Constraints
 
-| Parameter                | Limit                                              |
-| ------------------------ | -------------------------------------------------- |
-| Maximum number of topics | 20                                                 |
-| Topic string length      | 2–50 printable ASCII characters                    |
-| Label length             | 2–20 characters                                    |
-| Label format             | Lowercase letters, numbers, and hyphens (`-`) only |
+Custom topic descriptions accept UTF-8 characters, including non-ASCII characters. Only English descriptions are officially supported.
+
+Descriptions in other languages are evaluated on a best-effort basis and may produce less consistent results.
+
+| Parameter                    | Limit                                                                |
+| ---------------------------- | -------------------------------------------------------------------  |
+| Maximum number of topics     | 20                                                                   |
+| Topic description length     | 2–50 UTF-8 bytes                                                     |
+| Topic description characters | Letters, combining marks, numbers, punctuation, symbols, and spaces  |
+| Prohibited characters        | Tabs, line breaks, invalid text, and invisible formatting characters |
+| Label length                 | 2–20 characters                                                      |
+| Label format                 | Lowercase ASCII letters, digits, and hyphens (`-`) only              |
+
+The topic description limit is measured in bytes, not characters. A non-ASCII character can use multiple UTF-8 bytes.
 
 :::caution
 If you reference a label in a rule expression that has not been defined, the map lookup returns `nil`. Comparisons against `nil` are almost always `false`. For example, `cf.llm.prompt.custom_topic_categories["missing"] >= 0` evaluates to `false`. Make sure the label in your rule expression exactly matches a label you have defined in your custom topics list.

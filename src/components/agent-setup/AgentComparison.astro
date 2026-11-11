@@ -107,103 +107,97 @@ const dashIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" ar
 			>
 				<thead>
 					<tr class="bg-muted">
-						{
-							COLUMNS.map((col, i) => (
-								<th
+						{COLUMNS.map((col, i) => (
+							<th
+								class:list={[
+									"border-border border-b p-0 align-middle",
+									i === 0 &&
+										"border-border bg-muted sticky left-0 z-20 border-r",
+								]}
+								data-align={col.align ?? "center"}
+								aria-sort={i === 0 ? "ascending" : "none"}
+							>
+								<button
+									type="button"
 									class:list={[
-										"border-border border-b p-0 align-middle",
-										i === 0 &&
-											"border-border bg-muted sticky left-0 z-20 border-r",
+										"text-muted-foreground hover:text-foreground data-[active=true]:text-primary flex w-full items-center gap-1.5 px-3 py-3 font-mono text-xs tracking-wider uppercase transition-colors",
+										col.align === "left" ? "justify-start" : "justify-center",
 									]}
-									data-align={col.align ?? "center"}
-									aria-sort={i === 0 ? "ascending" : "none"}
+									data-sort-key={col.key}
+									data-active={i === 0 ? "true" : "false"}
 								>
-									<button
-										type="button"
-										class:list={[
-											"text-muted-foreground hover:text-foreground data-[active=true]:text-primary flex w-full items-center gap-1.5 px-3 py-3 font-mono text-xs tracking-wider uppercase transition-colors",
-											col.align === "left" ? "justify-start" : "justify-center",
-										]}
-										data-sort-key={col.key}
-										data-active={i === 0 ? "true" : "false"}
+									<span>{col.label}</span>
+									<span
+										class="text-primary text-[0.7rem]"
+										aria-hidden="true"
+										data-indicator
 									>
-										<span>{col.label}</span>
-										<span
-											class="text-primary text-[0.7rem]"
-											aria-hidden="true"
-											data-indicator
-										>
-											{i === 0 ? "↑" : ""}
-										</span>
-									</button>
-								</th>
-							))
-						}
+										{i === 0 ? "↑" : ""}
+									</span>
+								</button>
+							</th>
+						))}
 					</tr>
 				</thead>
 				<tbody data-agent-tbody>
-					{
-						rows.map(({ agent, sortKeys }) => (
-							<tr
-								class="group/row border-border hover:bg-muted/50 border-b transition-colors last:border-b-0"
-								data-sort-keys={JSON.stringify(sortKeys)}
+					{rows.map(({ agent, sortKeys }) => (
+						<tr
+							class="group/row border-border hover:bg-muted/50 border-b transition-colors last:border-b-0"
+							data-sort-keys={JSON.stringify(sortKeys)}
+						>
+							<td
+								class="border-border bg-background group-hover/row:bg-muted/50 sticky left-0 z-10 border-r px-3 py-3 text-left align-middle"
+								data-align="left"
 							>
-								<td
-									class="border-border bg-background group-hover/row:bg-muted/50 sticky left-0 z-10 border-r px-3 py-3 text-left align-middle"
-									data-align="left"
+								<a
+									href={`/agent-setup/${agent.slug}/`}
+									class="text-foreground hover:text-primary font-medium no-underline transition-colors"
 								>
-									<a
-										href={`/agent-setup/${agent.slug}/`}
-										class="text-foreground hover:text-primary font-medium no-underline transition-colors"
-									>
-										{agent.name}
-									</a>
-								</td>
+									{agent.name}
+								</a>
+							</td>
 
-								{CAP_COLUMNS.map((cap) => (
-									<td
-										class:list={[
-											"px-3 py-3 text-center align-middle",
-											agent.capabilities[cap]
-												? "agent-check"
-												: "text-muted-foreground/40",
-										]}
-										set:html={agent.capabilities[cap] ? checkIcon : dashIcon}
-									/>
-								))}
-
-								{VALUE_COLUMNS.map((key) => {
-									const value = agent[key] as string | undefined;
-									return (
-										<td class="px-3 py-3 text-center align-middle">
-											{value ? (
-												<Badge
-													text={capabilityLabels[value] ?? value}
-													variant={VALUE_VARIANT[value] ?? "default"}
-													size="small"
-													data-agent-tooltip={capabilityTooltips[value] ?? ""}
-												/>
-											) : (
-												<span class="text-muted-foreground/40">—</span>
-											)}
-										</td>
-									);
-								})}
-
+							{CAP_COLUMNS.map((cap) => (
 								<td
 									class:list={[
 										"px-3 py-3 text-center align-middle",
-										agent.capabilities.open_source
+										agent.capabilities[cap]
 											? "agent-check"
 											: "text-muted-foreground/40",
 									]}
-									set:html={
-										agent.capabilities.open_source ? checkIcon : dashIcon
-									}
+									set:html={agent.capabilities[cap] ? checkIcon : dashIcon}
 								/>
-							</tr>
-						))
-					}
+							))}
+
+							{VALUE_COLUMNS.map((key) => {
+								const value = agent[key] as string | undefined;
+								return (
+									<td class="px-3 py-3 text-center align-middle">
+										{value ? (
+											<Badge
+												text={capabilityLabels[value] ?? value}
+												variant={VALUE_VARIANT[value] ?? "default"}
+												size="small"
+												data-agent-tooltip={capabilityTooltips[value] ?? ""}
+											/>
+										) : (
+											<span class="text-muted-foreground/40">—</span>
+										)}
+									</td>
+								);
+							})}
+
+							<td
+								class:list={[
+									"px-3 py-3 text-center align-middle",
+									agent.capabilities.open_source
+										? "agent-check"
+										: "text-muted-foreground/40",
+								]}
+								set:html={agent.capabilities.open_source ? checkIcon : dashIcon}
+							/>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>

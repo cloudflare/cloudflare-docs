@@ -1,7 +1,7 @@
 releaseNotes: |-
   This release introduces multiple features from our previous beta release into stable release, including:
 
-  - The client now applies DNS search suffixes configured in your [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles) / [network policy](/cloudflare-one/traffic-policies/network-policies). Administrators can push a list of DNS search domains that the client appends to single-label queries, alongside any system-configured suffixes. See [DNS search suffixes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#dns-search-suffixes) for details.
+  - The client now applies DNS search suffixes configured in your [device profile](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-profiles) / [network policy](/cloudflare-one/traffic-controls/network-policies). Administrators can push a list of DNS search domains that the client appends to single-label queries, alongside any system-configured suffixes. See [DNS search suffixes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#dns-search-suffixes) for details.
   - Upgraded security of device registration to be hardware-backed. Registration tokens can now be generated in the TPM (with TPM 2.0+) whenever it is available to provide stronger protection against device impersonation. See [Hardware-backed registration](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/hardware-backed-registration/) for details.
   - Added a local-file signal source for Emergency Disconnect. In addition to the existing HTTPS polling mechanism, administrators can now configure WARP to monitor for a file on disk; the presence of the file triggers an emergency disconnect even if both Cloudflare and your own infrastructure are unreachable. Either signal being asserted triggers disconnect; both must be cleared for normal operation to resume.
   - Added new warp-cli debug commands for interactive connection diagnosis. See [Extra debug logging](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#extra-debug-logging) for details.
@@ -12,8 +12,8 @@ releaseNotes: |-
 
 
   - Starting with 2026.6.822.0, the client unifies all API requests under the `api.devices.cloudflare.com` SNI, where previously both `zero-trust-client.cloudflareclient.com` and `notifications.cloudflareclient.com` were used. Review [Cloudflare One Client with firewall](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/) to ensure systems that rely on SNI inspection do not block the API traffic. The behavior of previous client versions is unaffected.
-  - [Cloudflare Mesh](/cloudflare-one/networks/connectors/cloudflare-mesh/) functionality using the Cloudflare One Client is now supported on RHEL 9 and 10.
-  - Cloudflare Mesh now supports [hostname-based routing](/cloudflare-one/networks/connectors/cloudflare-mesh/routes/#hostname-routes).
+  - [Cloudflare Mesh](/mesh/) functionality using the Cloudflare One Client is now supported on RHEL 9 and 10.
+  - Cloudflare Mesh now supports [hostname-based routing](/mesh/features/routes/#hostname-routes).
   - Client Certificate device-posture checks now support template variables (e.g. `${serial_number}`, `${device_uuid}`) in the Subject Alternative Name field. Previously only the Common Name field accepted variables, which broke posture rules that pinned identity to a SAN entry.
   - Improved accessibility by using high contrast colors and more defined color boundaries when high contrast is enabled in the system display settings.
   - Path MTU Discovery (PMTUD) is now enabled by default.
@@ -56,3 +56,7 @@ linuxPlatforms:
   bookworm-intel: 74636772
   jammy-intel: 74630568
   bookworm-arm: 73445502
+  almalinux9-intel: 77047688
+  almalinux9-arm: 76199809
+  almalinux10-arm: 75987979
+  almalinux10-intel: 77107580

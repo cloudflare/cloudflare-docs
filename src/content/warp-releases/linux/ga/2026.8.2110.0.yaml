@@ -1,0 +1,27 @@
+releaseNotes: This hotfix resolves an issue where the client could repeatedly
+  disconnect and reconnect when a split tunnel configuration with hostname-based
+  entries failed to apply.
+version: 2026.8.2110.0
+releaseDate: 2026-10-12T19:16:09.214Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/noble-intel/version/2026.8.2110.0
+packageSize: 74687338
+platformName: Linux
+linuxPlatforms:
+  noble-intel: 74687338
+  resolute-arm: 76856220
+  bookworm-arm: 76543256
+  jammy-arm: 76518596
+  noble-arm: 77143142
+  almalinux10-arm: 79069889
+  fedora44-arm: 79106968
+  fedora43-arm: 79059350
+  trixie-intel: 74697280
+  fedora44-intel: 77235254
+  resolute-intel: 74690010
+  jammy-intel: 74945482
+  trixie-arm: 76902472
+  fedora43-intel: 77211173
+  bookworm-intel: 74955658
+  almalinux10-intel: 77196835
+  almalinux9-intel: 77309967
+  almalinux9-arm: 79384849

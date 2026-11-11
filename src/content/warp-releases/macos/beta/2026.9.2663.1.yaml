@@ -1,0 +1,52 @@
+releaseNotes: |-
+  This release includes the following highlights:
+
+  - macOS 15.0 is now the minimum supported version. This release does not run on macOS 14.
+  - Added automatic endpoint selection for Global Acceleration. When Global Acceleration is enabled for an organization, the client connects to the Global Acceleration endpoints while the device is in the acceleration region and to the standard anycast endpoints otherwise, and reconnects when a network change moves the device between them without requiring action from the user. The Connectivity page shows which tunnel and API endpoints are in use, and users who are allowed to override the selection can choose endpoints in Settings.
+  - Added a Diagnostics page to the client that shows the connection status and health, live tunnel and device metrics, network details and the results of DEX tests in one place. Users can run a speed test from the page that compares performance inside and outside the tunnel while the client is connected. The Troubleshooting tools button collects a full warp-diag bundle, or runs a captive portal test that briefly reconnects Wi-Fi, and saves the result to the Desktop, so users no longer need to run warp-diag from a terminal.
+  - The client now shows a banner when the network limits the tunnel MTU to a degraded or critically low value. The banner clears when the MTU recovers or the client disconnects.
+
+  **Additional changes and improvements**
+
+  - The client now applies tunnel MTUs between 1147 and 1199 bytes measured by Path MTU Discovery. Previously the client ignored these values and kept a larger MTU, which could drop larger packets on networks such as mobile hotspots while the client showed as connected.
+  - When Path MTU Discovery is enabled, the client now accepts larger packets from Cloudflare instead of limiting them to the size it uses for its own outbound packets.
+  - When Path MTU Discovery measures an IPv6 path MTU below 1280 bytes, the client now reconnects over IPv4 and keeps preferring IPv4 until the network changes. Previously the client could stay on a smaller tunnel MTU over IPv6 on networks where IPv4 supports larger packets.
+  - Access reauthentication requests now trust certificates in the operating system's certificate store, so reauthentication works on networks that perform TLS inspection.
+  - For Zero Trust deployments, the client now records a traceroute of the network path outside the tunnel when the tunnel degrades or fails to connect. warp-diag includes the same trace.
+  - warp-diag now includes redacted copies of the deployed MDM files and reports a QUIC path MTU only when one was measured.
+  - Added the MDM parameters managed_network_probe_interval_secs (30–300, default 30) and managed_network_probe_count (0 disables probing, 1–10, or -1 to keep probing until a managed network is found; default 1). After a registration or network change finds no managed network, the client now rechecks, so a device doesn't stay on the default profile because of a transient connection failure. Set the count to 0 to keep the previous behavior.
+  - Added the `multicast` network policy and MDM setting (`allow` or `drop`, default `drop`). When set to `allow`, the client sends traffic for multicast addresses through the tunnel instead of dropping it, for networks that use multicast ranges for other traffic.
+  - In proxy mode for Zero Trust, the client now sends hostnames from HTTP/HTTPS and SOCKS5 requests to Cloudflare for resolution, instead of resolving them on the device.
+  - The Connectivity page now shows the IPv4 and IPv6 addresses assigned to the tunnel while the client is connected.
+  - When the app cannot reach the client service, the home screen now says why (service not running, not accepting connections, not responding, or connection dropped and reconnecting). It shows an error code and a Learn more link instead of "IPC error".
+  - The client now shows a notification when an administrator removes the user's selected virtual network, and shows a specific message when the user selects a virtual network that is no longer available.
+  - The consumer client home screen now shows when the connection is post-quantum encrypted.
+  - `warp-cli target list` now accepts `--hostname` to filter targets by one or more comma-separated hostnames.
+  - DEX HTTP tests now send a default User-Agent that identifies the Cloudflare One Client when the test does not configure one.
+  - The client's background services now start only when their binaries are signed by Cloudflare, so replacing the application bundle cannot run other code with the services' privileges.
+  - Reduced the client UI's memory usage on the home screen.
+  - Fixed a managed registration being removed when the MDM configuration file was briefly missing or unreadable. The client now keeps the last applied policy for 20 seconds after the file becomes unavailable. The new MDM parameters mdm_file_debounce_secs (1–60) and mdm_file_unavailable_debounce_secs (0–300) change how long the client waits before applying a changed file and before acting on a missing one.
+  - Fixed an upgrade sometimes leaving the client without a running service when the previous service was slow to stop. The installer now waits up to 10 seconds for the old service to be removed before starting the new one.
+  - Fixed the client UI not showing onboarding on first launch while a notification permission request was pending.
+  - Fixed the client UI crashing when the Mac woke from sleep or a display configuration changed.
+  - Fixed the client UI freezing and no longer showing status updates after the Mac woke from sleep.
+  - Fixed DNS queries failing for a short time after the Mac woke from sleep. The client now replaces stale connections to the DNS resolver during its wake connectivity check.
+  - Fixed the client continuing to use the previous tunnel protocol after a key rotation for a protocol change failed. The client now retries the rotation the next time it connects.
+  - Fixed service token enrollment failing when it ran shortly after the service token was created. The client now retries while the new token becomes available.
+  - Fixed the client reconnecting repeatedly when Global Acceleration automatic endpoint selection was enabled on devices in the acceleration region, and fixed the client keeping its previous data center after the selected endpoints changed.
+  - Fixed a hostname-based split tunnel entry not taking effect until the next reconnect after its firewall rule failed to apply.
+  - Fixed split tunnel updates for hostname-based entries failing when the client tried to remove a route that macOS had not installed.
+  - Fixed `warp-cli dns fallback add` accepting an empty domain, which sent all DNS queries to the local resolver instead of Gateway. Fallback domain and split tunnel entries are now normalized, so removing an entry matches regardless of case or a trailing dot.
+  - Fixed the DNS proxy caching answers for longer than the TTL of a CNAME record in the chain.
+  - Fixed `warp-cli registration license` reporting an error on slow networks even though the license was applied, which left the client registered to a WARP+ account it did not recognize.
+  - Fixed Digital Experience Monitoring (DEX) results being reported with timestamps offset from the actual time after the system clock was corrected.
+  - Fixed the OS version detail stored for a device keeping an outdated value, including the text "Usage: sw_vers…" reported by client versions 2023.5.587.1 through 2024.12.760.0. The client now clears the value the next time it connects.
+
+  **Known issues**
+
+  - After an administrator removes a virtual network from a device profile or changes its default network, the virtual network list in the client may continue to show the previous networks until the client is restarted. This is a display issue only: the device connects to the networks its profile allows, and selecting a removed network is rejected without changing the connection. The warp-cli vnet command shows the current list. This will be addressed prior to the next GA release.
+version: 2026.9.2663.1
+releaseDate: 2026-11-10T18:56:13.311Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.9.2663.1
+packageSize: 179301432
+platformName: macOS

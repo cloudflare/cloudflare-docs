@@ -1,0 +1,47 @@
+---
+title: Snapshot and restore Container filesystem
+description: Persist point-in-time container filesystem with snapshot APIs in public beta.
+products:
+  - containers
+date: "2026-09-30T08:45:00-04:00"
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Containers](/containers/) now support snapshot APIs in public beta for saving and restoring point-in-time filesystem state. Create a snapshot first, then pass it back to `start()` to restore files after container sleep, restart, or handoff to another Durable Object.
+
+Use `snapshotContainer()` through the [Durable Object Container API](/containers/api/durable-object-container/) to capture the full container filesystem. Create a snapshot from a running Container, store its handle, and pass that handle to `start()` when you restore it later:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class MyDurableObject extends DurableObject {
+	async saveSnapshot() {
+		// Create a snapshot from the running Container.
+		const containerSnapshot = await this.ctx.container.snapshotContainer({});
+
+		await this.ctx.storage.put("containerSnapshot", containerSnapshot);
+	}
+
+	async restoreSnapshot() {
+		// Restore the saved snapshot later.
+		const containerSnapshot =
+			await this.ctx.storage.get<ContainerSnapshot>("containerSnapshot");
+
+		if (!containerSnapshot) {
+			return;
+		}
+
+		this.ctx.container.start({ containerSnapshot, enableInternet: false });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Snapshots are only supported for Container applications that use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy). Snapshots are immutable, so create a new snapshot to persist filesystem changes made after a restore.
+
+For more information, refer to [Snapshots](/containers/guides/snapshots/) and the [Durable Object Container API](/containers/api/durable-object-container/).

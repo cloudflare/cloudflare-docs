@@ -17,7 +17,6 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 ## 1. Create an application in your identity provider
 
 1. Visit your identity provider and create a client/app.
-
 2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter the following URL:
 
    ```txt
@@ -26,14 +25,11 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
    <Render file="find-team-name" product="cloudflare-one" />
 
-3. Copy the content of these fields:
-   - Client ID
-   - Client secret
-   - Auth URL: The `authorization_endpoint` URL of your IdP
-   - Token URL: The `token_endpoint` URL of your IdP
-   - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
-
-   You can find these values on your identity provider's **OIDC discovery endpoint**. Some providers call this the "well-known URL".
+3. Copy the **Client ID** and **Client secret** from the application's settings in your identity provider.
+4. Open your identity provider's **OIDC discovery endpoint**, sometimes called the "well-known URL". Copy these endpoint URLs:
+   - Auth URL: The `authorization_endpoint` URL.
+   - Token URL: The `token_endpoint` URL.
+   - Certificate URL: The `jwks_uri` URL. Access retrieves the IdP's public keys from this endpoint to verify token signatures.
 
 ## 2. Add an OIDC provider to Cloudflare One
 
@@ -47,11 +43,11 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 4. Name your identity provider and fill in the required fields with the information obtained from your identity provider.
 
-5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
+5. (Optional) Enable [Proof Key for Code Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
 6. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
 
-7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity).
+7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#custom-oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity).
 
 8. Select **Save**.
 
@@ -109,11 +105,13 @@ Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subr
 
 ## 3. Test the connection
 
-To test that your connection is working, go to **Authentication** > **Login methods** and select **Test** next to the login method you want to test. On success, a confirmation screen displays.
+To test the connection, go to **Integrations** > **Identity providers** and select **Test** next to the login method. A confirmation screen displays when the test succeeds.
 
 ## Synchronize users and groups
 
 The generic OIDC integration allows you to synchronize user groups and automatically deprovision users using [SCIM](/cloudflare-one/team-and-resources/users/scim/).
+
+<Render file="access/scim-policy-behavior" product="cloudflare-one" />
 
 ### Prerequisites
 
@@ -136,7 +134,7 @@ Setup instructions vary depending on the identity provider. In your identity pro
 If you would like to build policies based on IdP groups:
 
 - Ensure that your IdP sends a `groups` field. The naming must match exactly (case insensitive). All other values will be sent as a OIDC claim.
-- If your IdP requires creating a new SCIM application, ensure that the groups in the SCIM application match the groups in the [original SSO application](/cloudflare-one/integrations/identity-providers/generic-oidc/#1-create-an-application-in-your-identity-provider). Because SCIM group membership updates will overwrite any groups in a user's identity, assigning the same groups to each app ensures consistent policy evaluation.
+- If your IdP requires a new SCIM application, ensure that its groups match the groups in the [original SSO application](/cloudflare-one/integrations/identity-providers/generic-oidc/#1-create-an-application-in-your-identity-provider). Matching the groups keeps the Gateway identity synchronized with the groups that the IdP returns when the user authenticates to Access.
 
 ### 3. Verify SCIM provisioning
 
@@ -146,7 +144,7 @@ If you would like to build policies based on IdP groups:
 
 ### Custom OIDC claims
 
-All OIDC IdP integrations support the use of custom OIDC claims. Once configured, Access will add the claims to the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) for consumption by your origin services. You can reference the custom OIDC claims in [Access policies](/cloudflare-one/access-controls/policies/) and [Gateway policies](/cloudflare-one/traffic-policies/identity-selectors/#oidc-claims), offering a means to control user access to applications based on custom identity attributes.
+All OIDC IdP integrations support the use of custom OIDC claims. Once configured, Access will add the claims to the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/) for consumption by your origin services. You can reference the custom OIDC claims in [Access policies](/cloudflare-one/access-controls/policies/) and [Gateway policies](/cloudflare-one/traffic-controls/identity-selectors/#oidc-claims), offering a means to control user access to applications based on custom identity attributes.
 
 To add a custom OIDC claim to an IdP integration:
 
@@ -163,7 +161,7 @@ To add a custom OIDC claim to an IdP integration:
         	},
         ```
 
-You can now build an Access policy for the custom claim using the **OIDC Claim** or **IdP OIDC Claim** selector. You can also use custom OIDC claims as [identity-based selectors in Gateway policies](/cloudflare-one/traffic-policies/identity-selectors/#oidc-claims). The custom claim will be passed to origins behind Access in a [JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#custom-saml-attributes-and-oidc-claims).
+You can now build an Access policy for the custom claim using the **OIDC Claim** or **IdP OIDC Claim** selector. You can also use custom OIDC claims as [identity-based selectors in Gateway policies](/cloudflare-one/traffic-controls/identity-selectors/#oidc-claims). The custom claim will be passed to origins behind Access in a [JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#custom-saml-attributes-and-oidc-claims).
 
 #### Email claim
 
@@ -171,9 +169,9 @@ You can specify a custom **Email claim** name that Access will use to identify u
 
 #### Multi-record OIDC claims
 
-Cloudflare Access extends support for multi-record OIDC claims. These claims are parsed out and can be individually referenced in policies. This feature enables granular access control and precise user authorization in applications.
+Access supports OIDC claims with multiple values. Policies can match individual values, but cannot match part of a value.
 
-Cloudflare Access does not support partial OIDC claim value references or OIDC scopes.
+OAuth scopes are separate from claim matching. For a generic OIDC provider, use `config.scopes` in the [Identity Providers API](/api/resources/zero_trust/subresources/identity_providers/methods/create/) to request additional scopes from your IdP. Requesting a scope does not create an Access policy rule.
 
 ## Supported algorithms for generic OIDC tokens
 

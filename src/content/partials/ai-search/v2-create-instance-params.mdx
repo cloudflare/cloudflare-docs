@@ -12,7 +12,7 @@ The unique identifier for the AI Search instance. Must be 1-64 characters and ma
 
 `type` <Type text="string" /> <MetaInfo text="optional" />
 
-The type of data source. Valid values: `r2`, `web-crawler`. Required when creating an instance with a data source. Omit when creating an empty instance for use with the [Items API](/ai-search/api/items/workers-binding/).
+The type of data source. Valid values: `r2` or `web-crawler`. If omitted, an HTTP(S) URL source selects `web-crawler`, an existing R2 bucket selects `r2`, and a missing or blank source creates an instance with built-in storage. Other sources return error `7111`. The REST API also accepts `null`, which behaves like an omitted value. The Workers binding does not accept `null`.
 
 ---
 
@@ -78,7 +78,7 @@ Configures which indexing methods are enabled for the instance. Determines wheth
 - `vector` <Type text="boolean" /> <MetaInfo text="optional" />
   - Enable vector-based semantic search. Defaults to `true`.
 - `keyword` <Type text="boolean" /> <MetaInfo text="optional" />
-  - Enable keyword-based search. Defaults to `false`.
+  - Enable keyword-based search. Defaults to `true`.
 
 Set both to `true` for hybrid search.
 
@@ -96,6 +96,8 @@ Configuration for how content is indexed.
 
 - `keyword_tokenizer` <Type text="string" /> <MetaInfo text="optional" />
   - The tokenizer used for keyword search indexing. Valid values: `porter` (stemming-based), `trigram` (character n-gram). Defaults to `porter`.
+- `use_ocr` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Use optical character recognition (OCR) when ingesting PDFs and images. Defaults to `false`. OCR is available on every account and is billed as image-processing ingestion tokens.
 
 ---
 
@@ -126,7 +128,7 @@ The UUID of the [service API token](/ai-search/configuration/indexing/service-ap
 
 `ai_gateway_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The AI Gateway ID to route requests through for logging and analytics.
+The AI Gateway ID for generation, query rewriting, and external-provider requests. Workers AI embedding and reranking usage is included in AI Search usage. These requests do not appear in your AI Gateway logs or Workers AI bill.
 
 ---
 

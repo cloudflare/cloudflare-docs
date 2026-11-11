@@ -8,7 +8,7 @@ reviewed: 2024-07-18
 sidebar:
   order: 14
 tags:
-- SSO
+  - SSO
 ---
 
 This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/grafana-cloud/account-management/authentication-and-permissions/authorization/#configure-oauth-20-with-generic-oauth) as an OIDC application in Cloudflare One.
@@ -28,7 +28,7 @@ This guide covers how to configure [Grafana Cloud](https://grafana.com/docs/graf
 6. Select **Add application**.
 7. In **Scopes**, select the attributes that you want Access to send in the ID token.
 8. In **Redirect URLs**, enter `https://<your-grafana-domain>/login/generic_oauth`.
-9. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
+9. (Optional) Enable [Proof Key for Code Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if your SaaS application supports it. Configure the SaaS application to use PKCE as well.
 10. Copy the **Client secret**, **Client ID**, **Token endpoint**, and **Authorization endpoint**.
 11. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
 12. (Optional) In **Experience settings**, configure [App Launcher settings](/cloudflare-one/access-controls/access-settings/app-launcher/) by turning on **Enable App in App Launcher** and, in **App Launcher URL**, entering `https://<your-grafana-domain>/login`.

@@ -5,4 +5,11 @@ sidebar:
   order: 11
 ---
 
-In [HTTP request logs](/logs/logpush/logpush-job/datasets/zone/http_requests/), `cacheResponseBytes` reflects the uncompressed response size from cache or origin. `edgeResponseBytes` reflects the final compressed response size sent to the client. Because Cloudflare applies compression (gzip, Brotli) before delivering to the client, `edgeResponseBytes` is typically smaller than `cacheResponseBytes`.
+In [HTTP request logs](/logs/logpush/logpush-job/datasets/zone/http_requests/), `cacheResponseBytes` and `edgeResponseBytes` both count the response body as Cloudflare delivered it to the client. They differ only in which response headers they count:
+
+- `cacheResponseBytes`: the response headers Cloudflare received from cache or origin, plus the response body as delivered to the client.
+- `edgeResponseBytes`: the response headers sent to the client, after any header modifications, plus the response body as delivered to the client.
+
+Neither field records the body size as received from the origin. If the origin sends a pre-compressed body (for example, `Content-Encoding: gzip` or `br`) and the client accepts that encoding, both fields count the compressed body. If Cloudflare decompresses the body, for example because the client does not accept the encoding or a feature needs to modify the HTML, both fields count the body as delivered: uncompressed, or re-compressed.
+
+Because both fields count the same body, any difference between `edgeResponseBytes` and `cacheResponseBytes` comes from response headers. The header size counted in `cacheResponseBytes` can be larger than the headers your origin sent.

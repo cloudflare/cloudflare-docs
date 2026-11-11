@@ -17,7 +17,7 @@ The `/scrape` endpoint extracts structured data from specific elements on a webp
 ## Endpoint
 
 ```txt
-https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scrape
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/scrape
 ```
 
 ## Required fields
@@ -42,7 +42,7 @@ You must provide `elements` and exactly one of `url` or `html`:
 Go to `https://example.com` and extract metadata from all `h1` and `a` elements in the DOM.
 
 ```bash
-curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-rendering/scrape' \
+curl -X POST 'https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/scrape' \
   -H 'Authorization: Bearer <apiToken>' \
   -H 'Content-Type: application/json' \
   -d '{

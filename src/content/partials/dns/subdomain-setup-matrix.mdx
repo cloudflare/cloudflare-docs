@@ -1,6 +1,5 @@
 ---
-params:
-  - linkForMore?
+{}
 ---
 
 When configuring a subdomain setup, its availability will depend on both the parent zone setup and the setup used for the child zone. A child zone holds DNS management for a delegated subdomain.
@@ -13,10 +12,3 @@ When configuring a subdomain setup, its availability will depend on both the par
 | [Partial](/dns/zone-setups/partial-setup/)                                                                    | [Full](/dns/zone-setups/full-setup/)                                  | Yes       |
 | [Partial](/dns/zone-setups/partial-setup/)                                                                    | [Secondary](/dns/zone-setups/zone-transfers/cloudflare-as-secondary/) | Yes       |
 | [Partial](/dns/zone-setups/partial-setup/)                                                                    | [Partial](/dns/zone-setups/partial-setup/)                          | Yes       |
-
-{props.linkForMore && (
-  <>
-	  <br />
-    For details, refer to <a href="/dns/zone-setups/subdomain-setup/setup/">setup</a>.
-  </>
-)}

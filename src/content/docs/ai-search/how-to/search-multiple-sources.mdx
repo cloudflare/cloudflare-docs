@@ -43,10 +43,9 @@ Create a new project named `multi-source-search` by running:
 />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "TypeScript",
 	}}
@@ -67,6 +66,7 @@ Add an [AI Search namespace binding](/ai-search/concepts/namespaces/) to your [W
 ```toml
 name = "multi-source-search"
 main = "src/index.ts"
+upload_source_maps = true
 compatibility_date = "$today"
 
 [[ai_search_namespaces]]

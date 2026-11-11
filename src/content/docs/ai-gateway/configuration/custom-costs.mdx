@@ -11,7 +11,7 @@ products:
 
 import { TabItem, Tabs } from "~/components";
 
-AI Gateway allows you to set custom costs at the request level. By using this feature, the cost metrics can accurately reflect your unique pricing, overriding the default or public model costs.
+AI Gateway allows you to set custom costs at the request level. Custom costs can reflect your negotiated input, output, cache-read, and cache-write rates. They override the default or public model costs.
 
 :::note[Note]
 
@@ -21,22 +21,41 @@ Custom costs will only apply to requests that pass tokens in their response. Req
 
 ## Custom cost
 
-To add custom costs to your API requests, use the `cf-aig-custom-cost` header. This header enables you to specify the cost per token for both input (tokens sent) and output (tokens received).
+To add custom costs to your API requests, use the `cf-aig-custom-cost` header. This header supports the following properties:
 
-- **per_token_in**: The negotiated input token cost (per token).
-- **per_token_out**: The negotiated output token cost (per token).
+- `per_token_in`: Cost per input token.
+- `per_token_out`: Cost per output token.
+- `per_cache_read_token`: Cost per cache-read token.
+- `per_cache_write_token`: Cost per cache-write token.
 
 There is no limit to the number of decimal places you can include, ensuring precise cost calculations, regardless of how small the values are.
 
+Cache-token pricing is optional. To turn it on, specify at least one cache rate. If you specify only one cache rate, the other defaults to `per_token_in`. If you omit both cache rates, AI Gateway ignores cache-token counts and uses the existing input and output calculation.
+
+## Cache-token calculations
+
+Providers report cache usage in different ways. Some include cache-read and cache-write tokens within the input token count. Others report input and cache tokens as separate counts.
+
+AI Gateway automatically accounts for how each provider and model reports cache usage. When cache tokens are included in the input count, AI Gateway subtracts them before applying `per_token_in`. When cache tokens are reported separately, AI Gateway applies their costs in addition to the input cost. This prevents cache tokens from being double-counted.
+
+For example, an inclusive response reports the following usage:
+
+- 1,000 input tokens
+- 600 cache-read tokens
+- 200 cache-write tokens
+- 100 output tokens
+
+AI Gateway calculates 200 fresh input tokens: `1,000 - 600 - 200`. It then applies each custom rate to its corresponding token count.
+
 Custom costs will appear in the logs with an underline, making it easy to identify when custom pricing has been applied.
 
-In this example, if you have a negotiated price of $1 per million input tokens and $2 per million output tokens, include the `cf-aig-custom-cost` header as shown below.
+In this example, the negotiated prices are $1 per million input tokens, $2 per million output tokens, $0.10 per million cache-read tokens, and $0.50 per million cache-write tokens.
 
 ```bash title="Request with custom cost"
 curl https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/openai/chat/completions \
   --header "Authorization: Bearer $TOKEN" \
   --header 'Content-Type: application/json' \
-  --header 'cf-aig-custom-cost: {"per_token_in":0.000001,"per_token_out":0.000002}' \
+  --header 'cf-aig-custom-cost: {"per_token_in":0.000001,"per_token_out":0.000002,"per_cache_read_token":0.0000001,"per_cache_write_token":0.0000005}' \
   --data ' {
         "model": "gpt-4o-mini",
         "messages": [

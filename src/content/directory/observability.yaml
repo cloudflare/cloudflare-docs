@@ -1,0 +1,13 @@
+id: 7CkYr7
+name: Cloudflare Observability
+
+entry:
+  title: Cloudflare Observability
+  url: /observability/
+  group: Core platform
+  additional_groups: [Analytics]
+
+meta:
+  title: Cloudflare Observability docs
+  description: Find Cloudflare documentation for logs, traces, analytics, alerts, telemetry export, and dashboards
+  author: "@cloudflare"

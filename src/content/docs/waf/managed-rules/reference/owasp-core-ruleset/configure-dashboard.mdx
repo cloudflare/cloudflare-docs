@@ -11,7 +11,10 @@ head:
     content: Configure the OWASP ruleset in the dashboard
 ---
 
-import { Render, Markdown } from "~/components";
+import { Render, Markdown, Steps, DashButton } from "~/components";
+import { Image } from "astro:assets";
+import owaspRulesetConfigImg from "~/assets/images/waf/managed-rulesets/ruleset-config-owasp-core-ruleset.png";
+import owaspTagsConfigImg from "~/assets/images/waf/managed-rulesets/tags-config-owasp-core-ruleset.png";
 
 The Cloudflare OWASP Core Ruleset is Cloudflare's implementation of the [OWASP ModSecurity Core Rule Set](https://owasp.org/www-project-modsecurity-core-rule-set/) (CRS). It is designed to work as a single entity to calculate a [threat score](/waf/managed-rules/reference/owasp-core-ruleset/concepts/#request-threat-score) and execute an action based on that score.
 
@@ -21,14 +24,18 @@ Learn more about the [concepts](/waf/managed-rules/reference/owasp-core-ruleset/
 
 ## Deploy the Cloudflare OWASP Core Ruleset {/* deploy-in-the-dashboard */}
 
-<Render
-	file="dash-deploy-managed-ruleset-zone"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare OWASP Core Ruleset",
-		dashOptionName: "OWASP core ruleset",
-	}}
-/>
+<Steps>
+	1. In the Cloudflare dashboard, go to the Security **Settings** page.
+
+		<DashButton url="/?to=/:account/:zone/security/settings" />
+	2. (Optional) Filter by **Web application exploits**.
+	3. Turn on **OWASP core ruleset**.
+
+	4. Review the deployment settings. Edit the scope, if necessary, to apply the ruleset to a subset of the incoming requests, or configure any custom settings (also known as overrides).
+	5. Select **Save**.
+</Steps>
+
+This operation deploys the managed ruleset for the current zone, creating a new rule with the _Execute_ action.
 
 ## Configure in the dashboard
 
@@ -59,13 +66,22 @@ You can configure (or override) the following Cloudflare OWASP Core Ruleset sett
 
 Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure it in the dashboard:
 
-<Render
-	file="dash-configure-all-rules"
-	params={{
-		rulesetName: "Cloudflare OWASP Core Ruleset",
-	}}
-	product="waf"
-/>
+<Steps>
+	1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+		<DashButton url="/?to=/:account/:zone/security/security-rules" />
+	2. (Optional) Filter by **Managed rules**.
+	3. Search for **Cloudflare OWASP Core Ruleset**. Look for a rule with an _Execute_ action.
+	4. Select the rule name (containing the name of the managed ruleset) to open the deployment configuration page.
+	5. (Optional) To execute the Cloudflare OWASP Core Ruleset for a subset of incoming requests, select **Edit scope** and [configure the expression](/ruleset-engine/rules-language/expressions/edit-expressions/) that will determine the scope of the current rule deploying the managed ruleset.
+	6. In the ruleset configuration section, define settings for all the rules in the Cloudflare OWASP Core Ruleset by setting one or more fields using the drop-down lists.
+
+		For example, select the action to perform for all the rules in the ruleset.
+
+		<Image src={owaspRulesetConfigImg} alt="The Configure deployment page displaying the available options to override all the rules in the OWASP Core Ruleset: OWASP Anomaly Score Threshold, OWASP Paranoia Level, and OWASP Action." />
+
+	7. Select **Save**.
+</Steps>
 
 ### Tag-level configuration
 
@@ -79,13 +95,22 @@ Setting the rule status for specific tags affects all current and future rules w
 
 Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure rules with specific tags in the dashboard:
 
-<Render
-	file="dash-configure-rules-by-tag"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare OWASP Core Ruleset",
-	}}
-/>
+<Render file="managed-rules-browse-zone-new-nav-owasp" product="waf" />
+
+<Steps>
+	5. Select one or more tags under the search input to filter the rules with those tags, and then select the checkbox in the top left corner of the table to select all the rules shown in the current page.<br />
+		If not all the rules are displayed in the current page, extend your selection to all rules with the selected tags across all pages by selecting **Select all \<NUMBER> rules**.
+
+		<Image src={owaspTagsConfigImg} alt="The Configure deployment page displaying selected rules with the 'attack-xss' tag in the Cloudflare OWASP Core Ruleset." />
+
+	6. Update one or more settings for the selected rules using the buttons displayed in the top right corner of the table (for example, **Set status**).
+	7. Select **Next**.
+	8. A dialog appears asking you if any new rules with the selected tags should be configured with the field values you selected.
+		- Select **Include new rules** if you want to apply your configurations to any new rules with the select tags.
+		- Select **Only selected rules** to apply your configurations to the selected rules only.
+
+	9. Select **Save**.
+</Steps>
 
 ### Rule-level configuration
 
@@ -95,18 +120,15 @@ You can configure (or override) the following setting in the dashboard for the s
 
 Once you have [deployed the Cloudflare OWASP Core Ruleset](#deploy-in-the-dashboard), do the following to configure individual ruleset rules in the dashboard:
 
-<Render
-	file="managed-rules-browse-zone-new-nav"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare OWASP Core Ruleset",
-	}}
-/>
+<Render file="managed-rules-browse-zone-new-nav-owasp" product="waf" />
 
-<Render
-	file="managed-ruleset-configure-individual-rules"
-	product="waf"
-	params={{
-		rulesetName: "Cloudflare OWASP Core Ruleset",
-	}}
-/>
+<Steps>
+	5. Search for rules using the available filters.
+	6. In the results list, change the values for each rule as desired, using the displayed drop-down lists and toggles. For example, change the status of a rule using the **Status** toggle next to the rule.
+
+		To configure multiple rules with the same value, select the checkboxes for all the rules you want to configure. If not all the rules are displayed in the current page, you can extend your selection to all rules across all pages by selecting **Select all \<NUMBER> rules**. Then, use the buttons displayed in the top right corner of the table — for example, **Set status** — to update one or more fields for the selected rules.
+
+		<Image src={owaspTagsConfigImg} alt="The Configure deployment page displaying selected rules in the Cloudflare OWASP Core Ruleset." />
+
+	7. Select **Next**, and then select **Save**.
+</Steps>

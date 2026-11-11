@@ -8,6 +8,8 @@ products:
   - ai-gateway
 ---
 
+import { APIRequest } from "~/components";
+
 Add Guardrails to any gateway to start evaluating and potentially modifying responses.
 
 1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account.
@@ -20,6 +22,51 @@ Add Guardrails to any gateway to start evaluating and potentially modifying resp
    - For **Prompts**: Guardrails will evaluate and transform incoming prompts based on your security policies.
    - For **Responses**: Guardrails will inspect the model's responses to ensure they meet your content and formatting guidelines.
 8. Select **Save**.
+
+## Configure Guardrails with the API
+
+Use the [Update a Gateway](/api/resources/ai_gateway/methods/update/) endpoint to manage Guardrails programmatically:
+
+<APIRequest
+	path="/accounts/{account_id}/ai-gateway/gateways/{id}"
+	method="PUT"
+	json={{
+		rate_limiting_interval: 0,
+		rate_limiting_limit: 0,
+		collect_logs: true,
+		cache_ttl: 0,
+		cache_invalidate_on_update: false,
+		guardrails: {
+			prompt: {
+				P1: "BLOCK",
+				S9: "BLOCK",
+			},
+			response: {
+				S9: "BLOCK",
+			},
+		},
+	}}
+/>
+
+This example blocks prompt injection (`P1`) in prompts and indiscriminate weapons (`S9`) in prompts and responses:
+
+```json
+{
+	"guardrails": {
+		"prompt": {
+			"P1": "BLOCK",
+			"S9": "BLOCK"
+		},
+		"response": {
+			"S9": "BLOCK"
+		}
+	}
+}
+```
+
+The API accepts `FLAG` and `BLOCK` actions. Omit a category to apply the dashboard's **Ignore** behavior.
+
+The update endpoint uses `PUT`. Retrieve the current gateway first and preserve its existing settings in the update body. Omitting the `guardrails` property disables Guardrails and removes its configuration.
 
 :::note[Usage considerations]
 For additional details about how to implement Guardrails, refer to [Usage considerations](/ai-gateway/features/guardrails/usage-considerations/).
@@ -36,7 +83,6 @@ When a request is blocked by guardrails, you will receive a structured error res
 - **Prompt blocked**
   - `"code": 2016`
   - `"message": "Prompt blocked due to security configurations"`
-
 - **Response blocked**
   - `"code": 2017`
   - `"message": "Response blocked due to security configurations"`

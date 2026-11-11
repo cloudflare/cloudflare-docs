@@ -1,0 +1,28 @@
+---
+pcx_content_type: navigation
+title: API
+description: Control a container from its Durable Object with the Durable Object Container API.
+sidebar:
+  order: 6
+products:
+  - containers
+  - durable-objects
+---
+
+import { CardGrid, LinkTitleCard } from "~/components";
+
+A Durable Object controls its container through `ctx.container`. Use the Durable Object Container API to start, stop, monitor, and connect to the container. Use Durable Object storage and alarms in the same class to keep state and schedule work.
+
+<CardGrid>
+
+<LinkTitleCard
+	title="Durable Object Container API"
+	href="/containers/api/durable-object-container/"
+	icon="seti:typescript"
+>
+	Start, stop, monitor, and connect to a container through `ctx.container`.
+</LinkTitleCard>
+
+</CardGrid>
+
+If your application uses the `Container` class, refer to [Migrate from the Container class to the Durable Object Container API](/containers/guides/migrate-to-durable-object-container-api/).

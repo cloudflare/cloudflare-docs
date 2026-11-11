@@ -27,6 +27,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.script_name` - The name of your Worker
 - `cloudflare.script_tags` - Tags associated with your Worker deployment
 - `cloudflare.script_version.id` - The version identifier of your deployed Worker
+- `cloudflare.durable_object.id` - The Durable Object instance ID, set on root and child spans for Durable Object invocations
 - `cloudflare.invocation.sequence.number` - A counter added to every emitted span and log that can be used to distinguish which was emitted first when the timestamps are the same
 - `telemetry.sdk.language` - The programming language used, set to `javascript`
 - `telemetry.sdk.name` - The telemetry SDK name, set to `cloudflare`
@@ -43,6 +44,23 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.outcome` - The outcome of the Worker invocation (e.g., `ok`, `exception`, `exceededCpu`, `exceededMemory`)
 - `cloudflare.cpu_time_ms` - The CPU time used by the Worker invocation, in milliseconds
 - `cloudflare.wall_time_ms` - The wall time used by the Worker invocation, in milliseconds
+
+---
+
+### Warning attributes
+
+Workers tracing may attach warning attributes to a span when a non-fatal error condition is encountered while recording telemetry for that span.
+These are diagnostic indicators about the span's telemetry state (for example, a span that was never closed).
+When present, both attributes are set together.
+
+- `cloudflare.warning.type` - A closed-set identifier indicating the type of warning condition encountered. See [Warning types](#warning-types) for the set of defined values.
+- `cloudflare.warning.message` - A free-form, human-readable explanation of the warning condition.
+
+#### Warning types
+
+The following values are defined for `cloudflare.warning.type`:
+
+- `span_not_ended` - The span was still open when its parent invocation span closed. Workers tracing force-closes the span and attaches this warning.
 
 ---
 
@@ -147,7 +165,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 
 #### [`RPC Handler`](/workers/runtime-apis/rpc/)
 
-- `cloudflare.jsrpc.method`
+- `jsrpc.method`
 
 #### [`Email Handler`](/email-service/api/route-emails/email-handler/)
 
@@ -162,6 +180,33 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 #### [`Alarm Handler`](/durable-objects/api/alarms/#alarm)
 
 - `cloudflare.scheduled_time`
+
+---
+
+### [RPC](/workers/runtime-apis/rpc/)
+
+Workers tracing emits these spans for RPC calls between Workers and from Workers to Durable Objects.
+
+#### RPC session
+
+A caller-side span that covers the lifetime of an RPC session. Calls that reuse the session appear under this span.
+
+This span has no additional RPC-specific attributes.
+
+#### RPC invocation
+
+A callee-side span that covers an RPC invocation in the target Worker or Durable Object.
+
+#### RPC call
+
+A caller-side or callee-side span for an individual method call or property access.
+
+Caller-side and callee-side spans use the execution color of the Worker or Durable Object where they run. The color change marks the execution boundary.
+
+- `jsrpc.method` - The method name or property path
+- `jsrpc.operation` - The operation type: `call` or `getProperty`
+- `jsrpc.target_kind` - The type of RPC target
+- `jsrpc.caller_span_id` - On callee-side spans, the corresponding caller-side `jsRpcCall` span ID
 
 ---
 

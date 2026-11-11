@@ -1,14 +1,5 @@
 ---
-/**
- * RuleID — copy-to-clipboard pill showing the last 8 chars of a rule ID.
- *
- * CF source: cloudflare-docs/src/components/RuleID.astro
- *
- * Mapping notes:
- *   - Upstream uses `~/util/tippy` for the "Copied!" tooltip; replaced with a
- *     lightweight title-attribute swap to avoid the tippy dependency.
- *   - CF Starlight CSS vars swapped for Nimbus design tokens.
- */
+// Copy-to-clipboard pill; behaviour wired globally in scripts/rule-id.client.ts.
 import { z } from "astro/zod";
 
 type Props = z.infer<typeof props>;
@@ -20,32 +11,17 @@ const props = z
 	.strict();
 
 const { id } = props.parse(Astro.props);
+
+const display = id.length > 8 ? `...${id.slice(-8)}` : id;
 ---
 
-<rule-id id={id}>
+<span class="rule-id" data-rule-id={id}>
 	<button
+		type="button"
 		title="Copy rule ID"
-		aria-label="Copy rule ID"
+		aria-label={`Copy rule ID ${id}`}
 		class="border-border bg-muted hover:border-foreground/30 hover:bg-accent inline-flex cursor-copy items-center rounded-md border px-1.5 py-0.5 transition-colors duration-150"
 	>
-		<span class="font-mono text-[0.8125rem] font-medium"
-			>{`...${id.slice(-8)}`}</span
-		>
+		<span class="font-mono text-[0.8125rem] font-medium">{display}</span>
 	</button>
-</rule-id>
-
-<script>
-	class RuleID extends HTMLElement {
-		connectedCallback() {
-			const button = this.querySelector<HTMLButtonElement>("button");
-			button?.addEventListener("click", () => {
-				navigator.clipboard.writeText(this.id);
-				const prev = button.title;
-				button.title = "Copied!";
-				setTimeout(() => (button.title = prev), 1000);
-			});
-		}
-	}
-
-	customElements.define("rule-id", RuleID);
-</script>
+</span>

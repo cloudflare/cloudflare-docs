@@ -1,7 +1,19 @@
 {
+    "name": "@cf/baai/bge-reranker-base",
+    "properties": [
+        {
+            "property_id": "price",
+            "value": [
+                {
+                    "unit": "per M input tokens",
+                    "price": 0.00311,
+                    "currency": "USD"
+                }
+            ]
+        }
+    ],
     "id": "145337e7-cec3-4ebb-8e78-16ddfc75e580",
     "source": 1,
-    "name": "@cf/baai/bge-reranker-base",
     "description": "Different from embedding model, reranker uses question and document as input and directly output similarity instead of embedding. You can get a relevance score by inputting query and passage to the reranker. And the score can be mapped to a float value in [0,1] by sigmoid function.\n\n",
     "task": {
         "id": "19606750-23ed-4371-aab2-c20349b53a60",
@@ -10,18 +22,6 @@
     },
     "created_at": "2025-02-14 12:28:19.009",
     "tags": [],
-    "properties": [
-        {
-            "property_id": "price",
-            "value": [
-                {
-                    "unit": "per M input tokens",
-                    "price": 0.0031,
-                    "currency": "USD"
-                }
-            ]
-        }
-    ],
     "schema": {
         "input": {
             "type": "object",
@@ -78,5 +78,6 @@
                 }
             }
         }
-    }
+    },
+    "deprecated": false
 }

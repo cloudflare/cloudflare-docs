@@ -22,9 +22,9 @@ The following fields are now available in Cache Rules expressions:
 | `cf.bot_management.verified_bot` | Boolean | Whether the request originates from a verified bot, such as a search engine crawler. |
 | `cf.bot_management.static_resource` | Boolean | Whether the request is for a static resource and therefore exempt from bot detection. |
 | `cf.bot_management.js_detection.passed` | Boolean | Whether the browser passed JavaScript detection when the feature is enabled. |
-| `cf.bot_management.attack_score` | Number | Classifies the request by attack score, from `1` (likely automated) to `99` (likely human). |
-| `cf.bot_management.api_score` | Number | Classifies the request by API score, from `1` (likely automated) to `99` (likely human). |
-| `cf.bot_management.bot_tags["<TAG>"]` | Boolean | Whether the bot traffic matches the specified tag, such as `google` or `bing`. |
+| `cf.bot_management.detection_ids` | Array&lt;Number&gt; | List of IDs that correspond to Bot Management heuristic detections made on the request. |
+| `cf.bot_management.tags` | Array&lt;String&gt; | List of tags associated with the bot traffic, such as `API`, `GOOGLE`, or `BING`. Match a tag with an expression such as `any(cf.bot_management.tags[*] eq "API")`. |
+| `cf.bot_management.signed_agent` | Boolean | Whether the request originates from a known agent that identifies itself with Web Bot Auth. |
 | `cf.bot_management.corporate_proxy` | Boolean | Whether the request originates from a known corporate proxy. |
 | `ip.src.asnum` | Number | The autonomous system number (ASN) of the incoming request's IP address. |
 

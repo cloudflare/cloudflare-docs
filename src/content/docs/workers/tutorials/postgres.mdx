@@ -22,7 +22,11 @@ To continue:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
 2. Install [`npm`](https://docs.npmjs.com/getting-started).
-3. Install [`Node.js`](https://nodejs.org/en/). Use a Node version manager like [Volta](https://volta.sh/) or [nvm](https://github.com/nvm-sh/nvm) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+3. Install [`Node.js`](https://nodejs.org/en/).
+
+   <Render file="nodejs-version-manager" product="workers" />
+
+   For supported Node.js versions, refer to the [Wrangler system requirements](/workers/wrangler/install-and-update/#install-wrangler).
 4. Make sure you have access to a PostgreSQL database.
 
 ## 1. Create a Worker application
@@ -38,10 +42,9 @@ First, use the [`create-cloudflare` CLI](https://github.com/cloudflare/workers-s
 This will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package and lead you through a setup wizard.
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "TypeScript",
 	}}
@@ -346,6 +349,7 @@ This command outputs the Hyperdrive configuration `id` that will be used for you
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "hyperdrive-example",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"compatibility_flags": [
 		"nodejs_compat"

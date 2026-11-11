@@ -13,7 +13,7 @@ languages:
       - ".nvmrc"
       - ".node-version"
   - name: Bun
-    default: "1.1.33"
+    default: "1.4.4"
     supported: "Any version"
     environment_variable: "BUN_VERSION"
   - name: Python
@@ -48,7 +48,7 @@ tools:
     default: "9.6.7"
     supported: "Corresponds with Node.js version"
   - name: pip
-    default: "23.2.1"
+    default: "26.2.2"
     supported: "Corresponds with Python version"
   - name: pipx
     default: "1.2.0"

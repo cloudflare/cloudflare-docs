@@ -1,0 +1,21 @@
+---
+title: D1 will enforce a maximum query result size of 50 MB
+description: Beginning November 4, 2026, D1 queries that return a result larger than 50 MB will fail and return an error.
+products:
+  - d1
+date: 2026-10-30
+---
+
+Beginning Wednesday, November 4, 2026, D1 will enforce a maximum query result size of 50 MB. Queries that return a result larger than 50 MB will fail and return the following error:
+
+```txt
+D1 query result exceeded the maximum response size limit of 50 MB
+```
+
+The 50 MB limit covers the 99.999th percentile of requests across D1, so most D1 users will not be impacted.
+
+[Import and export](/d1/best-practices/import-export-data/) operations via the [REST API](/api/resources/d1/subresources/database/methods/export/) are not subject to this limit and will continue to work as they do today.
+
+If your queries return large results, reduce the result size before the enforcement date. For example, select only the columns you need instead of using `SELECT *`, and paginate large result sets with `LIMIT` and `OFFSET`.
+
+For more information, refer to [D1 limits](/d1/platform/limits/) and the [D1 error list](/d1/observability/debug-d1/#error-list).

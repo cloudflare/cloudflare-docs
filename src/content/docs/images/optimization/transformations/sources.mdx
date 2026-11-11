@@ -13,9 +13,9 @@ When optimizing remote images, you can specify which origins can be used as the 
 On this page, you will learn how to define and manage the origins for the source images that you want to optimize.
 
 :::note
-The allowed origins setting applies to requests from [Workers](/workers/).
+The allowed origins setting only applies to [transformation URLs](/images/optimization/features/#url-interface) that use the `/cdn-cgi/image/` format.
 
-If you use a Worker to optimize remote images via a `fetch()` subrequest, then this setting may conflict with existing logic that handles source images.
+It does not apply when you use a [Worker](/images/optimization/transformations/transform-via-workers/) to optimize remote images via a `fetch()` subrequest. If your Worker accepts source image URLs from user input, then validate them in your Worker code.
 :::
 
 ## How it works

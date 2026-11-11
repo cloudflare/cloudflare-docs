@@ -1,0 +1,41 @@
+---
+pcx_content_type: reference
+title: Environment Variables
+description: Runtime and user-defined environment variables available inside Container instances.
+sidebar:
+  order: 3
+products:
+  - containers
+---
+
+import { WranglerConfig } from "~/components";
+
+## Runtime environment variables
+
+The container runtime automatically sets the following variables:
+
+- `CLOUDFLARE_APPLICATION_ID` - the ID of the Containers application
+- `CLOUDFLARE_COUNTRY_A2` - the [ISO 3166-1 Alpha 2 code](https://www.iso.org/obp/ui/#search/code/) of a country the container is placed in
+- `CLOUDFLARE_LOCATION` - a name of a location the container is placed in
+- `CLOUDFLARE_REGION` - a region name
+- `CLOUDFLARE_DURABLE_OBJECT_ID` - the ID of the Durable Object instance that the container is bound to. You can use this to identify particular container instances on the dashboard.
+
+## User-defined environment variables
+
+Pass environment variables in the `env` option when you start a container instance with [`ctx.container.start()`](/containers/api/durable-object-container/#start):
+
+```js
+const container = this.ctx.container;
+container.start({
+	image: container.images.base,
+	enableInternet: false,
+	env: {
+		MY_CUSTOM_VAR: "value",
+		ANOTHER_VAR: "another_value",
+	},
+});
+```
+
+Processes that you start with [`exec()`](/containers/api/durable-object-container/#exec) do not receive these variables, except `PATH`. Pass them in the `env` option of `exec()` instead.
+
+More details about defining environment variables and secrets can be found in [this example](/containers/examples/env-vars-and-secrets).

@@ -37,16 +37,26 @@ cloudflare-docs/
 ├── public/                 # Static files served as-is (images, redirects, robots.txt)
 ├── worker/                 # Cloudflare Worker for serving the site
 ├── bin/                    # Build scripts and CI helpers
-│   └── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   ├── fetch-skills.ts     # Downloads skills.tar.gz from middlecache, extracts to skills/
+│   └── fetch-logpush-datasets.ts  # Downloads generated Logpush dataset pages from middlecache
 ├── skills/                 # Agent Skills served at /.well-known/skills/ — GENERATED, do not edit
 │                           # Fetched from https://middlecache.ced.cloudflare.com/v1/cloudflare-skills/skills.tar.gz
 │                           # by bin/fetch-skills.ts, which runs automatically via prebuild/predev hooks.
 │                           # skills/ is in .gitignore and is NOT committed to the repository.
 ├── .flue/                  # Flue cloudflare-docs-bot — see .flue/AGENTS.md
 ├── astro.config.ts         # Astro + Nimbus configuration
+├── openapi.lock.json       # Pinned Cloudflare API schema version (see "OpenAPI schema pinning")
 ├── package.json
 └── tsconfig.json
 ```
+
+## OpenAPI schema pinning
+
+`<APIRequest>` renders against the Cloudflare API OpenAPI schema pinned by the repo-root `openapi.lock.json` (an upstream [`cloudflare/api-schemas`](https://github.com/cloudflare/api-schemas) commit SHA plus the snapshot's sha256). `prebuild`/`predev` download and verify the pinned snapshot from middlecache; a weekly workflow (`.github/workflows/bump-openapi-schema.yml` + `bin/bump-openapi-lock.ts`) opens a PR when a newer snapshot exists. Source: `src/util/openapi-schema.ts`.
+
+- Builds fail if an `<APIRequest>` path/method does not exist in the pinned schema. Fix the page to match the current API, or merge the pending bump PR.
+- Set `OPENAPI_SCHEMA=latest` to render against the newest published snapshot (escape hatch; CI always uses the pin).
+- Snapshots expire after 365 days. A build that 404s on the pinned snapshot is on a stale branch — rebase onto `production`.
 
 ## Content — writing and editing docs
 
@@ -82,7 +92,7 @@ reviewed: 2025-01-15 # YYYY-MM-DD of last content review
 ---
 ```
 
-Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `implementation-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `release-notes`, `solution-guide`, `troubleshooting`, `tutorial`, `video`.
+Valid `pcx_content_type` values: `changelog`, `concept`, `configuration`, `design-guide`, `example`, `faq`, `get-started`, `how-to`, `integration-guide`, `learning-unit`, `navigation`, `overview`, `reference`, `reference-architecture`, `reference-architecture-diagram`, `troubleshooting`, `tutorial`, `video`.
 
 ### Writing and style rules
 
@@ -102,7 +112,8 @@ For full component documentation including props, examples, and mandatory usage 
 
 ```bash
 pnpm run check          # Type-check (validates frontmatter schemas + Astro types)
-pnpm run build          # Full build (validates MDX parsing, image paths, internal links) — LOCAL ONLY, skip in CI
+pnpm run build          # Full build (validates MDX parsing, image paths) — LOCAL ONLY, skip in CI
+pnpm run lint:nimbus    # Nimbus lint, including internal links (needs a prior build: reads .nimbus/routes.json)
 ```
 
 ### Minimum validation for code changes (.ts/.tsx/.astro/.js)
@@ -130,7 +141,8 @@ pnpm run format:core:check  # Prettier formatting check
 pnpm run check              # Astro + Worker type checking
 pnpm run lint               # ESLint
 pnpm run format:core:check  # Prettier formatting check
-pnpm run build              # Full build with link checking
+pnpm run build              # Full build
+pnpm run lint:nimbus        # Internal link + frontmatter + image-ref lint (run after build)
 pnpm run test               # All test suites
 pnpm exec tsm bin/validate-redirects.ts  # Only if public/__redirects was modified
 ```
@@ -160,6 +172,7 @@ The CI workflow (`.github/workflows/ci.yml`) runs on PRs to `production` and che
 3. ESLint (reported inline on PR via reviewdog)
 4. `pnpm run format:core:check` (Prettier formatting)
 5. `pnpm run build` (full build + MDX parsing + image path validation)
+   - Build runs `nimbus-docs lint` against its own `.nimbus/` data (internal links, redirects)
 6. Redirect validation (`bin/validate-redirects.ts`)
 7. `pnpm run test` (all Vitest suites)
 
@@ -222,11 +235,11 @@ node tools/directory-entry-ids --fix  # Auto-fix missing, malformed, or duplicat
 
 Tests use Vitest with three workspace projects (`vitest.config.ts`):
 
-| Suite   | File pattern       | Runtime                           |
-| ------- | ------------------ | --------------------------------- |
-| Workers | `*.worker.test.ts` | `@cloudflare/vitest-pool-workers` |
-| Node    | `*.node.test.ts`   | Node.js                           |
-| Astro   | `*.astro.test.ts`  | Astro Vite config                 |
+| Suite   | File pattern       | Runtime                     |
+| ------- | ------------------ | --------------------------- |
+| Workers | `*.worker.test.ts` | `@cloudflare/vitest-plugin` |
+| Node    | `*.node.test.ts`   | Node.js                     |
+| Astro   | `*.astro.test.ts`  | Astro Vite config           |
 
 Run all tests: `pnpm run test`
 

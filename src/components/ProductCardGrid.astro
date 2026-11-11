@@ -9,16 +9,12 @@ const { label } = Astro.props;
 ---
 
 <div>
-	{
-		label && (
-			<p class="text-muted-foreground mb-4 font-mono text-xs tracking-widest uppercase">
-				{label}
-			</p>
-		)
-	}
-	<div
-		class="border-border bg-border relative grid grid-cols-1 gap-px overflow-visible border lg:grid-cols-3"
-	>
+	{label && (
+		<h3 class="text-muted-foreground mb-4 font-mono text-xs tracking-widest uppercase">
+			{label}
+		</h3>
+	)}
+	<div class="border-border bg-border relative grid grid-cols-1 gap-px overflow-visible border lg:grid-cols-3">
 		<CornerMarks />
 		<slot />
 	</div>

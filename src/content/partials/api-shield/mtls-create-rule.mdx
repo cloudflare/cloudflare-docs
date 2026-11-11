@@ -1,9 +1,8 @@
 ---
 {}
-
 ---
 
-import { Steps, DashButton } from "~/components"
+import { Steps, DashButton } from "~/components";
 
 <Steps>
 1. In the Cloudflare dashboard, go to **Client Certificates** page.
@@ -16,4 +15,4 @@ import { Steps, DashButton } from "~/components"
 6. Select **Deploy** to make the rule active.
 </Steps>
 
-Once you have deployed your mTLS rule, any requests without a [valid client certificate](/ssl/client-certificates/) will be blocked.
+Once you have deployed your mTLS rule, requests without a [valid client certificate](/ssl/client-certificates/) are blocked only when they match the hostname and URI path conditions configured in the rule.

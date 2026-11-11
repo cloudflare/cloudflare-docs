@@ -21,16 +21,16 @@ Using a CI/CD pipeline to deploy your Workers is a best practice because it:
 
 ## Which CI/CD should I use?
 
-Choose [Workers Builds](/workers/ci-cd/builds) if you want a fully integrated solution within Cloudflare's ecosystem that requires minimal setup and configuration for GitHub or GitLab users.
+Choose [Workers Builds](/workers/ci-cd/builds) if you want a fully integrated solution within Cloudflare's ecosystem for Artifacts, GitHub, or GitLab repositories.
 
 We recommend using [external CI/CD providers](/workers/ci-cd/external-cicd) if:
 
-- You have a self-hosted instance of GitHub or GitLabs, which is currently not supported in Workers Builds' [Git integration](/workers/ci-cd/builds/git-integration/)
-- You are using a Git provider that is not GitHub or GitLab
+- You have a self-hosted instance of GitHub or GitLab, which is currently not supported in Workers Builds' [Git integration](/workers/ci-cd/builds/git-integration/)
+- You are using a Git provider other than Artifacts, GitHub, or GitLab
 
 ## Workers Builds
 
-[Workers Builds](/workers/ci-cd/builds) is Cloudflare's native CI/CD system that allows you to integrate with GitHub or GitLab to automatically deploy changes with each new push to a selected branch (e.g. `main`).
+[Workers Builds](/workers/ci-cd/builds) is Cloudflare's native CI/CD system that allows you to integrate with Artifacts, GitHub, or GitLab to automatically deploy changes with each new push to a selected branch (e.g. `main`).
 
 ![Workers Builds Workflow Diagram](~/assets/images/workers/platform/ci-cd/workers-builds-workflow.png)
 

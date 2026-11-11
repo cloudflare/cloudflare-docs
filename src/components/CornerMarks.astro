@@ -34,12 +34,10 @@ const fillClasses =
 	tone === "accent" ? "bg-primary" : "bg-background dark:bg-background";
 ---
 
-{
-	corners.map((c) => (
-		<div
-			class={`pointer-events-none absolute z-30 ${fillClasses} ${className}`}
-			style={`${baseStyle}${positions[c]}`}
-			aria-hidden="true"
-		/>
-	))
-}
+{corners.map((c) => (
+	<div
+		class={`pointer-events-none absolute z-30 ${fillClasses} ${className}`}
+		style={`${baseStyle}${positions[c]}`}
+		aria-hidden="true"
+	/>
+))}

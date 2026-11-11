@@ -1,0 +1,13 @@
+---
+title: Workers Observability logs and traces in Custom Dashboards
+description: Custom Dashboards can now chart Workers Observability logs and traces alongside analytics and Log Explorer data.
+date: 2026-10-02
+---
+
+You can now build Custom Dashboards charts from Workers Observability data. Two new datasets, **Workers Observability — Logs** and **Workers Observability — Traces (OTel)**, let you chart Worker invocations, log levels, errors, CPU and wall time, span counts, and durations next to HTTP traffic, security events, and other analytics datasets.
+
+This gives you one dashboard for an application that spans Cloudflare's network and your Workers. For example, you can put request volume, WAF blocks, and Worker error rates on the same view, filter all three by time range, and spot whether a spike in errors lines up with a change in traffic.
+
+The datasets are available for every Worker in your account that has [Workers Logs](/workers/observability/logs/workers-logs/) or [Workers Traces](/workers/observability/traces/) turned on. Custom Dashboards also now allow up to 100 dashboards for every account.
+
+To get started, refer to [Workers Observability data in Custom Dashboards](/analytics/custom-dashboards/#workers-observability-data).

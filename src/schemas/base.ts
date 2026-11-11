@@ -28,7 +28,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			.string()
 			.optional()
 			.describe(
-				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/components/list-tutorials/).",
+				"Difficulty is displayed as a column in the [ListTutorials component](/style-guide/build-the-page/components/list-tutorials/).",
 			),
 		reviewed: z
 			.date()
@@ -41,7 +41,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			.array()
 			.optional()
 			.describe(
-				"Required for the [`ProductReleaseNotes`](/style-guide/components/usage/#productreleasenotes) component.",
+				"Required for the [`ProductReleaseNotes`](/style-guide/build-the-page/components/usage/#productreleasenotes) component.",
 			),
 		products: z
 			.array(reference("directory"))
@@ -64,7 +64,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			.boolean()
 			.optional()
 			.describe(
-				"Renders this group as a single link on the sidebar, to the index page. Refer to [Sidebar](https://developers.cloudflare.com/style-guide/frontmatter/sidebar/).",
+				"Renders this group as a single link on the sidebar, to the index page. Refer to [Sidebar](https://developers.cloudflare.com/style-guide/build-the-page/frontmatter/sidebar/).",
 			),
 		styleGuide: z
 			.object({
@@ -72,7 +72,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			})
 			.optional()
 			.describe(
-				"Used by overrides for style guide component documentation, which helps us display the [usage counts](/style-guide/components/usage/) for components directly on the component page itself.",
+				"Used by overrides for style guide component documentation, which helps us display the [usage counts](/style-guide/build-the-page/components/usage/) for components directly on the component page itself.",
 			),
 		banner: z
 			.object({
@@ -84,7 +84,7 @@ export const baseSchema = (_context: SchemaContext) =>
 			})
 			.optional()
 			.describe(
-				"Displays a [Banner](https://developers.cloudflare.com/style-guide/frontmatter/banner/) on the current docs page.",
+				"Displays a [Banner](https://developers.cloudflare.com/style-guide/build-the-page/frontmatter/banner/) on the current docs page.",
 			),
 		feedback: z
 			.boolean()

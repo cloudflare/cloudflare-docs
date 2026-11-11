@@ -1,0 +1,20 @@
+---
+title: Gateway and Workers integration is now in public beta
+description: Transform Cloudflare Gateway HTTP traffic with Cloudflare Workers using the Forward policy action, now in public beta.
+products:
+  - cloudflare-one
+  - workers
+date: 2026-10-15
+---
+
+Cloudflare Gateway now integrates with Cloudflare Workers in public beta on all Zero Trust plans. You can use the **Forward** action in [Gateway HTTP policies](/cloudflare-one/traffic-controls/http-policies/) to run your own code on matching, permitted traffic without managing a separate proxy.
+
+The **Forward** action lets you transform HTTP requests and responses, return a coaching page, or run background tasks such as Slack notifications and R2 captures. Your Worker receives the request and [Gateway context](/cloudflare-one/traffic-controls/integrate-workers/available-context/), including connection metadata, user identity, and device posture when available.
+
+![A matching Gateway Forward policy sends HTTP traffic to a Worker, which processes requests and responses for Internet or private-network upstream services.](~/assets/images/changelog/gateway/gateway-workers-forward.png)
+
+Gateway handles the proxy connection, TLS decryption, and upstream routing. It evaluates HTTP request policies before Forward policies and inspects the final response before returning it to the user.
+
+Gateway inspects the original request body before delivering it to your Worker. A body-inspection Block decision can interrupt the Worker.
+
+To get started, [deploy a Worker and configure a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/), or adapt one of the [Worker templates](/cloudflare-one/traffic-controls/integrate-workers/worker-templates/).

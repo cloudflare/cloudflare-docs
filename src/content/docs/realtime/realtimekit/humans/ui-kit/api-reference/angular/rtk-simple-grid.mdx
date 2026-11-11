@@ -1,0 +1,54 @@
+---
+pcx_content_type: navigation
+title: rtk-simple-grid
+description: API reference for rtk-simple-grid component (Angular Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-simple-grid/rtk-simple-grid.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A grid component which renders only the participants in a simple grid.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `aspectRatio` | `string` | ✅ | - | Aspect Ratio of participant tile  Format: `width:height` |
+| `config` | `UIConfig` | ❌ | `createDefaultConfig()` | UI Config |
+| `gap` | `number` | ✅ | - | Gap between participant tiles |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon Pack |
+| `meeting` | `Meeting` | ✅ | - | Meeting object |
+| `participants` | `Peer[]` | ✅ | - | Participants |
+| `size` | `Size` | ✅ | - | Size |
+| `states` | `States` | ✅ | - | States object |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-simple-grid></rtk-simple-grid>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-simple-grid
+ aspectRatio="example"
+ gap="42"
+ [meeting]="meeting">
+</rtk-simple-grid>
+```
+

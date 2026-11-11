@@ -1,0 +1,48 @@
+---
+title: New web_fetch tool in the Agents SDK for reading webpages and documents, with automatic markdown conversion
+description: A web_fetch tool with automatic Markdown conversion and adapters for Pi Durable, AI SDK, and TanStack AI.
+date: 2026-10-12
+---
+
+import { TypeScriptExample } from "~/components";
+
+The [Cloudflare Agents SDK](/agents/) now provides a `web_fetch` tool that reads webpages, PDFs, and supported Office documents, using [Workers AI Markdown Conversion](/workers-ai/features/markdown-conversion/) to turn them into text the model can read. The tool requests Markdown directly from sites that support [Markdown for Agents](/fundamentals/reference/markdown-for-agents/) and formats JSON for the model.
+
+When you give the `web_fetch` tool to your agent, the model provides a URL and receives back the page content, along with the final URL, HTTP status, and content type. Long pages come back in smaller sections, with an offset the model can use to continue reading. You control which hosts the agent can fetch, response size, timeouts, and redirects.
+
+When you also provide the [`web_search`](/agents/tools/web-search/) tool to your agent, the model is told to use `web_fetch` to read the pages that `web_search` returns.
+
+To use the `web_fetch` tool, make sure you have [Agents SDK v0.28.0](https://github.com/cloudflare/agents/releases/tag/agents%400.28.0) or greater installed, and add it to a [Pi Durable](/agents/harnesses/pi/) [extension registry](/agents/harnesses/pi/extensions/) before opening the harness:
+
+<TypeScriptExample>
+
+```ts
+import { webFetchTool } from "agents/webfetch/pi";
+
+export class MyAgent extends DurableObject<Env> {
+	// ...
+
+	readonly harness = new PiHarness({
+		harness: async ({ storage, context }) => {
+			this.registry.install({
+				name: "web-tools",
+				tools: [webFetchTool({ binding: this.env.AI })],
+			});
+
+			// ...
+
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry },
+				context,
+			);
+		},
+	});
+}
+```
+
+</TypeScriptExample>
+
+The `web_fetch` tool works with any harness. The SDK includes AI SDK and TanStack AI adapters. If you use a different harness, or need to fetch a page without calling a model, use `fetchWeb()`, `windowWebFetchPage()`, and `renderWebFetchPage()` from `agents/webfetch`. Direct fetching does not require a Durable Object or browser.
+
+For setup, examples, and request controls, refer to [Web fetch](/agents/tools/web-fetch/).

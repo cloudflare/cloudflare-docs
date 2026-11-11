@@ -116,7 +116,7 @@ The sandbox also includes standard JavaScript globals. It does not expose Node.j
 
 An executor runs one block of model-generated code once. It receives callable namespaces and returns a result, an error, and captured console output. It does not retain execution history.
 
-`DynamicWorkerExecutor` uses a [Dynamic Worker Loader](/workers/runtime-apis/bindings/worker-loader/) to create an isolated Worker for each execution pass. A resumed execution runs the code again in another pass. Durable state therefore cannot live inside the sandbox.
+`DynamicWorkerExecutor` uses a [Dynamic Worker Loader](/dynamic-workers/) to create an isolated Worker for each execution pass. A resumed execution runs the code again in another pass. Durable state therefore cannot live inside the sandbox.
 
 External `fetch()` and `connect()` calls are blocked by default. `DynamicWorkerExecutor` configures `globalOutbound: null` unless you provide another value. You can provide a `Fetcher` to route outbound requests through a controlled service.
 

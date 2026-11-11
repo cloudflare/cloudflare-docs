@@ -1,0 +1,13 @@
+id: FX9rys
+
+name: Basin SQL
+
+entry:
+  title: Basin SQL
+  url: /basin-sql/
+  group: Developer platform
+
+meta:
+  title: Basin SQL docs
+  description: Cloudflare's serverless, distributed query engine for data stored in Basin Catalog
+  author: "@cloudflare"

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 920 414" role="img" aria-labelledby="title description">
+  <title id="title">Existing work drains on the previous version of the Workers runtime while new HTTP requests use the updated version</title>
+  <desc id="description">A timeline for stateless Workers compares the previous 30-second grace period with up to 20 minutes. At time zero, the updated version of the Workers runtime is ready and processes running the previous version start draining existing work. An existing streaming response finishes during the grace period. Existing WebSockets still open at the end disconnect. A new HTTP request arriving at 15 minutes runs on the updated version. Existing work can still be interrupted earlier.</desc>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,&quot;Segoe UI&quot;,sans-serif}.label{font-size:12px;font-weight:600;fill:#1a1a1a}.sublabel{font-size:11px;fill:#6b7280}.previous{font-size:11px;font-weight:600;fill:#9a3412}.grace,.new-request{font-size:11px;font-weight:600;fill:#166534}.request,.stop{font-size:11px;font-weight:600;fill:#0369a1}
+  </style>
+  <defs>
+    <marker id="time-arrow" markerHeight="6" markerWidth="8" orient="auto" refX="7" refY="3">
+      <path fill="#d1d5db" d="m0 0 8 3-8 3z"/>
+    </marker>
+  </defs>
+  <rect width="920" height="414" fill="#fafafa" rx="8"/>
+  <text x="40" y="24" class="label">Workers runtime versions</text>
+  <path stroke="#d1d5db" stroke-width="1.5" marker-end="url(#time-arrow)" d="M240 34h640"/>
+  <text x="890" y="38" class="sublabel">time</text>
+  <path stroke="#d1d5db" d="M240 30v8m125-8v8m125-8v8m125-8v8m125-8v8m125-8v8"/>
+  <text x="240" y="54" class="sublabel" text-anchor="middle">0</text>
+  <text x="365" y="54" class="sublabel" text-anchor="middle">5 min</text>
+  <text x="490" y="54" class="sublabel" text-anchor="middle">10 min</text>
+  <text x="615" y="54" class="sublabel" text-anchor="middle">15 min</text>
+  <text x="740" y="54" class="sublabel" text-anchor="middle">20 min</text>
+  <text x="865" y="54" class="sublabel" text-anchor="middle">25 min</text>
+
+  <path stroke="#ea580c" stroke-dasharray="4 3" stroke-width="1.5" d="M240 102v204"/>
+  <text x="240" y="76" class="sublabel" text-anchor="middle" style="fill:#c2410c">updated version ready</text>
+  <text x="240" y="92" class="sublabel" text-anchor="middle" style="fill:#c2410c">previous version starts draining</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" stroke-width="1.5" d="M740 102v204"/>
+  <text x="740" y="76" class="stop" text-anchor="middle">grace period for the previous version ends</text>
+
+  <text x="40" y="130" class="label">Previous grace period</text>
+  <rect width="12.5" height="28" x="240" y="112" fill="#fff7ed" stroke="#fb923c" rx="3"/>
+  <text x="268" y="130" class="previous">30 seconds</text>
+
+  <text x="40" y="182" class="label">New grace period</text>
+  <rect width="500" height="28" x="240" y="164" fill="#f0fdf4" stroke="#86efac" rx="4"/>
+  <text x="490" y="182" class="grace" text-anchor="middle">up to 20 minutes for existing work on the previous version</text>
+
+  <text x="40" y="236" class="label">Existing streaming response</text>
+  <rect width="250" height="28" x="240" y="218" fill="#eff6ff" stroke="#93c5fd" rx="4"/>
+  <text x="365" y="236" class="request" text-anchor="middle">finishes on the previous version</text>
+  <path stroke="#60a5fa" stroke-dasharray="4 3" d="M490 210v46"/>
+
+  <text x="40" y="288" class="label">Existing WebSocket</text>
+  <rect width="500" height="28" x="240" y="270" fill="#eff6ff" stroke="#93c5fd" rx="4"/>
+  <text x="490" y="288" class="request" text-anchor="middle">can stay connected on the previous version until the grace period ends</text>
+
+  <text x="740" y="322" class="stop" text-anchor="end">previous version: unfinished work stops · open connections close</text>
+  <path stroke="#e5e7eb" d="M40 342h840"/>
+
+  <text x="40" y="382" class="label">New HTTP request</text>
+  <text x="615" y="354" class="sublabel">starts at 15 min</text>
+  <path fill="#f0fdf4" stroke="#86efac" d="M615 364h250l16 14-16 14H615z"/>
+  <text x="740" y="382" class="new-request" text-anchor="middle">handled by the updated version</text>
+</svg>

@@ -1,0 +1,30 @@
+---
+title: Realtime SFU WebSocket adapter is generally available
+description: Connect transcription, recording, and AI services to live WebRTC media with the generally available Realtime SFU WebSocket adapter.
+date: 2026-09-30
+---
+
+The [WebSocket adapter](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) for [Cloudflare's Realtime SFU](/realtime/sfu/) is now generally available. The SFU (selective forwarding unit) is managed WebRTC infrastructure for live audio, video, and data across [Cloudflare's global network in 330+ cities](https://www.cloudflare.com/products/turn-sfu/).
+
+The adapter connects live calls to any server that accepts WebSockets, such as a [Durable Object](/durable-objects/). It delivers uncompressed pulse-code modulation (PCM) audio and JPEG video frames. Your backend can process this media without implementing a WebRTC client.
+
+## What you can build
+
+- Transcribe or record call audio, or let a voice agent hear and respond to participants. The [AI audio example](/realtime/sfu/examples/ai-audio/) uses Durable Objects and Workers AI for transcription and speech generation. Separate adapters receive PCM audio and send generated speech back to participants.
+- Analyze images or build previews from live video. The [WebRTC-to-JPEG example](https://github.com/cloudflare/realtime-examples/tree/main/video-to-jpeg) sends a browser's camera stream to a Durable Object as JPEG frames at one frame per second by default.
+
+## What changes for existing integrations
+
+Existing adapter creation requests and media formats stay the same.
+
+For WebRTC-to-WebSocket streaming, the SFU now automatically retries the same endpoint for up to 15 seconds instead of 5, with no additional API setting.
+
+The [close API](/realtime/sfu/features/media-transport-adapters/websocket-adapter/#close-adapter) is now idempotent and returns success even if the adapter has already closed:
+
+```json
+{
+	"tracks": [{ "adapterId": "<ADAPTER_ID>" }]
+}
+```
+
+Refer to the [WebSocket adapter guide](/realtime/sfu/features/media-transport-adapters/websocket-adapter/) for setup, media formats, and API requests.

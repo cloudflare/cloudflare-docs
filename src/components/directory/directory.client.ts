@@ -21,6 +21,7 @@
  *     (`?search=…&group=…&group=…`).
  */
 import { mount } from "@cloudflare/nimbus-docs/client";
+import { isEditableKeyboardTarget } from "~/util/keyboard";
 import { setSearchParams } from "~/util/url";
 import {
 	LG_GRID_CLASS,
@@ -136,7 +137,7 @@ function initDirectory(root: HTMLElement): () => void {
 		search?.focus();
 	}
 	function onKeydown(event: KeyboardEvent): void {
-		const slash = event.key === "/" && document.activeElement !== search;
+		const slash = event.key === "/" && !isEditableKeyboardTarget(event);
 		const cmdK =
 			event.key.toLowerCase() === "k" && (event.metaKey || event.ctrlKey);
 		if (slash || cmdK) {

@@ -19,7 +19,7 @@ import {
 	WranglerConfig,
 } from "~/components";
 
-Use the Artifacts Workers binding to create, import, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns repo handles that allow repo-scoped operations such as token management and forking.
+Use the Artifacts Workers binding to create, import, inspect, fork, and delete repos directly from your Worker. The Artifacts binding returns disposable repository capabilities that support metadata lookup, token management, Git object inspection, path-based file reads, commit history, and forking.
 
 Review [Namespaces](/artifacts/concepts/namespaces/) first, then choose the namespace name you will bind here.
 
@@ -48,9 +48,16 @@ export interface Env {
 
 Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
 
-In named Wrangler environments, `artifacts` is non-inheritable. Repeat the binding in each environment where you need it.
+:::note
 
-At runtime, deployed Workers use the configured binding directly. For local Wrangler commands such as `wrangler dev`, `wrangler deploy`, or `wrangler types`, authenticate Wrangler first. For local OAuth authentication, refer to [`wrangler login`](/workers/wrangler/commands/general/#login). For CI or headless environments, refer to [Running Wrangler in CI/CD](/workers/ci-cd/).
+Make sure to update to Wrangler 4.145.0 or later before generating Artifacts binding types or using Blob-returning methods with a remote binding in local development.
+
+```sh
+npm install --save-dev wrangler@latest
+npx wrangler types
+```
+
+:::
 
 ## Namespace methods
 
@@ -93,13 +100,19 @@ async function createRepo(artifacts: Artifacts) {
 - Returns <Type text="Promise<ArtifactsRepo>" />
 - Throws if the repo does not exist or is not ready yet.
 
-`get()` returns a handle to an existing repo. Use the handle to call async methods on the repo, such as `createToken()`, `listTokens()`, `revokeToken()`, and `fork()`.
+`get()` returns an `ArtifactsRepo` RPC capability that implements `Disposable`. Use the disposable handle to retrieve metadata, manage tokens, inspect Git objects, read files, list commit history, and fork the repository. Declare the handle with `using` so it is released before the request ends.
+
+:::note
+
+`get()` returns a disposable repository capability, not repository metadata. Call `repo.info()` to retrieve current metadata.
+
+:::
 
 <TypeScriptExample>
 
 ```ts
 async function getRepoHandle(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
+	using repo = await artifacts.get("starter-repo");
 	const token = await repo.createToken("read", 3600);
 	return token;
 }
@@ -186,9 +199,27 @@ async function deleteRepo(artifacts: Artifacts) {
 
 </TypeScriptExample>
 
-## Repo handle methods
+## Repository capability methods
 
-Call `await artifacts.get(name)` to get a repo handle. Use the handle to call async methods on the repo.
+Call `await artifacts.get(name)` to get a disposable repo handle. Declare the handle with `using` so it is released before the request ends.
+
+### `info()`
+
+- Returns <Type text="Promise<ArtifactsRepoInfo>" />
+- Throws `NOT_FOUND` if the repo was deleted.
+
+Repository metadata is not exposed as properties on `ArtifactsRepo`. `info()` performs a fresh metadata lookup for the repo.
+
+<TypeScriptExample>
+
+```ts
+async function getRepoInfo(artifacts: Artifacts) {
+	using repo = await artifacts.get("starter-repo");
+	return await repo.info();
+}
+```
+
+</TypeScriptExample>
 
 ### `createToken(scope?, ttl?)`
 
@@ -200,8 +231,8 @@ Call `await artifacts.get(name)` to get a repo handle. Use the handle to call as
 
 ```ts
 async function mintReadToken(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.createToken("read", 3600);
+	using repo = await artifacts.get("starter-repo");
+	return await repo.createToken("read", 3600);
 }
 ```
 
@@ -217,7 +248,7 @@ Unlike `create()` and `import()`, `repo.createToken()` returns a structured resu
 
 ```ts
 async function listRepoTokens(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
+	using repo = await artifacts.get("starter-repo");
 	const result = await repo.listTokens();
 	return {
 		total: result.total,
@@ -237,8 +268,8 @@ async function listRepoTokens(artifacts: Artifacts) {
 
 ```ts
 async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.revokeToken(tokenOrId);
+	using repo = await artifacts.get("starter-repo");
+	return await repo.revokeToken(tokenOrId);
 }
 ```
 
@@ -258,7 +289,7 @@ async function revokeToken(artifacts: Artifacts, tokenOrId: string) {
 
 ```ts
 async function forkRepo(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
+	using repo = await artifacts.get("starter-repo");
 	const forked = await repo.fork("starter-repo-copy", {
 		description: "Fork for testing",
 		defaultBranchOnly: true,
@@ -273,16 +304,18 @@ async function forkRepo(artifacts: Artifacts) {
 
 ### `log(opts?)`
 
-- `opts.ref` <Type text="string" /> <MetaInfo text="optional" /> — Branch, tag, or commit hash.
-- `opts.limit` <Type text="number" /> <MetaInfo text="optional" />
-- `opts.offset` <Type text="number" /> <MetaInfo text="optional" />
-- Returns <Type text="Promise<ArtifactsLogResult>" />
+- `opts.ref` <Type text="string" /> <MetaInfo text='optional (default: "HEAD")' /> — Branch, tag, or commit hash.
+- `opts.limit` <Type text="number" /> <MetaInfo text="optional (default: 50, maximum: 1000)" />
+- `opts.offset` <Type text="number" /> <MetaInfo text="optional (default: 0)" />
+- Returns <Type text="Promise<ArtifactsCommitMetadata[]>" />
+
+`log()` follows the first-parent chain and returns commits newest first. If the ref cannot be resolved, `log()` returns an empty array.
 
 <TypeScriptExample>
 
 ```ts
 async function readCommitHistory(artifacts: Artifacts) {
-	const repo = await artifacts.get("starter-repo");
+	using repo = await artifacts.get("starter-repo");
 	const history = await repo.log({ ref: "main", limit: 10 });
 	return history;
 }
@@ -293,14 +326,16 @@ async function readCommitHistory(artifacts: Artifacts) {
 ### `readCommit(hash)`
 
 - `hash` <Type text="string" /> <MetaInfo text="required" /> — Commit SHA-1 hash.
-- Returns <Type text="Promise<ArtifactsCommit>" />
+- Returns <Type text="Promise<ArtifactsCommitMetadata | null>" />
+
+`readCommit()` returns `null` if the commit does not exist.
 
 <TypeScriptExample>
 
 ```ts
 async function readCommit(artifacts: Artifacts, hash: string) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.readCommit(hash);
+	using repo = await artifacts.get("starter-repo");
+	return await repo.readCommit(hash);
 }
 ```
 
@@ -309,18 +344,75 @@ async function readCommit(artifacts: Artifacts, hash: string) {
 ### `readTree(hash)`
 
 - `hash` <Type text="string" /> <MetaInfo text="required" /> — Tree SHA-1 hash.
-- Returns <Type text="Promise<ArtifactsTree>" />
+- Returns <Type text="Promise<ArtifactsTreeEntry[] | null>" />
+
+`readTree()` returns only the tree's immediate children. It returns `null` if the tree does not exist.
 
 <TypeScriptExample>
 
 ```ts
 async function readTree(artifacts: Artifacts, hash: string) {
-	const repo = await artifacts.get("starter-repo");
-	return repo.readTree(hash);
+	using repo = await artifacts.get("starter-repo");
+	return await repo.readTree(hash);
 }
 ```
 
 </TypeScriptExample>
+
+### `readBlob(hash)`
+
+- `hash` <Type text="string" /> <MetaInfo text="required" /> — Lowercase, 40-character Git SHA-1 object ID.
+- Returns <Type text="Promise<Blob | null>" />
+
+`readBlob()` returns an untyped `Blob`, so `blob.type` is empty. It returns `null` if the object is missing or is not a blob. Use `readFile()` when you need path resolution or a content type.
+
+<TypeScriptExample>
+
+```ts
+async function readBlob(artifacts: Artifacts, hash: string) {
+	using repo = await artifacts.get("starter-repo");
+	return await repo.readBlob(hash);
+}
+```
+
+</TypeScriptExample>
+
+### `readFile(args)`
+
+- `args.ref` <Type text="string" /> <MetaInfo text="required" /> — Branch, tag, or commit ID.
+- `args.path` <Type text="string" /> <MetaInfo text="required" /> — Non-empty repository-relative path.
+- Returns <Type text="Promise<Blob | null>" />
+- Throws `INVALID_INPUT` if `ref` or `path` is empty.
+
+`readFile()` returns a MIME-typed `Blob`. It returns `null` if the path does not exist or points to a directory.
+
+<TypeScriptExample>
+
+```ts
+async function readReadme(artifacts: Artifacts) {
+	using repo = await artifacts.get("starter-repo");
+	const file = await repo.readFile({
+		ref: "main",
+		path: "README.md",
+	});
+
+	if (file === null) {
+		return null;
+	}
+
+	return {
+		content: await file.text(),
+		contentType: file.type,
+	};
+}
+```
+
+</TypeScriptExample>
+
+Tested MIME types include:
+
+- Text: `text/plain;charset=utf-8`
+- Unknown binary data: `application/octet-stream`
 
 ## Worker example
 
@@ -346,13 +438,31 @@ export default {
 		}
 
 		if (request.method === "POST" && url.pathname === "/tokens") {
-			const repo = await env.ARTIFACTS.get("starter-repo");
+			using repo = await env.ARTIFACTS.get("starter-repo");
 			const token = await repo.createToken("read", 3600);
 			return Response.json(token);
 		}
 
+		if (request.method === "GET" && url.pathname === "/readme") {
+			using repo = await env.ARTIFACTS.get("starter-repo");
+			const file = await repo.readFile({
+				ref: "main",
+				path: "README.md",
+			});
+
+			if (file === null) {
+				return new Response("Not found", { status: 404 });
+			}
+
+			return new Response(file, {
+				headers: {
+					"content-type": file.type,
+				},
+			});
+		}
+
 		return Response.json(
-			{ message: "Use POST /repos or POST /tokens." },
+			{ message: "Use POST /repos, POST /tokens, or GET /readme." },
 			{ status: 404 },
 		);
 	},

@@ -8,13 +8,24 @@ sidebar:
   order: 4
 ---
 
-import { Render } from "~/components";
+import { DashButton } from "~/components";
 
-<Render
-	file="analytics/traceroutes"
-	product="networking-services"
-	params={{
-		productName: "Cloudflare WAN",
-		magicWord: "Cloudflare WAN",
-	}}
-/>
+You can run traceroutes to analyze the hop-by-hop Internet path and latency between Cloudflare's network and your network.
+
+To run a traceroute from a specific Cloudflare data center to your network:
+
+1. Go to the **Network health** page.
+
+<DashButton url="/?to=/:account/networking-insights/health" />
+
+2. Select **Connector health**.
+3. Select the tunnel for the traceroute.
+4. Select the three dots > **Traceroute details**.
+
+You can access detailed data from the traceroute, including:
+
+- Time to live (TTL) and host
+- Autonomous system (AS) number
+- [Packets](https://www.cloudflare.com/learning/network-layer/what-is-a-packet/) sent in the traceroute
+- Average, minimum, and maximum latency
+- Standard deviation of latency

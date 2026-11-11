@@ -1,11 +1,11 @@
 import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
-import { skillsLoader } from "astro-skills";
 import {
 	docsCollection,
 	partialsCollection,
 } from "@cloudflare/nimbus-docs/content";
+import { duplicateUpdateAnchors } from "~/util/changelog-updates";
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
 import { fieldsSchema } from "~/schemas/fields";
@@ -187,6 +187,26 @@ export const collections = {
 			products: z.array(reference("directory")).default([]),
 			// Hidden entries are excluded from /changelog/ and the RSS feeds.
 			hidden: z.boolean().default(false),
+			// Material changes made after publishing (for example, rules added to
+			// a WAF release). Each entry is listed on the post and emitted as its
+			// own RSS item with a distinct GUID, so feed subscribers are notified.
+			// The GUID comes from the date, so dates must differ to the minute.
+			updates: z
+				.array(
+					z.object({
+						date: z.coerce.date(),
+						summary: z.string().min(1),
+					}),
+				)
+				.superRefine((updates, ctx) => {
+					for (const anchor of duplicateUpdateAnchors(updates)) {
+						ctx.addIssue({
+							code: "custom",
+							message: `More than one update has the same date and time (${anchor}). Give each update a distinct time, for example \`2026-10-21T12:34:00Z\`, so each one reaches RSS subscribers.`,
+						});
+					}
+				})
+				.default([]),
 		}),
 	}),
 	// CF product directory — product metadata + group membership. Id is the
@@ -257,10 +277,6 @@ export const collections = {
 	// middlecache at build. Read by ProductAvailabilityText /
 	// GranularControlApplicationsList.
 	"product-availability": defineCollection(productAvailabilityCollectionConfig),
-	// Agent Skills Discovery — shared root `./skills` dir, served via astro-skills.
-	skills: defineCollection({
-		loader: skillsLoader({ base: "./skills" }),
-	}),
 	"granular-control-applications": defineCollection(
 		granularControlApplicationsCollectionConfig,
 	),
@@ -269,8 +285,6 @@ export const collections = {
 	"mcp-servers": defineCollection(mcpServersCollectionConfig),
 	// Agent Skills manifest (name + description only), fetched from
 	// middlecache at build. Read by SkillsList on the agent-setup pages.
-	// Distinct from the `skills` collection above, which loads the full
-	// SKILL.md bundles for the /.well-known/skills/ discovery routes.
 	"skills-manifest": defineCollection(skillsManifestCollectionConfig),
 	// CF notification catalog (single index.yaml). Read by AvailableNotifications.
 	notifications: defineCollection({
@@ -417,6 +431,7 @@ export const collections = {
 			// Capabilities
 			context_length: z.number().nullable(),
 			max_output_tokens: z.number().nullable(),
+			pricing: z.record(z.string(), z.unknown()).default({}),
 			supports_async: z.boolean(),
 
 			// Zero Data Retention (optional — older API rows omit it).

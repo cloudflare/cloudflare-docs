@@ -4,18 +4,126 @@ title: FAQ
 description: Frequently asked questions about RealtimeKit meetings, recordings, and SDK usage.
 slug: realtime/realtimekit/faq
 sidebar:
-  order: 14
+  order: 17
 ---
 
-import { Details } from "~/components";
+import { Details, Steps } from "~/components";
 
-<Details header="How can I generate the Cloudflare API Token?">
+### API token
+
+<Details header="How can I generate a Cloudflare API token?">
 
 To use RealtimeKit APIs, you must have a [Cloudflare account](https://dash.cloudflare.com).
 
-Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a new token via the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens).
-When configuring permissions, ensure that **Realtime** / **Realtime Admin** permissions are selected.
-Configure any additional [access policies and restrictions](/fundamentals/api/reference/permissions/) as needed for your use case.
+Follow the [Create API token guide](/fundamentals/api/get-started/create-token/) to create a token from the [Cloudflare dashboard](https://dash.cloudflare.com/profile/api-tokens). When configuring permissions, select **Realtime** > **Realtime Admin**. Configure additional [access policies and restrictions](/fundamentals/api/reference/permissions/) for your use case.
+
+Cloudflare API tokens authenticate requests to Cloudflare APIs. Use these tokens only in your backend. Never expose an API token to your frontend or share it with an end user.
+
+</Details>
+
+### APIs
+
+<Details header="Why does the peer report endpoint return a 404 error for every participant ID?">
+
+The peer report endpoint requires a `peer_id`, not a `participant_id`. RealtimeKit creates a peer when a participant joins a meeting. Each time the participant rejoins or reloads the page, RealtimeKit creates a new peer with a new unique peer ID.
+
+To retrieve the peer report data:
+
+<Steps>
+1. Call the [Get session participant details](/api/resources/realtime_kit/subresources/sessions/methods/get_session_participant_details/) endpoint with `include_peer_events=true`:
+
+   ```txt
+   /accounts/{account_id}/realtime/kit/{app_id}/sessions/{session_id}/participants/{participant_id}?include_peer_events=true
+   ```
+
+   The `peer_events` field in the response contains every peer ID associated with the participant.
+
+2. Call the [Get participant data from peer ID](/api/resources/realtime_kit/subresources/sessions/methods/get_participant_data_from_peer_id/) endpoint with a `peer_id` from `peer_events`:
+
+   ```txt
+   /accounts/{account_id}/realtime/kit/{app_id}/sessions/peer-report/{peer_id}
+   ```
+
+   This endpoint returns call statistics for that peer.
+</Steps>
+
+Passing a `participant_id` to the peer report endpoint returns a `404` response with `No peer event exists for id <given-id>`.
+
+</Details>
+
+### Auth tokens
+
+<Details header="How do I generate an auth token for a participant?">
+
+Your backend generates an auth token by adding the user as a participant to a meeting with the [Add Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) API endpoint. The API response includes a `token` field for that participant.
+
+You can send this token to your frontend for the intended participant. The token is tied to that participant and meeting. It does not grant access to other meetings.
+
+If you need a new token after the previous token expires, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint. For more information, refer to [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
+
+</Details>
+
+<Details header="How long is an auth token valid?">
+
+By default, an auth token is a JSON Web Token (JWT) that is valid for 100 days from when it is issued. To set a shorter validity window, refer to [Token validity and refresh](/realtime/realtimekit/concepts/participant/#token-validity-and-refresh). The token contains `meetingId` and `participantId` fields that tie it to a specific participant in a specific meeting. The token does not grant access to other meetings. If you need a new token after the previous token expires, use the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint. For more information, refer to [Participant tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
+
+</Details>
+
+<Details header="Can I refresh an auth token before it expires?">
+
+Yes. You can call the [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint before the current token expires. Refreshing an auth token generates a new token without invalidating an existing token. Each token remains valid and expires independently at its own expiration time.
+
+</Details>
+
+<Details header="Can the auth token lifespan be configured?">
+
+Yes. When you call the [Add Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) or [Refresh Participant Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/) endpoint, you can pass `not_before` and `expires_on` timestamps to set when the token becomes valid and when it expires. The validity window cannot be longer than 100 days. For more information, refer to [Token validity and refresh](/realtime/realtimekit/concepts/participant/#token-validity-and-refresh).
+
+</Details>
+
+<Details header="Does generating a new auth token invalidate the previous token?">
+
+No. Generating a new token, including through the refresh flow, does not invalidate an existing token. Each token remains valid and expires independently at its own expiration time. To invalidate a specific token, [revoke it](/realtime/realtimekit/concepts/participant/#revoke-tokens).
+
+</Details>
+
+<Details header="Does deleting a participant revoke all previously issued tokens?">
+
+Yes. The [Delete Participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/) endpoint immediately revokes all tokens issued to that participant for the meeting. It also removes the participant from the active session of the meeting, if one exists.
+
+</Details>
+
+<Details header="What happens if a participant uses an expired or invalidated auth token?">
+
+The participant cannot join the meeting. The RealtimeKit UI and Core SDK report that the token is invalid.
+
+Because RealtimeKit rejects the participant before they enter the meeting stage, they are not billed.
+
+</Details>
+
+<Details header="What happens to a participant already in a meeting when their auth token expires?">
+
+The participant stays connected. RealtimeKit does not disconnect a participant when their token's `expires_on` time passes. The participant remains in the meeting until they leave or are removed.
+
+To remove a participant from an active session, [revoke their token](/realtime/realtimekit/concepts/participant/#revoke-tokens) or [delete the participant](/api/resources/realtime_kit/subresources/meetings/methods/delete_meeting_participant/).
+
+</Details>
+
+<Details header="Does the SDK check the auth token again when it reconnects?">
+
+Yes. Any socket reconnect, such as after a network drop, reuses the same token. If the token has expired, RealtimeKit rejects the connection with a `401` error.
+
+</Details>
+
+<Details header="Can a participant with a valid auth token join an inactive meeting?">
+
+No. A participant cannot join a meeting with an `INACTIVE` status, even if their auth token is valid and has not expired.
+
+</Details>
+
+<Details header="Does the SDK cache participant auth tokens?">
+
+No. RealtimeKit SDKs do not cache participant auth tokens or store them in browser or device storage.
 
 </Details>
 
@@ -32,14 +140,13 @@ A common approach is:
 - If the checks pass, your backend [adds the participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) to the meeting,
   returns the participant auth token to the frontend and the frontend passes that token to the RealtimeKit SDK so the user can join.
 
+To limit when a participant can join, set `not_before` and `expires_on` on their [auth token](/realtime/realtimekit/concepts/participant/#token-validity-and-refresh) to match the schedule.
+
 </Details>
 
 <Details header="How do I prevent participants from joining a meeting after a specific date or time?">
 
-You can disable the meeting at the required time by setting its status to `INACTIVE` using a `PATCH` request to the
-[Update Meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) endpoint.
-
-This prevents participants from joining the meeting and prevents any new Sessions from starting.
+At the required time, call the [Update Meeting](/api/resources/realtime_kit/subresources/meetings/methods/update_meeting_by_id/) endpoint to set the meeting status to `INACTIVE`. This removes all participants from the active session, if one exists, and prevents participants from joining the meeting or starting new sessions.
 
 ```bash
 curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{APP_ID}/meetings/{MEETING_ID} \
@@ -49,22 +156,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{AP
 --data '{ "status": "INACTIVE" }'
 ```
 
+To control access for individual participants, set `expires_on` on their auth tokens instead. For more information, refer to [Token validity and refresh](/realtime/realtimekit/concepts/participant/#token-validity-and-refresh).
+
 </Details>
 
 ### Participants
-
-<Details header="How do I generate an auth token for a participant?">
-	Your backend generates an authentication token by adding the user as a
-	participant to a meeting with the [Add
-	Participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/)
-	API endpoint. The API response includes a `token` field, which is the
-	authentication token for that participant in that meeting. If you need a new
-	token for an existing participant after the previous token has expired, use
-	the [Refresh Participant
-	Token](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/)
-	endpoint. For more details, see [Participant
-	tokens](/realtime/realtimekit/concepts/participant/#participant-tokens).
-</Details>
 
 <Details header="Can the same user join from multiple devices or browser tabs?">
 	Yes. A single participant can be represented by multiple peers if the user
@@ -104,7 +200,7 @@ curl https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/realtime/kit/{AP
 
 Presets are **re-usable** set of rules and configurations that are defined at the App level. You can use the same preset for multiple participants.
 
-Read more about presets [here](/realtime/realtimekit/concepts/preset/).
+For more information, refer to [Presets](/realtime/realtimekit/concepts/preset/).
 
 </Details>
 
@@ -118,7 +214,7 @@ Read more about presets [here](/realtime/realtimekit/concepts/preset/).
 
     Please Note: When you use our UI Kit, you also get the core SDK with it, which can be used to build additional features based on your needs.
 
-    For more information please refer to our [SDK Selection Guide](/realtime/realtimekit/sdk-selection/)
+    For more information, refer to the [SDK selection guide](/realtime/realtimekit/humans/sdk-selection/).
 
 </Details>
 
@@ -128,7 +224,7 @@ Read more about presets [here](/realtime/realtimekit/concepts/preset/).
 
 When initializing RealtimeKit, you can set the media configurations for camera quality.
 
-Refer to the media configurations [here](/realtime/realtimekit/core/#advanced-options) for more details.
+For the media configuration options, refer to [Advanced options](/realtime/realtimekit/humans/core/#advanced-options).
 
 Higher camera quality increases bandwidth usage and may impact meeting performance on lower-end devices if the end user's device is not powerful enough to handle 1080p from multiple peers.
 
@@ -138,7 +234,7 @@ Higher camera quality increases bandwidth usage and may impact meeting performan
 
 When initializing RealtimeKit, you can set the media configurations for camera.
 
-Refer to the media configurations [here](/realtime/realtimekit/core/#advanced-options) for more details.
+For the media configuration options, refer to [Advanced options](/realtime/realtimekit/humans/core/#advanced-options).
 
 Higher video frame rates increase bandwidth usage and may impact the video feed quality of other peers in the meeting if there are bandwidth issues with the end user's device. Set the video frame rate to a lower value (for example, &lt;= 30) in group calls. The current default is 24/30 FPS based on the simulcast layer.
 
@@ -162,9 +258,17 @@ If auto-selection fails, end users can manually select the microphone from the S
 
 When initializing RealtimeKit, you can set the media configurations for screen share.
 
-Refer to the media configurations [here](/realtime/realtimekit/core/#advanced-options) for more details.
+For the media configuration options, refer to [Advanced options](/realtime/realtimekit/humans/core/#advanced-options).
 
 Higher screen share frame rates increase bandwidth usage and may impact the video feed quality of other peers in the meeting if there are bandwidth issues with the end user's device. Set the screen share frame rate to a lower value (for example, &lt;= 30) in group calls. In most use cases, 5 FPS (default) is sufficient for screen share.
+
+</Details>
+
+<Details header="What do I need to do to enable screen sharing with the iOS SDK?">
+
+The iOS platform requires the use of a [Broadcast Upload Extension](https://developer.apple.com/documentation/replaykit/rpbroadcastsamplehandler) that you will need to include in your apps.
+
+You can find more detailed steps for it on its [dedicated page](/realtime/realtimekit/humans/core/ios-screen-sharing/).
 
 </Details>
 
@@ -176,11 +280,27 @@ There could be multiple reasons for this.
 
 First, try a sample meeting on the [demo app](https://examples.realtime.cloudflare.com/). If you cannot send a message in the demo app, contact support. If you can send a message in the demo app, the issue is on the integration side.
 
-To troubleshoot integration issues, first check if the user has joined the meeting successfully. If the user has [joined](/realtime/realtimekit/core/meeting-object-explained/) the meeting successfully, check if the user's [preset](/realtime/realtimekit/concepts/preset/) has permissions to send messages. If you are using a custom UI, check if the core [Chat APIs](/realtime/realtimekit/core/chat/) are working to eliminate the Core SDK from the usual suspects.
+To troubleshoot integration issues, first check if the user has joined the meeting successfully. If the user has [joined](/realtime/realtimekit/humans/core/meeting-object-explained/) the meeting successfully, check if the user's [preset](/realtime/realtimekit/concepts/preset/) has permissions to send messages. If you are using a custom UI, check if the core [Chat APIs](/realtime/realtimekit/humans/core/chat/) are working to eliminate the Core SDK from the usual suspects.
 
 If this does not solve the issue, check if your framework is blocking the UI. Frameworks like Material UI can block input focus using focus traps in Drawer component. There is usually a prop to disable the focus trap. Material UI has a `disableEnforceFocus` prop for this purpose.
 
 If you are still unable to send a message, please contact support.
+
+</Details>
+
+### Notifications
+
+<Details header="Why are SDK notifications not visible when my meeting tab is in the background or minimized? How can I see them without returning to the tab?">
+
+Browsers do not show in-page content outside a backgrounded tab or minimized window. RealtimeKit UI Kit notifications are in-page elements, so they follow this browser behavior. Picture in Picture is a separate browser feature that can show participant video in a floating window, but it does not show notifications.<br/>
+
+A host may need to know when someone enters the waiting room, a participant joins, or recording starts while they are viewing another tab. To display system notifications outside the meeting tab, choose an approach:
+
+- **Notifications API in the page:** Use the browser [Notification() constructor](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) after requesting [notification permission](https://developer.mozilla.org/en-US/docs/Web/API/Notification/requestPermission_static). This can notify users while the page is open. [Browser support](https://caniuse.com/mdn-api_notification_notification) varies, and the constructor does not work in most mobile browsers.
+- **Service worker notifications:** Use a service worker with [showNotification()](https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorkerRegistration/showNotification). This works in more browsers, including many mobile browsers. The meeting page must pass SDK events to the worker. A service worker alone cannot continue receiving SDK events after the tab closes.
+- **Web Push:** Use a service worker, the [Push API](https://developer.mozilla.org/en-US/docs/Web/API/Push_API), and a push subscription. Keep the [VAPID private key on your server](https://developer.mozilla.org/en-US/docs/Web/API/PushManager/subscribe). Your backend can send push messages even when the meeting tab is closed.
+
+Choose notification triggers based on where the event is available. While the meeting page is open, the SDK exposes [participant join, leave, audio, and video events](/realtime/realtimekit/humans/core/remote-participants/events/), [local audio and video events](/realtime/realtimekit/humans/core/local-participant/#events), and [chat updates](/realtime/realtimekit/humans/core/chat/#receiving-chat-messages). For backend-triggered notifications, subscribe to [RealtimeKit webhooks](/realtime/realtimekit/webhooks/#supported-events), then send relevant events to your clients. Webhooks cover a smaller set of events, including participant joins and recording status changes. They do not provide individual chat messages or waiting-room arrivals.
 
 </Details>
 
@@ -196,18 +316,90 @@ When you pass a watermark image URL via the [Start Recording](/api/resources/rea
 
 </Details>
 
+### Network access
+
+<Details header="Which domains and ports must I allowlist when my network restricts outbound traffic?">
+
+If your network restricts outbound traffic, refer to [Network allowlist](/realtime/realtimekit/platform/network-allowlist/) for the domains and ports required for your RealtimeKit integration.
+
+</Details>
+
+<Details header="How can I check if my network and devices are ready for a RealtimeKit meeting?">
+
+Go to [test.realtime.cloudflare.com](https://test.realtime.cloudflare.com/) and run the pre-call test. The test checks your camera, microphone, and network, and verifies connectivity to Cloudflare Realtime endpoints, so you can confirm that the required services are not blocked by your network or firewall before joining a meeting. For required domains and ports, refer to [Network allowlist](/realtime/realtimekit/platform/network-allowlist/).
+
+</Details>
+
 ### Demo App
 
 <Details header="Can I use the Cloudflare hosted demo app or examples in my website as an iframe?">
 
 We strongly recommend against embedding the Cloudflare hosted demo app or examples as an iframe in your website, even if you pass authentication tokens via URL parameters.
 
-Instead, set up the default meeting UI in your own website by following the [UI Kit setup guide](/realtime/realtimekit/ui-kit/) or deploy the [RealtimeKit web examples](https://github.com/cloudflare/realtimekit-web-examples/) under your own domain. The effort required for either approach is minimal and provides significant benefits:
+Instead, set up the default meeting UI in your own website by following the [UI Kit setup guide](/realtime/realtimekit/humans/ui-kit/) or deploy the [RealtimeKit web examples](https://github.com/cloudflare/realtimekit-web-examples/) under your own domain. The effort required for either approach is minimal and provides significant benefits:
 
 - **Control**: You maintain full control over the user experience, structure, and interface.
 - **Stability**: Your implementation remains consistent and will not change overnight, protecting your product from sudden disruptions.
 - **Reliability**: You control when and how to upgrade, ensuring a stable experience for your users.
 
 The demo app and example applications may be updated at any time without prior notice.
+
+</Details>
+
+### Billing
+
+<Details header="How are Audio/Video Participant and Audio-Only Participant minutes charged?">
+
+RealtimeKit bills active participant minutes. Billing starts when a participant joins a meeting session and stops when they leave it.
+
+<br/>
+**Key billing rules:**
+
+- **No-shows are not billed:** Adding someone with the [Add Participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) does not incur charges. RealtimeKit does not charge for that participant if they never join the meeting.
+- **Usage is billed by duration:** RealtimeKit charges for the exact time, including seconds, that a participant spends in an active session. The participant is still billed when they do not produce or consume audio or video.
+- **Multiple tabs are billed separately:** If someone joins from multiple browser tabs with the same auth token, RealtimeKit bills each tab separately. The RealtimeKit dashboard displays the aggregated duration for that participant.
+
+For more information about the difference between meetings and sessions, refer to [RealtimeKit concepts](/realtime/realtimekit/concepts/).
+
+<br/>
+For example:
+
+- If two participants join at 7:00 p.m. and leave at 7:30 p.m., each participant uses 30 minutes. RealtimeKit charges 60 participant minutes.
+- If one participant joins at 4:00 p.m., another joins at 4:03 p.m., and both leave at 5:00 p.m., they use 60 and 57 minutes. RealtimeKit charges 117 participant minutes.
+- If one participant joins at 3:00 p.m. and leaves at 3:27 p.m., while another joins at 3:05 p.m. and leaves at 3:30 p.m., they use 27 and 25 minutes. RealtimeKit charges 52 participant minutes.
+- If five participants are expected but only two join, RealtimeKit charges participant minutes only for the two participants who joined.
+- If two participants are expected to join a pre-created meeting at 2:00 p.m. but neither joins, RealtimeKit does not charge any participant minutes.
+<br/>
+Creating meetings and participant tokens does not incur charges.
+
+</Details>
+
+<Details header="How is composite recording export charged?">
+
+For composite recordings, a recorder joins the meeting as a hidden virtual participant and records its view. For more information, refer to the [recording guides](/realtime/realtimekit/recording-guide/).
+
+After the final participant leaves, the recorder remains active for the meeting's <a href="/api/resources/realtime_kit/subresources/meetings/methods/create/#(resource)%20realtime_kit.meetings%20%3E%20(method)%20create%20%3E%20(params)%200%20%3E%20(param)%20session_keep_alive_time_in_secs%20%3E%20(schema)"><code>session_keep_alive_time_in_secs</code></a>. The default is 60 seconds, and the maximum is 600 seconds.
+
+RealtimeKit does not charge participant minutes for the recorder. Instead, it charges export minutes for the recorded duration. Refer to [RealtimeKit pricing](/realtime/realtimekit/platform/pricing/) for current rates.
+
+<br/>
+When <a href="/api/resources/realtime_kit/subresources/meetings/methods/create/#(resource)%20realtime_kit.meetings%20%3E%20(method)%20create%20%3E%20(params)%200%20%3E%20(param)%20record_on_start%20%3E%20(schema)"><code>record_on_start</code></a> is `true`:
+
+- If two participants join at 7:00 p.m. and leave at 7:30 p.m., recording starts at 7:00 p.m. After both participants leave, the recorder remains active for the default 60-second session keep-alive period. Recording stops at 7:31 p.m., so RealtimeKit charges 31 export minutes.
+- If five participants are expected but only two join at 8:00 p.m. and leave at 8:20 p.m., recording runs until 8:21 p.m. with the default session keep-alive period. RealtimeKit charges 21 export minutes. The charge would remain 21 export minutes if all five participants joined and left at the same times because participant count does not affect recording export minutes.
+- If nobody joins a pre-created meeting, recording does not start. Creating a meeting with `record_on_start` set to `true` does not incur charges by itself.
+
+<br/>
+When someone starts recording during an active session:
+
+- If recording starts at 4:20 p.m. and the final participant leaves at 5:00 p.m., it stops at 5:01 p.m. by default. RealtimeKit charges 41 export minutes.
+- If recording starts at 4:20 p.m. and someone calls <a href="/realtime/realtimekit/humans/core/end-a-session/"><code>kickAll()</code></a> at 5:00 p.m., recording stops immediately. RealtimeKit charges 40 export minutes.
+- If a meeting and recording start at 4:20 p.m., the meeting uses a two-minute keep-alive period, and all participants close their tabs at 5:00 p.m., recording stops at 5:02 p.m. RealtimeKit charges 42 export minutes.
+
+<br/>
+This keep-alive period helps workflows that must preserve a single recording across brief disconnections. For example, an education technology (EdTech) application might record a timed take-home assignment in a one-participant meeting. If the participant loses their network connection and rejoins before the keep-alive period expires, the recorder continues the same recording. The recording contains an empty gap during the disconnection, but the application does not need to combine two separate recordings.
+
+<br/>
+The export charges include the keep-alive period. To avoid this extra time, explicitly end the session by calling <a href="/realtime/realtimekit/humans/core/end-a-session/"><code>kickAll()</code></a> or the [Kick all participants API](/api/resources/realtime_kit/subresources/active-session/methods/kick_all_participants/).
 
 </Details>

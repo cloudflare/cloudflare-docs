@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 Cloudflare runs regular security scans on your account. These scans check your Cloudflare account settings, DNS record configurations, and product configurations — such as SSL/TLS, WAF, and Access — across all domains in your account.
 
@@ -32,4 +32,10 @@ For a full list of insight types and their descriptions, refer to [Security Insi
 
 <Render file="scan-frequency" product="security-center" />
 
-Eligible accounts (Business, Enterprise, or Teams plans) can also manually start a scan. Refer to [Get started](/security-center/get-started/) for instructions.
+:::caution
+Automated scans for Free accounts may be paused due to account inactivity. To ensure scans continue to run, regularly review Security Insights in the Cloudflare dashboard or through the [API](/api/resources/security_center/).
+:::
+
+All accounts can also manually start a scan from the **Security Insights** page in the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/security-center" />

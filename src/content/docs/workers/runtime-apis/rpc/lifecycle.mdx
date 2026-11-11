@@ -93,7 +93,7 @@ For example, the Worker below does not make use of the `using` declaration, but 
 export default {
 	async fetch(request, env, ctx) {
 		let authResult = await env.AUTH_SERVICE.checkCookie(
-			req.headers.get("Cookie"),
+			request.headers.get("Cookie"),
 		);
 		if (!authResult.authorized) {
 			return new Response("Not authorized", { status: 403 });

@@ -1,0 +1,18 @@
+---
+{}
+---
+
+import { Steps, DashButton } from "~/components";
+import { Image } from "astro:assets";
+import owaspCoreRulesetImg from "~/assets/images/waf/managed-rulesets/rules-config-owasp-core-ruleset.png";
+
+<Steps>
+	1. In the Cloudflare dashboard, go to the **Security rules** page.
+
+		<DashButton url="/?to=/:account/:zone/security/security-rules" />
+	2. (Optional) Filter by **Managed rules**.
+	3. Search for **Cloudflare OWASP Core Ruleset**. Look for a rule with an _Execute_ action.
+	4. Select the rule name (containing the name of the managed ruleset), and then select **Browse rules**.
+
+		<Image src={owaspCoreRulesetImg} alt="The Cloudflare dashboard displaying the list of rules in the Cloudflare OWASP Core Ruleset." />
+</Steps>

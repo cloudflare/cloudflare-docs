@@ -1,0 +1,28 @@
+---
+title: Link cards
+styleGuide:
+  component: LinkCard
+description: Display navigation cards with titles and descriptions.
+products:
+  - style-guide
+---
+
+```mdx wrap
+import { CardGrid, LinkCard } from "~/components"
+
+<LinkCard
+    title="foo"
+    description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum nulla et accumsan sodales."
+    href="/style-guide/build-the-page/components/link-cards/"
+/>
+
+<CardGrid>
+{[...Array(4).keys()].map(() => (
+    <LinkCard
+        title="foo"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam bibendum nulla et accumsan sodales."
+        href="/style-guide/build-the-page/components/link-cards/"
+    />
+))}
+</CardGrid>
+```

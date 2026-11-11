@@ -1,0 +1,62 @@
+---
+title: Run the Codex agent loop on Cloudflare Workers
+description: Explore an experimental Codex harness example with persistent conversations, files, and recovery in a Durable Object.
+products:
+  - workers
+date: 2026-11-09
+---
+
+import { TypeScriptExample } from "~/components";
+
+Run the [Codex agent loop](/agents/harnesses/codex/) in a Cloudflare Durable Object with this [experimental Agents SDK example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/codex). Conversations, files, and completed model and tool results persist across restarts, allowing the agent to recover after interruptions.
+
+The example adapts [Codex’s Rust turn-processing code](https://github.com/cloudflare/agents/blob/main/examples/next/harnesses/codex/wasm-kernel/src/lib.rs) to WebAssembly and uses Agents SDK capabilities for storage and recovery.
+
+The harness combines Agents SDK capabilities for durable execution:
+
+- `Tasks` journals model calls and tool execution. Completed steps reuse their recorded results after a restart. Interrupted steps can run again.
+- `Sessions` stores conversation history and compacts the model context.
+- `Streams` stores ordered events for replay after reconnecting.
+- `Workspace` provides tools to read and write persistent files.
+
+For example, use OpenAI's GPT-6.1 Sol through AI Gateway. Configure the model with [`createAI`](/agents/models/ai-sdk/) and install the capabilities on a Durable Object:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/ai-sdk";
+import { Sessions } from "agents/sessions";
+import { Streams } from "agents/streams";
+import { Tasks } from "agents/tasks";
+import { CodexHarness } from "./codex-harness";
+
+export class Coder extends DurableObject<Env> {
+	tasks = new Tasks();
+	streams = new Streams();
+	sessions = new Sessions();
+	workspace = new Workspace({ storage: this.ctx.storage });
+
+	codex = new CodexHarness({
+		tasks: this.tasks,
+		streams: this.streams,
+		sessions: this.sessions,
+		workspace: this.workspace,
+		model: createAI({ binding: this.env.AI, id: "default" })("openai/gpt-6.1-sol"),
+	});
+
+	lifecycle = Lifecycle.install(this)
+		.use(this.tasks)
+		.use(this.streams)
+		.use(this.sessions)
+		.use(this.codex);
+}
+```
+
+</TypeScriptExample>
+
+To use this model, configure the `default` gateway with [Unified Billing](/ai-gateway/features/unified-billing/) or a [stored OpenAI API key](/ai-gateway/configuration/bring-your-own-keys/).
+
+For setup, models, tools, and recovery behavior, refer to the [Codex harness guide](/agents/harnesses/codex/).

@@ -25,7 +25,9 @@ const { agent } = Astro.props;
 		<CapabilityBadge capabilities={agent.capabilities} />
 
 		<ul class="agent-setup-card-features">
-			{agent.features.slice(0, 4).map((feature) => <li>{feature}</li>)}
+			{agent.features.slice(0, 4).map((feature) => (
+				<li>{feature}</li>
+			))}
 		</ul>
 
 		<span class="agent-setup-card-cta"> View guide &rarr; </span>

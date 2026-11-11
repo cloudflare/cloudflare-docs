@@ -17,7 +17,9 @@ When using Cloudflare DNS, you have a few options for your DNS zone setup:
 * [Zone transfers](/dns/zone-setups/zone-transfers/): Use Cloudflare and another DNS provider together across your entire zone to increase availability and fault tolerance. DNS records will be transferred between providers using [AXFR](https://datatracker.ietf.org/doc/html/rfc5936) or [IXFR](https://datatracker.ietf.org/doc/html/rfc1995).
 * [Subdomain setup](/dns/zone-setups/subdomain-setup/): With your apex domain (`example.com`) on a CNAME setup (partial) or primary setup (full), independently manage the settings for a delegated subdomain (`blog.example.com`) within a separate zone and, potentially, a separate account.
 
-   <Render file="subdomain-setup-matrix" product="dns" params={{ linkForMore: true }} />
+   <Render file="subdomain-setup-matrix" product="dns" />
+
+   For details, refer to [setup](/dns/zone-setups/subdomain-setup/setup/).
 
 ---
 

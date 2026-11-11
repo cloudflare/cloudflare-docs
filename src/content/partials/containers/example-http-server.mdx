@@ -1,0 +1,33 @@
+---
+---
+
+## Define the container
+
+Save these files in the project root. The server listens on `0.0.0.0:8080` and exposes a readiness endpoint at `/health`.
+
+```js title="server.mjs"
+import { createServer } from "node:http";
+
+createServer((request, response) => {
+	if (request.url === "/health") {
+		response.writeHead(200).end();
+		return;
+	}
+	response.setHeader("Content-Type", "application/json");
+	response.end(
+		JSON.stringify({
+			message: "Hello from a Container",
+			environment: process.env.ENV_VAR,
+			kvValue: process.env.KV_VALUE,
+		}),
+	);
+}).listen(8080, "0.0.0.0");
+```
+
+```dockerfile title="Dockerfile"
+FROM node:24-bookworm-slim
+WORKDIR /app
+COPY server.mjs .
+EXPOSE 8080
+CMD ["node", "server.mjs"]
+```

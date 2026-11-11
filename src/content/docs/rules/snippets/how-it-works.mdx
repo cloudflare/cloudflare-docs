@@ -30,3 +30,13 @@ The snippets are executed sequentially. Each snippet receives the modified reque
 ## 4. Continue with the request execution workflow
 
 After executing the final snippet IDs, the resulting modified request is passed back to the request execution workflow. Refer to [Execution order](/rules/snippets/#execution-order) for more information on the Rules features evaluated before and after Cloudflare Snippets.
+
+## Subrequests made by a snippet
+
+When a snippet calls `fetch()` to a proxied hostname in the same zone, the request that the snippet makes is a subrequest. The incoming request that triggered the snippet is evaluated as normal, including by the security features configured for the hostname the visitor requested.
+
+[WAF custom rules](/waf/custom-rules/) and [WAF managed rules](/waf/managed-rules/) on the target hostname are not evaluated for a same-zone subrequest made by a snippet. This applies to both `fetch(url)` and `fetch(request)`.
+
+:::caution
+Do not rely on custom rules on the target hostname to restrict access to subrequests made by a snippet. To protect the target, apply protections to the incoming request that triggers the snippet, or validate the request at the target itself (for example, in your origin server or in a Worker).
+:::

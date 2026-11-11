@@ -1,0 +1,288 @@
+---
+title: Web search
+description: Give your agent a web search tool backed by the Cloudflare Web Search API. Use Pi Durable, AI SDK, TanStack AI, or your own harness.
+pcx_content_type: integration-guide
+sidebar:
+  order: 3
+products:
+  - agents
+---
+
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+Give your agent a `web_search` tool to find pages on the Internet. The tool calls the [Cloudflare Web Search API](/web-search/) through [AI Gateway](/ai-gateway/), via the Workers AI binding.
+
+The `web_search` tool works with any harness. The Agents SDK provides built-in adapters for [Pi Durable](/agents/harnesses/pi/), the AI SDK, or TanStack AI. If you're using a different harness, or need to use the `web_search` tool without calling a model, use the search sources and renderer in [`agents/websearch`](https://github.com/cloudflare/agents/tree/main/packages/agents/src/web/search).
+
+## When to use it
+
+| Tool                                    | Use it to                                                                                                                                         |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `web_search`                            | Find pages on a topic when the agent does not have a URL, such as current events, recent releases, or documentation the model was not trained on. |
+| [`web_fetch`](/agents/tools/web-fetch/) | Read a page or document at a known URL, including the URLs that `web_search` returns.                                                             |
+| [Browser](/agents/tools/browser/)       | Use pages that need JavaScript, a login, or interaction.                                                                                          |
+
+The `web_search` tool description tells the model to read result URLs with `web_fetch` when that tool is available.
+
+## Why use the tool
+
+You could call the Web Search API from a tool of your own. The `web_search` tool adds what a model needs around each search:
+
+- **You control the cost.** The model chooses only the query and a result count, up to the limit you set. Your application chooses the provider, gateway, and billing. Multiple search providers are supported, including Ceramic.ai, Exa, and Linkup. Refer to [Providers](/web-search/providers/) for the full list.
+- **The model gets a short list and your application gets everything.** The model reads titles, URLs, and trimmed descriptions, so a search uses a few kilobytes of context. Your application receives the full API response.
+- **Failures tell the model what to do next.** The model is guided to fix its query, retry, or continue without search. Your application receives a structured error.
+- **One tool for every harness.** The same options work with Pi Durable, AI SDK, and TanStack AI, and the same search sources work without a model.
+
+## Add the tool to your harness
+
+These examples require Agents SDK 0.27.0 or later and an existing harness. For a new Pi Durable agent, start with the [Pi harness guide](/agents/harnesses/pi/).
+
+<Steps>
+
+1. Update the Agents SDK and Wrangler in your Worker project:
+
+   <PackageManagers pkg="agents@latest wrangler@latest" />
+
+   The Workers AI binding gained web search in workerd 1.20260924.1, which ships with Wrangler 4.141.0 and `@cloudflare/vite-plugin` 1.60.2. On an older runtime, searches fail with the `web_search_unsupported_runtime` error code.
+
+2. In your Wrangler configuration, add a Workers AI binding:
+
+   <WranglerConfig>
+
+   ```toml
+   [ai]
+   binding = "AI"
+   remote = true
+   ```
+
+   </WranglerConfig>
+
+3. Make sure the account the Worker runs in can pay for searches, with AI Gateway credits or a [provider key stored on the gateway](/web-search/how-to-use/#bring-your-own-key-byok). Searches go through the `default` gateway unless you set `gateway`. Searches during local development also run against, and bill, the account you are logged in to.
+
+4. Register the tool with your harness using one of the examples that follow.
+
+</Steps>
+
+### Pi Durable
+
+In your [Pi harness factory](/agents/harnesses/pi/extensions/#install-an-extension), install the tool on the registry before passing it to `Harness.open()`:
+
+<TypeScriptExample>
+
+```ts
+import { webSearchTool } from "agents/websearch/pi";
+
+// Inside the harness factory, before Harness.open():
+this.registry.install({
+	name: "web-tools",
+	tools: [webSearchTool({ binding: this.env.AI })],
+});
+```
+
+</TypeScriptExample>
+
+Ask your agent a question that needs current information. The model can call `web_search` with a `query` and an optional `limit`.
+
+The Pi tool is marked `replay: "safe"`. If an eviction interrupts a search, Pi reruns only that search when the session recovers, which is a second billed search. Finished calls already have their results in the transcript. The tool does not cache results, so when the model repeats a search, it makes and bills a new one. The tool also honors Pi's abort signal when you cancel a running call.
+
+### AI SDK
+
+Add the tool to the `tools` object in your existing `streamText()` or `generateText()` call:
+
+<TypeScriptExample>
+
+```ts
+import { streamText } from "ai";
+import { webSearchTool } from "agents/websearch/ai-sdk";
+
+const tools = {
+	web_search: webSearchTool({ binding: env.AI }),
+};
+
+const result = streamText({ model, messages, tools });
+```
+
+</TypeScriptExample>
+
+If you convert UI messages yourself, pass the same `tools` to `convertToModelMessages(messages, { tools })`. Otherwise, the model reads earlier searches as the full JSON response instead of the trimmed list.
+
+### TanStack AI
+
+Add the server tool to your existing `chat()` call:
+
+<TypeScriptExample>
+
+```ts
+import { chat } from "@tanstack/ai";
+import { webSearchTool } from "agents/websearch/tanstack-ai";
+
+const stream = chat({
+	adapter,
+	messages,
+	tools: [webSearchTool({ binding: env.AI })],
+});
+```
+
+</TypeScriptExample>
+
+The tool is named `web_search` unless you pass a `name` option.
+
+### Other harnesses
+
+Create a search source with `createAIWebSearch()` and call it inside your harness's tool handler. Use `renderWebSearchResults()` to give the model the same text as the supplied adapters:
+
+<TypeScriptExample>
+
+```ts
+import {
+	createAIWebSearch,
+	renderWebSearchResults,
+	type WebSearchToolInput,
+} from "agents/websearch";
+
+const MAX_RESULTS = 5;
+
+// Register this handler with your harness's tool interface.
+// Forward the harness's cancellation signal when it provides one.
+async function searchWeb(
+	input: WebSearchToolInput,
+	env: { AI: Ai },
+	signal?: AbortSignal,
+) {
+	const search = createAIWebSearch({ binding: env.AI });
+	const response = await search.search(
+		{
+			query: input.query,
+			limit: Math.min(input.limit ?? MAX_RESULTS, MAX_RESULTS),
+		},
+		{ signal },
+	);
+	return renderWebSearchResults(response);
+}
+```
+
+</TypeScriptExample>
+
+Define the tool's input schema with a required `query` of 1 to 1,024 characters and an optional positive integer `limit`. Map `WebSearchError` to your harness's error result. The `WEB_SEARCH_TOOL_NAME` and `WEB_SEARCH_TOOL_DESCRIPTION` exports give you the adapters' tool name and description.
+
+## Read search results
+
+The model receives a numbered list. Each result has a title, a URL, and a description trimmed at a word boundary:
+
+```txt
+3 results for "cloudflare web search api":
+
+1. Introducing the Web Search API
+https://blog.cloudflare.com/introducing-web-search-api/
+Today we are launching the Web Search API in open beta…
+
+2. …
+```
+
+Some providers return descriptions of several thousand characters per result. Trimming keeps a five-result search to a few kilobytes of the model's context. When a result includes a last modified date, the model sees that too.
+
+Your application receives the full API response as `WebSearchToolOutput`: `items` with complete descriptions and every documented field, `metadata` with the AI Gateway `requestId` and `latencyMs`, and the `provider` that ran the search. Results without a URL are dropped, and a missing title falls back to the URL. Pi stores the output in `details.output`. The AI SDK returns it from `execute`. TanStack AI returns the formatted text.
+
+The Web Search API does not paginate. The tool description tells the model to search again with a rephrased query when it needs more or different results.
+
+Search results are for finding pages. To let the model read the pages it finds, add the [`web_fetch` tool](/agents/tools/web-fetch/) next to `web_search`.
+
+## Control searches
+
+The model chooses `query` and `limit`. Your application chooses everything that affects cost and data handling when creating the tool:
+
+<TypeScriptExample>
+
+```ts
+import { webSearchTool } from "agents/websearch/pi";
+
+const search = webSearchTool({
+	binding: env.AI,
+	gateway: "research-agent",
+	provider: "exa",
+	limit: 8,
+	maxDescriptionChars: 300,
+	timeoutMs: 15_000,
+});
+```
+
+</TypeScriptExample>
+
+| Option                | Default          | Effect                                                                                                                                                                                                                                                                            |
+| --------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `gateway`             | `"default"`      | AI Gateway ID that routes and bills the search.                                                                                                                                                                                                                                   |
+| `provider`            | Platform default | Search provider that runs the search, such as `"exa"`. The model cannot choose or change it. Refer to [Providers](/web-search/providers/).                                                                                                                                        |
+| `byokAlias`           | None             | Alias of a provider key stored on the gateway. When omitted, AI Gateway uses the provider's key with the `default` alias if there is one, otherwise your AI Gateway credits. When set to an alias the gateway does not have, the search fails instead of falling back to credits. |
+| `limit`               | `5`              | Results per search when the model does not ask for a count, and the most it gets when it asks for more. Accepts integers from `1` to `10`.                                                                                                                                        |
+| `maxDescriptionChars` | `600`            | Maximum characters per result description in the model's view. `Infinity` passes descriptions through whole.                                                                                                                                                                      |
+| `timeoutMs`           | `30000`          | Deadline in milliseconds before the search fails with a retryable `web_search_timeout` error.                                                                                                                                                                                     |
+| `description`         | Built-in         | Replaces the tool description the model sees.                                                                                                                                                                                                                                     |
+
+An invalid `limit`, `maxDescriptionChars`, `timeoutMs`, or `byokAlias` throws a `RangeError` when you create the tool. A `limit` from the model above your `limit` is capped, not rejected.
+
+To add caching, logging, or a test fake, supply a `WebSearchSource` through the `source` option instead of `binding`. The source owns the gateway, provider, and billing, so those options are not accepted with it. When you wrap an existing source, spread it so its `provider` is kept:
+
+<TypeScriptExample>
+
+```ts
+import { createAIWebSearch } from "agents/websearch";
+import { webSearchTool } from "agents/websearch/ai-sdk";
+
+const source = createAIWebSearch({ binding: env.AI, provider: "linkup" });
+
+const tool = webSearchTool({
+	source: {
+		...source,
+		async search(request, options) {
+			console.log("web_search", request.query);
+			return source.search(request, options);
+		},
+	},
+});
+```
+
+</TypeScriptExample>
+
+## Search without a model
+
+`createAIWebSearch()` and `createHTTPWebSearch()` return the same sources the tool uses. Call `search()` from a scheduled job, a test, or code outside Workers. `createHTTPWebSearch()` uses the REST API with an account ID and an API token, so it can also search through a gateway in another account:
+
+<TypeScriptExample>
+
+```ts
+import { createHTTPWebSearch } from "agents/websearch";
+
+const search = createHTTPWebSearch({
+	accountId: env.CF_ACCOUNT_ID,
+	apiToken: env.CF_API_TOKEN,
+	provider: "linkup",
+});
+
+const { items } = await search.search({
+	query: "cloudflare agents sdk",
+	limit: 3,
+});
+```
+
+</TypeScriptExample>
+
+Store the API token as a [secret](/workers/configuration/secrets/), not in your Wrangler configuration.
+
+## Handle errors
+
+A failed search becomes a `WebSearchError` with `status`, `code`, `retryable`, and `requestId`, which you can look up in the AI Gateway logs. Every error has a `code`: the API's own code when it sends one, such as `web_search_payment_required`, or one derived from the HTTP status, such as `web_search_rate_limited` or `web_search_unavailable`.
+
+The error `message` is written for you and can tell you to add credits or configure a provider key. The model gets different text that tells it what to do next: fix the query, retry once, or continue without search.
+
+Pi returns failures in `details` with `ok: false`. The AI SDK and TanStack AI adapters throw `WebSearchError`, with the model's text as its `message` and the original error as its `cause`. Every adapter entry point re-exports `WebSearchError`. Cancellation propagates as an abort rather than a failed search.
+
+## Related resources
+
+- [Web Search API](/web-search/) — providers, the Workers binding, the REST API, and limits.
+- [Web fetch](/agents/tools/web-fetch/) — let the model read the pages it finds.
+- [Browser](/agents/tools/browser/) — for pages that need JavaScript, a login, or interaction.

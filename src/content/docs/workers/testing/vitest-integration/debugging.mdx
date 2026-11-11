@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-This guide shows you how to debug your Workers tests with Vitest. This is available with `@cloudflare/vitest-pool-workers` v0.7.5 or later.
+This guide shows you how to debug your Workers tests with Vitest and `@cloudflare/vitest-plugin`.
 
 ## Open inspector with Vitest
 
@@ -30,7 +30,7 @@ vitest --inspect=3456 --no-file-parallelism
 Alternatively, you can define it in your Vitest configuration file:
 
 ```ts
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({

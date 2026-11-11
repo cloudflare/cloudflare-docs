@@ -1,0 +1,27 @@
+{
+    "id": "bf419b23-844f-4a2c-8111-89dbd63152eb",
+    "source": 1,
+    "name": "@cf/utter-project/eurollm-9b-it",
+    "description": "EuroLLM-9B is a 9B parameter model trained on 4 trillion tokens divided across the considered languages and several data sources: Web data, parallel data (en-xx and xx-en), and high-quality datasets. For access, please fill out this form: https://forms.gle/kgvmkr6ucHN3xNuH6",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2026-09-30 14:09:31.518",
+    "tags": [],
+    "properties": [
+        {
+            "property_id": "context_window",
+            "value": "32000"
+        },
+        {
+            "property_id": "function_calling",
+            "value": "true"
+        },
+        {
+            "property_id": "languages",
+            "value": "Bulgarian,Croatian,Czech,Danish,Dutch,English,Estonian,Finnish,French,German,Greek,Hungarian,Irish,Italian,Latvian,Lithuanian,Maltese,Polish,Portuguese,Romanian,Slovak,Slovenian,Spanish,Swedish,Arabic,Catalan,Chinese,Galician,Hindi,Japanese,Korean,Norwegian,Russian,Turkish,Ukrainian"
+        }
+    ]
+}

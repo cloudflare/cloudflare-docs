@@ -15,11 +15,23 @@ head:
 
 import { Details, Render } from "~/components";
 
+## Certificate stuck in pending validation
+
+If a custom hostname certificate is stuck in **pending validation** or has timed out, a [domain control validation (DCV)](/ssl/edge-certificates/changing-dcv-method/dcv-flow/) step did not complete successfully.
+
+Refer to [Troubleshooting certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/) for:
+
+- A breakdown of which errors require action from the **SaaS provider** versus **your customer**.
+- CA error messages with resolution steps.
+- How to recover from stale tokens or a **Timed Out Validation** status.
+
+---
+
 ## Rate limits
 
 By default, you may issue up to 15 certificates per minute. Only successful submissions (POSTs that return 200) are counted towards your limit. If you exceed your limit, you will be prevented from issuing new certificates for 30 seconds.
 
-If you require a higher rate limit, contact your Customer Success Manager.
+If you require a higher rate limit, contact your account team.
 
 ---
 
@@ -66,28 +78,9 @@ In some circumstances, custom hostnames can also enter a **Moved** state if your
 
 ---
 
-## CAA Errors
+## CAA errors
 
-The `caa_error` in the status of a custom hostname means that the CAA records configured on the domain prevented the Certificate Authority to issue the certificate.
-
-You can check which CAA records are configured on a domain using the `dig` command:
-`dig CAA example.com`
-
-You will need to ensure that the required CAA records for the selected Certificate Authority are configured.
-For example, here are the records required to issue [Let's Encrypt](https://letsencrypt.org/docs/caa/) and [Google Trust Services](https://pki.goog/faq/#caa) certificates:
-
-```txt
-example.com CAA 0 issue "pki.goog; cansignhttpexchanges=yes"
-example.com CAA 0 issuewild "pki.goog; cansignhttpexchanges=yes"
-
-example.com CAA 0 issue "letsencrypt.org"
-example.com CAA 0 issuewild "letsencrypt.org"
-
-example.com CAA 0 issue "ssl.com"
-example.com CAA 0 issuewild "ssl.com"
-```
-
-For more details, refer to [CAA records FAQ](/ssl/faq/#caa-records).
+If a custom hostname's `ssl.validation_errors` contains a CAA-related error, refer to [Troubleshooting certificate validation](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/validate-certificates/troubleshooting/#caa-records) for resolution steps, including the exact CAA records required per certificate authority.
 
 ***
 
@@ -105,7 +98,26 @@ As Let's Encrypt - one of the [certificate authorities (CAs)](/ssl/reference/cer
 
 Consider the following solutions:
 
-- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to an empty string (`""`): this sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
+- Use the [Custom Hostname Details](/api/resources/custom_hostnames/methods/get/) endpoint to retrieve the current `ssl.method`, `ssl.type`, and complete `ssl.settings` object. Then use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set `certificate_authority` to an empty string (`""`). Reuse the current method, type, and settings. This sets the custom hostname certificate to "default CA", leaving the choice up to Cloudflare. Cloudflare will always attempt to issue the certificate from a more compatible CA, such as [Google Trust Services](/ssl/reference/certificate-authorities/#google-trust-services), and will only fall back to using Let’s Encrypt if there is a [CAA record](/ssl/edge-certificates/caa-records/) in place that blocks Google from issuing a certificate.
+
+  For example, the following response values must remain unchanged when you update `certificate_authority`:
+
+  ```json
+  {
+    "method": "txt",
+    "type": "dv",
+    "settings": {
+      "ciphers": [
+        "ECDHE-ECDSA-AES128-GCM-SHA256",
+        "ECDHE-RSA-AES128-GCM-SHA256"
+      ],
+      "early_hints": "on",
+      "http2": "on",
+      "min_tls_version": "1.2",
+      "tls_1_3": "on"
+    }
+  }
+  ```
 
   <Details header="Example API call">
 
@@ -119,14 +131,24 @@ Consider the following solutions:
     "ssl": {
         "method": "txt",
         "type": "dv",
-        "certificate_authority": ""
+        "certificate_authority": "",
+        "settings": {
+            "ciphers": [
+                "ECDHE-ECDSA-AES128-GCM-SHA256",
+                "ECDHE-RSA-AES128-GCM-SHA256"
+            ],
+            "early_hints": "on",
+            "http2": "on",
+            "min_tls_version": "1.2",
+            "tls_1_3": "on"
+        }
     }
   }'
   ```
 
   </Details>
 
-- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames. In your API call, make sure to also include `method` and `type` in the `ssl` object.
+- Use the [Edit Custom Hostname](/api/resources/custom_hostnames/methods/edit/) endpoint to set the `certificate_authority` parameter to `google`: this sets Google Trust Services as the CA for your custom hostnames. In your API call, include the current `method`, `type`, and complete `settings` object.
 - If you are using a custom certificate for your custom hostname, refer to the [custom certificates troubleshooting](/ssl/edge-certificates/custom-certificates/troubleshooting/#lets-encrypt-chain-update).
 
 ## Custom hostname fails to verify because the zone is held
@@ -147,3 +169,23 @@ Since no host is 64 characters or fewer, Cloudflare Branding is required. Please
 To solve this, you can set `cloudflare_branding` to `true` when [creating your custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/#hostnames-over-64-characters) via API.
 
 Cloudflare branding means that `sni.cloudflaressl.com` will be added as the certificate Common Name (CN) and the long hostname will be included as a part of the Subject Alternative Name (SAN).
+
+---
+
+## TLS handshake failure for clients without SNI
+
+Clients that omit the `server_name` extension from their TLS `ClientHello` — typically legacy embedded devices or very old operating systems — receive a TLS handshake failure (alert 40) when connecting to a custom hostname. Without SNI, the edge cannot determine which certificate to serve, and the connection fails before any HTTP traffic is exchanged.
+
+SNI is required for custom hostnames. There is no configuration within Cloudflare for SaaS that enables non-SNI clients to connect to arbitrary custom hostnames (for example, `shop.example.com`). The only reliable fix is to upgrade the affected devices to a TLS stack that supports SNI.
+
+### Alternative architecture for non-SNI clients
+
+If upgrading affected devices is not possible, an alternative architecture combining [Spectrum](/spectrum/) and [BYOIP](/byoip/) can allow non-SNI clients to reach custom hostnames — but it does not use Cloudflare for SaaS.
+
+In this model:
+
+- Each custom hostname is assigned a dedicated IP via BYOIP (requires ownership of at least a /24 prefix, with one IP allocated per tenant), so the destination IP itself identifies the tenant instead of SNI.
+- Spectrum routes the connection at Layer 4 by IP:port without terminating TLS.
+- TLS is handled entirely at the origin, which is responsible for selecting the correct certificate per hostname.
+
+This approach requires Spectrum and BYOIP add-ons and is a significant architectural change. Contact your account team to evaluate this option.

@@ -374,10 +374,9 @@ Create a Worker to serve the image you uploaded to Images by running:
 />
 
 <Render
-	file="c3-post-run-steps"
+	file="c3-post-run-steps-hello-world"
 	product="workers"
 	params={{
-		category: "hello-world",
 		type: "Worker only",
 		lang: "JavaScript",
 	}}
@@ -406,7 +405,7 @@ export default {
 };
 ```
 
-Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/get-started/).
+Update `env.CLOUDFLARE_ACCOUNT_HASH` with your [Cloudflare account ID](/fundamentals/account/find-account-and-zone-ids/). Update `env.IMAGE_ID` with your [image ID](/images/get-started/introduction/).
 
 Run your Worker and go to the `/original-image` route to review your image.
 

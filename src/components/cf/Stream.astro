@@ -117,62 +117,61 @@ if (thumbnail) {
 				allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
 				allowfullscreen="true"
 				title={title}
-				id={id}></iframe>
+				id={id}
+			></iframe>
 		</div>
 
-		{
-			chapters && (
-				<Details header="Chapters" open={expandChapters}>
-					<p>
-						<ul class="flex list-none gap-4 overflow-x-scroll pb-4 pl-0">
-							{Object.entries(chapters).map(([chapter, time]) => {
-								const totalSeconds = parseSeconds(time);
+		{chapters && (
+			<Details header="Chapters" open={expandChapters}>
+				<p>
+					<ul class="flex list-none gap-4 overflow-x-scroll pb-4 pl-0">
+						{Object.entries(chapters).map(([chapter, time]) => {
+							const totalSeconds = parseSeconds(time);
 
-								const thumb = new URL(thumbnailUrl);
-								thumb.searchParams.set("fit", "crop");
-								thumb.searchParams.set("time", `${totalSeconds}s`);
+							const thumb = new URL(thumbnailUrl);
+							thumb.searchParams.set("fit", "crop");
+							thumb.searchParams.set("time", `${totalSeconds}s`);
 
-								return (
-									<li class="mt-0!">
-										<button
-											class="border-border flex h-full w-36 cursor-pointer flex-col rounded-sm border bg-transparent p-4"
-											data-chapter={chapter}
-											data-time={totalSeconds}
-										>
-											<img
-												src={thumb.toString()}
-												alt={chapter}
-												width="120"
-												height="64"
-												class="border-accent bg-accent/10 rounded-sm border"
-											/>
-											<div class="flex h-full flex-col items-center justify-between">
-												<strong class="line-clamp-2 text-xs" title={chapter}>
-													{chapter}
-												</strong>
-												<Badge text={time} variant="tip" class="w-fit" />
-											</div>
-										</button>
-									</li>
-								);
-							})}
-						</ul>
-					</p>
-				</Details>
-			)
-		}
+							return (
+								<li class="mt-0!">
+									<button
+										class="border-border flex h-full w-36 cursor-pointer flex-col rounded-sm border bg-transparent p-4"
+										data-chapter={chapter}
+										data-time={totalSeconds}
+									>
+										<img
+											src={thumb.toString()}
+											alt={chapter}
+											width="120"
+											height="64"
+											class="border-accent bg-accent/10 rounded-sm border"
+										/>
+										<div class="flex h-full flex-col items-center justify-between">
+											<strong class="line-clamp-2 text-xs" title={chapter}>
+												{chapter}
+											</strong>
+											<Badge text={time} variant="tip" class="w-fit" />
+										</div>
+									</button>
+								</li>
+							);
+						})}
+					</ul>
+				</p>
+			</Details>
+		)}
 
-		{
-			showMoreVideos && (
-				<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">
-					Watch more videos on our Developer Channel
-				</a>
-			)
-		}
+		{showMoreVideos && (
+			<a href="https://www.youtube.com/@CloudflareDevelopers" target="_blank">
+				Watch more videos on our Developer Channel
+			</a>
+		)}
 	</stream-player>
 </div>
 
-<script is:inline src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
+<script
+	is:inline
+	src="https://embed.cloudflarestream.com/embed/sdk.latest.js"
 ></script>
 
 <script>

@@ -1,0 +1,20 @@
+---
+title: User API tokens have a redesigned creation experience
+description: User API tokens now use an updated dashboard experience aligned with Account API tokens, with clearer policy editing and review.
+products:
+  - fundamentals
+date: 2026-11-06
+publish_future_dated_entry: true
+---
+
+User API tokens now use a redesigned dashboard experience that more closely matches Account API tokens, making it easier to create and review user-owned credentials while preserving their user-scoped behavior.
+
+![Redesigned User API token creation flow](~/assets/images/changelog/fundamentals/2026-11-06-user-api-token-redesign.png)
+
+### What's new
+
+- **A more consistent creation flow**: User API tokens now follow the same modern dashboard pattern as Account API tokens, including a clearer create and review experience.
+- **Improved policy editing**: Policies are now easier to read and manage, with inline controls to add, edit, and remove policy blocks before creating the token.
+- **Clearer restrictions during setup**: Expiration presets and client IP address filtering are built directly into the creation flow so you can review token restrictions in one place.
+
+These tokens still act on behalf of the creating user, even though the dashboard experience is now more consistent with Account API tokens. For more information, refer to [Create API token](/fundamentals/api/get-started/create-token/), [Create tokens via API](/fundamentals/api/how-to/create-via-api/), and [Account API tokens](/fundamentals/api/get-started/account-owned-tokens/).

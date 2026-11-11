@@ -1,0 +1,166 @@
+---
+reviewed: 2026-11-02
+pcx_content_type: how-to
+title: Migrate Nuxt from Vercel to Cloudflare Workers
+description: Migrate a Nuxt application from Vercel to Cloudflare Workers. Replace the Nitro vercel preset with cloudflare_module. Includes a prompt for your coding agent.
+sidebar:
+  label: Nuxt
+  order: 3
+products:
+  - workers
+---
+
+import { PackageManagers, Steps, WranglerConfig } from "~/components";
+
+This guide moves a [Nuxt](https://nuxt.com/) application from Vercel to Cloudflare Workers. Nuxt selects its Vercel preset automatically on Vercel. On Workers, you set the Nitro `cloudflare_module` preset instead.
+
+Nuxt 3 and Nuxt 4 run on Nitro v2 (`nitropack`). Use the [Nitro v2 Cloudflare documentation](https://github.com/nitrojs/nitro/blob/v2/docs/2.deploy/20.providers/cloudflare.md), not the Nitro v3 documentation.
+
+## Before you begin
+
+- Set `compatibilityDate` in `nuxt.config.ts` to `2025-07-17` or later. With an earlier date, `nuxt dev` does not emulate Cloudflare bindings.
+- Do not install `nitro-cloudflare-dev` on `nitropack` 2.12 or later. Nitro includes the same development emulation, and both together start two proxies.
+- Review the steps in [Before you begin](/workers/static-assets/migration-guides/vercel-to-workers/#before-you-begin) that apply to every framework.
+
+## Migrate with a coding agent
+
+Copy this prompt into your coding agent. The agent stops before it deploys.
+
+```txt
+Migrate this Nuxt app from Vercel to Cloudflare Workers with the Nitro preset cloudflare_module (not cloudflare_pages). Nuxt 3 and 4 run on nitropack v2. Check with `<pm> why nitropack`, and use https://github.com/nitrojs/nitro/blob/v2/docs/2.deploy/20.providers/cloudflare.md, not the Nitro v3 documentation.
+
+0. Install dependencies with the repository's package manager. With pnpm 10 or later, if install fails with ERR_PNPM_IGNORED_BUILDS, run `pnpm approve-builds --all` and commit pnpm-workspace.yaml.
+1. Remove Vercel:
+   - Remove nitro.preset 'vercel', nitro.vercel.*, and @vercel/* packages.
+   - Port redirects and headers from vercel.json to routeRules, or to public/_redirects and public/_headers. Then delete vercel.json and .vercel/.
+   - List every routeRules entry with `isr`, which only works on Vercel. Replace each one with prerender: true, swr, or cache-control headers, and tell me about the behavior change.
+2. Install wrangler as a dev dependency. Do not add nitro-cloudflare-dev on nitropack 2.12 or later.
+3. In nuxt.config.ts, set compatibilityDate to today. It must be 2025-07-17 or later. Add nitro: { preset: 'cloudflare_module', cloudflare: { deployConfig: true, nodeCompat: true } }.
+4. Create wrangler.jsonc with only "$schema", "name" (the repository name), "compatibility_date": "<today>", "observability": { "enabled": true }, and any bindings or vars. Do not set "main" or "assets", because Nitro generates them in .output/server/wrangler.json. Nitro also adds no_nodejs_compat_v2 on purpose. Do not add nodejs_compat. A compatibility date of 2026-08-04 or later already enables it. Add .wrangler and .dev.vars* to .gitignore.
+5. Read bindings with `event.context.cloudflare.env`. Read environment variables with useRuntimeConfig(event) inside handlers, never at module scope. Run `npx wrangler types`.
+6. If @nuxt/image uses the vercel or ipx provider, switch to the cloudflare provider and set image.cloudflare.baseURL to the production origin. ipx depends on sharp, which does not run on Workers.
+7. For crons, add triggers.crons to wrangler.jsonc and a Nitro plugin that hooks 'cloudflare:scheduled'.
+8. Set these scripts: preview="<pm> run build && wrangler dev", deploy="<pm> run build && wrangler deploy", and cf-typegen="wrangler types".
+9. Cloudflare applies every matching _headers rule, so the cache-control values from Nitro stack. Add a nitro:init hook that registers a compiled hook. In it, rewrite .output/public/_headers from nitro.options.routeRules, sorted from least to most specific, with "  ! <name>" before each "  <name>: <value>" line. If public/_headers exists, merge it in.
+10. Run `<pm> run preview --port <port>`. Check SSR pages, API routes, an error page, and images. `curl -I /_nuxt/builds/latest.json` must return exactly "public, max-age=1, immutable". In `nuxt dev`, confirm that a server route can read `event.context.cloudflare.env`.
+
+Rules: work on a new git branch; store local secrets in a gitignored .dev.vars file with placeholder values; never print secret values; do not deploy, log in, or change DNS.
+When you finish, list the files you changed, the Vercel features without an equivalent, the secrets I must set with `npx wrangler secret put <NAME>`, and the deploy command.
+```
+
+## Migrate manually
+
+<Steps>
+
+1. Install Wrangler:
+
+   <PackageManagers pkg="wrangler" dev />
+
+2. In `nuxt.config.ts`, update `compatibilityDate` and set the Nitro preset:
+
+   ```ts title="nuxt.config.ts"
+   export default defineNuxtConfig({
+   	compatibilityDate: "2025-07-17",
+   	nitro: {
+   		preset: "cloudflare_module",
+   		cloudflare: {
+   			deployConfig: true,
+   			nodeCompat: true,
+   		},
+   	},
+   });
+   ```
+
+   Use today's date, or any date after `2025-07-17`.
+
+3. Create a Wrangler configuration file without `main` or `assets`. Nitro generates both when you build.
+
+   <WranglerConfig>
+
+   ```jsonc
+   {
+   	"$schema": "node_modules/wrangler/config-schema.json",
+   	"name": "<YOUR_PROJECT_NAME>",
+   	"compatibility_date": "$today",
+   	"observability": {
+   		"enabled": true,
+   	},
+   }
+   ```
+
+   </WranglerConfig>
+
+4. Add these scripts to `package.json`:
+
+   ```json title="package.json"
+   {
+   	"scripts": {
+   		"preview": "npm run build && wrangler dev",
+   		"deploy": "npm run build && wrangler deploy",
+   		"cf-typegen": "wrangler types"
+   	}
+   }
+   ```
+
+5. Replace any `isr` route rules. If you use `@nuxt/image`, switch to the [Cloudflare provider](https://image.nuxt.com/providers/cloudflare). Read bindings with `event.context.cloudflare.env`.
+
+6. Add the [cache header fix](#fix-stacked-cache-headers).
+
+7. Build and preview your application locally:
+
+   <PackageManagers type="run" args="preview" />
+
+8. Delete `vercel.json` and deploy your application:
+
+   <PackageManagers type="run" args="deploy" />
+
+</Steps>
+
+## Fix stacked cache headers
+
+Cloudflare applies every `_headers` rule that matches a path. The rules that Nitro generates for `/_nuxt/` overlap, so files such as `latest.json` receive two `Cache-Control` values. This hook rewrites the generated file so the most specific rule wins:
+
+```ts title="nuxt.config.ts"
+import { writeFile } from "node:fs/promises";
+import { join } from "node:path";
+
+export default defineNuxtConfig({
+	hooks: {
+		"nitro:init"(nitro) {
+			nitro.hooks.hook("compiled", async () => {
+				const base = nitro.options.baseURL.replace(/\/$/, "");
+				const rules = Object.entries(nitro.options.routeRules)
+					.filter(([, rule]) => rule.headers)
+					.sort(([a], [b]) => a.split("/").length - b.split("/").length)
+					.map(([path, rule]) =>
+						[
+							base + path.replace("/**", "/*"),
+							...Object.entries(rule.headers!).flatMap(([name, value]) => [
+								`  ! ${name}`,
+								`  ${name}: ${value}`,
+							]),
+						].join("\n"),
+					);
+				await writeFile(
+					join(nitro.options.output.publicDir, "_headers"),
+					rules.join("\n") + "\n",
+				);
+			});
+		},
+	},
+});
+```
+
+If your project has a `public/_headers` file, merge its rules into the generated file instead of overwriting them.
+
+## Known issues
+
+- **`nuxt dev` has no bindings.** Your `compatibilityDate` is earlier than `2025-07-17`. Check that `.nuxt/nitro.json` contains `"preset": "cloudflare-dev"`.
+- **The build warns that `main` and `assets` are overridden.** Remove `main` and `assets` from your Wrangler configuration file.
+- **`wrangler dev` reports `Missing entry-point to Worker script`.** Build your application first. Nitro generates the Worker entry file when you build.
+- **The `ASSETS` binding is missing from generated types.** `wrangler types` reads your root Wrangler configuration file, not the configuration that Nitro generates. You can ignore this.
+
+## Related resources
+
+- [Nuxt framework guide](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)
+- [Migrate from Vercel to Workers](/workers/static-assets/migration-guides/vercel-to-workers/)

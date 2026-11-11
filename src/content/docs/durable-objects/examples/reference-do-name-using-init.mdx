@@ -1,10 +1,10 @@
 ---
-summary: Access the name from within a Durable Object using RpcTarget.
+summary: Pass metadata to a Durable Object using RpcTarget.
 pcx_content_type: example
 title: Use RpcTarget class to handle Durable Object metadata
 sidebar:
   order: 3
-description: Access the name from within a Durable Object using RpcTarget.
+description: Pass metadata to a Durable Object using RpcTarget.
 reviewed: 2025-04-25
 products:
   - durable-objects
@@ -12,11 +12,13 @@ products:
 
 import { TabItem, Tabs, GlossaryTooltip } from "~/components";
 
-When working with Durable Objects, you will need to access the name that was used to create the Durable Object via `idFromName()`. This name is typically a meaningful identifier that represents what the Durable Object is responsible for (like a user ID, room name, or resource identifier).
+When working with Durable Objects, you will often need the name that was used to create the Durable Object via `idFromName()`. This name is typically a meaningful identifier that represents what the Durable Object is responsible for (like a user ID, room name, or resource identifier).
 
-However, there is a limitation in the current implementation: even though you can create a Durable Object with `.idFromName(name)`, you cannot directly access this name inside the Durable Object via `this.ctx.id.name`.
+:::note
+If the caller accesses the Durable Object with `getByName()` or `idFromName()`, you can read the name directly inside the Durable Object from `this.ctx.id.name`. You do not need the pattern on this page for that. Refer to [Durable Object ID](/durable-objects/api/id/#name) for details, including when `ctx.id.name` is `undefined`.
+:::
 
-The `RpcTarget` pattern shown below offers a solution by creating a communication layer that automatically carries the name with each method call. This keeps your API clean while ensuring the Durable Object has access to its own name.
+The `RpcTarget` pattern in the following examples is useful when you need to pass metadata that is not available on `ctx.id`, or when `ctx.id.name` is `undefined` (for example, when the caller uses `idFromString()`). It creates a communication layer that automatically carries the metadata with each method call, which keeps your API clean.
 
 Based on your needs, you can either store the metadata temporarily in the `RpcTarget` class, or use Durable Object storage to persist the metadata for the lifetime of the object.
 

@@ -12,31 +12,31 @@ import { DashButton } from "~/components";
 
 ## Submit reports
 
-Cloudflare helps you prevent online abuse and make your website more secure. If abuse is identified on your website, Cloudflare gives you a mechanism to present your grievances to the party best positioned to address them.
+Cloudflare provides security, performance, and reliability services to millions of websites. When you report abuse involving a website that uses Cloudflare, Cloudflare's ability to respond depends on the Cloudflare service involved. Many reports involve websites using Cloudflare's pass-through CDN and security services, while others involve domains registered through Cloudflare Registrar or content hosted on Cloudflare's developer platform.
 
-Cloudflare offers three ways for you to submit an abuse report:
+If you find abusive content on a website that uses Cloudflare, you can submit a report in one of three ways:
 
-- Public form: Refer to [Submit an Abuse Report](https://abuse.cloudflare.com/) to learn more.
-- The Cloudflare dashboard, on the **Abuse reports** page.
+- **Public form**: Use [Submit an abuse report](https://abuse.cloudflare.com/) to report abuse to Cloudflare. This form is available to anyone on the Internet.
+- **Cloudflare dashboard**: Entitled Cloudflare customers can submit abuse reports from the **Abuse reports** page. You must have the **Trust & Safety**, **Admin**, or **Super Admin** role.
 
-    <DashButton url="/?to=/:account/abuse-reports" />
-  Optionally, filter the reports based on date, report status, report type, and domain.
-- The Cloudflare API: Use the [Abuse Reports API](/api/resources/abuse_reports/) to submit an abuse report.
+  <DashButton url="/?to=/:account/abuse-reports" />
+
+- **Cloudflare API**: Entitled Cloudflare customers can submit abuse reports using the [Abuse Reports API](/api/resources/abuse_reports/). You must have the **Trust & Safety**, **Admin**, or **Super Admin** role.
 
 ## View submitted reports
 
-Users with Admin, Super Admin, or Trust & Safety roles can view any abuse reports submitted and accepted against the content associated with their account.
+Entitled Cloudflare customers with the **Trust & Safety**, **Admin**, or **Super Admin** role can view abuse reports against content associated with their account.
 
 1. In the Cloudflare dashboard, go to the **Abuse reports** page.
 
-    <DashButton url="/?to=/:account/abuse-reports" />
+   <DashButton url="/?to=/:account/abuse-reports" />
 
-2. Optionally, filter the reports based on date, report status, report type, and domain.
+2. Optionally, filter reports by date, report status, report type, or domain.
 
-If there was a mitigation against your website due to the abuse allegation, you may have the opportunity to request a review on that mitigation. Cloudflare will then review your request and potentially remove the mitigation.
+If Cloudflare applied a mitigation to your website because of an abuse report, you may be able to request a review of that mitigation in the dashboard or using the [Abuse Report Mitigations API](/api/resources/abuse_reports/subresources/mitigations/). Cloudflare will review the request and may remove the mitigation.
 
 ## Receive notifications
 
-You can enable abuse notifications for your account to configure email, webhook, or PagerDuty alerts about new abuse reports against your websites. 
+You can enable abuse notifications for your account to configure email, webhook, or PagerDuty alerts about new abuse reports against your websites.
 
 For help setting up alerts, refer to [Configure Cloudflare notifications](/notifications/get-started/).

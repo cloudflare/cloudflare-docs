@@ -1,0 +1,136 @@
+---
+pcx_content_type: reference
+title: Local Development
+description: Learn how to run Container-enabled Workers locally with `wrangler dev` and `vite dev`.
+sidebar:
+  order: 2
+products:
+  - containers
+---
+
+You can run both your container and your Worker locally by running [`npx wrangler dev`](/workers/wrangler/commands/workers/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
+
+To develop Container-enabled Workers locally, you will need to first ensure that a
+Docker compatible CLI tool and Engine are installed. For instance, you could use [Docker Desktop](https://docs.docker.com/desktop/) or [Colima](https://github.com/abiosoft/colima).
+
+Containers that use the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) require Wrangler 4.136.0 or later for local development. To run the [`cloudflare/debian-trixie` managed image](/containers/guides/image-management/#use-the-cloudflare-managed-image) locally, use Wrangler 4.141.0 or later.
+
+When you start a dev session, your container image will be built or downloaded. If your
+[Wrangler configuration](/workers/wrangler/configuration/#containers) sets
+the `image` attribute to a local path, the image will be built using the local Dockerfile.
+If the `image` attribute is set to an image reference, the image will be pulled from the referenced registry, such as the Cloudflare Registry, Docker Hub, Amazon ECR, or Google Artifact Registry.
+
+:::note
+With `wrangler dev`, image references from the Cloudflare Registry, Docker Hub, Amazon ECR, and Google Artifact Registry are supported in local development.
+
+With `vite dev`, image references from external registries such as Docker Hub, Amazon ECR, and Google Artifact Registry are supported, but `vite dev` cannot pull directly from the Cloudflare Registry.
+
+If you use a private Docker Hub, Amazon ECR, or Google Artifact Registry image in local development, authenticate to that registry locally, for example with `docker login`.
+
+As a workaround for Cloudflare Registry images, point `vite dev` at a local Dockerfile that uses `FROM <IMAGE_REFERENCE>`. Docker then pulls the base image during the local build.
+:::
+
+Container instances will be launched locally when your Worker code calls to create
+a new container. Requests will then automatically be routed to the correct locally-running container.
+
+When the dev session ends, all associated container instances should be stopped, but
+local images are not removed, so that they can be reused in subsequent builds.
+
+:::note
+If your Worker app creates many container instances, your local machine may not be able to run as many containers concurrently as is possible when you deploy to Cloudflare.
+
+Also, `max_instances` configuration option does not apply during local development.
+
+Additionally, if you regularly rebuild containers locally, you may want to clear
+out old container images (using `docker image prune` or similar) to reduce disk used.
+
+:::
+
+## FUSE support
+
+Miniflare automatically grants local containers the Docker privileges required for Filesystem in Userspace (FUSE). This applies to `wrangler dev`, the Cloudflare Vite plugin, and direct Miniflare use.
+
+Miniflare grants these privileges when the local Docker daemon runs inside a virtual machine (VM). This includes Docker engines on macOS and through Windows Subsystem for Linux (WSL). On Linux, Miniflare grants the privileges for local rootless Docker when `/dev/fuse` is available.
+
+Rootful Docker on Linux does not support FUSE by default during local development. Miniflare does not grant FUSE privileges when the Docker daemon does not meet these conditions or cannot be inspected.
+
+## Iterating on Container code
+
+When you develop with Wrangler or Vite, your Worker's code is automatically reloaded each time you save a change,
+but code running within the container is not.
+
+To rebuild your container with new code changes, you can hit the `[r]` key on your keyboard, which
+triggers a rebuild. Container instances will then be restarted with the newly built images.
+
+You may prefer to set up your own code watchers and reloading mechanisms, or mount a local directory
+into the local container images to sync code changes. This can be done, but there is no built-in
+mechanism for doing so, and best-practices will depend on the languages and frameworks
+you are using in your container code.
+
+## Differences after you deploy
+
+Local development runs your container in Docker. A deployed container that uses the [Durable Object scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) differs from a local container in the following ways. Code that works locally can fail after you deploy.
+
+{/* Remove this section when the deployed hostname fits in a DNS label and /etc/hosts lists it. */}
+
+### The hostname is longer than a DNS label
+
+The hostname of a container is the name it uses for itself, which the `hostname` command prints. Nothing routes traffic to it. In a deployed container, the hostname is 64 characters, one more than a DNS label allows. `/etc/hosts` does not list it, so it does not resolve. Locally, the hostname is the 12-character Docker container ID, and `/etc/hosts` lists it. Code that looks up its own hostname can fail after you deploy.
+
+For example, `python3 -m http.server` and other servers built on the Python `http.server` module, such as `wsgiref`, exit on startup with this error:
+
+```txt
+UnicodeEncodeError: 'idna' codec can't encode characters in position 0-63: label too long
+```
+
+To serve files with Python, use `socketserver`, which does not look up the hostname:
+
+```sh
+python3 -c 'import http.server as h, socketserver as s; s.ThreadingTCPServer(("", 8000), h.SimpleHTTPRequestHandler).serve_forever()'
+```
+
+### Other Linux users keep root capabilities
+
+Locally, Docker gives no capabilities to a process that runs as a user other than `root`. File permissions apply to that process. In a deployed container, every process has the same Linux capabilities as `root`, regardless of user. For more information, refer to the [`exec()` `user` option](/containers/api/durable-object-container/#exec).
+
+## Troubleshooting
+
+### Ports
+
+Your Worker can connect to any port in the container.
+
+`getTcpPort()` requires a process listening on that port. If the process has not started yet, you will see the following error:
+
+```txt
+Container is not listening to port 8080
+```
+
+Retry until the port becomes available.
+
+### Socket configuration - `internal error`
+
+If you see an opaque `internal error` when attempting to connect to your container, you may need to set the `DOCKER_HOST` environment variable to the socket path your container engine is listening on. Wrangler or Vite will attempt to automatically find the correct socket to use to communicate with your container engine, but if that does not work, you may have to set this environment variable to the appropriate socket path.
+
+### SSL errors with the Cloudflare One Client or a VPN
+
+If you are running the Cloudflare One Client or a VPN that performs TLS inspection, HTTPS requests made during the Docker build process may fail with SSL or certificate errors. This happens because the VPN intercepts HTTPS traffic and re-signs it with its own certificate authority, which Docker does not trust by default.
+
+To resolve this, you can either:
+
+- Disable the Cloudflare One Client or your VPN while running `wrangler dev` or `wrangler deploy`, then re-enable it afterwards.
+- Add the certificate to your Docker build context. The Cloudflare One Client exposes its certificate via the `NODE_EXTRA_CA_CERTS` and `SSL_CERT_FILE` environment variables on your host machine. You can pass the certificate into your Docker build as an environment variable, so that it is available during the build without being baked into the final image.
+
+  ```dockerfile
+  RUN if [ -n "$SSL_CERT_FILE" ]; then \
+      cp "$SSL_CERT_FILE" /usr/local/share/ca-certificates/Custom_CA.crt && \
+      update-ca-certificates; \
+      fi
+  ```
+
+  :::note
+  The above Dockerfile snippet is an example. Depending on your base image, the commands to install certificates may differ (for example, Alpine uses `apk add ca-certificates` and a different certificate path).
+
+  This snippet will store the certificate into the image. Depending on whether your production environment needs the certificate, you may choose to do this only during development or use it in production too.
+  :::
+
+  Wrangler invokes Docker automatically when you run `wrangler dev` or `wrangler deploy`, so if you need to pass build secrets, you will need to build and push the image manually using `wrangler containers push`.

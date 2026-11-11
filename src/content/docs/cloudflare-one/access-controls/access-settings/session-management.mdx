@@ -61,7 +61,7 @@ By default, the policy session duration is equal to the [application session dur
 To set the policy session duration:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Policies**.
-2. Choose a policy and select **Configure**.
+2. Choose a policy and select **Edit**.
 3. Select a **Session Duration** from the dropdown menu.
 4. Save the policy.
 
@@ -74,7 +74,7 @@ The application session duration is the default [policy session duration](#polic
 To set the application session duration:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Choose an application and select **Configure**.
+2. Choose an application and select **Edit**.
 3. Select a **Session Duration** from the dropdown menu.
 4. Save the application.
 
@@ -95,9 +95,25 @@ Users who match a policy configured with a _Same as application session timeout_
 
 <Render file="access/self-hosted-app/ssh-sessions" product="cloudflare-one" />
 
+For [infrastructure applications](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/), connections are limited by a configurable [session duration](/cloudflare-one/networks/connectors/cloudflare-tunnel/use-cases/ssh/ssh-infrastructure-access/#session-duration), which defaults to 24 hours. When the session duration elapses, any active SSH connections through that application are closed and users must reconnect. When a target matches multiple infrastructure applications, the shortest session duration applies.
+
 ### Cloudflare One Client session duration
 
 When [Authenticate with Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/client-sessions/#configure-client-sessions-in-access) is enabled for an Access application, the Cloudflare One Client session duration takes precedence over all other session durations (application, policy, and global). As long as the Cloudflare One Client session is valid and the user is running the Cloudflare One Client, the user will not be prompted to re-authenticate with the IdP — even if the global session has expired.
+
+#### Return 401 responses for non-browser traffic
+
+By default, failed Cloudflare One Client authentication requests return a `302` redirect to the Access login page. API clients, command-line tools, and automation often cannot complete this browser login flow. You can return a `401 Unauthorized` response for non-browser traffic instead so that these clients can detect the authentication failure directly.
+
+To enable this behavior:
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Access settings**.
+2. Under **Cloudflare One Client authentication**, ensure that **Enable authentication using the Cloudflare One Client session** is turned on.
+3. Turn on **Return 401 response for non-browser traffic**.
+
+You can also set `warp_auth_non_browser_401` to `true` using the [Update your Zero Trust organization](/api/resources/zero_trust/subresources/organizations/methods/update/) API.
+
+This account setting only applies to failed Cloudflare One Client authentication. It is separate from `service_auth_401_redirect`, which controls Service Auth behavior for an individual Access application.
 
 ### MFA session duration
 
@@ -107,13 +123,13 @@ If you use [independent multi-factor authentication (MFA)](/cloudflare-one/acces
 
 The following flowchart illustrates how Access enforces user sessions for a self-hosted application.
 
-| Flowchart setting                       | Dashboard location                                                                                                                                |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Authenticate with Cloudflare One Client | **Access controls** > **Applications** > select an application > **Configure** > **Authentication** > **Authenticate with Cloudflare One Client** |
-| Cloudflare One Client session duration  | **Access controls** > **Access settings** > **Cloudflare One Client authentication** > **Session duration**                                       |
-| Policy session duration                 | **Access controls** > **Policies** > select a policy > **Configure** > **Session duration**                                                       |
-| Application session duration            | **Access controls** > **Applications** > select an application > **Configure** > **Overview** > **Session Duration**                              |
-| Global session duration                 | **Access controls** > **Access settings** > **Set your global session duration**                                                                  |
+| Flowchart setting                       | Dashboard location                                                                                                                           |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Authenticate with Cloudflare One Client | **Access controls** > **Applications** > select an application > **Edit** > **Authentication** > **Authenticate with Cloudflare One Client** |
+| Cloudflare One Client session duration  | **Access controls** > **Access settings** > **Cloudflare One Client authentication** > **Session duration**                                  |
+| Policy session duration                 | **Access controls** > **Policies** > select a policy > **Edit** > **Session duration**                                                       |
+| Application session duration            | **Access controls** > **Applications** > select an application > **Edit** > **Overview** > **Session Duration**                              |
+| Global session duration                 | **Access controls** > **Access settings** > **Set your global session duration**                                                             |
 
 ```mermaid
 flowchart TB
@@ -149,7 +165,7 @@ Access provides two options for revoking user sessions: per-application and per-
 To immediately terminate all active sessions for a specific application:
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-2. Locate the application for which you would like to revoke active sessions and select **Configure**.
+2. Locate the application for which you would like to revoke active sessions and select **Edit**.
 3. Select **Revoke existing tokens**.
 
 Unless there are changes to rules in the policy, users can start a new session if their profile in your identity provider is still active.
@@ -181,6 +197,20 @@ To log out of Access, the end user can visit either of the following URLs:
 This action [revokes the user's session](#per-user) across all applications. Access will immediately clear the authorization cookie from the user's browser, and all previously issued tokens will stop being accepted in 20-30 seconds. The only difference between these two URLs is which domain the authorization cookie is deleted from. For example, going to `<your-application-domain>/cdn-cgi/access/logout` will remove the application cookie and make the logout action feel more instantaneous.
 
 You can use these URLs to create custom logout buttons or links directly within your application.
+
+:::note[Redirect after logout]
+
+To redirect users after logout, append the `returnTo` query parameter to either logout URL. For example, to redirect to `https://app.example.com/signed-out`:
+
+```txt
+https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout?returnTo=https%3A%2F%2Fapp.example.com%2Fsigned-out
+```
+
+Use your team domain or an application domain in the same Access account as the destination. Access validates the destination and rejects unrelated domains, such as `?returnTo=google.com`, with a `400` response (`Invalid redirect URL`).
+
+URL-encode the destination, especially if it contains query parameters. If you omit the scheme, Access uses `https://`.
+
+:::
 
 :::note
 

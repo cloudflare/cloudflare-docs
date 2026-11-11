@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import type { ConflictFileForAgent } from "./rebase-conflict";
+import {
+	isDeleteModifyConflict,
+	type ConflictFileForAgent,
+} from "./rebase-conflict";
 
 function conflictFile(
 	path: string,
@@ -13,14 +16,6 @@ function conflictFile(
 		productionVersion: "prod content",
 		...overrides,
 	};
-}
-
-// Extracted predicate matching the one in resolveConflictsWithAI.
-function isDeleteModifyConflict(f: ConflictFileForAgent): boolean {
-	return (
-		f.baseVersion !== null &&
-		(f.prVersion === null) !== (f.productionVersion === null)
-	);
 }
 
 describe("delete/modify conflict detection", () => {

@@ -8,12 +8,11 @@ sidebar:
   order: 6
 ---
 
-import { Render } from "~/components";
+You can only add or remove applications to Breakout traffic and Prioritized traffic. To add or remove applications:
 
-<Render
-	file="mconn/maintenance/edit-traffic-steering"
-	product="networking-services"
-	params={{
-		dashName: "CF1 Cloudflare WAN",
-	}}
-/>
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks**.
+2. Go to **Connectors** > **Appliances** > **Profiles**.
+3. Find the Appliance that you want to edit > select the three dots next to it > **Edit**.
+4. Go to **Traffic steering** > **Breakout traffic** or **Prioritized traffic**.
+5. Select **Add** to add a new application.
+6. To delete an application, find the one you want to delete from **Breakout traffic** or **Prioritized traffic** > select the three dots next to it > **Remove**.

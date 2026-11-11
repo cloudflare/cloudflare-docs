@@ -382,58 +382,54 @@ export function CodeExample({
 
 export const modelOptions = [
 	{
-		model: "gpt-5.2",
+		model: "gpt-6-luna",
 		provider: "openai",
 		aiSDK: {
+			id: "openai/gpt-6-luna",
+			pkg: "@ai-sdk/openai",
 			providerFactory: "createOpenAI",
-			providerUsage: "openai.chat",
 			provider: "openai",
 		},
 	},
 	{
-		model: "claude-4-5-sonnet",
+		model: "claude-opus-5-5",
 		provider: "anthropic",
 		aiSDK: {
+			id: "anthropic/claude-opus-5.5",
+			pkg: "@ai-sdk/anthropic",
 			providerFactory: "createAnthropic",
-			providerUsage: "anthropic",
 			provider: "anthropic",
 		},
 	},
 	{
-		model: "gemini-2.5-pro",
+		model: "gemini-4-argon",
 		provider: "google",
 		aiSDK: {
-			providerFactory: "createGoogle",
-			providerUsage: "google",
+			id: "google/gemini-4-argon",
+			pkg: "@ai-sdk/google",
+			providerFactory: "createGoogleGenerativeAI",
 			provider: "google",
 		},
 	},
 	{
-		model: "grok-4",
+		model: "grok-4.7",
 		provider: "grok",
 		aiSDK: {
+			id: "xai/grok-4.7",
+			pkg: "@ai-sdk/xai",
 			providerFactory: "createXai",
-			providerUsage: "xai",
 			provider: "xai",
 		},
 	},
 	{
 		model: "customer-support",
 		provider: "dynamic",
-		aiSDK: {
-			providerFactory: "createUnified",
-			providerUsage: "unified",
-			provider: "unified",
-		},
+		aiSDK: { id: "dynamic/customer-support" },
 	},
 	{
 		model: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
 		provider: "workers-ai",
-		aiSDK: {
-			providerFactory: "createUnified",
-			providerUsage: "unified",
-			provider: "unified",
-		},
+		aiSDK: { id: "@cf/meta/llama-3.3-70b-instruct-fp8-fast" },
 	},
 ];
 export const code = `import OpenAI from "openai";
@@ -450,38 +446,35 @@ const response = await client.chat.completions.create({
 	messages: [{ role: "user", content: "Hello, world!" }],
 });`;
 
-export const aiSDKUnifiedCode = `import { createAiGateway } from 'ai-gateway-provider';
-import { createUnified } from 'ai-gateway-provider/providers/unified';
+export const aiSDKUnifiedCode = `import { createAI } from "agents/models/ai-sdk";
 import { generateText } from "ai";
 
-const aigateway = createAiGateway({
+const ai = createAI({
   accountId: "{CLOUDFLARE_ACCOUNT_ID}",
-  gateway: '{GATEWAY_NAME}',
-  apiKey: '{CF_AIG_TOKEN}',
+  apiToken: "{CF_API_TOKEN}",
+  gateway: "{GATEWAY_NAME}",
 });
 
-const unified = createUnified({apikey});
-
 const { text } = await generateText({
-  model: aigateway(unified('{provider}/{model}')),
-  prompt: 'What is Cloudflare?',
+  model: ai("{id}"),
+  prompt: "What is Cloudflare?",
 });`;
 
-export const aiSDKNativeCode = `import { createAiGateway } from 'ai-gateway-provider';
-import { {providerFactory} } from 'ai-gateway-provider/providers/{provider}';
+export const aiSDKNativeCode = `import { createAI } from "agents/models/ai-sdk";
+import { {providerFactory} } from "{pkg}";
 import { generateText } from "ai";
 
-const aigateway = createAiGateway({
+const ai = createAI({
   accountId: "{CLOUDFLARE_ACCOUNT_ID}",
-  gateway: '{GATEWAY_NAME}',
-  apiKey: '{CF_AIG_TOKEN}',
+  apiToken: "{CF_API_TOKEN}",
+  gateway: "{GATEWAY_NAME}",
 });
 
 const {provider} = {providerFactory}({apikey});
 
 const { text } = await generateText({
-  model: aigateway({providerUsage}('{model}')),
-  prompt: 'What is Cloudflare?',
+  model: ai({provider}("{model}"){vendorKey}),
+  prompt: "What is Cloudflare?",
 });`;
 
 export const curlCode = `curl -X POST https://gateway.ai.cloudflare.com/v1/{account_id}/{gateway_id}/compat/chat/completions \\

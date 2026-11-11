@@ -1,0 +1,6 @@
+releaseNotes: This hotfix addresses an issue building trusted certificate chains.
+version: 2026.6.906.0
+releaseDate: 2026-11-09T19:39:25.400Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.6.906.0
+packageSize: 149670632
+platformName: macOS

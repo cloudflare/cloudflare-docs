@@ -1,0 +1,460 @@
+---
+title: Handle outbound traffic
+pcx_content_type: how-to
+sidebar:
+  order: 6
+description: Intercept and handle outbound HTTP from containers using Workers.
+products:
+  - containers
+---
+
+import { TabItem, Tabs, TypeScriptExample } from "~/components";
+
+Outbound intercepts let you intercept and modify HTTP traffic from a container with trusted code.
+
+Use them to:
+
+- Allow or deny specific origin destinations
+- Safely inject authorization headers or tokens
+- Transparently reroute traffic
+- Add custom policy on outbound traffic (such as denying specific HTTP requests)
+- [Connect to Workers bindings](/containers/configuration/workers-connections/) like KV, R2, and Durable Objects
+
+An intercept sends matching requests from the container to a `WorkerEntrypoint` in your Worker. Register intercepts on [`ctx.container`](/containers/api/durable-object-container/#interceptoutboundhttp) with an entrypoint from `ctx.exports`. An intercept lasts until the container stops. Register intercepts each time the Durable Object starts the container.
+
+`ctx.exports` requires a [compatibility date](/workers/configuration/compatibility-dates/) of `2025-11-17` or later, or the `enable_ctx_exports` compatibility flag.
+
+## Block outbound traffic
+
+Set `enableInternet` to `false` when you start the container to block public Internet access:
+
+```ts
+const container = this.ctx.container!;
+container.start({
+	image: container.images.base,
+	enableInternet: false,
+});
+```
+
+When `enableInternet` is `false`, only traffic that an intercept handles can leave the container. Only HTTP and HTTPS traffic can be intercepted. Your intercepts decide which DNS lookups resolve. For more information, refer to [Non-HTTP traffic](#non-http-traffic).
+
+:::note
+`enableInternet` takes effect when the container starts. You can register intercepts before or after `start()`, and changes to intercepts affect a running container without a restart.
+:::
+
+## Allow traffic to specific hosts
+
+To allow only specific hosts, start the container with `enableInternet: false`. Then intercept each allowed host with an entrypoint that forwards the request:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+
+const ALLOWED_HOSTS = ["allowed.com"];
+
+export class AllowHosts extends WorkerEntrypoint<Env> {
+	fetch(request: Request): Promise<Response> | Response {
+		// For HTTPS, the intercept matches the TLS server name. The request URL always comes from the Host header.
+		if (!ALLOWED_HOSTS.includes(new URL(request.url).hostname)) {
+			return new Response("Forbidden", { status: 403 });
+		}
+		return fetch(request);
+	}
+}
+
+export class MyContainer extends DurableObject<Env> {
+	async startContainer(): Promise<void> {
+		const container = this.ctx.container!;
+		if (container.running) return;
+
+		for (const host of ALLOWED_HOSTS) {
+			await container.interceptOutboundHttp(host, this.ctx.exports.AllowHosts);
+			// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+			await container.interceptOutboundHttps(host, this.ctx.exports.AllowHosts);
+		}
+
+		container.start({
+			image: container.images.base,
+			enableInternet: false,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+Intercept targets also support hostname globs where `*` matches any sequence of characters, such as `*.example.com`. `interceptOutboundHttp()` also accepts IP addresses and CIDR ranges.
+
+## Block traffic to specific hosts
+
+By default, a container started with `enableInternet: true` can reach any host. To block specific hosts or IP ranges, intercept them with an entrypoint that rejects every request:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+
+const DENIED_HOSTS = ["some-nefarious-website.com"];
+const DENIED_RANGES = ["141.101.64.0/18"];
+
+export class DenyHost extends WorkerEntrypoint<Env> {
+	fetch(): Response {
+		return new Response("Forbidden", { status: 403 });
+	}
+}
+
+export class MyContainer extends DurableObject<Env> {
+	async startContainer(): Promise<void> {
+		const container = this.ctx.container!;
+		if (container.running) return;
+
+		const deny = this.ctx.exports.DenyHost;
+		for (const host of DENIED_HOSTS) {
+			await container.interceptOutboundHttp(host, deny);
+			await container.interceptOutboundHttps(host, deny);
+		}
+		for (const range of DENIED_RANGES) {
+			await container.interceptOutboundHttp(range, deny);
+		}
+
+		container.start({
+			image: container.images.base,
+			enableInternet: true,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::caution
+These intercepts cover HTTP and HTTPS requests that the container sends to the denied hostnames, and HTTP requests to the denied IP ranges. While `enableInternet` is `true`, all other connections reach the Internet directly, including connections on other ports. To block a destination on every port, start the container with `enableInternet: false` and [allow only what the container needs](#allow-traffic-to-specific-hosts).
+:::
+
+## Define outbound handlers
+
+Outbound handlers are `WorkerEntrypoint` classes that act as programmable egress proxies. They run on the same machine as the container and have access to all Workers bindings.
+
+To intercept every HTTP request on port `80` and every HTTPS request on port `443`, use `interceptAllOutboundHttp()` and `interceptOutboundHttps("*")`:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject, WorkerEntrypoint } from "cloudflare:workers";
+
+export class OutboundHandler extends WorkerEntrypoint<Env> {
+	fetch(request: Request): Promise<Response> | Response {
+		if (request.method !== "GET") {
+			console.log(`Blocked ${request.method} to ${request.url}`);
+			return new Response("Method Not Allowed", { status: 405 });
+		}
+		return fetch(request);
+	}
+}
+
+export class MyContainer extends DurableObject<Env> {
+	async startContainer(): Promise<void> {
+		const container = this.ctx.container!;
+		if (container.running) return;
+
+		const handler = this.ctx.exports.OutboundHandler;
+		await container.interceptAllOutboundHttp(handler);
+		// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+		await container.interceptOutboundHttps("*", handler);
+
+		container.start({
+			image: container.images.base,
+			enableInternet: false,
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+:::note
+HTTP requests to the outbound handler remain secure because they run on the same machine as the container. You can upgrade requests to HTTPS from the Worker itself to prevent plain-text traffic from reaching the internet.
+:::
+
+To map a specific domain name or IP address to a handler, use `interceptOutboundHttp()`. The hostname does not need to exist in public DNS:
+
+```ts
+export class MyWorkerHandler extends WorkerEntrypoint<Env> {
+	async fetch(request: Request): Promise<Response> {
+		// Run arbitrary Workers logic for this hostname
+		return await someWorkersFunction(request.body);
+	}
+}
+
+// In the Durable Object, before you start the container:
+await this.ctx.container!.interceptOutboundHttp(
+	"my.worker",
+	this.ctx.exports.MyWorkerHandler,
+);
+```
+
+Calls to `http://my.worker` from the container invoke the handler, which runs inside the Workers runtime, outside the container sandbox.
+
+When you combine hostname intercepts with `interceptAllOutboundHttp()` or a `*` target, register the hostname intercepts first. For more information, refer to [Handler precedence](#handler-precedence).
+
+## Securely inject credentials
+
+Because outbound handlers run in the Workers runtime — outside the container sandbox — they can hold secrets that the container itself never sees. The container makes a plain request, and the handler attaches the credential before forwarding it to the upstream service.
+
+```ts
+export class GitHubAuth extends WorkerEntrypoint<Env> {
+	fetch(request: Request): Promise<Response> | Response {
+		// For HTTPS, the intercept matches the TLS server name. The request URL always comes from the Host header.
+		const url = new URL(request.url);
+		if (url.protocol !== "https:" || url.hostname !== "github.com") {
+			return new Response("Forbidden", { status: 403 });
+		}
+
+		const requestWithAuth = new Request(url, request);
+		requestWithAuth.headers.set("x-auth-token", this.env.SECRET);
+		return fetch(requestWithAuth, { redirect: "manual" });
+	}
+}
+
+// In the Durable Object, before you start the container:
+// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+await this.ctx.container!.interceptOutboundHttps(
+	"github.com",
+	this.ctx.exports.GitHubAuth,
+);
+```
+
+Check the hostname and protocol of every request before you add a credential. The intercept matches the TLS server name, but the request URL comes from the `Host` header, which code in the container controls. `redirect: "manual"` returns redirects to the container, so the credential does not follow a redirect to another host.
+
+This is especially useful for agentic workloads where you cannot fully trust the code running inside the container. With this pattern:
+
+- **No token is exposed to the container.** The secret lives in the Worker's environment and is never passed into the sandbox.
+- **No token rotation inside the container.** Rotate the secret in your Worker's environment and every request picks it up immediately.
+- **Per-host and per-instance rules.** Pass the Durable Object ID in `props` to scope credentials or permissions to a specific container instance.
+
+Here, `props` carries the Durable Object ID, and the handler looks up a per-instance key from KV:
+
+```ts
+type Props = { containerId: string };
+
+export class InternalVcsAuth extends WorkerEntrypoint<Env, Props> {
+	async fetch(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		if (url.protocol !== "https:" || url.hostname !== "my-internal-vcs.dev") {
+			return new Response("Forbidden", { status: 403 });
+		}
+
+		const authKey = await this.env.KEYS.get(this.ctx.props.containerId);
+		if (authKey === null) {
+			return new Response("Forbidden", { status: 403 });
+		}
+
+		const requestWithAuth = new Request(url, request);
+		requestWithAuth.headers.set("x-auth-token", authKey);
+		return fetch(requestWithAuth, { redirect: "manual" });
+	}
+}
+
+// In the Durable Object, before you start the container:
+await this.ctx.container!.interceptOutboundHttps(
+	"my-internal-vcs.dev",
+	this.ctx.exports.InternalVcsAuth({
+		props: { containerId: this.ctx.id.toString() },
+	}),
+);
+```
+
+## HTTPS traffic
+
+`interceptOutboundHttp()` and `interceptAllOutboundHttp()` do not intercept HTTPS traffic. To intercept HTTPS, register the hostname with `interceptOutboundHttps()`, or register `*` to intercept HTTPS to every hostname:
+
+```ts
+// Make sure the container trusts /etc/cloudflare/certs/cloudflare-containers-ca.crt
+await this.ctx.container!.interceptOutboundHttps(
+	"*",
+	this.ctx.exports.OutboundHandler,
+);
+```
+
+This is useful for Sandbox-like services that redirect untrusted traffic from a container instance to Workers for filtering and modification.
+
+When HTTPS interception is active, an ephemeral CA file is created at `/etc/cloudflare/certs/cloudflare-containers-ca.crt`. The intercept terminates TLS with a certificate that this CA signs. Register HTTPS intercepts before you call `start()`, so the file exists when the container entrypoint runs.
+
+### Trust the CA certificate
+
+For HTTPS interception to work, you must trust the CA file. The CA is ephemeral and only exists at runtime, so do not try to bake it into your image during `docker build`. Instead, copy it into your distro's trust store and refresh the trust store from the container `entrypoint` before your application starts.
+
+If your base image does not already include the trust-store tooling, install the distro's `ca-certificates` package in your image first.
+
+Pass the entrypoint for your distro to `start()`:
+
+```ts
+const container = this.ctx.container!;
+await container.interceptOutboundHttps("*", this.ctx.exports.OutboundHandler);
+container.start({
+	image: container.images.base,
+	enableInternet: false,
+	entrypoint,
+});
+```
+
+<Tabs>
+	<TabItem label="Debian/Ubuntu">
+
+    ```ts
+    const entrypoint = [
+    	"sh",
+    	"-lc",
+    	[
+    		"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /usr/local/share/ca-certificates/cloudflare-containers-ca.crt",
+    		"update-ca-certificates",
+    		"exec node server.js",
+    	].join(" && "),
+    ];
+    ```
+
+    </TabItem>
+    <TabItem label="Alpine">
+
+    ```ts
+    const entrypoint = [
+    	"sh",
+    	"-lc",
+    	[
+    		"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /usr/local/share/ca-certificates/cloudflare-containers-ca.crt",
+    		"update-ca-certificates",
+    		"exec node server.js",
+    	].join(" && "),
+    ];
+    ```
+
+    </TabItem>
+    <TabItem label="Fedora/RHEL">
+
+    ```ts
+    const entrypoint = [
+    	"sh",
+    	"-lc",
+    	[
+    		"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /etc/pki/ca-trust/source/anchors/cloudflare-containers-ca.crt",
+    		"update-ca-trust",
+    		"exec node server.js",
+    	].join(" && "),
+    ];
+    ```
+
+    </TabItem>
+    <TabItem label="Arch">
+
+    ```ts
+    const entrypoint = [
+    	"sh",
+    	"-lc",
+    	[
+    		"cp /etc/cloudflare/certs/cloudflare-containers-ca.crt /etc/ca-certificates/trust-source/anchors/cloudflare-containers-ca.crt",
+    		"trust extract-compat",
+    		"exec node server.js",
+    	].join(" && "),
+    ];
+    ```
+
+    </TabItem>
+
+</Tabs>
+
+Replace `node server.js` with the command that starts your application.
+
+Most runtimes will then trust the CA through the system root store automatically. If your runtime uses its own CA bundle, point it at `/etc/cloudflare/certs/cloudflare-containers-ca.crt` directly, for example with `NODE_EXTRA_CA_CERTS` or `REQUESTS_CA_BUNDLE`.
+
+## Non-HTTP traffic
+
+Outbound intercepts only handle HTTP and HTTPS traffic. Other traffic never reaches an outbound handler.
+
+If you start the container with `enableInternet: false`, that traffic is denied. DNS lookups never reach a public resolver, so DNS cannot carry data out of the container. The container network answers lookups only for hostnames that your intercepts cover. Each answer is a placeholder address that routes the request to your Worker. Your intercepts decide which hostnames resolve:
+
+- With `interceptAllOutboundHttp()` or a `*` target, every hostname resolves, and your Worker allows or blocks each request.
+- With only hostname intercepts, only those hostnames resolve.
+
+Other lookups time out. For the exact rules, refer to [`interceptOutboundHttp`](/containers/api/durable-object-container/#interceptoutboundhttp).
+
+## Change policies at runtime
+
+Registering a target again replaces its handler. Open connections use the new handler without being dropped. You cannot remove an intercept while the container runs, so replace it with a handler that denies requests instead.
+
+Use Durable Object methods to change the handler for a host while the container runs. This lets a trusted Worker hold credentials without exposing them to an untrusted container. Register the HTTPS target with a handler that denies requests before you start the container, so that the CA file exists when the entrypoint runs. Later calls replace that handler:
+
+```ts
+export class MyContainer extends DurableObject<Env> {
+	async startContainer(): Promise<void> {
+		const container = this.ctx.container!;
+		if (container.running) return;
+
+		await container.interceptOutboundHttps(
+			"github.com",
+			this.ctx.exports.DenyHost,
+		);
+		container.start({
+			image: container.images.base,
+			enableInternet: false,
+		});
+	}
+
+	// Give the container access to github.com during setup
+	async allowGitHub(): Promise<void> {
+		await this.ctx.container!.interceptOutboundHttps(
+			"github.com",
+			this.ctx.exports.GitHubAuth,
+		);
+	}
+
+	// Remove access to GitHub
+	async denyGitHub(): Promise<void> {
+		await this.ctx.container!.interceptOutboundHttps(
+			"github.com",
+			this.ctx.exports.DenyHost,
+		);
+	}
+}
+```
+
+Call these methods from your Worker:
+
+```ts
+const container = env.MY_CONTAINER.getByName("my-instance");
+
+await container.allowGitHub();
+// Do something with github.com in your container...
+await container.denyGitHub();
+```
+
+To change per-request behavior without registering a new target, register the target again with new `props`. A container has a limit of 128 intercept entries. For more information, refer to [Intercept limit](/containers/api/durable-object-container/#intercept-limit).
+
+## Handler precedence
+
+Requests are evaluated as follows:
+
+1. `interceptOutboundHttp()` and `interceptAllOutboundHttp()` handle HTTP. `interceptOutboundHttps()` handles HTTPS.
+2. A hostname intercept that you register before `interceptAllOutboundHttp()` or a `*` target receives requests for that hostname. A hostname intercept registered after the broader rule on the same protocol and port receives no requests. Register specific hostnames first.
+3. If no intercept matches, the request reaches the public Internet when the container started with `enableInternet: true`. Otherwise, it is denied.
+
+## Troubleshoot outbound uploads
+
+An HTTP upload forwarded through an outbound handler can fail with `413 Payload Too Large` when its request body exceeds the [100 MiB default outbound limit](/containers/platform/limits/#outbound-http-request-body-size). Increasing **Maximum Upload Size** for your application's custom domain does not increase this limit.
+
+Identify whether the failure occurs on the incoming request to your application or the outbound request to the destination. Check the destination's limits as well. Compare the complete request body size with each applicable limit.
+
+If the destination supports multipart or resumable uploads, send smaller parts in separate requests. If you need a larger individual request, [contact Cloudflare with the upload details](/containers/platform/limits/#outbound-http-request-body-size).
+
+The error `Can't read from request stream after responding with an exception.` can accompany an upload failure. It can also occur after unrelated exceptions. Check earlier errors and the response status to identify the cause.
+
+## Local development
+
+`wrangler dev` supports outbound interception. A sidecar process is spawned inside the container's network namespace. It applies `TPROXY` rules to route matching traffic to the local Workerd instance, mirroring production behavior.
+
+## Related resources
+
+- [Connect to Workers bindings](/containers/configuration/workers-connections/) — Access KV, R2, Durable Objects, and other bindings from a container
+- [Control outbound traffic (Sandboxes)](/sandbox/sdk/guides/outbound-traffic/) — Sandbox SDK API for outbound handlers
+- [Environment variables and secrets](/containers/configuration/environment-variables/) — Configure secrets and environment variables
+- [Durable Object Container API](/containers/api/durable-object-container/) — Full `ctx.container` API reference

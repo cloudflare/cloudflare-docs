@@ -41,10 +41,9 @@ In this tutorial, you will use D1 and [Hono](https://hono.dev/) to build a JSON 
    />
 
    <Render
-   	file="c3-post-run-steps"
+   	file="c3-post-run-steps-hello-world"
    	product="workers"
    	params={{
-   		category: "hello-world",
    		type: "Worker only",
    		lang: "TypeScript",
    	}}
@@ -83,6 +82,7 @@ Install [Hono](https://hono.dev/), a lightweight web framework for building APIs
    ```toml
    name = "d1-comments-api"
    main = "src/index.ts"
+   upload_source_maps = true
    compatibility_date = "$today"
 
    [[d1_databases]]

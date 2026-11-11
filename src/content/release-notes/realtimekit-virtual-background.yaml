@@ -1,0 +1,18 @@
+---
+link: "/realtime/realtimekit/release-notes/web-virtual-bg/"
+productName: RealtimeKit Web Virtual Background
+productLink: "/realtime/realtimekit/"
+entries:
+  - publish_date: "2026-10-19"
+    title: RealtimeKit Web Virtual Background 0.0.3
+    description: |-
+      **Enhancement**
+
+      - Virtual background assets now load from `rtk-assets.realtime.cloudflare.com`, sharing an asset hostname with Web UI Kit. Refer to the [Network allowlist](/realtime/realtimekit/network-allowlist/) for domain requirements.
+
+  - publish_date: "2025-05-29"
+    title: RealtimeKit Web Virtual Background 0.0.2
+    description: |-
+      **Feature**
+
+      - Initial supported release of [`@cloudflare/realtimekit-virtual-background`](https://www.npmjs.com/package/@cloudflare/realtimekit-virtual-background). It adds virtual backgrounds to RealtimeKit meetings. Refer to [Video effects](/realtime/realtimekit/core/video-effects/) for setup and usage.

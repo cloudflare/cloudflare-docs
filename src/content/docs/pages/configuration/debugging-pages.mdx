@@ -90,11 +90,13 @@ If you are not using Functions or have reviewed that your Functions configuratio
 
 ## Differences between `pages.dev` and custom domains
 
-If your custom domain is proxied ([orange-clouded](/dns/proxy-status/#benefits)) through Cloudflare, your zone's settings, like caching, will apply.
+If your custom domain is [proxied](/dns/proxy-status/) through Cloudflare, requests use both [your zone's settings and Pages-managed settings](/pages/configuration/custom-domains/#zone-settings). If behavior differs from your `pages.dev` domain, review the security, redirect, transform, and cache rules that match your custom hostname.
 
-If you are experiencing issues with new content not being shown, go to **Rules** > **Page Rules** in the Cloudflare dashboard and check for a Page Rule with **Cache Everything** enabled. If present, remove this rule as Pages handles its own cache.
+If new content does not appear after a deployment, check for Cache Rules or legacy Page Rules, such as **Cache Everything**, that cache responses on your custom domain. Refer to [Caching and performance](/pages/configuration/serving-pages/#caching-and-performance) for guidance on changing these rules and purging stale content.
 
-If you are experiencing errors on your custom domain but not on your `pages.dev` domain, go to **DNS** > **Records** in the Cloudflare dashboard and set the DNS record for your project to be **DNS Only** (grey cloud). If the error persists, review your zone's configuration.
+A DNS-only comparison bypasses your zone's HTTP settings, including security rules, but still uses Pages-managed settings. It does not isolate every custom domain issue. [Custom domains for branch aliases](/pages/how-to/custom-branch-aliases/) require proxied DNS records. Unproxied records route to the production branch instead.
+
+If a request returns [Error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/), check [Browser Integrity Check on Pages](/pages/platform/known-issues/#browser-integrity-check). Turning off or skipping this check in your zone does not turn it off in Pages.
 
 ## Domain stuck in verification
 
@@ -102,7 +104,7 @@ If your [custom domain](/pages/configuration/custom-domains/) has not moved from
 
 ### Blocked HTTP validation
 
-Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/access-controls/policies/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), etc.), validation cannot be completed.
+Pages uses HTTP validation and needs to hit an HTTP endpoint during validation. If another Cloudflare product is in the way (such as [Access](/cloudflare-one/access-controls/policies/), [a redirect](/rules/url-forwarding/), [a Worker](/workers/), [a WAF custom rule](/waf/custom-rules/), or a [Client-Side Security content security rule](/client-side-security/rules/)), validation cannot be completed.
 
 To check this, run a `curl` command against your domain hitting `/.well-known/acme-challenge/randomstring`. For example:
 

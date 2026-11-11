@@ -60,11 +60,18 @@ Make a `POST` request to the [Identity Providers](/api/resources/zero_trust/subr
 
 </TabItem></Tabs>
 
-:::tip
-If your organization uses a third-party email scanning service (for example, Mimecast or Barracuda), add `noreply@notify.cloudflare.com` to the email scanning allowlist.
-:::
-
 To grant a user access to an application, simply add their email address to an [Access policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy).
+
+## Allow OTP emails through your email gateway
+
+If your email gateway blocks, rate limits, or scans OTP emails, allowlist the sender domain `notify.cloudflare.com`, the sender address `noreply@notify.cloudflare.com`, and these IP addresses:
+
+- `104.30.16.2`
+- `104.30.16.3`
+- `104.30.16.4`
+- `104.30.16.5`
+- `104.30.16.6`
+- `104.30.16.7`
 
 ## Log in with OTP
 

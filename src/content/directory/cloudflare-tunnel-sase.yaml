@@ -7,4 +7,4 @@ entry:
   url: /cloudflare-one/networks/connectors/cloudflare-tunnel/
 
 meta:
-  description: Connect private networks and resources to Cloudflare One
+  description: Connect private networks to Cloudflare with outbound-only tunnels, without exposing a public IP

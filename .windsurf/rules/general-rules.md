@@ -55,10 +55,10 @@ This code would only be rendered if the page has a magicWord variable set to "ha
 ## Components
 
 - If a component is used in a page, it needs to be imported below the initial frontmatter (`import { DashButton } from "~/components";`)
-- If `https://dash.cloudflare.com` is used in a series of steps, replace with the [`DashButton` component](https://developers.cloudflare.com/style-guide/components/dash-button/).
-- Replace `sh` code blocks that have requests to `https://api.cloudflare.com` with our [`APIRequest` component](https://developers.cloudflare.com/style-guide/components/api-request/).
-- Replace `txt` blocks attempted to show a file tree with our [`FileTree` component](https://developers.cloudflare.com/style-guide/components/file-tree/).
-- Replace `sh` blocks using `npm commands` with our [`PackageManagers` component](https://developers.cloudflare.com/style-guide/components/package-managers/).
-- Replace in-text mentions of Cloudflare's number of data centers, network capacity, or network peers with our [`PublicStats` component](https://developers.cloudflare.com/style-guide/components/public-stats/).
-- Replace `toml` or `json` code blocks with [Wrangler configuration](https://developers.cloudflare.com/workers/wrangler/configuration/#sample-wrangler-configuration) information with our [`WranglerConfig` component](https://developers.cloudflare.com/style-guide/components/wrangler-config/).
-- Replace `ts` or `typescript` code blocks with our [`TypeScriptExample` component](https://developers.cloudflare.com/style-guide/components/typescript-example/). Ignore this rule if the original code block is within a tutorial or other step-by-step guide that is specific to TypeScript.
+- If `https://dash.cloudflare.com` is used in a series of steps, replace with the [`DashButton` component](https://developers.cloudflare.com/style-guide/build-the-page/components/dash-button/).
+- Replace `sh` code blocks that have requests to `https://api.cloudflare.com` with our [`APIRequest` component](https://developers.cloudflare.com/style-guide/build-the-page/components/api-request/).
+- Replace `txt` blocks attempted to show a file tree with our [`FileTree` component](https://developers.cloudflare.com/style-guide/build-the-page/components/file-tree/).
+- Replace `sh` blocks using `npm commands` with our [`PackageManagers` component](https://developers.cloudflare.com/style-guide/build-the-page/components/package-managers/).
+- Replace in-text mentions of Cloudflare's number of data centers, network capacity, or network peers with our [`PublicStats` component](https://developers.cloudflare.com/style-guide/build-the-page/components/public-stats/).
+- Replace `toml` or `json` code blocks with [Wrangler configuration](https://developers.cloudflare.com/workers/wrangler/configuration/#sample-wrangler-configuration) information with our [`WranglerConfig` component](https://developers.cloudflare.com/style-guide/build-the-page/components/wrangler-config/).
+- Replace `ts` or `typescript` code blocks with our [`TypeScriptExample` component](https://developers.cloudflare.com/style-guide/build-the-page/components/typescript-example/). Ignore this rule if the original code block is within a tutorial or other step-by-step guide that is specific to TypeScript.

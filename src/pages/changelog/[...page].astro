@@ -22,7 +22,13 @@ export const getStaticPaths = (async ({ paginate }) => {
 		filter: (entry) => !entry.data.hidden,
 	});
 
-	return paginate(visibleNotes, { pageSize: 25 });
+	const pages = paginate(visibleNotes, { pageSize: 25 });
+	return pages.map((p) => {
+		const pageDigest = (p.props.page.data as typeof visibleNotes)
+			.map((n) => n.digest ?? n.id)
+			.join(",");
+		return { ...p, cacheKey: `${p.params.page ?? 1}:${pageDigest}` };
+	});
 }) satisfies GetStaticPaths;
 
 type Props = { page: Page<CollectionEntry<"changelog">> };

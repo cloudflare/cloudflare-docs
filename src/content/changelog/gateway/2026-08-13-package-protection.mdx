@@ -6,7 +6,7 @@ products:
 date: 2026-08-13
 ---
 
-Cloudflare Gateway can now detect software package downloads and give you policy control over supply chain traffic. When a developer or CI/CD pipeline downloads a package through Gateway, the proxy identifies the registry protocol from the request URL and extracts the package ecosystem, name, version, and namespace. You can then write [HTTP policies](/cloudflare-one/traffic-policies/http-policies/) using `pkg.*` selectors to allow or block package downloads.
+Cloudflare Gateway can now detect software package downloads and give you policy control over supply chain traffic. When a developer or CI/CD pipeline downloads a package through Gateway, the proxy identifies the registry protocol from the request URL and extracts the package ecosystem, name, version, and namespace. You can then write [HTTP policies](/cloudflare-one/traffic-controls/http-policies/) using `pkg.*` selectors to allow or block package downloads.
 
 ### Supported ecosystems
 
@@ -36,6 +36,6 @@ In the dashboard, select **Package Ecosystem** to access the package registry se
 
 Detection is based on the registry protocol rather than the hostname, so it works the same way whether traffic goes to a public registry, a corporate proxy such as Artifactory or Nexus, or a self-hosted mirror.
 
-Package registry security requires [TLS decryption](/cloudflare-one/traffic-policies/http-policies/tls-decryption/) to be turned on.
+Package registry security requires [TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) to be turned on.
 
-For more information, refer to [Package registry security](/cloudflare-one/traffic-policies/http-policies/package-registry-security/).
+For more information, refer to [Package registry security](/cloudflare-one/traffic-controls/http-policies/package-registry-security/).

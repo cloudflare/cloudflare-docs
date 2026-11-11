@@ -73,6 +73,16 @@ You can also set the traffic percentage to less than 100% to start a [gradual de
 
 You can also create versions and deployments directly with the API, library SDKs, and Terraform. Refer to [Infrastructure as Code](/workers/platform/infrastructure-as-code/) for examples.
 
+## In-flight requests
+
+A deployment changes which versions receive new requests. Requests already executing can continue running the version that accepted them. Deploying new code does not update code in an invocation that has already started.
+
+A successful deployment does not confirm that earlier invocations or their external operations have completed. If a release requires earlier work to finish, coordinate that in your application before making incompatible data or configuration changes.
+
+Existing requests remain subject to the [invocation duration rules](/workers/platform/limits/#duration) and [`ctx.waitUntil()` limits](/workers/runtime-apis/context/#waituntil). The grace period for [Workers runtime updates](/workers/platform/limits/#runtime-updates) applies when Cloudflare updates the runtime, rather than when you deploy your code.
+
+Durable Objects have separate [code update behavior](/durable-objects/deployments/durable-objects-code-updates/).
+
 ## Limits
 
 ### Deployments limit

@@ -1,0 +1,97 @@
+---
+title: x402 protocol
+description: Understand the x402 request, payment authorization, and settlement flow used by Monetization Gateway.
+pcx_content_type: concept
+sidebar:
+  order: 4
+products:
+  - monetization-gateway
+---
+
+[x402](https://www.x402.org/) is an HTTP payment protocol. Monetization Gateway uses x402 version 2 to request and settle payments within an HTTP exchange.
+
+The protocol uses two client-facing headers. Each header contains Base64-encoded JSON.
+
+| Header              | Direction         | Purpose                                              |
+| ------------------- | ----------------- | ---------------------------------------------------- |
+| `PAYMENT-REQUIRED`  | Gateway to client | Describes the resource and accepted payment options. |
+| `PAYMENT-SIGNATURE` | Client to Gateway | Provides the signed payment authorization.           |
+
+## Request a protected resource
+
+The client first requests the resource without payment:
+
+```http
+GET /premium-data HTTP/1.1
+Host: api.example.com
+```
+
+Monetization Gateway responds with `402 Payment Required`. The `PAYMENT-REQUIRED` header contains the encoded payment requirements:
+
+```http
+HTTP/1.1 402 Payment Required
+PAYMENT-REQUIRED: <BASE64_ENCODED_PAYMENT_REQUIRED>
+```
+
+After Base64 decoding, a fixed-price response has this general structure:
+
+```json
+{
+	"x402Version": 2,
+	"resource": {
+		"url": "https://api.example.com/premium-data",
+		"description": "Premium data",
+		"mimeType": "application/json"
+	},
+	"accepts": [
+		{
+			"scheme": "exact",
+			"network": "<CAIP_2_NETWORK>",
+			"asset": "<ASSET_IDENTIFIER>",
+			"amount": "25000",
+			"payTo": "<RECEIVING_WALLET>",
+			"maxTimeoutSeconds": 3600,
+			"extra": {}
+		}
+	]
+}
+```
+
+The `accepts` array tells the client how it can pay. Important fields include:
+
+| Field               | Description                                                                                          |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| `scheme`            | Payment scheme. Monetization Gateway uses `exact` for fixed pricing and `upto` for variable pricing. |
+| `network`           | Blockchain network identifier in CAIP-2 format.                                                      |
+| `asset`             | Asset identifier used for payment.                                                                   |
+| `amount`            | Fixed charge or maximum authorized charge in atomic units.                                           |
+| `payTo`             | Receiving wallet configured by the seller.                                                           |
+| `maxTimeoutSeconds` | Maximum time allowed for payment authorization.                                                      |
+
+## Authorize payment
+
+The client selects an accepted option and signs a payment authorization. It then repeats the request with a `PAYMENT-SIGNATURE` header:
+
+```http
+GET /premium-data HTTP/1.1
+Host: api.example.com
+PAYMENT-SIGNATURE: <BASE64_ENCODED_PAYMENT_PAYLOAD>
+```
+
+The signed payload binds the authorization to the selected payment requirements. Use an x402 client library to create this payload instead of constructing it manually.
+
+To implement a paying client, refer to [x402 payments](/agents/tools/payments/x402/). To pay from a Cloudflare Agent, refer to [Pay from Agents SDK](/agents/tools/payments/x402/pay-from-agents-sdk/).
+
+## Validate at the origin (Cloudflare-specific)
+
+After verifying the client authorization, Monetization Gateway forwards the request to your origin. It adds a `PAYMENT-CONTEXT` header containing a signed JSON Web Token (JWT).
+
+Your origin must validate this token before serving the paid resource. Variable-price origins also return the actual charge in `PAYMENT-SETTLEMENT`. These headers are between Monetization Gateway and your origin. They are not x402 client headers.
+
+For validation and settlement requirements, refer to [Payment validation](/monetization-gateway/configuration/payment-validation/).
+
+## Return the resource
+
+After successful settlement, Monetization Gateway returns the origin response.
+
+If verification or settlement fails, the Gateway does not serve the protected resource. Clients should inspect the HTTP status and x402 response before retrying.

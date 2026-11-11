@@ -24,6 +24,8 @@ Run `wrangler deploy` in a project without a Wrangler configuration file and Wra
 <PackageManagers type="exec" pkg="wrangler" args="deploy" />
 
 Learn more about [automatic project configuration](/workers/framework-guides/automatic-configuration/).
+
+To move an existing Nuxt project from Vercel, refer to [Migrate Nuxt from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/nuxt/).
 :::
 
 <AutoconfigDiagram
@@ -31,7 +33,6 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 	configs={[
 		{ label: "main", file: "wrangler.jsonc", value: ".output/server/index.mjs" },
 		{ label: "assets", file: "wrangler.jsonc", value: "directory: .output/public" },
-		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 		{ label: "preset", file: "nuxt.config.ts", value: "cloudflare" },
 	]}
