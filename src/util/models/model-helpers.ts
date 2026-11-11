@@ -1,10 +1,16 @@
-/** Models whose served legacy aliases explicitly canonicalize to /ai/models. */
-export const unifiedCanonicalModelIds = new Set([
-	"@cf/cloudflare/clef",
-	"@cf/cloudflare/clef-flash",
-	"@cf/cloudflare/clef-omni",
-	"@cf/cloudflare/clairic",
-]);
+/**
+ * Models whose served legacy aliases explicitly canonicalize to /ai/models,
+ * mapped to their display names (legacy rows only carry the model ID).
+ */
+export const unifiedCanonicalModels: Record<string, string> = {
+	"@cf/cloudflare/clef": "Clef",
+	"@cf/cloudflare/clef-flash": "Clef-flash",
+	"@cf/cloudflare/clef-omni": "Clef-omni",
+	"@cf/cloudflare/clairic": "Clairic",
+};
+export const unifiedCanonicalModelIds = new Set(
+	Object.keys(unifiedCanonicalModels),
+);
 
 /**
  * Extract the author/provider from a model ID.

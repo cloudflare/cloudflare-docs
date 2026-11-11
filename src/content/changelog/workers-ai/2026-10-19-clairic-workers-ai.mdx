@@ -8,9 +8,9 @@ date: 2026-10-19
 
 import { TypeScriptExample } from "~/components";
 
-[`@cf/cloudflare/clairic`](/workers-ai/models/clairic/) is now available on Workers AI as a preview. Clairic is the first [extraction model](/workers-ai/concepts/extraction-models/): a System One model that answers with values instead of text. We intend to release the model with open weights soon.
+[`@cf/cloudflare/clairic`](/ai/models/@cf/cloudflare/clairic/) is now available on Workers AI as a preview. Clairic is the first [extraction model](/workers-ai/concepts/extraction-models/): a System One model that answers with values instead of text. We intend to release the model with open weights soon.
 
-Decision models such as [Clef](/workers-ai/models/clef/) choose among options you define up front. Many structured-output tasks do not have answers you can list in advance: an invoice total, a delivery date, the number of days a shipment is late, or what a repair will cost. Clairic handles these. You send a state and a schema of typed fields, and it returns one typed value per field. A value is read from the input, computed from it, or predicted beyond it.
+Decision models such as [Clef](/ai/models/@cf/cloudflare/clef/) choose among options you define up front. Many structured-output tasks do not have answers you can list in advance: an invoice total, a delivery date, the number of days a shipment is late, or what a repair will cost. Clairic handles these. You send a state and a schema of typed fields, and it returns one typed value per field. A value is read from the input, computed from it, or predicted beyond it.
 
 Clairic does not generate tokens. It reads your input in one pass and decodes each answer under the rules of its type, so every answer is a valid value of the type you asked for, or `null` when the input does not determine it.
 
@@ -81,4 +81,4 @@ Clairic costs $0.10 per million input tokens. Because it generates no tokens, th
 
 Use Clairic through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`) or the REST API at `/ai/run`. You can also use [AI Gateway](/ai-gateway/) with these endpoints.
 
-For more information, refer to the [Clairic model page](/workers-ai/models/clairic/), [extraction models](/workers-ai/concepts/extraction-models/), [pricing](/workers-ai/platform/pricing/), and the [blog post](https://blog.cloudflare.com/clairic-extraction-model/).
+For more information, refer to the [Clairic model page](/ai/models/@cf/cloudflare/clairic/), [extraction models](/workers-ai/concepts/extraction-models/), [pricing](/workers-ai/platform/pricing/), and the [blog post](https://blog.cloudflare.com/clairic-extraction-model/).
