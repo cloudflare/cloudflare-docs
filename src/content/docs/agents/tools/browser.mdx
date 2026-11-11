@@ -574,7 +574,7 @@ You might still use the legacy tools for the following:
 
 - **Your own browser.** Connect to a CDP endpoint you manage with `cdpUrl`. `Browser` supports only Browser Run's Chromium engine.
 - **Kitesurf.** A [Kitesurf](/browser-run/kitesurf/) browser lives only as long as its CDP WebSocket, so it cannot be a persistent browser.
-- **Approval or human handoff within a run.** The [legacy Code Mode runtime](/agents/runtime/code-mode/legacy/) can pause a run for approval and resume it with the browser session intact. `browserTool` does not pause runs.
+- **Approval or human handoff within a run.** The durable runtime in [`@cloudflare/codemode`](/agents/runtime/code-mode/legacy/) can pause a run for approval and resume it with the browser session intact. `browserTool` does not pause runs.
 
 You do not need the legacy tools to get a fresh browser for each run. With `browserTool`, call [`browser.close()`](#close-the-browser) after a turn, or set a short `keepAliveMs`, so the next run starts a new browser. To read a page without a browser, use the [`web_fetch` tool](/agents/tools/web-fetch/).
 

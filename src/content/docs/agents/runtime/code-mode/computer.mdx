@@ -16,7 +16,7 @@ import {
 
 [Cloudflare Computer](https://github.com/cloudflare/computer) is the recommended way to add [Code Mode](/agents/concepts/code-mode/) to an agent. It gives the model an `exec` tool that runs JavaScript in a [Dynamic Worker](/dynamic-workers/). You decide what that code can reach by passing it modules. Each module is imported under a `codemode:` name, and its functions run in your agent.
 
-Computer runs code with `CodemodeBackend` from `@cloudflare/computer/backends/codemode`, and adds a persistent file system, the model-facing tools, and prebuilt modules. To run code without a workspace, refer to [Use the executor](/agents/runtime/code-mode/executor/). For the file system and file tools, refer to [Workspace](/agents/tools/workspace/).
+Computer runs code with `CodemodeBackend` from `@cloudflare/computer/backends/codemode`, and adds a persistent file system, the model-facing tools, and prebuilt modules. For the file system and file tools, refer to [Workspace](/agents/tools/workspace/).
 
 ## Install
 
@@ -297,10 +297,9 @@ List waiting calls with `workspace.runtime.pending()`, and answer one with `work
 ## Use Computer with a harness
 
 - [Think](/agents/harnesses/think/) has a workspace at `this.workspace` and adds `exec` once the workspace has a backend. Refer to [Call the agent's tools from code](/agents/harnesses/think/tools/#call-the-agents-tools-from-code).
-- [Pi](/agents/harnesses/pi/) takes the workspace tools from `createPiTools()`. Build `codemode:tools` with `forPiTools()`. Refer to [File system](/agents/tools/workspace/#pi).
+- [Pi](/agents/harnesses/pi/) takes the workspace tools from `createPiTools()`. Build `codemode:tools` with `forPiTools()`. Refer to [Workspace](/agents/tools/workspace/#pi).
 
 ## Related resources
 
 - [Workspace](/agents/tools/workspace/): the workspace, file tools, backend options, and resuming runs after a restart.
-- [Use the executor](/agents/runtime/code-mode/executor/): run code without a workspace.
 - [Computer documentation](https://github.com/cloudflare/computer/tree/main/docs): the full interfaces of every module.

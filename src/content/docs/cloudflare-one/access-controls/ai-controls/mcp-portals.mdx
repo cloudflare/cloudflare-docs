@@ -537,7 +537,7 @@ This sanitization happens automatically. You do not need to call any helper func
 If you are building an MCP client with the [Agents SDK](/agents/model-context-protocol/apis/client-api/), the SDK provides helper functions for working with server IDs and tool names:
 
 - **`normalizeServerId`** (exported from `agents/mcp/client`) normalizes a caller-supplied server ID into a safe string. For example, `"GitHub MCP!"` becomes `"github-mcp"`. The SDK calls this automatically when you pass an `id` option to `addMcpServer()`.
-- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. It is part of the [legacy Code Mode API](/agents/runtime/code-mode/legacy/).
+- **`sanitizeToolName`** (exported from `@cloudflare/codemode`) converts a tool name into a valid JavaScript identifier by replacing hyphens and dots with underscores. This is called automatically in Code Mode contexts. For moving Code Mode tools to Computer, refer to [Move from `@cloudflare/codemode`](/agents/runtime/code-mode/legacy/).
 
 :::note
 The Agents SDK uses a `tool_{server_id}_{tool_name}` format (with a `tool_` prefix) when returning tools from `getAITools()`. This differs from the portal format, which uses `{server_id}_{tool_name}` without the prefix.
