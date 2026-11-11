@@ -16,7 +16,7 @@ Use this page for guidance on how to choose coordination boundaries, size worklo
 
 ## Starting considerations {/* decision-summary */}
 
-### Primary Recommendations
+### Primary recommendations
 
 1. **Separate control-plane changes from data-plane traffic.** Durable Objects can serve either role. Publish configuration outward so routine application requests do not depend on a control-plane object.
 2. **Choose an atom of coordination.** Use one object for a room, session, document, account, or other unit whose state must change together.
@@ -25,7 +25,7 @@ Use this page for guidance on how to choose coordination boundaries, size worklo
 5. **Use complementary services.** Distribute configuration with KV, store large objects in R2, and send analytical events to [Basin Pipelines](/basin-pipelines/) instead of collecting them in one global object.
 6. **Plan for hot Durable Objects.** Identify the limiting resource, then add shards or layers that preserve the coordination your application needs.
 
-### Anti-Patterns
+### Anti-patterns
 
 - Avoid routing unrelated, high-volume application requests through the same object just to discover their destination or update shared configuration.
 - Avoid making each data-plane request write control-plane state or wait for a control-plane decision that could be published in advance.

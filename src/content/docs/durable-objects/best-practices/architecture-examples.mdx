@@ -95,7 +95,7 @@ Keep event export off the synchronous request path, and define delivery, retry, 
 
 For the underlying design choices, refer to [Separate control and data planes](/durable-objects/best-practices/architecture-guidance/#control-plane) and [Account for propagation consistency](/durable-objects/best-practices/architecture-guidance/#configuration-propagation). The existing [control and data plane reference architecture](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/) also shows Durable Objects in both roles.
 
-## Fan out (e.g., hubs at the edge) {/* pattern-fan-out-hub */}
+## Fan out (for example, hubs at the edge) {/* pattern-fan-out-hub */}
 
 Deliver one live stream, such as inventory or service status updates, to many clients without every client holding its own connection to your origin.
 
@@ -135,6 +135,7 @@ import { DurableObject } from "cloudflare:workers";
 
 export class TopicHub extends DurableObject<Env> {
 	private upstream: WebSocket | null = null;
+	private upstreamConnecting: Promise<void> | null = null;
 
 	async fetch(request: Request): Promise<Response> {
 		const topic = new URL(request.url).searchParams.get("topic")!;
@@ -149,6 +150,15 @@ export class TopicHub extends DurableObject<Env> {
 	// One connection to the origin per hub, however many subscribers it has
 	private async ensureUpstream(topic: string) {
 		if (this.upstream) return;
+		if (!this.upstreamConnecting) {
+			this.upstreamConnecting = this.connectUpstream(topic).finally(() => {
+				this.upstreamConnecting = null;
+			});
+		}
+		await this.upstreamConnecting;
+	}
+
+	private async connectUpstream(topic: string) {
 		const res = await fetch(`${this.env.ORIGIN_URL}/topics/${topic}`, {
 			headers: { Upgrade: "websocket" },
 		});
@@ -156,7 +166,9 @@ export class TopicHub extends DurableObject<Env> {
 		if (!ws) throw new Error("Origin refused the WebSocket upgrade");
 		ws.accept();
 		ws.addEventListener("message", (event) => this.broadcast(event.data));
-		ws.addEventListener("close", () => (this.upstream = null));
+		ws.addEventListener("close", () => {
+			if (this.upstream === ws) this.upstream = null;
+		});
 		this.upstream = ws;
 	}
 
@@ -173,7 +185,14 @@ export class TopicHub extends DurableObject<Env> {
 	async webSocketClose(ws: WebSocket, code: number) {
 		ws.close(code);
 		// Close the upstream link when the last subscriber leaves
-		if (this.ctx.getWebSockets().length <= 1) this.upstream?.close();
+		const hasSubscribers = this.ctx
+			.getWebSockets()
+			.some((socket) => socket !== ws);
+		if (!hasSubscribers) {
+			const upstream = this.upstream;
+			this.upstream = null;
+			upstream?.close();
+		}
 	}
 }
 ```
@@ -184,7 +203,7 @@ While the upstream socket is open, the hub stays in memory and cannot hibernate.
 
 **Public case study:** [Kaizen Gaming](https://www.cloudflare.com/case-studies/kaizen-gaming/) describes a real-time distribution use case. This example is a generalized design, not a reproduction of that deployment.
 
-## Fan in (e.g., ingestion buffer) {/* pattern-ingest-buffer */}
+## Fan in (for example, ingestion buffer) {/* pattern-ingest-buffer */}
 
 Accept bursts of application work that needs shard-local deduplication or coordination before a backend processes it.
 
@@ -219,7 +238,7 @@ KV holds per-stream config (shard count, layout version).
 3. The alarm flushes a batch to R2 (or [Queues](/queues/)). The backend drains batches at its own pace.
 4. Choose retention, replay, and recovery requirements before acknowledging events. The buffer alone is not an end-to-end delivery guarantee.
 
-The batch size and flush interval below are example settings. Tune both against your latency target and backend capacity.
+The batch size and flush interval in `ingest-shard.ts` are example settings. Tune both against your latency target and backend capacity.
 
 <TypeScriptExample filename="ingest-shard.ts">
 
@@ -289,7 +308,7 @@ export class IngestShard extends DurableObject<Env> {
 
 If the R2 write succeeds but the alarm fails before it marks rows as flushed, the batch is written again on retry. Make the backend idempotent by deduplicating on `event_id`.
 
-## Session per Durable Object (e.g., coding-agent session) {/* pattern-session */}
+## Session per Durable Object (for example, coding-agent session) {/* pattern-session */}
 
 A long-lived, multiplayer work session, such as a coding-agent session, a document, or a design file, that streams in real time to several clients and integrations at once.
 
@@ -327,7 +346,7 @@ Web app | mobile app | CLI client | external webhooks
 
 For example, a background coding agent can give every session its own Durable Object and SQLite database to isolate session state and coordinate concurrent streams.
 
-## Per-user constellation (e.g., agent loop per Durable Object) {/* pattern-per-user */}
+## Per-user constellation (for example, agent loop per Durable Object) {/* pattern-per-user */}
 
 A consumer AI assistant where each user has several independent, stateful things (memory, conversations, scheduled tasks), and every agent run can take minutes and call many tools.
 
@@ -417,7 +436,7 @@ export class AgentRun extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-## Shared shards placed by load (e.g., background jobs) {/* pattern-place-by-load */}
+## Shared shards placed by load (for example, background jobs) {/* pattern-place-by-load */}
 
 A platform runs millions of small entities (jobs, workflow instances, devices), and each one has a little background work. Pinning each entity to a fixed shard by hash looks even on paper. In practice, a few hot entities land on the same shard while other shards sit idle, and there is no way to move them.
 
@@ -560,7 +579,7 @@ export class EngineShard extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-## Workers for Platforms (e.g., tenant-deployed code) {/* workers-for-platforms */}
+## Workers for Platforms (for example, tenant-deployed code) {/* workers-for-platforms */}
 
 If your customers deploy their own code, [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) separates deployment administration from runtime dispatch:
 
