@@ -185,7 +185,8 @@ Add the VPC Service binding to your Wrangler configuration file:
 	"vpc_services": [
 		{
 			"binding": "VPC_SERVICE",
-			"service_id": "<YOUR_SERVICE_ID>"
+			"service_id": "<YOUR_SERVICE_ID>",
+			"remote": true
 		}
 	]
 }
@@ -227,7 +228,7 @@ export default {
 
 ## 6. Test locally
 
-Test your Worker locally. You must use remote VPC Services, using either [Workers remote bindings](/workers/local-development/#remote-bindings) as was configured in your `wrangler.jsonc` configuration file, or using `npx wrangler dev --remote`:
+Test your Worker locally with [remote bindings](/workers/local-development/#remote-bindings). The `remote: true` setting in step 4 connects `VPC_SERVICE` to your configured VPC Service during local development:
 
 ```sh
 npx wrangler dev
