@@ -12,7 +12,6 @@
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 import { Badge } from "~/components/ui/badge";
 import ModelBadges from "./ModelBadges.astro";
-import { authorData } from "~/components/models/data";
 import {
 	facetValues,
 	formatModelPricing,
@@ -42,7 +41,6 @@ const dateValue = model.createdAt ? new Date(model.createdAt).getTime() : 0;
 const { pinnedIndex } = model;
 const isPinned = pinnedIndex >= 0;
 // Author logo; initial-letter tile when the author id is unmapped.
-const authorLogo = authorData[model.author]?.logo;
 const pricing = formatModelPricing(model.pricing);
 // Format all providers serving this model
 const providers = (model.modelProviders ?? [])
@@ -104,13 +102,21 @@ const providers = (model.modelProviders ?? [])
 			</>
 		)}
 		<div class={`flex items-center gap-3${isPinned ? " pr-9" : ""}`}>
-			{authorLogo ? (
-				<img
-					src={authorLogo}
-					alt={`${model.authorName} logo`}
-					loading="lazy"
-					class="border-border bg-card size-10 shrink-0 rounded-md border object-contain p-1 dark:bg-gray-200"
-				/>
+			{model.authorIcon ? (
+				<span class="border-border bg-card size-10 shrink-0 rounded-md border p-1">
+					<img
+						src={model.authorIcon.light}
+						alt={`${model.authorName} logo`}
+						loading="lazy"
+						class="size-full object-contain dark:hidden"
+					/>
+					<img
+						src={model.authorIcon.dark}
+						alt={`${model.authorName} logo`}
+						loading="lazy"
+						class="hidden size-full object-contain dark:block"
+					/>
+				</span>
 			) : (
 				<span
 					aria-hidden="true"

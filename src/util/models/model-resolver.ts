@@ -5,13 +5,13 @@
  * namespace.
  */
 import { getCollection, type CollectionEntry } from "astro:content";
-import { authorData } from "~/components/models/data";
 import type {
 	ModelBanner,
 	ModelCardData,
 	ModelExample,
 	ModelProvider,
 	ModelView,
+	ProviderBrand,
 } from "./model-types";
 import { getModelAuthor } from "./model-helpers";
 import { CAPABILITY_PROPERTIES } from "./model-properties";
@@ -20,10 +20,6 @@ import { pinnedModelNames } from "./facets";
 export type CatalogEntry = CollectionEntry<"catalog-models">;
 
 const isTrue = (v: unknown): boolean => v === true || v === "true";
-
-/** Display name from the author table, falling back to the raw id. */
-const authorDisplayName = (author: string): string =>
-	authorData[author]?.name ?? author;
 
 /**
  * Pinned-first sort tier. The hardcoded `pinnedModelNames` list keeps its
@@ -53,7 +49,7 @@ const hasPricing = (
  */
 function resolveModelProviders(
 	model: Record<string, any>,
-	providerNames: ReadonlyMap<string, string>,
+	brands: ReadonlyMap<string, ProviderBrand>,
 ): ModelProvider[] | null {
 	const details = (model.provider_details ?? []) as Array<{
 		id: string;
@@ -72,7 +68,7 @@ function resolveModelProviders(
 	return providers
 		.sort((x, y) => x.ordinal - y.ordinal)
 		.map((provider) => {
-			const name = providerNames.get(provider.provider) ?? provider.provider;
+			const name = brands.get(provider.provider)?.name ?? provider.provider;
 			if (hasPricing(provider.pricing)) return { ...provider, name };
 			const detailPricing = details.find(
 				(detail) => detail.id === provider.provider,
@@ -111,8 +107,10 @@ function buildView(args: {
 	banner?: ModelBanner | null;
 	pinned?: boolean;
 	digest?: number | string;
+	brands: ReadonlyMap<string, ProviderBrand>;
 }): ModelView {
 	const author = getModelAuthor(args.name);
+	const authorBrand = args.brands.get(author);
 	const capabilities = args.propertiesList
 		.filter((p) => p.property_id in CAPABILITY_PROPERTIES && p.value === "true")
 		.map((p) => CAPABILITY_PROPERTIES[p.property_id].label);
@@ -124,7 +122,8 @@ function buildView(args: {
 		shortName: args.name.split("/").at(-1) ?? args.name,
 		displayName: args.displayName,
 		author,
-		authorName: authorDisplayName(author),
+		authorName: authorBrand?.name ?? author,
+		authorIcon: authorBrand?.icon ?? null,
 		hosting: args.hosting,
 		dataSource: args.dataSource,
 		source: args.source,
@@ -157,7 +156,7 @@ function buildView(args: {
  */
 export function catalogToResolved(
 	entry: CatalogEntry,
-	providerNames: ReadonlyMap<string, string> = new Map(),
+	brands: ReadonlyMap<string, ProviderBrand> = new Map(),
 ): ModelView {
 	const model = entry.data as Record<string, any>;
 	const hosted = isHostedModelId(model.model_id);
@@ -212,11 +211,12 @@ export function catalogToResolved(
 		modelId: model.model_id,
 		requestFormats: (model.request_formats as string[] | undefined) ?? null,
 		pricing: model.pricing,
-		modelProviders: resolveModelProviders(model, providerNames),
+		modelProviders: resolveModelProviders(model, brands),
 		examples: (model.examples as ModelExample[] | undefined) ?? [],
 		banner: (model.banner as ModelBanner | null | undefined) ?? null,
 		pinned: model.pinned === true,
 		digest: entry.digest,
+		brands,
 	});
 }
 
@@ -230,13 +230,19 @@ export async function getResolvedModels(): Promise<ModelView[]> {
 		getCollection("catalog-models"),
 		getCollection("catalog-providers"),
 	]);
-	// Provider ids and their aliases → display name.
-	const providerNames = new Map(
-		providers.flatMap(({ data }) =>
-			[data.id, ...data.aliases].map((id) => [id, data.name] as const),
-		),
+	// Provider ids and their aliases → display name and icon. The catalog CMS
+	// is the single source of provider branding.
+	const brands = new Map<string, ProviderBrand>(
+		providers.flatMap(({ data }) => {
+			const { brand, brand_dark } = data.icons ?? {};
+			const brandInfo: ProviderBrand = {
+				name: data.name,
+				icon: brand ? { light: brand, dark: brand_dark ?? brand } : null,
+			};
+			return [data.id, ...data.aliases].map((id) => [id, brandInfo] as const);
+		}),
 	);
-	return entries.map((entry) => catalogToResolved(entry, providerNames));
+	return entries.map((entry) => catalogToResolved(entry, brands));
 }
 
 /** Only Cloudflare-hosted (`@cf/*`) models. Feeds `/workers-ai/models`. */

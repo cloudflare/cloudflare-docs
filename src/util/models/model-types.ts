@@ -8,6 +8,18 @@ export interface CodeSnippet {
 }
 
 /** Provider information with pricing details, ordered by priority. */
+/** Light and dark theme variants of a provider's brand icon (URLs). */
+export interface ProviderIcon {
+	light: string;
+	dark: string;
+}
+
+/** Display name and icon for a provider id, from `/ai/catalog/providers`. */
+export interface ProviderBrand {
+	name: string;
+	icon: ProviderIcon | null;
+}
+
 export interface ModelProvider {
 	provider: string;
 	/** Display name from the catalog's providers list; falls back to `provider`. */
@@ -60,8 +72,10 @@ export interface ModelView {
 	displayName: string;
 	/** Author org id, e.g. `meta` / `openai`. */
 	author: string;
-	/** Author display name, e.g. `Meta` / `OpenAI`. */
+	/** Author display name, e.g. `Meta` / `OpenAI`; falls back to `author`. */
 	authorName: string;
+	/** Author brand icon from the catalog's providers list, if it has one. */
+	authorIcon: ProviderIcon | null;
 	/** "hosted" (Cloudflare) | "proxied" (third-party). */
 	hosting: "hosted" | "proxied";
 	dataSource: "catalog" | "legacy";
