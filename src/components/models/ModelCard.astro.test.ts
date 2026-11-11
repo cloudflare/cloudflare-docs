@@ -15,6 +15,7 @@ const model: ModelCardData = {
 	shortName: "verylongmodelnamethatmustwrapwithouttruncation",
 	author: "fixture-author",
 	authorName: "Fixture Author",
+	authorIcon: null,
 	hosting: "proxied",
 	dataSource: "catalog",
 	source: 2,
@@ -178,8 +179,20 @@ describe("ModelCard", () => {
 	});
 
 	test("fills provider pricing from top-level pricing and provider_details", () => {
-		const providerNames = new Map([["google-vertex-ai", "Google"]]);
-		const resolve = (fields: Record<string, unknown>) =>
+		// One CMS provider reachable by id (the author) and alias (the
+		// serving provider).
+		const google = {
+			name: "Google",
+			icon: {
+				light: "https://icons/google.svg",
+				dark: "https://icons/g-dark.svg",
+			},
+		};
+		const brands = new Map([
+			["google", google],
+			["google-vertex-ai", google],
+		]);
+		const view = (fields: Record<string, unknown> = {}) =>
 			catalogToResolved(
 				{
 					id: "fixture",
@@ -204,8 +217,15 @@ describe("ModelCard", () => {
 						...fields,
 					},
 				},
-				providerNames,
-			).modelProviders;
+				brands,
+			);
+		const resolve = (fields: Record<string, unknown>) =>
+			view(fields).modelProviders;
+
+		expect(view()).toMatchObject({
+			authorName: "Google",
+			authorIcon: google.icon,
+		});
 
 		// Sole provider without pricing: use the model's top-level pricing.
 		expect(
