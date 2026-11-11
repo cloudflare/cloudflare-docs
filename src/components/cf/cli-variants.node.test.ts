@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { validateCliVariants } from "./cli-variants";
+import { orderCliVariants, validateCliVariants } from "./cli-variants";
 
 const variant = (cli: string, body = "<p>Text</p>") =>
 	`<div data-nb-cli-variant="${cli}" data-cli-variants-item="${cli}">${body}</div>`;
@@ -51,5 +51,20 @@ describe("validateCliVariants", () => {
 		],
 	])("rejects %s", (_name, html, message) => {
 		expect(validateCliVariants(html)).toContain(message);
+	});
+});
+
+describe("orderCliVariants", () => {
+	const wrangler = variant(
+		"wrangler",
+		"<div><div>Run   Wrangler</div></div><div>&amp; wait.</div>",
+	);
+	const cf = variant("cf", "<pre><code>cf deploy\n</code></pre>");
+
+	test.each([
+		["Wrangler first", `\n${wrangler}\n\n${cf}\n`],
+		["cf first", cf + wrangler],
+	])("puts cf first when the author wrote %s", (_name, html) => {
+		expect(orderCliVariants(html)).toBe(cf + wrangler);
 	});
 });

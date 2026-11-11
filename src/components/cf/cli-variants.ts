@@ -1,7 +1,7 @@
 import { HTMLElement, NodeType, parse } from "node-html-parser";
 
 const ITEM = "data-cli-variants-item";
-const CLIS = ["wrangler", "cf"] as const;
+const CLIS = ["cf", "wrangler"] as const;
 
 /**
  * Checks the rendered children of `<CliVariants>` and returns a problem
@@ -46,4 +46,18 @@ export function validateCliVariants(html: string): string | null {
 	}
 
 	return null;
+}
+
+/**
+ * Returns the validated children of `<CliVariants>` with cf first. Variants
+ * are sliced from the input, not serialised again, so their markup is
+ * unchanged.
+ */
+export function orderCliVariants(html: string): string {
+	const root = parse(html);
+
+	return CLIS.map((cli) => {
+		const [start, end] = root.querySelector(`[${ITEM}="${cli}"]`)!.range;
+		return html.slice(start, end);
+	}).join("");
 }
