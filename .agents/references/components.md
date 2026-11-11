@@ -35,6 +35,8 @@ Inside the partial, params are referenced as JS expressions: `{props.product}`. 
 
 Renders a TypeScript code block and auto-generates a JavaScript tab using `ts-blank-space`. **Required for all Workers JS/TS examples** — do not use bare `ts`/`js` fences.
 
+Exception: a snippet that only contains types (`type`, `interface`, `declare`) has no JavaScript equivalent, so the JS tab would be empty. Show type definitions in a plain `ts` fence. The build fails if a `TypeScriptExample` produces an empty JS tab.
+
 ````mdx
 import { TypeScriptExample } from "~/components";
 
@@ -54,7 +56,7 @@ Props:
 
 - `filename` — optional, must end in `.ts`. The JS tab shows the `.js` equivalent.
 - `playground` — boolean. Adds "Run Worker in Playground" button to the JS tab.
-- `omitTabs` — boolean. Renders the TypeScript block without the JS/TS tab wrapper (useful for inline snippets).
+- `omitTabs` — boolean. Renders the JavaScript and TypeScript `TabItem`s without their own `Tabs` wrapper, so you can place them inside a parent `<Tabs syncKey="workersExamples">` next to other languages, such as a Python `TabItem`.
 - `code` — object. Astro `Code` component props (e.g. `{ collapse: "1-2" }`). Apply to both tabs.
 
 Note: Code fence options (`collapse={1-2}`, etc.) cannot be set on the fence directly — pass them via the `code` prop instead.

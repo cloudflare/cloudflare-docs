@@ -151,7 +151,7 @@ See `.agents/references/style-guide.md` for the full rules. Quick reference:
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
 | Unescaped MDX characters | `{`, `}`, `<`, `>` in prose must be escaped or in backticks                                                       |
 | Component imports        | Reusable components must be added to the `~/components` barrel and imported from `~/components`; page-specific or one-off components may use deep paths |
-| Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences                                                           |
+| Workers code             | Must use `TypeScriptExample`, not bare `js`/`ts` fences. Type-only snippets use a plain `ts` fence                |
 | Config blocks            | Must use `WranglerConfig`; use `$today` for `compatibility_date`                                                  |
 | Package install commands | Must use `PackageManagers`, not bare `sh` fences                                                                  |
 | Code block languages     | Lowercase, from the supported set — see `.agents/references/style-guide.md`                                       |
