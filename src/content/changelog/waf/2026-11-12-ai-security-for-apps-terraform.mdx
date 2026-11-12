@@ -1,0 +1,34 @@
+---
+title: Manage AI Security for Apps with Terraform
+description: Turn on AI Security for Apps and define custom topics using the Terraform Cloudflare provider.
+date: 2026-11-12
+---
+
+You can now manage [AI Security for Apps](/waf/detections/ai-security-for-apps/) with Terraform. Version 5.29.0 of the Terraform Cloudflare provider adds two resources:
+
+- [`cloudflare_ai_security`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ai_security): Turns AI Security for Apps on or off for a zone.
+- [`cloudflare_ai_security_custom_topics`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ai_security_custom_topics): Defines the [custom topics](/waf/detections/ai-security-for-apps/unsafe-topics/#custom-topics) that AI Security for Apps scores each prompt against.
+
+For example:
+
+```tf
+resource "cloudflare_ai_security" "zone_ai_security" {
+  zone_id = var.cloudflare_zone_id
+  enabled = true
+}
+
+resource "cloudflare_ai_security_custom_topics" "zone_custom_topics" {
+  zone_id = var.cloudflare_zone_id
+
+  topics = [
+    {
+      label = "competitors"
+      topic = "seeking info on competitors"
+    }
+  ]
+}
+```
+
+You can then use AI Security for Apps fields in custom rules managed with the `cloudflare_ruleset` resource, keeping your detection settings, topics, and mitigation rules in the same configuration.
+
+For more examples, refer to [Terraform configuration examples](/waf/detections/ai-security-for-apps/terraform-examples/).
