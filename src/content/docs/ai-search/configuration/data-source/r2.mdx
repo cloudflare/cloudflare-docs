@@ -20,6 +20,10 @@ If you have never created an R2-backed instance before, we recommend using the d
 
 To get started, [configure an R2 bucket](/r2/get-started/) containing your data. Files that are unsupported or exceed the size limit will be skipped during indexing and logged as errors.
 
+:::note[Storage billing]
+AI Search keeps the extracted Markdown of each indexed file from your bucket. This content counts toward [AI Search storage](/ai-search/platform/limits-pricing/#how-storage-is-measured), separate from the R2 storage you pay for your bucket.
+:::
+
 ## Set Content-Type metadata
 
 AI Search uses recognized filename extensions as its preferred, faster file-type detection path. For R2 objects without a filename extension, set explicit `Content-Type` metadata to a supported MIME type.
