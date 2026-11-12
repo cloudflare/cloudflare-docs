@@ -8,11 +8,11 @@ date: 2026-10-01T09:00:00-04:00
 
 import { TypeScriptExample } from "~/components";
 
-Meet [`@cf/cloudflare/clef`](/workers-ai/models/clef/) and [`@cf/cloudflare/clef-flash`](/workers-ai/models/clef-flash/), the first models trained by the Cloudflare Workers AI team, available on Workers AI today.
+Meet [`@cf/cloudflare/clef`](/ai/models/@cf/cloudflare/clef/) and [`@cf/cloudflare/clef-flash`](/ai/models/@cf/cloudflare/clef-flash/), the first models trained by the Cloudflare Workers AI team, available on Workers AI today.
 
 Clef is a decision model, in the same family as [Typesafe's Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev). Instead of generating text, it reads an input state and a set of typed questions, then returns a probability for every allowed answer. Your agent gets a structured decision it can act on immediately, for example: route the ticket, block the request, or escalate to a human. There is no free-form output to parse and no reasoning tokens to wait for.
 
-Both models are hosted on Workers AI as [Clef](/workers-ai/models/clef/) and [Clef-flash](/workers-ai/models/clef-flash/). We are also open-sourcing the weights under the Apache 2.0 license on Hugging Face: [Clef](https://huggingface.co/Cloudflare/clef) and [Clef-flash](https://huggingface.co/Cloudflare/clef-flash). Read the [launch blog post](https://blog.cloudflare.com/clef-decision-models/) for the full story, including how we trained them.
+Both models are hosted on Workers AI as [Clef](/ai/models/@cf/cloudflare/clef/) and [Clef-flash](/ai/models/@cf/cloudflare/clef-flash/). We are also open-sourcing the weights under the Apache 2.0 license on Hugging Face: [Clef](https://huggingface.co/Cloudflare/clef) and [Clef-flash](https://huggingface.co/Cloudflare/clef-flash). Read the [launch blog post](https://blog.cloudflare.com/clef-decision-models/) for the full story, including how we trained them.
 
 We are also launching a reinforcement learning (RL) fine-tuning service to help you tune Clef for your own workloads. [Sign up to work with us as a design partner](https://www.cloudflare.com/resource/clef-rl-interest).
 
@@ -42,10 +42,10 @@ On Typesafe's own workflow evals, Clef beats Jev in 3 of 4 areas: invoice proces
 
 ## Drop-in compatible with Jev
 
-| Model                                                         | Size | Best for                             | Context window |
-| ------------------------------------------------------------- | ---- | ------------------------------------ | -------------- |
-| [`@cf/cloudflare/clef`](/workers-ai/models/clef/)             | 27B  | Highest-precision decisions          | 64K tokens     |
-| [`@cf/cloudflare/clef-flash`](/workers-ai/models/clef-flash/) | 9B   | Latency-critical, hot-path decisions | 64K tokens     |
+| Model                                                                | Size | Best for                             | Context window |
+| -------------------------------------------------------------------- | ---- | ------------------------------------ | -------------- |
+| [`@cf/cloudflare/clef`](/ai/models/@cf/cloudflare/clef/)             | 27B  | Highest-precision decisions          | 64K tokens     |
+| [`@cf/cloudflare/clef-flash`](/ai/models/@cf/cloudflare/clef-flash/) | 9B   | Latency-critical, hot-path decisions | 64K tokens     |
 
 Clef follows the System One API, so you can switch an existing Jev integration to Clef by changing the endpoint and model. Ask up to 64 questions per request, in three types:
 
@@ -94,4 +94,4 @@ const response = await env.AI.run("@cf/cloudflare/clef", {
 
 Use Clef through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`) or the REST API at `/ai/run`. You can also use [AI Gateway](/ai-gateway/) with these endpoints.
 
-For more information, refer to the [Clef model page](/workers-ai/models/clef/), the [Clef-flash model page](/workers-ai/models/clef-flash/), and [pricing](/workers-ai/platform/pricing/).
+For more information, refer to the [Clef model page](/ai/models/@cf/cloudflare/clef/), the [Clef-flash model page](/ai/models/@cf/cloudflare/clef-flash/), and [pricing](/workers-ai/platform/pricing/).

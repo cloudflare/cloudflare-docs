@@ -34,7 +34,9 @@ import AnchorHeading from "~/components/cf/AnchorHeading.astro";
 import { authorData } from "~/components/models/data";
 import {
 	detectApiModes,
+	formatModelPricing,
 	getTopLevelVariants,
+	unifiedCanonicalModelIds,
 	type ModelView,
 } from "~/util/models";
 
@@ -80,6 +82,7 @@ const isClef = [
 
 // Clairic extraction models take typed fields, not chat messages.
 const isClairic = model.name === "@cf/cloudflare/clairic";
+const isJev = model.name === "typesafe/jev";
 
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
@@ -231,12 +234,38 @@ const markdownUrl = Astro.site
 	? new URL(markdownPath, Astro.site).href
 	: markdownPath;
 
-// Match production Starlight: the head title carries displayName + author + AI suffix;
-// the shared Head layer then applies the product-specific suffix.
-const pageTitle = `${displayName} (${authorName})`;
-const headTitle = `${pageTitle} · Cloudflare AI docs`;
+// Consolidate only the four explicitly selected models. Other models keep
+// PageHead's existing pathname-based canonical (Jev already has one route).
+// PageHead also uses this target for JSON-LD and percent-encodes `@`.
+const canonicalPath = unifiedCanonicalModelIds.has(model.name)
+	? `/ai/models/${model.slug}/`
+	: undefined;
+
+// Keep identity + API in the title, then advertise only available page facts.
+// Drop optional intents, never model identity, to fit the practical 60-char
+// budget including the single suffix applied by PageHead.
+const titleSuffix = "Workers AI";
+const titleIntents = [
+	model.propertiesList.length > 0 &&
+		formatModelPricing(model.pricing).length > 0 &&
+		"Pricing",
+	Number(model.properties.context_window) > 0 && "Context",
+	hasPlayground && "Playground",
+].filter(Boolean) as string[];
+const includedIntents: string[] = [];
+let headTitle = `${displayName} API`;
+for (const intent of titleIntents) {
+	const candidate = `${displayName} API: ${[...includedIntents, intent].join(", ")}`;
+	if (`${candidate} · ${titleSuffix}`.length <= 60) {
+		includedIntents.push(intent);
+		headTitle = candidate;
+	}
+}
 
 const headings: MarkdownHeading[] = [
+	isJev && { depth: 2, slug: "how-jev-works", text: "How Jev works" },
+	isJev && { depth: 2, slug: "use-cases", text: "Use cases" },
+	isJev && { depth: 2, slug: "related-models", text: "Related models" },
 	hasReasoningEffortGuidance && {
 		depth: 2,
 		slug: "reasoning-effort",
@@ -261,7 +290,11 @@ const headings: MarkdownHeading[] = [
 	markdownUrl={markdownUrl}
 	prevNext={{}}
 	collection="docs"
-	meta={{ contentType: "reference" }}
+	meta={{
+		contentType: "reference",
+		canonical: canonicalPath,
+		titleSuffix,
+	}}
 >
 	<Fragment slot="pagination" />
 
@@ -425,6 +458,61 @@ const headings: MarkdownHeading[] = [
 			product="workers-ai"
 			params={{ omni: model.name === "@cf/cloudflare/clef-omni" }}
 		/>
+	)}
+
+	{isJev && (
+		<Fragment>
+			<AnchorHeading depth={2} title="How Jev works" slug="how-jev-works" />
+			<p>
+				Jev evaluates an input <code>state</code> against questions you define.
+				The state can be text or structured data. Instead of open-ended prose,
+				each question returns a typed answer:
+			</p>
+			<ul>
+				<li>
+					<strong>Noul:</strong> A probability from 0 to 1 for a yes/no
+					question.
+				</li>
+				<li>
+					<strong>Choice:</strong> One of your named options, with probabilities
+					and confidence.
+				</li>
+				<li>
+					<strong>Score:</strong> A continuous value on the scale of your
+					ordered criteria, with probabilities and confidence.
+				</li>
+			</ul>
+			<p>
+				This is a decision model: you define the possible answers rather than
+				asking it to generate free-form text. For more information, refer to
+				TypeSafe's{" "}
+				<a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">
+					introduction to decision models and Jev
+				</a>
+				.
+			</p>
+			<Aside type="caution">
+				Jev image inputs are beta and are not recommended for production.
+			</Aside>
+			<AnchorHeading depth={2} title="Use cases" slug="use-cases" />
+			<p>The examples on this page show how to:</p>
+			<ul>
+				<li>Classify support requests by urgency and department.</li>
+				<li>Evaluate a refund request against order data and a policy.</li>
+				<li>Score account activity and flag it for human review.</li>
+			</ul>
+			<p>
+				These are model evaluations, not guarantees. Use application rules and
+				human review where a wrong decision could cause harm.
+			</p>
+			<AnchorHeading depth={2} title="Related models" slug="related-models" />
+			<p>
+				For Cloudflare-hosted decision models with typed questions, explore{" "}
+				<a href="/ai/models/@cf/cloudflare/clef/">Clef</a>,{" "}
+				<a href="/ai/models/@cf/cloudflare/clef-flash/">Clef-flash</a>, and{" "}
+				<a href="/ai/models/@cf/cloudflare/clef-omni/">Clef-omni</a>.
+			</p>
+		</Fragment>
 	)}
 
 	{hasGlm52ReasoningEffortGuidance && (
