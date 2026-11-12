@@ -60,6 +60,8 @@ By default, `persist` is `true`. Logs and traces are exported and stored in Clou
 
 When `persist` is enabled, the Cloudflare-stored copy of your logs and traces follows your account's [Customer Metadata Boundary](/data-localization/metadata-boundary/) setting when one is configured. Exported data is sent to the destination you configure.
 
+Viewing availability for the Cloudflare-stored copy is subject to the Customer Metadata Boundary limitations listed in [Data Localization compatibility](/data-localization/compatibility/).
+
 Redeploy your Worker after updating its Wrangler configuration. Events may take several minutes to reach your destination.
 
 ## Known limitations
