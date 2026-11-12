@@ -13,7 +13,7 @@ tags:
   - AI
 ---
 
-import { DashButton, PackageManagers, Steps } from "~/components";
+import { PackageManagers, Steps } from "~/components";
 
 Run Gemini API managed agents on Cloudflare with Bring Your Own Sandbox (BYOS). Google hosts the agent loop. File and shell tools run in a Linux sandbox in your Cloudflare account.
 
@@ -51,7 +51,7 @@ You need:
 - The [`gemini-api` CLI](https://github.com/google-gemini/gemini-api-cli#installation) installed locally
 - A [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key)
 
-For manual deployment, you also need [Git](https://git-scm.com/), [Node.js 20](https://nodejs.org/) or later, npm, and a running [Docker](https://www.docker.com/) daemon to build the container image.
+For manual deployment, you also need [Git](https://git-scm.com/), [Node.js 22.12](https://nodejs.org/) or later, npm, and a running [Docker](https://www.docker.com/) daemon to build the container image.
 
 ## Create a Gemini environment
 
@@ -99,15 +99,11 @@ Choose the dashboard or manual deployment instructions. Both deploy the same Wor
 ### Deploy through the dashboard
 
 <Steps>
-1. Select **Deploy to Cloudflare** and follow the prompts to create a repository and deploy the example:
+1. Select **Deploy to Cloudflare** and follow the prompts to create a repository:
 
    [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare)
 
-2. In the Cloudflare dashboard, go to **Workers & Pages** and select your deployed Worker.
-
-   <DashButton url="/?to=/:account/workers-and-pages" />
-
-3. In **Settings** > **Variables and Secrets**, select **Add**. Add these values with the type **Secret**, then select **Deploy**:
+2. Enter these values when prompted, then complete the deployment:
 
    | Variable name                | Value                                                     |
    | ---------------------------- | --------------------------------------------------------- |
@@ -135,16 +131,17 @@ The example includes a Wrangler configuration. Run these commands in the same sh
 
    <PackageManagers type="exec" pkg="wrangler" args="login" managers={["npm"]} />
 
-4. With Docker running, deploy the Worker and container image:
-
-   <PackageManagers type="exec" pkg="wrangler" args="deploy" managers={["npm"]} />
-
-5. Upload the environment key and dispatch secret to the deployed Worker:
+4. Copy the example secrets file:
 
    ```sh
-   printf '%s' "$GEMINI_ENVIRONMENT_KEY" | npx wrangler secret put GEMINI_ENVIRONMENT_KEY
-   printf '%s' "$CLOUDFLARE_DISPATCH_SECRET" | npx wrangler secret put CLOUDFLARE_DISPATCH_SECRET
+   cp .dev.vars.example .dev.vars
    ```
+
+   In `.dev.vars`, fill in `GEMINI_ENVIRONMENT_KEY` and `CLOUDFLARE_DISPATCH_SECRET` with the values you saved earlier. This local file is excluded from version control.
+
+5. With Docker running, deploy the Worker, container image, and secrets together:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy --secrets-file .dev.vars" managers={["npm"]} />
 </Steps>
 
 Keep `GEMINI_API_KEY` in your local application. The runtime needs only the scoped environment key.
