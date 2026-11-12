@@ -91,7 +91,8 @@ Creates a new span and runs `callback` inside it. The span is automatically ende
 - The span ends when the callback returns synchronously, throws synchronously, or when its returned promise fulfills or rejects.
 
 ```ts
-// Synchronous callback — span ends when the function returns
+// Synchronous callback — span ends when the function returns.
+// Its duration can display 0 ms even when parsing performs CPU work.
 const result = tracing.enterSpan("parse", (span) => {
 	span.setAttribute("format", "json");
 	return JSON.parse(body);
@@ -107,6 +108,8 @@ const data = await tracing.enterSpan("fetchData", async (span) => {
 // Forwarding arguments
 const doubled = tracing.enterSpan("compute", (span, x) => x * 2, 21);
 ```
+
+Custom spans use the runtime clock, which does not advance during JavaScript execution. The synchronous `parse` span can report `0 ms` even when parsing takes CPU time. This does not mean the parser did no work. Refer to [Non-I/O operations may report time of 0 ms](/workers/observability/traces/known-limitations/#non-io-operations-may-report-time-of-0-ms).
 
 ### `tracing.startActiveSpan(name, callback, ...args)`
 

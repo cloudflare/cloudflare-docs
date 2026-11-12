@@ -1,0 +1,169 @@
+---
+---
+
+<svg
+	class="trace-timing-diagram"
+	width="900"
+	height="407"
+	viewBox="0 0 900 407"
+	role="img"
+	aria-labelledby="durable-object-caller-span-title durable-object-caller-span-desc"
+>
+	<title id="durable-object-caller-span-title">Durable Object caller and invocation spans</title>
+	<desc id="durable-object-caller-span-desc">
+		An illustrative caller span outlasts the Durable Object invocation. Response
+		headers can be available before the body is consumed. The surrounding gaps
+		have no assigned cause. Invocations can use different clock contexts, so the
+		bar positions are not measurements of network or activation latency.
+	</desc>
+	<rect width="900" height="407" rx="12" fill="var(--diagram-bg)" />
+	<g font-family="system-ui, -apple-system, sans-serif">
+		<text
+			x="28"
+			y="40"
+			text-anchor="start"
+			font-size="25"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="28" dy="0">
+				Caller and object invocation
+			</tspan>
+		</text>
+		<text
+			x="28"
+			y="72"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-muted)"
+			font-weight="400"
+		>
+			<tspan x="28" dy="0">
+				Illustrative lifetimes, not measured latency or a shared clock
+			</tspan>
+		</text>
+		<text
+			x="28"
+			y="129"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="28" dy="0">
+				Caller span
+			</tspan>
+			<tspan x="28" dy="26">
+				durable_object_subrequest
+			</tspan>
+		</text>
+		<rect
+			x="295"
+			y="110"
+			width="540"
+			height="54"
+			rx="8"
+			fill="var(--diagram-blue-bg)"
+			stroke="var(--diagram-blue)"
+		/>
+		<text
+			x="28"
+			y="218"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="28" dy="0">
+				Durable Object
+			</tspan>
+			<tspan x="28" dy="26">
+				invocation span
+			</tspan>
+		</text>
+		<rect
+			x="400"
+			y="198"
+			width="170"
+			height="50"
+			rx="8"
+			fill="var(--diagram-purple-bg)"
+			stroke="var(--diagram-purple)"
+		/>
+		<path
+			d="M600 165 L600 282"
+			fill="none"
+			stroke="var(--diagram-line)"
+			stroke-width="2"
+			stroke-dasharray="5 5"
+		/>
+		<text
+			x="600"
+			y="307"
+			text-anchor="middle"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="400"
+		>
+			<tspan x="600" dy="0">
+				Response headers
+			</tspan>
+			<tspan x="600" dy="26">
+				available
+			</tspan>
+		</text>
+		<path
+			d="M835 165 L835 282"
+			fill="none"
+			stroke="var(--diagram-line)"
+			stroke-width="2"
+			stroke-dasharray="5 5"
+		/>
+		<text
+			x="835"
+			y="307"
+			text-anchor="middle"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="400"
+		>
+			<tspan x="835" dy="0">
+				Body
+			</tspan>
+			<tspan x="835" dy="26">
+				consumed
+			</tspan>
+		</text>
+		<text
+			x="28"
+			y="382"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-muted)"
+			font-weight="400"
+		>
+			<tspan x="28" dy="0">
+				The surrounding gaps do not identify network, queueing, or activation
+				time.
+			</tspan>
+		</text>
+	</g>
+</svg>
+
+<style>
+	.trace-timing-diagram {
+		display: block;
+		width: 100%;
+		height: auto;
+		margin: 1.5rem 0;
+		--diagram-bg: light-dark(#ffffff, #171719);
+		--diagram-text: light-dark(#1e293b, #f1f5f9);
+		--diagram-muted: light-dark(#475569, #cbd5e1);
+		--diagram-line: light-dark(#64748b, #94a3b8);
+		--diagram-blue-bg: light-dark(#dbeafe, #172554);
+		--diagram-blue: light-dark(#2563eb, #60a5fa);
+		--diagram-purple-bg: light-dark(#ede9fe, #2e1065);
+		--diagram-purple: light-dark(#7c3aed, #a78bfa);
+		--diagram-panel: light-dark(#f1f5f9, #27272a);
+	}
+</style>

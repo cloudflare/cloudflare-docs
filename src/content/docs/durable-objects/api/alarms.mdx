@@ -28,7 +28,9 @@ Alarms are directly scheduled from within your Durable Object. Cron Triggers, on
 
 :::
 
-Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms also provide a mechanism to guarantee that operations within a Durable Object will complete without relying on incoming requests to keep the Durable Object alive. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
+Alarms can be used to build distributed primitives, like queues or batching of work atop Durable Objects. Alarms let scheduled work run without incoming requests. For a complete example, refer to [Use the Alarms API](/durable-objects/examples/alarms-api/).
+
+Frequent alarm invocations can keep an object in memory by preventing idle hibernation. A scheduled alarm alone does not prevent hibernation while the object waits for it. If an alarm wakes a hibernated or inactive object, the constructor runs before `alarm()`. See [Alarm frequency and hibernation](/durable-objects/concepts/durable-object-lifecycle/#alarm-frequency-and-hibernation) and [Calling `setAlarm` inside the constructor](#calling-setalarm-inside-the-constructor).
 
 ## Scheduling multiple events with a single alarm
 
@@ -94,7 +96,9 @@ export class AgentServer extends DurableObject {
   - Set the time for the alarm to run. Specify the time as the number of milliseconds elapsed since the UNIX epoch.
   - If you call `setAlarm` when there is already one scheduled, it will override the existing alarm.
 
-:::caution[Calling `setAlarm` inside the constructor]
+#### Calling `setAlarm` inside the constructor
+
+:::caution
 If you wish to call `setAlarm` inside the constructor of a Durable Object, ensure that you are first checking whether an alarm has already been set.
 
 This is due to the fact that, if the Durable Object wakes up after being inactive, the constructor is invoked before the [`alarm` handler](/durable-objects/api/alarms/#alarm). Therefore, if the constructor calls `setAlarm`, it could interfere with the next alarm which has already been set.

@@ -85,6 +85,12 @@ The next incoming request or event starts the cycle again.
 A Durable Object incurs charges only when it is **actively running in-memory**, or when it is **idle in-memory and non-hibernateable** (indicated as green rectangles in the diagram).
 :::
 
+## Alarm frequency and hibernation
+
+Frequent [alarm](/durable-objects/api/alarms/) invocations can prevent idle hibernation. For example, alarms delivered every 3 seconds arrive before the current 10-second inactivity threshold. Even with frequent alarms, a code update or runtime restart can cause the object's constructor to run again. Refer to [Shutdown behavior](#shutdown-behavior).
+
+A scheduled alarm alone does not prevent hibernation while the object waits for it. For constructor precautions, refer to [Calling `setAlarm` inside the constructor](/durable-objects/api/alarms/#calling-setalarm-inside-the-constructor).
+
 ## Shutdown behavior
 
 Durable Objects will occasionally shut down and objects are restarted, which will run your Durable Object class constructor. This can happen for various reasons, including:

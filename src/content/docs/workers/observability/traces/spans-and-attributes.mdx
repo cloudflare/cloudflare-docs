@@ -8,9 +8,62 @@ products:
   - workers
 ---
 
-import { Render } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
+import InvocationTimingDiagram from "~/components/InvocationTimingDiagram.astro";
+import DurableObjectCallerSpanDiagram from "~/components/DurableObjectCallerSpanDiagram.astro";
 
 Cloudflare Workers provides automatic tracing instrumentation **out of the box** - no code changes or SDK are required.
+
+## Invocation timing
+
+Workers tracing reports several measurements that cover different parts of an invocation:
+
+| Measurement                                 | What it measures                                                                                                                                                                                                                                                                                                                          |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Root span duration                          | Time between the runtime's start and completion timestamps for an invocation. This can include work after the response is returned, such as `waitUntil()` tasks.                                                                                                                                                                          |
+| `cloudflare.wall_time_ms` (invocation wall time)       | Elapsed time from invocation start until the runtime determines no more JavaScript needs to run. Includes CPU work, waiting for I/O, and `waitUntil()` tasks. It can end before the response body finishes streaming to the client. See [Wall time per execution](/workers/observability/metrics-and-analytics/#wall-time-per-execution). |
+| `cloudflare.response.time_to_first_byte_ms` | Time from the invocation start timestamp until the runtime returns a response. It does not measure when the first byte reaches your client.                                                                                                                                                                                               |
+
+Root span duration and response timing use the runtime clock described in [Trace durations and gaps](/workers/observability/traces/known-limitations/#trace-durations-and-gaps). Wall time uses a separate clock, so it can differ from these values for the same invocation.
+
+This Worker starts a KV write without delaying its response. The example assumes an `AUDIT` [KV binding](/kv/concepts/kv-bindings/):
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	AUDIT: KVNamespace;
+}
+
+export default {
+	async fetch(request, env, ctx) {
+		ctx.waitUntil(env.AUDIT.put("last-request", request.url));
+		return new Response("OK");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+<Fragment slot="python">
+
+```py title="src/entry.py"
+from workers import Response, WorkerEntrypoint
+
+
+class Default(WorkerEntrypoint):
+    async def fetch(self, request):
+        self.ctx.waitUntil(self.env.AUDIT.put("last-request", request.url))
+        return Response("OK")
+```
+
+</Fragment>
+
+</TypeScriptExample>
+
+If the KV write finishes after the response returns, the invocation can follow this sequence:
+
+<InvocationTimingDiagram />
+
+The diagram shows event order rather than measured durations.
 
 ## Currently supported spans and attributes
 
@@ -43,7 +96,7 @@ Cloudflare Workers provides automatic tracing instrumentation **out of the box**
 - `cloudflare.execution_model` - The execution model of the Worker (e.g., `stateless`, `stateful` for Durable Objects)
 - `cloudflare.outcome` - The outcome of the Worker invocation (e.g., `ok`, `exception`, `exceededCpu`, `exceededMemory`)
 - `cloudflare.cpu_time_ms` - The CPU time used by the Worker invocation, in milliseconds
-- `cloudflare.wall_time_ms` - The wall time used by the Worker invocation, in milliseconds
+- `cloudflare.wall_time_ms` - Elapsed time for the invocation, including time spent waiting for I/O, in milliseconds. This is measured separately from span duration. See [Invocation timing](#invocation-timing).
 
 ---
 
@@ -128,7 +181,7 @@ The following values are defined for `cloudflare.warning.type`:
 
 - `cloudflare.verified_bot_category`
 - `cloudflare.asn`
-- `cloudflare.response.time_to_first_byte_ms`
+- `cloudflare.response.time_to_first_byte_ms` - Time from the invocation start timestamp until the runtime returns a response, in milliseconds. See [Invocation timing](#invocation-timing).
 - `geo.timezone`
 - `geo.continent.code`
 - `geo.country.code`
@@ -487,6 +540,44 @@ Caller-side and callee-side spans use the execution color of the Worker or Durab
 ### [Durable Object API](/durable-objects/)
 
 #### `durable_object_subrequest`
+
+Records the calling Worker's call to a Durable Object. The object's own invocation is recorded in a separate span. The caller's span can start earlier and end later because it also covers work outside that invocation.
+
+Before the object's invocation starts, the runtime may need to locate the object, route the request to its server, and wait for the request to be dispatched for execution. If the object is not already in memory, the runtime must also initialize an instance before its handler can run. This initialization is necessary even if your class does not define a constructor.
+
+For HTTP calls, `await stub.fetch()` returns a `Response` when the response headers are available. The body may still be streaming. The object can finish executing while the caller is still receiving the body, keeping the caller's span open after the object's invocation span ends.
+
+In this example, `stub` is a [Durable Object stub](/durable-objects/api/stub/) whose `fetch()` handler returns JSON. Receiving the `Response` and reading its body are separate steps:
+
+<TypeScriptExample>
+
+```ts
+const response = await stub.fetch("https://object.example/data");
+// Response headers are available. The body may still be streaming.
+
+const data = await response.json();
+// The response body has now been consumed.
+```
+
+<Fragment slot="python">
+
+```py
+response = await stub.fetch("https://object.example/data")
+# Response headers are available. The body may still be streaming.
+
+data = await response.json()
+# The response body has now been consumed.
+```
+
+</Fragment>
+
+</TypeScriptExample>
+
+One possible span layout for a streaming response is:
+
+<DurableObjectCallerSpanDiagram />
+
+The bars show what each span covers. They do not show how much time was spent routing, waiting, or initializing the object. The caller's and object's clocks can be adjusted independently, so the gaps cannot be used to measure network or startup latency. See [Trace durations and gaps](/workers/observability/traces/known-limitations/#trace-durations-and-gaps). For RPC calls, see [RPC spans](#rpc).
 
 ---
 

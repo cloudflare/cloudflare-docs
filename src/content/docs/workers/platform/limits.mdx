@@ -303,6 +303,8 @@ When the platform rejects a deployment because the Worker exceeds the startup ti
 
 To measure startup time, run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`. Wrangler reports `startup_time_ms` in the output.
 
+This measures the CPU used to initialize the script. It does not indicate whether a specific request needed a new instance or how long initialization took for that request.
+
 To reduce startup time, avoid expensive work in global scope. Move initialization logic into your handler or to build time. For example, generating or consuming a large schema at the top level is a common cause of exceeding this limit.
 
 <Render file="limits_increase" product="workers" />
