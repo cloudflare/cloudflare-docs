@@ -122,7 +122,7 @@ Detaching and setting the header again is how one file takes a different value f
   Cache-Control: public, max-age=604800
 ```
 
-`/assets/model.bin` is served with `max-age=604800` alone. Reversing the two blocks leaves the glob's value in place instead, because the detach would run before the value it targets was added.
+`/assets/model.bin` is served with `max-age=604800` alone. Reversing the two blocks causes both values to be joined, because the detach runs before the broader rule adds its value.
 
 ### Match a path
 
