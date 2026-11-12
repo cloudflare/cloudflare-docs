@@ -21,7 +21,7 @@ When serving static assets, Workers will attach some headers to the response by 
 
 - **`Cache-Control: public, max-age=0, must-revalidate`**
 
-  Sent when the request does not have an `Authorization` or `Range` header, this response header tells the browser that the asset can be cached, but that the browser should revalidate the freshness of the content every time before using it. This default behavior ensures good website performance for static pages, while still guaranteeing that stale content will never be served.
+  Cloudflare sends this header when the request has no `Authorization` or `Range` header. It allows the browser to cache the asset, but requires the browser to check for changes before reusing it. The version handling that request determines the response. This check does not keep related requests on one version or prevent [version skew](/workers/versions-and-deployments/version-skew/).
 
 - **`ETag`**
 

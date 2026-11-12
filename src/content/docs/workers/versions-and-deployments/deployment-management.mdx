@@ -11,13 +11,15 @@ sidebar:
 
 import { DashButton, PackageManagers } from "~/components";
 
-By default, a new version is created and immediately deployed to 100% of traffic when you use any of the following:
+By default, these operations create a version and deploy it to 100% of traffic:
 
 - [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy)
 - [Workers Builds](/workers/ci-cd/builds/)
 - The [Workers Script Upload API](/api/resources/workers/subresources/scripts/methods/update/)
 
-You can separate these steps so that uploading a version and deploying it are independent actions. This lets you control exactly when a new version goes live.
+You can upload a version without deploying it. This allows you to choose when to send traffic to it.
+
+Deployment changes take up to a few seconds to reach every location on the network. Deploying to 100% of traffic does not make every location switch at once. A browser's HTML and asset requests can still use different versions. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/).
 
 ## Upload a version without deploying
 
@@ -51,6 +53,8 @@ New versions are not created when you make changes to [resources connected to yo
 ## Deploy an uploaded version
 
 Once you have uploaded a version, you can create a deployment that routes traffic to it.
+
+Uploading a version does not add it to a deployment. To test it on your production hostname with a [version override](/workers/versions-and-deployments/version-overrides/), add it to the deployment. You can set it to 0% of traffic. You can also turn on a [Version URL](/workers/versions-and-deployments/version-urls/) to access the uploaded version separately.
 
 ### Via Wrangler
 

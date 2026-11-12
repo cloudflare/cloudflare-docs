@@ -10,9 +10,13 @@ products:
 
 import { WranglerConfig, TypeScriptExample } from "~/components";
 
-If you have both static assets and a Worker script configured, Cloudflare will first attempt to serve static assets if one matches the incoming request. You can read more about how we match assets in the [HTML handling docs](/workers/static-assets/routing/advanced/html-handling/).
+By default, if you configure static assets and a Worker script, Cloudflare checks for a matching asset first. It uses the assets belonging to the selected Worker version. For how paths match assets, refer to [HTML handling](/workers/static-assets/routing/advanced/html-handling/).
 
-If an appropriate static asset if not found, Cloudflare will invoke your Worker script.
+If no asset matches, Cloudflare invokes that version's `fetch()` handler. Your handler decides what response to return. A missing asset does not automatically produce a `404` response. Calling `env.ASSETS.fetch(request)` from the handler still uses the same version's assets.
+
+This also applies when an older page requests a file missing from a newer version. Refer to [Requests for missing assets](/workers/versions-and-deployments/version-skew/#requests-for-missing-assets).
+
+Routing settings can change this default behavior. For example, [single-page application routing](/workers/static-assets/routing/single-page-application/) can serve `/index.html` for navigation requests without invoking your Worker.
 
 This allows you to easily combine together these two features to create powerful applications (e.g. a [full-stack application](/workers/static-assets/routing/full-stack-application/), or a [Single Page Application (SPA)](/workers/static-assets/routing/single-page-application/) or [Static Site Generation (SSG) application](/workers/static-assets/routing/static-site-generation/) with an API).
 
