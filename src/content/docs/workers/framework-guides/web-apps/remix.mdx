@@ -1,0 +1,231 @@
+---
+title: Remix 3
+description: Create a server-rendered Remix 3 application with Vite+ and deploy it to Cloudflare Workers using the Cloudflare CLI.
+pcx_content_type: how-to
+sidebar:
+  order: 3.5
+tags: ["full-stack"]
+products:
+  - workers
+---
+
+import { Details, FileTree, Steps, TypeScriptExample } from "~/components";
+
+Create a [Remix 3](https://remix.run/) application with [Vite+](https://viteplus.dev/guide/) and deploy it using the [Cloudflare CLI (`cf`)](/cf/). The routes read a [Workers binding](/workers/runtime-apis/bindings/) and return HTML or JSON.
+
+For Remix v2 applications, refer to the [React Router guide](/workers/framework-guides/web-apps/react-router/).
+
+## Prerequisites
+
+- Node.js 24 or later
+- [Vite+](https://viteplus.dev/guide/#install-vp-globally)
+- [Cloudflare CLI](/cf/get-started/#install-cf)
+
+## Create and deploy a Remix app
+
+<Steps>
+
+1. **Create a project**
+
+   ```sh
+   cf init my-remix-app --package-manager pnpm --no-install
+   cd my-remix-app
+   ```
+
+   Replace `package.json` with the following configuration:
+
+   ```json title="package.json"
+   {
+     "name": "my-remix-app",
+     "private": true,
+     "type": "module",
+     "scripts": {
+       "dev": "vp dev",
+       "build": "vp build",
+       "deploy": "cf deploy",
+       "check": "cf workers types && vp check"
+     },
+     "dependencies": {
+       "remix": "3.2.0"
+     },
+     "devDependencies": {
+       "@cloudflare/vite-plugin": "2.0.0-beta.v.15",
+       "cf": "1.0.0-beta.30",
+       "typescript": "7.0.2",
+       "vite": "npm:@voidzero-dev/vite-plus-core@1.6.0",
+       "vite-plus": "1.6.0"
+     }
+   }
+   ```
+
+   Create `pnpm-workspace.yaml` to use the same Vite+ core throughout the project:
+
+   ```yaml title="pnpm-workspace.yaml"
+   overrides:
+     "vite@*": "npm:@voidzero-dev/vite-plus-core@1.6.0"
+   allowBuilds:
+     esbuild: true
+     workerd: true
+   ```
+
+2. **Configure the Worker and Vite+**
+
+   Replace `cloudflare.config.ts`. The `WORLD` text binding supplies the greeting:
+
+   <TypeScriptExample filename="cloudflare.config.ts">
+   ```ts
+   import { bindings, defineConfig } from "cf/config";
+   import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+   export default defineConfig({
+     worker: {
+       name: "my-remix-app",
+       compatibilityDate: "$today",
+       compatibilityFlags: ["nodejs_compat"],
+       entrypoint,
+       env: {
+         WORLD: bindings.text("World"),
+       },
+     },
+   });
+   ```
+   </TypeScriptExample>
+
+   Replace `vite.config.ts` to add the [Cloudflare Vite plugin](/workers/vite-plugin/) and compile Remix JSX:
+
+   <TypeScriptExample filename="vite.config.ts">
+   ```ts
+   import { cloudflare } from "@cloudflare/vite-plugin";
+   import { defineConfig } from "vite-plus";
+
+   export default defineConfig({
+     plugins: [cloudflare()],
+     oxc: {
+       jsx: {
+         runtime: "automatic",
+         importSource: "remix/component",
+       },
+     },
+     lint: { options: { typeAware: true, typeCheck: true } },
+   });
+   ```
+   </TypeScriptExample>
+
+   In `tsconfig.json`, add these fields to the existing `compilerOptions` object:
+
+   ```json
+   "jsx": "react-jsx",
+   "jsxImportSource": "remix/component"
+   ```
+
+3. **Add the Remix routes**
+
+   Create `src/router.tsx`. The router reads `WORLD` through `cloudflare:workers`:
+
+   ```tsx title="src/router.tsx"
+   import { env } from "cloudflare:workers";
+   import { render } from "remix/middleware/render";
+   import { createRouter } from "remix/router";
+
+   export const router = createRouter({ middleware: [render()] });
+
+   router.get("/", ({ render }) =>
+     render(
+       <html lang="en">
+         <head>
+           <meta charset="utf-8" />
+           <meta name="viewport" content="width=device-width, initial-scale=1" />
+           <title>Remix on Cloudflare</title>
+         </head>
+         <body>
+           <h1>Hello {env.WORLD}!</h1>
+           <a href="/api/hello">Get the greeting as JSON</a>
+         </body>
+       </html>,
+     ),
+   );
+
+   router.get("/api/hello", () =>
+     Response.json({ message: `Hello ${env.WORLD}!` }),
+   );
+   ```
+
+   Replace `src/index.ts` to pass incoming requests to Remix:
+
+   <TypeScriptExample filename="src/index.ts">
+   ```ts
+   import { router } from "./router.tsx";
+
+   export default {
+     fetch(request) {
+       return router.fetch(request);
+     },
+   } satisfies ExportedHandler;
+   ```
+   </TypeScriptExample>
+
+   <Details header="Project structure">
+
+   <FileTree>
+   - my-remix-app/
+     - src/
+       - index.ts
+       - router.tsx
+     - cloudflare.config.ts
+     - package.json
+     - pnpm-workspace.yaml
+     - tsconfig.json
+     - vite.config.ts
+   </FileTree>
+
+   </Details>
+
+4. **Develop locally**
+
+   ```sh
+   vp install
+   vp dev
+   ```
+
+   Open `http://localhost:5173/` to view the greeting. The Cloudflare Vite plugin runs Remix in the Workers runtime.
+
+   In another terminal, test the JSON route:
+
+   ```sh
+   curl http://localhost:5173/api/hello
+   ```
+
+   ```json output
+   { "message": "Hello World!" }
+   ```
+
+5. **Deploy your project**
+
+   Format and check the project, then sign in and deploy:
+
+   ```sh
+   vp check --fix
+   vp run check
+   cf auth login
+   cf deploy
+   ```
+
+   `cf deploy` builds with Vite+ and prints your `workers.dev` URL. If prompted, select your Cloudflare account.
+
+   Test the deployed route, replacing `<YOUR_SUBDOMAIN>` with your account subdomain:
+
+   ```sh
+   curl https://my-remix-app.<YOUR_SUBDOMAIN>.workers.dev/api/hello
+   ```
+
+   ```json output
+   { "message": "Hello World!" }
+   ```
+
+</Steps>
+
+## Next steps
+
+- Add [static assets](/workers/static-assets/), such as stylesheets, in `public/`.
+- Configure more [bindings in `cloudflare.config.ts`](/cf/projects/cloudflare-config/#declare-bindings).
+- Add interactive components using the [Remix documentation](https://github.com/remix-run/remix/tree/main/packages/remix/guides).
