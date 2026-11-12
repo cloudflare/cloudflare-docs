@@ -1,10 +1,10 @@
 "use client";
 
 // Interactive decision guide on the "Choose a connector" page. The reader
-// picks what they are connecting, answers up to three yes/no refinements, and
+// picks what they are connecting, answers a few yes/no refinements, and
 // gets one recommended connector with an animated traffic path, the reasons
 // it fits, what to watch for, and where to start. The decision logic mirrors
-// the "Four questions" table on the page, so the text equivalent stays true.
+// the rules table on the page, so the text equivalent stays true.
 import { Fragment, useMemo, useState, type CSSProperties } from "react";
 import { cn } from "@/lib/cn";
 import { DiagramStage } from "@/components/react/diagram";
@@ -49,32 +49,9 @@ interface ResultDef {
 
 const NEEDS: NeedDef[] = [
 	{
-		id: "app",
-		title: "An application",
-		blurb: "A website, API, or SSH or RDP service that people reach by hostname.",
-		glyph: "app",
-		questions: [
-			{
-				id: "serverInitiated",
-				text: "The server also needs to start connections to clients",
-				hint: "For example, VoIP or SIP callbacks, or Active Directory and SCCM pushes.",
-			},
-			{
-				id: "sourceIp",
-				text: "The service needs the client's real IP for non-HTTP traffic",
-				hint: "HTTP origins can read the CF-Connecting-IP header instead.",
-			},
-			{
-				id: "platform",
-				text: "You run a platform that needs one tunnel per customer or device",
-				hint: "For example, a SaaS, IoT, AI, or developer tools platform.",
-			},
-		],
-	},
-	{
 		id: "network",
-		title: "A network, server, or device",
-		blurb: "Subnets, VMs, containers, or laptops, with traffic in either direction.",
+		title: "A private network, server, or device",
+		blurb: "Subnets, VMs, containers, or laptops. The default connector for Cloudflare One.",
 		glyph: "network",
 		questions: [
 			{
@@ -89,6 +66,34 @@ const NEEDS: NeedDef[] = [
 			{
 				id: "managedBox",
 				text: "You want a managed box, not software on a host",
+			},
+		],
+	},
+	{
+		id: "app",
+		title: "An application",
+		blurb: "A website, API, or service. Tunnel publishes it on a public hostname. Mesh keeps it private.",
+		glyph: "app",
+		questions: [
+			{
+				id: "private",
+				text: "It should stay private, not on a public hostname",
+				hint: "Users reach it from the Cloudflare One Client. This is the Cloudflare One default.",
+			},
+			{
+				id: "udp",
+				text: "It uses UDP",
+				hint: "For example, DNS, VoIP or SIP, video, or game traffic.",
+			},
+			{
+				id: "serverInitiated",
+				text: "The server also needs to start connections to clients",
+				hint: "For example, VoIP callbacks, or Active Directory and SCCM pushes.",
+			},
+			{
+				id: "platform",
+				text: "You run a platform that needs one tunnel per customer or device",
+				hint: "For example, a SaaS, IoT, AI, or developer tools platform.",
 			},
 		],
 	},
@@ -126,10 +131,10 @@ const NEEDS: NeedDef[] = [
 const RESULTS: Record<ResultId, ResultDef> = {
 	tunnel: {
 		name: "Cloudflare Tunnel",
-		verdict: "Publish the application through an outbound-only connector.",
+		verdict: "Publish the HTTP application on the public Internet, with or without Access in front.",
 		facts: [
 			{ k: "Direction", v: "Client to application" },
-			{ k: "Layer", v: "L7: HTTP, plus TCP services such as SSH and RDP" },
+			{ k: "Layer", v: "L7: HTTP and HTTPS on public hostnames" },
 			{ k: "Runs as", v: "cloudflared on Linux, macOS, Windows, or Kubernetes" },
 		],
 		flow: ["People", "Cloudflare", "cloudflared", "Your app"],
@@ -137,22 +142,22 @@ const RESULTS: Record<ResultId, ResultDef> = {
 		why: [
 			"No public IP or inbound port. cloudflared connects out to Cloudflare.",
 			"The full edge stack applies: DDoS protection, WAF, bot and API rules, and Access.",
-			"One tunnel can publish many hostnames, and replicas add high availability.",
+			"Put Access in front to require sign-in, or leave the hostname open. One tunnel can publish many hostnames.",
 		],
 		watch:
-			"Tunnel carries connections that clients start. If the server must start connections too, use Cloudflare Mesh.",
+			"Tunnel is built for HTTP. For UDP, private-only access, or server-initiated traffic, use Cloudflare Mesh.",
 		links: [
 			{ label: "Publish an application", href: "/tunnel/get-started/" },
 			{
-				label: "Private apps with Cloudflare One",
-				href: "/cloudflare-one/networks/connectors/cloudflare-tunnel/",
+				label: "Protect it with Access",
+				href: "/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/",
 			},
 		],
 	},
 	mesh: {
 		name: "Cloudflare Mesh",
 		badge: "Beta",
-		verdict: "Give every server, device, and subnet a private Mesh IP.",
+		verdict: "The default connector for Cloudflare One and private networks.",
 		facts: [
 			{ k: "Direction", v: "Bidirectional: any side can start" },
 			{ k: "Layer", v: "L3: TCP, UDP, and ICMP" },
@@ -161,8 +166,9 @@ const RESULTS: Record<ResultId, ResultDef> = {
 		flow: ["Device", "Cloudflare", "Mesh node", "Private subnet"],
 		bidirectional: true,
 		why: [
+			"Any protocol: TCP, UDP, and ICMP are forwarded packet by packet, so DNS, VoIP, and video work.",
 			"Any participant can start the conversation, and the source IP is preserved.",
-			"CIDR and hostname routes reach subnets and services behind a node.",
+			"CIDR and hostname routes reach private apps, subnets, and services behind a node.",
 			"Replicas fail over automatically, and source NAT means no return routes to add.",
 		],
 		watch:
@@ -299,21 +305,18 @@ type Answers = Record<string, boolean>;
 
 function resolve(need: Need, a: Answers): { id: ResultId; notes: string[] } {
 	if (need === "app") {
-		if (a.serverInitiated || a.sourceIp) {
-			return {
-				id: "mesh",
-				notes: [
-					"Tunnel only carries connections that clients start, and it does not keep the client IP for non-HTTP traffic. Mesh does both.",
-				],
-			};
-		}
+		const why: string[] = [];
+		if (a.private) why.push("Mesh is the default connector for private access in Cloudflare One. Give the app a hostname route, and users reach it from the Cloudflare One Client.");
+		if (a.udp) why.push("Tunnel proxies UDP flow by flow, which does not suit heavy or long-lived UDP. Mesh forwards every packet.");
+		if (a.serverInitiated) why.push("Tunnel only carries connections that clients start. With Mesh, either side can start.");
+		if (why.length) return { id: "mesh", notes: why };
 		return {
 			id: "tunnel",
 			notes: a.platform
 				? [
 						"Every account includes 1,000 tunnels. Tunnels for Platforms adds more, so tunnel count can grow with customer count.",
 					]
-				: [],
+				: ["Keeping it private instead? Use Cloudflare Mesh, the default connector for Cloudflare One."],
 		};
 	}
 	if (need === "network") {

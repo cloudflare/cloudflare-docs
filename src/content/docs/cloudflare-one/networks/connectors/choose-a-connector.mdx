@@ -1,7 +1,7 @@
 ---
 title: Choose a connector
 pcx_content_type: concept
-description: Pick the right Cloudflare connector for what you are connecting. Use Cloudflare Tunnel for applications, Cloudflare Mesh for private networks, Workers VPC for code on Cloudflare, and Cloudflare WAN for whole sites.
+description: Pick the right Cloudflare connector for what you are connecting. Cloudflare Mesh is the default for Cloudflare One and private networks, Cloudflare Tunnel publishes HTTP applications on the public Internet, Workers VPC connects code on Cloudflare, and Cloudflare WAN connects whole sites.
 products:
   - cloudflare-one
   - tunnel
@@ -25,7 +25,7 @@ import ConnectorDirection from "~/components/react/connectors/ConnectorDirection
 
 You connect once, and Cloudflare does the rest. Every connector brings traffic into the same global network, where the same policies, identity controls, and logs apply. What changes from one connector to the next is **what you are connecting**.
 
-> **If it is an application, use Tunnel. If it is a network, use Mesh.**
+> **Mesh is the default connector for Cloudflare One and private networks. Tunnel is the best way to publish an HTTP application on the public Internet.**
 > Code running on Cloudflare uses Workers VPC, and whole sites use Cloudflare WAN.
 
 ## Start with what you are connecting
@@ -38,12 +38,12 @@ People and their devices arrive through the [Cloudflare One Client](/cloudflare-
 
 | Connector | You are connecting | What it does | Usually run by |
 | --- | --- | --- | --- |
-| [Cloudflare Tunnel](/tunnel/) | **An application** | Publishes HTTP and TCP services to Cloudflare. `cloudflared` connects out, so the origin needs no inbound port. | Application and web teams |
-| [Cloudflare Mesh](/mesh/) | **A private network, server, or device** | Gives every participant a private Mesh IP. Private TCP, UDP, and ICMP flow in both directions. The default software connector for private traffic. | Platform, DevOps, and cloud infrastructure teams |
+| [Cloudflare Mesh](/mesh/) | **Anything private: networks, servers, devices, and private applications** | The default connector for Cloudflare One (SASE) and private networks. Gives every participant a private Mesh IP, and carries TCP, UDP, and ICMP in both directions. | Platform, DevOps, and cloud infrastructure teams |
+| [Cloudflare Tunnel](/tunnel/) | **A web application on the public Internet** | Publishes HTTP applications on public hostnames, with or without [Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in front. `cloudflared` connects out, so the origin needs no inbound port. | Application and web teams |
 | [Workers VPC](/workers-vpc/) | **Code on Cloudflare** | Lets Workers and agents call private APIs and databases, wherever and however they connect. | Developers building on Workers |
 | [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) | **A whole site** | Brings branch offices and data centers online with the [Cloudflare One Appliance](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/), or IPsec and GRE from your existing routers. | Network engineering teams |
 
-The quickest way to tell them apart is the boundary you are connecting: an application, a software node or subnet, your own code, or the edge of a whole network.
+The quickest way to tell them apart is the boundary you are connecting: a public web application, anything private, your own code, or the edge of a whole network.
 
 ## Find your connector
 
@@ -51,7 +51,7 @@ _Answer one question, refine it if you need to, and get a recommendation._
 
 <ConnectorPicker client:visible>
 
-Choose what you are connecting: an application, a network, server, or device, code on Cloudflare, or a whole site. Refine the choice with up to three yes or no questions. The picker then recommends one connector, shows the direction traffic can flow, lists why it fits and what to watch for, and links to its setup guide. The same logic is written out in the table that follows.
+Choose what you are connecting: a private network, server, or device, an application, code on Cloudflare, or a whole site. Refine the choice with a few yes or no questions. The picker then recommends one connector, shows the direction traffic can flow, lists why it fits and what to watch for, and links to its setup guide. The same logic is written out in the table that follows.
 
 </ConnectorPicker>
 
@@ -59,10 +59,12 @@ The picker follows these rules:
 
 | If you are connecting | And | Use |
 | --- | --- | --- |
-| A public or internal web application, API, or SSH or RDP service | Clients start every connection | [Cloudflare Tunnel](/tunnel/) |
-| An application | The server must also start connections, or needs the client IP for non-HTTP traffic | [Cloudflare Mesh](/mesh/) |
-| An application, once per customer or device | You run a platform with more than 1,000 tunnels | [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/) |
 | A private network, subnet, server, container, or device | — | [Cloudflare Mesh](/mesh/) |
+| A web application or API on a public hostname | With or without Access in front | [Cloudflare Tunnel](/tunnel/) |
+| An application | It should stay private, reachable only from the Cloudflare One Client | [Cloudflare Mesh](/mesh/) |
+| An application | It uses UDP, such as DNS, VoIP, or video | [Cloudflare Mesh](/mesh/) |
+| An application | The server must also start connections | [Cloudflare Mesh](/mesh/) |
+| A web application, once per customer or device | You run a platform with more than 1,000 tunnels | [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/) |
 | A private resource that AI agents need to reach | — | [Cloudflare Mesh](/mesh/), with a node beside the resource |
 | Code running on Workers | It calls many private addresses | [Workers VPC: VPC Network](/workers-vpc/configuration/vpc-networks/) |
 | Code running on Workers | It calls one fixed host and port | [Workers VPC: VPC Service](/workers-vpc/configuration/vpc-services/) |
@@ -70,15 +72,15 @@ The picker follows these rules:
 | A branch office or data center | You already run a router or firewall that speaks IPsec or GRE | [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/) |
 | A data center | Traffic must not cross the public Internet | [Cloudflare Network Interconnect](/network-interconnect/) |
 
-## Applications or networks: Tunnel and Mesh
+## Public applications or private networks: Tunnel and Mesh
 
-_The deciding question is who starts the conversation._
+_Public HTTP goes through Tunnel. Everything private goes through Mesh._
 
 Cloudflare Tunnel and Cloudflare Mesh both run as software beside your infrastructure, and both connect out to Cloudflare without opening inbound ports. They differ in direction and layer.
 
-**Tunnel publishes an application.** `cloudflared` proxies requests that arrive from Cloudflare to a service it can reach. Clients start every connection, and the full edge stack, including DDoS protection, WAF, bot and API rules, and Access, applies to the traffic.
+**Mesh is the default for private access.** It is the connector for Cloudflare One (SASE): users on the Cloudflare One Client reach private applications, servers, and networks through it. Every participant, whether a laptop, phone, server, VM, or container, gets a private [Mesh IP](/mesh/concepts/#mesh-ips), and any participant can start a connection to any other. Mesh forwards packets at layer 3, so any TCP, UDP, or ICMP traffic works. Routes extend Mesh to whole subnets and to private hostnames behind a node.
 
-**Mesh connects a network.** Every participant, whether a laptop, phone, server, VM, or container, gets a private [Mesh IP](/mesh/concepts/#mesh-ips), and any participant can start a connection to any other. Routes extend Mesh to whole subnets and to private hostnames behind a node.
+**Tunnel publishes a web application on the public Internet.** `cloudflared` proxies HTTP requests that arrive from Cloudflare to a service it can reach. Put [Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in front to require sign-in, or leave the hostname open. Either way, the full edge stack, including DDoS protection, WAF, and bot and API rules, applies to the traffic. Tunnel is built for HTTP: it proxies UDP flow by flow, which does not suit heavy or long-lived UDP traffic. For UDP, even a private application is better on Mesh.
 
 <ConnectorDirection client:visible>
 
@@ -88,38 +90,29 @@ A laptop, Cloudflare, a connector, and a private server sit on one vertical path
 
 |  | Cloudflare Tunnel | Cloudflare Mesh |
 | --- | --- | --- |
-| **Best for** | Publishing applications | Private networking, servers, devices, and agents |
+| **Best for** | Publishing HTTP applications on the public Internet, with or without Access | Cloudflare One private access, private networks, servers, devices, and agents |
 | **Direction** | Client to application | Bidirectional |
-| **Layer** | L7 (HTTP/2, QUIC), plus TCP services such as SSH and RDP | L3: any TCP, UDP, or ICMP traffic, over MASQUE |
+| **Layer** | L7 HTTP proxy (HTTP/2, QUIC). TCP services such as SSH and RDP also work. | L3: any TCP, UDP, or ICMP traffic, over MASQUE |
+| **UDP** | Proxied flow by flow. Fine for light traffic, not for DNS at scale, VoIP, or video. | Forwarded packet by packet |
 | **Connector** | `cloudflared` | Cloudflare One Client (`warp-cli`) as a Mesh node, or the [`cloudflare/mesh`](/mesh/guides/run-mesh-in-containers/) container image |
 | **Addressing** | Public hostnames, or private routes to resources | A Mesh IP for every participant, plus CIDR and hostname routes |
 | **Source IP** | The origin sees `cloudflared`. HTTP origins can read `CF-Connecting-IP`. | Preserved end to end |
 | **Runs on** | Linux, macOS, Windows, Docker, and Kubernetes | Linux hosts and containers (amd64 and arm64) for nodes. Client devices on desktop and mobile. |
 
-Four quick checks settle most cases:
+Quick checks settle most cases:
 
-- **Does the server need to start connections?** Use Mesh.
-- **Does the destination need the original source IP?** Use Mesh.
+- **Is it an HTTP application on a public hostname?** Use Tunnel, with or without Access in front.
+- **Is it private, reached from the Cloudflare One Client?** Use Mesh.
+- **Does it use UDP?** Use Mesh, even for a private application.
+- **Does the server need to start connections, or need the original source IP?** Use Mesh.
 - **Is an AI agent connecting?** Use Mesh.
 - **Is it a whole LAN, or does it need 1 Gbps or more?** Use Cloudflare WAN.
 
-Otherwise, if people reach the service by hostname, use Tunnel.
-
 <Details header="I already route private networks through Cloudflare Tunnel. Do I need to move?">
 
-No. Tunnel [private network routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) keep working for client-to-server traffic, such as users reaching internal applications from the Cloudflare One Client. Consider Mesh for new private networks, and for any workload that needs server-initiated traffic, source IP preservation, or long-lived connections such as database replication, VoIP, or Active Directory and SCCM traffic. Both can run in the same account.
+No. Tunnel [private network routes](/cloudflare-one/networks/connectors/cloudflare-tunnel/private-net/) keep working for client-to-server traffic, such as users reaching internal web applications from the Cloudflare One Client. For new private access, we recommend Mesh. Move workloads to Mesh when they use UDP, such as DNS, VoIP, or video, or when they need server-initiated traffic, source IP preservation, or long-lived connections such as database replication or Active Directory and SCCM traffic. Both can run in the same account.
 
 </Details>
-
-### When Mesh is not the right fit
-
-Mesh carries IP traffic at layer 3 through Cloudflare, so every connection passes through the same policies and logs. That design rules out a few requirements:
-
-- **Layer 2, broadcast, or multicast traffic.** Mesh carries TCP, UDP, and ICMP, not Ethernet frames. Applications that discover peers by broadcast or multicast need a bridge that converts that traffic to unicast.
-- **A direct local path between nearby devices.** Mesh traffic goes through Cloudflare even when two participants share a LAN. For LAN-speed site traffic, use [Cloudflare WAN](#whole-sites-cloudflare-wan).
-- **Traffic that must keep flowing without Internet access.** Participants reach each other through Cloudflare, so Mesh-carried flows stop if a site loses its connection to Cloudflare.
-- **Hosts that cannot run a connector.** A Mesh node needs a Linux host or container that can change routes and DNS. If you cannot add one, connect the site router with [IPsec or GRE](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/).
-- **Publishing an application only.** If clients only need to reach a hostname, Tunnel is simpler.
 
 ## Code on Cloudflare: Workers VPC
 
@@ -164,12 +157,12 @@ Connectors share one routing table and one policy plane, so they combine without
 
 | Scenario | Connectors |
 | --- | --- |
-| Remote workforce reaching internal apps and servers | Cloudflare One Client, Tunnel for published applications, and Mesh for private networks |
+| Remote workforce reaching internal apps and servers | Cloudflare One Client for users, Mesh for private applications and networks, and Tunnel for public web applications |
 | SaaS or developer platform with private customer environments | Tunnel, with [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/) as tunnel count grows with customer count |
 | Cloud-native team with private APIs and agents | Mesh nodes in each VPC or cluster, and Workers VPC for code on Cloudflare |
-| Enterprise with branch offices and data centers | Cloudflare One Appliance or IPsec at each site, the Cloudflare One Client for remote users, and Tunnel for specific applications |
+| Enterprise with branch offices and data centers | Cloudflare One Appliance or IPsec at each site, the Cloudflare One Client for remote users, and Tunnel for public web applications |
 
-A typical hybrid design uses Cloudflare WAN for managed branches and data centers, Mesh for cloud workloads and small sites, and Tunnel for application ingress. Keep one route inventory, and record which connector owns each prefix, so overlapping routes do not send traffic to the wrong place.
+A typical hybrid design uses Cloudflare WAN for managed branches and data centers, Mesh for private access, cloud workloads, and small sites, and Tunnel for public web applications. Keep one route inventory, and record which connector owns each prefix, so overlapping routes do not send traffic to the wrong place.
 
 :::caution[Cloudflare Mesh and Cloudflare WAN]
 To use Cloudflare Mesh and Cloudflare WAN in the same account, the account must use [Cloudflare One Unified Routing](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#unified-routing).
@@ -187,6 +180,7 @@ _Each one tends to surface as "Cloudflare does not work."_
 | Forgetting the reply path | A private host receives a packet from `100.96.x.x`, has no route back, and drops the reply. The connection opens and then hangs. | Keep [source NAT](/mesh/guides/run-mesh-in-containers/#source-nat) on, or add a return route to the Mesh IP range. |
 | Confusing routes with replicas | Two nodes that advertise overlapping routes do not fail over. The longest prefix wins, with no health check first. | For failover, add [replicas](/mesh/features/high-availability/) to one node instead of adding routes. |
 | Excluding Mesh in split tunnels | Nodes and devices cannot reach each other. | Send `100.96.0.0/12` through Cloudflare, and use MASQUE in the device profile. On Windows, allow inbound `100.96.0.0/12` in Windows Firewall. |
+| Sending heavy UDP through Tunnel | `cloudflared` keeps state for every UDP flow. High-volume DNS, VoIP, or video can drop packets or exhaust the connector. | Carry UDP over Mesh, which forwards packets without per-flow state on the node. |
 | Treating Tunnel private routes as site-to-site | A private route lets clients reach destinations behind `cloudflared`. It does not make `cloudflared` a router for traffic that starts inside the network. | Use Mesh for software-defined sites, or Cloudflare WAN for managed sites. |
 | Expecting one connector to be highly available | One `cloudflared` instance, one Mesh node, or one IPsec tunnel is still a single point of failure. | Run [Tunnel replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/), Mesh [replicas](/mesh/features/high-availability/), or redundant WAN tunnels, and test failover. |
 | Binding a Worker too broadly | `cf1:network` reaches everything Mesh and Cloudflare WAN reach. | Advertise only the routes the Worker needs, or bind a single VPC Service. |
@@ -195,14 +189,14 @@ _Each one tends to surface as "Cloudflare does not work."_
 
 <CardGrid>
 	<LinkCard
-		title="Publish an application with Tunnel"
-		href="/tunnel/get-started/"
-		description="Connect a public hostname to a service in your network."
-	/>
-	<LinkCard
 		title="Set up Cloudflare Mesh"
 		href="/mesh/get-started/"
-		description="Create a node and connect your first participants."
+		description="Connect private networks, servers, and devices with the default Cloudflare One connector."
+	/>
+	<LinkCard
+		title="Publish a web application with Tunnel"
+		href="/tunnel/get-started/"
+		description="Put a public hostname, with or without Access, in front of a service in your network."
 	/>
 	<LinkCard
 		title="Connect Workers to a private network"

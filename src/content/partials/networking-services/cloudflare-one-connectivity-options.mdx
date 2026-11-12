@@ -12,7 +12,7 @@ Cloudflare One provides multiple connectivity options for your users, devices, a
 This page helps you understand which connectivity options to use based on your requirements, and how to combine multiple options in a single deployment.
 
 :::tip[Not sure where to start?]
-[Choose a connector](/cloudflare-one/networks/connectors/choose-a-connector/) gives a short, interactive recommendation: Cloudflare Tunnel for applications, Cloudflare Mesh for private networks, Workers VPC for code on Cloudflare, and Cloudflare WAN for whole sites. This page is the full reference.
+[Choose a connector](/cloudflare-one/networks/connectors/choose-a-connector/) gives a short, interactive recommendation: Cloudflare Mesh as the default for private networks and private access, Cloudflare Tunnel for HTTP applications on the public Internet, Workers VPC for code on Cloudflare, and Cloudflare WAN for whole sites. This page is the full reference.
 :::
 
 ## Cloudflare One on-ramps and off-ramps
@@ -271,9 +271,11 @@ The following table maps common requirements to recommended Cloudflare One conne
 **Table 4. Recommend Cloudflare One connectivity options for common requirements**
 | Requirement | Recommended option |
 | ---- | ---- |
-| Expose a private web application without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
+| Publish a web application on the public Internet, with or without Access, without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
+| Give users private access to applications and networks | [Cloudflare Mesh](#cloudflare-mesh) |
+| Private applications that use UDP, such as DNS, VoIP, or video | [Cloudflare Mesh](#cloudflare-mesh) |
 | Secure end-user devices | [Cloudflare One Client](#cloudflare-one-client) |
-| Replace traditional VPN for remote access | [Cloudflare One Client](#cloudflare-one-client) for users, with [Cloudflare Tunnel](#cloudflare-tunnel) for published applications and [Cloudflare Mesh](#cloudflare-mesh) for private networks |
+| Replace traditional VPN for remote access | [Cloudflare One Client](#cloudflare-one-client) for users, with [Cloudflare Mesh](#cloudflare-mesh) for private applications and networks, and [Cloudflare Tunnel](#cloudflare-tunnel) for public web applications |
 | Connect private servers, containers, or subnets in both directions | [Cloudflare Mesh](#cloudflare-mesh) |
 | Let Workers or AI agents on Cloudflare call private APIs and databases | [Workers VPC](/workers-vpc/), which reaches services behind Tunnel, Mesh, and Cloudflare WAN |
 | Connect a site with IoT devices or VoIP systems | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) (from existing router/firewall), [Cloudflare One Appliance](#cloudflare-one-appliance) (zero-touch deployment), or [Cloudflare Mesh](#cloudflare-mesh) (requires a Linux host) |
