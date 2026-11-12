@@ -109,8 +109,20 @@ Shallow fork is safe to retry. If a request times out or the connection drops, s
 
 For the full list of responses, refer to [Shallow fork a repo](/artifacts/api/rest-api/#shallow-fork-a-repo).
 
-## Plan for large and popular templates
+## Keep several copies of popular templates
+
+Each repo handles forks one after another. If many customers fork the same template at the same time, for example right after you publish a new template, requests wait on each other and can time out or fail. This applies to both fork and shallow fork.
+
+To spread the load:
+
+- Keep several identical copies of each popular template, for example `storefront-1` through `storefront-5`. You can create the copies with shallow fork.
+- Send each new customer to the next copy in turn (round-robin).
+- Create the copies before you announce a template, not while customers are already forking it.
+- Retry failed requests with a short backoff. For `503` responses, wait for the `Retry-After` delay.
+
+When you publish a new template version, update every copy and record the new commit hash for each one.
+
+## Plan for large templates
 
 - Copy time grows with the number of files and folders in the commit, more than with total size. A template with tens of thousands of files can take more than a minute. Run the request from a background job rather than inside a short request timeout.
-- Shallow forks from the same template are processed one at a time. If many customers start from one template at once, for example after a launch, each request waits for the ones before it. To spread the load, shallow fork the template into several identical template repos and send new customers to them in turn.
 - Shallow fork copies files inside Artifacts, so the [push size limit](/artifacts/platform/limits/) does not apply. You do not need to download a large template and push it back in pieces.
