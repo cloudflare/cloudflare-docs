@@ -12,15 +12,15 @@ products:
 
 import { DashButton, Steps } from "~/components";
 
-Set spending limits for Workers and Durable Objects, or receive email alerts when spending reaches a threshold.
+Set spending limits for Workers and Durable Objects, or receive email alerts when spending reaches a threshold. Support for more products is coming soon.
 
 When a product reaches its spending limit, Cloudflare blocks supported operations until the next billing period or until you change the limit. Email alerts notify you without blocking usage.
 
-Support for more products is coming soon.
+Use these controls alongside [AI Gateway spend limits](/ai-gateway/features/spend-limits/) to manage compute and AI inference costs across your application. AI Gateway supports per-user and per-model budgets for Workers AI and other AI providers, applied to requests routed through your gateway.
 
-In the API, a spending limit or email alert is called a _spend policy_.
+In the billing API, a spending limit or email alert is called a _spend policy_.
 
-Choose how you want to get started:
+Choose how to configure spending limits and email alerts for Workers or Durable Objects:
 
 - **Dashboard:** [Set a spending limit](/billing/manage/spend-management/#set-a-spending-limit-in-the-dashboard) for Workers or Durable Objects.
 - **cf CLI:** [Create and manage spending limits and email alerts](/billing/manage/spend-management/cli/) from your terminal or coding agent.
@@ -30,12 +30,13 @@ Choose how you want to get started:
 | Control                                        | Scope                                           | What happens at the threshold                                           |
 | ---------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------- |
 | Spending limit                                 | Workers or Durable Objects, across your account | Cloudflare blocks the product's supported operations.                   |
+| [AI Gateway spend limit](/ai-gateway/features/spend-limits/) | AI requests routed through your gateway, scoped by user, model, or provider | AI Gateway blocks matching requests until the budget window resets. |
 | Email alert                                    | Workers or Durable Objects, across your account | Cloudflare emails the address you configure. The product keeps running. |
 | [Budget alert](/billing/manage/budget-alerts/) | Account-wide usage-based spend                  | Cloudflare emails your recipients. Products keep running.               |
 
-Each product has a separate limit. A Workers limit does not include Durable Objects, Workers KV, R2, or other products used by your application.
+Workers and Durable Objects each have a separate product-wide limit. A Workers limit does not include Durable Objects, Workers AI, Workers KV, R2, or other products used by your application.
 
-Limits cannot target an individual Worker, Durable Object namespace, or billing metric. Choose each limit for the combined usage of that product across your account.
+Workers and Durable Objects limits cannot target an individual Worker, Durable Object namespace, or billing metric. Choose each limit for the combined usage of that product across your account.
 
 :::caution[Limits affect application availability]
 A limit can interrupt every application that uses the affected product on your account. Choose an alert if you want notification without a service interruption.
@@ -45,7 +46,7 @@ A limit does not guarantee a maximum invoice amount. Usage reporting and blockin
 
 ## What counts toward a limit
 
-Limits use estimated usage charges for the product's current subscription billing period. Included usage is deducted before Cloudflare calculates these charges. Amounts are in US dollars.
+Workers and Durable Objects limits use estimated usage charges for the product's current subscription billing period. Included usage is deducted before Cloudflare calculates these charges. Amounts are in US dollars.
 
 | Product         | Usage charges counted toward the limit                                                                     | Charges excluded from the limit                                  |
 | --------------- | ---------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
