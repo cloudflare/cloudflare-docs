@@ -67,15 +67,10 @@ curl --request PATCH \
 </TabItem>
 </Tabs>
 
-All Hyperdrive configurations have a minimum of 5 connections. The maximum connection count depends on your [Workers plan](/hyperdrive/platform/limits/).
+All Hyperdrive configurations have a minimum of 5 connections. Workers Paid customers can configure up to 1,500 connections per configuration. For the full set of limits by plan, refer to [Hyperdrive limits](/hyperdrive/platform/limits/).
 
 :::note
 The Hyperdrive connection pool limit is a "soft limit". This means that it is possible for Hyperdrive to make more connections to your database than this limit in the event of network failure to ensure high availability. We recommend that you set the Hyperdrive connection limit to be lower than the limit of your origin database to account for occasions where Hyperdrive needs to create more connections for resiliency.
-
-:::
-
-:::note
-You can request adjustments to Hyperdrive's origin connection limits. To request an increase, submit a [Limit Increase Request](https://forms.gle/eX6pXvit1wBv77Yw5) and Cloudflare will contact you with next steps. Cloudflare also regularly monitors the Hyperdrive channel in [Cloudflare's Discord community](https://discord.cloudflare.com/) and can answer questions regarding limits and requests.
 :::
 
 ## Best practices

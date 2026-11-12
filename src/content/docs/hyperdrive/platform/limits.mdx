@@ -16,7 +16,7 @@ These limits apply when creating or updating Hyperdrive configurations.
 
 | Limit                          | Free                  | Paid                  |
 | ------------------------------ | --------------------- | --------------------- |
-| Maximum configured databases   | 10 per account        | 25 per account        |
+| Maximum configured databases   | 10 per account        | 100 per account       |
 | Maximum username length [^1]   | 63 characters (bytes) | 63 characters (bytes) |
 | Maximum database name length [^1] | 63 characters (bytes) | 63 characters (bytes) |
 
@@ -30,7 +30,7 @@ These limits apply to connections between Hyperdrive and your origin database.
 | ---------------------------------- | ------------------------ | ------------------------- |
 | Initial connection timeout         | 15 seconds               | 15 seconds                |
 | Idle connection timeout            | 10 minutes               | 10 minutes                |
-| Maximum origin database connections (per configuration) [^2] | ~20 connections | ~100 connections |
+| Maximum origin database connections (per configuration) [^2] | ~20 connections | up to 1,500 connections |
 
 Hyperdrive does not limit the number of concurrent client connections from your Workers. However, Hyperdrive limits connections to your origin database because most hosted databases have connection limits.
 
