@@ -80,7 +80,7 @@ The guide applies the rules in the following table:
 
 ## Mesh and Tunnel
 
-Mesh and Tunnel both run as software beside your infrastructure. Both connect out to Cloudflare, so you do not open inbound ports. They differ in the traffic they carry and in which side can start a connection.
+Mesh and Tunnel both run as software beside your infrastructure. Each starts its own connection to Cloudflare, so neither needs a public IP address. They differ in the traffic they carry, which side can start a connection, and the firewall rules they need.
 
 **Mesh connects private resources.** Mesh is the connector for private access in Cloudflare One. Users of the Cloudflare One Client reach private applications, servers, and networks through it. Every participant gets a private [Mesh IP](/mesh/concepts/#mesh-ips), and any participant can start a connection to any other. Mesh forwards packets at layer 3 (L3), so it carries any TCP, UDP, or ICMP traffic. [Routes](/mesh/features/routes/) extend Mesh to subnets and private hostnames behind a node.
 
@@ -108,6 +108,7 @@ The following table compares Mesh and Tunnel:
 | Addressing | A Mesh IP for every participant, plus CIDR and hostname routes | Public hostnames, or private routes to resources |
 | Source IP | Preserved end to end | Replaced by `cloudflared`, though HTTP origins can read the `CF-Connecting-IP` header |
 | Platforms | Linux hosts and containers for nodes, and desktop and mobile devices for users | Linux, macOS, Windows, Docker, and Kubernetes |
+| Firewall | Outbound UDP to the [Cloudflare One Client ingress IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip), with return traffic allowed for the client process | Outbound port `7844` over TCP or UDP, with [all inbound traffic blocked](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) |
 | Typical throughput | 350 to 750 Mbps for each node, as described in [Throughput](#throughput) | About 750 Mbps for each replica for public traffic, or 350 to 500 Mbps for private traffic |
 
 Use the following checks to decide between them:
