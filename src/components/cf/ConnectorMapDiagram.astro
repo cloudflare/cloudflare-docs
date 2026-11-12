@@ -10,8 +10,10 @@
 // is a static, fully linked figure.
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
+type Variant = "connectors" | "agents";
+
 interface Props {
-	variant?: "connectors" | "agents";
+	variant?: Variant;
 }
 
 const { variant = "connectors" } = Astro.props;
@@ -24,9 +26,21 @@ type Item = {
 	caption: string;
 	href?: string;
 	hint?: string;
-	tone?: "brand" | "mesh" | "tunnel" | "wan" | "client" | "workers" | "neutral";
+	tone?: string;
 	mono?: boolean;
 };
+
+interface MapData {
+	label: string;
+	inTitle: string;
+	outTitle: string;
+	coreTitle: string;
+	coreLines: string[];
+	pills: { label: string; href: string }[];
+	defaultHint: string;
+	inbound: Item[];
+	outbound: Item[];
+}
 
 const GLYPH = {
 	globe:
@@ -42,27 +56,18 @@ const GLYPH = {
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 18h10.5a4 4 0 0 0 .5-8 6 6 0 0 0-11.6 1.5A3.3 3.3 0 0 0 7 18Z"/></svg>',
 };
 
-const data: Record<
-	"connectors" | "agents",
-	{
-		label: string;
-		inTitle: string;
-		outTitle: string;
-		coreTitle: string;
-		coreLines: string[];
-		pills: { label: string; href: string }[];
-		defaultHint: string;
-		inbound: Item[];
-		outbound: Item[];
-	}
-> = {
+const data: Record<Variant, MapData> = {
 	connectors: {
 		label:
 			"How traffic arrives at Cloudflare One through each connector, and what it reaches: Internet and SaaS, private applications, private networks, and Cloudflare code.",
 		inTitle: "How traffic arrives",
 		outTitle: "What it reaches",
 		coreTitle: "Cloudflare One",
-		coreLines: ["One global network", "One set of policies", "One view of traffic"],
+		coreLines: [
+			"One global network",
+			"One set of policies",
+			"One view of traffic",
+		],
 		pills: [
 			{ label: "Gateway", href: "/cloudflare-one/traffic-controls/" },
 			{ label: "Access", href: "/cloudflare-one/access-controls/" },
@@ -108,9 +113,24 @@ const data: Record<
 			},
 		],
 		outbound: [
-			{ key: "internet", glyph: GLYPH.globe, title: "Internet and SaaS", caption: "Filtered and inspected" },
-			{ key: "apps", glyph: GLYPH.app, title: "Private applications", caption: "Published by hostname" },
-			{ key: "networks", glyph: GLYPH.network, title: "Private networks", caption: "Reached by IP or name" },
+			{
+				key: "internet",
+				glyph: GLYPH.globe,
+				title: "Internet and SaaS",
+				caption: "Filtered and inspected",
+			},
+			{
+				key: "apps",
+				glyph: GLYPH.app,
+				title: "Private applications",
+				caption: "Published by hostname",
+			},
+			{
+				key: "networks",
+				glyph: GLYPH.network,
+				title: "Private networks",
+				caption: "Reached by IP or name",
+			},
 			{
 				key: "code",
 				glyph: GLYPH.code,
@@ -126,13 +146,19 @@ const data: Record<
 		inTitle: "Where the agent runs",
 		outTitle: "What it reaches privately",
 		coreTitle: "Cloudflare One",
-		coreLines: ["Gateway network and HTTP policies", "DLP on what moves", "DNS, HTTP, and network logs", "Unified routing: Mesh, Tunnel, WAN"],
+		coreLines: [
+			"Gateway network and HTTP policies",
+			"DLP on what moves",
+			"DNS, HTTP, and network logs",
+			"Unified routing: Mesh, Tunnel, WAN",
+		],
 		pills: [
 			{ label: "Gateway", href: "/cloudflare-one/traffic-controls/" },
 			{ label: "DLP", href: "/cloudflare-one/data-loss-prevention/" },
 			{ label: "Logs", href: "/cloudflare-one/insights/logs/" },
 		],
-		defaultHint: "Agents and employees reach private resources through the same controls.",
+		defaultHint:
+			"Agents and employees reach private resources through the same controls.",
 		inbound: [
 			{
 				key: "node",
@@ -163,10 +189,34 @@ const data: Record<
 			},
 		],
 		outbound: [
-			{ key: "pg", glyph: GLYPH.db, title: "Private Postgres", caption: "10.0.1.20:5432", mono: true },
-			{ key: "api", glyph: GLYPH.api, title: "Internal API", caption: "api.corp.internal", mono: true },
-			{ key: "mcp", glyph: GLYPH.mcp, title: "Internal MCP server", caption: "mcp.internal:8080", mono: true },
-			{ key: "vpc", glyph: GLYPH.cloud, title: "Another cloud VPC", caption: "10.10.0.0/16", mono: true },
+			{
+				key: "pg",
+				glyph: GLYPH.db,
+				title: "Private Postgres",
+				caption: "10.0.1.20:5432",
+				mono: true,
+			},
+			{
+				key: "api",
+				glyph: GLYPH.api,
+				title: "Internal API",
+				caption: "api.corp.internal",
+				mono: true,
+			},
+			{
+				key: "mcp",
+				glyph: GLYPH.mcp,
+				title: "Internal MCP server",
+				caption: "mcp.internal:8080",
+				mono: true,
+			},
+			{
+				key: "vpc",
+				glyph: GLYPH.cloud,
+				title: "Another cloud VPC",
+				caption: "10.10.0.0/16",
+				mono: true,
+			},
 		],
 	},
 };
@@ -174,39 +224,42 @@ const data: Record<
 const d = data[variant];
 ---
 
-<figure class="connector-map not-content" aria-label={d.label} data-connector-map>
+<figure
+	class="connector-map not-content"
+	aria-label={d.label}
+	data-connector-map
+>
 	<div class="col col-in">
 		<p class="col-title">{d.inTitle}</p>
 		<ul class="stack">
-			{
-				d.inbound.map((item) => (
-					<li>
-						<a
-							class={`card in-card tone-${item.tone ?? "neutral"}`}
-							href={item.href}
-							data-key={item.key}
-							data-hint={item.hint}
-						>
-							<span class="icon" aria-hidden="true">
-								{item.icon ? <Icon name={item.icon} /> : <Fragment set:html={item.glyph} />}
-							</span>
-							<span class="text">
-								<span class="title">{item.title}</span>
-								<span class="caption">{item.caption}</span>
-							</span>
-							<span class="rail" aria-hidden="true">
-								<span class="pulse" />
-							</span>
-						</a>
-					</li>
-				))
-			}
+			{d.inbound.map((item) => (
+				<li>
+					<a
+						class={`card in-card tone-${item.tone ?? "neutral"}`}
+						href={item.href}
+						data-key={item.key}
+						data-hint={item.hint}
+					>
+						<span class="icon" aria-hidden="true">
+							{item.icon && <Icon name={item.icon} />}
+							{item.glyph && <Fragment set:html={item.glyph} />}
+						</span>
+						<span class="text">
+							<span class="title">{item.title}</span>
+							<span class="caption">{item.caption}</span>
+						</span>
+						<span class="rail" aria-hidden="true">
+							<span class="pulse"></span>
+						</span>
+					</a>
+				</li>
+			))}
 		</ul>
 	</div>
 
 	<div class="col col-core">
 		<div class="core">
-			<span class="core-glow" aria-hidden="true" />
+			<span class="core-glow" aria-hidden="true"></span>
 			<p class="core-title">{d.coreTitle}</p>
 			<ul class="core-lines">
 				{d.coreLines.map((l) => <li>{l}</li>)}
@@ -223,51 +276,48 @@ const d = data[variant];
 	<div class="col col-out">
 		<p class="col-title">{d.outTitle}</p>
 		<ul class="stack">
-			{
-				d.outbound.map((item) => {
-					const Tag = item.href ? "a" : "div";
-					return (
-						<li>
-							<Tag class="card out-card" href={item.href}>
-								<span class="rail rail-out" aria-hidden="true">
-									<span class="pulse" />
-								</span>
-								<span class="icon icon-out" aria-hidden="true">
-									<Fragment set:html={item.glyph} />
-								</span>
-								<span class="text">
-									<span class="title">{item.title}</span>
-									<span class:list={["caption", { mono: item.mono }]}>{item.caption}</span>
-								</span>
-							</Tag>
-						</li>
-					);
-				})
-			}
+			{d.outbound.map((item) => (
+				<li>
+					<a class="card out-card" href={item.href}>
+						<span class="rail rail-out" aria-hidden="true">
+							<span class="pulse"></span>
+						</span>
+						<span class="icon icon-out" aria-hidden="true">
+							<Fragment set:html={item.glyph} />
+						</span>
+						<span class="text">
+							<span class="title">{item.title}</span>
+							<span class={item.mono ? "caption mono" : "caption"}>
+								{item.caption}
+							</span>
+						</span>
+					</a>
+				</li>
+			))}
 		</ul>
 	</div>
 </figure>
 
 <script>
 	function initConnectorMaps() {
-		document
-			.querySelectorAll<HTMLElement>("[data-connector-map]:not([data-ready])")
-			.forEach((map) => {
-				map.dataset.ready = "true";
-				const hint = map.querySelector<HTMLElement>("[data-hint-target]");
-				const cards = map.querySelectorAll<HTMLElement>(".in-card");
-				const activate = (card: HTMLElement | null) => {
-					cards.forEach((c) => c.classList.toggle("is-active", c === card));
-					map.classList.toggle("has-active", card !== null);
-					if (hint) hint.textContent = card?.dataset.hint ?? hint.dataset.default ?? "";
-				};
-				cards.forEach((card) => {
-					card.addEventListener("mouseenter", () => activate(card));
-					card.addEventListener("focus", () => activate(card));
-					card.addEventListener("mouseleave", () => activate(null));
-					card.addEventListener("blur", () => activate(null));
-				});
+		const selector = "[data-connector-map]:not([data-ready])";
+		for (const map of document.querySelectorAll<HTMLElement>(selector)) {
+			map.dataset.ready = "true";
+			const hint = map.querySelector<HTMLElement>("[data-hint-target]");
+			const cards = map.querySelectorAll<HTMLElement>(".in-card");
+			const activate = (card: HTMLElement | null) => {
+				cards.forEach((c) => c.classList.toggle("is-active", c === card));
+				map.classList.toggle("has-active", card !== null);
+				const text = card?.dataset.hint ?? hint?.dataset.default ?? "";
+				if (hint) hint.textContent = text;
+			};
+			cards.forEach((card) => {
+				card.addEventListener("mouseenter", () => activate(card));
+				card.addEventListener("focus", () => activate(card));
+				card.addEventListener("mouseleave", () => activate(null));
+				card.addEventListener("blur", () => activate(null));
 			});
+		}
 	}
 	initConnectorMaps();
 	document.addEventListener("astro:page-load", initConnectorMaps);
@@ -351,11 +401,21 @@ const d = data[variant];
 			transform 160ms ease;
 	}
 
-	.tone-client { --tone: var(--tone-client); }
-	.tone-tunnel { --tone: var(--tone-tunnel); }
-	.tone-mesh { --tone: var(--tone-mesh); }
-	.tone-wan { --tone: var(--tone-wan); }
-	.tone-workers { --tone: var(--tone-workers); }
+	.tone-client {
+		--tone: var(--tone-client);
+	}
+	.tone-tunnel {
+		--tone: var(--tone-tunnel);
+	}
+	.tone-mesh {
+		--tone: var(--tone-mesh);
+	}
+	.tone-wan {
+		--tone: var(--tone-wan);
+	}
+	.tone-workers {
+		--tone: var(--tone-workers);
+	}
 
 	a.in-card:hover,
 	a.in-card:focus-visible,
@@ -372,7 +432,7 @@ const d = data[variant];
 		opacity: 0.5;
 	}
 
-	a.out-card:hover {
+	a.out-card[href]:hover {
 		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
 	}
 
@@ -469,8 +529,14 @@ const d = data[variant];
 	}
 
 	@keyframes map-pulse {
-		0% { left: -6px; opacity: 1; }
-		100% { left: 100%; opacity: 1; }
+		0% {
+			left: -6px;
+			opacity: 1;
+		}
+		100% {
+			left: 100%;
+			opacity: 1;
+		}
 	}
 
 	.col-core {
@@ -498,7 +564,8 @@ const d = data[variant];
 		position: absolute;
 		inset: -40% -20% auto;
 		height: 120px;
-		background: radial-gradient(closest-side, color-mix(in srgb, var(--map-brand) 18%, transparent), transparent);
+		--glow: color-mix(in srgb, var(--map-brand) 18%, transparent);
+		background: radial-gradient(closest-side, var(--glow), transparent);
 		pointer-events: none;
 	}
 
@@ -558,8 +625,14 @@ const d = data[variant];
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.pulse { animation: none !important; opacity: 0 !important; }
-		.card { transition: none; transform: none !important; }
+		.pulse {
+			animation: none !important;
+			opacity: 0 !important;
+		}
+		.card {
+			transition: none;
+			transform: none !important;
+		}
 	}
 
 	/* Phones and narrow columns: stack the three columns vertically. */
@@ -569,7 +642,9 @@ const d = data[variant];
 			gap: 18px;
 			padding: 16px 12px;
 		}
-		.col-core { padding: 0; }
+		.col-core {
+			padding: 0;
+		}
 		.col-core::before,
 		.col-core::after {
 			content: "↓";
@@ -577,7 +652,12 @@ const d = data[variant];
 			text-align: center;
 			color: var(--map-caption);
 		}
-		.col-core { flex-direction: column; gap: 6px; }
-		.rail { display: none; }
+		.col-core {
+			flex-direction: column;
+			gap: 6px;
+		}
+		.rail {
+			display: none;
+		}
 	}
 </style>

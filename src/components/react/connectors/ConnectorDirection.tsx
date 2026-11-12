@@ -1,15 +1,21 @@
 "use client";
 
-// "Applications or networks" figure on the Choose a connector page. One
-// vertical path from a laptop, through Cloudflare and a connector, to a
-// private server. Switch the connector between Cloudflare Tunnel and
-// Cloudflare Mesh, then start a connection from either end. A laptop-started
-// connection works with both. A server-started connection works with Mesh,
-// and is refused with Tunnel, which only carries connections clients start.
+// Direction figure on the Connector selection page. One vertical path runs
+// from a laptop, through Cloudflare and a connector, to a private server.
+// Switch the connector between Cloudflare Tunnel and Cloudflare Mesh, then
+// start a connection from either end. A laptop-started connection works with
+// both. A server-started connection works with Mesh, and fails with Tunnel,
+// which only carries connections that clients start.
 import { useEffect, useState } from "react";
 import { Diagram, useDiagramOrDefault } from "@cloudflare/nimbus-docs/react";
 import { Tabs } from "@/components/react/diagram";
-import { Caption, Connector, LabelCard, edgePoint, makeRect } from "../diagram-weld";
+import {
+	Caption,
+	Connector,
+	LabelCard,
+	edgePoint,
+	makeRect,
+} from "../diagram-weld";
 import { WeldCanvas } from "../container/WeldCanvas";
 import { LabeledButton } from "../container/Transport";
 import type { DiagramFallbackProps } from "../container/DiagramFallback";
@@ -26,20 +32,39 @@ const NODES = [LAPTOP, CLOUDFLARE, CONNECTOR, SERVER];
 const BEAT_MS = 620;
 const CAPTION_X = CX + 10;
 
+const LABEL =
+	"A laptop, Cloudflare, a connector, and a private server on one vertical path. Switch the connector between Cloudflare Tunnel and Cloudflare Mesh, then start a connection from the laptop or from the server. Connections from the laptop work with both. Connections from the server work only with Mesh.";
+
+const CONTROLS_CSS = `
+.cd-controls { display: flex; flex-direction: column; gap: 0.5rem; padding: 0.5rem; }
+.cd-actions { display: flex; flex-wrap: wrap; gap: 0.375rem; }
+@media (min-width: 640px) {
+  .cd-controls { flex-direction: row; align-items: center; justify-content: space-between; }
+  .cd-actions { justify-content: flex-end; }
+}
+`;
+
 type Mode = "tunnel" | "mesh";
 type Origin = "laptop" | "server";
 
 // Each hop is [from index, to index] in NODES.
 type Hop = [number, number];
+
 const DOWN: Hop[] = [
 	[0, 1],
 	[1, 2],
 	[2, 3],
 ];
+
 const UP: Hop[] = [
 	[3, 2],
 	[2, 1],
 	[1, 0],
+];
+
+const MODES: { id: Mode; label: string }[] = [
+	{ id: "tunnel", label: "Tunnel" },
+	{ id: "mesh", label: "Mesh" },
 ];
 
 interface Run {
@@ -50,19 +75,46 @@ interface Run {
 }
 
 function plan(mode: Mode, origin: Origin, id: number): Run {
-	if (origin === "laptop") return { id, origin, hops: [...DOWN, ...UP], blocked: false };
-	if (mode === "mesh") return { id, origin, hops: [...UP, ...DOWN], blocked: false };
+	if (origin === "laptop") {
+		return { id, origin, hops: [...DOWN, ...UP], blocked: false };
+	}
+	if (mode === "mesh") {
+		return { id, origin, hops: [...UP, ...DOWN], blocked: false };
+	}
 	// Tunnel: cloudflared only proxies connections that arrive from Cloudflare.
 	// The server's packet reaches cloudflared and goes no further.
 	return { id, origin, hops: [[3, 2]], blocked: true };
 }
 
+function describe(mode: Mode, run: Run | null, running: boolean): string {
+	if (!run) {
+		if (mode === "tunnel") return "Tunnel: outbound-only connector";
+		return "Mesh: every participant has a Mesh IP";
+	}
+	if (running) {
+		if (run.origin === "laptop") return "Laptop starts a connection";
+		return "Server starts a connection";
+	}
+	if (run.blocked) return "Failed: Tunnel only carries client connections";
+	if (run.origin === "laptop") return "Round trip complete";
+	return "Server reached the laptop, and the laptop replied";
+}
+
+function hopPoints([a, b]: Hop) {
+	const down = a < b;
+	const from = edgePoint(NODES[a], down ? "bottom" : "top");
+	const to = edgePoint(NODES[b], down ? "top" : "bottom");
+	return { from, to };
+}
+
+function segment(hop: Hop) {
+	const { from, to } = hopPoints(hop);
+	return `M ${from.x} ${from.y} L ${to.x} ${to.y}`;
+}
+
 export default function ConnectorDirection(_props: DiagramFallbackProps) {
 	return (
-		<Diagram
-			label="A laptop, Cloudflare, a connector, and a private server in one vertical path. Switch the connector between Cloudflare Tunnel and Cloudflare Mesh, then start a connection from the laptop or from the server. Laptop-started connections work with both. Server-started connections work only with Mesh."
-			keyboard={false}
-		>
+		<Diagram label={LABEL} keyboard={false}>
 			<DirectionBody />
 		</Diagram>
 	);
@@ -89,42 +141,29 @@ function DirectionBody() {
 		return () => clearTimeout(t);
 	}, [run, step, done, reduced]);
 
-	const start = (origin: Origin) => {
+	function start(origin: Origin) {
 		const id = seq + 1;
 		setSeq(id);
 		setStep(0);
 		setRun(plan(mode, origin, id));
-	};
+	}
 
-	const switchMode = (m: Mode) => {
-		setMode(m);
+	function switchMode(next: Mode) {
+		setMode(next);
 		setRun(null);
 		setStep(0);
-	};
+	}
 
 	const hop = run && !done ? run.hops[step] : null;
+	const points = hop ? hopPoints(hop) : null;
 	const path = hop ? segment(hop) : null;
-
-	const status = !run
-		? mode === "tunnel"
-			? "Tunnel: outbound-only connector"
-			: "Mesh: every participant has a Mesh IP"
-		: running
-			? run.origin === "laptop"
-				? "Laptop starts a connection"
-				: "Server starts a connection"
-			: run.blocked
-				? "Refused: Tunnel only carries client-started connections"
-				: run.origin === "laptop"
-					? "Round trip complete"
-					: "Server reached the laptop, and the laptop replied";
-
-	const touched = (i: number) =>
-		run !== null &&
-		run.hops.slice(0, done ? run.hops.length : step + 1).some(([a, b]) => a === i || b === i);
-
-	const ok = done && run && !run.blocked;
+	const status = describe(mode, run, running);
+	const visible = run ? run.hops.slice(0, step + 1) : [];
+	const touched = (i: number) => visible.some(([a, b]) => a === i || b === i);
+	const ok = done && run !== null && !run.blocked;
+	const failed = done && run !== null && run.blocked;
 	const meshMode = mode === "mesh";
+	const target = run?.origin === "laptop" ? SERVER : LAPTOP;
 
 	return (
 		<WeldCanvas
@@ -132,18 +171,16 @@ function DirectionBody() {
 			height={VIEW_H}
 			liveStatus={status}
 			controls={
-				<div className="flex flex-col gap-2 p-2 sm:flex-row sm:items-center sm:justify-between">
+				<div className="cd-controls">
+					<style>{CONTROLS_CSS}</style>
 					<Tabs<Mode>
 						ariaLabel="Connector"
-						options={[
-							{ id: "tunnel", label: "Tunnel" },
-							{ id: "mesh", label: "Mesh" },
-						]}
+						options={MODES}
 						active={mode}
 						onChange={switchMode}
 						disabled={running}
 					/>
-					<div className="flex flex-wrap gap-1.5 sm:justify-end">
+					<div className="cd-actions">
 						<LabeledButton
 							ariaLabel="Start a connection from the laptop to the server"
 							onClick={() => start("laptop")}
@@ -164,16 +201,29 @@ function DirectionBody() {
 				</div>
 			}
 		>
-			<Connector from={edgePoint(LAPTOP, "bottom")} to={edgePoint(CLOUDFLARE, "top")} straight active={Boolean(ok)} ghost={!ok} />
-			<Connector from={edgePoint(CLOUDFLARE, "bottom")} to={edgePoint(CONNECTOR, "top")} straight active={Boolean(ok)} ghost={!ok} />
-			<Connector from={edgePoint(CONNECTOR, "bottom")} to={edgePoint(SERVER, "top")} straight active={Boolean(ok)} ghost={!ok} />
-			{hop && (
-				<Connector
-					from={edgePoint(NODES[hop[0]], hop[0] < hop[1] ? "bottom" : "top")}
-					to={edgePoint(NODES[hop[1]], hop[0] < hop[1] ? "top" : "bottom")}
-					straight
-					active
-				/>
+			<Connector
+				from={edgePoint(LAPTOP, "bottom")}
+				to={edgePoint(CLOUDFLARE, "top")}
+				straight
+				active={ok}
+				ghost={!ok}
+			/>
+			<Connector
+				from={edgePoint(CLOUDFLARE, "bottom")}
+				to={edgePoint(CONNECTOR, "top")}
+				straight
+				active={ok}
+				ghost={!ok}
+			/>
+			<Connector
+				from={edgePoint(CONNECTOR, "bottom")}
+				to={edgePoint(SERVER, "top")}
+				straight
+				active={ok}
+				ghost={!ok}
+			/>
+			{points && (
+				<Connector from={points.from} to={points.to} straight active />
 			)}
 
 			<LabelCard
@@ -189,7 +239,12 @@ function DirectionBody() {
 				active={touched(2)}
 				fontSize={10}
 			/>
-			<LabelCard rect={SERVER} label="Server · 10.0.0.50" active={touched(3)} fontSize={10} />
+			<LabelCard
+				rect={SERVER}
+				label="Server · 10.0.0.50"
+				active={touched(3)}
+				fontSize={10}
+			/>
 
 			<Caption x={CAPTION_X} y={81}>
 				{meshMode ? "Reachable by Mesh IP" : "Not reachable from servers"}
@@ -201,8 +256,8 @@ function DirectionBody() {
 				{meshMode ? "Source IP preserved" : "Proxies inbound requests"}
 			</Caption>
 
-			{done && run?.blocked && <FailureMark x={CX} y={CONNECTOR.t - 16} />}
-			{done && ok && <SuccessMark x={run?.origin === "laptop" ? SERVER.r + 14 : LAPTOP.r + 14} y={run?.origin === "laptop" ? SERVER.cy : LAPTOP.cy} />}
+			{failed && <FailureMark x={CX} y={CONNECTOR.t - 16} />}
+			{ok && <SuccessMark x={target.r + 14} y={target.cy} />}
 			{path && !reduced && run && (
 				<PacketPulse key={`${run.id}-${step}`} path={path} ms={BEAT_MS} />
 			)}
@@ -210,19 +265,13 @@ function DirectionBody() {
 	);
 }
 
-function segment([a, b]: Hop) {
-	const down = a < b;
-	const p = edgePoint(NODES[a], down ? "bottom" : "top");
-	const q = edgePoint(NODES[b], down ? "top" : "bottom");
-	return `M ${p.x} ${p.y} L ${q.x} ${q.y}`;
-}
-
 function FailureMark({ x, y }: { x: number; y: number }) {
+	const d = `M ${x - 3} ${y - 3} L ${x + 3} ${y + 3} M ${x + 3} ${y - 3} L ${x - 3} ${y + 3}`;
 	return (
 		<g className="text-red-500">
 			<circle cx={x} cy={y} r={8} fill="currentColor" opacity={0.12} />
 			<path
-				d={`M ${x - 3} ${y - 3} L ${x + 3} ${y + 3} M ${x + 3} ${y - 3} L ${x - 3} ${y + 3}`}
+				d={d}
 				stroke="currentColor"
 				strokeWidth={1.5}
 				strokeLinecap="round"
@@ -232,11 +281,12 @@ function FailureMark({ x, y }: { x: number; y: number }) {
 }
 
 function SuccessMark({ x, y }: { x: number; y: number }) {
+	const d = `M ${x - 3.5} ${y} L ${x - 1} ${y + 2.5} L ${x + 3.5} ${y - 2.5}`;
 	return (
 		<g className="text-emerald-500">
 			<circle cx={x} cy={y} r={8} fill="currentColor" opacity={0.14} />
 			<path
-				d={`M ${x - 3.5} ${y} L ${x - 1} ${y + 2.5} L ${x + 3.5} ${y - 2.5}`}
+				d={d}
 				fill="none"
 				stroke="currentColor"
 				strokeWidth={1.5}

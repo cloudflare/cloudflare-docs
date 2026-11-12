@@ -108,6 +108,7 @@ The following table compares Mesh and Tunnel:
 | Addressing | A Mesh IP for every participant, plus CIDR and hostname routes | Public hostnames, or private routes to resources |
 | Source IP | Preserved end to end | Replaced by `cloudflared`, though HTTP origins can read the `CF-Connecting-IP` header |
 | Platforms | Linux hosts and containers for nodes, and desktop and mobile devices for users | Linux, macOS, Windows, Docker, and Kubernetes |
+| Typical throughput | 350 to 750 Mbps for each node, as described in [Throughput](#throughput) | About 750 Mbps for each replica for public traffic, or 350 to 500 Mbps for private traffic |
 
 Use the following checks to decide between them:
 
@@ -141,6 +142,24 @@ Workers VPC does not replace Mesh or Tunnel. It builds on them. Connect the priv
 The [Cloudflare One Appliance](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/) is a hardware or virtual appliance that configures itself after you connect it. If a site already has a router or firewall that supports IPsec or GRE, [connect that device](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/) instead. To keep traffic off the public Internet, use [Cloudflare Network Interconnect (CNI)](/network-interconnect/).
 
 Cloudflare WAN requires an Enterprise plan.
+
+## Throughput
+
+Throughput depends on the connector, the type of traffic, and the host. The following table lists typical throughput on a host with 4 virtual CPUs (vCPUs) and 4 GB of RAM:
+
+| Connector | Traffic | Typical throughput |
+| --- | --- | --- |
+| Cloudflare Mesh | Private traffic through a Mesh node | 350 to 750 Mbps for each node |
+| Cloudflare One Client | Traffic from one device | 350 to 750 Mbps for each device |
+| Cloudflare Tunnel | Public Internet traffic to a published application | About 750 Mbps for each replica |
+| Cloudflare Tunnel | Private traffic from Cloudflare One Client users | 350 to 500 Mbps for each replica |
+| Cloudflare WAN and the Cloudflare One Appliance | Site traffic over IPsec | 1 to 2 Gbps or more for each IPsec tunnel |
+
+Use these figures for planning. They are not guarantees, because your traffic and network path also affect throughput.
+
+A host with fewer resources delivers less throughput. At this time, a host with more resources does not raise throughput above these values. For sustained throughput above 1 Gbps, use Cloudflare WAN.
+
+For host sizing, refer to [Tunnel system requirements](/tunnel/platform/system-requirements/#throughput) and [Mesh host sizing](/mesh/platform/#host-sizing).
 
 ## AI agents
 
