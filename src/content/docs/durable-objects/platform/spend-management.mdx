@@ -1,0 +1,67 @@
+---
+title: Spending limits
+description: Set a Durable Objects spending limit and understand its effects on requests, SQL storage, WebSockets, and alarms.
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - durable-objects
+  - billing
+---
+
+[Set a spending limit](/billing/manage/spend-management/) for Durable Objects. It applies across your account, rather than to one namespace or object.
+
+To configure a limit, follow [Set a spending limit in the dashboard](/billing/manage/spend-management/#set-a-spending-limit-in-the-dashboard) or [Manage spending limits and alerts with the cf CLI](/billing/manage/spend-management/cli/).
+
+## Charges counted toward the limit
+
+The limit counts usage charges after included usage for:
+
+- Requests and duration.
+- SQLite rows read and written.
+- Key-value storage reads, writes, and deletes.
+
+Stored data charges and the shared Workers Paid subscription fee are excluded. Stored data can continue to incur charges during a pause.
+
+## What stops at the limit
+
+Once the limit takes effect, Cloudflare blocks these operations:
+
+| Operation                                  | Behavior                                                                                                  |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| New requests through a Durable Object stub | Rejected.                                                                                                 |
+| SQL queries                                | Reads and writes are rejected.                                                                            |
+| SQLite storage growth                      | Rejected.                                                                                                 |
+| New alarms through `setAlarm()`            | Rejected.                                                                                                 |
+| Pending alarms                             | Held until the block ends, subject to the seven-day limit described in [Alarm recovery](#alarm-recovery). |
+
+An affected operation can return `Exceeded the account's spending cap for Durable Objects.` A limit does not delete your objects or their stored data.
+
+## Operations that can continue
+
+A limit does not stop every source of charges:
+
+- Requests already running can continue to accrue duration charges.
+- Messages on WebSocket connections that are already open are not blocked by the limit.
+- Key-value storage operations in legacy key-value-backed objects are not blocked by the limit, even though their charges count toward it.
+- Existing stored data continues to incur storage charges.
+
+Usage reporting and enforcement also take time. These limits mean that a limit does not guarantee a maximum invoice amount.
+
+## Alarm recovery
+
+Cloudflare holds pending alarms while the limit blocks the object. These holds do not use the alarm's normal retry budget.
+
+:::caution
+An alarm scheduled more than seven days ago is deleted while held. After restoring service, your application must schedule it again if the work is still needed.
+:::
+
+Alarms still within that limit can run once the block ends. Plan for delayed work when restoring service.
+
+## Resume Durable Objects
+
+[Raise the limit above current spend, turn it off, or remove it](/billing/manage/spend-management/#resume-service-or-change-a-limit). Changes can take a few minutes to apply.
+
+The block also expires at the next subscription billing period. An enabled limit remains configured for the new period.
+
+Workers have a [separate limit](/workers/platform/spend-management/). If the Worker that calls your object is also blocked, restore that Worker before retrying the application.

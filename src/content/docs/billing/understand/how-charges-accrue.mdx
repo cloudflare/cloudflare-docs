@@ -124,7 +124,9 @@ The key takeaway: **cached responses are the cheapest path**. Every cache hit av
 | Use Workers Smart Placement to run Workers closer to your data | Workers CPU time | Medium — reduces execution time for data-dependent Workers |
 | Use R2 lifecycle rules to move infrequently accessed data to Infrequent Access tier | R2 storage | Medium — reduces storage costs for archival data |
 | Monitor usage with the [billable usage dashboard](/billing/manage/billable-usage/) | All usage-based products | High — visibility is the first step to optimization |
-| Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes | All usage-based products | High — prevents surprise invoices |
+| Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes | All usage-based products | Notifies you when spend crosses your threshold |
+
+To control Workers and Durable Objects usage charges, set [spending limits](/billing/manage/spend-management/). Each product needs its own limit. A Workers limit does not cover Durable Objects or other products used by the same request. Some charges can continue after a limit takes effect.
 
 ## Related resources
 
