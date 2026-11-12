@@ -12,6 +12,8 @@ This is great for [platforms that offer starter apps or templates](/artifacts/gu
 
 The new repo starts with a single commit. Nothing else from the source is copied: no earlier commits, no other branches or tags, and no deleted files. The copy happens inside Artifacts, so you do not need to download a large repo and push it back in pieces.
 
+For example, here is how to create a customer's repo from the latest version of a `storefront` template. First create an empty repo named `site-123`, then shallow fork the template commit into it:
+
 ```bash
 curl --request POST "$ARTIFACTS_API/customers/repos/site-123/shallow-fork" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
