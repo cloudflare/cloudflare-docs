@@ -262,7 +262,11 @@ const d = data[variant];
 			<span class="core-glow" aria-hidden="true"></span>
 			<p class="core-title">{d.coreTitle}</p>
 			<ul class="core-lines">
-				{d.coreLines.map((l) => <li>{l}</li>)}
+				{d.coreLines.map((l) => (
+					<li>
+						<span>{l}</span>
+					</li>
+				))}
 			</ul>
 			<div class="pills">
 				{d.pills.map((p) => (
