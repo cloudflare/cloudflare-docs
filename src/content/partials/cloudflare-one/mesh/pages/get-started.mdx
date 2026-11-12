@@ -3,6 +3,7 @@
 ---
 
 import {
+	APIRequest,
 	DashButton,
 	Details,
 	Render,
@@ -240,13 +241,13 @@ resource "cloudflare_zero_trust_connectivity_settings" "mesh" {
 
 To configure the same settings with the API, use the [Zero Trust connectivity settings endpoint](/api/resources/zero_trust/subresources/connectivity_settings/methods/edit/). This request requires the `Zero Trust Write` permission:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/zerotrust/connectivity_settings" \
-	--request PATCH \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--header "Content-Type: application/json" \
-	--data '{"offramp_warp_enabled": true}'
-```
+<APIRequest
+	path="/accounts/{account_id}/zerotrust/connectivity_settings"
+	method="PATCH"
+	json={{
+		offramp_warp_enabled: true,
+	}}
+/>
 
 Turn on enrolled-device reachability before connecting participants. Set `icmp_proxy_enabled` to `true` only if you require `ping`, `traceroute`, or another ICMP-based workflow.
 
