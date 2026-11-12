@@ -41,5 +41,5 @@ This is a list of Artifacts errors.
 | `NAMESPACE_DELETION_IN_PROGRESS` | 10305 | The namespace is being deleted. Retry after deletion completes. |
 | `NAMESPACE_ACTIVATION_IN_PROGRESS` | 10306 | The namespace is still being created. Retry the request shortly. |
 | `INTERNAL_ERROR` | 10400 | An unexpected internal error occurred. |
-| `UPSTREAM_UNAVAILABLE` | 10401 | The remote git server could not be reached. |
+| `UPSTREAM_UNAVAILABLE` | 10401 | Artifacts or a service it depends on is temporarily unavailable, or the repository is busy with another write. Retry after a short delay, or after the `Retry-After` header value when present. |
 | `MEMORY_LIMIT` | 10402 | The operation exceeds service memory or size limits. |

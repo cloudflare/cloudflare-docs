@@ -466,6 +466,82 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 }
 ```
 
+### Shallow fork a repo
+
+Route: `POST /artifacts/namespaces/:namespace/repos/:name/shallow-fork`
+
+Copies the files of one commit from a source repo into the repo named in the route. The target repo must already exist and be empty. The target gets one new commit with no parent on its default branch. No other history, branches, tags, or objects from the source are copied.
+
+:::note
+Shallow fork is in limited beta. Contact your account team to enable it for your account. Until it is enabled, this route returns `404 Not Found`.
+:::
+
+Request body:
+
+- `source.namespace` <Type text="string" /> <MetaInfo text="required" />
+- `source.name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `commit` <Type text="string" /> <MetaInfo text="required" /> — Full 40-character commit hash. Branch and tag names are not accepted.
+- `message` <Type text="string" /> <MetaInfo text="optional" /> — Commit message for the new commit, 1–65,536 characters. Defaults to the source commit message.
+
+Response type:
+
+```ts
+export interface ShallowForkRequest {
+	source: {
+		namespace: string;
+		name: RepoName;
+	};
+	commit: string;
+	message?: string;
+}
+
+export interface ShallowForkResult {
+	head: string;
+	tree: string;
+	source_commit: string;
+	objects: number;
+}
+
+export type ShallowForkResponse = ApiEnvelope<ShallowForkResult>;
+```
+
+```bash
+curl --request POST "$ARTIFACTS_BASE_URL/repos/customer-site-123/shallow-fork" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '{
+	  "source": { "namespace": "templates", "name": "storefront" },
+	  "commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f"
+	}'
+```
+
+```json
+{
+	"result": {
+		"head": "1b1cd1e7343b280990837641fa559c3cfe219693",
+		"tree": "6402f7b7d13f21915d85d8ec2cd1e3faa1082ca8",
+		"source_commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f",
+		"objects": 1843
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+The request returns `201 Created` for a new fork. Repeating the same request returns `200 OK` with the same `head`, so retries are safe.
+
+| Status | Meaning |
+| --- | --- |
+| `400` | The body is invalid, the source is in a different [jurisdiction](/artifacts/guides/data-localization/), or the commit has more than 250,000 files and folders. |
+| `404` | The source repo, the commit, or the target repo does not exist. |
+| `409` | The target repo is not empty, for example because it already holds a different fork. |
+| `413` | The copy would exceed the target repo's storage limit. |
+| `422` | `commit` is not a commit, or the commit contains a file that cannot be copied. |
+| `503` | Another write to the target repo is in progress. Retry after the `Retry-After` delay. |
+
+For a step-by-step workflow, refer to [Fork repositories from templates](/artifacts/guides/fork-from-templates/).
+
 ### Import a public HTTPS remote
 
 Route: `POST /artifacts/namespaces/:namespace/repos/:name/import`

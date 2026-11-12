@@ -1,0 +1,120 @@
+---
+title: Fork repositories from templates
+description: Give each customer their own copy of a template repo, at an exact version, without the template's history.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+products:
+  - artifacts
+---
+
+If your platform offers starter apps, site templates, or lets users remix each other's projects, you can keep each template in an Artifacts repo and give every customer their own copy to edit.
+
+Artifacts has two ways to copy a repo:
+
+| | [Fork](/artifacts/api/rest-api/#fork-a-repo) | [Shallow fork](/artifacts/api/rest-api/#shallow-fork-a-repo) |
+| --- | --- | --- |
+| What is copied | All history and refs, or the default branch's full history with `default_branch_only` | The files of one commit only |
+| Version | The current state of the source | An exact commit you choose |
+| History in the copy | Yes | None. The copy starts with one new commit. |
+| Target repo | Created by the request | Create it empty before the request |
+| Use it when | The copy needs history, for example an agent that works on a branch and is reviewed against the source | The copy is a fresh start, for example a new project from a template or a remix of someone else's project |
+
+For templates and remixes, use shallow fork. The customer gets exactly the template version you chose, and nothing from the template's history, other branches, or deleted files.
+
+:::note
+Shallow fork is in limited beta. Contact your account team to enable it for your account. Until it is enabled, the shallow fork route returns `404 Not Found`.
+:::
+
+## Before you begin
+
+- Use a [Cloudflare API token](/fundamentals/api/get-started/create-token/) with **Artifacts** > **Edit**.
+- Keep templates and customer repos in the same account and the same [jurisdiction](/artifacts/guides/data-localization/). They can be in different [namespaces](/artifacts/concepts/namespaces/).
+
+```sh
+export ACCOUNT_ID="<YOUR_ACCOUNT_ID>"
+export CLOUDFLARE_API_TOKEN="<YOUR_API_TOKEN>"
+export ARTIFACTS_API="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces"
+```
+
+## 1. Store your templates
+
+Keep templates in their own namespace, for example `templates`, separate from customer repos. Create one repo per template and push its files with Git, or [import](/artifacts/guides/import-repositories/) it from a public HTTPS remote.
+
+When you publish a new version of a template, record the commit hash. Customers fork that hash, not a branch name, so a later push to the template does not change what new customers get until you update the recorded hash.
+
+```sh
+git ls-remote "$TEMPLATE_REMOTE" refs/heads/main
+```
+
+You can also read the latest commit from a Worker with [`log()`](/artifacts/api/workers-binding/#logopts).
+
+## 2. Create an empty repo for the customer
+
+Create the customer's repo without pushing to it. Shallow fork only writes to an empty repo.
+
+```bash
+curl --request POST "$ARTIFACTS_API/customers/repos" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '{ "name": "site-123" }'
+```
+
+The new commit lands on the repo's default branch. Set `default_branch` when you create the repo if you do not want `main`.
+
+## 3. Shallow fork the template
+
+```bash
+curl --request POST "$ARTIFACTS_API/customers/repos/site-123/shallow-fork" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '{
+	  "source": { "namespace": "templates", "name": "storefront" },
+	  "commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f",
+	  "message": "Create site from Storefront template"
+	}'
+```
+
+```json
+{
+	"result": {
+		"head": "1b1cd1e7343b280990837641fa559c3cfe219693",
+		"tree": "6402f7b7d13f21915d85d8ec2cd1e3faa1082ca8",
+		"source_commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f",
+		"objects": 1843
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+The customer's repo now has one commit. Its files are identical to the template commit, so `tree` matches the template commit's tree. The commit keeps the template commit's author and dates. It uses the template commit's message unless you pass `message`.
+
+`head` is a new commit hash. It matches `commit` only if the template commit already had no parent, and you did not pass a different `message`.
+
+## 4. Give the customer access
+
+Issue a [repo-scoped token](/artifacts/guides/authentication/) for the customer's repo, and hand it to the customer or the agent that edits their project. The template stays untouched.
+
+## Remix another customer's project
+
+A remix works the same way. Use the other customer's repo as `source` and the commit they shared as `commit`. Only that commit's files are copied, so earlier versions, other branches, and anything they deleted are not visible in the remix.
+
+## Handle retries and errors
+
+Shallow fork is safe to retry. If a request times out or the connection drops, send the same request again:
+
+- `201 Created` means the copy was made by this request.
+- `200 OK` means an earlier identical request already finished. The response returns the same `head`.
+- `503 Service Unavailable` means another write to the target repo is in progress. Wait for the `Retry-After` delay, then retry.
+- `409 Conflict` means the target repo already has different content, for example a fork of another commit. Create a new empty repo instead.
+- `404 Not Found` means the source repo, the commit, or the target repo does not exist.
+
+For the full list of responses, refer to [Shallow fork a repo](/artifacts/api/rest-api/#shallow-fork-a-repo).
+
+## Plan for large and popular templates
+
+- Copy time grows with the number of files and folders in the commit, more than with total size. A template with tens of thousands of files can take more than a minute. Run the request from a background job rather than inside a short request timeout.
+- Shallow forks from the same template are processed one at a time. If many customers start from one template at once, for example after a launch, each request waits for the ones before it. To spread the load, shallow fork the template into several identical template repos and send new customers to them in turn.
+- Shallow fork copies files inside Artifacts, so the [push size limit](/artifacts/platform/limits/) does not apply. You do not need to download a large template and push it back in pieces.
