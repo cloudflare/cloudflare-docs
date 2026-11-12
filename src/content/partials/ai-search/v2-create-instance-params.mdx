@@ -12,13 +12,13 @@ The unique identifier for the AI Search instance. Must be 1-64 characters and ma
 
 `type` <Type text="string" /> <MetaInfo text="optional" />
 
-The type of data source. Valid values: `r2` or `web-crawler`. If omitted, an HTTP(S) URL source selects `web-crawler`, an existing R2 bucket selects `r2`, and a missing or blank source creates an instance with built-in storage. Other sources return error `7111`. The REST API also accepts `null`, which behaves like an omitted value. The Workers binding does not accept `null`.
+The type of data source. Valid values: `r2`, `web-crawler`, or `d1`. If omitted, an HTTP(S) URL source selects `web-crawler`, an existing R2 bucket selects `r2`, and a missing or blank source creates an instance with built-in storage. Other sources return error `7111`. The `d1` type is never inferred. The REST API also accepts `null`, which behaves like an omitted value. The Workers binding does not accept `null`.
 
 ---
 
 `source` <Type text="string" /> <MetaInfo text="optional" />
 
-The data source location. For `r2` type, this is the R2 bucket name. For `web-crawler` type, this is the website domain. Required when `type` is specified.
+The data source location. For `r2` type, this is the R2 bucket name. For `web-crawler` type, this is the website domain. For `d1` type, this is the D1 database ID (UUID), which cannot be changed after creation. Required when `type` is specified.
 
 ---
 
@@ -68,6 +68,12 @@ Additional parameters for the data source.
       - The storage bucket ID.
     - `r2_jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
       - The jurisdiction for the storage bucket.
+- `d1` <Type text="object" /> <MetaInfo text="optional" />
+  - Configuration for D1 sources. Required when `type` is `d1`. Refer to [D1](/ai-search/configuration/data-source/d1/).
+  - `query` <Type text="string" /> <MetaInfo text="required" />
+    - A read-only `SELECT` or `WITH` query that returns an `id` column. Up to 10,000 characters.
+  - `template` <Type text="string" /> <MetaInfo text="optional" />
+    - How each row is rendered as a document. Valid values: `labelled`, `content_only`, `key_value`, `json`. Defaults to `labelled` on create. An update that omits it keeps the stored template.
 
 ---
 
@@ -122,7 +128,7 @@ Seconds between automatic data source syncs. Valid values: `3600`, `7200`, `1440
 
 `token_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The UUID of the [service API token](/ai-search/configuration/indexing/service-api-token/) to use for this instance. Only required if you have never created an AI Search instance before. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
+The UUID of the [service API token](/ai-search/configuration/indexing/service-api-token/) to use for this instance. Required for `d1` instances. For other types, only required if you have never created an AI Search instance before. Refer to the [API get started guide](/ai-search/get-started/api/) for how to create and register a service token.
 
 ---
 
@@ -212,7 +218,7 @@ The cache entry TTL in seconds. Valid values are `600`, `1800`, `3600`, `7200`, 
 
 `custom_metadata` <Type text="array" /> <MetaInfo text="optional" />
 
-Custom metadata fields to extract and index from documents.
+Custom metadata fields to extract and index from documents. For `d1` instances, AI Search derives these fields from the `meta_*` columns of the query, so omit `custom_metadata` or pass the same fields.
 
 - `field_name` <Type text="string" /> <MetaInfo text="required" />
   - The name of the metadata field.

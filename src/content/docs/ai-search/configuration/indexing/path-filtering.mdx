@@ -10,7 +10,7 @@ products:
 
 Path filtering allows you to control which files or URLs are indexed by defining include and exclude patterns. Use this to limit indexing to specific content or to skip files you do not want searchable.
 
-Path filtering works with both [website](/ai-search/configuration/data-source/website/) and [R2](/ai-search/configuration/data-source/r2/) data sources.
+Path filtering works with [website](/ai-search/configuration/data-source/website/), [R2](/ai-search/configuration/data-source/r2/), and [D1](/ai-search/configuration/data-source/d1/) data sources. For D1 data sources, rules match the item key of each row, such as `42.md`.
 
 ## Configuration
 
@@ -97,6 +97,15 @@ To give each tenant an isolated instance backed by a single shared bucket, refer
 | Exclude admin pages           | Exclude: `**/admin/**`                              | `example.com/blog/post`                                | `example.com/admin/settings`                       |
 | Exclude login pages           | Exclude: `**/login*`                                | `example.com/blog/post`                                | `example.com/login`, `example.com/auth/login-form` |
 | Index docs but exclude drafts | Include: `**/docs/**`, Exclude: `**/docs/drafts/**` | `example.com/docs/guide`                               | `example.com/docs/drafts/wip`                      |
+
+### D1 data source
+
+D1 item keys have no folders, so patterns do not start with `/`. Rows skipped by these rules are not listed in job logs, and already-indexed rows that become excluded are deleted on the next full sync.
+
+| Use case                     | Pattern                | Indexed         | Skipped          |
+| ---------------------------- | ---------------------- | --------------- | ---------------- |
+| Skip draft rows              | Exclude: `drafts-*.md` | `guide-1.md`    | `drafts-1.md`    |
+| Index only one group of rows | Include: `docs-*.md`   | `docs-intro.md` | `blog-launch.md` |
 
 ### API format
 

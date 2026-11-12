@@ -1,7 +1,7 @@
 ---
 pcx_content_type: concept
 title: Service API token
-description: Create a service API token to grant AI Search read access to R2 buckets for indexing.
+description: Create a service API token to grant AI Search read access to R2 buckets and D1 databases for indexing.
 sidebar:
   order: 10
 products:
@@ -10,11 +10,11 @@ products:
 
 import { DashButton } from "~/components";
 
-A service API token grants AI Search permission to access [R2](/r2/) buckets in your account. This token is only required if you connect an R2 bucket as a data source. If you use a website or upload files directly through the [Items API](/ai-search/api/items/workers-binding/), you do not need a service API token.
+A service API token grants AI Search permission to access [R2](/r2/) buckets and [D1](/d1/) databases in your account. This token is only required if you connect an R2 bucket or a D1 database as a data source. If you use a website or upload files directly through the [Items API](/ai-search/api/items/workers-binding/), you do not need a service API token.
 
 ## When you need a service API token
 
-You need a service API token when you create an AI Search instance with `type: "r2"`. The token authorizes AI Search to read objects from your R2 bucket for indexing.
+You need a service API token when you create an AI Search instance with `type: "r2"` or `type: "d1"`. The token authorizes AI Search to read your R2 bucket or D1 database for indexing. Its AI Search Index Engine permission includes R2 read access and the D1 Read permission, so one token works for both. D1-backed instances always require `token_id`.
 
 ## Create via the dashboard or Wrangler
 
@@ -94,7 +94,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
   }'
 ```
 
-Save the `id` from the response. This is your `token_id` to pass when creating R2-backed instances:
+Save the `id` from the response. This is your `token_id` to pass when creating R2-backed or D1-backed instances:
 
 ```json
 {
@@ -130,7 +130,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 Once registered, the service API token is stored securely and reused across all AI Search instances in your account.
 
 :::caution
-Do not delete your service API token. If you revoke or delete the token, any R2-backed AI Search instances will lose access to their data source and stop indexing.
+Do not delete your service API token. If you revoke or delete the token, any R2-backed or D1-backed AI Search instances will lose access to their data source and stop indexing.
 :::
 
 ### Rotate your token

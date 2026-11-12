@@ -66,7 +66,7 @@ for (const instance of result) {
 | ------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
 | `result`                  | array   | Array of instance objects.                                                                                       |
 | `result[].id`             | string  | The instance identifier.                                                                                         |
-| `result[].type`           | string  | The data source type (`r2`, `web-crawler`, or `null` for empty instances).                                       |
+| `result[].type`           | string  | The data source type (`r2`, `web-crawler`, `d1`, or `null` for empty instances).                                 |
 | `result[].source`         | string  | The data source location.                                                                                        |
 | `result[].status`         | string  | The current indexing lifecycle status, such as `waiting`, `index_source`, `embed_files`, or a `paused_*` status. |
 | `result[].paused`         | boolean | Whether indexing is paused.                                                                                      |
@@ -114,6 +114,32 @@ const instance = await env.AI_SEARCH.create({
 	id: "internal-docs",
 	type: "r2",
 	source: "my-docs-bucket",
+});
+```
+
+**Create a D1-backed instance:**
+
+Index the rows returned by a read-only query against a [D1](/d1/) database. A `token_id` is required. For more configuration options, refer to [D1 data source](/ai-search/configuration/data-source/d1/).
+
+```ts
+const instance = await env.AI_SEARCH.create({
+	id: "help-center",
+	type: "d1",
+	source: "<D1_DATABASE_ID>",
+	token_id: "<SERVICE_TOKEN_ID>",
+	source_params: {
+		d1: {
+			query: `
+				SELECT
+				  article_id AS id,
+				  title,
+				  content,
+				  category AS meta_category
+				FROM articles
+				WHERE published = 1
+			`,
+		},
+	},
 });
 ```
 
@@ -180,7 +206,7 @@ Accepts a partial version of the [create parameters](#parameters). Only the fiel
 | `reranking_model`   | string  | The reranking model.                                                   |
 | `rewrite_query`     | boolean | Turn on or off query rewriting.                                        |
 | `rewrite_model`     | string  | The query rewriting model.                                             |
-| `source`            | string  | Update the data source location.                                       |
+| `source`            | string  | The data source location. Cannot be changed after creation.            |
 | `cache`             | boolean | Turn on or off response caching.                                       |
 | `cache_ttl`         | number  | Cache entry time to live in seconds.                                   |
 | `chunk_size`        | number  | Token size of each chunk.                                              |
@@ -207,7 +233,7 @@ const info = await env.AI_SEARCH.get("my-instance").info();
 | Field               | Type    | Description                                                                                                      |
 | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------- |
 | `id`                | string  | The instance identifier.                                                                                         |
-| `type`              | string  | The data source type (`r2`, `web-crawler`, or `null`).                                                           |
+| `type`              | string  | The data source type (`r2`, `web-crawler`, `d1`, or `null`).                                                     |
 | `source`            | string  | The data source location.                                                                                        |
 | `namespace`         | string  | The namespace the instance belongs to.                                                                           |
 | `status`            | string  | The current indexing lifecycle status, such as `waiting`, `index_source`, `embed_files`, or a `paused_*` status. |
