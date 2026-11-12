@@ -134,14 +134,14 @@ The example includes a Wrangler configuration. Run these commands in the same sh
 4. Copy the example secrets file:
 
    ```sh
-   cp .dev.vars.example .dev.vars
+   cp .env.example .env
    ```
 
-   In `.dev.vars`, fill in `GEMINI_ENVIRONMENT_KEY` and `CLOUDFLARE_DISPATCH_SECRET` with the values you saved earlier. This local file is excluded from version control.
+   In `.env`, fill in `GEMINI_ENVIRONMENT_KEY` and `CLOUDFLARE_DISPATCH_SECRET` with the values you saved earlier. This local file is excluded from version control.
 
 5. With Docker running, deploy the Worker, container image, and secrets together:
 
-   <PackageManagers type="exec" pkg="wrangler" args="deploy --secrets-file .dev.vars" managers={["npm"]} />
+   <PackageManagers type="exec" pkg="wrangler" args="deploy --secrets-file .env" managers={["npm"]} />
 </Steps>
 
 Keep `GEMINI_API_KEY` in your local application. The runtime needs only the scoped environment key.
@@ -217,7 +217,7 @@ After deployment, use `wrangler secret put` to add a secret or replace its value
 
 Each command prompts for the value, creates a new Worker version, and deploys it immediately. To add another secret, use its binding name instead.
 
-If you also use `.dev.vars`, update the matching value there before your next `wrangler deploy --secrets-file .dev.vars`, so it does not restore an old value. Secrets omitted from the file are preserved. Keep the dispatch secret in your calling application in sync with the Worker secret. For more information, refer to [Secrets](/workers/configuration/secrets/).
+If you also use `.env`, update the matching value there before your next `wrangler deploy --secrets-file .env`, so it does not restore an old value. Secrets omitted from the file are preserved. Keep the dispatch secret in your calling application in sync with the Worker secret. For more information, refer to [Secrets](/workers/configuration/secrets/).
 
 ### Network access
 
