@@ -108,7 +108,7 @@ The following table compares Mesh and Tunnel:
 | Addressing | A Mesh IP for every participant, plus CIDR and hostname routes | Public hostnames, or private routes to resources |
 | Source IP | Preserved end to end | Replaced by `cloudflared`, though HTTP origins can read the `CF-Connecting-IP` header |
 | Platforms | Linux hosts and containers for nodes, and desktop and mobile devices for users | Linux, macOS, Windows, Docker, and Kubernetes |
-| Firewall | Outbound UDP to the [Cloudflare One Client ingress IPs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/#warp-ingress-ip), with return traffic allowed for the client process | Outbound port `7844` over TCP or UDP, with [all inbound traffic blocked](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) |
+| Firewall rules | Refer to [Cloudflare One Client firewall rules](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/) | Refer to [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) |
 | Typical throughput | 350 to 750 Mbps for each node, as described in [Throughput](#throughput) | About 750 Mbps for each replica for public traffic, or 350 to 500 Mbps for private traffic |
 
 Use the following checks to decide between them:
