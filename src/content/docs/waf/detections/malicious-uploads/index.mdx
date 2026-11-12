@@ -68,9 +68,9 @@ Content scanning can check the following content objects for malicious content:
 
 ### Multipart requests
 
-The request's `Content-Type` header is used to decide whether to parse the body as a multipart request. If the type is `multipart/form-data` or `multipart/mixed`, Cloudflare scans each part as a separate content object. Otherwise, the request body is treated as a single content object.
+The request's `Content-Type` header is used to decide whether to parse the body as a multipart request. If the type is `multipart/form-data` or `multipart/mixed`, Cloudflare scans each part as a separate content object.
 
-A `boundary` parameter only applies to multipart types. If the `Content-Type` header has a `boundary` parameter but its type is not `multipart/*` (for example, `application/json; boundary=example`), the body will not be scanned and the field `cf.waf.content_scan.has_failed` is set to `true`.
+A `boundary` parameter only applies to multipart types. If a request selected for content scanning has a nonempty body and its `Content-Type` header has a `boundary` parameter but its type is not `multipart/*` (for example, `application/json; boundary=example`), the body will not be scanned and the field `cf.waf.content_scan.has_failed` is set to `true`.
 
 ### Size limit
 
@@ -99,7 +99,7 @@ This means a request whose content was only partly scanned can produce the same 
   - Archives with more than 300 files
   - PGP-encrypted files
 
-- In rare cases, the AV scanner may time out and fail to analyze a content object. When this happens, the `cf.waf.content_scan.has_failed` field will be set to true. This field refers to scans that were attempted but did not complete. It is not set for content that the scanner did not reach because of the 50 MB size limit.
+- In rare cases, the AV scanner may time out and fail to analyze a content object. When this happens, the `cf.waf.content_scan.has_failed` field is set to `true`. Note that exceeding the 50 MB scanning limit does not, by itself, set this field. Content beyond that limit is excluded from scanning.
 
 :::
 

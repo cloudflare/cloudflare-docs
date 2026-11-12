@@ -6,6 +6,6 @@ products:
 date: 2026-10-28
 ---
 
-The [malicious uploads detection](/waf/detections/malicious-uploads/) now sets `cf.waf.content_scan.has_failed` to `true` for requests whose `Content-Type` header has a `boundary` parameter but type is not `multipart/*`, for example `application/json; boundary=example`. The body of these requests is not scanned .
+The [malicious uploads detection](/waf/detections/malicious-uploads/) now sets `cf.waf.content_scan.has_failed` to `true` for requests whose `Content-Type` header has a `boundary` parameter but type is not `multipart/*`, for example `application/json; boundary=example`. The body of these requests is not scanned.
 
 For more information, refer to [Multipart requests](/waf/detections/malicious-uploads/#multipart-requests).
