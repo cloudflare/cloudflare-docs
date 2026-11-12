@@ -197,6 +197,30 @@ For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/). 
 
 The runtime receives `GEMINI_ENVIRONMENT_KEY` inside the container. Treat it as accessible to code that runs there. The project API key and dispatch secret do not need to enter the container.
 
+### Add or update secrets
+
+After deployment, use `wrangler secret put` to add a secret or replace its value. Run these commands from the project directory containing your deployed Worker's Wrangler configuration:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="secret put GEMINI_ENVIRONMENT_KEY"
+	managers={["npm"]}
+/>
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="secret put CLOUDFLARE_DISPATCH_SECRET"
+	managers={["npm"]}
+/>
+
+Each command prompts for the value, creates a new Worker version, and deploys it immediately. To add another secret, use its binding name instead.
+
+If you also use `.dev.vars`, update the matching value there before your next `wrangler deploy --secrets-file .dev.vars`, so it does not restore an old value. Secrets omitted from the file are preserved. Keep the dispatch secret in your calling application in sync with the Worker secret. For more information, refer to [Secrets](/workers/configuration/secrets/).
+
+### Network access
+
 The example starts the container with `enableInternet: true`. Commands that the agent runs can also reach the Internet. To restrict destinations, refer to [Outbound traffic](/containers/configuration/outbound-traffic/). For more information about the isolation boundary, refer to [Sandbox security](/sandbox/concepts/security/).
 
 ## Troubleshooting
