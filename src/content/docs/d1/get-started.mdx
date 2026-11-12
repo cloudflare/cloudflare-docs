@@ -196,7 +196,7 @@ But if you wish to add the binding manually, follow the steps below:
    {
      "d1_databases": [
        {
-         "binding": "prod_d1_tutorial", // available in your Worker on env.DB
+         "binding": "prod_d1_tutorial", // available in your Worker on env.prod_d1_tutorial
          "database_name": "prod-d1-tutorial",
          "database_id": "<unique-ID-for-your-database>"
        }
@@ -348,7 +348,7 @@ After you have set up your database, run an SQL query from within your Worker.
     		const { pathname } = new URL(request.url);
 
     		if (pathname === "/api/beverages") {
-    			// If you did not use `DB` as your binding name, change it here
+    			// If you did not use `prod_d1_tutorial` as your binding name, change it here
     			const { results } = await env.prod_d1_tutorial.prepare(
     				"SELECT * FROM Customers WHERE CompanyName = ?",
     			)
@@ -417,7 +417,7 @@ You can query your D1 database using your Worker.
     		const { pathname } = new URL(request.url);
 
     		if (pathname === "/api/beverages") {
-    			// If you did not use `DB` as your binding name, change it here
+    			// If you did not use `prod_d1_tutorial` as your binding name, change it here
     			const { results } = await env.prod_d1_tutorial.prepare(
     				"SELECT * FROM Customers WHERE CompanyName = ?"
     			)
