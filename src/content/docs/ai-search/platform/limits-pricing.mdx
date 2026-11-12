@@ -76,7 +76,20 @@ AI Search counts ingestion tokens the same way for every instance, regardless of
 
 Workers AI embedding and reranking usage is included in AI Search usage and does not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
 
-Storage, vector indexing, and [Browser Run](/browser-run/pricing/) usage for website crawling are included with AI Search. They are not billed separately.
+The R2, Vectorize, and [Browser Run](/browser-run/pricing/) usage that AI Search runs on your behalf for storage, vector indexing, and website crawling does not appear on separate R2, Vectorize, or Browser Run bills. Storage is billed as AI Search storage, as described in [How storage is measured](#how-storage-is-measured).
+
+### How storage is measured
+
+Storage is the size of the content AI Search keeps for each instance:
+
+- Files you upload to [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
+- The Markdown text that AI Search extracts and keeps for every indexed file from a connected data source, such as an [R2 bucket](/ai-search/configuration/data-source/r2/) or a [website](/ai-search/configuration/data-source/website/). For files that are already Markdown or plain text, this copy is roughly the same size as the source file.
+
+This copy is separate from your own R2 bucket. If you connect an R2 bucket, you continue to pay [R2 storage](/r2/pricing/) for that bucket separately.
+
+When a source file is deleted or replaced, AI Search removes its kept content on the next sync, so storage tracks the content that is currently indexed. Vectors and the keyword index do not count toward storage.
+
+Storage is sampled hourly. To reduce storage, narrow your [path filtering](/ai-search/configuration/indexing/path-filtering/) include and exclude rules, and remove duplicate or unneeded files from your data source.
 
 ## Historical billing
 
