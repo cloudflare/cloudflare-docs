@@ -790,31 +790,32 @@ package.json @cloudflare/content-engineering
 
 # realtime
 
-/public/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/assets/images/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/docs/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/partials/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/changelog/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/realtime.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtime.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/icons/realtime.svg @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/public/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/assets/images/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/docs/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/partials/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/changelog/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/realtime.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtime.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/icons/realtime.svg @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 
 # realtimekit
 
-/src/components/realtimekit/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-android-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-android-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-flutter-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-flutter-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-ios-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-ios-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-react-native-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-react-native-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-recording-sdk.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-web-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/components/realtimekit/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/components/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-android-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-android-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-flutter-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-flutter-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-ios-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-ios-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-react-native-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-react-native-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-recording-sdk.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-web-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-web-ui-addons.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-web-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-web-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 
 # reference-architecture
 
