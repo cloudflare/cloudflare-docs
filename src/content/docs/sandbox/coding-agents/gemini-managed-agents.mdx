@@ -13,18 +13,11 @@ tags:
   - AI
 ---
 
-import { LinkButton, Steps } from "~/components";
+import { DashButton, PackageManagers, Steps } from "~/components";
 
 Run Gemini API managed agents on Cloudflare with Bring Your Own Sandbox (BYOS). Google hosts the agent loop. File and shell tools run in a Linux sandbox in your Cloudflare account.
 
-Google publishes a [Cloudflare provider example](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare) for its [self-hosted environments](https://github.com/google-gemini/gemini-api-cli/blob/main/docs/self-hosted/README.md). The example deploys a Worker and a [Container](/containers/), with one Durable Object for each Gemini environment ID.
-
-<LinkButton
-	variant="secondary"
-	href="https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare"
->
-	Get the example
-</LinkButton>
+Google publishes a [Cloudflare provider example on GitHub](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare) for its [self-hosted environments](https://github.com/google-gemini/gemini-api-cli/blob/main/docs/self-hosted/README.md). The example deploys a Worker and a [Container](/containers/), with one Durable Object for each Gemini environment ID.
 
 ## How it works
 
@@ -55,10 +48,10 @@ The example uses the [Durable Object Container API](/containers/api/durable-obje
 You need:
 
 - A Cloudflare Workers Paid account with access to Containers
-- A running [Docker](https://www.docker.com/) daemon to build the container image
-- [Node.js 20](https://nodejs.org/) or later and npm
 - The [`gemini-api` CLI](https://github.com/google-gemini/gemini-api-cli#installation) installed locally
 - A [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key)
+
+For manual deployment, you also need [Git](https://git-scm.com/), [Node.js 20](https://nodejs.org/) or later, npm, and a running [Docker](https://www.docker.com/) daemon to build the container image.
 
 ## Create a Gemini environment
 
@@ -101,18 +94,73 @@ The integration uses three credentials with different scopes:
 
 ## Deploy and connect the runtime
 
+Choose the dashboard or manual deployment instructions. Both deploy the same Worker and container image.
+
+### Deploy through the dashboard
+
 <Steps>
-1. Complete the deployment and secret upload steps in the [Cloudflare provider quick start](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare#quick-start). These steps deploy the Worker and container image, then store `GEMINI_ENVIRONMENT_KEY` and `CLOUDFLARE_DISPATCH_SECRET` as Worker secrets.
+1. Select **Deploy to Cloudflare** and follow the prompts to create a repository and deploy the example:
 
-   Keep `GEMINI_API_KEY` in your local application. The runtime needs only the scoped environment key.
+   [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare)
 
-2. Save the deployed Worker URL:
+2. In the Cloudflare dashboard, go to **Workers & Pages** and select your deployed Worker.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+
+3. In **Settings** > **Variables and Secrets**, select **Add**. Add these values with the type **Secret**, then select **Deploy**:
+
+   | Variable name                | Value                                                     |
+   | ---------------------------- | --------------------------------------------------------- |
+   | `GEMINI_ENVIRONMENT_KEY`     | The `environment_key` returned when you created the environment |
+   | `CLOUDFLARE_DISPATCH_SECRET` | The dispatch secret you generated in your local shell      |
+</Steps>
+
+### Deploy manually
+
+The example includes a Wrangler configuration. Run these commands in the same shell where you saved your Gemini environment credentials.
+
+<Steps>
+1. Clone Google's repository and open the Cloudflare example directory:
+
+   ```sh
+   git clone https://github.com/google-gemini/gemini-api-cli.git
+   cd gemini-api-cli/docs/self-hosted/providers/cloudflare
+   ```
+
+2. Install the example's dependencies:
+
+   <PackageManagers type="install" managers={["npm"]} />
+
+3. Log in to your Cloudflare account:
+
+   <PackageManagers type="exec" pkg="wrangler" args="login" managers={["npm"]} />
+
+4. With Docker running, deploy the Worker and container image:
+
+   <PackageManagers type="exec" pkg="wrangler" args="deploy" managers={["npm"]} />
+
+5. Upload the environment key and dispatch secret to the deployed Worker:
+
+   ```sh
+   printf '%s' "$GEMINI_ENVIRONMENT_KEY" | npx wrangler secret put GEMINI_ENVIRONMENT_KEY
+   printf '%s' "$CLOUDFLARE_DISPATCH_SECRET" | npx wrangler secret put CLOUDFLARE_DISPATCH_SECRET
+   ```
+</Steps>
+
+Keep `GEMINI_API_KEY` in your local application. The runtime needs only the scoped environment key.
+
+### Connect the runtime
+
+After either deployment method, connect your Gemini environment to the deployed Worker.
+
+<Steps>
+1. Save the Worker URL from your deployment output or the Worker's **Settings** > **Domains & Routes**:
 
    ```sh
    export WORKER_URL="https://gemini-api-self-hosted-cloudflare.<YOUR_SUBDOMAIN>.workers.dev"
    ```
 
-3. Start the runtime for your environment:
+2. Start the runtime for your environment:
 
    ```sh
    curl --fail-with-body \
