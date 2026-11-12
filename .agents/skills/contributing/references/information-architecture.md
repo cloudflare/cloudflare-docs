@@ -44,7 +44,7 @@ Do not re-explain a concept that already has its own page. Link to the canonical
 
 ## Navigation stubs
 
-Some guides live in one product and appear in another through stubs. A stub is a frontmatter-only page with `pcx_content_type: navigation` and an `external_link` to the guide. Edit content only in the source folder. When you add, rename, move, or delete a guide, make the same change in the stub folder. Each subfolder needs a stub `index.mdx` with `<DirectoryListing />`.
+Some guides live in one product and appear in another through stubs. A stub is a frontmatter-only page with `pcx_content_type: navigation` and an `external_link` to the guide. Edit content only in the source folder. When you add, rename, move, or delete a guide, make the same change in the stub folder. Each subfolder needs a stub `index.mdx` that renders `<DirectoryListing />` and has the same body as the source index.
 
 ```mdx
 ---

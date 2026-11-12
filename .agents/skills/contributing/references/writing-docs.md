@@ -53,6 +53,7 @@ Remember to add reusable components to the `~/components` barrel export (`src/co
 
 - **Images** go in `src/assets/images/{product}/`, never in `src/content/`. Use descriptive alt text. See the screenshots section of `.agents/references/style-guide.md`.
 - **Redirects** — if you renamed, moved, or deleted a page, add a redirect. See `information-architecture.md`.
+- **Navigation stubs** — if you added, renamed, moved, or deleted a page in a folder that another product mirrors with stubs, make the same change to the stubs. See the navigation stubs section of `information-architecture.md`.
 - **Changelog** — if the change documents a new feature, enhancement, or noteworthy product change, add a changelog entry per `changelog.md`.
 - **Glossary / new product metadata** — see `information-architecture.md`.
 

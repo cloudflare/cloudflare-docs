@@ -5,7 +5,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { describe, expect, test } from "vitest";
-import { parse } from "yaml";
+import { parse, stringify } from "yaml";
 
 const DOCS = "src/content/docs";
 
@@ -51,37 +51,55 @@ describe.each(PAIRS)("navigation stubs for $source", (pair) => {
 			.filter((rel) => !isIndex(rel) && !existsSync(join(stubDir, rel)))
 			.map((rel) => {
 				const { data } = read(join(sourceDir, rel));
+				const frontmatter = stringify({
+					title: data.title,
+					pcx_content_type: "navigation",
+					description: data.description,
+					products: [pair.stubProduct],
+					external_link: urlFor(pair.source, rel),
+				});
 				return [
 					`Missing stub: ${join(stubDir, rel)}`,
 					"Create it with this frontmatter and no body:",
-					"---",
-					`title: ${data.title}`,
-					"pcx_content_type: navigation",
-					`description: ${data.description}`,
-					"products:",
-					`  - ${pair.stubProduct}`,
-					`external_link: ${urlFor(pair.source, rel)}`,
-					"---",
+					`---\n${frontmatter}---`,
 				].join("\n");
 			});
 		expect(problems, problems.join("\n\n")).toEqual([]);
 	});
 
-	test("every guide folder has a stub index with <DirectoryListing />", () => {
-		const problems = sourceFiles
-			.filter((rel) => isIndex(rel) && rel !== "index.mdx")
-			.filter((rel) => {
-				const path = join(stubDir, rel);
-				return (
-					!existsSync(path) ||
-					!readFileSync(path, "utf8").includes("<DirectoryListing")
+	test("every guide folder has a matching stub index with <DirectoryListing />", () => {
+		const problems = sourceFiles.filter(isIndex).flatMap((rel) => {
+			const path = join(stubDir, rel);
+			const sourcePath = join(sourceDir, rel);
+			if (!existsSync(path)) {
+				return [
+					`Missing stub index: ${path}. Copy ${sourcePath}, set products to ${pair.stubProduct}, and keep the same body.`,
+				];
+			}
+			const errors: string[] = [];
+			const { body } = read(path);
+			if (!body.includes("<DirectoryListing")) {
+				errors.push(`${path} must render <DirectoryListing />.`);
+			}
+			if (body.trim() !== read(sourcePath).body.trim()) {
+				errors.push(
+					`${path} body must match ${sourcePath}. Move any new content to the Cloudflare WAN index and copy its body here.`,
 				);
-			})
+			}
+			return errors;
+		});
+		expect(problems, problems.join("\n")).toEqual([]);
+	});
+
+	test("every stub folder has a guide folder", () => {
+		const problems = stubFiles
+			.filter((rel) => isIndex(rel) && rel !== "index.mdx")
+			.filter((rel) => !existsSync(join(sourceDir, rel)))
 			.map(
 				(rel) =>
-					`${join(stubDir, rel)} must exist and render <DirectoryListing />. Copy the frontmatter from ${join(sourceDir, rel)}, set products to ${pair.stubProduct}, and keep the body to the DirectoryListing import and component.`,
+					`Orphaned stub folder: ${join(stubDir, rel)} has no matching guide folder at ${join(sourceDir, rel)}. Rename or delete the stub folder to match the guides.`,
 			);
-		expect(problems, problems.join("\n\n")).toEqual([]);
+		expect(problems, problems.join("\n")).toEqual([]);
 	});
 
 	test("stubs have no body and link to an existing guide", () => {
