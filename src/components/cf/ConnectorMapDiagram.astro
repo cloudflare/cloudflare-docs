@@ -33,14 +33,19 @@ type Item = {
 	group?: string;
 };
 
-type Row = { group?: string; items: Item[] };
+type Row = { group?: string; cls: string; items: Item[] };
 
 function toRows(items: Item[]): Row[] {
 	const rows: Row[] = [];
 	for (const item of items) {
-		const last = rows[rows.length - 1];
-		if (item.group && last?.group === item.group) last.items.push(item);
-		else rows.push({ group: item.group, items: [item] });
+		const last = rows.at(-1);
+		if (last && item.group && last.group === item.group) {
+			last.items.push(item);
+			continue;
+		}
+		const tone = `tone-${item.tone ?? "neutral"}`;
+		const cls = item.group ? `pair ${tone}` : tone;
+		rows.push({ group: item.group, cls, items: [item] });
 	}
 	return rows;
 }
@@ -260,55 +265,18 @@ const d = data[variant];
 	<div class="col col-in">
 		<p class="col-title">{d.inTitle}</p>
 		<ul class="stack">
-			{toRows(d.inbound).map((row) =>
-				row.group ? (
-					<li
-						class={`pair tone-${row.items[0].tone ?? "neutral"}`}
-						role="group"
-						aria-label={row.group}
-					>
-						<p class="pair-label" aria-hidden="true">
-							{row.group}
-						</p>
-						<div class="pair-cards">
-							{row.items.map((item) => (
-								<a
-									class={`card in-card tile tone-${item.tone ?? "neutral"}`}
-									href={item.href}
-									data-key={item.key}
-									data-hint={item.hint}
-								>
-									<span
-										class={item.glyph ? "icon is-glyph" : "icon"}
-										aria-hidden="true"
-									>
-										{item.icon && <Icon name={item.icon} />}
-										{item.glyph && <Fragment set:html={item.glyph} />}
-									</span>
-									<span class="text">
-										<span class="title">{item.title}</span>
-										<span class="caption">{item.caption}</span>
-									</span>
-								</a>
-							))}
-						</div>
-						<span class="rail" aria-hidden="true">
-							<span class="pulse"></span>
-						</span>
-					</li>
-				) : (
-					row.items.map((item) => (
-						<li>
+			{toRows(d.inbound).map((row) => (
+				<li class={row.cls}>
+					{row.group && <p class="pair-label">{row.group}</p>}
+					<div class={row.group ? "pair-cards" : "single"}>
+						{row.items.map((item) => (
 							<a
 								class={`card in-card tone-${item.tone ?? "neutral"}`}
 								href={item.href}
 								data-key={item.key}
 								data-hint={item.hint}
 							>
-								<span
-									class={item.glyph ? "icon is-glyph" : "icon"}
-									aria-hidden="true"
-								>
+								<span class="icon" aria-hidden="true">
 									{item.icon && <Icon name={item.icon} />}
 									{item.glyph && <Fragment set:html={item.glyph} />}
 								</span>
@@ -316,14 +284,14 @@ const d = data[variant];
 									<span class="title">{item.title}</span>
 									<span class="caption">{item.caption}</span>
 								</span>
-								<span class="rail" aria-hidden="true">
-									<span class="pulse"></span>
-								</span>
 							</a>
-						</li>
-					))
-				),
-			)}
+						))}
+					</div>
+					<span class="rail" aria-hidden="true">
+						<span class="pulse"></span>
+					</span>
+				</li>
+			))}
 		</ul>
 	</div>
 
@@ -535,16 +503,18 @@ const d = data[variant];
 		fill: currentColor;
 	}
 
-	.icon.is-glyph :global(svg) {
+	.icon :global(svg[fill="none"]) {
 		fill: none;
+	}
+
+	.col-in .stack > li {
+		position: relative;
 	}
 
 	/* Paired on-ramps (Cloudflare WAN and the Appliance) share one row. */
 	.pair {
-		position: relative;
 		padding: 6px;
-		border: 1px dashed
-			color-mix(in srgb, var(--tone) 35%, var(--map-line));
+		border: 1px dashed color-mix(in srgb, var(--tone) 35%, var(--map-line));
 		border-radius: 12px;
 	}
 
@@ -565,7 +535,7 @@ const d = data[variant];
 		gap: 6px;
 	}
 
-	.card.tile {
+	.pair .card {
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 6px;
@@ -573,18 +543,8 @@ const d = data[variant];
 		padding: 8px 10px;
 	}
 
-	.card.tile .title {
+	.pair .title {
 		font-size: 12px;
-	}
-
-	.pair:has(.is-active) > .rail,
-	.pair:has(a.in-card:hover) > .rail {
-		background: color-mix(in srgb, var(--tone) 45%, var(--map-line));
-	}
-
-	.pair:has(.is-active) > .rail .pulse,
-	.pair:has(a.in-card:hover) > .rail .pulse {
-		animation: map-pulse 900ms linear infinite;
 	}
 
 	.icon-out {
@@ -642,13 +602,13 @@ const d = data[variant];
 		opacity: 0;
 	}
 
-	.in-card.is-active .rail,
-	a.in-card:hover .rail {
+	li:has(.is-active) > .rail,
+	li:has(a.in-card:hover) > .rail {
 		background: color-mix(in srgb, var(--tone) 45%, var(--map-line));
 	}
 
-	.in-card.is-active .pulse,
-	a.in-card:hover .pulse {
+	li:has(.is-active) > .rail .pulse,
+	li:has(a.in-card:hover) > .rail .pulse {
 		animation: map-pulse 900ms linear infinite;
 	}
 
