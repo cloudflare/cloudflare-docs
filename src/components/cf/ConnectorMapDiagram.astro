@@ -265,7 +265,11 @@ const d = data[variant];
 				{d.coreLines.map((l) => <li>{l}</li>)}
 			</ul>
 			<div class="pills">
-				{d.pills.map((p) => <a class="pill" href={p.href}>{p.label}</a>)}
+				{d.pills.map((p) => (
+					<a class="pill" href={p.href}>
+						{p.label}
+					</a>
+				))}
 			</div>
 			<p class="hint" data-hint-target data-default={d.defaultHint}>
 				{d.defaultHint}
