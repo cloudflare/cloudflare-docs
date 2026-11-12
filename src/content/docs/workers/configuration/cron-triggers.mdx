@@ -86,7 +86,7 @@ Refer to the following additional examples to write your code:
 
 Changes such as adding a new Cron Trigger, updating an old Cron Trigger, or deleting a Cron Trigger may take several minutes (up to 15 minutes) to propagate to the Cloudflare global network.
 
-If a Cron Trigger is created less than approximately 15 minutes before the next scheduled execution time, the first invocation may be skipped. The trigger will run normally from the following scheduled time onward.
+Scheduled invocations can be missed until propagation completes. The trigger starts running at the next scheduled time after propagation.
 
 :::
 
