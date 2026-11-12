@@ -279,7 +279,9 @@ The **Client disconnected by type** chart shows the number of client disconnect 
 | Client Disconnects             | Meaning                                                                                                                                                                                          |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `Response Stream Disconnected` | Connection was terminated during the deferred proxying stage of a Worker request flow. It commonly appears for longer lived connections such as [WebSockets](/workers/runtime-apis/websockets/). |
-| `Cancelled`                    | The Client disconnected before the Worker completed its response.                                                                                                                                |
+| `Cancelled`                    | The client disconnected or canceled the request before the Worker finished responding.                                                                                                           |
+
+The client can be any application or service, including another Worker or a Pages Function. For example, if Worker A stops waiting for Worker B, Worker B may report Client Disconnected too. Follow [Find out why a request was canceled](/workers/runtime-apis/bindings/service-bindings/http/#find-out-why-a-request-was-canceled) to check both sets of logs.
 
 ## Debug exceptions with Workers Logs
 

@@ -118,6 +118,8 @@ You can use any type of [binding](/workers/runtime-apis/bindings) this way.
 
 The [`ctx`](/workers/runtime-apis/context) object is exposed as a class property of the `WorkerEntrypoint` class.
 
+If the calling Worker's execution context ends, the called Worker's RPC execution context is canceled. This can happen when the original client disconnects. Refer to [Request cancellation](/workers/runtime-apis/bindings/service-bindings/#request-cancellation) for the request chain, and [RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/#end-of-event-handler--execution-context) for RPC object lifetimes.
+
 For example, you can extend the lifetime of the invocation context by calling the `waitUntil()` method:
 
 <Tabs> <TabItem label="JavaScript" icon="seti:javascript">
