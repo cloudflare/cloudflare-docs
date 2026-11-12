@@ -48,6 +48,10 @@ Review your Spectrum subscription charges and [Workers pricing](/workers/platfor
 
 The setup in this guide passes TCP traffic through without terminating TLS. Requests without Spectrum Enterprise must omit the `tls` field. To encrypt the connection, terminate TLS in the service behind the Worker, or use [Spectrum Enterprise TLS termination](#terminate-tls-with-spectrum-enterprise).
 
+:::note[STARTTLS]
+Workers cannot upgrade inbound Spectrum sockets with `socket.startTls()`, including when `tls` is `off`. For STARTTLS protocols, proxy the connection to a backend that handles the TLS upgrade. Refer to the [connect handler TLS documentation](/workers/runtime-apis/handlers/connect/#tls).
+:::
+
 ## Create the Spectrum application
 
 Choose the dashboard, Cloudflare CLI, or API procedure.

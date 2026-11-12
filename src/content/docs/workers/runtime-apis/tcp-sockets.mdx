@@ -126,6 +126,10 @@ export default {
 
 ## Opportunistic TLS (StartTLS)
 
+:::note[Inbound connections from Spectrum]
+`startTls()` is not supported on inbound sockets delivered by Spectrum to a Worker's `connect()` handler. Refer to the [connect handler TLS documentation](/workers/runtime-apis/handlers/connect/#tls) for supported TLS options.
+:::
+
 Many TCP-based systems, including databases and email servers, require that clients use opportunistic TLS (otherwise known as [StartTLS](https://en.wikipedia.org/wiki/Opportunistic_TLS)) when connecting. In this pattern, the client first creates an insecure TCP socket, without TLS, and then upgrades it to a secure TCP socket, that uses TLS. The `connect()` API simplifies this by providing a method, `startTls()`, which returns a new `Socket` instance that uses TLS:
 
 ```typescript

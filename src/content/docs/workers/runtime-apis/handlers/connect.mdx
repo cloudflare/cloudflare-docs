@@ -50,8 +50,7 @@ The example echoes each byte back to the client. Await all stream operations tha
 - `socket` (`Socket`) — The established inbound connection.
   - `socket.readable` contains bytes sent by the client.
   - `socket.writable` sends bytes to the client.
-  - `socket.opened` resolves to [`SocketInfo`](/workers/runtime-apis/tcp-sockets/#socketinfo). For inbound connections, `remoteAddress` identifies the client when available, and `localAddress` identifies the requested destination.
-    For service bindings, `localAddress` contains the address the caller passed to `connect()`.
+  - `socket.opened` resolves to [`SocketInfo`](/workers/runtime-apis/tcp-sockets/#socketinfo), which contains the [connection addresses](#connection-addresses).
   - `socket.closed` settles when the connection closes.
 - `env` (`Env`) — The Worker's [bindings](/workers/runtime-apis/bindings/).
 - `ctx` (`ExecutionContext`) — The handler's [execution context](/workers/runtime-apis/context/).
@@ -61,6 +60,24 @@ The example echoes each byte back to the client. Await all stream operations tha
 The handler returns `void` or `Promise<void>`. Keep the returned promise pending while the Worker is processing the connection.
 
 Inbound sockets preserve TCP half-closes. When a client closes its writable side, the Worker can continue sending data through `socket.writable`. Set `allowHalfOpen: true` on outbound sockets when a proxy must preserve this behavior.
+
+## Connection addresses
+
+For connections delivered by Spectrum, `remoteAddress` contains the original client's IP address and source port. Extract the IP address for client identification, such as rate limiting.
+
+`localAddress` contains the destination IP address and Spectrum edge port. Use the port to identify which application port received the connection.
+
+Addresses include the port, such as `203.0.113.7:12345`. IPv6 addresses use brackets, such as `[2001:db8::1]:12345`. Handle `null` when address metadata is unavailable.
+
+For [service bindings](/workers/runtime-apis/bindings/service-bindings/), `localAddress` contains the address the caller passed to `connect()`.
+
+## TLS
+
+Spectrum Enterprise can [terminate TLS before forwarding the connection](/spectrum/how-to/route-tcp-traffic-to-a-worker/#terminate-tls-with-spectrum-enterprise) to the Worker. Without Spectrum TLS termination, the Worker can proxy encrypted bytes to a backend service that terminates TLS.
+
+Calling `socket.startTls()` on an inbound socket delivered by Spectrum is not supported, including when Spectrum TLS termination is turned off.
+
+SMTP on port `587` and IMAP on port `143` can negotiate a TLS upgrade with STARTTLS. Proxy these connections to a backend that handles the upgrade and TLS handshake. Spectrum TLS termination expects TLS from the start of the connection.
 
 ## Deploy the Worker
 
