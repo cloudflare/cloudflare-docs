@@ -8,7 +8,7 @@ products:
   - artifacts
 ---
 
-If your platform offers starter apps, site templates, or lets users remix each other's projects, you can keep each template in an Artifacts repo and give every customer their own copy to edit.
+If your platform offers starter apps or templates, you can keep each template in an Artifacts repo and give every customer their own copy to edit.
 
 Artifacts has two ways to copy a repo:
 
@@ -18,9 +18,9 @@ Artifacts has two ways to copy a repo:
 | Version | The current state of the source | An exact commit you choose |
 | History in the copy | Yes | None. The copy starts with one new commit. |
 | Target repo | Created by the request | Create it empty before the request |
-| Use it when | The copy needs history, for example an agent that works on a branch and is reviewed against the source | The copy is a fresh start, for example a new project from a template or a remix of someone else's project |
+| Use it when | The copy needs history, for example an agent that works on a branch and is reviewed against the source | The copy is a fresh start, for example a new project from a template |
 
-For templates and remixes, use shallow fork. The customer gets exactly the template version you chose, and nothing from the template's history, other branches, or deleted files.
+For templates, use shallow fork. The customer gets exactly the template version you chose, and nothing from the template's history, other branches, or deleted files.
 
 :::note
 Shallow fork is in limited beta. Contact your account team to enable it for your account. Until it is enabled, the shallow fork route returns `404 Not Found`.
@@ -96,10 +96,6 @@ The customer's repo now has one commit. Its files are identical to the template 
 ## 4. Give the customer access
 
 Issue a [repo-scoped token](/artifacts/guides/authentication/) for the customer's repo, and hand it to the customer or the agent that edits their project. The template stays untouched.
-
-## Remix another customer's project
-
-A remix works the same way. Use the other customer's repo as `source` and the commit they shared as `commit`. Only that commit's files are copied, so earlier versions, other branches, and anything they deleted are not visible in the remix.
 
 ## Handle retries and errors
 
