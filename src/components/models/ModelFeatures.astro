@@ -7,6 +7,7 @@
  */
 import {
 	formatModelPricing,
+	formatProviderPricing,
 	formatModelReasoning,
 	modelCurrencyFormatter,
 	type ModelView,
@@ -28,6 +29,9 @@ for (const { property_id, value } of model.propertiesList) {
 
 const isCatalog = model.dataSource === "catalog";
 const catalogPricing = isCatalog ? formatModelPricing(model.pricing) : [];
+
+// All providers serving this model, in priority order (sorted by the resolver).
+const modelProviders = model.modelProviders ?? [];
 
 // `requestFormats` lives on the resolved model (catalog-only) rather than the
 // properties array because Property.value is string-only. Identifiers like
@@ -225,6 +229,40 @@ const reasoning = formatModelReasoning(
 									<li class="border-border m-0 flex justify-between gap-4 border-b py-2 first:pt-0 last:border-b-0 last:pb-0">
 										<span>{label}</span>
 										<span class="shrink-0 text-right">{cost}</span>
+									</li>
+								);
+							})}
+						</ul>
+					</td>
+				</tr>
+			)}
+			{modelProviders.length > 0 && (
+				<tr>
+					<td>Available Providers</td>
+					<td>
+						<ul class="m-0 list-none p-0">
+							{modelProviders.map((provider) => {
+								const providerPricing = formatProviderPricing(provider.pricing);
+								return (
+									<li class="border-border m-0 border-b py-2 first:pt-0 last:border-b-0 last:pb-0">
+										<div class="font-medium mb-1">
+											{provider.name ?? provider.provider}
+										</div>
+										{providerPricing.length > 0 && (
+											<ul class="m-0 ml-4 list-none p-0">
+												{providerPricing.map((line) => {
+													const separator = line.lastIndexOf(": ");
+													const label = line.slice(0, separator);
+													const cost = line.slice(separator + 2);
+													return (
+														<li class="flex justify-between gap-4 text-sm text-muted-foreground">
+															<span>{label}</span>
+															<span class="shrink-0 text-right">{cost}</span>
+														</li>
+													);
+												})}
+											</ul>
+										)}
 									</li>
 								);
 							})}

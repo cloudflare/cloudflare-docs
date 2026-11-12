@@ -197,16 +197,16 @@ A separate Semgrep workflow checks style guide compliance (dates, "coming soon" 
 
 The site defines 19 content collections in `src/content.config.ts` with schemas in `src/schemas/`. The major ones:
 
-| Collection          | Location                         | Description                              |
-| ------------------- | -------------------------------- | ---------------------------------------- |
-| `docs`              | `src/content/docs/`              | Main documentation pages (MDX)           |
-| `partials`          | `src/content/partials/`          | Reusable content snippets (MDX)          |
-| `changelog`         | `src/content/changelog/`         | Product changelogs (MDX)                 |
-| `glossary`          | `src/content/glossary/`          | Glossary terms (YAML)                    |
-| `workers-ai-models` | `src/content/workers-ai-models/` | AI model definitions (JSON)              |
-| `directory`         | `src/content/directory/`         | Product/feature directory entries (YAML) |
-| `fields`            | `src/content/fields/`            | Ruleset engine field definitions (YAML)  |
-| `learning-paths`    | `src/content/learning-paths/`    | Learning path definitions (JSON)         |
+| Collection       | Location                            | Description                                                                  |
+| ---------------- | ----------------------------------- | ---------------------------------------------------------------------------- |
+| `docs`           | `src/content/docs/`                 | Main documentation pages (MDX)                                               |
+| `partials`       | `src/content/partials/`             | Reusable content snippets (MDX)                                              |
+| `changelog`      | `src/content/changelog/`            | Product changelogs (MDX)                                                     |
+| `glossary`       | `src/content/glossary/`             | Glossary terms (YAML)                                                        |
+| `catalog-models` | `src/content/collections/models.ts` | AI models (hosted and proxied), loaded from the Cloudflare API at build time |
+| `directory`      | `src/content/directory/`            | Product/feature directory entries (YAML)                                     |
+| `fields`         | `src/content/fields/`               | Ruleset engine field definitions (YAML)                                      |
+| `learning-paths` | `src/content/learning-paths/`       | Learning path definitions (JSON)                                             |
 
 ### Directory entry IDs
 

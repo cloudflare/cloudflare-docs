@@ -3,7 +3,8 @@ import { parse } from "node-html-parser";
 import { describe, expect, test } from "vitest";
 
 import type { ModelCardData } from "~/util/models";
-import { legacyToResolved } from "~/util/models/model-resolver";
+import { catalogToResolved } from "~/util/models/model-resolver";
+import { pinnedModelNames } from "~/util/models/facets";
 import ModelCard from "./ModelCard.astro";
 
 const model: ModelCardData = {
@@ -14,6 +15,7 @@ const model: ModelCardData = {
 	shortName: "verylongmodelnamethatmustwrapwithouttruncation",
 	author: "fixture-author",
 	authorName: "Fixture Author",
+	authorIcon: null,
 	hosting: "proxied",
 	dataSource: "catalog",
 	source: 2,
@@ -28,6 +30,7 @@ const model: ModelCardData = {
 		{ property_id: "function_calling", value: "true" },
 		{ property_id: "reasoning", value: "true" },
 	],
+	pinnedIndex: -1,
 };
 
 const truncationClasses = (className: string | undefined): string[] =>
@@ -43,17 +46,27 @@ describe("ModelCard", () => {
 	test.each([undefined, "false", "true"])(
 		"shows hosted models as ZDR when the incoming property is %s",
 		async (zdr) => {
-			const hostedModel = legacyToResolved({
+			const hostedModel = catalogToResolved({
 				id: "hosted-fixture",
-				collection: "workers-ai-models",
+				collection: "catalog-models",
 				data: {
-					id: "hosted-fixture",
-					name: "@cf/fixture/hosted-model",
+					model_id: "@cf/fixture/hosted-model",
+					provider_id: "workers-ai",
+					name: "Hosted model",
 					description: "A hosted model",
-					task: { name: "Text Generation" },
+					task: "Text Generation",
 					tags: [],
-					properties:
-						zdr === undefined ? [] : [{ property_id: "zdr", value: zdr }],
+					context_length: null,
+					max_output_tokens: null,
+					pricing: {},
+					supports_async: false,
+					...(zdr === undefined ? {} : { zdr: zdr === "true" }),
+					examples: [],
+					metadata: {},
+					external_info: null,
+					terms: null,
+					cover_image_url: null,
+					schema_version: null,
 				},
 			});
 			const container = await AstroContainer.create();
@@ -130,5 +143,134 @@ describe("ModelCard", () => {
 		expect(compareRow?.textContent).not.toContain("Context:");
 		expect(compareRow?.textContent).not.toContain("Maximum output:");
 		expect(compareRow?.textContent).not.toContain("Pricing listed");
+	});
+
+	test("orders pinned models: hardcoded list first, then the API flag", () => {
+		const resolve = (modelId: string, pinned?: boolean) =>
+			catalogToResolved({
+				id: modelId,
+				collection: "catalog-models",
+				data: {
+					model_id: modelId,
+					provider_id: null,
+					name: modelId,
+					description: "",
+					task: "Text Generation",
+					tags: [],
+					context_length: null,
+					max_output_tokens: null,
+					pricing: {},
+					supports_async: false,
+					examples: [],
+					metadata: {},
+					external_info: null,
+					terms: null,
+					cover_image_url: null,
+					schema_version: null,
+					...(pinned === undefined ? {} : { pinned }),
+				},
+			}).pinnedIndex;
+
+		expect(resolve(pinnedModelNames[0])).toBe(0);
+		expect(resolve(pinnedModelNames[0], false)).toBe(0);
+		expect(resolve("openai/gpt-5", true)).toBe(pinnedModelNames.length);
+		expect(resolve("openai/gpt-5", false)).toBe(-1);
+		expect(resolve("openai/gpt-5")).toBe(-1);
+	});
+
+	test("fills provider pricing from top-level pricing and provider_details", () => {
+		// One CMS provider reachable by id (the author) and alias (the
+		// serving provider).
+		const google = {
+			name: "Google",
+			icon: {
+				light: "https://icons/google.svg",
+				dark: "https://icons/g-dark.svg",
+			},
+		};
+		const brands = new Map([
+			["google", google],
+			["google-vertex-ai", google],
+		]);
+		const view = (fields: Record<string, unknown> = {}) =>
+			catalogToResolved(
+				{
+					id: "fixture",
+					collection: "catalog-models",
+					data: {
+						model_id: "google/gemini-3-flash",
+						provider_id: "google",
+						name: "Gemini",
+						description: "",
+						task: "Text Generation",
+						tags: [],
+						context_length: null,
+						max_output_tokens: null,
+						pricing: { "Input tokens (per 1M)": 1 },
+						supports_async: false,
+						examples: [],
+						metadata: {},
+						external_info: null,
+						terms: null,
+						cover_image_url: null,
+						schema_version: null,
+						...fields,
+					},
+				},
+				brands,
+			);
+		const resolve = (fields: Record<string, unknown>) =>
+			view(fields).modelProviders;
+
+		expect(view()).toMatchObject({
+			authorName: "Google",
+			authorIcon: google.icon,
+		});
+
+		// Sole provider without pricing: use the model's top-level pricing.
+		expect(
+			resolve({
+				model_providers: [
+					{ provider: "google-vertex-ai", ordinal: 0, pricing: null },
+				],
+			}),
+		).toEqual([
+			{
+				provider: "google-vertex-ai",
+				name: "Google",
+				ordinal: 0,
+				pricing: { "Input tokens (per 1M)": 1 },
+			},
+		]);
+
+		// No model_providers yet: derive providers from provider_details.
+		expect(
+			resolve({
+				provider_details: [{ id: "google-vertex-ai", pricing: null }],
+			}),
+		).toEqual([
+			{
+				provider: "google-vertex-ai",
+				name: "Google",
+				ordinal: 0,
+				pricing: { "Input tokens (per 1M)": 1 },
+			},
+		]);
+
+		// Several providers: top-level pricing is ambiguous, so use each
+		// provider's provider_details entry, and keep ordinal order.
+		expect(
+			resolve({
+				model_providers: [
+					{ provider: "b", ordinal: 1, pricing: null },
+					{ provider: "a", ordinal: 0, pricing: { input_tokens: 3 } },
+				],
+				provider_details: [{ id: "b", pricing: { input_tokens: 2 } }],
+			}),
+		).toEqual([
+			// Unknown to the providers list: the id doubles as the name.
+			{ provider: "a", name: "a", ordinal: 0, pricing: { input_tokens: 3 } },
+			{ provider: "b", name: "b", ordinal: 1, pricing: { input_tokens: 2 } },
+		]);
 	});
 });

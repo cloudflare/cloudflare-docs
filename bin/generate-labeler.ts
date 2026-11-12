@@ -49,15 +49,15 @@ const productRoots: Record<string, string[]> = {
 
 // Collection folders that map wholesale to a single product.
 const collectionGlobs: Record<string, string[]> = {
-	"ai-gateway": ["src/content/catalog-models/**"],
 	"ruleset-engine": ["src/content/fields/**"],
 	workers: ["src/content/compatibility-flags/**"],
-	"workers-ai": ["src/content/workers-ai-models/**"],
 };
 
 // Hand-added globs that are not derivable from the directory structure.
 const extraGlobs: Record<string, string[]> = {
+	"ai-gateway": ["src/content/collections/models.ts"],
 	"network-flow": ["src/content/partials/networking-services/mnm/**"],
+	"workers-ai": ["src/content/collections/models.ts"],
 };
 
 // Rules for paths that are not product docs dirs.
@@ -318,7 +318,7 @@ async function main() {
 #   src/content/release-notes/{slug}.yaml release notes
 #   src/content/changelog/**              changelog entries (product:changelog)
 #   src/content/changelog/{slug}/**       per-product changelog entries
-#   src/content/{workers-ai-models,compatibility-flags,fields,catalog-models}
+#   src/content/{compatibility-flags,fields}
 #
 # Regenerate with: pnpm run generate:labeler
 #

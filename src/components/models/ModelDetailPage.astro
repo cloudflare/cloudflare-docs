@@ -31,7 +31,6 @@ import SchemaDisplay from "~/components/models/SchemaDisplay.astro";
 import SchemaVariantTabs from "~/components/models/SchemaVariantTabs.tsx";
 import SchemaFileLinks from "~/components/models/SchemaFileLinks.astro";
 import AnchorHeading from "~/components/cf/AnchorHeading.astro";
-import { authorData } from "~/components/models/data";
 import {
 	detectApiModes,
 	getTopLevelVariants,
@@ -156,7 +155,6 @@ if (model.name.includes("@cf/openai/gpt-oss") || isClef || isClairic) {
 	hasPlayground = false;
 }
 
-const author = authorData[model.author];
 const authorName = model.authorName;
 
 const requiresWorkersPaid =
@@ -267,12 +265,19 @@ const headings: MarkdownHeading[] = [
 
 	<div slot="page-title">
 		<div class="not-prose mt-6 flex items-center gap-4">
-			{author ? (
-				<img
-					class="bg-card h-14 w-14 shrink-0 rounded-sm object-contain dark:bg-gray-200 dark:p-1"
-					src={author.logo}
-					alt={`${authorName} logo`}
-				/>
+			{model.authorIcon ? (
+				<span class="h-14 w-14 shrink-0">
+					<img
+						class="size-full rounded-sm object-contain dark:hidden"
+						src={model.authorIcon.light}
+						alt={`${authorName} logo`}
+					/>
+					<img
+						class="hidden size-full rounded-sm object-contain dark:block"
+						src={model.authorIcon.dark}
+						alt={`${authorName} logo`}
+					/>
+				</span>
 			) : (
 				<span
 					aria-hidden="true"

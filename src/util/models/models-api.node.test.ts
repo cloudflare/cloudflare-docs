@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-	hasMoreCatalogModels,
-	mapConcurrentOrdered,
-} from "./catalog-import-utils";
+import { hasMoreCatalogModels, mapConcurrentOrdered } from "./models-api";
 
 describe("catalog import utilities", () => {
 	it("stops pagination after all API rows are consumed", () => {

@@ -16,6 +16,10 @@ import { productAvailabilityCollectionConfig } from "~/content/collections/produ
 import { granularControlApplicationsCollectionConfig } from "~/content/collections/granular-control-applications";
 import { mcpServersCollectionConfig } from "~/content/collections/mcp-servers";
 import { skillsManifestCollectionConfig } from "~/content/collections/skills-manifest";
+import {
+	catalogModelsLoader,
+	catalogProvidersLoader,
+} from "~/content/collections/models";
 
 // Extend the default docs schema with the CF-specific frontmatter keys the
 // content uses. The schema is permissive — these fields just need to validate
@@ -372,55 +376,33 @@ export const collections = {
 			},
 		}),
 	),
-	// Workers AI model catalog — one JSON per model. Id is the filename
-	// (e.g. `llama-3.1-8b-instruct-fast`), which is also the per-model URL slug.
-	// Schema is permissive (loose) so the files validate as-is; only the
-	// fields the catalog/per-model pages read are declared. The big
-	// `schema.input`/`output` JSON-Schema blob is carried through untyped.
-	"workers-ai-models": defineCollection({
-		loader: glob({
-			pattern: "*.json",
-			base: "./src/content/workers-ai-models",
-			generateId: ({ entry }) => entry.replace(/\.json$/, ""),
-		}),
+	// Unified AI model catalog (hosted `@cf/*` and proxied), loaded from the
+	// API at build time (see `catalogModelsLoader`). Entry id is derived from
+	// `model_id` (e.g. `openai-tts-1`, `clef`); the per-model URL slug is the `model_id` itself
+	// (e.g. `openai/tts-1`). The resolver-read fields are declared (so rows
+	// validate and reads never go `undefined`) and the object is
+	// `.looseObject()` so heavy/extra fields (full examples, code_snippets,
+	// raw_response, etc.) carry through untyped.
+	// Model authors and serving providers from the catalog CMS, used for
+	// display names. `aliases` maps other ids (e.g. `google-vertex-ai`) to one
+	// provider.
+	"catalog-providers": defineCollection({
+		loader: catalogProvidersLoader(),
 		schema: z.looseObject({
 			id: z.string(),
 			name: z.string(),
-			description: z.string(),
-			source: z.number().optional(),
-			task: z.looseObject({
-				id: z.string().optional(),
-				name: z.string(),
-				description: z.string().optional(),
-			}),
-			tags: z.array(z.string()).default([]),
-			properties: z
-				.array(
-					z.looseObject({
-						property_id: z.string(),
-						value: z.any(),
-					}),
-				)
-				.default([]),
-			schema: z.any().optional(),
+			aliases: z.array(z.string()).default([]),
+			website_url: z.string().nullish(),
+			description: z.string().nullish(),
+			icons: z.record(z.string(), z.string().nullable()).optional(),
 		}),
 	}),
-	// Unified AI model catalog — one JSON per model. Id is the filename
-	// (e.g. `openai-tts-1`); the per-model URL slug is the `model_id`
-	// (e.g. `openai/tts-1`), NOT the filename. The resolver-read fields are
-	// declared (so JSON validates and reads never go `undefined`) and the object
-	// is `.looseObject()` so heavy/extra fields (full examples, code_snippets,
-	// raw_response, etc.) carry through untyped.
 	"catalog-models": defineCollection({
-		loader: glob({
-			pattern: "*.json",
-			base: "./src/content/catalog-models",
-			generateId: ({ entry }) => entry.replace(/\.json$/, ""),
-		}),
+		loader: catalogModelsLoader(),
 		schema: z.looseObject({
 			// Identification
 			model_id: z.string(),
-			provider_id: z.string().nullable(),
+			provider_id: z.string().nullish(),
 			name: z.string(),
 
 			// Content
@@ -440,6 +422,18 @@ export const collections = {
 
 			// In-page notice + request formats (optional/nullable).
 			banner: z.any().nullable().optional(),
+			// Editor-curated in the CMS: list pinned models first.
+			pinned: z.boolean().optional(),
+			// Every provider serving the model, ordered by \`ordinal\`.
+			model_providers: z
+				.array(
+					z.looseObject({
+						provider: z.string(),
+						ordinal: z.number(),
+						pricing: z.record(z.string(), z.unknown()).nullable(),
+					}),
+				)
+				.nullish(),
 			request_formats: z.string().array().nullable().optional(),
 
 			// Examples + snippets (required `examples`, optional rest).
