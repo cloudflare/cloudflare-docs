@@ -38,7 +38,7 @@ To let users open Datadog from the [App Launcher](/cloudflare-one/access-control
 
 1. In a separate tab or window, open the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Zero Trust** > **Access controls** > **Applications**.
 2. Select **Create new application** > **SaaS application**.
-3. For **Application**, select _Datadog_. If Datadog is not in the list, enter `Datadog` and select the textbox that appears below.
+3. For **Application**, select _Datadog_.
 4. For the authentication protocol, select **SAML**.
 5. Select **Add application**.
 6. Fill in the following fields:
@@ -46,8 +46,8 @@ To let users open Datadog from the [App Launcher](/cloudflare-one/access-control
    - **Assertion Consumer Service URL**: Datadog **Assertion Consumer Service URL**
    - **Name ID format**: _Email_
 
-   :::caution[Use Email, not Unique ID]
-   Datadog requests the `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` NameID format. Datadog uses the NameID as the Datadog username, and this username is the email address of the user. If you select _Unique ID_, Access sends the UUID of the Access identity. Datadog cannot match this value to a Datadog user, and the login fails.
+   :::caution
+   Datadog requests the `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` NameID format. Datadog uses the NameID as the Datadog username, and this username is the email address of the user.
    :::
 
 7. (Optional) Add SAML attribute statements to update the user profile in Datadog. Datadog reads these attributes:
@@ -61,7 +61,7 @@ To let users open Datadog from the [App Launcher](/cloudflare-one/access-control
    The first attribute is `eduPersonPrincipalName`. If it is present, Datadog uses its value as the username instead of the NameID. Thus, its value must also be the email address of the user. The first name and last name claims must come from your identity provider. To learn more, refer to [Datadog supported attributes](https://docs.datadoghq.com/account_management/saml/#supported-attributes).
 
 8. (Optional) To map identity provider groups to Datadog roles or teams, use the `groups` attribute. To learn more, refer to [Datadog SAML group mapping](https://docs.datadoghq.com/account_management/saml/mapping/).
-9. Datadog supports the upload of a metadata XML file. To download your SAML metadata from Access:
+9. Download your SAML metadata XML file from Access, and upload it to Datadog:
    1. Copy the **SAML Metadata endpoint**.
    2. In a separate browser window, go to the SAML Metadata endpoint (`https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/xxx/saml-metadata`).
    3. Save the page as `access_saml_metadata.xml`.
