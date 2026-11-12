@@ -28,7 +28,22 @@ type Item = {
 	hint?: string;
 	tone?: string;
 	mono?: boolean;
+	// Consecutive inbound items with the same group render side by side
+	// under one shared label, for example "Whole sites".
+	group?: string;
 };
+
+type Row = { group?: string; items: Item[] };
+
+function toRows(items: Item[]): Row[] {
+	const rows: Row[] = [];
+	for (const item of items) {
+		const last = rows[rows.length - 1];
+		if (item.group && last?.group === item.group) last.items.push(item);
+		else rows.push({ group: item.group, items: [item] });
+	}
+	return rows;
+}
 
 interface MapData {
 	label: string;
@@ -54,6 +69,8 @@ const GLYPH = {
 	mcp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg>',
 	cloud:
 		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 18h10.5a4 4 0 0 0 .5-8 6 6 0 0 0-11.6 1.5A3.3 3.3 0 0 0 7 18Z"/></svg>',
+	appliance:
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 12h5"/><circle cx="16" cy="12" r="0.9" fill="currentColor"/><circle cx="18.5" cy="12" r="0.9" fill="currentColor"/></svg>',
 };
 
 const data: Record<Variant, MapData> = {
@@ -105,11 +122,22 @@ const data: Record<Variant, MapData> = {
 			{
 				key: "wan",
 				icon: "cloudflare-wan",
-				title: "Cloudflare One Appliance",
-				caption: "Whole sites",
-				href: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/",
-				hint: "Whole sites: a managed box or VM for branches and data centers.",
+				title: "Cloudflare WAN",
+				caption: "IPsec or GRE",
+				href: "/cloudflare-one/networks/connectors/cloudflare-wan/",
+				hint: "Whole sites over IPsec or GRE from your routers, with BGP and route control for network teams.",
 				tone: "wan",
+				group: "Whole sites",
+			},
+			{
+				key: "appliance",
+				glyph: GLYPH.appliance,
+				title: "Cloudflare One Appliance",
+				caption: "Box or VM",
+				href: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/",
+				hint: "Whole sites with a managed box or VM for branches and data centers. It connects to Cloudflare WAN.",
+				tone: "wan",
+				group: "Whole sites",
 			},
 		],
 		outbound: [
@@ -232,28 +260,70 @@ const d = data[variant];
 	<div class="col col-in">
 		<p class="col-title">{d.inTitle}</p>
 		<ul class="stack">
-			{d.inbound.map((item) => (
-				<li>
-					<a
-						class={`card in-card tone-${item.tone ?? "neutral"}`}
-						href={item.href}
-						data-key={item.key}
-						data-hint={item.hint}
+			{toRows(d.inbound).map((row) =>
+				row.group ? (
+					<li
+						class={`pair tone-${row.items[0].tone ?? "neutral"}`}
+						role="group"
+						aria-label={row.group}
 					>
-						<span class="icon" aria-hidden="true">
-							{item.icon && <Icon name={item.icon} />}
-							{item.glyph && <Fragment set:html={item.glyph} />}
-						</span>
-						<span class="text">
-							<span class="title">{item.title}</span>
-							<span class="caption">{item.caption}</span>
-						</span>
+						<p class="pair-label" aria-hidden="true">
+							{row.group}
+						</p>
+						<div class="pair-cards">
+							{row.items.map((item) => (
+								<a
+									class={`card in-card tile tone-${item.tone ?? "neutral"}`}
+									href={item.href}
+									data-key={item.key}
+									data-hint={item.hint}
+								>
+									<span
+										class={item.glyph ? "icon is-glyph" : "icon"}
+										aria-hidden="true"
+									>
+										{item.icon && <Icon name={item.icon} />}
+										{item.glyph && <Fragment set:html={item.glyph} />}
+									</span>
+									<span class="text">
+										<span class="title">{item.title}</span>
+										<span class="caption">{item.caption}</span>
+									</span>
+								</a>
+							))}
+						</div>
 						<span class="rail" aria-hidden="true">
 							<span class="pulse"></span>
 						</span>
-					</a>
-				</li>
-			))}
+					</li>
+				) : (
+					row.items.map((item) => (
+						<li>
+							<a
+								class={`card in-card tone-${item.tone ?? "neutral"}`}
+								href={item.href}
+								data-key={item.key}
+								data-hint={item.hint}
+							>
+								<span
+									class={item.glyph ? "icon is-glyph" : "icon"}
+									aria-hidden="true"
+								>
+									{item.icon && <Icon name={item.icon} />}
+									{item.glyph && <Fragment set:html={item.glyph} />}
+								</span>
+								<span class="text">
+									<span class="title">{item.title}</span>
+									<span class="caption">{item.caption}</span>
+								</span>
+								<span class="rail" aria-hidden="true">
+									<span class="pulse"></span>
+								</span>
+							</a>
+						</li>
+					))
+				),
+			)}
 		</ul>
 	</div>
 
@@ -463,6 +533,58 @@ const d = data[variant];
 
 	.icon:not(.icon-out) :global(svg) {
 		fill: currentColor;
+	}
+
+	.icon.is-glyph :global(svg) {
+		fill: none;
+	}
+
+	/* Paired on-ramps (Cloudflare WAN and the Appliance) share one row. */
+	.pair {
+		position: relative;
+		padding: 6px;
+		border: 1px dashed
+			color-mix(in srgb, var(--tone) 35%, var(--map-line));
+		border-radius: 12px;
+	}
+
+	.pair-label {
+		margin: 0 0 6px;
+		color: var(--map-caption);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-align: center;
+	}
+
+	.pair-cards {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 6px;
+	}
+
+	.card.tile {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+		min-height: 0;
+		padding: 8px 10px;
+	}
+
+	.card.tile .title {
+		font-size: 12px;
+	}
+
+	.pair:has(.is-active) > .rail,
+	.pair:has(a.in-card:hover) > .rail {
+		background: color-mix(in srgb, var(--tone) 45%, var(--map-line));
+	}
+
+	.pair:has(.is-active) > .rail .pulse,
+	.pair:has(a.in-card:hover) > .rail .pulse {
+		animation: map-pulse 900ms linear infinite;
 	}
 
 	.icon-out {
