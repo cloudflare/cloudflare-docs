@@ -67,7 +67,7 @@ For connections delivered by Spectrum, `remoteAddress` contains the original cli
 
 `localAddress` contains the destination IP address and Spectrum edge port. Use the port to identify which application port received the connection.
 
-Addresses include the port, such as `203.0.113.7:12345`. IPv6 addresses use brackets, such as `[2001:db8::1]:12345`. Handle `null` when address metadata is unavailable.
+Addresses include the port, such as `203.0.113.7:12345`. IPv6 addresses use brackets, such as `[2001:db8::1]:12345`. `remoteAddress` is `undefined` when client address metadata is unavailable.
 
 For [service bindings](/workers/runtime-apis/bindings/service-bindings/), `localAddress` contains the address the caller passed to `connect()`.
 

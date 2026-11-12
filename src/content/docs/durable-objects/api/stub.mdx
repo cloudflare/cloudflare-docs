@@ -100,7 +100,7 @@ connect(address: SocketAddress | string, options?: SocketOptions): Socket
 
 #### Parameters
 
-- `address` (`SocketAddress | string`) — A logical address in `host:port` format. The Durable Object receives this value as the socket's `localAddress`.
+- `address` (`SocketAddress | string`) — A logical destination, expressed as a `host:port` string or a [`SocketAddress`](/workers/runtime-apis/tcp-sockets/#socketaddress) with `hostname` and `port` fields. The Durable Object receives the resulting `host:port` string as the socket's `localAddress`.
 - `options` (`SocketOptions`, optional) — Socket configuration. Refer to [`SocketOptions`](/workers/runtime-apis/tcp-sockets/#socketoptions).
 
 #### Return values

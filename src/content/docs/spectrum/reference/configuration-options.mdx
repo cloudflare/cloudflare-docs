@@ -36,7 +36,7 @@ Set `traffic_type` to `worker` and `origin_worker_id` to the immutable 32-charac
 
 Worker origins have the following constraints:
 
-- `protocol` must specify TCP on a single port. Port ranges and UDP are not supported.
+- For the TCP beta, `protocol` must specify TCP on a single port. Port ranges are not supported.
 - Pro and Business zones without Spectrum Enterprise support one Worker-origin application per zone, in addition to their existing plan-supported applications. Free zones are not supported.
 - On Pro and Business zones without Spectrum Enterprise, omit `tls`. Spectrum does not terminate TLS for these applications.
 - With Spectrum Enterprise, `tls` can be `off` or `flexible`.

@@ -67,12 +67,12 @@ Choose the dashboard, Cloudflare CLI, or API procedure.
 
 2. Select **Create an application**.
 3. For **Application type**, select **TCP**.
-4. For **Domain**, enter the hostname that clients will connect to.
+4. For **Subdomain**, enter the subdomain that clients will connect to. The dashboard appends your zone's domain name.
 5. For **Edge port**, enter a single TCP port.
-6. For **Origin**, select **Worker**.
+6. For **Origin type**, select **Worker**.
 7. Select the Worker that will receive the connections.
-8. If **Edge TLS termination** is available, select **Off** to pass the TCP payload to the Worker without TLS termination.
-9. Select **Add**.
+8. If **Edge TLS termination** is available, turn it off to pass the TCP payload to the Worker without TLS termination.
+9. Select **Add Application**.
 </Steps>
 
 </TabItem>
@@ -140,7 +140,7 @@ Choose the dashboard, Cloudflare CLI, or API procedure.
 
 Spectrum applications with a Worker origin have the following constraints:
 
-- The application protocol must be TCP on a single port. Port ranges and UDP are not supported.
+- This TCP beta uses a single port per application. Port ranges are not supported.
 - `traffic_type` must be `worker`.
 - `origin_worker_id` must contain the target Worker's tag, not its name.
 - On Pro and Business zones without Spectrum Enterprise, omit `tls`. Spectrum does not terminate TLS for these applications.
@@ -165,7 +165,7 @@ The Spectrum application sends the connection to the Worker's `connect()` handle
 
 Spectrum Enterprise applications can use `tls: "flexible"` to terminate TLS at Cloudflare. Spectrum sends the decrypted TCP payload to the Worker. This mode requires an active [advanced certificate](/ssl/edge-certificates/advanced-certificate-manager/) or [custom certificate](/ssl/edge-certificates/custom-certificates/) covering the Spectrum hostname. [Universal SSL is not supported](/spectrum/reference/limitations/#universal-ssl).
 
-In the dashboard, select **Flexible** for **Edge TLS termination**. For API or CLI configuration, add `"tls":"flexible"` to the request body. Do not include this field unless Spectrum Enterprise is enabled.
+In the dashboard, turn on **Edge TLS termination** and select **Flexible** for **TLS mode**. For API or CLI configuration, add `"tls":"flexible"` to the request body. Do not include this field unless Spectrum Enterprise is enabled.
 
 To test the echo handler with Spectrum TLS termination, run:
 
