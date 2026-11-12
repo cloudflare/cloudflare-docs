@@ -78,7 +78,7 @@ cf workers versions profile --help
 
 The command requires a positional version identifier and `--worker-id`. Use `latest-deployed`, a version's universally unique identifier (UUID), or a UUID prefix of at least eight characters.
 
-`latest-deployed` selects the most recently deployed version. To profile a version that is not the latest deployed version, replace `latest-deployed` in the examples with that version's identifier.
+`latest-deployed` profiles a version in the active deployment. When traffic is split, versions are tried in traffic-share order until one has a loaded isolate. To profile a specific version, replace `latest-deployed` in the examples with that version's identifier.
 
 Set `--duration-ms` to a value from `1000` to `50000` milliseconds. For either Workers or Durable Objects, use `--profile-type cpu` for CPU profiles or `--profile-type heap` for allocation profiles.
 
@@ -122,7 +122,7 @@ The command writes raw binary pprof data to standard output.
 
 Use an API token with **Workers Scripts Read** permission or the **Content Read-Only** [Workers role](/workers/authorization/workers/). Set `$CLOUDFLARE_API_TOKEN` to your token and `$ACCOUNT_ID` to your account ID.
 
-The `latest-deployed` version selects the most recently deployed version. To profile a different version, replace `latest-deployed` in the URL with that version's UUID.
+`latest-deployed` profiles a version in the active deployment. When traffic is split, versions are tried in traffic-share order until one has a loaded isolate. To profile a specific version, replace `latest-deployed` in the URL with that version's UUID.
 
 The selected version must be loaded and running, with traffic during capture. The API returns a gzip-compressed pprof profile.
 
