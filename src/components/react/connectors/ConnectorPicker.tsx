@@ -441,7 +441,7 @@ export default function ConnectorPicker(_props: DiagramFallbackProps) {
 
 				{needDef && (
 					<div key={`q-${needDef.id}`} className="cp-enter flex flex-col gap-2">
-						<StepLabel n={2}>Does any of this apply?</StepLabel>
+						<StepLabel n={2}>Do any of these apply?</StepLabel>
 						<div className="flex flex-col gap-1.5">
 							{needDef.questions.map((q) => {
 								const on = Boolean(answers[q.id]);
@@ -584,14 +584,14 @@ export default function ConnectorPicker(_props: DiagramFallbackProps) {
 
 				{!need && (
 					<p className="m-0 text-center text-xs text-neutral-500 dark:text-neutral-400">
-						Pick one to see the recommended connector.
+						Select an option to see the recommended connector.
 					</p>
 				)}
 				{need && (
 					<p className="m-0 text-center text-xs text-neutral-500 dark:text-neutral-400">
-						Most deployments use two or three connectors together.{" "}
+						Most deployments combine two or three connectors. For examples, refer to{" "}
 						<a href="#combine-connectors" className="text-brand">
-							See common combinations
+							Combine connectors
 						</a>
 						.
 					</p>
