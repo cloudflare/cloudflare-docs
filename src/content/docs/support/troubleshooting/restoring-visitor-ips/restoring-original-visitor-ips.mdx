@@ -16,7 +16,7 @@ For example, if you install applications that depend on the incoming IP address 
 :::caution[Protect the Cloudflare-to-origin connection]
 The visitor IP restoration configurations restore IP values for logs and applications. They do not authenticate users or clients, or verify that traffic passed through your zone. Before using those values for IP-based access restrictions or rate limiting, follow the [visitor IP header trust requirements](/fundamentals/reference/http-headers/#trust-visitor-ip-headers).
 
-For public HTTPS origins, we recommend mutual TLS (mTLS) using [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with a certificate dedicated to your zone or hostname. Configure your origin to require and verify client certificates, rejecting requests with missing or untrusted certificates. Alternatively, use Cloudflare Tunnel with direct public access blocked.
+For public HTTPS origins, we recommend mutual TLS (mTLS) using [zone-level or per-hostname Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate) with a client certificate dedicated to your zone or hostname. Configure your origin to require and verify client certificates. Trust only a certificate authority (CA) dedicated to that zone or hostname. If you use a shared CA, also validate the expected leaf certificate or an explicitly allowlisted certificate identity. Reject requests with missing, untrusted, or unexpected certificates. Alternatively, use Cloudflare Tunnel with direct public access blocked.
 
 Allowlisting Cloudflare IP ranges or using global AOP alone does not identify your zone: both use credentials or infrastructure shared across customers. [Worker subrequests](/fundamentals/reference/http-headers/#cf-connecting-ip-in-worker-subrequests) can also change visitor IP header values, depending on the destination.
 :::
@@ -264,11 +264,11 @@ codebase](https://github.com/cloudflare/mod_cloudflare) from GitHub.
 
 ### Lighttpd
 
-Use `mod_extforward` to restore visitor IPs in Lighttpd. Use Lighttpd 1.4.70 or later when your proxy reuses HTTP/2 connections for different visitors, as described in the [Lighttpd documentation](https://redmine.lighttpd.net/projects/lighttpd/wiki/Mod_extforward).
+Use `mod_extforward` to restore visitor IPs in Lighttpd. CIDR proxy ranges require Lighttpd 1.4.50 or later. Use Lighttpd 1.4.70 or later when your proxy reuses HTTP/2 connections for different visitors, as described in the [Lighttpd documentation](https://redmine.lighttpd.net/projects/lighttpd/wiki/Mod_extforward).
 
 <Steps>
 
-1. Open `lighttpd.conf` and add `mod_extforward` to the `server.modules` list. Place it after `mod_accesslog` to restore visitor IPs in access logs.
+1. Open `lighttpd.conf` and add `mod_extforward` to the `server.modules` list. On versions before 1.4.61, place it after `mod_accesslog` to restore visitor IPs in access logs.
 
 2. Configure `extforward.forwarder` with all current [Cloudflare IPv4 and IPv6 ranges](https://www.cloudflare.com/ips/), and set `extforward.headers` to `CF-Connecting-IP`. The following example shows one range of each type. Add all remaining Cloudflare ranges before using it:
 
@@ -284,7 +284,9 @@ Use `mod_extforward` to restore visitor IPs in Lighttpd. Use Lighttpd 1.4.70 or 
 
 </Steps>
 
-Do not use `"all" => "trust"` to work around IPv6 configuration issues. Trust only your configured proxy ranges and [authenticate the path to your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers). For a complete example, refer to [Lighttpd's Cloudflare configuration guide](https://redmine.lighttpd.net/projects/lighttpd/wiki/Restoring_original_visitor_IPs_Logging_visitor_IP_addresses_with_mod_extforward).
+Keep `extforward.forwarder` synchronized with the current [Cloudflare IPv4 and IPv6 ranges](https://www.cloudflare.com/ips/). Add newly published ranges and remove retired ranges.
+
+Do not use `"all" => "trust"` to work around IPv6 configuration issues. Trust only your configured proxy ranges and [authenticate the path to your origin](/fundamentals/reference/http-headers/#trust-visitor-ip-headers).
 
 ### LiteSpeed server
 

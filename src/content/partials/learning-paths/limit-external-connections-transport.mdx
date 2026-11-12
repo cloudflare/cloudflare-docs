@@ -10,7 +10,7 @@ import { Details, Render } from "~/components"
 
 [Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/) helps ensure requests to your origin server come from the Cloudflare network.
 
-To identify traffic for your account or zone, use your own certificate with [zone-level or per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate). Configure your origin to reject requests without the expected client certificate.
+To identify traffic for your zone or hostname, use a dedicated client certificate with [zone-level or per-hostname AOP](/ssl/origin-configuration/authenticated-origin-pull/#when-to-use-your-own-certificate). Configure your origin to require and verify client certificates. Trust only a certificate authority (CA) dedicated to that zone or hostname. If you use a shared CA, also validate the expected leaf certificate or an explicitly allowlisted certificate identity. Reject requests with missing, untrusted, or unexpected certificates.
 
 * **Security**: Very secure.
 * **Availability**: All customers.
