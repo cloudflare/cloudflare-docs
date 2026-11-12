@@ -1,0 +1,177 @@
+---
+title: Run Gemini API managed agents in a sandbox
+description: Run Gemini API managed agent file and shell tools in a Linux sandbox on Cloudflare Containers with Bring Your Own Sandbox.
+pcx_content_type: how-to
+sidebar:
+  order: 9
+  label: Gemini API managed agents
+products:
+  - sandbox
+  - containers
+  - durable-objects
+tags:
+  - AI
+---
+
+import { LinkButton, Steps } from "~/components";
+
+Run Gemini API managed agents on Cloudflare with Bring Your Own Sandbox (BYOS). Google hosts the agent loop. File and shell tools run in a Linux sandbox in your Cloudflare account.
+
+Google publishes a [Cloudflare provider example](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare) for its [self-hosted environments](https://github.com/google-gemini/gemini-api-cli/blob/main/docs/self-hosted/README.md). The example deploys a Worker and a [Container](/containers/), with one Durable Object for each Gemini environment ID.
+
+<LinkButton
+	variant="secondary"
+	href="https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare"
+>
+	Get the example
+</LinkButton>
+
+## How it works
+
+Your application sends an authenticated `POST /connect` request to the Worker. The Worker routes the environment ID to its Durable Object, which starts a container and runs `gemini-api environments connect` inside it.
+
+The runtime polls Google over outbound HTTPS and executes file and shell tools in `/workspace`. The container needs no inbound ports. Your application still calls the public Worker endpoint to start the runtime.
+
+```mermaid
+sequenceDiagram
+    participant App as Your application
+    participant Worker as Cloudflare Worker
+    participant Sandbox as Durable Object and Container
+    participant Gemini as Gemini API
+
+    App->>Worker: POST /connect with environment ID
+    Worker->>Sandbox: Start the Gemini runtime
+    Sandbox->>Gemini: Poll for work over HTTPS
+    App->>Gemini: Run an agent with the environment ID
+    Gemini-->>Sandbox: Return file and shell tool calls
+    Sandbox->>Gemini: Submit tool results
+    Gemini-->>App: Return the agent response
+```
+
+The example uses the [Durable Object Container API](/containers/api/durable-object-container/) directly. Its Durable Object calls `this.ctx.container.start()` and `this.ctx.container.exec()` to start the instance and runtime. Refer to the [Worker source](https://github.com/google-gemini/gemini-api-cli/blob/main/docs/self-hosted/providers/cloudflare/src/index.ts) for the implementation.
+
+## Prerequisites
+
+You need:
+
+- A Cloudflare Workers Paid account with access to Containers
+- A running [Docker](https://www.docker.com/) daemon to build the container image
+- [Node.js 20](https://nodejs.org/) or later and npm
+- The [`gemini-api` CLI](https://github.com/google-gemini/gemini-api-cli#installation) installed locally
+- A [Gemini API key](https://ai.google.dev/gemini-api/docs/api-key)
+
+## Create a Gemini environment
+
+<Steps>
+1. Set your Gemini API key in your local shell:
+
+   ```sh
+   export GEMINI_API_KEY="<GEMINI_API_KEY>"
+   ```
+
+2. Create a self-hosted environment:
+
+   ```sh
+   curl --fail-with-body \
+     --request POST \
+     "https://generativelanguage.googleapis.com/v1beta/environments" \
+     --header "x-goog-api-key: $GEMINI_API_KEY" \
+     --header "Content-Type: application/json" \
+     --data '{"mode": "self_hosted"}'
+   ```
+
+3. Save the response's `id` and `environment_key` in your shell. Use the `id` without an `environments/` prefix:
+
+   ```sh
+   export GEMINI_ENVIRONMENT_ID="<ENVIRONMENT_ID>"
+   export GEMINI_ENVIRONMENT_KEY="<ENVIRONMENT_KEY>"
+   export CLOUDFLARE_DISPATCH_SECRET="$(openssl rand -hex 32)"
+   ```
+
+   The API returns `environment_key` only when it creates the environment. Save it before closing the response.
+</Steps>
+
+The integration uses three credentials with different scopes:
+
+| Credential                   | Purpose                                                | Where it is used                                       |
+| ---------------------------- | ------------------------------------------------------ | ------------------------------------------------------ |
+| `GEMINI_API_KEY`             | Create environments and run agents                     | Your local CLI or application                          |
+| `GEMINI_ENVIRONMENT_KEY`     | Connect the runtime to one Gemini environment          | A Worker secret passed to the runtime in the container |
+| `CLOUDFLARE_DISPATCH_SECRET` | Authorize requests to the Worker's `/connect` endpoint | A Worker secret and your application                   |
+
+## Deploy and connect the runtime
+
+<Steps>
+1. Complete the deployment and secret upload steps in the [Cloudflare provider quick start](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare#quick-start). These steps deploy the Worker and container image, then store `GEMINI_ENVIRONMENT_KEY` and `CLOUDFLARE_DISPATCH_SECRET` as Worker secrets.
+
+   Keep `GEMINI_API_KEY` in your local application. The runtime needs only the scoped environment key.
+
+2. Save the deployed Worker URL:
+
+   ```sh
+   export WORKER_URL="https://gemini-api-self-hosted-cloudflare.<YOUR_SUBDOMAIN>.workers.dev"
+   ```
+
+3. Start the runtime for your environment:
+
+   ```sh
+   curl --fail-with-body \
+     --request POST "$WORKER_URL/connect" \
+     --header "Authorization: Bearer $CLOUDFLARE_DISPATCH_SECRET" \
+     --header "Content-Type: application/json" \
+     --data "{\"environment_id\": \"$GEMINI_ENVIRONMENT_ID\"}"
+   ```
+</Steps>
+
+The Worker returns HTTP `202` with a `connecting` or `already_connected` status. A `connecting` response accepts the startup request. It does not confirm that the runtime has connected to Google. Run an agent to verify the connection.
+
+## Run an agent
+
+From your local machine, run the example agent with your environment ID:
+
+```sh
+gemini-api agent run \
+  "Write hello to /workspace/hello.txt, read it back, and run uname -a in bash." \
+  --agent antigravity-preview-05-2026 \
+  --body "{\"environment\": \"$GEMINI_ENVIRONMENT_ID\"}"
+```
+
+The agent uses the runtime in your Cloudflare container to write and read the file, then run the shell command. Check that the tool results include `hello` and the Linux kernel information. Use an agent identifier available to your Gemini project. Google's [provider example](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare#run-an-interaction) documents its example identifier.
+
+## Sandbox lifetime
+
+The example maps each `environment_id` to a Durable Object with `getByName()`. Requests for the same environment reach the same Durable Object. Separate environments use separate containers. Agent runs that use the same environment share its running container and workspace.
+
+The Durable Object sets a 10-minute inactivity timeout. A process running inside the container does not by itself keep the Durable Object active. The example does not save snapshots or restore workspace files after an instance stops.
+
+If the runtime exits or its instance stops, call `/connect` again to start the runtime. A new instance starts from the container image. Its `/workspace` does not contain files from the previous instance.
+
+For more information, refer to [Sandbox lifetime](/sandbox/concepts/lifetime/). To add workspace persistence, refer to [Save and restore a sandbox with snapshots](/sandbox/files/save-and-restore-a-workspace/).
+
+## Credentials and network access
+
+The runtime receives `GEMINI_ENVIRONMENT_KEY` inside the container. Treat it as accessible to code that runs there. The project API key and dispatch secret do not need to enter the container.
+
+The example starts the container with `enableInternet: true`. Commands that the agent runs can also reach the Internet. To restrict destinations, refer to [Outbound traffic](/containers/configuration/outbound-traffic/). For more information about the isolation boundary, refer to [Sandbox security](/sandbox/concepts/security/).
+
+## Troubleshooting
+
+Use [Workers Logs](/workers/observability/logs/) to inspect the deployment. The example exposes `GET /healthz`, which checks that the Worker responds. It does not check the runtime's connection to Google.
+
+| Symptom                                        | What to check                                                                                                                                                                               |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/connect` returns `401`                       | Send the dispatch secret as a bearer token. Confirm that it matches the deployed `CLOUDFLARE_DISPATCH_SECRET` Worker secret.                                                                |
+| `/connect` returns `400`                       | Check the response body. Supply the environment `id` and configure the `GEMINI_ENVIRONMENT_KEY` Worker secret with the key returned for that environment.                                   |
+| `/connect` returns `202`, but tools do not run | Check the runtime's logs, environment key, outbound connectivity, and the environment ID passed to `gemini-api agent run`. A startup response does not confirm a working Google connection. |
+| Files disappear after an instance stops        | The example does not persist the workspace. Add snapshots or copy files to durable storage.                                                                                                 |
+
+## Clean up
+
+Follow the [cleanup instructions](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare#cleanup) to delete both the Worker and its backing Container application. Deleting only the Worker leaves the Container application behind. Container instances that remain running continue to incur charges.
+
+## Related resources
+
+- [Google's Cloudflare provider example](https://github.com/google-gemini/gemini-api-cli/tree/main/docs/self-hosted/providers/cloudflare)
+- [Gemini API self-hosted environments](https://github.com/google-gemini/gemini-api-cli/blob/main/docs/self-hosted/README.md)
+- [Durable Object Container API](/containers/api/durable-object-container/)
+- [Sandbox lifetime](/sandbox/concepts/lifetime/)
