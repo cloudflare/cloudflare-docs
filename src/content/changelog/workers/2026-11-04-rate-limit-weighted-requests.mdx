@@ -1,0 +1,46 @@
+---
+title: Count weighted requests with the Rate Limiting binding API in Workers
+description: Pass a delta to limit() so that one call counts as more than one request.
+products:
+  - workers
+date: 2026-11-04
+---
+
+import { TypeScriptExample } from "~/components";
+
+Requests can require different amounts of work. A product lookup might be cheap, while a search runs an expensive database query. Use weighted requests to make expensive operations consume more of the same rate limit.
+
+The [Rate Limiting binding](/workers/runtime-apis/bindings/rate-limit/) now accepts an optional `delta` in `limit()`. Pass `delta` to choose how many units a call consumes.
+
+For example, assign one unit to a product lookup and 10 units to an expensive search. Both operations consume the same user's allowance. The following handler takes a verified user ID from your application's authentication flow:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+export async function handleAuthenticatedRequest(
+	request: Request,
+	env: Env,
+	userId: string,
+): Promise<Response> {
+	const { pathname } = new URL(request.url);
+
+	// Assign searches a weight of 10 and other requests a weight of 1.
+	const delta = pathname === "/search" ? 10 : 1;
+
+	const { success } = await env.MY_RATE_LIMITER.limit({
+		key: userId,
+		delta,
+	});
+	if (!success) {
+		return new Response("Rate limit exceeded", { status: 429 });
+	}
+
+	return new Response("Success!");
+}
+```
+
+</TypeScriptExample>
+
+The `delta` defaults to `1`. To use `delta` in local development, use [Wrangler 4.157.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.157.0) or later. For TypeScript support, use `@cloudflare/workers-types` version 5.20261106.1 or later.
+
+For more details, refer to [Weighted requests](/workers/runtime-apis/bindings/rate-limit/#weighted-requests).
