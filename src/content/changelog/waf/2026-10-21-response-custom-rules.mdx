@@ -1,0 +1,21 @@
+---
+title: Response custom rules
+description: Apply default protections and custom rules to HTTP responses on every Cloudflare plan.
+date: 2026-10-21
+---
+
+The response firewall can block responses before they reach visitors. Cloudflare turns on default protections for everyone, on every plan.
+
+Every plan includes three response custom rules per zone. These rules run in the `http_response_firewall_custom` phase.
+
+Rules support the `block`, `log`, and `execute` actions. You can include at most one `execute` rule within the three-rule allowance.
+
+Response custom rules can combine request fields with response fields. For requests to `/api/` paths, this expression matches responses with status code `500`:
+
+```txt
+starts_with(http.request.uri.path, "/api/") and http.response.code eq 500
+```
+
+For background, refer to the [full transaction detection announcement](https://blog.cloudflare.com/full-transaction-waf/).
+
+For supported actions, fields, and limits, refer to [Response firewall](/waf/response-firewall/).
