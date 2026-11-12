@@ -39,6 +39,10 @@
             }
         },
         {
+            "property_id": "terms",
+            "value": "https://www.apache.org/licenses/LICENSE-2.0"
+        },
+        {
             "property_id": "vision",
             "value": "true"
         },
