@@ -11,17 +11,7 @@ head:
     content: Overview
 ---
 
-import {
-	AnchorHeading,
-	CardGrid,
-	Description,
-	Feature,
-	GlossaryTooltip,
-	LinkTitleCard,
-	Plan,
-	RelatedProduct,
-	Stream,
-} from "~/components";
+import { AnchorHeading, CardGrid, Description, Feature, GlossaryTooltip, LinkTitleCard, Plan, RelatedProduct, Render, Stream } from "~/components";
 
 <Description>
 	Connect and secure your entire corporate network through Cloudflare, replacing
@@ -37,6 +27,8 @@ Cloudflare WAN provides secure, performant [routing](https://www.cloudflare.com/
 You connect your sites to Cloudflare through <GlossaryTooltip term="on-ramp">on-ramps</GlossaryTooltip> — tunnels or direct connections from your network to Cloudflare. Cloudflare WAN supports any device that uses <GlossaryTooltip term="anycast">anycast</GlossaryTooltip> <GlossaryTooltip term="GRE tunnel">GRE</GlossaryTooltip> or <GlossaryTooltip term="IPsec tunnel">IPsec</GlossaryTooltip> tunnels. To make it easier to onboard your cloud resources, you can use [Multi-Cloud Networking](/cloudflare-wan/configuration/multi-cloud-networking/), which automates creating on-ramps from your cloud networks. Refer to [On-ramps](/cloudflare-wan/on-ramps/) for a full list of supported on-ramps.
 
 Refer to [WAN transformation](/cloudflare-wan/wan-transformation/) to compare approaches and plan your migration, or go straight to [get started](/cloudflare-wan/get-started/).
+
+<Render file="choose-a-connector-tip" product="networking-services" />
 
 <AnchorHeading depth={2} title="Cloudflare WAN and Cloudflare One" />
 

@@ -10,13 +10,7 @@ sidebar:
 description: Securely connect your origin servers, APIs, and services to Cloudflare with post-quantum encrypted tunnels — no public IPs required.
 ---
 
-import {
-	CardGrid,
-	Description,
-	LinkTitleCard,
-	Plan,
-	Stream,
-} from "~/components";
+import { CardGrid, Description, LinkTitleCard, Plan, Render, Stream } from "~/components";
 
 <Description>
 	Securely connect your origin servers, APIs, and services to Cloudflare with
@@ -28,6 +22,9 @@ import {
 :::note[Looking for private networking or Zero Trust?]
 This documentation covers Cloudflare Tunnel use cases for public applications. For VPN replacement, private network access, and network traffic filtering, refer to the [Cloudflare One Tunnel documentation](/cloudflare-one/networks/connectors/cloudflare-tunnel/).
 :::
+
+<Render file="choose-a-connector-tip" product="networking-services" />
+
 
 Cloudflare Tunnel connects your infrastructure to Cloudflare through an outbound-only, [post-quantum encrypted](/ssl/post-quantum-cryptography/) connection. Instead of exposing a public IP, you install a lightweight daemon called `cloudflared` on your server. It creates a persistent tunnel to Cloudflare's global network, so all traffic to your origins flows through Cloudflare — where CDN caching, WAF, Bot Management, and DDoS protection are applied automatically.
 

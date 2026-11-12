@@ -11,6 +11,10 @@ Cloudflare One provides multiple connectivity options for your users, devices, a
 
 This page helps you understand which connectivity options to use based on your requirements, and how to combine multiple options in a single deployment.
 
+:::tip[Not sure where to start?]
+[Choose a connector](/cloudflare-one/networks/connectors/choose-a-connector/) gives a short, interactive recommendation: Cloudflare Tunnel for applications, Cloudflare Mesh for private networks, Workers VPC for code on Cloudflare, and Cloudflare WAN for whole sites. This page is the full reference.
+:::
+
 ## Cloudflare One on-ramps and off-ramps
 
 Cloudflare One connectivity options use the concept of on-ramps and off-ramps:
@@ -269,7 +273,9 @@ The following table maps common requirements to recommended Cloudflare One conne
 | ---- | ---- |
 | Expose a private web application without a public IP | [Cloudflare Tunnel](#cloudflare-tunnel) |
 | Secure end-user devices | [Cloudflare One Client](#cloudflare-one-client) |
-| Replace traditional VPN for remote access | [Cloudflare Tunnel](#cloudflare-tunnel) (primary) + [Cloudflare Mesh](#cloudflare-mesh) (for bidirectional needs) |
+| Replace traditional VPN for remote access | [Cloudflare One Client](#cloudflare-one-client) for users, with [Cloudflare Tunnel](#cloudflare-tunnel) for published applications and [Cloudflare Mesh](#cloudflare-mesh) for private networks |
+| Connect private servers, containers, or subnets in both directions | [Cloudflare Mesh](#cloudflare-mesh) |
+| Let Workers or AI agents on Cloudflare call private APIs and databases | [Workers VPC](/workers-vpc/), which reaches services behind Tunnel, Mesh, and Cloudflare WAN |
 | Connect a site with IoT devices or VoIP systems | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) (from existing router/firewall), [Cloudflare One Appliance](#cloudflare-one-appliance) (zero-touch deployment), or [Cloudflare Mesh](#cloudflare-mesh) (requires a Linux host) |
 | Connect a branch office using existing routers | [GRE](#gre-tunnels) or [IPsec tunnels](#ipsec-tunnels) |
 | Encrypt traffic over the public Internet | [IPsec tunnels](#ipsec-tunnels) |
