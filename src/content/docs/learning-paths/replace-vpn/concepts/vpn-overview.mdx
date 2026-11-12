@@ -17,7 +17,7 @@ A virtual private network (VPN) is an Internet security service that allows user
 
 Ordinarily, most Internet traffic is unencrypted and very public. When a user creates an Internet connection, such as visiting a website in a browser, the user's device will connect to their Internet Service Provider (ISP). The ISP will then connect to the Internet to find the appropriate web server to communicate with to fetch the requested website.
 
-Information about the user is exposed in every step of the website request. Since the user's IP address is exposed throughout the process, the ISP and any other intermediary can keep logs of the user's browsing habits. Additionally, the data flowing between the user's device and the web server may be unencrypted; this creates opportunities for malicious actors to spy on the data or perpetrate attacks on the user, such as an [on-path attack](https://www.cloudflare.com/learning/security/threats/on-path-attack/).
+Information about the user is exposed in every step of the website request. Since the user's IP address is exposed throughout the process, the ISP and any other intermediary can keep logs of the user's browsing habits. Additionally, the data flowing between the user's device and the web server may be unencrypted. This creates opportunities for malicious actors to spy on the data or perpetrate attacks on the user, such as an [on-path attack](https://www.cloudflare.com/learning/security/threats/on-path-attack/).
 
 ## How a VPN works
 
@@ -97,9 +97,9 @@ The right protocol depends on your environment. Choose IPsec/IKEv2 for broad nat
 
 ## Key VPN features
 
-- **Split tunneling:** only selected traffic goes through the VPN, and the rest goes directly to the Internet. Enable it to reduce load on the VPN and keep local network access. Disable it when all traffic must be inspected or protected.
-- **Kill switch:** blocks Internet traffic if the VPN connection drops, so traffic is never sent unprotected. Enable it on untrusted networks or whenever your real IP address must stay hidden.
-- **DNS leak protection:** keeps DNS queries inside the tunnel, so your ISP cannot see which domains you look up. Enable it whenever you want the VPN to hide your browsing destinations.
+- **Split tunneling:** only selected traffic goes through the VPN, and the rest goes directly to the Internet. Turn it on to reduce load on the VPN and keep local network access. Turn it off when all traffic must be inspected or protected.
+- **Kill switch:** blocks Internet traffic if the VPN connection drops, so traffic is never sent unprotected. Turn it on when using untrusted networks or whenever your real IP address must stay hidden.
+- **DNS leak protection:** keeps DNS queries inside the tunnel, so your ISP cannot see which domains you look up. Turn it on whenever you want the VPN to hide your browsing destinations.
 
 ## Limitations of VPNs
 
@@ -117,7 +117,7 @@ The right protocol depends on your environment. Choose IPsec/IKEv2 for broad nat
 
 ## VPN vs Zero Trust
 
-| | Traditional VPN | Zero Trust (ZTNA) |
+| Feature | Traditional VPN | Zero Trust (ZTNA) |
 | --- | --- | --- |
 | Access scope | Whole network | Per application |
 | Trust model | Implicit trust after login | Verify every request |
@@ -150,9 +150,8 @@ Many organizations migrate gradually: they keep the VPN for legacy resources and
 
 Cloudflare One provides Zero Trust alternatives to the functions a traditional VPN performs:
 
-- **Tunnel:** connects your servers and networks to Cloudflare without opening inbound ports. See [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/).
-- **Access:** controls who can reach each application, based on identity and other signals. See [Access](https://developers.cloudflare.com/cloudflare-one/access-controls/policies/).
-- **Gateway:** filters and inspects outbound traffic from your users and devices. See [Gateway](https://developers.cloudflare.com/cloudflare-one/traffic-controls/).
+- **Access:** controls who can reach each application, based on identity and other signals. Refer to [Access](/cloudflare-one/access-controls/policies/).
+- **Gateway:** filters and inspects outbound traffic from your users and devices. Refer to [Gateway](/cloudflare-one/traffic-controls/).
 
 ## Glossary
 
