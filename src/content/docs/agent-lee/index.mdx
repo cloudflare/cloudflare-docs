@@ -30,6 +30,7 @@ If you are on an Enterprise plan and would like access, contact your account tea
 With Agent Lee, you can:
 
 - Ask questions about your account configuration and get answers based on your actual data.
+- Attach screenshots, PDFs, and log or configuration files for Agent Lee to read.
 - Make changes to DNS records, zone settings, and security rules, with your approval required before anything executes.
 - Undo a change Agent Lee made earlier in the conversation.
 - Run network diagnostics like DNS lookups and certificate checks.
@@ -51,6 +52,35 @@ Agent Lee was previously referred to as Cloudflare Agent.
 Agent Lee answers based on your actual account data, not just documentation. When you ask a question, it fetches your zone configuration, DNS records, and security settings before responding.
 
 It can also tell you whether your account is entitled to a particular Cloudflare feature, and which plan tier you are on, so you know whether something is available to you before you try to configure it.
+
+### Attachments
+
+Attach files to a message, and Agent Lee reads them as part of your question. Select the paperclip next to the message box, paste an image, or drag files onto the chat panel.
+
+| File type | Formats | Size limit |
+| --------- | ------- | ---------- |
+| Images | PNG, JPEG, WebP | 3.5 MiB each, up to 8,192 pixels on a side and 40 megapixels in total |
+| Documents | PDF | 5 MiB each |
+| Text files | `.txt`, `.log`, `.csv`, `.md` | Up to 100 MiB, trimmed to 1 MiB before sending |
+| Structured text | `.json`, `.har`, `.yaml`, `.yml`, `.toml`, `.xml` | Up to 100 MiB, trimmed to 2 MiB before sending |
+
+You can attach up to four files per message, up to 14 MiB in total after trimming. SVG and GIF images are not supported.
+
+How Agent Lee reads each kind of file:
+
+- **Images** go to a vision-capable model, which reads text, error messages, and layout in screenshots.
+- **PDFs** are converted to text. A PDF that is only scanned images, with no text layer, cannot be read. For a long PDF, Agent Lee reads from the start of the document.
+- **Text files** are read in full when they fit. For a long file, such as a log, Agent Lee reads the start and the end, where errors usually appear.
+
+Your browser trims a text file that is over its size limit before sending it, keeping its first and last lines. HAR files are always compacted before sending: request and response bodies and cookies are removed, and the values of credential headers such as `Authorization`, `Cookie`, and `X-Auth-Key` are replaced with `[redacted]`.
+
+Agent Lee keeps attachments from your most recent messages in view. Older attachments are removed from the conversation. Attach a file again to bring it back.
+
+Example requests:
+
+- "Here's a screenshot of the error I get when I open my site. What's wrong?"
+- "This HAR file is from a slow page load. Which requests are taking the longest?"
+- "Here's the error log from my Worker. What is causing these failures?"
 
 ### Write operations
 
@@ -141,6 +171,8 @@ Conversations are stored per user using [Durable Objects](/durable-objects/). Co
 
 Agent Lee can list, search, and summarize conversations you have had with it. It cannot read another user's conversations.
 
+Files you attach are stored with the conversation. When an attachment ages out, it is removed from the stored conversation. Do not attach files that contain passwords, API tokens, or other secrets.
+
 ### Data usage
 
 Agent Lee does not currently use your conversations, prompts, or account data to train AI models, nor do we share your data with other Cloudflare customers. Should these practices change in the future, we will provide advance notice to keep you informed. For Cloudflare's authoritative data handling commitments, refer to the [Cloudflare Privacy Policy](https://www.cloudflare.com/privacypolicy/).
@@ -156,6 +188,7 @@ Agent Lee cannot:
 - Access payment methods, billing history, or API tokens
 - Operate across multiple accounts: sessions are scoped to your authenticated account
 - Query raw log data or Logpush datasets
+- Read scanned PDFs that have no text layer, or SVG and GIF images
 - Execute write operations without your explicit approval
 
 Agent Lee is entirely optional. If you do not open the Ask AI panel, none of your data is sent to or processed by it.
