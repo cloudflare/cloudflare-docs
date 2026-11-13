@@ -69,7 +69,7 @@ If the `<lastmod>` attribute is not defined, AI Search uses the `<changefreq>` a
 
 By default, AI Search crawls all sitemaps listed in your `robots.txt` in the order they appear (top to bottom). If you do not want the crawler to index everything, or if your sitemap is hosted at a non-standard path, you can configure custom sitemap URLs in the dashboard under **Parser options** > **Specific sitemap**.
 
-When custom sitemap URLs are configured, AI Search uses those sitemap URLs instead of auto-discovering sitemaps from `robots.txt` or `/sitemap.xml`. You can add up to five sitemap URLs.
+When custom sitemap URLs are configured, AI Search uses those sitemap URLs instead of auto-discovering sitemaps from `robots.txt` or `/sitemap.xml`. You can add up to 10 sitemap URLs.
 
 ### robots.txt
 
@@ -178,7 +178,7 @@ Because `discover` does not depend on a sitemap, it reaches pages that a sitemap
 3. The crawler follows links up to the configured depth and stops once it reaches the page limit.
 4. Each fetched page is stored in built-in storage, converted to Markdown, chunked, and indexed.
 
-The crawler identifies itself as `Cloudflare-AI-Search` on domains in your Cloudflare account. If you enable [external links or subdomains](#external-links-and-subdomains) and the crawl reaches a domain outside your account, it identifies itself as `Cloudflare-AI-Search-External`. Pages that `robots.txt` disallows are recorded with the `blocked_by_robots_txt` [indexing error code](/ai-search/troubleshooting/indexing-error-codes/) instead of being indexed.
+The crawler identifies itself as `Cloudflare-AI-Search`. Pages that `robots.txt` disallows are recorded with the `blocked_by_robots_txt` [indexing error code](/ai-search/troubleshooting/indexing-error-codes/) instead of being indexed.
 
 :::note
 The crawler declares the `search` and `ai-input` crawl purposes. A site that sets either purpose to `no` in a `robots.txt` [Content Signals](/browser-run/quick-actions/crawl-endpoint/#content-signals) directive rejects the crawl.
@@ -195,7 +195,7 @@ The crawler declares the `search` and `ai-input` crawl purposes. A site that set
 2. Select **Create**, then select **Website** as your data source.
 3. Under **Crawl target**, enter the website URL.
 4. Under **Parse type**, select **Discover**.
-5. Under **Crawl options**, adjust **Crawl source**, **Page limit**, **Crawl depth**, **Max cache age**, **Include external links**, and **Include subdomains**.
+5. Under **Crawl options**, adjust **Crawl source**, **Page limit**, **Crawl depth**, **Max cache age**, and **Include subdomains**.
 6. Complete the setup process to create your instance.
 
 </Steps>
@@ -233,14 +233,13 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 The following options apply only when `parse_type` is `discover`. All of them are optional.
 
-| Option                   | Type    | Default  | Range or values            | Description                                                           |
-| ------------------------ | ------- | -------- | -------------------------- | --------------------------------------------------------------------- |
-| `source`                 | string  | `all`    | `all`, `sitemaps`, `links` | Where the crawler looks for candidate URLs.                           |
-| `limit`                  | number  | `100000` | 1 to 100,000               | Maximum number of pages to crawl.                                     |
-| `depth`                  | number  | `5`      | 1 to 100,000               | Maximum number of link hops to follow from the source URL.            |
-| `max_age`                | number  | `86400`  | 0 to 604,800 seconds       | How long the crawler reuses cached page content before it re-fetches. |
-| `include_external_links` | boolean | `false`  | `true`, `false`            | Whether to follow links that point to other domains.                  |
-| `include_subdomains`     | boolean | `false`  | `true`, `false`            | Whether to follow links that point to subdomains of the source URL.   |
+| Option               | Type    | Default  | Range or values            | Description                                                           |
+| -------------------- | ------- | -------- | -------------------------- | --------------------------------------------------------------------- |
+| `source`             | string  | `all`    | `all`, `sitemaps`, `links` | Where the crawler looks for candidate URLs.                           |
+| `limit`              | number  | `100000` | 1 to 100,000               | Maximum number of pages to crawl.                                     |
+| `depth`              | number  | `5`      | 1 to 100,000               | Maximum number of link hops to follow from the source URL.            |
+| `max_age`            | number  | `86400`  | 0 to 604,800 seconds       | How long the crawler reuses cached page content before it re-fetches. |
+| `include_subdomains` | boolean | `false`  | `true`, `false`            | Whether to follow links that point to subdomains of the source URL.   |
 
 #### Discovery source
 
@@ -264,12 +263,12 @@ The `max_age` option sets the maximum age, in seconds, of cached page content th
 
 In the dashboard, **Max cache age** offers **No cache**, **1 hour**, **1 day**, **3 days**, and **7 days**.
 
-#### External links and subdomains
+#### Subdomains
 
-By default, the crawler stays on the host of the source URL. Enable `include_subdomains` to follow links into subdomains, and `include_external_links` to follow links to other domains.
+By default, the crawler stays on the host of the source URL. Enable `include_subdomains` to follow links into subdomains.
 
 :::caution
-Either option can grow a crawl well beyond your own site. Pair them with `limit`, `depth`, and [path filtering](/ai-search/configuration/indexing/path-filtering/).
+`include_subdomains` can grow a crawl well beyond the pages you expect. Pair it with `limit`, `depth`, and [path filtering](/ai-search/configuration/indexing/path-filtering/).
 :::
 
 ### Sync behavior
