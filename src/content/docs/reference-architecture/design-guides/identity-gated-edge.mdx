@@ -1,0 +1,377 @@
+---
+title: Design an identity-gated edge
+pcx_content_type: design-guide
+description: Choose Cloudflare products and settings for an identity-gated edge, close origin bypasses, and verify enforcement with repeatable tests.
+products:
+  - access
+  - tunnel
+  - waf
+  - load-balancing
+sidebar:
+  label: Identity-gated edge
+---
+
+import { DashButton, Steps } from "~/components";
+
+This guide turns the [identity-gated edge architecture](/reference-architecture/architectures/identity-gated-edge/) into a deployment plan. It covers product selection, security settings, origin connectivity, and acceptance tests. Start with one HTTP application, then repeat the verified pattern.
+
+The target state has four requirements: authorized entry, no alternate origin path, validated identity at the application boundary, and tested configuration changes. Adding Access or changing DNS alone does not establish all four.
+
+For a reproducible demonstration, use the [Tunnel pilot companion](/reference-architecture/implementation-guides/identity-gated-edge/). Its browser checks establish a minimum pilot result, not production acceptance.
+
+## Prerequisites and deployment inputs
+
+Before changing traffic, identify the application owner and collect these inputs:
+
+| Input                    | Record                                                                                           |
+| ------------------------ | ------------------------------------------------------------------------------------------------ |
+| Application destinations | Production, test, failover, and alternate hostnames, including IPv4 and IPv6 listeners           |
+| Application behavior     | Paths, methods, redirects, cookies, WebSockets, uploads, and required callback URLs              |
+| Callers                  | Browser users, partners, services, agents, native clients, and health monitors                   |
+| Identity                 | Entitled groups, allowed IdPs, required MFA, device requirements, and revocation owner           |
+| Origin                   | Tunnel or restricted public origin, TLS server name, certificate trust, and local firewall rules |
+| Access configuration     | Account, application ID, team domain, application audience (AUD), and policy IDs                 |
+| Operations               | Expected traffic, availability targets, log destination, rollout owner, and rollback conditions  |
+
+Use a hostname in a [Cloudflare-proxied DNS setup](/dns/proxy-status/) supported by Access. Configure your [IdP integration](/cloudflare-one/integrations/identity-providers/) before testing human authentication. Confirm the application supports an intermediate proxy and that you can restrict every path to its origin.
+
+Check availability before selecting optional controls. Access, WAF, load balancing, log datasets, and enterprise origin features have different plans and entitlements. Dedicated CDN Egress IPs require the applicable [Smart Shield offering](/smart-shield/configuration/dedicated-egress-ips/). Do not assume a single subscription includes every control in this guide.
+
+## Choose a deployment profile
+
+Select one profile and record any deviations:
+
+| Profile                          | Required components                                                                                        | Optional additions                                                      |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Recommended Tunnel profile       | Proxied hostname, Access, Tunnel, JWT validation before application code, no public origin ingress         | WAF tuning, rate limits, redundant connectors, device posture           |
+| Restricted public-origin profile | Proxied hostname, Access, Full (strict), custom Authenticated Origin Pulls, origin firewall, JWT validator | Dedicated CDN Egress IPs, Load Balancing, network-layer DDoS protection |
+| Managed-device private profile   | Cloudflare One Client, private routing, and appropriate private Access and network policies                | Device posture and protocol-specific controls                           |
+
+The private profile is an alternative for applications that do not need a public hostname. Use the [private application guide](/cloudflare-one/access-controls/applications/non-http/self-hosted-private-app/) for that configuration. A public-hostname WAF policy does not automatically apply to a private-network flow.
+
+## Configure the identity gate
+
+Create a [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) before publishing a new Tunnel route. Otherwise, the route can expose the application before its policy exists.
+
+### Human access
+
+Use the following starting settings, then adjust them to the application's risk and client requirements:
+
+| Control                    | Setting or configuration                                                   | Design guidance                                                                                                             |
+| -------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Destination coverage       | Application hostname and path                                              | Cover the complete hostname first. Review more-specific applications and path exceptions separately                         |
+| Authorization              | **Allow** policy with **Include** rules for entitled groups or named users | Avoid broad email-domain membership as the only entitlement for sensitive applications                                      |
+| Additional conditions      | **Require** rules                                                          | Use for conditions every admitted user must meet, such as device posture or a supported authentication method               |
+| Login providers            | Application login methods                                                  | Allow only approved IdPs. Do not leave a weaker fallback method available unintentionally                                   |
+| IdP MFA                    | **Require** > **Authentication method**                                    | Confirm your IdP reports the required method. Generic `mfa` does not establish phishing resistance                          |
+| Access independent MFA     | Organization enrollment plus application or policy enforcement             | Require an approved factor where a second check independent of the IdP is needed                                            |
+| Session lifetime           | Application and policy session durations                                   | Select an explicit duration and test reauthentication. The Access session is separate from the IdP and application sessions |
+| Browser session protection | **HttpOnly**, **SameSite**, and **Binding Cookie** where compatible        | Test redirects and cross-site workflows before tightening cookie settings                                                   |
+
+Access is deny by default. Understand [policy actions and rule logic](/cloudflare-one/access-controls/policies/) before combining policies. Multiple Include rules are alternatives, not conditions every user must satisfy. Review policy ordering and all Service Auth and Bypass policies, not only the main human Allow policy.
+
+[IdP-based MFA requirements](/cloudflare-one/access-controls/policies/mfa-requirements/) reject a user whose reported method does not satisfy the policy. They do not guarantee that Access can make the IdP perform a stronger authentication flow.
+
+For [independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/), leave **Use identity provider MFA** off if Access must always perform its own factor check. Review policy-level overrides as well as application settings. Test enrollment, recovery, and the weakest permitted sign-in method.
+
+Use the [cookie settings reference](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) and [session management reference](/cloudflare-one/access-controls/access-settings/session-management/) for exact behavior. A binding cookie reduces some replay opportunities. It is not proof that a compromised device cannot use the session.
+
+For browser APIs, configure [CORS preflight responses](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/cors/) at Cloudflare where supported. Forwarding anonymous `OPTIONS` requests to application code creates an exception to the no-anonymous-access requirement. Do not solve a CORS failure by bypassing authentication for the API.
+
+### Session lifecycle
+
+Coordinate Access logout, IdP logout, and application logout explicitly. Ending one session does not necessarily end the others. Test the [Access logout and revocation behavior](/cloudflare-one/access-controls/access-settings/session-management/) and any [SCIM integration](/cloudflare-one/team-and-resources/users/scim/) used for deprovisioning. Session revocation alone does not remove a user's entitlement to sign in again.
+
+Test new requests and already-open WebSocket or streaming connections separately after revocation. Record whether existing connections continue and for how long. Do not assume revoking admission credentials terminates an established connection. If immediate termination is required, verify how the application or connection layer enforces it.
+
+### Services and autonomous agents
+
+Give each workload its own credential and [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth). Select named [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) rather than any token in the account. Where appropriate, use [Access mTLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) instead.
+
+Keep credentials in the caller's secret store. Set expiry, assign an owner, and test rotation and revocation. Do not embed a service token in a browser application or use it to represent every end user. Continue to authorize operations inside the application.
+
+An API client must handle denial without following an interactive login indefinitely. Test the real client with missing, expired, and revoked credentials. Do not assume every authentication failure returns the same HTTP status or response format.
+
+### Agents acting for a user
+
+Use [managed OAuth](/cloudflare-one/access-controls/applications/http-apps/managed-oauth/) when the client supports its authorization flow and resource indicators. Managed OAuth is Beta. It is not required for autonomous workloads using service credentials.
+
+The following flow distinguishes the client's opaque token from the assertion the origin validates:
+
+```mermaid
+sequenceDiagram
+    accTitle: Managed OAuth for a CLI or agent acting for a user
+    accDescr: A client discovers Access OAuth endpoints and opens the user's browser for identity-provider authentication and Access policy checks. The client exchanges an authorization code for an opaque access token. Access accepts that token on permitted requests and forwards a signed Access JWT, which the origin validates before application authorization.
+    participant Client as CLI or user-authorized agent
+    participant Browser as User browser
+    participant Access as Cloudflare Access
+    participant IdP as Identity provider
+    participant Origin as Origin validator and application
+    Client->>Access: Request without a usable credential
+    Access-->>Client: 401 with OAuth discovery information
+    Client->>Browser: Open authorization URL
+    Browser->>Access: Start authorization
+    Access-->>Browser: Redirect to IdP
+    Browser->>IdP: Authenticate
+    IdP-->>Browser: Authentication response
+    Browser->>Access: Complete authentication and policy checks
+    Access-->>Client: Authorization response through registered redirect
+    Client->>Access: Exchange authorization code
+    Access-->>Client: Opaque OAuth access token
+    Client->>Access: Request with bearer access token
+    Access->>Origin: Authorized request with Access JWT
+    Origin->>Origin: Validate JWT and authorize operation
+```
+
+Do not copy a user's `CF_Authorization` cookie into an agent. Keep OAuth tokens in protected client storage and test expiry and reauthorization. If the application already serves its own OAuth metadata or `WWW-Authenticate` challenges, resolve that compatibility before turning on managed OAuth.
+
+## Close the origin path
+
+### Tunnel profile
+
+Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) to establish outbound connections from your network. Remove public inbound access to the application and restrict internal access to the intended connector or validating proxy.
+
+In the published application's [origin parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/#access), turn on **Protect with Access**. Configure the team and the expected application AUD. This makes `cloudflared` validate the Access JWT before forwarding the request.
+
+#### Remotely managed Tunnel
+
+For a [remotely managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/), Cloudflare stores the configuration. Do not expect a local ingress YAML file to configure that tunnel.
+
+<Steps>
+
+1. Create the Access application and its restrictive policies before publishing a route. Record the team name and application AUD.
+2. In the Cloudflare dashboard, go to **Networking** > **Tunnels**, select the tunnel, and open **Routes**.
+
+   <DashButton url='/?to=/:account/tunnels' />
+
+3. Add or edit the published application route for the protected hostname. Set the service address reachable from the connector. For the same-host companion example, use `http://127.0.0.1:8080`.
+4. Under **Additional application settings**, turn on **Protect with Access**. Configure the recorded team and this application's AUD before saving the route.
+5. Save the route and confirm the connector receives the configuration. Inspect the saved [remote configuration](https://developers.cloudflare.com/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/get/). The matching ingress rule must contain `originRequest.access.required: true`, the intended `teamName`, and the intended `audTag` list.
+
+</Steps>
+
+Keep the tunnel token secret. Use the dashboard's connector installation instructions on the origin host. Verify JWT rejection separately: a healthy connector or an Access sign-in does not prove connector-side validation. The companion provides the deployment sequence and browser positive control.
+
+#### Locally managed Tunnel
+
+For a [locally managed tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/do-more-with-tunnels/local-management/configuration-file/), an ingress configuration can use the following structure:
+
+```yaml
+tunnel: <TUNNEL_UUID>
+credentials-file: /etc/cloudflared/<TUNNEL_UUID>.json
+
+ingress:
+  - hostname: app.example.com
+    service: https://app.internal.example.com:443
+    originRequest:
+      access:
+        required: true
+        teamName: <TEAM_NAME>
+        audTag:
+          - <ACCESS_APPLICATION_AUD>
+  - service: http_status:404
+```
+
+Replace the placeholders with your tunnel and Access application values. The internal hostname must resolve from the connector and present a valid TLS certificate. Configure the appropriate CA trust when using a private CA. Do not turn off TLS verification to make a failing certificate check pass.
+
+The catch-all rule rejects unmatched ingress. Also inspect other routes on the same tunnel: an alternate hostname or less-protected ingress rule must not reach the same application without validation. Keep `cloudflared` current and review its [origin parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/) for version-specific URL normalization behavior.
+
+For availability, run [Tunnel replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-availability/deploy-replicas/). Test a connector failure without reopening public ingress.
+
+### Restricted public-origin profile
+
+When Tunnel is not suitable, protect both the network connection and the application assertion:
+
+| Layer                     | Configuration                                                                                    | Verification                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| Server authentication     | **Full (strict)** with a valid origin certificate                                                | Cloudflare rejects an invalid or mismatched server certificate                              |
+| Client authentication     | Custom zone-level or per-hostname Authenticated Origin Pulls certificate, required by the origin | Missing or untrusted client certificates are rejected before protected application handlers |
+| Network restriction       | Firewall allows only the intended origin traffic sources                                         | Direct Internet connections fail, including IPv6 and alternate ports                        |
+| Optional source isolation | Dedicated CDN Egress IPs                                                                         | All assigned addresses work across every origin and failover site                           |
+| Application admission     | A JWT-validating reverse proxy or application                                                    | Missing or invalid Access assertions are rejected before protected handlers                 |
+
+Follow the [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP instructions. Restrict the origin's trust to the intended client certificate or issuing CA. Do not retain a second listener that accepts connections without it.
+
+Reject missing or untrusted client certificates at the origin's TLS termination layer without forwarding to protected application handlers. Depending on the server, rejection can produce a TLS alert or an HTTP error. For example, NGINX can handle certificate-verification failures during [HTTP error processing](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#error_processing).
+
+Keep shared Cloudflare IP allowlisting and custom AOP distinct. The first narrows network sources. The second authenticates the origin connection. Neither replaces Access policy or JWT validation.
+
+### Health checks and failover
+
+Health monitors need their own design. They do not establish an end-user Access session. Use a minimal health endpoint that returns status without application data. If it cannot require an Access assertion, isolate it from protected application handlers and explicitly document that exception.
+
+For [Load Balancing monitors](/load-balancing/monitors/) connecting directly to a restricted public origin, configure **Simulate Zone** when the monitor must use that zone's AOP or dedicated-egress settings. Set the expected Host header and validate the actual response. This does not authenticate the monitor as an Access user.
+
+Apply the same origin restrictions to standby pools. A failover endpoint that accepts anonymous traffic is a bypass, even if normal traffic never uses it.
+
+## Validate identity before application code
+
+Use [programmatic Access JWT validation](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) in the application or its trusted proxy. With the Tunnel profile, `cloudflared` can perform admission validation for software that cannot read JWTs.
+
+The validator must perform these checks:
+
+| Check                                       | Expected behavior                                                                                   |
+| ------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| Signature                                   | Verify using the configured team's published keys and the expected signing algorithm                |
+| Issuer (`iss`)                              | Match the configured team authentication URL exactly                                                |
+| Audience (`aud`)                            | Require the AUD for the destination application                                                     |
+| Lifetime (`exp` and applicable time claims) | Reject expired or not-yet-valid assertions, with bounded clock tolerance                            |
+| Key rotation                                | Select a trusted key by `kid` and refresh keys safely. Do not trust a key URL supplied by the token |
+| Failure                                     | Reject missing or invalid assertions without forwarding to protected handlers                       |
+
+Read `Cf-Access-Jwt-Assertion`, not an unverified email header. Decoding a JWT without validating its signature is not authentication. Do not fetch verification keys from an issuer chosen by an incoming token.
+
+Map the verified subject to application permissions. Human and service assertions do not necessarily contain the same claims. Do not require a human email field for every authorized service request.
+
+If the application keeps its own SAML or OIDC sign-in, configure redirects and callback URLs for the protected public hostname. Test the two sessions separately. Do not assume Access transparently exchanges arbitrary IdP tokens or replaces the application's existing authentication protocol.
+
+Trust `CF-Connecting-IP` only after establishing the trusted proxy path. Do not use client-supplied `X-Forwarded-For` values as an authorization decision. Refer to [Cloudflare request headers](/fundamentals/reference/http-headers/#request-headers) for address restoration and IPv6 behavior.
+
+## Add request filtering and response controls
+
+Apply these controls to the same protected hostname:
+
+| Product or feature                               | Recommended configuration                                                               | Caveat                                                                               |
+| ------------------------------------------------ | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| [WAF managed rules](/waf/managed-rules/)         | Deploy the rules available to your plan and tune against legitimate application traffic | Managed rules do not guarantee prevention of every known or unknown exploit          |
+| [WAF custom rules](/waf/custom-rules/)           | Restrict unused methods and paths where the application supports an explicit allowlist  | Test redirects, callbacks, encoded paths, uploads, and WebSockets before enforcement |
+| [Rate limiting rules](/waf/rate-limiting-rules/) | Set thresholds by endpoint and expected caller traffic                                  | Shared source IPs and retry behavior can affect legitimate callers                   |
+| [Bot Management](/bots/)                         | Add where bot signals and application risk justify it                                   | Interactive challenges can break services and agent clients                          |
+| [API Shield](/api-shield/)                       | Add schema or JWT validation for APIs that need those controls                          | API validation does not create an Access identity                                    |
+| [Cache Rules](/cache/how-to/cache-rules/)        | Set **Cache eligibility** to **Bypass cache** for the authenticated hostname            | Audit overlapping rules, Workers caches, and application-side caches too             |
+
+Return `Cache-Control: private, no-store` for sensitive responses. Test the same URL as two users and anonymously. Do not infer isolation from `CF-Cache-Status` alone.
+
+WAF custom-rule **Skip** actions and Access **Bypass** policies affect different controls. Neither is a general way to admit an authenticated service. Record their exact scope and test them independently. Refer to [feature interoperability](/waf/feature-interoperability/) for execution behavior.
+
+## Operate the architecture as code
+
+Manage Access applications and policies, DNS, Tunnel configuration, rulesets, cache rules, and origin restrictions through reviewed configuration. Use the [Cloudflare Terraform provider](/terraform/) or documented APIs, and pin the tool and provider versions used by your deployment.
+
+Keep secrets and private keys out of configuration repositories. Protect Terraform state and CI credentials. Before updating an existing resource, retrieve its configuration and preserve fields your change does not own.
+
+Divide responsibilities explicitly:
+
+| Owner              | Responsibilities                                                                                    |
+| ------------------ | --------------------------------------------------------------------------------------------------- |
+| Identity team      | IdPs, MFA requirements, group lifecycle, service-credential ownership, and revocation               |
+| Edge security team | WAF baseline, administrative permissions, audit review, and emergency controls                      |
+| Application team   | Destinations, callback compatibility, JWT validation, application authorization, and cache behavior |
+| Network team       | Origin firewall, certificates, Tunnel placement, segmentation, and failover connectivity            |
+
+Detect drift through both configuration comparison and [audit logs](/fundamentals/account/account-security/review-audit-logs/). An audit event records a change, but does not by itself establish whether the resulting configuration meets the design.
+
+Export the [available Logpush datasets](/logs/logpush/) needed for HTTP requests, security events, and Access activity. Confirm plan availability and fields before promising a combined audit trail. Correlate edge and origin requests with `Cf-Ray`, timestamps, application identifiers, and a verified subject where available. Do not log bearer tokens, service-token secrets, or session cookies.
+
+An anonymous login redirect is not necessarily a failed authentication event. A `403` alone does not prove the WAF blocked a request. Confirm which control acted using its corresponding logs and the request identifier.
+
+## Roll out without reopening the origin
+
+Use the following stages and exit criteria. A pilot passing is not evidence that every production origin is closed:
+
+| Stage           | Work                                                                              | Exit criterion                                                                        |
+| --------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| Inventory       | Map all hostnames, paths, clients, listeners, and owners                          | Each route has an intended identity and connection model                              |
+| Pilot           | Deploy the complete pattern on a controlled hostname                              | Legitimate browser, service, and native-client workflows pass                         |
+| Prepare origins | Apply certificates, validators, firewall restrictions, and failover configuration | Direct-path and invalid-assertion tests pass                                          |
+| Cut over        | Move controlled cohorts or applications to the protected path                     | Authentication success, latency, errors, and application behavior meet agreed targets |
+| Enforce         | Resolve false positives and remove temporary exceptions                           | Negative tests pass on the production configuration                                   |
+| Retest          | Exercise credential rotation, connector failover, and emergency procedures        | Recovery preserves authentication and origin restrictions                             |
+
+Any migration phase that still permits direct anonymous origin access has not reached the target state. Give that exposure an owner and a deadline. Prefer a pilot hostname or controlled user cohorts over a design that depends on leaving a bypass open.
+
+Define rollback before cutover. Revert to the last verified protected configuration or return a maintenance response. Do not turn off the proxy, publish origin IPs, or add a broad Bypass policy as an availability workaround.
+
+For an IdP outage, test what happens to existing sessions and new logins. For an edge outage, any independent recovery path must preserve its own authentication and origin isolation. A second gated path requires separate design and testing. It is not provided by changing a DNS record alone.
+
+## Acceptance tests
+
+Run tests only against systems you own or are authorized to assess. Use harmless requests and dedicated test identities. Record the configuration version, UTC time, hostname, result, request identifier where available, and origin-side evidence.
+
+### Record test results
+
+For each matrix row, create a separate result record. Split compound tests into individual cases, such as expired credentials and revoked credentials. Record these fields:
+
+| Field              | Required value                                                                                                       |
+| ------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Test and scope     | Test ID, individual case, target hostname, configuration revision, connector version, UTC start and end              |
+| Execution kind     | **Deployed pilot**, **deployed target**, or **unit simulation**                                                      |
+| Persona and source | Test identity or credential class, source network, and boundary exercised; never record secrets                      |
+| Expected result    | Status or behavior and evidence required by the applicable matrix row                                                |
+| Observed result    | Actual status or behavior, request IDs, and references to redacted edge, connector, or origin evidence               |
+| Status             | **Not tested** initially; **passed** only with the required observed evidence; **failed** for an unmet condition     |
+| Gap or exclusion   | Missing prerequisite, unavailable persona, evidence gap, or a justified design exclusion, with owner and next action |
+
+A test blocked by unavailable credentials, tooling, or evidence remains **not tested**, never **passed**. Use **not applicable** only for a documented design exclusion, such as custom AOP in a Tunnel-only deployment. A unit simulation can pass as a unit test, but cannot mark a deployed test passed. Do not copy results between environments or configuration revisions without rerunning the affected checks.
+
+For automation, create one record per case using this structure. Replace the placeholders only with observed results. Keep credentials outside the record.
+
+```json
+{
+	"testId": "A1",
+	"case": "entitled browser reaches protected handler",
+	"executionKind": "deployed target",
+	"configurationRevision": "replace-with-tested-revision",
+	"connectorVersion": "replace-with-tested-version",
+	"hostname": "app.example.com",
+	"persona": "dedicated entitled browser user",
+	"source": "external browser network",
+	"boundary": "public hostname to protected handler",
+	"startedAtUtc": null,
+	"endedAtUtc": null,
+	"expected": "successful response correlated with protected-handler log",
+	"observed": null,
+	"requestIds": [],
+	"evidence": [],
+	"status": "not tested",
+	"gapOwnerAndNextAction": "assign before execution"
+}
+```
+
+### Minimum pilot verification
+
+Use the [companion's pilot matrix](/reference-architecture/implementation-guides/identity-gated-edge/#run-minimum-pilot-verification) to reproduce browser sign-in, anonymous-entry handling, one subject-level authorization denial, and local admission rejection. Preserve the same origin isolation, Access policy, and JWT validation requirements as the architecture.
+
+First establish a legitimate-user positive control. Sign in as an entitled browser user, request a protected resource, and require the application's successful response. Match its request ID to origin evidence that the protected handler ran. Repeat that control after configuration changes and after each negative-test batch. Empty origin logs are inconclusive without known logging coverage and a working positive control around the test window.
+
+Passing the minimum pilot checks is not production sign-off. It does not establish binding-cookie replay protection, expiry or revocation, weak-method denial, unentitled-user denial, or two-user cache isolation. Keep those production tests **not tested** until exercised separately.
+
+### Production acceptance
+
+Execute the applicable matrix rows against the deployed target configuration, even if a pilot or unit simulation passed. Rows identify the required test setup and evidence, not completed results. Rerun the legitimate-user positive control on this target before negative tests.
+
+Record each test source and the boundary it exercises. Test origin isolation from the Internet and from relevant internal network segments, including attempts to reach application listeners behind the validator. Preserve the intended TLS server name (SNI) and HTTP Host header when targeting an origin IP, so the test reaches the correct virtual host.
+
+| ID and requirement                   | Required persona or credential                                                                          | Test location                                                                 | Action                                                                                                                                    | Expected evidence                                                                                                                                    | Applicability                                                                                         |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| A1: Legitimate-user positive control | Entitled browser user                                                                                   | External browser through the protected hostname                               | Complete authentication and request a protected resource                                                                                  | Successful application response; request ID matched to a protected-handler log                                                                       | Every browser application; repeat around negative tests                                               |
+| A2: Anonymous entry                  | Fresh browser profile with no Access or IdP credentials                                                 | External browser through the protected hostname                               | Request a protected page without completing sign-in                                                                                       | Access redirect or rejection; no protected-handler entry within the logged test window; A1 works                                                     | Every public-hostname deployment                                                                      |
+| A3: Unentitled user                  | Valid IdP identity excluded from the application policy                                                 | External browser through the protected hostname                               | Authenticate with a fresh application session and request the resource                                                                    | Access denies entry; authentication/policy evidence identifies the tested user and application; no protected-handler entry                           | Every identity-restricted browser application                                                         |
+| A4: Authentication method            | Dedicated user able to authenticate with both the weaker and required methods                           | Fresh browser and IdP sessions through the protected hostname                 | Attempt the weaker method against the stronger-method policy; repeat using the required method                                            | IdP and Access evidence establish methods and policy evaluation; weaker method is denied and required method works                                   | Every method-restricted policy                                                                        |
+| A5: Binding-cookie replay            | Dedicated user with a working paired-cookie session                                                     | Isolated browser/test client against the edge, not directly at the origin     | Confirm paired cookies work; attempt the application authorization cookie without its binding cookie and with a mismatched binding cookie | Edge rejects admission using the incomplete or mismatched pair; no protected-handler entry; intact pair remains a positive control                   | Browser applications with binding-cookie protection; not tested if the test cannot isolate cookie use |
+| A6: Session expiry                   | Dedicated entitled user and the original test session                                                   | External browser/test client against the edge                                 | Record effective session lifetime; repeat a request with the old credential after expiry without following a new sign-in flow             | UTC timing, session settings, and edge responses show the expired credential no longer admits; record any subsequent IdP reauthentication separately | Every session-bearing application                                                                     |
+| A7: Session revocation               | Dedicated entitled user; operator authorized to revoke the test session                                 | External browser/test client against the edge                                 | Revoke the session and retry new requests using its old credential                                                                        | Revocation action/time, edge outcome, and origin evidence meet the documented revocation behavior; a new sign-in is recorded separately              | Every session-bearing application                                                                     |
+| A8: Machine access and lifecycle     | Dedicated permitted service credential; expired and revoked test credentials                            | External test client through the protected hostname                           | Test valid, missing, expired, and revoked credentials as separate cases                                                                   | Valid credential reaches the handler; other cases do not; correlate revocation time and observed behavior                                            | Deployments admitting workloads                                                                       |
+| A9: User-authorized agent            | Compatible OAuth client, entitled user, unentitled user, and expired/revoked grants                     | Selected client through the protected hostname                                | Complete OAuth; separately test denial, expiry, revocation, and reauthorization                                                           | Client and edge results plus origin correlation; only authorized requests reach the handler; no browser-cookie reuse                                 | Deployments using managed OAuth                                                                       |
+| A10: Origin isolation                | Anonymous tester; no assertion                                                                          | Internet and each relevant internal segment, including behind the validator   | Probe inventoried IPv4, IPv6, ports, hostnames, and standby listeners, preserving SNI/Host                                                | Per-destination network or admission rejection with boundary evidence; no anonymous protected-handler entry                                          | Every origin; document each absent destination type                                                   |
+| A11: Custom AOP                      | Expected client certificate, no certificate, and an untrusted certificate                               | Authorized source allowed by the origin firewall, directly to TLS termination | Run positive and negative certificate tests with intended SNI/Host                                                                        | Expected certificate works; termination logs show missing/untrusted certificates rejected before protected handlers, by TLS alert or HTTP error      | Restricted public origins; excluded for Tunnel-only deployments                                       |
+| A12: Assertion validation            | Valid control JWT plus missing, forged, expired, wrong-issuer, and authentically signed wrong-AUD cases | Controlled origin-side path to each deployed validator, plus public hostname  | Run each case at the validator boundary and identify which validator rejects it                                                           | Validator-specific rejection before protected handlers; valid control works; edge rejection alone is insufficient                                    | Every JWT validator, including cloudflared and any application validator                              |
+| A13: Signing-key rotation            | Operator-controlled rotation facility and valid test identities                                         | Deployed validator during an authorized rotation exercise                     | Exercise trusted key rotation and untrusted-key rejection                                                                                 | Valid requests continue; untrusted keys fail; capture key IDs and validator evidence, not tokens                                                     | Every JWT validator; unavailable rotation facility means not tested                                   |
+| A14: Application authorization       | Authenticated users A and B with distinct resources                                                     | Through the protected hostname                                                | As A, request A's resource and then B's resource                                                                                          | A's request succeeds; B's resource is denied; match both IDs to application authorization evidence                                                   | Applications with subject-level permissions; pilot mismatch is not a two-user test                    |
+| A15: Filtering                       | Authorized tester with the credentials needed to reach the selected rule                                | Through the protected hostname                                                | Send an agreed harmless marker matched by a dedicated test rule                                                                           | Matching security event identifies the rule and intended action                                                                                      | Deployed WAF and rate-limit controls; test each configured control                                    |
+| A16: Cache isolation                 | Two entitled browser users with distinguishable responses, plus an anonymous profile                    | Same sensitive URL through the deployed caching path                          | Request as A, B, and anonymous in multiple orders                                                                                         | Response bodies/identities, cache behavior, and origin evidence show no cross-user response; anonymous caller receives no protected content          | Every sensitive cache path; no-store configuration alone is not a pass                                |
+| A17: Established connections         | Authorized user or workload with an open WebSocket or stream; revocation operator                       | Deployed client and connection-serving origin                                 | Revoke admission while the connection is open; also test new requests                                                                     | Timed connection and origin evidence meets the application's termination requirements; new-request results recorded separately                       | Applications supporting long-lived connections                                                        |
+| A18: Availability                    | Operator authorized to stop a test connector or change the test origin pool; entitled user              | Protected hostname during controlled failure                                  | Stop a connector or fail over an origin pool                                                                                              | Healthy protected route serves entitled requests or fails closed; anonymous probes remain gated                                                      | Each configured replica, pool, and failover path                                                      |
+| A19: Change control                  | Configuration owner and authorized recovery operator                                                    | Deployed control plane and protected application                              | Compare configuration to the approved revision; rehearse protected rollback                                                               | Drift is detected; recovery evidence shows authentication and origin restrictions remain enforced                                                    | Every deployment                                                                                      |
+
+Test JWT rejection at the validator boundary as well as through the public hostname. An edge rejection or an overwritten client header does not demonstrate that the origin validator works.
+
+For the wrong-audience test, use an unexpired, authentically signed token from another application in the same team. Confirm its signature and issuer are valid, then verify the destination rejects its audience. Editing `aud` on an existing token invalidates its signature and does not isolate audience enforcement. Include a positive control using a valid token for the destination application.
+
+For AOP tests, use an authorized source permitted by the origin firewall and preserve SNI and Host. First confirm that the expected client certificate allows the test request through TLS termination. Then omit the certificate or present an untrusted one and confirm certificate enforcement rejects it. Use termination-layer logs to distinguish certificate rejection from firewall drops or unrelated TLS failures. Do not open the origin broadly to run this test.
+
+Use existing request logs to establish whether application code ran. A successful redirect, an empty log query, or a browser error alone is insufficient evidence. Document logging coverage and distinguish connector rejection from application execution.
+
+## Next steps
+
+Apply the verified deployment profile to the next application. Keep its own identity policy, audience, exception list, and test record. Use the [reference architecture](/reference-architecture/architectures/identity-gated-edge/) when reviewing trust boundaries or explaining why origin isolation is part of the identity design.
