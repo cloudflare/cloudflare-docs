@@ -1,0 +1,217 @@
+---
+title: Demonstrate an identity-gated edge with Tunnel
+pcx_content_type: tutorial
+description: Run a minimal Tunnel and Access demonstration with a protected handler, browser positive controls, correlated logs, and explicit verification limits.
+products:
+  - access
+  - tunnel
+difficulty: Intermediate
+sidebar:
+  label: Identity-gated edge pilot
+---
+
+import { PackageManagers, Steps } from "~/components";
+
+Build a small HTTP service behind Access and Tunnel. Verify that an entitled browser user reaches its protected handler. Then test anonymous entry and a subject-level authorization denial. Use the [design guide](/reference-architecture/design-guides/identity-gated-edge/) for the security requirements and production acceptance matrix.
+
+:::caution[Demonstration only]
+This is not a production-ready application. It has no persistent data, administration interface, high availability, or production logging pipeline. It demonstrates JWT admission checks and one ownership comparison. Do not use real application data or relax the design guide's controls to make the demonstration work.
+:::
+
+## Prerequisites and inputs
+
+Use a dedicated test hostname, Access application, and Tunnel. Run Node.js 24 and a current `cloudflared` on the same isolated test host, without an existing connector service. Install [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/), configure an [identity provider](/cloudflare-one/integrations/identity-providers/), and use a [supported proxied DNS setup](/dns/proxy-status/).
+
+| Input              | Example or requirement                                                                                        |
+| ------------------ | ------------------------------------------------------------------------------------------------------------- |
+| Public hostname    | `pilot.example.com`, not an existing application hostname                                                     |
+| Team domain        | `https://your-team.cloudflareaccess.com`, without a trailing slash                                            |
+| Application AUD    | The audience of this pilot's Access application                                                               |
+| Pilot identity     | A dedicated browser user explicitly entitled by the Access policy                                             |
+| Origin listener    | `127.0.0.1:8080`, reachable only on the connector host                                                        |
+| Evidence           | Browser network panel and captured standard output from the handler                                           |
+| Resource inventory | IDs of the dedicated application, policies, Tunnel, route, DNS record, and any cache rule created for cleanup |
+
+The same-host HTTP hop is loopback only. Do not change the listener to `0.0.0.0`, publish its port, or move the connector to another host without designing the network restrictions and TLS validation described in the design guide.
+
+## Create the protected handler
+
+<Steps>
+
+1. Create an empty, dedicated local directory. In that directory, save this `package.json`:
+
+   ```json
+   {
+     "private": true,
+     "type": "module"
+   }
+   ```
+
+2. Install the JWT library. Keep the generated lockfile with your test record.
+
+   <PackageManagers pkg='jose@6' />
+
+3. Save the following code as `server.mjs`. It verifies the [signed Access assertion](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/) independently of `cloudflared`. A client-supplied identity header alone is not trusted.
+
+   ```javascript title="server.mjs"
+   import { createServer } from 'node:http';
+   import { randomUUID } from 'node:crypto';
+   import { createRemoteJWKSet, jwtVerify } from 'jose';
+
+   const { TEAM_DOMAIN, ACCESS_AUD } = process.env;
+   if (!TEAM_DOMAIN || !ACCESS_AUD) {
+     throw new Error('Set TEAM_DOMAIN and ACCESS_AUD');
+   }
+   if (new URL(TEAM_DOMAIN).protocol !== 'https:') {
+     throw new Error('TEAM_DOMAIN must use HTTPS');
+   }
+   const keys = createRemoteJWKSet(
+     new URL('/cdn-cgi/access/certs', TEAM_DOMAIN),
+   );
+
+   createServer(async (request, response) => {
+     const requestId = randomUUID();
+     const reply = (status, body, stage) => {
+       response.writeHead(status, {
+         'content-type': 'application/json',
+         'cache-control': 'no-store',
+         'x-demo-request-id': requestId,
+       });
+       response.end(JSON.stringify({ ...body, requestId }));
+       console.log(JSON.stringify({
+         time: new Date().toISOString(), requestId, stage, status,
+       }));
+     };
+
+     let identity;
+     try {
+       const assertion = request.headers['cf-access-jwt-assertion'];
+       if (typeof assertion !== 'string') throw new Error('Missing JWT');
+       const { payload } = await jwtVerify(assertion, keys, {
+         issuer: TEAM_DOMAIN,
+         audience: ACCESS_AUD,
+         algorithms: ['RS256'],
+         requiredClaims: ['exp', 'sub'],
+       });
+       if (typeof payload.sub !== 'string' || !payload.sub) {
+         throw new Error('Missing subject');
+       }
+       identity = payload;
+     } catch {
+       reply(401, { error: 'Admission denied' }, 'admission');
+       return;
+     }
+
+     let url;
+     try {
+       url = new URL(request.url, 'http://127.0.0.1');
+     } catch {
+       reply(400, { error: 'Invalid URL' }, 'handler');
+       return;
+     }
+     if (request.method !== 'GET') {
+       reply(405, { error: 'Use GET' }, 'handler');
+     } else if (url.pathname === '/me') {
+       const query = new URLSearchParams({ owner: identity.sub });
+       reply(200, {
+         subject: identity.sub,
+         ownResource: `/records?${query}`,
+       }, 'handler');
+     } else if (url.pathname === '/records') {
+       if (url.searchParams.get('owner') !== identity.sub) {
+         reply(403, { error: 'Forbidden' }, 'handler');
+         return;
+       }
+       reply(200, { message: 'Demonstration record' }, 'handler');
+     } else {
+       reply(404, { error: 'Not found' }, 'handler');
+     }
+   }).listen(8080, '127.0.0.1');
+   ```
+
+</Steps>
+
+The `admission` log stage records requests rejected before application logic. The `handler` stage records requests that passed JWT validation, including application authorization denials. Responses and logs share a server-generated request ID. The code does not log assertions, cookies, or subjects. Treat the subject returned by `/me` as test-user information.
+
+## Deploy the pilot
+
+<Steps>
+
+1. Create a dedicated [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for `pilot.example.com`, covering all paths. Add an Allow policy for the dedicated test identity. Configure the IdP, MFA, cookie, and session requirements from the [design guide](/reference-architecture/design-guides/identity-gated-edge/#human-access). Inspect overlapping applications and policies. Do not add Bypass, anonymous paths, or machine credentials for this browser-only pilot.
+2. Record the application's AUD. In the local demonstration directory, create `.env` with your values:
+
+   ```sh title=".env"
+   TEAM_DOMAIN=https://your-team.cloudflareaccess.com
+   ACCESS_AUD=replace-with-pilot-application-audience
+   ```
+
+   Do not commit `.env`, tunnel credentials, or browser cookies. Keep the directory private to the test operator.
+
+3. On the connector host, start the handler in a terminal. Keep its standard output available for correlation:
+
+   ```sh
+   node --env-file=.env server.mjs
+   ```
+
+   From that host, request `http://127.0.0.1:8080/me` without an assertion. Expect `401`, an `Admission denied` response, and a matching `admission` log. Confirm the listener is loopback-only and no port forwarding exposes it. This is a deployed local admission check, not an Access edge test.
+
+4. Create a dedicated [remotely managed Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/get-started/create-remote-tunnel/). Install its connector on the handler host using the dashboard instructions. Protect the tunnel token and record the connector version. Do not publish the application until its Access configuration exists.
+5. Follow the [remotely managed configuration path](/reference-architecture/design-guides/identity-gated-edge/#remotely-managed-tunnel). Publish only `pilot.example.com`, using service URL `http://127.0.0.1:8080`. Turn on **Protect with Access**, set the team and pilot AUD, and inspect the saved remote configuration before testing. Audit other routes for alternate access to the listener.
+
+   Alternatively, follow the [locally managed configuration path](/reference-architecture/design-guides/identity-gated-edge/#locally-managed-tunnel). Use the pilot hostname and `http://127.0.0.1:8080` service in that example. Retain per-rule JWT validation and the rejecting catch-all. Complete the linked local Tunnel setup before creating its DNS route. Do not configure both management paths for the same tunnel.
+
+6. Inspect [cache rules](/cache/how-to/cache-rules/). Configure a cache bypass for the dedicated pilot hostname, and ensure no conflicting rule or Worker overrides it. The handler also returns `Cache-Control: no-store`. Record the effective cache configuration; this does not establish two-user cache isolation.
+
+</Steps>
+
+HTTP on loopback is specific to this demonstration. For a remote HTTPS origin, preserve certificate verification and configure the expected origin server name and CA trust.
+
+## Verify the legitimate-user positive control
+
+Do this before interpreting negative tests or missing log entries.
+
+<Steps>
+
+1. In the entitled user's browser, open the network panel and preserve the request history. Visit `https://pilot.example.com/me` and complete manual IdP authentication.
+2. Confirm the final response is the demonstration's `200` JSON, not an Access page. Record its `requestId` or `X-Demo-Request-Id` response header.
+3. Find the same ID in the origin's standard output. Require `stage: handler` and `status: 200`. Record UTC time and the configuration version. A redirect alone is not a successful positive control.
+4. On the same hostname, open the `ownResource` path returned by `/me`. Require `200` with `Demonstration record`. Match that response's ID to another `handler` log.
+
+</Steps>
+
+If the positive control fails, investigate the deployment or evidence collection first. Do not call a negative test successful based on empty logs. Repeat the positive control after configuration changes and after the negative-test batch to bound the logging window.
+
+Do not export cookies, JWTs, tunnel tokens, or unredacted browser archives into the evidence record. Request IDs and redacted status records are sufficient for this demonstration.
+
+## Run minimum pilot verification
+
+Run these checks against the deployed pilot. They are not unit simulations. Start every result as **not tested** and use the [test record format](/reference-architecture/design-guides/identity-gated-edge/#record-test-results).
+
+| ID and action                                                                                          | Required persona or credential                                   | Test location                                | Expected evidence                                                                                                                     | Applicability                            |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| P1: Complete sign-in; request `/me` and its `ownResource`                                              | Entitled browser user with valid Access session                  | External browser through the pilot hostname  | Two `200` responses with matching origin request IDs, `handler` stages, and statuses                                                  | Required positive control                |
+| P2: Request `/me` without signing in                                                                   | Separate fresh browser profile without Access or IdP credentials | External browser through the pilot hostname  | Access redirects or denies; no demonstration response or protected-handler entry during the bounded window; P1 confirms logging works | Required anonymous-entry check           |
+| P3: Request `/records?owner=not-this-subject` after confirming that value differs from `/me`'s subject | P1's entitled browser session                                    | External browser through the pilot hostname  | `403` from the demonstration with a matching `handler` log                                                                            | Required application authorization check |
+| P4: Request `/me` without an assertion                                                                 | No credential                                                    | Connector host, directly to `127.0.0.1:8080` | `401` with a matching `admission` log and no `handler` entry for that ID                                                              | Required local admission check           |
+
+For P2, stop at the Access response. Do not complete authentication. If the profile signs in automatically, it is not an anonymous test. For P3, a mismatched owner value demonstrates one ownership comparison. It does not require, or establish isolation between, two authenticated users.
+
+A successful browser pilot establishes only the tested route and outcomes. It does not establish binding-cookie replay protection, session expiry or revocation, weak-method denial, unentitled-user denial, or two-user cache isolation. Keep those checks **not tested** until independently exercised with the required personas and evidence. Continue with [production acceptance](/reference-architecture/design-guides/identity-gated-edge/#production-acceptance).
+
+## Clean up safely
+
+Use the resource IDs recorded for this demonstration. Do not remove shared resources or relax security controls as a cleanup shortcut.
+
+<Steps>
+
+1. Stop the dedicated handler. Stop or uninstall only the connector process or service created for this pilot, following its installation method. Leave any shared connector untouched.
+2. Remove the pilot's published application route and its dedicated DNS record. Confirm the hostname no longer reaches the handler. Inspect DNS separately: removing a route does not establish that its DNS record was removed.
+3. Delete the dedicated Tunnel after confirming no other routes or connectors use it. Revoke or rotate its token if it was exposed. Never remove an active application's gate while its route remains reachable.
+4. After removing reachability, delete only the pilot's dedicated Access application, unused policies, and hostname-specific cache rule. Keep the organization's IdP and shared policies unchanged.
+5. Remove the pilot's `.env`, any local tunnel credential files, and test browser profiles after confirming they are not shared. Retain redacted results and the dependency lockfile according to your evidence policy.
+
+</Steps>
+
+## Next steps
+
+Use the [production acceptance matrix](/reference-architecture/design-guides/identity-gated-edge/#production-acceptance) before adapting the pattern to a real application. Add production authorization, data handling, observability, availability, and operational controls. A local test or browser demonstration does not replace deployed validation of those controls.
