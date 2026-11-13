@@ -263,7 +263,9 @@ Queries run faster and read less data when they scan fewer events. The following
 
 ### Queries from the API
 
-If you run queries on a schedule, for example to forward events to another system, also do the following:
+If you want to send every event to another system, check whether you can [export](/observability/export/) the data instead of querying for it on a schedule. Export delivers events to your destination as they are produced, so you do not need to page through results or stay within the query limits. Export is not available for every dataset. Refer to [supported telemetry](/observability/export/opentelemetry/#supported-telemetry) for the data you can send to an OpenTelemetry destination.
+
+If you run queries on a schedule, also do the following:
 
 - **Use consecutive, non-overlapping time ranges.** Query from the end of the previous range to the current time, rather than querying the last hour again on every run.
 - **Page through results with a cursor.** Set `limit` to at most 2,000, then pass the `$metadata.id` of the last event you received as `offset` to request the next page.
