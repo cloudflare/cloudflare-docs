@@ -12,6 +12,8 @@ import { DashButton } from "~/components";
 
 For security reasons, Cloudflare attempts to verify the email address associated with your account. You cannot perform certain tasks within the Cloudflare dashboard -- for example, [adding a new member](/fundamentals/manage-members/manage/#add-account-members), [changing your email address](/fundamentals/user-profiles/change-password-or-email/#change-email-address) or [updating your communication preferences](/fundamentals/user-profiles/customize-account/#notifications) -- without verifying your email.
 
+If you verify a newly added email address, Cloudflare automatically enrolls your account in email 2FA. You can manage that 2FA method from **My Profile** > **Authentication**. Refer to [Two-factor authentication](/fundamentals/user-profiles/2fa/) for more information.
+
 ## When creating your account
 
 When you first [create an account](/fundamentals/account/create-account/), Cloudflare automatically sends a message to the email address you provided for your account.
@@ -34,7 +36,7 @@ If you cannot find your verification email or your email has expired, request an
 
 1. Log in to the Cloudflare dashboard.
 
-    <DashButton url="/?to=/:account/home" />
+   <DashButton url="/?to=/:account/home" />
 
 2. Go to **My Profile**.
 3. For **Email Address**, select **Send verification email** (if this option is not available, your email has already been verified).
@@ -47,7 +49,7 @@ To check your verification:
 
 1. Log in to the Cloudflare dashboard.
 
-    <DashButton url="/?to=/:account/home" />
+   <DashButton url="/?to=/:account/home" />
 
 2. Go to **My Profile**.
 3. For **Email Address**, your email address will have `(verified)` added after it.
