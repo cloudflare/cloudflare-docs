@@ -9,6 +9,19 @@ import { GlossaryTooltip, TabItem, Tabs, DashButton } from "~/components";
 
 Origin parameters determine how `cloudflared` sends requests to the origin server of your [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
+:::note[Published applications and dual-layer timeouts]
+
+For **published applications** (proxied DNS records), timeouts apply at two layers:
+
+1. **CDN layer**: [Proxy Read Timeout](/fundamentals/reference/connection-limits/) and Proxy Write Timeout apply between Cloudflare's edge and the Tunnel service
+2. **Tunnel layer**: Connection and TLS timeout parameters on this page apply between `cloudflared` and your origin server
+
+**When both layers apply, the shorter timeout takes precedence.** Configure timeouts in both layers to ensure requests complete successfully. Enterprise customers can adjust CDN timeouts via [Cache Rules](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) or the [zone settings API](/api/resources/zones/subresources/settings/methods/edit/).
+
+For **private network routes**, only Tunnel origin parameters apply.
+
+:::
+
 ## Update origin parameters
 
 This section describes how to update origin parameters for a <GlossaryTooltip term="remotely-managed tunnel">remotely-managed tunnel</GlossaryTooltip>. If you are using a <GlossaryTooltip term="locally-managed tunnel">locally-managed tunnel</GlossaryTooltip>, add these parameters to your <a href={props.configurationFileURL}>configuration file</a>.
