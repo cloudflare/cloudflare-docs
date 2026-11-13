@@ -53,7 +53,7 @@ export default {
 		const repoName = `worker-demo-${crypto.randomUUID().slice(0, 8)}`;
 		const created = await env.ARTIFACTS.create(repoName);
 
-		// Artifacts tokens include expiry metadata: art_v1_<secret>?expires=<unix_seconds>
+		// Artifacts tokens include expiry metadata: art_v2_<route>_<secret>?expires=<unix_seconds>
 		// Git Basic auth expects only the token secret as the password
 		const tokenSecret = created.token.split("?expires=")[0];
 

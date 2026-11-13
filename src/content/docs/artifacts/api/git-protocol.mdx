@@ -27,7 +27,9 @@ Git routes accept repo access tokens in two forms:
 
 ### Token format
 
-Repo tokens are issued in the format `art_v1_<40 hex>?expires=<unix_seconds>`. The `?expires=` suffix is the token's expiry as a unix timestamp in seconds. To check when a token expires, parse the value after `?expires=`.
+Repo tokens are issued in the format `art_v2_<route>_<40 hex>?expires=<unix_seconds>`. The `<route>` character identifies the jurisdiction of the token's namespace (`x` for unrestricted, `e` for `eu`, `u` for `us`, and `f` for `fedramp`). The `?expires=` suffix is the token's expiry as a unix timestamp in seconds. To check when a token expires, parse the value after `?expires=`.
+
+Tokens issued before the `art_v2_` format, in the format `art_v1_<40 hex>?expires=<unix_seconds>`, remain valid until they expire or are revoked. Treat tokens as opaque strings and do not validate their prefix in your own code.
 
 ### Git `extraHeader` parameter
 
@@ -59,6 +61,14 @@ git push "$ARTIFACTS_AUTH_REMOTE" HEAD:main
 ```
 
 Use any non-empty username in the URL. Artifacts accepts that username but does not otherwise use or log it, so `x` is just a placeholder.
+
+:::caution
+Git credential helpers, such as `osxkeychain` on macOS or Git Credential Manager on Windows, can save credentials from a remote URL after a successful request. Later commands against the same host can then authenticate with the saved token without you passing it. To avoid this, use the `http.extraHeader` form, or disable the helper for the command with `git -c credential.helper= clone ...`. To remove a saved token, run:
+
+```sh
+printf 'protocol=https\nhost=<ACCOUNT_ID>.artifacts.cloudflare.net\n\n' | git credential reject
+```
+:::
 
 ## Protocol support
 
