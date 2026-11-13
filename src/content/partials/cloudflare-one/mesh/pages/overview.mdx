@@ -2,7 +2,7 @@
 {}
 ---
 
-import { CardGrid, Description, LinkTitleCard } from "~/components";
+import { CardGrid, Description, LinkTitleCard, Render } from "~/components";
 
 <Description>
 	Connect services and devices with post-quantum encrypted private networking
@@ -26,6 +26,8 @@ Cloudflare Mesh was previously known as WARP Connector and peer-to-peer connecti
 <span id="mesh-ips"></span>
 
 For details about how Mesh works, protocol requirements, and Mesh IP assignment, refer to [Concepts](/mesh/concepts/).
+
+<Render file="choose-a-connector-tip" product="networking-services" />
 
 ## Use cases
 
@@ -59,6 +61,8 @@ For details about how Mesh works, protocol requirements, and Mesh IP assignment,
 <span id="mesh-vs-tunnel"></span>
 
 ## Mesh vs. Cloudflare Tunnel
+
+For a side-by-side guide to every connector, including Workers VPC and Cloudflare WAN, refer to [Connector selection](/cloudflare-one/networks/connectors/choose-a-connector/).
 
 Use Mesh when participants need bidirectional private IP connectivity or when a workload requires stable, long-lived connections. Use [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/) when you want to publish specific applications, hostnames, or IP routes through an outbound-only connector.
 

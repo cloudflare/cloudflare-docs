@@ -16,6 +16,19 @@ import { Render, TunnelCalculator } from "~/components";
 
 Run a `cloudflared` [replica](/tunnel/configuration/#replicas-and-high-availability) on two dedicated hosts per location with a minimum of 4 GB RAM and 4 CPU cores. Allocate 50,000 ports per host.
 
+## Throughput
+
+On a host that meets the baseline recommendations, one `cloudflared` replica typically carries:
+
+- About 750 Mbps of public Internet traffic to published applications.
+- 350 to 500 Mbps of private traffic from Cloudflare One Client users.
+
+Use these figures for planning. They are not guarantees, because your traffic and network path also affect throughput.
+
+A host with fewer resources delivers less throughput. At this time, a host with more resources does not raise one replica above these values. To add capacity, run more replicas on identical hosts. For sustained throughput above 1 Gbps at a site, use [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/).
+
+To compare throughput across connectors, refer to [Connector selection](/cloudflare-one/networks/connectors/choose-a-connector/#throughput).
+
 ## Port configuration
 <Render file="tunnel/availability/port-configuration" product="cloudflare-one" />
 
