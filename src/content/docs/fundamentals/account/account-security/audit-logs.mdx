@@ -353,6 +353,13 @@ The actor represents who or what performed the action. Its identity attributes d
 - `dash`: The action was performed through the Cloudflare dashboard.
 - `oauth`: The action was authenticated with an OAuth token.
 - `origin_ca_key`: The action was authenticated with an Origin CA key.
+- `system`: The action was performed automatically by Cloudflare's internal systems, not by any user or API credential.
+
+Common examples of system-initiated actions include automatic zone deletion when a domain's nameservers no longer point to Cloudflare, SSL/TLS certificate renewal (including temporary `_acme-challenge` DNS records for Domain Control Validation), and managed ruleset updates deployed by Cloudflare across your zones. If you see an unexpected action with actor type `system`, refer to the action description and resource type to identify what Cloudflare process triggered it — no response is required from you unless the underlying condition needs to be resolved.
+
+:::note
+Audit log entries captured before the `system` context value was introduced may show no Actor Context for system-initiated events. This does not indicate a data issue — it reflects the absence of this field in earlier entries. Only events captured after this value was added will show `system` explicitly.
+:::
 
 ### Action
 
