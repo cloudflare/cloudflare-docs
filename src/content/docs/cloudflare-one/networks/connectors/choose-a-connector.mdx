@@ -48,26 +48,22 @@ The following interactive guide recommends a connector. Choose what you connect,
 
 <ConnectorPicker client:visible>
 
-The interactive guide asks what you connect: a private network, server, or device, an application, code on Cloudflare, or a whole site. It then asks a few yes or no questions and recommends one connector. For each recommendation, it shows which direction traffic can flow, why the connector fits, what to watch for, and where to start. The following table contains the same rules.
+The interactive guide asks what you connect: a private network, server, or device, an application, code on Cloudflare, or a whole site. It then asks a few yes or no questions and recommends one connector. For each recommendation, it shows which direction traffic can flow, why the connector fits, what to watch for, and where to start.
+
+The guide applies these rules:
+
+- A private network, subnet, server, container, or device: Cloudflare Mesh.
+- A private resource that AI agents need to reach: Cloudflare Mesh, with a node beside the resource.
+- An application that only Cloudflare One Client users reach, that uses UDP, or whose server starts connections: Cloudflare Mesh.
+- A web application or API on a public hostname, with or without Access: Cloudflare Tunnel.
+- A platform that needs one tunnel for each customer or device: Tunnels for Platforms.
+- Code on Workers that calls many private addresses: a Workers VPC Network binding.
+- Code on Workers that calls one fixed host and port: a Workers VPC Service binding.
+- A branch office or data center that wants managed hardware: the Cloudflare One Appliance.
+- A branch office or data center whose router or firewall supports IPsec or GRE: Cloudflare WAN.
+- A data center whose traffic must not cross the public Internet: Cloudflare Network Interconnect.
 
 </ConnectorPicker>
-
-The guide applies the rules in the following table:
-
-| If you connect | And | Use |
-| --- | --- | --- |
-| A private network, subnet, server, container, or device | No other conditions apply | [Cloudflare Mesh](/mesh/) |
-| A private resource that AI agents need to reach | No other conditions apply | [Cloudflare Mesh](/mesh/), with a node beside the resource |
-| An application | Only users of the Cloudflare One Client should reach it | [Cloudflare Mesh](/mesh/) |
-| An application | It uses UDP, such as DNS, VoIP, or video | [Cloudflare Mesh](/mesh/) |
-| An application | The server must also start connections | [Cloudflare Mesh](/mesh/) |
-| A web application or API on a public hostname | You use Access in front of it, or leave it open | [Cloudflare Tunnel](/tunnel/) |
-| A web application for each customer or device | You run a platform that needs more than 1,000 tunnels | [Tunnels for Platforms](/tunnel/features/tunnels-for-platforms/) |
-| Code that runs on Workers | It calls many private addresses | [Workers VPC: VPC Network](/workers-vpc/configuration/vpc-networks/) |
-| Code that runs on Workers | It calls one fixed host and port | [Workers VPC: VPC Service](/workers-vpc/configuration/vpc-services/) |
-| A branch office or data center | You want managed hardware with zero-touch setup | [Cloudflare One Appliance](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/) |
-| A branch office or data center | Your router or firewall supports IPsec or GRE | [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/) |
-| A data center | Traffic must not cross the public Internet | [Cloudflare Network Interconnect](/network-interconnect/) |
 
 ## Mesh and Tunnel
 
@@ -101,15 +97,6 @@ The following table compares Mesh and Tunnel:
 | Platforms | Linux hosts and containers for nodes, and desktop and mobile devices for users | Linux, macOS, Windows, Docker, and Kubernetes |
 | Firewall rules | Refer to [Cloudflare One Client firewall rules](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/firewall/) | Refer to [Tunnel with firewall](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/tunnel-with-firewall/) |
 | Typical throughput | 350 to 750 Mbps for each node, as described in [Throughput](#throughput) | About 750 Mbps for each replica for public traffic, or 350 to 500 Mbps for private traffic |
-
-Use the following checks to decide between them:
-
-- **Is it an HTTP application on a public hostname?** Use Tunnel.
-- **Is it private, and do users reach it from the Cloudflare One Client?** Use Mesh.
-- **Does it use UDP?** Use Mesh.
-- **Must the server start connections, or see the original source IP?** Use Mesh.
-- **Does an AI agent need to reach it?** Use Mesh.
-- **Is it a whole site, or does it need 1 Gbps or more?** Use Cloudflare WAN.
 
 <Details header="I already route private networks through Cloudflare Tunnel. Do I need to move?">
 
