@@ -3,6 +3,12 @@ link: "/turnstile/changelog/"
 productName: Turnstile
 productLink: "/turnstile/"
 entries:
+  - publish_date: "2026-11-13"
+    title: Swahili language support
+    description: |-
+      Turnstile now supports Swahili (Kenya). Set the widget's `language` option or `data-language` attribute to `sw` or `sw-ke`, or use `auto` to follow the visitor's browser language preference.
+
+      Refer to [supported languages](/turnstile/reference/supported-languages/) for the full list of languages and language codes.
   - publish_date: "2026-11-02"
     description: |-
       - Improved Turnstile widget responsiveness in narrow layouts and at increased browser zoom levels. The widget retains its standard width when space allows and adapts to narrower containers to improve accessibility. For sizing options, refer to [Widget sizes](/turnstile/get-started/client-side-rendering/widget-configurations/#widget-sizes).
