@@ -8,7 +8,12 @@ products:
   - artifacts
 ---
 
-import { PackageManagers, Steps, WranglerConfig } from "~/components";
+import {
+	PackageManagers,
+	Steps,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 The local Artifacts simulator lets you develop against a Git-compatible repository on your machine. Local repositories and tokens are separate from deployed Artifacts resources. Creating, pushing to, or deleting a local repo does not change a deployed repo.
 
@@ -94,9 +99,37 @@ Push, clone, and fetch events are not published locally yet. A Workflow that [bu
 
 ### Start a Workflow from an event
 
-Use the same `triggers.events` configuration that you deploy. Each target must be a Workflow defined by the same Worker. A matching event starts a new instance of that Workflow, and the event message is the instance's `event.payload`:
+Use the same `triggers.events` configuration that you deploy. Each target must be a Workflow defined by the same Worker. A matching event starts a new instance of that Workflow, and the event message is the instance's `event.payload`.
 
-<WranglerConfig>
+`wrangler dev` and Workers Vitest read `triggers.events` from your Wrangler config file. In `cloudflare.config.ts`, which the Vite plugin 2.x, Workers Vitest, and `cf` read, declare events on the Workflow export instead. The Workflow that declares an event receives it, so there is no `targets` list. The filter uses `repoName` instead of `repo_name`.
+
+<WranglerConfig
+	cfConfig={`
+import { bindings, defineConfig, exports } from "cf/config";
+
+export default defineConfig({
+	worker: {
+		name: "artifacts-worker",
+		entrypoint: "./src/index.ts",
+		compatibilityDate: "$today",
+		env: {
+			ARTIFACTS: bindings.artifacts({ namespace: "default" }),
+		},
+		exports: {
+			OnRepoCreated: exports.workflow({
+				name: "on-repo-created",
+				events: [
+					{
+						type: "cf.artifacts.repo.created",
+						filter: { namespace: "default" },
+					},
+				],
+			}),
+		},
+	},
+});
+`}
+>
 
 ```jsonc
 {
@@ -125,7 +158,11 @@ Use the same `triggers.events` configuration that you deploy. Each target must b
 
 </WranglerConfig>
 
-```ts title="src/index.ts"
+Both configurations use the same Workflow class:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
 import {
 	WorkflowEntrypoint,
 	type WorkflowEvent,
@@ -149,33 +186,7 @@ export class OnRepoCreated extends WorkflowEntrypoint<Env, RepoCreated> {
 }
 ```
 
-`wrangler dev` and Workers Vitest read `triggers.events` from your Wrangler config file. In `cloudflare.config.ts`, which the Vite plugin 2.x, Workers Vitest, and `cf` read, declare events on the Workflow export instead. The Workflow that declares an event receives it, so there is no `targets` list. The filter uses `repoName` instead of `repo_name`:
-
-```ts title="cloudflare.config.ts"
-import { bindings, defineConfig, exports } from "@cloudflare/config";
-
-export default defineConfig({
-	worker: {
-		name: "artifacts-worker",
-		entrypoint: "./src/index.ts",
-		compatibilityDate: "$today",
-		env: {
-			ARTIFACTS: bindings.artifacts({ namespace: "default" }),
-		},
-		exports: {
-			OnRepoCreated: exports.workflow({
-				name: "on-repo-created",
-				events: [
-					{
-						type: "cf.artifacts.repo.created",
-						filter: { namespace: "default" },
-					},
-				],
-			}),
-		},
-	},
-});
-```
+</TypeScriptExample>
 
 ### How local delivery works
 
