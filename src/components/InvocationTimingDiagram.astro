@@ -1,0 +1,231 @@
+---
+---
+
+<svg
+	class="trace-timing-diagram"
+	width="900"
+	height="458"
+	viewBox="0 0 900 458"
+	role="img"
+	aria-labelledby="invocation-timing-title invocation-timing-desc"
+>
+	<title id="invocation-timing-title">Invocation and response timing</title>
+	<desc id="invocation-timing-desc">
+		Response timing ends when the response returns. The root span can continue
+		while a waitUntil KV write finishes. Invocation wall time is measured
+		separately and includes waiting for that write. Bar lengths show event
+		order, not measured durations.
+	</desc>
+	<rect width="900" height="458" rx="12" fill="var(--diagram-bg)" />
+	<g font-family="system-ui, -apple-system, sans-serif">
+		<text
+			x="28"
+			y="40"
+			text-anchor="start"
+			font-size="25"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="28" dy="0">
+				Invocation and response timing
+			</tspan>
+		</text>
+		<text
+			x="28"
+			y="72"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-muted)"
+			font-weight="400"
+		>
+			<tspan x="28" dy="0">
+				Example: the KV write finishes after the response returns
+			</tspan>
+		</text>
+		<text
+			x="290"
+			y="112"
+			text-anchor="middle"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="400"
+		>
+			<tspan x="290" dy="0">
+				Invocation
+			</tspan>
+			<tspan x="290" dy="26">
+				starts
+			</tspan>
+		</text>
+		<text
+			x="530"
+			y="112"
+			text-anchor="middle"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="400"
+		>
+			<tspan x="530" dy="0">
+				Response
+			</tspan>
+			<tspan x="530" dy="26">
+				returns
+			</tspan>
+		</text>
+		<text
+			x="815"
+			y="112"
+			text-anchor="middle"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="400"
+		>
+			<tspan x="815" dy="0">
+				Background
+			</tspan>
+			<tspan x="815" dy="26">
+				work finishes
+			</tspan>
+		</text>
+		<path
+			d="M290 155 L290 295"
+			fill="none"
+			stroke="var(--diagram-line)"
+			stroke-width="2"
+			stroke-dasharray="5 5"
+		/>
+		<path
+			d="M530 155 L530 295"
+			fill="none"
+			stroke="var(--diagram-line)"
+			stroke-width="2"
+			stroke-dasharray="5 5"
+		/>
+		<path
+			d="M815 155 L815 295"
+			fill="none"
+			stroke="var(--diagram-line)"
+			stroke-width="2"
+			stroke-dasharray="5 5"
+		/>
+		<text
+			x="28"
+			y="190"
+			text-anchor="start"
+			font-size="20"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="28" dy="0">
+				Response timing
+			</tspan>
+		</text>
+		<rect
+			x="290"
+			y="165"
+			width="240"
+			height="40"
+			rx="8"
+			fill="var(--diagram-blue-bg)"
+			stroke="var(--diagram-blue)"
+		/>
+		<text
+			x="28"
+			y="260"
+			text-anchor="start"
+			font-size="20"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="28" dy="0">
+				Root span duration
+			</tspan>
+		</text>
+		<rect
+			x="290"
+			y="235"
+			width="525"
+			height="40"
+			rx="8"
+			fill="var(--diagram-purple-bg)"
+			stroke="var(--diagram-purple)"
+		/>
+		<text
+			x="673"
+			y="295"
+			text-anchor="middle"
+			font-size="18"
+			fill="var(--diagram-muted)"
+			font-weight="400"
+		>
+			<tspan x="673" dy="0">
+				KV write can continue
+			</tspan>
+		</text>
+		<rect
+			x="28"
+			y="322"
+			width="844"
+			height="82"
+			rx="8"
+			fill="var(--diagram-panel)"
+			stroke="none"
+		/>
+		<text
+			x="48"
+			y="351"
+			text-anchor="start"
+			font-size="19"
+			fill="var(--diagram-text)"
+			font-weight="600"
+		>
+			<tspan x="48" dy="0">
+				Invocation wall time is measured separately.
+			</tspan>
+		</text>
+		<text
+			x="48"
+			y="379"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-text)"
+			font-weight="400"
+		>
+			<tspan x="48" dy="0">
+				It includes waiting for the KV write until no more JavaScript needs to
+				run.
+			</tspan>
+		</text>
+		<text
+			x="28"
+			y="436"
+			text-anchor="start"
+			font-size="18"
+			fill="var(--diagram-muted)"
+			font-weight="400"
+		>
+			<tspan x="28" dy="0">
+				Event order only. Bar lengths are not measured durations or a shared
+				time scale.
+			</tspan>
+		</text>
+	</g>
+</svg>
+
+<style>
+	.trace-timing-diagram {
+		display: block;
+		width: 100%;
+		height: auto;
+		margin: 1.5rem 0;
+		--diagram-bg: light-dark(#ffffff, #171719);
+		--diagram-text: light-dark(#1e293b, #f1f5f9);
+		--diagram-muted: light-dark(#475569, #cbd5e1);
+		--diagram-line: light-dark(#64748b, #94a3b8);
+		--diagram-blue-bg: light-dark(#dbeafe, #172554);
+		--diagram-blue: light-dark(#2563eb, #60a5fa);
+		--diagram-purple-bg: light-dark(#ede9fe, #2e1065);
+		--diagram-purple: light-dark(#7c3aed, #a78bfa);
+		--diagram-panel: light-dark(#f1f5f9, #27272a);
+	}
+</style>

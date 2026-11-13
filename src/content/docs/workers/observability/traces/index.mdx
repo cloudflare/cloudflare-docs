@@ -22,6 +22,10 @@ Tracing gives you end-to-end visibility into the life of a request as it travels
 
 ![Example trace showing a POST request to a cake shop with multiple spans including fetch requests and durable object operations](~/assets/images/workers-observability/wobs_waterfall_trace_122.png)
 
+### Read trace timings
+
+Invocation duration can include background work after the response returns. Refer to [Invocation timing](/workers/observability/traces/spans-and-attributes/#invocation-timing) for measurement definitions and an example.
+
 ### Automatic instrumentation
 
 Cloudflare Workers provides tracing instrumentation **out of the box** — no code changes or SDK are required. Simply enable tracing on your Worker and Cloudflare automatically captures telemetry data for:

@@ -2,6 +2,7 @@
 /**
  * TypeScriptExample — author one ```ts block, render synced JS + TS tabs.
  * The JS variant is generated at build time, so the MDX stays single-source.
+ * An optional named `python` slot adds a Python tab alongside JS and TS.
  *
  * CF source: cloudflare-docs/src/components/TypeScriptExample.astro
  *
@@ -135,5 +136,10 @@ const wrapperProps = omitTabs ? {} : { syncKey: "workersExamples" };
 				<Fragment set:html={slot} />
 			)}
 		</TabItem>
+		{Astro.slots.has("python") && (
+			<TabItem label="Python">
+				<slot name="python" />
+			</TabItem>
+		)}
 	</Wrapper>
 </div>
