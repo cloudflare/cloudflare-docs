@@ -269,7 +269,7 @@ export class MyContainer extends DurableObject<Env> {
 ```
 </TypeScriptExample>
 
-The `user` option sets the numeric Linux user and group IDs for the process, as `uid:gid`. When omitted, the process runs as the image user. Before you rely on `user` to restrict a process, refer to [`exec()`](/containers/api/durable-object-container/#exec).
+The `user` option sets the Linux user and optional group for the process, as `user[:group]`. Each value can be a name or numeric ID. When omitted, the process runs as the image user. Before you rely on `user` to restrict a process, refer to [`exec()`](/containers/api/durable-object-container/#exec).
 
 ## Combine standard error
 

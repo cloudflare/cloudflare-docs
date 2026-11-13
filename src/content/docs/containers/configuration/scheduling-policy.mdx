@@ -158,12 +158,13 @@ The image map is uploaded with the Worker version. Updating the map does not res
 Set `instance` in `ctx.container.start()` to one of the following [named instance types](/containers/platform/limits/#instance-types):
 
 - `lite`
+- `basic`
 - `standard-1`
 - `standard-2`
 - `standard-3`
 - `standard-4`
 
-The runtime does not accept `basic` or the legacy `dev` and `standard` aliases.
+The runtime does not accept the legacy `dev` and `standard` aliases.
 
 If you omit `instance`, the Container uses `lite`. You can also supply a custom instance object that meets the [custom instance type constraints](/containers/platform/limits/#custom-instance-types):
 
