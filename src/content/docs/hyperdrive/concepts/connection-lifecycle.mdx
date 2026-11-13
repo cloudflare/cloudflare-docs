@@ -129,6 +129,16 @@ Keep transactions as short as possible. Perform only the essential queries withi
 
 Refer to [Limits](/hyperdrive/platform/limits/) to understand how many connections are available for your Hyperdrive configuration based on your Workers plan.
 
+### Client disconnects and open transactions
+
+A transaction holds its connection until it completes, even if the client that started it disconnects. Hyperdrive does not roll back or commit an open transaction when the client disconnects.
+
+By default, the Worker keeps running after the client disconnects. The transaction continues: it commits when your code sends `COMMIT`, and it holds its pool connection and any row locks until then. Other queries that conflict with those locks wait until the transaction ends.
+
+To end the transaction when the client disconnects, handle the abort signal. Listen for the `abort` event on [`request.signal`](/workers/runtime-apis/request/#properties), which aborts when the client disconnects for compatibility dates of `2026-11-17` or later. For earlier compatibility dates, add the [`enable_request_signal`](/workers/configuration/compatibility-flags/#enable-requestsignal-for-incoming-requests) compatibility flag.
+
+Then cancel the in-flight database work and roll back the transaction. Pass `request.signal` to your driver or framework so that it can cancel in-flight queries, and send `ROLLBACK` for the open transaction. When the rollback reaches your database, Hyperdrive returns the connection to the pool, and blocked queries resume.
+
 ## Related resources
 
 - [How Hyperdrive works](/hyperdrive/concepts/how-hyperdrive-works/)
