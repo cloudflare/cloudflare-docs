@@ -78,6 +78,8 @@ For browser APIs, configure [CORS preflight responses](/cloudflare-one/access-co
 
 Coordinate Access logout, IdP logout, and application logout explicitly. Ending one session does not necessarily end the others. Test the [Access logout and revocation behavior](/cloudflare-one/access-controls/access-settings/session-management/) and any [SCIM integration](/cloudflare-one/team-and-resources/users/scim/) used for deprovisioning. Session revocation alone does not remove a user's entitlement to sign in again.
 
+Test new requests and already-open WebSocket or streaming connections separately after revocation. Record whether existing connections continue and for how long. Do not assume revoking admission credentials terminates an established connection. If immediate termination is required, verify how the application or connection layer enforces it.
+
 ### Services and autonomous agents
 
 Give each workload its own credential and [Service Auth policy](/cloudflare-one/access-controls/policies/#service-auth). Select named [service tokens](/cloudflare-one/access-controls/service-credentials/service-tokens/) rather than any token in the account. Where appropriate, use [Access mTLS authentication](/cloudflare-one/access-controls/service-credentials/mutual-tls-authentication/) instead.
@@ -94,6 +96,8 @@ The following flow distinguishes the client's opaque token from the assertion th
 
 ```mermaid
 sequenceDiagram
+    accTitle: Managed OAuth for a CLI or agent acting for a user
+    accDescr: A client discovers Access OAuth endpoints and opens the user's browser for identity-provider authentication and Access policy checks. The client exchanges an authorization code for an opaque access token. Access accepts that token on permitted requests and forwards a signed Access JWT, which the origin validates before application authorization.
     participant Client as CLI or user-authorized agent
     participant Browser as User browser
     participant Access as Cloudflare Access
@@ -153,15 +157,17 @@ For availability, run [Tunnel replicas](/cloudflare-one/networks/connectors/clou
 
 When Tunnel is not suitable, protect both the network connection and the application assertion:
 
-| Layer                     | Configuration                                                                                    | Verification                                                                |
-| ------------------------- | ------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-| Server authentication     | **Full (strict)** with a valid origin certificate                                                | Cloudflare rejects an invalid or mismatched server certificate              |
-| Client authentication     | Custom zone-level or per-hostname Authenticated Origin Pulls certificate, required by the origin | Missing or untrusted client certificates fail the TLS handshake             |
-| Network restriction       | Firewall allows only the intended origin traffic sources                                         | Direct Internet connections fail, including IPv6 and alternate ports        |
-| Optional source isolation | Dedicated CDN Egress IPs                                                                         | All assigned addresses work across every origin and failover site           |
-| Application admission     | A JWT-validating reverse proxy or application                                                    | Missing or invalid Access assertions are rejected before protected handlers |
+| Layer                     | Configuration                                                                                    | Verification                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
+| Server authentication     | **Full (strict)** with a valid origin certificate                                                | Cloudflare rejects an invalid or mismatched server certificate                              |
+| Client authentication     | Custom zone-level or per-hostname Authenticated Origin Pulls certificate, required by the origin | Missing or untrusted client certificates are rejected before protected application handlers |
+| Network restriction       | Firewall allows only the intended origin traffic sources                                         | Direct Internet connections fail, including IPv6 and alternate ports                        |
+| Optional source isolation | Dedicated CDN Egress IPs                                                                         | All assigned addresses work across every origin and failover site                           |
+| Application admission     | A JWT-validating reverse proxy or application                                                    | Missing or invalid Access assertions are rejected before protected handlers                 |
 
 Follow the [zone-level](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) or [per-hostname](/ssl/origin-configuration/authenticated-origin-pull/set-up/per-hostname/) AOP instructions. Restrict the origin's trust to the intended client certificate or issuing CA. Do not retain a second listener that accepts connections without it.
+
+Reject missing or untrusted client certificates at the origin's TLS termination layer without forwarding to protected application handlers. Depending on the server, rejection can produce a TLS alert or an HTTP error. For example, NGINX can handle certificate-verification failures during [HTTP error processing](https://nginx.org/en/docs/http/ngx_http_ssl_module.html#error_processing).
 
 Keep shared Cloudflare IP allowlisting and custom AOP distinct. The first narrows network sources. The second authenticates the origin connection. Neither replaces Access policy or JWT validation.
 
@@ -257,25 +263,32 @@ For an IdP outage, test what happens to existing sessions and new logins. For an
 
 Run tests only against systems you own or are authorized to assess. Use harmless requests and dedicated test identities. Record the configuration version, UTC time, hostname, result, request identifier where available, and origin-side evidence.
 
-| Requirement               | Test                                                                                                 | Pass condition                                                                                    |
-| ------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| Authorized entry          | Request a protected login page without credentials                                                   | Access redirects or rejects the caller. The protected handler receives no request                 |
-| Authorized entry          | Sign in as an authenticated but unentitled user                                                      | Access denies application entry                                                                   |
-| MFA                       | Use the weakest permitted IdP method against a stronger-method policy                                | The weaker authentication does not satisfy the policy                                             |
-| Machine access            | Present valid, missing, expired, and revoked service credentials                                     | Only the permitted credential reaches the protected handler                                       |
-| User-authorized agent     | Complete managed OAuth, then test expiry and an unentitled user                                      | Compatible clients work without browser-cookie reuse. Denied clients do not reach the application |
-| Origin isolation          | Connect to direct IPv4, IPv6, alternate ports, hostnames, and standby origins                        | No route admits anonymous application requests                                                    |
-| Origin isolation          | For public origins, omit or replace the required AOP client certificate                              | The origin rejects the TLS connection                                                             |
-| Assertion validation      | In a controlled origin-side test, present missing, forged, expired, wrong-issuer, and wrong-AUD JWTs | The validator rejects each case before application code                                           |
-| Assertion validation      | Exercise trusted signing-key rotation                                                                | Valid requests continue and untrusted keys remain rejected                                        |
-| Application authorization | Use a valid identity to request another user's resource                                              | The application denies the unauthorized operation                                                 |
-| Filtering                 | Send an agreed harmless marker matched by a dedicated test rule                                      | A matching security event confirms the intended rule acted                                        |
-| Cache isolation           | Request the same sensitive URL as two users and anonymously                                          | No caller receives another user's response                                                        |
-| Lifecycle                 | Revoke a user session and a workload credential                                                      | Access ceases admitting them according to the tested revocation behavior                          |
-| Availability              | Stop a connector or fail over an origin pool                                                         | Traffic uses another protected route or fails closed                                              |
-| Change control            | Compare deployed configuration and rehearse an approved emergency change                             | Drift is detected and recovery preserves the gate                                                 |
+Record each test source and the boundary it exercises. Test origin isolation from the Internet and from relevant internal network segments, including attempts to reach application listeners behind the validator. Preserve the intended TLS server name (SNI) and HTTP Host header when targeting an origin IP, so the test reaches the correct virtual host.
+
+| Requirement               | Test                                                                                                 | Pass condition                                                                                              |
+| ------------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Authorized entry          | Request a protected login page without credentials                                                   | Access redirects or rejects the caller. The protected handler receives no request                           |
+| Authorized entry          | Sign in as an authenticated but unentitled user                                                      | Access denies application entry                                                                             |
+| MFA                       | Use the weakest permitted IdP method against a stronger-method policy                                | The weaker authentication does not satisfy the policy                                                       |
+| Machine access            | Present valid, missing, expired, and revoked service credentials                                     | Only the permitted credential reaches the protected handler                                                 |
+| User-authorized agent     | Complete managed OAuth, then test expiry and an unentitled user                                      | Compatible clients work without browser-cookie reuse. Denied clients do not reach the application           |
+| Origin isolation          | Connect to direct IPv4, IPv6, alternate ports, hostnames, and standby origins                        | No route admits anonymous application requests                                                              |
+| Origin isolation          | For public origins, omit or replace the required AOP client certificate                              | The origin's TLS termination layer rejects the request without forwarding to protected application handlers |
+| Assertion validation      | In a controlled origin-side test, present missing, forged, expired, wrong-issuer, and wrong-AUD JWTs | The validator rejects each case before application code                                                     |
+| Assertion validation      | Exercise trusted signing-key rotation                                                                | Valid requests continue and untrusted keys remain rejected                                                  |
+| Application authorization | Use a valid identity to request another user's resource                                              | The application denies the unauthorized operation                                                           |
+| Filtering                 | Send an agreed harmless marker matched by a dedicated test rule                                      | A matching security event confirms the intended rule acted                                                  |
+| Cache isolation           | Request the same sensitive URL as two users and anonymously                                          | No caller receives another user's response                                                                  |
+| Lifecycle                 | Revoke a user session and a workload credential                                                      | Access ceases admitting them according to the tested revocation behavior                                    |
+| Established connections   | Revoke access while a WebSocket or stream is open                                                    | Recorded connection behavior meets the application's termination requirements                               |
+| Availability              | Stop a connector or fail over an origin pool                                                         | Traffic uses another protected route or fails closed                                                        |
+| Change control            | Compare deployed configuration and rehearse an approved emergency change                             | Drift is detected and recovery preserves the gate                                                           |
 
 Test JWT rejection at the validator boundary as well as through the public hostname. An edge rejection or an overwritten client header does not demonstrate that the origin validator works.
+
+For the wrong-audience test, use an unexpired, authentically signed token from another application in the same team. Confirm its signature and issuer are valid, then verify the destination rejects its audience. Editing `aud` on an existing token invalidates its signature and does not isolate audience enforcement. Include a positive control using a valid token for the destination application.
+
+For AOP tests, use an authorized source permitted by the origin firewall and preserve SNI and Host. First confirm that the expected client certificate allows the test request through TLS termination. Then omit the certificate or present an untrusted one and confirm certificate enforcement rejects it. Use termination-layer logs to distinguish certificate rejection from firewall drops or unrelated TLS failures. Do not open the origin broadly to run this test.
 
 Use existing request logs to establish whether application code ran. A successful redirect, an empty log query, or a browser error alone is insufficient evidence. Document logging coverage and distinguish connector rejection from application execution.
 

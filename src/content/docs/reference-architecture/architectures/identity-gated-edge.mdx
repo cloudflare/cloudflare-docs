@@ -41,6 +41,8 @@ Without an independent gate, anonymous callers can reach the application's HTTP 
 
 ```mermaid
 flowchart LR
+    accTitle: Application login processing without an independent identity gate
+    accDescr: An anonymous Internet caller reaches application HTTP and login processing before the application's authentication and MFA checks. Only subsequent application functions require authorization.
     caller[Anonymous Internet caller] --> parser[Application HTTP and login processing]
     parser --> login[Application authentication and MFA]
     login --> data[Authorized application functions]
@@ -69,14 +71,16 @@ The following topology uses Tunnel. Solid arrows show application requests. Dash
 
 ```mermaid
 flowchart TB
+    accTitle: Identity-gated HTTP application connected through Cloudflare Tunnel
+    accDescr: Human browsers and machine callers connect to Access and WAF in the Cloudflare network. The identity provider supplies human authentication. In the customer network, cloudflared establishes an outbound tunnel, validates Access JWTs on permitted incoming requests, and forwards validated requests to the application for authorization.
     browser[Human browser]
     machine[Service or AI agent]
     idp[Organization identity provider]
-    subgraph edge[<br/>]
+    subgraph edge[Cloudflare network]
         controls[Cloudflare edge: proxied HTTPS with Access, WAF, and rate limits]
         tunnel[Cloudflare Tunnel service]
     end
-    subgraph origin[<br/>]
+    subgraph origin[Customer network]
         connector[Customer network: cloudflared validates Access JWT]
         app[Application: authorization and optional existing sign-in]
     end
