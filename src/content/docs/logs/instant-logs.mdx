@@ -35,6 +35,22 @@ The **Analytics > Instant Logs** menu entry has moved. Instant Logs is now integ
 
 Filters and columns from the Logs view carry over into the live stream. Filters that cannot be streamed display a message instead of being silently dropped.
 
+Some [HTTP Requests](/logs/logpush/logpush-job/datasets/zone/http_requests/) fields are unavailable as live stream columns or filters. For example, you cannot filter the live stream on `EdgeServerIP`. To filter on these fields, use the [Instant Logs page (legacy)](#instant-logs-page-legacy). You can also filter on these fields with the [CLI](#instant-logs-via-cli).
+
+### Instant Logs page (legacy)
+
+The standalone Instant Logs page is still available from a direct link. Its filters use the HTTP Requests dataset fields. Some fields require an additional subscription, such as Bot Management.
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Instant Logs** page.
+
+   <DashButton url="/?to=/:account/:zone/analytics/instant-logs" />
+
+2. Select **Start streaming**.
+3. (Optional) To narrow the results, select **Add filter**.
+4. To inspect a log entry as JSON, select it. Selecting an entry stops the live stream.
+</Steps>
+
 ## Instant Logs via CLI
 
 ### 1. Create an Instant Logs Job
