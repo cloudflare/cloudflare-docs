@@ -12,7 +12,7 @@ tableOfContents: false
 
 import { DashButton } from "~/components";
 
-The Web Application Firewall provides the following [phases](/ruleset-engine/about/phases/) where you can create rulesets and rules:
+The Web Application Firewall provides the following request [phases](/ruleset-engine/about/phases/) where you can create rulesets and rules:
 
 - `http_request_firewall_custom`
 - `http_ratelimit`
@@ -28,5 +28,9 @@ These phases exist both at the account level and at the zone level. Considering 
 | [Rate limiting rules](/waf/rate-limiting-rules/)               | Zone    | `http_ratelimit`                | `zone`                                | <DashButton url="/?to=/:account/:zone/security/security-rules" />                             |
 | [Managed rulesets](/waf/account/managed-rulesets/)             | Account | `http_request_firewall_managed` | `root`                                | <DashButton url="/?to=/:account/application-security/waf" /> > **Managed rulesets** tab       |
 | [Managed rules](/waf/managed-rules/)                           | Zone    | `http_request_firewall_managed` | `zone`                                | <DashButton url="/?to=/:account/:zone/security/security-rules" />                             |
+
+For HTTP responses, you can create zone-level [response custom rules](/waf/response-firewall/). These rules run in the `http_response_firewall_custom` phase.
+
+This phase runs before Custom Errors and Response Header Transform Rules. For the execution order, refer to the [response phases list](/ruleset-engine/reference/phases-list/#response-phases).
 
 To learn more about phases, refer to [Phases](/ruleset-engine/about/phases/) in the Ruleset Engine documentation.

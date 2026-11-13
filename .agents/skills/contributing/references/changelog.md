@@ -56,7 +56,7 @@ Include a code example when the changelog describes an API, SDK, or configuratio
 
 - Keep snippets short and focused on the new feature — minimize boilerplate
 - Import components after the frontmatter: `import { TypeScriptExample, WranglerConfig } from "~/components";`
-- **Workers JS/TS** → use `TypeScriptExample` (not bare `js`/`ts` fences)
+- **Workers JS/TS** → use `TypeScriptExample` (not bare `js`/`ts` fences). Type-only snippets use a plain `ts` fence
 - **Wrangler config** → use `WranglerConfig` with TOML input and `$today` for `compatibility_date` (not bare `toml`/`jsonc` fences)
 - **Other languages** (Python, Rust, Go, etc.) → use a plain fenced code block with the correct language identifier
 - **Non-Workers config snippets** (JSON, YAML, etc.) → use a plain fenced code block (`json`, `yaml`, etc.)

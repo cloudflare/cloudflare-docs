@@ -552,6 +552,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
 </TabItem> </Tabs>
 
+If the browser disconnects from your Pages Function, the Function can stop waiting for the Worker it calls. That Worker may also report Client Disconnected. Refer to [Choose when work should stop](/workers/runtime-apis/bindings/service-bindings/#choose-when-work-should-stop) to decide whether to stop the work or keep it running.
+
 ### Interact with your Service bindings locally
 
 You can interact with your Service bindings locally in one of two ways:

@@ -23,6 +23,8 @@ import {
 	TypeScriptExample,
 	DashButton,
 	APIRequest,
+	CliVariants,
+	CliVariant,
 } from "~/components";
 
 Workers KV provides low-latency, high-throughput global storage to your [Cloudflare Workers](/workers/) applications. Workers KV is ideal for storing user configuration data, routing data, A/B testing configurations and authentication tokens, and is well suited for read-heavy workloads.
@@ -131,6 +133,9 @@ A [KV namespace](/kv/concepts/kv-namespaces/) is a key-value database replicated
 
 <Tabs syncKey = 'CLIvsDash'> <TabItem label='CLI'>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 You can use [Wrangler](/workers/wrangler/) to create a new KV namespace. You can also use it to perform operations such as put, list, get, and delete within your KV namespace.
 
 :::note
@@ -171,6 +176,40 @@ To create a KV namespace via Wrangler:
 
 </Steps>
 
+</CliVariant>
+<CliVariant cli="cf">
+
+You can use the [Cloudflare CLI (`cf`)](/cf/) to create a new KV namespace. It also has commands to put, list, get, and delete keys within your KV namespace.
+
+:::note
+
+KV operations are scoped to your account. If you have not used `cf` before, [install it and sign in](/cf/get-started/) first.
+:::
+
+To create a KV namespace via `cf`:
+
+<Steps>
+1. Open your terminal and run the following command:
+
+	```sh
+	cf kv namespaces create --title <NAMESPACE_TITLE>
+	```
+
+	The `cf kv namespaces create` command creates a namespace with the title you pass to `--title`.
+
+	For this tutorial, use the title `USERS_NOTIFICATION_CONFIG`.
+
+	```sh ins="USERS_NOTIFICATION_CONFIG"
+	cf kv namespaces create --title USERS_NOTIFICATION_CONFIG
+	```
+
+2. `cf` prints the new namespace as JSON. Keep its `id` value. You need it to bind the namespace to your Worker in the next step.
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
+
 </TabItem><TabItem label = 'Dashboard'>
 
 <Steps>
@@ -190,6 +229,9 @@ To create a KV namespace via Wrangler:
 
 Use Workers KV Instant for small, read-heavy application configurations values that update infrequently and are proactively propagated across Cloudflare's network.
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 To optionally create a KV Instant namespace named `APP_CONFIG` with [Wrangler](/workers/wrangler/), pass `--experimental-mode instant`:
 
 <PackageManagers
@@ -198,11 +240,17 @@ To optionally create a KV Instant namespace named `APP_CONFIG` with [Wrangler](/
 	args="kv namespace create APP_CONFIG --experimental-mode instant"
 />
 
-To create the namespace with [Cloudflare CLI](/cf/), pass `--namespaceMode instant`:
+</CliVariant>
+<CliVariant cli="cf">
+
+To optionally create a KV Instant namespace named `APP_CONFIG` with the [Cloudflare CLI (`cf`)](/cf/), pass `--namespace-mode instant`:
 
 ```sh
-cf kv namespaces create --title APP_CONFIG --namespaceMode instant
+cf kv namespaces create --title APP_CONFIG --namespace-mode instant
 ```
+
+</CliVariant>
+</CliVariants>
 
 Alternatively, create it through the API with `mode: "instant"`:
 

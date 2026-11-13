@@ -37,7 +37,7 @@ Reducing usage-based charges starts with understanding where your consumption co
 | Set up [R2 lifecycle rules](/r2/buckets/object-lifecycles/) to transition cold data to Infrequent Access | R2 storage costs                                     |
 | Use [Workers Smart Placement](/workers/configuration/placement/) for data-heavy Workers                  | Workers CPU time                                     |
 | Batch R2 operations where possible instead of per-object reads                                           | R2 Class B operation count                           |
-| Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes early                  | All products — prevents surprise invoices            |
+| Set up [budget alerts](/billing/manage/budget-alerts/) to catch unexpected spikes early                  | All products — notifies you about rising costs       |
 
 For a detailed walkthrough of how a single request generates charges across multiple products, refer to [How charges accrue](/billing/understand/how-charges-accrue/).
 
@@ -46,6 +46,12 @@ For a detailed walkthrough of how a single request generates charges across mult
 The [billable usage dashboard](/billing/manage/billable-usage/) gives Pay-as-you-go customers daily visibility into usage-based costs. The dashboard shows a daily cost breakdown chart and a per-product usage table with free-tier allowances, so you can see exactly what you are being charged for.
 
 You can also set up [budget alerts](/billing/manage/budget-alerts/) to get notified by email when your account-wide spend crosses a dollar threshold you define.
+
+## Set spending limits
+
+[Set separate spending limits](/billing/manage/spend-management/) for Workers and Durable Objects. When a limit takes effect, Cloudflare blocks new invocations or requests for that product. Limits apply across your account and do not guarantee a maximum invoice amount.
+
+You can also set product-specific email alerts without blocking usage. The spending limits and alerts guide covers dashboard and cf CLI setup.
 
 ## Usage-based billing notifications
 

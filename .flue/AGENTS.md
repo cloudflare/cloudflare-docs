@@ -47,7 +47,7 @@ Agents are Durable Objects driven by shared helpers in `lib/agents/`:
 
 Each agent gets one durable instance ID per run. Use `agentStep` helpers for dispatch/read durability and deadlines. The `submit_result` tool ends the agent turn (`terminate`); trusted code validates its output against the Valibot schema. Instructions are static plain `.md` imports; per-run data belongs in the dispatched message or run artifacts.
 
-Specialists use `cloudflare/@cf/deepseek-ai/deepseek-v4-flash-0731`; the judge uses `cloudflare/@cf/zai-org/glm-5.3`. Model IDs live in `lib/agents/models.ts`. Agents with `read_repo_file` and `search_repo` also get `prompts/repo-tools.md`, which describes what each tool can and cannot see. The judge receives reduced context and decides only whether a new finding is kept or dropped, and whether each touched prior finding remains active, is resolved, or is dismissed.
+Specialists use `cloudflare/@cf/deepseek-ai/deepseek-v4.1-flash-1017`; the judge uses `cloudflare/@cf/zai-org/glm-5.3`. Model IDs live in `lib/agents/models.ts`. Agents with `read_repo_file` and `search_repo` also get `prompts/repo-tools.md`, which describes what each tool can and cannot see. The judge receives reduced context and decides only whether a new finding is kept or dropped, and whether each touched prior finding remains active, is resolved, or is dismissed.
 
 ### Rules and verification
 

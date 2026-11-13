@@ -47,7 +47,7 @@ Enabling a namespace endpoint does not change the instance endpoints inside it. 
 - An empty list means nothing is searchable. This is the state a namespace starts in when you first enable the endpoint.
 - Deleting an instance, or moving it to another namespace, removes it from the allowlist.
 
-A request that resolves to no searchable instance returns a `404` with error `60013`. This response is identical whether the instance does not exist, is outside the allowlist, or the allowlist is empty, so callers cannot discover which instances a namespace contains.
+While the allowlist is empty, every request returns a `404` with error `60013`.
 
 <Aside type="caution">
 
@@ -55,9 +55,9 @@ A request that resolves to no searchable instance returns a `404` with error `60
 
 </Aside>
 
-## Search a subset of instances
+## Search the allowlist
 
-By default, a request searches every instance in the allowlist. To narrow a single request, set `ai_search_options.instance_ids` in the request body.
+Every request searches all instances in the allowlist and merges the results. You cannot narrow a request to a subset of instances. If the request body includes `ai_search_options.instance_ids`, the endpoint replaces it with the full allowlist.
 
 ```bash
 curl https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/search \
@@ -68,22 +68,15 @@ curl https://ns-<NAMESPACE_ENDPOINT_ID>.search.ai.cloudflare.com/search \
         "content": "How do I configure AI Search?",
         "role": "user"
       }
-    ],
-    "ai_search_options": {
-      "instance_ids": ["docs", "support"]
-    }
+    ]
   }'
 ```
 
-Every value must be in the allowlist. Rules for this field:
-
-- Omitting the field, or setting it to `null`, searches the full allowlist.
-- A malformed value, such as an empty array or a non-string entry, returns a `400` with error `60012`.
-- A value outside the allowlist returns a `404` with error `60013`.
+To search a different set of instances, update `instances_allowed`, or query the instances from a [Workers binding or the REST API](/ai-search/how-to/search-multiple-sources/).
 
 <Aside type="note">
 
-The request body must be a JSON object. An array, a string, or an empty body returns a `400` with error `60015`.
+The request body must be a JSON object. An array or a string returns a `400` with error `60015`. An empty body is treated as an empty JSON object.
 
 </Aside>
 
@@ -106,8 +99,7 @@ curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-searc
 | ------- | ---------------------------------------------- | ----------- | --------------------------------------------------------------------- |
 | `7097`  | `instances_allowed_contains_unknown_instances` | 400         | An entry in `instances_allowed` is not an instance in this namespace. |
 | `7099`  | `namespace_modified_concurrently_please_retry` | 409         | Another update changed the namespace at the same time. Retry.         |
-| `60012` | `invalid ai_search_options.instance_ids`       | 400         | The `instance_ids` value is malformed.                                |
-| `60013` | `ai_search_not_found`                          | 404         | No searchable instance matched the request.                           |
+| `60013` | `ai_search_not_found`                          | 404         | The allowlist is empty, so no instance is searchable.                 |
 | `60014` | `path not supported for namespace-kind hash`   | 404         | The path is not `/search`, `/chat/completions`, or `/mcp`.            |
 | `60015` | `request body must be a JSON object`           | 400         | The request body is not a JSON object.                                |
 

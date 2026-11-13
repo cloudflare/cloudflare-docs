@@ -136,9 +136,45 @@ Each Worker is deployed separately.
 
 ## Lifecycle
 
-The Service bindings API is asynchronous — you must `await` any method you call. If Worker A invokes Worker B via a Service binding, and Worker A does not await the completion of Worker B, Worker B will be terminated early.
+Use `return` or `await` for service-binding calls needed to answer a request. Otherwise, work in the called Worker can stop when the caller finishes. For a short task that should continue after the response, pass the whole task to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil).
 
-For more about the lifecycle of calling a Worker over a Service Binding via RPC, refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs.
+### Request cancellation
+
+When a client disconnects, work handling its request may be canceled. This includes pending subrequests and open streams or connections tied to that request.
+
+If Worker A calls Worker B through an HTTP or RPC service binding, cancellation can continue down that chain. Worker A is Worker B's client. When Worker A's execution context ends, Worker B loses its caller, even though it has no direct connection to the original client.
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant A as Worker A
+    participant B as Worker B
+    C->>A: Request
+    A->>B: HTTP or RPC call
+    C--xA: Disconnects
+    Note over A: Request work may be canceled
+    A--xB: Call is canceled when A's context ends
+    Note over B: B loses its caller
+```
+
+The original client can be any application or service, such as a browser or mobile app. The calling Worker can also be a Pages Function.
+
+Using `await` does not prevent cancellation when the client disconnects. Use `ctx.waitUntil()` for short tasks that should continue after the request ends.
+
+- **HTTP:** Follow [Handle canceled requests](/workers/runtime-apis/bindings/service-bindings/http/#handle-canceled-requests) to handle response bodies and compare logs from both Workers.
+- **RPC:** When the caller's execution context ends, the called Worker's RPC execution context is canceled, even if RPC object references still exist. Refer to [RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/#end-of-event-handler--execution-context) for object lifetimes and extending work with `ctx.waitUntil()`.
+
+### Choose when work should stop
+
+Choose how to run the work based on what should happen if the client disconnects:
+
+| What you need                                                              | What to do                                                                                                                                                                                                                                               |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Work only needed to answer this request                                    | Return or await the call. For HTTP calls, forward the response or finish reading its body. Let the work stop if the client disconnects.                                                                                                                  |
+| A short task that should finish after the response, such as a cache update | Pass the whole task to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil), including any response-body processing it needs. For HTTP-triggered Workers, it can run for up to 30 seconds after the response is sent or the client disconnects. |
+| A job that must finish even if the client disconnects                      | Send the job to [Queues](/queues/) or start a [Workflow](/workflows/). Wait for the message to be accepted or the workflow instance to be created before telling the client the job was accepted.                                                        |
+
+`waitUntil()` gives work more time. It does not guarantee completion or send a response to a disconnected client. For jobs that can retry, make it safe to run the same operation more than once. For example, [Queues can deliver the same message more than once](/queues/reference/delivery-guarantees/).
 
 ## Local development
 

@@ -51,11 +51,17 @@ From there you can edit or delete existing alerts.
 - Budget alerts evaluate your cumulative usage-based spend for the current billing period.
 - When spend crosses the threshold, Cloudflare sends a single email notification to all configured recipients.
 - The alert resets at the start of each new billing period.
-- Budget alerts are informational only. They do not pause or cap usage. Your monthly invoice remains the authoritative source for billing.
+- Budget alerts are informational only. They do not pause or limit usage. Your monthly invoice remains the authoritative source for billing.
+
+## Stop usage at a spending threshold
+
+Budget alerts do not block usage. To stop supported Workers or Durable Objects operations at a product spending threshold, configure a [spending limit](/billing/manage/spend-management/).
+
+You can also set product-specific email alerts for Workers and Durable Objects. Refer to [Choose a control](/billing/manage/spend-management/#choose-a-control) to compare these options.
 
 ## Budget alerts compared to usage notifications
 
-Cloudflare offers two types of spend monitoring:
+Budget alerts and usage notifications measure different things:
 
 | Feature            | Budget alerts                                   | Usage notifications                                       |
 | ------------------ | ----------------------------------------------- | --------------------------------------------------------- |

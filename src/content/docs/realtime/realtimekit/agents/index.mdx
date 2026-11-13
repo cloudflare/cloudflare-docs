@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Agent Participant
-description: Add a server-side agent to a RealtimeKit meeting and stream transcripts, participant presence, and broadcasts to a Worker or Durable Object.
+description: Add a server-side agent to a RealtimeKit meeting that receives transcripts and presence, and sends chat, polls, and broadcasts.
 sidebar:
   order: 4
   label: Overview
@@ -18,7 +18,7 @@ import AgentWebSocketFlow from "~/components/realtime/realtimekit/AgentWebSocket
 
 Agent Participant adds a server-side agent to a RealtimeKit meeting. Any backend that can open a WebSocket — a Cloudflare Worker, a Durable Object, or your own server — can connect to it. No client SDK or browser is required.
 
-Today an agent receives live meeting activity, such as transcripts, participant presence, and broadcasts. More capabilities are planned, including sending messages and working with meeting media.
+An agent receives live meeting activity, such as transcripts, participant presence, chat, polls, and broadcasts. It can also send chat messages, run polls, and send broadcasts. Working with meeting media is planned.
 
 ## What an agent can do
 
@@ -50,7 +50,7 @@ Decide whether people in the meeting should see the agent. The agent receives th
 | [Hidden agent](/realtime/realtimekit/agents/get-started/#hidden-agent)   | Compliance monitor, quality review, live meeting analytics | No            |
 | [Visible agent](/realtime/realtimekit/agents/get-started/#visible-agent) | Note-taker that appears in the participant list            | Yes           |
 
-Agents that speak or send chat messages are not supported yet. Refer to the [Capability matrix](/realtime/realtimekit/agents/capabilities/).
+Agents that speak are not supported yet. Refer to the [Capability matrix](/realtime/realtimekit/agents/capabilities/).
 
 ## Billing
 

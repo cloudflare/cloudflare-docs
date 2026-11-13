@@ -1,0 +1,112 @@
+---
+pcx_content_type: reference
+title: Workers binding
+description: Work with the instances in an AI Search namespace from a Cloudflare Worker using the namespace binding.
+sidebar:
+  order: 1
+products:
+  - ai-search
+---
+
+import { WranglerConfig } from "~/components";
+
+The `ai_search_namespaces` binding gives a [Worker](/workers/) access to one [namespace](/ai-search/concepts/namespaces/). Use it to get, list, create, and delete instances in that namespace, and to search across several of its instances in one call.
+
+The binding is scoped to the namespace you configure. It cannot create, list, update, or delete namespaces. To manage namespaces, use the [REST API](/ai-search/api/namespaces/rest-api/), [Terraform](/ai-search/api/namespaces/terraform/), or [Wrangler](/ai-search/wrangler-commands/).
+
+## Configure the binding
+
+Add an `ai_search_namespaces` entry to your [Wrangler configuration](/workers/wrangler/configuration/) and set the namespace the binding can access:
+
+<WranglerConfig>
+
+```toml
+compatibility_date = "$today"
+
+[[ai_search_namespaces]]
+binding = "AI_SEARCH"
+namespace = "support"
+```
+
+</WranglerConfig>
+
+| Field       | Type    | Required | Description                                                                                                                                     |
+| ----------- | ------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `binding`   | string  | Yes      | The variable name available on `env`. For example, `"AI_SEARCH"` makes it accessible as `env.AI_SEARCH`.                                        |
+| `namespace` | string  | Yes      | The namespace to bind to. A `default` namespace exists for every account. If the namespace does not exist, Wrangler creates it when you deploy. |
+| `remote`    | boolean | No       | Set to `true` for local development with `wrangler dev`.                                                                                        |
+
+## What the binding can do
+
+At runtime, `env.AI_SEARCH` is the namespace handle. It exposes the following methods:
+
+| Method              | Description                                                    |
+| ------------------- | -------------------------------------------------------------- |
+| `get()`             | Returns a handle to an instance. Does not make a network call. |
+| `list()`            | Lists the instances in the namespace.                          |
+| `create()`          | Creates an instance in the namespace and returns a handle.     |
+| `delete()`          | Permanently deletes an instance and its indexed content.       |
+| `search()`          | Searches across several instances in the namespace.            |
+| `chatCompletions()` | Generates a response from several instances in the namespace.  |
+
+For parameters and responses of the instance methods, refer to the [Instances Workers binding](/ai-search/api/instances/workers-binding/) reference. For `search()` and `chatCompletions()`, refer to the [Search Workers binding](/ai-search/api/search/workers-binding/) reference.
+
+### Get an instance
+
+```ts
+const instance = env.AI_SEARCH.get("docs");
+const results = await instance.search({
+	messages: [{ role: "user", content: "How do I reset my password?" }],
+});
+```
+
+### List instances
+
+```ts
+const { result } = await env.AI_SEARCH.list();
+
+for (const instance of result) {
+	console.log(instance.id);
+}
+```
+
+### Create an instance
+
+```ts
+const instance = await env.AI_SEARCH.create({
+	id: "faq",
+});
+```
+
+### Delete an instance
+
+```ts
+await env.AI_SEARCH.delete("faq");
+```
+
+:::caution
+Deleting an instance permanently removes all indexed data, including embeddings, chunks, and source files.
+:::
+
+## Bind multiple namespaces
+
+Declare one binding per namespace. Each binding only reaches the instances in its own namespace.
+
+<WranglerConfig>
+
+```toml
+[[ai_search_namespaces]]
+binding = "BLOG_SEARCH"
+namespace = "blog"
+
+[[ai_search_namespaces]]
+binding = "SUPPORT_SEARCH"
+namespace = "support"
+```
+
+</WranglerConfig>
+
+```ts
+const blogPosts = await env.BLOG_SEARCH.list();
+const supportDocs = env.SUPPORT_SEARCH.get("docs");
+```

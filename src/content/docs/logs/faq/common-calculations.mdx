@@ -15,10 +15,12 @@ products:
 
 ### How can I calculate bytes served by the origin from Cloudflare Logs?
 
-The best way to calculate bytes served by the origin is to use the `CacheResponseBytes` field in Cloudflare Logs, and to filter only requests that come from the origin. Make sure to filter out `OriginResponseStatus` values `0` and `304`, which indicate a revalidated response.
+To approximate bytes served by the origin, use the `CacheResponseBytes` field in Cloudflare Logs, and filter only requests that come from the origin. Make sure to filter out `OriginResponseStatus` values `0` and `304`, which indicate a revalidated response.
+
+`CacheResponseBytes` counts the response body as Cloudflare delivered it to the client, not as the origin sent it. The two can differ when Cloudflare changes the body encoding. For example, if the origin sends a gzip-compressed body and the client does not accept gzip, Cloudflare decompresses the body and `CacheResponseBytes` counts the uncompressed size. Refer to [edgeResponseBytes and cacheResponseBytes discrepancy](/cache/troubleshooting/edge-vs-cache-response-bytes/).
 
 ### How do I calculate bandwidth usage for my zone?
 
 Bandwidth (or data transfer) can be calculated by adding the `EdgeResponseBytes` field in HTTP request logs. There are some types of requests that are not factored into bandwidth calculations. In order to only include relevant requests in calculations, add the filter `ClientRequestSource = 'eyeball'`.
 
-
+`EdgeResponseBytes` counts response bytes when Cloudflare sends them, so for requests that the client cancels before the response is complete, it can include data the client never received. Refer to [Responses the client stops reading](/cache/troubleshooting/edge-vs-cache-response-bytes/#responses-the-client-stops-reading).

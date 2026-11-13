@@ -267,7 +267,7 @@ Use `<br/>`, never two trailing spaces.
 
 ### Cloudflare-specific component conventions
 
-Workers JS/TS examples must use `TypeScriptExample` — not bare `js`/`ts` fences.
+Workers JS/TS examples must use `TypeScriptExample` — not bare `js`/`ts` fences. Type-only snippets (`type`, `interface`, `declare`) are the exception: use a plain `ts` fence, because the generated JavaScript tab would be empty.
 
 Wrangler config must use `WranglerConfig` with TOML input. Use `$today` for `compatibility_date`.
 
@@ -281,7 +281,7 @@ Add reusable components to the `~/components` barrel export (`src/components.ts`
 
 **Mandatory component usage** — do not use bare fences for these:
 
-- Workers JS/TS examples → `TypeScriptExample`
+- Workers JS/TS examples → `TypeScriptExample` (type-only snippets → plain `ts` fence)
 - Wrangler config → `WranglerConfig` (TOML input, use `$today` for `compatibility_date`)
 - Package install/exec commands → `PackageManagers`
 - Multi-step procedures → `Steps`

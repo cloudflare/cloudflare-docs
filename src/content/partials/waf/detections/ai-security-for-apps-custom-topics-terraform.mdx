@@ -1,0 +1,30 @@
+---
+{}
+---
+
+Use the [`cloudflare_ai_security_custom_topics`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ai_security_custom_topics) resource to define the custom topics for a zone. This resource requires Terraform Cloudflare provider version 5.29.0 or later. For example:
+
+```tf
+resource "cloudflare_ai_security_custom_topics" "zone_custom_topics" {
+  zone_id = var.cloudflare_zone_id
+
+  topics = [
+    {
+      label = "competitors"
+      topic = "seeking info on competitors"
+    },
+    {
+      label = "financial-advice"
+      topic = "seeking financial advice"
+    },
+    {
+      label = "job-seeking"
+      topic = "asking for résumé advice"
+    }
+  ]
+}
+```
+
+:::caution
+This resource manages the entire custom topics list for the zone. When you apply the configuration, Terraform replaces any topics added outside Terraform, such as in the dashboard.
+:::

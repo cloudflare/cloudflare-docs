@@ -17,6 +17,7 @@ import {
 	Steps,
 	DashButton,
 	GlossaryTooltip,
+	Render,
 } from "~/components";
 
 AI Security for Apps can detect when an LLM prompt touches on unsafe or unwanted subjects. There are two layers of topic detection:
@@ -129,6 +130,13 @@ To retrieve your current topics, use a `GET` request:
 curl "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ai-security/custom-topics" \
   --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
+
+</TabItem> <TabItem label="Terraform">
+
+<Render
+	file="detections/ai-security-for-apps-custom-topics-terraform"
+	product="waf"
+/>
 
 </TabItem> </Tabs>
 

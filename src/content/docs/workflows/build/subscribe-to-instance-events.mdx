@@ -3,7 +3,7 @@ title: Subscribe to instance events
 description: Use Cloudflare Workflows subscribe method to receive historical and live instance events without polling status.
 pcx_content_type: concept
 sidebar:
-  order: 7
+  order: 8
 products:
   - workflows
 ---
@@ -125,8 +125,6 @@ Declare the subscription with `using` for automatic disposal when the scope exit
 
 The public type definition shows the fields available on each event:
 
-<TypeScriptExample>
-
 ```ts
 type WorkflowInstanceEvent = {
 	instanceId: string;
@@ -204,8 +202,6 @@ type WorkflowInstanceEvent = {
 	| { type: "rollback_errored" }
 );
 ```
-
-</TypeScriptExample>
 
 The following sections describe when each event is emitted.
 

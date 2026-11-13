@@ -155,7 +155,7 @@ const browser = await puppeteer.launch(env.BROWSER);
 const page = await browser.newPage();
 ```
 
-The [`page.setContent()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.setcontent.md) function can then be used to set the page's HTML contents from a string, so you can pass in your created document directly like so:
+The [`page.setContent()`](https://pptr.dev/api/puppeteer.page.setcontent) function can then be used to set the page's HTML contents from a string, so you can pass in your created document directly like so:
 
 ```ts
 await page.setContent(document);
@@ -163,13 +163,13 @@ await page.setContent(document);
 
 ## 3. Generate and Return PDF
 
-With your Browser Run instance now rendering your provided HTML and CSS, you can use the [`page.pdf()`](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.page.pdf.md) command to generate a PDF file and return it to the client.
+With your Browser Run instance now rendering your provided HTML and CSS, you can use the [`page.pdf()`](https://pptr.dev/api/puppeteer.page.pdf) command to generate a PDF file and return it to the client.
 
 ```ts
 let pdf = page.pdf({ printBackground: true });
 ```
 
-The `page.pdf()` call supports a [number of options](https://github.com/cloudflare/puppeteer/blob/main/docs/api/puppeteer.pdfoptions.md), including setting the dimensions of the generated PDF to a specific paper size, setting specific margins, and allowing fully-transparent backgrounds. For now, you are only overriding the `printBackground` option to allow your `body` background styles to show up.
+The `page.pdf()` call supports a [number of options](https://pptr.dev/api/puppeteer.pdfoptions), including setting the dimensions of the generated PDF to a specific paper size, setting specific margins, and allowing fully-transparent backgrounds. For now, you are only overriding the `printBackground` option to allow your `body` background styles to show up.
 
 Now that you have your PDF data, return it to the client in the `Response` with an `application/pdf` content type:
 

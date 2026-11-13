@@ -31,7 +31,7 @@ const results = await instance.search({
 		retrieval: {
 			filters: {
 				folder: "docs/getting-started/",
-				timestamp: { $gte: 1735689600 },
+				timestamp: { $gte: 1735689600000 },
 			},
 		},
 	},
@@ -89,7 +89,9 @@ Combine upper and lower bound operators to filter by ranges:
 {
 	"ai_search_options": {
 		"retrieval": {
-			"filters": { "timestamp": { "$gte": 1735689600, "$lt": 1735900000 } }
+			"filters": {
+				"timestamp": { "$gte": 1735689600000, "$lt": 1735862400000 }
+			}
 		}
 	}
 }
@@ -105,7 +107,7 @@ When you specify multiple keys, all conditions must match:
 		"retrieval": {
 			"filters": {
 				"folder": "docs/getting-started/",
-				"timestamp": { "$gte": 1735689600 }
+				"timestamp": { "$gte": 1735689600000 }
 			}
 		}
 	}

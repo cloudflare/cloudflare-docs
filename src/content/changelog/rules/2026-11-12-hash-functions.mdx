@@ -1,0 +1,23 @@
+---
+title: New hash functions — sha1(), md5(), and sha512()
+description: Compute SHA-1, MD5, and SHA-512 hashes directly in Rules expressions with three new functions.
+date: 2026-11-12
+---
+
+Cloudflare Rules supports three new hash functions: `sha1()`, `md5()`, and `sha512()`. Use them to compute hashes for systems that require these algorithms.
+
+Like the existing `sha256()` function, each accepts a string or byte array and returns raw bytes:
+
+| Function   | Algorithm | Output length |
+| ---------- | --------- | ------------- |
+| `md5()`    | MD5       | 16 bytes      |
+| `sha1()`   | SHA-1     | 20 bytes      |
+| `sha512()` | SHA-512   | 64 bytes      |
+
+For example, combine `sha512()` with `encode_base64()` to produce a Base64-encoded hash:
+
+```txt
+encode_base64(sha512("hello world"))
+```
+
+For details, refer to the [`sha1()`](/ruleset-engine/rules-language/functions/#sha1), [`md5()`](/ruleset-engine/rules-language/functions/#md5), and [`sha512()`](/ruleset-engine/rules-language/functions/#sha512) function references.

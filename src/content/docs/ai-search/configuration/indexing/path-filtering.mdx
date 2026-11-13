@@ -10,7 +10,7 @@ products:
 
 Path filtering allows you to control which files or URLs are indexed by defining include and exclude patterns. Use this to limit indexing to specific content or to skip files you do not want searchable.
 
-Path filtering works with both [website](/ai-search/configuration/data-source/website/) and [R2](/ai-search/configuration/data-source/r2/) data sources.
+Path filtering works with [website](/ai-search/configuration/data-source/website/), [R2](/ai-search/configuration/data-source/r2/), and [D1](/ai-search/configuration/data-source/d1/) data sources. For D1 data sources, rules match the item key of each row, such as `42.md`.
 
 ## Configuration
 
@@ -73,19 +73,20 @@ You can view these in the Jobs tab of your AI Search instance to verify your fil
 - **Case sensitivity:** Pattern matching is case-sensitive. `/Blog/*` does not match `/blog/post.html`.
 - **Full path matching:** Patterns match the entire path or URL. Use `**` at the beginning for partial matching. For example, `docs/*` matches `docs/file.pdf` but not `site/docs/file.pdf`, while `**/docs/*` matches both.
 - **Single `*` does not cross directories:** Use `**` to match across path separators. For example, `docs/*` matches `docs/file.pdf` but not `docs/sub/file.pdf`, while `docs/**` matches both.
+- **R2 object keys:** For R2 data sources, patterns match object keys as-is. Object keys do not start with `/`, so use `docs/**` instead of `/docs/**`.
 - **Trailing slashes matter:** URLs are matched as-is without normalization. `/blog/` does not match `/blog`.
 
 ## Examples
 
 ### R2 data source
 
-| Use case                        | Pattern                                         | Indexed                                | Skipped                               |
-| ------------------------------- | ----------------------------------------------- | -------------------------------------- | ------------------------------------- |
-| Index only PDFs in docs         | Include: `/docs/**/*.pdf`                       | `/docs/guide.pdf`, `/docs/api/ref.pdf` | `/docs/guide.md`, `/images/logo.png`  |
-| Exclude temp and backup files   | Exclude: `**/*.tmp`, `**/*.bak`                 | `/docs/guide.md`                       | `/data/cache.tmp`, `/old.bak`         |
-| Exclude temp and backup folders | Exclude: `/temp/**`, `/backup/**`               | `/docs/guide.md`                       | `/temp/file.txt`, `/backup/data.json` |
-| Index docs but exclude drafts   | Include: `/docs/**`, Exclude: `/docs/drafts/**` | `/docs/guide.md`                       | `/docs/drafts/wip.md`                 |
-| Scope an instance to one tenant | Include: `/customers/acme/**`                   | `/customers/acme/report.pdf`           | `/customers/globex/report.pdf`        |
+| Use case                        | Pattern                                       | Indexed                              | Skipped                             |
+| ------------------------------- | --------------------------------------------- | ------------------------------------ | ----------------------------------- |
+| Index only PDFs in docs         | Include: `docs/**/*.pdf`                      | `docs/guide.pdf`, `docs/api/ref.pdf` | `docs/guide.md`, `images/logo.png`  |
+| Exclude temp and backup files   | Exclude: `**/*.tmp`, `**/*.bak`               | `docs/guide.md`                      | `data/cache.tmp`, `old.bak`         |
+| Exclude temp and backup folders | Exclude: `temp/**`, `backup/**`               | `docs/guide.md`                      | `temp/file.txt`, `backup/data.json` |
+| Index docs but exclude drafts   | Include: `docs/**`, Exclude: `docs/drafts/**` | `docs/guide.md`                      | `docs/drafts/wip.md`                |
+| Scope an instance to one tenant | Include: `customers/acme/**`                  | `customers/acme/report.pdf`          | `customers/globex/report.pdf`       |
 
 To give each tenant an isolated instance backed by a single shared bucket, refer to [Multitenancy](/ai-search/how-to/per-tenant-search/#r2).
 
@@ -97,6 +98,15 @@ To give each tenant an isolated instance backed by a single shared bucket, refer
 | Exclude admin pages           | Exclude: `**/admin/**`                              | `example.com/blog/post`                                | `example.com/admin/settings`                       |
 | Exclude login pages           | Exclude: `**/login*`                                | `example.com/blog/post`                                | `example.com/login`, `example.com/auth/login-form` |
 | Index docs but exclude drafts | Include: `**/docs/**`, Exclude: `**/docs/drafts/**` | `example.com/docs/guide`                               | `example.com/docs/drafts/wip`                      |
+
+### D1 data source
+
+D1 item keys have no folders, so patterns do not start with `/`. Rows skipped by these rules are not listed in job logs, and already-indexed rows that become excluded are deleted on the next full sync.
+
+| Use case                     | Pattern                | Indexed         | Skipped          |
+| ---------------------------- | ---------------------- | --------------- | ---------------- |
+| Skip draft rows              | Exclude: `drafts-*.md` | `guide-1.md`    | `drafts-1.md`    |
+| Index only one group of rows | Include: `docs-*.md`   | `docs-intro.md` | `blog-launch.md` |
 
 ### API format
 

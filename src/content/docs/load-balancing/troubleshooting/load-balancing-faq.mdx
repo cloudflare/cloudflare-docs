@@ -69,6 +69,8 @@ When a pool or endpoint becomes unhealthy, traffic may be rerouted to other heal
 
 2 - Pools with FQDN endpoint addresses and the recursive DNS lookup fails in a specific data center. In this case, only requests for which the DNS request fails will be steered away from impacted endpoints. This could be sporadic, especially if upstream authoritative resolvers occasionally time out or fail, when the local DNS cache TTL expires and a remote lookup is required in the hot path. This also appears in LB request analytics as steering away from an unhealthy endpoint, and the resolved endpoint IP will be missing from the request log.
 
+   A specific case of this failure occurs when the endpoint hostname has a DNS answer that exceeds 512 bytes over UDP — for example, a hostname that resolves to many A records. The monitor performs an uncached DNS lookup on every health check using UDP by default and does not fall back to TCP when the response is truncated. The monitor reports `DNS Unknown Host` even though the hostname resolves correctly for clients. For more information, refer to [DNS Unknown Host](/load-balancing/troubleshooting/common-error-codes/#dns-unknown-host).
+
 To avoid these scenarios:
 
 1 - Do not use **All-Datacenters** monitoring.

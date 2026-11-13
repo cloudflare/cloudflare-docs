@@ -1,0 +1,11 @@
+---
+title: Run the Nanocode agent harness in Cloudflare Durable Objects
+description: Embed a coding agent in your application with Nanocode's Rust/WebAssembly engine, Workers AI, and durable sessions.
+date: 2026-11-09
+---
+
+You can now run [Nanocode](https://github.com/gakonst/nanocode) coding agents in [Cloudflare Durable Objects](/durable-objects/), with persistent session history and recovery after interruptions.
+
+Nanocode's Rust engine runs as WebAssembly and implements Codex and Claude Code prompt and tool conventions. Its Cloudflare host saves turn progress and tool results in SQLite and uses alarms to resume pending work. The Nanocode project maintains the host independently of Cloudflare; it does not require the Agents SDK.
+
+Start with the [reference Worker](https://github.com/gakonst/nanocode-cloudflare-durable) and follow [Nanocode on Workers](/agents/harnesses/nanocode/) for setup, models, and recovery limits.
