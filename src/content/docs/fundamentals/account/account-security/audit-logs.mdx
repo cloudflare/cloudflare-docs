@@ -46,6 +46,20 @@ Audit Logs (version 2) provide a unified and standardized system for tracking an
 Approximately 30 days of logs from the Beta period (back to ~February 8, 2026) are available at GA. These Beta logs will expire on ~April 9, 2026. Logs generated after GA will be retained for the full 18 months. Older logs remain available in Audit Logs v1.
 :::
 
+## Regional storage
+
+Audit logs record actions that administrators and Cloudflare systems take on your account. They are not End User Customer Logs, so [Customer Metadata Boundary (CMB)](/data-localization/metadata-boundary/) commitments do not apply to them.
+
+However, Audit Logs v2 is available in Cloudflare's [FedRAMP High authorized environment](https://www.cloudflare.com/cloudflare-for-government/). For FedRAMP High accounts, Cloudflare processes and stores Audit Logs v2 data only in the United States.
+
+If your account uses CMB, Audit Logs v2 stores your audit logs only in your selected region. Before Cloudflare stores them:
+
+- Many actions are processed in Cloudflare's US core data center because the APIs that perform them run there. Cloudflare creates the audit logs for those actions in that data center.
+- Audit log events can pass through, or be held temporarily in, data centers outside your selected region.
+- The configuration changes that audit logs describe, such as a DNS record update, are distributed across Cloudflare's global network as usual.
+
+Logpush jobs for the Audit Logs v2 dataset deliver from your selected region. Audit Logs v1 does not support regional storage.
+
 ## Access Audit Logs
 
 You can retrieve audit logs using the Cloudflare dashboard, the API, or Logpush.

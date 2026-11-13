@@ -28,7 +28,8 @@ If you enable CMB for a region where a dataset is not available (marked ✘ in t
 | ------------------------------------------- | ------- | ------------ | ---------------------------- | ---------------------------- |
 | Access Requests                             | Account | ✅           | ✅                           | ✅                           |
 | AI Gateway Events                           | Account | ✅           | ✅                           | ✅                           |
-| Audit Logs                                  | Account | ✘            | ✅                           | ✘                            |
+| Audit Logs v1                               | Account | ✘            | ✅                           | ✘                            |
+| Audit Logs v2                               | Account | N/A[^2]      | ✅                           | ✅                           |
 | Browser Isolation User Actions              | Account | ✅           | ✅                           | ✅                           |
 | CASB Findings                               | Account | ✘            | ✅                           | ✘                            |
 | Client-side security (formerly Page Shield) | Zone    | ✅           | ✅                           | ✅                           |
@@ -57,3 +58,4 @@ If you enable CMB for a region where a dataset is not available (marked ✘ in t
 | Zero Trust Sessions                         | Account | ✅           | ✅                           | ✅                           |
 
 [^1]: Customer Metadata Boundary does not apply in this case, as these logs are sent directly from the processing location to your configured destination.
+[^2]: Audit logs are not End User Customer Logs, so CMB commitments do not apply. Audit Logs v2 stores logs in your selected region and delivers Logpush jobs from that region. For more information, refer to [Regional storage](/fundamentals/account/account-security/audit-logs/#regional-storage).
