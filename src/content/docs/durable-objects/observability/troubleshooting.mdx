@@ -16,6 +16,12 @@ products:
 
 ## Common errors
 
+### Exceeded the account's spending cap for Durable Objects
+
+The account has reached a [Durable Objects spending limit](/durable-objects/platform/spend-management/). In **Billing** > **Spend Management**, raise the limit above current spend, turn it off, or remove it. Changes can take a few minutes to apply.
+
+The block also expires at the next subscription billing period. If you use alarms, review [alarm recovery](/durable-objects/platform/spend-management/#alarm-recovery) before resuming your application.
+
 ### No event handlers were registered. This script does nothing.
 
 In your Wrangler file, make sure the `dir` and `main` entries point to the correct file containing your Worker code, and that the file extension is `.mjs` instead of `.js` if using ES modules syntax.

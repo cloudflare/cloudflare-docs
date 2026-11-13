@@ -25,6 +25,12 @@ On Workers Free plan:
 	params={{ computeDepth: 2, storageDepth: 2, backendDepth: 3 }}
 />
 
+## Control usage costs
+
+Set a [Durable Objects spending limit](/durable-objects/platform/spend-management/) for requests, duration, and storage operations after included usage. Stored data charges are excluded and can continue during a pause.
+
+Review the [operations that can continue](/durable-objects/platform/spend-management/#operations-that-can-continue) before relying on a limit. For email without blocking usage, configure an [email alert](/billing/manage/spend-management/cli/#create-an-email-alert).
+
 ## Compute billing examples
 
 These examples exclude the costs for the Workers calling the Durable Objects. When modelling the costs of a Durable Object, note that:
