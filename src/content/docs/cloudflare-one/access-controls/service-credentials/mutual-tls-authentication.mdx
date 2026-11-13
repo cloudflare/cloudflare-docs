@@ -23,7 +23,7 @@ This page covers Access mTLS for Service Auth policies. [Zone-level mTLS](/api-s
 - **Authenticate devices that do not use an identity provider** — Automated systems and IoT devices can prove their identity by presenting a client certificate instead of logging in through an IdP.
 - **Add a second authentication factor** — Team members who log in through an IdP can also be required to present a valid client certificate, providing an additional layer of security.
 
-When you upload a root certificate authority (CA) to Access, only requests from devices with a matching client certificate are allowed through. When a request reaches the application, Access asks the client to present a certificate. If the client cannot present a valid certificate, the request is blocked. If the client presents a valid certificate, Access completes a key exchange to verify.
+Uploading a certificate authority (CA) configures client certificate validation for its associated hostnames. To require a valid client certificate for an application, you must also create and attach an Access policy with a **Valid Certificate** or **Common Name** rule. Uploading the CA alone does not create a policy or prevent another policy from allowing access without a certificate.
 
 ![mTLS handshake diagram](~/assets/images/cloudflare-one/identity/devices/mtls.png)
 
@@ -44,37 +44,32 @@ The mTLS certificate is used only to verify the client certificate. It does not 
 ### Add mTLS to your Access application
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Mutual TLS**.
-
 2. Select **Add mTLS Certificate**.
-
 3. Enter any name for the root CA.
-
 4. In **Certificate content**, paste the contents of your root CA.
 
-	If the client certificate is directly signed by the root CA, you only need to upload the root. If the client certificate is signed by an intermediate certificate, you must upload the entire CA chain (intermediate and root). For example:
-	```txt
-	-----BEGIN CERTIFICATE-----
-	<intermediate.pem>
-	-----END CERTIFICATE-----
-	-----BEGIN CERTIFICATE-----
-	<rootCA.pem>
-	-----END CERTIFICATE-----
-	```
+   If the client certificate is directly signed by the root CA, you only need to upload the root. If the client certificate is signed by an intermediate certificate, you must upload the entire CA chain (intermediate and root). For example:
 
-	Do not include any SSL/TLS server certificates; Access only uses the CA chain to verify the connection between the user's device and Cloudflare.
+   ```txt
+   -----BEGIN CERTIFICATE-----
+   <intermediate.pem>
+   -----END CERTIFICATE-----
+   -----BEGIN CERTIFICATE-----
+   <rootCA.pem>
+   -----END CERTIFICATE-----
+   ```
+
+   Do not include any SSL/TLS server certificates; Access only uses the CA chain to verify the connection between the user's device and Cloudflare.
 
 5. In **Associated hostnames**, enter the fully-qualified domain names (FQDN) that will use this certificate.
 
    These FQDNs will be the hostnames used for the resources being protected in the [Access policy](/cloudflare-one/access-controls/policies/). You must associate the Root CA with the FQDN that the application being protected uses.
 
-6. Save the policy.
-
+6. Save the certificate configuration.
 7. Go to **Access controls** > **Policies**.
-
 8. [Create an Access policy](/cloudflare-one/access-controls/policies/policy-management/#create-a-policy) using one of the following [selectors](/cloudflare-one/access-controls/policies/#selectors):
    - **Valid Certificate**: Any client certificate that can authenticate with the Root CA will be allowed to proceed.
    - **Common Name**: Only client certificates with a specific common name will be allowed to proceed.
-
 9. If this is for a client who does not need to log in through an IdP, set the policy **Action** to _Service Auth_.
 
    <Example>
@@ -86,11 +81,8 @@ The mTLS certificate is used only to verify the client certificate. It does not 
    </Example>
 
 10. Save the policy, then go to **Access controls** > **Applications**.
-
 11. Select the application you would like to enforce mTLS on and select **Edit**. The application must be included in the **Associated hostnames** list from Step 5.
-
 12. In the **Policies** tab, add your mTLS policy.
-
 13. Save the application.
 
 You can now authenticate to the application using a client certificate. For instructions on how to present a client certificate, refer to [Test mTLS](#test-mtls).
@@ -258,16 +250,15 @@ This guide uses [Cloudflare's PKI toolkit](https://github.com/cloudflare/cfssl) 
 
 The process requires two packages from Cloudflare's PKI toolkit:
 
-- `cf-ssl`
+- `cfssl`
 - `cfssljson`
 
-You can install these packages from the [Cloudflare SSL GitHub repository](https://github.com/cloudflare/cfssl). You will need a working installation of Go, version 1.12 or later. Alternatively, you can [download the packages](https://github.com/cloudflare/cfssl) directly.
+You can install these packages from the [Cloudflare SSL GitHub repository](https://github.com/cloudflare/cfssl). To build from source, use the Go version required by the release you are installing. Alternatively, download prebuilt binaries from the repository's releases.
 Use the instructions under Installation to install the toolkit, and ensure that you install all of the utility programs in the toolkit.
 
 #### 2. Generate the root CA
 
 1. Create a new directory to store the root CA.
-
 2. Within that directory, create two new files:
    - **CSR**. Create a file named `ca-csr.json` and add the following JSON blob, then save the file.
 
@@ -369,7 +360,6 @@ The command will output a client certificate file (`client.pem`) and its key (`c
 You can use the Cloudflare PKI toolkit to generate a certificate revocation list (CRL), as well. This list will contain client certificates that are revoked.
 
 1. Get the serial number from the client certificate generated earlier. Add that serial number, or any others you intend to revoke, in hex format in a text file. This example uses a file named `serials.txt`.
-
 2. Create the CRL with the following command.
 
    ```sh
