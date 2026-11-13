@@ -208,3 +208,65 @@ Now, we can investigate by selecting the **Invocations** tab. We can see that th
 We can expand a single invocation to view the relevant logs, and continue to debug.
 
 ![Viewing the logs for a single Invocation](~/assets/images/workers-observability/wobs_invocation_logs_122.png)
+
+## Limits
+
+These limits apply to queries run from the Query Builder and from the [Workers Observability REST API](/api/resources/workers/subresources/observability/).
+
+| Description                                  | Limit                 |
+| -------------------------------------------- | --------------------- |
+| Maximum time range                           | 7 days                |
+| Maximum events returned per request          | 2,000 (default 50)    |
+| API requests<sup>1</sup>                     | 1,200 per 5 minutes   |
+| Data read by queries per account<sup>2</sup> | 500 GB per 60 seconds |
+
+<sup>1</sup> Queries sent to the REST API count toward the [global Cloudflare
+API rate limit](/fundamentals/api/reference/limits/), which is shared with every
+other Cloudflare API request made by the same user or API token. When you exceed
+it, the API returns HTTP `429` with a `Retry-After` header. Each response also
+includes `Ratelimit` and `Ratelimit-Policy` headers that report your remaining
+quota.
+
+<sup>2</sup> Refer to [Data read](#data-read).
+
+A query that asks for more than 2,000 events is rejected with HTTP `400`. A query for a time range that starts more than seven days ago only searches the last seven days.
+
+### Data read
+
+Each query reads data from storage to find the events that match. The amount of data read depends on how much data the query has to scan, not on how many events it returns. A query that returns ten events can still read many gigabytes if it searches a wide time range across all of your datasets.
+
+The API reports the amount of data each query read, in uncompressed bytes, in the `result.statistics.bytes_read` field of the response. The response also includes `result.statistics.rows_read` and `result.statistics.elapsed` (in seconds).
+
+```json
+{
+	"result": {
+		"statistics": {
+			"elapsed": 0.412,
+			"rows_read": 1830421,
+			"bytes_read": 2934505472
+		}
+	}
+}
+```
+
+Your account can read up to 500 GB in any 60-second period. This total includes queries from the dashboard and from the API. When your account exceeds it, queries return HTTP `429` with a `Retry-After` header until earlier queries fall outside the 60-second period. To recover, wait for the number of seconds in the `Retry-After` header, then retry with a narrower time range or more selective filters.
+
+## Improve query performance
+
+Queries run faster and read less data when they scan fewer events. The following changes have the largest effect, in order:
+
+1. **Narrow the time range.** Data is organized by time, so the time range sets the upper bound on how much data a query can read. Query the last 15 minutes instead of the last 24 hours when you can, and split a long range into several shorter queries.
+2. **Query one dataset.** Select the dataset you need, such as Workers or R2, instead of searching across all of them. In the API, set `parameters.datasets` to a single dataset, for example `["r2"]`.
+3. **Filter on `$metadata.service` with Equals.** Data within a dataset is organized by service, so an exact match lets a query skip every other service. For Workers, the service is the Worker name. For [R2 Data Access Logs](/r2/buckets/data-access-logs/), the service is the bucket name.
+4. **Prefer exact matches to text matching.** The Equals and Does not equal operators are the least expensive. Includes, Starts with, Regex, and [Search](#search) compare text in every event in the time range, so combine them with a narrow time range and a `$metadata.service` filter.
+5. **Aggregate instead of retrieving events.** To answer a question such as how many requests failed for each path, use a [visualization](#visualization) with [Group By](#group-by) rather than downloading the matching events and counting them yourself.
+
+### Queries from the API
+
+If you run queries on a schedule, for example to forward events to another system, also do the following:
+
+- **Use consecutive, non-overlapping time ranges.** Query from the end of the previous range to the current time, rather than querying the last hour again on every run.
+- **Page through results with a cursor.** Set `limit` to at most 2,000, then pass the `$metadata.id` of the last event you received as `offset` to request the next page.
+- **Omit data you do not use.** Set `ignoreSeries` to `true` when you only need events and not the time series for a chart.
+- **Watch `result.statistics.bytes_read`.** If one query reads much more than you expect, narrow its time range or add a `$metadata.service` filter before you increase how often it runs.
+- **Back off when you receive HTTP `429`.** Wait for the number of seconds in the `Retry-After` header before you send the next request.
