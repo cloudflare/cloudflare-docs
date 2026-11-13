@@ -1,0 +1,25 @@
+---
+title: Spatial indexes with the SQLite R*Tree module
+description: Durable Objects and D1 now support SQLite's R*Tree module, so you can create spatial indexes for fast bounding box and range queries.
+products:
+  - durable-objects
+  - d1
+  - workers
+date: 2026-07-22
+---
+
+SQLite-backed Durable Objects and D1 databases now support the [R\*Tree module](https://www.sqlite.org/rtree.html). An R\*Tree is an index for spatial and range queries. For example, given a query rectangle, it returns every entry that overlaps or falls inside that rectangle without scanning the whole table.
+
+The R\*Tree suits any query that filters on the minimum and maximum values of one to five dimensions: which delivery zones cover a coordinate, which events were active during a time window, or which objects a camera can see in 3D space. Previously, these queries required a full table scan or a manually maintained index such as a geohash column.
+
+Create the index as a virtual table, then query it with an ordinary `WHERE` clause. For a worked example, refer to [Use the R\*Tree module](/durable-objects/examples/use-sqlite-rtree/).
+
+**Limits:**
+
+- Only `rtree` and `rtree_i32` virtual tables are enabled. Of the functions the R\*Tree module provides, only `rtreecheck()` is available.
+- Each R\*Tree is backed by three shadow tables, so writing to it counts as more rows written than in an equivalent ordinary table. Refer to [Durable Objects pricing](/durable-objects/platform/pricing/) and [D1 pricing](/d1/platform/pricing/).
+- D1 cannot export a database containing a virtual table. This already applied to FTS5 tables and now applies to R\*Tree tables.
+
+This works the same way in local development with `wrangler dev` as it does in production. Run `npm update wrangler` to ensure you are on a version with this support.
+
+For the list of supported extensions, refer to [Supported SQLite extensions](/durable-objects/api/sqlite-storage-api/#supported-sqlite-extensions).
