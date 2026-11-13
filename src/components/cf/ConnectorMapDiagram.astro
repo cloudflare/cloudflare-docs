@@ -8,6 +8,11 @@
 // Hovering or focusing an on-ramp highlights it, dims the others, and shows
 // its one-line summary in the centre panel. Without JavaScript the diagram
 // is a static, fully linked figure.
+/* `role="list"` on the lists below is intentional, not redundant: Safari
+   + VoiceOver drop the implicit list role when `list-style: none` is
+   applied, so the explicit role is required to preserve list semantics
+   for screen reader users. */
+/* eslint-disable astro/jsx-a11y/no-redundant-roles */
 import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
 
 type Variant = "connectors" | "agents";
@@ -264,7 +269,7 @@ const d = data[variant];
 >
 	<div class="col col-in">
 		<p class="col-title">{d.inTitle}</p>
-		<ul class="stack">
+		<ul class="stack" role="list">
 			{toRows(d.inbound).map((row) => (
 				<li class={row.cls}>
 					{row.group && <p class="pair-label">{row.group}</p>}
@@ -299,7 +304,7 @@ const d = data[variant];
 		<div class="core">
 			<span class="core-glow" aria-hidden="true"></span>
 			<p class="core-title">{d.coreTitle}</p>
-			<ul class="core-lines">
+			<ul class="core-lines" role="list">
 				{d.coreLines.map((l) => (
 					<li>
 						<span>{l}</span>
@@ -321,7 +326,7 @@ const d = data[variant];
 
 	<div class="col col-out">
 		<p class="col-title">{d.outTitle}</p>
-		<ul class="stack">
+		<ul class="stack" role="list">
 			{d.outbound.map((item) => (
 				<li>
 					<a class="card out-card" href={item.href}>
