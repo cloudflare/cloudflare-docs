@@ -59,6 +59,8 @@ const results = await instance.search({
 
 The `get()` method is synchronous and does not make a network call. The instance is resolved lazily when you call a method like `search()` or `chatCompletions()`.
 
+The binding manages instances inside its namespace. To create, update, or delete namespaces themselves, refer to the [Namespaces API](/ai-search/api/namespaces/).
+
 ## Default namespace
 
 A `default` namespace is automatically created for every account. If you do not need multiple namespaces, use `default` for all your instances.
@@ -98,6 +100,25 @@ namespace = "support"
 ```
 
 </WranglerConfig>
+
+## Manage namespaces with Terraform
+
+From [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) v5.29.0, use the `cloudflare_ai_search_namespace` resource to create a namespace, and set `namespace` on `cloudflare_ai_search_instance` to create an instance in it. If you omit `namespace`, the instance is created in `default`.
+
+```tf
+resource "cloudflare_ai_search_namespace" "support" {
+  account_id = var.account_id
+  name       = "support"
+}
+
+resource "cloudflare_ai_search_instance" "docs" {
+  account_id = var.account_id
+  id         = "docs"
+  namespace  = cloudflare_ai_search_namespace.support.name
+}
+```
+
+Changing `namespace` on an existing instance replaces it. For imports, data sources, and other options, refer to [Namespaces with Terraform](/ai-search/api/namespaces/terraform/) and [Instances with Terraform](/ai-search/api/instances/terraform/).
 
 ## Namespace public endpoints
 

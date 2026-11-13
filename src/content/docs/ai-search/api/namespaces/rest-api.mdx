@@ -1,0 +1,123 @@
+---
+pcx_content_type: reference
+title: REST API
+description: Create, list, update, and delete AI Search namespaces over HTTP using the Namespaces REST API.
+sidebar:
+  order: 2
+products:
+  - ai-search
+---
+
+import { Render } from "~/components";
+
+Use the AI Search REST API to manage [namespaces](/ai-search/concepts/namespaces/) over HTTP.
+
+## Authentication
+
+<Render file="rest-api-auth" product="ai-search" />
+
+## API paths
+
+| Path                                                 | Description                    |
+| ---------------------------------------------------- | ------------------------------ |
+| `/accounts/{account_id}/ai-search/namespaces`        | Lists and creates namespaces   |
+| `/accounts/{account_id}/ai-search/namespaces/{name}` | Operates on a single namespace |
+
+For the full specification, refer to the [Namespace API reference](/api/resources/ai_search/subresources/namespaces/).
+
+## Operations
+
+| Operation                                                                                              | Method   | Description                               |
+| ------------------------------------------------------------------------------------------------------ | -------- | ----------------------------------------- |
+| [Create](/api/resources/ai_search/subresources/namespaces/methods/create/)                             | `POST`   | Create a namespace                        |
+| [List](/api/resources/ai_search/subresources/namespaces/methods/list/)                                 | `GET`    | List namespaces                           |
+| [Get](/api/resources/ai_search/subresources/namespaces/methods/read/)                                  | `GET`    | Get a namespace by name                   |
+| [Update](/api/resources/ai_search/subresources/namespaces/methods/update/)                             | `PUT`    | Update the description or public endpoint |
+| [Delete](/api/resources/ai_search/subresources/namespaces/methods/delete/)                             | `DELETE` | Delete an empty namespace                 |
+| [Move instance](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/move/) | `PATCH`  | Move an instance to a different namespace |
+
+To search across several instances in a namespace, refer to [Multi-Instance Search](/api/resources/ai_search/subresources/namespaces/methods/search/) and [Multi-Instance Chat Completions](/api/resources/ai_search/subresources/namespaces/methods/chat_completions/) in the API reference.
+
+## Fields
+
+Use these fields in the request body when you create or update a namespace.
+
+| Field                    | Type   | Create   | Update   | Description                                                                                                                                                |
+| ------------------------ | ------ | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                   | string | Required | -        | The namespace name. Use 1 to 28 lowercase letters, digits, and hyphens. The name must start and end with a letter or digit. You cannot rename a namespace. |
+| `description`            | string | Optional | Optional | A description of up to 256 characters. Set it to `null` to clear it.                                                                                       |
+| `public_endpoint_params` | object | Optional | Optional | The namespace public endpoint configuration. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/).         |
+
+On update, fields you omit keep their current value. Set `public_endpoint_params` to `null` to remove the public endpoint configuration.
+
+You cannot change the description of the `default` namespace. You can configure its public endpoint.
+
+## Examples
+
+### Create a namespace
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "support",
+    "description": "Customer support content"
+  }'
+```
+
+An account can have up to 100 namespaces. Creating more returns error `7062` (`max_namespaces_reached`).
+
+### List namespaces
+
+```bash
+curl "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces?per_page=50" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
+| Query parameter | Description                                                                         |
+| --------------- | ----------------------------------------------------------------------------------- |
+| `page`          | The page number to return. Defaults to `1`.                                         |
+| `per_page`      | The number of namespaces per page. Defaults to `20`. Maximum `100`.                 |
+| `search`        | Return namespaces whose name or description contains this string. Case-insensitive. |
+
+### Update a namespace
+
+```bash
+curl -X PUT "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/support" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "description": "Support articles and FAQs"
+  }'
+```
+
+### Delete a namespace
+
+```bash
+curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/support" \
+  -H "Authorization: Bearer <API_TOKEN>"
+```
+
+A namespace must be empty before you delete it. If it still contains instances, the request returns error `7066` (`namespace_not_empty`). Move or delete the instances first. Instances that are still being deleted do not block the request.
+
+You cannot delete the `default` namespace. The request returns error `7065` (`cannot_modify_default_namespace`).
+
+### Move an instance
+
+Move an instance to another namespace with a `PATCH` request on the instance in its current namespace:
+
+```bash
+curl -X PATCH "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances/docs" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "new_namespace": "support"
+  }'
+```
+
+The target namespace cannot already contain an instance with the same name.
+
+## Errors
+
+For namespace error codes, refer to [API error codes](/ai-search/troubleshooting/api-error-codes/#namespaces).
