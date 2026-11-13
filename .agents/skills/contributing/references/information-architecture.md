@@ -42,6 +42,27 @@ Before creating a file:
 
 Do not re-explain a concept that already has its own page. Link to the canonical page with descriptive, root-relative link text (`/workers/runtime-apis/bindings/`). This keeps content accurate as products change and avoids drift between duplicate explanations.
 
+## Navigation stubs
+
+Some guides live in one product and appear in another through stubs. A stub is a frontmatter-only page with `pcx_content_type: navigation` and an `external_link` to the guide. Edit content only in the source folder. When you add, rename, move, or delete a guide, make the same change in the stub folder. Each subfolder needs a stub `index.mdx` that renders `<DirectoryListing />` and has the same body as the source index.
+
+```mdx
+---
+title: Amazon AWS Transit Gateway
+pcx_content_type: navigation
+description: Integrate Amazon AWS Transit Gateway with Zero Trust networking.
+products:
+  - cloudflare-one
+external_link: /cloudflare-wan/configuration/third-party/aws/
+---
+```
+
+| Source                                      | Stubs                                                                          |
+| ------------------------------------------- | ------------------------------------------------------------------------------ |
+| `cloudflare-wan/configuration/third-party/` | `cloudflare-one/networks/connectors/cloudflare-wan/configuration/third-party/` |
+
+`bin/third-party-stubs.node.test.ts` enforces this. Add new pairs to its `PAIRS` list.
+
 ## Partial vs new page
 
 Extract a **partial** (`src/content/partials/{product}/`, embedded with `Render`) when the same content needs to appear on more than one page — prerequisites, shared setup steps, repeated warnings. Write a **new page** when the content is a standalone topic a reader would navigate to or link to directly. Do not extract a partial for content used in only one place.

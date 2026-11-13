@@ -145,12 +145,12 @@ package.json @cloudflare/content-engineering
 
 # artifacts
 
-/src/content/docs/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
-/src/assets/images/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
-/src/content/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/artifacts.yaml @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
-/src/icons/artifacts.svg @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
+/src/content/docs/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
+/src/assets/images/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
+/src/content/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/artifacts.yaml @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
+/src/icons/artifacts.svg @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
 
 # audit-logs
 
