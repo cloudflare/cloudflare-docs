@@ -132,6 +132,8 @@ Because alarms are only retried up to 6 times on error, it's recommended to catc
 
 :::
 
+When `alarm()` returns successfully, the current alarm is complete. If no new alarm has been set, no pending alarm remains, even if queued jobs remain in storage. This includes an early return because job processing is turned off. To resume processing later, preserve the job schedule in storage and explicitly [set the next alarm](/durable-objects/api/alarms/#setalarm) when processing resumes.
+
 ## Example
 
 This example shows how to both set alarms with the `setAlarm(timestamp)` method and handle alarms with the `alarm()` handler within your Durable Object.
