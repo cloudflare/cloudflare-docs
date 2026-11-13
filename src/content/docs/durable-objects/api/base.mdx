@@ -221,6 +221,10 @@ class MyDurableObject(DurableObject):
   - On older compatibility dates (before `2026-04-07`), you **must** call `ws.close(code, reason)` inside this handler to complete the WebSocket close handshake. Failing to reciprocate the close will result in `1006` errors on the client, representing an abnormal closure per the WebSocket specification.
   - This method can be `async`.
 
+This handler is not a [shutdown hook](/durable-objects/concepts/durable-object-lifecycle/#working-without-shutdown-hooks). A client reporting `1006` does not establish whether this handler ran.
+
+Refer to [Handle disconnects](/durable-objects/best-practices/websockets/#handle-disconnects) for recovery guidance.
+
 #### Parameters
 
 - `ws` <Type text="WebSocket"/> - the [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) that was closed.
