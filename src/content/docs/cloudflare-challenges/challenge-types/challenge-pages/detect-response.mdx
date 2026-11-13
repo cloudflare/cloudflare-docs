@@ -30,3 +30,12 @@ fetch("/my-api-endpoint").then((response) => {
 	}
 });
 ```
+
+## Cross-origin requests
+
+For cross-origin fetch/XHR requests, the browser only exposes response headers listed in the `Access-Control-Expose-Headers` response header. To allow client-side code to read the `cf-mitigated` header on a challenged cross-origin endpoint, add a [Response Header Transform Rule](/rules/transform/response-header-modification/) on that endpoint that sets:
+
+- `Access-Control-Expose-Headers: Cf-Mitigated`
+- An appropriate `Access-Control-Allow-Origin` value for your application
+
+Scope the rule to the API endpoints where detection is required. Do not modify challenge-critical headers such as `Content-Security-Policy` or `Referer-Policy` on challenge pages, since this causes challenges to fail. For details, refer to [Custom CSP and error pages](/cloudflare-challenges/challenge-types/challenge-pages/additional-configuration/#custom-content-security-policy-csp-and-error-pages).
