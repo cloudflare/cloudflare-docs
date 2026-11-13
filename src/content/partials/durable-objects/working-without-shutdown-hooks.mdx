@@ -2,25 +2,36 @@
 {}
 ---
 
-A Durable Object shuts down when it becomes inactive, when a [code update strategy](/durable-objects/deployments/durable-objects-code-updates/) applies new code, or when Cloudflare deploys a new version of the Workers runtime. An `immediate` strategy applies the update right away. A `deferred` strategy gives the object time to hibernate, up to `max_delay`, but is best effort: the object can reset earlier. This is similar to other compute environments, where compute instances do not live forever and applications must persist state back to a database or storage system. Rather than relying on shutdown hooks (which are not provided), design your application to write state incrementally.
+import { TypeScriptExample } from "~/components";
 
-Shutdown hooks or lifecycle callbacks that run before shutdown are not provided because Cloudflare cannot guarantee these hooks would execute in all cases, and external software may rely too heavily on these (unreliable) hooks.
+A Durable Object shuts down when it becomes inactive, when a [code update strategy](/durable-objects/deployments/durable-objects-code-updates/) applies new code, or when Cloudflare deploys a new version of the Workers runtime.
 
-Instead of relying on shutdown hooks, you can regularly write to storage to recover gracefully from shutdowns.
+An `immediate` strategy applies the update right away. A `deferred` strategy gives the object time to hibernate, up to `max_delay`, but is best effort: the object can reset earlier.
 
-For example, if you are processing a stream of data and need to save your progress, write your position to storage as you go rather than waiting to persist it at the end:
+Design your application to write state incrementally rather than relying only on a shutdown notification.
 
-```js
-// Good: Write progress as you go
-async processData(data) {
-  data.forEach(async (item, index) => {
-    await this.processItem(item);
-    // Save progress frequently
-    await this.ctx.storage.put("lastProcessedIndex", index);
-  });
+Use the best-effort [`onHibernate`](/durable-objects/api/base/#onhibernate) hook for clean shutdown logic. The hook is not guaranteed to run.
+
+Persist important changes during normal request processing rather than deferring them to shutdown. SQLite storage operations such as `sql.exec()` complete synchronously, and key-value storage writes issued without an intervening `await` are automatically coalesced into a single atomic transaction — so writing incrementally does not add meaningful overhead compared to batching writes until shutdown.
+
+For example, persist each event as it arrives rather than buffering events in memory until shutdown:
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { onHibernate } from "cloudflare:durable-objects";
+
+export class EventRecorder extends DurableObject<Env> {
+	async recordEvent(eventId: string, payload: string) {
+		await this.ctx.storage.put(`event:${eventId}`, payload);
+	}
+
+	async [onHibernate](info: DurableObjectHibernationInfo) {
+		// Record shutdown metadata, but do not rely on this write for progress.
+		await this.ctx.storage.put("lastHibernationReason", info.reason);
+	}
 }
 ```
+</TypeScriptExample>
 
-While this may feel unintuitive, Durable Object storage writes are fast and synchronous, so you can persist state with minimal performance concerns.
-
-This approach ensures your Durable Object can safely resume from any point, even if it shuts down unexpectedly.
+This approach ensures that recorded events survive an unexpected shutdown. Refer to [`onHibernate`](/durable-objects/api/base/#onhibernate) for hook details.
