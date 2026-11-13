@@ -14,9 +14,13 @@ The local Artifacts simulator lets you develop against a Git-compatible reposito
 
 ## Choose a binding mode
 
-When you run a Worker locally, the `artifacts` binding uses the local simulator unless you explicitly set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your existing development workflow relied on an implicit remote binding, set `remote = true` to keep using the deployed service.
+Starting with Wrangler 4.162.0, the `artifacts` binding uses the local simulator when you run a Worker locally, unless you set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your development workflow relied on the earlier remote default, set `remote = true` to keep using deployed repos.
 
-While `remote` is omitted, `wrangler dev`, `getPlatformProxy()` and the Vite plugin warn that the binding uses the local simulator by default, once for each binding rather than on every config reload. They warn only when remote bindings are enabled; Workers Vitest and `wrangler dev --local` always used the local simulator, so they don't warn. Set `remote = true` to use deployed repos, or `remote = false` to keep the local simulator and silence the warning. In `cloudflare.config.ts`, the setting is `dev: { remote }`.
+While `remote` is omitted, `wrangler dev`, `getPlatformProxy()`, and the Vite plugin warn that the binding uses the local simulator by default. Each binding warns once, not on every config reload. You only see the warning when remote bindings are enabled. Workers Vitest and `wrangler dev --local` always used the local simulator, so they do not warn. Set `remote = true` to use deployed repos, or set `remote = false` to keep the local simulator and silence the warning. In `cloudflare.config.ts`, the setting is `dev: { remote }`.
+
+:::note
+Cloudflare Vite plugin 1.x keeps the earlier default. With remote bindings enabled, an omitted `remote` uses deployed repos. Set `remote = false` to use the local simulator with Vite plugin 1.x.
+:::
 
 | Setting                              | Binding destination        | Local Git installation            | Cloudflare credentials for local development |
 | ------------------------------------ | -------------------------- | --------------------------------- | -------------------------------------------- |
@@ -63,7 +67,7 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
 
    Use the same Wrangler config file with the Cloudflare Vite plugin or Workers Vitest. For a Worker example that creates a repo, refer to [Get started with Workers](/artifacts/get-started/workers/).
 
-4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP. Wrangler prints each namespace's Git remote prefix at startup. The port is saved with your local state and reused after a restart, so clones keep working. If another process has taken the port, the dev server picks a new one; get the new URL from the binding and run `git remote set-url origin <remote>` in existing clones:
+4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP. The dev server prints each namespace's Git remote prefix at startup. The port is saved with your local state and reused after a restart, so clones keep working. If another process has taken the port, the dev server picks a new one. Get the new URL from the binding and run `git remote set-url origin <remote>` in existing clones:
 
    ```sh
    git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
@@ -72,6 +76,113 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
    Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username and the repo token as the password. Snippets elsewhere in these docs that strip `https://` from the remote do not apply to the local `http://` remote.
 
 </Steps>
+
+## Test event subscriptions
+
+Local namespaces publish [Artifacts events](/artifacts/guides/event-subscriptions/) as you work, so you can build and test event-driven Workflows before you deploy. For example:
+
+- Set up a repo when it is created, imported, or forked
+- Clean up related data when a repo is deleted
+- Audit when repo tokens are created or revoked
+
+Locally, Artifacts publishes these events:
+
+- **Repo lifecycle** — `cf.artifacts.repo.created`, `cf.artifacts.repo.imported`, `cf.artifacts.repo.forked`, and `cf.artifacts.repo.deleted`.
+- **Repo tokens** — `cf.artifacts.repo.token.created` and `cf.artifacts.repo.token.revoked`. Creating, importing, or forking a repo also publishes `cf.artifacts.repo.token.created` for the repo's initial token.
+
+Push, clone, and fetch events are not published locally yet. A Workflow that [builds and deploys on push](/artifacts/guides/build-and-deploy-on-push/) does not start in local development.
+
+### Start a Workflow from an event
+
+Use the same `triggers.events` configuration that you deploy. Each target must be a Workflow defined by the same Worker. A matching event starts a new instance of that Workflow, and the event message is the instance's `event.payload`:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"name": "artifacts-worker",
+	"main": "src/index.ts",
+	"compatibility_date": "$today",
+	"artifacts": [{ "binding": "ARTIFACTS", "namespace": "default" }],
+	"workflows": [
+		{
+			"binding": "ON_REPO_CREATED",
+			"name": "on-repo-created",
+			"class_name": "OnRepoCreated",
+		},
+	],
+	"triggers": {
+		"events": [
+			{
+				"type": "cf.artifacts.repo.created",
+				"filter": { "namespace": "default" },
+				"targets": [{ "type": "workflow", "workflow_name": "on-repo-created" }],
+			},
+		],
+	},
+}
+```
+
+</WranglerConfig>
+
+```ts title="src/index.ts"
+import {
+	WorkflowEntrypoint,
+	type WorkflowEvent,
+	type WorkflowStep,
+} from "cloudflare:workers";
+
+interface RepoCreated {
+	type: "cf.artifacts.repo.created";
+	source: { type: "artifacts"; namespace: string; repoName: string };
+	payload: { repoId: string; defaultBranch: string };
+}
+
+export class OnRepoCreated extends WorkflowEntrypoint<Env, RepoCreated> {
+	async run(event: WorkflowEvent<RepoCreated>, step: WorkflowStep) {
+		const { source } = event.payload;
+		await step.do("read repo info", async () => {
+			const repo = await this.env.ARTIFACTS.get(source.repoName);
+			return await repo.info();
+		});
+	}
+}
+```
+
+`wrangler dev` and Workers Vitest read `triggers.events` from your Wrangler config file. In `cloudflare.config.ts`, which the Vite plugin 2.x, Workers Vitest, and `cf` read, declare events on the Workflow export instead. The Workflow that declares an event receives it, so there is no `targets` list. The filter uses `repoName` instead of `repo_name`:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig, exports } from "@cloudflare/config";
+
+export default defineConfig({
+	worker: {
+		name: "artifacts-worker",
+		entrypoint: "./src/index.ts",
+		compatibilityDate: "$today",
+		env: {
+			ARTIFACTS: bindings.artifacts({ namespace: "default" }),
+		},
+		exports: {
+			OnRepoCreated: exports.workflow({
+				name: "on-repo-created",
+				events: [
+					{
+						type: "cf.artifacts.repo.created",
+						filter: { namespace: "default" },
+					},
+				],
+			}),
+		},
+	},
+});
+```
+
+### How local delivery works
+
+- **Same message shape** — Each message has the deployed `type`, `source`, `payload`, and `metadata` fields. Locally, `metadata.accountId` is `"local"`.
+- **Unordered** — Events can arrive in any order, even for back-to-back operations such as creating a repo and its initial token.
+- **Does not block repo changes** — Artifacts publishes an event after the repo change completes. If delivery fails, the dev server logs the error and does not retry. The repo operation still succeeds.
+- **Workflows only** — Local Artifacts does not deliver events to queues.
 
 ## Keep or reset local repositories
 
