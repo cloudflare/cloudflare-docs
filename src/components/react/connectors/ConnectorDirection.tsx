@@ -24,12 +24,17 @@ import { PacketPulse } from "../mesh/PacketPulse";
 const VIEW_W = 340;
 const VIEW_H = 330;
 const CX = VIEW_W / 2;
-const LAPTOP = makeRect(90, 14, 160, 40);
+// The laptop and server cards are wider than the middle two so that labels
+// with an address, such as "Laptop · 100.96.0.12", have room to breathe.
+const LAPTOP = makeRect(60, 14, 220, 40);
 const CLOUDFLARE = makeRect(100, 100, 140, 40);
 const CONNECTOR = makeRect(100, 186, 140, 40);
-const SERVER = makeRect(90, 274, 160, 40);
+const SERVER = makeRect(60, 274, 220, 40);
 const NODES = [LAPTOP, CLOUDFLARE, CONNECTOR, SERVER];
 const BEAT_MS = 620;
+// After a run finishes, its result stays visible this long, then the
+// diagram returns to rest.
+const RESULT_MS = 2400;
 const CAPTION_X = CX + 10;
 
 const LABEL =
@@ -141,6 +146,17 @@ function DirectionBody() {
 		return () => clearTimeout(t);
 	}, [run, step, done, reduced]);
 
+	// Reset to rest once the result has been shown. Under reduced motion the
+	// result stays until the reader acts again.
+	useEffect(() => {
+		if (!done || reduced) return;
+		const t = setTimeout(() => {
+			setRun(null);
+			setStep(0);
+		}, RESULT_MS);
+		return () => clearTimeout(t);
+	}, [done, reduced]);
+
 	function start(origin: Origin) {
 		const id = seq + 1;
 		setSeq(id);
@@ -158,7 +174,8 @@ function DirectionBody() {
 	const points = hop ? hopPoints(hop) : null;
 	const path = hop ? segment(hop) : null;
 	const status = describe(mode, run, running);
-	const visible = run ? run.hops.slice(0, step + 1) : [];
+	// Nodes light up only while a connection is moving through them.
+	const visible = running && run ? run.hops.slice(0, step + 1) : [];
 	const touched = (i: number) => visible.some(([a, b]) => a === i || b === i);
 	const ok = done && run !== null && !run.blocked;
 	const failed = done && run !== null && run.blocked;
@@ -185,7 +202,7 @@ function DirectionBody() {
 							ariaLabel="Start a connection from the laptop to the server"
 							onClick={() => start("laptop")}
 							disabled={running}
-							highlight
+							highlight={running && run?.origin === "laptop"}
 						>
 							Laptop → server
 						</LabeledButton>
@@ -193,7 +210,7 @@ function DirectionBody() {
 							ariaLabel="Start a connection from the server to the laptop"
 							onClick={() => start("server")}
 							disabled={running}
-							highlight
+							highlight={running && run?.origin === "server"}
 						>
 							Server → laptop
 						</LabeledButton>

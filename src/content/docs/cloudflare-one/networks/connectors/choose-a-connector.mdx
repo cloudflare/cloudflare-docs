@@ -29,24 +29,15 @@ Cloudflare offers four connectors. Each one suits a different kind of resource. 
 
 ## Connectors at a glance
 
-People and their devices connect through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). Infrastructure and code connect through one of four connectors. In the following diagram, hover over or focus on a connector to highlight the destinations it reaches.
+People and their devices connect through the [Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/). Infrastructure and code connect through one of four connectors. In the following diagram, hover over or focus on a connector to see how it works and who usually runs it.
 
 <ConnectorMapDiagram variant="connectors" />
-
-The following table summarizes what each connector connects and how it works:
-
-| Connector | Connects | How it works | Usually run by |
-| --- | --- | --- | --- |
-| [Cloudflare Mesh](/mesh/) | Private networks, servers, devices, and private applications | Gives each participant a private IP address and carries TCP, UDP, and ICMP traffic in both directions. | Platform, DevOps, and cloud teams |
-| [Cloudflare Tunnel](/tunnel/) | Web applications on the public Internet | Runs `cloudflared` beside the application, which connects out to Cloudflare so the origin needs no inbound port. | Application teams |
-| [Workers VPC](/workers-vpc/) | Code that runs on Cloudflare Workers | Lets a Worker call private services that Mesh, Tunnel, or Cloudflare WAN connect. | Developers |
-| [Cloudflare WAN](/cloudflare-one/networks/connectors/cloudflare-wan/) | Branch offices and data centers | Connects a whole site at the network layer with the Cloudflare One Appliance, or with IPsec or GRE tunnels from your routers. | Network engineering teams |
 
 We recommend the following defaults:
 
 - **Private access and private networks:** Use Cloudflare Mesh. Mesh is the default connector for [Cloudflare One](/cloudflare-one/), Cloudflare's secure access service edge (SASE) platform.
 - **Public web applications:** Use Cloudflare Tunnel to publish an HTTP application on the public Internet, with or without [Cloudflare Access](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) in front of it.
-- **Code on Cloudflare:** Use Workers VPC.
+- **Code on Cloudflare:** Use Workers VPC. It lets a Worker call private services that Mesh, Tunnel, or Cloudflare WAN connect.
 - **Whole sites:** Use Cloudflare WAN.
 
 Most deployments combine two or three connectors. For examples, refer to [Combine connectors](#combine-connectors).
@@ -170,18 +161,11 @@ Common workarounds expose a credential. A public endpoint protected by a shared 
 
 Mesh makes the agent a participant in your private network instead. Run a Mesh node beside the private resource, then have the agent connect to the node's Mesh IP or hostname. Agents on servers and in containers get a service identity. Agents on laptops use the identity of the signed-in user. You can then write separate policies for people and for workloads.
 
+In the following diagram, hover over or focus on where an agent runs to see how it connects.
+
 <ConnectorMapDiagram variant="agents" />
 
-The following table lists common patterns for AI agents:
-
-| Pattern | Connector | How it works |
-| --- | --- | --- |
-| A coding agent on a laptop reaches a private database | Cloudflare Mesh | The agent connects to the Mesh IP of a node beside the database, with no bastion host or port forwarding. |
-| An agent in one cloud reaches services in another cloud | Cloudflare Mesh | A node in each virtual private cloud (VPC) advertises its subnet as a [route](/mesh/features/routes/), so neither cloud opens a port. |
-| A Worker or agent on Cloudflare calls an internal API | Workers VPC | The Worker binds to `cf1:network` and calls the private hostname or IP with `fetch()`. |
-| An agent calls a private Model Context Protocol (MCP) server | Cloudflare Mesh or Workers VPC | A node beside the MCP server gives it a [hostname route](/mesh/features/routes/#hostname-routes), and Gateway logs every call. |
-
-Each pattern follows the same model. A node sits beside the resource, a route or hostname makes the resource reachable, and the agent connects to it.
+Each pattern follows the same model. A node sits beside the resource, and a [route](/mesh/features/routes/) or [hostname route](/mesh/features/routes/#hostname-routes) makes the resource reachable. The agent then connects to it, and Gateway logs every call.
 
 ## Combine connectors
 
