@@ -233,14 +233,13 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-sear
 
 The following options apply only when `parse_type` is `discover`. All of them are optional.
 
-| Option                   | Type    | Default  | Range or values            | Description                                                           |
-| ------------------------ | ------- | -------- | -------------------------- | --------------------------------------------------------------------- |
-| `source`                 | string  | `all`    | `all`, `sitemaps`, `links` | Where the crawler looks for candidate URLs.                           |
-| `limit`                  | number  | `100000` | 1 to 100,000               | Maximum number of pages to crawl.                                     |
-| `depth`                  | number  | `5`      | 1 to 100,000               | Maximum number of link hops to follow from the source URL.            |
-| `max_age`                | number  | `86400`  | 0 to 604,800 seconds       | How long the crawler reuses cached page content before it re-fetches. |
-| `include_external_links` | boolean | `false`  | `false`                    | Not supported. Must stay `false`.                                     |
-| `include_subdomains`     | boolean | `false`  | `true`, `false`            | Whether to follow links that point to subdomains of the source URL.   |
+| Option               | Type    | Default  | Range or values            | Description                                                           |
+| -------------------- | ------- | -------- | -------------------------- | --------------------------------------------------------------------- |
+| `source`             | string  | `all`    | `all`, `sitemaps`, `links` | Where the crawler looks for candidate URLs.                           |
+| `limit`              | number  | `100000` | 1 to 100,000               | Maximum number of pages to crawl.                                     |
+| `depth`              | number  | `5`      | 1 to 100,000               | Maximum number of link hops to follow from the source URL.            |
+| `max_age`            | number  | `86400`  | 0 to 604,800 seconds       | How long the crawler reuses cached page content before it re-fetches. |
+| `include_subdomains` | boolean | `false`  | `true`, `false`            | Whether to follow links that point to subdomains of the source URL.   |
 
 #### Discovery source
 
@@ -264,14 +263,12 @@ The `max_age` option sets the maximum age, in seconds, of cached page content th
 
 In the dashboard, **Max cache age** offers **No cache**, **1 hour**, **1 day**, **3 days**, and **7 days**.
 
-#### External links and subdomains
+#### Subdomains
 
 By default, the crawler stays on the host of the source URL. Enable `include_subdomains` to follow links into subdomains.
 
-Following links to other domains is not supported. A `discover` crawl only covers the zone you own, so `include_external_links` must stay `false`. Setting it to `true` returns error `7102` (`include_external_links_not_allowed`).
-
 :::caution
-`include_subdomains` can grow a crawl well beyond the pages you expect. Pair them with `limit`, `depth`, and [path filtering](/ai-search/configuration/indexing/path-filtering/).
+`include_subdomains` can grow a crawl well beyond the pages you expect. Pair it with `limit`, `depth`, and [path filtering](/ai-search/configuration/indexing/path-filtering/).
 :::
 
 ### Sync behavior
