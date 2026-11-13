@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 660" font-family="Inter, ui-sans-serif, system-ui, sans-serif" role="img" aria-labelledby="diagram-title diagram-desc">
+<title id="diagram-title">Separate administrative and resource request paths</title>
+<desc id="diagram-desc">Both designs contain a request Worker, one account control Durable Object, and three separate document Durable Objects named doc:1, doc:2, and doc:3. On the coupled path, every document request passes through the account control object. On the separated path, an administrative Worker updates the account control object, which publishes configuration through KV or R2. The request Worker reads that configuration and routes directly to the selected document object. Workers use the Workers logo; every Durable Object has its own Durable Objects icon and box.</desc>
+<defs>
+<symbol id="icon-workers" viewBox="0 0 48 49"><path d="m18.63 37.418-9.645-12.9 9.592-12.533-1.852-2.527L5.917 23.595l-.015 1.808 10.86 14.542z"/><path d="M21.997 6.503h-3.712l13.387 18.3-13.072 17.7h3.735L35.4 24.81z"/><path d="M29.175 6.503h-3.758l13.598 18.082-13.598 17.918h3.765l12.908-17.01v-1.808z"/></symbol>
+<symbol id="icon-durable-objects" viewBox="0 0 64 64"><path fill="currentColor" fill-rule="evenodd" d="M32.214 6h-.202a26 26 0 1 0 .327 52q.266 0 .527-.014A26 26 0 0 0 58.012 32 26 26 0 0 0 32.865 6.014a10 10 0 0 0-.65-.013m-9.503 6.063A22 22 0 0 0 10.104 30h7.804q.068-1.79.252-3.51l3.998.24A46 46 0 0 0 21.91 30H30V10.519c-1.784.81-3.475 2.582-4.9 5.41q-.139.278-.274.567l-3.873-1.145q.276-.627.575-1.221c.363-.72.757-1.412 1.182-2.067M30 34h-8.09c.226 5.584 1.392 10.5 3.19 14.071 1.425 2.829 3.116 4.6 4.9 5.41zm-7.29 17.937a22 22 0 0 1-1.182-2.067c-2.131-4.233-3.393-9.795-3.62-15.87h-7.806A22 22 0 0 0 22.71 51.937m19.554-.472A22 22 0 0 0 53.921 34h-7.15a51 51 0 0 1-.26 3.589l-3.998-.24q.185-1.627.255-3.349H34v19.742c2.032-.641 3.973-2.486 5.577-5.671q.129-.255.252-.517l3.874 1.145q-.267.6-.553 1.171a23 23 0 0 1-.885 1.595M42.768 30H34V10.258c2.032.641 3.973 2.486 5.577 5.671 1.799 3.572 2.965 8.487 3.191 14.071m4.003 0c-.227-6.075-1.49-11.637-3.621-15.87a22 22 0 0 0-.885-1.595A22 22 0 0 1 53.921 30z" clip-rule="evenodd"/></symbol>
+<symbol id="icon-kv" viewBox="0 0 64 64"><path fill="currentColor" d="M22 44.95h-7v-4h7zm-7-8h7v-4h-7zm7-8h-7v-4h7zm4 16h23v-4H26zm23-8H26v-4h23zm-23-8h23v-4H26z"/><path fill="currentColor" fill-rule="evenodd" d="m6 12 2-2h19l1.675.907 3.408 5.225H56l2 2V52l-2 2H8l-2-2zm4 2v36h44V20.132H31l-1.675-.908L25.917 14z" clip-rule="evenodd"/></symbol>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#5577a5"/></marker>
+</defs>
+<rect width="1200" height="660" fill="#ffffff"/>
+<rect x="20" y="20" width="470" height="605" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" />
+<rect x="510" y="20" width="670" height="605" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" />
+<text x="255" y="55" font-size="21" font-weight="600" text-anchor="middle" fill="#1d2939">Coupled request path</text>
+<text x="845" y="55" font-size="21" font-weight="600" text-anchor="middle" fill="#1d2939">Separate request paths</text>
+<rect x="125" y="85" width="260" height="85" rx="9" fill="#f4f7fc" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-workers" x="139" y="97" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="185" y="120" font-size="17" font-weight="600" text-anchor="start" fill="#1d2939">Request Worker</text><text x="255" y="147" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">All user requests</text>
+<rect x="125" y="220" width="260" height="90" rx="9" fill="#fff4e8" stroke="#e7a460" stroke-width="1.5" />
+<use href="#icon-durable-objects" x="142" y="237" width="40" height="40" fill="#f6821f" color="#f6821f"/>
+<text x="196" y="252" font-size="17" font-weight="600" text-anchor="start" fill="#1d2939">Account control DO</text>
+<text x="255" y="285" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">Every request waits here</text>
+<path d="M255 170 V220" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M255 310 V425 H115" fill="none" stroke="#5577a5" stroke-width="2"/>
+<path d="M255 425 H395" fill="none" stroke="#5577a5" stroke-width="2"/>
+<path d="M115 425 V455" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M255 425 V455" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M395 425 V455" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="55" y="455" width="120" height="100" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-durable-objects" x="97" y="465" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="115" y="520" font-size="16" font-weight="600" text-anchor="middle" fill="#1d2939">doc:1</text><text x="115" y="541" font-size="12" font-weight="400" text-anchor="middle" fill="#475467">Durable Object</text>
+<rect x="195" y="455" width="120" height="100" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-durable-objects" x="237" y="465" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="255" y="520" font-size="16" font-weight="600" text-anchor="middle" fill="#1d2939">doc:2</text><text x="255" y="541" font-size="12" font-weight="400" text-anchor="middle" fill="#475467">Durable Object</text>
+<rect x="335" y="455" width="120" height="100" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-durable-objects" x="377" y="465" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="395" y="520" font-size="16" font-weight="600" text-anchor="middle" fill="#1d2939">doc:3</text><text x="395" y="541" font-size="12" font-weight="400" text-anchor="middle" fill="#475467">Durable Object</text>
+<text x="255" y="585" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">Every request shares the account control dependency</text>
+<text x="255" y="608" font-size="13" font-weight="400" text-anchor="middle" fill="#475467">Three separate document Durable Objects</text>
+<rect x="535" y="85" width="270" height="85" rx="9" fill="#f4f7fc" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-workers" x="549" y="97" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="595" y="120" font-size="17" font-weight="600" text-anchor="start" fill="#1d2939">Admin API Worker</text><text x="670" y="147" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">Configuration changes</text>
+<rect x="865" y="85" width="285" height="85" rx="9" fill="#fff4e8" stroke="#e7a460" stroke-width="1.5" />
+<use href="#icon-durable-objects" x="880" y="97" width="36" height="36" fill="#f6821f" color="#f6821f"/>
+<text x="930" y="120" font-size="17" font-weight="600" text-anchor="start" fill="#1d2939">Account control DO</text>
+<text x="1007.5" y="147" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">Authoritative account state</text>
+<path d="M805 127 H865" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="865" y="220" width="285" height="85" rx="9" fill="#f4f7fc" stroke="#b6c7e0" stroke-width="1.5" />
+<text x="1007.5" y="252" font-size="18" font-weight="600" text-anchor="middle" fill="#1d2939">KV / R2</text>
+<text x="1007.5" y="280" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">Published configuration</text>
+<path d="M1007 170 V220" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M865 262 H840 V335" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<text x="808" y="294" font-size="13" font-weight="400" text-anchor="end" fill="#475467">read</text>
+<rect x="690" y="335" width="300" height="80" rx="9" fill="#f4f7fc" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-workers" x="704" y="347" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="750" y="370" font-size="17" font-weight="600" text-anchor="start" fill="#1d2939">Request Worker</text><text x="840" y="397" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">User traffic · policy · routing</text>
+<path d="M840 415 V435 H640" fill="none" stroke="#5577a5" stroke-width="2"/>
+<path d="M840 435 H1070" fill="none" stroke="#5577a5" stroke-width="2"/>
+<path d="M640 435 V455" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M855 435 V455" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M1070 435 V455" fill="none" stroke="#5577a5" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="575" y="455" width="130" height="100" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-durable-objects" x="622" y="465" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="640" y="520" font-size="16" font-weight="600" text-anchor="middle" fill="#1d2939">doc:1</text><text x="640" y="541" font-size="12" font-weight="400" text-anchor="middle" fill="#475467">Durable Object</text>
+<rect x="790" y="455" width="130" height="100" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-durable-objects" x="837" y="465" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="855" y="520" font-size="16" font-weight="600" text-anchor="middle" fill="#1d2939">doc:2</text><text x="855" y="541" font-size="12" font-weight="400" text-anchor="middle" fill="#475467">Durable Object</text>
+<rect x="1005" y="455" width="130" height="100" rx="9" fill="#ffffff" stroke="#b6c7e0" stroke-width="1.5" /><use href="#icon-durable-objects" x="1052" y="465" width="36" height="36" fill="#f6821f" color="#f6821f"/><text x="1070" y="520" font-size="16" font-weight="600" text-anchor="middle" fill="#1d2939">doc:3</text><text x="1070" y="541" font-size="12" font-weight="400" text-anchor="middle" fill="#475467">Durable Object</text>
+<text x="845" y="585" font-size="14" font-weight="400" text-anchor="middle" fill="#475467">Route directly to the selected document Durable Object</text>
+<text x="845" y="608" font-size="13" font-weight="400" text-anchor="middle" fill="#475467">Control-plane Durable Objects remain valid</text>
+<use href="#icon-workers" x="358" y="631" width="22" height="22" fill="#f6821f" color="#f6821f"/>
+<text x="388" y="648" font-size="13" font-weight="400" text-anchor="start" fill="#1d2939">Worker</text>
+<use href="#icon-durable-objects" x="598" y="631" width="22" height="22" fill="#f6821f" color="#f6821f"/>
+<text x="628" y="648" font-size="13" font-weight="400" text-anchor="start" fill="#1d2939">Durable Object</text>
+</svg>
