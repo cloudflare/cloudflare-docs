@@ -2,11 +2,21 @@
 {}
 ---
 
-import { Tabs, TabItem, Render, Details, APIRequest, GlossaryTooltip } from "~/components";
+import {
+	Tabs,
+	TabItem,
+	Render,
+	Details,
+	APIRequest,
+	GlossaryTooltip,
+} from "~/components";
 
 A target represents a single resource in your infrastructure (such as a server, Kubernetes cluster, database, or container) that users will connect to through Cloudflare.
 
-<p>Targets are protocol-agnostic, meaning that you do not need to define a new target for each protocol that runs on the server. To create a new target: </p>
+<p>
+	Targets are protocol-agnostic, meaning that you do not need to define a new
+	target for each protocol that runs on the server. To create a new target:{" "}
+</p>
 
 <Tabs syncKey="dashPlusAPI">
 <TabItem label="Dashboard">
@@ -56,10 +66,10 @@ Make a `POST` request to the [Infrastructure Access Targets](/api/resources/zero
 The `tags` field is optional. Use [Resource Tagging](/resource-tagging/) to manage tags. Each key can only appear once per target.
 
 </TabItem>
-<TabItem label="Terraform">
+<TabItem label="Terraform (v4)">
 
 :::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.45.0`.
+The following example uses Cloudflare provider v4 (`>=4.45.0, <5.0.0`). Provider v5 uses a different configuration syntax.
 :::
 
 1. Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
