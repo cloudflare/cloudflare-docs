@@ -208,3 +208,34 @@ Now, we can investigate by selecting the **Invocations** tab. We can see that th
 We can expand a single invocation to view the relevant logs, and continue to debug.
 
 ![Viewing the logs for a single Invocation](~/assets/images/workers-observability/wobs_invocation_logs_122.png)
+
+## Limits
+
+| Description                         | Limit                 |
+| ----------------------------------- | --------------------- |
+| Maximum time range                  | 7 days                |
+| Maximum events returned per request | 2,000                 |
+| API requests<sup>1</sup>            | 1,200 per 5 minutes   |
+| Data read per account<sup>2</sup>   | 500 GB per 60 seconds |
+
+<sup>1</sup> Queries sent through the REST API count toward the [global
+Cloudflare API rate limit](/fundamentals/api/reference/limits/).
+
+<sup>2</sup> Data read is the amount of data a query scans to find matching
+events, not the amount it returns. The API reports it in
+`result.statistics.bytes_read`. The limit covers queries from both the dashboard
+and the API.
+
+Requests over the API or data read limit return HTTP `429` with a `Retry-After` header.
+
+## Query performance
+
+Queries run faster when they scan less data:
+
+- Use a shorter time range. This has the largest effect.
+- Select a single dataset.
+- Filter on `$metadata.service`, which is the Worker name, or the bucket name for R2.
+- Use Equals where you can. Includes, Regex, and [Search](#search) compare text in every event in the time range.
+- To count or summarize events, use a [visualization](#visualization) with [Group By](#group-by) instead of retrieving the events themselves.
+
+If you query the API on a schedule to copy events into another system, check whether you can [export](/observability/export/) the data to a destination instead. Export is not available for every dataset. Refer to [supported telemetry](/observability/export/opentelemetry/#supported-telemetry) for what you can export today.
