@@ -1,0 +1,8 @@
+---
+title: Tiered Cache works with private origins over Cloudflare WAN
+description: The Tiered Cache 403 issue for cacheable requests to private origins is resolved.
+pcx_content_type: changelog
+date: 2026-11-07
+---
+
+**Tiered Cache now works with private origins over Cloudflare WAN.** The earlier issue where upper tiers returned `403` for cacheable cache-miss requests to private-origin hostnames is resolved. The Cache Rule bypass workaround is no longer needed and can be removed.

@@ -85,7 +85,6 @@ Replace `100.64.0.0/12` with the Source IP range configured for your account, an
 | Traffic tries to route over the public Internet     | The **Use private network routing** toggle is not turned on for the DNS record. Edit the record and turn the toggle on.                                                                  |
 | Large responses hang or stall                       | The MSS clamp is missing or above `1360` on the IPsec tunnel. Set it to `1360` or lower.                                                                                                 |
 | IPv6 requests time out                              | No return route for `2606:4700:cf1:5000::/64`. Add one through the tunnel.                                                                                                               |
-| Cacheable assets return `403`                       | Known Tiered Cache issue. Refer to [Limitations](/dns/private-origins/#limitations).                                                                                                     |
 
 ## Next steps
 
