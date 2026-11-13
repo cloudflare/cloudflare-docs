@@ -50,7 +50,9 @@ For more specific guidance, contact your hosting provider or website administrat
 
 ### Block other IP addresses (recommended)
 
-If someone discovers your origin server's IP address — for example, through historical DNS records or mail server configuration — they could send traffic directly to your server, bypassing Cloudflare's security protections entirely. To prevent this, block all traffic that does not come from Cloudflare IP addresses or the IP addresses of your trusted partners, vendors, or applications.
+If someone discovers your origin server's IP address — for example, through historical DNS records or mail server configuration — they could send traffic directly to your server, bypassing Cloudflare's security protections entirely. To restrict direct access, block all traffic that does not come from Cloudflare IP addresses or the IP addresses of your trusted partners, vendors, or applications.
+
+Cloudflare IP ranges are shared across customers. Allowlisting them does not prove that a request passed through your zone or its security rules. Combine this network filter with [origin authentication](/fundamentals/reference/http-headers/#trust-visitor-ip-headers), especially before trusting visitor IP headers for security decisions.
 
 For example, you might [update your iptables](https://www.linode.com/docs/guides/control-network-traffic-with-iptables/#block-or-allow-traffic-by-port-number-to-create-an-iptables-firewall) with the following commands:
 
