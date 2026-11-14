@@ -1,6 +1,6 @@
 ---
 title: Container Fundamentals
-description: Understand what a Cloudflare Container is, how requests reach it, how it starts and stops, where it runs, and how it holds state.
+description: Understand what a Cloudflare Container is, how HTTP and TCP traffic reaches it, how it starts and stops, where it runs, and how it holds state.
 pcx_content_type: overview
 sidebar:
   order: 3
@@ -8,7 +8,7 @@ sidebar:
     label: Concepts
 products:
   - containers
-reviewed: 2026-08-21
+reviewed: 2026-09-24
 ---
 
 import { CardGrid, LinkCard } from "~/components";
@@ -18,7 +18,7 @@ import { ContainerRequestPath } from "~/components/react/container/ContainerRequ
 import { ContainerLifecycle } from "~/components/react/container/ContainerLifecycle";
 import { ContainerPlacement } from "~/components/react/container/ContainerPlacement";
 
-A Cloudflare Container runs your container image in a full Linux environment on Cloudflare's network, alongside a Worker. The Worker handles incoming HTTP requests, while the Container provides the runtime, binaries, and languages your application needs. Together, they let you run Linux workloads without managing the underlying infrastructure.
+A Cloudflare Container runs your container image in a full Linux environment on Cloudflare's network, alongside a Worker. The Worker handles incoming HTTP requests and can handle raw TCP connections in public beta. The Container provides the runtime, binaries, and languages your application needs. Together, they let you run Linux workloads without managing the underlying infrastructure.
 
 ## The Container runtime
 
@@ -33,6 +33,8 @@ A request reaches the Worker, which routes it to a Container running inside its 
 </ContainerIsolation>
 
 For more information, refer to [Lifecycle of a Container](/containers/concepts/architecture/).
+
+For TCP applications, Spectrum can invoke a Worker's [`connect()` handler](/workers/runtime-apis/handlers/connect/). The Worker can then forward the raw socket to a process in the Container. This supports protocols such as bidirectional gRPC. Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/).
 
 ## How requests reach a Container
 
@@ -113,6 +115,11 @@ When you are ready to build, start with a deployed Container or explore the avai
 		href="/containers/guides/"
 		description="Task-focused walkthroughs for common container workloads."
 	/>
+	<LinkCard
+		title="Bidirectional gRPC"
+		href="/containers/examples/bidirectional-grpc/"
+		description="Route a gRPC stream through Spectrum and Workers to a Container."
+	/>
 </CardGrid>
 
 ## Related resources
@@ -120,5 +127,6 @@ When you are ready to build, start with a deployed Container or explore the avai
 - [Lifecycle of a Container](/containers/concepts/architecture/): the deep dive on deployment, routing, and shutdown.
 - [Placement](/containers/concepts/placement/): where instances run and how to constrain them.
 - [Connect to Workers and bindings](/containers/configuration/workers-connections/): reaching Cloudflare resources from a container.
+- [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/): routing raw TCP streams to a containerized gRPC server.
 - [Limits and instance types](/containers/platform/limits/) and [Pricing](/containers/platform/pricing/): sizes, account limits, and billing.
 - [Rollouts](/containers/configuration/rollouts/): how new versions roll out across instances.

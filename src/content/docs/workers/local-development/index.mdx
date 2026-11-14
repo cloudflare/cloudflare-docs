@@ -4,7 +4,7 @@ title: Local development
 sidebar:
   order: 6
 head: []
-description: Develop and test your Workers locally.
+description: Develop and test HTTP, TCP, and gRPC Workers locally.
 products:
   - workers
 ---
@@ -57,6 +57,22 @@ Both Wrangler and the Cloudflare Vite plugin use [Miniflare](/workers/testing/mi
 
 - [Get started with Wrangler](/workers/wrangler/install-and-update/)
 - [Get started with the Cloudflare Vite plugin](/workers/vite-plugin/get-started/)
+
+### Inbound TCP and gRPC
+
+To receive raw TCP connections locally, export a [`connect()` handler](/workers/runtime-apis/handlers/connect/) and configure a TCP listener in `wrangler.jsonc`:
+
+<WranglerConfig>
+```jsonc
+{
+	"connect": [{ "protocol": "tcp", "port": 8788 }],
+}
+```
+</WranglerConfig>
+
+Connect TCP or gRPC clients to `localhost:8788`. The port comes from this configuration; exporting the handler alone does not create a listener.
+
+Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/) for an example that uses the local TCP listener to test a gRPC server running in a Container.
 
 ### Defaults
 
