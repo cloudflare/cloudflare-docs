@@ -59,9 +59,11 @@ With the `durable_object` policy, you set the instance size with the `instance` 
 
 - `dev`: Use `lite`.
 - `standard`: Use `standard-1`.
-- `basic`: Choose `lite` or `standard-1`. Custom instance types require at least 1 vCPU, so you cannot reproduce `basic` with a custom instance.
+- `basic`: Use a custom instance with `{ vcpu: 0.25, memoryMib: 1024, diskMb: 4000 }`.
 
 Custom instance objects use camel case at runtime. Rename `memory_mib` to `memoryMib` and `disk_mb` to `diskMb`. Refer to [Choose an instance size at runtime](/containers/configuration/scheduling-policy/#choose-an-instance-size-at-runtime).
+
+For custom instance minimums and maximums, refer to [Custom Instance Types](/containers/platform/limits/#custom-instance-types).
 
 ## Move the application
 
