@@ -142,9 +142,15 @@ For the complete procedure, refer to
 
 - **Live logs**: `cf` cannot stream live logs yet. Run
   `npx wrangler tail <WORKER_NAME>` instead of installing Wrangler.
-- **Single secrets**: `cf` cannot set a single secret yet. For options, refer
-  to
-  [Commands not yet supported](/cf/wrangler/reference/#commands-not-yet-supported).
+
+Secrets do not need Wrangler. `cf` can set a single secret with
+`cf workers secrets update`, which replaces `wrangler secret put`:
+
+```sh
+cf workers secrets update <SECRET_NAME> --worker <WORKER_NAME>
+```
+
+For details, refer to [Secrets](/cf/wrangler/reference/#secrets).
 
 Wrangler does not read `cloudflare.config.ts`. If you still run Wrangler
 commands in a migrated project, keep the Wrangler configuration file until you
