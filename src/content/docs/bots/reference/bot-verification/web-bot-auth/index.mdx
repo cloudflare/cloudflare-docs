@@ -6,18 +6,22 @@ products:
   - bots
 sidebar:
   order: 2
-  label: Web Bot Auth
 tags:
   - Authentication
 ---
 
-import { GlossaryTooltip, Steps } from "~/components";
+import { CopyPromptButton, Render, Steps } from "~/components";
 
-Web Bot Auth is an authentication method that leverages cryptographic signatures in HTTP messages to verify that a request comes from an automated bot. Web Bot Auth is used as a verification method for [verified bots and agents](/bots/concepts/bot/verified-bots/).
+Web Bot Auth verifies bot identity using signed HTTP requests. Use it to authenticate [verified bots and agents](/bots/concepts/bot/verified-bots/).
 
 It relies on IETF drafts: a [directory draft](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-03) allowing the crawler to share their public keys, and a [protocol draft](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture-02) defining how these keys should be used to attach the crawler's identity to HTTP requests.
 
-This documentation goes over specific integration within Cloudflare.
+Generate a key, publish its public key, and register your bot. Then add a signing adapter to your HTTP client.
+
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Follow https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/ to add Web Bot Auth to this project. Choose the HTTP library integration, keep private keys in local secret storage, and test redirects, retries, and key changes. Never print or commit private keys."
+/>
 
 ## 1. Generate a valid signing key
 
@@ -125,6 +129,16 @@ After successful verification, you will be able to send verified requests.
 
 After your bot has been successfully verified, your bot is ready to sign its requests. The signature protocol is defined in [draft-meunier-web-bot-auth-architecture-02](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture-02)
 
+### Use your HTTP library
+
+Start with a tested adapter for your existing HTTP client. Each guide includes setup, copyable source, and request verification.
+
+<Render file="web-bot-auth-clients" product="bots" />
+
+The adapters create `Signature-Agent`, `Signature-Input`, and `Signature` for each request. They derive `keyid` from your private key, so you do not maintain it separately.
+
+Read [Sign requests](/bots/reference/bot-verification/web-bot-auth/sign-requests/) for shared setup. To implement your own signer, follow the protocol details in steps 4.1–4.4.
+
 ### 4.1. Choose a set of components to sign
 
 Choose a set of components to sign.
@@ -209,6 +223,21 @@ You can test how Cloudflare interprets your signed requests against https://craw
 :::
 
 ---
+
+## Change signing keys
+
+A new private key produces a new `keyid`. Changing a filename or environment variable does not register that key with Cloudflare.
+
+<Steps>
+1. Generate a separate key for each environment. Keep private keys in your secret store.
+2. Publish the new public key alongside the old key. Sign the directory response with each listed Ed25519 key.
+3. Complete [registration](/bots/reference/bot-verification/web-bot-auth/#3-register-your-bot-and-key-directory) for the new key. Confirm Cloudflare recognizes it before switching traffic.
+4. Deploy the new private key and recreate the signing client. These examples load keys when you create the client.
+5. Send a request to the [test endpoint](/bots/reference/bot-verification/web-bot-auth/sign-requests/#verify-your-requests). Require `200` before promoting the configuration.
+6. After all clients use the new key, remove the old public key and its directory signature.
+</Steps>
+
+Keep staging and production configurations together: private-key location, signature-agent origin, and allowed destination origins. These are application configuration choices; they do not create separate registration states in Cloudflare.
 
 ## Transitive trust and the `Forwarded` header
 

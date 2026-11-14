@@ -1,0 +1,90 @@
+---
+title: Go net/http
+description: Sign Go HTTP requests with a Web Bot Auth RoundTripper that preserves request headers and signs each redirect hop.
+pcx_content_type: integration-guide
+products:
+  - bots
+sidebar:
+  order: 4
+---
+
+import { Code, CopyPromptButton, Render, Steps } from "~/components";
+import source from "~/../public/web-bot-auth/wba.go?raw";
+
+Wrap your HTTP transport with a signing [`RoundTripper`](https://pkg.go.dev/net/http#RoundTripper). Use it with a reusable `http.Client`.
+
+Requires Go 1.22 or later. The example uses the standard library. Complete the [shared setup](/bots/reference/bot-verification/web-bot-auth/sign-requests/#before-you-start) first.
+
+<CopyPromptButton
+	tooltip="Add Web Bot Auth request signing"
+	prompt="Add Web Bot Auth to this project's Go HTTP client using https://developers.cloudflare.com/bots/reference/bot-verification/web-bot-auth/sign-requests/go/. Use the signing RoundTripper, configure allowed origins, and test redirects, retries, and key changes. Never print or commit the private key."
+/>
+
+## Add the transport
+
+<Steps>
+1. Save [wba.go](/web-bot-auth/wba.go) in a `wba` folder inside your Go module.
+
+2. Create a client. Replace `example.com/mybot` with your module path and replace the signature-agent origin with your own.
+
+   ```go title="main.go"
+   package main
+
+   import (
+       "fmt"
+       "io"
+       "net/http"
+       "os"
+       "time"
+
+       "example.com/mybot/wba"
+   )
+
+   func run() error {
+       key, err := os.ReadFile("private-key.pem")
+       if err != nil { return err }
+       transport, err := wba.NewTransport(
+           key,
+           "https://bot.example.com",
+           []string{"https://example.com", "https://crawltest.com"},
+           nil, // Use http.DefaultTransport.
+       )
+       if err != nil { return err }
+       defer transport.CloseIdleConnections()
+
+       client := &http.Client{Transport: transport, Timeout: 30 * time.Second}
+       response, err := client.Get("https://crawltest.com/cdn-cgi/web-bot-auth")
+       if err != nil { return err }
+       defer response.Body.Close()
+       fmt.Println(response.StatusCode)
+       _, err = io.Copy(os.Stdout, response.Body)
+       return err
+   }
+
+   func main() {
+       if err := run(); err != nil {
+           fmt.Fprintln(os.Stderr, err)
+           os.Exit(1)
+       }
+   }
+   ```
+
+3. Run `go run .` and [check the response](#verify-the-request).
+</Steps>
+
+## Transport source
+
+<Code code={source} lang="go" meta='title="wba/wba.go"' />
+
+## Redirects and retries
+
+- The HTTP client sends each redirect through `RoundTrip`. Each hop gets a new signature for its destination and method.
+- The transport clones the request before editing headers. Requests outside the allowed origins continue unsigned.
+- Retry through `client.Do` with a new request and a fresh body. An underlying transport may retry internally; keep attempts within the signature's 60-second lifetime.
+- To configure proxies or TLS, clone `http.DefaultTransport` and pass it as the final argument to `NewTransport`.
+- Leave `Request.Host` unchanged. Use ASCII or punycode destination hostnames.
+- Use `transport.KeyID()` to compare the selected key with your registered directory.
+
+## Verify the request
+
+<Render file="web-bot-auth-verify" product="bots" />
