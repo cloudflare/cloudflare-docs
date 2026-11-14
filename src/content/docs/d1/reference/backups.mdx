@@ -1,6 +1,6 @@
 ---
 title: Backups (Legacy)
-description: Create, list, download, and restore legacy snapshot-based backups for D1 alpha databases using Wrangler.
+description: Legacy D1 alpha snapshot backups are no longer available. Use Time Travel for production databases.
 pcx_content_type: concept
 sidebar:
   order: 9
@@ -8,25 +8,21 @@ products:
   - d1
 ---
 
-D1 has built-in support for creating and restoring backups of your databases with wrangler v3, including support for scheduled automatic backups and manual backup management.
+This page describes snapshot-based backups for legacy D1 alpha databases. For production databases, use [Time Travel](/d1/reference/time-travel/).
 
-:::caution[Planned removal]
+:::caution[Legacy alpha backups]
 
-Access to snapshot based backups for D1 alpha databases described in this documentation will be removed on [2025-07-01](/d1/platform/release-notes/#2025-07-01).
-
-:::
-
-:::caution[Time Travel]
-
-Databases using D1's [production storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel point-in-time recovery. [Time Travel](/d1/reference/time-travel/) replaces the snapshot based backups used for legacy alpha databases.
-
-To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and check for the `version` field in the output.Databases with `version: alpha` only support the older, snapshot based backup API.
+Snapshot backups were removed on [2025-07-01](/d1/platform/release-notes/#2025-07-01). The commands and examples on this page are kept for reference and no longer work.
 
 :::
 
 ## Automatic backups
 
-D1 automatically backs up your databases every hour on your behalf, and [retains backups for 24 hours](/d1/platform/limits/). Backups will block access to the DB while they are running. In most cases this should only be a second or two, and any requests that arrive during the backup will be queued.
+:::caution[Legacy alpha databases only]
+This hourly backup behavior applied only to legacy D1 alpha databases. It does not apply to production databases, which use [Time Travel](/d1/reference/time-travel/).
+:::
+
+D1 backed up alpha databases every hour and kept the backups for 24 hours. Each backup blocked database access, usually for a second or two. Requests that arrived during a backup waited in a queue.
 
 To view and manage these backups, including any manual backups you have made, you can use the `d1 backup list <DATABASE_NAME>` command to list each backup.
 
