@@ -84,23 +84,25 @@ To get started with R2:
 
 ### Durable Objects
 
-Durable Objects provide low-latency coordination and consistent storage for the Workers platform through global uniqueness and a transactional storage API.
+Durable Objects combine stateful serverless compute with storage on the Workers platform. Each object has a unique identity. The runtime routes requests for the same ID to the same logical object, which runs in one location at a time.
 
-- Global Uniqueness guarantees that there will be a single instance of a Durable Object class with a given ID running at once, across the world. Requests for a Durable Object ID are routed by the Workers runtime to the Cloudflare data center that owns the Durable Object.
-- The transactional storage API provides strongly consistent key-value storage to the Durable Object. Each Object can only read and modify keys associated with that Object. Execution of a Durable Object is single-threaded, but multiple request events may still be processed out-of-order from how they arrived at the Object.
+Each object has private, strongly consistent, transactional storage. [SQLite-backed Durable Objects](/durable-objects/api/sqlite-storage-api/) are recommended for new classes and provide both SQL and key-value APIs. Durable storage persists across restarts, but in-memory state does not.
 
-It is ideal for projects that require:
+Execution is single-threaded, but requests can interleave during non-storage I/O, such as an external `fetch()` call.
 
-- Real-time collaboration (such as a chat application or a game server).
-- Consistent storage.
-- Data locality.
+Durable Objects are ideal for projects that require:
+
+- Real-time collaboration, such as chat rooms, multiplayer games, and collaborative documents
+- Per-user, per-tenant, or per-resource databases with application logic
+- Strongly consistent coordination, such as bookings or per-user rate limits
+- Stateful AI agents built with the [Agents SDK](/agents/)
 
 To get started with Durable Objects:
 
-- Read the [introductory blog post](https://blog.cloudflare.com/introducing-workers-durable-objects/).
-- Review the [Durable Objects documentation](/durable-objects/).
+- Read [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/).
+- Review the [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/).
 - Get started with [Durable Objects](/durable-objects/get-started/).
-- Learn about Durable Objects [Limits](/durable-objects/platform/limits/).
+- Review [Durable Objects limits](/durable-objects/platform/limits/).
 
 ### D1
 
