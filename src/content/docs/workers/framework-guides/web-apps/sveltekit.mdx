@@ -46,6 +46,20 @@ To fix this, generate the types file, then deploy again:
 You only need to do this once. Wrangler has already created your Wrangler configuration file, so the second deploy skips project setup.
 :::
 
+:::note[Generate types without the main module]
+
+If your project already has a `cf-typegen` script, update it to pass `--include-main-module=false` so the SvelteKit build output (`.svelte-kit/cloudflare/_worker.js`) is not pulled into application type checking:
+
+```json
+{
+  "scripts": {
+    "cf-typegen": "wrangler types --include-main-module=false ./src/worker-configuration.d.ts"
+  }
+}
+```
+
+:::
+
 <AutoconfigDiagram
 	framework="SvelteKit"
 	configs={[

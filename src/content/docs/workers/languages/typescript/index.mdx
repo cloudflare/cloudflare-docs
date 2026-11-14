@@ -87,6 +87,8 @@ There are no plans to stop publishing the `@cloudflare/workers-types` package, w
 
 This will generate a `.d.ts` file, saved to `worker-configuration.d.ts` by default. This will also generate `Env` types. If for some reason you do not want to include those, you can set `--include-env=false`.
 
+If your Worker entrypoint is generated build output that should not be included in application type checking, set `--include-main-module=false`. This omits the entrypoint import used to infer `ctx.exports` types from the generated declarations. Environment bindings, runtime types, and Durable Object namespace declarations are still generated, and imports required for Durable Object, service, and Workflow binding types remain. The option is recorded in the generated file's header and reused by `wrangler types --check` when no override is supplied.
+
 You can now remove any imports from `@cloudflare/workers-types` in your Worker code.
 
 :::note
