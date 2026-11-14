@@ -90,6 +90,8 @@ For example, in the configurations above, a connection to `range.example.com:100
 
 If [IP Access rules](/waf/tools/ip-access-rules/create/) are enabled for a Spectrum application, Cloudflare will respect the IP Access rules configured for that domain. Cloudflare only respects rules created for specific IP addresses, IP blocks, countries, or ASNs for Spectrum applications. Spectrum will also only respect rules created with the actions `allow` or `block`.
 
+IP Access Rules are off by default for new TCP and UDP applications, whether you create them in the dashboard or through the API with `ip_firewall` omitted. To turn them on, edit the application in the dashboard and turn on **IP Access Rules** under **Advanced Options**, or set `ip_firewall` to `true` through the API. The `ip_firewall` setting applies only to TCP and UDP applications. The API rejects `ip_firewall: true` for HTTP and HTTPS applications, and the dashboard does not show the switch for them.
+
 :::note
 Network analytics data for Spectrum does not reflect the outcomes of IP Access rules. Instead, to verify whether traffic was allowed or blocked based on these rules, consult the Spectrum event logs.
 :::
