@@ -11,6 +11,14 @@ head:
 description: Review how to troubleshoot issues such as certificate timeouts when using Cloudflare Universal SSL.
 ---
 
+## Certificate stuck in pending validation
+
+The Cloudflare dashboard does not have a **Retry** or **Re-validate** button for Universal SSL certificates. If your certificate shows **Pending Validation** after you have placed the required DNS records, you can trigger an immediate DCV recheck using the API.
+
+For instructions, refer to [Trigger an immediate DCV recheck](/ssl/edge-certificates/changing-dcv-method/troubleshooting/#trigger-an-immediate-dcv-recheck). For help diagnosing why validation is failing, refer to [DCV troubleshooting](/ssl/edge-certificates/changing-dcv-method/troubleshooting/).
+
+---
+
 ## Resolve a timed out state
 
 If a certificate issuance times out, Cloudflare tells you where in the chain of issuance the timeout occurred: Initializing, Validation, Issuance, Deployment, or Deletion.
