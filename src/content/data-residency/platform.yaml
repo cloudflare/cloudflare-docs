@@ -1,0 +1,52 @@
+category: Platform
+order: 5
+entries:
+  - product: Logpull
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: supported
+        impact:
+          - Logpull available when using CMB = US only. Logpull is a legacy feature, consider using [Logpush](/data-localization/metadata-boundary/logpush-datasets/) or [Log Explorer](/observability/logs/log-explorer/) instead.
+      gkm:
+        status: out-of-scope
+  - product: Logpush
+    controls:
+      regional_services:
+        status: supported
+      storage:
+        status: unassessed
+      cmb:
+        status: requirements
+        requirements:
+          - Logpush available with Customer Metadata Boundary for [these datasets](/data-localization/metadata-boundary/logpush-datasets/). Contact your account team if you need another dataset.
+      gkm:
+        status: out-of-scope
+  - product: Log Explorer
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: not-supported
+        notes:
+          - Log Explorer stores data in a Cloudflare-managed R2 bucket. You cannot choose its location.
+      cmb:
+        status: not-supported
+        notes:
+          - Currently, customers do not have the ability to choose the location of the Cloudflare-managed R2 bucket for Log Explorer.
+      gkm:
+        status: out-of-scope
+  - product: Audit Logs
+    controls:
+      regional_services:
+        status: out-of-scope
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: out-of-scope
+    review: true
