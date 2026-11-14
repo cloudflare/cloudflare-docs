@@ -22,7 +22,7 @@ By default, WAF's managed rulesets are compatible with most websites and web app
 
 You can use [Security Events](/waf/analytics/security-events/) to help you identify what caused legitimate requests to get blocked. Add filters and adjust the report duration as needed.
 
-To get more detail about which part of a request matched a managed rule, enable [payload logging](/waf/managed-rules/payload-logging/) for the affected managed ruleset. Payload logging records the specific string that triggered each rule (encrypted with a key pair that you provide), which helps you confirm whether a match was a false positive. If you have not set it up yet, [configure payload logging](/waf/managed-rules/payload-logging/configure/) so that the matched payload is available the next time you investigate a false positive. Payload logging is available on Enterprise plans.
+To get more detail about which part of a request matched a managed rule, enable [payload logging](/waf/payload-logging/) for the affected managed ruleset. Payload logging records the specific string that triggered each rule (encrypted with a key pair that you provide), which helps you confirm whether a match was a false positive. If you have not set it up yet, [configure payload logging](/waf/payload-logging/configure/) so that the matched payload is available the next time you investigate a false positive. Payload logging is available on Enterprise plans.
 
 If you encounter a false positive caused by a managed rule, do one of the following:
 

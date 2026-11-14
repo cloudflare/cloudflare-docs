@@ -3253,6 +3253,7 @@
 /rules/custom-error-responses/* /rules/custom-errors/:splat 301
 # WAF
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/waf/managed-rules/payload-logging/* /waf/payload-logging/:splat 301
 /waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
 /waf/detections/firewall-for-ai/* /waf/detections/ai-security-for-apps/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301

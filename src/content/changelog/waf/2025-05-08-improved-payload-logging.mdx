@@ -14,6 +14,6 @@ We have upgraded WAF Payload Logging to enhance rule diagnostics and usability:
 
 ![Log entry showing payload logging details](~/assets/images/changelog/waf/2025-05-payload-logging-update.png)
 
-Payload Logging is available to all Enterprise customers. If you have not used Payload Logging before, check how you can [get started](/waf/managed-rules/payload-logging/).
+Payload Logging is available to all Enterprise customers. If you have not used Payload Logging before, check how you can [get started](/waf/payload-logging/).
 
 **Note:** The structure of the `encrypted_matched_data` field in Logpush has changed from `Map<Field, Value>` to `Map<Field, {Before: bytes, Content: Value, After: bytes}>`. If you rely on this field in your Logpush jobs, you should review and update your processing logic accordingly.
