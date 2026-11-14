@@ -198,6 +198,10 @@ When you scope a route to a Cloudflare data center region, it only shows up in t
 Scoping routes to specific regions is not supported with BGP peering, and is only available to statically configured routes at this time.
 :::
 
+:::note[Identical routes at different scopes do not coexist]
+In each Cloudflare data center, the Magic Transit Virtual Network routing table contains at most one route per unique combination of prefix and next hop. If you configure the same prefix and next hop both globally and scoped to a region or data center, only the scoped route is installed in that location, regardless of the priority values on either route. The global route is not kept as a lower-priority fallback. Priority is used to choose between routes with the same prefix and next hop only within the same scope level. Routes with different next hops always coexist, and route prioritization and ECMP logic apply across them regardless of scope. To keep a global route available as a fallback in a location where you also configure scoped routes, use a different next hop (for example, a different tunnel) for the global route.
+:::
+
 When using region-scoped routes, ensure that all prefixes have routes covering all regions. Otherwise, traffic may arrive at a Cloudflare region that is not covered by any route, in which case Cloudflare drops the traffic.
 
 The following table exemplifies how to use geographic scoping for routes:
