@@ -18,7 +18,7 @@ Certain fields in Spectrum request and response bodies require an Enterprise pla
 
 ## Create a Spectrum application using an IP address
 
-To create a Spectrum application using an IP address, Cloudflare normally assigns you an arbitrary IP from Cloudflare’s IP pool to your application. If you want to use your own IP addresses, you can use [BYOIP](/spectrum/about/byoip/) or you can also use a [Static IP](/spectrum/about/static-ip/). In these two last cases, you need to create your Spectrum application through the API, as these features are not available via dash. When using the API, the field `origin_direct` takes as input the IP address.
+To create a Spectrum application using an IP address, Cloudflare normally assigns you an arbitrary IP from Cloudflare’s IP pool to your application. If you want to use your own IP addresses, you can use [BYOIP](/spectrum/about/byoip/) or you can also use a [Static IP](/spectrum/about/static-ip/). In these two last cases, select **Dedicated IPs** under **Edge IP Type** in the dashboard, or set `edge_ips` in the API. When using the API, the field `origin_direct` takes as input the IP address.
 
 <Details header="Add your application via Dashboard">
 
@@ -28,7 +28,7 @@ To create a Spectrum application using an IP address, Cloudflare normally assign
 
 2. Select **Create an Application**.
 3. Under **Application Configuration**, select your **Application Type**.
-4. In **Subdomain**, enter the subdomain that will use Spectrum. The dashboard adds your zone name after it.
+4. In **Subdomain**, enter the subdomain that will use Spectrum. The dashboard adds your zone name after it. Leave it blank to use the zone apex (for example, `example.com`).
 5. In **Edge Port**, enter the port Cloudflare should use for your application.
 6. Under **Origin Configuration**, select **IP or DNS record** as the **Origin type**.
 7. In **Origin IP or DNS record**, enter your application's origin IP. In **Port**, enter the origin port.
@@ -111,7 +111,7 @@ To create a Spectrum application using a CNAME record, you will need to create a
 
 2. Select **Create an Application**.
 3. Under **Application Configuration**, select your **Application Type**.
-4. In **Subdomain**, enter the subdomain that will use Spectrum. The dashboard adds your zone name after it.
+4. In **Subdomain**, enter the subdomain that will use Spectrum. The dashboard adds your zone name after it. Leave it blank to use the zone apex (for example, `example.com`).
 5. In **Edge Port**, enter the port Cloudflare should use for your application.
 6. Under **Origin Configuration**, select **IP or DNS record** as the **Origin type**.
 7. In **Origin IP or DNS record**, enter your `CNAME` record name. In **Port**, enter the origin port.
@@ -214,7 +214,7 @@ For Cloudflare WAN (formerly Magic WAN) as the connector, refer to [Get started 
 
 2. Select **Create an Application**.
 3. Under **Application Configuration**, select **TCP** or **UDP** as the **Application Type**.
-4. In **Subdomain**, enter the subdomain that will use Spectrum. The dashboard adds your zone name after it.
+4. In **Subdomain**, enter the subdomain that will use Spectrum. The dashboard adds your zone name after it. Leave it blank to use the zone apex (for example, `example.com`).
 5. In **Edge Port**, enter the port Cloudflare should use for your application.
 6. Under **Origin Configuration**, select **Virtual Network** as the **Origin type**.
 7. In **Virtual Network**, select the virtual network that contains your origin.
