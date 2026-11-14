@@ -9,7 +9,7 @@ sidebar:
   order: 8
 ---
 
-import { DashButton } from "~/components";
+import { DashButton, Steps } from "~/components";
 
 To ensure that your Cloudflare Workers code runs only within a specific geographic region, configure Regional Services on the Workers custom domain. This restricts where TLS termination (traffic decryption) and code execution occur.
 
@@ -25,6 +25,21 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 3. Follow the steps to [create a custom domain](/workers/configuration/routing/custom-domains/).
 4. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the configured Workers Custom Domain to create a `regional_hostnames` with a specific region.
 
+### Workers for Platforms
+
+To use Regional Services with Workers for Platforms:
+
+<Steps>
+
+1. [Configure Regional Services](/data-localization/regional-services/regional-hostnames/) on your [dispatch Worker's](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) hostname.
+2. Turn off [Smart Placement](/workers/configuration/placement/) for your dispatch Worker, user Workers, and [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+
+</Steps>
+
+For requests to that hostname, all of these Workers run only in the region you choose.
+
+Set data location separately for any external services or storage your Workers use. The [Workers caveats](#caveats) also apply.
+
 ### Caveats
 
 Regional Services only applies to the custom domain configured for a Workers project. Therefore, it will run only in-region Cloudflare locations.
@@ -38,6 +53,8 @@ Regional Services does not apply to other Worker triggers, like [Queues](/queues
 ## Customer Metadata Boundary
 
 Customer Metadata Boundary applies to the custom domain configured, as well as the [`*.workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
+
+To export logs from your dispatch and user Workers, use [Workers Trace Events Logpush](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/#workers-trace-events-logpush). This dataset follows your Customer Metadata Boundary setting and supports the EU region. Choose an export destination that meets your data residency requirements.
 
 Workers [Metrics and Analytics](/workers/observability/metrics-and-analytics/) are not available outside the US region when using Customer Metadata Boundary.
 
