@@ -116,7 +116,7 @@ Configure the model, browser, Worker Loader, and Durable Object bindings:
 
 </WranglerConfig>
 
-Generate the `Env` type with [`wrangler types`](/workers/wrangler/commands/general/#types). The `LOADER` binding runs the model's browser code in a new [Dynamic Worker](/dynamic-workers/) for each call, with no network access. The code reaches the browser only through the [browser API](#browser-api).
+Generate the `Env` type with [`wrangler types`](/workers/wrangler/commands/workers/#types). The `LOADER` binding runs the model's browser code in a new [Dynamic Worker](/dynamic-workers/) for each call, with no network access. The code reaches the browser only through the [browser API](#browser-api).
 
 `browserTool` does not use Code Mode, but keep `@cloudflare/codemode` installed. `agents/browser` still exports the [legacy browser tools](#legacy-browser-tools), which need it.
 
