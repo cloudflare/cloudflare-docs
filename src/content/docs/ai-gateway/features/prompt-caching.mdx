@@ -8,24 +8,42 @@ products:
   - ai-gateway
 ---
 
-Prompt caching lets a model provider reuse the processed start of a prompt. Requests that share a long, stable prefix cost less and return faster.
+Prompt caching lets a model provider reuse the processed start of a prompt. Requests that share a long prefix cost less and return faster.
 
-Prompt caching is different from AI Gateway [response caching](/ai-gateway/features/caching/). Response caching stores a full response and returns it for an identical request. Prompt caching happens at the provider, and the model still generates a new response.
+Prompt caching is different from AI Gateway [response caching](/ai-gateway/features/caching/). Response caching returns a stored response for an identical request. With prompt caching, the model still generates a new response.
 
 ## How providers cache prompts
 
-OpenAI caches prompt prefixes automatically. Anthropic caches a prefix only when the request marks where the prefix ends. Anthropic calls this mark a cache breakpoint and sets it with `cache_control`.
+OpenAI caches prompt prefixes automatically. Anthropic caches a prefix only when the request marks where the prefix ends. This mark is a cache breakpoint, set with the `cache_control` field.
 
-When you send an OpenAI-format request to an Anthropic model, AI Gateway converts the request to the Anthropic Messages API. During the conversion, AI Gateway reads the OpenAI prompt caching fields and adds the Anthropic breakpoints for you.
+AI Gateway converts OpenAI-format requests to the Anthropic Messages API for Anthropic models. During the conversion, AI Gateway reads the OpenAI prompt caching fields. It then adds the Anthropic breakpoints for you.
 
-This applies to these endpoints:
+This conversion applies to the `/ai/v1/chat/completions` and `/ai/v1/responses` endpoints of the [REST API](/ai-gateway/usage/rest-api/). It also applies to the `/compat/chat/completions` endpoint of the [Unified API](/ai-gateway/usage/chat-completion/).
 
-- `/ai/v1/chat/completions` and `/ai/v1/responses` on the [REST API](/ai-gateway/usage/rest-api/)
-- `/compat/chat/completions` on the [Unified API](/ai-gateway/usage/chat-completion/)
+## Settings
+
+AI Gateway reads these OpenAI fields when it converts a request for an Anthropic model:
+
+| Field                       | Valid values                     | Effect on Anthropic models                                                        |
+| --------------------------- | -------------------------------- | --------------------------------------------------------------------------------- |
+| `prompt_cache_options.mode` | `implicit`, `explicit`           | Controls whether AI Gateway adds its own breakpoint. Refer to the next table.     |
+| `prompt_cache_options.ttl`  | `30m`, `12h`                     | Sets the lifetime of every breakpoint. Without a value, Anthropic uses 5 minutes. |
+| `prompt_cache_breakpoint`   | An object with an optional `ttl` | Adds a breakpoint on the text part or tool that carries it.                       |
+| `prompt_cache_key`          | A string                         | Shows that later requests reuse the prefix.                                       |
+
+The `mode` value controls the breakpoint that AI Gateway adds at the end of the prompt:
+
+| `mode`     | Breakpoint from AI Gateway                                                                             |
+| ---------- | ------------------------------------------------------------------------------------------------------ |
+| `implicit` | Added on every request.                                                                                |
+| `explicit` | Never added. Only the parts with `prompt_cache_breakpoint` get a breakpoint.                           |
+| Not set    | Added only when the request shows reuse. Refer to [Requests without a mode](#requests-without-a-mode). |
+
+OpenAI models receive these fields unchanged.
 
 ## Cache prompts on OpenAI and Anthropic models
 
-To cache prompts with one request body for both providers, set `prompt_cache_options.mode` to `implicit`:
+To cache prompts with one request body for both providers, set `prompt_cache_options.mode` to `implicit`. Replace `<SYSTEM_PROMPT>` with long instructions that are the same on every request:
 
 ```bash title="Request with implicit prompt caching"
 # Run `wrangler whoami` to get your account ID to replace $CLOUDFLARE_ACCOUNT_ID,
@@ -38,7 +56,7 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
     "messages": [
       {
         "role": "system",
-        "content": "<long instructions that are the same on every request>"
+        "content": "<SYSTEM_PROMPT>"
       },
       {
         "role": "user",
@@ -51,12 +69,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
   }'
 ```
 
-To send the same request to OpenAI, change `model` to an OpenAI model, such as `openai/gpt-4.1`. The rest of the body does not change.
+To send the request to OpenAI, change `model` to an OpenAI model, such as `openai/gpt-4.1`. Do not change the rest of the body.
 
-- **OpenAI models** receive `prompt_cache_options` unchanged.
-- **Anthropic models** receive a top-level `cache_control` breakpoint on every request. Anthropic uses this breakpoint to cache the prompt prefix automatically.
-
-Put content that does not change, such as instructions and tool definitions, at the start of the request. Put content that changes at the end.
+Put content that does not change at the start of the request. This includes instructions and tool definitions. Put content that changes at the end.
 
 :::note
 Anthropic does not cache a prompt that is shorter than the minimum length for the model. The request still succeeds. For the minimum lengths, refer to [Prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) in the Anthropic documentation.
@@ -64,28 +79,34 @@ Anthropic does not cache a prompt that is shorter than the minimum length for th
 
 ### Set the cache lifetime
 
-To change how long Anthropic keeps a cache entry, set `prompt_cache_options.ttl`. AI Gateway maps the OpenAI lifetime to the nearest Anthropic lifetime:
+To change how long Anthropic keeps a cache entry, set `prompt_cache_options.ttl`. AI Gateway maps each OpenAI lifetime to the nearest Anthropic lifetime:
 
 | OpenAI `ttl` | Anthropic lifetime |
 | ------------ | ------------------ |
 | `30m`        | 5 minutes          |
 | `12h`        | 1 hour             |
 
-A longer lifetime costs more to write. Use `12h` only when you reuse a prefix after more than five minutes. OpenAI accepts different `ttl` values on Chat Completions and on Responses. For the values each endpoint accepts, refer to [Prompt caching](https://platform.openai.com/docs/guides/prompt-caching) in the OpenAI documentation.
+A longer lifetime costs more to write. Use `12h` only when you reuse a prefix after more than five minutes.
 
-## Requests without a caching mode
+OpenAI accepts different `ttl` values on Chat Completions and on Responses. For the values each endpoint accepts, refer to [Prompt caching](https://platform.openai.com/docs/guides/prompt-caching) in the OpenAI documentation.
 
-If a request does not set `prompt_cache_options.mode`, AI Gateway adds an Anthropic breakpoint only when the prefix is likely to be read again. This is true when the request has one of these signals:
+## Requests without a mode
+
+When a request does not set `prompt_cache_options.mode`, AI Gateway adds a breakpoint only if the request shows reuse. A request shows reuse when it has one of these signals:
 
 - A `prompt_cache_key` field
-- A `cf-aig-session-id` header. For more information, refer to [Session affinity](/ai-gateway/features/routing/auto-router/#session-affinity).
-- An earlier assistant message or tool result, which shows that the request continues a conversation
+- A `cf-aig-session-id` header
+- An earlier assistant message or tool result
 
-A first request with no signal gets no breakpoint. Anthropic charges extra to write a cache entry, so a one-time request would pay for an entry that no request reads.
+For more information about the session header, refer to [Session affinity](/ai-gateway/features/routing/auto-router/#session-affinity).
+
+A first request with no signal gets no breakpoint. Anthropic charges extra to write a cache entry. Without a signal, no later request is likely to read the entry.
 
 ## Place breakpoints yourself
 
-To control where Anthropic breakpoints go, set `prompt_cache_options.mode` to `explicit`. Then add `prompt_cache_breakpoint` to each text part or tool that ends a prefix to cache:
+To mark the end of a prefix, add `prompt_cache_breakpoint` to a text part or a tool. AI Gateway converts each one to a `cache_control` breakpoint on the same part.
+
+To use only your own breakpoints, also set `prompt_cache_options.mode` to `explicit`:
 
 ```json title="Request with an explicit breakpoint"
 {
@@ -96,7 +117,7 @@ To control where Anthropic breakpoints go, set `prompt_cache_options.mode` to `e
 			"content": [
 				{
 					"type": "text",
-					"text": "<long instructions that are the same on every request>",
+					"text": "<SYSTEM_PROMPT>",
 					"prompt_cache_breakpoint": {}
 				}
 			]
@@ -112,35 +133,33 @@ To control where Anthropic breakpoints go, set `prompt_cache_options.mode` to `e
 }
 ```
 
-AI Gateway converts each `prompt_cache_breakpoint` to a `cache_control` breakpoint on the same part. In `explicit` mode, AI Gateway adds no other breakpoints.
+These limits apply to breakpoints:
 
-These limits apply:
-
-- Anthropic accepts up to four breakpoints in a request. AI Gateway removes the extra breakpoints, starting with the oldest message.
+- Anthropic accepts up to four breakpoints in a request. AI Gateway removes extra breakpoints, starting with the oldest message.
 - Images, files, and audio cannot carry a breakpoint. AI Gateway ignores a breakpoint on these parts.
-- Anthropic requires 1-hour breakpoints to come before 5-minute breakpoints. AI Gateway shortens a 1-hour breakpoint that comes after a 5-minute breakpoint.
+- Anthropic requires 1-hour breakpoints before 5-minute breakpoints. AI Gateway shortens a 1-hour breakpoint that comes later.
 
-### Use Anthropic cache_control
+### Use Anthropic cache_control markers
 
-If you send a request only to Anthropic models, you can add Anthropic `cache_control` markers to content parts and tools. AI Gateway sends these markers as written.
+For requests to Anthropic models only, you can add `cache_control` markers to content parts and tools. AI Gateway sends these markers as written.
 
-When any part of a request has `cache_control`, AI Gateway ignores `prompt_cache_options` and `prompt_cache_breakpoint` in that request. Do not mix the two styles in one request.
+If any part has `cache_control`, AI Gateway ignores the OpenAI caching fields in that request. Do not mix the two styles in one request.
 
-To use Anthropic prompt caching with no conversion, send requests to the `/ai/v1/messages` endpoint. For more information, refer to [REST API](/ai-gateway/usage/rest-api/).
+To use Anthropic prompt caching with no conversion, use the `/ai/v1/messages` endpoint. For more information, refer to [REST API](/ai-gateway/usage/rest-api/).
 
 ## Read cache usage
 
-The `usage` object in the response reports cache reads and cache writes. The input token count includes the cached tokens and the cache write tokens.
+The `usage` object in the response reports cache reads and cache writes. The input token count includes the cache read and cache write tokens.
 
-The fields depend on the endpoint:
+The field names depend on the endpoint:
 
-| Value                             | Chat Completions field                              | Responses field                                 |
-| --------------------------------- | --------------------------------------------------- | ----------------------------------------------- |
-| Tokens read from the cache        | `usage.prompt_tokens_details.cached_tokens`         | `usage.input_tokens_details.cached_tokens`      |
-| Tokens written to the cache       | `usage.prompt_tokens_details.cache_write_tokens`    | `usage.input_tokens_details.cache_write_tokens` |
-| Tokens written with a 1h lifetime | `usage.prompt_tokens_details.cache_write_1h_tokens` | —                                               |
+| Value                               | Chat Completions field                              | Responses field                                 |
+| ----------------------------------- | --------------------------------------------------- | ----------------------------------------------- |
+| Tokens read from the cache          | `usage.prompt_tokens_details.cached_tokens`         | `usage.input_tokens_details.cached_tokens`      |
+| Tokens written to the cache         | `usage.prompt_tokens_details.cache_write_tokens`    | `usage.input_tokens_details.cache_write_tokens` |
+| Tokens written with 1-hour lifetime | `usage.prompt_tokens_details.cache_write_1h_tokens` | —                                               |
 
-When AI Gateway converts a response from an Anthropic model, it adds the cache write fields. A cache write field appears only when its value is greater than zero. For the fields that OpenAI returns, refer to the OpenAI documentation.
+AI Gateway adds the cache write fields to converted responses from Anthropic models. A cache write field appears only when its value is more than zero. For the fields that OpenAI returns, refer to the OpenAI documentation.
 
 The first request writes the prefix to the cache:
 
