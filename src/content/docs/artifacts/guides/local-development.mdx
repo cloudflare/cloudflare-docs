@@ -17,11 +17,17 @@ import {
 
 The local Artifacts simulator lets you develop against a Git-compatible repository on your machine. Local repositories and tokens are separate from deployed Artifacts resources. Creating, pushing to, or deleting a local repo does not change a deployed repo.
 
+## Requirements
+
+- Git 2.32 or later on the `PATH` of the process that starts your dev server or tests.
+- Wrangler 4.163.0 or later, Cloudflare Vite plugin 2.0.0-rc.0 or later, or `@cloudflare/vitest-plugin` 1.8.3 or later.
+- To declare events in `cloudflare.config.ts`, `cf` 1.0.0-rc.0 or later.
+
 ## Choose a binding mode
 
-Starting with Wrangler 4.162.0, Cloudflare Vite plugin 2.0.0-beta.v.17, and `@cloudflare/vitest-plugin` 1.8.2, the `artifacts` binding uses the local simulator when you run a Worker locally, unless you set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your development workflow relied on the earlier remote default, set `remote = true` to keep using deployed repos.
+The `artifacts` binding uses the local simulator when you run a Worker locally, unless you set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your development workflow relied on the earlier remote default, set `remote = true` and [authenticate your dev tool](/artifacts/guides/authentication/) to keep using deployed repos. Remote bindings do not sync with local repos.
 
-While `remote` is omitted, `wrangler dev`, `getPlatformProxy()`, and the Vite plugin warn that the binding uses the local simulator by default. Each binding warns once, not on every config reload. You only see the warning when remote bindings are enabled. Workers Vitest and `wrangler dev --local` always used the local simulator, so they do not warn. Set `remote = true` to use deployed repos, or set `remote = false` to keep the local simulator and silence the warning. In `cloudflare.config.ts`, the setting is `dev: { remote }`.
+While `remote` is omitted, `wrangler dev`, `getPlatformProxy()`, and the Vite plugin warn that the binding uses the local simulator by default. Set `remote = false` to keep the local simulator and silence the warning, or `remote = true` to use deployed repos. In `cloudflare.config.ts`, the setting is `dev: { remote }`.
 
 :::note
 Cloudflare Vite plugin 1.x keeps the earlier default. With remote bindings enabled, an omitted `remote` uses deployed repos. Set `remote = false` to use the local simulator with Vite plugin 1.x.
@@ -46,9 +52,7 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
    git --version
    ```
 
-   Use an up-to-date, security-patched Git release.
-
-   If Git is unavailable or older than 2.32, local Artifacts fails at startup with installation or upgrade instructions. Restart your dev tool after changing `PATH`. This version requires a globally available Git installation. We plan to open-source a JavaScript Git engine in the future. It is not included in this version. Deployed Artifacts does not require Git on your development machine.
+   If Git is unavailable or older than 2.32, local Artifacts fails at startup with installation or upgrade instructions. Restart your dev tool after changing `PATH`.
 
 2. Add a binding to your Wrangler config file. If your project already has a binding, leave `remote` unset or set it to `false`:
 
@@ -74,15 +78,17 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
 
    Use the same Wrangler config file with the Cloudflare Vite plugin or Workers Vitest. For a Worker example that creates a repo, refer to [Get started with Workers](/artifacts/get-started/workers/).
 
-4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP. The dev server prints each namespace's Git remote prefix at startup. The port is saved with your local state and reused after a restart, so clones keep working. If another process has taken the port, the dev server picks a new one. Get the new URL from the binding and run `git remote set-url origin <remote>` in existing clones:
+4. Use the `remote` URL and initial token returned by `env.ARTIFACTS.create()` to clone or push with Git. The local URL uses loopback HTTP:
 
    ```sh
    git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
    ```
 
-   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username, and use the part of the repo token before `?expires=` as the password. Snippets elsewhere in these docs that strip `https://` from the remote do not apply to the local `http://` remote.
+   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username, and use the part of the repo token before `?expires=` as the password.
 
 </Steps>
+
+The dev server prints each namespace's Git remote prefix at startup. The port is saved with your local state and reused after a restart, so existing clones keep working. If another process has taken the port, the dev server picks a new one. Get the new `remote` from the binding and run `git remote set-url origin <remote>` in existing clones.
 
 ## Test event subscriptions
 
@@ -99,7 +105,7 @@ Locally, Artifacts publishes these events:
 
 Push, clone, and fetch events are not published locally yet. A Workflow that [builds and deploys on push](/artifacts/guides/build-and-deploy-on-push/) does not start in local development.
 
-Local events require Wrangler 4.163.0, Cloudflare Vite plugin 2.0.0-rc.0, or `@cloudflare/vitest-plugin` 1.8.3 or later. Cloudflare Vite plugin 1.x does not start Workflows from local events yet.
+Cloudflare Vite plugin 1.x does not start Workflows from local events yet.
 
 ### Start a Workflow from an event
 
@@ -207,18 +213,18 @@ To observe these instances in Workers Vitest, pass a Workflow binding to `intros
 - **Does not block repo changes** — Artifacts publishes an event after the repo change completes. If delivery fails, the dev server logs the error and does not retry. The repo operation still succeeds.
 - **Workflows only** — Local Artifacts does not deliver events to queues.
 
-## Keep or reset local repositories
+## Limits
 
 As in production, a push that contains a file larger than 32 MiB is rejected, and reading a larger file throws an `ArtifactsError` with code `MEMORY_LIMIT`. `listTokens()` includes revoked and expired tokens with their `state`.
 
+## Keep or reset local repositories
+
 Local repository metadata and Git objects persist under your dev tool's resource persistence directory. For Wrangler and Vite plugin 1.x, this is typically `.wrangler/state/` when persistence is on. Vite plugin 2.x uses `.cloudflare/state/`. Use the same project root and persistence settings to keep data across restarts. Turning off persistence, such as with Vite's `persistState: false`, makes the data temporary.
 
-To reset local Artifacts, stop the dev server and back up any repositories you need. Then delete only the `artifacts/` directory inside that tool's resource persistence directory. Do not delete unrelated binding data. Local tokens and repository data do not transfer to a remote binding.
+To reset local Artifacts, stop the dev server, back up any repositories you need, and delete only the `artifacts/` directory inside that tool's resource persistence directory. Local tokens and repository data do not transfer to a remote binding.
 
-## Use an HTTPS import explicitly
+## Import repositories over HTTPS
 
-Selecting a local binding never automatically contacts Cloudflare. Calling `env.ARTIFACTS.import()` with an HTTPS source URL is different: Git on your development machine contacts the specified host, including private-network hosts. Only import URLs you trust. Imports do not follow HTTP redirects. Supply the final HTTPS Git URL, especially when using credentials. The source can require credentials or a trusted certificate. To trust a private certificate authority, set `GIT_SSL_CAINFO` in the dev tool's host environment before startup. Do not turn off certificate verification.
+Calling `env.ARTIFACTS.import()` with an HTTPS URL runs Git on your development machine to fetch from that host, so the host must be reachable from your machine. Only import from URLs you trust. Imports do not follow HTTP redirects, so use the final HTTPS Git URL. To trust a private certificate authority, set `GIT_SSL_CAINFO` in your dev tool's environment before it starts. Local repos do not store import credentials in repository metadata or Git configuration.
 
-A successful local import does not retain URL credentials in repository metadata or the Git configuration. If the process exits during an import, treat any partial local storage as sensitive until you inspect or reset it. Keep import URLs with credentials out of logs. For the binding arguments, refer to [Workers binding](/artifacts/api/workers-binding/#importparams).
-
-To use deployed Artifacts during local development, set `remote = true` on the binding and authenticate your dev tool. The remote binding does not synchronize with the local simulator. For authentication options, refer to [Authentication](/artifacts/guides/authentication/).
+For the binding arguments, refer to [Workers binding](/artifacts/api/workers-binding/#importparams).
