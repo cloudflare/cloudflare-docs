@@ -36,44 +36,49 @@ It is not sufficient to only remove the client-side widget from the page, as an 
 
 ## Example 1: Use a Transform Rule for selected agents
 
-A Transform Rule can add a header to a request before it reaches your website. Your website can use that header to decide whether to show Turnstile. This example uses a Transform Rule to tell your website when a request comes from an agent you have chosen to allow.
+A Request Header Transform Rule can add or remove a header before a request reaches your website. This example uses two rules: the first removes any visitor-supplied `x-turnstile-bypass` header, and the second sets it to `true` for requests with detection IDs you choose. This avoids using a dynamic header value, which may not accept detection ID expressions.
 
 Your website then leaves Turnstile off the page for that agent and does not require a token when the agent submits the form. Other visitors still get Turnstile. This example requires Enterprise [Bot Management](/bots/get-started/bot-management/) to identify the selected agents.
 
 <Steps>
 
-1. Find the Bot Detection ID for the agent in [Botbase](/bots/botbase/).
+1. Find the Bot Detection ID or IDs for the agent in [Botbase](/bots/botbase/).
 
 2. In the Cloudflare dashboard, go to **Rules** > **Overview**.
 
    <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-3. Select **Create rule** > **Request Header Transform Rule**, then configure it in four steps:
+3. Create a rule that removes any incoming bypass header:
 
-   1. Under **If incoming requests match…**, select **Custom filter expression**.
-   2. Under **When incoming requests match…**, enter the request match expression. For example, match a hostname with `http.host eq "example.com"` or a path with `http.request.uri.path eq "/login"`.
+   1. Select **Create rule** > **Request Header Transform Rule**.
+   2. Under **If incoming requests match…**, select **Custom filter expression**.
+   3. Under **When incoming requests match…**, enter an expression for every hostname where your application trusts this header. For example: `http.host eq "example.com"`.
+   4. Under **Then…** > **Modify request header**, set **Operation** to **Remove** and **Header name** to `x-turnstile-bypass`.
+   5. Deploy the rule.
 
-   3. Under **Then…** > **Modify request header**, set:
+4. Create a second rule that sets the header for approved detection IDs:
 
-      - **Operation** to **Set dynamic**.
-      - **Header name** to `x-turnstile-bypass`.
-      - **Value** to this expression, replacing `12345` with the detection ID you want to allow:
+   1. Select **Create rule** > **Request Header Transform Rule**.
+   2. Under **If incoming requests match…**, select **Custom filter expression**.
+   3. Under **When incoming requests match…**, enter an expression that matches your hostname and the detection ID or IDs you want to allow. For example, replace the hostname and IDs in this expression:
 
       ```txt
-      to_string(has_value(cf.bot_management.detection_ids, 12345))
+      http.host eq "example.com" and any(cf.bot_management.detection_ids[*] in {12345 6789})
       ```
 
-      This sets **Value** to `true` when the request includes that detection ID and `false` otherwise.
-   4. Set the rule's priority after any other Request Header Transform Rule that changes this header, then select **Deploy**.
+      Separate multiple IDs with spaces inside the braces. This is a request-match expression. Do not enter it as the header value.
 
-4. At your origin, decide what to render:
+   4. Under **Then…** > **Modify request header**, set **Operation** to **Set static**, **Header name** to `x-turnstile-bypass`, and **Value** to `true`.
+   5. Set this rule's priority after the removal rule, then select **Deploy**. Ensure no later rule changes this header.
+
+5. At your origin, decide what to render:
 
    - Check that the header has exactly one value and that value is `true`. Also check the approved hostname and operation.
    - For eligible page requests, render the form without the Turnstile script, widget, or token-dependent browser logic.
    - For other page requests, render Turnstile normally.
    - If you render the page in the browser, pass only the rendering decision from your server to the page.
 
-5. In your form handler, check the header again. If its only value is `true`, accept the form without a Turnstile token. Otherwise, require a token and verify it with [Siteverify](/turnstile/get-started/server-side-validation/). Keep your other form checks unchanged.
+6. In your form handler, check the header again. If its only value is `true`, accept the form without a Turnstile token. Otherwise, require a token and verify it with [Siteverify](/turnstile/get-started/server-side-validation/). Keep your other form checks unchanged.
 
    For example, in a Node.js form handler:
 
