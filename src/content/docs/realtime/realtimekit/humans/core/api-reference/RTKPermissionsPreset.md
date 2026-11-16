@@ -36,6 +36,7 @@ The PermissionPreset class represents the meeting permissions for the current pa
     * [.hiddenParticipant](#module_PermissionPreset+hiddenParticipant)
     * [.showParticipantList](#module_PermissionPreset+showParticipantList)
     * [.canChangeParticipantPermissions](#module_PermissionPreset+canChangeParticipantPermissions)
+    * [.canEditMeetingTitle](#module_PermissionPreset+canEditMeetingTitle)
     * [.canLivestream](#module_PermissionPreset+canLivestream)
 
 <a name="module_PermissionPreset+stageEnabled"></a>
@@ -220,6 +221,13 @@ If `true`, participant list can be shown to the participant.
 ### meeting.self.permissions.canChangeParticipantPermissions
 The `canChangeParticipantPermissions` returns boolean value.
 If `true`, allow changing the participants' permissions.
+
+**Kind**: instance property of [<code>PermissionPreset</code>](#module_PermissionPreset)  
+<a name="module_PermissionPreset+canEditMeetingTitle"></a>
+
+### meeting.self.permissions.canEditMeetingTitle
+The `canEditMeetingTitle` returns boolean value.
+If `true`, participant can rename the meeting for the current session.
 
 **Kind**: instance property of [<code>PermissionPreset</code>](#module_PermissionPreset)  
 <a name="module_PermissionPreset+canLivestream"></a>
