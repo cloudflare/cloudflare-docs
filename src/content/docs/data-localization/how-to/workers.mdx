@@ -9,7 +9,7 @@ sidebar:
   order: 8
 ---
 
-import { DashButton } from "~/components";
+import { APIRequest, DashButton, Steps } from "~/components";
 
 To ensure that your Cloudflare Workers code runs only within a specific geographic region, configure Regional Services on the Workers custom domain. This restricts where TLS termination (traffic decryption) and code execution occur.
 
@@ -25,6 +25,30 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 3. Follow the steps to [create a custom domain](/workers/configuration/routing/custom-domains/).
 4. Run the [API POST](/data-localization/regional-services/regional-hostnames/#configure-regional-services-via-api) command on the configured Workers Custom Domain to create a `regional_hostnames` with a specific region.
 
+### Workers for Platforms
+
+Regional Services keeps Workers for Platforms execution in your region only when none of the Workers in the request path has a [placement](/workers/configuration/placement/) setting. This includes Smart Placement (`mode`) and targeted placement (`region`, `host`, or `hostname`).
+
+To use Regional Services with Workers for Platforms:
+
+<Steps>
+
+1. [Configure Regional Services](/data-localization/regional-services/regional-hostnames/) on your [dispatch Worker's](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) hostname.
+2. Remove the `placement` object from the Wrangler configuration of your dispatch Worker and [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), then redeploy both Workers.
+3. Upload new user Workers without a `placement` object in the [upload metadata](/workers/configuration/multipart-upload-metadata/). Re-upload any existing user Worker that has a `placement` setting, without the `placement` object.
+4. Confirm that each user Worker has no placement setting. The response must not include a `placement` field:
+
+   <APIRequest
+   	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings"
+   	method="GET"
+   />
+
+</Steps>
+
+With this configuration, requests to the regionalized hostname run the dispatch Worker, user Workers, and Outbound Worker only in the region you choose.
+
+This applies only to requests to that hostname. It does not set the location of storage, external services, or other triggers your Workers use. Configure those separately. The [Workers caveats](#caveats) also apply.
+
 ### Caveats
 
 Regional Services only applies to the custom domain configured for a Workers project. Therefore, it will run only in-region Cloudflare locations.
@@ -38,6 +62,8 @@ Regional Services does not apply to other Worker triggers, like [Queues](/queues
 ## Customer Metadata Boundary
 
 Customer Metadata Boundary applies to the custom domain configured, as well as the [`*.workers.dev`](/workers/configuration/routing/workers-dev/) subdomain.
+
+To export logs from your dispatch and user Workers, use [Workers Trace Events Logpush](/cloudflare-for-platforms/workers-for-platforms/configuration/observability/#workers-trace-events-logpush). This dataset follows your Customer Metadata Boundary setting and supports the EU region. Choose an export destination that meets your data residency requirements.
 
 Workers [Metrics and Analytics](/workers/observability/metrics-and-analytics/) are not available outside the US region when using Customer Metadata Boundary.
 
