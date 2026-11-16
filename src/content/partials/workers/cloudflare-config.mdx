@@ -13,17 +13,19 @@ Its default export can define a Worker, Container applications, and account
 settings. Because the file is a TypeScript module, it can use imports,
 functions, environment variables, and asynchronous values.
 
-:::note[Open beta]
-Programmatic configuration with `cloudflare.config.ts` is in open beta.
-The configuration format can change before the stable release.
+:::note[Release candidate]
+Programmatic configuration with `cloudflare.config.ts` is part of the `cf` 1.0
+release candidate. We expect the configuration format to stay the same through
+the stable release.
 :::
 
-Loading `cloudflare.config.ts` requires Node.js 22.18 or later. Bun is not
+`cf` requires Node.js 22.23.0, 24.22.0, or 26.12.0, or a later release in the
+same major version. Bun is not
 supported: when `cf` runs on Bun, loading the file fails with
 `cloudflare.config.ts loading is not supported on Bun`. Most `cf` commands load
 the nearest `cloudflare.config.ts`, including commands that only call the
-Cloudflare API, so this is the practical minimum for any `cf` command you run
-inside the project.
+Cloudflare API, so this applies to any `cf` command you run inside the
+project.
 
 Set `"type": "module"` in the project's `package.json`. Without it, Node.js
 prints a warning each time it loads the file. With `"type": "commonjs"`,
@@ -675,8 +677,7 @@ Supported compliance regions are `public` and `fedramp-high`.
 
 `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_COMPLIANCE_REGION` take priority over
 these values. When neither the environment nor the configuration sets an
-account, `cf` uses the account it saved on an earlier command, or resolves one
-from your credentials. For the full order, refer to
+account, `cf` resolves one from your credentials. For the full order, refer to
 [Select an account](/cf/get-started/#select-an-account).
 
 `cf` searches from the current directory toward the filesystem root and uses

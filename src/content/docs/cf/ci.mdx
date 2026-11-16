@@ -83,18 +83,18 @@ following sections explain each part.
 `cf auth login` needs a person to approve access in a browser. In CI, set these
 environment variables instead:
 
-| Variable                | Purpose                                                                                                                                                                            |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                                                                                  |
-| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then an account saved by an earlier run in the same checkout, then the only account available. |
-| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                                                                              |
+| Variable                | Purpose                                                                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                               |
+| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then the only account the token can access. |
+| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                           |
 
-If the token can access more than one account and no account is set or saved,
-the command fails instead of prompting:
+If the token can access more than one account and no account is set, the
+command fails instead of prompting:
 
 ```txt
 More than one account available but unable to select one in non-interactive mode.
-Please set the appropriate `account_id` in your cf config file or assign it to the `CLOUDFLARE_ACCOUNT_ID` environment variable.
+Please set the appropriate account ID in your cloudflare.config.ts file or assign it to the `CLOUDFLARE_ACCOUNT_ID` environment variable.
 Available accounts are (`<name>`: `<account_id>`):
   `(redacted)`: `<ACCOUNT_ID>`
 ```
@@ -106,9 +106,9 @@ In CI, `cf` replaces account names with `(redacted)`. To fix the error, set
 ### Use a `.env` file for local automation
 
 For scripts on your own machine, `cf` commands that call the Cloudflare API
-can also read these variables from a `.env` file in the current directory.
-They do not read `.env.local`. Variables already set in the environment take
-priority. For details, refer to
+can also read these variables from `.env` and `.env.local` files in the current
+directory. Variables already set in the environment take priority. For
+details, refer to
 [Load credentials from a .env file](/cf/get-started/#load-credentials-from-a-env-file).
 
 :::caution
@@ -123,8 +123,8 @@ each command to the project's copy. Collaborators, coding agents, and CI then
 run the same version. One-off runs such as `npx cf@<VERSION>` are not handed
 off.
 
-Use Node.js 22.18 or later. For details, refer to
-[Requirements](/cf/get-started/#requirements).
+Use Node.js 22.23.0, 24.22.0, or 26.12.0, or a later release in the same major
+version. For details, refer to [Requirements](/cf/get-started/#requirements).
 
 ## Understand non-interactive behavior
 
@@ -135,7 +135,7 @@ non-interactive run:
 - **Prompts** use their default answer. Prompts without a default fail, so pass
   the value as an option instead.
 - **Destructive commands** abort without `--force`. They print `Aborted.` to
-  standard error, make no change, and exit with status `0`.
+  standard error, make no change, and exit with status `1`.
 - **`cf init`** needs a directory, such as `cf init my-worker` or `cf init .`.
   A new project uses the package manager that started `cf`, or npm. Pass
   `--package-manager` to choose another.
@@ -198,7 +198,7 @@ recorded `--mode`, as the example workflow does.
 ## Deploy previews from CI
 
 `cf previews deploy` builds the project and deploys a Worker Preview. It needs
-credentials and has no `--dry-run` option.
+credentials. `--dry-run` checks the arguments without building or uploading.
 
 <PackageManagers type="exec" pkg="cf" args="previews deploy" />
 
@@ -215,6 +215,25 @@ checkout without these variables, pass `--preview-name`:
 
 You can also use `--preview-name` to override the detected branch name. For
 the output and options, refer to [Deploy a preview](/cf/projects/#deploy-a-preview).
+
+## Deploy with Workers Builds
+
+When [Workers Builds](/workers/ci-cd/builds/) runs `cf deploy` or
+`cf previews deploy`, it sets `CLOUDFLARE_CI_OVERRIDE_WORKER_NAME` to the
+Worker connected to the build. `cf` deploys the selected Worker under that
+name, so production deployments and Previews stay attached to the connected
+Worker even when `cloudflare.config.ts` uses a different `name`. `cf` warns
+when the names differ. `cf workers versions create` and
+`cf workers triggers deploy` follow the same variable.
+
+`cf` also writes deployment and Preview results to the output file that
+Workers Builds reads, so the build shows the deployment and Preview URLs.
+
+To make sure a job updates the Worker you expect, set
+`CLOUDFLARE_CI_MATCH_WORKER_TAG` to that Worker's tag, its unique identifier.
+`cf deploy` and `cf workers versions create` fail when the Worker they would
+update has a different tag. This is the `cf` equivalent of Wrangler's
+`WRANGLER_CI_MATCH_TAG`.
 
 ## Turn off telemetry
 
