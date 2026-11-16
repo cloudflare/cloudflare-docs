@@ -1,0 +1,15 @@
+---
+title: Cloudflare One adds Periodic Beaconing Traffic to UEBA
+description: Identify steady, repeated contacts to uncommon destinations in Gateway HTTP traffic.
+date: 2026-11-16
+products:
+  - cloudflare-one
+---
+
+Cloudflare One adds Periodic Beaconing Traffic as a user and entity behavior analytics (UEBA) risk behavior. It flags a user who contacts the same destination more than 30 times in six hours at steady intervals from 10 seconds to about 12 minutes, when few other users reach it.
+
+Detection uses traffic behavior alone, without threat intelligence, categories, or reputation. Malware can use this pattern to contact a command-and-control (C2) server, but legitimate software also checks in periodically. Treat events as informational leads, not C2 verdicts.
+
+The behavior is off by default and starts at the Info level. Turn it on under **Risk score** > **Risk behaviors**. A continuing beacon is reported once. Events usually arrive 3 to 6 hours after the window closes.
+
+Periodic Beaconing Traffic is available on Enterprise plans.
