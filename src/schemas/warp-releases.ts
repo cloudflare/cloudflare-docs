@@ -9,6 +9,8 @@ export const warpReleasesSchema = z
 		packageURL: z.string(),
 		platformName: z.enum(["Windows", "macOS", "Linux"]),
 		linuxPlatforms: z.record(z.string(), z.number()).optional(),
+		// Sizes of the headless `cloudflare-mesh` package, for releases that ship one.
+		linuxHeadlessPlatforms: z.record(z.string(), z.number()).optional(),
 	})
 	.refine(
 		(val) => {

@@ -25,21 +25,22 @@ This Enterprise product provides the most flexibility to customers by:
 
 ## Enable Bot Management for Enterprise
 
-Bot Management is automatically enabled for Enterprise zones entitled with the add-on.
+Bot Management is automatically enabled and always active for Enterprise zones entitled with the add-on.
+
+To review the Bot Management configuration:
 
 <Steps>
   1. In the Cloudflare dashboard, go to the **Security Settings** page.
 
       <DashButton url="/?to=/:account/:zone/security/settings" />
   2. Filter by **Bot traffic**.
-  3. Go to **Bot management**.
-  4. Turn **Bot management** on.
-  5. Choose how your domain should respond to various types of traffic by selecting the associated edit icon.
-      - For more details on verified bots, refer to [Verified Bots](/bots/concepts/bot/verified-bots/).
-      - For more details on supported file types, refer to [Static resource protection](/bots/additional-configurations/static-resources/).
-      - For more details on invisible code injection, refer to [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/).
-      - For more details on WordPress optimization, refer to [Super Bot Fight Mode for WordPress](/bots/troubleshooting/wordpress-loopback-issue/).
+  3. Go to **Bot management** and select the edit icon to review the following configurations:
+      - **JavaScript Detections**: For more details, refer to [JavaScript detections](/cloudflare-challenges/challenge-types/javascript-detections/).
+      - **JavaScript Detections for API traffic**
+      - **Auto-update machine learning model**: For more details, refer to [Enable the latest Machine Learning version](#enable-the-latest-machine-learning-version).
 </Steps>
+
+Bot Management does not block or challenge traffic on its own. To act on bot traffic, create [WAF custom rules](/waf/custom-rules/) based on bot score, as described in [Deploy custom rule templates](#deploy-custom-rule-templates).
 
 :::note
 
@@ -56,7 +57,7 @@ Cloudflare recommends that you deploy the following basic settings and customize
 
 <Render file="latest-ml-model-enable" product="bots" />
 
-### Block AI Bots
+### Configure AI bot policies
 
 Refer to [Block AI bots](/bots/additional-configurations/block-ai-bots/).
 
@@ -66,13 +67,9 @@ You can view blocked AI bot traffic via [Security Analytics](/waf/analytics/secu
 
 ### Deploy custom rule templates
 
-The **Definitely Automated** and **Likely Automated** toggles you configured in the previous step already provide baseline protection against automated traffic.
+Bot Management assigns a bot score to every request, but you must create custom rules to block or challenge automated traffic. Cloudflare provides [rule templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) to get started. You can also reach these templates from the **Bot management** setting in **Security Settings** by selecting **View bot traffic templates**.
 
-If you need additional control, such as path-specific protection, custom score thresholds, or combining bot score with other fields, Cloudflare provides [rule templates](https://dash.cloudflare.com/?to=/:account/:zone/security/security-rules?template=bot_traffic) to get started.
-
-:::note
-Custom rules created from these templates execute before the managed rules configured in **Security Settings**. For more details on this execution order, refer to [Security features interoperability](/waf/feature-interoperability/).
-:::
+Customize the templates as needed, for example to add path-specific protection, adjust score thresholds, or combine bot score with other fields.
 
 These templates use wirefilter expression syntax. In these expressions, `eq` means equals, `le` means less than or equal to, `ge` means greater than or equal to, and `not` excludes matching traffic.
 

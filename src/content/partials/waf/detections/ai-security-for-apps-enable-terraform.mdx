@@ -1,0 +1,12 @@
+---
+{}
+---
+
+Use the [`cloudflare_ai_security`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/ai_security) resource to turn on AI Security for Apps for a zone. This resource requires Terraform Cloudflare provider version 5.29.0 or later. For example:
+
+```tf
+resource "cloudflare_ai_security" "zone_ai_security" {
+  zone_id = var.cloudflare_zone_id
+  enabled = true
+}
+```

@@ -17,7 +17,6 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 ## 1. Create an application in your identity provider
 
 1. Visit your identity provider and create a client/app.
-
 2. When creating a client/app, your IdP may request an **authorized redirect URI**. Enter the following URL:
 
    ```txt
@@ -26,14 +25,11 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
    <Render file="find-team-name" product="cloudflare-one" />
 
-3. Copy the content of these fields:
-   - Client ID
-   - Client secret
-   - Auth URL: The `authorization_endpoint` URL of your IdP
-   - Token URL: The `token_endpoint` URL of your IdP
-   - Certificate URL: The `jwks_uri` endpoint of your IdP to allow the IdP keys to sign the tokens
-
-   You can find these values on your identity provider's **OIDC discovery endpoint**. Some providers call this the "well-known URL".
+3. Copy the **Client ID** and **Client secret** from the application's settings in your identity provider.
+4. Open your identity provider's **OIDC discovery endpoint**, sometimes called the "well-known URL". Copy these endpoint URLs:
+   - Auth URL: The `authorization_endpoint` URL.
+   - Token URL: The `token_endpoint` URL.
+   - Certificate URL: The `jwks_uri` URL. Access retrieves the IdP's public keys from this endpoint to verify token signatures.
 
 ## 2. Add an OIDC provider to Cloudflare One
 
@@ -47,11 +43,11 @@ Cloudflare Access has a generic OpenID Connect (OIDC) connector to help you inte
 
 4. Name your identity provider and fill in the required fields with the information obtained from your identity provider.
 
-5. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
+5. (Optional) Enable [Proof Key for Code Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/) if the protocol is supported by your IdP. PKCE will be performed on all login attempts.
 
 6. (Optional) To enable SCIM, refer to [Synchronize users and groups](#synchronize-users-and-groups).
 
-7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity).
+7. (Optional) Under **Optional configurations**, enter [custom OIDC claims](#custom-oidc-claims) that you wish to add to users' identity. This information will be available in the [user identity endpoint](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity).
 
 8. Select **Save**.
 
@@ -173,9 +169,9 @@ You can specify a custom **Email claim** name that Access will use to identify u
 
 #### Multi-record OIDC claims
 
-Cloudflare Access extends support for multi-record OIDC claims. These claims are parsed out and can be individually referenced in policies. This feature enables granular access control and precise user authorization in applications.
+Access supports OIDC claims with multiple values. Policies can match individual values, but cannot match part of a value.
 
-Cloudflare Access does not support partial OIDC claim value references or OIDC scopes.
+OAuth scopes are separate from claim matching. For a generic OIDC provider, use `config.scopes` in the [Identity Providers API](/api/resources/zero_trust/subresources/identity_providers/methods/create/) to request additional scopes from your IdP. Requesting a scope does not create an Access policy rule.
 
 ## Supported algorithms for generic OIDC tokens
 

@@ -5,8 +5,10 @@ description: Opinionated chat agent framework with built-in tools, persistent me
 tags:
   - AI
 sidebar:
-  order: 11
+  badge: Experimental
+  order: 12
   group:
+    badge: Experimental
     hideIndex: false
 products:
   - agents
@@ -47,9 +49,7 @@ import { routeAgentRequest } from "agents";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
-		);
+		return createAI({ binding: this.env.AI })("@cf/moonshotai/kimi-k2.6");
 	}
 }
 

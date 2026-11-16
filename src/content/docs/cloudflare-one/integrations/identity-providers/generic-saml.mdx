@@ -155,10 +155,10 @@ After you turn on encryption, Access will reject any unencrypted assertions from
 
 Access supports the following encryption algorithms:
 
-| Algorithm type | Supported values |
-| --- | --- |
+| Algorithm type     | Supported values                                   |
+| ------------------ | -------------------------------------------------- |
 | Content encryption | AES-128-CBC, AES-256-CBC, AES-128-GCM, AES-256-GCM |
-| Key transport | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5 |
+| Key transport      | RSA-OAEP (XML Encryption 1.0 and 1.1), RSA-1.5     |
 
 :::caution
 RSA-1.5 is supported for compatibility but is considered insecure. Use RSA-OAEP when your identity provider supports it.
@@ -185,7 +185,7 @@ If you rotate again before updating your IdP with the current certificate, the p
 
 ### Sign SAML authentication request
 
-This optional configuration signs the [Access JWT](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/) with the Cloudflare Access public key to ensure that the JWT is coming from a legitimate source. The Cloudflare public key can be obtained at `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/certs`.
+This option signs the SAML authentication request that Access sends to your identity provider. Access signs the request with its private key. Your IdP verifies the signature with the corresponding public certificate. This setting does not control Access JWT signing. For setup instructions, refer to [Signed AuthN requests](/cloudflare-one/integrations/identity-providers/signed_authn/).
 
 ### Require fresh authentication at the identity provider
 
