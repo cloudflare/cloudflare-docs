@@ -98,32 +98,4 @@ For Cloudflare to cache an origin `206 Partial Content` response, the response m
 | `Transfer-Encoding` | Omit this header. |
 | `ETag` | Optional. If present, its presence and exact value must remain consistent across responses for the same cached representation. |
 
-The complete file size must also remain consistent across responses. Violations can prevent caching or end responses served to the client early.
-
-### Origin responses that do not honor Range
-
-### Test origin range support
-
-To check whether your origin supports range requests, send a range request directly to your origin. A request through a proxied hostname can return `206 Partial Content` from Cloudflare even when your origin ignores `Range`.
-
-```sh
-curl https://example.com/large-file.mp4 --include --resolve example.com:443:<ORIGIN_IP> --header "Range: bytes=0-1" --header "Accept-Encoding: identity"
-```
-
-A `206 Partial Content` response with `Content-Range: bytes 0-1/<FILE_SIZE>` shows that your origin supports range requests. Check that the response also meets the [partial response requirements](#partial-response-requirements). A `200 OK` response means that your origin ignores `Range`.
-
-### Origin responses that do not honor Range
-
-If the origin ignores a Cloudflare-generated `Range` header and returns a complete `200 OK`, Cloudflare can use the response. Cloudflare must download the complete file and may then return the requested range to the client.
-
-If the origin returns an encoded `206 Partial Content` response, Cloudflare does not cache it. Before the client response starts, Cloudflare may send that single response without caching. After the response starts, Cloudflare ends it early, and the client receives fewer bytes than promised.
-
-Other incompatible origin responses during a response assembled from several requests can also end the client response early.
-
-## Caching limitations
-
-Origin Range Requests do not make an otherwise ineligible request or response cacheable. Cloudflare checks the [maximum cacheable file size](/cache/concepts/default-cache-behavior/#cacheable-size-limits) against the complete size from `Content-Range`. Requesting a small range does not bypass this limit.
-
-Changing the Origin Range Requests setting does not change the cache key or purge cached files. Cloudflare records which byte ranges of a file are cached alongside the file. Files cached in full remain usable either way. After you turn the setting off, Cloudflare stops serving files it holds only in part. The next request for such a file fetches the complete file again and replaces the partial copy.
-
-Origin Range Requests are not supported with [Cache Reserve](/cache/advanced-configuration/cache-reserve/#limits).
+The complete file size must also remain consiste
