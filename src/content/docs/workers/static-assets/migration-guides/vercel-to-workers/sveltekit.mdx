@@ -2,7 +2,7 @@
 reviewed: 2026-11-02
 pcx_content_type: how-to
 title: Migrate SvelteKit from Vercel to Cloudflare Workers
-description: Migrate a SvelteKit application from Vercel to Cloudflare Workers. Replace adapter-vercel with adapter-cloudflare. Includes a prompt for your coding agent.
+description: Replace adapter-vercel with adapter-cloudflare, pick the right adapter for SvelteKit 2 or 3, convert ISR routes, and read bindings on Cloudflare Workers.
 sidebar:
   label: SvelteKit
   order: 5
@@ -36,11 +36,11 @@ Copy this prompt into your coding agent. The agent stops before it deploys.
 ```txt
 Migrate this SvelteKit app from Vercel to Cloudflare Workers (Workers with Static Assets, not Pages).
 
-0. Detect the package manager from the lockfile (<pm>) and install dependencies. If the lockfile comes from an older package manager major version, regenerate it in its own commit. With pnpm 10 or later, run `pnpm approve-builds esbuild workerd` if an install reports ERR_PNPM_IGNORED_BUILDS. If package.json has no "name", add one.
+0. Detect the package manager from the lockfile (<pm>) and install dependencies. If the lockfile comes from an older package manager major version, regenerate it in its own commit. With pnpm 10 or later, run `pnpm approve-builds --all` if an install reports ERR_PNPM_IGNORED_BUILDS. Run it again after you install wrangler, which adds workerd. If package.json has no "name", add one.
 1. Detect the installed @sveltejs/kit version from node_modules/@sveltejs/kit/package.json.
    - 2.x or 3.x: keep that major version. Do not combine the hosting move with a SvelteKit major upgrade.
    - Earlier than 2 (1.x or 1.0.0-next.*): no Cloudflare Workers adapter supports it. Upgrade to the latest SvelteKit 2 in a separate commit, and keep the current adapter. Target @sveltejs/kit@^2, svelte@^5 (keep the legacy syntax), vite@^7, @sveltejs/vite-plugin-svelte@^6, typescript@^5, and svelte-check@^4. `npx sv migrate` is interactive and has no codemod for pre-1.0 APIs, so make these changes by hand:
-     - kit.methodOverride and POST, PATCH, or DELETE exports in +page.server become named `export const actions`, with `action="?/name"`.
+     - kit.methodOverride and POST, PATCH, or DELETE exports in +page.server become named `export const actions`, with `action="?/name"`. Delete kit.methodOverride from svelte.config.js, because SvelteKit 2 rejects it.
      - Custom form enhance functions become `enhance` from $app/forms.
      - $app/env becomes $app/environment.
      - `export const hydrate` and `export const router` become `csr`.
@@ -161,24 +161,25 @@ When you finish, list the files you changed, behavior changes from any SvelteKit
 
 Pre-1.0 SvelteKit applications need these changes when you upgrade to SvelteKit 2:
 
-| Pre-1.0 API                                              | SvelteKit 2 replacement                   |
-| -------------------------------------------------------- | ----------------------------------------- |
-| `kit.methodOverride` and `POST`/`PATCH`/`DELETE` exports | Named form actions with `action="?/name"` |
-| Custom form `enhance` helpers                            | `enhance` from `$app/forms`               |
-| `$app/env`                                               | `$app/environment`                        |
-| `export const hydrate` and `export const router`         | `export const csr`                        |
-| `sveltekit:prefetch`                                     | `data-sveltekit-preload-data`             |
-| `src/hooks.js`                                           | `src/hooks.server.js`                     |
-| `throw error()` and `throw redirect()`                   | `error()` and `redirect()`                |
-| Self-closing non-void tags, such as `<button />`         | `<button></button>`                       |
+| Pre-1.0 API                                              | SvelteKit 2 replacement                                                                         |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `kit.methodOverride` and `POST`/`PATCH`/`DELETE` exports | Named form actions with `action="?/name"`. Remove `kit.methodOverride` from `svelte.config.js`. |
+| Custom form `enhance` helpers                            | `enhance` from `$app/forms`                                                                     |
+| `$app/env`                                               | `$app/environment`                                                                              |
+| `export const hydrate` and `export const router`         | `export const csr`                                                                              |
+| `sveltekit:prefetch`                                     | `data-sveltekit-preload-data`                                                                   |
+| `src/hooks.js`                                           | `src/hooks.server.js`                                                                           |
+| `throw error()` and `throw redirect()`                   | `error()` and `redirect()`                                                                      |
+| Self-closing non-void tags, such as `<button />`         | `<button></button>`                                                                             |
 
 After the upgrade, cookies set by SvelteKit include `Secure` and `SameSite=Lax`. Cross-site form submissions return `403`.
 
 </Details>
 
-## Known issues
+## Troubleshooting
 
 - **The build fails with `Cannot read properties of undefined (reading 'assets')`.** You installed adapter version 8 on SvelteKit 2. Install `@sveltejs/adapter-cloudflare@^7`.
+- **The build fails with `Unexpected option config.kit.methodOverride`.** SvelteKit 2 removed `methodOverride`. Delete it from `svelte.config.js` and use named form actions.
 - **The build fails with `Types file not found`.** Run `npx wrangler types` before you build.
 - **Cron jobs have no scheduled handler.** `adapter-cloudflare` does not export a `scheduled()` handler. Use a separate Worker with a [Cron Trigger](/workers/configuration/cron-triggers/) that calls an authenticated endpoint.
 - **Prerendered pages skip your hooks.** Workers serves prerendered pages as static assets, so `hooks.server.js` does not run for them. Vercel behaves the same way.

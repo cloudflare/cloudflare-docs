@@ -1,0 +1,292 @@
+---
+import { z } from "astro/zod";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+import { Aside } from "~/components/ui/aside";
+import AnchorHeading from "~/components/cf/AnchorHeading.astro";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+const textWorker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		// Prefix queries and documents with task instructions for better retrieval quality.
+		const response = await env.AI.run("${name}", {
+			input: [
+				"task: search result | query: waterproof shoes for trail running",
+				"title: Trail Runner X | text: Waterproof running shoes with a breathable mesh upper.",
+				"title: City Sneaker | text: Lightweight canvas sneakers for everyday wear.",
+			],
+		});
+
+		// response.data[i].embedding is a 768-dimensional vector
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const textPython = `
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+response = requests.post(
+    f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+        "input": [
+            "task: search result | query: waterproof shoes for trail running",
+            "title: Trail Runner X | text: Waterproof running shoes with a breathable mesh upper.",
+            "title: City Sneaker | text: Lightweight canvas sneakers for everyday wear.",
+        ]
+    },
+)
+print(response.json())
+`;
+
+const textCurl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{
+    "input": [
+      "task: search result | query: waterproof shoes for trail running",
+      "title: Trail Runner X | text: Waterproof running shoes with a breathable mesh upper.",
+      "title: City Sneaker | text: Lightweight canvas sneakers for everyday wear."
+    ]
+  }'
+`;
+
+const mediaWorker = `
+export interface Env {
+	AI: Ai;
+}
+
+// Media must be sent as base64 data URIs.
+async function toDataUri(url: string, mimeType: string): Promise<string> {
+	const bytes = new Uint8Array(await (await fetch(url)).arrayBuffer());
+	let binary = "";
+	for (const byte of bytes) binary += String.fromCharCode(byte);
+	return \`data:\${mimeType};base64,\${btoa(binary)}\`;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const image = await toDataUri("https://example.com/shoe.png", "image/png");
+		const video = await toDataUri("https://example.com/grip-test.mp4", "video/mp4");
+
+		// Each conversation in the array produces one embedding.
+		const response = await env.AI.run("${name}", {
+			messages: [
+				// Text, an image, and a video combined into a single embedding
+				[
+					{
+						role: "user",
+						content: [
+							{ type: "text", text: "Waterproof running shoes." },
+							{ type: "image_url", image_url: { url: image } },
+							{ type: "video_url", video_url: { url: video } },
+						],
+					},
+				],
+				// A text query to compare against
+				[
+					{
+						role: "user",
+						content: "task: search result | query: waterproof shoes for trail running",
+					},
+				],
+			],
+		});
+
+		// Both embeddings share one vector space, so you can compare them directly.
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const mediaPython = `
+import base64
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+def data_uri(path, mime_type):
+    with open(path, "rb") as f:
+        return f"data:{mime_type};base64," + base64.b64encode(f.read()).decode()
+
+response = requests.post(
+    f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+        "messages": [
+            [
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": "Waterproof running shoes."},
+                        {"type": "image_url", "image_url": {"url": data_uri("shoe.png", "image/png")}},
+                        {"type": "video_url", "video_url": {"url": data_uri("grip-test.mp4", "video/mp4")}},
+                    ],
+                }
+            ],
+            [
+                {
+                    "role": "user",
+                    "content": "task: search result | query: waterproof shoes for trail running",
+                }
+            ],
+        ]
+    },
+)
+print(response.json())
+`;
+
+const audioWorker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		// Use mono 16 kHz audio for best results.
+		const bytes = new Uint8Array(await (await fetch("https://example.com/clip.wav")).arrayBuffer());
+		let binary = "";
+		for (const byte of bytes) binary += String.fromCharCode(byte);
+
+		const response = await env.AI.run("${name}", {
+			messages: [
+				{
+					role: "user",
+					content: [
+						{ type: "input_audio", input_audio: { data: btoa(binary), format: "wav" } },
+					],
+				},
+			],
+			dimensions: 256,
+		});
+
+		// dimensions: 256 returns a shorter vector to reduce storage.
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const audioPython = `
+import base64
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+with open("clip.wav", "rb") as f:
+    audio = base64.b64encode(f.read()).decode()
+
+response = requests.post(
+    f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "input_audio", "input_audio": {"data": audio, "format": "wav"}}
+                ],
+            }
+        ],
+        "dimensions": 256,
+    },
+)
+print(response.json())
+`;
+
+const response = `
+{
+  "id": "embd-...",
+  "object": "list",
+  "created": 1793902589,
+  "model": "${name}",
+  "data": [
+    { "object": "embedding", "index": 0, "embedding": [-0.0137, 0.0037, 0.0386, ...] },
+    { "object": "embedding", "index": 1, "embedding": [0.0312, -0.0147, 0.0081, ...] }
+  ],
+  "usage": { "prompt_tokens": 266, "total_tokens": 266 }
+}
+`;
+---
+
+<AnchorHeading depth={3} title="Text" slug="usage-text" />
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={textWorker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python">
+		<Code code={textPython} lang="py" title="" />
+	</TabItem>
+	<TabItem label="curl">
+		<Code code={textCurl} lang="sh" />
+	</TabItem>
+</Tabs>
+
+<AnchorHeading
+	depth={3}
+	title="Images and video"
+	slug="usage-images-and-video"
+/>
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={mediaWorker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python">
+		<Code code={mediaPython} lang="py" title="" />
+	</TabItem>
+</Tabs>
+
+<AnchorHeading depth={3} title="Audio" slug="usage-audio" />
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={audioWorker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python">
+		<Code code={audioPython} lang="py" title="" />
+	</TabItem>
+</Tabs>
+
+<Code code={response} lang="json" title="Response" />
+
+<Aside type="note" title="Task prefixes">
+	Prefix text with a task instruction for best results. For search, use{" "}
+	<code>task: search result | query: ...</code> for queries and{" "}
+	<code>title: ... | text: ...</code> for documents (use{" "}
+	<code>title: none</code> when there is no title). For classification,
+	clustering, or similarity, use the same prefix on every input, for example{" "}
+	<code>task: clustering | query: ...</code>. Do not add prefixes to images,
+	video, or audio.
+</Aside>
+
+<Aside type="note" title="Inputs and limits">
+	Send media as base64 data URIs. Remote URLs are not supported. All content in
+	one embedding shares an 8,192 token context window. An image uses about 260
+	tokens, video uses about 140 tokens per sampled frame (one frame per second),
+	and audio uses about 25 tokens per second. Set <code>dimensions</code> to 128,
+	256, or 512 to return shorter vectors, and use the same size for queries and
+	documents.
+</Aside>

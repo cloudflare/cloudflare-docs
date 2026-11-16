@@ -221,11 +221,11 @@ When every instance succeeds, the response has no `errors` field. If an instance
 
 ## 5. Generate an answer over both instances
 
-To return a single written answer grounded in both instances instead of raw chunks, use `chatCompletions` with the same `instance_ids`. It retrieves from every listed instance, then generates one response from the combined context:
+To return a single written answer grounded in both instances instead of raw chunks, use `chatCompletions`. Pass the query as a user message in `messages`, with the same `instance_ids`. It retrieves from every listed instance, then generates one response from the combined context:
 
 ```ts
 const completion = await env.AI_SEARCH.chatCompletions({
-	query,
+	messages: [{ role: "user", content: query }],
 	ai_search_options: {
 		instance_ids: [GENERAL_INSTANCE, tenantInstance(tenantId)],
 	},

@@ -187,6 +187,12 @@ error.
 For local state, refer to
 [Local resource data](/cf/projects/#local-resource-data).
 
+## Control usage costs
+
+Before your agent runs workloads on Cloudflare, consider setting [spending limits or email alerts](/billing/manage/spend-management/) for Workers and Durable Objects. You can configure them with the cf CLI.
+
+Each limit applies to the product across your account, not to an individual agent or project. Reaching a limit can interrupt other applications on the same account. Choose an email alert if you want notification without blocking usage.
+
 ## Work in Wrangler projects
 
 :::caution

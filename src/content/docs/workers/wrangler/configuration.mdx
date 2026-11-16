@@ -1028,10 +1028,21 @@ To bind R2 buckets to your Worker, assign an array of the below object to the `r
 
 - `binding` <Type text="string" /> <MetaInfo text="required" />
   - The binding name used to refer to the R2 bucket.
-- `bucket_name` <Type text="string" /> <MetaInfo text="required" />
+- `bucket_name` <Type text="string" /> <MetaInfo text="optional" />
   - The name of this R2 bucket.
 - `jurisdiction` <Type text="string" /> <MetaInfo text="optional" />
   - The jurisdiction where this R2 bucket is located, if a jurisdiction has been specified. Refer to [Jurisdictional Restrictions](/r2/reference/data-location/#jurisdictional-restrictions).
+- `remote` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Connect this binding to the deployed bucket during local development. Defaults to `false`. Refer to [R2 remote bindings](/r2/local-development/#connect-to-a-remote-bucket).
+- `local_dev` <Type text="object" /> <MetaInfo text="optional" />
+  - Settings that apply only to local development.
+  - `experimental_s3_credentials` <Type text="object" /> <MetaInfo text="optional" />
+    - Serve this local bucket through the experimental S3-compatible endpoint at `/cdn-cgi/local/r2/s3`. Requires Wrangler 4.115.0 or later. Ignored when `remote` is `true`.
+    - `accessKeyId` <Type text="string" /> <MetaInfo text="required" />
+      - An access key ID you choose for local AWS Signature Version 4 authentication.
+    - `secretAccessKey` <Type text="string" /> <MetaInfo text="required" />
+      - A secret access key you choose for local AWS Signature Version 4 authentication. These local credentials do not grant access to deployed R2 buckets.
+    - Refer to [Serve buckets over the S3 API](/r2/local-development/#serve-buckets-over-the-s3-api) for configuration and client examples.
 - `preview_bucket_name` <Type text="string" /> <MetaInfo text="optional" />
   - The preview name of this R2 bucket. If provided, `wrangler dev` will use this name for the R2 bucket. Otherwise, it will use `bucket_name`. This option is required when using `wrangler dev --remote` (but is not required with [remote bindings](/workers/local-development/#remote-bindings)).
 
@@ -1355,6 +1366,8 @@ The following options are available under the `assets` key.
   - Not required if you're using the [Cloudflare Vite plugin](/workers/vite-plugin/), which will automatically point to the client build output.
 - `binding` <Type text="string" /> <MetaInfo text="optional" />
   - The binding name used to refer to the assets. Optional, and only useful when a Worker script is set with `main`.
+- `base_path` <Type text="string" /> <MetaInfo text={'optional, defaults to "/"'} />
+  - The URL path prefix where static assets are available. For example, set this to `/docs` to serve the root of `assets.directory` from `/docs/`. Refer to [Serving a subdirectory](/workers/static-assets/routing/advanced/serving-a-subdirectory/).
 - `run_worker_first` <Type text="boolean | string[]" /> <MetaInfo text="optional, defaults to false" />
   - Controls whether static assets are fetched directly, or a Worker script is invoked. Can be a boolean (`true`/`false`) or an array of route pattern strings with support for glob patterns (`*`) and exception patterns (`!` prefix). Patterns must begin with `/` or `!/`. Supports at most 100 entries (duplicates count toward the limit). Learn more about fetching assets when using [`run_worker_first`](/workers/static-assets/routing/worker-script/#run-your-worker-script-first).
 - `html_handling`: <Type text={'"auto-trailing-slash" | "force-trailing-slash" | "drop-trailing-slash" | "none"'} /> <MetaInfo text={'optional, defaults to "auto-trailing-slash"'} />
@@ -1371,6 +1384,7 @@ Example:
 	"assets": {
 		"directory": "./public",
 		"binding": "ASSETS",
+		"base_path": "/docs",
 		"html_handling": "force-trailing-slash",
 		"not_found_handling": "404-page",
 	},
