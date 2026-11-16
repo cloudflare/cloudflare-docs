@@ -106,7 +106,7 @@ Your website then leaves Turnstile off the page for that agent and does not requ
 </Steps>
 
 :::caution
-Only trust this header through authenticated origin access restricted to the intended zone or application, such as a suitably restricted Cloudflare Tunnel or deployment-specific origin authentication. A DNS record, `CF-Ray` header, or an allowlist of all Cloudflare IP addresses does not establish that trust. Reject duplicate or comma-joined header values; do not check only whether the header exists.
+Only trust this header through authenticated origin access restricted to the intended zone or application, such as a suitably restricted Cloudflare Tunnel or deployment-specific origin authentication. A DNS record, `CF-Ray` header, or an allowlist of all Cloudflare IP addresses does not establish that trust. Reject duplicate or comma-joined header values. Do not check only whether the header exists.
 :::
 
 If you cache the form page, ensure a version without Turnstile cannot be served to other visitors. Test a real approved agent, an ordinary visitor, a forged header, and a page request that qualifies followed by a submission that does not. The ordinary visitor and the ineligible submission must provide valid tokens.
