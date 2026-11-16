@@ -1,0 +1,113 @@
+---
+pcx_content_type: reference
+title: Terraform
+description: Manage AI Search namespaces as code with the Cloudflare Terraform provider.
+sidebar:
+  order: 3
+products:
+  - ai-search
+---
+
+Use the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) to create, update, import, and read AI Search [namespaces](/ai-search/concepts/namespaces/) as code. To create instances in a namespace you manage with Terraform, use provider v5.29.0 or later.
+
+## Create a namespace
+
+Use the `cloudflare_ai_search_namespace` resource.
+
+```tf
+resource "cloudflare_ai_search_namespace" "support" {
+  account_id  = var.account_id
+  name        = "support"
+  description = "Customer support content"
+}
+```
+
+### Arguments
+
+| Argument                 | Required | Description                                                                                                                                        |
+| ------------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `account_id`             | Yes      | Your Cloudflare account ID.                                                                                                                        |
+| `name`                   | Yes      | The namespace name. Use 1 to 28 lowercase letters, digits, and hyphens. The name must start and end with a letter or digit.                        |
+| `description`            | No       | A description of up to 256 characters.                                                                                                             |
+| `public_endpoint_params` | No       | The namespace public endpoint configuration. Refer to [Namespace public endpoints](/ai-search/configuration/retrieval/public-endpoint/namespace/). |
+
+### Attributes
+
+| Attribute            | Description                                                     |
+| -------------------- | --------------------------------------------------------------- |
+| `id`                 | The namespace name. Same value as `name`.                       |
+| `created_at`         | When the namespace was created, as an RFC 3339 timestamp.       |
+| `public_endpoint_id` | The identifier of the namespace public endpoint, if one exists. |
+
+### Changes that replace the namespace
+
+Changing `name` or `account_id` replaces the namespace. Terraform deletes the old namespace and creates a new one. Changing `description` or `public_endpoint_params` updates the namespace in place.
+
+A namespace that still contains instances cannot be deleted. Move or delete its instances before you change its name.
+
+## Create a namespace with an instance
+
+Set `namespace` on a `cloudflare_ai_search_instance` to the `name` of the namespace resource. The reference makes Terraform create the namespace before the instance, and destroy the instance before the namespace.
+
+```tf
+resource "cloudflare_ai_search_namespace" "support" {
+  account_id = var.account_id
+  name       = "support"
+}
+
+resource "cloudflare_ai_search_instance" "docs" {
+  account_id = var.account_id
+  id         = "docs"
+  namespace  = cloudflare_ai_search_namespace.support.name
+}
+```
+
+AI Search rejects deleting a namespace that still contains instances. If an instance in the namespace is not managed in the same configuration, or does not reference the namespace resource, `terraform destroy` fails until you move or delete that instance.
+
+For more instance options, refer to [Instances with Terraform](/ai-search/api/instances/terraform/).
+
+## Import a namespace
+
+Import an existing namespace with an ID in the format `<account_id>/<name>`:
+
+```sh
+terraform import cloudflare_ai_search_namespace.support <account_id>/support
+```
+
+You can also use an `import` block:
+
+```tf
+import {
+  to = cloudflare_ai_search_namespace.support
+  id = "${var.account_id}/support"
+}
+```
+
+## Data sources
+
+### Read one namespace
+
+The `cloudflare_ai_search_namespace` data source reads one namespace. Set either `name` or a `filter` object with `search`, for example `filter = { search = "support" }`.
+
+```tf
+data "cloudflare_ai_search_namespace" "support" {
+  account_id = var.account_id
+  name       = "support"
+}
+```
+
+### List namespaces
+
+The `cloudflare_ai_search_namespaces` data source lists the namespaces in an account. Use the optional `search` argument to return only namespaces whose name or description contains a string, and `max_items` to limit the number of results. The namespaces are returned in `result`.
+
+```tf
+data "cloudflare_ai_search_namespaces" "all" {
+  account_id = var.account_id
+}
+```
+
+## Related resources
+
+- [Instances with Terraform](/ai-search/api/instances/terraform/)
+- [Namespaces REST API](/ai-search/api/namespaces/rest-api/)
+- [Namespaces](/ai-search/concepts/namespaces/)

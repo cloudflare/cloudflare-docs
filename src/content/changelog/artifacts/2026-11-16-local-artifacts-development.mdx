@@ -1,0 +1,53 @@
+---
+title: Artifacts now supports local development
+description: Create, import, clone, and push Artifacts repos locally with Wrangler, the Cloudflare Vite plugin, and Workers Vitest.
+products:
+  - artifacts
+  - workers
+date: 2026-11-16
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+You can now develop and test [Artifacts](/artifacts/) locally. Create repos, import Git repositories over HTTPS, issue repo tokens, and clone or push with Git on your machine before deploying to Cloudflare's global network. Local repos are separate from your deployed repos, so you can test changes without affecting production data.
+
+Local repos also emit the same [Artifacts events](/artifacts/guides/event-subscriptions/) as production when a repo is created, imported, forked, or deleted, or when a repo token is created or revoked. This lets you test the Workflows that react to them before you deploy.
+
+To use local repos when you run your Worker locally, add an Artifacts binding to your Wrangler configuration file:
+
+<WranglerConfig>
+
+```toml
+name = "artifacts-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[artifacts]]
+binding = "ARTIFACTS"
+namespace = "default"
+```
+
+</WranglerConfig>
+
+Run `npx wrangler dev`, then use the binding the same way you would in production:
+
+<TypeScriptExample>
+
+```ts
+const created = await env.ARTIFACTS.create("starter-repo");
+
+return Response.json({
+	remote: created.remote,
+	token: created.token,
+});
+```
+
+</TypeScriptExample>
+
+The returned `remote` points to your local dev session, so you can use it with a standard Git client to clone and push.
+
+Local development requires the latest version of Wrangler and Git 2.32 or later on your `PATH`.
+
+When you develop with `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), or the [Workers Vitest integration](/workers/testing/vitest-integration/), Artifacts bindings use the local simulator by default. To use your deployed repos instead, set `remote = true` on the binding.
+
+To learn more, refer to [Local development](/artifacts/guides/local-development/).

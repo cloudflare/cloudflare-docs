@@ -24,6 +24,8 @@ export { default as CopyPromptButton } from "./components/CopyPromptButton.astro
 export { default as APIRequest } from "./components/cf/APIRequest.astro";
 export { default as CfCommand } from "./components/cf/CfCommand.astro";
 export { default as CfNamespace } from "./components/cf/CfNamespace.astro";
+export { default as CliVariant } from "./components/cf/CliVariant.astro";
+export { default as CliVariants } from "./components/cf/CliVariants.astro";
 export { default as DashButton } from "./components/cf/DashButton.astro";
 export { default as DirectoryListing } from "./components/cf/DirectoryListing.astro";
 export { default as AnnotatedConfigExplorer } from "./components/config-explorer/AnnotatedConfigExplorer.astro";

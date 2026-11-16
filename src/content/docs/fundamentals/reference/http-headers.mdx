@@ -31,7 +31,7 @@ Alternatively, if you do not wish to receive the `CF-Connecting-IP` header or an
 
 #### CF-Connecting-IP in Worker subrequests
 
-In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client's IP). `x-real-ip` can be altered by the user in their Worker script.
+In same-zone Worker subrequests, the value of `CF-Connecting-IP` reflects the value of `x-real-ip` (the client's IP). `x-real-ip` can be altered by the user in their Worker script, which changes the `CF-Connecting-IP` value your origin server receives. Cloudflare does not forward the `x-real-ip` header itself to your origin server.
 
 In cross-zone subrequests from one Cloudflare zone to another Cloudflare zone, the `CF-Connecting-IP` value will be set to the Worker client IP address `'2a06:98c0:3600::103'` for security reasons.
 

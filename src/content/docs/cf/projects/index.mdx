@@ -299,11 +299,12 @@ then uploads the preview and prints the result as JSON. Previews in `cf` can
 change during the beta.
 
 The preview name defaults to the current branch. `cf` reads the branch from
-Workers Builds, GitHub Actions, or GitLab CI/CD, and then from Git. On a
-detached `HEAD` with no CI branch, pass a name:
+Workers Builds, GitHub Actions, or GitLab CI/CD, and then from Git. To override
+the branch name, pass `--preview-name`. This flag is required on a detached
+`HEAD` with no CI branch:
 
 ```sh
-cf previews deploy my-feature
+cf previews deploy --preview-name my-feature
 ```
 
 The command accepts `--mode`, `--worker`, and `--prebuilt`. With `--prebuilt`,
@@ -484,7 +485,11 @@ We couldn't determine a Preview name from CI or Git.
 ```
 
 `cf previews deploy` found no branch name, for example on a detached `HEAD`.
-Pass a name: `cf previews deploy <PREVIEW_NAME>`.
+Pass a name with `--preview-name`:
+
+```sh
+cf previews deploy --preview-name <PREVIEW_NAME>
+```
 
 ### A local command has no local equivalent
 

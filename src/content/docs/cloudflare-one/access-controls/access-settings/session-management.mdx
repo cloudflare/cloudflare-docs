@@ -198,6 +198,20 @@ This action [revokes the user's session](#per-user) across all applications. Acc
 
 You can use these URLs to create custom logout buttons or links directly within your application.
 
+:::note[Redirect after logout]
+
+To redirect users after logout, append the `returnTo` query parameter to either logout URL. For example, to redirect to `https://app.example.com/signed-out`:
+
+```txt
+https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/logout?returnTo=https%3A%2F%2Fapp.example.com%2Fsigned-out
+```
+
+Use your team domain or an application domain in the same Access account as the destination. Access validates the destination and rejects unrelated domains, such as `?returnTo=google.com`, with a `400` response (`Invalid redirect URL`).
+
+URL-encode the destination, especially if it contains query parameters. If you omit the scheme, Access uses `https://`.
+
+:::
+
 :::note
 
 At this time, end users cannot log themselves out on a per-application basis.
