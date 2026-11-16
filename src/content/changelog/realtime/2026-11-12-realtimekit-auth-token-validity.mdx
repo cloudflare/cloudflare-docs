@@ -1,0 +1,40 @@
+---
+title: Set custom validity windows for RealtimeKit auth tokens
+description: RealtimeKit participant auth tokens now accept custom start and end times, and you can revoke a single token without removing everyone from the meeting.
+products:
+  - realtime
+date: 2026-11-12
+---
+
+import { APIRequest } from "~/components";
+
+[RealtimeKit](/realtime/realtimekit/) auth tokens now support custom validity windows, and you can revoke a single token. When your backend adds a [participant](/realtime/realtimekit/concepts/participant/) to a meeting, it gets back an auth token that the participant's app uses to join.
+
+Previously, every token was valid for 100 days from the moment it was issued. Now you can choose when a token starts and stops working, for example only during a scheduled class or interview, so a shared link stops working once the session is over. Pass `not_before` and `expires_on` in the `token` object when you [add a participant](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/):
+
+<APIRequest
+	path="/accounts/{account_id}/realtime/kit/{app_id}/meetings/{meeting_id}/participants"
+	method="POST"
+	json={{
+		name: "Mary Sue",
+		preset_name: "<preset_name>",
+		custom_participant_id: "<uuid_of_the_user_in_your_system>",
+		token: {
+			not_before: "2026-12-01T15:00:00Z",
+			expires_on: "2026-12-01T17:00:00Z",
+		},
+	}}
+/>
+
+Both fields are optional, so existing integrations keep getting 100-day tokens.
+
+You can also [revoke a single token](/realtime/realtimekit/concepts/participant/#revoke-tokens) without setting the whole meeting to `INACTIVE`. If the participant is in the meeting, RealtimeKit removes them. A revoked token can take up to 60 seconds to stop working everywhere, so delete the participant instead if you need to block them immediately.
+
+RealtimeKit rejects expired, not yet valid, and revoked tokens before the participant enters the meeting, so you are not billed for them.
+
+## Learn more
+
+- [Token validity and refresh](/realtime/realtimekit/concepts/participant/#token-validity-and-refresh)
+- [Revoke tokens](/realtime/realtimekit/concepts/participant/#revoke-tokens)
+- [Add participant API](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/)
+- [Refresh participant token API](/api/resources/realtime_kit/subresources/meetings/methods/refresh_participant_token/)

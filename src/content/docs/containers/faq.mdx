@@ -97,7 +97,7 @@ On the production branch, Workers Builds should run `wrangler deploy` so images 
 ## How does scaling work?
 
 Containers scale by creating or addressing specific instances. For stateless routing across a
-fixed number of interchangeable instances, use the `getRandom` helper.
+fixed number of interchangeable instances, choose an instance name at random from a fixed pool.
 
 Refer to [scaling and routing](/containers/configuration/scaling-and-routing/) for details.
 
@@ -105,7 +105,7 @@ Refer to [scaling and routing](/containers/configuration/scaling-and-routing/) f
 
 Not today, though Cloudflare plans to add built-in autoscaling in a future release.
 
-Until then, use `getRandom` for simple stateless routing and specific instance IDs when you need
+Until then, route to a random instance from a fixed pool for simple stateless routing, and use specific instance names when you need
 explicit control over container lifecycle.
 
 ## What are cold starts? How fast are they?
@@ -147,7 +147,7 @@ Containers do not use swap memory.
 
 ## How long can instances run for? What happens when a host server is shut down?
 
-Cloudflare does not stop a container instance after a fixed maximum runtime. With the Durable Object Container API, call [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout) to stop an inactive container. The `Container` class sets [`sleepAfter`](/containers/api/container-class/#sleepafter) to 10 minutes by default. Its [`onActivityExpired()`](/containers/api/container-class/#onactivityexpired) implementation signals the container to stop after that period without activity. You can change the duration or override the hook.
+Cloudflare does not stop a container instance after a fixed maximum runtime. Call [`setInactivityTimeout()`](/containers/api/durable-object-container/#setinactivitytimeout) to stop an inactive container.
 
 Another platform event can stop an active container. For example, a host server restart happens on an irregular cadence. Cloudflare does not guarantee that any container instance will run for a set period.
 

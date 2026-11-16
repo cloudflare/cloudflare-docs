@@ -325,6 +325,31 @@ steps = 25_000
 
 Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workflow limits](/workflows/reference/limits/) for more information.
 
+## Workflow concurrency limits
+
+To cap how many instances of a single Workflow run at the same time, configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"concurrency": {
+				"limit": 10,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+Instances above the limit are queued and start automatically as running instances finish. The limit cannot be higher than your account's [concurrency limit](/workflows/reference/limits/). Refer to [Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits) for how limits are applied, and how to change or remove them.
+
 ## Default instance retention
 
 By default, the state of a finished Workflow instance is retained for 3 days on the Workers Free plan. On the Workers Paid plan, instance state is retained for 7 days by default. Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/) keep their existing 30-day default. To retain instances for a different period, up to your account's [retention limit](/workflows/reference/limits/), configure `default_retention` on the Workflow binding in your Wrangler configuration:
@@ -398,7 +423,7 @@ Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `
 
 </WranglerConfig>
 
-A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `schedules`, `default_retention`, and `jurisdiction`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
+A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `concurrency`, `schedules`, `default_retention`, and `jurisdiction`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
 
 You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
 
@@ -669,8 +694,6 @@ const result = await env.MY_WORKFLOW.createBatch({
 
 `options` takes one of the following shapes:
 
-<TypeScriptExample omitTabs>
-
 ```ts
 type WorkflowBatchCreateOptions =
 	| {
@@ -686,13 +709,9 @@ type WorkflowBatchCreateOptions =
 	  };
 ```
 
-</TypeScriptExample>
-
 `count` must be an integer from 1 to 100. `instances` must contain from 1 to 100 entries. You cannot pass both `count` and `instances` in the same call.
 
 The operation returns the created instances and per-instance errors:
-
-<TypeScriptExample omitTabs>
 
 ```ts
 type WorkflowBatchCreateResult = {
@@ -705,8 +724,6 @@ type WorkflowBatchCreateResult = {
 	}[];
 };
 ```
-
-</TypeScriptExample>
 
 `created` contains a `WorkflowInstance` for each created instance, in input order. `errors` contains the entries that were not created. Each error includes the position of the entry in the input (`index`), its `id` if one was provided, and an error code and message.
 
@@ -764,8 +781,6 @@ const result = await env.MY_WORKFLOW.deleteBatch([
 
 The operation returns successes and per-instance failures:
 
-<TypeScriptExample>
-
 ```ts
 type WorkflowBatchDeleteResult = {
 	deleted: { id: string }[];
@@ -776,8 +791,6 @@ type WorkflowBatchDeleteResult = {
 	}[];
 };
 ```
-
-</TypeScriptExample>
 
 `deleted` contains the IDs that were deleted successfully. `errors` contains failures identified by instance ID, with a stable error code and message.
 

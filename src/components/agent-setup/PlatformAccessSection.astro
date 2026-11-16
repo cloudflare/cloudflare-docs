@@ -70,11 +70,11 @@ const { showCliSelector = false } = Astro.props;
 
 		{showCliSelector ? (
 			<>
-				<div data-nb-cli-variant="wrangler" class="border-border border-b">
-					<PlatformCliDetails cli="wrangler" />
-				</div>
 				<div data-nb-cli-variant="cf" class="border-border border-b">
 					<PlatformCliDetails cli="cf" />
+				</div>
+				<div data-nb-cli-variant="wrangler" class="border-border border-b">
+					<PlatformCliDetails cli="wrangler" />
 				</div>
 			</>
 		) : (

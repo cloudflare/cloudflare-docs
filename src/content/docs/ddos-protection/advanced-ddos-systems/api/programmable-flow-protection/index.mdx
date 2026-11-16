@@ -1,7 +1,7 @@
 ---
 pcx_content_type: how-to
 title: Programmable Flow Protection
-description: Configure Programmable Flow Protection programs and rules using the Cloudflare API.
+description: Configure Programmable Flow Protection programs, rules, and parameter maps using the Cloudflare API.
 products:
   - ddos-protection
 sidebar:
@@ -66,6 +66,21 @@ To move an existing rule to another successful version of its program, send a `P
 | Operation | Method and endpoint / Description |
 | --- | --- |
 | Debug with PCAP | <p>`POST accounts/{account_id}/magic/programmable_flow_protection/configs/programs/{program_id}/pcap`</p>Runs a program against a PCAP file and returns an annotated PCAP with program verdicts. |
+
+### Parameter operations
+
+| Operation | Method and endpoint / Description |
+| --- | --- |
+| Get parameters | <p>`GET accounts/{account_id}/magic/programmable_flow_protection/configs/parameters`</p>Fetches the account's [parameter maps](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/json-objects/#parameters). |
+| Replace parameters | <p>`PUT accounts/{account_id}/magic/programmable_flow_protection/configs/parameters`</p>Replaces all of the account's parameter maps. To remove all maps, send `{"params": {}}`. |
+
+A `PUT` request replaces all maps. To change a single entry, get the current maps, edit them, and send the complete document back. If any part of the document is invalid, the request fails and the existing maps stay active.
+
+#### Limits
+
+- Your account's allocation sets the maximum number of maps and the maximum document size. Contact your account team to change your allocation.
+- Request bodies cannot exceed 32 MiB.
+- You can replace the maps at most once per second. Faster requests return `429` with a `Retry-After` header.
 
 ## Pagination
 

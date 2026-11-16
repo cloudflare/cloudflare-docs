@@ -1,0 +1,33 @@
+---
+title: AI Search supports D1 databases as a data source (beta)
+description: AI Search can now index the rows returned by a read-only SQL query against a Cloudflare D1 database.
+products:
+  - ai-search
+  - d1
+date: 2026-11-12T12:00:00Z
+---
+
+[AI Search](/ai-search/) can now use a [D1](/d1/) database as a data source. AI Search runs a read-only query that you provide and indexes each returned row as a separate document. Scheduled syncs keep the index current as rows are added, changed, or removed.
+
+Create D1-backed instances from the dashboard, the REST API, or the Workers binding.
+
+![Selecting a D1 database as the data source when creating an AI Search instance in the dashboard](~/assets/images/ai-search/d1-data-source-dashboard.png)
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "id": "help-center",
+    "type": "d1",
+    "source": "<D1_DATABASE_ID>",
+    "token_id": "<SERVICE_TOKEN_ID>",
+    "source_params": {
+      "d1": {
+        "query": "SELECT article_id AS id, title, content, category AS meta_category\nFROM articles\nWHERE published = 1"
+      }
+    }
+  }'
+```
+
+Learn more in [D1 data source](/ai-search/configuration/data-source/d1/).

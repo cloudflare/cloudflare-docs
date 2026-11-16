@@ -50,6 +50,7 @@ import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 import ClefCode from "~/components/models/code/ClefCode.astro";
 import ClairicCode from "~/components/models/code/ClairicCode.astro";
+import EmbeddingGemma2Code from "~/components/models/code/EmbeddingGemma2Code.astro";
 
 interface Props {
 	model: ModelView;
@@ -120,6 +121,9 @@ if (!hasCatalogUsage) {
 	}
 	if (isClairic) {
 		CodeExamples = ClairicCode;
+	}
+	if (model.name === "@cf/google/embeddinggemma-2") {
+		CodeExamples = EmbeddingGemma2Code;
 	}
 }
 
@@ -425,6 +429,10 @@ const headings: MarkdownHeading[] = [
 			product="workers-ai"
 			params={{ omni: model.name === "@cf/cloudflare/clef-omni" }}
 		/>
+	)}
+
+	{isClairic && (
+		<Render file="clairic-media-input-pricing" product="workers-ai" />
 	)}
 
 	{hasGlm52ReasoningEffortGuidance && (

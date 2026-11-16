@@ -15,12 +15,11 @@ import { DashButton, Tabs, TabItem } from '~/components';
 User Groups are a collection of [account members](/fundamentals/manage-members/) that are treated equally from an access control perspective. User Groups can be assigned permission policies, with individual members in the group receiving all permissions of the roles assigned to the User Group. If users also have individually assigned permissions, then their effective permissions are the union of all of their individual permissions, plus the permissions for all of the User Groups they are a member of. 
 
 :::note
-User Group permissions are inherited by each member of the group but are not currently reflected in the role field on the **Members** page. To view a member’s full set of permissions, check both:
+User Group permissions are inherited by each member of the group.
 
-- The **Members** page for any directly assigned policies
-- The **Groups** tab to identify which groups the member belongs to, and the policies applied to those groups
+To view a member's effective permissions, open that member's details from the **Members** page. The member details view shows both directly assigned policies and policies inherited from User Groups.
 
-Cloudflare is actively working on improving this experience to make inherited and direct permissions easier to view.
+Use the **Groups** tab when you need to review or change the policies assigned to the group itself.
 :::
 
 ## Create a User Group manually 

@@ -18,10 +18,13 @@ const props = z.object({
 		"macos/ga",
 		"macos/beta",
 		"linux/ga",
+		"linux/beta",
 	]),
+	// Oldest version to list. Older releases of the track stay out of the page.
+	minVersion: z.string().optional(),
 });
 
-const { track } = props.parse(Astro.props);
+const { track, minVersion } = props.parse(Astro.props);
 
 // Newest version first. Sorting by version rather than release date keeps a
 // backport (e.g. 2026.7.1384.0 shipped after 2026.8.2115.0) from being shown
@@ -37,6 +40,10 @@ const entries = await getCollection("warp-releases", (release) => {
 	});
 
 	if (release.data.releaseDate.getTime() < oneYearAgo.getTime()) return false;
+
+	if (minVersion && compareWarpVersions(release.data.version, minVersion) < 0) {
+		return false;
+	}
 
 	return true;
 });
@@ -56,14 +63,16 @@ const platform = latestRelease.platformName;
 
 <WARPRelease header="Latest release" open={true} release={latestRelease} />
 
-<Details header={`Previous version history (${releases.length - 1})`}>
-	{releases
-		.slice(1)
-		.sort(sortByVersion)
-		.map((release) => (
-			<WARPRelease
-				header={`${platform} ${release.version}`}
-				release={release}
-			/>
-		))}
-</Details>
+{releases.length > 1 && (
+	<Details header={`Previous version history (${releases.length - 1})`}>
+		{releases
+			.slice(1)
+			.sort(sortByVersion)
+			.map((release) => (
+				<WARPRelease
+					header={`${platform} ${release.version}`}
+					release={release}
+				/>
+			))}
+	</Details>
+)}

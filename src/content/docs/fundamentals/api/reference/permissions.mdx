@@ -47,6 +47,15 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
 
+MoQ uses its own account permissions, separate from Realtime permissions. Select **Account** > **MoQ** when [creating a token](/fundamentals/api/get-started/create-token/):
+
+| Dashboard permission | Permission-groups API name | Access |
+| -------------------- | -------------------------- | ------ |
+| MoQ Read | MoQ Read | Read and list MoQ relays and connection-token metadata. |
+| MoQ Edit | MoQ Write | Create, read, update, and delete MoQ relays, and create, list, and revoke their connection tokens. |
+
+For examples, refer to [Use the MoQ API](/moq/use-the-api/).
+
 :::note
 The `AI Gateway Read`, `Run`, and `Edit` permissions are account-scoped only — they cannot be restricted to a single gateway. For details, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/).
 :::

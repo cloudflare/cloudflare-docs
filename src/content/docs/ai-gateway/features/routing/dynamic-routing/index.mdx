@@ -64,7 +64,7 @@ Ensure your gateway has [authentication](/ai-gateway/configuration/authenticatio
 
 :::note
 
-Dynamic routes accept the OpenAI chat completions request shape only. You can call them through the [REST API](/ai-gateway/usage/rest-api/) at `/ai/v1/chat/completions`, the [AI binding](/ai-gateway/usage/worker-binding-methods/) in a Worker, or the [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) at `/compat/chat/completions`. Other request formats, such as Anthropic Messages, return a `400` error.
+Dynamic routes accept the OpenAI chat completions request shape only. You can call them through the [REST API](/ai-gateway/usage/rest-api/) at `/ai/v1/chat/completions`, the [AI binding](/ai-gateway/usage/worker-binding-methods/) in a Worker, or the [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) at `/compat/chat/completions`. Other request formats, such as Anthropic Messages, return a `400` error. The `/ai/run` REST endpoint does not support dynamic routes. Requests to it return a `400` error with code [`7003`](/ai-gateway/reference/troubleshooting/#400-bad-request-7003).
 
 Dynamic routes are scoped to the gateway you created them on. On the REST API, set the `cf-aig-gateway-id` header to that gateway, otherwise the request resolves against your default gateway and returns a `404` error.
 

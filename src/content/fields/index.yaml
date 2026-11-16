@@ -664,7 +664,7 @@ entries:
     description: |-
       Provides the same information as [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/).
 
-      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled, except in [rate limiting rules](/waf/rate-limiting-rules/#availability), where this field is available on all plans.
 
   - name: cf.verified_bot_category
     data_type: String
