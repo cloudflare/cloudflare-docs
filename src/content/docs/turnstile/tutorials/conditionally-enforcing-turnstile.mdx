@@ -48,21 +48,19 @@ Your website then leaves Turnstile off the page for that agent and does not requ
 
    <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-3. Select **Create rule** > **Request Header Transform Rule**. Under **When incoming requests match**, select a custom filter that covers every request to the hostname where your application trusts the header. For example:
+3. Select **Create rule** > **Request Header Transform Rule** and give the rule a descriptive name. Under **When incoming requests match**, select **Custom filter expression**. Set **Field** to **Hostname**, **Operator** to **equals**, and **Value** to your hostname, such as `example.com`.
+
+   Under **Then…** > **Modify request header**, set **Operation** to **Set static**. Set **Header name** to `x-turnstile-bypass` and **Value** to `false`. This rule overwrites any value supplied by a visitor. Select **Deploy**.
+
+4. Create a second Request Header Transform Rule with a descriptive name. Under **When incoming requests match**, select **Custom filter expression** and set **Field** to **Hostname**, **Operator** to **equals**, and **Value** to your hostname. Select **Edit expression** and add a detection ID condition to the hostname filter. For example, replace `example.com` with your hostname and `12345` with one or more reviewed detection IDs (separate multiple IDs with spaces inside the braces):
 
    ```txt
-   http.host eq "example.com"
+   http.host eq "example.com" and any(cf.bot_management.detection_ids[*] in {12345})
    ```
 
-   Replace `example.com` with your hostname. Do not filter this rule to approved detection IDs: it must also overwrite a visitor-supplied header on unapproved requests.
+   Under **Then…** > **Modify request header**, set **Operation** to **Set static**. Set **Header name** to `x-turnstile-bypass` and **Value** to `true`. Select **Deploy**.
 
-4. Under **Modify request header**, select **Set dynamic**. Set the header name to `x-turnstile-bypass` and the value to this expression, replacing `12345` with a reviewed detection ID or a space-separated list of IDs:
-
-   ```txt
-   to_string(any(cf.bot_management.detection_ids[*] in {12345}))
-   ```
-
-5. Select **Deploy**. The rule sets the header to `true` for selected agents and `false` for other requests, overwriting a value supplied by the visitor. Ensure no later rule or proxy can change that decision.
+5. In **Rules** > **Overview**, confirm that the rule setting the header to `false` is ordered before the rule setting it to `true`. The first rule sets the header for every request to the hostname; the second overwrites it only for requests that match the selected detection IDs. Ensure no later rule or proxy can change that decision.
 
 6. At your origin, decide what to render:
 
