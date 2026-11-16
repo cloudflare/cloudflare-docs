@@ -9,9 +9,9 @@ date: 2026-11-16
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
 
-You can now develop and test [Artifacts](/artifacts/) locally using `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), and the [Workers Vitest integration](/workers/testing/vitest-integration/). Create repos, import Git repositories over HTTPS, issue repo tokens, and clone or push with Git on your machine before deploying to Cloudflare's global network. Local repos are separate from your deployed repos, so you can test changes without affecting production data.
+You can now develop and test [Artifacts](/artifacts/) locally. Create repos, import Git repositories over HTTPS, issue repo tokens, and clone or push with Git on your machine before deploying to Cloudflare's global network. Local repos are separate from your deployed repos, so you can test changes without affecting production data.
 
-Artifacts bindings now use a local simulator by default:
+Artifacts bindings now use a local simulator by default when you run your Worker with `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), or the [Workers Vitest integration](/workers/testing/vitest-integration/). Add a binding to your Wrangler configuration file:
 
 <WranglerConfig>
 
