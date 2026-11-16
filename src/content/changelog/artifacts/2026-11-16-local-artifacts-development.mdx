@@ -11,9 +11,9 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 You can now develop and test [Artifacts](/artifacts/) locally. Create repos, import Git repositories over HTTPS, issue repo tokens, and clone or push with Git on your machine before deploying to Cloudflare's global network. Local repos are separate from your deployed repos, so you can test changes without affecting production data.
 
-You can also test [Artifacts events](/artifacts/guides/event-subscriptions/) locally. Local repos emit the same events as production when a repo is created, imported, forked, or deleted, or when a repo token is created or revoked. Use them to test the Workflows that react to those events, like an agent that sets up a new repo when it is created or forked.
+Local repos also emit the same [Artifacts events](/artifacts/guides/event-subscriptions/) as production when a repo is created, imported, forked, or deleted, or when a repo token is created or revoked. This lets you test the Workflows that react to them, like an agent that sets up each new repo, before you deploy.
 
-Artifacts bindings now use a local simulator by default when you run your Worker with `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), or the [Workers Vitest integration](/workers/testing/vitest-integration/). Add a binding to your Wrangler configuration file:
+When you develop with `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), or the [Workers Vitest integration](/workers/testing/vitest-integration/), Artifacts bindings use the local simulator by default. Add a binding to your Wrangler configuration file:
 
 <WranglerConfig>
 
