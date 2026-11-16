@@ -385,6 +385,18 @@ Converts a string field to lowercase. Only uppercase ASCII bytes are converted. 
 
 For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) == "www.cloudflare.com"` will return `true`.
 
+### `md5`
+
+<code>md5(input <Type text="String | Bytes" />)</code>: <Type text="Bytes" />
+
+Computes the MD5 hash of the `input` string or byte array. Returns a 16-byte hash value.
+
+To encode the hash as a string, combine `md5()` with [`encode_base64()`](#encode_base64):
+
+```txt
+encode_base64(md5("hello world"))
+```
+
 ### `regex_replace`
 
 <code>regex_replace(source <Type text="String" />, regular_expression <Type text="String" />, replacement <Type text="String" />)</code>: <Type text="String" />
@@ -463,6 +475,18 @@ remove_query_args(http.request.uri.query, "category") will return "order=desc"
 You can only use the `remove_query_args()` function in [rewrite expressions of Transform Rules](/rules/transform/).
 :::
 
+### `sha1`
+
+<code>sha1(input <Type text="String | Bytes" />)</code>: <Type text="Bytes" />
+
+Computes the SHA-1 hash of the `input` string or byte array. Returns a 20-byte hash value.
+
+To encode the hash as a string, combine `sha1()` with [`encode_base64()`](#encode_base64):
+
+```txt
+encode_base64(sha1("hello world"))
+```
+
 ### `sha256`
 
 <code>sha256(input <Type text="String | Bytes" />)</code>: <Type text="Bytes" />
@@ -498,6 +522,18 @@ The `sha256()` function is available as an Enterprise add-on and requires a spec
 You can only use the `sha256()` function in rewrite expressions of [Transform Rules](/rules/transform/).
 
 :::
+
+### `sha512`
+
+<code>sha512(input <Type text="String | Bytes" />)</code>: <Type text="Bytes" />
+
+Computes the SHA-512 hash of the `input` string or byte array. Returns a 64-byte hash value.
+
+To encode the hash as a string, combine `sha512()` with [`encode_base64()`](#encode_base64):
+
+```txt
+encode_base64(sha512("hello world"))
+```
 
 ### `split`
 

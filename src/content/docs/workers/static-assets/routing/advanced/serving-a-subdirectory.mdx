@@ -48,6 +48,10 @@ Set `assets.base_path` to `/blog` in your Wrangler configuration file:
 
 Requests to `example.com/blog/` serve `dist/index.html`. Requests to `example.com/blog/posts/post1` serve `dist/posts/post1.html`.
 
+Your Worker's [routes](/workers/configuration/routing/routes/) must include the base path. For example, if your Worker only runs on `example.com/api/*`, requests to `example.com/blog/` do not reach your Worker or its static assets.
+
+If you build with the [Cloudflare Vite plugin](/workers/vite-plugin/), also set Vite's `base` option to `/blog/`. Refer to [Serve assets from a URL path prefix](/workers/vite-plugin/reference/static-assets/#serve-assets-from-a-url-path-prefix).
+
 Requests outside `/blog` do not resolve static assets. Requests made through the [assets binding](/workers/static-assets/binding/#binding) also use the mounted public path. Forwarding the original request works unchanged. When constructing a request, include `/blog` in its pathname, for example, `env.ASSETS.fetch("https://assets.local/blog/posts/post1")`.
 
 Paths in `_headers`, `_redirects`, and `assets.run_worker_first` use the public URL path. Include `/blog` in those paths when they apply to this example.

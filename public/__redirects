@@ -144,6 +144,14 @@
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
 /magic-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/magic-cloud-networking/changelog/ /cloudflare-wan/reference/legacy-cloud-networking-changelog/ 301
+/multi-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/cloudflare-wan/reference/legacy-cloud-networking-changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/multi-cloud-networking/changelog/ /cloudflare-wan/reference/legacy-cloud-networking-changelog/ 301
+/magic-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
+/multi-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
+/cloudflare-wan/configuration/multi-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
+/magic-wan/configuration/multi-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
 /magic-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /cloudflare-network-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /magic-network-monitoring/changelog/index.xml /changelog/rss/network-flow.xml 301
@@ -395,6 +403,7 @@
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
+/agents/harnesses/container/ /agents/harnesses/claude-code/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
@@ -735,10 +744,11 @@
 # Containers
 /containers/beta-info/ /containers/faq/ 301
 # Containers API
-/containers/container-package/ /containers/api/container-class/ 301
+/containers/api/container-class/ /containers/api/durable-object-container/ 301
+/containers/container-package/ /containers/api/durable-object-container/ 301
 /containers/durable-object-methods/ /containers/api/durable-object-container/ 301
-/containers/container-class/ /containers/api/container-class/ 301
-/containers/reference/container-class/ /containers/api/container-class/ 301
+/containers/container-class/ /containers/api/durable-object-container/ 301
+/containers/reference/container-class/ /containers/api/durable-object-container/ 301
 /containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301
 /durable-objects/api/container/ /containers/api/durable-object-container/ 301
 # Containers IA rework: loose pages folded into core sections
@@ -1674,7 +1684,7 @@
 /magic-wan/configuration/common-settings/enable-magic-roles/ /cloudflare-wan/configuration/common-settings/enable-roles/ 301
 /magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
 /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
-/magic-wan/configuration/magic-cloud-networking/ /cloudflare-wan/configuration/multi-cloud-networking/ 301
+/magic-wan/configuration/magic-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
 # wan-tunnels slug renames (old path + old slug → new path + new slug)
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/enable-magic-roles/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/enable-roles/ 301
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
@@ -2163,6 +2173,7 @@
 
 
 # r2
+/r2/get-started/local-development/ /r2/local-development/ 301
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
 /r2/platform/s3-compatibility/tokens/ /r2/api/tokens/ 301
 /r2/api/s3/tokens/ /r2/api/tokens/ 301
@@ -3295,7 +3306,8 @@
 /cloudflare-one/networks/connectors/wan-tunnels/* /cloudflare-one/networks/connectors/cloudflare-wan/:splat 301
 
 # Multi-Cloud Networking (formerly Magic Cloud Networking)
-/magic-cloud-networking/* /multi-cloud-networking/:splat 301
+/magic-cloud-networking/* /cloudflare-wan/reference/cloud-networking/ 301
+/multi-cloud-networking/* /cloudflare-wan/reference/cloud-networking/ 301
 
 # Network Flow (formerly Magic Network Monitoring)
 /magic-network-monitoring/* /network-flow/:splat 301
@@ -3341,4 +3353,3 @@
 /style-guide/grammar/* /style-guide/style-and-grammar/grammar/:splat 301
 /style-guide/frontmatter/* /style-guide/build-the-page/frontmatter/:splat 301
 /style-guide/components/* /style-guide/build-the-page/components/:splat 301
-

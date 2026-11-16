@@ -14,6 +14,7 @@ Two rules first:
 | You have…                                              | Use                                      | Mandatory? |
 | ------------------------------------------------------ | ---------------------------------------- | ---------- |
 | A Workers JavaScript/TypeScript code sample            | `TypeScriptExample`                      | Yes        |
+| A TypeScript type definition with no runtime code      | Plain `ts` fence                         | Yes        |
 | A Wrangler configuration                               | `WranglerConfig` (TOML input, `$today`)  | Yes        |
 | A package install or exec command (npm/yarn/pnpm/bun)  | `PackageManagers`                        | Yes        |
 | A multi-step procedure                                 | `Steps`                                  | Yes        |
@@ -57,7 +58,7 @@ Two rules first:
 
 ### Code and configuration
 
-- **`TypeScriptExample`** — any Workers JS/TS. Auto-generates the JS tab from TS, so there is one source to maintain. Do not use bare `ts`/`js` fences.
+- **`TypeScriptExample`** — any Workers JS/TS. Auto-generates the JS tab from TS, so there is one source to maintain. Do not use bare `ts`/`js` fences. Type-only snippets (`type`, `interface`, `declare`) are the exception: use a plain `ts` fence, because the generated JavaScript tab would be empty.
 - **`WranglerConfig`** — any Wrangler config. Provide TOML or JSON; the other is generated. Use `$today` for `compatibility_date`. Note minimum compatibility dates in a `:::note`.
 - **`PackageManagers`** — install/exec commands across npm, yarn, pnpm, and bun tabs.
 - **`WranglerCommand` / `WranglerNamespace`** — auto-generated Wrangler CLI reference for a command or a whole namespace.

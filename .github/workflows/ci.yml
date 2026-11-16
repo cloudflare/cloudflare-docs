@@ -125,11 +125,12 @@ jobs:
       # fail; other content edits get a reminder comment and don't fail.
       - name: Check changelog updates entries
         if: github.event_name == 'pull_request'
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        # Compare with the production commit this PR was merged onto: the
+        # merge commit's first parent. `pull_request.base.sha` can be older,
+        # which would count other PRs' changes as part of this one.
         run: |
-          git fetch --no-tags --depth=1 origin "$BASE_SHA"
-          pnpm exec tsx bin/check-changelog-updates.ts "$BASE_SHA" --comment "$RUNNER_TEMP/changelog-updates.md"
+          git fetch --no-tags --depth=2 origin "$GITHUB_SHA"
+          pnpm exec tsx bin/check-changelog-updates.ts "$GITHUB_SHA^1" --comment "$RUNNER_TEMP/changelog-updates.md"
 
       - name: Comment on changelog updates
         if: always() && github.event_name == 'pull_request'

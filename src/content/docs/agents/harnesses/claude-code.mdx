@@ -1,0 +1,192 @@
+---
+title: Claude Code
+description: Run Claude Code on Cloudflare. The CLI runs in a Container, with its own plugins, mods, and settings, and a Durable Object keeps its sessions and credentials.
+pcx_content_type: get-started
+sidebar:
+  badge: Experimental
+  order: 12
+products:
+  - agents
+---
+
+import { PackageManagers, Render, Steps, TypeScriptExample } from "~/components";
+
+Run [Claude Code](https://docs.anthropic.com/en/docs/claude-code/overview) on Cloudflare, with its plugins, mods, and settings, the way it runs on your laptop.
+
+<Render file="container-harness-how" product="agents" params={{ cli: "Claude Code" }} />
+
+To start from a complete app, with HTTP routes and event streaming, use the [Container harness example](https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/container).
+
+## Create a project
+
+You need Node.js 24 or later, the [Cloudflare CLI](/cf/get-started/), and an Anthropic API key. Local container development also needs Docker running.
+
+<Steps>
+1. Create a Worker project:
+
+   ```sh
+   cf init claude-code-agent
+   cd claude-code-agent
+   ```
+
+2. Install the Agents SDK:
+
+   <PackageManagers pkg="agents@latest" />
+</Steps>
+
+Replace `cloudflare.config.ts`. It declares a SQLite-backed Durable Object with a container on the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), the `ContainerEgress` entrypoint, and the API key secret:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig, defineContainer, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+const container = defineContainer({
+	name: "claude-code",
+	schedulingPolicy: "durable-object",
+});
+
+export default defineConfig({
+	worker: {
+		name: "claude-code-agent",
+		entrypoint,
+		compatibilityDate: "2026-11-06",
+		compatibilityFlags: ["nodejs_compat"],
+		exports: {
+			ClaudeCodeAgent: exports.durableObject({ storage: "sqlite", container }),
+			ContainerEgress: exports.worker(),
+		},
+		env: {
+			ANTHROPIC_API_KEY: bindings.secret(),
+		},
+	},
+	containers: [container],
+});
+```
+
+## Create the agent
+
+Create the harness with the `claudeCode()` preset, and add it to the Lifecycle:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { ContainerHarness, claudeCode } from "agents/harness/container";
+import { Lifecycle } from "agents/lifecycle";
+
+export { ContainerEgress } from "agents/harness/container";
+
+export class ClaudeCodeAgent extends DurableObject<Env> {
+	harness = new ContainerHarness({
+		container: containerOf(this.ctx),
+		egress: this.ctx.exports.ContainerEgress,
+		agent: claudeCode({ apiKey: this.env.ANTHROPIC_API_KEY }),
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method !== "POST") {
+			return Response.json(await this.harness.messages());
+		}
+		const { prompt } = await request.json<{ prompt: string }>();
+		const result = await this.harness.prompt(prompt);
+		return Response.json({ status: result.status, text: result.text });
+	}
+}
+
+function containerOf(ctx: DurableObjectState): Container {
+	if (!ctx.container) throw new Error("Configure a container for ClaudeCodeAgent");
+	return ctx.container;
+}
+
+export default {
+	async fetch(request: Request, _env: Env, ctx: ExecutionContext) {
+		return ctx.exports.ClaudeCodeAgent.getByName("demo").fetch(request);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+To send model requests through [AI Gateway](/ai-gateway/), pass the gateway's Anthropic URL as `baseUrl`. With [Unified Billing](/ai-gateway/features/unified-billing/), pass the gateway token as `apiKey`. With [stored provider keys](/ai-gateway/configuration/bring-your-own-keys/), pass it in a `cf-aig-authorization` header in `headers` instead.
+
+## Customize Claude Code
+
+`claudeCode()` takes Claude Code's own options:
+
+| Option               | Description                                                        |
+| -------------------- | ------------------------------------------------------------------ |
+| `model`              | The model new sessions start with. `session.setModel()` changes it |
+| `appendSystemPrompt` | Passed to `--append-system-prompt`                                 |
+| `allowedTools`       | Passed to `--allowedTools`                                         |
+| `disallowedTools`    | Passed to `--disallowedTools`                                      |
+| `maxTurns`           | Passed to `--max-turns`                                            |
+| `version`            | The `@anthropic-ai/claude-code` version to install                 |
+| `setup`              | Commands that run once on the first start, kept in the snapshot    |
+
+Use `setup` to install plugins and mods, and to write `CLAUDE.md`, `~/.claude/settings.json`, or skills. A step with `user: "agent"` runs as the user Claude Code runs as, in its home. Every session's home starts as a copy of that home:
+
+<TypeScriptExample>
+
+```ts
+claudeCode({
+	apiKey: this.env.ANTHROPIC_API_KEY,
+	appendSystemPrompt: "Run the tests before you report a change as done.",
+	setup: [
+		{
+			name: "install review plugin",
+			user: "agent",
+			command: [
+				"sh",
+				"-c",
+				"claude plugin marketplace add my-org/plugins && claude plugin install review@plugins",
+			],
+		},
+		{
+			name: "write CLAUDE.md",
+			user: "agent",
+			command: [
+				"sh",
+				"-c",
+				"mkdir -p ~/.claude && printf '%s\\n' 'Use pnpm. Keep commits small.' > ~/.claude/CLAUDE.md",
+			],
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+Changing `setup` or `version` takes effect when a container next starts. That container sets up from scratch, without the previous snapshot. A token that a setup step uses stays in the snapshot, where the agent can read it.
+
+## Run locally
+
+Add your API key to `.dev.vars`, and keep that file out of version control:
+
+```txt title=".dev.vars"
+ANTHROPIC_API_KEY="<ANTHROPIC_API_KEY>"
+```
+
+Start Docker, then run `cf dev`. Send a prompt to the agent named `demo`, using the port that `cf dev` prints:
+
+```sh
+curl http://localhost:5173/ \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"Write hello.txt containing hi, then read it back."}'
+```
+
+The first prompt takes longer, because the harness installs Claude Code and takes the setup snapshot. Later containers start from that snapshot.
+
+<Render file="container-harness-sessions" product="agents" />
+
+Use `allowedTools` and `disallowedTools` to limit what Claude Code can do.
+
+## Deploy
+
+After you add authentication, deploy with the [Cloudflare CLI](/cf/get-started/) and supply the secret from a [secrets file](/cf/projects/#deploy):
+
+```sh
+cf auth login
+cf deploy --secrets-file .dev.vars
+```

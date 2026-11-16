@@ -1,0 +1,239 @@
+---
+title: D1
+description: Connect a Cloudflare D1 database as a data source to index the rows returned by a SQL query with AI Search.
+pcx_content_type: how-to
+sidebar:
+  order: 3
+  badge:
+    text: Beta
+products:
+  - ai-search
+---
+
+import { Tabs, TabItem } from "~/components";
+
+You can connect a [Cloudflare D1](/d1/) database as a data source for your AI Search instance. AI Search runs a read-only query that you provide and automatically indexes each returned row as a separate document.
+
+D1 data sources are in beta.
+
+## Get started
+
+You can connect a D1 database when creating a new instance through the [dashboard](/ai-search/get-started/dashboard/), the [REST API](/ai-search/get-started/api/), or the [Workers binding](/ai-search/api/instances/workers-binding/#create). D1 is an optional data source that you can add alongside [built-in storage](/ai-search/configuration/data-source/built-in-storage/).
+
+In the dashboard, select **D1 Database** as the data source, choose the database, then write the query and choose a document template. Select **Test query** to run the query on one row and check its columns before you create the instance.
+
+With the REST API or the Workers binding, you need the ID of a D1 database in the same account, a read-only query that returns an `id` column, and the `token_id` of a [service API token](/ai-search/configuration/indexing/service-api-token/). The `token_id` is always required. The AI Search Index Engine permission of the service API token includes the D1 Read permission.
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<ACCOUNT_ID>/ai-search/namespaces/default/instances" \
+  -H "Authorization: Bearer <API_TOKEN>" \
+  -H "Content-Type: application/json" \
+  --data '{
+    "id": "help-center",
+    "type": "d1",
+    "source": "<D1_DATABASE_ID>",
+    "token_id": "<SERVICE_TOKEN_ID>",
+    "source_params": {
+      "d1": {
+        "query": "SELECT article_id AS id, title, body AS content, category AS meta_category\nFROM articles\nWHERE published = 1",
+        "template": "labelled"
+      }
+    }
+  }'
+```
+
+Before it creates the instance, AI Search checks the database, the token, the query, and the result columns. If a check fails, the request returns an error and no instance is created. To change the query, template, or [path filters](#path-filtering) later, use the [Update instance API](/api/resources/ai_search/subresources/namespaces/subresources/instances/methods/update/). A `query` or `template` that you omit from `source_params.d1` keeps its current value, but a `source_params` object replaces `include_items` and `exclude_items`, so send them again to keep them. A change starts a sync. The `source` database cannot be changed.
+
+## Query requirements
+
+The query must meet these requirements:
+
+- It is a single read-only statement that starts with `SELECT` or `WITH`.
+- It contains no `;`, `--`, or `/*`, and no bound parameters such as `?`, `:name`, `@name`, or `$name`.
+- It contains no write or administrative keywords, such as `INSERT`, `UPDATE`, `DELETE`, `REPLACE`, or `PRAGMA`, and no names that start with `sqlite_`, `_cf_`, or `pragma_`.
+- The `;`, `--`, and `/*` characters, the blocked keywords, and the reserved names are rejected anywhere in the query, including string literals, so the `replace()` function is also rejected.
+- Its parentheses are balanced.
+- It returns an `id` that is unique, not `NULL` or empty, and either all text or all integers between -9,007,199,254,740,991 and 9,007,199,254,740,991.
+- It returns at least one row and at most 100,000 rows.
+
+Do not use `ORDER BY` or `LIMIT`. AI Search reads the result in pages ordered by `id`.
+
+## Column conventions
+
+AI Search assigns a role to each result column based on its name. Use `AS` to give a column the role you want, and give every result column a unique name.
+
+| Column           | Role                                                                                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------------- |
+| `id`             | Required. Identifies the row across syncs.                                                            |
+| `title`          | Optional. Rendered as the document heading.                                                           |
+| `content`        | Optional. Rendered as the document body.                                                              |
+| `meta_<name>`    | Optional. Stored as the custom metadata field `<name>`. Refer to [Custom metadata](#custom-metadata). |
+| Any other column | Rendered as a labeled field, depending on the [template](#document-templates).                        |
+
+Each row becomes an item with the key `<id>.md` when the `id` has only letters, digits, `.`, `_`, and `-` and is at most 117 characters, unless it already ends in a hyphen and 16 hex characters. Any other `id` gets a key made of a sanitized prefix plus a hash, such as `acme_intro-1a2b3c4d5e6f7a8b.md`. Every chunk carries the exact `id` value in its `row_id` metadata, and changing a row's `id` deletes the item and creates a new one. `NULL` values and empty strings are omitted from the document.
+
+## Document templates
+
+Set `source_params.d1.template` to control how each row becomes a Markdown document. The dashboard shows these templates as **Labelled**, **Content only**, **Key-value**, and **JSON**. The examples render this row:
+
+```sql
+SELECT
+  42 AS id,
+  'Reset your password' AS title,
+  'Go to Settings and select Reset password.' AS content,
+  'web' AS platform,
+  'account' AS meta_category
+```
+
+<Tabs> <TabItem label="labelled (default)">
+
+Renders the `title` as a heading, every other column except `id` as a labeled field, then the `content`.
+
+```md
+# Reset your password
+
+- **platform:** web
+- **category:** account
+
+Go to Settings and select Reset password.
+```
+
+</TabItem> <TabItem label="content_only">
+
+Renders only the `title` and `content`. Rows without `content` fall back to labeled fields.
+
+```md
+# Reset your password
+
+Go to Settings and select Reset password.
+```
+
+</TabItem> <TabItem label="key_value">
+
+Renders one `column: value` line for every non-empty column, including `id`. Line breaks in values become spaces.
+
+```txt
+id: 42
+title: Reset your password
+content: Go to Settings and select Reset password.
+platform: web
+meta_category: account
+```
+
+</TabItem> <TabItem label="json">
+
+Renders the `title` (or the `id`) as a heading, then a JSON object with every non-empty column. Numbers stay numbers, which suits structured data such as product catalogs.
+
+```txt
+# Reset your password
+
+{
+  "id": 42,
+  "title": "Reset your password",
+  "content": "Go to Settings and select Reset password.",
+  "platform": "web",
+  "meta_category": "account"
+}
+```
+
+</TabItem> </Tabs>
+
+## Custom metadata
+
+Each `meta_<name>` column becomes a [custom metadata](/ai-search/configuration/indexing/metadata/) field called `<name>` that you can use to [filter search results](/ai-search/configuration/retrieval/filtering/). Column names are lowercased first. After the `meta_` prefix, a name must start with a letter, contain only letters, digits, and underscores, and be at most 64 characters. The names `timestamp`, `folder`, `filename`, `file`, and `row_id` are reserved.
+
+AI Search builds the `custom_metadata` schema from these columns, so you do not need to set it. If you pass `custom_metadata`, it must list the same fields with the same types. Columns with integer or real values get the `number` type, and all others get `text`. A query can return at most five `meta_*` columns. When you change the query, you can add `meta_*` columns but cannot remove one or change its type.
+
+To filter by date, return a Unix timestamp:
+
+```sql
+SELECT
+  id,
+  body AS content,
+  CAST(strftime('%s', published_at) AS INTEGER) AS meta_published_at
+FROM articles
+```
+
+Then filter with `{ "published_at": { "$gte": 1767225600 } }` in `ai_search_options.retrieval.filters`.
+
+## Path filtering
+
+You can control which rows get indexed with include and exclude rules. Rules match the item key of each row, such as `42.md`, with the same syntax as R2 path filters.
+
+For example, to skip rows whose `id` starts with `drafts-`:
+
+- **Exclude:** `drafts-*.md`
+
+AI Search still reads excluded rows from D1, so filtering with `WHERE` in the query is usually simpler and reads fewer rows. Refer to [Path filtering](/ai-search/configuration/indexing/path-filtering/) for pattern syntax and filtering behavior.
+
+## How syncing works
+
+D1-backed instances sync on the instance [sync interval](/ai-search/configuration/indexing/syncing/). On each sync:
+
+- New rows are indexed.
+- Changed rows are re-indexed. Unchanged rows are skipped.
+- Rows that the query no longer returns are deleted, but only after AI Search reads the full result.
+
+If the query fails or returns no rows, the sync job ends with an error and the indexed items are kept. Every sync reads the full query result at least twice with your service API token (once to check the `id` values, then in pages), so it counts toward your D1 [rows read](/d1/platform/pricing/). For row errors, sync job errors, and pauses, refer to [Indexing error codes](/ai-search/troubleshooting/indexing-error-codes/#d1-database) and [Sync job errors](/ai-search/troubleshooting/indexing-error-codes/#sync-job-errors).
+
+## Storage
+
+Rows are stored as Markdown items in built-in storage automatically.
+
+To see the items created from your rows, [list the instance's items](/ai-search/api/items/workers-binding/#itemslist) with the Items API. To see the Markdown rendered for a row, [download the item](/api/resources/ai_search/subresources/namespaces/subresources/instances/subresources/items/methods/download/).
+
+## Best practices
+
+- **Select only the columns you need.** Leave out volatile columns, such as view counters or `updated_at`, because a changed value re-indexes the row.
+- **Use a stable, indexed `id`.** The table primary key lets D1 read each page efficiently. A computed `id` can make D1 scan the full result for every page, which increases rows read.
+- **Filter with `WHERE`.** Index only the rows you want to be searchable.
+
+## Example queries
+
+**Text and composite keys:**
+
+```sql
+SELECT
+  tenant_id || ':' || slug AS id,
+  title,
+  body AS content
+FROM pages
+```
+
+**Joins with unique aliases:**
+
+```sql
+SELECT
+  t.ticket_id AS id,
+  t.subject AS title,
+  c.name AS customer
+FROM tickets t
+JOIN customers c ON c.customer_id = t.customer_id
+```
+
+**Published rows only:**
+
+```sql
+SELECT
+  slug AS id,
+  title,
+  body AS content
+FROM posts
+WHERE status = 'published'
+```
+
+## Limits
+
+The regular AI Search [limits](/ai-search/platform/limits-pricing/) apply when using the D1 data source. The following limits apply to D1 data sources:
+
+| Limit                                                                | Value                                        |
+| -------------------------------------------------------------------- | -------------------------------------------- |
+| [Query](#query-requirements) length                                  | 10,000 characters                            |
+| [Rows](#query-requirements) returned by the query                    | 100,000                                      |
+| [`id`](#column-conventions) length                                   | 512 bytes (UTF-8)                            |
+| [Rendered document](#document-templates) size per row                | 64 KiB                                       |
+| [`meta_*` columns](#custom-metadata)                                 | 5                                            |
+| [Metadata](/ai-search/configuration/indexing/metadata/) value length | 500 characters (longer values are truncated) |
+| Metadata per row, including the `id`                                 | 8,000 bytes as JSON                          |
+
+The [files per instance](/ai-search/platform/limits-pricing/#limits) limit also applies, so the effective cap is whichever value is lower. When a sync reaches that limit, rows are indexed in `id` order up to the limit, and no items are deleted in that sync.

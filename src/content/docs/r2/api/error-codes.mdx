@@ -74,7 +74,7 @@ For the **S3-compatible API**, errors are returned as XML in the response body:
 | 10014 | InvalidDigest | 400 | Checksum header format is malformed. | Ensure checksums are properly encoded (base64 for SHA/CRC checksums). |
 | 10037 | BadDigest | 400 | Provided checksum does not match the uploaded content. | Verify data integrity and retry the upload. |
 | 10039 | InvalidRange | 416 | Requested byte range is not satisfiable. | Ensure the range start is less than object size. Check `Range` header format. |
-| 10031 | PreconditionFailed | 412 | Conditional headers (`If-Match`, `If-Unmodified-Since`, etc.) were not satisfied. | Object's ETag or modification time does not match your condition. Refetch and retry. Refer to [conditional operations](/r2/api/s3/extensions/#conditional-operations-in-putobject). |
+| 10031 | PreconditionFailed | 412 | Conditional headers (`If-Match`, `If-Unmodified-Since`, etc.) were not satisfied. | Object's ETag or modification time does not match your condition. Refetch and retry. Refer to [conditional operations](/r2/api/s3/conditional-operations/). |
 
 ### Multipart upload errors
 
