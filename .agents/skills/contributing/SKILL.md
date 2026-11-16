@@ -48,14 +48,17 @@ Find your task and read the listed reference(s). Paths are relative to this skil
 
 The authoring workflow in `references/writing-docs.md` ties these together: gather context → locate where the page belongs → pick a content type → draft against the style guide → choose components for each piece of data → validate.
 
-## Validate before you finish
+## Local preview and validation
 
-Run validation after any content change. Match the command set to your environment — a full build is local-only.
+For MDX edits, start `pnpm run dev` once and leave the local Astro server running while editing. Use its hot reload to preview each change. Do not run a full site build after every MDX edit.
+
+After editing, run the relevant content check and format the files you touched. Run a full build only when the user explicitly requests one or when final full-site validation is needed.
 
 ```bash
-pnpm run check              # Type-check: validates frontmatter schemas + Astro types
-pnpm run build              # Full build: validates MDX parsing, image paths, internal links — LOCAL ONLY (times out in CI)
-pnpm run format             # Auto-fix Prettier formatting on edited files
+pnpm run dev                 # Local preview; keep running for hot reload
+pnpm run check               # Type-check: validates frontmatter schemas + Astro types
+pnpm run format              # Auto-fix Prettier formatting on edited files
+pnpm run build               # Full-site validation, only when warranted
 ```
 
 In CI (`CI=true`), skip `pnpm run build`; run `pnpm run check`, `pnpm run lint`, and `pnpm run format:core:check` only.

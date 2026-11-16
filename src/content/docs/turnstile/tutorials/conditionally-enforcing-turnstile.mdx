@@ -42,34 +42,37 @@ Your website then leaves Turnstile off the page for that agent and does not requ
 
 <Steps>
 
-1. Choose the [detection IDs](/bots/botbase/) for the agents you want to allow. Confirm what each ID detects and check your traffic in [Security Analytics](/waf/analytics/security-analytics/).
+1. Find the Bot Detection ID for the agent in [Botbase](/bots/botbase/).
 
 2. In the Cloudflare dashboard, go to **Rules** > **Overview**.
 
    <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-3. Select **Create rule** > **Request Header Transform Rule** and give the rule a descriptive name. Under **When incoming requests match**, select **Custom filter expression**. Set **Field** to **Hostname**, **Operator** to **equals**, and **Value** to your hostname, such as `example.com`.
+3. Select **Create rule** > **Request Header Transform Rule**, then configure it in four steps:
 
-   Under **Then…** > **Modify request header**, set **Operation** to **Set static**. Set **Header name** to `x-turnstile-bypass` and **Value** to `false`. This rule overwrites any value supplied by a visitor. Select **Deploy**.
+   1. Under **If incoming requests match…**, select **Custom filter expression**.
+   2. Under **When incoming requests match…**, enter the request match expression. For example, match a hostname with `http.host eq "example.com"` or a path with `http.request.uri.path eq "/login"`.
+   3. Under **Then…** > **Modify request header**, set:
 
-4. Create a second Request Header Transform Rule with a descriptive name. Under **When incoming requests match**, select **Custom filter expression** and set **Field** to **Hostname**, **Operator** to **equals**, and **Value** to your hostname. Select **Edit expression** and add a detection ID condition to the hostname filter. For example, replace `example.com` with your hostname and `12345` with one or more reviewed detection IDs (separate multiple IDs with spaces inside the braces):
+      - **Operation** to **Set dynamic**.
+      - **Header name** to `x-turnstile-bypass`.
+      - **Value** to this expression, replacing `12345` with the detection ID or IDs you want to allow:
 
-   ```txt
-   http.host eq "example.com" and any(cf.bot_management.detection_ids[*] in {12345})
-   ```
+      ```txt
+      to_string(has_value(cf.bot_management.detection_ids, 12345))
+      ```
 
-   Under **Then…** > **Modify request header**, set **Operation** to **Set static**. Set **Header name** to `x-turnstile-bypass` and **Value** to `true`. Select **Deploy**.
+      For multiple IDs, add one `has_value(...)` check for each ID and join them with `or`. This sets **Value** to `true` when the request includes any listed detection ID and `false` otherwise.
+   4. Set the rule's priority after any other Request Header Transform Rule that changes this header, then select **Deploy**.
 
-5. In **Rules** > **Overview**, confirm that the rule setting the header to `false` is ordered before the rule setting it to `true`. The first rule sets the header for every request to the hostname; the second overwrites it only for requests that match the selected detection IDs. Ensure no later rule or proxy can change that decision.
-
-6. At your origin, decide what to render:
+4. At your origin, decide what to render:
 
    - Check that the header has exactly one value and that value is `true`. Also check the approved hostname and operation.
    - For eligible page requests, render the form without the Turnstile script, widget, or token-dependent browser logic.
    - For other page requests, render Turnstile normally.
    - If you render the page in the browser, pass only the rendering decision from your server to the page.
 
-7. In your form handler, check the header again. If its only value is `true`, accept the form without a Turnstile token. Otherwise, require a token and verify it with [Siteverify](/turnstile/get-started/server-side-validation/). Keep your other form checks unchanged.
+5. In your form handler, check the header again. If its only value is `true`, accept the form without a Turnstile token. Otherwise, require a token and verify it with [Siteverify](/turnstile/get-started/server-side-validation/). Keep your other form checks unchanged.
 
    For example, in a Node.js form handler:
 
