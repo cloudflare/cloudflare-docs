@@ -20,19 +20,23 @@ This is not a production-ready application. It has no persistent data, administr
 
 ## Prerequisites and inputs
 
+:::note[Test host required]
+You need a virtual machine, a remote machine you control, or your own local machine to run this pilot. Run the demonstration service and `cloudflared` on that same machine. It must be able to make outbound connections to Cloudflare.
+:::
+
 Use a dedicated test hostname, Access application, and Tunnel. Run Node.js 24 and a current `cloudflared` on the same isolated test host, without an existing connector service. Install [cloudflared](/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/), configure an [identity provider](/cloudflare-one/integrations/identity-providers/), and use a [supported proxied DNS setup](/dns/proxy-status/).
 
-| Input              | Example or requirement                                                                                        |
-| ------------------ | ------------------------------------------------------------------------------------------------------------- |
-| Public hostname    | `pilot.example.com`, not an existing application hostname                                                     |
-| Team domain        | `https://your-team.cloudflareaccess.com`, without a trailing slash                                            |
-| Application AUD    | The audience of this pilot's Access application                                                               |
-| Pilot identity     | A dedicated browser user explicitly entitled by the Access policy                                             |
-| Origin listener    | `127.0.0.1:8080`, reachable only on the connector host                                                        |
-| Evidence           | Browser network panel and captured standard output from the handler                                           |
-| Resource inventory | IDs of the dedicated application, policies, Tunnel, route, DNS record, and any cache rule created for cleanup |
+| Input              | Example or requirement                                                                                  |
+| ------------------ | ------------------------------------------------------------------------------------------------------- |
+| Public hostname    | `pilot.example.com`, not an existing application hostname                                               |
+| Team domain        | `https://your-team.cloudflareaccess.com`, without a trailing slash                                      |
+| Application AUD    | The audience of this pilot's Access application                                                         |
+| Pilot identity     | A dedicated browser user explicitly entitled by the Access policy                                       |
+| Origin listener    | `127.0.0.1:8080`, reachable only on the connector host                                                  |
+| Evidence           | Browser network panel and captured standard output from the handler                                     |
+| Resource inventory | IDs of the dedicated application, policies, Tunnel, route, DNS record, and cache rule used by the pilot |
 
-The same-host HTTP hop is loopback only. Do not change the listener to `0.0.0.0`, publish its port, or move the connector to another host without designing the network restrictions and TLS validation described in the design guide.
+The service listens at `127.0.0.1`, an address reachable only from the same machine. This is called a loopback address. The connection from `cloudflared` to the service uses HTTP because it never leaves that machine; the browser-to-Cloudflare and Tunnel connections remain encrypted. Do not change the listener to `0.0.0.0`, publish its port, or move the connector to another host without configuring the network restrictions and TLS validation described in the design guide.
 
 ## Create the protected handler
 
@@ -135,17 +139,21 @@ The `admission` log stage records requests rejected before application logic. Th
 
 ## Deploy the pilot
 
+:::note[Use a domain you control]
+`pilot.example.com` is a placeholder. Replace it with an unused hostname on a domain you control in your supported Cloudflare DNS setup. Use that hostname consistently in the Access application, Tunnel route, cache rule, and browser tests.
+:::
+
 <Steps>
 
 1. Create a dedicated [self-hosted Access application](/cloudflare-one/access-controls/applications/http-apps/self-hosted-public-app/) for `pilot.example.com`, covering all paths. Add an Allow policy for the dedicated test identity. Configure the IdP, MFA, cookie, and session requirements from the [design guide](/reference-architecture/design-guides/identity-gated-edge/#human-access). Inspect overlapping applications and policies. Do not add Bypass, anonymous paths, or machine credentials for this browser-only pilot.
 2. Record the application's AUD. In the local demonstration directory, create `.env` with your values:
 
    ```sh title=".env"
-   TEAM_DOMAIN=https://your-team.cloudflareaccess.com
+    TEAM_DOMAIN=https://[your-team].cloudflareaccess.com
    ACCESS_AUD=replace-with-pilot-application-audience
    ```
 
-   Do not commit `.env`, tunnel credentials, or browser cookies. Keep the directory private to the test operator.
+   Replace `[your-team]`, including the brackets, with your Access team name. Replace the `ACCESS_AUD` example with the pilot application's audience. Do not commit `.env`, tunnel credentials, or browser cookies. Keep the directory private to the test operator.
 
 3. On the connector host, start the handler in a terminal. Keep its standard output available for correlation:
 
@@ -160,11 +168,11 @@ The `admission` log stage records requests rejected before application logic. Th
 
    Alternatively, follow the [locally managed configuration path](/reference-architecture/design-guides/identity-gated-edge/#locally-managed-tunnel). Use the pilot hostname and `http://127.0.0.1:8080` service in that example. Retain per-rule JWT validation and the rejecting catch-all. Complete the linked local Tunnel setup before creating its DNS route. Do not configure both management paths for the same tunnel.
 
-6. Inspect [cache rules](/cache/how-to/cache-rules/). Configure a cache bypass for the dedicated pilot hostname, and ensure no conflicting rule or Worker overrides it. The handler also returns `Cache-Control: no-store`. Record the effective cache configuration; this does not establish two-user cache isolation.
+6. Inspect [cache rules](/cache/how-to/cache-rules/). Configure a cache bypass for the dedicated pilot hostname, and ensure no conflicting rule or Worker overrides it. Authentication controls who can request a response; it does not make a personalized response safe to cache. If a cache rule stores a response without separating users, another user could receive it. The handler also returns `Cache-Control: no-store`. Record the effective cache configuration; this does not establish two-user cache isolation.
 
 </Steps>
 
-HTTP on loopback is specific to this demonstration. For a remote HTTPS origin, preserve certificate verification and configure the expected origin server name and CA trust.
+The local HTTP connection is specific to this demonstration. For an origin on another machine, use HTTPS, preserve certificate verification, and configure the expected origin server name and CA trust.
 
 ## Verify the legitimate-user positive control
 
@@ -196,21 +204,24 @@ Run these checks against the deployed pilot. They are not unit simulations. Star
 
 For P2, stop at the Access response. Do not complete authentication. If the profile signs in automatically, it is not an anonymous test. For P3, a mismatched owner value demonstrates one ownership comparison. It does not require, or establish isolation between, two authenticated users.
 
-A successful browser pilot establishes only the tested route and outcomes. It does not establish binding-cookie replay protection, session expiry or revocation, weak-method denial, unentitled-user denial, or two-user cache isolation. Keep those checks **not tested** until independently exercised with the required personas and evidence. Continue with [production acceptance](/reference-architecture/design-guides/identity-gated-edge/#production-acceptance).
-
-## Clean up safely
-
-Use the resource IDs recorded for this demonstration. Do not remove shared resources or relax security controls as a cleanup shortcut.
+To run the checks, replace `pilot.example.com` with your pilot hostname:
 
 <Steps>
 
-1. Stop the dedicated handler. Stop or uninstall only the connector process or service created for this pilot, following its installation method. Leave any shared connector untouched.
-2. Remove the pilot's published application route and its dedicated DNS record. Confirm the hostname no longer reaches the handler. Inspect DNS separately: removing a route does not establish that its DNS record was removed.
-3. Delete the dedicated Tunnel after confirming no other routes or connectors use it. Revoke or rotate its token if it was exposed. Never remove an active application's gate while its route remains reachable.
-4. After removing reachability, delete only the pilot's dedicated Access application, unused policies, and hostname-specific cache rule. Keep the organization's IdP and shared policies unchanged.
-5. Remove the pilot's `.env`, any local tunnel credential files, and test browser profiles after confirming they are not shared. Retain redacted results and the dependency lockfile according to your evidence policy.
+1. **P1:** In the signed-in browser used for the positive control, visit `https://pilot.example.com/me`. Copy the `ownResource` path from the JSON response and open it on the same hostname. Use the browser network panel to check both response statuses and match their request IDs to the handler logs.
+2. **P2:** Open a fresh browser profile without Access or IdP credentials and visit `https://pilot.example.com/me`. Stop at the login page or denial. Check the network panel for the redirect or denial, and confirm no corresponding protected-handler request appears in the service logs.
+3. **P3:** Return to P1's signed-in browser. Confirm that `not-this-subject` differs from the `subject` returned by `/me`, then visit `https://pilot.example.com/records?owner=not-this-subject`. Check for `403` in the network panel and a matching `handler` log.
+4. **P4:** On the machine running the service, open a terminal and run:
+
+   ```sh
+   curl --include http://127.0.0.1:8080/me
+   ```
+
+   In Windows PowerShell, use `curl.exe` instead of `curl`. Do not add an Access assertion header. Expect `401` and match the response's `requestId` to an `admission` log, with no `handler` entry for that ID.
 
 </Steps>
+
+A successful browser pilot establishes only the tested route and outcomes. It does not establish binding-cookie replay protection, session expiry or revocation, weak-method denial, unentitled-user denial, or two-user cache isolation. Keep those checks **not tested** until independently exercised with the required personas and evidence. Continue with [production acceptance](/reference-architecture/design-guides/identity-gated-edge/#production-acceptance).
 
 ## Next steps
 
