@@ -8,7 +8,7 @@ import { TypeScriptExample } from "~/components";
 
 [Email Sending](/email-service/api/send-emails/) is now available on the Workers Free plan. You can onboard [sending domains](/email-service/configuration/domains/) and send to the [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. Use the Workers binding, the REST API, or SMTP to send alerts, reports, and notifications to your own team without a paid plan.
 
-Sends to verified destination addresses are free on every plan. They do not count toward the monthly quota or the daily sending limits. They appear in the Activity log and in Email Sending analytics, and they publish [Email Sending events](/email-service/reference/event-subscriptions/).
+Sends to verified destination addresses are free on every plan. They do not count toward the monthly quota or the daily sending limits.
 
 On the Workers Free plan, Email Service rejects the whole message if any recipient in `to`, `cc`, or `bcc` is not a verified destination address. Each interface returns its own error:
 
@@ -45,3 +45,12 @@ export default {
 </TypeScriptExample>
 
 To send to any recipient, upgrade to the [Workers Paid plan](/workers/platform/pricing/). Refer to [Limits](/email-service/platform/limits/#verified-destination-addresses) and [Pricing](/email-service/platform/pricing/) for details.
+
+## Verified sends now appear in Email Sending
+
+On every plan, messages that you send from a sending domain to verified destination addresses now count as Email Sending traffic. Before, Email Service recorded them as Email Routing traffic. These messages now:
+
+- Appear in the [Activity log](/email-service/observability/logs/) and in [Email Sending analytics](/email-service/observability/metrics-analytics/), and no longer appear in Email Routing analytics.
+- Publish [Email Sending events](/email-service/reference/event-subscriptions/), such as `message.delivered` and `message.bounced`, to your event subscriptions.
+
+To find these messages in the [GraphQL Analytics API](/analytics/graphql-api/), filter the Email Sending datasets on the new `isVerifiedRecipient` field. Messages sent from a domain that has only Email Routing configured are unchanged.
