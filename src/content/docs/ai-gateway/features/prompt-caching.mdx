@@ -14,7 +14,7 @@ Prompt caching is different from AI Gateway [response caching](/ai-gateway/featu
 
 ## How providers cache prompts
 
-OpenAI caches prompt prefixes automatically. Anthropic caches a prefix only when the request marks where the prefix ends. This mark is a cache breakpoint, set with the `cache_control` field.
+OpenAI caches prompt prefixes automatically. Anthropic caches a prefix only when the request marks where the prefix ends. This mark is a cache breakpoint, set with the `cache_control` field. Workers AI uses a different mechanism. Refer to [Workers AI models](#workers-ai-models).
 
 AI Gateway converts OpenAI-format requests to the Anthropic Messages API for Anthropic models. During the conversion, AI Gateway reads the OpenAI prompt caching fields. It then adds the Anthropic breakpoints for you.
 
@@ -146,6 +146,14 @@ For requests to Anthropic models only, you can add `cache_control` markers to co
 If any part has `cache_control`, AI Gateway ignores the OpenAI caching fields in that request. Do not mix the two styles in one request.
 
 To use Anthropic prompt caching with no conversion, use the `/ai/v1/messages` endpoint. For more information, refer to [REST API](/ai-gateway/usage/rest-api/).
+
+## Workers AI models
+
+Workers AI uses prefix caching, which is related to prompt caching but works differently. Workers AI caches prefixes automatically for supported models. It does not use breakpoints, so the OpenAI prompt caching fields do not control it.
+
+To increase cache hits, send the `x-session-affinity` header with a session ID. Workers AI then routes requests in the same session to the same model instance. AI Gateway passes this header to Workers AI. The `cf-aig-session-id` header does not set Workers AI session affinity.
+
+For supported models, cached token pricing, and examples, refer to [Prompt caching](/workers-ai/features/prompt-caching/) in the Workers AI documentation.
 
 ## Read cache usage
 
