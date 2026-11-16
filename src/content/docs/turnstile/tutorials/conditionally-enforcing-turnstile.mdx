@@ -52,17 +52,24 @@ Your website then leaves Turnstile off the page for that agent and does not requ
 
    1. Under **If incoming requests match…**, select **Custom filter expression**.
    2. Under **When incoming requests match…**, enter the request match expression. For example, match a hostname with `http.host eq "example.com"` or a path with `http.request.uri.path eq "/login"`.
+
+      To allow multiple detection IDs, include them in this filter expression instead of the dynamic value. For example, match a hostname and either of two IDs:
+
+      ```txt
+      http.host eq "example.com" and any(cf.bot_management.detection_ids[*] in {12345 6789})
+      ```
+
    3. Under **Then…** > **Modify request header**, set:
 
-      - **Operation** to **Set dynamic**.
+      - **Operation** to **Set dynamic** for a single detection ID. For multiple IDs, set it to **Set static** and set **Value** to `true`.
       - **Header name** to `x-turnstile-bypass`.
-      - **Value** to this expression, replacing `12345` with the detection ID or IDs you want to allow:
+      - For a single ID, set **Value** to this expression, replacing `12345` with the detection ID you want to allow:
 
       ```txt
       to_string(has_value(cf.bot_management.detection_ids, 12345))
       ```
 
-      For multiple IDs, add one `has_value(...)` check for each ID and join them with `or`. This sets **Value** to `true` when the request includes any listed detection ID and `false` otherwise.
+      The dynamic value sets **Value** to `true` when the request includes that ID and `false` otherwise. For a multiple-ID filter, requests that do not match will not receive the header.
    4. Set the rule's priority after any other Request Header Transform Rule that changes this header, then select **Deploy**.
 
 4. At your origin, decide what to render:
