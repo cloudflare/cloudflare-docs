@@ -168,3 +168,23 @@ entries:
         status: supported
       gkm:
         status: supported
+  - product: China Network
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
+  - product: Web3
+    controls:
+      regional_services:
+        status: unassessed
+      storage:
+        status: unassessed
+      cmb:
+        status: unassessed
+      gkm:
+        status: unassessed
