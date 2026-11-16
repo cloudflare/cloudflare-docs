@@ -16,7 +16,7 @@ const { headings, class: className, ...attrs } = Astro.props;
 
 const items: TOCItem[] = [
 	{ depth: 2, text: "Overview", slug: "_top" },
-	...headings.filter((h) => h.slug),
+	...headings,
 ];
 ---
 

@@ -165,12 +165,18 @@ const showFeedback = feedback !== false && !isCustom;
 			</Fragment>
 		) : (
 			<div class="mx-auto flex w-full flex-1 flex-col">
-				<div class="flex flex-1">
+				<div
+					class:list={[
+						"flex flex-1",
+						showSidebar &&
+							"lg:grid lg:grid-cols-[var(--nb-sidebar-width)_minmax(0,1fr)]",
+					]}
+				>
 					{/* The content row (main + TOC) comes first in source order so agents
-              and text readers reach it before the sidebar; `order-first` keeps
-              the sidebar on the left. The footer is a sibling of this whole
+              and text readers reach it before the sidebar; the grid keeps the
+              sidebar on the left and its column reserved while the page streams. The footer is a sibling of this whole
               row (below), so it spans the full page width. */}
-					<div class="flex min-w-0 flex-1 flex-col">
+					<div class="flex min-w-0 flex-1 flex-col lg:col-start-2 lg:row-start-1">
 						<div class="flex min-w-0 flex-1">
 							<main id="main-content" class="min-w-0 flex-1">
 								<div
@@ -316,7 +322,7 @@ const showFeedback = feedback !== false && !isCustom;
 						<aside
 							id="desktop-sidebar"
 							data-nb-desktop-sidebar
-							class="border-border relative sticky order-first top-14 hidden max-h-[calc(100vh-3.5rem)] w-(--nb-sidebar-width) shrink-0 flex-col overflow-y-auto border-r lg:flex"
+							class="border-border relative sticky top-14 hidden lg:col-start-1 lg:row-start-1 max-h-[calc(100vh-3.5rem)] w-(--nb-sidebar-width) shrink-0 flex-col overflow-y-auto border-r lg:flex"
 						>
 							{hasSidebar ? (
 								<div data-sidebar-home class="flex-1">
