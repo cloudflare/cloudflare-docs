@@ -42,8 +42,12 @@ Use the `jurisdiction` constraint to restrict containers to compliance boundarie
 
 When you specify both `jurisdiction` and `regions`, the regions must be valid for that jurisdiction. For example, specifying `jurisdiction: "eu"` with `regions: ["ENAM"]` is invalid.
 
-:::caution
-The `eu` and `us` jurisdictions control where containers run. They are not yet a full data residency guarantee. Container images are stored in and pulled from the global Cloudflare registry (`registry.cloudflare.com`), and regional registries for `eu` and `us` are not yet available. For Data Localization Suite support, refer to [Product compatibility](/data-localization/compatibility/#developer-platform).
+:::caution[Jurisdiction controls where containers run, not where images are stored]
+The `jurisdiction` constraint controls where Container instances run. It does not determine where Container images or [snapshots](/containers/guides/snapshots/) are stored. If storage location is part of your requirement, confirm the supported image workflow with your account team before you deploy.
+
+The `jurisdiction` constraint in Wrangler configuration applies to applications that use the [`default` scheduling policy](/containers/configuration/scheduling-policy/). With the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy), a Container runs where its Durable Object runs. To restrict that location, create the Durable Object in a [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction).
+
+For Data Localization Suite support, refer to [Product compatibility](/data-localization/compatibility/#developer-platform).
 :::
 
 ## Configure placement
