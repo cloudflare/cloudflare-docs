@@ -124,6 +124,6 @@ Other incompatible origin responses during a response assembled from several req
 
 Origin Range Requests do not make an otherwise ineligible request or response cacheable. Cloudflare checks the [maximum cacheable file size](/cache/concepts/default-cache-behavior/#cacheable-size-limits) against the complete size from `Content-Range`. Requesting a small range does not bypass this limit.
 
-Changing the Origin Range Requests setting does not invalidate cached content. Cloudflare tracks slice coverage as metadata under the normal cache key. Existing cached files remain until they expire or are purged.
+Changing the Origin Range Requests setting does not change the cache key or purge cached files. Cloudflare records which byte ranges of a file are cached alongside the file. Files cached in full remain usable either way. After you turn the setting off, Cloudflare stops serving files it holds only in part. The next request for such a file fetches the complete file again and replaces the partial copy.
 
 Origin Range Requests are not supported with [Cache Reserve](/cache/advanced-configuration/cache-reserve/#limits).
