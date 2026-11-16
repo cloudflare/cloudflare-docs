@@ -18,6 +18,8 @@ This consists of the metadata of the meeting, such as the room name and the titl
     * [.meetingTitle](#module_RTKMeta+meetingTitle)
     * [.sessionId](#module_RTKMeta+sessionId)
     * [.meetingId](#module_RTKMeta+meetingId)
+    * [.ApplyRemoteTitleSync()](#module_RTKMeta+ApplyRemoteTitleSync)
+    * [.setMeetingTitle(meetingTitle)](#module_RTKMeta+setMeetingTitle)
     * [.setBroadcastTabChanges(broadcastTabChanges)](#module_RTKMeta+setBroadcastTabChanges)
     * [.setSelfActiveTab(spotlightTab, tabChangeSource)](#module_RTKMeta+setSelfActiveTab)
 
@@ -64,6 +66,24 @@ The title of the meeting.
 The room name of the meeting.
 
 **Kind**: instance property of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+ApplyRemoteTitleSync"></a>
+
+### meeting.meta.ApplyRemoteTitleSync()
+**Kind**: instance method of [<code>RTKMeta</code>](#module_RTKMeta)  
+<a name="module_RTKMeta+setMeetingTitle"></a>
+
+### meeting.meta.setMeetingTitle(meetingTitle)
+Renames the meeting for everyone in the current session.
+When connected meetings are loaded, the parent or breakout meeting is renamed through
+`connectedMeetings.updateMeetings` and requires `canAlterConnectedMeetings`.
+Otherwise it requires `canEditMeetingTitle`.
+
+**Kind**: instance method of [<code>RTKMeta</code>](#module_RTKMeta)  
+
+| Param | Type |
+| --- | --- |
+| meetingTitle | <code>string</code> | 
+
 <a name="module_RTKMeta+setBroadcastTabChanges"></a>
 
 ### meeting.meta.setBroadcastTabChanges(broadcastTabChanges)
