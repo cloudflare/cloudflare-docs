@@ -21,9 +21,15 @@ If you need higher sending limits sooner than automatic adjustment provides, ref
 
 ## Verified destination addresses
 
-Before you onboard a sending domain, you can send emails only to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. After you onboard a sending domain, you can send to any recipient immediately.
+The recipients you can send to depend on your plan and on whether you have onboarded a [sending domain](/email-service/configuration/domains/):
 
-Sends to verified destination addresses are always free: they do not count toward your monthly [quota](/email-service/platform/pricing/) or your daily sending limits, on any plan, including when only Email Routing is configured. You can only send from your routing domains.
+- **Workers Paid plan, with a sending domain**: Any recipient.
+- **Workers Free plan, with a sending domain**: Only [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account.
+- **Any plan, with only Email Routing configured**: Only verified destination addresses, sent from your routing domains.
+
+On the Workers Free plan, if any recipient in `to`, `cc`, or `bcc` is not a verified destination address, Email Service rejects the whole message. No recipient receives it. Refer to [Troubleshooting](/email-service/reference/troubleshooting/#recipient-is-not-a-verified-destination-address) for the error that each interface returns.
+
+Sends to verified destination addresses are always free. They do not count toward your monthly [quota](/email-service/platform/pricing/) or your daily sending limits, on any plan.
 
 ## Email content limits
 
