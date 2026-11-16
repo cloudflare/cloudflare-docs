@@ -36,7 +36,7 @@ It is not sufficient to only remove the client-side widget from the page, as an 
 
 ## Example 1: Use a Transform Rule for selected agents
 
-A Request Header Transform Rule can add or remove a header before a request reaches your website. This example uses two rules: the first removes any visitor-supplied `x-turnstile-bypass` header, and the second sets it to `true` for requests with detection IDs you choose. This avoids using a dynamic header value, which may not accept detection ID expressions.
+A Request Header Transform Rule can add or remove a header before a request reaches your website. This example uses two rules: the first removes any visitor-supplied `x-turnstile-bypass` header, and the second sets it to `true` for requests with detection IDs you choose.
 
 Your website then leaves Turnstile off the page for that agent and does not require a token when the agent submits the form. Other visitors still get Turnstile. This example requires Enterprise [Bot Management](/bots/get-started/bot-management/) to identify the selected agents.
 
@@ -48,9 +48,7 @@ Your website then leaves Turnstile off the page for that agent and does not requ
 
    <DashButton url="/?to=/:account/:zone/rules/overview" />
 
-3. Create a rule that removes any incoming bypass header:
-
-   This prevents visitors from forging the header to bypass Turnstile.
+3. Create a rule that removes any incoming bypass header. This prevents visitors from forging the header to bypass Turnstile.
 
    1. Select **Create rule** > **Request Header Transform Rule**.
    2. Under **If incoming requests match…**, select **Custom filter expression**.
