@@ -107,6 +107,12 @@ Use the same `triggers.events` configuration that you deploy. Each target must b
 
 `wrangler dev` and Workers Vitest read `triggers.events` from your Wrangler config file. In `cloudflare.config.ts`, which the Vite plugin 2.x, Workers Vitest, and `cf` read, declare events on the Workflow export instead. The Workflow that declares an event receives it, so there is no `targets` list. The filter uses `repoName` instead of `repo_name`.
 
+`exports.workflow({ events })` requires `cf` 1.0.0-rc.0 or later, or `@cloudflare/config` 1.0.0-rc.0 or later if you import it directly. With earlier versions, TypeScript reports that `events` does not exist in `WorkflowExportOptions`. To use the `cloudflare.config.ts` example, install `cf` as a development dependency:
+
+<PackageManagers type="add" pkg="cf" dev />
+
+To have Workers Vitest read `cloudflare.config.ts`, pass `config: true` to `cloudflareTest()`, or pass a path to the file. You cannot combine `config` with the `wrangler` option. For details, refer to [`CloudflareTestOptions`](/workers/testing/vitest-integration/configuration/#cloudflaretestoptions).
+
 <WranglerConfig
 	cfConfig={`
 import { bindings, defineConfig, exports } from "cf/config";
@@ -191,6 +197,8 @@ export class OnRepoCreated extends WorkflowEntrypoint<Env, RepoCreated> {
 ```
 
 </TypeScriptExample>
+
+To observe these instances in Workers Vitest, pass a Workflow binding to `introspectWorkflow()`. The Wrangler example declares the `ON_REPO_CREATED` binding, but the `cloudflare.config.ts` example declares no Workflow binding. Add one, such as a test-only binding in the `miniflare.workflows` option. For an example, refer to [Introspect Workflows declared in `exports`](/workers/testing/vitest-integration/test-apis/#introspect-workflows-declared-in-exports).
 
 ### How local delivery works
 
