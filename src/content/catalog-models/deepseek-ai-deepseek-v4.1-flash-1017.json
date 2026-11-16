@@ -1,0 +1,539 @@
+{
+	"model_id": "deepseek-ai/deepseek-v4.1-flash-1017",
+	"name": "DeepSeek V4.1 Flash",
+	"description": "DeepSeek V4.1 Flash is a language model from DeepSeek, available through Cloudflare Workers AI and Subconscious, with PrimaLabs as a fallback.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.3,
+		"Cached input tokens (per 1M)": 0.007,
+		"Output tokens (per 1M)": 1.2
+	},
+	"examples": [],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://api-docs.deepseek.com/",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {},
+	"request_formats": [
+		"chat-completions",
+		"responses"
+	],
+	"provider_id": "deepseek",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "subconscious",
+			"pricing": {
+				"input_tokens": 0.3,
+				"input_cached_tokens": 0.007,
+				"output_tokens": 1.2
+			}
+		},
+		{
+			"id": "primalabs",
+			"pricing": {
+				"input_tokens": 0.24,
+				"output_tokens": 0.96,
+				"input_cached_tokens": 0.0048
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "workers-ai",
+			"pricing": null,
+			"rates": null
+		},
+		{
+			"provider": "subconscious",
+			"pricing": {
+				"input_tokens": 0.3,
+				"input_cached_tokens": 0.007,
+				"output_tokens": 1.2
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "input_tokens",
+							"label": "Input",
+							"unit": "per_1m_tokens",
+							"value": 0.3
+						},
+						{
+							"key": "input_cached_tokens",
+							"label": "Cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.007
+						},
+						{
+							"key": "output_tokens",
+							"label": "Output",
+							"unit": "per_1m_tokens",
+							"value": 1.2
+						}
+					]
+				}
+			]
+		},
+		{
+			"provider": "primalabs",
+			"pricing": {
+				"input_tokens": 0.24,
+				"output_tokens": 0.96,
+				"input_cached_tokens": 0.0048
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "input_tokens",
+							"label": "Input",
+							"unit": "per_1m_tokens",
+							"value": 0.24
+						},
+						{
+							"key": "input_cached_tokens",
+							"label": "Cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.0048
+						},
+						{
+							"key": "output_tokens",
+							"label": "Output",
+							"unit": "per_1m_tokens",
+							"value": 0.96
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-10 19:22:24",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"messages": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string",
+										"enum": [
+											"system",
+											"developer",
+											"user",
+											"assistant",
+											"tool"
+										]
+									},
+									"content": {
+										"anyOf": [
+											{
+												"type": "string"
+											},
+											{
+												"type": "null"
+											},
+											{
+												"type": "array",
+												"items": {}
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"max_completion_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"frequency_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"presence_penalty": {
+							"type": "number",
+							"minimum": -2,
+							"maximum": 2
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"stream_options": {
+							"type": "object",
+							"properties": {
+								"include_usage": {
+									"type": "boolean"
+								}
+							},
+							"additionalProperties": false
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"response_format": {},
+						"modalities": {
+							"type": "array",
+							"items": {
+								"type": "string",
+								"enum": [
+									"text",
+									"audio"
+								]
+							}
+						},
+						"audio": {
+							"type": "object",
+							"properties": {
+								"voice": {
+									"type": "string",
+									"enum": [
+										"alloy",
+										"ash",
+										"ballad",
+										"coral",
+										"echo",
+										"sage",
+										"shimmer",
+										"verse"
+									]
+								},
+								"format": {
+									"type": "string",
+									"enum": [
+										"wav",
+										"mp3",
+										"flac",
+										"opus",
+										"pcm16"
+									]
+								}
+							},
+							"additionalProperties": false
+						},
+						"reasoning_effort": {
+							"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+							"type": [
+								"string",
+								"null"
+							]
+						}
+					},
+					"required": [
+						"messages"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"input": {
+							"anyOf": [
+								{
+									"type": "string"
+								},
+								{
+									"type": "array",
+									"items": {}
+								}
+							]
+						},
+						"instructions": {
+							"type": "string"
+						},
+						"temperature": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 2
+						},
+						"max_output_tokens": {
+							"type": "number",
+							"exclusiveMinimum": 0
+						},
+						"top_p": {
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						},
+						"stream": {
+							"type": "boolean"
+						},
+						"tools": {
+							"type": "array",
+							"items": {}
+						},
+						"tool_choice": {},
+						"text": {
+							"type": "object",
+							"properties": {
+								"format": {}
+							},
+							"additionalProperties": {}
+						},
+						"reasoning": {
+							"type": "object",
+							"properties": {
+								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
+									"type": "string",
+									"enum": [
+										"none",
+										"low",
+										"medium",
+										"high",
+										"xhigh",
+										"max"
+									]
+								}
+							},
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"input"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				}
+			]
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"oneOf": [
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string"
+						},
+						"created": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"choices": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"index": {
+										"type": "number"
+									},
+									"message": {
+										"type": "object",
+										"properties": {
+											"role": {
+												"type": "string"
+											},
+											"content": {
+												"type": [
+													"string",
+													"null"
+												]
+											},
+											"tool_calls": {
+												"anyOf": [
+													{
+														"type": "array",
+														"items": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											},
+											"audio": {
+												"anyOf": [
+													{
+														"type": "object",
+														"properties": {
+															"id": {
+																"type": "string"
+															},
+															"data": {
+																"type": "string"
+															},
+															"expires_at": {
+																"type": "number"
+															},
+															"transcript": {
+																"type": "string"
+															}
+														},
+														"additionalProperties": {}
+													},
+													{
+														"type": "null"
+													}
+												]
+											}
+										},
+										"required": [
+											"role"
+										],
+										"additionalProperties": {}
+									},
+									"finish_reason": {
+										"type": [
+											"string",
+											"null"
+										]
+									}
+								},
+								"required": [
+									"index",
+									"message",
+									"finish_reason"
+								],
+								"additionalProperties": {}
+							}
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"prompt_tokens": {
+									"type": "number"
+								},
+								"completion_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"prompt_tokens",
+								"completion_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created",
+						"model",
+						"choices"
+					],
+					"additionalProperties": {},
+					"title": "Chat Completions"
+				},
+				{
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"object": {
+							"type": "string",
+							"const": "response"
+						},
+						"created_at": {
+							"type": "number"
+						},
+						"model": {
+							"type": "string"
+						},
+						"output": {
+							"type": "array",
+							"items": {}
+						},
+						"output_text": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"in_progress",
+								"completed",
+								"failed",
+								"incomplete"
+							]
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"input_tokens": {
+									"type": "number"
+								},
+								"output_tokens": {
+									"type": "number"
+								},
+								"total_tokens": {
+									"type": "number"
+								}
+							},
+							"required": [
+								"input_tokens",
+								"output_tokens",
+								"total_tokens"
+							],
+							"additionalProperties": {}
+						}
+					},
+					"required": [
+						"id",
+						"object",
+						"created_at",
+						"model",
+						"output"
+					],
+					"additionalProperties": {},
+					"title": "Responses"
+				}
+			]
+		}
+	}
+}
