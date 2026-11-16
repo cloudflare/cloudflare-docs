@@ -187,6 +187,7 @@ entries:
 
   - publish_date: "2026-05-28"
     title: RealtimeKit Web Core 1.5.1
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Web UI Kit 1.2.0 or later.
 
@@ -210,6 +211,7 @@ entries:
 
   - publish_date: "2026-04-20"
     title: RealtimeKit Web Core 1.4.0
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Android Core 2.0.0+ and RealtimeKit iOS Core 2.0.0+.
 
@@ -227,6 +229,7 @@ entries:
       - Refactored error handling to properly catch and display error codes for SDK initialization failures, room join failures, and other errors.
   - publish_date: "2026-03-31"
     title: RealtimeKit Web Core 1.3.0
+    deprecated: true
     description: |-
       **Features**
 
@@ -234,6 +237,7 @@ entries:
       - Added 4K UHD video support in media production (configurable in Preset and API). Falls back to the maximum supported resolution if the camera does not support 4K.
   - publish_date: "2026-03-10"
     title: RealtimeKit Web Core 1.2.5
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.1 or later.
 
@@ -249,6 +253,7 @@ entries:
 
   - publish_date: "2026-01-30"
     title: RealtimeKit Web Core 1.2.4
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Web UI Kit 1.1.0 or later.
 
@@ -303,6 +308,7 @@ entries:
       - Pinned messages are not supported for private chats.
   - publish_date: "2026-01-05"
     title: RealtimeKit Web Core 1.2.3
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -328,6 +334,7 @@ entries:
 
   - publish_date: "2025-12-17"
     title: RealtimeKit Web Core 1.2.2
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -337,6 +344,7 @@ entries:
 
   - publish_date: "2025-11-18"
     title: RealtimeKit Web Core 1.2.1
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -349,6 +357,7 @@ entries:
 
   - publish_date: "2025-10-30"
     title: RealtimeKit Web Core 1.2.0
+    deprecated: true
     description: |-
       **Features**
 
@@ -376,6 +385,7 @@ entries:
 
   - publish_date: "2025-08-26"
     title: RealtimeKit Web Core 1.1.7
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -386,6 +396,7 @@ entries:
 
   - publish_date: "2025-08-14"
     title: RealtimeKit Web Core 1.1.6
+    deprecated: true
     description: |-
       **Enhancements**
 
@@ -393,6 +404,7 @@ entries:
 
   - publish_date: "2025-08-04"
     title: RealtimeKit Web Core 1.1.5
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -402,6 +414,7 @@ entries:
 
   - publish_date: "2025-07-17"
     title: RealtimeKit Web Core 1.1.4
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -411,6 +424,7 @@ entries:
 
   - publish_date: "2025-07-08"
     title: RealtimeKit Web Core 1.1.3
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -418,6 +432,7 @@ entries:
 
   - publish_date: "2025-07-02"
     title: RealtimeKit Web Core 1.1.2
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -425,6 +440,7 @@ entries:
 
   - publish_date: "2025-06-30"
     title: RealtimeKit Web Core 1.1.0–1.1.1
+    deprecated: true
     description: |-
       **Features**
 
@@ -448,6 +464,7 @@ entries:
 
   - publish_date: "2025-06-17"
     title: RealtimeKit Web Core 1.0.2
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -456,6 +473,7 @@ entries:
 
   - publish_date: "2025-05-29"
     title: RealtimeKit Web Core 1.0.1
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -465,6 +483,7 @@ entries:
 
   - publish_date: "2025-05-29"
     title: RealtimeKit Web Core 1.0.0
+    deprecated: true
     description: |-
       **Features**
 
