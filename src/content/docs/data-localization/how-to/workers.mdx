@@ -9,7 +9,7 @@ sidebar:
   order: 8
 ---
 
-import { DashButton, Steps } from "~/components";
+import { APIRequest, DashButton, Steps } from "~/components";
 
 To ensure that your Cloudflare Workers code runs only within a specific geographic region, configure Regional Services on the Workers custom domain. This restricts where TLS termination (traffic decryption) and code execution occur.
 
@@ -27,18 +27,27 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 
 ### Workers for Platforms
 
+Regional Services keeps Workers for Platforms execution in your region only when none of the Workers in the request path has a [placement](/workers/configuration/placement/) setting. This includes Smart Placement (`mode`) and targeted placement (`region`, `host`, or `hostname`).
+
 To use Regional Services with Workers for Platforms:
 
 <Steps>
 
 1. [Configure Regional Services](/data-localization/regional-services/regional-hostnames/) on your [dispatch Worker's](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) hostname.
-2. Turn off [Smart Placement](/workers/configuration/placement/) for your dispatch Worker, user Workers, and [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/).
+2. Remove the `placement` object from the Wrangler configuration of your dispatch Worker and [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), then redeploy both Workers.
+3. Upload new user Workers without a `placement` object in the [upload metadata](/workers/configuration/multipart-upload-metadata/). Re-upload any existing user Worker that has a `placement` setting, without the `placement` object.
+4. Confirm that each user Worker has no placement setting. The response must not include a `placement` field:
+
+   <APIRequest
+   	path="/accounts/{account_id}/workers/dispatch/namespaces/{dispatch_namespace}/scripts/{script_name}/settings"
+   	method="GET"
+   />
 
 </Steps>
 
-For requests to that hostname, all of these Workers run only in the region you choose.
+With this configuration, requests to the regionalized hostname run the dispatch Worker, user Workers, and Outbound Worker only in the region you choose.
 
-Set data location separately for any external services or storage your Workers use. The [Workers caveats](#caveats) also apply.
+This applies only to requests to that hostname. It does not set the location of storage, external services, or other triggers your Workers use. Configure those separately. The [Workers caveats](#caveats) also apply.
 
 ### Caveats
 

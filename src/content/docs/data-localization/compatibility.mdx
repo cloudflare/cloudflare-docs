@@ -83,7 +83,7 @@ The tables below show whether each Cloudflare product is compatible with each DL
 | Stream                         | ⚫️             | ✘                 | 🚧 [^1]                    |
 | Vectorize                      | ⚫️             | ✘                 | ✘                          |
 | Workers (deployed on a Zone)   | ✅              | ✅                | 🚧 [^41]                   |
-| Workers for Platforms          | ✅              | ✅ [^51]          | 🚧 [^41]                   |
+| Workers for Platforms          | ✅              | 🚧 [^52]          | 🚧 [^41]                   |
 | Workers AI                     | ⚫️             | ✘                 | ✅                         |
 | Workers KV                     | ⚫️             | ✘                 | ✅ [^34]                   |
 | Workers.dev                    | ✘               | ✘                 | ✘                          |
@@ -216,4 +216,4 @@ The tables below show whether each Cloudflare product is compatible with each DL
 
 [^50]: Email and webhook notifications for DDoS and WAF events may not fire reliably when Customer Metadata Boundary is set to `eu`. This behavior is intermittent and under investigation. If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism.
 
-[^51]: Configure Regional Services on the dispatch Worker's hostname and turn off Smart Placement for the dispatch Worker, user Workers, and Outbound Worker. Refer to [Workers for Platforms](/data-localization/how-to/workers/#workers-for-platforms) for setup steps and limits.
+[^52]: Applies to requests to a regionalized dispatch Worker hostname. The dispatch Worker, user Workers, and Outbound Worker must not have a placement setting, including Smart Placement and targeted placement. Refer to [Workers for Platforms](/data-localization/how-to/workers/#workers-for-platforms) for setup steps and limits.
