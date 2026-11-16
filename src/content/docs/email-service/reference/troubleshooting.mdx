@@ -252,6 +252,16 @@ To reduce bounce rates:
 3. Monitor feedback loops: Subscribe to ISP feedback loops
 4. Gradual warm-up: For new domains, start with small volumes
 
+### Recipient is not a verified destination address
+
+On the Workers Free plan, Email Sending sends only to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. If any recipient in `to`, `cc`, or `bcc` is not verified, Email Service rejects the whole message:
+
+- The Workers binding throws `E_RECIPIENT_PLAN_RESTRICTED`.
+- The REST API returns `403` with code `10208`.
+- SMTP refuses the recipient with `550 5.7.1`.
+
+To send to that recipient, [add and verify](/email-service/configuration/email-routing-addresses/#add-a-destination-address) it as a destination address, or upgrade to the [Workers Paid plan](/workers/platform/pricing/).
+
 ### Suppressed recipient
 
 Each sending domain has a [**Drop suppressed recipients** setting](/email-service/configuration/domains/#drop-suppressed-recipients). The setting is off by default.

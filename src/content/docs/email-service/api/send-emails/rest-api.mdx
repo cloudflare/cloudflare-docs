@@ -135,23 +135,24 @@ The REST API returns standard Cloudflare API error responses. A failed request r
 
 The REST API returns the following error codes:
 
-| HTTP status | Code  | Message                                             | Description                                    |
-| ----------- | ----- | --------------------------------------------------- | ---------------------------------------------- |
-| 400         | 10001 | `email.sending.error.invalid_request_schema`        | Invalid request format                         |
-| 400         | 10200 | `email.sending.error.email.too_big`                 | Email exceeds size limit                       |
-| 400         | 10201 | `email.sending.error.email.no_content_length`       | Missing content length                         |
-| 400         | 10202 | `email.sending.error.email.invalid`                 | Invalid email content                          |
-| 401         | 10101 | `email.sending.error.authentication.unauthorized`   | Missing or invalid API token                   |
-| 401         | 10103 | `email.sending.error.authentication.bad_token_type` | Wrong token type for this endpoint             |
-| 403         | 10102 | `email.sending.error.authentication.forbidden`      | Token lacks permission to send                 |
-| 403         | 10105 | `email.sending.error.authentication.not_entitled`   | Account not entitled to use Email Sending      |
-| 403         | 10203 | `email.sending.error.email.sending_disabled`        | Sending disabled for this zone or account      |
-| 403         | 10207 | `email.sending.error.email.account_suspended`       | Email Sending is paused for the account        |
-| 404         | 10000 | `email.sending.error.not_found`                     | Resource not found                             |
-| 429         | 10004 | `email.sending.error.throttled`                     | Rate limit exceeded                            |
-| 500         | 10002 | `email.sending.error.internal_server`               | Internal server error                          |
-| 500         | 10003 | `email.sending.error.not_implemented`               | Operation not implemented                      |
-| 503         | 10100 | `email.sending.error.authentication.upstream`       | Authentication service temporarily unavailable |
+| HTTP status | Code  | Message                                               | Description                                             |
+| ----------- | ----- | ----------------------------------------------------- | ------------------------------------------------------- |
+| 400         | 10001 | `email.sending.error.invalid_request_schema`          | Invalid request format                                  |
+| 400         | 10200 | `email.sending.error.email.too_big`                   | Email exceeds size limit                                |
+| 400         | 10201 | `email.sending.error.email.no_content_length`         | Missing content length                                  |
+| 400         | 10202 | `email.sending.error.email.invalid`                   | Invalid email content                                   |
+| 401         | 10101 | `email.sending.error.authentication.unauthorized`     | Missing or invalid API token                            |
+| 401         | 10103 | `email.sending.error.authentication.bad_token_type`   | Wrong token type for this endpoint                      |
+| 403         | 10102 | `email.sending.error.authentication.forbidden`        | Token lacks permission to send                          |
+| 403         | 10105 | `email.sending.error.authentication.not_entitled`     | Account not entitled to use Email Sending               |
+| 403         | 10203 | `email.sending.error.email.sending_disabled`          | Sending disabled for this zone or account               |
+| 403         | 10207 | `email.sending.error.email.account_suspended`         | Email Sending is paused for the account                 |
+| 403         | 10208 | `email.sending.error.email.recipient_plan_restricted` | Account plan allows only verified destination addresses |
+| 404         | 10000 | `email.sending.error.not_found`                       | Resource not found                                      |
+| 429         | 10004 | `email.sending.error.throttled`                       | Rate limit exceeded                                     |
+| 500         | 10002 | `email.sending.error.internal_server`                 | Internal server error                                   |
+| 500         | 10003 | `email.sending.error.not_implemented`                 | Operation not implemented                               |
+| 503         | 10100 | `email.sending.error.authentication.upstream`         | Authentication service temporarily unavailable          |
 
 :::note[Workers binding vs REST API errors]
 The REST API returns standard Cloudflare API numeric error codes, while the [Workers binding](/email-service/api/send-emails/workers-api/) throws errors with string codes (for example, `E_SENDER_NOT_VERIFIED`). Refer to the [Workers API error codes table](/email-service/api/send-emails/workers-api/#error-codes) for the string error codes.
