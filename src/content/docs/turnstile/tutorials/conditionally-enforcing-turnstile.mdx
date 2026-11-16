@@ -22,7 +22,7 @@ Sometimes you may want to show Turnstile only for certain requests. For example,
 
 Turnstile runs in the browser and gives your server a token to check. If you want someone to complete an action without Turnstile, do not show them the widget **and** do not require a token when they complete that action. Keep both checks for everyone else.
 
-This tutorial shows two ways to leave the widget off the page. In Example 1, a Transform Rule sends request information to your site in a header. In Example 2, [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) removes the widget when a pre-shared header matches. Each example also covers the server-side token check.
+This tutorial shows two ways to leave the widget off the page. In Example 1, a [Request Header Transform Rule](/rules/transform/request-header-modification/) sends request information to your site in a header. In Example 2, [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) removes the widget when a pre-shared header matches. Each example also covers the server-side token check.
 
 :::note
 While this tutorial removes Turnstile client-side elements when specific criteria are met, you could instead conditionally insert them.
