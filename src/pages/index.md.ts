@@ -1,1 +1,3 @@
-export { GET, prerender } from "./llms.txt";
+export { GET } from "./llms.txt";
+
+export const prerender = true;
