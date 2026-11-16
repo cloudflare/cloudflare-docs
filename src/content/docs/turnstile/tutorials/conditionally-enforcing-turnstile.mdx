@@ -66,9 +66,8 @@ Your website then leaves Turnstile off the page for that agent and does not requ
       http.host eq "example.com" and any(cf.bot_management.detection_ids[*] in {12345 6789})
       ```
 
-      Separate multiple IDs with spaces inside the braces. This is a request-match expression. Do not enter it as the header value.
-
    4. Under **Then…** > **Modify request header**, set **Operation** to **Set static**, **Header name** to `x-turnstile-bypass`, and **Value** to `true`.
+   This sets `x-turnstile-bypass: true` on matching requests so your site can skip Turnstile for them.
    5. Set this rule's priority after the removal rule, then select **Deploy**. Ensure no later rule changes this header.
 
 5. At your origin, decide what to render:
