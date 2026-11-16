@@ -1,0 +1,25 @@
+---
+title: Fork a repo at one commit with shallow fork
+description: Shallow fork copies one commit's files into a new Artifacts repo with no history, so platforms can give each customer a clean copy of a template.
+products:
+  - artifacts
+date: 2026-11-13
+---
+
+[Artifacts](/artifacts/) now supports [**shallow fork**](/artifacts/api/rest-api/#shallow-fork-a-repo), which copies the files of one commit into a new repo without any history.
+
+This is great for [platforms that offer starter apps or templates](/artifacts/guides/fork-from-templates/) because it allows you to give every new customer a clean copy of a template at the exact version you choose.
+
+The new repo starts with a single commit. Nothing else from the source is copied: no earlier commits, no other branches or tags, and no deleted files. The copy happens inside Artifacts, so you do not need to download a large repo and push it back in pieces.
+
+For example, here is how to create a customer's repo from the latest version of a `storefront` template. First create an empty repo named `site-123`, then shallow fork the template commit into it:
+
+```bash
+curl --request POST "$ARTIFACTS_API/customers/repos/site-123/shallow-fork" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '{
+	  "source": { "namespace": "templates", "name": "storefront" },
+	  "commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f"
+	}'
+```

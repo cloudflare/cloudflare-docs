@@ -81,7 +81,7 @@ Returned repo tokens are secrets. Do not log them or store them in long-lived re
 
 ```ts
 export type NamespaceName = string;
-export type Jurisdiction = "eu" | "us";
+export type Jurisdiction = "unrestricted" | "eu" | "us" | "fedramp";
 export type RepoName = string;
 export type BranchName = string;
 export type Scope = "read" | "write";
@@ -164,7 +164,7 @@ Use the account-level base URL.
 Request body:
 
 - `namespace` <Type text="NamespaceName" /> <MetaInfo text="required" />
-- `jurisdiction` <Type text='"eu" | "us"' /> <MetaInfo text="optional (default: unrestricted)" />
+- `jurisdiction` <Type text='"unrestricted" | "eu" | "us" | "fedramp"' /> <MetaInfo text="optional (default: unrestricted)" />
 
 ```bash
 curl --request POST "$ARTIFACTS_ACCOUNT_BASE_URL/namespaces" \
@@ -274,7 +274,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos" \
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo.git",
-		"token": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
+		"token": "art_v2_x_0123456789abcdef0123456789abcdef01234567?expires=1760000000"
 	},
 	"success": true,
 	"errors": [],
@@ -457,7 +457,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 		"description": "Repository for automation experiments",
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/starter-repo-copy.git",
-		"token": "art_v1_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
+		"token": "art_v2_x_89abcdef0123456789abcdef0123456789abcdef?expires=1760003600",
 		"objects": 128
 	},
 	"success": true,
@@ -465,6 +465,82 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/$ARTIFACTS_REPO/fork" \
 	"messages": []
 }
 ```
+
+### Shallow fork a repo
+
+Route: `POST /artifacts/namespaces/:namespace/repos/:name/shallow-fork`
+
+Copies the files of one commit from a source repo into the repo named in the route. The target repo must already exist and be empty. The target gets one new commit with no parent on its default branch. No other history, branches, tags, or objects from the source are copied.
+
+:::note
+Shallow fork is in limited beta. Contact your account team to enable it for your account. Until it is enabled, this route returns `404 Not Found`.
+:::
+
+Request body:
+
+- `source.namespace` <Type text="string" /> <MetaInfo text="required" />
+- `source.name` <Type text="RepoName" /> <MetaInfo text="required" />
+- `commit` <Type text="string" /> <MetaInfo text="required" /> — Full 40-character commit hash. Branch and tag names are not accepted.
+- `message` <Type text="string" /> <MetaInfo text="optional" /> — Commit message for the new commit, 1–65,536 characters. Defaults to the source commit message.
+
+Response type:
+
+```ts
+export interface ShallowForkRequest {
+	source: {
+		namespace: string;
+		name: RepoName;
+	};
+	commit: string;
+	message?: string;
+}
+
+export interface ShallowForkResult {
+	head: string;
+	tree: string;
+	source_commit: string;
+	objects: number;
+}
+
+export type ShallowForkResponse = ApiEnvelope<ShallowForkResult>;
+```
+
+```bash
+curl --request POST "$ARTIFACTS_BASE_URL/repos/customer-site-123/shallow-fork" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '{
+	  "source": { "namespace": "templates", "name": "storefront" },
+	  "commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f"
+	}'
+```
+
+```json
+{
+	"result": {
+		"head": "1b1cd1e7343b280990837641fa559c3cfe219693",
+		"tree": "6402f7b7d13f21915d85d8ec2cd1e3faa1082ca8",
+		"source_commit": "9f2c1e7a4b8d3f6e0a1c5b9d2e7f4a8c3b6d1e0f",
+		"objects": 1843
+	},
+	"success": true,
+	"errors": [],
+	"messages": []
+}
+```
+
+The request returns `201 Created` for a new fork. Repeating the same request returns `200 OK` with the same `head`, so retries are safe.
+
+| Status | Meaning |
+| --- | --- |
+| `400` | The body is invalid, the source is in a different [jurisdiction](/artifacts/guides/data-localization/), or the commit has more than 250,000 files and folders. |
+| `404` | The source repo, the commit, or the target repo does not exist. |
+| `409` | The target repo is not empty, for example because it already holds a different fork. |
+| `413` | The copy would exceed the target repo's storage limit. |
+| `422` | `commit` is not a commit, or the commit contains a file that cannot be copied. |
+| `503` | Another write to the target repo is in progress. Retry after the `Retry-After` delay. |
+
+For a step-by-step workflow, refer to [Fork repositories from templates](/artifacts/guides/fork-from-templates/).
 
 ### Import a public HTTPS remote
 
@@ -511,7 +587,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/repos/react-mirror/import" \
 		"description": null,
 		"default_branch": "main",
 		"remote": "https://<ACCOUNT_ID>.artifacts.cloudflare.net/git/default/react-mirror.git",
-		"token": "art_v1_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
+		"token": "art_v2_x_fedcba9876543210fedcba9876543210fedcba98?expires=1760007200"
 	},
 	"success": true,
 	"errors": [],
@@ -684,7 +760,7 @@ curl --request POST "$ARTIFACTS_BASE_URL/tokens" \
 {
 	"result": {
 		"id": "0123456789abcdef",
-		"plaintext": "art_v1_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
+		"plaintext": "art_v2_x_0123456789abcdef0123456789abcdef01234567?expires=1760000000",
 		"scope": "read",
 		"expires_at": "<ISO_TIMESTAMP>"
 	},
