@@ -19,12 +19,14 @@ The local Artifacts simulator lets you develop against a Git-compatible reposito
 
 ## Choose a binding mode
 
-Starting with Wrangler 4.162.0, the `artifacts` binding uses the local simulator when you run a Worker locally, unless you set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your development workflow relied on the earlier remote default, set `remote = true` to keep using deployed repos.
+Starting with Wrangler 4.162.0, Cloudflare Vite plugin 2.0.0-beta.v.17, and `@cloudflare/vitest-plugin` 1.8.2, the `artifacts` binding uses the local simulator when you run a Worker locally, unless you set `remote = true`. An omitted `remote` setting and `remote = false` both select local storage. If your development workflow relied on the earlier remote default, set `remote = true` to keep using deployed repos.
 
 While `remote` is omitted, `wrangler dev`, `getPlatformProxy()`, and the Vite plugin warn that the binding uses the local simulator by default. Each binding warns once, not on every config reload. You only see the warning when remote bindings are enabled. Workers Vitest and `wrangler dev --local` always used the local simulator, so they do not warn. Set `remote = true` to use deployed repos, or set `remote = false` to keep the local simulator and silence the warning. In `cloudflare.config.ts`, the setting is `dev: { remote }`.
 
 :::note
 Cloudflare Vite plugin 1.x keeps the earlier default. With remote bindings enabled, an omitted `remote` uses deployed repos. Set `remote = false` to use the local simulator with Vite plugin 1.x.
+
+The deprecated `@cloudflare/vitest-pool-workers` package also keeps the earlier remote default and fails without Cloudflare credentials. To use the local simulator in tests, [migrate to `@cloudflare/vitest-plugin`](/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin/).
 :::
 
 | Setting                              | Binding destination        | Local Git installation            | Cloudflare credentials for local development |
@@ -78,7 +80,7 @@ The local simulator is available through `wrangler dev`, the Cloudflare Vite plu
    git -c http.extraHeader="Authorization: Bearer $ARTIFACTS_TOKEN" clone "$ARTIFACTS_REMOTE" artifacts-clone
    ```
 
-   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username and the repo token as the password. Snippets elsewhere in these docs that strip `https://` from the remote do not apply to the local `http://` remote.
+   Set `ARTIFACTS_REMOTE` to the returned `remote` value and `ARTIFACTS_TOKEN` to the returned token before running this command. The token is a repo credential, not a Cloudflare API token. Keep it out of source files, Git config, and logs. You can also use HTTP Basic auth when Git prompts: enter any username, and use the part of the repo token before `?expires=` as the password. Snippets elsewhere in these docs that strip `https://` from the remote do not apply to the local `http://` remote.
 
 </Steps>
 
@@ -96,6 +98,8 @@ Locally, Artifacts publishes these events:
 - **Repo tokens** — `cf.artifacts.repo.token.created` and `cf.artifacts.repo.token.revoked`. Creating, importing, or forking a repo also publishes `cf.artifacts.repo.token.created` for the repo's initial token.
 
 Push, clone, and fetch events are not published locally yet. A Workflow that [builds and deploys on push](/artifacts/guides/build-and-deploy-on-push/) does not start in local development.
+
+Local events require Wrangler 4.163.0, Cloudflare Vite plugin 2.0.0-rc.0, or `@cloudflare/vitest-plugin` 1.8.3 or later. Cloudflare Vite plugin 1.x does not start Workflows from local events yet.
 
 ### Start a Workflow from an event
 
@@ -199,7 +203,7 @@ export class OnRepoCreated extends WorkflowEntrypoint<Env, RepoCreated> {
 
 As in production, a push that contains a file larger than 32 MiB is rejected, and reading a larger file throws an `ArtifactsError` with code `MEMORY_LIMIT`. `listTokens()` includes revoked and expired tokens with their `state`.
 
-Local repository metadata and Git objects persist under your dev tool's resource persistence directory. For Wrangler, this is typically `.wrangler/state/` when persistence is on. Use the same project root and persistence settings to keep data across restarts. Turning off persistence, such as with Vite's `persistState: false`, makes the data temporary.
+Local repository metadata and Git objects persist under your dev tool's resource persistence directory. For Wrangler and Vite plugin 1.x, this is typically `.wrangler/state/` when persistence is on. Vite plugin 2.x uses `.cloudflare/state/`. Use the same project root and persistence settings to keep data across restarts. Turning off persistence, such as with Vite's `persistState: false`, makes the data temporary.
 
 To reset local Artifacts, stop the dev server and back up any repositories you need. Then delete only the `artifacts/` directory inside that tool's resource persistence directory. Do not delete unrelated binding data. Local tokens and repository data do not transfer to a remote binding.
 

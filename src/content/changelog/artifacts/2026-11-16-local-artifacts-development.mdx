@@ -4,7 +4,7 @@ description: Create, import, clone, and push Artifacts repos locally with Wrangl
 products:
   - artifacts
   - workers
-date: 2026-10-14
+date: 2026-11-16
 ---
 
 import { TypeScriptExample, WranglerConfig } from "~/components";
@@ -46,6 +46,8 @@ The returned `remote` points to your local dev session, so you can use it with a
 
 Local repos also publish [Artifacts events](/artifacts/guides/event-subscriptions/) when you create, import, fork, or delete a repo, or create or revoke a repo token. Use the same `triggers.events` configuration that you deploy to start a Workflow from those events and test your automation end to end.
 
-Local development requires Wrangler 4.162.0 or later and Git 2.32 or later on your `PATH`. With the Cloudflare Vite plugin 1.x, set `remote = false` on the binding to use the local simulator. If you already use deployed Artifacts during local development, set `remote = true` on the binding to keep that behavior. Until you set `remote`, `wrangler dev`, `getPlatformProxy()`, and the Vite plugin warn that the binding uses the local simulator by default.
+Local development requires Git 2.32 or later on your `PATH` and Wrangler 4.163.0 or later, Cloudflare Vite plugin 2.0.0-rc.0 or later, or `@cloudflare/vitest-plugin` 1.8.3 or later. If you already use deployed Artifacts during local development, set `remote = true` on the binding to keep that behavior. Until you set `remote`, `wrangler dev`, `getPlatformProxy()`, and the Vite plugin warn that the binding uses the local simulator by default.
+
+With the Cloudflare Vite plugin 1.x, an omitted `remote` still uses deployed repos, and local events do not start Workflows. Set `remote = false` on the binding to use the local simulator. The deprecated `@cloudflare/vitest-pool-workers` package also keeps the earlier remote default. [Migrate to `@cloudflare/vitest-plugin`](/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin/) to use the local simulator in tests.
 
 To get started, refer to [Local development](/artifacts/guides/local-development/).
