@@ -30,27 +30,15 @@ Serve identical requests directly from Cloudflare's global cache, reducing laten
 
 </Feature>
 
-<Feature header="Spend Limits" href="/ai-gateway/features/spend-limits/">
+<Feature header="Spend and Model Access Policies" href="/ai-gateway/features/policies/" badge="Beta">
 
-Set cost-based budgets that track cumulative dollar spend across requests. Scope limits by model, provider, or custom metadata dimensions like user, team, or application.
-
-**Key benefits:**
-
-- Per-provider or per-model budgets
-- Per-user or per-team budgets using [custom metadata](/ai-gateway/observability/custom-metadata/)
-- Configurable time windows (daily, weekly, monthly)
-- Automatic request blocking when budget is exceeded
-
-</Feature>
-
-<Feature header="Policies" href="/ai-gateway/features/policies/" badge="Beta">
-
-Control which users can call which models and providers, and how much each user or team can spend, based on the verified identity of the caller.
+Control how much each user or team can spend, and which models and providers they can call. Policies use the verified identity of the caller from Cloudflare Access or [custom metadata](/ai-gateway/observability/custom-metadata/). Policies replace [spend limits](/ai-gateway/features/spend-limits/).
 
 **Key benefits:**
 
 - Shared budgets for teams or email domains
 - Individual spend caps for each user
+- Hourly, daily, weekly, or monthly budgets
 - Block or allowlist models by user, email domain, or custom metadata
 - Test policies before they affect live traffic
 
@@ -212,13 +200,13 @@ Override default pricing with your negotiated rates or custom cost models. Apply
 
 ## Feature Comparison by Use Case
 
-| Use Case                   | Recommended Features                                            |
-| -------------------------- | --------------------------------------------------------------- |
-| **Cost Optimization**      | Caching, Auto Router, Spend Limits, Rate Limiting, Custom Costs |
-| **High Availability**      | Fallbacks using Dynamic Routing                                 |
-| **Security & Compliance**  | Guardrails, DLP, Authentication, BYOK, Logging                  |
-| **Performance Monitoring** | Analytics, Logging, Custom Metadata                             |
-| **A/B Testing**            | Dynamic Routing, Custom Metadata, Analytics                     |
+| Use Case                   | Recommended Features                                        |
+| -------------------------- | ----------------------------------------------------------- |
+| **Cost Optimization**      | Caching, Auto Router, Policies, Rate Limiting, Custom Costs |
+| **High Availability**      | Fallbacks using Dynamic Routing                             |
+| **Security & Compliance**  | Guardrails, DLP, Authentication, BYOK, Logging              |
+| **Performance Monitoring** | Analytics, Logging, Custom Metadata                         |
+| **A/B Testing**            | Dynamic Routing, Custom Metadata, Analytics                 |
 
 ## Getting Started with Features
 

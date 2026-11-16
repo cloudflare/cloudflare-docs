@@ -4,24 +4,24 @@ title: Spend limits
 description: Set cost-based budgets on your AI Gateway to control spending by model, provider, or custom metadata dimensions like user or team.
 sidebar:
   order: 4
-  badge: Beta
+  badge: Deprecated
 products:
   - ai-gateway
 ---
 
 import { Steps } from "~/components";
 
+:::caution[Deprecated]
+
+Spend limits are deprecated. [Policies](/ai-gateway/features/policies/) replace spend limits, and existing spend limit rules continue to work until you migrate. Policies support the same metadata-based budgets, and can also use the verified identity of the caller and block or allow access to models. To move your rules, refer to [Migrate from spend limits](/ai-gateway/features/policies/#migrate-from-spend-limits).
+
+:::
+
 Spend limits let you set cost-based budgets on your AI Gateway. When cumulative spend reaches the limit within a time window, AI Gateway blocks further requests with a `429` response until the window resets.
 
 Unlike [rate limiting](/ai-gateway/features/rate-limiting/), which caps the number of requests, spend limits track actual dollar cost per request based on model pricing. You can scope limits to any combination of model, provider, or [custom metadata](/ai-gateway/observability/custom-metadata/) dimensions like user ID, team, or application.
 
 Spend limits apply to both [Unified Billing](/ai-gateway/features/unified-billing/) requests and [BYOK](/ai-gateway/configuration/bring-your-own-keys/) requests for models with known pricing.
-
-:::caution[Migrate to policies]
-
-[Policies](/ai-gateway/features/policies/) replace spend limits. Policies support the same metadata-based budgets, and can also use the verified identity of the caller and block or allow access to models. To move your rules, refer to [Migrate from spend limits](/ai-gateway/features/policies/#migrate-from-spend-limits).
-
-:::
 
 ![Spend limits rules configured on a gateway](~/assets/images/ai-gateway/spend-limits-rules.png)
 

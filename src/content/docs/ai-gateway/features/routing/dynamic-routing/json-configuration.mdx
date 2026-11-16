@@ -91,6 +91,8 @@ Routes requests probabilistically across multiple outputs, useful for A/B testin
 
 Apply limits based on request metadata. Supports both count-based and cost-based limits.
 
+To enforce budgets without falling back to another model, use [policies](/ai-gateway/features/policies/) instead. Use a cost-based limit in a route when you want requests to fall back to another model after a budget is used up.
+
 - **Inputs**: Request
 - **Outputs**:
   - `success`: Forwards request to provided element if request is not rate limited
