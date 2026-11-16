@@ -2,7 +2,7 @@
 reviewed: 2026-11-02
 pcx_content_type: how-to
 title: Migrate TanStack Start from Vercel to Cloudflare Workers
-description: Migrate a TanStack Start application from Vercel to Cloudflare Workers. Replace Nitro with the Cloudflare Vite plugin. Includes a prompt for your coding agent.
+description: Move TanStack Start off Vercel by replacing the Nitro Vite plugin with the Cloudflare Vite plugin. Server functions and server routes run on Workers unchanged.
 sidebar:
   label: TanStack Start
   order: 6
@@ -139,7 +139,7 @@ When you finish, list the files you changed, the Vercel features without an equi
 
 To add [Cron Triggers](/workers/configuration/cron-triggers/), [Queues](/queues/), or [Durable Objects](/durable-objects/), create a custom server entrypoint. For more information, refer to [Custom entrypoints](/workers/framework-guides/web-apps/tanstack-start/#custom-entrypoints).
 
-## Known issues
+## Troubleshooting
 
 - **Assets are not cached.** Without `public/_headers`, Workers serves files in `/assets/` with `max-age=0, must-revalidate`.
 - **The server function format changes after a lockfile re-resolve.** Re-resolving dependencies can upgrade `seroval`, which changes the server function wire format. Convert old lockfiles instead.

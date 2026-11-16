@@ -406,9 +406,10 @@ PRAGMA defer_foreign_keys = on
 -- Run your CREATE TABLE or ALTER TABLE / COLUMN statements
 ALTER TABLE users ...
 
--- This is implicit if not set by the end of the transaction.
-PRAGMA defer_foreign_keys = off
+-- Outstanding foreign key violations are checked when the transaction ends.
 ```
+
+Setting `PRAGMA defer_foreign_keys = off` before the transaction ends discards any outstanding foreign key violations instead of reporting them, so the transaction commits even if rows still violate a constraint. Use [`PRAGMA foreign_key_check`](#pragma-foreign_key_check) to find violations.
 
 Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn more about how to work with foreign keys.
 

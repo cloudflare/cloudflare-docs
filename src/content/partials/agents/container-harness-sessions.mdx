@@ -1,0 +1,38 @@
+---
+{}
+---
+
+import { TypeScriptExample } from "~/components";
+
+## Sessions and recovery
+
+`prompt()` submits work and waits for the answer. `submit()` returns once the prompt is stored, and `wait()` picks up the result later, in another request to the same object. Pass an `operationId` to deduplicate a submission:
+
+<TypeScriptExample>
+
+```ts
+const receipt = await this.harness.submit("Add tests for parse()", {
+	operationId: "parse-tests-1",
+});
+
+// In a later request to the same Durable Object:
+const result = await this.harness.wait(receipt.operationId);
+if (result.status === "done") console.log(result.text);
+else console.log(result.reason);
+```
+
+</TypeScriptExample>
+
+`harness.sessions.create()` starts an independent session, and `harness.sessions.fork(id)` branches one. `session.events()` returns a snapshot of the session followed by live events, which you can forward to a client.
+
+Recovery depends on what stopped:
+
+- **The Durable Object is evicted or redeployed.** A Lifecycle job reattaches to the running container and replays the events it missed.
+- **The container goes idle.** After five minutes, the harness snapshots the filesystem and stops it. The next prompt restores the snapshot and resumes the CLI's session.
+- **The container dies during a turn.** The turn ends with `status: "unanswered"` and `reason: "container_lost"`, and the session survives. Pass `onContainerLost: "retry"` to run the turn again instead, when its side effects are safe to repeat.
+
+Files in the container come back from the last snapshot, so edits made after it can be lost. Keep files that must survive in separate durable storage.
+
+## Security
+
+The container is the sandbox. Both CLIs run without their own permission prompts, so treat everything in the container as readable by the agent. Keep credentials out of it, and put [authentication](/agents/runtime/routing/authentication/) in front of every route that reaches the harness. Each prompt can run commands and spend model credit.

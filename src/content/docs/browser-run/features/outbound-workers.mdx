@@ -144,12 +144,14 @@ The `.test` top-level domain is reserved for testing. Use a hostname that does n
 
 Outbound Worker routing supports HTTP requests only. Use an `http://` URL for the routed hostname. HTTPS requests do not use the outbound Worker.
 
+Outbound routing lasts until the browser session closes. It also applies when a later Worker invocation reconnects with `connectSession()`. Routed requests go to the currently deployed version of the outbound Worker.
+
 ## Constraints
 
 - Use `outboundByHost` with Browser Run binding methods only. It is not supported by REST endpoints or legacy HTTP-only bindings.
-- Create the Fetcher and call `acquire()` or `launch()` in the same Worker invocation.
-- The Fetcher is not persisted with the browser session and cannot be reused by a later invocation.
+- You cannot add or change outbound routes after `acquire()` or `launch()`. To use different routes, start a new session.
 - Outbound routing applies to the hostnames in the map. Requests to other hostnames use the browser's normal network path.
+- Session [guardrails](/browser-run/features/guardrails/) do not check hostnames in `outboundByHost`, and they do not limit the requests that your outbound Worker makes with `fetch()`.
 
 ## Next steps
 

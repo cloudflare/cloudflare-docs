@@ -1,0 +1,16 @@
+---
+params:
+  - cli
+---
+
+{props.cli} runs in a [Cloudflare Container](/containers/), and a [Durable Object](/durable-objects/) drives it with `ContainerHarness` from `agents/harness/container`:
+
+- **The CLI owns the loop.** It keeps its own tools, plugins, settings, and session format, the same as on your laptop.
+- **The Durable Object owns the record.** The harness stores sessions, operations, transcripts, and the CLI's session files in the object's SQLite database. [Lifecycle](/agents/runtime/lifecycle/) jobs reconnect to a running container after an eviction or a deploy.
+- **Credentials stay outside the container.** The CLI calls a placeholder host with a placeholder key. `ContainerEgress`, a Worker entrypoint in your Worker, adds the real credentials to each model request after it leaves the container.
+
+No Dockerfile is needed. The harness starts the `cloudflare/debian-trixie` image, installs {props.cli} on first use, and snapshots the filesystem for later starts.
+
+:::caution[Experimental]
+`agents/harness/container` is experimental. Its API may change in any release.
+:::

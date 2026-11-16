@@ -35,6 +35,8 @@ Inside the partial, params are referenced as JS expressions: `{props.product}`. 
 
 Renders a TypeScript code block and auto-generates a JavaScript tab using `ts-blank-space`. **Required for all Workers JS/TS examples** — do not use bare `ts`/`js` fences.
 
+Exception: a snippet that only contains types (`type`, `interface`, `declare`) has no JavaScript equivalent, so the JS tab would be empty. Show type definitions in a plain `ts` fence. The build fails if a `TypeScriptExample` produces an empty JS tab.
+
 ````mdx
 import { TypeScriptExample } from "~/components";
 
@@ -54,7 +56,7 @@ Props:
 
 - `filename` — optional, must end in `.ts`. The JS tab shows the `.js` equivalent.
 - `playground` — boolean. Adds "Run Worker in Playground" button to the JS tab.
-- `omitTabs` — boolean. Renders the TypeScript block without the JS/TS tab wrapper (useful for inline snippets).
+- `omitTabs` — boolean. Renders the JavaScript and TypeScript `TabItem`s without their own `Tabs` wrapper, so you can place them inside a parent `<Tabs syncKey="workersExamples">` next to other languages, such as a Python `TabItem`.
 - `code` — object. Astro `Code` component props (e.g. `{ collapse: "1-2" }`). Apply to both tabs.
 
 Note: Code fence options (`collapse={1-2}`, etc.) cannot be set on the fence directly — pass them via the `code` prop instead.
@@ -88,6 +90,43 @@ database_id = "<unique-ID-for-your-database>"
 - Use `removeSchema` prop to omit the `$schema` line from JSON output (useful for config snippets rather than full files).
 - Use `cfConfig` to supply a reviewed `cloudflare.config.ts` alternative and surface the shared CLI selector.
 - If a feature requires a minimum `compatibility_date`, note it in a `:::note` admonition above or below the config block.
+
+---
+
+## CliVariants / CliVariant
+
+Shows Wrangler and Cloudflare CLI (`cf`) versions of the same passage – a paragraph, a list of steps, or a short procedure – behind the shared CLI selector. Use it when the prose differs between the CLIs. For a single command or config block, use `cfCommand` / `cfConfig` / `cfNamespace` on the existing components instead.
+
+````mdx
+import { CliVariant, CliVariants } from "~/components";
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Sign in with Wrangler:
+
+```sh
+npx wrangler login
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Sign in with `cf`:
+
+```sh
+cf auth login
+```
+
+</CliVariant>
+</CliVariants>
+````
+
+- Exactly one `cli="wrangler"` and one `cli="cf"` child, with all content inside them. The build fails otherwise.
+- Leave a blank line after each opening `<CliVariant>` tag and before each closing tag so the content is parsed as Markdown.
+- Do not nest `CliVariants`, and do not put components with their own CLI selector (`cfCommand`, `cfConfig`, `cfNamespace`) inside a variant – the build fails. Write the cf command directly in the cf variant.
+- Keep headings outside the component. If both variants must start with the same heading, pass its ID as `anchorId` on `CliVariants`.
+- The page's Markdown version includes both variants, cf first, each labelled, after a sentence telling agents to use `cf` for new projects and the project's existing CLI otherwise. Do not write that guidance yourself.
 
 ---
 

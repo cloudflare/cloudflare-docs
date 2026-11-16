@@ -140,5 +140,6 @@ actions on the meeting.
 | options | The options object. |
 | options.authToken | The authorization token received using the API. |
 | options.baseURI | The base URL of the API. |
-| options.defaults | The default audio and video settings. |
+| options.defaults | The default audio, video, and view mode settings. |
+| options.defaults.viewMode | The initial view mode of the meeting: ACTIVE_GRID (default), PAGINATED, or MANUAL. |
 

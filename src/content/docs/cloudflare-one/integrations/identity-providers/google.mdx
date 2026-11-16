@@ -17,9 +17,7 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
 ## Set up Google as an identity provider
 
 1. Log in to the Google Cloud Platform [console](https://console.cloud.google.com/). Create a new project, name the project, and select **Create**.
-
 2. On the project home page, go to **APIs & Services** and on the sidebar select **Credentials**.
-
 3. Select **Configure Consent Screen**.
 
    ![Location to configure a Consent Screen in the Google Cloud Platform console.](~/assets/images/cloudflare-one/identity/google/configure-consent-screen.png)
@@ -31,13 +29,11 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
    4. Enter your **Contact Information**. Google Cloud Platform requires an email in your account.
    5. Agree to Google's user data policy and select **Continue**.
    6. Select **Create**.
-
 5. The OAuth overview page will load. On the OAuth overview screen, select **Create OAuth client**.
 
    ![Location to create an OAuth client in the Google Cloud Platform console.](~/assets/images/cloudflare-one/identity/google/create-oauth-client.png)
 
 6. Choose _Web application_ as the **Application type** and give your OAuth Client ID a name.
-
 7. Under **Authorized JavaScript origins**, in the **URIs** field, enter your team domain:
 
    ```txt
@@ -53,15 +49,10 @@ You do not need to be a Google Cloud Platform user to integrate Google as an ide
    ```
 
 9. After creating the OAuth client, select the OAuth client that you just created. Google will present the **OAuth Client ID** value and **Client secret** value. The client secret field functions like a password and should not be shared. Copy both the **OAuth Client ID** value and **Client secret** value.
-
 10. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
-
 11. Under **Your identity providers**, select **Add new identity provider**. Choose **Google** on the next page.
-
 12. Input the Client ID (**App ID** in the Cloudflare dashboard) and Client Secret fields generated previously.
-
-13. (Optional) Enable [Proof of Key Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
-
+13. (Optional) Enable [Proof Key for Code Exchange (PKCE)](https://www.oauth.com/oauth2-servers/pkce/). PKCE will be performed on all login attempts.
 14. Select **Save**.
 
 ## Test your connection
