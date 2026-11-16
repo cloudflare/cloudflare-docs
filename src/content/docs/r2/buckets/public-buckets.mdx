@@ -77,6 +77,12 @@ Once the domain exists in your Cloudflare account (regardless of setup type), yo
 
 To view the added DNS record, select **...** next to the connected domain and select **Manage DNS**.
 
+### Existing DNS records
+
+R2 does not replace an existing `A`, `AAAA`, or `CNAME` record for the hostname you connect, unless R2 created that record. If such a record exists, connecting the domain fails with HTTP `409` and error code `10056` (`DNS record for this domain already exists on zone.`).
+
+To connect the domain, first [delete the existing DNS record](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) for the hostname, then connect the domain again. Deleting a DNS record requires DNS edit permission on the zone, in addition to permission to configure the R2 bucket.
+
 :::note
 
 If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
