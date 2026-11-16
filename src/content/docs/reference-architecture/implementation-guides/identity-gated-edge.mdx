@@ -36,7 +36,7 @@ Use a dedicated test hostname, Access application, and Tunnel. Run Node.js 24 an
 | Evidence           | Browser network panel and captured standard output from the handler                                     |
 | Resource inventory | IDs of the dedicated application, policies, Tunnel, route, DNS record, and cache rule used by the pilot |
 
-The service listens at `127.0.0.1`, an address reachable only from the same machine. This is called a loopback address. The connection from `cloudflared` to the service uses HTTP because it never leaves that machine; the browser-to-Cloudflare and Tunnel connections remain encrypted. Do not change the listener to `0.0.0.0`, publish its port, or move the connector to another host without configuring the network restrictions and TLS validation described in the design guide.
+The service listens at `127.0.0.1`, an address reachable only from the same machine. This is called a loopback address. The connection from `cloudflared` to the service uses HTTP because it never leaves that machine. The browser-to-Cloudflare and Tunnel connections remain encrypted. Do not change the listener to `0.0.0.0`, publish its port, or move the connector to another host without configuring the network restrictions and TLS validation described in the design guide.
 
 ## Create the protected handler
 
@@ -149,7 +149,7 @@ The `admission` log stage records requests rejected before application logic. Th
 2. Record the application's AUD. In the local demonstration directory, create `.env` with your values:
 
    ```sh title=".env"
-    TEAM_DOMAIN=https://[your-team].cloudflareaccess.com
+   TEAM_DOMAIN=https://[your-team].cloudflareaccess.com
    ACCESS_AUD=replace-with-pilot-application-audience
    ```
 
@@ -168,7 +168,7 @@ The `admission` log stage records requests rejected before application logic. Th
 
    Alternatively, follow the [locally managed configuration path](/reference-architecture/design-guides/identity-gated-edge/#locally-managed-tunnel). Use the pilot hostname and `http://127.0.0.1:8080` service in that example. Retain per-rule JWT validation and the rejecting catch-all. Complete the linked local Tunnel setup before creating its DNS route. Do not configure both management paths for the same tunnel.
 
-6. Inspect [cache rules](/cache/how-to/cache-rules/). Configure a cache bypass for the dedicated pilot hostname, and ensure no conflicting rule or Worker overrides it. Authentication controls who can request a response; it does not make a personalized response safe to cache. If a cache rule stores a response without separating users, another user could receive it. The handler also returns `Cache-Control: no-store`. Record the effective cache configuration; this does not establish two-user cache isolation.
+6. Inspect [cache rules](/cache/how-to/cache-rules/). Configure a cache bypass for the dedicated pilot hostname, and ensure no conflicting rule or Worker overrides it. Authentication controls who can request a response. It does not make a personalized response safe to cache. If a cache rule stores a response without separating users, another user could receive it. The handler also returns `Cache-Control: no-store`. Record the effective cache configuration. This does not establish two-user cache isolation.
 
 </Steps>
 

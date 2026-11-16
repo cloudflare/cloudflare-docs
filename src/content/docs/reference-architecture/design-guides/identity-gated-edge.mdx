@@ -146,7 +146,7 @@ For a [remotely managed tunnel](/cloudflare-one/networks/connectors/cloudflare-t
 
 3. Add or edit the published application route for the protected hostname. Set the service address reachable from the connector. For the same-host companion example, use `http://127.0.0.1:8080`.
 4. Under **Additional application settings**, turn on **Protect with Access**. Configure the recorded team and this application's AUD before saving the route.
-5. Save the route and confirm the connector receives the configuration. Inspect the saved [remote configuration](https://developers.cloudflare.com/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/get/). The matching ingress rule must contain `originRequest.access.required: true`, the intended `teamName`, and the intended `audTag` list.
+5. Save the route and confirm the connector receives the configuration. Inspect the saved [remote configuration](/api/resources/zero_trust/subresources/tunnels/subresources/cloudflared/subresources/configurations/methods/get/). The matching ingress rule must contain `originRequest.access.required: true`, the intended `teamName`, and the intended `audTag` list.
 
 </Steps>
 
