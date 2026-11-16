@@ -38,7 +38,7 @@ It is not sufficient to only remove the client-side widget from the page, as an 
 
 A Request Header Transform Rule can add or remove a header before a request reaches your website. This example uses two rules: the first removes any visitor-supplied `x-turnstile-bypass` header, and the second sets it to `true` for requests with detection IDs you choose.
 
-Your website then leaves Turnstile off the page for that agent and does not require a token when the agent submits the form. Other visitors still get Turnstile. This example requires Enterprise [Bot Management](/bots/get-started/bot-management/) to identify the selected agents.
+Configure your website to leave Turnstile off the page and accept submissions without a token when it receives `x-turnstile-bypass: true`. Other visitors still get Turnstile. This example requires Enterprise [Bot Management](/bots/get-started/bot-management/) to identify the selected agents.
 
 <Steps>
 
