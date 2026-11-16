@@ -13,9 +13,7 @@ You can now develop and test [Artifacts](/artifacts/) locally. Create repos, imp
 
 Local repos also emit the same [Artifacts events](/artifacts/guides/event-subscriptions/) as production when a repo is created, imported, forked, or deleted, or when a repo token is created or revoked. This lets you test the Workflows that react to them before you deploy.
 
-When you develop with `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), or the [Workers Vitest integration](/workers/testing/vitest-integration/), Artifacts bindings use the local simulator by default.
-
-To work with local repos, add an Artifacts binding to your Wrangler configuration file:
+To use local repos when you run your Worker locally, add an Artifacts binding to your Wrangler configuration file:
 
 <WranglerConfig>
 
@@ -50,6 +48,6 @@ The returned `remote` points to your local dev session, so you can use it with a
 
 Local development requires the latest version of Wrangler and Git 2.32 or later on your `PATH`.
 
-To use your deployed repos during local development instead, set `remote = true` on the binding.
+When you develop with `npx wrangler dev`, the [Cloudflare Vite plugin](/workers/vite-plugin/), or the [Workers Vitest integration](/workers/testing/vitest-integration/), Artifacts bindings use the local simulator by default. To use your deployed repos instead, set `remote = true` on the binding.
 
 To learn more, refer to [Local development](/artifacts/guides/local-development/).
