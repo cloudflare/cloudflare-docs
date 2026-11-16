@@ -212,11 +212,16 @@ Ensure the endpoint responds to requests and that no applications have crashed o
 
 ### Cause
 
-The endpoint hostname does not exist.
+The endpoint hostname does not exist, or the monitor's DNS resolver could not obtain a usable response for the hostname.
+
+A common cause of the second scenario is a DNS answer that exceeds 512 bytes over UDP — for example, a hostname that resolves to a large number of A records (typically 20 or more). The load balancer monitor performs an uncached DNS lookup on every health check using UDP by default. If the DNS response is too large and the resolver does not fall back to TCP, the lookup fails and the monitor reports `DNS Unknown Host` — even though the hostname resolves correctly for clients.
 
 ### Solution
 
-Confirm the endpoint resolves to an IP address.
+- **Confirm the hostname exists:** verify it resolves to at least one IP address using `dig` or `nslookup`.
+- **If the hostname resolves correctly for clients but the monitor still reports this error:** use an individual IP address as the pool endpoint instead of a hostname. This eliminates the DNS lookup from the health check path entirely. If you cannot use a bare IP address, use a hostname for which Cloudflare is authoritative (primary or secondary DNS).
+
+For more information on DNS lookup failures with FQDN endpoints, refer to [What happens when a pool or endpoint becomes unhealthy?](/load-balancing/troubleshooting/load-balancing-faq/#what-happens-when-a-pool-or-endpoint-becomes-unhealthy)
 
 ***
 

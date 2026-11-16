@@ -16,7 +16,7 @@ By default, reranking is **disabled** for all AI Search instances. You can enabl
 
 When enabled, AI Search will:
 
-1. Retrieve a set of relevant results from your index, constrained by your `max_num_results` and `score_threshold` parameters.
+1. Retrieve a set of relevant results from your index, constrained by your `max_num_results` and match threshold settings (`score_threshold` on the instance, or `match_threshold` per request).
 2. Pass those results through a [reranking model](/ai-search/configuration/models/supported-models/).
 3. Return the reranked results, which the text generation model can use for answer generation.
 

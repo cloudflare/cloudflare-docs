@@ -31,9 +31,13 @@ A deployment determines which version(s) of your Worker are actively serving tra
 
 Each deployment tracks who created it, when, and which version(s) it includes.
 
+Traffic percentages control routing by default. A [version override](/workers/versions-and-deployments/version-overrides/) can select a version in the deployment, even at 0% of traffic.
+
 ## Default behavior
 
-By default, these two concepts are coupled together - when you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Workers creates a new version and immediately deploys it to 100% of traffic in a single step.
+When you run [`wrangler deploy`](/workers/wrangler/commands/workers/#deploy), Workers creates a version and sets its deployment to 100% of traffic.
+
+Deployment changes take time to reach every location on Cloudflare's network. During this time, locations can use different versions. A browser makes separate requests for HTML and its assets. Those requests can use different versions, even when you deploy to 100% of traffic. Refer to [Version skew and static assets](/workers/versions-and-deployments/version-skew/) for examples and strategies.
 
 You can decouple them so that uploading a version and deploying it are independent actions. This gives you control over when new code goes live, and lets you use strategies like [gradual deployments](/workers/versions-and-deployments/gradual-deployments/) or manual promotion. Refer to [Deployment management](/workers/versions-and-deployments/deployment-management/) for details.
 
@@ -54,8 +58,9 @@ Wrangler allows you to view the 100 most recent versions and deployments. Refer 
 ## Next steps
 
 - [Deployment management](/workers/versions-and-deployments/deployment-management/) - Upload versions without deploying them and control when they go live
+- [Version skew and static assets](/workers/versions-and-deployments/version-skew/) - Understand related requests during deployments and asset availability for older pages
 - [Version URLs](/workers/versions-and-deployments/version-urls/) - Test new versions before deploying them to production
 - [Gradual deployments](/workers/versions-and-deployments/gradual-deployments/) - Split traffic between two versions using percentage-based routing
-- [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) - Consistently route users to the same version across page loads during a gradual deployment
+- [Version affinity](/workers/versions-and-deployments/gradual-deployments/version-affinity/) - Keep requests with the same key on one version while the deployment configuration stays the same
 - [Version overrides](/workers/versions-and-deployments/version-overrides/) - Send a request to a specific version by ID for smoke testing and pinning between Workers
 - [Rollbacks](/workers/versions-and-deployments/rollbacks/) - Revert to a previously deployed version

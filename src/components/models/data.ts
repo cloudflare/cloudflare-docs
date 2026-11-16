@@ -44,6 +44,7 @@ import replicate from "~/assets/images/workers-ai/replicate.svg";
 import resembleai from "~/assets/images/workers-ai/resemble-ai.svg";
 import runway from "~/assets/images/workers-ai/runway.svg";
 import stabilityai from "~/assets/images/workers-ai/stabilityai.svg";
+import thinkingmachines from "~/assets/images/workers-ai/thinkingmachines.svg";
 import tiiuae from "~/assets/images/workers-ai/tiiuae.svg";
 import unum from "~/assets/images/workers-ai/unum.svg";
 import vidu from "~/assets/images/workers-ai/vidu.svg";
@@ -223,6 +224,10 @@ export const authorData: Record<string, { name: string; logo: string }> = {
 	stabilityai: {
 		name: "Stability.ai",
 		logo: stabilityai.src,
+	},
+	thinkingmachines: {
+		name: "Thinking Machines",
+		logo: thinkingmachines.src,
 	},
 	tiiuae: {
 		name: "TII UAE",

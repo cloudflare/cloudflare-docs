@@ -1,0 +1,29 @@
+---
+title: Kitesurf is now open source
+description: Kitesurf, Cloudflare's experimental browser engine for AI agents, is now open source. Run it locally or deploy it to your own Cloudflare account.
+date: 2026-11-12
+---
+
+[Kitesurf](https://kitesurf.dev/), Cloudflare's browser engine for AI agents, is now [open source on GitHub](https://github.com/cloudflare/kitesurf) under the Apache 2.0 license. You can inspect the source, run it locally, and deploy your own instance to your Cloudflare account.
+
+Kitesurf runs entirely on Cloudflare Workers. It parses HTML, applies CSS, executes page JavaScript, and renders screenshots without a browser container. It supports the Chrome DevTools Protocol (CDP), so you can connect clients such as Puppeteer.
+
+Kitesurf is still **experimental and under heavy development**. The team continues to improve web standards support, rendering fidelity, and performance.
+
+## Run locally or deploy to your account
+
+Developers can run Kitesurf locally with Wrangler. After following the [build requirements and setup instructions](https://github.com/cloudflare/kitesurf#build-and-run-locally), run `pnpm run dev`. This builds the engine and starts `wrangler dev`.
+
+To run your own instance on Cloudflare, follow the [deployment instructions](https://github.com/cloudflare/kitesurf#cloudflare-deployment). Protect your deployment with Cloudflare Access or another authentication layer. Kitesurf does not provide built-in authentication.
+
+:::note[Important]
+Kitesurf requires [Cloudflare Dynamic Workers](/dynamic-workers/) to create isolated Workers for pages. Dynamic Workers are part of the [Workers Paid plan](/dynamic-workers/pricing/). A Workers Paid plan is required to run Kitesurf on Cloudflare. Local development uses `wrangler dev`.
+:::
+
+## Contribute and follow progress
+
+Contributions and pull requests are welcome. The team remains focused on compatibility, reliability, and performance, with limited review capacity. Keep changes focused and follow the [contribution guidelines](https://github.com/cloudflare/kitesurf/blob/main/CONTRIBUTING.md), including opening an issue and getting vouched by a maintainer before submitting a pull request.
+
+Visit [kitesurf.dev](https://kitesurf.dev/), the main Kitesurf website and playground. Track [Web Platform Tests (WPT) progress](https://kitesurf.dev/wpt) and [performance benchmarks](https://kitesurf.dev/benchmarks) as development continues.
+
+For background and technical details, refer to the [introductory blog post](https://blog.cloudflare.com/kitesurf/) and the [Kitesurf update](https://blog.cloudflare.com/kitesurf-update/). To use Kitesurf through Browser Run, refer to the [Kitesurf documentation](/browser-run/kitesurf/).

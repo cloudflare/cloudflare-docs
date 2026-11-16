@@ -1,0 +1,94 @@
+---
+title: CliVariants
+styleGuide:
+  component: CliVariants
+description: Show Wrangler and Cloudflare CLI versions of a paragraph or procedure.
+products:
+  - style-guide
+---
+
+import { CliVariant, CliVariants, Type, MetaInfo } from "~/components";
+
+The `CliVariants` component shows a Wrangler version and a Cloudflare CLI (`cf`) version of the same content. Readers switch between them with the shared CLI selector, and their choice applies to every CLI selector on the site.
+
+Use it when the text around a command differs between the two CLIs, such as a paragraph, a list of steps, or a short procedure. When only a single command or configuration block differs, use the `cfCommand` prop on [`PackageManagers`](/style-guide/build-the-page/components/package-managers/) or [`WranglerCommand`](/style-guide/build-the-page/components/wrangler-command/), or the `cfConfig` prop on [`WranglerConfig`](/style-guide/build-the-page/components/wrangler-config/) instead.
+
+## Import
+
+```mdx
+import { CliVariant, CliVariants } from "~/components";
+```
+
+## Usage
+
+````mdx
+import { CliVariant, CliVariants } from "~/components";
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Sign in with Wrangler:
+
+```sh
+npx wrangler login
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Sign in with `cf`. It keeps its own credentials and does not reuse a Wrangler login:
+
+```sh
+cf auth login
+```
+
+</CliVariant>
+</CliVariants>
+````
+
+This renders as:
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Sign in with Wrangler:
+
+```sh
+npx wrangler login
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Sign in with `cf`. It keeps its own credentials and does not reuse a Wrangler login:
+
+```sh
+cf auth login
+```
+
+</CliVariant>
+</CliVariants>
+
+Leave a blank line after each opening `<CliVariant>` tag and before each closing tag, so that the content inside is parsed as Markdown.
+
+## Rules
+
+- Provide exactly one `<CliVariant cli="wrangler">` and one `<CliVariant cli="cf">`, and put all content inside them. The build fails otherwise.
+- Do not nest `CliVariants`, and do not put components that have their own CLI selector inside a variant, such as `PackageManagers` with `cfCommand`, `WranglerConfig` with `cfConfig`, or `WranglerCommand` with `cfCommand`. The build fails, because the nested component's variants would be hidden. Write the cf command or configuration directly inside the cf variant instead.
+- Keep headings outside the component where you can. Headings inside both variants both appear in the table of contents. If both variants must start with the same heading, pass its ID as `anchorId` so that links to the heading reach the visible variant.
+
+## Markdown output
+
+The Markdown version of a page includes both variants, because agents cannot use the selector. Whatever order you write them in, the cf variant comes first and the Wrangler variant second, each under its own label (`Cloudflare CLI` and `Wrangler`). A sentence before them tells agents that the content appears twice, that new projects should use `cf`, and that an existing project should use the CLI it already uses. The selector itself is left out.
+
+The same applies to `cfCommand`, `cfConfig` and `cfNamespace`.
+
+## Arguments
+
+### `CliVariants`
+
+`anchorId` <Type text="string" /> <MetaInfo text="optional" /> is the ID of a heading that appears in both variants. The ID moves to the heading in the visible variant.
+
+### `CliVariant`
+
+`cli` <Type text="'wrangler' | 'cf'" /> <MetaInfo text="required" /> is the CLI that the content describes.

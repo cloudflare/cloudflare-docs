@@ -38,9 +38,9 @@ package.json @cloudflare/content-engineering
 
 # agent-lee
 
-/src/content/docs/agent-lee/ @Brayden @kczajkowski @cloudflare/product-owners
-/src/content/directory/agent-lee.yaml @Brayden @kczajkowski @cloudflare/product-owners
-/src/icons/agent-lee.svg @Brayden @kczajkowski @cloudflare/product-owners
+/src/content/docs/agent-lee/ @Brayden @kale-stew @cloudflare/product-owners
+/src/content/directory/agent-lee.yaml @Brayden @kale-stew @cloudflare/product-owners
+/src/icons/agent-lee.svg @Brayden @kale-stew @cloudflare/product-owners
 
 # agent-memory
 
@@ -87,13 +87,13 @@ package.json @cloudflare/content-engineering
 
 # ai-gateway
 
-/src/content/docs/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/content/partials/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/assets/images/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/content/changelog/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/content/glossary/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
-/src/icons/ai-gateway.svg @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/docs/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/partials/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/assets/images/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/changelog/ai-gateway/ @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/content/glossary/ai-gateway.yaml @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
+/src/icons/ai-gateway.svg @abhishekkankani @adriandlam @aninibread @ethulia @kathayl @kflansburg @mattrothenberg @mchenco @NikhilSinha1 @palashgo @roerohan @shridharathi @oiricaud @superhighfives @thebongy @zeke @cloudflare/product-owners
 
 # ai-search
 
@@ -145,12 +145,12 @@ package.json @cloudflare/content-engineering
 
 # artifacts
 
-/src/content/docs/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
-/src/assets/images/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/assets/images/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
-/src/content/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/artifacts.yaml @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
-/src/icons/artifacts.svg @dinasaur404 @dmmulroy @mattzcarey @zebp @cloudflare/product-owners
+/src/content/docs/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
+/src/assets/images/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/assets/images/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
+/src/content/changelog/artifacts/ @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/artifacts.yaml @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
+/src/icons/artifacts.svg @dinasaur404 @dmmulroy @mattzcarey @zebp @leostera @cloudflare/product-owners
 
 # audit-logs
 
@@ -381,13 +381,13 @@ package.json @cloudflare/content-engineering
 
 # data-localization
 
-/src/content/changelog/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/docs/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/assets/images/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/partials/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/directory/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/content/release-notes/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
-/src/icons/data-localization.svg @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/changelog/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/docs/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/assets/images/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/partials/data-localization/ @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/directory/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/content/release-notes/data-localization.yaml @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
+/src/icons/data-localization.svg @aberglund-cf @angelampcosta @Arkanayan @cagrawal @cferike @connect-avinash31 @DavidJKTofan @mathew-cf @umeshgtank @cloudflare/appsec-reviewers @cloudflare/cf1-reviewers @cloudflare/product-owners
 
 # ddos-http
 
@@ -790,31 +790,32 @@ package.json @cloudflare/content-engineering
 
 # realtime
 
-/public/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/assets/images/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/docs/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/partials/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/changelog/realtime/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/directory/realtime.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtime.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/icons/realtime.svg @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/public/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/assets/images/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/docs/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/partials/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/changelog/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/directory/realtime.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtime.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/icons/realtime.svg @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 
 # realtimekit
 
-/src/components/realtimekit/ @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-android-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-android-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-flutter-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-flutter-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-ios-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-ios-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-react-native-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-react-native-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-recording-sdk.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-web-core.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/components/realtimekit/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/components/realtime/ @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-android-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-android-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-flutter-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-flutter-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-ios-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-ios-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-react-native-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-react-native-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-recording-sdk.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-web-core.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 /src/content/release-notes/realtimekit-web-ui-addons.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
-/src/content/release-notes/realtimekit-web-ui-kit.yaml @ravindra-cloudflare @roerohan @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
+/src/content/release-notes/realtimekit-web-ui-kit.yaml @ravindra-cloudflare @cloudflare/realtime @cloudflare/RealtimeKit @cloudflare/product-owners
 
 # reference-architecture
 

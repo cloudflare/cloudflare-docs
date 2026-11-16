@@ -12,7 +12,9 @@ import { GlossaryTooltip } from "~/components";
 
 Any uncaught exceptions thrown by a <GlossaryTooltip term="Durable Object">Durable Object</GlossaryTooltip> or thrown by Durable Objects' infrastructure (such as overloads or network errors) will be propagated to the callsite of the client. Catching these exceptions allows you to retry creating the [`DurableObjectStub`](/durable-objects/api/stub) and sending requests.
 
-JavaScript Errors with the property `.retryable` set to True are suggested to be retried if requests to the Durable Object are idempotent, or can be applied multiple times without changing the response. If requests are not idempotent, then you will need to decide what is best for your application. It is strongly recommended to apply exponential backoff when retrying requests.
+The runtime retries some failures before they reach your code. For more information, refer to [Automatic retries](/durable-objects/best-practices/automatic-retries/).
+
+JavaScript Errors with the property `.retryable` set to True are transient. If one reaches your code, either the runtime ran out of retries, or the failure happened after the request reached the Durable Object. Retry it yourself only if requests to the Durable Object are idempotent, or can be applied multiple times without changing the response. If requests are not idempotent, then you will need to decide what is best for your application. It is strongly recommended to apply exponential backoff when retrying requests.
 
 JavaScript Errors with the property `.overloaded` set to True should not be retried. If a Durable Object is overloaded, then retrying will worsen the overload and increase the overall error rate.
 
@@ -34,6 +36,8 @@ Refer to [Troubleshooting](/durable-objects/observability/troubleshooting/) to r
 ## Example
 
 This example demonstrates retrying requests using the recommended exponential backoff algorithm.
+
+The runtime also retries each attempt in this loop, so three attempts here can become up to 15 attempts in total. Keep the attempt count low, or set [`retry: { maxRetries: 0 }`](/durable-objects/best-practices/automatic-retries/#set-retry-limits-for-a-stub) on the stub if your loop should be the only source of retries.
 
 ```ts
 import { DurableObject } from "cloudflare:workers";

@@ -1,0 +1,227 @@
+---
+/* `role="list"` on the lists below is intentional, not redundant: Safari
+   + VoiceOver drop the implicit list role when `list-style: none` is
+   applied, so the explicit role is required to preserve list semantics
+   for screen reader users. */
+/* eslint-disable astro/jsx-a11y/no-redundant-roles */
+const vnets = [
+	{
+		name: "default",
+		cardClass: "vnet-card default-vnet",
+		routes: [
+			{ cidr: "10.0.0.0/8", via: "Tunnel", dest: "Legacy DC" },
+			{ cidr: "192.168.1.0/24", via: "IPsec", dest: "Branch office" },
+		],
+	},
+	{
+		name: "production",
+		cardClass: "vnet-card",
+		routes: [
+			{ cidr: "10.0.0.0/8", via: "Tunnel", dest: "Production DC" },
+			{ cidr: "172.16.0.0/16", via: "Mesh", dest: "Production VPC" },
+		],
+	},
+	{
+		name: "staging",
+		cardClass: "vnet-card",
+		routes: [{ cidr: "10.0.0.0/8", via: "Tunnel", dest: "Staging DC" }],
+	},
+];
+
+const viaClass = (via: string) => `route-via ${via.toLowerCase()}-via`;
+---
+
+<figure
+	class="vnet-diagram not-content"
+	aria-label="Virtual network routing: one Cloudflare account with three virtual networks, each with its own routing table. The default virtual network routes 10.0.0.0/8 through a tunnel to a legacy data center and 192.168.1.0/24 through IPsec to a branch office. The production virtual network routes 10.0.0.0/8 through a tunnel to the production data center and 172.16.0.0/16 through a Mesh node to a production VPC. The staging virtual network routes 10.0.0.0/8 through a tunnel to the staging data center."
+>
+	<div class="account">
+		<span class="account-label">Your Cloudflare account</span>
+		<ul class="vnet-row" role="list">
+			{vnets.map((vnet) => (
+				<li class={vnet.cardClass}>
+					<span class="vnet-name">{vnet.name}</span>
+					<ul class="route-list" role="list">
+						{vnet.routes.map((route) => (
+							<li class="route">
+								<code>{route.cidr}</code>
+								<span class={viaClass(route.via)}>{route.via}</span>
+								<span class="route-dest">{route.dest}</span>
+							</li>
+						))}
+					</ul>
+				</li>
+			))}
+		</ul>
+	</div>
+</figure>
+
+<style>
+	.vnet-diagram {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-strong: light-dark(#525252, #a3a3a3);
+		--map-caption: light-dark(#737373, #a3a3a3);
+		--map-brand: #f6821f;
+		--map-tunnel: light-dark(#0891b2, #67e8f9);
+		--map-mesh: light-dark(#7c3aed, #a78bfa);
+		--map-wan: light-dark(#db2777, #f9a8d4);
+		--map-vnet: color-mix(in srgb, var(--map-brand) 45%, var(--map-line));
+
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin: 1.5rem 0;
+		padding: 22px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 14px 14px;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		font-feature-settings: "cv02", "cv03", "cv04", "calt";
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+	}
+
+	.account {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		padding: 14px;
+		border: 1px dashed var(--map-line);
+		border-radius: 12px;
+	}
+
+	.account-label {
+		align-self: center;
+		color: var(--map-strong);
+		font-size: 12px;
+		font-weight: 600;
+	}
+
+	.vnet-row {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 14px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.vnet-card {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		margin: 0;
+		padding: 12px;
+		border: 1px solid var(--map-vnet);
+		border-radius: 10px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 7%);
+		color: var(--map-text);
+	}
+
+	.default-vnet {
+		border-style: dashed;
+		border-color: var(--map-strong);
+	}
+
+	.vnet-name {
+		align-self: center;
+		color: var(--map-text);
+		font-size: 13px;
+		font-weight: 600;
+	}
+
+	.vnet-name::before {
+		content: "Virtual network: ";
+		color: var(--map-caption);
+		font-weight: 500;
+	}
+
+	.route-list {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.route {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		margin: 0;
+		padding: 8px 10px;
+		border: 1px solid var(--map-line);
+		border-radius: 8px;
+		background: var(--map-elevated);
+	}
+
+	code {
+		display: inline;
+		padding: 1px 6px;
+		border: 1px solid var(--map-line);
+		border-radius: 5px;
+		background: var(--map-card);
+		color: var(--map-text);
+		font-family:
+			"Paper Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+			monospace;
+		font-size: 11px;
+		white-space: nowrap;
+	}
+
+	.route-via {
+		padding: 1px 6px;
+		border-radius: 5px;
+		font-size: 11px;
+		font-weight: 600;
+		white-space: nowrap;
+	}
+
+	.route-via::before {
+		content: "via ";
+		font-weight: 400;
+	}
+
+	.tunnel-via {
+		background: color-mix(in srgb, var(--map-tunnel) 12%, transparent);
+		color: var(--map-tunnel);
+	}
+
+	.mesh-via {
+		background: color-mix(in srgb, var(--map-mesh) 12%, transparent);
+		color: var(--map-mesh);
+	}
+
+	.ipsec-via {
+		background: color-mix(in srgb, var(--map-wan) 12%, transparent);
+		color: var(--map-wan);
+	}
+
+	.route-dest {
+		flex-basis: 100%;
+		color: var(--map-caption);
+		font-size: 12px;
+		text-align: center;
+	}
+
+	.route-dest::before {
+		content: "↓ ";
+	}
+
+	@media (max-width: 52rem) {
+		.vnet-row {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+</style>

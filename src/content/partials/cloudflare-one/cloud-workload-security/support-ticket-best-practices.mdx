@@ -1,0 +1,77 @@
+---
+{}
+---
+
+For the fastest possible troubleshooting, ensure your support ticket includes comprehensive details. The more context you provide, the faster your issue can be identified and resolved.
+
+To ensure efficient resolution when [contacting support](/support/contacting-cloudflare-support/), include as much relevant detail as possible in your ticket:
+
+<ul>
+	<li>
+		<label>
+			<input type="checkbox" /> Context: Briefly describe the scenario or use
+			case (for example, what the client was doing and which API operation it
+			called).
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Reproduction steps: Describe the steps you took
+			to reproduce the issue.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Timestamps: Be specific and include the exact
+			time and time zone when the issue occurred.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Troubleshooting attempts: Outline any
+			troubleshooting steps or configuration changes already attempted.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Account ID, deployment ID, and the IDs of any
+			relevant policy or policy set.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Proxy version (run <code>cws-proxy --version</code>), operating system, and CPU architecture.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Client name, client version, and the exact error message.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> The target API operation, what you expected, and what happened.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Proxy logs: Include short excerpts from the proxy log, with <code>cws.request_id</code> when present.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> For dashboard or API errors: the error code, message, and <code>source.pointer</code> when available.
+		</label>
+	</li>
+	<li>
+		<label>
+			<input type="checkbox" /> Confirmation that the account has a Zero Trust subscription.
+		</label>
+	</li>
+</ul>
+
+:::tip[Write a detailed ticket to resolve your issue faster]
+Avoid vague descriptions and include the scenario, timestamps, and steps taken to troubleshoot the issue. Refer to the following example:
+
+<p>Acme Corp started receiving 403 responses from its automation on October 30, 2025, at approximately 3:45 PM UTC, after saving a policy change. The proxy log shows <code>request.outcome</code> denied and lists the evaluated policy set in <code>request.policy_sets</code>. The proxy version, the deployment ID, and a log excerpt with <code>cws.request_id</code> are attached.</p>
+:::

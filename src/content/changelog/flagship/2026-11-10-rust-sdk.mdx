@@ -1,0 +1,37 @@
+---
+title: Evaluate Flagship feature flags from Rust
+description: The Flagship Rust SDK provides an async OpenFeature provider with HTTP and local evaluation for Rust server applications.
+date: 2026-11-10
+---
+
+[Flagship](/flagship/) now has an official Rust SDK. Use it to evaluate feature flags from async Rust server applications through OpenFeature, with the same targeting rules and percentage rollouts as the other Flagship SDKs.
+
+Install the [`cloudflare-flagship`](https://crates.io/crates/cloudflare-flagship) crate:
+
+```sh
+cargo add cloudflare-flagship
+```
+
+Then register the provider and evaluate a flag:
+
+```rust
+let options = FlagshipClientOptions::builder()
+    .app_id("<APP_ID>")
+    .account_id("<ACCOUNT_ID>")
+    .auth_token("<API_TOKEN>")
+    .build()?;
+
+let mut api = OpenFeature::default();
+api.set_provider(FlagshipServerProvider::new(options)?).await;
+
+let context = EvaluationContext::default().with_targeting_key("user-42");
+let enabled = api
+    .create_client()
+    .get_bool_value("new-checkout", Some(&context), None)
+    .await
+    .unwrap_or(false);
+```
+
+The provider evaluates flags over HTTP by default. Turn on local evaluation to download flag definitions and evaluate flags in-process, without a network request per evaluation. The SDK also supports structured evaluation context, an optional response cache, and logging and telemetry hooks.
+
+The SDK requires Rust 1.88 or later and a Tokio runtime. For setup and configuration options, refer to the [Rust SDK](/flagship/sdk/rust/) documentation.
