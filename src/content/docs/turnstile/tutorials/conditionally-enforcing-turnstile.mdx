@@ -11,14 +11,18 @@ tags:
 sidebar:
   order: 6
 description: >-
-  This tutorial explains how to conditionally enforce Turnstile based on the incoming request, such as a pre-shared secret in a header or a specific IP address.
+  Learn two ways to show Turnstile only for certain requests using a Transform Rule or HTMLRewriter.
 ---
 
-This tutorial explains how to conditionally enforce Turnstile based on the incoming request, such as a pre-shared secret in a header or a specific IP address.
+import { DashButton, Steps } from "~/components";
+
+Sometimes you may want to show Turnstile only for certain requests. For example, you might let an approved agent use a form without completing Turnstile. Here are two ways to conditionally render it: use a Transform Rule to pass request information to your site in a header, or use HTMLRewriter with a pre-shared header.
 
 ## Overview
 
-You may have setups such as automation that cannot load or run the Turnstile challenge. Using [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/), this tutorial will demonstrate how to conditionally handle the [client-side widget](/turnstile/get-started/client-side-rendering/) and [Siteverify API](/turnstile/get-started/server-side-validation/) when specific criteria are met.
+Turnstile runs in the browser and gives your server a token to check. If you want someone to complete an action without Turnstile, do not show them the widget **and** do not require a token when they complete that action. Keep both checks for everyone else.
+
+This tutorial shows two ways to leave the widget off the page. In Example 1, a Transform Rule sends request information to your site in a header. In Example 2, [`HTMLRewriter`](/workers/runtime-apis/html-rewriter/) removes the widget when a pre-shared header matches. Each example also covers the server-side token check.
 
 :::note
 While this tutorial removes Turnstile client-side elements when specific criteria are met, you could instead conditionally insert them.
@@ -30,7 +34,84 @@ It is critical to make sure you are validating tokens with the Siteverify API wh
 It is not sufficient to only remove the client-side widget from the page, as an attacker can forge the request to your API.
 :::
 
-## Implementation
+## Example 1: Use a Transform Rule for selected agents
+
+A Transform Rule can add a header to a request before it reaches your website. Your website can use that header to decide whether to show Turnstile. This example uses a Transform Rule to tell your website when a request comes from an agent you have chosen to allow.
+
+Your website then leaves Turnstile off the page for that agent and does not require a token when the agent submits the form. Other visitors still get Turnstile. This example requires Enterprise [Bot Management](/bots/get-started/bot-management/) to identify the selected agents.
+
+<Steps>
+
+1. Choose the [detection IDs](/ai-crawl-control/reference/bots/) for the agents you want to allow. Confirm what each ID detects and check your traffic in [Security Analytics](/waf/analytics/security-analytics/).
+
+2. In the Cloudflare dashboard, go to **Rules** > **Overview**.
+
+   <DashButton url="/?to=/:account/:zone/rules/overview" />
+
+3. Select **Create rule** > **Request Header Transform Rule**. Under **When incoming requests match**, select a custom filter that covers every request to the hostname where your application trusts the header. For example:
+
+   ```txt
+   http.host eq "example.com"
+   ```
+
+   Replace `example.com` with your hostname. Do not filter this rule to approved detection IDs: it must also overwrite a visitor-supplied header on unapproved requests.
+
+4. Under **Modify request header**, select **Set dynamic**. Set the header name to `x-turnstile-bypass` and the value to this expression, replacing `12345` with a reviewed detection ID or a space-separated list of IDs:
+
+   ```txt
+   to_string(any(cf.bot_management.detection_ids[*] in {12345}))
+   ```
+
+5. Select **Deploy**. The rule sets the header to `true` for selected agents and `false` for other requests, overwriting a value supplied by the visitor. Ensure no later rule or proxy can change that decision.
+
+6. At your origin, decide what to render:
+
+   - Check that the header has exactly one value and that value is `true`. Also check the approved hostname and operation.
+   - For eligible page requests, render the form without the Turnstile script, widget, or token-dependent browser logic.
+   - For other page requests, render Turnstile normally.
+   - If you render the page in the browser, pass only the rendering decision from your server to the page.
+
+7. In your form handler, check the header again. If its only value is `true`, accept the form without a Turnstile token. Otherwise, require a token and verify it with [Siteverify](/turnstile/get-started/server-side-validation/). Keep your other form checks unchanged.
+
+   For example, in a Node.js form handler:
+
+   ```js
+   // Read every value so duplicate headers cannot grant an exception.
+   const bypassValues = [];
+   for (let i = 0; i < req.rawHeaders.length; i += 2) {
+     if (req.rawHeaders[i].toLowerCase() === "x-turnstile-bypass") {
+       bypassValues.push(req.rawHeaders[i + 1]);
+     }
+   }
+
+   const skipTurnstile =
+     req.hostname === "example.com" &&
+     req.path === "/submit" &&
+     bypassValues.length === 1 &&
+     bypassValues[0] === "true";
+
+   if (!skipTurnstile) {
+     const token = req.body["cf-turnstile-response"];
+     const result = token && (await verifyTurnstile(token));
+     if (!result?.success) {
+       return res.status(400).send("Turnstile verification failed");
+     }
+   }
+
+   // Continue processing the form as usual.
+   ```
+
+   Replace the example hostname and path with yours. Use your existing Siteverify call for `verifyTurnstile()`.
+
+</Steps>
+
+:::caution
+Only trust this header through authenticated origin access restricted to the intended zone or application, such as a suitably restricted Cloudflare Tunnel or deployment-specific origin authentication. A DNS record, `CF-Ray` header, or an allowlist of all Cloudflare IP addresses does not establish that trust. Reject duplicate or comma-joined header values; do not check only whether the header exists.
+:::
+
+If you cache the form page, ensure a version without Turnstile cannot be served to other visitors. Test a real approved agent, an ordinary visitor, a forged header, and a page request that qualifies followed by a submission that does not. The ordinary visitor and the ineligible submission must provide valid tokens.
+
+## Example 2: Use HTMLRewriter
 
 This tutorial will modify the existing [Turnstile demo](https://github.com/cloudflare/turnstile-demo-workers/blob/main/src/) to conditionally remove the existing `script` and widget container elements.
 
@@ -74,7 +155,7 @@ export default {
 };
 ```
 
-## Server-side integration
+### Server-side integration
 
 We will exit early in our validation if the same logic we used to remove the client-side elements is present.
 
@@ -98,7 +179,7 @@ async function handlePost(request) {
 
 With these changes, Turnstile will not be enforced on requests with the header `x-bypass-turnstile: VerySecretValue` present.
 
-## Demonstration
+### Demonstration
 
 After running `npm run dev` in the project folder, you can test the changes by running the following command:
 
