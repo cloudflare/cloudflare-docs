@@ -17,10 +17,13 @@ Each custom error token provides diagnostic information or specific functionalit
 
 To display a custom page for each error, create a separate page per error. For example, to create an error page for both **IP/Country Block** and **Interactive Challenge**, you must design and publish two separate pages.
 
-The following custom error tokens are required by their respective error pages:
+For new custom Challenge Page templates, use `::CF_WIDGET_BOX::`. Cloudflare replaces this token for managed, interactive, and non-interactive challenges. Include it exactly once in the HTML body. Refer to [Custom Challenge Pages](/cloudflare-challenges/challenge-types/challenge-pages/additional-configuration/#custom-challenge-pages) for requirements and example templates.
+
+The following custom error tokens provide the functionality required by their respective error pages:
 
 | Token                            | Required for                                                                                                                       |
 | -------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `::CF_WIDGET_BOX::`              | Managed, interactive, and non-interactive challenges                                                                               |
 | `::CAPTCHA_BOX::`                | Interactive Challenge <br/>Country Challenge (Managed Challenge)<br/>Managed Challenge / I'm Under Attack Mode (Interstitial Page) |
 | `::IM_UNDER_ATTACK_BOX::`        | Non-Interactive Challenge                                                                                                          |
 | `::CLOUDFLARE_ERROR_500S_BOX::`  | 5XX Errors                                                                                                                         |
