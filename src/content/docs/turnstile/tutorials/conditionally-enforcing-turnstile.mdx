@@ -50,6 +50,8 @@ Your website then leaves Turnstile off the page for that agent and does not requ
 
 3. Create a rule that removes any incoming bypass header:
 
+   This prevents visitors from forging the header to bypass Turnstile.
+
    1. Select **Create rule** > **Request Header Transform Rule**.
    2. Under **If incoming requests match…**, select **Custom filter expression**.
    3. Under **When incoming requests match…**, enter an expression for every hostname where your application trusts this header. For example: `http.host eq "example.com"`.
