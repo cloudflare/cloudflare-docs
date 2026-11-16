@@ -22,7 +22,8 @@ understand what `cf migrate` changed or to finish a conversion by hand.
 
 Most Wrangler commands have a `cf` equivalent, although the command name and
 arguments can differ. For example, Worker versions and deployments are under
-`cf workers versions` and `cf workers deployments`.
+`cf workers versions` and `cf workers deployments`, and `wrangler secret put` is
+`cf workers secrets update`.
 
 To find the `cf` command for a task, use any of the following:
 
@@ -59,11 +60,6 @@ with `npx wrangler` instead of installing Wrangler. Wrangler does not read
   ```sh
   npx wrangler tail <WORKER_NAME>
   ```
-
-- **`wrangler secret put`**: `cf` cannot set a single secret yet. Run
-  `npx wrangler secret put <SECRET_NAME> --name <WORKER_NAME>`, or upload
-  secrets with a new Worker version by passing `--secrets-file <PATH>` to
-  `cf deploy` or `cf workers versions create`.
 
 ## Configuration fields {/* configuration-fields */}
 
