@@ -32,6 +32,10 @@ Additionally, you can [add filters](/waf/analytics/security-events/#adjust-displ
 
 Please note that Security Events may use sampled data to improve performance. If sampled data is applied to your search, you might not see all events, and filters might not return the expected results. To display more events, select a smaller timeframe.
 
+:::note
+If a Ray ID does not appear in Security Events, this does not necessarily mean that Cloudflare did not act on the request. Sampling may omit the event from the results.
+:::
+
 ### Observability Logs
 
 [Log Explorer (Legacy)](/observability/logs/log-explorer/) provides access to Cloudflare logs with all the context available within the Cloudflare platform. If your account has the Log Explorer add-on, go to **Observability** > **Logs** in the dashboard and [build a query](/observability/logs/log-explorer/log-search/) that filters for a specific Ray ID to investigate HTTP errors.

@@ -2,7 +2,7 @@
 reviewed: 2026-11-02
 pcx_content_type: how-to
 title: Migrate Astro from Vercel to Cloudflare Workers
-description: Migrate an Astro SSR application from Vercel to Cloudflare Workers. Replace @astrojs/vercel with @astrojs/cloudflare. Includes a prompt for your coding agent.
+description: Swap @astrojs/vercel for @astrojs/cloudflare, upgrade to Astro 7, and replace Vercel ISR with Astro route caching and Vercel images with the Images binding.
 sidebar:
   label: Astro
   order: 1
@@ -49,7 +49,7 @@ Migrate this Astro project from Vercel to Cloudflare Workers (Workers with Stati
    - Delete vercel.json, .vercel/, @vercel/* packages, and Vercel analytics components.
    - Port redirects to the astro config `redirects` option or public/_redirects. Port headers to public/_headers.
    - For crons, add triggers.crons to wrangler.jsonc and create src/worker.ts that exports { fetch: (req, env, ctx) => handle(req, env, ctx), scheduled }, with handle imported from "@astrojs/cloudflare/handler". Set "main" to that file.
-   - A Worker does not cache its own responses based on Cache-Control: s-maxage. Replace Vercel isr and every page that sets s-maxage or stale-while-revalidate with Astro route caching: add `cache: { provider: cacheCloudflare() }` to astro.config (import cacheCloudflare from '@astrojs/cloudflare/cache') and call `Astro.cache.set({ maxAge, swr })` in the route. Tell me about the behavior change.
+   - A Worker does not cache its own responses based on Cache-Control: s-maxage. Replace Vercel isr and every page that sets s-maxage or stale-while-revalidate with Astro route caching: add `cache: { provider: cacheCloudflare() }` to astro.config (`import { cacheCloudflare } from '@astrojs/cloudflare/cache'`, a named export) and call `Astro.cache.set({ maxAge, swr })` in the route. Tell me about the behavior change.
    - If webAnalytics or speedInsights was on, ask me before you create a Cloudflare Web Analytics site. On workers.dev, add the beacon script to every page.
 8. Keep the default imageService 'cloudflare-binding' if <Image> is used on on-demand pages. Use imageService: 'compile' only if every image is on a prerendered page. Do not use sharp at runtime.
 9. Set these scripts: preview="astro build && astro preview", deploy="astro build && wrangler deploy", and cf-typegen="wrangler types". Remove the "generate-types" script that astro add creates.
@@ -151,7 +151,7 @@ These `@astrojs/vercel` options have Cloudflare equivalents:
 | `isr`                           | Astro route caching with `cacheCloudflare()`, or prerendering                                              |
 | `webAnalytics`, `speedInsights` | [Web Analytics](/web-analytics/). On a `workers.dev` URL, add the beacon script to your layout.            |
 
-## Known issues
+## Troubleshooting
 
 - **`astro add` fails with `Cannot find module '@astrojs/vercel'`.** Remove the Vercel import from your Astro configuration before you uninstall the package.
 - **`astro add` or `@astrojs/upgrade` exits without changes.** Both commands prompt for confirmation and exit when no terminal is attached. Pass `--yes` to `astro add`. Install `astro@latest` directly instead of using `@astrojs/upgrade`.

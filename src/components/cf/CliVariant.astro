@@ -1,0 +1,29 @@
+---
+/**
+ * CliVariant — one CLI's version of a passage inside `<CliVariants>`.
+ *
+ * Renders the same `data-nb-cli-variant` panel as `CliPreferenceSwitch`, so
+ * the shared CLI preference script and the pre-paint CSS in `BaseLayout`
+ * show or hide it. `data-cli-variants-item` lets the parent count its own
+ * children without counting variants rendered by nested components.
+ */
+import CliVariantLabel from "../ui/cli-preference/CliVariantLabel.astro";
+import type { CliPreference } from "../ui/cli-preference/cli-preference";
+
+interface Props {
+	cli: CliPreference;
+}
+
+const { cli } = Astro.props;
+
+if (cli !== "wrangler" && cli !== "cf") {
+	throw new Error(
+		`[CliVariant] \`cli\` must be "wrangler" or "cf" (got ${JSON.stringify(cli)}) on "${Astro.url.pathname}".`,
+	);
+}
+---
+
+<div data-nb-cli-variant={cli} data-cli-variants-item={cli}>
+	<CliVariantLabel cli={cli} />
+	<slot />
+</div>

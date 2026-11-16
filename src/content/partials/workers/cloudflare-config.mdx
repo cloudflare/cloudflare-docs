@@ -424,6 +424,7 @@ export default defineConfig({
 			OrderWorkflow: exports.workflow({
 				name: "order-workflow",
 				limits: { steps: 100 },
+				concurrency: { limit: 10 },
 				defaultRetention: {
 					successRetention: "3 days",
 					errorRetention: "7 days",
@@ -438,8 +439,11 @@ The builders describe exported code. They do not create JavaScript exports. The
 entrypoint must still export `Admin`, `Counter`, and `OrderWorkflow`.
 
 `exports.workflow()` requires a `name`, which must be unique within the account.
-It also accepts `limits.steps`, `concurrency.limit`, `schedules` for cron
-schedules that start instances, `defaultRetention`, and `jurisdiction`.
+It also accepts `limits.steps`, `concurrency.limit` to cap how many instances
+of the Workflow run at the same time (refer to
+[Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits)),
+`schedules` for cron schedules that start instances, `defaultRetention`, and
+`jurisdiction`.
 Retention values accept milliseconds or a duration string, such as `"3 days"`.
 `jurisdiction` restricts where the instances of the Workflow run and store data,
 and cannot be changed after the Workflow is created. Refer to
@@ -709,6 +713,7 @@ configuration:
 | ---------------------------------------------------------------- | ------------- |
 | `cf dev` with the Cloudflare Vite plugin                         | `development` |
 | `cf build`, `cf deploy`, and other commands that build with Vite | `production`  |
+| `vitest` with the Workers Vitest integration                     | `test`        |
 | Commands that build with Wrangler                                | `undefined`   |
 | API commands, such as `cf d1 list`                               | `undefined`   |
 

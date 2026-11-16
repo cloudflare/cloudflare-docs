@@ -13,7 +13,7 @@ import { makeRunReadPatchTool } from "../lib/review/read-patch-r2";
 import { SpecialistResultSchema } from "../lib/review/types";
 import { useBotRole, useInstructions } from "../lib/agents/instructions";
 import { SPECIALIST_DURABILITY } from "../lib/agents/durability";
-import { DEEPSEEK_V4_FLASH } from "../lib/agents/models";
+import { DEEPSEEK_V4_1_FLASH } from "../lib/agents/models";
 import { STYLE_RULE_INSTRUCTIONS } from "../lib/agents/review-rules";
 import { useSubmitResult } from "../lib/agents/submit-result";
 import {
@@ -22,7 +22,7 @@ import {
 } from "../lib/github-repo-tools";
 import { getGitHubToken } from "../lib/token-provider";
 
-const MODEL = DEEPSEEK_V4_FLASH;
+const MODEL = DEEPSEEK_V4_1_FLASH;
 export const STYLE_GUIDE_REVIEW_DATA = "review";
 
 export default function StyleGuideReviewer(_props: AgentProps): string {

@@ -18,7 +18,7 @@ For supported file types, refer to [Supported file types](/ai-search/configurati
 
 ## Indexing
 
-Files uploaded to built-in storage are indexed immediately. External data sources like websites and R2 buckets are indexed on a [sync schedule](/ai-search/configuration/indexing/syncing/).
+Files uploaded to built-in storage are indexed immediately. External data sources like websites, R2 buckets, and D1 databases are indexed on a [sync schedule](/ai-search/configuration/indexing/syncing/).
 
 ## External data sources
 
@@ -26,9 +26,12 @@ An instance can use built-in storage alongside an external data source. The avai
 
 - [Website](/ai-search/configuration/data-source/website/): crawl and index a website that you own
 - [R2 Bucket](/ai-search/configuration/data-source/r2/): index documents stored in a Cloudflare R2 bucket
+- [D1 database](/ai-search/configuration/data-source/d1/): index rows returned by a SQL query against a Cloudflare D1 database
 
 For example, an instance can be backed by a website for shared documentation while also accepting file uploads through the Items API for additional content.
 
+Built-in storage also holds the Markdown content that AI Search extracts from each indexed file in a connected data source. This content counts toward [AI Search storage](/ai-search/platform/limits-pricing/#how-storage-is-measured).
+
 ## Limits and pricing
 
-Storage, vector indexing, Browser Run crawling, and Workers AI embedding and reranking usage are included in AI Search billing. Other usage, such as generation through your AI Gateway, is billed separately. For full details, refer to [Limits and pricing](/ai-search/platform/limits-pricing/).
+Storage, vector indexing, Browser Run crawling, and Workers AI embedding and reranking usage are included in AI Search billing. Storage is billed as AI Search storage rather than on your R2 bill. Other usage, such as generation through your AI Gateway, is billed separately. For full details, refer to [Limits and pricing](/ai-search/platform/limits-pricing/).

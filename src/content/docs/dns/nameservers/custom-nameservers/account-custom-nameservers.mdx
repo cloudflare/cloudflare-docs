@@ -131,6 +131,14 @@ Use the endpoint [Update DNS Settings for a Zone](/api/resources/dns/subresource
 - If your domain uses a different registrar, update the nameservers at your registrar to use the account custom nameservers.
 - If your zone is delegated, update the corresponding `NS` record at the parent zone.
 
+:::note
+If your zone is in **Pending Nameserver Update** status, verify which nameservers to set
+at your registrar from your Cloudflare **activation email**, not the zone **Overview** page
+in the dashboard. The dashboard may display standard account custom nameservers rather than
+a [nameserver set](/dns/nameservers/custom-nameservers/nameserver-sets/) assigned to the zone.
+The activation email always reflects the nameservers currently assigned to the zone.
+:::
+
 ### 3. (Optional) Make ACNS default for new zones
 
 To make ACNS the default option for all new zones added to your account from now on:

@@ -166,9 +166,7 @@ With this setup, production and each Preview use separate Durable Object namespa
 If your code uses an `env` binding, declare the Durable Object binding at the top level for production and again under `previews.durable_objects.bindings` for Previews:
 
 ```ts
-import { getContainer } from "@cloudflare/containers";
-
-const container = getContainer(env.MY_CONTAINER, "tenant-a");
+const container = env.MY_CONTAINER.getByName("tenant-a");
 return container.fetch(request);
 ```
 

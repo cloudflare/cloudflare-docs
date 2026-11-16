@@ -70,6 +70,22 @@ If the build and deployment succeed but requests to your Worker return a `404` o
 
 If this error appears in Workers Builds but `npm ci` works on your machine, your lockfile was probably written by a newer npm version than the build image's default. Workers Builds does not use the `engines.npm` field to choose an npm version. To use the same npm version as your local machine, set the [`packageManager`](/workers/ci-cd/builds/build-image/#package-manager-versions) field in your `package.json` to an exact version, for example `"packageManager": "npm@11.19.1"`. To check your local npm version, run `npm -v`.
 
+### Pull request comment shows "No Preview URL"
+
+A preview build can succeed while the pull request or merge request comment shows **No Preview URL**. This means Workers Builds did not receive a Preview URL from your Preview command. Check the following:
+
+1. **A Preview host is enabled.** Your Worker needs a custom domain enabled for Preview traffic, `workers.dev` Preview URLs, or both. You do not need `workers.dev` if a custom domain is enabled for Previews. To enable a host, refer to [Custom domains](/workers/previews/custom-domains/).
+2. **Your Preview command reports the Preview to Workers Builds.** Workers Builds reads Preview and Deployment URLs from the output of the [Preview command](/workers/ci-cd/builds/configuration/#preview-command). Use one of these commands:
+
+   | Command                  | Minimum version    |
+   | ------------------------ | ------------------ |
+   | `npx wrangler preview`   | Wrangler 4.135.0   |
+   | `npx cf previews deploy` | `cf` 1.0.0-beta.18 |
+
+   Earlier versions of `cf previews deploy` print the Preview URLs in the build log but do not report them to Workers Builds. Update the version in your `package.json`.
+
+To confirm the Preview was created, find its URLs in the build log or in the **Previews** section of your Worker.
+
 ### Git integration issues
 
 If you are running into errors associated with your Git integration, you can try removing access to your [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#removing-access) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#removing-access) integration from Cloudflare, then reinstalling the [GitHub](/workers/ci-cd/builds/git-integration/github-integration/#reinstall-a-git-integration) or [GitLab](/workers/ci-cd/builds/git-integration/gitlab-integration/#reinstall-a-git-integration) integration.

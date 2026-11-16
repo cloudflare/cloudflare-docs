@@ -1,0 +1,100 @@
+---
+title: Harness
+description: A harness is the agent loop around a model. Learn what a harness does, how its brain and hands split across Cloudflare, and which harness to start with.
+pcx_content_type: concept
+sidebar:
+  order: 3
+products:
+  - agents
+---
+
+import { LinkCard } from "~/components";
+
+A harness is a model in a loop. It sends the conversation to the model, runs the tools the model asks for, feeds the results back, and repeats until the model is done. Everything that makes an agent more than a single model call lives in the harness, or is reached through it.
+
+On Cloudflare, the harness is the [capability](/agents/runtime/capabilities/) that runs the agent loop inside a [Durable Agent](/agents/getting-started/quick-start/). It is the unit of compute for an agent, and the Agents SDK exists to make harnesses run well on Cloudflare.
+
+## What a harness does
+
+A harness usually provides:
+
+- **The loop.** It calls the model, runs tool calls, handles their results, and decides whether to continue or stop.
+- **Memory.** It stores the session, every message, tool call, and result, so the next turn has the context of the last one. Many harnesses also keep notes the model reads on every turn, such as facts about the user.
+- **Tools.** It gives the model a set of tools, and runs them when the model asks.
+- **Skills.** It loads instructions and resources on demand, so the model only reads them when a task needs them.
+- **Extensions.** It has a way to customize the loop, such as adding tools, system prompt sections, or hooks, without forking the harness.
+- **Durable work.** It schedules work that has to finish, such as a run cut off by an eviction or a deploy, or a follow-up that is due later. The [Lifecycle](/agents/runtime/lifecycle/) job queue wakes the Durable Object, and the harness picks up where it stopped.
+- **Input and output.** It has an API to send prompts in and get answers, events, and the transcript out.
+
+## The brain and the hands
+
+An agent has two halves. Anthropic calls them the brain and the hands, in [Scaling Managed Agents](https://www.anthropic.com/engineering/managed-agents):
+
+- **The brain** is the loop and its memory. The loop decides what to do next. The memory is everything it decides from: the session, and any notes it keeps.
+- **The hands** are the tools: a file system, a shell, a browser, an MCP server, or an API.
+
+The loop and the memory belong together, because every turn reads and extends the memory. They do not have to run in the same place. A stateless loop can load its memory from storage at the start of a turn and write it back at the end.
+
+On Cloudflare, a [Durable Object](/durable-objects/) makes it easy to keep them together. The loop runs in the object, and the memory lives in the same object's SQLite database, so a turn reads its memory without a network call, and both survive eviction together. The hands attach to the object as tools, and run wherever the work needs to.
+
+### A workspace spans several parts of the platform
+
+The hands are often more than one thing. A [workspace](/agents/tools/filesystem/) from Cloudflare Computer is a good example. To the harness it is one set of tools, such as `read`, `write`, `edit`, and `exec`. Underneath, it uses three parts of the platform:
+
+- **Durable Objects** hold the files. A `Workspace` stores every file in the same SQLite database as the session, so files survive eviction the same way the transcript does.
+- **Workers** run code. The JavaScript backend runs each `exec` call in a new [Dynamic Worker](/dynamic-workers/), which can read and write the workspace files but not the agent's bindings or credentials.
+- **Containers** run Linux. When a task needs a shell or native binaries, a [sandbox](/agents/tools/sandbox/) attaches a [Container](/containers/) to the object. It starts for a command and stops when the agent goes quiet.
+
+Because each part runs separately, a failure stays small. If a container dies, one tool call fails and the model decides what to do next. The brain is still in the Durable Object.
+
+### When the loop runs in a container
+
+Coding agent CLIs, such as Claude Code and Codex, ship as native binaries. Each one owns its loop, its tools, and its session files, and expects a POSIX file system and a shell. A Durable Object has neither. You could patch a CLI to run without them, but it is a lot of work and the result is slower.
+
+The Agents SDK runs these CLIs in a container instead, with `ContainerHarness`, and keeps the session and the credentials in the Durable Object. Here the loop and the memory are split: the loop runs in the container, and the memory lives in the object. When a container is replaced, the object restores the CLI's session files, and the CLI resumes its session. To run one, refer to [Harnesses](/agents/harnesses/).
+
+The loop itself is not what keeps a CLI out of a Durable Object. Codex's Rust turn loop, for example, compiles to WebAssembly and runs in a Durable Object. What does not come along are the CLI's file and shell tools, which need a real file system.
+
+| Arrangement                 | Loop runs in   | Memory lives in | If the container dies                                                |
+| --------------------------- | -------------- | --------------- | -------------------------------------------------------------------- |
+| Loop in the Durable Object  | Durable Object | Durable Object  | One tool call fails. The run continues.                              |
+| Loop in a container         | Container      | Durable Object  | The turn fails, or reruns if you turn on retry. The session resumes. |
+| Everything in one container | Container      | Container       | The session and the run are lost.                                    |
+
+Keep the loop in the Durable Object when you can. Run the loop in a container when you want a specific CLI agent with its own tools, plugins, and settings.
+
+## One API across harnesses
+
+The harnesses in the Agents SDK take work in the same way. You send a prompt and either wait for the answer, or hand it off and let the harness finish in the background, in any session. The Agents SDK keeps this input the same across harnesses, so you can switch harnesses without changing how your app talks to the agent. What comes back, such as events and the transcript format, is still specific to each harness.
+
+## Choose a harness
+
+**Start with [Pi](/agents/harnesses/pi/).** The Pi harness runs [Pi Durable](https://earendil.com/posts/pi-durable/), and Pi includes most of what an agent needs: sessions and the transcript, a tool registry and [extensions](/agents/harnesses/pi/extensions/), skills, an event stream for clients, and recovery after an eviction, with replay rules for each tool.
+
+To compare Pi with Think, OpenCode, Claude Code, Codex, and the other harnesses by where they run and how they recover, refer to [Compare harnesses](/agents/harnesses/#compare-harnesses).
+
+## The harness and the runtime
+
+The harness answers "what does this agent do on each turn?" The [runtime](/agents/runtime/) answers "where does this agent live and how does it stay durable?" [Routing](/agents/runtime/routing/) sends each request to the right Durable Object, the Lifecycle starts the harness and the other capabilities, and [observability](/agents/runtime/observability/) traces what happened.
+
+With a harness, the parts of the runtime you work with directly are usually routing, [`WebSockets`](/agents/runtime/capabilities/websockets/), and observability. For more information, refer to [If you use a harness](/agents/runtime/#if-you-use-a-harness).
+
+## Related resources
+
+<LinkCard
+	title="Build your first Durable Agent"
+	href="/agents/getting-started/quick-start/"
+	description="Run the Pi harness in a Durable Object, give it a workspace, and connect over WebSockets."
+/>
+
+<LinkCard
+	title="Harnesses"
+	href="/agents/harnesses/"
+	description="Compare harnesses by where they run, how they recover, and how they reach files."
+/>
+
+<LinkCard
+	title="Scaling Managed Agents"
+	href="https://www.anthropic.com/engineering/managed-agents"
+	description="Anthropic's write-up on decoupling the brain from the hands."
+/>

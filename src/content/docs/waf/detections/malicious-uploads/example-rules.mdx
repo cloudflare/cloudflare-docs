@@ -42,6 +42,14 @@ This custom rule example blocks requests addressed at `/upload.php` that contain
 
 - **Action:** _Block_
 
+## Block requests with content that could not be scanned
+
+This custom rule example blocks requests whose content Cloudflare could not scan:
+
+- **When incoming requests match:**<br/>
+  `(cf.waf.content_scan.has_failed)`
+- **Action:** _Block_
+
 ## Block requests with non-PDF file uploads
 
 This custom rule example blocks requests addressed at `/upload` with uploaded content objects that are not PDF files:
