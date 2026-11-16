@@ -52,6 +52,37 @@ const linesToRemove = [
 	"For Consumer documentation please see: <https://developers.cloudflare.com/warp-client>",
 ];
 
+// Linux releases can also ship a headless package (`cloudflare-mesh`). Its size
+// per platform comes from the package-specific feed and is recorded in the
+// release file the default feed created.
+async function addHeadlessPackageSizes(platform, track) {
+	const data = await fetch(
+		`${BASE_URL}/update/json/${platform}/${track}?package_id=headless`,
+	).then((res) => res.json());
+
+	for (const item of data.items ?? []) {
+		if (item.packageId !== "headless") continue;
+
+		const path = `./src/content/warp-releases/linux/${track}/${item.version}.yaml`;
+		if (!fs.existsSync(path)) continue;
+
+		const release = YAML.parse(fs.readFileSync(path, "utf-8"));
+		release.linuxHeadlessPlatforms ??= {};
+		if (release.linuxHeadlessPlatforms[platform]) continue;
+
+		console.log(
+			`Adding headless ${platform} to Linux ${track} ${item.version}.`,
+		);
+		release.linuxHeadlessPlatforms[platform] = item.packageSize;
+
+		fs.writeFileSync(
+			path,
+			YAML.stringify(release, { blockQuote: "literal" }),
+			"utf-8",
+		);
+	}
+}
+
 for (const { platform, display_name } of platforms) {
 	const isLinux = linuxDistributions.some((dist) =>
 		display_name.includes(dist),
@@ -186,6 +217,10 @@ for (const { platform, display_name } of platforms) {
 						"utf-8",
 					);
 				});
+			})
+			// After the default feed, so the release files this platform contributes to exist.
+			.then(() => {
+				if (isLinux) return addHeadlessPackageSizes(platform, track);
 			});
 	}
 }

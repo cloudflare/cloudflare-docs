@@ -2,16 +2,21 @@
 {}
 ---
 
-import { TabItem, Tabs } from "~/components";
+import { DashButton, Steps, TabItem, Tabs } from "~/components";
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 To enable Markdown for Agents for your zone in the dashboard:
 
-1. Log into the [Cloudflare dashboard](https://dash.cloudflare.com/) and select your account (you need a Pro or Business plan).
-2. Select the zone you want to configure.
-3. Visit the [AI Crawl Control](https://dash.cloudflare.com/?to=/:account/:zone/ai) section.
-4. Enable **Markdown for Agents**.
+<Steps>
+
+1. In the Cloudflare dashboard, select your zone and go to **Agent Readiness** > **Markdown for Agents**.
+
+   <DashButton url="/?to=/:account/:zone/agent-readiness/markdown-for-agents" />
+
+2. Turn on **Serve Markdown to AI agents**. You need permission to edit zone settings and a [supported plan](/fundamentals/reference/markdown-for-agents/#availability-and-pricing).
+
+</Steps>
 
 ### Enable for specific subdomains or paths
 

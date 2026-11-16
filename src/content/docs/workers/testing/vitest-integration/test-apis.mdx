@@ -135,7 +135,8 @@ The Workers Vitest integration provides runtime helpers for writing tests. Some 
         {
           id: "message-1",
           timestamp: new Date(1000),
-          body: "body-1"
+          body: "body-1",
+          attempts: 1
         }
       ]);
       const ctx = createExecutionContext();
@@ -460,7 +461,7 @@ Available in `@cloudflare/vitest-plugin` version **1.0.0** and later.
           await env.MY_WORKFLOW.create();
 
           // 3. ASSERTION
-          const instances = introspector.get();
+          const instances = await introspector.get();
           for(const instance of instances) {
             await expect(instance.waitForStatus("complete")).resolves.not.toThrow();
             const output = await instance.getOutput();
@@ -552,7 +553,7 @@ Available in `@cloudflare/vitest-plugin` version **1.0.0** and later.
             expect(error.name).toEqual("Error");
             expect(error.message).toContain("Execution timed out");
 
-          } catch {
+          } finally {
             // 4. DISPOSE
             await instance.dispose();
           }

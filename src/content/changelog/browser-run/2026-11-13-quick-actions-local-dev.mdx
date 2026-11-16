@@ -1,0 +1,20 @@
+---
+title: Browser Run Quick Actions now work in local development
+description: The browser binding's .quickAction() method now runs against a local Chrome under wrangler dev, so you no longer need remote mode to test your Quick Actions.
+products:
+  - browser-run
+date: 2026-11-13T18:00:00Z
+---
+
+You can now test [Browser Run Quick Actions](/browser-run/quick-actions/) locally. Under `npx wrangler dev`, the browser binding's `.quickAction()` method runs against a Chrome instance on your machine. Before, `.quickAction()` worked only in remote mode, and local calls failed with `The RPC receiver does not implement the method "quickAction"`.
+
+:::note
+
+There are currently two limitations in the local simulation:
+
+- The `json` action is emulated. It requires an AI model to extract data, and the model is not available locally, so the action returns placeholder data that matches your schema.
+- The [Kitesurf](/browser-run/kitesurf/) browser is not supported yet.
+
+:::
+
+For details, refer to [Test Quick Actions locally](/browser-run/quick-actions/#test-quick-actions-locally).

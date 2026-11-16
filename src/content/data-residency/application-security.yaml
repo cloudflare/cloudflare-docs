@@ -19,6 +19,8 @@ entries:
         status: unassessed
       cmb:
         status: supported
+        impact:
+          - "Email and webhook notifications for DDoS and WAF events may not fire reliably when Customer Metadata Boundary is set to `eu`. This behavior is intermittent and under investigation. If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism."
       gkm:
         status: supported
   - product: API Shield
@@ -123,6 +125,8 @@ entries:
         status: unassessed
       cmb:
         status: supported
+        impact:
+          - "Email and webhook notifications for DDoS and WAF events may not fire reliably when Customer Metadata Boundary is set to `eu`. This behavior is intermittent and under investigation. If timely alerts are critical, use [Logpush](/logs/logpush/) as a complementary monitoring mechanism."
       gkm:
         status: supported
   - product: DMARC Management

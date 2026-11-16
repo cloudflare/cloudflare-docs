@@ -67,21 +67,21 @@ For inline images and file uploads, refer to [Email attachments](/email-service/
 
 ## Custom headers
 
-Set custom headers for threading, list management, or tracking. Refer to the [email headers reference](/email-service/reference/headers/) for the full list of allowed headers.
+Set custom headers for threading or tracking. Refer to the [email headers reference](/email-service/reference/headers/) for the full list of allowed headers.
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/email/sending/send" \
   --header "Authorization: Bearer <API_TOKEN>" \
   --header "Content-Type: application/json" \
   --data '{
-    "to": "user@example.com",
-    "from": "notifications@yourdomain.com",
-    "subject": "Your weekly digest",
-    "html": "<h1>Weekly Digest</h1>",
+    "to": "customer@example.com",
+    "from": "support@yourdomain.com",
+    "subject": "Re: Support request #12345",
+    "html": "<p>Your support request has been updated.</p>",
     "headers": {
-      "List-Unsubscribe": "<https://yourdomain.com/unsubscribe?id=abc123>",
-      "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
-      "X-Campaign-ID": "weekly-digest-2026-03"
+      "In-Reply-To": "<original-message-id@yourdomain.com>",
+      "References": "<original-message-id@yourdomain.com>",
+      "X-Case-ID": "12345"
     }
   }'
 ```

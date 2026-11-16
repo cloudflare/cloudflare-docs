@@ -169,3 +169,23 @@ Since no host is 64 characters or fewer, Cloudflare Branding is required. Please
 To solve this, you can set `cloudflare_branding` to `true` when [creating your custom hostnames](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/create-custom-hostnames/#hostnames-over-64-characters) via API.
 
 Cloudflare branding means that `sni.cloudflaressl.com` will be added as the certificate Common Name (CN) and the long hostname will be included as a part of the Subject Alternative Name (SAN).
+
+---
+
+## TLS handshake failure for clients without SNI
+
+Clients that omit the `server_name` extension from their TLS `ClientHello` — typically legacy embedded devices or very old operating systems — receive a TLS handshake failure (alert 40) when connecting to a custom hostname. Without SNI, the edge cannot determine which certificate to serve, and the connection fails before any HTTP traffic is exchanged.
+
+SNI is required for custom hostnames. There is no configuration within Cloudflare for SaaS that enables non-SNI clients to connect to arbitrary custom hostnames (for example, `shop.example.com`). The only reliable fix is to upgrade the affected devices to a TLS stack that supports SNI.
+
+### Alternative architecture for non-SNI clients
+
+If upgrading affected devices is not possible, an alternative architecture combining [Spectrum](/spectrum/) and [BYOIP](/byoip/) can allow non-SNI clients to reach custom hostnames — but it does not use Cloudflare for SaaS.
+
+In this model:
+
+- Each custom hostname is assigned a dedicated IP via BYOIP (requires ownership of at least a /24 prefix, with one IP allocated per tenant), so the destination IP itself identifies the tenant instead of SNI.
+- Spectrum routes the connection at Layer 4 by IP:port without terminating TLS.
+- TLS is handled entirely at the origin, which is responsible for selecting the correct certificate per hostname.
+
+This approach requires Spectrum and BYOIP add-ons and is a significant architectural change. Contact your account team to evaluate this option.

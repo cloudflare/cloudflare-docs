@@ -3,7 +3,7 @@ import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
 ---
 
 <RealtimeDiagramFrame
-	ariaLabel="Meeting participants and the agent share a RealtimeKit meeting. The agent joins as a participant. Through the Agent Participant WebSocket, your Worker or Durable Object receives transcripts, participant presence, and broadcasts. Sending chat and broadcasts back is planned."
+	ariaLabel="Meeting participants and the agent share a RealtimeKit meeting. The agent joins as a participant. Through the Agent Participant WebSocket, your Worker or Durable Object receives transcripts, participant presence, chat, polls, and broadcasts, and sends chat, polls, and broadcasts back. Streaming audio is planned."
 	className="rt-agent-caps"
 >
 	<div class="rtac-desktop">
@@ -30,12 +30,12 @@ import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
 		<div class="rtac-links">
 			<div class="rt-diagram__connector rtac-listen">
 				<span class="rt-diagram__connector-label">
-					Listen: transcripts, presence, broadcasts
+					Listen: transcripts, presence, chat, polls, broadcasts
 				</span>
 			</div>
-			<div class="rt-diagram__connector rt-diagram__connector--left rt-diagram__connector--dashed rtac-send">
+			<div class="rt-diagram__connector rt-diagram__connector--left rtac-send">
 				<span class="rt-diagram__connector-label">
-					Send: chat, broadcasts, stream audio (future-scope)
+					Send: chat, polls, broadcasts
 				</span>
 			</div>
 		</div>
@@ -65,7 +65,7 @@ import RealtimeDiagramFrame from "../sfu/RealtimeDiagramFrame.astro";
 		</div>
 		<div class="rt-diagram__mobile-route">
 			<span>Worker or Durable Object</span>
-			<small>Send (planned) →</small>
+			<small>Send →</small>
 			<span>Agent Participant</span>
 		</div>
 	</div>

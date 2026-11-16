@@ -16,9 +16,24 @@ Cloudflare provides an unlimited number of scripts for Workers for Platforms cus
 
 ## `cf` object
 
-The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) contains Cloudflare-specific properties of a request. This field is not accessible in [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) by default because some fields in this object are sensitive and can be used to manipulate Cloudflare features (for example, `cacheKey`, `resolveOverride`, `scrapeShield`.)
+The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfproperties) contains Cloudflare-specific properties of a request. This field is not accessible in [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers) by default because some fields in this object are sensitive and can be used to manipulate Cloudflare features (for example, `cacheKey`, `resolveOverride`, `scrapeShield`).
 
-To access the `cf` object, you need to enable [trusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
+In the default [untrusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#untrusted-mode-default), this also applies to outgoing requests. Any `cf` properties a user Worker sets on a `fetch()` subrequest are ignored, and the subrequest uses the default cache behavior for its URL.
+
+This includes the standard [`cache` option](/workers/examples/cache-using-fetch/#using-the-http-cache-api) of `fetch()` and `Request`. Workers implement `cache: 'no-store'` and `cache: 'no-cache'` as `cf` cache settings, so in untrusted mode they do not change how the subrequest is cached:
+
+```js
+// In a user Worker in an untrusted dispatch namespace:
+await fetch("https://example.com/file.bin", { method: "HEAD", cache: "no-store" });
+// The cache is not bypassed. Because .bin is a default cached file extension,
+// the request goes through the cache and reaches the origin as a GET.
+```
+
+The Cache-Control: no-cache and Pragma: no-cache request headers that these options add are still sent to the origin, but they do not affect whether Cloudflare's cache handles the request.
+When a subrequest goes through the cache, HEAD requests can be sent to the origin as GET and the Range header can be removed. Refer to HEAD requests (/cache/concepts/cache-behavior/#interaction-of-head-requests-with-cache) and Range requests (/cache/reference/range-requests/).
+To use cf properties or the cache option in user Workers, either:
+- Enable trusted mode (/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
+- Set the cache options in an Outbound Worker (/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), which runs as your platform's Worker rather than the user Worker.
 
 ## Durable Object namespace limits
 

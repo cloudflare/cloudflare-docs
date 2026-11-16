@@ -101,7 +101,7 @@ If your gateway is not behind Access, pass your own user identifier as [custom m
 When a spend limit is exceeded, AI Gateway returns a `429 Too Many Requests` response. You have two options:
 
 - **Block requests** (default) - The request is rejected until the budget window resets.
-- **Fall back to a cheaper model** - Create a [Dynamic Route](/ai-gateway/features/dynamic-routing/) with a primary model and a fallback (for example, `anthropic/claude-opus-4.7` with a fallback to `@cf/moonshotai/kimi-k2.6`). Then set a spend limit on the primary model using this feature. When the primary model's budget is exceeded, AI Gateway automatically routes requests to the fallback model instead of blocking them.
+- **Fall back to a cheaper model** - Create a [dynamic route](/ai-gateway/features/routing/dynamic-routing/) with a primary model and a fallback (for example, `anthropic/claude-opus-4.7` with a fallback to `@cf/moonshotai/kimi-k2.6`). Then set a spend limit on the primary model using this feature. When the primary model's budget is exceeded, AI Gateway automatically routes requests to the fallback model instead of blocking them.
 
 ## Monitoring spend
 

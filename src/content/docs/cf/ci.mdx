@@ -205,7 +205,15 @@ credentials and has no `--dry-run` option.
 The preview name defaults to the current branch. In GitHub Actions, `cf` reads
 `GITHUB_HEAD_REF` or `GITHUB_REF_NAME`. In GitLab CI/CD, it reads
 `CI_COMMIT_REF_NAME`. Otherwise, it uses the current Git branch. On a detached
-checkout without these variables, pass the preview name as an argument. For
+checkout without these variables, pass `--preview-name`:
+
+<PackageManagers
+	type="exec"
+	pkg="cf"
+	args="previews deploy --preview-name my-feature"
+/>
+
+You can also use `--preview-name` to override the detected branch name. For
 the output and options, refer to [Deploy a preview](/cf/projects/#deploy-a-preview).
 
 ## Turn off telemetry

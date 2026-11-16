@@ -5,6 +5,7 @@ import {
 	docsCollection,
 	partialsCollection,
 } from "@cloudflare/nimbus-docs/content";
+import { duplicateUpdateAnchors } from "~/util/changelog-updates";
 import { warpReleasesSchema } from "~/schemas/warp-releases";
 import { compatibilityFlagsSchema } from "~/schemas/compatibility-flags";
 import { fieldsSchema } from "~/schemas/fields";
@@ -193,6 +194,26 @@ export const collections = {
 			products: z.array(reference("directory")).default([]),
 			// Hidden entries are excluded from /changelog/ and the RSS feeds.
 			hidden: z.boolean().default(false),
+			// Material changes made after publishing (for example, rules added to
+			// a WAF release). Each entry is listed on the post and emitted as its
+			// own RSS item with a distinct GUID, so feed subscribers are notified.
+			// The GUID comes from the date, so dates must differ to the minute.
+			updates: z
+				.array(
+					z.object({
+						date: z.coerce.date(),
+						summary: z.string().min(1),
+					}),
+				)
+				.superRefine((updates, ctx) => {
+					for (const anchor of duplicateUpdateAnchors(updates)) {
+						ctx.addIssue({
+							code: "custom",
+							message: `More than one update has the same date and time (${anchor}). Give each update a distinct time, for example \`2026-10-21T12:34:00Z\`, so each one reaches RSS subscribers.`,
+						});
+					}
+				})
+				.default([]),
 		}),
 	}),
 	// CF product directory — product metadata + group membership. Id is the
