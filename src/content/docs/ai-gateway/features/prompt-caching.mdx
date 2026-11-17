@@ -26,14 +26,14 @@ AI Gateway reads these OpenAI fields when it converts a request for an Anthropic
 
 | Field                       | Valid values                     | Effect on Anthropic models                                                        |
 | --------------------------- | -------------------------------- | --------------------------------------------------------------------------------- |
-| `prompt_cache_options.mode` | `implicit`, `explicit`           | Controls whether AI Gateway adds its own breakpoint. Refer to the next table.     |
+| `prompt_cache_options.mode` | `implicit`, `explicit`           | Controls whether AI Gateway adds its own breakpoints. Refer to the next table.    |
 | `prompt_cache_options.ttl`  | `30m`, `12h`                     | Sets the lifetime of every breakpoint. Without a value, Anthropic uses 5 minutes. |
 | `prompt_cache_breakpoint`   | An object with an optional `ttl` | Adds a breakpoint on the text part or tool that carries it.                       |
 | `prompt_cache_key`          | A string                         | Shows that later requests reuse the prefix.                                       |
 
-The `mode` value controls the breakpoint that AI Gateway adds at the end of the prompt:
+The `mode` value controls the [breakpoints that AI Gateway adds](#breakpoints-that-ai-gateway-adds):
 
-| `mode`     | Breakpoint from AI Gateway                                                                             |
+| `mode`     | Breakpoints from AI Gateway                                                                            |
 | ---------- | ------------------------------------------------------------------------------------------------------ |
 | `implicit` | Added on every request.                                                                                |
 | `explicit` | Never added. Only the parts with `prompt_cache_breakpoint` get a breakpoint.                           |
@@ -73,6 +73,15 @@ To send the request to OpenAI, change `model` to an OpenAI model, such as `opena
 
 Put content that does not change at the start of the request. This includes instructions and tool definitions. Put content that changes at the end.
 
+### Breakpoints that AI Gateway adds
+
+When AI Gateway adds its own breakpoints to a request, it adds two:
+
+- **End of the system prompt.** Anthropic caches tools first, then the system prompt. This cache entry holds both. It still matches when later messages change, for example when an agent rewrites its conversation summary.
+- **End of the prompt.** This cache entry holds the conversation so far.
+
+AI Gateway does not add the system prompt breakpoint when the system prompt is empty. It also does not add it when a tool or the system prompt already has a breakpoint from you. AI Gateway does not add the end breakpoint when the last part already has one.
+
 :::note
 Anthropic does not cache a prompt that is shorter than the minimum length for the model. The request still succeeds. For the minimum lengths, refer to [Prompt caching](https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching) in the Anthropic documentation.
 :::
@@ -92,15 +101,16 @@ OpenAI accepts different `ttl` values on Chat Completions and on Responses. For 
 
 ## Requests without a mode
 
-When a request does not set `prompt_cache_options.mode`, AI Gateway adds a breakpoint only if the request shows reuse. A request shows reuse when it has one of these signals:
+When a request does not set `prompt_cache_options.mode`, AI Gateway adds breakpoints only if the request shows reuse. A request shows reuse when it has one of these signals:
 
 - A `prompt_cache_key` field
-- A `cf-aig-session-id` header
+- A `cf-aig-session-id` or `x-session-affinity` header
+- A session header from an agent tool, such as OpenCode, OpenAI Codex, or LiteLLM
 - An earlier assistant message or tool result
 
-For more information about the session header, refer to [Session affinity](/ai-gateway/features/routing/auto-router/#session-affinity).
+For more information about `cf-aig-session-id`, refer to [Session affinity](/ai-gateway/features/routing/auto-router/#session-affinity).
 
-A first request with no signal gets no breakpoint. Anthropic charges extra to write a cache entry. Without a signal, no later request is likely to read the entry.
+A first request with no signal gets no breakpoints. Anthropic charges extra to write a cache entry. Without a signal, no later request is likely to read the entry.
 
 ## Place breakpoints yourself
 
@@ -135,7 +145,7 @@ To use only your own breakpoints, also set `prompt_cache_options.mode` to `expli
 
 These limits apply to breakpoints:
 
-- Anthropic accepts up to four breakpoints in a request. AI Gateway removes extra breakpoints, starting with the oldest message.
+- Anthropic accepts up to four breakpoints in a request, including the breakpoints that AI Gateway adds. AI Gateway removes extra breakpoints, starting with the oldest message.
 - Images, files, and audio cannot carry a breakpoint. AI Gateway ignores a breakpoint on these parts.
 - Anthropic requires 1-hour breakpoints before 5-minute breakpoints. AI Gateway shortens a 1-hour breakpoint that comes later.
 
@@ -149,9 +159,11 @@ To use Anthropic prompt caching with no conversion, use the `/ai/v1/messages` en
 
 ## Workers AI models
 
-Workers AI uses prefix caching, which is related to prompt caching but works differently. Workers AI caches prefixes automatically for supported models. It does not use breakpoints, so the OpenAI prompt caching fields do not control it.
+Workers AI uses prefix caching, which is related to prompt caching but works differently. Workers AI caches prefixes automatically for supported models. It does not use breakpoints. Workers AI ignores the OpenAI prompt caching fields, so you can send the same request body to Workers AI models.
 
 To increase cache hits, send the `x-session-affinity` header with a session ID. Workers AI then routes requests in the same session to the same model instance. AI Gateway passes this header to Workers AI. The `cf-aig-session-id` header does not set Workers AI session affinity.
+
+Workers AI reports cached tokens in `usage.prompt_tokens_details.cached_tokens`.
 
 For supported models, cached token pricing, and examples, refer to [Prompt caching](/workers-ai/features/prompt-caching/) in the Workers AI documentation.
 
