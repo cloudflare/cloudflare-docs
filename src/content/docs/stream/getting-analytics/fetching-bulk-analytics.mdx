@@ -35,6 +35,21 @@ Dotted field paths indicate nested selections: `sum.minutesViewed` means `sum { 
 
 To find current fields and filter operators, [explore the GraphQL schema](/analytics/graphql-api/getting-started/explore-graphql-schema/) using introspection. The following is a summary with explanations of useful fields.
 
+## Time grouping
+
+In addition to all the fields listed by dataset below, all five datasets on this page include these time grouping and filter dimensions:
+
+| Field                    | Description                                                                  |
+| ------------------------ | ---------------------------------------------------------------------------- |
+| `date`                   | Observation or event date, at day granularity                                 |
+| `datetime`               | Observation or event timestamp, without truncation                            |
+| `datetimeMinute`         | Timestamp truncated to the start of the minute                               |
+| `datetimeFiveMinutes`    | Timestamp truncated to the start of the five-minute interval                  |
+| `datetimeFifteenMinutes` | Timestamp truncated to the start of the 15-minute interval                    |
+| `datetimeHour`           | Timestamp truncated to the start of the hour                                 |
+
+These fields can be used to aggregate a bucket interval when combined with other dataset-specific dimensions and `filter` options below.
+
 ## Video delivered via HLS/DASH and WebRTC
 
 Stream collects minutes of video delivered for live and on-demand video. These data include minutes delivered via HLS/DASH and WebRTC (WHEP), regardless of your player. This is a [billable metric](/stream/pricing/), but GraphQL data are sampled so it may not precisely match billable usage reported on invoices.
@@ -47,11 +62,12 @@ The dataset supports these filters and grouping dimensions:
 
 | Field                    | Description                                                                                  |
 | ------------------------ | -------------------------------------------------------------------------------------------- |
-| `date`                   | Date                                                                                         |
-| `datetime`               | Date and time                                                                                |
 | `uid`                    | Video ID (for HLS/DASH) or Input ID (for WebRTC/WHEP)                                        |
 | `clientCountryName`      | ISO 3166-1 alpha-2 country code for the viewer                                               |
 | `creator`                | [Creator ID](/stream/manage-video-library/creator-id/) associated with the video, if set     |
+| `mediaType`              | Delivery type: `playback` or `downloads`                                                      |
+
+_Note:_ `playback` includes HLS/DASH and WebRTC/WHEP delivery.
 
 Some filters, like `date`, can be used with operators, such as `gt` (greater than) and `lt` (less than), as shown in the example query below. For more advanced filtering options, refer to [filtering](/analytics/graphql-api/features/filtering/).
 
@@ -157,8 +173,6 @@ You can select and filter these fields:
 
 | Field                    | Description                                        |
 | ------------------------ | -------------------------------------------------- |
-| `date`                   | Date                                               |
-| `datetime`               | Date and time                                      |
 | `eventCode`              | Stored segment event code                          |
 | `inputId`                | Live input ID                                      |
 
@@ -215,8 +229,6 @@ The dataset supports these filters and grouping dimensions:
 | `hlsType`                         | `hls` or `ll-hls`, otherwise blank                                                 |
 | `topBitrate`                      | Highest bitrate rendition                                                          |
 | `playbackRate`                    | Playback rate: `1` for real time, `2` for twice real time, or `0` when not playing |
-| `date`                            | Date                                                                               |
-| `datetime`                        | Date and time                                                                      |
 
 ### Metrics
 
@@ -257,8 +269,6 @@ Select percentile fields under `quantiles`. All durations are in milliseconds, a
 
 Use these datasets to inspect WebRTC-HTTP Ingestion Protocol (WHIP) ingest and WebRTC-HTTP Egress Protocol (WHEP) playback quality. For delivery and billing metrics, query [minutes delivered](/stream/getting-analytics/fetching-bulk-analytics/#video-delivered-via-hlsdash-and-webrtc).
 
-Both grouped datasets support time-based grouping through `datetime`, `datetimeMinute`, `datetimeFiveMinutes`, `datetimeFifteenMinutes`, and `datetimeHour`. The interval fields group observations by timestamps truncated to the start of each interval.
-
 ### WHIP ingest metrics
 
 Use `streamWHIPBroadcastMetricsAdaptive` for raw observations and `streamWHIPBroadcastMetricsAdaptiveGroups` for aggregates.
@@ -293,8 +303,6 @@ Stream collects WHIP observations every 15 seconds. They can take two to three m
 
 | Field                    | Description                                        |
 | ------------------------ | -------------------------------------------------- |
-| `date`                   | Date                                               |
-| `datetime`               | Date and time                                      |
 | `sampleInterval`         | Adaptive sampling interval                         |
 | `inputId`                | Live input ID                                      |
 | `peerConnectionState`    | Peer connection state                              |
@@ -333,8 +341,6 @@ The dataset supports these filters and grouping dimensions:
 
 | Field                    | Description                                                     |
 | ------------------------ | --------------------------------------------------------------- |
-| `date`                   | Observation date                                                |
-| `datetime`               | Observation date and time                                       |
 | `sampleInterval`         | Adaptive sampling interval, not the observation duration        |
 | `inputId`                | Live input ID                                                   |
 | `peerConnectionState`    | WebRTC peer connection state                                    |
