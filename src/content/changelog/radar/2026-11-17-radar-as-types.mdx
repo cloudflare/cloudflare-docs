@@ -57,6 +57,7 @@ For example, to get the share of HTTP requests by AS type in the last week:
 	path="/radar/http/summary/{dimension}"
 	method="GET"
 	parameters={{ dimension: "AS_CATEGORY", dateRange: "7d" }}
+	roles={false}
 />
 
 Visit an [AS page](https://radar.cloudflare.com/as7922) on Cloudflare Radar to see its type, or read the [AS type definitions](/radar/glossary/#autonomous-system-types).
