@@ -6,9 +6,11 @@
  *
  * CF source: cloudflare-docs/src/pages/[...changelog].xml.ts
  *
- * Faithful port with one adaptation to this app's conventions:
+ * Faithful port with two adaptations to this app's conventions:
  *   - Site origin comes from `virtual:nimbus/config` (`config.site`) — the
  *     same source the llms.txt routes use — rather than `context.site`.
+ *   - Not in upstream: entries with `deprecated: true` get a " (Deprecated)"
+ *     suffix on their RSS item title.
  */
 import rss from "@astrojs/rss";
 import { getCollection, getEntry } from "astro:content";
@@ -101,6 +103,7 @@ export const GET: APIRoute = async (context) => {
 					date: entry.publish_date,
 					description,
 					title,
+					deprecated: entry.deprecated,
 				};
 			});
 		}),
@@ -122,7 +125,7 @@ export const GET: APIRoute = async (context) => {
 		trailingSlash: false,
 		items: entries.map((entry) => {
 			return {
-				title: `${entry.product} - ${entry.title ?? entry.date}`,
+				title: `${entry.product} - ${entry.title ?? entry.date}${entry.deprecated ? " (Deprecated)" : ""}`,
 				description: absolutizeUrls(renderMarkdown(entry.description ?? "")),
 				pubDate: new Date(entry.date),
 				link: entry.link,
