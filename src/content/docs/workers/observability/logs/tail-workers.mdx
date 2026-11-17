@@ -114,6 +114,48 @@ Workers added to the `tail_consumers` array must have a `tail()` handler defined
 
 :::
 
+## Read tail consumer configuration
+
+To read the tail consumer configuration of a deployed Worker, call the [Get Worker Script Settings](/api/resources/workers/subresources/scripts/subresources/settings/methods/get/) endpoint with an API token that has the [Workers Scripts Read](/workers/authorization/workers/) permission:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/workers/scripts/{script_name}/script-settings"
+```
+
+The response contains a `tail_consumers` array. Each entry contains:
+
+- `service` — The name of the consumer Worker.
+- `environment` — The environment of the consumer Worker, when it uses one.
+- `namespace` — The dispatch namespace of the consumer Worker, when it belongs to one.
+
+An omitted `tail_consumers` field, a `null` value, and an empty array all mean the same thing: the Worker has no tail consumers configured.
+
+### Streaming tail consumers
+
+Streaming tail consumers are configured separately from `tail_consumers`. Add a `streaming_tail_consumers` array to the [Wrangler configuration file](/workers/wrangler/configuration/) of the producer Worker:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"streaming_tail_consumers": [
+		{
+			"service": "<STREAMING_TAIL_WORKER_NAME>"
+		}
+	]
+}
+```
+
+</WranglerConfig>
+
+The consumer Worker must export a `tailStream()` handler, which receives events while the producer Worker runs. A `tail()` handler only receives batched events after the producer Worker finishes.
+
+Wrangler writes streaming tail consumers when you deploy. The public API schema for the settings read does not document a streaming tail consumers field. The documented `tail_consumers` field is not described as including streaming tail consumers, and no documented read returns them. The response also cannot confirm that a Worker has no streaming tail consumers, because an omitted streaming field is not a documented empty state. Treat the Wrangler configuration deployed with the Worker as the authoritative record of its streaming tail consumers.
+
+To preview the tail consumers that a deploy would configure, including streaming tail consumers, run `npx wrangler deploy --dry-run`. This prints the tail consumers from your configuration without deploying or changing any settings.
+
+No `wrangler` command fetches script settings. `wrangler tail` streams live tail events to your terminal and does not read the configured tail consumers.
+
 ## Use Analytics Engine for aggregated metrics
 
 If you need aggregated analytics rather than individual log events, consider writing to [Workers Analytics Engine](/analytics/analytics-engine/) from your Tail Worker. Analytics Engine is optimized for high-cardinality, time-series data that you can query with SQL.

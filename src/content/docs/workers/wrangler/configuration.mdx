@@ -253,6 +253,8 @@ Non-inheritable keys are configurable at the top-level, but cannot be inherited 
   - A list of Workflows that your Worker should be bound to. Refer to [Workflows](#workflows).
 - `tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
   - A list of the Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
+- `streaming_tail_consumers` <Type text="object" /> <MetaInfo text="optional" />
+  - A list of the streaming Tail Workers your Worker sends data to. Refer to [Tail Workers](/workers/observability/logs/tail-workers/).
 - `secrets` <Type text="object" /> <MetaInfo text="optional" />
   - Declares the secret names your Worker requires. Used for validation during local development and deploy, and as the source of truth for type generation. Refer to [Secrets](#secrets).
   - `required` <Type text="string[]" /> <MetaInfo text="optional" /> — A list of secret names that must be set to deploy your Worker.
