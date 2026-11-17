@@ -100,7 +100,7 @@ Turn on file summaries in the dashboard, or set `indexing_options.file_summary` 
 :::caution[LLM costs are billed to your account]
 File summaries are not part of the AI Search ingestion allotment. AI Search selects a Workers AI text-generation model suited to summarization and calls it through the AI Gateway connected to your instance, or the `default` gateway if none is set. These calls are billed to your account as [Workers AI usage](/workers-ai/platform/pricing/) and appear in your AI Gateway logs, where you can see the model used.
 
-Costs grow with the number of files you index. Each summary uses up to about 24,000 input tokens and about 1,000 output tokens for English text, and some languages use more input tokens. Every new or modified file is summarized, while unchanged files reuse their summary on later syncs. If AI Search changes the summary model, files are summarized again the next time they are processed.
+Costs grow with the number of files you index. AI Search sends a limited sample of each file's text to the model, so the cost of a summary is capped regardless of file size. Every new or modified file is summarized, while unchanged files reuse their summary on later syncs. If AI Search changes the summary model, files are summarized again the next time they are processed.
 :::
 
 File summaries apply to text documents, including converted formats such as PDFs, that produce at least three chunks at your instance's chunk size. A smaller chunk size makes more files eligible and increases cost. Smaller files are indexed without a summary and make no model calls. Images are not summarized.
