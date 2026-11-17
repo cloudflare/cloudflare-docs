@@ -1,6 +1,6 @@
 ---
 title: Cloudflare CLI (cf) 1.0 release candidate
-description: The first release candidate for Cloudflare CLI 1.0 is available. Configuration, Build Output, and the commands that develop and deploy projects are now stable.
+description: The release candidate for Cloudflare CLI 1.0 is available. Configuration, Build Output, and the commands that develop and deploy projects are now stable.
 products:
   - workers
 date: 2026-11-17
@@ -8,7 +8,7 @@ date: 2026-11-17
 
 import { PackageManagers } from "~/components";
 
-Cloudflare CLI (`cf`) `1.0.0-rc.0` is the first release candidate for `cf` 1.0. `cf` has been in beta since late September. This is the release we recommend you try on your own projects, and we want your feedback before 1.0.
+Cloudflare CLI (`cf`) `1.0.0-rc.1` is a release candidate for `cf` 1.0. `cf` has been in beta since late September. This is the release we recommend you try on your own projects, and we want your feedback before 1.0.
 
 To install or update to the latest release:
 
@@ -34,6 +34,8 @@ The release candidate also moves to caret (`^`) version ranges for its dependenc
 - `@cloudflare/vite-plugin` 2.0.0-rc.0 or later, for projects that build with Vite.
 - Wrangler 4.163.0 or later, for legacy projects that build with Wrangler.
 
+`1.0.0-rc.1` renames a few generated API commands without aliases. For example, `cf workers secrets bulk` is now `cf workers secrets bulk-edit`. For the full list, refer to the [release notes](https://github.com/cloudflare/cf/blob/main/packages/cli/CHANGELOG.md).
+
 If you last updated early in the beta, these earlier changes may also affect you:
 
 - Prompts, progress, and status messages are written to stderr. Stdout holds only command output, so scripts that read messages from stdout must read stderr instead.
@@ -44,6 +46,17 @@ If you last updated early in the beta, these earlier changes may also affect you
 - Streaming tail consumers move to `experimental.streamingTailConsumers` in `cloudflare.config.ts`.
 - Destructive commands run without a terminal exit with an error unless you pass `--force`.
 - `cf` supports the latest versions of the Node.js LTS releases and the latest active release of Node.js.
+
+## Stream live logs
+
+`cf observability tail` streams live logs and other observability events as newline-delimited JSON. Select a Worker with `--worker`, a zone and its subdomains with `--zone`, or every event in the account with `--all`. Narrow the results with `--filters`, as inline JSON or from a file:
+
+```sh
+cf observability tail --worker my-worker
+cf observability tail --worker my-worker --filters @filters.json
+```
+
+Worker events require [Workers Logs](/workers/observability/logs/workers-logs/) to be turned on for the Worker. For filter shapes and examples, run `cf observability tail --help`.
 
 ## What changed during the beta
 
@@ -75,6 +88,7 @@ If you last updated early in the beta, these earlier changes may also affect you
 - `cf auth login` summarizes the scopes you granted, and `cf auth scopes` lists them by product.
 - `cf auth whoami`, also available as `cf whoami`, prints a short summary in a terminal and full JSON for scripts and agents.
 - `cf auth login` now uses the system keyring where available.
+- Long-running commands, such as `cf observability tail`, refresh an expired OAuth login instead of failing.
 - `cf auth whoami` reports the status of scoped API tokens correctly.
 - Set `CLOUDFLARE_API_HEADERS` to [send custom headers with API requests](/cf/environment-variables/#custom-api-headers).
 

@@ -22,8 +22,11 @@ understand what `cf migrate` changed or to finish a conversion by hand.
 
 Most Wrangler commands have a `cf` equivalent, although the command name and
 arguments can differ. For example, Worker versions and deployments are under
-`cf workers versions` and `cf workers deployments`, and `wrangler secret put` is
-`cf workers secrets update`.
+`cf workers versions` and `cf workers deployments`, `wrangler secret put` is
+`cf workers secrets update`, and `wrangler tail <WORKER_NAME>` is
+`cf observability tail --worker <WORKER_NAME>`. `cf observability tail` streams
+events from [Workers Logs](/workers/observability/logs/workers-logs/), so turn
+on Workers Logs for the Worker first.
 
 To find the `cf` command for a task, use any of the following:
 
