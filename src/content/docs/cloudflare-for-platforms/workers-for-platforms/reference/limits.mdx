@@ -20,7 +20,7 @@ The [`cf` object](/workers/runtime-apis/request/#the-cf-property-requestinitcfpr
 
 In the default [untrusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#untrusted-mode-default), this also applies to outgoing requests. Any `cf` properties a user Worker sets on a `fetch()` subrequest are ignored, and the subrequest uses the default cache behavior for its URL.
 
-This includes the standard [`cache` option](/workers/examples/cache-using-fetch/#using-the-http-cache-api) of `fetch()` and `Request`. Workers implement `cache: 'no-store'` and `cache: 'no-cache'` as `cf` cache settings, so in untrusted mode they do not change how the subrequest is cached:
+This includes the standard [`cache` option](/workers/examples/cache-using-fetch/#using-the-http-cache-api) of `fetch()` and `Request`. Workers implement `cache: "no-store"` and `cache: "no-cache"` as `cf` cache settings, so in untrusted mode they do not change how the subrequest is cached:
 
 ```js
 // In a user Worker in an untrusted dispatch namespace:
@@ -39,8 +39,8 @@ When a subrequest goes through the cache, `HEAD` requests can be sent to the ori
 To use `cf` properties or the `cache` option for requests from user Workers, use one of these options:
 
 - **Trusted mode**: Enable [trusted mode](/cloudflare-for-platforms/workers-for-platforms/reference/worker-isolation/#trusted-mode) for your namespace. Only enable this if you control all Worker code in the namespace.
-- **Outbound Worker**: Set the cache options in an [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), which runs as your platform's Worker rather than the user Worker. When an Outbound Worker is enabled, user Workers cannot use `connect()`.
-- **Service binding**: Give user Workers a [service binding](/workers/runtime-apis/bindings/service-bindings/) to a Worker you own outside the namespace. User code sends the requests that need the `cache` option through the binding. User Workers keep `connect()`.
+- **Outbound Worker**: Set the cache options in an [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), which runs as your platform's Worker rather than the user Worker. When an Outbound Worker is enabled, user Workers cannot use `connect()`, except through [Hyperdrive](/hyperdrive/) bindings.
+- **Service binding**: Give user Workers a [service binding](/workers/runtime-apis/bindings/service-bindings/) to a Worker you own outside the namespace, in the same account. User code sends the requests that need the `cache` option through the binding. User Workers keep `connect()`.
 
 A Worker outside the namespace runs as your platform's code, so the `cache` option on its own `fetch()` takes effect. The `cf` object of the user Worker is not passed to it, so user code cannot use it to set other `cf` properties:
 
@@ -63,7 +63,14 @@ await env.PLATFORM_FETCH.fetch("https://example.com/file.bin", {
 // The cache is bypassed, and the origin receives a HEAD request.
 ```
 
-Any user Worker with the binding can use this Worker to send requests that bypass the cache. Do not add routes to this Worker, and turn off its `workers.dev` and Preview URLs.
+Use `cache: "no-store"` rather than `cache: "no-cache"`. `no-cache` only asks the cache to revalidate, so `HEAD` requests can still be sent to the origin as `GET`.
+
+Any user Worker with the binding can use this Worker to send requests that bypass the cache. To keep it limited to that:
+
+- Do not add routes to this Worker, and turn off its `workers.dev` and Preview URLs, so that only user Workers with the binding can call it.
+- Do not add secrets or authentication to the requests this Worker sends, and do not trust headers from the caller for authentication.
+- Do not let end users choose the targets of the service bindings in the user Workers you upload. Otherwise, user code could bind to your dispatch Worker or other platform Workers.
+- If this Worker needs to know which user Worker is calling it, pass that information in the binding's [`props`](/workers/runtime-apis/context/#props).
 
 ## Durable Object namespace limits
 
