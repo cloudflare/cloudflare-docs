@@ -6,6 +6,9 @@ products:
 date: 2026-11-17
 ---
 
+import { Image } from "astro:assets";
+import asTypeCard from "~/assets/images/radar/radar-as-type.png";
+
 [**Cloudflare Radar**](/radar/) now shows the [type](/radar/glossary/#autonomous-system-types) of each [autonomous system (AS)](/radar/glossary/#autonomous-systems): Access ISP, Hosting/Cloud/Content, or Organization. AS types are inferred automatically, so an individual AS can be misclassified. They make it easier to tell, for example, whether traffic or attacks come from residential and mobile networks or from data centers.
 
 - **Access ISP** (`ACCESS_ISP`): networks that connect end users, such as home broadband and mobile operators, plus transit providers.
@@ -14,7 +17,9 @@ date: 2026-11-17
 
 ASes without a type are shown as **Unclassified**.
 
-![AS7922 information card showing its AS type, Access ISP, and an icon with the type of each related AS](~/assets/images/radar/radar-as-type.png)
+![Chart of HTTP traffic from the top five ASes beside a table of the top ten, with house, cloud, and building icons before the AS numbers](~/assets/images/radar/radar-traffic-by-as-type.png)
+
+_Top ASes by HTTP traffic in [Portugal](https://radar.cloudflare.com/traffic/pt#traffic-volume-by-autonomous-system), with the type of each AS shown before its number._
 
 ## Radar pages
 
@@ -22,7 +27,22 @@ ASes without a type are shown as **Unclassified**.
 - An icon before the AS number shows its type across Radar. Hover over the icon to see the AS type.
 - The [Data Explorer](https://radar.cloudflare.com/explorer) can break down and filter HTTP, NetFlows, DNS, and layer 7 attack data by AS type.
 
-![Data Explorer chart of worldwide HTTP requests by AS type over four weeks, with Access ISP and Hosting/Cloud/Content making up most requests](~/assets/images/radar/radar-explorer-as-type.png)
+<Image
+	src={asTypeCard}
+	alt="AS information card listing the AS type as Access ISP, above a table of related ASes with house, cloud, and building icons"
+	width={360}
+	style="display: block; margin-inline: auto"
+/>
+
+<div style="text-align: center">
+
+_The AS type in the [AS7922](https://radar.cloudflare.com/traffic/as7922#asn-information) information card._
+
+</div>
+
+![Stacked area chart where Access ISP makes up about two thirds of requests and Hosting/Cloud/Content about one third](~/assets/images/radar/radar-explorer-as-type.png)
+
+_Worldwide HTTP requests by AS type over the last four weeks, from the [Data Explorer](https://radar.cloudflare.com/explorer?dataSet=http&groupBy=as_category&dateRange=28d)._
 
 ## API
 
