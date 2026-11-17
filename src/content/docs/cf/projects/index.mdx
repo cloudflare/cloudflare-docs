@@ -114,6 +114,25 @@ cf dev
 
 The dev server prints its local URL. Append `/cdn-cgi/local/explorer` to that URL to open [Local Explorer](/workers/local-development/local-explorer/). Use it to inspect local binding data, view logs and traces, and [test Cron Triggers](/workers/local-development/local-explorer/#test-cron-triggers) with a chosen cron expression and scheduled time.
 
+### Local variables and secrets
+
+During `cf dev`, the development server reads values for your Worker's
+variables and secrets from files in the project directory. When you pass
+`--mode`, it also reads the files for that mode.
+
+The Cloudflare Vite plugin reads both of these groups:
+
+- `.env`, `.env.local`, `.env.<MODE>`, and `.env.<MODE>.local`, in that order.
+  A value in a later file overrides the same variable in an earlier one.
+- `.dev.vars.<MODE>` if it exists, otherwise `.dev.vars`.
+
+Wrangler reads `.dev.vars.<MODE>` if it exists, otherwise `.dev.vars`. It reads
+the `.env` files only when the project has no `.dev.vars` file.
+
+`cf` also reads its own credentials, such as `CLOUDFLARE_API_TOKEN`, from the
+same `.env` files. For details, refer to
+[Load credentials from a .env file](/cf/get-started/#load-credentials-from-a-env-file).
+
 ## Build
 
 Build the project:
