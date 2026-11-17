@@ -106,13 +106,9 @@ Control the compression quality of the output image. Accepts either:
 - A **fixed value** from `1` (low quality, small file size) to `100` (high quality, large file size).
 - A **perceptual quality level**: `high`, `medium-high`, `medium-low`, or `low`.
 
+To override the quality when Images detects a slow connection, set `slow-connection` beneath `quality`. For example, `quality=(value=high,slow-connection=40)` uses perceptual high quality by default and quality `40` for slow connections.
+
 Refer to [`quality`](/images/optimization/features/#quality)
-
-#### `slow-connection-quality` | `scq`
-
-Override `quality` when a slow connection is detected via client hints. Accepts the same fixed or perceptual values as `quality`. This serves lower-quality (and smaller) images to users on slow networks without affecting users on fast connections.
-
-Refer to [`slow-connection-quality`](/images/optimization/features/#slow-connection-quality)
 
 #### `width` | `w`
 

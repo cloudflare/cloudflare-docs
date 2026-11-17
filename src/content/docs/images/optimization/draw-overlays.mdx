@@ -151,7 +151,7 @@ Style the text with `font`, `color`, and `size` settings. These apply to the URL
 
 Sets the maximum dimensions of the overlay image when drawing with the URL interface or with `cf.image`. These settings apply only to image overlays. The dimensions of a text overlay are determined by its text string and styling.
 
-Accepts an integer (pixels) or a decimal between `0` and `1` representing a fraction of the base image's dimension. For example, `height:0.25` (`cf.image`) sets the overlay height to 25% of the height of the base image.
+Accepts an integer pixel count or a percentage string such as `50p`. For example, `height: "25p"` (`cf.image`) sets the overlay height to 25% of the height of the base image.
 
 Use [`fit`](/images/optimization/features/#fit) and [`gravity`](/images/optimization/features/#gravity--g) to control how the overlay image is resized and cropped.
 

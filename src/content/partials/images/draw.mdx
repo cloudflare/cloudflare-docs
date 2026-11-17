@@ -25,6 +25,7 @@ An overlay can be configured with the following settings:
 | `font` | Text | Sets the font used to render the text. Must be percent-encoded when using the URL interface. |
 | `color` | Text | Sets the fill color for the text. |
 | `size` | Text | Sets the font size in pixels. |
+| `width`, `height` | Image | Sets the overlay dimensions in pixels or as percentage strings, such as `50p`. |
 | `top`, `right`, `bottom`, `left` | Both | Positions the overlay as an offset, in pixels, to the specified edge. |
 | `opacity` | Both | Sets the overlay opacity from `0.0` to `1.0`. |
 | `repeat` | Both | Repeats the overlay horizontally, vertically, or in both directions. |
@@ -35,7 +36,7 @@ The `draw` parameter also accepts additional optimization settings, such as `wid
 <Tabs>
   <TabItem label="URL format">
   ```txt
-  draw=((url=https%3A%2F%2Fexample.com%2Flogo.png,bottom=5,right=5,width=100))
+  draw=((url=https%3A%2F%2Fexample.com%2Flogo.png,bottom=5,right=5,width=50p))
   ```
   </TabItem>
   <TabItem label="Workers">
@@ -47,7 +48,7 @@ The `draw` parameter also accepts additional optimization settings, such as `wid
           url: "https://example.com/logo.png",
           bottom: 5,
           right: 5,
-          width: 100,
+          width: "50p",
         },
       ],
     },
