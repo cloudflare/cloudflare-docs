@@ -102,6 +102,8 @@ Configuration for how content is indexed.
   - The tokenizer used for keyword search indexing. Valid values: `porter` (stemming-based), `trigram` (character n-gram). Defaults to `porter`.
 - `use_ocr` <Type text="boolean" /> <MetaInfo text="optional" />
   - Use optical character recognition (OCR) when ingesting PDFs and images. Defaults to `false`. OCR is available on every account and is billed as image-processing ingestion tokens.
+- `file_summary` <Type text="boolean" /> <MetaInfo text="optional" />
+  - Generate a summary, topics, and keywords for each eligible file during indexing. Defaults to `false`. The LLM calls are billed to your account as Workers AI usage, not as AI Search ingestion. Refer to [File summaries](/ai-search/configuration/data-source/#file-summaries).
 
 ---
 
@@ -132,7 +134,7 @@ The UUID of the [service API token](/ai-search/configuration/indexing/service-ap
 
 `ai_gateway_id` <Type text="string" /> <MetaInfo text="optional" />
 
-The AI Gateway ID for generation, query rewriting, and external-provider requests. Workers AI embedding and reranking usage is included in AI Search usage. These requests do not appear in your AI Gateway logs or Workers AI bill.
+The AI Gateway ID for generation, query rewriting, file summaries, and external-provider requests. File summaries use the `default` gateway when this is not set. Workers AI embedding and reranking usage is included in AI Search usage. These requests do not appear in your AI Gateway logs or Workers AI bill.
 
 ---
 
