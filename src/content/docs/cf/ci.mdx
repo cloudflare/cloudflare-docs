@@ -83,11 +83,11 @@ following sections explain each part.
 `cf auth login` needs a person to approve access in a browser. In CI, set these
 environment variables instead:
 
-| Variable                | Purpose                                                                                                                         |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                               |
-| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then the only account the token can access. |
-| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                           |
+| Variable                | Purpose                                                                                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                                                             |
+| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then prompts you to choose if the token can access more than one account. |
+| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                                                         |
 
 If the token can access more than one account and no account is set, the
 command fails instead of prompting:
