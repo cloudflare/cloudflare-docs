@@ -46,7 +46,7 @@ curl --request PATCH \
   --data '{"validation_method":"txt"}'
 ```
 
-To find your certificate pack UUID and current validation method, use the [List Certificate Pack Validation Details](/api/resources/ssl/subresources/verification/methods/list/) endpoint:
+To find your certificate pack UUID and current validation method, use the [SSL Verification Details](/api/resources/ssl/subresources/verification/methods/get/) endpoint:
 
 ```sh
 curl "https://api.cloudflare.com/client/v4/zones/{zone_id}/ssl/verification" \
