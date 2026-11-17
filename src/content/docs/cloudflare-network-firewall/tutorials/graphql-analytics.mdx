@@ -22,7 +22,7 @@ Use the GraphQL Analytics API to review data for Cloudflare Network Firewall (fo
 
 Before you begin, you must have an [API token](/analytics/graphql-api/getting-started/authentication/). For additional help getting started with GraphQL Analytics, refer to [GraphQL Analytics API](/analytics/graphql-api/).
 
-For GraphQL nodes by ruleset phase, refer to [Network Firewall analytics](/cloudflare-network-firewall/about/analytics/#verdict-and-outcome).
+For GraphQL nodes by ruleset phase, refer to [Network Firewall analytics](/cloudflare-network-firewall/about/analytics/#graphql-nodes-by-phase).
 
 ## Obtain Cloudflare Account ID
 
@@ -184,7 +184,7 @@ query MagicFirewallTraffic($accountTag: string!, $start: Time, $end: Time) {
 }
 ```
 
-### Obtain rate limiting analytics (beta)
+### Obtain rate limiting analytics
 
 :::note
 For Cloudflare Advanced Network Firewall customers, rate limiting (beta) is available by request through the account team.
@@ -199,15 +199,20 @@ query MagicFirewallRateLimit($accountTag: string!, $start: Time, $end: Time) {
 	viewer {
 		accounts(filter: { accountTag: $accountTag }) {
 			magicFirewallRateLimitNetworkAnalyticsAdaptiveGroups(
-				filter: { datetime_geq: $start, datetime_leq: $end, outcome: "pass", ruleId: "" }
+				filter: {
+					datetime_geq: $start
+					datetime_leq: $end
+					outcome: "pass"
+					ruleId: ""
+				}
 				limit: 10
 				orderBy: [sum_packets_DESC]
 			) {
 				sum {
-					count: packets
+					packets
 				}
 				dimensions {
-					metric: coloName
+					coloName
 				}
 			}
 		}
