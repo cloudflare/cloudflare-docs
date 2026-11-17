@@ -77,14 +77,9 @@ DNS Firewall provides different levels of protection depending on the type of at
 | Attack pattern | Description | DNS Firewall protection |
 |---|---|---|
 | **Simple DNS flood** | The same query name, or a small set of names, repeated at high volume. | ✅ Strong — cached responses absorb the traffic. Increase cache TTL values. |
-| **Random prefix attack** | Random-looking subdomains all ending with the same suffix (for example, `abc123.example.com`, `xyz456.example.com`). | ⚠️ Best-effort — use `attack_mitigation`. See [During an active random prefix attack](#during-an-active-random-prefix-attack). |
-| **Random-query attack** | Random subdomains across many different suffixes, or the targeted suffix is on the [Public Suffix List](https://publicsuffix.org/) (for example, `co.uk`). | ❌ Cannot be mitigated by DNS Firewall — Cloudflare cannot block an entire public suffix. Consider upstream-side mitigations. |
+| **Random prefix attack** | Random-looking subdomains all ending with the same suffix (for example, `abc123.example.com`, `xyz456.example.com`). | Best-effort — use `attack_mitigation`. Refer to [Respond to an active random prefix attack](#respond-to-an-active-random-prefix-attack). |
+| **Random-query attack** | Random subdomains across many different suffixes, or the targeted suffix is on the [Public Suffix List](https://publicsuffix.org/) (for example, `co.uk`). | Partial — DNS Firewall can mitigate attacks targeting specific domain apexes. Attacks targeting an entire public suffix (such as `co.uk`) cannot be fully mitigated. |
 
-:::note
-
-If the suffix under attack is listed on the [Public Suffix List](https://publicsuffix.org/), DNS Firewall will not be able to mitigate it. Contact your account team to discuss alternative mitigations.
-
-:::
 
 ## Respond to a simple DNS flood
 
@@ -102,6 +97,12 @@ Raising the cache TTL lets Cloudflare serve more responses from cache and reduce
         "maximum_cache_ttl": 21600,
 	}}
 />
+
+:::note
+
+Increasing cache TTL reduces upstream load but also delays DNS change propagation to end users.
+
+:::
 
 ### Cache negative responses
 
@@ -126,6 +127,12 @@ If the attack includes queries for names that do not exist, enable negative resp
         "deprecate_any_requests": true,
 	}}
 />
+
+:::note
+
+When enabled, DNS Firewall returns a `REFUSED` response to `ANY` queries instead of forwarding them to your upstream nameservers. This prevents `ANY` queries from being used as a DNS amplification vector.
+
+:::
 
 ## Respond to an active random prefix attack
 
@@ -158,6 +165,12 @@ Raising the cache TTL lets Cloudflare serve more responses from cache, reducing 
         "maximum_cache_ttl": 21600,
 	}}
 />
+
+:::note
+
+Increasing cache TTL reduces upstream load but also delays DNS change propagation to end users.
+
+:::
 
 ### 3. Set a rate limit
 
