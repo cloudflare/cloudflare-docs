@@ -39,7 +39,7 @@ Replace `<YOUR_TUNNEL_ID>` with the tunnel ID from step 1 and `<YOUR_DATABASE_IP
 The command returns a service ID. Save this value for the next step.
 
 :::note
-If your database uses a self-signed certificate, add `--cert-verification-mode verify_ca` to the command above. Refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode) for all options.
+If your database uses a certificate signed by a private certificate authority (CA), or requires a client certificate, attach them to the VPC Service with `--certificate-authority` and `--client-certificate`. Refer to [Custom CA and client certificates](/workers-vpc/configuration/vpc-services/#custom-ca-and-client-certificates). For other verification options, refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode).
 :::
 
 ## 3. Create a Hyperdrive configuration
