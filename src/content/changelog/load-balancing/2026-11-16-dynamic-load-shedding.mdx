@@ -1,0 +1,27 @@
+---
+title: Shed pool traffic automatically based on endpoint-reported load
+description: Dynamic load shedding sheds traffic from a pool when the load your endpoints report passes a target you set.
+products:
+  - load-balancing
+date: 2026-11-16
+---
+
+[Dynamic load shedding](/load-balancing/additional-options/dynamic-load-shedding/) lets your endpoints tell Cloudflare when they are under load. You no longer need to adjust load shedding by hand, or run your own scripts against the API, during a traffic spike.
+
+Your endpoints report their current load in the `CF-Origin-Load-Factor` header of health monitor responses. Cloudflare averages and smooths these values per region. When the load passes your target, Cloudflare sheds a share of new requests to the next pool. The shed percentage grows with the load, up to 95%, and falls as the load recovers.
+
+To turn it on, set `load_shedding` on a pool:
+
+```json
+{
+	"load_shedding": {
+		"mode": "dynamic",
+		"target_load": 80,
+		"scaling_factor": 2
+	}
+}
+```
+
+With this configuration, a load of `90` sheds 20% of requests from the pool.
+
+For more information, refer to [Dynamic load shedding](/load-balancing/additional-options/dynamic-load-shedding/).
