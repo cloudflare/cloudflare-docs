@@ -1,0 +1,23 @@
+---
+title: Load balancing analytics available with Customer Metadata Boundary set to EU
+description: Accounts with Customer Metadata Boundary set to EU can now view load balancing analytics, stored and served from the EU.
+products:
+  - load-balancing
+  - data-localization
+date: 2026-11-23
+---
+
+[Load balancing analytics](/load-balancing/reference/load-balancing-analytics/) are now available for accounts with [Customer Metadata Boundary](/data-localization/metadata-boundary/) set to `EU`.
+
+Previously, load balancing analytics were only available in the US region, so the **Load Balancing Analytics** views were empty for accounts with Customer Metadata Boundary set to `EU`. Request analytics and endpoint health events for these accounts are now stored in, and served from, the EU.
+
+For accounts with Customer Metadata Boundary set to `EU`:
+
+- **Request analytics** are available in the dashboard and the API. **Overview** and **Latency** in **Traffic** > **Load Balancing Analytics** are populated, and the `loadBalancingRequestsAdaptive` and `loadBalancingRequestsAdaptiveGroups` datasets are available in the [GraphQL Analytics API](/analytics/graphql-api/).
+- **Health events** are available in the dashboard and the API. The **Logs** view in **Traffic** > **Load Balancing Analytics** is populated, and the account-scoped [`lbHealthEvents` and `lbHealthEntitiesGroups`](/load-balancing/reference/load-balancing-analytics/#health-events) datasets are available in the GraphQL Analytics API.
+
+Analytics for time ranges before this change might be incomplete or unavailable for these accounts.
+
+Accounts with Customer Metadata Boundary set to `US`, and accounts without Customer Metadata Boundary, are unaffected.
+
+For more details, refer to [Load Balancing with the Data Localization Suite](/data-localization/how-to/load-balancing/#customer-metadata-boundary).

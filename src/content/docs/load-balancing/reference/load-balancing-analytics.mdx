@@ -29,6 +29,12 @@ Load balancing analytics are only available to customers on paid plans (Pro, Bus
 
 :::
 
+:::note[Data Localization Suite]
+
+If your account uses [Customer Metadata Boundary](/data-localization/metadata-boundary/) set to `US` or `EU`, load balancing analytics are stored in, and served from, that region. Refer to [Load Balancing with the Data Localization Suite](/data-localization/how-to/load-balancing/#customer-metadata-boundary) for details.
+
+:::
+
 ## Dashboard Analytics
 
 ### Overview metrics
@@ -153,11 +159,22 @@ In this example:
 
 To access logs in the dashboard, go to **Traffic** > **Load Balancing Analytics**.
 
+To query health events programmatically, use the [GraphQL Analytics API](#health-events).
+
 ## GraphQL Analytics
 
 For more flexibility, get load balancing metrics directly from the [GraphQL Analytics API](/analytics/graphql-api/).
 
-Get started with a sample query:
+Load balancing analytics are available in the following datasets:
+
+| Dataset                               | Scope   | Description                                                               |
+| ------------------------------------- | ------- | ------------------------------------------------------------------------- |
+| `loadBalancingRequestsAdaptive`       | Zone    | Load balancing requests, with the pools considered and selected for each. |
+| `loadBalancingRequestsAdaptiveGroups` | Zone    | Aggregated load balancing requests.                                       |
+| `lbHealthEvents`                      | Account | Pool and endpoint health status changes.                                  |
+| `lbHealthEntitiesGroups`              | Account | Pools and endpoints that reported health events in a time range.          |
+
+### Requests
 
 <Details header="Requests per pool">
 
@@ -281,6 +298,144 @@ query RequestsPerDataCenter($zoneTag: string, $start: Time, $end: Time) {
                             "selectedPoolName": "asia-ne"
                         },
                     ...
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
+
+</Details>
+
+### Health events
+
+Health events record status changes for your pools and endpoints. They are the same events shown in the dashboard **Logs** view.
+
+The `lbHealthEvents` and `lbHealthEntitiesGroups` datasets are account-scoped, so query them with `accounts` and your account ID instead of `zones`. A single query can cover up to seven days, within the last 90 days.
+
+Each event has a `scope`:
+
+- `global`: A change in the pool or endpoint health status used across all regions.
+- `regional`: A change in the health status for a single region, shown in `region`.
+
+<Details header="Health events for a pool">
+
+This query lists recent health status changes for a pool, including the health of each endpoint and the reason for any failures.
+
+```graphql graphql-api-explorer title="Query"
+query HealthEventsForPool($accountTag: string, $start: Time, $end: Time) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			lbHealthEvents(
+				limit: 100
+				filter: {
+					datetime_geq: $start
+					datetime_leq: $end
+					poolName: "us-east"
+				}
+				orderBy: [datetime_DESC]
+			) {
+				datetime
+				scope
+				region
+				poolName
+				poolHealth
+				changedOriginName
+				changedOriginHealth
+				origins {
+					originName
+					health
+					failureReason
+					responseCode
+				}
+			}
+		}
+	}
+}
+```
+
+```json title="Response (truncated)"
+{
+    "data": {
+        "viewer": {
+            "accounts": [
+                {
+                    "lbHealthEvents": [
+                        {
+                            "changedOriginHealth": "critical",
+                            "changedOriginName": "origin-1",
+                            "datetime": "2026-11-18T14:32:10Z",
+                            "origins": [
+                                {
+                                    "failureReason": "httpTimeout",
+                                    "health": "critical",
+                                    "originName": "origin-1",
+                                    "responseCode": 0
+                                },
+                                {
+                                    "failureReason": "noFailure",
+                                    "health": "healthy",
+                                    "originName": "origin-2",
+                                    "responseCode": 200
+                                }
+                            ],
+                            "poolHealth": "degraded",
+                            "poolName": "us-east",
+                            "region": "GLOBAL",
+                            "scope": "global"
+                        },
+                        ...
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
+
+</Details>
+
+<Details header="Pools and endpoints with health events">
+
+This query lists the pools and endpoints that reported health events in a time range, and the number of events for each.
+
+```graphql graphql-api-explorer title="Query"
+query HealthEntities($accountTag: string, $start: Time, $end: Time) {
+	viewer {
+		accounts(filter: { accountTag: $accountTag }) {
+			lbHealthEntitiesGroups(
+				limit: 100
+				filter: { datetime_geq: $start, datetime_leq: $end }
+			) {
+				count
+				dimensions {
+					poolId
+					poolName
+					originName
+				}
+			}
+		}
+	}
+}
+```
+
+```json title="Response (truncated)"
+{
+    "data": {
+        "viewer": {
+            "accounts": [
+                {
+                    "lbHealthEntitiesGroups": [
+                        {
+                            "count": 12,
+                            "dimensions": {
+                                "originName": "origin-1",
+                                "poolId": "17b5962d775c646f3f9725cbc7a53df4",
+                                "poolName": "us-east"
+                            }
+                        },
+                        ...
                     ]
                 }
             ]
