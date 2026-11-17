@@ -129,7 +129,7 @@ cf dns records delete <RECORD_ID> --zone example.com
 `cf` asks you to confirm before it deletes anything. The default answer is no.
 
 In a non-interactive session, such as a script or CI job, `cf` cannot ask. It
-prints the question and `Aborted.`, makes no change, and exits with status `0`.
+prints the question and `Aborted.`, makes no change, and exits with status `1`.
 To delete without confirmation, pass `--force`:
 
 ```sh
@@ -137,10 +137,8 @@ cf dns records delete <RECORD_ID> --zone example.com --force
 ```
 
 :::caution
-Because a skipped deletion exits with status `0`, a script cannot tell from the
-exit status that nothing was deleted. On some commands, `--force` also changes
-what the API operation does. Read the `--help` output of a command before you
-pass `--force` in a script.
+On some commands, `--force` also changes what the API operation does. Read the
+`--help` output of a command before you pass `--force` in a script.
 :::
 
 ## 7. Find other commands

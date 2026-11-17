@@ -22,7 +22,11 @@ understand what `cf migrate` changed or to finish a conversion by hand.
 
 Most Wrangler commands have a `cf` equivalent, although the command name and
 arguments can differ. For example, Worker versions and deployments are under
-`cf workers versions` and `cf workers deployments`.
+`cf workers versions` and `cf workers deployments`, `wrangler secret put` is
+`cf workers secrets update`, and `wrangler tail <WORKER_NAME>` is
+`cf observability tail --worker <WORKER_NAME>`. `cf observability tail` streams
+events from [Workers Logs](/workers/observability/logs/workers-logs/), so turn
+on Workers Logs for the Worker first.
 
 To find the `cf` command for a task, use any of the following:
 
@@ -47,23 +51,6 @@ provides, such as KV keys, D1 through `cf d1 raw`, `cf d1 migrations list`, and
 `cf d1 migrations apply`, and R2 objects. For the full list, refer to
 [Local resource data](/cf/projects/#local-resource-data). Commands without a
 local equivalent, such as `cf d1 query`, return an error.
-
-### Commands not yet supported {/* commands-not-yet-supported */}
-
-`cf` is in beta, and some Wrangler commands are not supported yet. Run these
-with `npx wrangler` instead of installing Wrangler. Wrangler does not read
-`cloudflare.config.ts`, so pass the Worker name.
-
-- **`wrangler tail`**: `cf` cannot stream live logs yet. Run:
-
-  ```sh
-  npx wrangler tail <WORKER_NAME>
-  ```
-
-- **`wrangler secret put`**: `cf` cannot set a single secret yet. Run
-  `npx wrangler secret put <SECRET_NAME> --name <WORKER_NAME>`, or upload
-  secrets with a new Worker version by passing `--secrets-file <PATH>` to
-  `cf deploy` or `cf workers versions create`.
 
 ## Configuration fields {/* configuration-fields */}
 
@@ -135,7 +122,7 @@ the bundler:
 With the Wrangler bundler, `cf migrate` writes these settings to
 `wrangler.config.ts` for you and adds `types: { generate: false }`. With the
 Vite bundler, it lists the fields in a required item for you to move.
-`wrangler.config.ts` is experimental and can change during the beta.
+`wrangler.config.ts` is experimental and can change.
 
 ## Convert environments to modes {/* environments-to-modes */}
 
