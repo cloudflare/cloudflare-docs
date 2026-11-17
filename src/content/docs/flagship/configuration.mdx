@@ -167,7 +167,7 @@ These commands support `--local`:
 
 Other `cf flagship` commands, such as `cf flagship apps get`, `cf flagship apps definitions get`, and `cf flagship apps flags changelog`, fail with `This command has no local equivalent.` Run them without `--local` to use the remote app.
 
-By default, `cf` keeps [local data](/cf/projects/#local-resource-data) in `.cloudflare/state` next to `cloudflare.config.ts`, the same directory as the Cloudflare Vite plugin 2.0. To work on the same flags as `wrangler dev` or the Cloudflare Vite plugin 1.x, pass their data directory, `.wrangler/state`:
+By default, `cf` keeps [local data](/cf/projects/#local-resource-data) in `.cloudflare/state` next to `cloudflare.config.ts`, the same directory as the Cloudflare Vite plugin 2.0. To work on the same flags as `wrangler dev` or the Cloudflare Vite plugin 1.x, pass their data directory, `--persist-to=".wrangler/state"`:
 
 ```sh
 cf flagship apps flags list --app-id <APP_ID> --local --persist-to .wrangler/state

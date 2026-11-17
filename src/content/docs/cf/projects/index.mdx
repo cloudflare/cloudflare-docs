@@ -34,22 +34,22 @@ tools:
    Vite or Vite+ project, including a project created with `cf init`, that is
    `vite` or `vp`.
 2. **An installed Cloudflare build tool.** Otherwise, `cf` uses the Cloudflare
-   build tool declared in the project's `package.json`. That is the Cloudflare
-   Vite plugin, or Wrangler 4.163.0 or later when the Vite plugin is not
-   declared.
+   build tool listed in the project's `package.json` dependencies: the
+   Cloudflare Vite plugin, or Wrangler when the Vite plugin is not listed.
 
-`cf` uses the Cloudflare Vite plugin 2.0, version 2.0.0-rc.0 or later, which
-does not depend on Wrangler. `cf` rejects earlier 2.0 betas, which write an
-older Build Output format. Wrangler builds projects that declare it without
-the Vite plugin, such as projects that `cf migrate` converts with the Wrangler
-bundler and static sites that
+`cf` supports the latest release of the Cloudflare Vite plugin 2.0 and the
+latest release of Wrangler. The Vite plugin 2.0 does not depend on Wrangler.
+
+Wrangler builds projects such as those that `cf migrate` converts with the
+Wrangler bundler, and static sites that
 [automatic configuration](#automatic-configuration) sets up. These projects keep
 build settings, such as the static assets directory, in a generated
 `wrangler.config.ts` file. That file is experimental and can change.
 
-`cf` does not run your `package.json` scripts. If your `build` script runs extra
-steps, such as `tsc -b && vite build`, then `cf build` and `cf deploy` skip
-them. Chain those steps with `cf build` in your own script instead:
+`cf build` and `cf deploy` run the framework's own build command, such as
+`vite build` or `astro build`, not the `build` script in `package.json`. If
+your `build` script runs extra steps, such as `tsc -b && vite build`, chain
+those steps with `cf build` in your own script instead:
 
 ```json title="package.json"
 {
@@ -334,8 +334,7 @@ cf previews deploy --preview-name my-feature
 The command accepts `--mode`, `--worker`, and `--prebuilt`. With `--prebuilt`,
 Build Output must come from a preview build, and the
 [mode rule](#deploy-a-prebuilt-build) applies. `--dry-run` checks the arguments
-and shows what the command would run, without building or uploading. Without
-`--dry-run`, the command needs credentials.
+and shows what the command would run, without building or uploading.
 
 The JSON result contains `type`, `version`, `preview_id`, `preview_name`,
 `preview_slug`, `preview_urls`, `deployment_id`, and `deployment_urls`.
@@ -481,9 +480,8 @@ Build Output Specification: no root config found at <PATH>/.cloudflare/output/v1
 ```
 
 A `--prebuilt` command found no build. Run `cf build` first, or restore the
-complete `.cloudflare/output/v1/` directory from your build job. Beta releases
-of `cf` wrote Build Output to `.cloudflare/output/v0/`, which this release does
-not read. Rebuild that output with the current release.
+complete `.cloudflare/output/v1/` directory from your build job. If the build
+job ran a beta release of `cf`, rebuild with the current release.
 
 ### Preview output reaches a production deploy
 

@@ -69,7 +69,7 @@ queue, a cron trigger, a route, and a Durable Object:
   not write files when `git status` reports changes anywhere in the
   repository. Files that `.gitignore` excludes do not count.
 - Install the project's dependencies. With the Wrangler bundler, the Worker's
-  package needs Wrangler 4.163.0 or later installed. `cf migrate` uses it to
+  package needs the latest release of Wrangler installed. `cf migrate` uses it to
   write `wrangler.config.ts`, and `cf dev`, `cf build`, and `cf deploy` run it.
 - Do not run `cf dev`, `cf build`, or `cf deploy` in the project first. In an
   unmigrated project they
@@ -150,8 +150,8 @@ export default defineConfig({
 If the project already uses the Cloudflare Vite plugin, install
 `@cloudflare/vite-plugin@rc` in the same way. Version 2.0 reads
 `cloudflare.config.ts` and has no `configPath` option. Remove `configPath` if
-`vite.config.ts` passes it to `cloudflare()`. `cf` rejects 2.0 beta releases,
-which write an older Build Output format.
+`vite.config.ts` passes it to `cloudflare()`. `cf` supports the latest release
+of the Cloudflare Vite plugin 2.0.
 
 ## Run the migration
 
@@ -661,8 +661,8 @@ even for a dry run. Without one, it reports:
 Generating wrangler.config.ts requires wrangler 4.100.0 or newer because earlier versions do not export wrangler/experimental-config. No local Wrangler installation was found. Update Wrangler and retry the migration.
 ```
 
-After the migration, `cf dev`, `cf build`, and `cf deploy` need Wrangler
-4.163.0 or later. With an older version, their error includes:
+After the migration, `cf dev`, `cf build`, and `cf deploy` need the latest
+release of Wrangler. With an older version, their error includes:
 
 ```txt output
 cf requires wrangler@4.163.0 or newer for cf dev, cf build, cf deploy, and cf previews deploy.

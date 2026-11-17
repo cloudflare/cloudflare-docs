@@ -19,9 +19,8 @@ release candidate. We expect the configuration format to stay the same through
 the stable release.
 :::
 
-`cf` requires Node.js 22.23.0, 24.22.0, or 26.12.0, or a later release in the
-same major version. Bun is not
-supported: when `cf` runs on Bun, loading the file fails with
+`cf` supports the latest versions of the Node.js LTS releases and the latest
+active release of Node.js. Bun is not supported: when `cf` runs on Bun, loading the file fails with
 `cloudflare.config.ts loading is not supported on Bun`. Most `cf` commands load
 the nearest `cloudflare.config.ts`, including commands that only call the
 Cloudflare API, so this applies to any `cf` command you run inside the

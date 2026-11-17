@@ -21,9 +21,10 @@ chooses credentials, accounts, and zones.
 
 - A Cloudflare account. If you do not have one,
   [sign up](https://dash.cloudflare.com/sign-up).
-- Node.js 22.23.0, 24.22.0, or 26.12.0, or a later release in the same major
-  version. Bun is not supported. When `cf` runs on Bun, commands that load
-  `cloudflare.config.ts` fail.
+- Node.js. `cf` supports the latest versions of the Node.js
+  [LTS releases](https://nodejs.org/en/about/previous-releases) and the latest
+  active release of Node.js. Bun is not supported. When `cf` runs on Bun,
+  commands that load `cloudflare.config.ts` fail.
 
 ## Install `cf`
 
@@ -140,9 +141,16 @@ When a command needs an account, `cf` selects one in this order:
 3. The only account your credentials can access. If there are several, `cf`
    asks you to choose one.
 
-`cf` does not save your choice. When neither the environment nor
-`cloudflare.config.ts` sets an account and your credentials can access several,
-`cf` asks again the next time it runs.
+When your credentials can access several accounts and neither the environment
+nor `cloudflare.config.ts` sets one, `cf` asks each time it runs.
+
+To use the same account across several projects, or across your whole machine,
+use a [named profile](#use-named-profiles). Sign in to the profile with
+credentials that can access only that account, so `cf` selects it
+automatically. Then bind the profile with `cf auth activate` to the directory
+that contains those projects, or to your home directory to use it everywhere.
+Your other profiles keep their own sign-in, so you can stay signed in to other
+accounts at the same time.
 
 In a non-interactive session, such as a script or CI job, a command fails if
 your credentials can access more than one account and no account is set.
