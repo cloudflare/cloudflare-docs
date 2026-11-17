@@ -168,9 +168,9 @@ The address in `MAIL FROM` is on a domain that is not onboarded for Email Sendin
 
 ### `550 5.7.1` at `RCPT TO`
 
-On the Workers Free plan, SMTP accepts only [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account as recipients. It refuses any other `RCPT TO` address with `550 5.7.1`. If the client sends `DATA` after a refused recipient, SMTP refuses the whole message with `554 5.7.1` before it reads the body. No recipient receives the message.
+On the Workers Free plan, SMTP accepts only [verified destination addresses](/email-service/configuration/destination-addresses/) in your account as recipients. It refuses any other `RCPT TO` address with `550 5.7.1`. If the client sends `DATA` after a refused recipient, SMTP refuses the whole message with `554 5.7.1` before it reads the body. No recipient receives the message.
 
-To send to that recipient, [add and verify](/email-service/configuration/email-routing-addresses/#add-a-destination-address) it as a destination address, or upgrade to the [Workers Paid plan](/workers/platform/pricing/).
+To send to that recipient, [add and verify](/email-service/configuration/destination-addresses/#add-a-destination-address) it as a destination address, or upgrade to the [Workers Paid plan](/workers/platform/pricing/).
 
 ### `552 5.3.4 Message too big`
 
