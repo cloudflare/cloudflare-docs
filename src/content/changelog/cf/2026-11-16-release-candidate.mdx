@@ -25,6 +25,12 @@ We expect the following features to remain stable to `cf` 1.0:
 
 A small number of less commonly used API commands may still change before 1.0. `cf` generates these commands from the Cloudflare API schema, so their call path may still change before 1.0.
 
+## Deploy with Workers Builds
+
+[Workers Builds](/workers/ci-cd/builds/) now supports `cf`. When you connect a Worker whose project has a `cloudflare.config.ts` file, Workers Builds detects it and sets the build command to `cf build` and the deploy command to `cf deploy`. You do not need to configure these commands yourself.
+
+For how `cf` behaves in Workers Builds, refer to [Deploy with Workers Builds](/cf/ci/#deploy-with-workers-builds).
+
 ## Upgrade from a beta
 
 This release moves Build Output to version 1, in `.cloudflare/output/v1/`. `cf deploy` will automatically create a new build on first run in this location.
