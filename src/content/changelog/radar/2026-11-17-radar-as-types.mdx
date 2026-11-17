@@ -1,0 +1,40 @@
+---
+title: Autonomous system types on Cloudflare Radar
+description: Cloudflare Radar now shows the type of each autonomous system (Access ISP, Hosting/Cloud/Content, or Organization) across Radar pages and in the Radar API.
+products:
+  - radar
+date: 2026-11-17
+---
+
+[**Cloudflare Radar**](/radar/) now shows the [type](/radar/glossary/#autonomous-system-types) of each [autonomous system (AS)](/radar/glossary/#autonomous-systems): Access ISP, Hosting/Cloud/Content, or Organization. AS types are inferred automatically, so an individual AS can be misclassified. They make it easier to tell, for example, whether traffic or attacks come from residential and mobile networks or from data centers.
+
+- **Access ISP** (`ACCESS_ISP`): networks that connect end users, such as home broadband and mobile operators, plus transit providers.
+- **Hosting/Cloud/Content** (`HOSTING_CLOUD_CONTENT`): hosting providers, cloud platforms, and content delivery networks.
+- **Organization** (`ORGANIZATION`): enterprises, universities, governments, banks, and IXP route servers.
+
+ASes without a type are shown as **Unclassified**.
+
+![AS7922 information card showing its AS type, Access ISP, and an icon with the type of each related AS](~/assets/images/radar/radar-as-type.png)
+
+## Radar pages
+
+- AS pages, such as [AS7922](https://radar.cloudflare.com/as7922), show the AS type in the AS information card.
+- An icon before the AS number shows its type across Radar. Hover over the icon to see the AS type.
+- The [Data Explorer](https://radar.cloudflare.com/explorer) can break down and filter HTTP, NetFlows, DNS, and layer 7 attack data by AS type.
+
+![Data Explorer chart of worldwide HTTP requests by AS type over four weeks, with Access ISP and Hosting/Cloud/Content making up most requests](~/assets/images/radar/radar-explorer-as-type.png)
+
+## API
+
+- The [Get AS details](/api/resources/radar/subresources/entities/subresources/asns/methods/get/), [List ASes](/api/resources/radar/subresources/entities/subresources/asns/methods/list/), and [Get AS details by IP address](/api/resources/radar/subresources/entities/subresources/asns/methods/ip/) endpoints return a new `category` field with the AS type, or `null` when the AS is not classified.
+- The [HTTP](/api/resources/radar/subresources/http/), [NetFlows](/api/resources/radar/subresources/netflows/), [DNS](/api/resources/radar/subresources/dns/), and [layer 7 attacks](/api/resources/radar/subresources/attacks/subresources/layer7/) endpoints accept a new `asCategory` filter, and their summary and timeseries groups endpoints support a new `AS_CATEGORY` dimension. Both accept `ACCESS_ISP`, `HOSTING_CLOUD_CONTENT`, `ORGANIZATION`, and `UNCLASSIFIED`, where `UNCLASSIFIED` also covers traffic that could not be mapped to an AS. For HTTP, they are supported for date ranges starting on or after 2023-05-01.
+- The [global search](/api/resources/radar/subresources/search/methods/global/) endpoint returns an `entity` with details of the matched AS, including its `category`, for AS results, and of the matched region for region (`adm1` and `adm2`) results.
+
+For example, to get the share of HTTP requests by AS type in the last week:
+
+```bash
+curl "https://api.cloudflare.com/client/v4/radar/http/summary/AS_CATEGORY?dateRange=7d" \
+  --header "Authorization: Bearer <API_TOKEN>"
+```
+
+Visit an [AS page](https://radar.cloudflare.com/as7922) on Cloudflare Radar to see its type, or read the [AS type definitions](/radar/glossary/#autonomous-system-types).
