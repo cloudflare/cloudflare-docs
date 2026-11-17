@@ -440,10 +440,7 @@ function workerLines() {
 						refLine(2, "", ref, ": ["),
 						...exampleObjectLines(
 							ref,
-							[
-								{ name: "worker", value: '"log-sink"' },
-								{ name: "streaming", value: "true" },
-							],
+							[{ name: "worker", value: '"log-sink"' }],
 							4,
 							[],
 							"},",
