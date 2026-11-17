@@ -5,9 +5,12 @@
  * output dimensions → function calling → reasoning → vision → zdr → lora →
  * beta → Batch → request formats → partner → realtime → unit price → pricing.
  */
+import { Badge } from "~/components/ui/badge";
 import {
+	activeModelPromotion,
 	formatModelPricing,
 	formatModelReasoning,
+	formatPromotionEnd,
 	modelCurrencyFormatter,
 	type ModelView,
 } from "~/util/models";
@@ -44,6 +47,7 @@ const hasProps = Object.keys(properties).length > 0;
 const price = Array.isArray(properties.price)
 	? (properties.price as { price: number; unit: string }[])
 	: null;
+const promotion = activeModelPromotion(model.name);
 const reasoning = formatModelReasoning(
 	properties.reasoning_effort,
 	properties.reasoning,
@@ -206,9 +210,28 @@ const reasoning = formatModelReasoning(
 				<tr>
 					<td>Unit Pricing</td>
 					<td>
-						{price
-							.map((p) => `${modelCurrencyFormatter.format(p.price)} ${p.unit}`)
-							.join(", ")}
+						{promotion ? (
+							<Fragment>
+								<span class="font-semibold">
+									{modelCurrencyFormatter.format(promotion.promoPrice)}{" "}
+									{promotion.unit}
+								</span>{" "}
+								<s class="text-muted-foreground">
+									{modelCurrencyFormatter.format(promotion.standardPrice)}
+								</s>{" "}
+								<Badge text="Promo" variant="tip" />
+								<br />
+								<span class="text-muted-foreground text-sm">
+									Promotional price until {formatPromotionEnd(promotion)}, then{" "}
+									{modelCurrencyFormatter.format(promotion.standardPrice)}{" "}
+									{promotion.unit}.
+								</span>
+							</Fragment>
+						) : (
+							price
+								.map((p) => `${modelCurrencyFormatter.format(p.price)} ${p.unit}`)
+								.join(", ")
+						)}
 					</td>
 				</tr>
 			)}

@@ -4,9 +4,17 @@
  *   - provider badge (Cloudflare-hosted / Third-party) — `default`
  *   - capability badges — `default` (model) / `caution` (platform)
  *   - deprecation — `danger` (Deprecated / Planned deprecation)
+ *   - promotion — `success` ("Promo pricing"), shown first while a
+ *     promotion in `modelPromotions` is running, so it survives `maxVisible`
  */
 import { Badge } from "~/components/ui/badge";
-import { CAPABILITY_PROPERTIES, type ModelCardData } from "~/util/models";
+import {
+	activeModelPromotion,
+	CAPABILITY_PROPERTIES,
+	formatPromotionEnd,
+	modelCurrencyFormatter,
+	type ModelCardData,
+} from "~/util/models";
 
 interface Props {
 	model: ModelCardData;
@@ -16,7 +24,7 @@ interface Props {
 const { model, maxVisible } = Astro.props;
 
 type BadgeDef = {
-	variant: "default" | "caution" | "danger";
+	variant: "default" | "caution" | "danger" | "success";
 	text: string;
 	/** Supplementary tooltip — only the ZDR badge carries one (zdr_comment). */
 	title?: string;
@@ -53,7 +61,22 @@ for (const { property_id, value } of model.propertiesList) {
 	}
 }
 
-const badges: BadgeDef[] = [providerBadge, ...propertyBadges];
+const promotion = activeModelPromotion(model.name);
+const promotionBadges: BadgeDef[] = promotion
+	? [
+			{
+				variant: "success",
+				text: "Promo pricing",
+				title: `${modelCurrencyFormatter.format(promotion.promoPrice)} ${promotion.unit} until ${formatPromotionEnd(promotion)}, then ${modelCurrencyFormatter.format(promotion.standardPrice)}`,
+			},
+		]
+	: [];
+
+const badges: BadgeDef[] = [
+	...promotionBadges,
+	providerBadge,
+	...propertyBadges,
+];
 const visibleBadges =
 	maxVisible === undefined ? badges : badges.slice(0, maxVisible);
 const remainingBadges =
