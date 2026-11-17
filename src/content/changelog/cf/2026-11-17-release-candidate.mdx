@@ -64,7 +64,6 @@ If you last updated early in the beta, these earlier changes may also affect you
 - `cf init` creates new Worker projects with Vite+, including checks, formatting, and tests that run in the Workers runtime.
 - `cf dev` and `cf build` run the Vite or Vite+ executable installed in your project, including dependencies hoisted in a workspace.
 - `cf dev` passes arguments such as `--port` and `--host` to your framework's development server.
-- Commands run with `--local`, such as `cf kv keys list --local`, read the same data as the Cloudflare Vite plugin's development server.
 - `cf dev --profile <name>` passes the selected authentication profile to your development server.
 - `cf dev`, `cf build`, and `cf deploy` offer to run `cf migrate` when they find a Wrangler configuration file.
 - On Windows, Ctrl+C exits cleanly when your framework runs through npm, Wrangler and Vite start without `spawn EFTYPE` errors, and `cf d1 migrations create` rejects names that Windows cannot store.

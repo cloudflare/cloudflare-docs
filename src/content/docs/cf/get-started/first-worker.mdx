@@ -68,8 +68,8 @@ these files:
   the Workers runtime.
 - `package.json` has `dev`, `build`, and `deploy` scripts that run the matching
   `cf` commands, and `check`, `format`, `test`, and `typecheck` scripts that run
-  Vite+. It lists `cf` and the Cloudflare Vite plugin 2.0, which `cf` uses, but
-  not Wrangler.
+  Vite+. It lists `cf` and the release candidate of the Cloudflare Vite plugin 2.0,
+  which `cf` uses, but not Wrangler.
 - `.cloudflare/types/index.d.ts` holds generated binding and runtime types. The
   Vite plugin updates it when you run `cf dev` or `cf build`. The generated
   `.gitignore` excludes `.cloudflare/`.
