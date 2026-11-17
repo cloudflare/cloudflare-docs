@@ -6,15 +6,11 @@ date: 2026-11-16
 
 import { TypeScriptExample } from "~/components";
 
-[Email Sending](/email-service/api/send-emails/) is now available on the Workers Free plan. You can onboard [sending domains](/email-service/configuration/domains/) and send to the [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. Use the Workers binding, the REST API, or SMTP to send alerts, reports, and notifications to your own team without a paid plan.
+[Email Sending](/email-service/api/send-emails/) is now available on the Workers Free plan for sending to the [verified destination addresses](/email-service/configuration/destination-addresses/) in your account.
+
+You can now onboard [sending domains](/email-service/configuration/domains/), send for free to [verified destination addresses](/email-service/configuration/destination-addresses/) during development and testing, and upgrade to the [Workers Paid plan](/workers/platform/pricing/) when going to production to send to arbitrary addresses. Use the Workers binding, the REST API, or SMTP to send alerts, reports, and notifications to your own team without a paid plan.
 
 Sends to verified destination addresses are free on every plan. They do not count toward the monthly quota or the daily sending limits.
-
-On the Workers Free plan, Email Service rejects the whole message if any recipient in `to`, `cc`, or `bcc` is not a verified destination address. Each interface returns its own error:
-
-- The Workers binding throws `E_RECIPIENT_PLAN_RESTRICTED`.
-- The REST API returns `403` with code `10208`.
-- SMTP refuses the recipient with `550 5.7.1`.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -48,9 +44,11 @@ To send to any recipient, upgrade to the [Workers Paid plan](/workers/platform/p
 
 ## Verified sends now appear in Email Sending
 
-On every plan, messages that you send from a sending domain to verified destination addresses now count as Email Sending traffic. Before, Email Service recorded them as Email Routing traffic. These messages now:
+Messages that you send from a sending domain to verified destination addresses now count as Email Sending traffic.
 
-- Appear in the [Activity log](/email-service/observability/logs/) and in [Email Sending analytics](/email-service/observability/metrics-analytics/), and no longer appear in Email Routing analytics.
-- Publish [Email Sending events](/email-service/reference/event-subscriptions/), such as `message.delivered` and `message.bounced`, to your event subscriptions.
+Before, the capability to send to verified destination addresses was an Email Routing feature, and these messages were recorded as Email Routing traffic. This change moves this capability to Email Sending, with support for all Email Sending features:
+
+- The [Activity log](/email-service/observability/logs/) and [Email Sending analytics](/email-service/observability/metrics-analytics/). These messages no longer appear in Email Routing analytics.
+- [Email Sending events](/email-service/reference/event-subscriptions/), such as `message.delivered` and `message.bounced`, published to your event subscriptions.
 
 To find these messages in the [GraphQL Analytics API](/analytics/graphql-api/), filter the Email Sending datasets on the new `isVerifiedRecipient` field. Messages sent from a domain that has only Email Routing configured are unchanged.
