@@ -216,25 +216,6 @@ checkout without these variables, pass `--preview-name`:
 You can also use `--preview-name` to override the detected branch name. For
 the output and options, refer to [Deploy a preview](/cf/projects/#deploy-a-preview).
 
-## Deploy with Workers Builds
-
-When [Workers Builds](/workers/ci-cd/builds/) runs `cf deploy` or
-`cf previews deploy`, it sets `CLOUDFLARE_CI_OVERRIDE_WORKER_NAME` to the
-Worker connected to the build. `cf` deploys the selected Worker under that
-name, so production deployments and Previews stay attached to the connected
-Worker even when `cloudflare.config.ts` uses a different `name`. `cf` warns
-when the names differ. `cf workers versions create` and
-`cf workers triggers deploy` follow the same variable.
-
-`cf` also writes deployment and Preview results to the output file that
-Workers Builds reads, so the build shows the deployment and Preview URLs.
-
-To make sure a job updates the Worker you expect, set
-`CLOUDFLARE_CI_MATCH_WORKER_TAG` to that Worker's tag, its unique identifier.
-`cf deploy` and `cf workers versions create` fail when the Worker they would
-update has a different tag. This is the `cf` equivalent of Wrangler's
-`WRANGLER_CI_MATCH_TAG`.
-
 ## Turn off telemetry
 
 `cf` sends anonymous usage telemetry, which records whether it runs in CI. To

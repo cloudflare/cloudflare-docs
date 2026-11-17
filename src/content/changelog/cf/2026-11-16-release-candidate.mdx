@@ -25,12 +25,6 @@ We expect the following features to remain stable to `cf` 1.0:
 
 A small number of less commonly used API commands may still change before 1.0. `cf` generates these commands from the Cloudflare API schema, so their call path may still change before 1.0.
 
-## Deploy with Workers Builds
-
-[Workers Builds](/workers/ci-cd/builds/) now supports `cf`. When you connect a Worker whose project has a `cloudflare.config.ts` file, Workers Builds detects it and sets the build command to `cf build` and the deploy command to `cf deploy`. You do not need to configure these commands yourself.
-
-For how `cf` behaves in Workers Builds, refer to [Deploy with Workers Builds](/cf/ci/#deploy-with-workers-builds).
-
 ## Upgrade from a beta
 
 This release moves Build Output to version 1, in `.cloudflare/output/v1/`. `cf deploy` will automatically create a new build on first run in this location.
@@ -60,7 +54,6 @@ If you last updated early in the beta, these earlier changes may also affect you
 - `cf deploy --force` deploys when the Worker was last deployed through the API, or when its remote configuration conflicts with your local Build Output.
 - Redeploying no longer removes secrets that you added outside `cloudflare.config.ts`.
 - Stack traces from deployed Workers show project paths such as `src/index.ts`.
-- In [Workers Builds](/cf/ci/), Workers Builds shows Preview and deployment URLs from `cf`, and deployments go to the connected Worker even when `cloudflare.config.ts` names a different one.
 - Python Workers with vendored packages deploy correctly.
 - `cf deploy` applies SSH settings for Containers managed by Durable Objects.
 - `cf deploy --dry-run` shows the project setup changes it would make, without making them.
