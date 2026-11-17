@@ -49,18 +49,6 @@ provides, such as KV keys, D1 through `cf d1 raw`, `cf d1 migrations list`, and
 [Local resource data](/cf/projects/#local-resource-data). Commands without a
 local equivalent, such as `cf d1 query`, return an error.
 
-### Commands not yet supported {/* commands-not-yet-supported */}
-
-Some Wrangler commands are not supported in `cf` yet. Run these
-with `npx wrangler` instead of installing Wrangler. Wrangler does not read
-`cloudflare.config.ts`, so pass the Worker name.
-
-- **`wrangler tail`**: `cf` cannot stream live logs yet. Run:
-
-  ```sh
-  npx wrangler tail <WORKER_NAME>
-  ```
-
 ## Configuration fields {/* configuration-fields */}
 
 `cf migrate` converts Wrangler fields as the following table shows. Worker

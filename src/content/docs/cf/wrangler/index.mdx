@@ -111,9 +111,6 @@ Migrate a project when you want to:
 - Use one CLI for project, account, and resource tasks.
 - Build once and deploy the same Build Output later, for example from CI.
 
-Keep a project on Wrangler for now if it relies on a task listed in
-[What still needs Wrangler](#what-still-needs-wrangler).
-
 ## How migration works
 
 `cf migrate` reads the Wrangler configuration file and writes
@@ -135,13 +132,6 @@ marks it in the generated file. For Workflows and Containers, refer to
 [Workflows and Containers](/cf/wrangler/migrate/#workflows-and-containers).
 For the complete procedure, refer to
 [Migrate a Wrangler project](/cf/wrangler/migrate/).
-
-## What still needs Wrangler
-
-`cf` does not yet cover every Wrangler task:
-
-- **Live logs**: `cf` cannot stream live logs yet. Run
-  `npx wrangler tail <WORKER_NAME>` instead of installing Wrangler.
 
 Wrangler does not read `cloudflare.config.ts`. If you still run Wrangler
 commands in a migrated project, keep the Wrangler configuration file until you
