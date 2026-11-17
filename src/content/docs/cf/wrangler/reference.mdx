@@ -48,6 +48,29 @@ provides, such as KV keys, D1 through `cf d1 raw`, `cf d1 migrations list`, and
 [Local resource data](/cf/projects/#local-resource-data). Commands without a
 local equivalent, such as `cf d1 query`, return an error.
 
+### Secrets {/* secrets */}
+
+The `wrangler secret` commands are under `cf workers secrets` in `cf`. To add
+or change a single secret, use `update` where you used `put` in Wrangler, and
+pass the Worker name with `--worker`:
+
+```sh
+cf workers secrets update <SECRET_NAME> --worker <WORKER_NAME>
+```
+
+In a terminal, `cf` asks you to choose the secret type and then to enter the
+value, which it masks as you type. In CI or a script, pass `--type secret_text`
+and pipe the value through standard input:
+
+```sh
+echo "$SECRET_VALUE" | cf workers secrets update <SECRET_NAME> --worker <WORKER_NAME> --type secret_text
+```
+
+The group also has `list`, `get`, `delete`, and `bulk` commands. Run
+`cf workers secrets --help` to see their options. To upload secrets with a new
+Worker version instead, pass `--secrets-file <PATH>` to `cf deploy` or
+`cf workers versions create`.
+
 ### Commands not yet supported {/* commands-not-yet-supported */}
 
 `cf` is in beta, and some Wrangler commands are not supported yet. Run these
@@ -59,11 +82,6 @@ with `npx wrangler` instead of installing Wrangler. Wrangler does not read
   ```sh
   npx wrangler tail <WORKER_NAME>
   ```
-
-- **`wrangler secret put`**: `cf` cannot set a single secret yet. Run
-  `npx wrangler secret put <SECRET_NAME> --name <WORKER_NAME>`, or upload
-  secrets with a new Worker version by passing `--secrets-file <PATH>` to
-  `cf deploy` or `cf workers versions create`.
 
 ## Configuration fields {/* configuration-fields */}
 
