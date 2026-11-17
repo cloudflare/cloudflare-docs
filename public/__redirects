@@ -2630,6 +2630,9 @@
 /workers/development-testing/remote-data/ /workers/local-development/#remote-bindings 301
 /workers/development-testing/testing/ /workers/testing/ 301
 
+# workers ai - model moved to unified catalog
+/workers-ai/models/jev/ /ai/models/typesafe/jev/ 301
+
 # workers ai - legacy task type URLs redirect to unified catalog
 /workers-ai/models/llm/ /ai/models/#text-generation 301
 /workers-ai/models/sentiment-analysis/ /ai/models/#text-classification 301
