@@ -215,6 +215,16 @@ The country of the user making the request. <Render file="gateway/selectors/sour
 
 <Render file="gateway/selectors/source-port" product="cloudflare-one" />
 
+### Traffic Source <Badge text="Beta" variant="caution"/>
+
+The method used to on-ramp traffic to Cloudflare. Use this selector to apply policies based on how traffic reaches Gateway.
+
+| UI name        | API example                          |
+| -------------- | ------------------------------------ |
+| Traffic Source | `net.onramp.type == "device_client"` |
+
+Available values: `device_client` (Device client), `mesh` (Mesh), `cloudflare_wan` (Cloudflare WAN), `clientless_rdp` (Clientless RDP), `proxy_endpoint` (Proxy endpoint), `agentless_biso` (Clientless Browser Isolation), `mcp_portal` (MCP portal), `workers_vpc` (Workers VPC).
+
 ### Users
 
 <Render file="gateway/selectors/users-http" product="cloudflare-one" />
