@@ -7,6 +7,7 @@ date: 2026-11-17
 ---
 
 import { Image } from "astro:assets";
+import { APIRequest } from "~/components";
 import asTypeCard from "~/assets/images/radar/radar-as-type.png";
 
 [**Cloudflare Radar**](/radar/) now shows the [type](/radar/glossary/#autonomous-system-types) of each [autonomous system (AS)](/radar/glossary/#autonomous-systems): Access ISP, Hosting/Cloud/Content, or Organization. AS types are inferred automatically, so an individual AS can be misclassified. They make it easier to tell, for example, whether traffic or attacks come from residential and mobile networks or from data centers.
@@ -52,9 +53,10 @@ _Worldwide HTTP requests by AS type over the last four weeks, from the [Data Exp
 
 For example, to get the share of HTTP requests by AS type in the last week:
 
-```bash
-curl "https://api.cloudflare.com/client/v4/radar/http/summary/AS_CATEGORY?dateRange=7d" \
-  --header "Authorization: Bearer <API_TOKEN>"
-```
+<APIRequest
+	path="/radar/http/summary/{dimension}"
+	method="GET"
+	parameters={{ dimension: "AS_CATEGORY", dateRange: "7d" }}
+/>
 
 Visit an [AS page](https://radar.cloudflare.com/as7922) on Cloudflare Radar to see its type, or read the [AS type definitions](/radar/glossary/#autonomous-system-types).
