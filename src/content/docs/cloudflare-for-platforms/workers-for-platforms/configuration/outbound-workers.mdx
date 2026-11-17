@@ -8,7 +8,7 @@ products:
 
 import { WranglerConfig } from "~/components";
 
-Outbound Workers sit between your customer's Workers and the public Internet. They give you visibility into all outgoing `fetch()` requests from user Workers.
+Outbound Workers sit between your customer's Workers and the public Internet. They give you visibility into outgoing requests that user Workers make with the global `fetch()`. Requests made through bindings are not intercepted. Refer to [Requests that Outbound Workers do not intercept](#requests-that-outbound-workers-do-not-intercept).
 
 ![Outbound Workers diagram information](~/assets/images/cloudflare-for-platforms/outbound-worker-diagram.png)
 
@@ -16,14 +16,16 @@ Outbound Workers sit between your customer's Workers and the public Internet. Th
 
 Outbound Workers can be used to:
 
-- Log all subrequests to identify malicious domains or usage patterns.
+- Log outgoing `fetch()` requests to identify malicious domains or usage patterns.
 - Create, allow, or block lists for hostnames requested by user Workers.
 - Configure authentication to your APIs behind the scenes (without end developers needing to set credentials).
 
 :::note
 
 When an Outbound Worker is enabled, your customer's Worker will no longer be able to use the [`connect() API`](/workers/runtime-apis/tcp-sockets/#connect)
-to create outbound TCP Sockets. This is to ensure all outbound communication goes through the Outbound Worker's `fetch` method.
+to create outbound TCP Sockets. This ensures that user code cannot bypass the Outbound Worker by opening a TCP socket instead of calling the global `fetch()`.
+
+[Hyperdrive](/hyperdrive/) bindings continue to work when an Outbound Worker is enabled, including database drivers that use `connect()` with the connection details of the binding.
 
 :::
 
@@ -93,7 +95,7 @@ export default {
 };
 ```
 
-4. The Outbound Worker will now be invoked on any `fetch()` requests from a user Worker. The user Worker will trigger a [FetchEvent](/workers/runtime-apis/handlers/fetch/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
+4. The Outbound Worker will now be invoked on any global `fetch()` requests from a user Worker. The user Worker will trigger a [FetchEvent](/workers/runtime-apis/handlers/fetch/) on the Outbound Worker. The variables declared in the binding can be accessed in the Outbound Worker through `env.<VAR_NAME>`.
 
 The following is an example of an Outbound Worker that logs the fetch request from user Worker and creates a JWT if the fetch request matches `api.example.com`.
 
@@ -135,15 +137,14 @@ export default {
 };
 ```
 
-:::note
+## Requests that Outbound Workers do not intercept
 
-Outbound Workers only intercept requests made with the global `fetch()` of a user Worker. They do not intercept requests made:
+Outbound Workers only intercept requests made with the global `fetch()` of a user Worker. Requests made through a binding use that binding's own channel and are not intercepted. For example, Outbound Workers do not intercept requests made:
 
-- Through [Workers VPC](/workers-vpc/) bindings, with `fetch()` or `connect()` on the binding
-- Through [Hyperdrive](/hyperdrive/) bindings, including database drivers that connect with the connection details of the binding
-- With [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/)
-- From [Durable Objects](/durable-objects/)
+- Through [Workers VPC](/workers-vpc/) bindings, with `fetch()` or `connect()` on the binding. [VPC Network](/workers-vpc/configuration/vpc-networks/) bindings can also reach public Internet destinations.
+- Through [Hyperdrive](/hyperdrive/) bindings, including database drivers that use `connect()` with the connection details of the binding.
+- With [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).
+- Through [service bindings](/workers/runtime-apis/bindings/service-bindings/) and other bindings, such as [R2](/r2/) or [KV](/kv/).
+- From [Durable Objects](/durable-objects/).
 
-If user code calls the global `fetch()` instead of the binding, the Outbound Worker intercepts the request, even when the destination is the same.
-
-:::
+An Outbound Worker does not control all outbound traffic from user Workers on its own. To restrict where user Workers can send traffic, also control which bindings you attach to user Workers when you upload them.
