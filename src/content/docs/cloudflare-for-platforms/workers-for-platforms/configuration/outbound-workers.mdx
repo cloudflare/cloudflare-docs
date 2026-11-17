@@ -137,6 +137,13 @@ export default {
 
 :::note
 
-Outbound Workers do not intercept fetch requests made from [Durable Objects](/durable-objects/) or [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/).
+Outbound Workers only intercept requests made with the global `fetch()` of a user Worker. They do not intercept requests made:
+
+- Through [Workers VPC](/workers-vpc/) bindings, with `fetch()` or `connect()` on the binding
+- Through [Hyperdrive](/hyperdrive/) bindings, including database drivers that connect with the connection details of the binding
+- With [mTLS certificate bindings](/workers/runtime-apis/bindings/mtls/)
+- From [Durable Objects](/durable-objects/)
+
+If user code calls the global `fetch()` instead of the binding, the Outbound Worker intercepts the request, even when the destination is the same.
 
 :::
