@@ -126,7 +126,7 @@ Prove ownership by adding the validation token to either your IRR record or reve
    2^(next boundary - current prefix length)
    ```
 
-   The IPv4 prefix `192.0.2.0/23` requires two `/24` reverse zones: one for `192.0.2.0/24` and one for `192.0.3.0/24`.
+   An IPv4 `/23` prefix requires two `/24` reverse zones, one for each half of the prefix.
 
    The IPv6 prefix `2001:db8::/34` requires four `/36` reverse zones: `2001:db8::/36`, `2001:db8:1000::/36`, `2001:db8:2000::/36`, and `2001:db8:3000::/36`.
 
@@ -158,14 +158,10 @@ If validation fails, refer to [Troubleshoot prefix validation](/byoip/troublesho
 
 ### Optional: Delegate the prefix
 
-You can allow another Cloudflare account to use all or part of the prefix. Refer to [Prefix delegations](/byoip/concepts/prefix-delegations/) for details.
-
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/delegations" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"<IP_PREFIX_TO_DELEGATE>","delegated_account_id":"<DELEGATED_ACCOUNT_ID>"}'
-```
+You can let another Cloudflare account use all or part of the prefix. To create a delegation, refer to [Delegate a prefix](/byoip/delegate-a-prefix/). To learn how delegations work, refer to [Prefix delegations](/byoip/concepts/prefix-delegations/).
 
 :::note
-Service bindings for a delegated prefix are created and managed in the parent account that owns the prefix.
+Only the account that owns the prefix can create and manage service bindings. This is also true for IP addresses that you delegate to another account.
 :::
 
 ## 2. Create service bindings

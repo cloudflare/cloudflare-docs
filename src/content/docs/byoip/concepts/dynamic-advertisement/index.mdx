@@ -16,4 +16,4 @@ You can advertise and withdraw prefixes on demand using the [Cloudflare API](/by
 
 When using the API, you can authorize the call with your email and API key or create a service token for this purpose. A successful API response indicates the service registered the request.
 
-Both the API and the Cloudflare dashboard support [prefix delegations](/byoip/concepts/prefix-delegations/), which allow other Cloudflare accounts to interact with your prefix. The effect of a delegation is service-specific.
+Only the account that owns the prefix can advertise or withdraw it. If you use [prefix delegations](/byoip/concepts/prefix-delegations/), the delegated account cannot change the advertisement status.
