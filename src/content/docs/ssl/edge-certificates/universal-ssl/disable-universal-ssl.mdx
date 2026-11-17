@@ -82,7 +82,3 @@ Disabling Universal SSL removes the certificate from Cloudflare's network immedi
 However, Cloudflare does not automatically submit a revocation request to the CA. The certificate remains listed as valid in the CA's OCSP responses and CRL until it expires. If you check the certificate's OCSP status after disabling Universal SSL, the CA reports it as good until the natural expiry date.
 
 If you need the certificate to be explicitly revoked at the CA — for example, to satisfy a compliance or security audit requirement — contact [Cloudflare Support](https://support.cloudflare.com) to request a CA revocation submission.
-
-:::note
-[SSL for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/security/certificate-management/issue-and-validate/) certificates are revoked at the CA when they are deleted.
-:::
