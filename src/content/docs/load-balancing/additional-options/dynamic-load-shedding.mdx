@@ -1,0 +1,151 @@
+---
+pcx_content_type: how-to
+difficulty: Intermediate
+products:
+  - load-balancing
+title: Dynamic load shedding
+sidebar:
+  order: 14.5
+description: Shed traffic from a pool automatically, based on load that your endpoints report in health monitor responses.
+---
+
+import { APIRequest, Details } from "~/components";
+
+Dynamic load shedding lets your endpoints tell Cloudflare when they are under load. Each endpoint reports its current load in the `CF-Origin-Load-Factor` header of its health monitor responses. When a pool's load passes a target you set, Cloudflare sheds a share of that pool's traffic to the next pool.
+
+With [load shedding](/load-balancing/additional-options/load-shedding/), you set a fixed percentage and adjust it by hand. Dynamic load shedding adjusts the shed percentage for you as reported load rises and falls.
+
+## How dynamic load shedding works
+
+When a pool uses dynamic load shedding, Cloudflare does the following:
+
+1. Health monitors read the `CF-Origin-Load-Factor` header from each endpoint's response.
+2. For each region, Cloudflare averages the values reported by the pool's endpoints. Endpoints with a higher [weight](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) count more toward the average.
+3. Cloudflare smooths each regional average over time. A short spike in reported load does not cause a sudden traffic shift.
+4. When the smoothed load passes your target load, Cloudflare sheds a share of new requests from the pool. Shed requests go to the next pool, according to your load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/).
+5. As reported load falls, the shed percentage falls with it. Shedding stops when the load returns to the target or below it.
+
+### Shed percentage
+
+Cloudflare calculates the shed percentage with this formula:
+
+```txt
+shed percentage = scaling_factor × (current load − target_load)
+```
+
+For example, with a `target_load` of `80` and a `scaling_factor` of `2`, a current load of `90` sheds 20% of requests. A current load of `80` or lower sheds nothing.
+
+Cloudflare caps the shed percentage at 95%. A pool always keeps at least 5% of the requests that would otherwise reach it.
+
+### Regional and global load
+
+Cloudflare calculates a separate load value for each region that monitors the pool. A request uses the load for the region of the data center that handles it. A high reading in one region does not shed traffic in other regions.
+
+If no regional value exists for that region, Cloudflare uses a global value instead. The global value is the most recently updated regional value. For example, this happens when a request arrives in a region outside the pool's [health monitor regions](/load-balancing/monitors/#health-monitor-regions).
+
+Pools that use **All Regions** or **All Data Centers** get a load value for every region.
+
+### Reported load values
+
+Cloudflare reads the header only from responses to HTTP and HTTPS health monitors. Monitors set to monitoring only do not contribute load. Cloudflare handles header values as follows:
+
+| Header value                                            | Behavior                                                |
+| ------------------------------------------------------- | ------------------------------------------------------- |
+| Zero or a positive number, such as `0`, `90`, or `75.5` | Included in the load average                            |
+| Negative number                                         | Ignored                                                 |
+| Not a number                                            | Ignored                                                 |
+| Missing or empty                                        | Ignored. The endpoint is treated as not reporting load. |
+
+Cloudflare includes load from every endpoint that returns a valid header, even if its health check fails. Endpoints that do not report load are left out of the average.
+
+## Before you begin
+
+Make sure your pool meets these requirements:
+
+- The pool has an HTTP or HTTPS [monitor](/load-balancing/monitors/) attached.
+- The monitor is not set to monitoring only.
+- Your endpoints return the `CF-Origin-Load-Factor` header on health monitor responses.
+
+## Prepare your endpoints
+
+Configure each endpoint to return the `CF-Origin-Load-Factor` header on responses to health monitor requests. Set the value to a number that represents the endpoint's current load. Use the same scale as your target load. For example, use a percentage of capacity on a `0` to `100` scale.
+
+<Details header="Example health monitor response">
+
+```txt
+HTTP/1.1 200 OK
+Content-Type: application/json
+CF-Origin-Load-Factor: 90
+```
+
+</Details>
+
+Return the header only on health monitor responses. Cloudflare reads load only from those responses.
+
+## Configure dynamic load shedding
+
+To turn on dynamic load shedding, set the pool's `load_shedding` object with an [Edit Pool](/api/resources/load_balancers/subresources/pools/methods/edit/) request:
+
+<APIRequest
+	path="/accounts/{account_id}/load_balancers/pools/{pool_id}"
+	method="PATCH"
+	json={{
+		load_shedding: {
+			mode: "dynamic",
+			target_load: 80,
+			scaling_factor: 2,
+		},
+	}}
+/>
+
+The `load_shedding` object accepts these fields in dynamic mode:
+
+| Field            | Type     | Required | Description                                                                               |
+| ---------------- | -------- | -------- | ----------------------------------------------------------------------------------------- |
+| `mode`           | `string` | Yes      | Set to `dynamic`.                                                                         |
+| `target_load`    | `number` | Yes      | The load at which shedding begins. Must be `0` or greater.                                |
+| `scaling_factor` | `number` | Yes      | How much traffic to shed for each unit of load over the target. Must be greater than `0`. |
+| `default_policy` | `string` | No       | Only `random` is supported. Defaults to `random`.                                         |
+
+A pool uses one load shedding mode at a time. In dynamic mode, you cannot set `default_percent`, `session_percent`, or `session_policy`.
+
+### Choose a target load and scaling factor
+
+- **Target load**: set this a little below the load at which your endpoints start to degrade. Shedding begins as soon as the smoothed load passes it.
+- **Scaling factor**: a higher value sheds more traffic for the same excess load. Start low and increase it if shedding is too slow to protect your endpoints.
+
+## Turn off dynamic load shedding
+
+To turn off dynamic load shedding, set the pool's `load_shedding` object to `null`.
+
+To switch a pool between dynamic and static load shedding, first set `load_shedding` to `null`. Then send the new configuration.
+
+## Behavior details
+
+### Session affinity
+
+Dynamic load shedding does not shed requests that belong to an existing [session affinity](/load-balancing/understand-basics/session-affinity/) session. To shed existing sessions, use [load shedding](/load-balancing/additional-options/load-shedding/) instead.
+
+### Shedding policy
+
+Dynamic load shedding sheds requests at random, according to the calculated shed percentage. It does not support the IP hash policy.
+
+### Missing load data
+
+If Cloudflare has no load data for a pool, the pool does not shed traffic. For example, this happens when no endpoint returns the header. The pool then receives its normal share of traffic.
+
+### Fallback pools
+
+Cloudflare does not shed traffic from the [fallback pool](/load-balancing/understand-basics/health-details/#fallback-pools). If every other pool sheds a request, the request goes to the fallback pool. To keep traffic off the fallback pool, make sure at least one other pool does not shed.
+
+### Pools in multiple load balancers
+
+Load is calculated per pool. A pool sheds the same share of traffic in every load balancer that uses it.
+
+## Related resources
+
+- [Load shedding](/load-balancing/additional-options/load-shedding/)
+- [Monitors](/load-balancing/monitors/)
+- [Monitor Groups](/load-balancing/monitors/monitor-groups/)
+- [How endpoints and pools become unhealthy](/load-balancing/understand-basics/health-details/)
+- [Traffic steering](/load-balancing/understand-basics/traffic-steering/)
