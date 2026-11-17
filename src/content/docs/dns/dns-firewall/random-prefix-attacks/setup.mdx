@@ -130,7 +130,7 @@ If the attack includes queries for names that do not exist, enable negative resp
 
 :::note
 
-When enabled, DNS Firewall returns a `REFUSED` response to `ANY` queries instead of forwarding them to your upstream nameservers. This prevents `ANY` queries from being used as a DNS amplification vector.
+When enabled, DNS Firewall returns a `REFUSED` response to `ANY` queries instead of forwarding them to your upstream nameservers. This prevents `ANY` queries from being used as a DNS amplification vector. Refer to [RFC 8482](https://www.rfc-editor.org/rfc/rfc8482) for background on deprecating the `ANY` query type.
 
 :::
 
