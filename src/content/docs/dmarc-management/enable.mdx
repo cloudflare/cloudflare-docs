@@ -21,10 +21,6 @@ You need to enable DMARC Management to allow Cloudflare to process DMARC reports
 DMARC Management does not support modifications to SPF records when a CNAME record in your zone points to an external domain. Any changes to the SPF record could invalidate your DMARC policy, as Cloudflare cannot update the associated external DNS records. We recommend managing SPF updates directly through the external domain's DNS provider.
 :::
 
-:::note[Internationalized domain names (IDN)]
-DMARC Management supports internationalized domain names (IDN), such as domains using non-ASCII characters. These are stored in DNS as punycode labels (for example, labels prefixed with `xn--`). If you experience unexpected behavior when enabling DMARC Management on an IDN zone — such as a duplicate `_dmarc` record being created instead of your existing record being updated — contact Cloudflare Support.
-:::
-
 To enable DMARC Management:
 
 1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), and select your account and domain.
