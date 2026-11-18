@@ -72,15 +72,15 @@ How Agent Lee reads each kind of file:
 - **PDFs** are converted to text. A PDF that is only scanned images, with no text layer, cannot be read. For a long PDF, Agent Lee reads from the start of the document.
 - **Text files** are read in full when they fit. For a long file, such as a log, Agent Lee reads the start and the end, where errors usually appear.
 
-Your browser trims a text file that is over its size limit before sending it, keeping its first and last lines. HAR files are always compacted before sending: request and response bodies and cookies are removed, and the values of credential headers such as `Authorization`, `Cookie`, and `X-Auth-Key` are replaced with `[redacted]`.
+Your browser trims a text file over 1 MiB (2 MiB for structured text) before sending it, keeping its first and last lines. HAR files are always compacted before sending: request and response bodies and cookies are removed, and the values of credential headers such as `Authorization`, `Cookie`, and `X-Auth-Key` are replaced with `[redacted]`.
 
 Agent Lee keeps attachments from your most recent messages in view. Older attachments are removed from the conversation. Attach a file again to bring it back.
 
 Example requests:
 
-- "Here's a screenshot of the error I get when I open my site. What's wrong?"
+- "Here is a screenshot of the error I get when I open my site. What is wrong?"
 - "This HAR file is from a slow page load. Which requests are taking the longest?"
-- "Here's the error log from my Worker. What is causing these failures?"
+- "Here is the error log from my Worker. What is causing these failures?"
 
 ### Write operations
 
