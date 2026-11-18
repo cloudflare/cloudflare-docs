@@ -25,7 +25,9 @@ Dynamic `import()` statements do not work inside `export default { ... }` handle
 
 ### WebSockets
 
-Using WebSockets with Durable Objects is not supported with per-file storage isolation. To work around this, run your tests with shared storage using `--max-workers=1 --no-isolate`.
+Durable Object WebSockets support per-file storage isolation with `@cloudflare/vitest-plugin`.
+
+The legacy Vitest 3 pool requires shared storage for these tests. To use per-file isolation, [migrate to Vitest plugin](/workers/testing/vitest-integration/migration-guides/migrate-to-vitest-plugin/). To share state across test files, refer to [Isolation model](/workers/testing/vitest-integration/isolation-and-concurrency/#isolation-model).
 
 ### Storage isolation
 

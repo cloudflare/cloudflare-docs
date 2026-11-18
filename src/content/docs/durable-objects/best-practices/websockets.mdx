@@ -60,6 +60,12 @@ To restore state after hibernation, use [`serializeAttachment`](#websocketserial
 
 Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/) for more information.
 
+### Test hibernation
+
+Test hibernation locally with the [Workers Vitest integration](/durable-objects/examples/testing-with-durable-objects/). Call [`evictDurableObject()`](/workers/testing/vitest-integration/test-apis/#durable-objects) to reset in-memory state while keeping hibernatable WebSockets connected. Then send a WebSocket message to test how your object restores its state.
+
+For storage isolation, refer to [WebSocket testing guidance](/workers/testing/vitest-integration/known-issues/#websockets).
+
 ### Hibernation example
 
 To use WebSockets with Durable Objects:
