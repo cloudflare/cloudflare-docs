@@ -91,3 +91,14 @@ Workers VPC may return errors at runtime when connecting to private services thr
 If you cannot view, create, or bind VPC Services and Tunnels in the dashboard or via Wrangler, ensure your user has the required roles.
 
 <Render file="required-roles" product="workers-vpc" />
+
+### Error 10196 when deploying a Worker with a VPC binding
+
+Error `10196` means the account member or API token that deploys the Worker cannot use Workers VPC.
+
+To fix this error:
+
+1. Assign the **Connectivity Directory Bind** or **Connectivity Directory Admin** role to the member. Binding directly to a Cloudflare Tunnel with `tunnel_id` requires **Connectivity Directory Admin**.
+2. If you deploy with an API token, add the matching permission to the token.
+
+API tokens inherit the permissions of the member who created them. Roles that come only from a single sign-on (SSO) group mapping may not be inherited, so assign the role to the member directly.

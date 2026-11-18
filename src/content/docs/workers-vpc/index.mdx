@@ -46,6 +46,12 @@ Workers VPC is currently in beta. Features and APIs may change before general av
 
 :::
 
+:::note[Public Internet egress does not need an on-ramp]
+
+A Cloudflare Tunnel, Cloudflare Mesh node, or Cloudflare WAN on-ramp is only required to reach **private** destinations. To send a Worker's traffic to public Internet destinations through Cloudflare Gateway, bind to `cf1:network` and call the binding's `fetch()`. You do not need to deploy a Tunnel, Mesh node, or WAN on-ramp first. Refer to [Egress to the public Internet](/workers-vpc/configuration/vpc-networks/#egress-to-the-public-internet).
+
+:::
+
 <Tabs>
 	<TabItem label="index.ts">
 ```ts
