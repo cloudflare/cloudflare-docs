@@ -2,7 +2,7 @@
 	"model_id": "typesafe/jev",
 	"provider_id": "typesafe",
 	"name": "Jev",
-	"description": "Jev 1.13 is TypeSafe's structured evaluation model. It evaluates one state against typed Noul, Choice, and Score questions and returns calibrated answers with probabilities and confidence. Image inputs are beta and dreamer-ready, not recommended for production.",
+	"description": "Jev is TypeSafe's decision model for structured evaluation. Classify inputs and score decisions using typed questions, probabilities, and confidence.",
 	"task": "Text Generation",
 	"tags": [
 		"Structured Output",

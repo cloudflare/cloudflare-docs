@@ -109,11 +109,11 @@ Decide how your application handles missing or uncertain results. Before consequ
 - Typed output does not guarantee correctness. A result can satisfy its type and constraints while still answering the question incorrectly.
 - Results depend on the available information and field definitions. Returning an estimate does not mean the input provides enough information to predict the outcome accurately.
 - Uncertainty estimates are not guarantees. Confidence scores and prediction intervals do not replace application-level checks. An interval's actual coverage can vary across tasks and datasets.
-- Capabilities vary by model. Consult the [Clairic model documentation](/workers-ai/models/clairic/) for supported inputs, field types, metadata, context window, and model-specific limitations.
+- Capabilities vary by model. Consult the [Clairic model documentation](/ai/models/@cf/cloudflare/clairic/) for supported inputs, field types, metadata, context window, and model-specific limitations.
 
 ## Next steps
 
-- Review the [Clairic model reference](/workers-ai/models/clairic/) for supported inputs, field types, model-specific limits, request and response schemas, and invoice examples.
+- Review the [Clairic model reference](/ai/models/@cf/cloudflare/clairic/) for supported inputs, field types, model-specific limits, request and response schemas, and invoice examples.
 - Consult the [Workers AI REST API reference](/api/resources/ai/methods/run/) for the inference endpoint.
 - [Configure a Workers AI binding](/workers-ai/configuration/bindings/) to access Workers AI from a Worker.
 - [Use the Workers AI REST API](/workers-ai/get-started/rest-api/) to authenticate and send requests over HTTP.

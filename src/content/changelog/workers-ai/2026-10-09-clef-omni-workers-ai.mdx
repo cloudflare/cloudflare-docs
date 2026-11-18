@@ -8,7 +8,7 @@ date: 2026-10-09
 
 import { TypeScriptExample } from "~/components";
 
-[`@cf/cloudflare/clef-omni`](/workers-ai/models/clef-omni/) is now available on Workers AI. Clef-omni is a decision model that takes audio (WAV or MP3) and video (MP4 or WebM) input alongside text and images. It joins [Clef](/workers-ai/models/clef/) and [Clef-flash](/workers-ai/models/clef-flash/) in the Clef family of open-weight decision models. We also cut the price of Clef-flash, so it now costs less than Jev, and made Clef faster.
+[`@cf/cloudflare/clef-omni`](/ai/models/@cf/cloudflare/clef-omni/) is now available on Workers AI. Clef-omni is a decision model that takes audio (WAV or MP3) and video (MP4 or WebM) input alongside text and images. It joins [Clef](/ai/models/@cf/cloudflare/clef/) and [Clef-flash](/ai/models/@cf/cloudflare/clef-flash/) in the Clef family of open-weight decision models. We also cut the price of Clef-flash, so it now costs less than Jev, and made Clef faster.
 
 ## Clef-omni: one decision model for every modality
 
@@ -69,13 +69,13 @@ Clef-flash now costs **$0.038 per million input tokens**, down from $0.090, whic
 
 The Clef-flash weights on Hugging Face are unchanged and support up to a 256K context window if you self-host.
 
-| Model                                                         | Price                     | Context window |
-| ------------------------------------------------------------- | ------------------------- | -------------- |
-| [`@cf/cloudflare/clef-flash`](/workers-ai/models/clef-flash/) | $0.038 per M input tokens | 24K tokens     |
-| [`@cf/cloudflare/clef`](/workers-ai/models/clef/)             | $0.240 per M input tokens | 64K tokens     |
-| [`@cf/cloudflare/clef-omni`](/workers-ai/models/clef-omni/)   | $0.150 per M input tokens | 64K tokens     |
+| Model                                                                | Price                     | Context window |
+| -------------------------------------------------------------------- | ------------------------- | -------------- |
+| [`@cf/cloudflare/clef-flash`](/ai/models/@cf/cloudflare/clef-flash/) | $0.038 per M input tokens | 24K tokens     |
+| [`@cf/cloudflare/clef`](/ai/models/@cf/cloudflare/clef/)             | $0.240 per M input tokens | 64K tokens     |
+| [`@cf/cloudflare/clef-omni`](/ai/models/@cf/cloudflare/clef-omni/)   | $0.150 per M input tokens | 64K tokens     |
 
-All Clef models convert image inputs to input tokens, and Clef-omni does the same for audio and video. For details on how each input type is tokenized, refer to the [Clef](/workers-ai/models/clef/), [Clef-flash](/workers-ai/models/clef-flash/), and [Clef-omni](/workers-ai/models/clef-omni/) model pages.
+All Clef models convert image inputs to input tokens, and Clef-omni does the same for audio and video. For details on how each input type is tokenized, refer to the [Clef](/ai/models/@cf/cloudflare/clef/), [Clef-flash](/ai/models/@cf/cloudflare/clef-flash/), and [Clef-omni](/ai/models/@cf/cloudflare/clef-omni/) model pages.
 
 ## Clef is now faster
 
@@ -93,4 +93,4 @@ Part of this speedup comes from moving Clef to [SGLang](https://github.com/sgl-p
 
 Clef-omni follows the same System One API as Clef and Clef-flash, and works with [AI Gateway](/ai-gateway/). To try it, change the model ID to `@cf/cloudflare/clef-omni` and set the `model` selector to `clef-omni`.
 
-For more information, refer to the [Clef-omni model page](/workers-ai/models/clef-omni/) and [pricing](/workers-ai/platform/pricing/).
+For more information, refer to the [Clef-omni model page](/ai/models/@cf/cloudflare/clef-omni/) and [pricing](/workers-ai/platform/pricing/).

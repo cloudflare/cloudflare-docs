@@ -7,8 +7,9 @@
  * models. Bound to `getResolvedModels` with `model.slug`.
  *
  * Legacy-not-in-catalog models are intentionally emitted at BOTH this route
- * (full slug) and `/workers-ai/models/[...name]` (short slug) — dual URLs, not
- * canonical-deduped.
+ * (full slug) and `/workers-ai/models/[...name]` (short slug). ModelDetailPage
+ * consolidates canonicals only for its explicitly selected model IDs; all
+ * other models retain pathname-based canonicals.
  */
 import type { GetStaticPaths } from "astro";
 import ModelDetailPage from "~/components/models/ModelDetailPage.astro";

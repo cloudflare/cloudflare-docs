@@ -17,7 +17,7 @@ import type {
 	ModelExample,
 	ModelView,
 } from "./model-types";
-import { getModelAuthor } from "./model-helpers";
+import { getModelAuthor, unifiedCanonicalModels } from "./model-helpers";
 import { CAPABILITY_PROPERTIES } from "./model-properties";
 
 export type LegacyEntry = CollectionEntry<"workers-ai-models">;
@@ -193,7 +193,8 @@ export function legacyToResolved(entry: LegacyEntry): ModelView {
 		id: entry.id,
 		name: d.name,
 		slug: d.name,
-		displayName: d.name.split("/").at(-1) ?? d.name,
+		displayName:
+			unifiedCanonicalModels[d.name] ?? d.name.split("/").at(-1) ?? d.name,
 		dataSource: "legacy",
 		source: typeof d.source === "number" ? d.source : 1,
 		hosting: "hosted",
