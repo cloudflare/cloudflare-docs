@@ -1,0 +1,297 @@
+{
+	"model_id": "minimax/h3-image-highspeed",
+	"name": "MiniMax H3 Image Highspeed",
+	"description": "The faster version of MiniMax H3 Image, with the same text-to-image, multi-reference generation and image editing features, up to 4K output and up to 16 reference images.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Photorealistic",
+		"4K",
+		"Fast"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input text tokens (per 1M)": 2.3,
+		"Input image tokens (per 1M)": 3,
+		"Output image tokens (per 1M)": 7.6
+	},
+	"examples": [
+		{
+			"name": "4K Poster in Seconds",
+			"description": "A 4K travel poster with clean title text, generated at Highspeed.",
+			"input": {
+				"prompt": "Vintage-style travel poster of Kyoto in autumn: a red pagoda among maple trees, Mount Hiei in the distance, bold art-deco title text \"KYOTO\" at the top and \"AUTUMN EXPRESS\" at the bottom, limited palette of crimson, cream and navy",
+				"aspect_ratio": "3:4",
+				"area": "4K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/4k-poster-in-seconds.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/4k-poster-in-seconds.jpeg",
+					"images": [
+						"https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/4k-poster-in-seconds.jpeg"
+					],
+					"revised_prompt": "The image is a vertically oriented vintage travel poster for Kyoto in autumn, framed by a thick navy-blue Art-Deco border with ornate corner flourishes and thin gold-toned line accents on a warm cream parchment background. At the top center, the bold title text reads \"KYOTO\" in large crimson Art-Deco block letters with sharp angular serifs and a cream outline. Below the title, a stylized landscape illustration fills the center of the poster. The main subject is a traditional multi-tiered red pagoda standing in the center foreground, its roofs layered with navy-blue under-eaves and gold-toned ornamental roof finials. Flanking the pagoda on the left and right are large maple trees with dark navy branches and clusters of bright crimson leaves. In the lower foreground, a winding stone path with a small bridge and lanterns leads upward from the bottom center toward the pagoda. In the upper middle background, Mount Hiei rises as a stylized navy mountain silhouette with cream-colored mist bands and a small pavilion near its peak. The bottom section is centered with a small navy and crimson stylized train icon, followed by the text \"AUTUMN EXPRESS\" in bold navy Art-Deco lettering with a cream outline. Beneath the title text, a smaller line reads \"JAPAN\" flanked by two tiny crimson diamonds. At the very bottom edge, a navy horizontal decorative band holds a small gold-toned emblem and the words \"VINTAGE JOURNEY\", all rendered in clean retro typography. The overall design uses a strict crimson, cream, and navy color palette, with flat retro illustration shading, stylized halftone textures on the foliage, and a symmetrical composition that makes the travel poster feel like a classic mid-century print."
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-image-highspeed',\n  {\n    prompt:\n      'Vintage-style travel poster of Kyoto in autumn: a red pagoda among maple trees, Mount Hiei in the distance, bold art-deco title text \"KYOTO\" at the top and \"AUTUMN EXPRESS\" at the bottom, limited palette of crimson, cream and navy',\n    aspect_ratio: '3:4',\n    area: '4K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-image-highspeed\",\n  \"input\": {\n    \"prompt\": \"Vintage-style travel poster of Kyoto in autumn: a red pagoda among maple trees, Mount Hiei in the distance, bold art-deco title text \\\"KYOTO\\\" at the top and \\\"AUTUMN EXPRESS\\\" at the bottom, limited palette of crimson, cream and navy\",\n    \"aspect_ratio\": \"3:4\",\n    \"area\": \"4K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Batch of Variations",
+			"description": "Four 1K concept variations in one request for fast exploration.",
+			"input": {
+				"prompt": "Product concept render of a minimalist smart speaker made of light oak and woven grey fabric, on a white studio background, soft shadows",
+				"n": 4,
+				"aspect_ratio": "1:1",
+				"area": "1K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/batch-of-variations.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/batch-of-variations.jpeg",
+					"images": [
+						"https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/batch-of-variations.jpeg",
+						"https://video-product.cdn.minimax.io/h3_image/20261118/bfb70079-f388-4cca-9cbe-c1a06490021f.jpeg",
+						"https://video-product.cdn.minimax.io/h3_image/20261118/c7420e1f-5298-42eb-b59d-7d24c797ad4d.jpeg",
+						"https://video-product.cdn.minimax.io/h3_image/20261118/9ae7b0fa-997b-4aa2-a497-6f1037b65998.jpeg"
+					],
+					"revised_prompt": "The image is a high-quality product concept render of a minimalist smart speaker centered on a seamless white studio background. The speaker is a tall, elegant cylinder with its top and bottom sections crafted from smooth light oak wood with a fine visible wood grain. The midsection is wrapped in a tightly woven matte grey fabric that provides tactile acoustic texture. On the light oak top surface, a subtle black circular touch control ring is embedded slightly inward, accompanied by four small glowing white LED indicator dots that signal playback status. A thin metallic brass-toned accent ring sits between the lower wooden base and the fabric. The speaker rests directly on a white studio floor, casting a soft, natural drop shadow extending to the lower right. The scene is lit with diffused professional studio lighting from the upper left, creating gentle highlights on the polished wood and deepening the fabric texture. A small 3.5mm audio jack and a power port are placed on the lower rear side of the oak base, faintly visible from the three-quarter angle. The composition uses a clean, bright aesthetic with soft shadows and a generous amount of white negative space around the product, maintaining a realistic and polished e-commerce product photography style."
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-image-highspeed',\n  {\n    prompt:\n      'Product concept render of a minimalist smart speaker made of light oak and woven grey fabric, on a white studio background, soft shadows',\n    n: 4,\n    aspect_ratio: '1:1',\n    area: '1K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-image-highspeed\",\n  \"input\": {\n    \"prompt\": \"Product concept render of a minimalist smart speaker made of light oak and woven grey fabric, on a white studio background, soft shadows\",\n    \"n\": 4,\n    \"aspect_ratio\": \"1:1\",\n    \"area\": \"1K\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Multi-Reference Edit",
+			"description": "Combine two reference photos into one new, consistently lit scene.",
+			"input": {
+				"prompt": "Overhead editorial photo for a cafe menu: place the tea cup from image 2 beside the scones from image 1 on a rustic oak table, matching the soft morning window light, with a folded linen napkin and a few scattered blueberries",
+				"images": [
+					"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg",
+					"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg"
+				],
+				"aspect_ratio": "4:3",
+				"area": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/multi-reference-edit.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/multi-reference-edit.jpeg",
+					"images": [
+						"https://examples.aig.cloudflare.com/minimax/h3-image-highspeed/multi-reference-edit.jpeg"
+					],
+					"revised_prompt": "The five crumbly scones with dark berry filling in <Picture 1> are <Subject 1>. The loose blueberries scattered on the surface and inside the small bowl in <Picture 1> are <Subject 2>. The soft morning window lighting in <Picture 1> is <Subject 3>. The red apple held by a hand in <Picture 2> is <Subject 4>. The target image is an overhead editorial cafe-menu photograph showing <Subject 1>, <Subject 2>, and a newly introduced teacup resting on a folded linen napkin atop a rustic oak table, illuminated by <Subject 3>, while replacing the stained parchment paper, coffee cups, spoon, peonies, and dark slate surface from <Picture 1> as well as the orchard background from <Picture 2>. <Subject 1> is partially preserved; its baked appearance, crumbly texture, and berry-stained centers remain, while its placement and count are adjusted to sit cleanly on the new tabletop. <Subject 2> is partially preserved; the individual berries retain their round shape and dusty bloom, while being redistributed loosely across the new scene without the bowl. <Subject 3> supplies the soft directional morning illumination transferred to the entire target scene. <Subject 4> serves as a weak reference for the fresh fruit-and-tea cafe theme, inspiring the warm natural color accents without transferring the apple or hand itself. Seen directly from above in a 4:3 frame, a weathered rustic oak tabletop with visible wood grain and warm honey-brown tones fills the canvas. A neatly folded oatmeal-colored linen napkin with a subtle woven texture lies near the center-left, supporting four of the scones from <Subject 1>, while a fifth scone rests slightly apart on the bare wood to the right. Beside the napkin sits a ceramic teacup filled with amber tea, casting a gentle shadow under <Subject 3>, which enters from the side to create soft highlights on the cup rim, crumbs, and berry skins. A few berries from <Subject 2> are scattered casually around the napkin edges and teacup base."
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-image-highspeed',\n  {\n    prompt:\n      'Overhead editorial photo for a cafe menu: place the tea cup from image 2 beside the scones from image 1 on a rustic oak table, matching the soft morning window light, with a folded linen napkin and a few scattered blueberries',\n    images: [\n      'https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg',\n      'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    ],\n    aspect_ratio: '4:3',\n    area: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-image-highspeed\",\n  \"input\": {\n    \"prompt\": \"Overhead editorial photo for a cafe menu: place the tea cup from image 2 beside the scones from image 1 on a rustic oak table, matching the soft morning window light, with a folded linen napkin and a few scattered blueberries\",\n    \"images\": [\n      \"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg\",\n      \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\"\n    ],\n    \"aspect_ratio\": \"4:3\",\n    \"area\": \"2K\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://platform.minimax.io/docs/guides/image-generation.md",
+	"terms": "https://platform.minimax.io/docs/guides/terms-of-service.md",
+	"cover_image_url": null,
+	"metadata": {
+		"Billing": "Pay-as-you-go, per token (input text, reference images, output images)",
+		"Images per Request": "1-10",
+		"Output Size": "1K, 2K, 4K or custom up to 20 MP",
+		"Reference Images": "Up to 16"
+	},
+	"request_formats": null,
+	"provider_id": "minimax",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"input_text_tokens": 2.3,
+				"input_image_tokens": 3,
+				"output_image_tokens": 7.6
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "minimax",
+			"pricing": {
+				"input_text_tokens": 2.3,
+				"input_image_tokens": 3,
+				"output_image_tokens": 7.6
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "input_image_tokens",
+							"label": "Input image",
+							"unit": "per_1m_tokens",
+							"value": 3
+						},
+						{
+							"key": "input_text_tokens",
+							"label": "Input text",
+							"unit": "per_1m_tokens",
+							"value": 2.3
+						},
+						{
+							"key": "output_image_tokens",
+							"label": "Output image",
+							"unit": "per_1m_tokens",
+							"value": 7.6
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:08:39",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"maxLength": 32000,
+					"description": "Text description of the image, or of the edit when images are given, up to 32,000 characters. Refer to reference images by their order, e.g. \"image 1\"."
+				},
+				"images": {
+					"description": "Reference images for image editing and multi-reference generation, 1 to 16: https URLs or data:image/<format>;base64 URIs (JPG, PNG, WEBP, HEIC or HEIF; 128 to 8192 px per side; long side at most 4x the short side). When set, the request is an image edit.",
+					"minItems": 1,
+					"maxItems": 16,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"n": {
+					"default": 1,
+					"description": "Number of images to generate, 1 to 10",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 10
+				},
+				"size": {
+					"description": "Exact output size as WIDTHxHEIGHT, e.g. 2720x1536: area 655,360 to 20,000,000 pixels, aspect ratio between 1:3 and 3:1. Cannot be combined with aspect_ratio or area.",
+					"type": "string"
+				},
+				"aspect_ratio": {
+					"description": "Output aspect ratio when size is not set: auto (default, chosen from the prompt) or X:Y with X and Y from 1 to 300, between 1:3 and 3:1, e.g. 16:9 or 21:9",
+					"type": "string"
+				},
+				"area": {
+					"description": "Output area level when size is not set, targeting 1024x1024, 2048x2048 or 4096x4096 pixels at the chosen aspect ratio. Defaults to 4K.",
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
+				},
+				"disable_prompt_enhanced": {
+					"description": "Text-to-image only: use the prompt as written instead of the enhanced prompt. Requires size or an X:Y aspect_ratio.",
+					"type": "boolean"
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					]
+				},
+				"output_compression": {
+					"description": "JPEG or WEBP quality, 0 to 100 (default 95); ignored for png",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 100
+				}
+			},
+			"required": [
+				"prompt",
+				"n"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"description": "URL of the first generated image, hosted by MiniMax"
+				},
+				"images": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "URLs of all generated images, hosted by MiniMax; images withheld by the content safety check are left out"
+				},
+				"revised_prompt": {
+					"description": "The prompt used for the first image, after prompt enhancement",
+					"type": "string"
+				}
+			},
+			"required": [
+				"image",
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}
