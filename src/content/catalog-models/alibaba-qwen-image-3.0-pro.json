@@ -16,8 +16,7 @@
 	"pricing": {
 		"Per image": 0.04,
 		"output_size_1k": 0.04,
-		"output_size_2k": 0.07,
-		"Default (per second)": 0.04
+		"output_size_2k": 0.07
 	},
 	"examples": [
 		{

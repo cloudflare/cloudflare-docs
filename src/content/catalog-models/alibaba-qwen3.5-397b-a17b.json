@@ -4250,7 +4250,8 @@
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen3.5-397b-a17b.png",
 	"metadata": {
 		"Architecture": "Transformer (MoE)",
-		"Parameters": "397B total, 17B active"
+		"Parameters": "397B total, 17B active",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions",
@@ -4460,12 +4461,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},

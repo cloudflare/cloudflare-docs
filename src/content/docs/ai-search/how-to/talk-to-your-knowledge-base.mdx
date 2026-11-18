@@ -18,20 +18,20 @@ import {
 } from "~/components";
 import AiSearchVoiceDiagram from "~/components/AiSearchVoiceDiagram.astro";
 
-This tutorial builds a voice agent that you can talk to and that answers out loud from your [AI Search](/ai-search/) knowledge base. It uses the [Cloudflare Agents](/agents/) [`@cloudflare/voice`](/agents/agent-class/communication-channels/voice/) package for the speech pipeline, and AI Search as the agent's knowledge base, exposed as a retrieval tool the agent's model calls.
+This tutorial builds a voice agent that you can talk to and that answers out loud from your [AI Search](/ai-search/) knowledge base. It uses [Cloudflare Agents](/agents/) [voice](/agents/agent-class/communication-channels/voice/) (`agents/voice`) for the speech pipeline, and AI Search as the agent's knowledge base, exposed as a retrieval tool the agent's model calls.
 
 **What you will build:** A voice agent that transcribes your speech, calls AI Search to retrieve relevant content from your indexed knowledge base, generates a grounded answer, and speaks it back.
 
 ## How it works
 
-The `@cloudflare/voice` package adds a full voice pipeline to a Cloudflare Agent: speech-to-text (STT), a "turn" handler where you produce a reply, and text-to-speech (TTS). The pipeline runs in a single Worker backed by a Durable Object, and the browser connects to it over a WebSocket.
+The `agents/voice` entry point adds a full voice pipeline to a Cloudflare Agent: speech-to-text (STT), a "turn" handler where you produce a reply, and text-to-speech (TTS). The pipeline runs in a single Worker backed by a Durable Object, and the browser connects to it over a WebSocket.
 
 The one method you write is `onTurn()`, which receives the user's transcript and returns the text to speak. This is where AI Search fits in: you run a language model and give it AI Search as a retrieval tool. The model decides when to search your knowledge base, grounds its reply in the results it gets back, and returns the answer text, which the pipeline speaks.
 
 <AiSearchVoiceDiagram />
 
 :::note
-The voice pipeline uses [Workers AI](/workers-ai/) for STT and TTS, so no extra API keys are required. `@cloudflare/voice` is in beta.
+The voice pipeline uses [Workers AI](/workers-ai/) for STT and TTS, so no extra API keys are required. `agents/voice` is in beta.
 :::
 
 ## Prerequisites
@@ -49,11 +49,11 @@ npm create cloudflare@latest voice-knowledge-base -- --template cloudflare/agent
 cd voice-knowledge-base
 ```
 
-Install the voice package:
+Voice ships in the `agents` package. Update it to the latest version:
 
-<PackageManagers pkg="@cloudflare/voice" />
+<PackageManagers pkg="agents@latest" />
 
-The [`@cloudflare/voice`](/agents/agent-class/communication-channels/voice/) package provides the `withVoice` mixin and the Workers AI providers (`WorkersAIFluxSTT` and `WorkersAITTS`). For a full walkthrough of the voice agent itself, including the browser client, refer to the [Voice agent example](/agents/examples/voice-agent/).
+The [`agents/voice`](/agents/agent-class/communication-channels/voice/) entry point provides the `withVoice` mixin and the Workers AI providers (`WorkersAIFluxSTT` and `WorkersAITTS`). For a full walkthrough of the voice agent itself, including the browser client, refer to the [Voice agent example](/agents/examples/voice-agent/).
 
 ## 2. Add the AI Search binding
 
@@ -121,7 +121,7 @@ import {
 	WorkersAIFluxSTT,
 	WorkersAITTS,
 	type VoiceTurnContext,
-} from "@cloudflare/voice";
+} from "agents/voice";
 import { generateText, tool, stepCountIs } from "ai";
 import { createAI } from "agents/models/ai-sdk";
 import { z } from "zod";
@@ -202,7 +202,7 @@ Use a Workers AI model that supports function calling so the model can call the 
 Replace `src/client.tsx` with a React component that uses the [`useVoiceAgent`](/agents/agent-class/communication-channels/voice/) hook. The hook manages the microphone, the WebSocket connection to your agent, audio playback, and interrupt detection, so the component only needs to render controls. Set `agent` to your agent class name, `TalkToDocs`.
 
 ```tsx title="src/client.tsx"
-import { useVoiceAgent } from "@cloudflare/voice/react";
+import { useVoiceAgent } from "agents/voice/react";
 
 function App() {
 	// useVoiceAgent connects to your agent over WebSocket, captures the
@@ -293,7 +293,7 @@ This tutorial builds a single-user voice agent. If you instead need several peop
 <LinkCard
 	title="Voice agents API reference"
 	href="/agents/agent-class/communication-channels/voice/"
-	description="The @cloudflare/voice pipeline, providers, and onTurn contract."
+	description="The agents/voice pipeline, providers, and onTurn contract."
 />
 
 <LinkCard

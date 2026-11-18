@@ -20,18 +20,18 @@ Create the registry with `createRegistry()` and install extensions in the `harne
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
-import { Type } from "@earendil-works/pi-ai";
 import { createModels } from "@earendil-works/pi-ai/models";
 import {
 	createRegistry,
 	Harness,
 	type ToolRegistration,
 } from "@earendil-works/pi-durable";
+import { obj, str } from "@earendil-works/pi-schema";
 import { PiHarness } from "agents/harness/pi";
 import { Lifecycle } from "agents/lifecycle";
 import { createAI } from "agents/models/pi-ai";
 
-const WordCount = Type.Object({ text: Type.String() });
+const WordCount = obj({ text: str() });
 
 const wordCount: ToolRegistration<typeof WordCount> = {
 	name: "word_count",
@@ -83,13 +83,13 @@ Create the registry per object, as a class field, not at module scope. Pi keeps 
 
 A tool is a Pi Durable `ToolRegistration`:
 
-- **Typed arguments.** Type a tool as `ToolRegistration<typeof Parameters>`, and `execute` gets arguments typed from the schema. Pi validates them against `parameters` before it calls `execute`. A bare `ToolRegistration` types its arguments as `unknown`.
+- **Typed arguments.** Build `parameters` with the schema builders from `@earendil-works/pi-schema`, such as `obj()`, `str()`, and `num()`. Type a tool as `ToolRegistration<typeof Parameters>`, and `execute` gets arguments typed from the schema. Pi validates them against `parameters` before it calls `execute`. `obj()` rejects properties it does not list unless you pass `{ open: true }`. A bare `ToolRegistration` types its arguments as `unknown`.
 - **What a running call can use.** `execute(args, api, context)` gets Pi's operations for the call. `api.output()` streams running output, `api.details()` sends data for a UI, and `api.memo()` stores values that survive an eviction.
 - **Abort.** `context.abortSignal` is aborted when the call is. Honor it: `session.abort()` waits until every running tool returns.
 - **Parallel calls.** Pi runs the tool calls in one model round at the same time by default. Set `executionMode: "sequential"` on a tool whose calls must run one after another. One sequential call makes its whole round sequential.
 
 ```ts
-const FetchPage = Type.Object({ url: Type.String() });
+const FetchPage = obj({ url: str() });
 
 const fetchPage: ToolRegistration<typeof FetchPage> = {
 	name: "fetch_page",
@@ -129,15 +129,14 @@ this.registry.install({
 
 ## Add skills
 
-`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/runtime/execution/agent-skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. It has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
+`skills(sources)` from `agents/harness/pi` turns [Agent Skills](/agents/skills/) sources from `agents/skills` into a Pi extension named `agents.skills`. Sources can read skills from a [Computer Workspace](/agents/skills/sources/computer/), [R2](/agents/skills/sources/r2/), or a [manifest](/agents/skills/sources/code/). The extension has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section that lists the skills. It reads the sources, so install it in an `async` factory:
 
 ```ts
 import { skills } from "agents/harness/pi";
-import { fromManifest } from "agents/skills";
+import { manifest } from "agents/skills";
 
-const handbook = fromManifest({
+const handbook = manifest({
 	id: "handbook",
-	fingerprint: "v1",
 	skills: [
 		{
 			name: "release-notes",
@@ -155,7 +154,7 @@ harness = new PiHarness({
 });
 ```
 
-The tools match the ones [Think](/agents/harnesses/think/) offers, so a skill written for one works in the other. The model can read a skill's instructions and resources. Skill scripts do not run.
+The tools match the ones [Think](/agents/harnesses/think/) offers, so a skill written for one works in the other. The sources are read once, when the factory builds the extension. The model can read a skill's instructions and resources. To run skill scripts, give the model a shell or Workspace tool. Refer to [Execution](/agents/skills/execution/).
 
 ## Use more of Pi Durable
 

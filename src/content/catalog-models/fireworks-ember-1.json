@@ -265,7 +265,8 @@
 	"metadata": {
 		"Architecture": "Mixture of Experts",
 		"Parameters": "2.78T",
-		"Specification": "Calibrated: No"
+		"Specification": "Calibrated: No",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions",

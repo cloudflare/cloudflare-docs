@@ -45,22 +45,36 @@ To use Quick Actions from a [Worker](/workers/), configure a [browser binding](/
 
 :::caution
 
-The `.quickAction()` method has two requirements:
-
-- **Compatibility date:** Your Worker must use a compatibility date of `2026-03-24` or later.
-- **Remote mode for local development:** The `.quickAction()` method is not yet supported in local development mode. When developing locally with `wrangler dev`, you must use `npx wrangler dev --remote` or set `"remote": true` in your browser binding configuration. Without remote mode, you will receive the error: `The RPC receiver does not implement the method "quickAction"`.
+The `.quickAction()` method requires a compatibility date of `2026-03-24` or later.
 
 ```jsonc
 {
   "compatibility_date": "2026-03-24",
+  "browser": {
+    "binding": "BROWSER"
+  }
+}
+```
+
+:::
+
+### Test Quick Actions locally
+
+Under `npx wrangler dev`, `.quickAction()` uses a Chrome instance on your machine. It returns the same responses and errors as Browser Run, with two exceptions:
+
+- The `json` action returns placeholder data, because [Workers AI](/workers-ai/) is not available locally. If a field in `response_format.json_schema` sets `const`, `enum`, or `default`, it gets that value, or the first `enum` entry. Other fields get an empty value, such as `""`, `0`, `false`, or `[]`. Wrangler also logs a warning.
+- The [Kitesurf](/browser-run/kitesurf/) browser is not available. If you pass `browser: "kitesurf"`, `.quickAction()` throws an error.
+
+To get real `json` results or use Kitesurf during local development, set `"remote": true` in your browser binding configuration:
+
+```jsonc
+{
   "browser": {
     "binding": "BROWSER",
     "remote": true
   }
 }
 ```
-
-:::
 
 :::note[Note]
 

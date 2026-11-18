@@ -8,7 +8,7 @@ products:
   - agents
 ---
 
-import { PackageManagers, TypeScriptExample } from "~/components";
+import { PackageManagers, Render, TypeScriptExample } from "~/components";
 
 `MCPClientManager` from `agents/mcp/client` connects your agent to [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers. It stores the servers you add in the Durable Object's SQLite database, reconnects to them when the object starts, and answers OAuth callbacks before your `onRequest()` runs.
 
@@ -277,7 +277,9 @@ When the object is destroyed, the manager closes every connection.
 
 ## Call the manager over RPC
 
-Native RPC methods bypass `fetch()`, so they do not start the Lifecycle. Call `await this.lifecycle.start()` before you read tools or servers in an RPC method, as `callDocsSearch()` does in the previous example.
+<Render file="rpc-start" product="agents" />
+
+`callDocsSearch()` in the previous example starts the Lifecycle before it reads tools or servers.
 
 ## Storage
 

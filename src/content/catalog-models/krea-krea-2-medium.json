@@ -14,7 +14,6 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Default (per second)": 0.03,
 		"Per image": 0.03
 	},
 	"examples": [

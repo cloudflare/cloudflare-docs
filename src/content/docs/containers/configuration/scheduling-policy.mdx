@@ -12,6 +12,12 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 A scheduling policy determines where you configure a Container image and [instance size](/containers/platform/limits/#instance-types). It also determines how image updates and [rollouts](/containers/configuration/rollouts/) apply. Choose the policy when you create the Container application.
 
+:::caution[Default scheduling is deprecated]
+The `default` scheduling policy is deprecated. This includes applications that omit `scheduling_policy`, which selects `default` automatically.
+
+Migrate to the `durable_object` scheduling policy. Existing applications require code changes and a replacement application. Changing the setting alone does not migrate them. Refer to [Migrate to the Durable Object scheduling policy](/containers/guides/migrate-to-durable-object-scheduling-policy/).
+:::
+
 | Policy                  | Configure image and instance size                           | Image updates                                                                                                  | Best for                                                                                |
 | ----------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | `default`               | In Wrangler configuration                                   | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size                           |

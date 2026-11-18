@@ -14,11 +14,11 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Default (per second)": 0.12,
-		"@480p video input (per second)": 0.132,
-		"@720p video input (per second)": 0.286,
 		"@480p non-video input (per second)": 0.06,
-		"@720p non-video input (per second)": 0.12
+		"@480p video input (per second)": 0.132,
+		"@720p non-video input (per second)": 0.12,
+		"@720p video input (per second)": 0.286,
+		"Default (per second)": 0.12
 	},
 	"examples": [
 		{
@@ -147,11 +147,11 @@
 		{
 			"id": "bytedance",
 			"pricing": {
-				"default": 0.12,
-				"480p_video_in": 0.132,
-				"720p_video_in": 0.286,
 				"480p_non_video_in": 0.06,
-				"720p_non_video_in": 0.12
+				"480p_video_in": 0.132,
+				"720p_non_video_in": 0.12,
+				"720p_video_in": 0.286,
+				"default": 0.12
 			}
 		}
 	],
@@ -164,7 +164,7 @@
 			"properties": {
 				"prompt": {
 					"type": "string",
-					"maxLength": 2000,
+					"maxLength": 10000,
 					"description": "Text prompt describing the video to generate"
 				},
 				"image": {

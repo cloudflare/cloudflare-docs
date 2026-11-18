@@ -144,6 +144,14 @@
 /load-balancing/changelog/index.xml /changelog/rss/load-balancing.xml 301
 /logs/changelog/index.xml /changelog/rss/logs.xml 301
 /magic-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/magic-cloud-networking/changelog/ /cloudflare-wan/reference/legacy-cloud-networking-changelog/ 301
+/multi-cloud-networking/changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/cloudflare-wan/reference/legacy-cloud-networking-changelog/index.xml /changelog/rss/multi-cloud-networking.xml 301
+/multi-cloud-networking/changelog/ /cloudflare-wan/reference/legacy-cloud-networking-changelog/ 301
+/magic-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
+/multi-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
+/cloudflare-wan/configuration/multi-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
+/magic-wan/configuration/multi-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
 /magic-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /cloudflare-network-firewall/changelog/index.xml /changelog/rss/cloudflare-network-firewall.xml 301
 /magic-network-monitoring/changelog/index.xml /changelog/rss/network-flow.xml 301
@@ -258,6 +266,8 @@
 /agents/runtime/communication/readonly-connections/ /agents/agent-class/readonly-connections/ 301
 /agents/runtime/communication/routing/ /agents/agent-class/routing/ 301
 /agents/runtime/communication/websockets/ /agents/agent-class/websockets/ 301
+/agents/runtime/execution/ /agents/skills/ 301
+/agents/runtime/execution/agent-skills/ /agents/skills/execution/ 301
 /agents/runtime/execution/agent-tools/ /agents/agent-class/agent-tools/ 301
 /agents/runtime/execution/durable-execution/ /agents/agent-class/durable-execution/ 301
 /agents/runtime/execution/queue-tasks/ /agents/agent-class/queue-tasks/ 301
@@ -393,6 +403,7 @@
 /agents/communication-channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/communication-channels/slack/slack-agent/ /agents/examples/slack-agent/ 301
 /agents/tools/browser/browse-the-web/ /agents/tools/browser/ 301
+/agents/harnesses/container/ /agents/harnesses/claude-code/ 301
 /agents/tools/sandbox/codemode/ /agents/tools/codemode/ 301
 /agents/tools/payments/mpp/charge-for-http-content/ /agents/tools/payments/mpp-charge-for-http-content/ 301
 /agents/tools/payments/mpp/protect-an-origin/ /agents/tools/payments/mpp-charge-for-http-content/ 301
@@ -409,6 +420,10 @@
 /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-metrics/ /ai-crawl-control/features/pay-per-crawl/use-pay-per-crawl-as-site-owner/monitor-activity/ 301
 
 # AI Gateway
+/ai-gateway/features/auto-router/ /ai-gateway/features/routing/auto-router/ 301
+/ai-gateway/features/dynamic-routing/ /ai-gateway/features/routing/dynamic-routing/ 301
+/ai-gateway/features/dynamic-routing/json-configuration/ /ai-gateway/features/routing/dynamic-routing/json-configuration/ 301
+/ai-gateway/features/dynamic-routing/usage/ /ai-gateway/features/routing/dynamic-routing/usage/ 301
 /ai-gateway/get-started/configuring-settings/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/connecting-applications/ /ai-gateway/get-started/ 301
 /ai-gateway/get-started/creating-gateway/ /ai-gateway/get-started/ 301
@@ -729,10 +744,11 @@
 # Containers
 /containers/beta-info/ /containers/faq/ 301
 # Containers API
-/containers/container-package/ /containers/api/container-class/ 301
+/containers/api/container-class/ /containers/api/durable-object-container/ 301
+/containers/container-package/ /containers/api/durable-object-container/ 301
 /containers/durable-object-methods/ /containers/api/durable-object-container/ 301
-/containers/container-class/ /containers/api/container-class/ 301
-/containers/reference/container-class/ /containers/api/container-class/ 301
+/containers/container-class/ /containers/api/durable-object-container/ 301
+/containers/reference/container-class/ /containers/api/durable-object-container/ 301
 /containers/reference/durable-object-methods/ /containers/api/durable-object-container/ 301
 /durable-objects/api/container/ /containers/api/durable-object-container/ 301
 # Containers IA rework: loose pages folded into core sections
@@ -966,6 +982,7 @@
 /support/dns/troubleshooting/why-was-my-domain-deleted-from-cloudflare/ /dns/zone-setups/troubleshooting/domain-deleted/ 301
 
 # Durable Objects
+/durable-objects/reference/durable-object-gradual-deployments/ /workers/versions-and-deployments/gradual-deployments/#gradual-deployments-for-durable-objects 301
 /durable-objects/api/hibernatable-websockets-api/ /durable-objects/best-practices/websockets/ 301
 /durable-objects/api/alarms-in-durable-objects/ /durable-objects/api/alarms/ 301
 /durable-objects/api/websockets/ /durable-objects/best-practices/websockets/ 301
@@ -1226,14 +1243,14 @@
 /fundamentals/basic-tasks/optimize-speed-external-link/ /fundamentals/performance/optimize-speed-external-link/ 301
 /fundamentals/basic-tasks/prevent-ddos-attacks-external/ /fundamentals/security/prevent-ddos-attacks-external/ 301
 /fundamentals/basic-tasks/pci-scans/ /fundamentals/security/pci-scans/ 301
-/fundamentals/basic-tasks/trace-request/ /rules/trace-request/ 301
-/fundamentals/basic-tasks/trace-request/how-to/ /rules/trace-request/how-to/ 301
-/fundamentals/basic-tasks/trace-request/limitations/ /rules/trace-request/limitations/ 301
-/fundamentals/basic-tasks/trace-request/changelog/ /rules/trace-request/changelog/ 301
-/fundamentals/security/trace-request/ /rules/trace-request/ 301
-/fundamentals/security/trace-request/how-to/ /rules/trace-request/how-to/ 301
-/fundamentals/security/trace-request/limitations/ /rules/trace-request/limitations/ 301
-/fundamentals/security/trace-request/changelog/ /rules/trace-request/changelog/ 301
+/fundamentals/basic-tasks/trace-request/ /rules/simulator/ 301
+/fundamentals/basic-tasks/trace-request/how-to/ /rules/simulator/how-to/ 301
+/fundamentals/basic-tasks/trace-request/limitations/ /rules/simulator/limitations/ 301
+/fundamentals/basic-tasks/trace-request/changelog/ /rules/simulator/changelog/ 301
+/fundamentals/security/trace-request/ /rules/simulator/ 301
+/fundamentals/security/trace-request/how-to/ /rules/simulator/how-to/ 301
+/fundamentals/security/trace-request/limitations/ /rules/simulator/limitations/ 301
+/fundamentals/security/trace-request/changelog/ /rules/simulator/changelog/ 301
 /fundamentals/concepts/what-is-cloudflare/ https://www.cloudflare.com/learning/what-is-cloudflare/ 301
 /fundamentals/concepts/the-internet/ https://www.cloudflare.com/learning/network-layer/how-does-the-internet-work/ 301
 /fundamentals/concepts/free-plan/ /billing/ 301
@@ -1258,10 +1275,10 @@
 /fundamentals/subscriptions-and-billing/delete-account/ /fundamentals/user-profiles/delete-account/ 301
 /fundamentals/subscriptions-and-billing/ /fundamentals/account/ 301
 /fundamentals/api/building-custom-dashboards/ /fundamentals/api/ 301
-/fundamentals/trace-request/ /rules/trace-request/ 301
-/fundamentals/trace-request/how-to/ /rules/trace-request/how-to/ 301
-/fundamentals/trace-request/limitations/ /rules/trace-request/limitations/ 301
-/fundamentals/trace-request/changelog/ /rules/trace-request/changelog/ 301
+/fundamentals/trace-request/ /rules/simulator/ 301
+/fundamentals/trace-request/how-to/ /rules/simulator/how-to/ 301
+/fundamentals/trace-request/limitations/ /rules/simulator/limitations/ 301
+/fundamentals/trace-request/changelog/ /rules/simulator/changelog/ 301
 /fundamentals/setup/use-cloudflare-without-changing-nameservers/ /fundamentals/manage-domains/add-site/ 301
 /fundamentals/setup/interact-with-cloudflare/ /fundamentals/account/create-account/ 301
 /fundamentals/setup/find-account-and-zone-ids/ /fundamentals/account/find-account-and-zone-ids/ 301
@@ -1667,7 +1684,7 @@
 /magic-wan/configuration/common-settings/enable-magic-roles/ /cloudflare-wan/configuration/common-settings/enable-roles/ 301
 /magic-wan/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
 /magic-wan/reference/how-cloudflare-calculates-magic-tunnel-health-alerts/ /cloudflare-wan/reference/how-cloudflare-calculates-tunnel-health-alerts/ 301
-/magic-wan/configuration/magic-cloud-networking/ /cloudflare-wan/configuration/multi-cloud-networking/ 301
+/magic-wan/configuration/magic-cloud-networking/ /cloudflare-wan/reference/cloud-networking/ 301
 # wan-tunnels slug renames (old path + old slug → new path + new slug)
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/enable-magic-roles/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/enable-roles/ 301
 /cloudflare-one/networks/connectors/wan-tunnels/configuration/common-settings/configure-magic-tunnel-health-alerts/ /cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/configure-tunnel-health-alerts/ 301
@@ -2156,6 +2173,7 @@
 
 
 # r2
+/r2/get-started/local-development/ /r2/local-development/ 301
 /r2/platform/s3-compatibility/api/ /r2/api/s3/api/ 301
 /r2/platform/s3-compatibility/tokens/ /r2/api/tokens/ 301
 /r2/api/s3/tokens/ /r2/api/tokens/ 301
@@ -2612,6 +2630,9 @@
 /workers/development-testing/remote-data/ /workers/local-development/#remote-bindings 301
 /workers/development-testing/testing/ /workers/testing/ 301
 
+# workers ai - model moved to unified catalog
+/workers-ai/models/jev/ /ai/models/typesafe/jev/ 301
+
 # workers ai - legacy task type URLs redirect to unified catalog
 /workers-ai/models/llm/ /ai/models/#text-generation 301
 /workers-ai/models/sentiment-analysis/ /ai/models/#text-classification 301
@@ -3048,6 +3069,12 @@
 
 # ============================================================================
 # DYNAMIC REDIRECTS
+# Rules simulator (renamed from Cloudflare Trace, DEE-4058)
+/rules/trace-request/ /rules/simulator/ 301
+/rules/trace-request/how-to/ /rules/simulator/how-to/ 301
+/rules/trace-request/limitations/ /rules/simulator/limitations/ 301
+/rules/trace-request/changelog/ /rules/simulator/changelog/ 301
+
 /cloudflare-one/traffic-policies/* /cloudflare-one/traffic-controls/:splat 301
 /agents/think/* /agents/harnesses/think/:splat 301
 # ============================================================================
@@ -3223,11 +3250,13 @@
 /page-shield/* /client-side-security/:splat 301
 
 # Rules
+
 /rules/bulk-redirects/* /rules/url-forwarding/bulk-redirects/:splat 301
 /rules/url-forwarding/dynamic-redirects/* /rules/url-forwarding/single-redirects/:splat 301
 /rules/custom-error-responses/* /rules/custom-errors/:splat 301
 # WAF
 /waf/managed-rulesets/* /waf/managed-rules/:splat 301
+/waf/managed-rules/payload-logging/* /waf/payload-logging/:splat 301
 /waf/custom-rulesets/* /waf/account/custom-rulesets/:splat 301
 /waf/detections/firewall-for-ai/* /waf/detections/ai-security-for-apps/:splat 301
 /waf/exposed-credentials-check/* /waf/managed-rules/check-for-exposed-credentials/:splat 301
@@ -3281,7 +3310,8 @@
 /cloudflare-one/networks/connectors/wan-tunnels/* /cloudflare-one/networks/connectors/cloudflare-wan/:splat 301
 
 # Multi-Cloud Networking (formerly Magic Cloud Networking)
-/magic-cloud-networking/* /multi-cloud-networking/:splat 301
+/magic-cloud-networking/* /cloudflare-wan/reference/cloud-networking/ 301
+/multi-cloud-networking/* /cloudflare-wan/reference/cloud-networking/ 301
 
 # Network Flow (formerly Magic Network Monitoring)
 /magic-network-monitoring/* /network-flow/:splat 301

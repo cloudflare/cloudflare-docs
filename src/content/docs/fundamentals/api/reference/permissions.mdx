@@ -47,6 +47,15 @@ The applicable scope of user permissions is `com.cloudflare.api.user`.
 
 The applicable scope of account permissions is `com.cloudflare.api.account`.
 
+MoQ uses its own account permissions, separate from Realtime permissions. Select **Account** > **MoQ** when [creating a token](/fundamentals/api/get-started/create-token/):
+
+| Dashboard permission | Permission-groups API name | Access |
+| -------------------- | -------------------------- | ------ |
+| MoQ Read | MoQ Read | Read and list MoQ relays and connection-token metadata. |
+| MoQ Edit | MoQ Write | Create, read, update, and delete MoQ relays, and create, list, and revoke their connection tokens. |
+
+For examples, refer to [Use the MoQ API](/moq/use-the-api/).
+
 :::note
 The `AI Gateway Read`, `Run`, and `Edit` permissions are account-scoped only — they cannot be restricted to a single gateway. For details, refer to [Authenticated Gateway](/ai-gateway/configuration/authentication/).
 :::
@@ -457,6 +466,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Logs Edit                                                                                                  | Grants write access to [Logpull and Logpush](/logs/).                                                                 |
 | Managed Headers Read                                                                                                   | Grants read access to [Managed Headers](/rules/transform/managed-transforms/).                                        |
 | Managed Headers Edit                                                                                       | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                       |
+| Zone Observability Read                                                                                                | Grants read access to [Cloudflare Traces](/observability/traces/).                                                    |
+| Zone Observability Edit                                                                                                | Grants write access to [Cloudflare Traces](/observability/traces/).                                                   |
 | Origin Rules Read                                                                                                      | Grants read access to [Origin Rules](/rules/origin-rules/).                                                           |
 | Origin Rules Edit                                                                                          | Grants write access to [Origin Rules](/rules/origin-rules/).                                                          |
 | Page Rules Read                                                                                                        | Grants read access to [Page Rules](/rules/page-rules/).                                                               |
@@ -536,6 +547,8 @@ The applicable scope of zone permissions is `com.cloudflare.api.account.zone`.
 | Logs Write                                                                                                  | Grants write access to [Logpull and Logpush](/logs/).                                                                 |
 | Managed headers Read                                                                                                   | Grants read access to [Managed Headers](/rules/transform/managed-transforms/).                                        |
 | Managed headers Write                                                                                       | Grants write access to [Managed Headers](/rules/transform/managed-transforms/).                                       |
+| Zone Observability Read                                                                                                | Grants read access to [Cloudflare Traces](/observability/traces/).                                                    |
+| Zone Observability Write                                                                                               | Grants write access to [Cloudflare Traces](/observability/traces/).                                                   |
 | Origin Read                                                                                                            | Grants read access to [Origin Rules](/rules/origin-rules/).                                                           |
 | Origin Write                                                                                                | Grants write access to [Origin Rules](/rules/origin-rules/).                                                          |
 | Page Rules Read                                                                                                        | Grants read access to [Page Rules](/rules/page-rules/).                                                               |

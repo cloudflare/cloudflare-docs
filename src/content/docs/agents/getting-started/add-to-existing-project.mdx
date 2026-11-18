@@ -1,242 +1,273 @@
 ---
-title: Add to existing project
-description: Add the Agents SDK to an existing Cloudflare Workers project with state management and real-time connections.
+title: Add to an existing project
+description: Add the Agents SDK Lifecycle to a Durable Object in an existing Cloudflare Workers project, then add capabilities such as state, WebSockets, and scheduling.
 pcx_content_type: how-to
 sidebar:
-  order: 2
+  order: 3
 products:
   - agents
 ---
 
 import {
 	PackageManagers,
+	Render,
+	Steps,
 	TypeScriptExample,
 	WranglerConfig,
-	Render,
 } from "~/components";
 
-This guide shows how to add agents to an existing Cloudflare Workers project. If you are starting fresh, refer to [Building a chat agent](/agents/examples/chat-agent/) instead.
+Any Cloudflare Workers project can host an agent. Add a [Durable Object](/durable-objects/), or use one you already have, and install the Agents SDK [lifecycle](/agents/runtime/lifecycle/) on it. Then add the capabilities you need from the Agents SDK, such as state, WebSockets, scheduling, MCP clients, or a [harness](/agents/harnesses/).
+
+You do not need to change your Worker's existing routes or rewrite your Durable Object as a subclass of a framework class. The Lifecycle runs inside your `DurableObject` class.
+
+If you are starting a new project, follow [Build your first Durable Agent](/agents/getting-started/quick-start/) instead.
 
 ## Prerequisites
 
-- An existing Cloudflare Workers project with a Wrangler configuration file
-- Node.js 18 or newer
+- A Workers project with a [Wrangler configuration file](/workers/wrangler/configuration/).
+- A Durable Object class with [SQLite storage](/durable-objects/api/sqlite-storage-api/), or a new one. The Lifecycle keeps its job queue in SQLite, so it does not run on a [KV-backed Durable Object](/durable-objects/api/legacy-kv-storage-api/).
+- Objects addressed by name, with `getByName()` or `idFromName()`. The Lifecycle reads the object's name from `ctx.id.name`, which objects created with `newUniqueId()` or `idFromString()` do not have.
 
-## 1. Install the package
+## 1. Install the Agents SDK
 
 <PackageManagers pkg="agents" />
 
-For React applications, no additional packages are needed — React bindings are included.
-
-For Hono applications:
-
-<PackageManagers pkg="agents hono-agents" />
-
-## 2. Create an Agent
-
-Create a new file for your agent (for example, `src/agents/counter.ts`):
-
-<TypeScriptExample>
-
-```ts
-import { Agent, callable } from "agents";
-
-export type CounterState = {
-	count: number;
-};
-
-export class CounterAgent extends Agent<Env, CounterState> {
-	initialState: CounterState = { count: 0 };
-
-	@callable()
-	increment() {
-		this.setState({ count: this.state.count + 1 });
-		return this.state.count;
-	}
-
-	@callable()
-	decrement() {
-		this.setState({ count: this.state.count - 1 });
-		return this.state.count;
-	}
-}
-```
-
-</TypeScriptExample>
-
-## 3. Update Wrangler configuration
-
-Add the Durable Object binding and migration:
+The `agents` package requires the `nodejs_compat` compatibility flag. Add it to your Wrangler configuration if it is not there already:
 
 <WranglerConfig>
 
 ```jsonc
 {
-	"name": "my-existing-project",
-	"main": "src/index.ts",
-	"upload_source_maps": true,
-	"compatibility_date": "$today",
 	"compatibility_flags": ["nodejs_compat"],
+}
+```
 
+</WranglerConfig>
+
+## 2. Add a Durable Object
+
+Skip this step if you are using a Durable Object you already have.
+
+Add a binding for the new class, and declare it with SQLite storage. If your Worker uses the `exports` field, add an entry to it:
+
+<WranglerConfig>
+
+```jsonc
+{
 	"durable_objects": {
-		"bindings": [
-			{
-				"name": "CounterAgent",
-				"class_name": "CounterAgent",
-			},
-		],
+		"bindings": [{ "name": "NOTES", "class_name": "Notes" }],
 	},
+	"exports": {
+		"Notes": { "type": "durable-object", "storage": "sqlite" },
+	},
+}
+```
 
+</WranglerConfig>
+
+If your Worker uses the legacy `migrations` array, add a new migration with a new tag instead. A Worker uses one of the two, not both:
+
+<WranglerConfig>
+
+```jsonc
+{
 	"migrations": [
-		{
-			"tag": "v1",
-			"new_sqlite_classes": ["CounterAgent"],
-		},
+		// ...your existing migrations
+		{ "tag": "v2", "new_sqlite_classes": ["Notes"] },
 	],
 }
 ```
 
 </WranglerConfig>
 
-**Key points:**
+Refer to [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/) for details. Export the class from your Worker's main module, then run `npx wrangler types` to update the `Env` interface.
 
-- `name` in bindings becomes the property on `env` (for example, `env.CounterAgent`)
-- `class_name` must exactly match your exported class name
-- `new_sqlite_classes` enables SQLite storage for state persistence
-- `nodejs_compat` flag is required for the agents package
+## 3. Install the Lifecycle
 
-## 4. Configure TypeScript and Vite
+Add a `lifecycle` field to the class with `Lifecycle.install(this)`. The Lifecycle installs the object's `fetch`, `alarm`, and WebSocket handlers, starts the object once before it handles any work, and passes each request to your code.
 
-If you use `@callable()` decorators (as in the example above), you need two build configurations.
+The Lifecycle only installs a handler the class does not already define. If your class keeps its own `fetch()` or `alarm()`, those run instead, and the Lifecycle never starts. Move that code into the Lifecycle's hooks:
 
-**tsconfig.json** — extend `agents/tsconfig` (or set `"target": "ES2021"` manually):
+| Existing code                                                | Move it to                                                                                                                                                      |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Setup in the constructor, such as `blockConcurrencyWhile()`  | `onStart()`. It runs once each time the object starts, and the Lifecycle holds other events until it finishes.                                                  |
+| `fetch(request)`                                             | `onRequest(request)`. It receives every request that no capability handled.                                                                                     |
+| `alarm()` and `ctx.storage.setAlarm()`                       | The [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability, or `onAlarm()`. The Lifecycle owns the object's alarm and re-arms it from its job queue. |
+| `webSocketMessage()`, `webSocketClose()`, `webSocketError()` | The handlers of the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability.                                                                        |
 
-```json
-{
-	"extends": "agents/tsconfig"
-}
-```
+For example, here is a Durable Object that stores notes:
 
-If you have an existing `tsconfig.json` with custom settings, you can extend and override:
+<TypeScriptExample filename="src/notes.ts">
 
-```json
-{
-	"extends": "agents/tsconfig",
-	"compilerOptions": {
-		"paths": { "~/*": ["./src/*"] }
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class Notes extends DurableObject<Env> {
+	constructor(ctx: DurableObjectState, env: Env) {
+		super(ctx, env);
+		ctx.blockConcurrencyWhile(async () => {
+			this.ctx.storage.sql.exec(
+				"CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)",
+			);
+		});
+	}
+
+	add(text: string): void {
+		this.ctx.storage.sql.exec("INSERT INTO notes (text) VALUES (?)", text);
+	}
+
+	list(): string[] {
+		return this.ctx.storage.sql
+			.exec<{ text: string }>("SELECT text FROM notes ORDER BY id")
+			.toArray()
+			.map((row) => row.text);
+	}
+
+	async fetch(request: Request): Promise<Response> {
+		if (request.method === "POST") {
+			this.add(await request.text());
+		}
+		return Response.json(this.list());
 	}
 }
 ```
 
-**vite.config.ts** — add the `agents()` plugin (handles TC39 decorator transforms for Vite 8):
-
-<TypeScriptExample>
-
-```ts
-import agents from "agents/vite";
-
-export default defineConfig({
-	plugins: [
-		agents(),
-		// ... your existing plugins
-	],
-});
-```
-
 </TypeScriptExample>
 
-If your project does not use Vite, the `tsconfig.json` change alone is sufficient — your bundler must support TC39 decorators (stage 3, version `2023-11`).
+With the Lifecycle installed, the constructor setup moves to `onStart()` and `fetch()` becomes `onRequest()`:
 
-## 5. Export the Agent class
-
-Your agent class must be exported from your main entry point. Update your `src/index.ts`:
-
-<TypeScriptExample>
+<TypeScriptExample filename="src/notes.ts">
 
 ```ts
-// Export the agent class (required for Durable Objects)
-export { CounterAgent } from "./agents/counter";
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
 
-// Your existing exports...
-export default {
-	// ...
-} satisfies ExportedHandler<Env>;
-```
+export class Notes extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
 
-</TypeScriptExample>
+	onStart(): void {
+		this.ctx.storage.sql.exec(
+			"CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY, text TEXT NOT NULL)",
+		);
+	}
 
-## 6. Wire up routing
+	add(text: string): void {
+		this.ctx.storage.sql.exec("INSERT INTO notes (text) VALUES (?)", text);
+	}
 
-Choose the approach that matches your project structure:
+	async list(): Promise<string[]> {
+		// RPC calls do not go through fetch, so start the lifecycle first
+		await this.lifecycle.start();
+		return this.ctx.storage.sql
+			.exec<{ text: string }>("SELECT text FROM notes ORDER BY id")
+			.toArray()
+			.map((row) => row.text);
+	}
 
-### Plain Workers (fetch handler)
-
-<TypeScriptExample>
-
-```ts
-import { routeAgentRequest } from "agents";
-export { CounterAgent } from "./agents/counter";
-
-export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		// Try agent routing first
-		const agentResponse = await routeAgentRequest(request, env);
-		if (agentResponse) return agentResponse;
-
-		// Your existing routing logic
-		const url = new URL(request.url);
-		if (url.pathname === "/api/hello") {
-			return Response.json({ message: "Hello!" });
+	async onRequest(request: Request): Promise<Response> {
+		if (request.method === "POST") {
+			this.add(await request.text());
 		}
-
-		return new Response("Not found", { status: 404 });
-	},
-} satisfies ExportedHandler<Env>;
+		return Response.json(await this.list());
+	}
+}
 ```
 
 </TypeScriptExample>
 
-### Hono
+<Render file="rpc-start" product="agents" />
+
+Concurrent calls share one startup, and calls after startup return immediately. Capability methods, such as `scheduler.set()`, start the Lifecycle themselves.
+
+## 4. Add capabilities
+
+Each capability is a class from the Agents SDK. Create it as a field and add it to the Lifecycle with `.use()`. This example adds the [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability, so the object can add a note later:
+
+<TypeScriptExample filename="src/notes.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+import { Scheduler } from "agents/schedules";
+
+export class Notes extends DurableObject<Env> {
+	readonly scheduler = new Scheduler({
+		callbacks: {
+			remind: (payload: { text: string }) => {
+				this.add(`Reminder: ${payload.text}`);
+			},
+		},
+	});
+
+	readonly lifecycle = Lifecycle.install(this).use(this.scheduler);
+
+	async remindLater(text: string, seconds: number): Promise<void> {
+		await this.scheduler.set(seconds, "remind", { text });
+	}
+
+	// onStart(), add(), list(), and onRequest() as before
+}
+```
+
+</TypeScriptExample>
+
+The Lifecycle stores the schedule in its job queue in SQLite and sets the object's alarm. When the alarm fires, the Lifecycle starts the object if it was evicted, and runs `remind`.
+
+Call `remindLater()` over RPC from your Worker:
 
 <TypeScriptExample>
 
 ```ts
-import { Hono } from "hono";
-import { agentsMiddleware } from "hono-agents";
-export { CounterAgent } from "./agents/counter";
-
-const app = new Hono<{ Bindings: Env }>();
-
-// Add agents middleware - handles WebSocket upgrades and agent HTTP requests
-app.use("*", agentsMiddleware());
-
-// Your existing routes continue to work
-app.get("/api/hello", (c) => c.json({ message: "Hello!" }));
-
-export default app;
+const notes = env.NOTES.getByName("team");
+await notes.remindLater("Stand-up", 60);
 ```
 
 </TypeScriptExample>
 
-### With static assets
+Other capabilities install the same way:
 
-If you are serving static assets alongside agents, static assets are served first by default. Your Worker code only runs for paths that do not match a static asset:
+| Capability                                                             | Import              | What it adds                                                                        |
+| ---------------------------------------------------------------------- | ------------------- | ----------------------------------------------------------------------------------- |
+| [`State`](/agents/runtime/capabilities/state/)                         | `agents/state`      | One JSON value, stored in SQLite and optionally synced to clients.                  |
+| [`WebSockets`](/agents/runtime/capabilities/websockets/)               | `agents/websockets` | Hibernating WebSocket connections that `useAgent` and `AgentClient` can connect to. |
+| [`Scheduler`](/agents/runtime/capabilities/scheduler/)                 | `agents/schedules`  | Delayed, dated, interval, and cron schedules.                                       |
+| [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/) | `agents/mcp/client` | Connections to remote MCP servers.                                                  |
+| [`PiHarness`](/agents/harnesses/pi/)                                   | `agents/harness/pi` | The Pi agent loop, with durable sessions.                                           |
 
-<TypeScriptExample>
+Capabilities run in the order you add them. To write your own, refer to [Lifecycle](/agents/runtime/lifecycle/).
+
+## 5. Route requests to the Durable Object
+
+Your Worker can keep sending requests to the object the way it does now, for example with `env.NOTES.getByName(name).fetch(request)`. The Lifecycle handles requests and WebSocket upgrades from any stub.
+
+To use the Agents SDK clients, `useAgent` from `agents/react` and `AgentClient` from `agents/client`, serve the object at `/agents/{binding}/{name}` with `routeAgentRequest()`. Call it before your existing routes:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { routeAgentRequest } from "agents";
-export { CounterAgent } from "./agents/counter";
+
+export { Notes } from "./notes";
+
+// routeAgentRequest() matches every Durable Object binding in env.
+// Only serve the ones that run the lifecycle.
+const AGENT_BINDINGS = new Set(["NOTES"]);
+
+function onlyAgents(_request: Request, route: { className: string }) {
+	if (!AGENT_BINDINGS.has(route.className)) {
+		return new Response("Not found", { status: 404 });
+	}
+}
 
 export default {
-	async fetch(request: Request, env: Env, ctx: ExecutionContext) {
-		// Static assets are served automatically before this runs
-		// This only handles non-asset requests
-
-		// Route to agents
-		const agentResponse = await routeAgentRequest(request, env);
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const agentResponse = await routeAgentRequest(request, env, {
+			onBeforeRequest: onlyAgents,
+			onBeforeConnect: onlyAgents,
+		});
 		if (agentResponse) return agentResponse;
 
+		// Your existing routes
 		return new Response("Not found", { status: 404 });
 	},
 } satisfies ExportedHandler<Env>;
@@ -244,7 +275,11 @@ export default {
 
 </TypeScriptExample>
 
-Configure assets in the Wrangler configuration file:
+`routeAgentRequest()` maps every Durable Object binding in `env` to a URL. A binding called `NOTES` is served at `/agents/notes/{name}`. Without the `onBeforeRequest` and `onBeforeConnect` checks, it would also forward requests to other Durable Objects in your Worker. You can also use these hooks to check authentication before a request reaches the object.
+
+If you use [Hono](https://hono.dev/), `agentsMiddleware()` from the `hono-agents` package calls `routeAgentRequest()` for you. Pass the same options as `agentsMiddleware({ options: { onBeforeRequest, onBeforeConnect } })`.
+
+If your Worker serves [static assets](/workers/static-assets/), requests that match an asset are served before your Worker runs. To make sure `/agents/*` always reaches your Worker, add it to `run_worker_first`:
 
 <WranglerConfig>
 
@@ -252,96 +287,37 @@ Configure assets in the Wrangler configuration file:
 {
 	"assets": {
 		"directory": "./public",
+		"run_worker_first": ["/agents/*"],
 	},
 }
 ```
 
 </WranglerConfig>
 
-## 7. Generate TypeScript types
-
-Do not hand-write your `Env` interface. Run [`wrangler types`](/workers/wrangler/commands/general/#types) to generate a type definition file that matches your Wrangler configuration. This catches mismatches between your config and code at compile time instead of at deploy time.
-
-Re-run `wrangler types` whenever you add or rename a binding.
+## 6. Deploy
 
 ```sh
-npx wrangler types
+npx wrangler deploy
 ```
 
-This creates a type definition file with all your bindings typed, including your agent Durable Object namespaces. The `Agent` class defaults to using the generated `Env` type, so you do not need to pass it as a type parameter — `extends Agent` is sufficient unless you need to pass a second type parameter for state (for example, `Agent<Env, CounterState>`).
+Your existing Durable Objects keep their data. The Lifecycle and the Agents SDK capabilities add their own tables to the object's SQLite database, with names that start with `cf_agents_`, and their own storage keys, which start with `cf_agents:`. Harnesses use their own prefix, such as `pi_` for the Pi harness. None of them touch your tables.
 
-Refer to [TypeScript](/workers/languages/typescript/) for more details on type generation.
+## Troubleshooting
 
-## 8. Connect from the frontend
+### `onStart()`, `onRequest()`, or a capability never runs
 
-### React
+Remove `fetch()`, `alarm()`, `webSocketMessage()`, `webSocketClose()`, and `webSocketError()` from the class. The Lifecycle does not replace a handler the class already defines.
 
-<TypeScriptExample>
+### The object cannot determine its name
 
-```tsx
-import { useState } from "react";
-import { useAgent } from "agents/react";
-import type { CounterAgent, CounterState } from "./agents/counter";
+Address the object with `getByName()` or `idFromName()`. Objects created with `newUniqueId()` or `idFromString()` do not have a name. In local development, update Wrangler and use a current `compatibility_date`.
 
-function CounterWidget() {
-	const [count, setCount] = useState(0);
+### Scheduled work stops running
 
-	const agent = useAgent<CounterAgent, CounterState>({
-		agent: "CounterAgent",
-		onStateUpdate: (state) => setCount(state.count),
-	});
+Do not call `ctx.storage.setAlarm()` or `ctx.storage.deleteAlarm()` yourself. The Lifecycle owns the object's alarm, and setting it directly can cancel the Lifecycle's next wake-up. Use the [`Scheduler`](/agents/runtime/capabilities/scheduler/) capability or `lifecycle.jobs` instead.
 
-	return (
-		<>
-			{count}
-			<button onClick={() => agent.stub.increment()}>+</button>
-			<button onClick={() => agent.stub.decrement()}>-</button>
-		</>
-	);
-}
-```
+## Next steps
 
-</TypeScriptExample>
-
-Key points:
-
-- `useAgent` connects to your agent via WebSocket
-- `onStateUpdate` fires whenever the agent's state changes
-- `agent.stub.methodName()` calls methods marked with `@callable()` on your agent
-
-### Vanilla JavaScript
-
-<TypeScriptExample>
-
-```ts
-import { AgentClient } from "agents/client";
-
-const agent = new AgentClient({
-	agent: "CounterAgent",
-	name: "user-123", // Optional: unique instance name
-	onStateUpdate: (state) => {
-		document.getElementById("count").textContent = state.count;
-	},
-});
-
-// Call methods
-document.getElementById("increment").onclick = () => agent.call("increment");
-```
-
-</TypeScriptExample>
-
-<Render file="what-just-happened" product="agents" />
-
-## Deploy to Cloudflare
-
-```sh
-npm run deploy
-```
-
-Your agent is now live on Cloudflare's global network, running close to your users.
-
-<Render file="common-integration-patterns" product="agents" />
-
-<Render file="troubleshooting" product="agents" />
-
-<Render file="next-steps" product="agents" />
+- [Lifecycle](/agents/runtime/lifecycle/): the request path, the job queue, and how to write your own capability.
+- [Pi harness](/agents/harnesses/pi/): run an agent loop with tools on the same lifecycle.
+- [Testing your Agents](/agents/getting-started/testing-your-agent/): write tests with Vitest and the Workers test pool.

@@ -15,10 +15,14 @@
 	"max_output_tokens": 128000,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Input tokens (per 1M)": 2,
-		"Output tokens (per 1M)": 12,
-		"Cached input tokens (per 1M)": 0.2,
-		"Cache creation tokens (per 1M)": 2.5
+		"Short-context input (per 1M)": 2,
+		"Short-context cached input (per 1M)": 0.2,
+		"Short-context cache write (per 1M)": 2.5,
+		"Short-context output (per 1M)": 12,
+		"Long-context input (per 1M)": 4,
+		"Long-context cached input (per 1M)": 0.4,
+		"Long-context cache write (per 1M)": 5,
+		"Long-context output (per 1M)": 18
 	},
 	"examples": [
 		{
@@ -268,7 +272,8 @@
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/openai/gpt-5.6-terra.png",
 	"metadata": {
 		"API": "Responses",
-		"Architecture": "Transformer"
+		"Architecture": "Transformer",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"responses"
@@ -278,10 +283,15 @@
 		{
 			"id": "openai",
 			"pricing": {
-				"input_tokens": 2,
-				"output_tokens": 12,
-				"input_cached_tokens": 0.2,
-				"input_cache_creation_tokens": 2.5
+				"long_context_threshold_tokens": 272000,
+				"short_context_input_tokens": 2,
+				"short_context_input_cached_tokens": 0.2,
+				"short_context_input_cache_creation_tokens": 2.5,
+				"short_context_output_tokens": 12,
+				"long_context_input_tokens": 4,
+				"long_context_input_cached_tokens": 0.4,
+				"long_context_input_cache_creation_tokens": 5,
+				"long_context_output_tokens": 18
 			}
 		}
 	],
@@ -339,12 +349,15 @@
 					"type": "object",
 					"properties": {
 						"effort": {
+							"description": "Reasoning effort; availability and accepted values are model-dependent.",
 							"type": "string",
 							"enum": [
 								"none",
 								"low",
 								"medium",
-								"high"
+								"high",
+								"xhigh",
+								"max"
 							]
 						}
 					},

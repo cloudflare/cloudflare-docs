@@ -18,8 +18,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 3,
-		"Output tokens (per 1M)": 15,
-		"Cached input tokens (per 1M)": 0.3
+		"Cached input tokens (per 1M)": 0.3,
+		"Output tokens (per 1M)": 15
 	},
 	"examples": [
 		{
@@ -21711,7 +21711,8 @@
 		"Function Calling": "Yes",
 		"Parameters": "2.8T",
 		"Reasoning": "Yes (always-on)",
-		"Vision": "Yes"
+		"Vision": "Yes",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"
@@ -21722,8 +21723,8 @@
 			"id": "moonshot",
 			"pricing": {
 				"input_tokens": 3,
-				"output_tokens": 15,
-				"input_cached_tokens": 0.3
+				"input_cached_tokens": 0.3,
+				"output_tokens": 15
 			}
 		}
 	],

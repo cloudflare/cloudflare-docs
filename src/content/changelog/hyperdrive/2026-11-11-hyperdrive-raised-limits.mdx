@@ -1,0 +1,21 @@
+---
+title: Hyperdrive raises limits for connections and configurations
+description: Workers Paid customers can now create up to 100 Hyperdrive configurations and configure up to 1,500 origin connections per configuration.
+products:
+  - hyperdrive
+date: 2026-11-11
+---
+
+Customers on a Workers Paid plan can now create up to 100 Hyperdrive configurations, up from 25, and configure up to 1,500 origin database connections per configuration, up from 100.
+
+**Configuration limit**
+
+The configuration limit is the maximum number of Hyperdrive configurations you can create per account. Workers Paid customers can now create up to 100 configurations, allowing more workloads to take advantage of connection pooling and query caching across different databases.
+
+**Origin connection limit**
+
+The origin connection limit is the maximum number of database connections that Hyperdrive can make to your origin database per configuration. Workers Paid customers can now configure up to 1,500 origin connections, increasing the connection pool size available for workloads that need more concurrent database access. You can configure this value via the dashboard, Wrangler, or the REST API.
+
+We recommend setting the origin connection limit lower than your origin database's connection limit.
+
+For more information, refer to [Hyperdrive limits](/hyperdrive/platform/limits/) and [Tune connection pooling](/hyperdrive/configuration/tune-connection-pool/).

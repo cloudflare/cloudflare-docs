@@ -8,13 +8,9 @@ sidebar:
   order: 7
 ---
 
-import { Steps } from "~/components";
+import { Render, Steps } from "~/components";
 
 Diagnose Cloud Workload Security (CWS) proxy, client, and policy issues. This guide covers the proxy setup in [Get started](/cloudflare-one/cloud-workload-security/get-started/).
-
-:::note
-For questions about the Open Beta, contact [cloud-workload-security-open-beta@cloudflare.com](mailto:cloud-workload-security-open-beta@cloudflare.com).
-:::
 
 Use the sections to identify your symptom and verify the fix. Read the logs from the terminal or service running the proxy. For the relevant fields, refer to [Read proxy logs](/cloudflare-one/cloud-workload-security/troubleshooting/#read-proxy-logs).
 
@@ -104,7 +100,7 @@ If your network inspects Transport Layer Security (TLS), configure its approved 
 
 #### Deployment configuration cannot be parsed or prepared
 
-Local configuration validation does not validate the downloaded deployment bundle. If the API returns successfully but the proxy cannot parse or compile the configuration, [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) with the proxy version and sanitized error.
+Local configuration validation does not validate the downloaded deployment bundle. If the API returns successfully but the proxy cannot parse or compile the configuration, [contact Cloudflare Support](/cloudflare-one/cloud-workload-security/troubleshooting/#how-do-i-contact-support) with the proxy version and sanitized error.
 
 ### Verify the fix
 
@@ -235,7 +231,7 @@ An ACL allow decision permits the connection. It does not bypass request policie
 
 If no policy matches, inspect the deployment **Default mode** and intended request scope. If an evaluation error occurs, inspect the error and deployment **On error action**. Correct the underlying configuration or policy using [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/).
 
-If application classification fails before policy evaluation, the logs may report that failure instead of a normal policy decision. Include that error when [contacting the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team).
+If application classification fails before policy evaluation, the logs may report that failure instead of a normal policy decision. Include that error when [contacting Cloudflare Support](/cloudflare-one/cloud-workload-security/troubleshooting/#how-do-i-contact-support).
 
 #### Cloud provider rejects an allowed request
 
@@ -265,7 +261,7 @@ Look for `polling_remote_config` and any fetch or prepare failure. `remote_confi
 
 `remote_config_fetch_failed_keeping_current` and `remote_config_prepare_failed_keeping_current` mean the refresh failed. The running proxy retains its previous valid deployment configuration.
 
-For fetch failures, check [API access and connectivity](/cloudflare-one/cloud-workload-security/troubleshooting/#proxy-cannot-load-the-deployment). For prepare failures, review the reported configuration error and [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) if it persists. A saved dashboard change alone does not prove that the proxy applied it.
+For fetch failures, check [API access and connectivity](/cloudflare-one/cloud-workload-security/troubleshooting/#proxy-cannot-load-the-deployment). For prepare failures, review the reported configuration error and [contact Cloudflare Support](/cloudflare-one/cloud-workload-security/troubleshooting/#how-do-i-contact-support) if it persists. A saved dashboard change alone does not prove that the proxy applied it.
 
 #### Local configuration or process environment changed
 
@@ -289,7 +285,7 @@ Action Mapper classifies API requests for policy evaluation. The proxy rejects i
 
 Look for `initial_action_mapper_fetch_failed`, `initial_action_mapper_load_failed`, or `initial_action_mapper_incomplete` during startup. During operation, check `action_mapper_application_pending`, `action_mapper_poll_failed_keeping_current`, and any `action_mapper_degraded_denied_connect` or `action_mapper_degraded_denied_request` events.
 
-Use the reported error to check API connectivity and authentication. The proxy retries application-data loading. If validation failures persist, [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) with sanitized log excerpts.
+Use the reported error to check API connectivity and authentication. The proxy retries application-data loading. If validation failures persist, [contact Cloudflare Support](/cloudflare-one/cloud-workload-security/troubleshooting/#how-do-i-contact-support) with sanitized log excerpts.
 
 ### Verify the fix
 
@@ -333,7 +329,7 @@ Correct the displayed field errors. Filters must use supported Wirefilter fields
 
 For dashboard policies, declare a package under `policy.` and a Boolean `valid` rule. Check the syntax and imported library or metadata paths. Refer to [Configure policies](/cloudflare-one/cloud-workload-security/guides/configure-policies/) and [Manage policy reference resources](/cloudflare-one/cloud-workload-security/guides/policy-reference/).
 
-If the operation still fails, [contact the Open Beta team](/cloudflare-one/cloud-workload-security/troubleshooting/#contact-the-open-beta-team) with the sanitized API error code and message, when available. Do not treat a failed save as an applied configuration change.
+If the operation still fails, [contact Cloudflare Support](/cloudflare-one/cloud-workload-security/troubleshooting/#how-do-i-contact-support) with the sanitized API error code and message, when available. Do not treat a failed save as an applied configuration change.
 
 ### Verify the fix
 
@@ -358,16 +354,14 @@ For evaluated HTTP requests, inspect these events and fields:
 
 JSON-encoded log values can be truncated. A truncated audit is not a complete policy list. CONNECT denials and failures before policy evaluation can have their own events. The absence of a normal request record does not, by itself, prove that the client bypassed the proxy.
 
-## Contact the Open Beta team
+## How do I contact support?
 
-If the issue persists, contact [the Open Beta team](mailto:cloud-workload-security-open-beta@cloudflare.com) with:
+<Render
+	file="cloud-workload-security/support-ticket-best-practices"
+	product="cloudflare-one"
+/>
 
-- The failure timestamp and timezone.
-- The proxy version, operating system, and CPU architecture.
-- The client name, version, and error message.
-- The account, deployment, and relevant policy or policy-set IDs.
-- The target API operation and expected versus actual result.
-- Short, sanitized log excerpts, `cws.request_id`, and any response reference, when available.
+### Collect proxy details
 
 To collect the proxy version, run:
 

@@ -8,11 +8,13 @@ products:
   - agents
 ---
 
-import { TypeScriptExample } from "~/components";
+import { Render, TypeScriptExample } from "~/components";
 
-:::caution[Experimental]
-The `Streams` capability is experimental. Everything exported from `agents/streams` may change between releases.
-:::
+<Render
+	file="experimental"
+	product="agents"
+	params={{ name: "Streams", module: "agents/streams" }}
+/>
 
 `Streams` keeps a reply that is still being written, such as model tokens, so nobody loses it. If a user refreshes the page or drops their connection mid-reply, they reconnect and pick up where they left off, instead of losing the reply or starting over. If the Durable Object restarts mid-reply, the chunks already written are kept, and the reply can continue from there. The [Think harness](/agents/harnesses/think/) streams its replies this way.
 

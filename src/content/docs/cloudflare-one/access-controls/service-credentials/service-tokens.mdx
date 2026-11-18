@@ -24,7 +24,7 @@ import {
 
 You can provide automated systems with service tokens to authenticate against your Cloudflare One policies. Cloudflare Access will generate service tokens that consist of a Client ID and a Client Secret. Automated systems or applications can then use these values to reach an application protected by Access.
 
-This section covers how to create, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
+This section covers how to create, tag, rotate, renew, disable, and revoke a service token. You can also configure Access to manage inactive service tokens automatically.
 
 ## Create a service token
 
@@ -37,6 +37,93 @@ You can now configure your Access applications and [device enrollment permission
 As of August 26, 2026, new service token Client Secrets use the format `cfast_[40 alphanumeric characters][8-character checksum]`. The prefix and checksum make the secrets easier for credential scanning tools to identify.
 
 Existing Client Secrets use a 64-character hexadecimal format. These secrets continue to work and do not require rotation. Both formats use the same Client ID and authentication headers.
+
+## Tag service tokens
+
+Use key-value tags to organize service tokens by environment, team, or purpose. For example, assign `environment: production` to your production tokens. You can filter tokens by tag and authorize tokens with a matching tag in a [Service Auth policy](#authorize-service-tokens-by-tag).
+
+Service token tags integrate with [Resource Tagging](/resource-tagging/). They are separate from [App Launcher tags](/cloudflare-one/reusable-components/tags/), which label applications for end users.
+
+Each service token supports up to five tags, with one value per key. Keys and values are case-sensitive and can each contain up to 256 characters. Keys support Unicode letters, digits, underscores (`_`), periods (`.`), and hyphens (`-`).
+
+### Add or edit tags
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
+
+   <DashButton url="/?to=/:account/access/service-auth/service-tokens" zeroTrust />
+
+2. Locate the token and select the three dots > **Edit**.
+3. In **Tags**, select **Add tag**. Enter a key and value, or select existing suggestions.
+4. To remove a tag, select its remove button.
+5. Select **Save**.
+</Steps>
+
+You can also add tags when you [create a service token](#create-a-service-token). Editing only the tags does not rotate the Client Secret or change the expiration date.
+
+</TabItem> <TabItem label="API">
+
+Include a `tags` object when you [create a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/create/) or [update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/). When updating, include the token's existing `name` to preserve it. For example:
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/{account_id}/access/service_tokens/{service_token_id}"
+	method="PUT"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "CI/CD token",
+		tags: {
+			environment: "production",
+			team: "payments",
+		},
+	}}
+/>
+
+On update, `tags` replaces the token's entire tag set. Include every tag you want to keep, or send `"tags": {}` to remove all tags.
+
+</TabItem> </Tabs>
+
+:::note
+Resource Tagging uses the resource type `access_service_token` and the token's `id`, not its Client ID. You can query service token tags through Resource Tagging, but you must add, update, and remove them through the Access dashboard or service token API. Direct writes through the Tagging API are not supported.
+:::
+
+### Authorize service tokens by tag
+
+Use the **Service Token Tag** selector to authorize valid tokens with a specific key-value pair. You do not need to list each token individually. Tokens assigned the matching tag are eligible under the policy, including tokens you create later.
+
+<Steps>
+1. Create or edit an [Access policy](/cloudflare-one/access-controls/policies/) for your application.
+2. Set the action to **Service Auth**.
+3. Add an **Include** rule with the **Service Token Tag** selector.
+4. Enter the **Tag key** and **Tag value**, such as `environment` and `production`.
+5. Save the policy and ensure it is assigned to your application.
+</Steps>
+
+The equivalent API policy configuration is:
+
+```json
+{
+	"name": "Production service tokens",
+	"decision": "non_identity",
+	"include": [
+		{
+			"service_token_tag": {
+				"key": "environment",
+				"value": "production"
+			}
+		}
+	]
+}
+```
+
+Each rule matches one exact, case-sensitive key-value pair. Key-only matches and wildcards are not supported. The client must still present a valid Client ID and Client Secret; a tag does not make an expired or disabled token valid.
+
+You can use this selector in **Include**, **Require**, or **Exclude** rules. Policies that use the selector must use the **Service Auth** action. To require multiple tags, use the [Require rule type](/cloudflare-one/access-controls/policies/#require); multiple Include rules are combined with OR.
+
+:::caution
+Changing a token's tags can change which applications it can access. Only grant service token edit permissions to administrators who should be able to change tag-based access.
+:::
 
 ## Connect your service to Access
 
@@ -136,6 +223,8 @@ Rotate a service token secret when you suspect exposure or as part of regular cr
 
 You can set a grace period during which both secrets work. Use this period to update your services before Access revokes the previous secret.
 
+For a token [reported as leaked](#recover-a-leaked-service-token), the previous secret must expire immediately. You cannot use a rotation grace period.
+
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 <Steps>
@@ -165,30 +254,56 @@ To revoke the previous secret immediately, omit `previous_client_secret_expires_
 
 </TabItem> </Tabs>
 
+## Recover a leaked service token
+
+Cloudflare can receive service token leak reports from secret scanning partners, such as GitHub. A token reported as leaked cannot be re-enabled until you rotate its secret.
+
+To recover a disabled token after a leak report:
+
+<Steps>
+1. [Rotate the token's secret](#rotate-service-token-secrets). In the dashboard, select **Rotate secret** — the current secret is revoked immediately. In an API rotation request, omit `previous_client_secret_expires_at`.
+2. Replace the leaked secret in your services with the new Client Secret. The Client ID stays the same.
+3. [Turn the token on again](#turn-a-service-token-on-or-off). Rotation does not automatically re-enable a disabled token.
+</Steps>
+
+Remove the exposed secret from the location identified in the report. Removing it does not replace rotation: the secret may already have been copied.
+
+The service token API returns these read-only fields when available:
+
+| Field              | Description                                              |
+| ------------------ | -------------------------------------------------------- |
+| `leak_reported_at` | When a secret scanning partner reported the leak.        |
+| `leak_reporter`    | The secret scanning partner that reported the leak.      |
+| `leak_report_url`  | Where the secret was found, if provided by the reporter. |
+
+Rotation clears the token's leak metadata. Review [admin activity logs](/cloudflare-one/insights/logs/dashboard-logs/admin-activity-logs/) for the audit history.
+
+Attempting to re-enable a token before rotation returns `409`. Requesting a future `previous_client_secret_expires_at` when rotating a leaked token returns `400`. The leaked secret is discarded immediately and cannot be restored by extending its expiration.
+
 ## Renew service tokens
 
-Service tokens expire according to the token duration you selected when you created the token.
+Refreshing a service token resets its expiration to the current time plus its configured duration. It does not add that duration to the existing expiration date or change the Client ID or Client Secret. For example, refreshing a token configured for 24 hours makes it expire 24 hours from the refresh.
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Service credentials** > **Service Tokens**.
 2. Locate the token you want to renew.
-3. To extend the token's lifetime by one year, select **Refresh**.
-4. To extend the token's lifetime by more than a year:
+3. To renew using the current duration, select the token's refresh action.
+4. To use a different duration:
    1. Select **Edit**.
    2. Choose a new **Service Token Duration**.
-   3. Select **Save**. The expiration date will be extended by the selected amount of time.
+   3. Select **Save**. Access resets the expiration relative to the time of the update.
 
 </TabItem> <TabItem label="API">
 
-To extend the token's lifetime by one year, make a `POST` request to the [Refresh a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/refresh/) endpoint:
+To renew using the token's configured duration, make a `POST` request to the [Refresh a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/refresh/) endpoint:
 
 <APIRequest
 	path="/accounts/{account_id}/access/service_tokens/{service_token_id}/refresh"
 	method="POST"
 />
 
-To extend the token's lifetime by a custom duration, make a `PUT` request to the [Update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/) endpoint with the new `duration`:
+To change the duration and reset the expiration, make a `PUT` request to the [Update a service token](/api/resources/zero_trust/subresources/access/subresources/service_tokens/methods/update/) endpoint with the new `duration`:
 
 <APIRequest
 	path="/accounts/{account_id}/access/service_tokens/{service_token_id}"
@@ -329,7 +444,7 @@ terraform destroy -target=cloudflare_zero_trust_access_service_token.example_ser
 
 :::note
 
-When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent the user from starting a new session. As long as the Client ID and Client Secret are still valid, they can be exchanged for a new token on the next request. To revoke access, you must delete the service token.
+When editing an Access application, selecting **Revoke existing tokens** revokes existing sessions but does not prevent new sessions while the service token remains valid. To prevent new sessions, [disable](#turn-a-service-token-on-or-off) or delete the service token.
 :::
 
 ## Set a token expiration alert
@@ -349,3 +464,9 @@ To configure a service token expiration alert:
 6. Select **Save**.
 
 Your alert has been set and is now visible on the **Notifications** page.
+
+## Receive leaked service token alerts
+
+Cloudflare sends an email when a secret scanning partner, such as GitHub, reports a leaked service token. To restore access, [rotate the leaked secret and re-enable the token](#recover-a-leaked-service-token).
+
+Cloudflare automatically creates a leaked service token alert. By default, it emails account Super Administrators and the token creator, when their email address is available. You can [edit the alert](/notifications/get-started/#manage-alerts) to change its email recipients.

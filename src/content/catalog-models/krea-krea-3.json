@@ -233,7 +233,8 @@
 					"type": "string",
 					"enum": [
 						"fast",
-						"high"
+						"high",
+						"ultra"
 					]
 				},
 				"resolution": {

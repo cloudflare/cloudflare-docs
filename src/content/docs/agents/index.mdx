@@ -1,6 +1,6 @@
 ---
 title: Build Agents on Cloudflare
-description: Build and host AI agents on Cloudflare. Start with the Pi harness, which runs a durable model loop with tools in a Durable Object, and add state, real-time connections, and scheduled tasks with the Agents SDK.
+description: Build and host AI agents on Cloudflare. Run an agent harness in a Durable Object, add capabilities such as state, WebSockets, and scheduling with the Agents SDK Lifecycle, and give the agent tools.
 pcx_content_type: overview
 tags:
   - AI
@@ -11,12 +11,12 @@ head:
     content: Agents
 ---
 
-import { PackageManagers, RelatedProduct } from "~/components";
+import { RelatedProduct, Render } from "~/components";
 import AgentsPlatformDiagram from "~/components/cf/AgentsPlatformDiagram.astro";
 
-Build and host Agents on Cloudflare, connect chat, voice, email, Slack, and webhooks to a durable agent runtime with Browser, Sandbox, AI Search, MCP, Payments, and other MCP tools.
+Build and host AI agents on Cloudflare. Connect chat, voice, email, Slack, and webhooks to a durable agent, and give it tools such as a workspace, a browser, web search, MCP servers, and payments.
 
-When you host agents on Cloudflare, each agent session has a durable identity, local SQL storage, real-time connections, scheduled work, and recoverable execution.
+When you host agents on Cloudflare, each agent has a durable identity, local SQL storage, real-time connections, scheduled work, and recoverable execution.
 
 Deploy once and Cloudflare runs your agents across its global network, scaling to tens of millions of instances. No infrastructure to manage, no sessions to reconstruct, no state to externalize.
 
@@ -24,22 +24,28 @@ Deploy once and Cloudflare runs your agents across its global network, scaling t
 
 Agents on Cloudflare are composed from four parts:
 
-- **Communication channels** define how users and systems reach your agent, such as [chat](/agents/agent-class/communication-channels/chat/), [voice](/agents/agent-class/communication-channels/voice/), [email](/agents/agent-class/communication-channels/email/), [Slack](/agents/agent-class/communication-channels/slack/), [webhooks](/agents/agent-class/communication-channels/webhooks/), and other event sources.
-- **The agent harness** defines the loop: how the agent calls models, selects tools, handles tool results, streams responses, and decides whether to continue. Use the [Pi harness](/agents/harnesses/pi/) to run Pi Durable in a Durable Object, or build your own loop directly on the [Agents SDK runtime](/agents/agent-class/).
-- **The Agents SDK runtime** provides durable infrastructure: the [`Agent` class](/agents/agent-class/internals/), [state](/agents/agent-class/state/), [sessions](/agents/runtime/capabilities/sessions/), [routing](/agents/agent-class/routing/), [WebSockets](/agents/agent-class/websockets/), [scheduling](/agents/agent-class/schedule-tasks/), [fibers](/agents/agent-class/durable-execution/), and [observability](/agents/runtime/observability/).
-- **Tools** give the agent capabilities: [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP tools](/agents/tools/mcp/), and [payments](/agents/tools/payments/). [Code Mode](/agents/tools/codemode/) lets models discover and orchestrate multiple tools by writing code.
+- **The runtime is a Durable Object, the Lifecycle, and capabilities.** Each agent is a [Durable Object](/durable-objects/), and [routing](/agents/runtime/routing/) sends each request to the right one. The Agents SDK [Lifecycle](/agents/runtime/lifecycle/) runs inside the Durable Object, handles its requests, alarms, and WebSocket events, and starts the [capabilities](/agents/runtime/capabilities/) you add to it with `.use()`. Capabilities include [`WebSockets`](/agents/runtime/capabilities/websockets/), [`State`](/agents/runtime/capabilities/state/), [`Scheduler`](/agents/runtime/capabilities/scheduler/), and [`MCPClientManager`](/agents/runtime/capabilities/mcp-client-manager/).
+- **The harness is the capability that runs the agent loop.** A harness calls models, runs tools, handles tool results, streams responses, and decides whether to continue. It is the unit of compute for an agent, and the Agents SDK exists to make harnesses run well on Cloudflare. Use the [Pi harness](/agents/harnesses/pi/), which runs the [Pi](https://pi.dev/) agent loop durably and keeps a run going after the object is evicted.
+- **Tools** let the agent act. For a durable file system and code execution, give the agent a [workspace](/agents/tools/filesystem/) from Cloudflare Computer. The Agents SDK also includes [web fetch](/agents/tools/web-fetch/), [web search](/agents/tools/web-search/), [browser automation](/agents/tools/browser/), [sandboxed code execution](/agents/tools/sandbox/), [AI Search](/agents/tools/ai-search/), [MCP servers](/agents/tools/mcp/), [payments](/agents/tools/payments/), and [Code Mode](/agents/tools/codemode/).
+- **Communication channels** define how users and systems reach your agent, such as [chat](/agents/agent-class/communication-channels/chat/), [voice](/agents/agent-class/communication-channels/voice/), [email](/agents/agent-class/communication-channels/email/), [Slack](/agents/agent-class/communication-channels/slack/), [webhooks](/agents/agent-class/communication-channels/webhooks/), and other event sources. These guides use the [`Agent` class](/agents/agent-class/), a preset Durable Object with the Lifecycle and a set of capabilities already installed.
+
+Agents publish structured events, such as state changes, schedules, and MCP connections, that you can use for [observability](/agents/runtime/observability/).
 
 ### Get started
 
-Build your agent with the [Pi harness](/agents/harnesses/pi/). [Pi Durable](https://earendil.com/posts/pi-durable/) runs the agent loop, including the transcript, model calls, tools, and retries, inside a Durable Object. `PiHarness` from the Agents SDK stores Pi's state in the object's SQLite database and resumes the run after an eviction. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
+Build your first agent with the Pi harness. The [Pi harness](/agents/harnesses/pi/) runs the [Pi](https://pi.dev/) agent loop durably in a Durable Object. It uses the Lifecycle's job queue to schedule future work, so a run continues after the object is evicted. No API keys are required. The examples use [Workers AI](/workers-ai/) through the `AI` binding.
 
-<PackageManagers pkg="agents @earendil-works/pi-durable @earendil-works/pi-ai @earendil-works/chord" />
+<Render file="pi-install" product="agents" />
 
-The [Pi harness guide](/agents/harnesses/pi/) builds a first agent in one file. To start from a complete app with a browser UI, a durable filesystem, and code execution, deploy the Pi harness example:
+To start from a complete app with a browser UI, a Cloudflare Computer workspace, and code execution, deploy the Pi harness example:
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/agents/tree/main/examples/next/harnesses/pi)
 
+To build it step by step, follow [Build your first Durable Agent](/agents/getting-started/quick-start/). To learn the Lifecycle, [`State`](/agents/runtime/capabilities/state/), and [`WebSockets`](/agents/runtime/capabilities/websockets/) without a model, refer to [Learn the runtime](/agents/getting-started/learn-the-runtime/). To add the Lifecycle to a Worker you already have, refer to [Add to an existing project](/agents/getting-started/add-to-existing-project/).
+
 ### Example agents
+
+The Pi agent runs on the Pi harness. The other examples build on the [`Agent` class](/agents/agent-class/) preset.
 
 <RelatedProduct header="Pi agent" href="/agents/harnesses/pi/" product="agents">
 

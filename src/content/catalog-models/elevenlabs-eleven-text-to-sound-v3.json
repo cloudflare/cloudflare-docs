@@ -1,0 +1,194 @@
+{
+	"model_id": "elevenlabs/eleven-text-to-sound-v3",
+	"name": "Eleven Sound Effects v3",
+	"description": "Eleven Sound Effects v3 generates sound effects up to 30 seconds long from a text description, with optional seamless looping.",
+	"task": "Music Generation",
+	"tags": [
+		"Sound Effects",
+		"Audio Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"output_audio_seconds": 0.002
+	},
+	"examples": [
+		{
+			"name": "Door Creak",
+			"description": "Generate a short sound effect from a text description",
+			"input": {
+				"text": "Heavy wooden door creaking open slowly in an empty stone hallway",
+				"duration_seconds": 4
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-text-to-sound-v3/door-creak.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-text-to-sound-v3/door-creak.mp3"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'elevenlabs/eleven-text-to-sound-v3',\n  { text: 'Heavy wooden door creaking open slowly in an empty stone hallway', duration_seconds: 4 },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/eleven-text-to-sound-v3\",\n  \"input\": {\n    \"text\": \"Heavy wooden door creaking open slowly in an empty stone hallway\",\n    \"duration_seconds\": 4\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Rain Loop",
+			"description": "Generate a seamless loop for background ambience",
+			"input": {
+				"text": "Gentle rain on a tin roof with distant thunder",
+				"duration_seconds": 8,
+				"loop": true,
+				"output_format": "mp3_44100_128"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-text-to-sound-v3/rain-loop.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/elevenlabs/eleven-text-to-sound-v3/rain-loop.mp3"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'elevenlabs/eleven-text-to-sound-v3',\n  {\n    text: 'Gentle rain on a tin roof with distant thunder',\n    duration_seconds: 8,\n    loop: true,\n    output_format: 'mp3_44100_128',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"elevenlabs/eleven-text-to-sound-v3\",\n  \"input\": {\n    \"text\": \"Gentle rain on a tin roof with distant thunder\",\n    \"duration_seconds\": 8,\n    \"loop\": true,\n    \"output_format\": \"mp3_44100_128\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://elevenlabs.io/docs/api-reference/text-to-sound-effects/convert",
+	"terms": "https://elevenlabs.io/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Controls": "Prompt, duration, looping, prompt influence",
+		"Max Duration": "Up to 30 seconds",
+		"Output Formats": "MP3, Opus"
+	},
+	"request_formats": null,
+	"provider_id": "elevenlabs",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "elevenlabs",
+			"pricing": {
+				"output_audio_seconds": 0.002
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "elevenlabs",
+			"pricing": {
+				"output_audio_seconds": 0.002
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_audio_seconds",
+							"label": "Per audio second",
+							"unit": null,
+							"value": 0.002
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-16 14:03:18",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"text": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Description of the sound effect to generate."
+				},
+				"duration_seconds": {
+					"type": "number",
+					"minimum": 0.5,
+					"maximum": 30,
+					"description": "Length of the sound effect in seconds, from 0.5 to 30."
+				},
+				"loop": {
+					"description": "Create a sound effect that loops smoothly.",
+					"type": "boolean"
+				},
+				"prompt_influence": {
+					"description": "How closely to follow the prompt, from 0 to 1 (default 0.3). Higher is closer and less varied.",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"output_format": {
+					"description": "Audio codec, sample rate and bitrate (default mp3_44100_128).",
+					"type": "string",
+					"enum": [
+						"mp3_22050_32",
+						"mp3_24000_48",
+						"mp3_44100_32",
+						"mp3_44100_64",
+						"mp3_44100_96",
+						"mp3_44100_128",
+						"mp3_44100_192",
+						"opus_48000_32",
+						"opus_48000_64",
+						"opus_48000_96",
+						"opus_48000_128",
+						"opus_48000_192"
+					]
+				}
+			},
+			"required": [
+				"text",
+				"duration_seconds"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"type": "string",
+					"description": "URL of the generated sound effect."
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}
