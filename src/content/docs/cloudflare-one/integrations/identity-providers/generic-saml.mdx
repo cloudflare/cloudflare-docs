@@ -114,13 +114,10 @@ Use a publicly reachable HTTPS endpoint that returns the metadata directly, with
 
 The metadata must meet these requirements:
 
-- Return HTTP `200` within 10 seconds, with a body no larger than 1 MiB.
+- Return HTTP `200`.
 - Use a single SAML `EntityDescriptor` as the root element. Its `entityID` must exactly match the configured **IdP Entity ID or Issuer URL**. Aggregate `EntitiesDescriptor` documents are not supported.
 - Include X.509 certificates in a SAML 2.0 `IDPSSODescriptor`, under a `KeyDescriptor` with `use="signing"` or no `use` attribute.
-- Include at least one currently valid signing certificate. Access inspects at most 20 distinct certificates and ignores malformed, expired, or not-yet-valid certificates.
 - Do not include a `DOCTYPE` or entity declaration.
-
-Access trusts the HTTPS connection to retrieve the certificates. It does not verify the metadata document's XML signature.
 
 ### Configure discovery through the API
 
@@ -140,17 +137,9 @@ To configure discovery through the [Access identity provider API](/api/resources
 
 Configure either `metadata_url` or manual certificates (`idp_public_certs` or the legacy `idp_public_cert`), not both. For an existing IdP, [retrieve its configuration](/api/resources/zero_trust/subresources/identity_providers/methods/get/), preserve its other settings, and [update the IdP](/api/resources/zero_trust/subresources/identity_providers/methods/update/) with the chosen certificate source.
 
-### Cache and refresh behavior
-
-Access fetches metadata during login when no unexpired cache entry exists. It does not poll the endpoint. The cache lifetime uses the shortest advertised lifetime from `Cache-Control: max-age`, `cacheDuration`, and `validUntil`. The default is one hour, with a five-minute minimum and a 24-hour maximum. The cache never extends beyond the metadata's `validUntil`.
-
-If cached certificates cannot verify a SAML signature, Access can fetch metadata again and retry verification once. Refreshes are limited to one attempt per 60 seconds. A newly published certificate may therefore not be picked up immediately after a previous fetch.
-
-When no certificates are cached and a required fetch fails, login fails. Access remembers that failure for 60 seconds before trying again. A failed refresh does not replace the existing cached certificates. Logins that verify with cached certificates do not require a fetch.
-
 ### Rotate signing certificates
 
-For a planned rotation, publish both the old and new certificates in the metadata before changing the signing key. Allow time for Access to retrieve the new certificate, accounting for the cache lifetime and refresh limit. Keep the old certificate available for in-flight SAML responses and rollback, then remove it when it is no longer needed.
+For a planned rotation, publish both the old and new certificates in the metadata before changing the signing key. Allow time for Access to retrieve the new certificate. Keep the old certificate available for in-flight SAML responses and rollback, then remove it when it is no longer needed.
 
 :::caution[Emergency certificate replacement]
 Removing a certificate from metadata does not immediately remove it from the Access cache. Re-saving an unchanged IdP configuration does not force a refresh. To stop using a compromised cached certificate, switch the IdP to manual certificates and configure only a trusted replacement certificate.
