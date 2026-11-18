@@ -9,7 +9,6 @@ sidebar:
 ---
 
 import { Details } from "~/components";
-import PrefixDelegationDiagram from "~/components/cf/PrefixDelegationDiagram.astro";
 
 A prefix delegation lets another Cloudflare account use all or part of your BYOIP prefix. The account that owns the prefix keeps control of the prefix, its service bindings, and its advertisement.
 
@@ -19,22 +18,7 @@ To create or remove a delegation, refer to [Delegate a prefix](/byoip/delegate-a
 
 ## How a delegation works
 
-In the following diagram, hover over or focus on an item on the left to see which account manages it.
-
-<PrefixDelegationDiagram />
-
 Account A onboards the prefix, creates the service bindings, and controls advertisement. Account A then delegates a CIDR inside the prefix to Account B. The CIDR can be as small as one IP address. Account B can use the delegated IP addresses with address maps in its own account, Cloudflare for SaaS custom hostnames, and Spectrum applications. Account B cannot create service bindings or advertise the prefix. The delegation stays active until Account A removes it.
-
-## What a delegation enables
-
-The effect of a delegation depends on the service that receives traffic for the IP addresses.
-
-- **CDN**: Account B can add the delegated IP addresses to [address maps](/byoip/address-maps/) at the account or zone level. Account B can also validate and serve [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) custom hostnames on the delegated IP addresses. This is useful when you manage Cloudflare for SaaS configurations in more than one account.
-- **Spectrum**: Account B can create [Spectrum applications](/spectrum/about/byoip/) with the delegated IP addresses.
-
-For example, Account A owns `203.0.113.0/24` and delegates `203.0.113.16/28` to Account B. Account B can now create a Spectrum application on `203.0.113.17`.
-
-Account A must bind the IP addresses to the CDN or Spectrum service first. For more information, refer to [Service bindings](/byoip/service-bindings/).
 
 ## Who does what
 
@@ -49,6 +33,17 @@ Account A must bind the IP addresses to the CDN or Spectrum service first. For m
 
 A delegation does not transfer ownership of the prefix. It also does not create BGP prefixes, create service bindings, or change the advertisement status.
 
+## What a delegation enables
+
+The effect of a delegation depends on the service that receives traffic for the IP addresses.
+
+- **CDN**: Account B can add the delegated IP addresses to [address maps](/byoip/address-maps/) at the account or zone level. Account B can also validate and serve [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) custom hostnames on the delegated IP addresses. This is useful when you manage Cloudflare for SaaS configurations in more than one account.
+- **Spectrum**: Account B can create [Spectrum applications](/spectrum/about/byoip/) with the delegated IP addresses.
+
+For example, Account A owns `203.0.113.0/24` and delegates `203.0.113.16/28` to Account B. Account B can now create a Spectrum application on `203.0.113.17`.
+
+Account A must bind the IP addresses to the CDN or Spectrum service first. For more information, refer to [Service bindings](/byoip/service-bindings/).
+
 ## What Account B needs
 
 - Account B does not need a BYOIP subscription. Only Account A onboards and owns the prefix.
@@ -59,8 +54,6 @@ A delegation does not transfer ownership of the prefix. It also does not create 
 ## Example: lend IP addresses to more than one account
 
 Account A can delegate different parts of one prefix to different accounts. Each delegated account can use its IP addresses without its own prefix. A delegation can be permanent or temporary.
-
-<PrefixDelegationDiagram variant="lending" />
 
 In this example, Account A owns `203.0.113.0/24` and creates three delegations:
 
