@@ -88,8 +88,8 @@ export function promotionBanner(
 	if (!promotion) return null;
 	return {
 		severity: "info",
-		title: `Launch promo: ${promotionDiscountPercent(promotion)}% off`,
-		text: `${promotion.displayName} is ${usd(promotion.promoPrice)} ${promotion.unit} until ${formatPromotionEnd(promotion)}. The standard price of ${usd(promotion.standardPrice)} ${promotion.unit} applies from then on.`,
+		title: "Launch promo",
+		text: `${promotion.displayName} is ${promotionDiscountPercent(promotion)}% off at ${usd(promotion.promoPrice)} ${promotion.unit} until ${formatPromotionEnd(promotion)}. The standard price of ${usd(promotion.standardPrice)} ${promotion.unit} applies from then on.`,
 		link: null,
 	};
 }
