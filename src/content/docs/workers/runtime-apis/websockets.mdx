@@ -186,7 +186,11 @@ WebSocket messages received by a Worker have a size limit of 32 MiB (33,554,432 
 
 During routine Workers runtime updates, existing WebSocket connections to Workers can remain open until the process running the previous version of the Workers runtime exits. Connections still open when the [grace period for runtime updates](/workers/platform/limits/#runtime-updates) ends are disconnected. Crashes and shutdowns can disconnect clients earlier.
 
-Design clients to reconnect after a disconnection and restore application state.
+An ordinary Worker isolate can also be reclaimed after a period of inactivity. Reclaiming an idle isolate disconnects its WebSocket connections.
+
+For long-lived idle sessions, use the [Durable Objects Hibernation WebSocket API](/durable-objects/best-practices/websockets/#durable-objects-hibernation-websocket-api). Hibernation allows a Durable Object to sleep without disconnecting clients when idle. It does not guarantee an uninterrupted TCP connection through every runtime or host shutdown.
+
+Design clients to reconnect with jitter after a disconnection and restore application state.
 
 ## Close behavior
 

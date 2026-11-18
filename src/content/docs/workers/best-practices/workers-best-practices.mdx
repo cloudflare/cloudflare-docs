@@ -764,6 +764,38 @@ async function handleRequest(userId: string | null, env: Env): Promise<object> {
 
 </TypeScriptExample>
 
+Do not store a pending `fetch()`, initialization, or lazy-client promise in global scope when a request created it. If that request ends or is canceled, its I/O is canceled. Later requests awaiting the same promise can wait indefinitely with little or no CPU activity.
+
+Do not share live `Response` objects or response streams between requests. Keep timeouts and cancellation scoped to the current invocation. Cache only completed, immutable data when sharing across requests is appropriate.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+// 🔴 Bad: later requests wait on I/O owned by the first request
+let pendingResponse: Promise<Response> | undefined;
+
+const badHandler = {
+	async fetch(request: Request): Promise<Response> {
+		pendingResponse ??= fetch("https://api.example.com/data", {
+			signal: request.signal,
+		});
+		return pendingResponse;
+	},
+} satisfies ExportedHandler;
+
+// ✅ Good: each request owns its pending operation and response
+export default {
+	async fetch(request: Request): Promise<Response> {
+		const response = await fetch("https://api.example.com/data", {
+			signal: request.signal,
+		});
+		return response;
+	},
+} satisfies ExportedHandler;
+```
+
+</TypeScriptExample>
+
 For more information, refer to [Workers errors](/workers/observability/errors/#cannot-perform-io-on-behalf-of-a-different-request).
 
 ### Always await or waitUntil your Promises

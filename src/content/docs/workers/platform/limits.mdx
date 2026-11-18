@@ -14,6 +14,7 @@ import {
 	WranglerConfig,
 	DashButton,
 	TypeScriptExample,
+	Steps,
 } from "~/components";
 
 ## Spending limits
@@ -130,6 +131,14 @@ You can also change this in the dashboard: go to **Workers & Pages** > select yo
 Each [isolate](/workers/reference/how-workers-works/#isolates) can consume up to 128 MB of memory, including the JavaScript heap and [WebAssembly](/workers/runtime-apis/webassembly/) allocations. This limit is per-isolate, not per-invocation. A single isolate can handle many concurrent requests.
 
 When an isolate exceeds 128 MB, the Workers runtime lets in-flight requests complete and creates a new isolate for subsequent requests. During extremely high load, the runtime may cancel some incoming requests to maintain stability.
+
+Memory allocated while evaluating global scope counts toward this limit. A new isolate that approaches the limit during startup may be replaced after its first request. It can also fail before the runtime records an invocation. This can make cold starts appear after nearly every request.
+
+Staying within 128 MB does not eliminate garbage-collection pauses. The number and structure of live JavaScript objects can affect cleanup time, even when total heap usage remains low. These pauses can increase wall time without a matching increase in measured CPU time.
+
+To reduce memory and garbage-collection pressure, bound global caches and avoid retaining large object graphs. Use compact representations, such as strings, buffers, or typed arrays, for appropriate bulk data. Stream request and response bodies instead of materializing intermediate objects.
+
+If requests hang with little or no CPU activity, review [request-scoped state in global scope](/workers/best-practices/workers-best-practices/#do-not-store-request-scoped-state-in-global-scope). A pending request-owned promise shared across requests can prevent subsequent requests from completing.
 
 #### Error: exceeded memory limit {/* exceeded-memory */}
 
@@ -306,6 +315,20 @@ A Worker must parse and execute its global scope (top-level code outside of hand
 When the platform rejects a deployment because the Worker exceeds the startup time limit, the validation returns the error `Script startup exceeded CPU time limit` (error code `10021`). Wrangler automatically generates a CPU profile that you can import into Chrome DevTools or open in VS Code. Refer to [`wrangler check startup`](/workers/wrangler/commands/workers/#startup) for more details.
 
 To measure startup time, run `npx wrangler@latest deploy` or `npx wrangler@latest versions upload`. Wrangler reports `startup_time_ms` in the output.
+
+### Troubleshoot repeated cold starts
+
+Repeated cold starts can indicate startup memory pressure, even when individual requests succeed. To investigate:
+
+<Steps>
+1. Review imports reachable from global scope. Remove modules that initialize large object graphs or allocate substantial memory.
+2. Move request-specific initialization into your handler. Keep only completed, immutable data in global scope.
+3. Inspect bundled dependencies and assets. Remove unused dependencies, and store large assets outside your Worker bundle.
+4. Review [memory usage and invocation metrics](/workers/observability/metrics-and-analytics/) for signs of memory pressure or failed invocations.
+5. Compare client-observed latency with invocation wall time. Startup work occurs outside invocation wall-time measurements.
+</Steps>
+
+An HTTP `503` response with Cloudflare error `1105` and no matching invocation can indicate a startup failure. Error `1105` has other causes, and a missing invocation alone does not establish that the request never reached Workers.
 
 To reduce startup time, avoid expensive work in global scope. Move initialization logic into your handler or to build time. For example, generating or consuming a large schema at the top level is a common cause of exceeding this limit.
 

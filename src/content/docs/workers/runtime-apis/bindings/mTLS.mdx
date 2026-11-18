@@ -8,7 +8,12 @@ products:
   - workers
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components";
+import {
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 When using [HTTPS](https://www.cloudflare.com/learning/ssl/what-is-https/), a server presents a certificate for the client to authenticate in order to prove their identity. For even tighter security, some services require that the client also present a certificate.
 
@@ -89,3 +94,23 @@ export default {
 ```
 
 </TabItem> </Tabs>
+
+### Durable Object requests
+
+[Zone-level Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) does not apply to requests originating from Durable Objects. This includes requests that continue through service bindings. To present a client certificate for supported origin destinations, configure an mTLS certificate binding and use its `fetch()` method:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	MY_CERT: Fetcher;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		return env.MY_CERT.fetch("https://origin.example.com");
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>

@@ -161,6 +161,8 @@ The original client can be any application or service, such as a browser or mobi
 
 Using `await` does not prevent cancellation when the client disconnects. Use `ctx.waitUntil()` for short tasks that should continue after the request ends.
 
+Do not cache a request-owned pending promise or live response in global scope. Canceling the request that created the operation can leave later requests waiting indefinitely. For a concrete example, refer to [Do not store request-scoped state in global scope](/workers/best-practices/workers-best-practices/#do-not-store-request-scoped-state-in-global-scope).
+
 - **HTTP:** Follow [Handle canceled requests](/workers/runtime-apis/bindings/service-bindings/http/#handle-canceled-requests) to handle response bodies and compare logs from both Workers.
 - **RPC:** When the caller's execution context ends, the called Worker's RPC execution context is canceled, even if RPC object references still exist. Refer to [RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/#end-of-event-handler--execution-context) for object lifetimes and extending work with `ctx.waitUntil()`.
 
