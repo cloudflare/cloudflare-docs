@@ -113,7 +113,7 @@ package.json @cloudflare/content-engineering
 # analytics
 
 /src/content/docs/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
-/src/content/docs/analytics/analytics-engine/ @artikumar-cf @fridgecow @hc2116 @irvinebroque @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @nevikashah @renahlee @WalshyDev @cloudflare/product-owners
+/src/content/docs/analytics/analytics-engine/ @artikumar-cf @fridgecow @hc2116 @irvinebroque @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @nevikashah @renahlee @rianvdm @WalshyDev @cloudflare/product-owners
 /src/assets/images/changelog/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
 /src/assets/images/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/product-owners
 /src/content/changelog/analytics/ @angelampcosta @artikumar-cf @fridgecow @hc2116 @jayant-cmyk @jimhawkridge @JmitchellCloudflare @jowusu-cf @renahlee @rianvdm @soheiokamoto @cloudflare/pm-changelogs @cloudflare/product-owners
@@ -681,9 +681,9 @@ package.json @cloudflare/content-engineering
 
 # observability
 
-/src/content/docs/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
-/src/assets/images/observability/ @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
-/src/content/release-notes/observability.yaml @nevikashah @WalshyDev @Ankcorn @cloudflare/product-owners
+/src/content/docs/observability/ @nevikashah @WalshyDev @Ankcorn @rianvdm @cloudflare/product-owners
+/src/assets/images/observability/ @nevikashah @WalshyDev @Ankcorn @rianvdm @cloudflare/product-owners
+/src/content/release-notes/observability.yaml @nevikashah @WalshyDev @Ankcorn @rianvdm @cloudflare/product-owners
 
 # pages
 
@@ -1102,7 +1102,7 @@ package.json @cloudflare/content-engineering
 /src/content/docs/workers/framework-guides/automatic-configuration.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/content/docs/workers/framework-guides/web-apps/nextjs.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
 /src/content/docs/workers/framework-guides/web-apps/opennext.mdx @GregBrimble @irvinebroque @korinne @MattieTK @mikenomitch @scottbuscemi @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/dev-plat-leads @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
-/src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @vy-ton @cloudflare/product-owners
+/src/content/docs/workers/observability/ @irvinebroque @mikenomitch @nevikashah @rianvdm @vy-ton @cloudflare/product-owners
 /src/content/docs/workers/static-assets @GregBrimble @irvinebroque @MattieTK @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/product-owners
 /src/content/docs/workers/wrangler/ @irvinebroque @MattieTK @vy-ton @cloudflare/wrangler @cloudflare/product-owners
 /src/content/partials/workers/ @GregBrimble @irvinebroque @MattieTK @mikenomitch @vy-ton @WalshyDev @cloudflare/deploy-config @cloudflare/workers-runtime-1 @cloudflare/wrangler @cloudflare/product-owners
