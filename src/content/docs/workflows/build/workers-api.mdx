@@ -612,6 +612,10 @@ Returns a `WorkflowInstance`.
 
 Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance.
 
+`create()` rejects its promise with an `Error`. For an existing ID, the message includes `(instance.already_exists)`. Invalid IDs produce `(instance.invalid_id)`; invalid creation parameters produce `(body)`. These identifiers appear in `error.message`, rather than a numeric `error.code` property.
+
+To handle duplicates with structured numeric codes, use the object form of [`createBatch()`](#createbatch). A duplicate instance returns an entry in `errors` with code `10405`.
+
 <Render file="workflows-type-parameters" product="workflows" />
 
 To provide an optional type parameter to the `Workflow`, pass a type argument with your type when defining your Workflow bindings:
