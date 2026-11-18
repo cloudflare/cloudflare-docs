@@ -27,14 +27,12 @@ State changes for associated [storage resources](/workers/platform/storage-optio
 
 ### Version retention
 
-Cloudflare creates a new version every time you upload code or change a Worker's settings or secrets. Cloudflare deletes a version only when all of the following are true:
+Cloudflare creates a new version every time you upload code or change a Worker's settings or secrets. Versions are kept for 30 days. After 30 days, a version is deleted unless:
 
-- It is not one of the Worker's 100 most recent versions.
-- It is not currently deployed. A version is deployed if it serves any percentage of traffic, including both versions in a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/).
+- It is one of the Worker's 100 most recent versions.
+- It is currently deployed. A version is deployed if it serves any percentage of traffic, including both versions in a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/).
 
-For example, a Worker has 250 versions. Versions 151–250 are its 100 most recent versions, so Cloudflare keeps them. Versions 1–150 are deleted unless a version is still deployed.
-
-A Worker can store up to 100 versions. When a Worker reaches this limit, uploading a new version automatically deletes the oldest version that is not deployed. The upload is not rejected.
+For example, a Worker has 250 versions. Its 100 most recent versions are always kept. Of the other 150, versions created in the last 30 days are kept, and older ones are deleted unless they are deployed.
 
 When a version is deleted:
 
@@ -42,7 +40,7 @@ When a version is deleted:
 - Its [Version URL](/workers/versions-and-deployments/version-urls/) and any [aliased Version URLs](/workers/versions-and-deployments/version-urls/#aliased-version-urls) stop working. An alias does not prevent its version from being deleted. For URLs that keep working, use [Previews](/workers/previews/compare-workflows/#migrate-from-aliased-version-urls-to-previews).
 - Deployment history is kept. If a past deployment used the deleted version, the deployment history shows that version as deleted.
 
-You can only [deploy](/workers/versions-and-deployments/deployment-management/), create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) with, or [roll back](/workers/versions-and-deployments/rollbacks/) to the 100 most recent versions of your Worker. For all version limits, refer to [Limits](/workers/platform/limits/#versions).
+You can only [deploy](/workers/versions-and-deployments/deployment-management/), create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) with, or [roll back](/workers/versions-and-deployments/rollbacks/) to the 100 most recent versions of your Worker. Versions outside the 100 most recent are kept for 30 days but cannot be deployed. For all version limits, refer to [Limits](/workers/platform/limits/#versions).
 
 ## Deployments
 

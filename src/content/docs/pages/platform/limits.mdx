@@ -37,18 +37,17 @@ Based on your Cloudflare plan type, a Pages project is limited to a specific num
 
 ## Deployments
 
-| Limit                          | Value |
-| ------------------------------ | ----- |
-| Stored deployments per project | 100   |
+| Limit                   | Value                                                    |
+| ----------------------- | -------------------------------------------------------- |
+| Deployment retention    | 30 days                                                  |
+| Deployments always kept | 100 most recent, plus your current production deployment |
 
-Cloudflare deletes a deployment only when all of the following are true:
+Deployments are kept for 30 days. After 30 days, a deployment is deleted unless:
 
-- It is not one of the project's 100 most recent deployments. Both production and preview deployments count.
-- It is not your current production deployment.
+- It is one of the project's 100 most recent deployments. Both production and preview deployments count.
+- It is your current production deployment.
 
-For example, a project has 250 deployments. Deployments 151–250 are its 100 most recent, so Cloudflare keeps them. Deployments 1–150 are deleted unless one of them is your current production deployment.
-
-A project can store up to 100 deployments. When a project reaches this limit, a new deployment automatically deletes the oldest deployment that is not your current production deployment. The new deployment is not rejected.
+For example, a project has 250 deployments. Its 100 most recent deployments are always kept. Of the other 150, deployments created in the last 30 days are kept, and older ones are deleted unless one of them is your current production deployment.
 
 When a deployment is deleted:
 
@@ -86,7 +85,7 @@ An individual header in a `_headers` file can have a maximum of 2,000 characters
 
 ## Preview deployments
 
-Preview deployments count toward the deployments that Cloudflare keeps for each project. Preview deployments outside the 100 most recent are automatically deleted. For more information, refer to [Deployments](#deployments).
+Preview deployments count toward the deployments that Cloudflare keeps for each project. Preview deployments older than 30 days are deleted, unless they are one of the project's 100 most recent deployments. For more information, refer to [Deployments](#deployments).
 
 ## Redirects
 

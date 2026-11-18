@@ -1,19 +1,19 @@
 ---
-title: Workers and Pages now keep your 100 most recent versions
-description: Cloudflare now keeps the 100 most recent versions of each Worker and Pages project and deletes older ones. Your running applications are not affected.
+title: Workers and Pages now keep versions for 30 days
+description: Versions and deployments older than 30 days are now deleted, except your 100 most recent and what is currently deployed. Your running applications are not affected.
 products:
   - workers
   - pages
 date: 2026-11-18
 ---
 
-Cloudflare now keeps the 100 most recent [versions](/workers/versions-and-deployments/) of each Worker and the 100 most recent [deployments](/pages/configuration/preview-deployments/) of each Pages project, and deletes older ones.
+Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Workers and [deployments](/pages/configuration/preview-deployments/) of your Pages projects for 30 days. After 30 days, they are deleted, except your 100 most recent and what is currently deployed.
 
 **This has no impact on your running applications.** Deployed Worker versions and your current Pages production deployment are always retained, regardless of age. You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions.
 
 **What you will notice:**
 
-- **A shorter history:** The dashboard and API show up to your 100 most recent versions or deployments.
+- **A shorter history:** Versions and deployments older than 30 days no longer appear in the dashboard or API, unless they are one of your 100 most recent or are currently deployed.
 - **Workers Version URLs:** A version's [Version URL](/workers/versions-and-deployments/version-urls/), including any `--preview-alias`, is removed with the version. For pull requests, use [Workers Previews](/workers/previews/compare-workflows/), which run separately from production.
 - **Pages preview URLs:** A deployment's [preview URL](/pages/configuration/preview-deployments/) is removed with the deployment.
 
