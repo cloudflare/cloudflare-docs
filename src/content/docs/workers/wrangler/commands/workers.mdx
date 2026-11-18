@@ -253,6 +253,10 @@ None of the options for this command are required. Also, many can be set in your
   - A descriptive message for this Worker version and deployment. Matches the behavior of `wrangler versions upload --message`. The message is also applied to the deployment.
 - `--temporary` <Type text="boolean" /> <MetaInfo text="optional" />
   - Deploy with a temporary preview account when no Cloudflare credentials are available. Requires Wrangler 4.102.0 or later. Wrangler prints a claim URL that lets you claim the deployment within 60 minutes. This is intended for AI agents and other first-time deployment flows. If Wrangler can already use OAuth, `CLOUDFLARE_API_TOKEN`, or a global API key, this flag returns an error. For more information, refer to [Claim deployments](/workers/platform/claim-deployments/).
+- `--x-provision`, `--experimental-provision` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - When `true` (the default), Wrangler automatically provisions supported bindings that are declared in your configuration without a resource ID, such as KV namespaces, R2 buckets, and D1 databases. This can create real resources on your account. Automatic provisioning runs for both `wrangler deploy` and `wrangler versions upload`, except on assets-only projects. Set `--x-provision=false` or `--no-x-provision` to skip it. This flag is hidden from `--help`.
+- `--x-auto-create`, `--experimental-auto-create` <Type text="boolean" /> <MetaInfo text="(default: true) optional" />
+  - Used only when automatic provisioning is enabled. If a binding already has a resource name in your configuration, Wrangler still creates that named resource. If the name is missing, `true` (the default) creates a new resource with a default name, and `false` prompts you to connect an existing resource or create a new one. This flag is also honored by `wrangler versions upload`, and it is hidden from `--help`.
 
 <Render file="wrangler-commands/global-flags" product="workers" />
 
@@ -472,6 +476,8 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 	description="Upload a new [version](/workers/versions-and-deployments/#versions) of your Worker that is not deployed immediately."
 	headingLevel={3}
 />
+
+The generated options for `wrangler versions upload` omit two hidden flags that this command still honors: [`--x-provision`](#deploy) and [`--x-auto-create`](#deploy). Their defaults and behavior match [`wrangler deploy`](#deploy).
 
 <WranglerCommand
 	command="versions deploy"
