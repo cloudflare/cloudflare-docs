@@ -1,0 +1,78 @@
+---
+pcx_content_type: example
+summary: Create a redirect rule to redirect requests for a section of your
+  website, such as `/blog/`, to a subdomain, keeping the rest of the path and
+  the query string.
+products: [redirect-rules]
+title: Move a website section to a subdomain
+description: Create a redirect rule to redirect requests for a section of your
+  website, such as `/blog/`, to a subdomain, keeping the rest of the path and
+  the query string.
+tags:
+  - Redirects
+---
+
+import { Example } from "~/components";
+
+This example single redirect sends visitors from `www.example.com/blog/` to the subdomain `blog.example.com`. The redirect keeps the rest of the path and the query string.
+
+Use this redirect when you move part of your website to a new hostname. For example, you may move a blog to [Cloudflare Pages](/pages/) on its own subdomain.
+
+<Example>
+
+**When incoming requests match**
+
+- **Wildcard pattern**
+  - **Request URL**: `http*://www.example.com/blog/*`
+
+**Then**
+
+- **Target URL**: `https://blog.example.com/${2}`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
+
+</Example>
+
+The target URL uses `${2}` instead of `${1}`. The first `*` in the request URL, in `http*`, is `${1}`. The second `*` captures everything after `/blog/`. Refer to [How wildcard references are numbered](/rules/url-forwarding/single-redirects/create-dashboard/#how-wildcard-references-are-numbered).
+
+For example, the redirect rule would perform the following redirects:
+
+| Request URL                                         | Target URL                                      | Status code |
+| --------------------------------------------------- | ----------------------------------------------- | ----------- |
+| `https://www.example.com/blog/2009/05/my-post.html` | `https://blog.example.com/2009/05/my-post.html` | `301`       |
+| `http://www.example.com/blog/`                      | `https://blog.example.com/`                     | `301`       |
+| `https://www.example.com/blog/archive?page=2`       | `https://blog.example.com/archive?page=2`       | `301`       |
+| `https://www.example.com/blog`                      | (unchanged)                                     | n/a         |
+| `https://www.example.com/about/`                    | (unchanged)                                     | n/a         |
+
+## Redirect the section root without a trailing slash
+
+The request URL `http*://www.example.com/blog/*` does not match `/blog` without a trailing slash. To redirect it, create a second redirect rule:
+
+<Example>
+
+**When incoming requests match**
+
+- **Wildcard pattern**
+  - **Request URL**: `http*://www.example.com/blog`
+
+**Then**
+
+- **Target URL**: `https://blog.example.com/`
+- **Status code:** _301_
+- **Preserve query string:** Enabled
+
+</Example>
+
+## Migrate from Page Rules
+
+This redirect replaces a Page Rule with the following configuration:
+
+- **URL**: `www.example.com/blog/*`
+- **Setting**: _Forwarding URL_
+- **Select Status code**: _301 - Permanent Redirect_
+- **Destination URL**: `https://blog.example.com/$1`
+
+The Page Rule uses `$1` for the path, but the redirect rule uses `${2}`. Page Rules do not match the URI scheme, so the path is the first wildcard. In the redirect rule, the `*` in `http*` is the first wildcard.
+
+For more information, refer to [Page Rules migration guide](/rules/reference/page-rules-migration/).

@@ -768,6 +768,8 @@ To perform case-sensitive wildcard matching, set the `flags` parameter to `"s"`.
 
 This function uses lazy matching, that is, it tries to match each `*` metacharacter with the shortest possible string.
 
+Capture group references are numbered by the position of each `*` in `wildcard_pattern`, from left to right, starting at `${1}`. Every `*` counts, including one in the URI scheme. For example, in the pattern `http*://example.com/*`, `${1}` captures the `*` in `http*`, and `${2}` captures the path.
+
 You can only use the `wildcard_replace()` function once in an expression, and you cannot nest it with the [`regex_replace()`](/ruleset-engine/rules-language/functions/#regex_replace) function.
 
 Examples:
