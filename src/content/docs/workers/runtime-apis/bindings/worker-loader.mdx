@@ -99,6 +99,8 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 </WranglerConfig>
 
+The local `workerd` runtime does not enforce a dynamic Worker's [`limits.cpuMs`](#limits) CPU budget. Use a [Worker Preview](/workers/previews/) to test CPU-limit failures on Cloudflare before deploying to production.
+
 ## API Reference
 
 ### `get`
@@ -134,6 +136,10 @@ An optional list of [compatibility flags](/workers/configuration/compatibility-f
 #### <code>allowExperimental <Type text="boolean" /> <MetaInfo text='Optional' /></code>
 
 If true, then experimental compatibility flags will be permitted in `compatibilityFlags`. In order to set this, the worker calling the loader must itself have the compatibility flag `"experimental"` set. Experimental flags cannot be enabled in production.
+
+#### `limits`
+
+Optional resource limits for the dynamic Worker. Refer to [Custom resource limits](/dynamic-workers/usage/limits/) for `cpuMs`, `subRequests`, and configuration examples.
 
 #### <code>mainModule <Type text="string" /></code>
 
