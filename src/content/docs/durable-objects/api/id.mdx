@@ -86,6 +86,10 @@ The `name` property is also available on `ctx.id` inside the Durable Object when
 - Names longer than 1,024 bytes are not passed through to `ctx.id`.
 - The Durable Object was created with `newUniqueId()`.
 
+:::note[Local development]
+If `ctx.id.name` works after deployment but is `undefined` locally, upgrade to [Wrangler 4.79.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.79.0) or later.
+:::
+
 :::note[Alarms]
 `ctx.id.name` is especially useful inside [alarm handlers](/durable-objects/api/alarms/), where there is no calling client to pass the name as an argument. When the alarm fires, `ctx.id.name` holds the same name the object was originally accessed with.
 
