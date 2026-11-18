@@ -41,7 +41,7 @@ Version URLs are the right fit for:
 
 ### Migrate from aliased Version URLs to Previews
 
-If you are using aliased Version URLs created with `wrangler versions upload --preview-alias` for branch or pull request previews, switch to Previews instead. Aliased Version URLs do not create branch-isolated resources.
+If you are using aliased Version URLs created with `wrangler versions upload --preview-alias` for branch or pull request previews, switch to Previews instead. Aliased Version URLs do not create branch-isolated resources, and they stop working when their version is deleted under [version retention](/workers/versions-and-deployments/#version-retention).
 
 | What you do today                                  | What to do instead                                                                                             |
 | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |

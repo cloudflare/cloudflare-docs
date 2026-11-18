@@ -62,7 +62,7 @@ npx wrangler versions upload
 
 ## Aliased Version URLs
 
-Aliased Version URLs let you assign a readable alias to a specific Worker version. This can be useful when you want a stable URL for a manually uploaded version.
+Aliased Version URLs let you assign a readable alias to a specific Worker version. This can be useful when you want a readable URL for a manually uploaded version. An aliased Version URL stops working when its version is deleted under [version retention](/workers/versions-and-deployments/#version-retention). For a URL that keeps working as you deploy new changes, use [Previews](/workers/previews/).
 
 Create an alias during version upload with `--preview-alias`:
 
@@ -143,6 +143,7 @@ If `preview_urls` is omitted, Wrangler does not change an existing Version URL s
 - Aliases must begin with a lowercase letter.
 - The alias and Worker name combined with a dash must not exceed 63 characters due to DNS label limits.
 - Only the 1000 most recently deployed aliases are retained. When a new alias is created beyond this limit, the least recently deployed alias is deleted.
+- A Version URL and any aliases pointing to it stop working when the version is deleted under [version retention](/workers/versions-and-deployments/#version-retention). An alias does not prevent its version from being deleted. For URLs that keep working, use [Previews](/workers/previews/compare-workflows/#migrate-from-aliased-version-urls-to-previews).
 
 ## Limitations
 
