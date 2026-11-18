@@ -70,9 +70,17 @@ sent.
 
 The Wall Time per execution chart shows historical wall time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/).
 
+Startup work occurs outside invocation wall-time measurements. Client-observed latency can exceed invocation wall time when a request starts a new isolate.
+
 ### CPU Time per execution
 
 The CPU Time per execution chart shows historical CPU time data broken down into relevant quantiles using [reservoir sampling](https://en.wikipedia.org/wiki/Reservoir_sampling). Learn more about [interpreting quantiles](https://www.statisticshowto.com/quantile-definition-find-easy-steps/). In some cases, higher quantiles may appear to exceed [CPU time limits](/workers/platform/limits/#cpu-time) without generating invocation errors because of a mechanism in the Workers runtime that allows rollover CPU time for requests below the CPU limit.
+
+#### Compare CPU measurements
+
+Identical code and Worker versions do not guarantee identical CPU measurements across requests. Execution hardware can affect the CPU duration of equivalent requests.
+
+Compare distributions over representative traffic instead of a few individual requests. Separate cold starts, warm execution, memory and garbage-collection behavior, input differences, and execution-host variation. For sampled production data, refer to [Interpret production profiles](/workers/observability/profiling-in-production/#interpret-production-profiles).
 
 ### Execution duration (GB-seconds)
 
@@ -87,6 +95,12 @@ Workers run in V8 [isolates](/workers/reference/how-workers-works/#isolates), ea
 Deployment markers on the chart let you correlate memory changes with specific code deployments, making it easier to identify whether a new version introduced a memory regression.
 
 If you see memory usage trending upward over time, this may indicate a memory leak. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to take heap snapshots and identify specific objects causing high memory consumption.
+
+Startup allocations count toward isolate memory. Excessive startup memory can replace an isolate after its first request or prevent an invocation from starting. Repeated cold starts can result. For a diagnostic procedure, refer to [Troubleshoot repeated cold starts](/workers/platform/limits/#troubleshoot-repeated-cold-starts).
+
+Staying below 128 MB does not eliminate garbage-collection pauses. Cleanup cost can depend on the number and structure of live objects, not only heap size. Bound global caches, use compact representations for appropriate bulk data, and stream request and response bodies.
+
+When wall time rises without a matching CPU increase, consider garbage collection as a possible contributor. Refer to [Interpret production profiles](/workers/observability/profiling-in-production/#interpret-production-profiles) for sampling considerations.
 
 ### Invocation statuses
 
@@ -118,6 +132,8 @@ Worker invocation statuses indicate whether a Worker executed successfully or fa
 ² The Internal Error status may appear when the Workers runtime fails to process a request due to an internal failure in our system. These errors are not caused by any issue with the Worker code nor any resource limit. While requests with Internal Error status are rare, some may appear during normal operation. These requests are not counted towards usage for billing purposes. If you notice an elevated rate of requests with Internal Error status, review [www.cloudflarestatus.com](https://www.cloudflarestatus.com/).
 
 A Worker can return HTTP `200` headers and then have its response body canceled. Check whether the body finished, as well as the HTTP status.
+
+An HTTP `503` response with Cloudflare error `1105` and no matching invocation can indicate a startup failure. Startup memory pressure is one possible cause. Error `1105` has other causes, and a missing invocation alone does not establish that the request never reached Workers.
 
 When a client disconnects, the runtime may cancel pending subrequests and open streams or connections tied to that request. If a subrequest calls another Worker, that Worker loses its caller and may also report Client Disconnected. Refer to [Request cancellation](/workers/runtime-apis/bindings/service-bindings/#request-cancellation) for how this affects HTTP and RPC calls.
 

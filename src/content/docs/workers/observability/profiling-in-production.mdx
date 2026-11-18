@@ -198,6 +198,16 @@ Use **Search frames** to find function names or source locations. Switch to **Ta
 
 Percentages remain relative to the whole capture, even when you focus on a subtree.
 
+## Interpret production profiles
+
+A profile samples a recently active execution location. That location is not necessarily the host that processed a particular slow request.
+
+Equivalent requests on different execution hosts can report different CPU durations, even for identical code and Worker versions. Compare distributions over representative traffic instead of individual requests. Separate cold starts, warm execution, memory and garbage-collection behavior, input differences, and execution-host variation.
+
+When wall time rises without a matching CPU increase, consider garbage collection as a possible contributor. Cleanup cost can depend on the number and structure of live objects, not only heap size. Bound global caches, use compact representations for appropriate bulk data, and stream bodies instead of materializing intermediate objects.
+
+A Heap profile measures allocations rather than retained memory. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) to inspect retained objects in a heap snapshot.
+
 ## Download the capture
 
 Use pprof-compatible tools to inspect profiles captured through the CLI, API, or dashboard. In the dashboard, select **Download profile** to download the raw pprof profile.
