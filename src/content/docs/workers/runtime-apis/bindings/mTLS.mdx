@@ -102,15 +102,17 @@ export default {
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
+import { DurableObject } from "cloudflare:workers";
+
 interface Env {
 	MY_CERT: Fetcher;
 }
 
-export default {
-	async fetch(request, env): Promise<Response> {
-		return env.MY_CERT.fetch("https://origin.example.com");
-	},
-} satisfies ExportedHandler<Env>;
+export class OriginClient extends DurableObject<Env> {
+	async fetch(request: Request): Promise<Response> {
+		return this.env.MY_CERT.fetch("https://origin.example.com");
+	}
+}
 ```
 
 </TypeScriptExample>
