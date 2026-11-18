@@ -104,7 +104,21 @@ When Account A removes a delegation, Cloudflare does the following:
 
 Services in Account B that use the delegated IP addresses can stop working.
 
-Cloudflare does not remove the last IP address from an address map that has memberships. If the removal would leave an address map in Account B with no IP addresses, the removal fails. Cloudflare then makes no changes. To continue, Account B must add other IP addresses to that address map or remove its memberships.
+### If the removal fails
+
+The removal can fail when Account B uses the delegated IP addresses in an address map.
+
+An address map that has zones or accounts attached must keep at least one IP address. If removing the delegation would leave such an address map with no IP addresses, Cloudflare stops the removal and makes no changes. The API returns `address_map_has_memberships`.
+
+**If you own Account A (the prefix owner):** ask the owner of Account B to change the address map. Then remove the delegation again.
+
+**If you own Account B (the delegated account):** change the address map that uses the delegated IP addresses. Do one of the following:
+
+- Add other IP addresses to the address map. Your zones then use those IP addresses.
+- Remove all zones and accounts from the address map. Those zones then stop using the address map.
+- Disable and then delete the address map. Those zones then stop using the address map.
+
+Then tell the owner of Account A to remove the delegation again.
 
 ## Related resources
 
