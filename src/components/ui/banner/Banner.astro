@@ -50,6 +50,7 @@ const safeContent = sanitizeBannerHtml(content);
 		? {
 				"data-nb-banner-dismiss": dismissible.id,
 				"data-nb-banner-days": dismissible.days,
+				"data-nb-banner-key": `nb-banner-dismissed-${dismissible.id}`,
 			}
 		: {})}
 	{...attrs}
@@ -68,6 +69,23 @@ const safeContent = sanitizeBannerHtml(content);
 		</button>
 	)}
 </div>
+
+{dismissible && <script is:inline>
+	(() => {
+		const banner = document.currentScript?.previousElementSibling;
+		const key = banner?.getAttribute("data-nb-banner-key");
+		if (!key) return;
+		try {
+			const stored = localStorage.getItem(key);
+			if (!stored) return;
+			const expiry = Number(stored);
+			if (expiry === 0 || expiry > Date.now()) banner.remove();
+			else localStorage.removeItem(key);
+		} catch {
+			return;
+		}
+	})();
+</script>}
 
 <script>
 	import "./banner.client";

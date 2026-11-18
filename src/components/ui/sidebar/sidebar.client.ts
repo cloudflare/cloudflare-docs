@@ -114,6 +114,7 @@ function applyFilter(root: HTMLElement, query: string): void {
 		if (!text.includes(query)) return;
 		group.removeAttribute("data-nb-sidebar-hidden");
 		openGroup(group);
+		revealAncestors(group, root);
 		group
 			.querySelectorAll<HTMLElement>(
 				"[data-nb-sidebar-link], [data-nb-sidebar-group]",
