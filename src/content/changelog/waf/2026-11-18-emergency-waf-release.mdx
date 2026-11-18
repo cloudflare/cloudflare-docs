@@ -1,0 +1,91 @@
+---
+title: "WAF Emergency Release - 2026-11-18"
+description: Cloudflare WAF managed ruleset 2026-11-18 release
+date: 2026-11-18
+---
+
+import { RuleID } from "~/components";
+
+This release introduces 6 new malformed base64 Cloudflare Managed Ruleset detections for Java4Shell CVE-2026-114938. The rules are being deployed in log mode by default (in lieu of False Positive risk) and can be overridden if needed with supplementary information around the same available through blog post [How Cloudflare WAF helps protect against Java4Shell (CVE-2026-114938)](https://blog.cloudflare.com/java4shell-waf-protection/).
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="5de9b20a45ea45d3841919ab4d718bf4" />
+			</td>
+			<td>N/A</td>
+			<td>Java4Shell - Malformed Base64 Header - CVE-2026-114938</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="46bb4172813e471ea62d31c02337b51d" />
+			</td>
+			<td>N/A</td>
+			<td>Java4Shell - Malformed Base64 Query Value - CVE-2026-114938</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="d4dc3f71f1bc44a0811ae570e5e5836c" />
+			</td>
+			<td>N/A</td>
+			<td>Java4Shell - Malformed Base64 Body Value - CVE-2026-114938</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="0dceaf0684b54fd0b085fcfb6fd6f152" />
+			</td>
+			<td>N/A</td>
+			<td>Java4Shell - Malformed Base64 Path Segment - CVE-2026-114938</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="0ddd0eb664a040779f2f19065a25d991" />
+			</td>
+			<td>N/A</td>
+			<td>Java4Shell - Malformed Base64url JWT Component - CVE-2026-114938</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="4fce1ea79a614c07a27348d167d74ebb" />
+			</td>
+			<td>N/A</td>
+			<td>Java4Shell - Malformed Base64 WebAuthn Value - CVE-2026-114938</td>
+			<td>N/A</td>
+			<td>Log</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
