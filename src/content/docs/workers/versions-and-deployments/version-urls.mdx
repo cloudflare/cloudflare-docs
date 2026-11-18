@@ -146,7 +146,7 @@ If `preview_urls` is omitted, Wrangler does not change an existing Version URL s
 
 ## Limitations
 
-- Version URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. For Containers testing options, refer to [Deploy Containers](/containers/guides/deploy/#before-production).
+- Version URLs are not generated for Workers that implement a [Durable Object](/durable-objects/), including [Containers](/containers/) and [Sandbox](/sandbox/) Workers. To test Durable Objects in isolation, use [Previews](/workers/previews/). For Containers testing options, refer to [Deploy Containers](/containers/guides/deploy/#before-production).
 - Version URLs are not generated for [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) [user Workers](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#user-workers).
 - You cannot configure Version URLs to run on a subdomain other than [`workers.dev`](/workers/configuration/routing/workers-dev/).
 - You cannot view logs for Version URLs with Workers Logs, Wrangler tail, or Logpush.
