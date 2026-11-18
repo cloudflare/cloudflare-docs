@@ -23,6 +23,6 @@ For API configurations, use `metadata_url` instead of manual certificate fields:
 }
 ```
 
-Access caches the certificates and can refresh them during login if a signature cannot be verified, subject to a 60-second refresh limit. It does not poll the endpoint. Manual certificate configuration remains supported.
+Access caches the certificates and does not poll the endpoint.
 
 Removing a compromised certificate from metadata does not immediately revoke the cached certificate or existing Access sessions. For setup, planned rotation, and emergency replacement guidance, refer to [Discover IdP signing certificates](/cloudflare-one/integrations/identity-providers/generic-saml/#discover-idp-signing-certificates).
