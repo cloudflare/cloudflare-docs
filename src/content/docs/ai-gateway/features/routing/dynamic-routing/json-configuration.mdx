@@ -25,7 +25,7 @@ Conditional and rate/budget limit elements read data from the request's metadata
 Reference metadata keys as `metadata.<key>`. The keys available are:
 
 - The [custom metadata](/ai-gateway/observability/custom-metadata/) that you send in the `cf-aig-metadata` header. For example, if you send `cf-aig-metadata: {"plan": "free", "task": "summarize"}`, you can use `metadata.plan` and `metadata.task`.
-- `metadata.cf.user_id`, which AI Gateway adds when the request is authenticated with [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/). Refer to [Reserved metadata](/ai-gateway/observability/custom-metadata/#reserved-metadata).
+- `metadata.cf.user_id`, which AI Gateway adds when a user authenticates with [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/). Service-token requests and requests without a user subject do not include this key. Refer to [Reserved metadata](/ai-gateway/observability/custom-metadata/#reserved-metadata).
 
 To route on a value that AI Gateway does not supply, such as the task type, add it to `cf-aig-metadata` in your application.
 
@@ -110,7 +110,7 @@ Apply limits based on [request metadata](#request-metadata). Supports both count
 **Properties**:
 
 - `limitType`: "count" or "cost"
-- `key`: Metadata key to use for rate limiting (e.g. "metadata.user_id"). Requests that do not include this key share one limit.
+- `key`: Metadata key to use for rate limiting. For example, `metadata.user_id` for a custom key that your application sends, or `metadata.cf.user_id` for the Access user ID. Requests that do not include this key share one limit.
 - `limit`: Maximum allowed requests/cost
 - `window`: Time window in seconds
 
