@@ -96,7 +96,7 @@ Deployment markers on the chart let you correlate memory changes with specific c
 
 If you see memory usage trending upward over time, this may indicate a memory leak. Use [memory profiling with DevTools](/workers/observability/dev-tools/memory-usage/) locally to take heap snapshots and identify specific objects causing high memory consumption.
 
-Startup allocations count toward isolate memory. Excessive startup memory can replace an isolate after its first request or prevent an invocation from starting. Repeated cold starts can result. For a diagnostic procedure, refer to [Troubleshoot repeated cold starts](/workers/platform/limits/#troubleshoot-repeated-cold-starts).
+Startup allocations count toward isolate memory. Excessive startup memory can replace an isolate after its first request or prevent an invocation from starting. Repeated cold starts can result. For memory limits and troubleshooting guidance, refer to [Worker memory limits](/workers/platform/limits/#memory).
 
 Staying below 128 MB does not eliminate garbage-collection pauses. Cleanup cost can depend on the number and structure of live objects, not only heap size. Bound global caches, use compact representations for appropriate bulk data, and stream request and response bodies.
 
