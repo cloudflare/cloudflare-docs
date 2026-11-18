@@ -4,6 +4,9 @@ description: The Images URL interface and Workers cf.image options now share a c
 date: 2026-11-18
 ---
 
+import oldInterface from "~/assets/images/images/examples/consistent-optimization-interfaces/old-interface.png";
+import newInterface from "~/assets/images/images/examples/consistent-optimization-interfaces/new-interface.png";
+
 [Cloudflare Images](/images/) lets you dynamically compose, manipulate, and encode images using a broad set of optimizations, including [resizing](/images/optimization/features/#width--w), [face cropping](/images/optimization/features/#face), and [background removal](/images/optimization/features/#segment). You can configure optimizations directly in an image URL or programmatically through the [`cf.image` options](/images/optimization/transformations/transform-via-workers/) on a Worker [`fetch()` subrequest](/workers/runtime-apis/fetch/).
 
 We redesigned the Images API to provide a consistent, predictable, and intuitive language for developers and AI agents to optimize and manipulate images.
@@ -16,13 +19,27 @@ This release also makes adding [borders](/images/optimization/features/#border) 
 
 Optimization parameters are now represented in one of two ways: a compact form for single values and a structured form for related settings.
 
-For example, `width=500` requests an exact width, while `trim=color` asks Images to automatically trim the sides of an image based on its border color. [Color-based trimming](/images/optimization/features/#trim-color) already supports configuring the border color, tolerance, and retained edge; these settings were previously applied as separate top-level parameters using dotted syntax.
+For example, `width=500` requests an exact width, while `trim=color` asks Images to automatically trim the sides of an image based on its border color. [Color-based trimming](/images/optimization/features/#trim-color) already supports configuring the border color, tolerance, and retained edge; these settings were previously applied as separate top-level parameters:
 
-The new structure groups existing settings underneath `trim`:
+<img
+	src={oldInterface.src}
+	alt="Old Images interface with trim settings as separate top-level parameters"
+	style="width:100%; height:auto"
+/>
 
-_URLs and `cf.image` objects now use the same hierarchy to express relationships between parameters and their settings._
+_Related `trim` settings appeared alongside independent parameters such as `width`._
 
-In the URL interface, color-based trimming is configured under a single top-level `trim` parameter:
+The new structure groups existing settings under a single top-level `trim` parameter:
+
+<img
+	src={newInterface.src}
+	alt="New Images interface with trim settings as nested settings"
+	style="width:100%; height:auto"
+/>
+
+_Related `trim` settings are nested, while `width=250` remains a top-level parameter._
+
+In the URL interface, color-based trimming uses the following syntax:
 
 ```txt
 trim=(mode=color,color=red,tolerance=10,keep=5)
@@ -43,12 +60,12 @@ trim: {
 
 In Images, optimizations are expressed as parameters, which form the language used to describe every optimization and its intended behavior. `width` sets the output width, `gravity` identifies the area that a crop should preserve, and `draw` defines how image or text overlays are rendered.
 
-Many optimization features began as scalar parameters, pairing a parameter key with one value, such as `width=500`. As we introduced more capabilities, some parameters gained settings to configure how the optimization worked. We added syntax to support each use case, gradually accumulating different forms for expressing related settings, such as separate top-level parameters, dotted parameter names, and unlabeled positional values.
+Many optimization features began as scalar parameters, pairing a parameter key with one value, such as `width=500`. As we introduced more capabilities, some parameters gained settings to configure how the optimization worked, such as [automatic width selection](/images/optimization/features/#widthauto). We added syntax to support each use case, gradually accumulating different forms for expressing related settings.
 
-In our legacy structure, [trimming](/images/optimization/features/#trim) exposed additional top-level parameters, similarly to automatic width selection. [Color-based trimming](/images/optimization/features/#trim-color) used separate, dotted parameters to configure color detection behavior. [Side-based trimming](/images/optimization/features/#trim-side) used four positional values to represent the number of pixels that should be removed from the top, right, bottom, and left sides:
+A given optimization might follow multiple conventions for different behaviors. For example, [color-based trimming](/images/optimization/features/#trim-color) relied on separate dotted parameters, while [side-based trimming](/images/optimization/features/#trim-side) encoded the top, right, bottom, and left settings as four unlabeled positional values:
 
 ```txt
-trim=border,trim.border.color=%23fff,trim.border.tolerance=10,trim.border.keep=5
+trim=border,trim.border.color=white,trim.border.tolerance=10,trim.border.keep=5
 trim=10;20;10;20
 ```
 
