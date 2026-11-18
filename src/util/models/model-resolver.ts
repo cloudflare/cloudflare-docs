@@ -55,8 +55,17 @@ function resolveModelProviders(
 		id: string;
 		pricing?: Record<string, unknown> | null;
 	}>;
+	// Array order is the priority order; `ordinal`, when an older response
+	// still sends it, overrides it.
 	const providers: ModelProvider[] = model.model_providers
-		? [...(model.model_providers as ModelProvider[])]
+		? (
+				model.model_providers as Array<
+					Omit<ModelProvider, "ordinal"> & { ordinal?: number }
+				>
+			).map((provider, index) => ({
+				...provider,
+				ordinal: provider.ordinal ?? index,
+			}))
 		: details.map((detail, ordinal) => ({
 				provider: detail.id,
 				ordinal,

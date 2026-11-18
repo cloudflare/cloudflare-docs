@@ -427,12 +427,13 @@ export const collections = {
 			banner: z.any().nullable().optional(),
 			// Editor-curated in the CMS: list pinned models first.
 			pinned: z.boolean().optional(),
-			// Every provider serving the model, ordered by \`ordinal\`.
+			// Every provider serving the model, in priority order. The API
+			// dropped \`ordinal\` in favor of array order; accept both.
 			model_providers: z
 				.array(
 					z.looseObject({
 						provider: z.string(),
-						ordinal: z.number(),
+						ordinal: z.number().optional(),
 						pricing: z.record(z.string(), z.unknown()).nullable(),
 					}),
 				)

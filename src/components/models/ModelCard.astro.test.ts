@@ -272,5 +272,18 @@ describe("ModelCard", () => {
 			{ provider: "a", name: "a", ordinal: 0, pricing: { input_tokens: 3 } },
 			{ provider: "b", name: "b", ordinal: 1, pricing: { input_tokens: 2 } },
 		]);
+
+		// Current responses omit `ordinal`: array order is the priority.
+		expect(
+			resolve({
+				model_providers: [
+					{ provider: "b", pricing: { input_tokens: 2 } },
+					{ provider: "a", pricing: { input_tokens: 3 } },
+				],
+			})?.map((provider) => [provider.provider, provider.ordinal]),
+		).toEqual([
+			["b", 0],
+			["a", 1],
+		]);
 	});
 });

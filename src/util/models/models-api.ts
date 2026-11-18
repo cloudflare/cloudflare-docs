@@ -102,7 +102,7 @@ export type CatalogModel = {
 	// catalog API responses omit the field entirely.
 	model_providers?: Array<{
 		provider: string;
-		ordinal: number;
+		ordinal?: number;
 		pricing: Record<string, unknown> | null;
 	}> | null;
 };
