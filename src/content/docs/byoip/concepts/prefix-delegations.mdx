@@ -8,8 +8,6 @@ sidebar:
   order: 4
 ---
 
-import { Details } from "~/components";
-
 A prefix delegation lets another Cloudflare account use all or part of your BYOIP prefix. The account that owns the prefix keeps control of the prefix, its service bindings, and its advertisement.
 
 In this page, Account A is the account that owns the prefix. Account B is the account that receives the delegation. Account B is also called the delegated account.
@@ -65,26 +63,6 @@ In this example, Account A owns `203.0.113.0/24` and creates three delegations:
 
 Account A keeps control of the prefix, the service bindings, and the advertisement for all three accounts. Delegations do not expire. When a delegated account no longer needs its IP addresses, Account A removes the delegation.
 
-## Dashboard limitations
-
-:::caution[Dashboard limitations]
-- The dashboard shows only the first 50 accounts that your user is a member of, sorted by name. You cannot select other accounts in the dashboard.
-- The dashboard shows an account name only for those 50 accounts. For other delegated accounts, it shows the account ID.
-- The dashboard delegates the entire prefix only.
-
-To delegate to other accounts or to delegate part of a prefix, use the [API](/byoip/delegate-a-prefix/#create-a-delegation).
-:::
-
-A delegation identifies Account B by its account ID. The API returns this value in the `delegated_account_id` field.
-
-<Details header="Why does the dashboard show an account ID instead of an account name?">
-
-Account B is not in the first 50 accounts that your user is a member of. This is expected. The delegation is valid.
-
-To confirm which account received the delegation, ask the owner of that account to compare the ID with the account ID in their dashboard.
-
-</Details>
-
 ## Rules and limits
 
 - The prefix must be approved. Cloudflare approves a prefix after it passes validation.
@@ -94,6 +72,8 @@ To confirm which account received the delegation, ask the owner of that account 
 - You cannot delegate to an account in a different compliance region.
 - You cannot edit a delegation. To change it, remove the delegation and create a new one.
 - A delegation does not expire. It stays active until Account A removes it.
+- A delegation identifies Account B by its account ID. The API returns this value in the `delegated_account_id` field.
+- The dashboard has limits on which accounts and CIDRs you can delegate. Refer to [Choose the dashboard or the API](/byoip/delegate-a-prefix/#choose-the-dashboard-or-the-api).
 
 ## Effects of removing a delegation
 
@@ -104,21 +84,7 @@ When Account A removes a delegation, Cloudflare does the following:
 
 Services in Account B that use the delegated IP addresses can stop working.
 
-### If the removal fails
-
-The removal can fail when Account B uses the delegated IP addresses in an address map.
-
-An address map that has zones or accounts attached must keep at least one IP address. If removing the delegation would leave such an address map with no IP addresses, Cloudflare stops the removal and makes no changes. The API returns `address_map_has_memberships`.
-
-**If you own Account A (the prefix owner):** ask the owner of Account B to change the address map. Then remove the delegation again.
-
-**If you own Account B (the delegated account):** change the address map that uses the delegated IP addresses. Do one of the following:
-
-- Add other IP addresses to the address map. Your zones then use those IP addresses.
-- Remove all zones and accounts from the address map. Those zones then stop using the address map.
-- Disable and then delete the address map. Those zones then stop using the address map.
-
-Then tell the owner of Account A to remove the delegation again.
+The removal can fail if Account B uses the delegated IP addresses in an address map. Refer to [If the removal fails](/byoip/delegate-a-prefix/#if-the-removal-fails).
 
 ## Related resources
 

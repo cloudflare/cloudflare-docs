@@ -47,8 +47,8 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 <Render file="cloudflare-asn-callout" product="byoip" />
 
 :::tip[If a step fails]
-- If the API returns an error when you add a prefix, refer to [Self-serve onboarding API errors](/byoip/troubleshooting/#self-serve-onboarding-api-errors).
-- If validation does not pass, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/).
+- If you cannot add the prefix, or if validation does not pass, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/).
+- If you cannot create service bindings or advertise the BGP prefix, refer to [Self-serve onboarding API errors](/byoip/troubleshooting/#self-serve-onboarding-api-errors).
 :::
 
 ## 1. Add and validate your prefix
@@ -182,7 +182,7 @@ Ownership validation passes only when both of these conditions are true:
    curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/validate" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
    ```
 
-   This request sets the IRR, RPKI, and ownership states to `pending`. Cloudflare runs the checks in the background.
+   Cloudflare runs the checks in the background.
 
 2. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check the result:
 
