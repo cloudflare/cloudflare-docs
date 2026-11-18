@@ -282,6 +282,8 @@ export default defineConfig({
 });
 ```
 
+For isolated Durable Objects in Previews, use [`ctx.exports` with `cf` configuration](/workers/previews/resources/#use-cf-configuration). A named `bindings.durableObject()` binding targets the deployed Worker.
+
 Some items link to Wrangler or Workers runtime documentation. The next section
 describes how to resolve each item for `cf`. When you have resolved every item,
 delete the `TODO(@cloudflare)` comments, the comment that starts with
