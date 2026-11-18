@@ -10,7 +10,9 @@ products:
 
 import { WranglerConfig, DashButton } from "~/components";
 
-Environments provide isolated spaces where your code runs with specific dependencies and configurations. This can be useful for a number of reasons, such as compatibility testing or version management. Using different environments can help with code consistency, testing, and production segregation, which reduces the risk of errors when deploying code.
+Use [Wrangler environments](/workers/wrangler/environments/) for long-lived deployments such as staging and production. Each environment has its own Worker name, configuration, and Durable Object namespaces.
+
+Use [Workers Previews](/workers/previews/) to test a branch or pull request before merging. Refer to [Preview bindings](/workers/previews/resources/) to choose isolated resources and avoid accessing production state.
 
 ## Wrangler environments
 
@@ -97,9 +99,40 @@ If you want an environment-specific binding that accesses the same Objects as th
 
 ### Migration environments
 
-You can define a Durable Object migration for each environment, as well as at the top level. Migrations at the environment-level override migrations at the top level.
+Environments inherit top-level legacy `migrations`. An environment-specific list replaces the entire inherited list.
 
-For more information, refer to [Migration Wrangler Configuration](/durable-objects/reference/durable-object-class-migrations-legacy/#migration-wrangler-configuration).
+For example, this configuration creates separate `Room` namespaces for the default Worker and `staging`. Both deployments use the same top-level migration history, but each declares its own binding:
+
+<WranglerConfig>
+
+```toml
+name = "room-worker"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Room"]
+
+[[env.staging.durable_objects.bindings]]
+name = "ROOMS"
+class_name = "Room"
+```
+
+</WranglerConfig>
+
+| Deployment | Worker name | Migration history | `ROOMS` namespace |
+| --- | --- | --- | --- |
+| Default | `room-worker` | Top-level `v1` | Default Worker's `Room` namespace |
+| `staging` | `room-worker-staging` | Inherits top-level `v1` | Staging Worker's separate `Room` namespace |
+
+Do not repeat `migrations` under `env.staging` when the history is shared. If you define `env.staging.migrations`, include its complete history: that list replaces the top-level list.
+
+For configuration details, refer to [legacy migrations](/durable-objects/reference/durable-object-class-migrations-legacy/#migration-wrangler-configuration) or [Durable Object class exports](/durable-objects/reference/durable-objects-migrations/).
 
 ## Local development
 
