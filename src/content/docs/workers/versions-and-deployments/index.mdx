@@ -25,25 +25,6 @@ You can optionally attach a message and tag to a version when you upload it.
 State changes for associated [storage resources](/workers/platform/storage-options/) such as [KV](/kv/), [R2](/r2/), [Durable Objects](/durable-objects/), and [D1](/d1/) are not tracked with versions.
 :::
 
-### Version retention
-
-Cloudflare creates a new version every time you upload code or change a Worker's settings or secrets. Cloudflare deletes a version only when all of the following are true:
-
-- It is not one of the Worker's 100 most recent versions.
-- It is not currently deployed. A version is deployed if it serves any percentage of traffic, including both versions in a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/).
-
-For example, a Worker has 250 versions. Versions 151–250 are its 100 most recent versions, so Cloudflare keeps them. Versions 1–150 are deleted unless a version is still deployed.
-
-A Worker can store up to 100 versions. When a Worker reaches this limit, uploading a new version automatically deletes the oldest version that is not deployed. The upload is not rejected.
-
-When a version is deleted:
-
-- It no longer appears in the version list in the dashboard or API.
-- Its [Version URL](/workers/versions-and-deployments/version-urls/) and any [aliased Version URLs](/workers/versions-and-deployments/version-urls/#aliased-version-urls) stop working. An alias does not prevent its version from being deleted. For URLs that keep working, use [Previews](/workers/previews/compare-workflows/#migrate-from-aliased-version-urls-to-previews).
-- Deployment history is kept. If a past deployment used the deleted version, the deployment history shows that version as deleted.
-
-You can only [deploy](/workers/versions-and-deployments/deployment-management/), create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) with, or [roll back](/workers/versions-and-deployments/rollbacks/) to the 100 most recent versions of your Worker. For all version limits, refer to [Limits](/workers/platform/limits/#versions).
-
 ## Deployments
 
 A deployment determines which version(s) of your Worker are actively serving traffic. A deployment can reference one version (serving 100% of traffic) or two versions (with traffic split between them during a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/)).

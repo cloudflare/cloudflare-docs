@@ -35,27 +35,6 @@ Based on your Cloudflare plan type, a Pages project is limited to a specific num
 
 [^1]: If you need more custom domains, contact your account team.
 
-## Deployments
-
-| Limit                          | Value |
-| ------------------------------ | ----- |
-| Stored deployments per project | 100   |
-
-Cloudflare deletes a deployment only when all of the following are true:
-
-- It is not one of the project's 100 most recent deployments. Both production and preview deployments count.
-- It is not your current production deployment.
-
-For example, a project has 250 deployments. Deployments 151–250 are its 100 most recent, so Cloudflare keeps them. Deployments 1–150 are deleted unless one of them is your current production deployment.
-
-A project can store up to 100 deployments. When a project reaches this limit, a new deployment automatically deletes the oldest deployment that is not your current production deployment. The new deployment is not rejected.
-
-When a deployment is deleted:
-
-- It no longer appears in your project's deployment list in the dashboard or API.
-- Its unique preview URL, such as `<hash>.<project>.pages.dev`, stops working.
-- You cannot [roll back](/pages/configuration/rollbacks/) to it.
-
 ## Files
 
 Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files on the Free plan.
@@ -86,7 +65,7 @@ An individual header in a `_headers` file can have a maximum of 2,000 characters
 
 ## Preview deployments
 
-Preview deployments count toward the deployments that Cloudflare keeps for each project. Preview deployments outside the 100 most recent are automatically deleted. For more information, refer to [Deployments](#deployments).
+You can have an unlimited number of [preview deployments](/pages/configuration/preview-deployments/) active on your project at a time.
 
 ## Redirects
 
