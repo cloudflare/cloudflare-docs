@@ -102,7 +102,7 @@
 		"@types/react-dom": "19.0.4",
 		"@types/unist": "3.0.3",
 		"@typescript-eslint/parser": "8.72.1",
-		"astro": "7.4.5",
+		"astro": "7.4.7",
 		"cf": "0.15.0",
 		"cidr-tools": "13.0.4",
 		"clsx": "2.1.1",
