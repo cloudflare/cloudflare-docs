@@ -16,13 +16,13 @@ Previously, you had to describe what you were seeing or paste file contents into
 
 Example requests:
 
-- "Here's a screenshot of the error I get when I open my site. What's wrong?"
+- "Here is a screenshot of the error I get when I open my site. What is wrong?"
 - "This HAR file is from a slow page load. Which requests are taking the longest?"
-- "Here's the error log from my Worker. What is causing these failures?"
+- "Here is the error log from my Worker. What is causing these failures?"
 
 ### Good to know
 
-- **Supported files.** PNG, JPEG, and WebP images up to 3.5 MiB, PDFs up to 5 MiB, and text files (`.txt`, `.log`, `.json`, `.har`, `.csv`, `.yaml`, `.yml`, `.toml`, `.md`, `.xml`) up to 100 MiB. You can attach up to four files per message, up to 14 MiB in total.
+- **Supported files.** PNG, JPEG, and WebP images up to 3.5 MiB, PDFs up to 5 MiB, and text files (`.txt`, `.log`, `.json`, `.har`, `.csv`, `.yaml`, `.yml`, `.toml`, `.md`, `.xml`) up to 100 MiB. You can attach up to four files per message, up to 14 MiB in total after trimming.
 - **Text files are trimmed in your browser.** A text file over 1 MiB (2 MiB for JSON, HAR, YAML, TOML, and XML) keeps its first and last lines. HAR files are always compacted before sending: request and response bodies and cookies are removed, and credential headers such as `Authorization` and `Cookie` are replaced with `[redacted]`.
 - **Scanned PDFs are not read.** Agent Lee reads the text in a PDF. A PDF that is only scanned images, with no text layer, cannot be read.
 - **Older attachments age out.** Agent Lee keeps attachments from your most recent messages in view. Attach a file again to bring an older one back into the conversation.
