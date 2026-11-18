@@ -23,6 +23,14 @@ For Remix v2 applications, refer to the [React Router guide](/workers/framework-
 - [Vite+](https://viteplus.dev/guide/#install-vp-globally)
 - [Cloudflare CLI](/cf/get-started/#install-cf)
 
+:::caution[Local development on Windows]
+
+With the package versions pinned in this guide, `vp dev` can fail on native Windows with an error that includes `Could not analyze "src/entry.browser.ts"` and `There is a new version of the pre-bundle`.
+
+Use a Linux environment, such as [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/windows/wsl/install), to follow this guide while the [upstream fix](https://github.com/pitlane-tools/pitlane/pull/106) is pending.
+
+:::
+
 ## Create and deploy a Remix app
 
 <Steps>
