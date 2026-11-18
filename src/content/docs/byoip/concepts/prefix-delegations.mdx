@@ -1,7 +1,7 @@
 ---
 title: Prefix delegations
 pcx_content_type: concept
-description: Let another Cloudflare account use all or part of your BYOIP prefix with address maps, Cloudflare for SaaS, or Spectrum. The prefix owner keeps control of the prefix, its service bindings, and its advertisement.
+description: Let another Cloudflare account use all or part of your BYOIP prefix with CDN services (including Cloudflare for SaaS) or Spectrum. The prefix owner keeps control of the prefix, its service bindings, and its advertisement.
 products:
   - byoip
 sidebar:
@@ -18,7 +18,7 @@ To create or remove a delegation, refer to [Delegate a prefix](/byoip/delegate-a
 
 ## How a delegation works
 
-Account A onboards the prefix, creates the service bindings, and controls advertisement. Account A then delegates a CIDR inside the prefix to Account B. The CIDR can be as small as one IP address. Account B can use the delegated IP addresses with address maps in its own account, Cloudflare for SaaS custom hostnames, and Spectrum applications. Account B cannot create service bindings or advertise the prefix. The delegation stays active until Account A removes it.
+Account A onboards the prefix, creates the service bindings, and controls advertisement. Account A then delegates a CIDR inside the prefix to Account B. The CIDR can be as small as one IP address. Account B can use the delegated IP addresses with CDN services (including Cloudflare for SaaS) or Spectrum. Account B cannot create service bindings or advertise the prefix. The delegation stays active until Account A removes it.
 
 ## Who does what
 
