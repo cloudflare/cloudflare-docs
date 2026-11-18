@@ -8,7 +8,7 @@ products:
   - vectorize
 ---
 
-import { Render, WranglerConfig } from "~/components";
+import { Render, TypeScriptExample, WranglerConfig } from "~/components";
 
 This page covers the Vectorize API available within [Cloudflare Workers](/workers/), including usage examples.
 
@@ -106,12 +106,20 @@ let matches = await env.YOUR_INDEX.queryById("some-vector-id", {
 
 ### Get vectors by ID
 
+<TypeScriptExample>
+
 ```ts
-let ids = ["11", "22", "33", "44"];
+const ids = ["11", "22", "33", "44"];
 const vectors = await env.YOUR_INDEX.getByIds(ids);
+const found = new Set(vectors.map((vector) => vector.id));
+const missing = ids.filter((id) => !found.has(id));
 ```
 
+</TypeScriptExample>
+
 Retrieves the specified vectors by their ID, including values and metadata.
+
+`missing` contains requested IDs that were not returned. For a full inventory, use the [REST API or CLI listing](#list-vectors). After writes, allow for [asynchronous mutation visibility](#upsert-vectors).
 
 ### Delete vectors by ID
 
