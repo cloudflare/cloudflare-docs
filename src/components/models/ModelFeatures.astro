@@ -48,6 +48,18 @@ const price = Array.isArray(properties.price)
 	? (properties.price as { price: number; unit: string }[])
 	: null;
 const promotion = activeModelPromotion(model.name);
+const priceText = price
+	?.map((p) => `${modelCurrencyFormatter.format(p.price)} ${p.unit}`)
+	.join(", ");
+const promoPrice = promotion
+	? `${modelCurrencyFormatter.format(promotion.promoPrice)} ${promotion.unit}`
+	: null;
+const standardAmount = promotion
+	? modelCurrencyFormatter.format(promotion.standardPrice)
+	: null;
+const promoNote = promotion
+	? `Promotional price until ${formatPromotionEnd(promotion)}, then ${modelCurrencyFormatter.format(promotion.standardPrice)} ${promotion.unit}.`
+	: null;
 const reasoning = formatModelReasoning(
 	properties.reasoning_effort,
 	properties.reasoning,
@@ -212,25 +224,14 @@ const reasoning = formatModelReasoning(
 					<td>
 						{promotion ? (
 							<Fragment>
-								<span class="font-semibold">
-									{modelCurrencyFormatter.format(promotion.promoPrice)}{" "}
-									{promotion.unit}
-								</span>{" "}
-								<s class="text-muted-foreground">
-									{modelCurrencyFormatter.format(promotion.standardPrice)}
-								</s>{" "}
+								<span class="font-semibold">{promoPrice}</span>{" "}
+								<s class="text-muted-foreground">{standardAmount}</s>{" "}
 								<Badge text="Promo" variant="tip" />
 								<br />
-								<span class="text-muted-foreground text-sm">
-									Promotional price until {formatPromotionEnd(promotion)}, then{" "}
-									{modelCurrencyFormatter.format(promotion.standardPrice)}{" "}
-									{promotion.unit}.
-								</span>
+								<span class="text-muted-foreground text-sm">{promoNote}</span>
 							</Fragment>
 						) : (
-							price
-								.map((p) => `${modelCurrencyFormatter.format(p.price)} ${p.unit}`)
-								.join(", ")
+							priceText
 						)}
 					</td>
 				</tr>
