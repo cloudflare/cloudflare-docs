@@ -34,11 +34,29 @@ Instead, you can use Address Maps to set a default SNI for IPs on your account o
 
 ## Self-serve onboarding API errors
 
-When onboarding BYOIP prefixes via the API, you may encounter the following errors:
+When you onboard BYOIP prefixes with the API, you may get the following errors. If your prefix was added but validation does not pass, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/).
+
+### When you add a prefix
 
 | Error code | Meaning | Resolution |
 |---|---|---|
-| `prefix_not_valid_and_approved` | The prefix has not passed IRR validation, RPKI validation, and ownership verification (or manual approval). | Verify all three validation steps have completed. If one or more are failing, check prefix registration with your Regional Internet Registry (RIR) and your RPKI ROA configuration. If validation is passing but you are still seeing this error, contact support for manual approval. |
+| `missing_asn` | The request does not include an ASN. | Add the `asn` field to the request. |
+| `irr_entry_not_found` | Cloudflare did not find an IRR `route` or `route6` object for the prefix. | Create the IRR object. Refer to [IRR entries](/byoip/concepts/irr-entries/). |
+| `irr_mismatch_asn` | The IRR object exists, but its `origin` does not match the ASN in the request. | Update the IRR object, or use the ASN from the IRR object. |
+| `irr_cidr_too_specific` | The IRR object is for a smaller prefix than the prefix in the request. | Create an IRR object that matches the prefix exactly. |
+| `prefix_validation_irr_invalid` | The IRR check did not pass. | Review the IRR object for the prefix. Refer to [IRR best practices](/byoip/concepts/irr-entries/best-practices/). |
+| `invalid_network_cidr` | The prefix is not valid. | Use a valid IPv4 or IPv6 prefix that meets the [size requirements](/byoip/get-started/#before-you-begin). |
+| `invalid_self_serve_asn` | Your account cannot use this ASN with the self-serve flow. | Use AS13335, or contact your account team. |
+| `byoip_not_allowed` | BYOIP is not enabled on your account. | Contact your account team. |
+| `prefix_entitlement_limit_exceeded` | Your account has reached the maximum number of prefixes. Existing prefixes count toward this limit. | To add the same prefix again, delete the existing prefix first. To add more prefixes, contact your account team. |
+| `prefix_exists_for_cidr` | A prefix for this CIDR already exists. | Use the [List Prefixes endpoint](/api/resources/addressing/subresources/prefixes/methods/list/) to find the existing prefix. |
+| `nonexistent_loa_document` | The `loa_document_id` in the request does not exist in your account. | Leave out `loa_document_id` to use the self-serve flow, or use a valid LOA document ID. |
+
+### When you create service bindings or BGP prefixes
+
+| Error code | Meaning | Resolution |
+|---|---|---|
+| `prefix_not_valid_and_approved` | The prefix has not passed IRR validation, RPKI validation, and ownership verification (or manual approval). | Verify all three validation steps have completed. If one or more are failing, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/). If validation is passing but you are still seeing this error, contact support for manual approval. |
 | `incomplete_bgp_deployment` | Cannot create a BGP prefix without a default edge service binding configured. | Configure a default edge service binding before creating BGP prefixes. |
 | `advertise_state_locked` | Cannot create a BGP prefix — the default edge service binding is still deploying. | Wait for the edge service binding deployment to complete, then retry. |
 

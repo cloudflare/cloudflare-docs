@@ -1,6 +1,6 @@
 ---
 pcx_content_type: troubleshooting
-description: Resolve prefix validation errors during BYOIP onboarding.
+description: Find out why BYOIP prefix validation does not pass, and fix the reported issue.
 products:
   - byoip
 title: Troubleshoot prefix validation
@@ -11,39 +11,110 @@ sidebar:
 
 import { APIRequest, GlossaryTooltip, Render } from "~/components";
 
-1. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check if any issues were found during validation.
+Use this page when your prefix does not pass validation during [BYOIP onboarding](/byoip/get-started/). For errors that the API returns when you add a prefix, refer to [Self-serve onboarding API errors](/byoip/troubleshooting/#self-serve-onboarding-api-errors).
 
-   <APIRequest path= "/accounts/{account_id}/addressing/prefixes/{prefix_id}" method="GET" />
+## Check the validation result
 
-   ```json title="Response" {17-19}
+Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to get the current validation states.
 
-    "result": {
-       "id": "72823e95d6c64d48a8111fec81179816",
-       "created_at": "2025-02-25T00:34:11.423722Z",
-       "modified_at": "2025-02-25T00:34:11.423722Z",
-       "cidr": "203.0.113.0/24",
-       "account_id": "654c5f71c324478cc9f68d60065d4620",
-       "description": "",
-       "approved": "P",
-       "on_demand_enabled": false,
-       "on_demand_locked": false,
-       "advertised": null,
-       "advertised_modified_at": null,
-       "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
-       "asn": 13335,
-       "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
-       "delegate_loa_creation" : true,
-       "irr_validation_state": "valid",
-       "rpki_validation_state": "valid",
-       "ownership_validation_state": "missing",
-     }
+<APIRequest
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}"
+	method="GET"
+/>
 
-   ```
+```json title="Response" {9,14-19}
+{
+	"result": {
+		"id": "72823e95d6c64d48a8111fec81179816",
+		"created_at": "2025-02-25T00:34:11.423722Z",
+		"modified_at": "2025-02-25T00:34:11.423722Z",
+		"cidr": "203.0.113.0/24",
+		"account_id": "654c5f71c324478cc9f68d60065d4620",
+		"description": "",
+		"approved": "P",
+		"on_demand_enabled": false,
+		"on_demand_locked": false,
+		"advertised": null,
+		"advertised_modified_at": null,
+		"loa_document_id": null,
+		"asn": 13335,
+		"ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
+		"delegate_loa_creation": true,
+		"irr_validation_state": "valid",
+		"rpki_validation_state": "valid",
+		"ownership_validation_state": "missing"
+	}
+}
+```
 
-2. Consider the states returned in the API response (for example, `missing`, `invalid`, `mismatch_asn`) and review your IRR record, <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip>, and ownership validation method accordingly.
+Review these fields:
 
-    - Information in the IRR and ROA records should meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
+| Field                        | What it checks                                                                                       |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `approved`                   | `V` means that all checks passed. `P` means that the prefix is not approved yet.                     |
+| `irr_validation_state`       | Your IRR `route` or `route6` object matches the prefix and the ASN.                                  |
+| `rpki_validation_state`      | Your <GlossaryTooltip term="Route Origin Authorization (ROA)">ROA</GlossaryTooltip> authorizes the ASN to originate the prefix. |
+| `ownership_validation_state` | Cloudflare found your validation token, or Cloudflare verified your LOA.                             |
+| `ownership_validation_token` | The token to publish. This field is not present if you added the prefix with an LOA.                 |
+| `loa_document_id`            | The LOA linked to the prefix. If you use `delegate_loa_creation`, this field is `null` until the prefix is approved. |
 
-    - [Ownership validation](/byoip/get-started/#validate-prefix-ownership) requires a matching ROA and the correct validation token found in all DNS TXT records or in the IRR record.
+Your IRR record and ROA must meet the [onboarding prerequisites](/byoip/get-started/#before-you-begin).
 
-3. <Render file="validate-prefix-endpoint" product="byoip" />
+## Validation states
+
+| State                    | Meaning                                                                                  | What to do                                                                                                   |
+| ------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `valid`                  | The check passed.                                                                        | No action is necessary.                                                                                      |
+| `pending`                | Cloudflare has not finished the check.                                                   | Wait, and then check again. If you have not started validation, use the Validate Prefix endpoint.             |
+| `missing`                | Cloudflare did not find the required record.                                             | Refer to the section for the check below.                                                                    |
+| `mismatch_asn`           | Cloudflare found a record for the prefix, but the ASN does not match.                    | Update the record, or add the prefix again with the correct ASN.                                             |
+| `mismatch_more_specific` | The record is for a smaller prefix than the prefix you added.                            | Create a record that matches the prefix exactly.                                                             |
+| `mismatch_less_specific` | The IRR record is for a larger prefix that covers the prefix you added.                  | The IRR check accepts this state. No action is necessary.                                                    |
+| `invalid`                | The record exists, but it does not meet the requirements.                                | Refer to the section for the check below.                                                                    |
+| `error`                  | Cloudflare could not complete the check.                                                 | Run validation again. If the state does not change, contact your account team.                               |
+
+## IRR check fails
+
+- Make sure that a `route` (IPv4) or `route6` (IPv6) object exists for the exact prefix that you added.
+- Make sure that the `origin` of the object is the ASN that you used when you added the prefix.
+- For more information, refer to [IRR entries](/byoip/concepts/irr-entries/) and [IRR best practices](/byoip/concepts/irr-entries/best-practices/).
+
+## RPKI check fails
+
+- Make sure that a ROA exists for the prefix and authorizes the ASN that you used.
+- Make sure that the maximum length of the ROA covers the prefix.
+- Verify the ROA with [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/).
+- For more information, refer to [Route filtering and RPKI](/byoip/concepts/route-filtering-rpki/).
+
+## Ownership check fails
+
+Ownership validation passes only when the RPKI check is `valid` and Cloudflare finds your token. Fix the RPKI check first.
+
+If you use the IRR method:
+
+- Add `cf-validation: <OWNERSHIP_VALIDATION_TOKEN>` to a `descr` or `remarks` field of the `route` or `route6` object.
+- The object must be in the database of your RIR: AFRINIC, APNIC, ARIN, LACNIC, or RIPE. Cloudflare does not check RADB or other IRR databases for the token.
+- The object must match the prefix and the ASN exactly.
+
+If you use the reverse DNS method:
+
+- Create a TXT record named `cf-validation` in every reverse zone that the prefix requires. Refer to [Validate prefix ownership](/byoip/get-started/#validate-prefix-ownership).
+- The TXT value must be the token only, without a `cf-validation:` prefix.
+- At your RIR, delegate each reverse zone to the nameservers that host it.
+
+## No ownership validation token
+
+If the response has a `loa_document_id` value but no `ownership_validation_token` field, you added the prefix with an LOA. Cloudflare does not create a token for these prefixes. Ownership validation passes only after Cloudflare verifies the LOA. Until then, `ownership_validation_state` is `invalid` and `approved` is `P`.
+
+To continue, do one of the following:
+
+- Contact your account team to verify the LOA.
+- Use the self-serve token flow. Delete the prefix with the [Delete Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/delete/). Then add it again without `loa_document_id`, as described in [Add your prefix](/byoip/get-started/#add-your-prefix).
+
+If you added the prefix without `loa_document_id` and lost the token, use the Prefix Details endpoint. The response includes `ownership_validation_token`.
+
+## Run validation again
+
+<Render file="validate-prefix-endpoint" product="byoip" />
+
+Then check the result again with the Prefix Details endpoint.

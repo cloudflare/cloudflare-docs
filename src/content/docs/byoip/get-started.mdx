@@ -46,6 +46,11 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 
 <Render file="cloudflare-asn-callout" product="byoip" />
 
+:::tip[If a step fails]
+- If the API returns an error when you add a prefix, refer to [Self-serve onboarding API errors](/byoip/troubleshooting/#self-serve-onboarding-api-errors).
+- If validation does not pass, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/).
+:::
+
 ## 1. Add and validate your prefix
 
 ### Add your prefix
@@ -58,7 +63,7 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
    curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","asn":13335,"delegate_loa_creation":true}'
    ```
 
-   ```json title="Response" {4,16-20}
+   ```json title="Response" {3,16}
    {
      "result": {
        "id": "72823e95d6c64d48a8111fec81179816",
@@ -72,11 +77,11 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
        "on_demand_locked": false,
        "advertised": null,
        "advertised_modified_at": null,
-       "loa_document_id": "b9ff4afe312246a8b2e7324d98f40b23",
+       "loa_document_id": null,
        "asn": 13335,
        "ownership_validation_token": "<OWNERSHIP_VALIDATION_TOKEN>",
        "delegate_loa_creation": true,
-       "irr_validation_state": "pending",
+       "irr_validation_state": "valid",
        "rpki_validation_state": "pending",
        "ownership_validation_state": "pending"
      }
@@ -85,15 +90,30 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 
 2. Save the prefix `id` and `ownership_validation_token` from the response. You will use them in later steps.
 
+   If you lose the token, use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/). The response includes the `ownership_validation_token` field.
+
 </Steps>
 
+:::caution[Do not include `loa_document_id`]
+If you include `loa_document_id` in the request, Cloudflare does not create an ownership validation token. Cloudflare must then verify your uploaded LOA before ownership validation can pass, and the prefix stays in the `P` (pending) state until then. To use the self-serve flow in this guide, leave out `loa_document_id`.
+
+If you already added the prefix with `loa_document_id`, refer to [No ownership validation token](/byoip/troubleshooting/prefix-validation/#no-ownership-validation-token).
+:::
+
 :::note[Letter of Agency]
-This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you must upload the LOA manually, [update the prefix](/api/resources/addressing/subresources/prefixes/methods/edit/) after it is approved, and contact your account team. Manual LOA processing can increase onboarding time.
+This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. When `delegate_loa_creation` is `true`, Cloudflare creates the LOA after your prefix passes validation. Until then, `loa_document_id` is `null`.
+
+If you set `delegate_loa_creation` to `false`, you must upload the LOA manually, [update the prefix](/api/resources/addressing/subresources/prefixes/methods/edit/) after it is approved, and contact your account team. Manual LOA processing can increase onboarding time.
 :::
 
 ### Validate prefix ownership
 
 Prove ownership by adding the validation token to either your IRR record or reverse DNS. You only need to use one of these methods.
+
+Ownership validation passes only when both of these conditions are true:
+
+- The RPKI check for the prefix is `valid`.
+- Cloudflare finds the token in your IRR record or in your reverse DNS zones.
 
 <Tabs>
 <TabItem label="IRR record">
@@ -101,11 +121,17 @@ Prove ownership by adding the validation token to either your IRR record or reve
 <Steps>
 
 1. Copy the `ownership_validation_token` returned when you added the prefix.
-2. Add the following value to a `description` or `remarks` field in the matching IRR `route` or `route6` object. Replace `<OWNERSHIP_VALIDATION_TOKEN>` with your token.
+2. Add the following value to a `descr` or `remarks` field in the matching `route` or `route6` object. Replace `<OWNERSHIP_VALIDATION_TOKEN>` with your token.
 
    ```text
    cf-validation: <OWNERSHIP_VALIDATION_TOKEN>
    ```
+
+   The object must meet these requirements:
+
+   - It is in the database of your RIR: AFRINIC, APNIC, ARIN, LACNIC, or RIPE. Cloudflare does not check RADB or other IRR databases for the token.
+   - Its prefix matches the prefix you added exactly.
+   - Its `origin` matches the ASN you used when you added the prefix.
 
    The process for updating an IRR object depends on the registry. Refer to [IRR best practices](/byoip/concepts/irr-entries/best-practices/) for more information.
 
@@ -133,7 +159,7 @@ Prove ownership by adding the validation token to either your IRR record or reve
    </Details>
 
 2. Create the required reverse DNS zones. If you use Cloudflare for authoritative DNS, refer to [Set up a reverse DNS zone](/dns/additional-options/reverse-zones/#set-up-a-reverse-zone). Otherwise, follow your DNS provider's instructions.
-3. In each reverse zone, create a TXT record named `cf-validation` whose value is the ownership validation token.
+3. In each reverse zone, create a TXT record named `cf-validation` whose value is the ownership validation token. The value must be the token only. Do not add a `cf-validation:` prefix. Cloudflare checks every reverse zone that the prefix requires.
 
    ```text
    cf-validation.<REVERSE_ZONE> IN TXT "<OWNERSHIP_VALIDATION_TOKEN>"
@@ -146,15 +172,42 @@ Prove ownership by adding the validation token to either your IRR record or reve
 </TabItem>
 </Tabs>
 
-After publishing the validation token, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to trigger the prefix validation checks:
+### Run validation and check the result
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/validate" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
+<Steps>
 
-Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to monitor validation. When the IRR, RPKI, and ownership checks pass, the `approved` field for the prefix returns `"V"`. You can then remove the ownership validation token and proceed to create service bindings.
+1. After you publish the validation token, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to start the validation checks:
 
-If validation fails, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/), correct the reported issues, and trigger validation again.
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/validate" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+   ```
+
+   This request sets the IRR, RPKI, and ownership states to `pending`. Cloudflare runs the checks in the background.
+
+2. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check the result:
+
+   ```bash
+   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID" --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+   ```
+
+3. Review these fields in the response:
+
+   | Field                        | Expected value | What it checks                                                     |
+   | ---------------------------- | -------------- | ------------------------------------------------------------------ |
+   | `irr_validation_state`       | `valid`        | Your IRR `route` or `route6` object matches the prefix and ASN. `mismatch_less_specific` is also accepted. |
+   | `rpki_validation_state`      | `valid`        | Your ROA authorizes the ASN to originate the prefix.               |
+   | `ownership_validation_state` | `valid`        | Cloudflare found your validation token, and RPKI is `valid`.       |
+   | `approved`                   | `V`            | All checks passed. The prefix is approved.                         |
+
+   If a state is `pending`, Cloudflare has not finished the check. Wait, and then check again.
+
+</Steps>
+
+When `approved` is `V`, you can remove the ownership validation token and continue to [create service bindings](#2-create-service-bindings).
+
+:::caution[If validation does not pass]
+If a state is not `valid` or `pending`, or if `approved` stays `P`, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/). Fix the reported issue, and then run validation again.
+:::
 
 ### Optional: Delegate the prefix
 
