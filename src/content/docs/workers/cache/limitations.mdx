@@ -10,6 +10,10 @@ This page lists the scenarios where Workers Caching does not apply, followed by 
 
 ## Unsupported scenarios
 
+### Local tests
+
+Local Vitest tests do not exercise Workers Caching. Test cache behavior on a [Preview with its own cache](/workers/cache/#what-gets-cached) or a deployed test Worker with caching enabled. Check for `Cf-Cache-Status: HIT` using the [two-request debugging example](/workers/cache/debugging/#inspect-cf-cache-status).
+
 ### HTTP methods
 
 Only `GET` and `HEAD` requests are cached. `POST`, `PUT`, `PATCH`, `DELETE`, and other methods always invoke your Worker.
