@@ -8,7 +8,7 @@ products:
   - durable-objects
 ---
 
-import { Render, GlossaryTooltip, WranglerConfig } from "~/components";
+import { Render, GlossaryTooltip, WranglerConfig, TypeScriptExample } from "~/components";
 
 <GlossaryTooltip term="Durable Object">Durable Objects</GlossaryTooltip> are a
 powerful compute API that provides a compute with storage building block. Each
@@ -59,6 +59,26 @@ Use `new_sqlite_classes` on the migration in your Worker's Wrangler file:
 [SQL API](/durable-objects/api/sqlite-storage-api/#exec) is available on `ctx.storage.sql` parameter passed to the Durable Object constructor.
 
 SQLite-backed Durable Objects also offer [point-in-time recovery API](/durable-objects/api/sqlite-storage-api/#pitr-point-in-time-recovery-api), which uses <GlossaryTooltip term="bookmark">bookmarks</GlossaryTooltip> to allow you to restore a Durable Object's embedded SQLite database to any point in time in the past 30 days.
+
+### Choose SQL or synchronous key-value storage
+
+Use `ctx.storage.sql` for tables, indexes, and queries. For individual values, use the [synchronous key-value API](/durable-objects/api/sqlite-storage-api/#synchronous-kv-api) on `ctx.storage.kv`. Both APIs use the object's SQLite database. You do not need a custom SQL table to store key-value pairs.
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class Counter extends DurableObject {
+  increment(): number {
+    const value = (this.ctx.storage.kv.get<number>("count") ?? 0) + 1;
+    this.ctx.storage.kv.put("count", value);
+    return value;
+  }
+}
+```
+
+</TypeScriptExample>
 
 ### Initialize instance variables from storage
 
