@@ -15,7 +15,7 @@ For more details, refer to [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110#sec
 
 ### Common use cases
 
-A `401 Unauthorized` error occurs when the client fails to provide valid authentication credentials. The server responds with at least one challenge in the form of a `WWW-Authenticate` header field, as outlined in [section 4.1](https://datatracker.ietf.org/doc/html/rfc7235#section-4.1).
+A `401 Unauthorized` error occurs when the client fails to provide valid authentication credentials. The server responds with at least one challenge in the form of a `WWW-Authenticate` header field, as outlined in [RFC 9110, section 11.6.1](https://www.rfc-editor.org/rfc/rfc9110#section-11.6.1).
 
 If the client resends the request with the same credentials and the challenge remains unchanged, the server may return an entity to assist the client in identifying the correct credentials needed.
 
