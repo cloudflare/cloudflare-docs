@@ -34,6 +34,10 @@ npx wrangler ai-search jobs create <INSTANCE_NAME>
 
 Or call the [Create job REST API](/ai-search/api/instances/rest-api/#jobs) from a CMS webhook or a Worker. Sync jobs can be triggered at most once every 30 seconds.
 
+The [Create job REST API](/ai-search/api/instances/rest-api/#jobs) returns HTTP `429` (sync in cooldown) when called too soon. Wait at least 30 seconds between sync requests. Refer to [`7020` (`sync_in_cooldown`)](/ai-search/troubleshooting/api-error-codes/) for error details.
+
+Website syncs fetch pages according to the [recrawl rules](/ai-search/configuration/data-source/website/parse-types/).
+
 ## Built-in storage
 
 Files uploaded to [built-in storage](/ai-search/configuration/data-source/built-in-storage/) are indexed immediately. There are no sync jobs. Each file is processed individually as it is uploaded.
