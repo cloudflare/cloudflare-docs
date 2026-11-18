@@ -63,6 +63,11 @@ Example requests:
 - "Add an A record for blog.example.com pointing to 192.0.2.10."
 - "Enable Always Use HTTPS on my zone."
 - "Set the SSL mode for example.com to Full (strict)."
+- "Deploy a Worker named hello-world that returns 'Hello, world'."
+
+### Build and deploy code
+
+Agent Lee can write and run code for small projects, then deploy them to your account as Workers. Deploying is a write operation, so Agent Lee waits for your approval first. It needs write access to Workers Scripts: the **Full access** template includes it, and under **Custom** you turn on write for Workers Scripts. To keep working on the code locally, [export the source](/agent-lee/take-home-code/).
 
 ### Undo a change
 
@@ -151,7 +156,6 @@ Agent Lee does not currently use your conversations, prompts, or account data to
 
 Agent Lee cannot:
 
-- Deploy applications on your behalf or run code for you (it can generate small starter projects and [export the source](/agent-lee/take-home-code/) for you to clone)
 - Replace [Cloudflare Support](https://support.cloudflare.com) for account recovery or outages (it can prepare a support case for you, but only if your account is eligible and you confirm it)
 - Access payment methods, billing history, or API tokens
 - Operate across multiple accounts: sessions are scoped to your authenticated account
