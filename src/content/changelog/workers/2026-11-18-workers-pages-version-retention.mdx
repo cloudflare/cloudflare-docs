@@ -1,0 +1,20 @@
+---
+title: Workers and Pages now keep your 100 most recent versions
+description: Cloudflare now keeps the 100 most recent versions of each Worker and Pages project and deletes older ones. Your running applications are not affected.
+products:
+  - workers
+  - pages
+date: 2026-11-18
+---
+
+Cloudflare now keeps the 100 most recent [versions](/workers/versions-and-deployments/) of each Worker and the 100 most recent [deployments](/pages/configuration/preview-deployments/) of each Pages project, and deletes older ones.
+
+**This has no impact on your running applications.** Deployed Worker versions and your current Pages production deployment are always retained, regardless of age. You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions.
+
+**What you will notice:**
+
+- **A shorter history:** The dashboard and API show up to your 100 most recent versions or deployments.
+- **Workers Version URLs:** A version's [Version URL](/workers/versions-and-deployments/version-urls/), including any `--preview-alias`, is removed with the version. For pull requests, use [Workers Previews](/workers/previews/compare-workflows/), which run separately from production.
+- **Pages preview URLs:** A deployment's [preview URL](/pages/configuration/preview-deployments/) is removed with the deployment.
+
+For more information, refer to [Workers version retention](/workers/versions-and-deployments/#version-retention) and [Pages deployment limits](/pages/platform/limits/#deployments).
