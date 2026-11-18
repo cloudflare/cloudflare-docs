@@ -3,14 +3,114 @@ link: "/durable-objects/release-notes/"
 productName: Durable Objects
 productLink: "/durable-objects/"
 entries:
+  - publish_date: "2026-11-13"
+    title: Spending limits for Durable Objects
+    description: |-
+      You can now set a [spending limit](/durable-objects/platform/spend-management/) or email alerts for Durable Objects usage in the current billing period, separately from Workers. A Durable Objects spending limit applies to requests, duration, and storage operations after included usage. Stored data charges are excluded. Configure limits in the Cloudflare dashboard under **Billing** > **Spend limits** or with the `cf` CLI. For more details, refer to the [changelog entry](/changelog/post/2026-11-13-spend-management/).
+  - publish_date: "2026-11-11"
+    title: Improved request routing to Durable Objects
+    description: |-
+      When a Durable Object location lookup follows a forwarding record to another data center, the first data center now returns the destination directly instead of acquiring and proxying a connection to the object. This removes an intermediate connection and can reduce p99 connection latency for relocation-related requests. No code or configuration changes are required. For more details, refer to the [changelog entry](/changelog/post/2026-11-11-durable-objects-request-routing/).
+  - publish_date: "2026-11-09"
+    title: Improved Durable Object startup placement
+    description: |-
+      Durable Objects reactivated after inactivity now start on the machine that last ran them whenever possible, so their data does not need to be loaded again. This can reduce cold starts for SQLite-backed Durable Objects that are reactivated soon after going idle. No action is required. Refer to [Data location](/durable-objects/reference/data-location/) for more information about placement. For more details, refer to the [changelog entry](/changelog/post/2026-11-09-durable-objects-reactivation-placement/).
+  - publish_date: "2026-11-05"
+    title: Automatic retries for Durable Object calls
+    description: |-
+      The runtime now retries `fetch()` and RPC calls to a Durable Object when they fail with a retryable error before reaching the object. By default, a call is retried up to four times, and no retry starts more than 10 seconds after the initial call. Errors thrown by your Durable Object code and errors with `.overloaded` set to `true` are not retried.
+
+      A method never runs twice because of an automatic retry unless you mark it with `retryable()` from `cloudflare:durable-objects`. Use the `retry` option on `get()` or `getByName()` to change retry limits for a stub. If your code already retries Durable Object calls, lower your own attempt count or set `maxRetries: 0`. Refer to [Automatic retries](/durable-objects/best-practices/automatic-retries/). For more details, refer to the [changelog entry](/changelog/post/2026-11-05-durable-objects-automatic-retries/).
+  - publish_date: "2026-10-30"
+    title: Durable Objects defer code updates by default
+    description: |-
+      When you deploy, an active Durable Object can now keep running its current code for up to 5 minutes (300 seconds) while it waits to hibernate. This gives in-flight work time to finish before the object adopts the new code. Configure the delay with `code_update_strategy` in your Wrangler configuration, or pass `--durable-objects-code-update-mode immediate` to apply an update right away. Deferred code updates are best effort. Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/). For more details, refer to the [changelog entry](/changelog/post/2026-10-30-durable-objects-deferred-code-updates/).
+  - publish_date: "2026-10-01"
+    title: Pending I/O keeps Durable Objects active without a connected client
+    description: |-
+      For Workers with a compatibility date of `2026-10-01` or later, pending service binding requests, RPC or `fetch()` calls to other Durable Objects, `ctx.container.monitor()`, `ctx.waitUntil()` promises, and pending `setTimeout()` or `setInterval()` timers prevent a Durable Object from being evicted when no client is connected. Each pending operation prevents eviction for up to 15 minutes, and duration charges continue during that time.
+
+      To use this behavior with an earlier compatibility date, add the [`durable_object_io_tasks_prevent_eviction`](/workers/configuration/compatibility-flags/#durable-object-io-tasks-prevent-eviction) compatibility flag. To opt out, add `durable_object_io_tasks_do_not_prevent_eviction`. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/). For more details, refer to the [changelog entry](/changelog/post/2026-10-01-pending-io-keep-alive/).
+  - publish_date: "2026-09-23"
+    title: Durable Object name search supports 128 characters
+    description: |-
+      Durable Object name search in the Cloudflare dashboard now accepts up to 128 characters, up from 20. This applies to the object filter on the **Metrics** tab and object search in [Data Studio](/durable-objects/observability/data-studio/). For more details, refer to the [changelog entry](/changelog/post/2026-09-24-durable-object-name-search-limit/).
+  - publish_date: "2026-09-17"
+    title: JavaScript RPC session spans in Workers traces
+    description: |-
+      [Workers traces](/workers/observability/traces/) now follow JavaScript RPC calls into Durable Objects. Traces show caller-side session and call spans alongside the Durable Object invocation. Cloudflare records these spans automatically when tracing is enabled. Refer to [Spans and attributes](/workers/observability/traces/spans-and-attributes/). For more details, refer to the [changelog entry](/changelog/post/2026-09-17-javascript-rpc-session-spans/).
+  - publish_date: "2026-08-28"
+    title: Durable Objects can use up to ten Dynamic Workers concurrently
+    description: |-
+      A Durable Object can now have up to ten distinct [Dynamic Workers](/dynamic-workers/) with in-flight requests, increased from four. This limit applies across all concurrent requests to the same Durable Object. Multiple in-flight requests to the same Dynamic Worker count as one toward the limit. Refer to [Dynamic Workers limits](/dynamic-workers/platform/limits/). For more details, refer to the [changelog entry](/changelog/post/2026-08-28-durable-objects-dynamic-workers-limit/).
+  - publish_date: "2026-08-25"
+    title: Prevent alarm retries when using `ctx.abort()`
+    description: |-
+      Pass `{ retryAlarm: false }` to [`ctx.abort()`](/durable-objects/api/state/#abort) to prevent an in-progress [alarm](/durable-objects/api/alarms/) from retrying after the Durable Object resets. Existing calls to `ctx.abort()` continue to retry alarms by default. Set this option on every abort path that should stop an in-progress alarm. Local development requires Wrangler 4.126.0 or later. For more details, refer to the [changelog entry](/changelog/post/2026-08-25-durable-object-alarm-abort-no-retry/).
+  - publish_date: "2026-08-20"
+    title: Deployments tab for Durable Object namespaces
+    description: |-
+      Durable Object namespaces now have a read-only **Deployments** tab in the Cloudflare dashboard. The tab shows the backing Worker's active versions, traffic split, and per-version requests, error rate, and wall time. The **Traffic %** column now shows observed traffic share next to the configured percentage. Refer to [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/). For more details, refer to the [changelog entry](/changelog/post/2026-08-20-durable-objects-deployments-tab/).
+  - publish_date: "2026-07-24"
+    title: Filter Durable Object logs and traces by instance ID
+    description: |-
+      [Workers Logs](/workers/observability/logs/workers-logs/) and OpenTelemetry spans for Durable Object requests now include the Durable Object instance ID. Filter logs with `$workers.durableObjectId`, or use the `cloudflare.durable_object.id` span attribute to correlate traces. Refer to [Spans and attributes](/workers/observability/traces/spans-and-attributes/). For more details, refer to the [changelog entry](/changelog/post/2026-07-24-durable-object-instance-observability/).
+  - publish_date: "2026-07-20"
+    title: Total SQLite storage chart for Durable Object namespaces
+    description: |-
+      The Cloudflare dashboard now includes a **Total storage** chart for SQLite-backed Durable Object namespaces. The chart shows the maximum storage reported during each hour, so you can monitor storage growth and validate data cleanup. Refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/). For more details, refer to the [changelog entry](/changelog/post/2026-07-20-durable-objects-total-storage-metrics/).
+  - publish_date: "2026-07-09"
+    title: New Durable Object namespaces must use the SQLite storage backend
+    description: |-
+      Accounts that do not already have a key-value backed Durable Object namespace can no longer create new ones. Create new Durable Object classes with the [SQLite storage backend](/durable-objects/best-practices/access-durable-objects-storage/#create-sqlite-backed-durable-object-class). Accounts with at least one existing key-value backed namespace can still create new ones for now. Refer to [Durable Objects migrations](/durable-objects/reference/durable-objects-migrations/). For more details, refer to the [changelog entry](/changelog/post/2026-07-09-restrict-new-kv-backed-namespaces/).
   - publish_date: "2026-06-30"
     title: Declarative class lifecycle with `exports`
     description: |-
       A new declarative [`exports`](/durable-objects/reference/durable-objects-migrations/) field in your Wrangler configuration file replaces the imperative `migrations` array for creating, deleting, renaming, and transferring Durable Object classes. Each `wrangler deploy` now prints a structured reconciliation report. Existing Workers on `migrations` continue to work unchanged.
+  - publish_date: "2026-06-30"
+    title: Memory usage metrics for Durable Objects
+    description: |-
+      The **Metrics** tab for a Durable Object namespace now includes a **Memory Usage** chart that shows V8 isolate memory at P50, P90, P99, and P999. Filter by object ID or name to inspect memory usage for a single Durable Object. Refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/#memory-usage). For more details, refer to the [changelog entry](/changelog/post/2026-06-30-memory-usage-metrics/).
+  - publish_date: "2026-06-26"
+    title: New `us` jurisdiction for Durable Objects
+    description: |-
+      Durable Objects now support a `us` [jurisdiction](/durable-objects/reference/data-location/#restrict-durable-objects-to-a-jurisdiction), which keeps a Durable Object's compute and storage within the United States. Workers can still access these Durable Objects from anywhere in the world. For more details, refer to the [changelog entry](/changelog/post/2026-06-26-durable-objects-us-jurisdiction/).
+  - publish_date: "2026-06-25"
+    title: Test Durable Object eviction in Vitest
+    description: |-
+      `@cloudflare/vitest-pool-workers` 0.16.20 and later export `evictDurableObject()` and `evictAllDurableObjects()` from `cloudflare:test`, so you can test how Durable Objects behave after eviction. Refer to [Testing Durable Objects](/durable-objects/examples/testing-with-durable-objects/#testing-eviction) and the [Test APIs reference](/workers/testing/vitest-integration/test-apis/#durable-objects). For more details, refer to the [changelog entry](/changelog/post/2026-06-25-durable-object-eviction-test-helpers/).
+  - publish_date: "2026-06-19"
+    title: Outbound connections keep Durable Objects alive
+    description: |-
+      Active outbound TCP sockets created with [`connect()`](/workers/runtime-apis/tcp-sockets/) and outbound WebSocket connections now prevent a Durable Object from being evicted for up to 15 minutes per connection. Previously, a Durable Object could be evicted 70-140 seconds after its last incoming request, even while an outbound connection remained open. Refer to [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/). For more details, refer to the [changelog entry](/changelog/post/2026-06-19-outbound-connections-keep-dos-alive/).
+  - publish_date: "2026-06-19"
+    title: "New Asia-Pacific location hints: `apac-ne` and `apac-se`"
+    description: |-
+      Durable Objects now support the `apac-ne` (Northeast Asia-Pacific) and `apac-se` (Southeast Asia-Pacific) [location hints](/durable-objects/reference/data-location/#provide-a-location-hint) for finer-grained placement within Asia-Pacific. As with all location hints, placement is best effort. For more details, refer to the [changelog entry](/changelog/post/2026-06-19-apac-ne-apac-se-location-hints/).
+  - publish_date: "2026-06-12"
+    title: Filter Durable Objects metrics by object ID or name
+    description: |-
+      The **Metrics** tab for a Durable Object namespace can now be filtered to a single object by [ID](/durable-objects/api/id/) or [name](/durable-objects/api/id/#name). Refer to [Metrics and analytics](/durable-objects/observability/metrics-and-analytics/). For more details, refer to the [changelog entry](/changelog/post/2026-06-12-durable-objects-metrics-filter-by-id-name/).
+  - publish_date: "2026-03-26"
+    title: Access Durable Object jurisdiction with `ctx.id.jurisdiction`
+    description: |-
+      `ctx.id.jurisdiction` now reports the jurisdiction a Durable Object was created in, such as `"eu"`. It is `undefined` for Durable Objects outside jurisdiction-restricted namespaces. Alarms scheduled before 2026-03-15 do not have `jurisdiction` stored. To backfill the value, reschedule the alarm from a `fetch()` or RPC handler. Refer to [Durable Object ID](/durable-objects/api/id/#jurisdiction). For more details, refer to the [changelog entry](/changelog/post/2026-03-26-durable-object-id-jurisdiction/).
+  - publish_date: "2026-03-15"
+    title: Access Durable Object name with `ctx.id.name`
+    description: |-
+      When a Durable Object is accessed with `idFromName()` or `getByName()`, the same name is now available as `ctx.id.name` inside the object, including in alarm handlers. It is `undefined` for Durable Objects created with `newUniqueId()`, IDs accessed with `idFromString()`, and names longer than 1,024 bytes. Refer to [Durable Object ID](/durable-objects/api/id/#name). For more details, refer to the [changelog entry](/changelog/post/2026-03-15-durable-object-id-name/).
+  - publish_date: "2026-02-24"
+    title: "`deleteAll()` now deletes Durable Object alarms"
+    description: |-
+      For Workers with a compatibility date of `2026-02-24` or later, [`deleteAll()`](/durable-objects/api/sqlite-storage-api/#deleteall) deletes a Durable Object's alarm in addition to stored data. This applies to both SQLite-backed and key-value backed Durable Objects, so a separate `deleteAlarm()` call is no longer required. For more details, refer to the [changelog entry](/changelog/post/2026-02-24-deleteall-deletes-alarms/).
   - publish_date: "2026-01-07"
     title: Billing for SQLite Storage
     description: |-
-      Storage billing for SQLite-backed Durable Objects will be enabled in January 2026, with a target date of January 7, 2026 (no earlier). For more details, refer to the [Billing for SQLite Storage](/changelog/durable-objects/2026-01-07-durable-objects-sqlite-storage-billing/).
+      Storage billing for SQLite-backed Durable Objects will be enabled in January 2026, with a target date of January 7, 2026 (no earlier). For more details, refer to the [Billing for SQLite Storage](/changelog/post/2025-12-12-durable-objects-sqlite-storage-billing/).
+  - publish_date: "2025-12-15"
+    title: New Rules of Durable Objects guide
+    description: |-
+      The new [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/) guide covers design patterns, storage strategies, concurrency, and anti-patterns. The [testing guide](/durable-objects/examples/testing-with-durable-objects/) also includes updated examples that use `@cloudflare/vitest-pool-workers`. For more details, refer to the [changelog entry](/changelog/post/2025-12-15-rules-of-durable-objects/).
   - publish_date: "2025-10-25"
     description: |-
       - The maximum WebSocket message size limit has been increased from 1 MiB to 32 MiB.
@@ -21,7 +121,15 @@ entries:
   - publish_date: "2025-08-21"
     title: Durable Objects stubs can now be directly constructed by name
     description: |-
-      A [`DurableObjectStub`](/durable-objects/api/stub) can now be directly constructed by created directly with [`DurableObjectNamespace::getByName`](/durable-objects/api/namespace/#getbyname).
+      A [`DurableObjectStub`](/durable-objects/api/stub) can now be constructed directly with [`DurableObjectNamespace::getByName`](/durable-objects/api/namespace/#getbyname).
+  - publish_date: "2025-06-25"
+    title: "`@cloudflare/actors` library in beta"
+    description: |-
+      The [`@cloudflare/actors`](https://github.com/cloudflare/actors) library is now in beta. It provides an `Actor` class and helpers for SQLite storage, SQL schema migrations, and alarms on Durable Objects. For more details, refer to the [changelog entry](/changelog/post/2025-06-25-actors-package-alpha/).
+  - publish_date: "2025-05-16"
+    title: Durable Objects in Python Workers
+    description: |-
+      You can now define [Durable Objects](/durable-objects/) in [Python Workers](/workers/languages/python/) by extending `DurableObject` from the `workers` module. For more details, refer to the [changelog entry](/changelog/post/2025-05-14-python-worker-durable-object/).
   - publish_date: "2025-04-07"
     title: Durable Objects on Workers Free plan
     description: |-
