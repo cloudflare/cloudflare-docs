@@ -4,7 +4,7 @@
  *   - provider badge (Cloudflare-hosted / Third-party) — `default`
  *   - capability badges — `default` (model) / `caution` (platform)
  *   - deprecation — `danger` (Deprecated / Planned deprecation)
- *   - promotion — `success` ("Promo pricing"), shown first while a
+ *   - promotion — `success` ("58% off until Dec 1"), shown first while a
  *     promotion in `modelPromotions` is running, so it survives `maxVisible`
  */
 import { Badge } from "~/components/ui/badge";
@@ -13,6 +13,7 @@ import {
 	CAPABILITY_PROPERTIES,
 	formatPromotionEnd,
 	modelCurrencyFormatter,
+	promotionDiscountPercent,
 	type ModelCardData,
 } from "~/util/models";
 
@@ -66,7 +67,7 @@ const promotionBadges: BadgeDef[] = promotion
 	? [
 			{
 				variant: "success",
-				text: "Promo pricing",
+				text: `${promotionDiscountPercent(promotion)}% off until ${formatPromotionEnd(promotion, { short: true })}`,
 				title: `${modelCurrencyFormatter.format(promotion.promoPrice)} ${promotion.unit} until ${formatPromotionEnd(promotion)}, then ${modelCurrencyFormatter.format(promotion.standardPrice)}`,
 			},
 		]

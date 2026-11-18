@@ -35,6 +35,7 @@ import { authorData } from "~/components/models/data";
 import {
 	detectApiModes,
 	getTopLevelVariants,
+	promotionBanner,
 	type ModelView,
 } from "~/util/models";
 
@@ -135,7 +136,9 @@ const isBeta = model.beta;
 
 // Map the banner `severity` onto the four Aside types; unknown severities fall
 // back to neutral "note".
-const banner = model.banner ?? null;
+// A running promotion (see `modelPromotions`) shows in the same banner slot as
+// a CMS banner, as GPT-5.6 Sol's "50% off" banner did. A CMS banner wins.
+const banner = model.banner ?? promotionBanner(model.name);
 function bannerAsideType(
 	severity: string,
 ): "note" | "tip" | "caution" | "danger" {
