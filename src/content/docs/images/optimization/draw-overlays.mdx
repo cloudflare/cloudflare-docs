@@ -48,7 +48,7 @@ Overlays are drawn in the order they appear — the last entry is the topmost la
 <Tabs>
   <TabItem label="URL interface">
     ```txt
-    https://example.com/cdn-cgi/image/width=800,height=600,draw=((url=https%3A%2F%2Fexample.com%2Fbranding%2Flogo.png,bottom=5,right=5,fit=contain,width=100,height=50,opacity=0.8),(text=HELLO,font=(url=https%3A%2F%2Fexample.com%2Ffont.otf),color=%23223E49,size=96,top=40))/https://example.com/image.png
+    https://example.com/cdn-cgi/image/width=800,height=600,draw=((url='/branding/logo.png',bottom=5,right=5,fit=contain,width=100,height=50,opacity=0.8),(text=HELLO,font=(url='/font.otf'),color=rgb(0,0,0),size=96,top=40))/image.png
     ```
   </TabItem>
   <TabItem label="Workers">
@@ -256,7 +256,7 @@ Tile a semitransparent watermark across the entire image.
 <Tabs>
   <TabItem label="URL interface">
     ```txt
-    https://example.com/cdn-cgi/image/draw=((url=https%3A%2F%2Fexample.com%2Fwatermark.png,repeat=true,opacity=0.2))/https://example.com/image.png
+    https://example.com/cdn-cgi/image/draw=((url=/watermark.png,repeat=true,opacity=0.2))/image.png
     ```
   </TabItem>
   <TabItem label="Workers">
@@ -285,7 +285,7 @@ Position a logo at the bottom-right corner.
 <Tabs>
   <TabItem label="URL interface">
     ```txt
-    https://example.com/cdn-cgi/image/draw=((url=https%3A%2F%2Fexample.com%2Flogo.png,bottom=5,right=5))/https://example.com/image.png
+    https://example.com/cdn-cgi/image/draw=((url=/logo.png,bottom=5,right=5))/image.png
     ```
   </TabItem>
   <TabItem label="Workers">
@@ -314,7 +314,7 @@ Combine multiple overlays in one request. They are drawn in order — the last e
 <Tabs>
   <TabItem label="URL interface">
     ```txt
-    https://example.com/cdn-cgi/image/draw=((url=https%3A%2F%2Fexample.com%2Fwatermark.png,repeat=true,opacity=0.2),(url=https%3A%2F%2Fexample.com%2Fplay-button.png),(url=https%3A%2F%2Fexample.com%2Flogo.png,bottom=5,right=5))/https://example.com/image.png
+    https://example.com/cdn-cgi/image/draw=((url=/watermark.png,repeat=true,opacity=0.2),(url=/play-button.png),(url=/logo.png,bottom=5,right=5))/image.png
     ```
   </TabItem>
   <TabItem label="Workers">

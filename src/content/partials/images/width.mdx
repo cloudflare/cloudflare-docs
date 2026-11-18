@@ -42,10 +42,10 @@ To override the default widths, set `mode` to `auto` and specify any of the foll
 
 | Setting | Description | Accepted values | Default |
 | --- | --- | --- | --- |
-| `mode` | Applies automatic width selection. | `auto` | — |
-| `breakpoints` | Sets the available breakpoint widths, in pixels, when used with Client Hints. | List of integers | `320`, `768`, `960`, and `1200` |
-| `mobile` | Sets the fallback width for mobile devices. | Integer | `768` |
-| `desktop` | Sets the fallback width for desktop devices. | Integer | `1200` |
+| `mode` &#124; `m` | Applies automatic width selection. | `auto` | — |
+| `breakpoints` &#124; `b` | Sets the available breakpoint widths, in pixels, when used with Client Hints. | List of integers | `320`, `768`, `960`, and `1200` |
+| `mobile` &#124; `mb` | Sets the fallback width for mobile devices. | Integer | `768` |
+| `desktop` &#124; `dt` | Sets the fallback width for desktop devices. | Integer | `1200` |
 
 When optimizing remote images with `width=auto`, each unique width counts as a separate [billable transformation](/images/pricing/#images-transformed).
 
@@ -54,26 +54,17 @@ To learn how `width=auto` works, refer to our guide on [serving responsive image
 <Tabs>
   <TabItem label="URL format">
     ```txt
-    width=auto
+    width=250
+    w=250
     width=(mode=auto,mobile=600,desktop=1400,breakpoints=(400,800))
+    width=(m=auto,mb=600,dt=1400,bp=(400,800))
     ```
   </TabItem>
   <TabItem label="Workers">
   ```js
   cf: {
     image: {
-      width: "auto",
-    },
-  }
-
-  cf: {
-    image: {
-      width: {
-        mode: "auto",
-        mobile: 600,
-        desktop: 1400,
-        breakpoints: [400, 800],
-      },
+      width: "250",
     },
   }
   ```

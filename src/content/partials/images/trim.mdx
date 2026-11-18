@@ -59,7 +59,7 @@ To configure color detection, set `mode` to `color` and specify the following se
 <a id="trim-side"></a>
 #### `top`, `right`, `bottom`, `left`
 
-Sets how much to remove from each side of the image. Each setting accepts a nonnegative integer pixel count or a percentage string from `0p` through `100p`.
+Sets how much to remove from each side of the image. Each setting accepts a nonnegative integer pixel count or a percentage as a decimal between `0` and `1` or a string from `0p` through `100p`.
 
 To trim 10% from the top and bottom and 20% from the left and right:
 
@@ -67,6 +67,7 @@ To trim 10% from the top and bottom and 20% from the left and right:
   <TabItem label="URL format">
   ```txt
   trim=(mode=area,top=10p,right=20p,bottom=10p,left=20p)
+  trim=(mode=area,top=0.1,right=0.2,bottom=0.1,left=0.2)
   ```
   </TabItem>
   <TabItem label="Workers">
@@ -80,6 +81,17 @@ To trim 10% from the top and bottom and 20% from the left and right:
         right: "20p",
         bottom: "10p",
         left: "20p",
+      },
+    },
+  }
+    cf: {
+    image: {
+      trim: {
+        mode: "area",
+        top: "0.1",
+        right: "0.2",
+        bottom: "0.1",
+        left: "0.2",
       },
     },
   }

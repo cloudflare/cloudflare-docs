@@ -7,9 +7,9 @@ import sharpenImg from "~/assets/images/images/examples/sharpen-5.jpg";
 
 ### `sharpen`
 
-Applies a sharpening filter to increase edge definition in an image.
+Applies a sharpening filter to increase edge definition in an image. Supports both box and Gaussian filters using `mode`.
 
-To apply a box-filter unsharp mask, set `sharpen` to a decimal value from `0` (no sharpening) to `10` (maximum sharpening). The recommended value for downscaled images is `1`.
+To apply a box-filter unsharp mask, set `sharpen` to a decimal value from `0` (no sharpening) to `10` (maximum sharpening). The recommended value for downscaled images is `1`. When `mode` is not specified, this is the default mask.
 
 To configure a Gaussian-filter unsharp mask, set `mode` to `gaussian` and specify the following settings:
 

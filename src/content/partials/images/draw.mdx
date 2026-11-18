@@ -20,9 +20,9 @@ An overlay can be configured with the following settings:
 
 | Setting | Applies to | Description |
 | --- | --- | --- |
-| `url` | Image | Sets the absolute URL of the overlay image. Must be percent-encoded when using the URL interface. |
+| `url` | Image | Sets the absolute URL of the overlay image. |
 | `text` | Text | Sets the text string to render. |
-| `font` | Text | Sets the font used to render the text. Must be percent-encoded when using the URL interface. |
+| `font` | Text | Sets the font used to render the text. |
 | `color` | Text | Sets the fill color for the text. |
 | `size` | Text | Sets the font size in pixels. |
 | `width`, `height` | Image | Sets the overlay dimensions in pixels or as percentage strings, such as `50p`. |
@@ -36,7 +36,7 @@ The `draw` parameter also accepts additional optimization settings, such as `wid
 <Tabs>
   <TabItem label="URL format">
   ```txt
-  draw=((url=https%3A%2F%2Fexample.com%2Flogo.png,bottom=5,right=5,width=50p))
+  draw=((url=/logo.png,bottom=5,right=5,width=50p))
   ```
   </TabItem>
   <TabItem label="Workers">

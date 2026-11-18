@@ -16,26 +16,26 @@ This release also makes adding [borders](/images/optimization/features/#border) 
 
 Optimization parameters are now represented in one of two ways: a compact form for single values and a structured form for related settings.
 
-For example, `width=500` requests an exact width, while `width=auto` asks Images to automatically select a width using request context. [Automatic width selection](/images/optimization/features/#widthauto) already supports mobile and desktop fallbacks and a list of breakpoint widths; these settings were previously configured as separate top-level parameters.
+For example, `width=500` requests an exact width, while `trim=color` asks Images to automatically trim the sides of an image based on its border color. [Color-based trimming](/images/optimization/features/#trim-color) already supports configuring the border color, tolerance, and retained edge; these settings were previously applied as separate top-level parameters using dotted syntax.
 
-The new structure groups existing settings underneath `width`:
+The new structure groups existing settings underneath `trim`:
 
 _URLs and `cf.image` objects now use the same hierarchy to express relationships between parameters and their settings._
 
-In the URL interface, automatic width selection is configured under a single top-level `width` parameter:
+In the URL interface, color-based trimming is configured under a single top-level `trim` parameter:
 
 ```txt
-width=(mode=auto,mobile=600,desktop=1400,breakpoints=(400,800))
+trim=(mode=color,color=red,tolerance=10,keep=5)
 ```
 
 The same hierarchy maps directly to `cf.image` in Workers, where related values that were previously separate or inferred now live in the same object. The structured object uses `mode` to explicitly identify the selected behavior, while the remaining properties configure that behavior:
 
 ```js
-width: {
-	mode: "auto",
-	mobile: 600,
-	desktop: 1400,
-	breakpoints: [400, 800]
+trim: {
+	mode: "color",
+	color: "white",
+	tolerance: 10,
+	keep: 5
 }
 ```
 
@@ -60,7 +60,7 @@ The compact form continues to assign one value directly to a parameter. When an 
 
 The unified parameter model follows these rules:
 
-- **A parameter that needs one value uses the compact form.** When the relationship is unambiguous, existing forms like `width=500`, `trim=border` (with default settings), and `gravity=auto` continue to work with the same syntax.
+- **A parameter that needs one value uses the compact form.** When the relationship is unambiguous, existing forms like `width=500`, `width=auto` (with default settings), and `gravity=auto` continue to work with the same syntax.
 - **A parameter with configurable behavior groups its settings beneath the top-level parameter.** When a parameter supports multiple behaviors, the `mode` setting identifies the selected behavior. Without `mode`, an expression such as `width=(desktop=1400)` would require Images to infer `auto` from the presence of `desktop`.
 - **Across interfaces, groups and lists follow the same nesting rules.** A grouped URL parameter maps to an object in `cf.image`, while a URL list maps to an array. Previously, each feature needed a separate representation and translation rules for each interface. The shared hierarchy eliminates structural drift by using the same vocabulary and relationships in both interfaces.
 
