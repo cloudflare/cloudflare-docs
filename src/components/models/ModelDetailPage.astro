@@ -81,7 +81,9 @@ const isClef = [
 ].includes(model.name);
 
 // Clairic extraction models take typed fields, not chat messages.
-const isClairic = model.name === "@cf/cloudflare/clairic";
+const isClairic =
+	model.name === "@cf/cloudflare/clairic" ||
+	model.name === "@cf/cloudflare/clairic-flash";
 
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
