@@ -77,12 +77,6 @@ Once the domain exists in your Cloudflare account (regardless of setup type), yo
 
 To view the added DNS record, select **...** next to the connected domain and select **Manage DNS**.
 
-### Existing DNS records
-
-R2 does not replace an existing `A`, `AAAA`, or `CNAME` record for the hostname you connect, unless R2 created that record. If such a record exists, connecting the domain fails with HTTP `409` and error code `10056` (`DNS record for this domain already exists on zone.`).
-
-To connect the domain, first [delete the existing DNS record](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) for the hostname, then connect the domain again. Deleting a DNS record requires DNS edit permission on the zone, in addition to permission to configure the R2 bucket.
-
 :::note
 
 If the zone is on an Enterprise plan, make sure that you [release the zone hold](/fundamentals/account/account-security/zone-holds/#release-zone-holds) before adding the custom domain.
@@ -90,6 +84,19 @@ If the zone is on an Enterprise plan, make sure that you [release the zone hold]
 A zone hold would prevent the custom subdomain from activating.
 
 :::
+
+### Existing DNS records
+
+R2 does not replace existing `A`, `AAAA`, or `CNAME` records for the hostname you connect. The only exception is a `CNAME` record that already points to the current R2 custom domain target. If any other conflicting record exists, connecting the domain fails with HTTP `409` and error code `10056` (`DNS record for this domain already exists on zone.`).
+
+If the hostname already serves a website or another service that should stay live, connect the bucket to an unused hostname instead.
+
+To move an existing hostname to R2:
+
+1. Review the `A`, `AAAA`, and `CNAME` records for the hostname and confirm that they are safe to remove. Do not remove records for other hostnames or of other types.
+2. Plan for downtime. The hostname stops resolving as soon as you remove its records, and it can remain unavailable while the new custom domain is in the **Initializing** state. Resolvers may also [cache the missing record](/dns/troubleshooting/dns-issues/#newly-created-record-still-does-not-resolve) for a period of time.
+3. [Delete all conflicting DNS records](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) for the hostname. Deleting a DNS record requires DNS edit permission on the zone, in addition to permission to configure the R2 bucket.
+4. Connect the domain again.
 
 ## Disable domain access
 
