@@ -137,7 +137,13 @@ The first and likely most important decision that must be made when looking at a
 
 ![Figure 6: Client request being routed to origin server(s) in a multi-vendor setup](~/assets/images/reference-architecture/multi-vendor-architecture-images/Figure_6.png "Figure 6")
 
-DNS based load balancing and health checks can be leveraged here so that client requests to the domain/site are distributed across healthy origin server(s). The DNS provider monitors the health of the servers and DNS responds to the client request using a round-robin approach with the respective IPs.
+Choose a traffic split for each application. In Figure 6, DNS selects the proxy that receives the request. Test each proxy's path to the origin: an origin-only health check cannot tell you whether a client can reach the application through a particular proxy.
+
+- **Active-active:** Both providers serve the same hostname during normal operation. The split need not be equal. Sending a small share to the second provider exercises its certificates, cache, and security rules with real traffic. Check that either path can carry the full load if the other fails.
+- **Active-passive:** One provider serves the hostname until a health check or an operator changes the DNS answer. Test the standby regularly. A cold cache can send more traffic to the origin just as the standby takes over.
+- **Split by application:** Each provider normally serves different hostnames. This lets teams choose features per application, but an application has no backup unless its hostname, certificate, rules, and origin connection are ready on the other provider.
+
+A DNS change affects new lookups. Clients may continue to use cached answers until the record's time to live (TTL) expires, and existing connections do not move. During a failover drill, measure when requests reach the second provider, not just when the DNS update succeeds.
 
 If a multi-vendor DNS approach is also desired for DNS-level resiliency, a variety of configurations are possible here with multiple authoritative nameservers from different vendors. See the ‘Multi-vendor DNS setup options’ section in this document for additional details. The key here is ensuring consistent configurations across multiple providers. Depending on the DNS setup/configuration, this consistency can be resolved using different approaches such as zone transfers, automation via tools such as Terraform or OctoDNS, monitoring/automation via scripting, or even manual configuration.
 
@@ -232,6 +238,14 @@ Some DNS providers like [Cloudflare](/dns/zone-setups/zone-transfers/cloudflare-
 
 Another variation is to have specific applications/hostnames hosted through specific providers. That could mean, in the above example, both the primary and secondary DNS servers have `www.example.com` mapped to a Cloudflare address, regardless of which provider resolves the initial DNS query.
 
+### Split network DDoS protection by IP prefix
+
+For applications behind a reverse proxy, DNS steers requests by hostname. For network-layer DDoS protection, BGP steers packets by destination IP prefix. Changing a DNS record does not move traffic addressed directly to an IP in that prefix.
+
+For example, an organization with two routable prefixes can normally advertise one through [Magic Transit](/magic-transit/) and the other through a second mitigation provider. Before relying on either as a backup, onboard both prefixes with both providers, configure firewall policies on each, and test that each can deliver filtered traffic to the network over its tunnel or interconnect.
+
+Agree on who controls each announcement. During a drill, move one prefix and verify both the route visible outside your network and traffic delivery to the application before moving it back. For Cloudflare prerequisites and supported controls, refer to [Advertise prefixes](/magic-transit/how-to/advertise-prefixes/).
+
 ## Multi-vendor DNS setup options
 
 The important routing decision is dictated by DNS. As discussed, there are multiple configurations possible for a multi-DNS setup. The below assumes you are using two DNS providers which are also the providers for the security solution.
@@ -307,6 +321,14 @@ Cons:
 Figure 11 depicts a typical pattern seen when managing configurations across both Cloudflare and other providers in parallel. In this example, we are assuming that the same workloads are being split through both providers and the admin team is updating both configurations via API through Terraform. This can also be tied into an internal CI/CD pipeline to match your typical developer workflow. All Cloudflare functions can be configured via API and are delivered first via API. This diagram also depicts logs being sent to a common SIEM and native alerting functions that can be delivered via e-mail, webhook, or PagerDuty for alerts based on performance, security or administrative criteria.
 
 With the wide variety of customization options Cloudflare provides (Ruleset Engine, native features, Worker customizations), Cloudflare can likely meet feature parity with most other major vendors out in the market, however it's not guaranteed that these features will be configurable in the same manner. This is where working closely with your Cloudflare account team becomes critical in understanding the key differences in operation and best practices to align your workflow with Cloudflare.
+
+### Test what clients see
+
+Define the behavior you need before writing provider-specific rules. For example, specify which requests a bot policy should allow or challenge rather than treating two vendors' bot scores as equivalent.
+
+Run the same acceptance tests through each provider after a configuration change, including the standby if it normally receives no traffic. Use the production hostname on each path so the tests cover certificate selection and hostname-specific rules. Check a permitted request, a request your test policy should block, and a cacheable object. If both providers cache the object, send the purge to both and verify that each serves the new version.
+
+Send logs from both providers to the same monitoring system. Keep the provider name and map fields such as HTTP status, cache outcome, and response time to common definitions. Compare error rates, latency, cache hit ratios, and traffic share by provider and region. A site-wide average can hide an outage on the path that serves less traffic.
 
 ## Connectivity options
 
