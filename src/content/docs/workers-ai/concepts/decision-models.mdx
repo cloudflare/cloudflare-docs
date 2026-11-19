@@ -1,0 +1,136 @@
+---
+pcx_content_type: concept
+title: Decision models
+description: Understand how decision models evaluate an input state against typed questions, return options and probabilities, and fit into application logic.
+sidebar:
+  order: 2
+products:
+  - workers-ai
+---
+
+Decision models evaluate supplied information against questions with predefined answer spaces, such as whether a support request is urgent, which team should handle an invoice, or how severe an incident is. They return typed answers and probabilities rather than open-ended text or arbitrary extracted values. This helps you connect AI judgments to application logic.
+
+You provide an input state and define a set of named, typed questions, including each question's instructions and allowed options or scoring levels. The model evaluates the state against your questions and returns structured results with probability distributions. Typed results provide a predictable structure but do not guarantee correctness.
+
+## When to use decision models
+
+Use a decision model when your application needs to select from a predefined set of options, evaluate a yes/no condition, or score an input against an ordered rubric. Alternatively, use an [extraction model](/workers-ai/concepts/extraction-models/) to extract, compute, estimate, or forecast typed values, or a generative model to produce open-ended content.
+
+The following table compares these model types using invoice examples:
+
+| Model type | Use when you need                                                                           | Invoice example                                                                    |
+| ---------- | ------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Decision   | Select from a predefined set of options or score against a defined rubric.                  | Determine if an invoice requires approval, manual review, or rejection.            |
+| Extraction | Extract, compute, estimate, or forecast values, such as amounts, dates, durations, or text. | Read the total and due date from an invoice.                                       |
+| Generative | Produce open-ended content.                                                                 | Summarize discrepancies between the invoice, purchase order, and delivery receipt. |
+
+If a condition is exact and deterministic, such as checking whether an invoice total exceeds a fixed threshold or comparing two dates, write that rule in application code rather than calling a model.
+
+## How decision models work
+
+A decision request combines an input `state` with a map of named `questions`. The `state` supplies the information for a single evaluation, such as text or structured JSON records (some models also accept media inputs such as images, audio, or video). Each question specifies its type, instructions, and optional criteria. The model scores the allowed options for every question and returns typed answers under the same question IDs.
+
+For example, you provide an invoice record and approval policy as `state`. Separately, you define three questions:
+
+- `missing_po` (`noul`): whether the invoice references a valid purchase order.
+- `routing` (`choice`): whether the invoice should go to `auto_approve`, `manual_review`, or `reject`.
+- `risk_level` (`score`): an ordered rubric from `0` (routine) to `2` (high risk).
+
+The model returns a probability for `missing_po`, a selected option with per-option probabilities and confidence for `routing`, and a probability-weighted score with level probabilities for `risk_level`.
+
+Your application then decides what happens next, such as routing the invoice to a reviewer queue or requesting missing information. The model does not look up external records, verify permissions, or trigger side effects; your application code owns those steps.
+
+## Decision model question types
+
+Decision models on Workers AI support three core text-evaluation question types: `noul`, `choice`, and `score`. Supported question types vary by model and version (for example, `typesafe/jev-1.14.0` adds a beta `box` type for locating image regions).
+
+### Noul
+
+Evaluate a binary yes/no proposition (`type: "noul"`). A Noul question returns a probability from `0` to `1` that the answer is yes. It returns a number rather than a pre-thresholded boolean, and it does not include a separate `confidence` field.
+
+A value near `0.5` indicates uncertainty about whether the proposition is true, not a medium level of severity or degree.
+
+### Choice
+
+Select one option from a defined list of unordered alternatives (`type: "choice"`). A Choice question returns the highest-probability option, the probability distribution across all defined options, and a confidence value.
+
+You can include a fallback option such as `other` to handle inputs that do not fit your main categories, though a fallback option does not guarantee safe abstention on every task.
+
+### Score
+
+Evaluate an input against an ordered rubric of descriptive levels (`type: "score"`). Levels are indexed starting at `0`. A Score question returns the probability distribution across all levels, a confidence value, and a probability-weighted level index (which can be fractional).
+
+For example, on a three-level rubric (`0`, `1`, `2`), a returned score of `1.0` represents a weighted level index of `1.0`, not 100% accuracy.
+
+## Interpret decision results
+
+Question types and option lists define the shape of a response. They do not guarantee that the model chose the right answer.
+
+### Probabilities and calibration
+
+Returned probabilities estimate likelihood across the options you defined. Calibration is a property measured across groups of predictions, not a guarantee that an individual prediction is correct.
+
+Before relying on probability thresholds in production, evaluate the model's outputs against labeled examples from your own workflow.
+
+### Confidence
+
+For `choice` and `score` questions, `confidence` is a statistic computed from the shape of the returned probability distribution. It is not independent verification of the answer.
+
+Probability, confidence, and empirical accuracy are separate quantities. A model can return high confidence and still be wrong, particularly when inputs are ambiguous, incomplete, or outside your training or testing distribution.
+
+### Score distributions
+
+Inspect the full level probability distribution for `score` questions rather than relying only on the weighted average. Different distributions can produce the same weighted score.
+
+For example, on a `0` to `2` rubric, a distribution of `(0, 1.0, 0)` and a distribution of `(0.5, 0, 0.5)` both produce a weighted score of `1.0`. The first is concentrated on level `1`, while the second is split evenly between the two extremes.
+
+### Option constraints
+
+Defining allowed options restricts what the model can return. It does not ensure the right answer is in your list.
+
+If an input belongs to a category you omitted, the model still distributes probability across the options you provided.
+
+## Design decision tasks
+
+### Write narrow, clear questions
+
+Give each question a descriptive ID and write instructions that state exactly what the model should evaluate. Use `criteria` to define what each option or rubric level means so categories do not overlap.
+
+### Choose the right question type
+
+Match the question type to the judgment your application needs:
+
+- Use `noul` for yes/no checks.
+- Use `choice` for mutually exclusive categories.
+- Use `score` for ordered scales where intermediate levels have clear definitions.
+
+Keep deterministic checks, arithmetic, and business rules in application code.
+
+### Include task-relevant context
+
+Supply every fact the decision depends on inside `state`, such as policy text, account metadata, or relevant timestamps. The model only evaluates the state provided in the request and does not fetch live external data.
+
+### Match safeguards to risk
+
+Choose safeguards based on the cost of an incorrect decision. Suggesting a triage queue for a human reviewer carries less risk than automatically issuing a refund or blocking an account.
+
+Define how your application handles low-probability or split results. Before consequential or irreversible actions, verify results against independent checks or require human review.
+
+## Limitations
+
+- Typed output does not guarantee correctness. A response can satisfy your schema and allowed options while still making the wrong judgment.
+- Probabilities and confidence scores are estimates, not guarantees. They do not replace application-level checks or evaluation on your own labeled data.
+- Separate questions in one request should not be assumed to be statistically independent unless you have verified that assumption for your model and task. Do not multiply probabilities across questions without validation.
+- Capabilities vary by model and version, including context windows, supported question types, and media inputs. Consult the model documentation for [Clef](/workers-ai/models/clef/), [Clef-flash](/workers-ai/models/clef-flash/), [Clef-omni](/workers-ai/models/clef-omni/), and [Jev](/ai/models/typesafe/jev/) for model-specific limits and schemas.
+
+## Next steps
+
+- Review the decision model references for supported inputs, question schemas, and examples:
+  - [Clef](/workers-ai/models/clef/)
+  - [Clef-flash](/workers-ai/models/clef-flash/)
+  - [Clef-omni](/workers-ai/models/clef-omni/)
+  - [Jev (`typesafe/jev`)](/ai/models/typesafe/jev/)
+- Compare with [extraction models](/workers-ai/concepts/extraction-models/) when your application needs typed values rather than predefined choices.
+- Consult the [Workers AI REST API reference](/api/resources/ai/methods/run/) for the inference endpoint.
+- [Configure a Workers AI binding](/workers-ai/configuration/bindings/) to access Workers AI from a Worker.
+- [Use the Workers AI REST API](/workers-ai/get-started/rest-api/) to authenticate and send requests over HTTP.
