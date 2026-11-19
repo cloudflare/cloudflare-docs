@@ -20,6 +20,6 @@ Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Work
 - Older versions and deployments no longer appear in the dashboard or API
 - The URL associated with each deleted version, known as its [Version URL](/workers/versions-and-deployments/version-urls/) (including any `--preview-alias`), stops working. The same applies to Pages [preview URLs](/pages/configuration/preview-deployments/)
 
-For branches and pull requests, use [Worker Previews](/workers/previews/). Unlike Version URLs, which run against your production resources, each Worker Preview has its own resources and a URL that updates with every push.
+For branches and pull requests, use [Worker Previews](/workers/previews/). A Version URL runs with your production bindings. A Worker Preview has its own variables, secrets, and bindings, so you can point it at separate resources, and a URL that always serves its latest deployment. For which resources are isolated, refer to [Resources and isolation](/workers/previews/resources/).
 
 For more information, refer to [Compare workflows](/workers/previews/compare-workflows/), [Workers version retention](/workers/versions-and-deployments/#version-retention), and [Pages deployment limits](/pages/platform/limits/#deployments).
