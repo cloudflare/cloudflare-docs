@@ -1,0 +1,152 @@
+---
+title: Block malicious packages
+description: Block npm package downloads that the OSV database lists as malware, using a Gateway Worker.
+pcx_content_type: tutorial
+difficulty: Intermediate
+products:
+  - cloudflare-one
+  - workers
+sidebar:
+  badge:
+    text: Beta
+    variant: caution
+  order: 8
+---
+
+import { Render, PackageManagers, TypeScriptExample } from "~/components";
+
+<Render file="gateway/forward-availability" product="cloudflare-one" />
+
+Stop a developer or build pipeline from downloading an npm package that is known to be malicious. The Worker checks each package download against [OSV](https://osv.dev), an open database of vulnerabilities and malware advisories. It returns a `403` response for malware and lets every other download continue.
+
+Ordinary vulnerabilities (CVEs) do not block a download. Most real projects depend on packages with known CVEs, so blocking them would break builds. This template acts only on malware advisories, whose IDs start with `MAL-`.
+
+This template builds on [package registry security](/cloudflare-one/traffic-controls/http-policies/package-registry-security/). Gateway detects the package download, and the Worker decides whether to allow it.
+
+## Configure the Worker
+
+<Render file="gateway/worker-types" product="cloudflare-one" />
+
+Use this script as `src/index.ts` in the [Worker project](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward). It needs no bindings or secrets.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+import type {
+	GatewayMiddlewareContext,
+	GatewayMiddlewareNext,
+} from "@cloudflare/zt-types";
+
+const OSV_TIMEOUT_MS = 2000;
+
+// Matches /{name}/-/{name}-{version}.tgz and /@{scope}/{name}/-/{name}-{version}.tgz
+function parseNpmTarball(
+	rawUrl: string,
+): { name: string; version: string } | null {
+	try {
+		const parts = new URL(rawUrl).pathname.split("/").map(decodeURIComponent);
+		const dash = parts.lastIndexOf("-");
+		const file = parts[dash + 1];
+		if (dash < 1 || dash !== parts.length - 2 || !file?.endsWith(".tgz")) {
+			return null;
+		}
+
+		let name = parts[dash - 1];
+		const scope = parts[dash - 2];
+		if (!name.startsWith("@") && scope?.startsWith("@")) {
+			name = `${scope}/${name}`;
+		}
+
+		const bareName = name.split("/").pop() as string;
+		if (!file.startsWith(`${bareName}-`)) return null;
+		const version = file.slice(bareName.length + 1, -".tgz".length);
+		return version ? { name, version } : null;
+	} catch {
+		return null;
+	}
+}
+
+async function isMalware(name: string, version: string): Promise<boolean> {
+	const response = await fetch("https://api.osv.dev/v1/query", {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify({ package: { ecosystem: "npm", name }, version }),
+		signal: AbortSignal.timeout(OSV_TIMEOUT_MS),
+	});
+	if (!response.ok) return false;
+
+	const { vulns = [] } = await response.json<{
+		vulns?: { id: string; aliases?: string[] }[];
+	}>();
+	return vulns.some((vuln) =>
+		[vuln.id, ...(vuln.aliases ?? [])].some((id) => id.startsWith("MAL-")),
+	);
+}
+
+export class GatewayMiddleware extends WorkerEntrypoint {
+	async handle(
+		request: Request,
+		context: GatewayMiddlewareContext,
+		next: GatewayMiddlewareNext,
+	): Promise<Response> {
+		const pkg = request.method === "GET" ? parseNpmTarball(request.url) : null;
+
+		if (pkg) {
+			// Fail open: an OSV error or timeout lets the download continue.
+			const malicious = await isMalware(pkg.name, pkg.version).catch(
+				() => false,
+			);
+			if (malicious) {
+				return new Response(
+					`Blocked: ${pkg.name}@${pkg.version} is listed as malware in OSV.\n`,
+					{
+						status: 403,
+						headers: {
+							"content-type": "text/plain; charset=utf-8",
+							"cache-control": "no-store",
+						},
+					},
+				);
+			}
+		}
+
+		return next(request);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The script handles one case: an npm tarball download, such as `/lodash/-/lodash-4.17.21.tgz`. It does not call `next()` for malware, so Gateway does not send the request to the registry. If the URL is not an npm download, the Worker passes it through.
+
+The Worker fails open. If OSV does not answer within two seconds, or returns an error, the download continues. Gateway returns an error to the user when a Worker throws, so the script catches failures instead of surfacing them.
+
+Every package download waits for one OSV request, which typically takes a few hundred milliseconds. Lowering the timeout makes more lookups fail open and lets malware through. To avoid the added delay, cache results as described in [Extend the template](#extend-the-template).
+
+The Worker sends the package name and version to the OSV API. It sends nothing about the user, device, or request headers.
+
+## Forward and test
+
+Deploy the Worker and [create a Forward policy](/cloudflare-one/traffic-controls/integrate-workers/forward-traffic/#set-up-forward) for your test user group. Scope the policy to npm downloads with the following traffic expression:
+
+```txt
+pkg.ecosystem == "npm"
+```
+
+[TLS decryption](/cloudflare-one/traffic-controls/http-policies/tls-decryption/) must be on for the registry host. Gateway cannot classify a download that it does not decrypt, and the Worker is then never invoked.
+
+On a test device that is connected to Gateway, use an empty directory and try to install a package that OSV lists as malware. For example, `flatmap-stream@0.1.1` has the advisory `MAL-2025-20690`:
+
+<PackageManagers type="add" pkg="flatmap-stream@0.1.1" />
+
+The install fails with an `E403` error and nothing is added to `node_modules`. Then install a package with no malware advisory, such as `lodash`, and confirm that it completes.
+
+## Extend the template
+
+This template is a starting point. A production version would typically add the following:
+
+- **Other ecosystems.** Add a URL parser and the matching OSV ecosystem name for each registry that you use, such as PyPI or Cargo. Add them to the Forward policy's traffic expression.
+- **More malware signals.** Some compromised packages, such as `event-stream`, are published as `GHSA-` advisories with no `MAL-` ID. They are not matched by this script.
+- **A local index.** Cache results in [Workers KV](/kv/) so that repeated downloads of the same package skip the OSV request.
+- **Records and overrides.** Write each decision to [D1](/d1/) for auditing, and let administrators allow or block individual packages.
