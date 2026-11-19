@@ -288,7 +288,7 @@ RIGHT: clients → room:lobby | room:42 | room:dev (one object per room)
 
 ### Shared isolates and event-loop contention {/* shared-isolates */}
 
-Multiple instances of the same Durable Object class can share a V8 [isolate](/workers/reference/how-workers-works/#isolates). Only one thread can execute JavaScript in that isolate at a time, so synchronous work in one object can delay other objects sharing it. Different object IDs do not guarantee separate isolates.
+Multiple instances of the same Durable Object class can share an [isolate](/workers/reference/how-workers-works/#isolates). Only one thread can execute JavaScript in that isolate at a time, so synchronous work in one object can delay other objects sharing it. Different object IDs do not guarantee separate isolates.
 
 Asynchronous operations from these objects can interleave, but long synchronous work can cause delays even if the objects never communicate. For example, parsing a large JSON payload in one room object can increase latency in another room object.
 
