@@ -11,16 +11,16 @@ sidebar:
 
 import { APIRequest, GlossaryTooltip, Render } from "~/components";
 
-Use this page when you cannot add your prefix or when your prefix does not pass validation during [BYOIP onboarding](/byoip/get-started/).
+Use this page if you cannot add your prefix during [BYOIP onboarding](/byoip/get-started/). Also use it if your prefix does not pass validation.
 
 ## Add Prefix request fails
 
+The Add Prefix endpoint checks your IRR object before it adds the prefix. For IRR errors such as `irr_entry_not_found` or `irr_mismatch_asn`, refer to [IRR check fails](#irr-check-fails).
+
+The Add Prefix endpoint can also return the following error:
+
 | Error code                          | Cause                                                                                   | Solution                                                                                                         |
 | ----------------------------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `irr_entry_not_found`               | Cloudflare did not find a `route` or `route6` object for the prefix.                    | Create the object. Refer to [IRR check fails](#irr-check-fails).                                                 |
-| `irr_mismatch_asn`                  | The `origin` of the object does not match the ASN in the request.                       | Update the `origin`, or use the ASN from the object in the request.                                              |
-| `irr_cidr_too_specific`             | The object is for a smaller prefix than the prefix in the request.                      | Create an object that matches the prefix exactly.                                                                |
-| `prefix_validation_irr_invalid`     | The object does not meet the requirements.                                              | Refer to [IRR check fails](#irr-check-fails).                                                                    |
 | `prefix_entitlement_limit_exceeded` | Your account has reached the maximum number of prefixes. Existing prefixes count toward this limit. | To add the same prefix again, delete the existing prefix first. To add more prefixes, contact your account team. |
 
 After you fix the issue, send the Add Prefix request again.
@@ -41,7 +41,7 @@ Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixe
 		"created_at": "2025-02-25T00:34:11.423722Z",
 		"modified_at": "2025-02-25T00:34:11.423722Z",
 		"cidr": "203.0.113.0/24",
-		"account_id": "654c5f71c324478cc9f68d60065d4620",
+		"account_id": "<ACCOUNT_ID>",
 		"description": "",
 		"approved": "P",
 		"on_demand_enabled": false,
@@ -74,22 +74,33 @@ Your IRR record and ROA must meet the [onboarding prerequisites](/byoip/get-star
 
 ## Validation states
 
+Each check returns one of the following states:
+
 | State                    | Meaning                                                                                  | What to do                                                                                                   |
 | ------------------------ | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `valid`                  | The check passed.                                                                        | No action is necessary.                                                                                      |
 | `pending`                | Cloudflare has not finished the check.                                                   | Wait, and then check again. If you have not started validation, use the Validate Prefix endpoint.             |
-| `missing`                | Cloudflare did not find the required record.                                             | Refer to the section for the check below.                                                                    |
+| `missing`                | Cloudflare did not find the required record.                                             | Refer to the section for that check, for example [IRR check fails](#irr-check-fails).                                                                    |
 | `mismatch_asn`           | Cloudflare found a record for the prefix, but the ASN does not match.                    | Update the record so that it uses the ASN from the prefix. If the prefix has the wrong ASN, delete the prefix, and then add it again with the correct ASN. |
 | `mismatch_more_specific` | The record is for a smaller prefix than the prefix you added.                            | Create a record that matches the prefix exactly.                                                             |
 | `mismatch_less_specific` | The IRR record is for a larger prefix that covers the prefix you added.                  | The IRR check accepts this state. No action is necessary.                                                    |
-| `invalid`                | The record exists, but it does not meet the requirements.                                | Refer to the section for the check below.                                                                    |
+| `invalid`                | The record exists, but it does not meet the requirements.                                | Refer to the section for that check, for example [IRR check fails](#irr-check-fails).                                                                    |
 | `error`                  | Cloudflare could not complete the check.                                                 | Run validation again. If the state does not change, contact your account team.                               |
 
 ## IRR check fails
 
-- Make sure that a `route` (IPv4) or `route6` (IPv6) object exists for the exact prefix that you added.
-- Make sure that the `origin` of the object is the ASN that you used when you added the prefix.
+- Make sure that a `route` (IPv4) or `route6` (IPv6) object exists for the exact prefix.
+- Make sure that the `origin` of the object is the ASN of the prefix.
 - For more information, refer to [IRR entries](/byoip/concepts/irr-entries/) and [IRR best practices](/byoip/concepts/irr-entries/best-practices/).
+
+If the Add Prefix request fails, fix the IRR object, and then send the request again. The Add Prefix endpoint can return the following IRR errors:
+
+| Error code                      | Cause                                                                | Solution                                                            |
+| ------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `irr_entry_not_found`           | Cloudflare did not find a `route` or `route6` object for the prefix. | Create the object.                                                  |
+| `irr_mismatch_asn`              | The `origin` of the object does not match the ASN in the request.    | Update the `origin`, or use the ASN from the object in the request. |
+| `irr_cidr_too_specific`         | The object is for a smaller prefix than the prefix in the request.   | Create an object that matches the prefix exactly.                   |
+| `prefix_validation_irr_invalid` | The object does not meet the requirements in this section.                     | Review the object against the requirements in this section.                   |
 
 ## RPKI check fails
 
@@ -118,10 +129,9 @@ If you use the reverse DNS method:
 
 If the response has a `loa_document_id` value but no `ownership_validation_token` field, you added the prefix with an LOA. Cloudflare does not create a token for these prefixes. Ownership validation passes only after Cloudflare verifies the LOA. Until then, `ownership_validation_state` is `invalid` and `approved` is `P`.
 
-To continue, do one of the following:
+To continue, contact your account team to verify the LOA.
 
-- Contact your account team to verify the LOA.
-- Use the self-serve token flow. Delete the prefix with the [Delete Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/delete/). Then add it again without `loa_document_id`, as described in [Add your prefix](/byoip/get-started/#add-your-prefix).
+To use the self-serve token flow instead, delete the prefix with the [Delete Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/delete/). Then add it again without `loa_document_id`. Refer to [Add your prefix](/byoip/get-started/#add-your-prefix).
 
 If you added the prefix without `loa_document_id` and lost the token, use the Prefix Details endpoint. The response includes `ownership_validation_token`.
 

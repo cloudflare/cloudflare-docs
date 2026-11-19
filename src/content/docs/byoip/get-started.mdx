@@ -11,6 +11,7 @@ sidebar:
 ---
 
 import {
+	APIRequest,
 	Tabs,
 	TabItem,
 	GlossaryTooltip,
@@ -47,8 +48,7 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 <Render file="cloudflare-asn-callout" product="byoip" />
 
 :::tip[If a step fails]
-- If you cannot add the prefix, or if validation does not pass, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/).
-- If you cannot create service bindings or advertise the BGP prefix, refer to [Self-serve onboarding API errors](/byoip/troubleshooting/#self-serve-onboarding-api-errors).
+If you cannot add the prefix, or if validation does not pass, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/). If you cannot create service bindings or advertise the BGP prefix, refer to [Self-serve onboarding API errors](/byoip/troubleshooting/#self-serve-onboarding-api-errors).
 :::
 
 ## 1. Add and validate your prefix
@@ -59,9 +59,15 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 
 1. Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to add the prefix to the Cloudflare account that will own it.
 
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","asn":13335,"delegate_loa_creation":true}'
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/addressing/prefixes"
+   	method="POST"
+   	json={{
+   		cidr: "203.0.113.0/24",
+   		asn: 13335,
+   		delegate_loa_creation: true,
+   	}}
+   />
 
    ```json title="Response" {3,16}
    {
@@ -70,7 +76,7 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
        "created_at": "2025-02-25T00:34:11.423722Z",
        "modified_at": "2025-02-25T00:34:11.423722Z",
        "cidr": "203.0.113.0/24",
-       "account_id": "654c5f71c324478cc9f68d60065d4620",
+       "account_id": "<ACCOUNT_ID>",
        "description": "",
        "approved": "P",
        "on_demand_enabled": false,
@@ -95,7 +101,7 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 </Steps>
 
 :::caution[Do not include `loa_document_id`]
-If you include `loa_document_id` in the request, Cloudflare does not create an ownership validation token. Cloudflare must then verify your uploaded LOA before ownership validation can pass, and the prefix stays in the `P` (pending) state until then. To use the self-serve flow in this guide, leave out `loa_document_id`.
+If you include `loa_document_id` in the request, Cloudflare does not create an ownership validation token. Cloudflare must then verify your uploaded LOA before ownership validation can pass. Until then, the prefix stays in the `P` (pending) state. To use the self-serve flow in this guide, leave out `loa_document_id`.
 
 If you already added the prefix with `loa_document_id`, refer to [No ownership validation token](/byoip/troubleshooting/prefix-validation/#no-ownership-validation-token).
 :::
@@ -110,10 +116,7 @@ If you set `delegate_loa_creation` to `false`, you must upload the LOA manually,
 
 Prove ownership by adding the validation token to either your IRR record or reverse DNS. You only need to use one of these methods.
 
-Ownership validation passes only when both of these conditions are true:
-
-- The RPKI check for the prefix is `valid`.
-- Cloudflare finds the token in your IRR record or in your reverse DNS zones.
+Ownership validation passes only when the RPKI check is `valid` and Cloudflare finds the token.
 
 <Tabs>
 <TabItem label="IRR record">
@@ -178,17 +181,19 @@ Ownership validation passes only when both of these conditions are true:
 
 1. After you publish the validation token, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to start the validation checks:
 
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/validate" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/validate"
+   	method="POST"
+   />
 
    Cloudflare runs the checks in the background.
 
 2. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to check the result:
 
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID" --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}"
+   	method="GET"
+   />
 
 3. Review these fields in the response:
 
@@ -231,9 +236,14 @@ Each prefix requires a default service binding that covers the entire prefix. Cl
 2. If necessary, use the [List Prefixes endpoint](/api/resources/addressing/subresources/prefixes/methods/list/) to find the prefix `id`.
 3. Use the [Create Service Binding endpoint](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) to bind the entire prefix to the default service.
 
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bindings" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","service_id":"<DEFAULT_SERVICE_ID>"}'
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
+   	method="POST"
+   	json={{
+   		cidr: "203.0.113.0/24",
+   		service_id: "<DEFAULT_SERVICE_ID>",
+   	}}
+   />
 
 </Steps>
 
@@ -260,9 +270,14 @@ Suppose `203.0.113.0/24` uses Spectrum by default, but addresses `203.0.113.16` 
 
 Use the [Create Service Binding endpoint](/api/resources/addressing/subresources/prefixes/subresources/service_bindings/methods/create/) to create the more-specific binding.
 
-```bash
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bindings" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.16/29","service_id":"<SERVICE_ID>"}'
-```
+<APIRequest
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bindings"
+	method="POST"
+	json={{
+		cidr: "203.0.113.16/29",
+		service_id: "<SERVICE_ID>",
+	}}
+/>
 
 The initial provisioning state in the response is `provisioning`:
 
@@ -301,9 +316,13 @@ After the default binding and any more-specific bindings are active, advertise t
 
 2. Use the [Update BGP Prefix endpoint](/api/resources/addressing/subresources/prefixes/subresources/bgp_prefixes/methods/edit/) to advertise the prefix.
 
-   ```bash
-   curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/bgp/prefixes/$BGP_PREFIX_ID" --request PATCH --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"on_demand":{"advertised":true}}'
-   ```
+   <APIRequest
+   	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/bgp/prefixes/{bgp_prefix_id}"
+   	method="PATCH"
+   	json={{
+   		on_demand: { advertised: true },
+   	}}
+   />
 
 </Steps>
 

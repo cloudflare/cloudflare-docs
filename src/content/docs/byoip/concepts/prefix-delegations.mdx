@@ -1,7 +1,7 @@
 ---
 title: Prefix delegations
 pcx_content_type: concept
-description: Let another Cloudflare account use all or part of your BYOIP prefix with CDN services (including Cloudflare for SaaS) or Spectrum. The prefix owner keeps control of the prefix, its service bindings, and its advertisement.
+description: Let another Cloudflare account use all or part of your BYOIP prefix with CDN services (including Cloudflare for SaaS) or Spectrum.
 products:
   - byoip
 sidebar:
@@ -20,6 +20,8 @@ Account A onboards the prefix, creates the service bindings, and controls advert
 
 ## Who does what
 
+The following table shows which account can do each task:
+
 | Task                                                                            | Account A (prefix owner) | Account B (delegated account)  |
 | ------------------------------------------------------------------------------- | ------------------------ | ------------------------------ |
 | View the prefix and its delegations                                             | Yes                      | No                             |
@@ -27,7 +29,7 @@ Account A onboards the prefix, creates the service bindings, and controls advert
 | Create or delete service bindings                                               | Yes                      | No                             |
 | Advertise or withdraw the prefix                                                | Yes                      | No                             |
 | Create address maps with the delegated IP addresses                             | Yes                      | Yes, in its own account        |
-| Use the IP addresses with Cloudflare for SaaS or Spectrum                       | Yes                      | Yes, for delegated IPs only    |
+| Use the IP addresses with CDN services or Spectrum                              | Yes                      | Yes, for delegated IPs only    |
 
 A delegation does not transfer ownership of the prefix. It also does not create BGP prefixes, create service bindings, or change the advertisement status.
 
@@ -35,23 +37,21 @@ A delegation does not transfer ownership of the prefix. It also does not create 
 
 The effect of a delegation depends on the service that receives traffic for the IP addresses.
 
-- **CDN**: Account B can add the delegated IP addresses to [address maps](/byoip/address-maps/) at the account or zone level. Account B can also validate and serve [Cloudflare for SaaS](/cloudflare-for-platforms/cloudflare-for-saas/) custom hostnames on the delegated IP addresses. This is useful when you manage Cloudflare for SaaS configurations in more than one account.
-- **Spectrum**: Account B can create [Spectrum applications](/spectrum/about/byoip/) with the delegated IP addresses.
+For CDN, Account B can add the delegated IP addresses to [address maps](/byoip/address-maps/) at the account or zone level. For Spectrum, Account B can create [Spectrum applications](/spectrum/about/byoip/) with the delegated IP addresses.
 
 For example, Account A owns `203.0.113.0/24` and delegates `203.0.113.16/28` to Account B. Account B can now create a Spectrum application on `203.0.113.17`.
 
 Account A must bind the IP addresses to the CDN or Spectrum service first. For more information, refer to [Service bindings](/byoip/service-bindings/).
 
-## What Account B needs
+## Address maps in Account B
 
-- Account B does not need a BYOIP subscription. Only Account A onboards and owns the prefix.
-- Account B does not need address maps enabled on its own account. If address maps are enabled on Account A, Account B can create address maps with the delegated IP addresses.
-- Account B creates address maps in its own account, with its own zones. Account A cannot add zones from Account B to an address map in Account A.
-- Address map limits apply to each account separately. Address maps in Account B do not count toward the limit of Account A.
+Account B creates address maps in its own account, with its own zones. Account A cannot add zones from Account B to an address map in Account A.
+
+Address map limits apply to each account separately. Address maps in Account B do not count toward the limit of Account A.
 
 ## Example: lend IP addresses to more than one account
 
-Account A can delegate different parts of one prefix to different accounts. Each delegated account can use its IP addresses without its own prefix. A delegation can be permanent or temporary.
+Account A can delegate different parts of one prefix to different accounts. Each delegated account can use its IP addresses without its own prefix.
 
 In this example, Account A owns `203.0.113.0/24` and creates three delegations:
 
@@ -77,10 +77,7 @@ Account A keeps control of the prefix, the service bindings, and the advertiseme
 
 ## Effects of removing a delegation
 
-When Account A removes a delegation, Cloudflare does the following:
-
-- Removes the delegated IP addresses from address maps in Account B.
-- Deletes geofeed entries in Account B for the delegated CIDR.
+When Account A removes a delegation, Cloudflare removes the delegated IP addresses from address maps in Account B. Cloudflare also deletes geofeed entries in Account B for the delegated CIDR.
 
 Services in Account B that use the delegated IP addresses can stop working.
 
