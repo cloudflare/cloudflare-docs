@@ -9,20 +9,17 @@ date: 2026-11-19
 
 Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Workers and [deployments](/pages/configuration/preview-deployments/) of your Pages projects for 30 days. After 30 days, they are deleted, except your 100 most recent and what is currently deployed.
 
-**What this does not affect:**
+**What is not affected:**
 
-- **Your running applications:** Deployed Worker versions and your current Pages production deployment are always kept, regardless of age.
+- **Running applications:** Deployed Worker versions and your current Pages production deployment are always kept.
 - **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions.
-- **Worker Previews:** A [Worker Preview](/workers/previews/) URL always points to the latest deployment of that Preview, so it keeps working as long as the Preview exists.
+- **Worker Previews:** A [Worker Preview](/workers/previews/) URL always points to its latest deployment, so it keeps working.
 
-**What you will notice:**
+**What changes:**
 
-- **A shorter history:** Versions and deployments older than 30 days no longer appear in the dashboard or API, unless they are one of your 100 most recent or are currently deployed.
-- **Workers Version URLs:** A version's [Version URL](/workers/versions-and-deployments/version-urls/), including any `--preview-alias`, is removed with the version.
-- **Pages preview URLs:** A deployment's [preview URL](/pages/configuration/preview-deployments/) is removed with the deployment.
+- Older versions and deployments no longer appear in the dashboard or API.
+- Their URLs stop working. This includes Worker [Version URLs](/workers/versions-and-deployments/version-urls/), such as those created with `--preview-alias`, and Pages [preview URLs](/pages/configuration/preview-deployments/).
 
-### Use Previews, not Version URLs, for branches and pull requests
-
-Version URLs are not Previews. A Version URL runs one uploaded version against your production resources and is removed with its version. For branches and pull requests, use [Previews](/workers/previews/), which have their own URL and resources and update every time you push.
+For branches and pull requests, use Worker Previews instead of Version URLs. Version URLs run against your production resources, while Worker Previews have their own URL and resources and update every time you push.
 
 For more information, refer to [Compare workflows](/workers/previews/compare-workflows/), [Workers version retention](/workers/versions-and-deployments/#version-retention), and [Pages deployment limits](/pages/platform/limits/#deployments).
