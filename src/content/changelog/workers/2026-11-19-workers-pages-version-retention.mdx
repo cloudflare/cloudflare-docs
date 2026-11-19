@@ -11,14 +11,14 @@ Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Work
 
 **What is not affected:**
 
-- **Running applications:** Deployed Worker versions and your current Pages production deployment are always kept.
-- **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions.
-- **Worker Previews:** A [Worker Preview](/workers/previews/) URL always points to its latest deployment, so it keeps working.
+- **Running applications:** Deployed Worker versions and your current Pages production deployment are always kept
+- **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions
+- **Worker Previews:** [Worker Preview](/workers/previews/) URLs always serve the latest deployment of that Preview
 
 **What changes:**
 
-- Older versions and deployments no longer appear in the dashboard or API.
-- Their URLs stop working, including Worker [Version URLs](/workers/versions-and-deployments/version-urls/) (and any `--preview-alias`) and Pages [preview URLs](/pages/configuration/preview-deployments/).
+- Older versions and deployments no longer appear in the dashboard or API
+- Their URLs stop working, including Worker [Version URLs](/workers/versions-and-deployments/version-urls/) (and any `--preview-alias`) and Pages [preview URLs](/pages/configuration/preview-deployments/)
 
 For branches and pull requests, use [Worker Previews](/workers/previews/). Unlike Version URLs, which run against your production resources, each Worker Preview has its own resources and a URL that updates with every push.
 
