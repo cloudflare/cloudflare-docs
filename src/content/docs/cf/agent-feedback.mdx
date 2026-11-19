@@ -1,14 +1,12 @@
 ---
 title: Agent feedback
-description: Use the Cloudflare CLI to send feedback from coding agents, preview reports, and control the CLI context included in a report.
+description: Use the Cloudflare CLI to send feedback from coding agents and control the CLI context included in a report.
 pcx_content_type: how-to
 sidebar:
   order: 5.5
 products:
   - cf
 ---
-
-import { Steps } from "~/components";
 
 Use `cf feedback` to send bug reports, feature requests, and feedback about
 where you or your coding agent got stuck. You can send feedback without signing
@@ -48,24 +46,10 @@ the task, the expected and actual results, and any workaround. Use the optional
 }
 ```
 
-<Steps>
-1. Preview the report with `--dry-run`. Review the output and remove secrets,
-   personal information, and account identifiers before sending it.
-
-   ```sh
-   cf feedback --input-json feedback.json --dry-run
-   ```
-
-2. Send the report.
-
-   ```sh
-   cf feedback --input-json feedback.json
-   ```
-</Steps>
-
-To read the JSON from standard input, set `--input-json=-`. If a `--field`
-flag and the JSON report supply the same field, the flag takes precedence.
-Run `cf feedback --help` for supported fields.
+Send the file with `cf feedback --input-json feedback.json`. To read the JSON
+from standard input, set `--input-json=-`. If a `--field` flag and the JSON
+report supply the same field, the flag takes precedence. Run `cf feedback --help`
+for supported fields.
 
 The command prints a JSON receipt with a `submission_id` after Cloudflare
 accepts the report. If an agent sends the report, it should share the
