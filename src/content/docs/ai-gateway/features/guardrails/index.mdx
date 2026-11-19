@@ -1,6 +1,6 @@
 ---
 title: AI Gateway Guardrails
-description: Block or flag harmful prompts, unsafe model responses, and prompt injection across AI providers with Cloudflare AI Gateway Guardrails.
+description: Flag or block harmful prompts and prompt injection, and check eligible model responses for unsafe content across providers.
 pcx_content_type: navigation
 order: 1
 tags:
@@ -16,39 +16,32 @@ products:
 
 import { YouTube } from "~/components";
 
-AI Gateway Guardrails is a content safety and [prompt injection](https://www.cloudflare.com/learning/ai/prompt-injection/) filter that sits between your application and your [model providers](/ai-gateway/usage/providers/). It evaluates user prompts and model responses in real time using [`@cf/meta/llama-guard-3-8b`](/workers-ai/models/llama-guard-3-8b/) for content hazard categories (`S1` to `S14`) and `@cf/meta/prompt-guard-2-86m` for prompt injection (`P1`), then flags, blocks, or ignores each category based on your gateway settings.
+AI Gateway Guardrails checks traffic between your application and your [model providers](/ai-gateway/usage/providers/). Guardrails uses [`@cf/meta/llama-guard-3-8b`](/workers-ai/models/llama-guard-3-8b/) to check for content hazards (`S1` to `S14`). It uses `@cf/meta/prompt-guard-2-86m` to check prompts for [prompt injection](https://www.cloudflare.com/learning/ai/prompt-injection/) (`P1`).
 
-Because Guardrails runs at the proxy layer, you define one safety policy and enforce it consistently across OpenAI, Anthropic, DeepSeek, Workers AI, and other supported providers. Blocked requests return structured error codes (`2016` for prompts, `2017` for responses), and every evaluation is recorded in AI Gateway Logs for review and auditing.
+Configure one policy per gateway and apply it to supported traffic across providers, including OpenAI, Anthropic, DeepSeek, and Workers AI. Set the action for each supported category to **Flag**, **Block**, or **Ignore**.
 
-With AI Gateway Guardrails, you get:
-
-- **Cross-provider enforcement**: Apply one set of content safety and prompt-injection rules across all models routed through AI Gateway.
-- **Per-category actions**: Configure each hazard category (`S1` to `S14`) and prompt injection (`P1`) independently to **Flag**, **Block**, or **Ignore** for prompts and responses.
-- **Real-time blocking and error codes**: Stop disallowed prompts before they reach a model provider and block unsafe responses before they reach your users, with distinct error codes your application can handle.
-- **Audit logs**: Review logged prompts, model responses, and Guardrail verdicts in AI Gateway Logs to support internal oversight and compliance checks.
+Use [AI Gateway Logs](/ai-gateway/observability/logging/) to review evaluations for logged requests. Prompt and response bodies are available only when payloads are stored.
 
 ## Video demo
 
-<YouTube id="Its1H0jTxrQ" />
+<YouTube id="Its1H0jTxrQ" title="Add Guardrails to your AI Application" />
 
 ## How Guardrails work
 
-AI Gateway inspects requests and responses in real time against your configured safety categories. Guardrails operate in three steps:
+Guardrails applies your configured policy in three steps:
 
-1. **Intercept traffic**: AI Gateway proxies requests between your application and the upstream AI provider.
+1. **Intercept traffic**: AI Gateway proxies requests and responses between your application and its model provider.
 2. **Evaluate prompts and responses**:
-   - **User prompts**: Checked for content hazards (`S1` to `S14`) and prompt injection (`P1`). Prompts that match a blocked category are stopped before reaching the model.
-   - **Model responses**: Checked for content hazards (`S1` to `S14`) after the provider responds. Responses that match a blocked category are stopped before being returned to the caller.
-3. **Apply configured actions**: Flagged interactions proceed and are logged for review. Blocked interactions are rejected with error code `2016` (prompt) or `2017` (response).
+   - **User prompts**: Guardrails checks prompts for content hazards and prompt injection. If a prompt matches a category set to **Block**, it does not reach the model provider.
+   - **Model responses**: Guardrails checks eligible response text for content hazards. It skips responses from embedding and unknown model types. For streaming requests, the REST API evaluates responses without enforcing the response policy. Gateway endpoints buffer streamed responses for evaluation and return a single non-streamed payload.
+3. **Apply configured actions**: **Flag** marks a match for review without blocking it. **Ignore** takes no action for that category. A block returns error code `2016` for a prompt or `2017` for a response.
 
-For setup steps, category codes, and streaming behavior, refer to [Set up Guardrails](/ai-gateway/features/guardrails/set-up-guardrail/), [Supported model types](/ai-gateway/features/guardrails/supported-model-types/), and [Usage considerations](/ai-gateway/features/guardrails/usage-considerations/).
+For setup steps, [hazard categories](/ai-gateway/features/guardrails/usage-considerations/#hazard-categories), [supported model types](/ai-gateway/features/guardrails/supported-model-types/), and [streaming behavior](/ai-gateway/features/guardrails/usage-considerations/#streaming-behavior), refer to [Set up Guardrails](/ai-gateway/features/guardrails/set-up-guardrail/).
 
 ## Related resources
 
-- [Set up Guardrails](/ai-gateway/features/guardrails/set-up-guardrail/)
-- [Usage considerations and hazard categories](/ai-gateway/features/guardrails/usage-considerations/#hazard-categories)
 - [Cloudflare Learning Center: How to prevent misuse of AI](https://www.cloudflare.com/learning/ai/ai-misuse/)
 - [Cloudflare Learning Center: How to prevent prompt injection](https://www.cloudflare.com/learning/ai/prompt-injection/)
 - [Cloudflare Learning Center: What is AI security?](https://www.cloudflare.com/learning/ai/what-is-ai-security/)
-- [Cloudflare Learning Center: What are the OWASP Top 10 risks for LLMs?](https://www.cloudflare.com/learning/ai/owasp-top-10-risks-for-llms/)
-- [Cloudflare Blog: Keep AI interactions secure and risk-free with Guardrails in AI Gateway](https://blog.cloudflare.com/guardrails-in-ai-gateway/)
+- [Cloudflare Learning Center: OWASP's 2023 Top 10 risks for LLMs](https://www.cloudflare.com/learning/ai/owasp-top-10-risks-for-llms/)
+- [Cloudflare Blog: Guardrails launch announcement](https://blog.cloudflare.com/guardrails-in-ai-gateway/)
