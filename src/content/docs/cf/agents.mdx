@@ -175,9 +175,12 @@ error.
 - **Check for aborted deletes.** In a non-interactive session, a destructive
   command without `--force` prints `Aborted.` to standard error, makes no
   change, and exits with status `1`.
-- **Review `--force` before you allow it.** On some commands, `--force` is also
-  an API parameter. For example, `cf workers delete --force` also deletes a
-  Worker that other Workers still reference.
+- **Review `--force` before you allow it.** `--force` skips the confirmation
+  prompt, and on some commands it does more. For example, `cf deploy --force`
+  uploads in CI even when the remote Worker has conflicting changes. API
+  overrides use their own flags. `cf workers delete --force` only skips the
+  prompt, while `--delete-with-references` deletes the Worker even when other
+  Workers still reference it.
 - **Use local data where supported.** `--local` works only for a few
   resources that local development provides, mainly KV keys, D1 databases
   through `cf d1 raw`, `cf d1 migrations list`, and `cf d1 migrations apply`,
