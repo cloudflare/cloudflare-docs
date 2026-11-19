@@ -12,12 +12,12 @@ Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Work
 **What is not affected:**
 
 - **Running applications:** Deployed Worker versions and your current Pages production deployment are always kept
-- **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions
+- **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions or deployments
 - **Worker Previews:** [Worker Preview](/workers/previews/) URLs always serve the latest deployment of that Preview. Use Worker Previews for branches and pull requests instead of Version URLs, which run with your production bindings
 
 **What you will notice:**
 
-- Older versions and deployments no longer appear in the dashboard or API
-- The URL associated with each deleted version, known as its [Version URL](/workers/versions-and-deployments/version-urls/) (including any `--preview-alias`), stops working. The same applies to Pages [preview URLs](/pages/configuration/preview-deployments/)
+- Deleted versions and deployments no longer appear in the dashboard or API
+- The URL associated with each deleted Worker version, known as its [Version URL](/workers/versions-and-deployments/version-urls/) (including any `--preview-alias`), stops working, as does the [preview URL](/pages/configuration/preview-deployments/) of each deleted Pages deployment
 
 For more information, refer to [Compare workflows](/workers/previews/compare-workflows/), [Workers version retention](/workers/versions-and-deployments/#version-retention), and [Pages deployment limits](/pages/platform/limits/#deployments).
