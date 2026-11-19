@@ -69,7 +69,6 @@ Account A keeps control of the prefix, the service bindings, and the advertiseme
 - The delegated CIDR must be inside the prefix.
 - Account B must be an existing Cloudflare account.
 - You cannot create the same delegation twice for the same CIDR and account.
-- You cannot delegate to an account in a different compliance region.
 - You cannot edit a delegation. To change it, remove the delegation and create a new one.
 - A delegation does not expire. It stays active until Account A removes it.
 - A delegation identifies Account B by its account ID. The API returns this value in the `delegated_account_id` field.
