@@ -107,9 +107,9 @@ If you already added the prefix with `loa_document_id`, refer to [No ownership v
 :::
 
 :::note[Letter of Agency]
-This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. Set `delegate_loa_creation` to `true` when you add the prefix. Cloudflare creates the LOA after your prefix passes validation. Until then, `loa_document_id` is `null`.
+This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. When you set `delegate_loa_creation` to `true`, you authorize Cloudflare to create the LOA on your behalf. Cloudflare creates the LOA after your prefix passes validation. Until then, `loa_document_id` is `null`.
 
-If Cloudflare cannot generate the LOA for your prefix, send the LOA to your account team. Manual LOA processing can increase onboarding time.
+If you cannot authorize Cloudflare to create the LOA, use the manual onboarding process instead of this guide. Contact your account team, and send your LOA with the onboarding request. Manual onboarding can take longer.
 :::
 
 ### Validate prefix ownership
