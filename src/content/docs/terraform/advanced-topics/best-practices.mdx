@@ -6,6 +6,8 @@ products:
   - terraform
 ---
 
+import { Render } from "~/components";
+
 Though all Terraform deployments are unique, follow these best practices to set yourself up for success.
 
 ## Manage Terraform resources in Terraform
@@ -93,91 +95,93 @@ example-tf/
 Terraform modules are ways of encapsulating multiple resources with logic in an abstracted interface. Consider the example where a module sets up default load balancer with a pool, some DNS entries, and perhaps a page rule. The end user may use it like this:
 
 ```hcl
-module "example" "an_example_site" {
-  domain = "example.com"
+module "an_example_site" {
+  source    = "./modules/example"
+  domain    = "example.com"
   origin_ip = "192.168.0.1"
 }
 ```
 
 In terms of Terraform resources, however, the above example would be translated to:
 
+<Render file="v5-code-snippets" product="terraform" />
+
 ```hcl
-resource "cloudflare_record" "example_1" {
+resource "cloudflare_dns_record" "example_1" {
   zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  value   = "198.51.100.11"
+  name    = "terraform.example.com"
+  content = "198.51.100.11"
   type    = "A"
   ttl     = 3600
 }
 
-resource "cloudflare_record" "example_2" {
+resource "cloudflare_dns_record" "example_2" {
   zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  value   = "198.51.100.12"
+  name    = "terraform.example.com"
+  content = "198.51.100.12"
   type    = "A"
   ttl     = 3600
 }
 
-resource "cloudflare_record" "example_3" {
+resource "cloudflare_dns_record" "example_3" {
   zone_id = var.cloudflare_zone_id
-  name    = "terraform"
-  value   = "198.51.100.13"
+  name    = "terraform.example.com"
+  content = "198.51.100.13"
   type    = "A"
   ttl     = 3600
 }
 
-resource "cloudflare_load_balancer" "bar" {
-  zone_id          = var.cloudflare_zone_id
-  name             = "example-load-balancer.example.com"
-  fallback_pool_id = cloudflare_load_balancer_pool.foo.id
-  default_pool_ids = [cloudflare_load_balancer_pool.foo.id]
-  description      = "example load balancer using geo-balancing"
-  proxied          = true
-  steering_policy  = "geo"
+resource "cloudflare_load_balancer" "example_lb" {
+  zone_id         = var.cloudflare_zone_id
+  name            = "example-load-balancer.example.com"
+  fallback_pool   = cloudflare_load_balancer_pool.example_lb_pool.id
+  default_pools   = [cloudflare_load_balancer_pool.example_lb_pool.id]
+  description     = "example load balancer using geo-balancing"
+  proxied         = true
+  steering_policy = "geo"
 
-  pop_pools {
-    pop      = "LAX"
-    pool_ids = [cloudflare_load_balancer_pool.foo.id]
+  pop_pools = {
+    LAX = [cloudflare_load_balancer_pool.example_lb_pool.id]
   }
 
-  country_pools {
-    country  = "US"
-    pool_ids = [cloudflare_load_balancer_pool.foo.id]
+  country_pools = {
+    US = [cloudflare_load_balancer_pool.example_lb_pool.id]
   }
 
-  region_pools {
-    region   = "WNAM"
-    pool_ids = [cloudflare_load_balancer_pool.foo.id]
+  region_pools = {
+    WNAM = [cloudflare_load_balancer_pool.example_lb_pool.id]
   }
 
-  rules {
+  rules = [{
     name      = "example rule"
     condition = "http.request.uri.path contains \"testing\""
-    fixed_response {
+    fixed_response = {
       message_body = "hello"
       status_code  = 200
       content_type = "html"
       location     = "www.example.com"
     }
-  }
+  }]
 }
 
 resource "cloudflare_load_balancer_pool" "example_lb_pool" {
-  name = "example-lb-pool"
-  origins {
+  account_id = var.cloudflare_account_id
+  name       = "example-lb-pool"
+
+  origins = [{
     name    = "example-1"
     address = "198.51.100.1"
     enabled = true
-  }
+  }]
 }
 
 resource "cloudflare_page_rule" "example_page_rule" {
-  zone_id = var.cloudflare_zone_id
-  target = "sub.${var.cloudflare_zone}/page"
+  zone_id  = var.cloudflare_zone_id
+  target   = "sub.${var.cloudflare_zone}/page"
   priority = 1
 
-  actions {
-    ssl = "flexible"
+  actions = {
+    ssl               = "flexible"
     email_obfuscation = "on"
   }
 }
