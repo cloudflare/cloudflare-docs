@@ -753,14 +753,19 @@ type WorkflowBatchCreateResult = {
 };
 ```
 
-`created` contains a `WorkflowInstance` for each created instance, in input order. `errors` contains the entries that were not created. Each error includes the position of the entry in the input (`index`), its `id` if one was provided, and an error code and message.
+`created` contains a `WorkflowInstance` for each created instance, in input order. `errors` contains the entries that were not created. Each error includes the position of the entry in the input (`index`), its `id`, and an error code and message. If you did not provide an `id` for the entry, the error includes the ID that Workflows generated for it.
 
-Unlike [`create`](/workflows/build/workers-api/#create), `createBatch` does not throw when an ID is already in use. Instead, it reports the entry in `errors` with one of the following codes:
+Unlike [`create`](/workflows/build/workers-api/#create), `createBatch` does not throw when it cannot create an entry for one of the following reasons. Instead, it reports the entry in `errors` with the matching code:
 
-| Code    | Description                                                                                   |
-| ------- | --------------------------------------------------------------------------------------------- |
-| `10405` | An instance with this ID already exists.                                                      |
-| `10415` | An earlier entry in the same batch uses this ID. Only the first entry with the ID is created. |
+| Code    | Description                                                                                       |
+| ------- | ------------------------------------------------------------------------------------------------- |
+| `10002` | The `params` for the entry contain a value that Workflows cannot store, such as a function.       |
+| `10405` | An instance with this ID already exists.                                                          |
+| `10415` | An earlier entry in the same batch uses this ID. Only the first entry with the ID can be created. |
+
+If more than one of these reasons applies to an entry, it is reported with `10405` or `10415`, not `10002`. In the `count` form, all instances share the same `params`, so if they contain a value that Workflows cannot store, every instance is reported with `10002` and no instances are created.
+
+Entries can also fail for other reasons, such as an internal error, and are reported with a different code.
 
 If any entry has invalid options, such as an invalid ID or retention duration, the call throws an error before it creates any instances.
 
@@ -772,7 +777,7 @@ Passing an array to `createBatch` is deprecated. Use the `instances` option inst
 
 - <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
 
-The array form returns an array of `WorkflowInstance`. It skips IDs that already exist or repeat within the batch, and excludes them from the returned array without reporting an error.
+The array form returns an array of `WorkflowInstance`. It skips entries whose ID already exists or repeats within the batch, or whose `params` contain a value that Workflows cannot store, and excludes them from the returned array without reporting an error.
 
 To migrate, pass the array as `instances` and read the instances from `created`:
 
