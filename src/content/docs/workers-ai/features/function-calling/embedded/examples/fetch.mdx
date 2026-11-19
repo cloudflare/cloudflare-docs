@@ -15,9 +15,9 @@ products:
 A very common use case is to provide the LLM with the ability to perform API calls via function calling.
 
 In this example the LLM will retrieve the weather forecast for the next 5 days.
-To do so a `getWeather` function is defined that is passed to the LLM as tool.
+To do so a `getWeather` function is defined that is passed to the LLM as a tool.
 
-The `getWeather`function extracts the user's location from the request and calls the external weather API via the Workers' [`Fetch API`](/workers/runtime-apis/fetch/) and returns the result.
+The `getWeather` function extracts the user's location from the request and calls the external weather API via the Workers' [`Fetch API`](/workers/runtime-apis/fetch/) and returns the result.
 
 ```ts title="Embedded function calling example with fetch()"
 import { runWithTools } from '@cloudflare/ai-utils';
