@@ -558,7 +558,7 @@ Once connectivity between the Cloudflare edge and the centralized relay is resto
 	title="BGP peering with the Cloudflare Virtual Network routing table"
 />
 
-Cloudflare WAN BGP peering is with the Cloudflare Virtual Network routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide will receive advertisements for all prefixes in the Cloudflare Virtual Network routing table plus any additional prefixes configured in the on-ramp [Advertised prefix list](/cloudflare-wan/configuration/how-to/configure-routes/#set-up-bgp-peering).
+Cloudflare WAN BGP peering is with the Cloudflare Virtual Network routing table (as opposed to peering with the Cloudflare Internet global network). BGP peers configured by following this guide receive advertisements for some of the routes in the Cloudflare Virtual Network routing table, plus any additional prefixes configured in the on-ramp [Advertised prefix list](/cloudflare-wan/configuration/how-to/configure-routes/#set-up-bgp-peering). For details, refer to [BGP route distribution and convergence](#bgp-route-distribution-and-convergence).
 
 If instead you are seeking to do public peering with the Cloudflare ASN 13335 at one of the Cloudflare data centers, refer to [PNI and peering setup](/network-interconnect/). It is not currently possible to share Cloudflare Virtual Network BGP peering and PNI on the same physical interconnect port.
 
@@ -566,7 +566,15 @@ If instead you are seeking to do public peering with the Cloudflare ASN 13335 at
 
 Cloudflare redistributes routes received from your device into the Cloudflare Virtual Network routing table, which both Cloudflare WAN and Magic Transit use.
 
-All routes in the Cloudflare Virtual Network routing table are advertised to BGP peers. Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
+Cloudflare advertises the following routes to BGP peers:
+
+- Static WAN routes, unless you turn off [static route redistribution](/cloudflare-wan/configuration/how-to/configure-routes/#configure-route-redistribution).
+- Routes learned from your other BGP peers.
+- Prefixes in the on-ramp **Additional Advertised prefix list**.
+
+Cloudflare does not advertise routes from other connector types, such as Cloudflare Tunnel and Cloudflare Mesh routes, or system routes. To advertise these prefixes to a BGP peer, add them to the on-ramp **Additional Advertised prefix list**.
+
+Each BGP peer receives each prefix route along with the full `AS_PATH`, with the selected Cloudflare side [ASN](https://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system/) prepended. This is so that the peer can accurately perform [loop prevention](https://datatracker.ietf.org/doc/html/rfc4271#section-9.1.2).
 
 BGP peering sessions can advertise reachable prefixes to a peer and withdraw previously advertised prefixes. This propagation takes no more than a few minutes.
 

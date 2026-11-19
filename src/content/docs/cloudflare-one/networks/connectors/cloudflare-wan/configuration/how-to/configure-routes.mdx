@@ -308,30 +308,59 @@ BGP peering is available when using the following on-ramps:
 
 The Cloudflare Virtual Network routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte.
 
-By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Cloudflare Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
+By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Cloudflare Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can change it to any ASN from `1` to `4294967294`, except `23456` (`AS_TRANS`) and `65535`. For example, you can use a private ASN such as `65000`.
 
-The CF Account ASN applies to all BGP sessions in your account, over both IPsec/GRE tunnels and CNI. It must be different from the customer device ASN on each tunnel.
+The CF Account ASN applies to all BGP sessions in your account, over both IPsec/GRE tunnels and CNI. It must be different from the customer device ASN on each tunnel and interconnect.
+
+:::caution
+Changing the CF Account ASN restarts all BGP sessions in your account. Traffic over BGP-enabled tunnels and interconnects may be disrupted until the sessions re-establish.
+:::
 
 To set this ASN:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks**.
-2. Go to **Routes** > **WAN configuration**.
-3. In **Border Gateway Protocol (BGP) configuration**, select **Edit** and enter your ASN.
-4. Select **Save**.
+<Steps>
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks** > **Routes** > **BGP settings**.
+2. In **CF Account ASN**, enter Cloudflare's ASN.
+3. Select **Update**.
+4. If you changed the ASN, select **Change ASN** to confirm.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 
-Create a `PUT` request to update the BGP settings for your account. The following example sets the CF Account ASN to `65000`:
+:::note
+You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+:::
+
+Create a `PUT` request to update the BGP settings for your account. Fields you omit keep their current values, so this request does not change your route redistribution settings. The following example sets the CF Account ASN to `65000`:
 
 <APIRequest
-  path="/accounts/{account_id}/magic/bgp/settings"
-  method="PUT"
-  json={{
-		"cloudflare_asn": 65000
-  }}
+	path="/accounts/{account_id}/magic/bgp/settings"
+	method="PUT"
+	json={{
+		cloudflare_asn: 65000,
+	}}
 />
+
+```json output
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "cloudflare_asn": 65000,
+    "redistribute": {
+      "static:wan": true
+    },
+    "modified_on": "2026-01-01T00:00:00Z"
+  },
+  "success": true
+}
+```
+
+Cloudflare rejects the request if the new ASN matches the customer device ASN of any BGP-enabled tunnel or interconnect in your account.
 
 </TabItem> </Tabs>
 
@@ -343,6 +372,94 @@ Cloudflare WAN customers should also be aware of the following:
 	To enable routing between private networks over Cloudflare WAN, you should either:
 	- Assign a unique ASN to each site/network, or
 	- Configure your edge CPE to accept BGP routes that include its own ASN in the `AS_PATH`.
+
+### Configure route redistribution
+
+Route redistribution controls which types of routes Cloudflare advertises to your BGP peers. The settings apply to all BGP sessions over IPsec and GRE tunnels in your account.
+
+You can turn redistribution on or off for the following route types:
+
+| Route type        | API field                 | Default |
+| ----------------- | ------------------------- | ------- |
+| Static WAN routes | `redistribute.static:wan` | On      |
+
+If you turn off static route redistribution, BGP peers still receive routes learned from your other BGP peers and the prefixes in each tunnel's **Additional Advertised prefix list**. For more information, refer to [BGP route distribution and convergence](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/#bgp-route-distribution-and-convergence).
+
+To turn redistribution on or off for a route type:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks** > **Routes** > **BGP settings**.
+2. In **Route redistribution**, turn the route type on or off. For example, turn off **Static WAN routes**.
+3. Select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+:::note
+You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/) and [API token](/fundamentals/api/get-started/account-owned-tokens/) to use the API.
+:::
+
+To check the current setting, create a `GET` request to retrieve the BGP settings for your account:
+
+<APIRequest
+	path="/accounts/{account_id}/magic/bgp/settings"
+	method="GET"
+/>
+
+```json output
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "cloudflare_asn": 13335,
+    "redistribute": {
+      "static:wan": true
+    }
+  },
+  "success": true
+}
+```
+
+To turn off static route redistribution, create a `PUT` request that sets `static:wan` to `false`. Fields you omit keep their current values, so this request does not change your CF Account ASN:
+
+<APIRequest
+	path="/accounts/{account_id}/magic/bgp/settings"
+	method="PUT"
+	json={{
+		redistribute: {
+			"static:wan": false,
+		},
+	}}
+/>
+
+```json output
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "cloudflare_asn": 13335,
+    "redistribute": {
+      "static:wan": false
+    },
+    "modified_on": "2026-01-01T00:00:00Z"
+  },
+  "success": true
+}
+```
+
+To turn static route redistribution back on, send the same request with `static:wan` set to `true`.
+
+</TabItem> </Tabs>
+
+Changes to route redistribution settings apply to established BGP sessions without resetting them. Cloudflare advertises or withdraws routes as needed. Prefixes in a tunnel's **Additional Advertised prefix list** are always advertised, regardless of this setting, and bypass [export filters](#filter-bgp-routes).
+
+:::caution
+Cloudflare applies this setting after it selects the preferred route for each prefix. When static route redistribution is off, Cloudflare does not advertise a prefix whose preferred route is a static route, even if a BGP route for that prefix also exists. The preferred route is the route with the lowest priority value.
+:::
 
 ### Set up BGP peering
 
@@ -360,8 +477,8 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 :::
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks**.
-2. Go to **Routes** > **WAN configuration**.
-3. In **Border Gateway Protocol (BGP) configuration**, select **Edit ASN** and enter your ASN.
+2. Go to **Routes** > **BGP settings**.
+3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**. If you changed the ASN, select **Change ASN** to confirm.
 4. Go to **Networks** > **Connectors** > **Interconnects**.
 5. Locate the CNI interconnect with Dataplane v2 to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
@@ -378,8 +495,8 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 #### Set up BGP for IPsec/GRE tunnels
 
 1. Log in to [Cloudflare One](https://one.dash.cloudflare.com/), and go to **Networks**.
-2. Go to **Routes** > **WAN configuration**.
-3. In **Border Gateway Protocol (BGP) configuration**, select **Edit ASN** and enter your ASN.
+2. Go to **Routes** > **BGP settings**.
+3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**. If you changed the ASN, select **Change ASN** to confirm.
 4. Go to **Networks** > **Connectors** > **Cloudflare WAN**.
 5. In **IPsec/GRE tunnels**, locate the tunnel you want to configure with BGP > select the **three dots** next to it > **Configure BGP**.
 6. In **Customer device ASN**, enter the ASN for your network.
