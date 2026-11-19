@@ -1,0 +1,85 @@
+---
+title: Agent feedback
+description: Use the Cloudflare CLI to send feedback from coding agents, preview reports, and control the CLI context included in a report.
+pcx_content_type: how-to
+sidebar:
+  order: 5.5
+products:
+  - cf
+---
+
+import { Steps } from "~/components";
+
+Use `cf feedback` to send bug reports, feature requests, and feedback about
+where you or your coding agent got stuck. You can send feedback without signing
+in to Cloudflare.
+
+## Send a note
+
+A short note is enough to submit feedback.
+
+```sh
+cf feedback "The deploy output did not identify the selected environment"
+```
+
+Add details with repeatable `--field key=value` flags.
+
+```sh
+cf feedback --field type=friction --field command="cf deploy" --field expected="Show the selected environment" --field actual="The output only showed the Worker name"
+```
+
+## Send an agent report
+
+An agent can send a JSON report from a file or through standard input. Describe
+the task, the expected and actual results, and any workaround. Use the optional
+`agent` object for details such as the agent name or commands it ran.
+
+```json title="feedback.json"
+{
+	"type": "friction",
+	"task": "Find the command to list Worker deployments",
+	"expected": "A search result for listing Worker deployments",
+	"actual": "The first result was a command to create a deployment",
+	"impact": "worked_around",
+	"agent": {
+		"name": "claude-code",
+		"commands": ["cf cli search \"list Worker deployments\""]
+	}
+}
+```
+
+<Steps>
+1. Preview the report with `--dry-run`. Review the output and remove secrets,
+   personal information, and account identifiers before sending it.
+
+   ```sh
+   cf feedback --input-json feedback.json --dry-run
+   ```
+
+2. Send the report.
+
+   ```sh
+   cf feedback --input-json feedback.json
+   ```
+</Steps>
+
+To read the JSON from standard input, set `--input-json=-`. If a `--field`
+flag and the JSON report supply the same field, the flag takes precedence.
+Run `cf feedback --help` for supported fields.
+
+The command prints a JSON receipt with a `submission_id` after Cloudflare
+accepts the report. If an agent sends the report, it should share the
+submission ID with you.
+
+## Control CLI context
+
+Optional CLI context in the report can include the CLI version, operating
+system, and detected agent and model. By default, this context follows your
+[CLI telemetry settings](/cf/environment-variables/#supported-variables).
+Use `--context` to include it when telemetry is off or `--no-context` to omit it.
+`DO_NOT_TRACK=1` always omits the optional context.
+
+Running `cf feedback` explicitly sends the report even when `DO_NOT_TRACK` is
+enabled. Feedback requests include the CLI version and execution mode in their
+headers, along with the agent name when detected. With `DO_NOT_TRACK` enabled,
+`cf feedback --help` displays a notice about these headers.
