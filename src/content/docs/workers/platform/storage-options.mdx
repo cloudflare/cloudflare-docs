@@ -84,11 +84,11 @@ To get started with R2:
 
 ### Durable Objects
 
-Durable Objects combine stateful serverless compute with storage on the Workers platform. Each object has a unique identity. The runtime routes requests for the same ID to the same logical object, which runs in one location at a time.
+Durable Objects combine stateful serverless compute with storage on the Workers platform. Each object has a unique ID. The runtime routes new requests for that ID to a single current instance, which can move between locations. Only the current instance can access the object's storage.
 
 Each object has private, strongly consistent, transactional storage. [SQLite-backed Durable Objects](/durable-objects/api/sqlite-storage-api/) are recommended for new classes and provide both SQL and key-value APIs. Durable storage persists across restarts, but in-memory state does not.
 
-Execution is single-threaded, but requests can interleave during non-storage I/O, such as an external `fetch()` call.
+Each Durable Object is single-threaded, but requests can interleave while a handler awaits non-storage I/O, such as an outbound `fetch()` call.
 
 Durable Objects are ideal for projects that require:
 
@@ -101,7 +101,7 @@ To get started with Durable Objects:
 
 - Read [What are Durable Objects?](/durable-objects/concepts/what-are-durable-objects/).
 - Review the [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/).
-- Get started with [Durable Objects](/durable-objects/get-started/).
+- Follow the [Durable Objects getting started guide](/durable-objects/get-started/).
 - Review [Durable Objects limits](/durable-objects/platform/limits/).
 
 ### D1
