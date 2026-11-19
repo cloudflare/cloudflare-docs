@@ -1,6 +1,6 @@
 ---
 title: Workers and Pages now keep versions for 30 days
-description: Versions and deployments older than 30 days are now deleted, except your 100 most recent and what is currently deployed. Your running applications are not affected.
+description: Versions and deployments older than 30 days are now deleted, except your 100 most recent and what is currently deployed. Your running applications and Workers Previews are not affected.
 products:
   - workers
   - pages
@@ -9,9 +9,11 @@ date: 2026-11-19
 
 Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Workers and [deployments](/pages/configuration/preview-deployments/) of your Pages projects for 30 days. After 30 days, they are deleted, except your 100 most recent and what is currently deployed.
 
-For example, if a Worker has 1,000 versions created in the last 30 days, all of them are kept until they are more than 30 days old.
+**What this does not affect:**
 
-**This has no impact on your running applications.** Deployed Worker versions and your current Pages production deployment are always retained, regardless of age. You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions.
+- **Your running applications:** Deployed Worker versions and your current Pages production deployment are always kept, regardless of age.
+- **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent versions.
+- **Workers Previews:** A [Preview](/workers/previews/) URL always points to the latest deployment of that Preview, so it keeps working as long as the Preview exists.
 
 **What you will notice:**
 
@@ -19,18 +21,8 @@ For example, if a Worker has 1,000 versions created in the last 30 days, all of 
 - **Workers Version URLs:** A version's [Version URL](/workers/versions-and-deployments/version-urls/), including any `--preview-alias`, is removed with the version.
 - **Pages preview URLs:** A deployment's [preview URL](/pages/configuration/preview-deployments/) is removed with the deployment.
 
-### Use Previews for branches and pull requests
+### Use Previews, not Version URLs, for branches and pull requests
 
-Version URLs are not Previews. A Version URL runs one uploaded version against your **production** resources, such as your production KV namespaces, D1 databases, and R2 buckets. It is meant for checking a single version before you deploy it, not for testing branches.
-
-For branches and pull requests, use [Previews](/workers/previews/). Each Preview has its own URL and its own resources, separate from production, and it updates every time you push to the branch.
-
-```sh
-# Version URL: one version, production resources
-npx wrangler versions upload --preview-alias my-branch
-
-# Preview: its own URL and resources, updated on every push
-npx wrangler preview --name my-branch
-```
+Version URLs are not Previews. A Version URL runs one uploaded version against your production resources and is removed with its version. For branches and pull requests, use [Previews](/workers/previews/), which have their own URL and resources and update every time you push.
 
 For more information, refer to [Compare workflows](/workers/previews/compare-workflows/), [Workers version retention](/workers/versions-and-deployments/#version-retention), and [Pages deployment limits](/pages/platform/limits/#deployments).
