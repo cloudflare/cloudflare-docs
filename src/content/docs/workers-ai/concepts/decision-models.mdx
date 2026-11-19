@@ -1,16 +1,16 @@
 ---
 pcx_content_type: concept
 title: Decision models
-description: Understand how decision models evaluate an input state against typed questions, return options and probabilities, and fit into application logic.
+description: Learn how decision models evaluate inputs against typed questions and how to interpret their answers.
 sidebar:
   order: 2
 products:
   - workers-ai
 ---
 
-Decision models evaluate supplied information against questions with predefined answer spaces, such as whether a support request is urgent, which team should handle an invoice, or how severe an incident is. They return typed answers and probabilities rather than open-ended text or arbitrary extracted values. This helps you connect AI judgments to application logic.
+Decision models evaluate supplied information against questions with predefined answer spaces, such as whether a support request is urgent, which team should handle an invoice, or how severe an incident is. They return typed answers rather than open-ended text or arbitrary extracted values. This helps you connect AI judgments to application logic.
 
-You provide an input state and define a set of named, typed questions, including each question's instructions and allowed options or scoring levels. The model evaluates the state against your questions and returns structured results with probability distributions. Typed results provide a predictable structure but do not guarantee correctness.
+You provide an input state and define a set of named, typed questions, including each question's instructions and allowed options or scoring levels. For the core question types, the model returns structured results with probabilities. Typed results provide a predictable structure but do not guarantee correctness.
 
 ## When to use decision models
 
@@ -28,21 +28,21 @@ If a condition is exact and deterministic, such as checking whether an invoice t
 
 ## How decision models work
 
-A decision request combines an input `state` with a map of named `questions`. The `state` supplies the information for a single evaluation, such as text or structured JSON records (some models also accept media inputs such as images, audio, or video). Each question specifies its type, instructions, and optional criteria. The model scores the allowed options for every question and returns typed answers under the same question IDs.
+A decision request combines an input `state` (text or structured JSON) with a map of named `questions`. Some models also accept media, such as images, audio, or video. Each question specifies a `type` and `instructions`. Set `criteria` to an option map for `choice` or an ordered list of levels for `score`. For `noul`, `criteria` is optional. The response returns one entry in `answers` under each question ID.
 
 For example, you provide an invoice record and approval policy as `state`. Separately, you define three questions:
 
-- `missing_po` (`noul`): whether the invoice references a valid purchase order.
+- `missing_po` (`noul`): whether the invoice is missing a purchase-order reference.
 - `routing` (`choice`): whether the invoice should go to `auto_approve`, `manual_review`, or `reject`.
 - `risk_level` (`score`): an ordered rubric from `0` (routine) to `2` (high risk).
 
-The model returns a probability for `missing_po`, a selected option with per-option probabilities and confidence for `routing`, and a probability-weighted score with level probabilities for `risk_level`.
+The model returns the probability that the purchase-order reference is missing, the selected routing option with per-option probabilities and confidence, and a probability-weighted risk score with level probabilities and confidence.
 
 Your application then decides what happens next, such as routing the invoice to a reviewer queue or requesting missing information. The model does not look up external records, verify permissions, or trigger side effects; your application code owns those steps.
 
 ## Decision model question types
 
-Decision models on Workers AI support three core text-evaluation question types: `noul`, `choice`, and `score`. Supported question types vary by model and version (for example, `typesafe/jev-1.14.0` adds a beta `box` type for locating image regions).
+Clef and Jev support three core question types: `noul`, `choice`, and `score`. Supported question types vary by model and version. For example, [Jev 1.14](/ai/models/typesafe/jev-1.14.0/) adds a beta `box` question that returns bounding box coordinates and confidence. Box questions are not recommended for production.
 
 ### Noul
 
@@ -76,7 +76,7 @@ Before relying on probability thresholds in production, evaluate the model's out
 
 For `choice` and `score` questions, `confidence` is a statistic computed from the shape of the returned probability distribution. It is not independent verification of the answer.
 
-Probability, confidence, and empirical accuracy are separate quantities. A model can return high confidence and still be wrong, particularly when inputs are ambiguous, incomplete, or outside your training or testing distribution.
+Probability, confidence, and empirical accuracy are separate quantities. A model can return high confidence and still be wrong, particularly when inputs are ambiguous, incomplete, or unlike those in your evaluation data.
 
 ### Score distributions
 
@@ -108,29 +108,30 @@ Keep deterministic checks, arithmetic, and business rules in application code.
 
 ### Include task-relevant context
 
-Supply every fact the decision depends on inside `state`, such as policy text, account metadata, or relevant timestamps. The model only evaluates the state provided in the request and does not fetch live external data.
+Include relevant facts in the request, such as policy text, account metadata, or timestamps. The model uses the supplied state and question definitions, including supported media, and does not fetch live external data.
 
 ### Match safeguards to risk
 
 Choose safeguards based on the cost of an incorrect decision. Suggesting a triage queue for a human reviewer carries less risk than automatically issuing a refund or blocking an account.
 
-Define how your application handles low-probability or split results. Before consequential or irreversible actions, verify results against independent checks or require human review.
+Decide when to send uncertain results for review, such as a `noul` probability near `0.5` or a `choice` distribution with no clear winner. Before consequential or irreversible actions, verify results against independent checks or require human review.
 
 ## Limitations
 
 - Typed output does not guarantee correctness. A response can satisfy your schema and allowed options while still making the wrong judgment.
 - Probabilities and confidence scores are estimates, not guarantees. They do not replace application-level checks or evaluation on your own labeled data.
 - Separate questions in one request should not be assumed to be statistically independent unless you have verified that assumption for your model and task. Do not multiply probabilities across questions without validation.
-- Capabilities vary by model and version, including context windows, supported question types, and media inputs. Consult the model documentation for [Clef](/workers-ai/models/clef/), [Clef-flash](/workers-ai/models/clef-flash/), [Clef-omni](/workers-ai/models/clef-omni/), and [Jev](/ai/models/typesafe/jev/) for model-specific limits and schemas.
+- Capabilities vary by model and version, including context windows, supported question types, and media inputs. Consult the model documentation for [Clef](/ai/models/@cf/cloudflare/clef/), [Clef-flash](/ai/models/@cf/cloudflare/clef-flash/), [Clef-omni](/ai/models/@cf/cloudflare/clef-omni/), and [Jev](/ai/models/typesafe/jev/) for model-specific limits and schemas.
 
 ## Next steps
 
 - Review the decision model references for supported inputs, question schemas, and examples:
-  - [Clef](/workers-ai/models/clef/)
-  - [Clef-flash](/workers-ai/models/clef-flash/)
-  - [Clef-omni](/workers-ai/models/clef-omni/)
+  - [Clef](/ai/models/@cf/cloudflare/clef/)
+  - [Clef-flash](/ai/models/@cf/cloudflare/clef-flash/)
+  - [Clef-omni](/ai/models/@cf/cloudflare/clef-omni/)
   - [Jev (`typesafe/jev`)](/ai/models/typesafe/jev/)
+  - [Jev 1.14 (`typesafe/jev-1.14.0`)](/ai/models/typesafe/jev-1.14.0/)
 - Compare with [extraction models](/workers-ai/concepts/extraction-models/) when your application needs typed values rather than predefined choices.
-- Consult the [Workers AI REST API reference](/api/resources/ai/methods/run/) for the inference endpoint.
-- [Configure a Workers AI binding](/workers-ai/configuration/bindings/) to access Workers AI from a Worker.
-- [Use the Workers AI REST API](/workers-ai/get-started/rest-api/) to authenticate and send requests over HTTP.
+- To call Clef over HTTP, follow the [Workers AI REST API quickstart](/workers-ai/get-started/rest-api/) and refer to the [Workers AI Run API reference](/api/resources/ai/methods/run/).
+- To call Jev over HTTP, use the universal `/ai/run` endpoint in the [AI Gateway REST API guide](/ai-gateway/usage/rest-api/) and the request example on the model page.
+- [Configure a Workers AI binding](/workers-ai/configuration/bindings/) to run models from a Worker. For Jev, refer to [calling third-party models with the AI binding](/ai-gateway/usage/worker-binding-methods/).
