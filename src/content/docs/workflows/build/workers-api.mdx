@@ -612,9 +612,33 @@ Returns a `WorkflowInstance`.
 
 Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance.
 
-`create()` rejects its promise with an `Error`. For an existing ID, the message includes `(instance.already_exists)`. Invalid IDs produce `(instance.invalid_id)`; invalid creation parameters produce `(body)`. These identifiers appear in `error.message`, rather than a numeric `error.code` property.
+`create()` rejects with an `Error` when it cannot create the instance. For the following failures, `error.message` includes an identifier in parentheses:
 
-To handle duplicates with structured numeric codes, use the object form of [`createBatch()`](#createbatch). A duplicate instance returns an entry in `errors` with code `10405`.
+| Identifier                  | Cause                                                                                                               |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `(instance.already_exists)` | An instance with this ID already exists.                                                                            |
+| `(instance.invalid_id)`     | The ID is not valid, for example because it is longer than 100 characters.                                          |
+| `(body)`                    | An option has an invalid value, such as a `retention` duration in the wrong format or an `id` that is not a string. |
+
+These errors have no numeric `code` property. Other failures, such as rate limiting, can include a different identifier or none.
+
+To handle a duplicate ID, check `error.message` for the identifier:
+
+```ts
+try {
+	await env.MY_WORKFLOW.create({ id: myIdDefinedFromOtherSystem });
+} catch (err) {
+	if (
+		!(err instanceof Error) ||
+		!err.message.includes("(instance.already_exists)")
+	) {
+		throw err;
+	}
+	// An instance with this ID already exists
+}
+```
+
+To get numeric codes for duplicate IDs instead, use the object form of [`createBatch()`](#createbatch). It does not throw when an ID is already in use. Instead, it returns an entry in `errors` with code `10405` if the ID already exists, or `10415` if the ID repeats within the same batch.
 
 <Render file="workflows-type-parameters" product="workflows" />
 
