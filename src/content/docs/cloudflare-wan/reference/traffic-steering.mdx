@@ -173,8 +173,9 @@ Automatic Return Routing applies when:
   - A Cloudflare One Client
   - A private network connected to Cloudflare through Cloudflare Tunnel
   - A private network connected to Cloudflare through Cloudflare Mesh
+  - A private network connected through another Cloudflare WAN connection (TCP and UDP only)
 
-ARR does not change routing for traffic between Cloudflare WAN connections (for example, traffic from one IPsec/GRE tunnel or interconnect to another). That traffic continues to follow your configured Cloudflare WAN routes.
+For TCP and UDP traffic destined towards another Cloudflare WAN connection, ARR will source NAT to a [Cloudflare Source IP](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/). The initial request still follows your configured routes, but the traffic returning from the origin will route back to the original tunnel. ICMP traffic will be unaffected by ARR and will strictly follow your configured Cloudflare WAN routes.
 
 <AnchorHeading title="Unified Routing mode" slug="unified-routing" depth={2} />
 
@@ -205,7 +206,7 @@ The following features require Unified Routing.
 
 | Feature                                                                                                                                                   | Availability with Unified Routing                                                                  |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| [Automatic Return Routing](#automatic-return-routing)                                                                                                     | Generally available for Internet return traffic. Routing between WAN connections is not available. |
+| [Automatic Return Routing](#automatic-return-routing)                                                                                                     | Generally available for Internet return traffic. Site-to-site traffic uses Cloudflare Source IPs.   |
 | [BGP over IPsec and GRE](#release-status)                                                                                                                 | Generally available.                                                                               |
 | [Cloudflare source IPs](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/)                                                            | Generally available.                                                                               |
 | [Custom Cloudflare One Client device subnets](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/device-ips/) with Cloudflare WAN | Generally available.                                                                               |
@@ -277,7 +278,7 @@ Unified Routing uses a single routing fabric for all connection types. Route sel
 
 When routes have the same prefix length, Zero Trust routes take precedence over WAN routes.
 
-For scenarios with overlapping IP space across sites, enable [Automatic Return Routing](#automatic-return-routing) to ensure return traffic reaches the correct origin.
+For scenarios with overlapping IP space across sites, [Automatic Return Routing](#automatic-return-routing) can direct return traffic to the originating connection. You still need a route to select the destination site for the initial request.
 
 <AnchorHeading depth={3} title="Legacy Routing mode" />
 
