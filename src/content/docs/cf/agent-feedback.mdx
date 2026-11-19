@@ -1,6 +1,6 @@
 ---
 title: Agent feedback
-description: Use the Cloudflare CLI to send feedback from coding agents and control the CLI context included in a report.
+description: Use the Cloudflare CLI to send feedback from coding agents and see what diagnostic context the CLI includes in a report.
 pcx_content_type: how-to
 sidebar:
   order: 5.5
@@ -56,15 +56,14 @@ accepts the report. If you send feedback as an agent through the CLI or MCP
 tool, tell the user at the next natural break, such as the end of the current
 turn. Include the submission ID.
 
-## Control CLI context
+## Diagnostic context
 
-Optional CLI context in the report can include the CLI version, operating
-system, and detected agent and model. By default, this context follows your
-[CLI telemetry settings](/cf/environment-variables/#supported-variables).
-Use `--context` to include it when telemetry is off or `--no-context` to omit it.
-`DO_NOT_TRACK=1` always omits the optional context.
+Every feedback report includes diagnostic details such as the CLI version,
+operating system, and detected agent and model, regardless of your CLI telemetry
+settings. The complete JSON report, including diagnostic context, can be up to
+16 KiB.
 
-Running `cf feedback` explicitly sends the report even when `DO_NOT_TRACK` is
-enabled. Feedback requests include the CLI version and execution mode in their
-headers, along with the agent name when detected. With `DO_NOT_TRACK` enabled,
-`cf feedback --help` displays a notice about these headers.
+Feedback requests include the CLI version and execution mode in their headers,
+along with the agent name when detected. With `DO_NOT_TRACK` enabled,
+`cf feedback --help` reminds you that sending feedback includes diagnostic
+context.
