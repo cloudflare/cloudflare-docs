@@ -58,13 +58,18 @@ If your encoder is connected and the dashboard shows a green **Connected** statu
 
 ## Error codes
 
-Check the **Logs** tab for your live input or the `live_input.errored` webhook payload for these error codes:
+Live input warnings and errors are communicated both in the **Logs** tab for your live input, the `live_input.errored` [live webhook payload](/stream/stream-live/webhooks/), and via [GraphQL](/stream/getting-analytics/fetching-bulk-analytics/#event-fields). The following codes are reported:
 
-* `ERR_GOP_OUT_OF_RANGE` – The input GOP size or keyframe interval is out of range.
+Fatal conditions that will block playback or recording completely:
+
 * `ERR_UNSUPPORTED_VIDEO_CODEC` – The input video codec is unsupported for the protocol used.
 * `ERR_UNSUPPORTED_AUDIO_CODEC` – The input audio codec is unsupported for the protocol used.
 * `ERR_STORAGE_QUOTA_EXHAUSTED` – The account storage quota has been exceeded. Delete older content or purchase additional storage.
 * `ERR_MISSING_SUBSCRIPTION` – Unauthorized to start a live stream. Check subscription or log into Dash for details.
+
+Non-fatal errors that will negatively affect playback or recordings:
+
+* `ERR_GOP_OUT_OF_RANGE` – The input GOP size or keyframe interval is less than 2 seconds or greater than 8.
 * `ERR_UNHEALTHY` – The active broadcast cannot be processed for an unknown reason that is most often due to encoder misconfiguration. Confirm the broadcast follows [required and recommended settings](/stream/stream-live/start-stream-live/#recommendations-requirements-and-limitations), then disconnect and reconnect to try again.
 * `ERR_LIVE_INPUT_LLHLS_INCOMPATIBLE` – The input is enabled for Low-Latency HLS and encountered a B-Frame, which are not supported in LL-HLS and may result in buffering or stuttering on playback.
 
