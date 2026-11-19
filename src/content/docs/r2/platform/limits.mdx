@@ -56,7 +56,9 @@ For high-throughput object operations, use the [S3-compatible API](/r2/api/s3/ap
 
 Each Cloudflare account has a default R2 bandwidth limit of up to 100 Gbps. Upload and download bandwidth are measured separately, and each has its own 100 Gbps limit.
 
-If your account exceeds the bandwidth limit, R2 throttles requests rather than rejecting them. Throttled requests still complete, but more slowly, so you may see higher request latency until your bandwidth usage drops below the limit.
+If your account exceeds the bandwidth limit, R2 throttles requests rather than rejecting them, and requests that are already in progress are never rejected. Throttled requests still complete, but more slowly, so you may see higher request latency until your bandwidth usage drops below the limit.
+
+R2 returns `429 Too Many Requests` only for new requests if your account has so many concurrent requests that a new one would not get enough bandwidth to make progress.
 
 To monitor your bandwidth usage, use the R2 **Metrics** in the Cloudflare dashboard or query [R2 analytics](/r2/platform/metrics-analytics/). You can break down bandwidth by:
 
