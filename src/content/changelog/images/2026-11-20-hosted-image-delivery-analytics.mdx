@@ -18,7 +18,24 @@ Use [`cf sql query`](/analytics/sql-api/get-started/#use-the-cloudflare-cli) to 
 
 ```bash
 cf sql query \
-  'SELECT httpStatus, COUNT(*) AS requests FROM events.imagesHostedRequests GROUP BY httpStatus ORDER BY requests DESC LIMIT 20' \
+  'SELECT httpStatus, COUNT(*) AS requests
+   FROM events.imagesHostedRequests
+   GROUP BY httpStatus
+   ORDER BY requests DESC
+   LIMIT 20' \
+  --scope-account "<ACCOUNT_TAG>" \
+  --time-since "<START_TIME>"
+```
+
+The SQL API also exposes [transformation data](/changelog/post/2026-09-23-transformation-analytics/), such as binding requests, from the `events.imagesTransformations` dataset:
+
+```bash
+cf sql query \
+  'SELECT isBindingRequest, scriptName, originHost, COUNT(*) AS transformations
+   FROM events.imagesTransformations
+   GROUP BY isBindingRequest, scriptName, originHost
+   ORDER BY transformations DESC
+   LIMIT 5' \
   --scope-account "<ACCOUNT_TAG>" \
   --time-since "<START_TIME>"
 ```
