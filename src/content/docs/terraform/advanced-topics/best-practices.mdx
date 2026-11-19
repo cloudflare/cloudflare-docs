@@ -177,7 +177,7 @@ resource "cloudflare_load_balancer_pool" "example_lb_pool" {
 
 resource "cloudflare_page_rule" "example_page_rule" {
   zone_id  = var.cloudflare_zone_id
-  target   = "sub.${var.cloudflare_zone}/page"
+  target   = "sub.example.com/page"
   priority = 1
 
   actions = {
