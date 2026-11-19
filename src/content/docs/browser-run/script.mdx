@@ -21,14 +21,14 @@ The `/script` endpoint runs JavaScript you submit against a Browser Run session.
 
 Browser Run executes the submitted function in an isolated Worker connected to the session, so you do not need to deploy a Worker.
 
-## Choose between Quick Actions, sessions, and scripts
+## Choose an endpoint
 
-| Option                                                                     | Use it when                                                                                                          | Session                                                                              |
-| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| [Quick Actions](/browser-run/quick-actions/)                               | You need a single supported operation, such as a screenshot, PDF, rendered HTML, Markdown, or structured extraction. | Managed by Browser Run for each request.                                             |
-| `/script`                                                                  | You need custom multi-step browser automation and want Browser Run to acquire the browser for you.                   | Creates a session that stays open until you close it or it reaches its idle timeout. |
-| `/script/<sessionId>`                                                      | You want to run follow-up scripts in a session you already hold, from `/script` or from `POST /devtools/browser`.    | Reuses an existing session.                                                          |
-| [CDP with Playwright, Puppeteer, or another CDP client](/browser-run/cdp/) | You need a direct, long-lived connection outside the custom script request lifecycle.                                | You hold the connection for as long as you need it.                                  |
+| Endpoint                                                      | Use it when                                                                                                       | Session                                                                                                                                                            |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [`/script`](#run-a-script-in-a-new-session)                   | You need custom multi-step browser automation and want Browser Run to acquire the browser for you.                | Creates a session and returns its session ID and page target ID in the response headers. The session stays open until you close it or it reaches its idle timeout. |
+| [`/script/<sessionId>`](#run-a-script-in-an-existing-session) | You want to run follow-up scripts in a session you already hold, from `/script` or from `POST /devtools/browser`. | Reuses an existing session, so several runs can share pages, cookies, and navigation history.                                                                      |
+
+To compare custom scripts with Quick Actions and other Browser Sessions methods, such as CDP, refer to [Get started](/browser-run/get-started/).
 
 You can call both script endpoints in two ways:
 
@@ -50,13 +50,6 @@ https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/script
 - Log in, fill forms, or click through a flow before extracting data
 - Combine several page interactions in one request instead of chaining Quick Actions
 - Run follow-up steps in the same session, keeping cookies and navigation history between runs
-
-## How it works
-
-There are two ways to run a script:
-
-1. [Run a script in a new session](#run-a-script-in-a-new-session) — A `POST` request to `/script` acquires a new browser session, runs your function in it, and returns the result. The session ID and page target ID are returned in the response headers.
-2. [Run a script in an existing session](#run-a-script-in-an-existing-session) — A `POST` request to `/script/<sessionId>` runs your function in a session you already hold, so several runs can share pages, cookies, and navigation history.
 
 ## Run a script in a new session
 
@@ -399,12 +392,12 @@ All three runners attach to `targetId` when one is set. `/script` always sets it
 
 Both endpoints turn your function's return value into a response:
 
-| Script return value                                  | Response                                                                                                                     |
-| ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| JSON-serializable value                              | `200` with `{ "success": true, "result": <value> }`                                                                          |
-| `null` or `undefined`                                | `200` with `{ "success": true, "result": null }`                                                                             |
-| A `Response` with a JSON body                        | `200` with `{ "success": true, "result": <body> }`. The status your script set is replaced with `200`; its headers are kept. |
-| `ArrayBuffer`, typed array, or a non-JSON `Response` | Returned as is, with its own content type (`application/octet-stream` for binary values) and status.                         |
+| Script return value                                  | Response                                                                                                                              |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| JSON-serializable value                              | `200` with `{ "success": true, "result": <value> }`                                                                                   |
+| `null` or `undefined`                                | `200` with `{ "success": true, "result": null }`                                                                                      |
+| A `Response` with a JSON body                        | `200` with `{ "success": true, "result": <body> }`. Browser Run replaces the status your script set with `200` but keeps its headers. |
+| `ArrayBuffer`, typed array, or a non-JSON `Response` | Returned as is, with its own content type (`application/octet-stream` for binary values) and status.                                  |
 
 On `/script`, every response, enveloped or not, carries the `cf-browser-session-id` and `cf-browser-target-id` headers. Kitesurf runs (`browser=kitesurf`) are the exception: they create no session, so they return no session headers.
 
