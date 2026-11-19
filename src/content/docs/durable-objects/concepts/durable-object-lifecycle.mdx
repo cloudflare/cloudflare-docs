@@ -8,7 +8,7 @@ products:
   - durable-objects
 ---
 
-import { Render } from "~/components";
+import { TypeScriptExample } from "~/components";
 
 This section describes the lifecycle of a [Durable Object](/durable-objects/concepts/what-are-durable-objects/).
 
@@ -96,8 +96,8 @@ Durable Objects will occasionally shut down and objects are restarted, which wil
 
 When a Durable Object is shut down, the object instance is automatically restarted and new requests are routed to the new instance. In-flight requests are handled as follows:
 
-- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage.  If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
-- **WebSocket connections**: When a Durable Object shuts down, WebSocket connections are terminated automatically. This allows the new instance to take over the connection as soon as possible.
+- **HTTP & RPC requests**: In-flight requests are allowed to finish if they do not access a Durable Object's storage. If a request attempts to access a Durable Object's storage, it will be stopped immediately and return an error to maintain Durable Objects global uniqueness property. When the Worker runtime system is being updated, in-flight requests have up to 30 seconds to complete.
+- **WebSocket connections**: Standard WebSocket connections are terminated during shutdown. WebSockets accepted with the [WebSocket Hibernation API](/durable-objects/best-practices/websockets/) remain connected when an object is evicted due to inactivity.
 - **Other invocations (email, cron)**: Other invocations are treated similarly to HTTP requests.
 
 It is important to ensure that any services using Durable Objects are designed to handle the possibility of a Durable Object being shut down.
@@ -110,6 +110,34 @@ A `deferred` code update strategy gives an active Durable Object time to hiberna
 
 Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) to configure a code update strategy and understand how it interacts with gradual deployments.
 
-### Working without shutdown hooks
+### Shutdown notifications
 
-<Render file="working-without-shutdown-hooks" product="durable-objects" />
+Design your application to write state incrementally rather than relying only on a shutdown notification.
+
+If you need an explicit hook to save state, a Durable Object can also define an [`onHibernate`](/durable-objects/api/base/#onhibernate) hook for a best-effort final checkpoint. The hook is not guaranteed to run.
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { onHibernate } from "cloudflare:durable-objects";
+
+export class Counter extends DurableObject<Env> {
+	async [onHibernate](info: DurableObjectHibernationInfo) {
+		console.log(`Hibernating: ${info.reason}`);
+		await this.ctx.storage.put("lastHibernation", Date.now());
+	}
+}
+```
+</TypeScriptExample>
+
+`info` is a frozen `DurableObjectHibernationInfo` object. Its read-only `reason` can be `"inactive"`, `"codeUpdated"`, or `"system"`. Handle unknown values because more reasons may be added. Refer to [`onHibernate` parameters](/durable-objects/api/base/#onhibernate) for the full reference.
+
+SQLite storage operations such as `sql.exec()` are synchronous, while key-value storage operations are strongly consistent and complete asynchronously.
+
+### Shutdown behavior
+
+- The runtime reads the handler once after the constructor returns.
+- The runtime awaits the returned promise. When the hook finishes, throws, or times out, the runtime cancels remaining pending work and flushes storage writes. A failed flush can prevent writes from completing.
+- The symbol is not exposed on a Durable Object stub, so callers cannot invoke it over RPC. For the complete contract, refer to [`onHibernate`](/durable-objects/api/base/#onhibernate).
+
+For an example that combines regular checkpoints with a final shutdown checkpoint, refer to [Design for unexpected shutdowns](/durable-objects/best-practices/rules-of-durable-objects/#design-for-unexpected-shutdowns).

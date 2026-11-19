@@ -306,6 +306,47 @@ class MyDurableObject(DurableObject):
 
 </TabItem> </Tabs>
 
+### `onHibernate`
+
+Import the `onHibernate` symbol from `cloudflare:durable-objects`. Define the hook with a computed method name, as shown in the example.
+
+- `[onHibernate](info)`
+  : <Type text="void" /> | <Type text="Promise<void>" />
+  - Use this handler for best-effort clean shutdown logic, such as a final storage checkpoint. The hook is not guaranteed to run. Persist important changes during normal request processing.
+  - The runtime reads the handler once after the constructor returns. Adding or replacing the handler later does not change the registered callback.
+  - The runtime awaits the returned promise. Await asynchronous cleanup in the handler rather than leaving it to background work.
+  - After the hook finishes, throws an error, or times out, the runtime cancels remaining pending work, including timers and `waitUntil()` tasks, then flushes storage writes. A failed flush can prevent writes from completing.
+  - The symbol is not exposed on a Durable Object stub. Therefore, callers cannot invoke the hook over RPC.
+  - Your code can call the symbol-keyed method directly after importing the symbol. Make the handler idempotent if you call it directly.
+
+#### Parameters
+
+- `info` <Type text="DurableObjectHibernationInfo" /> - a frozen object describing why shutdown is happening:
+  - `reason` <Type text="string" /> <MetaInfo text="read-only" /> - defined values include `"inactive"`, `"codeUpdated"`, and `"system"`. Handle unknown values because more reasons may be added.
+
+#### Return values
+
+- `void` or `Promise<void>`. Return a promise to let the runtime await asynchronous cleanup.
+
+#### Example
+
+<TypeScriptExample filename="index.ts">
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { onHibernate } from "cloudflare:durable-objects";
+
+export class MyDurableObject extends DurableObject<Env> {
+	async [onHibernate](info: DurableObjectHibernationInfo) {
+		console.log(`Hibernating: ${info.reason}`);
+		await this.ctx.storage.put("lastHibernation", {
+			reason: info.reason,
+			timestamp: Date.now(),
+		});
+	}
+}
+```
+</TypeScriptExample>
+
 ## Properties
 
 ### `ctx`
@@ -321,3 +362,4 @@ class MyDurableObject(DurableObject):
 - [Use WebSockets](/durable-objects/best-practices/websockets/) for WebSocket handler best practices.
 - [Alarms API](/durable-objects/api/alarms/) for scheduling future work.
 - [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for type-safe method calls.
+- [Lifecycle of a Durable Object](/durable-objects/concepts/durable-object-lifecycle/#shutdown-notifications) for best-effort `onHibernate` cleanup and checkpoint guidance.
