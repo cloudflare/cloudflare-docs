@@ -24,7 +24,6 @@ In this page, Account A is the account that owns the prefix. Account B is the ac
 
 - Account A has an approved BYOIP prefix. Refer to [Get started](/byoip/get-started/).
 - You have the account ID of Account B. To find an account ID, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
-- Account A and Account B are in the same compliance region.
 - If Account B will use address maps, address maps are enabled on Account A.
 
 ## Choose the dashboard or the API
@@ -167,8 +166,7 @@ Use the following table to fix common problems with delegations:
 | The **BYOIP addresses** tab shows an account ID instead of a name. | Account B is not in your first 50 accounts, sorted by name.        | This is expected. Ask the owner of Account B to confirm the account ID.                    |
 | The API returns `cidr_not_within_prefix`.                  | The CIDR is not inside the prefix, or the prefix is not approved.  | Use a CIDR inside the prefix. Make sure that the prefix is approved.                       |
 | The API returns `invalid_account_id`.                      | The account ID is not valid, or the account does not exist.        | Copy the account ID again from the dashboard of Account B.                                 |
-| The API returns `delegation_exists`.                       | A delegation for the same CIDR and account already exists.         | List the delegations to confirm. No action is necessary.                                   |
-| The API returns `invalid_delegation`.                      | Account A and Account B are in different compliance regions.       | Delegate to an account in the same compliance region.                                      |
+| The API returns `delegation_exists`.                       | A delegation for the same CIDR and account already exists.         | List the delegations to confirm. No action is necessary.                                   |                                     |
 | The removal returns `address_map_has_memberships`.         | Account B has an address map that uses the delegated IP addresses and has zones or accounts attached. The removal would leave this address map with no IP addresses. | Refer to [If the removal fails](#if-the-removal-fails). |
 | Account B gets `address_maps_not_enabled_on_account` when it saves an address map. | Address maps are not enabled on Account A. No other account with address maps delegated IP addresses to Account B. | Contact your account team to enable address maps on Account A. |
 | Account B cannot use the IP addresses with a service.      | Account A did not bind the IP addresses to that service.           | Ask Account A to update the [service binding](/byoip/service-bindings/).                   |
