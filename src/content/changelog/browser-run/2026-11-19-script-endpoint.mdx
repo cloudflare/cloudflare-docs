@@ -22,6 +22,7 @@ curl -i -X POST "https://api.cloudflare.com/client/v4/accounts/<accountId>/brows
 - `POST /script/<sessionId>` runs follow-up scripts in a session you already hold, from `/script` or from `POST /devtools/browser`. Pass `targetId` to attach to a specific page, or create extra pages to run scripts concurrently in one session.
 - Session launch options (`keep_alive`, `recording`, `lab`) go in the `/script` query string. Use `browser=kitesurf` to run a CDP script on [Kitesurf](/browser-run/kitesurf/).
 - From a Worker, call the same endpoints through the [browser binding](/browser-run/script/#use-the-browser-binding) with `env.BROWSER.script()`, without an API token.
+- From the Cloudflare dashboard, write and run scripts against a live browser in [Script Studio](/browser-run/script/#try-scripts-in-the-dashboard), without an API token.
 - Neither endpoint closes the session after your script runs. Close it with `DELETE /devtools/browser/<sessionId>` or `browser.close()`; otherwise it ends at its idle timeout.
 
 For more information, refer to [Custom scripts](/browser-run/script/).

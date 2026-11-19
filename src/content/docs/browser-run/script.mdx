@@ -9,7 +9,13 @@ products:
   - browser-run
 ---
 
-import { TabItem, Tabs, TypeScriptExample, WranglerConfig } from "~/components";
+import {
+	DashButton,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 The `/script` endpoint runs JavaScript you submit against a Browser Run session. Use it for multi-step browser automation such as navigation, form completion, clicking, and extracting data when a pre-built [Quick Action](/browser-run/quick-actions/) does not fit the workflow.
 
@@ -306,6 +312,14 @@ To run a script on [Kitesurf](/browser-run/kitesurf/), pass `browser: "kitesurf"
 :::caution
 `script()` is not supported in local development mode. When developing locally with `wrangler dev`, use `npx wrangler dev --remote` or set `"remote": true` in your browser binding configuration.
 :::
+
+## Try scripts in the dashboard
+
+Script Studio in the Cloudflare dashboard lets you write and run scripts against a live browser, without an API token or a Worker. Use it to try a script before you call `/script` from your own code.
+
+Go to **Browser Run** > **Script Studio**, choose an automation library, and write a script or load an example. When you select **Run**, Script Studio starts a browser session, runs your script in it with `/script/<sessionId>`, and shows the result next to a [live view](/browser-run/features/live-view/) of the page. Select **Close browser** when you are done, so the session stops counting toward your browser time.
+
+<DashButton url="/?to=/:account/workers/browser-run/script-studio" />
 
 ## Response fields
 
