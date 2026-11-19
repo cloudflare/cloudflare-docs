@@ -6,7 +6,7 @@ date: 2026-11-19
 
 Cloudflare has improved how Durable Object storage handles machines restarting during runtime updates.
 
-Each write to a Durable Object's storage must be confirmed by a majority of the copies of its data stored on other machines. Machines restarting for a runtime update now notify Durable Objects right away, so the objects can move their data copies to healthy machines before their next write.
+Each write to a Durable Object's storage must be confirmed by a majority within a group of machines for durability. Machines now proactively remove themselves from the group when restarting, so that they can be replaced before the restart happens.
 
 Previously, this could take up to a few minutes. During that time, a write could fail to reach a majority, and the object was reset with `Internal error in Durable Object storage caused object to be reset`, disconnecting its WebSockets.
 
