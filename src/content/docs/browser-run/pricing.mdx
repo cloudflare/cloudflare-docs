@@ -15,9 +15,9 @@ import { DashButton, Plan } from "~/components";
 Billing depends on how you use Browser Run:
 
 - [**Quick Actions**](/browser-run/quick-actions/): Charged for browser hours only.
-- **Browser Sessions** ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/)): Direct browser control, charged for both browser hours and concurrent browsers.
+- **Browser Sessions** ([Puppeteer](/browser-run/puppeteer/), [Playwright](/browser-run/playwright/), [CDP](/browser-run/cdp/), [Custom scripts](/browser-run/script/)): Direct browser control, charged for both browser hours and concurrent browsers.
 
-Browser hours are shared across all methods.
+Browser hours are shared across all methods. [Kitesurf](/browser-run/kitesurf/) runs, including `/script?browser=kitesurf`, follow Kitesurf pricing instead.
 
 |                                             | Workers Free       | Workers Paid                                                                                                              |
 | ------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------- |
@@ -78,7 +78,7 @@ You can monitor Browser Run usage in two ways:
 
   <DashButton url="/?to=/:account/workers/browser-run" />
 
-- The `X-Browser-Ms-Used` header, which is returned in every Quick Actions response, reports browser time used for the request (in milliseconds). You can also access this header using the Typescript SDK with the .asResponse() method:
+- The `X-Browser-Ms-Used` header is returned in every Quick Actions and [`/script`](/browser-run/script/) response, and reports browser time in milliseconds. For Quick Actions, it reports the time used by that request. For `/script` requests, it reports the cumulative time since the session began, and the session may stay active after the last script execution, so total billed time may be higher. You can also access this header using the Typescript SDK with the .asResponse() method:
 
   ```ts
   const contentRes = await client.browserRendering.content
