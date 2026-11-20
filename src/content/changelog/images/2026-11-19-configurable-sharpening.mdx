@@ -45,4 +45,21 @@ cf: {
 }
 ```
 
+When using the [Images binding](/images/optimization/binding/), pass the structured `sharpen` object directly to `.transform()`:
+
+```js
+const result = await env.IMAGES.input(source.body)
+	.transform({
+		sharpen: {
+			mode: "gaussian",
+			amount: 2,
+			sigma: 1.5,
+			threshold: 0,
+		},
+	})
+	.output({ format: "image/avif" });
+
+return result.response();
+```
+
 Refer to [`sharpen`](/images/optimization/features/#sharpen).
