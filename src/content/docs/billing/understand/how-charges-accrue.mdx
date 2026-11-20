@@ -57,7 +57,7 @@ If Argo is enabled, Cloudflare routes the request through the fastest path acros
 
 | Resource | Billing impact |
 |---|---|
-| Argo data transfer | Metered per GB transferred between Cloudflare and your origin. First 1 GB included. Refer to [Argo Smart Routing](/argo-smart-routing/) for current rates. |
+| Argo data transfer | Metered per GB of data transfer. First 1 GB included. Refer to [Argo Smart Routing](/argo-smart-routing/) for current rates. |
 
 ### 5. Workers execution (if configured)
 
@@ -112,15 +112,15 @@ The final response is sent to the visitor. No additional charges apply at this s
 
 A single page load can generate dozens of requests. Each request may touch a different combination of the products above. Your monthly invoice aggregates all of these individual operations across all requests, all domains, and the full billing period.
 
-The key takeaway: **cached responses are the cheapest path**. Every cache hit avoids origin fetch costs, Argo routing charges, Workers execution, and R2 operations. Optimizing your cache hit ratio is the single most effective way to reduce usage-based charges.
+The key takeaway: **cached responses are the cheapest path**. Every cache hit avoids origin fetch costs, Workers execution, and R2 operations. Optimizing your cache hit ratio is the single most effective way to reduce usage-based charges.
 
 ## Cost optimization strategies
 
 | Strategy | Products affected | Impact |
 |---|---|---|
-| Maximize cache hit ratio with appropriate Cache-Control headers | Argo, Workers, origin bandwidth | High — every cache hit eliminates origin-side costs |
+| Maximize cache hit ratio with appropriate Cache-Control headers | Workers, origin bandwidth | High — every cache hit eliminates origin-side costs |
 | Use Cache Reserve for long-tail content | Cache, origin | Medium — reduces origin fetches for infrequently accessed content |
-| Set appropriate TTLs to avoid unnecessary revalidation | Cache, Argo | Medium — reduces origin round-trips |
+| Set appropriate TTLs to avoid unnecessary revalidation | Cache | Medium — reduces origin round-trips |
 | Use Workers Smart Placement to run Workers closer to your data | Workers CPU time | Medium — reduces execution time for data-dependent Workers |
 | Use R2 lifecycle rules to move infrequently accessed data to Infrequent Access tier | R2 storage | Medium — reduces storage costs for archival data |
 | Monitor usage with the [billable usage dashboard](/billing/manage/billable-usage/) | All usage-based products | High — visibility is the first step to optimization |
