@@ -1,0 +1,102 @@
+---
+title: "WAF Emergency Release - 2026-11-20"
+description: Cloudflare WAF managed and free rulesets 2026-11-20 release
+date: 2026-11-20
+---
+
+import { RuleID } from "~/components";
+
+This release introduces new Ruby and WordPress security advisory mapped rules. Supplementary information around the CVEs are available through Zero Wire [ruby2shell: heap overflow in Ruby string case conversion](https://radar.cloudflare.com/zero-wire/ruby2shell) and [WordPress 7.1.5: Template Part flaw can turn an administrator's click into code execution](https://radar.cloudflare.com/zero-wire/wordpress-7-1-5-template-part-privilege-escalation).
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="924dc0767eaf4d2ca834401ab01ffb6b" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Regexp Character Class Intersection - GHSA-7x2q-68qv-6p8x</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="d2bd5c254c28482aa7deafd1d5ec80f7" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Regexp Compiled Program Size - GHSA-3p8q-wmhx-vm2w</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="b2042ffccbce4851a35e660eaa981883" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Regexp Character Class Intersection - GHSA-7x2q-68qv-6p8x</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="b4101c3cb767476c9d74bcd41bd84008" />
+			</td>
+			<td>N/A</td>
+			<td>Ruby - Regexp Compiled Program Size - GHSA-3p8q-wmhx-vm2w</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="80a2b88845c24262bbd05c2fe12fd7b1" />
+			</td>
+			<td>N/A</td>
+			<td>WordPress - DoS - GHSA-56j2-5mp6-wr3x</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="5f7c30de03d647e5b0b6d9daa8ad193f" />
+			</td>
+			<td>N/A</td>
+			<td>WordPress - Broken Access Control - GHSA-pmp8-6cv8-q323</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="e33720d9a9ee401b8a2cc1f54755597d" />
+			</td>
+			<td>N/A</td>
+			<td>WordPress - Stored XSS - GHSA-cr2m-2j4r-3v3x</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
