@@ -1,0 +1,15 @@
+---
+title: Optimize original TIFF files with Images
+description: Use TIFF source images with Images to generate compressed, resized copies in browser-compatible formats for web delivery.
+date: 2026-11-17
+---
+
+[Cloudflare Images](/images/) lets you optimize images for web delivery while storing only the original, high-resolution version. With Images, you can dynamically serve compressed and resized versions in the [most efficient format](/images/optimization/features/#format) for the requesting browser.
+
+Starting today, Images accepts TIFF as an [input format](/images/get-started/limits/#input-formats).
+
+In publishing and e-commerce, TIFF is widely deployed as a master format for product photography, high-resolution scans, print assets, and archival collections. TIFF is a mature format, but it has limited support in modern browsers and tends to produce larger files than formats optimized for web delivery.
+
+You can dynamically transcode original TIFF files to formats such as WebP or AVIF. These formats offer more efficient compression, which can reduce file sizes and improve page load performance. You can also resize each output without converting or modifying your original image.
+
+For multi-page TIFF files, Images decodes only the first page. For supported formats and limits, refer to [Limits and formats](/images/get-started/limits/).

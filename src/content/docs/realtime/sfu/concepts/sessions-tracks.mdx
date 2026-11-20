@@ -26,9 +26,7 @@ A participant does not have to correspond to exactly one session. The [video-roo
 
 Calling `POST /sessions/new` with no request body returns a `sessionId`, but does not establish the WebRTC connection. Follow a [connection recipe](/realtime/sfu/get-started/connection-patterns/) to complete the offer/answer exchange, then wait for the endpoint's connection state to become `connected`.
 
-Create each session when ready to begin negotiation. An unconnected session can expire before its first track or DataChannel operation. Activity on another session does not keep it alive.
-
-If setup expires, later operations can return HTTP `410` with `session_error`. Create a new session and repeat connection setup.
+Create each session when the endpoint is ready to negotiate. If setup fails or the PeerConnection closes, create a new session and repeat connection setup.
 
 Follow [per-session mutation ordering](/realtime/sfu/concepts/negotiation/#serialize-mutations-per-session) during setup and later updates.
 
@@ -64,9 +62,9 @@ DataChannels carry application messages such as telemetry, text, and control eve
 
 ## Resource lifetime
 
-Remove a publication from discovery when your application stops offering it. This does not close existing subscriptions. Retain its SFU identifiers privately while cleanup remains outstanding.
+After setup fails or the connection ends, discard the session. The SFU reclaims its resources automatically.
 
-Follow the [media-close sequence](/realtime/sfu/get-started/connection-patterns/#close-media-tracks) or [DataChannel closure](/realtime/sfu/features/datachannels/#close-channels) when resources are no longer needed. Refer to [limits](/realtime/sfu/platform/limits/#inactivity-timeout) for expiration and reuse, and [Best practices](/realtime/sfu/best-practices/#retain-cleanup-state) for cleanup ownership.
+On a live session, close unused [media tracks](/realtime/sfu/get-started/connection-patterns/#close-media-tracks) or [DataChannels](/realtime/sfu/features/datachannels/#close-channels). Remove ended publications from discovery. Refer to [limits](/realtime/sfu/platform/limits/#inactivity-timeout) for inactivity timeouts.
 
 ## Learn with an example
 

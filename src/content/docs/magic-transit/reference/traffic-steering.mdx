@@ -255,7 +255,7 @@ The minimum advertising prefix is `/24`, but because Cloudflare uses anycast tun
 
 If you have multiple onboarded `/24` subnets that belong to a larger contiguous block, you can configure a summary static route for the corresponding supernet (like a `/23` or a `/22`) instead of adding each `/24` individually. This eliminates the need to configure each `/24` route, as all traffic will be routed through the same GRE tunnels.
 
-For example, if you have two tunnels:
+For example, if you have two subnets:
 
 - `192.0.2.0/24`
 - `192.0.3.0/24`

@@ -6,6 +6,8 @@ sidebar:
   order: 5
 ---
 
+import { DashButton, Steps } from "~/components";
+
 If caching is not behaving the way you expect, the `Cf-Cache-Status` response header is the first place to look. Every response carries it, and its value tells you exactly what happened for that request.
 
 :::note
@@ -148,4 +150,16 @@ For per-plan response size limits, refer to [Cacheable size limits](/cache/conce
 
 ## I need more visibility
 
-At launch, the primary debugging surfaces are the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/).
+Beyond the `Cf-Cache-Status` response header and per-invocation cache-hit information in the [Workers observability dashboard](/workers/observability/), you can review aggregate cache analytics for your Worker in the Cloudflare dashboard:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+    <DashButton url="/?to=/:account/workers-and-pages" />
+
+2. Select your Worker.
+3. Go to **Metrics** and find the cache analytics.
+
+</Steps>
+
+Cache analytics show how your Worker's cached traffic behaves over time, which helps you confirm whether caching is working across all requests rather than one request at a time. Refer to [Workers metrics](/workers/observability/metrics-and-analytics/#workers-metrics) for more on the **Metrics** page.

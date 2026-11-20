@@ -4,6 +4,7 @@ import {
 	bumpLevel,
 	escapeText,
 	findExistingBotComment,
+	parseDependabotPackages,
 	renderComment,
 	type DependabotReviewResult,
 } from "./dependabot-review";
@@ -162,5 +163,74 @@ describe("renderComment", () => {
 			"| Removed x | \ud83d\udca5 breaking | Yes: x used |",
 		);
 		expect(body).toContain("Used in: `src/a.ts`");
+	});
+});
+
+describe("parseDependabotPackages", () => {
+	it("parses grouped table rows", () => {
+		const body = [
+			"Bumps the non-major group with 2 updates:",
+			"",
+			"| Package | From | To |",
+			"| --- | --- | --- |",
+			"| [@astrojs/mdx](https://github.com/withastro/astro) | `8.1.0` | `8.1.2` |",
+			"| [hono](https://github.com/honojs/hono) | `4.13.14` | `4.13.16` |",
+		].join("\n");
+		expect(parseDependabotPackages(body)).toEqual([
+			{
+				name: "@astrojs/mdx",
+				repoUrl: "https://github.com/withastro/astro",
+				from: "8.1.0",
+				to: "8.1.2",
+			},
+			{
+				name: "hono",
+				repoUrl: "https://github.com/honojs/hono",
+				from: "4.13.14",
+				to: "4.13.16",
+			},
+		]);
+	});
+
+	it("parses grouped Updates lines when there is no table", () => {
+		const body = [
+			"Bumps the non-major group in /.flue with 2 updates: [hono](https://github.com/honojs/hono) and [wrangler](https://github.com/cloudflare/workers-sdk/tree/HEAD/packages/wrangler).",
+			"",
+			"Updates `hono` from 4.13.14 to 4.13.16",
+			"<details>",
+			"<p>Update the Undici dependency bundled from the retained package to <code>7.30.1</code>.</p>",
+			"</details>",
+			"",
+			"Updates `wrangler` from 4.153.0 to 4.156.2",
+			"Updates `hono` from 4.13.14 to 4.13.16",
+		].join("\n");
+		expect(parseDependabotPackages(body)).toEqual([
+			{
+				name: "hono",
+				repoUrl: "https://github.com/honojs/hono",
+				from: "4.13.14",
+				to: "4.13.16",
+			},
+			{
+				name: "wrangler",
+				repoUrl:
+					"https://github.com/cloudflare/workers-sdk/tree/HEAD/packages/wrangler",
+				from: "4.153.0",
+				to: "4.156.2",
+			},
+		]);
+	});
+
+	it("parses a single-package bump", () => {
+		const body =
+			"Bumps [hono](https://github.com/honojs/hono) from 4.13.14 to 4.13.16.";
+		expect(parseDependabotPackages(body)).toEqual([
+			{
+				name: "hono",
+				repoUrl: "https://github.com/honojs/hono",
+				from: "4.13.14",
+				to: "4.13.16",
+			},
+		]);
 	});
 });

@@ -35,6 +35,7 @@ import { authorData } from "~/components/models/data";
 import {
 	detectApiModes,
 	getTopLevelVariants,
+	promotionBanner,
 	type ModelView,
 } from "~/util/models";
 
@@ -50,6 +51,7 @@ import BgeRerankerBase from "~/components/models/code/Bge-Reranker-Base.astro";
 import Flux1Schnell from "~/components/models/code/Flux-1-Schnell.astro";
 import ClefCode from "~/components/models/code/ClefCode.astro";
 import ClairicCode from "~/components/models/code/ClairicCode.astro";
+import EmbeddingGemma2Code from "~/components/models/code/EmbeddingGemma2Code.astro";
 
 interface Props {
 	model: ModelView;
@@ -79,7 +81,9 @@ const isClef = [
 ].includes(model.name);
 
 // Clairic extraction models take typed fields, not chat messages.
-const isClairic = model.name === "@cf/cloudflare/clairic";
+const isClairic =
+	model.name === "@cf/cloudflare/clairic" ||
+	model.name === "@cf/cloudflare/clairic-flash";
 
 // Legacy code-example overrides (only used when there is no catalog usage).
 let CodeExamples: any = null;
@@ -121,6 +125,9 @@ if (!hasCatalogUsage) {
 	if (isClairic) {
 		CodeExamples = ClairicCode;
 	}
+	if (model.name === "@cf/google/embeddinggemma-2") {
+		CodeExamples = EmbeddingGemma2Code;
+	}
 }
 
 const hasCodeExamples = hasCatalogUsage || !!CodeExamples;
@@ -131,7 +138,9 @@ const isBeta = model.beta;
 
 // Map the banner `severity` onto the four Aside types; unknown severities fall
 // back to neutral "note".
-const banner = model.banner ?? null;
+// A running promotion (see `modelPromotions`) shows in the same banner slot as
+// a CMS banner, as GPT-5.6 Sol's "50% off" banner did. A CMS banner wins.
+const banner = model.banner ?? promotionBanner(model.name);
 function bannerAsideType(
 	severity: string,
 ): "note" | "tip" | "caution" | "danger" {
@@ -300,9 +309,60 @@ const headings: MarkdownHeading[] = [
 		<div class="bg-border mt-3 mb-6 h-px w-full" role="none"></div>
 	</div>
 
-	<div class="not-prose mb-4">
+	<section
+		aria-label="Model ID"
+		class="not-prose border-border bg-card [margin-block-end:1rem] flex min-w-0 flex-col gap-2 rounded-lg border p-4"
+	>
+		<p class="text-muted-foreground m-0 text-sm font-medium">Model ID</p>
 		<CopyableCode text={model.name} label="Copy model ID" />
-	</div>
+		{model.dataSource === "catalog" && (
+			<>
+				<p class="text-muted-foreground m-0 text-sm leading-relaxed">
+					Use with the{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/worker-binding-methods/"
+					>
+						Workers AI binding
+					</a>
+					, the AI Gateway{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/rest-api/"
+					>
+						REST API
+					</a>
+					, or the{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/chat-completion/"
+					>
+						Unified API
+					</a>
+					.
+				</p>
+				<p class="text-muted-foreground border-border m-0 [border-block-start-width:1px] [padding-block-start:1rem] text-sm leading-relaxed">
+					Calling the provider directly? Use the provider's model name instead,
+					including with{" "}
+					<a
+						class="text-(--nb-link) underline underline-offset-2"
+						href="/ai-gateway/usage/providers/"
+					>
+						provider-native endpoints
+					</a>{" "}
+					or the provider's own SDK. For example, Anthropic's name for{" "}
+					<code class="bg-accent rounded px-1 py-0.5 font-mono text-[0.8125rem] [overflow-wrap:anywhere]">
+						anthropic/claude-opus-4.8
+					</code>{" "}
+					is{" "}
+					<code class="bg-accent rounded px-1 py-0.5 font-mono text-[0.8125rem] [overflow-wrap:anywhere]">
+						claude-opus-4-8
+					</code>
+					.
+				</p>
+			</>
+		)}
+	</section>
 
 	<div class="not-prose mb-4">
 		<ModelBadges model={model} />
@@ -374,6 +434,10 @@ const headings: MarkdownHeading[] = [
 			product="workers-ai"
 			params={{ omni: model.name === "@cf/cloudflare/clef-omni" }}
 		/>
+	)}
+
+	{isClairic && (
+		<Render file="clairic-media-input-pricing" product="workers-ai" />
 	)}
 
 	{hasGlm52ReasoningEffortGuidance && (

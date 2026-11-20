@@ -310,6 +310,77 @@ Your device was unenrolled from your company's [organization](/cloudflare-one/se
 
 Contact your company or team administrator for assistance.
 
+## CF_SERVICE_CONNECTION_LOST
+
+### Symptoms
+
+- The Cloudflare One Client GUI shows **Reconnecting to service**
+- Unable to view or change the client status from the GUI
+
+### Cause
+
+The Cloudflare One Client GUI lost its connection to the Cloudflare One Client service on the device. This is usually temporary, for example while the service restarts.
+
+### Resolution
+
+The GUI reconnects automatically. No action is needed if the error clears on its own.
+
+If the GUI cannot reconnect, it shows one of the following errors instead. Follow the resolution for that error.
+
+- [CF_SERVICE_NOT_ACCEPTING](#cf_service_not_accepting)
+- [CF_SERVICE_NOT_RESPONDING](#cf_service_not_responding)
+- [CF_SERVICE_NOT_RUNNING](#cf_service_not_running)
+
+## CF_SERVICE_NOT_ACCEPTING
+
+### Symptoms
+
+- The Cloudflare One Client GUI shows **Service not accepting connections**
+- Unable to view or change the client status from the GUI
+
+### Cause
+
+The Cloudflare One Client service is running, but it is not accepting connections from the GUI. This can happen for a short time while the service starts.
+
+### Resolution
+
+1. Wait one minute. The GUI keeps trying to connect to the service.
+2. If the error does not clear, [restart the client service](#restart-the-client-service).
+3. If this does not resolve the error, restart your device.
+
+## CF_SERVICE_NOT_RESPONDING
+
+### Symptoms
+
+- The Cloudflare One Client GUI shows **Service not responding**
+- Unable to view or change the client status from the GUI
+
+### Cause
+
+The Cloudflare One Client GUI connected to the Cloudflare One Client service, but the service did not respond in time.
+
+### Resolution
+
+1. [Restart the client service](#restart-the-client-service).
+2. If this does not resolve the error, restart your device.
+
+## CF_SERVICE_NOT_RUNNING
+
+### Symptoms
+
+- The Cloudflare One Client GUI shows **Service not running**
+- Unable to view or change the client status from the GUI
+
+### Cause
+
+The Cloudflare One Client service is not running on the device. For example, the service was stopped or failed to start.
+
+### Resolution
+
+1. [Start the client service](#restart-the-client-service).
+2. If the service does not start, restart your device.
+3. If this does not resolve the error, [reinstall the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/download/).
+
 ## CF_TLS_INTERCEPTION_BLOCKING_DOH
 
 ### Symptoms
@@ -351,3 +422,44 @@ The account administrator has disconnected the Cloudflare One Client for all dev
 ### Resolution
 
 The account administrator must turn off both of the following features: - [Disconnect the Cloudflare One Client on all devices](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#disconnect-the-cloudflare-one-client-on-all-devices) - [Manage device connection using an external signal](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/#manage-device-connection-using-an-external-signal)
+
+## Restart the client service
+
+To restart the Cloudflare One Client service, run the command for your operating system as an administrator. The command also starts the service if it is stopped.
+
+<Tabs>
+<TabItem label="macOS">
+
+```sh
+sudo launchctl kickstart -k system/com.cloudflare.1dot1dot1dot1.macos.warp.daemon
+```
+
+If the command returns `Could not find service`, load the service instead. The service starts when it loads.
+
+```sh
+sudo launchctl enable system/com.cloudflare.1dot1dot1dot1.macos.warp.daemon
+sudo launchctl bootstrap system /Library/LaunchDaemons/com.cloudflare.1dot1dot1dot1.macos.warp.daemon.plist
+```
+
+</TabItem>
+<TabItem label="Windows">
+
+In an elevated PowerShell window, run:
+
+```powershell
+Restart-Service -Name CloudflareWARP
+```
+
+Alternatively, restart the **Cloudflare One Client** service in the Windows **Services** app.
+
+If [uninstall protection](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/settings/uninstall-protection/) is on, you cannot stop or restart the service. Restart your device instead.
+
+</TabItem>
+<TabItem label="Linux">
+
+```sh
+sudo systemctl restart warp-svc
+```
+
+</TabItem>
+</Tabs>

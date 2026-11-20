@@ -7,7 +7,37 @@ import sharpenImg from "~/assets/images/images/examples/sharpen-5.jpg";
 
 ### `sharpen`
 
-Applies a sharpening filter to enhance edge definition in an image. Accepts a decimal value from `0` (no sharpening) to `10` (maximum sharpening). The default is `0`. The recommended value for downscaled images is `1`. 
+Applies a sharpening filter to increase edge definition in an image. Supports both box and Gaussian filters using `mode`.
+
+To apply a box-filter unsharp mask, set `sharpen` to a decimal value from `0` (no sharpening) to `10` (maximum sharpening). The recommended value for downscaled images is `1`. When `mode` is not specified, this is the default mask.
+
+To configure a Gaussian-filter unsharp mask, set `mode` to `gaussian` and specify the following settings:
+
+| Setting | Description | Accepted values |
+| --- | --- | --- |
+| `mode` | Applies a Gaussian sharpening filter. | `gaussian` |
+| `amount` | Sets the sharpening strength to control how much isolated detail is added back. | Decimal from `0` to `10` |
+| `sigma` | Controls how broadly the blur spreads. | Decimal greater than `0` and less than or equal to `5` |
+| `threshold` (optional) | Sets the minimum difference required between the source and blurred pixels before sharpening is applied. If omitted, the default is `0`. | Integer from `0` to `255` |
+
+A higher `sigma` value makes larger edges and object outlines more pronounced. A higher `threshold` limits sharpening to stronger edges. Pixels whose differences fall below the threshold are not sharpened.
+
+<Tabs>
+  <TabItem label="URL format">
+    ```txt
+    sharpen=5
+    sharpen=(mode=box,amount=5)
+    sharpen=(mode=gaussian,amount=1,sigma=1.5,threshold=0)
+    ```
+  </TabItem>
+  <TabItem label="Workers">
+  ```js
+  cf: {image: {sharpen: 5}}
+  cf: {image: {sharpen: {mode: "box", amount: 5}}}
+  cf: {image: {sharpen: {mode: "gaussian", amount: 1, sigma: 1.5, threshold: 0}}}
+  ```
+  </TabItem>
+</Tabs>
 
 <table style="width:100%; table-layout:fixed; text-align:center; border:none">
   <tr style="border:none; background:none">
@@ -28,16 +58,3 @@ Applies a sharpening filter to enhance edge definition in an image. Accepts a de
     </td>
   </tr>
 </table>
-
-<Tabs>
-  <TabItem label="URL format">
-    ```txt
-    sharpen=2
-    ```
-  </TabItem>
-  <TabItem label="Workers">
-  ```js
-  cf: {image: {sharpen: 2}}
-  ```
-  </TabItem>
-</Tabs>

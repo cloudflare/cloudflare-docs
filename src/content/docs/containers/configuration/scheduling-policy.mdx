@@ -12,6 +12,12 @@ import { TypeScriptExample, WranglerConfig } from "~/components";
 
 A scheduling policy determines where you configure a Container image and [instance size](/containers/platform/limits/#instance-types). It also determines how image updates and [rollouts](/containers/configuration/rollouts/) apply. Choose the policy when you create the Container application.
 
+:::caution[Default scheduling is deprecated]
+The `default` scheduling policy is deprecated. This includes applications that omit `scheduling_policy`, which selects `default` automatically.
+
+Migrate to the `durable_object` scheduling policy. Existing applications require code changes and a replacement application. Changing the setting alone does not migrate them. Refer to [Migrate to the Durable Object scheduling policy](/containers/guides/migrate-to-durable-object-scheduling-policy/).
+:::
+
 | Policy                  | Configure image and instance size                           | Image updates                                                                                                  | Best for                                                                                |
 | ----------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | `default`               | In Wrangler configuration                                   | Cloudflare applies application-wide configuration changes with [rollouts](/containers/configuration/rollouts/) | Services whose instances use the same image and instance size                           |
@@ -117,7 +123,7 @@ export class AgentComputer extends DurableObject {
 
 </TypeScriptExample>
 
-`ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. Add an application-specific readiness check before sending traffic or calling [`exec()`](/containers/api/durable-object-container/#exec).
+`ctx.container.start()` initiates startup and returns before the Container is ready to accept requests. [`exec()`](/containers/api/durable-object-container/#exec) waits for container startup, but does not check whether your application is ready. Add an application-specific readiness check before sending traffic to the application.
 
 The `durable_object` policy does not support `max_instances`. Running instances count toward your [account limits](/containers/platform/limits/#account-limits).
 

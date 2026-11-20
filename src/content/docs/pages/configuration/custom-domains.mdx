@@ -82,6 +82,22 @@ To disable access to your project's provided `*.pages.dev` subdomain:
 2. Redirect the `*.pages.dev` URL associated with your production Pages project to a custom domain. You can use the account-level [Bulk Redirect](/rules/url-forwarding/bulk-redirects/) feature to redirect your `*.pages.dev` URL to a custom domain.
 </Steps>
 
+## Zone settings
+
+When a [proxied CNAME record](/dns/proxy-status/) points your custom domain to Pages, requests pass through your zone before reaching your Pages project. Your configured Web Application Firewall (WAF), Redirect Rules, Transform Rules, Cache Rules, and Bot Management settings apply according to your plan and configuration.
+
+A block, redirect, or cached response in your zone can end a request before it reaches Pages. Requests that continue to Pages also use Cloudflare-managed Pages settings.
+
+Some settings are managed separately from your zone:
+
+| Setting                                                          | Pages behavior                                                                                                                                                                                                                                                                                                                         |
+| ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Minimum Transport Layer Security (TLS) version and cipher suites | Pages manages these settings for the custom hostname. Your zone's [minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#availability) and [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#limitations) settings do not apply. You cannot customize these settings for Pages hostnames. |
+| Browser Integrity Check                                          | Pages can block a request even when you turn off or skip Browser Integrity Check in your zone. Refer to [Browser Integrity Check on Pages](/pages/platform/known-issues/#browser-integrity-check).                                                                                                                                     |
+| Early Hints                                                      | Pages enables Early Hints independently of your zone's setting. Refer to [Early Hints](/pages/configuration/early-hints/#disable-early-hints-on-pages).                                                                                                                                                                                |
+
+With a DNS-only record or an external DNS provider, requests do not pass through your zone's HTTP settings. Pages-managed settings still apply.
+
 ## Caching
 
 For guidelines on caching, refer to [Caching and performance](/pages/configuration/serving-pages/#caching-and-performance).

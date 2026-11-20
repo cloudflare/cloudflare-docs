@@ -1,0 +1,53 @@
+---
+title: Manage AI Search instances in any namespace with Terraform
+description: The Cloudflare Terraform provider can now create, import, and read AI Search instances in any namespace, and import namespaces.
+products:
+  - ai-search
+date: 2026-11-13
+---
+
+Starting with [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs) v5.29.0, you can manage [AI Search](/ai-search/) instances in any [namespace](/ai-search/concepts/namespaces/), not only `default`.
+
+The `cloudflare_ai_search_instance` resource has a new `namespace` argument. It defaults to `default`, so existing configurations keep managing the same instances.
+
+```tf
+resource "cloudflare_ai_search_namespace" "support" {
+  account_id = var.account_id
+  name       = "support"
+}
+
+resource "cloudflare_ai_search_instance" "docs" {
+  account_id = var.account_id
+  id         = "docs"
+  namespace  = cloudflare_ai_search_namespace.support.name
+}
+```
+
+You can import existing instances and namespaces:
+
+```sh
+terraform import cloudflare_ai_search_instance.docs <account_id>/support/docs
+terraform import cloudflare_ai_search_namespace.support <account_id>/support
+```
+
+The data sources read instances from the namespace you set:
+
+```tf
+data "cloudflare_ai_search_instance" "docs" {
+  account_id = var.account_id
+  namespace  = "support"
+  id         = "docs"
+}
+
+data "cloudflare_ai_search_instances" "support" {
+  account_id = var.account_id
+  namespace  = "support"
+}
+```
+
+When you upgrade to v5.29.0, review these changes:
+
+- The `cloudflare_ai_search_instance` import ID now includes the namespace: `<account_id>/<namespace>/<id>`. For instances in the default namespace, use `<account_id>/default/<id>`.
+- The `cloudflare_ai_search_instance` and `cloudflare_ai_search_instances` data sources require `namespace`. Set `namespace = "default"` for instances in the default namespace.
+- `cloudflare_ai_search_instances` returns the instances in one namespace. The `filter.namespace` argument of `cloudflare_ai_search_instance` is removed.
+- Changing `namespace` replaces the instance.

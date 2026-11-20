@@ -301,14 +301,15 @@ init({
 
 You can pass the following options as `defaults` to alter default behavior.
 
-| Option                    | Description                                                   | Type                                   | Required |
-| ------------------------- | ------------------------------------------------------------- | -------------------------------------- | -------- |
-| **video**                 | Should video be enabled by default                            | `boolean`                              | false    |
-| **audio**                 | Should audio be enabled by default                            | `boolean`                              | false    |
-| **mediaConfiguration**    | Allows you to pass custom media quality constraints           | `MediaConfiguration`                   | false    |
-| **autoSwitchAudioDevice** | Automatically switch to a newly plugged microphone or speaker | `boolean`                              | false    |
-| **isNonPreferredDevice**  | Allows you to set specific devices as "not preferred"         | `(device: MediaDeviceInfo) => boolean` | false    |
-| **recording**             | Allows you to configure recording settings                    | RecordingConfig                        | false    |
+| Option                    | Description                                                                        | Type                                       | Required |
+| ------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------ | -------- |
+| **video**                 | Should video be enabled by default                                                 | `boolean`                                  | false    |
+| **audio**                 | Should audio be enabled by default                                                 | `boolean`                                  | false    |
+| **viewMode**              | Sets the initial view mode for Web Core 2.1.0 or later; retained across reconnects | `"ACTIVE_GRID" \| "PAGINATED" \| "MANUAL"` | false    |
+| **mediaConfiguration**    | Allows you to pass custom media quality constraints                                | `MediaConfiguration`                       | false    |
+| **autoSwitchAudioDevice** | Automatically switch to a newly plugged microphone or speaker                      | `boolean`                                  | false    |
+| **isNonPreferredDevice**  | Allows you to set specific devices as "not preferred"                              | `(device: MediaDeviceInfo) => boolean`     | false    |
+| **recording**             | Allows you to configure recording settings                                         | RecordingConfig                            | false    |
 
 :::info
 By default, audio and video are auto enabled, as per preset permissions. SDK uses 640x480 quality as default for group calls, which can be overridden with `mediaConfiguration`. By default, the SDK automatically switches to the best available device and marks virtual devices as not preferred.
@@ -360,6 +361,7 @@ interface RecordingConfig {
 interface DefaultOptions {
 	video?: boolean;
 	audio?: boolean;
+	viewMode?: "ACTIVE_GRID" | "PAGINATED" | "MANUAL"; // Web Core 2.1.0 or later.
 	mediaConfiguration?: MediaConfiguration;
 	isNonPreferredDevice?: (device: MediaDeviceInfo) => boolean;
 	autoSwitchAudioDevice?: boolean;

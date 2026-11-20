@@ -1,0 +1,47 @@
+---
+title: "WAF Release - 2026-10-28"
+description: Cloudflare WAF managed and free rulesets 2026-10-28 release
+date: 2026-10-28
+---
+
+import { RuleID } from "~/components";
+
+This release introduces updates to the underlying rule expressions for PHP out-of-memory (OOM) vulnerabilities CVE-2026-109618, CVE-2026-109619 and CVE-2026-115560. The improvements are iterative changes based on reports from Security Researchers as part of [PHP Capture the Flag (CTF) challenge](https://blog.cloudflare.com/php-ctf).
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="4148ae686fdb4d01be673fab9d9c073d" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619, CVE-2026-115560) #6</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>	
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="19373a83abb840e18ab3ce5a7975ce1b" />
+			</td>
+			<td>N/A</td>
+			<td>PHP Remote Code Execution Attack (CVE-2026-109618, CVE-2026-109619, CVE-2026-115560) #6</td>
+			<td>Block</td>
+			<td>Block</td>
+			<td>Rule detection updated.</td>
+		</tr>
+	</tbody>
+</table>

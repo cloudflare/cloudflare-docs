@@ -1,0 +1,170 @@
+---
+pcx_content_type: how-to
+title: Rust SDK
+description: Set up the Flagship OpenFeature provider to evaluate Flagship feature flags from async Rust server applications.
+sidebar:
+  order: 3
+products:
+  - flagship
+---
+
+The Rust SDK provides an OpenFeature-compatible server provider for async Rust applications. It evaluates flags over HTTP or locally from downloaded flag definitions. It does not support the Cloudflare Workers binding.
+
+The SDK requires Rust 1.88 or later and a [Tokio](https://tokio.rs/) runtime.
+
+## Installation
+
+Install with `cargo`:
+
+```sh
+cargo add cloudflare-flagship
+```
+
+## Setup
+
+Configure the provider with your Flagship app ID, Cloudflare account ID, and an [API token](/flagship/api-tokens/) with Flagship Evaluate or Flagship App Evaluate permission.
+
+```rust
+use cloudflare_flagship::{
+    FlagshipClientOptions, FlagshipServerProvider,
+    open_feature::{EvaluationContext, OpenFeature},
+};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let options = FlagshipClientOptions::builder()
+        .app_id("<APP_ID>")
+        .account_id("<ACCOUNT_ID>")
+        .auth_token("<API_TOKEN>")
+        .build()?;
+    let provider = FlagshipServerProvider::new(options)?;
+
+    let mut api = OpenFeature::default();
+    api.set_provider(provider).await;
+
+    let client = api.create_client();
+    let context = EvaluationContext::default()
+        .with_targeting_key("user-42")
+        .with_custom_field("plan", "enterprise");
+
+    let enabled = client
+        .get_bool_value("new-checkout", Some(&context), None)
+        .await
+        .unwrap_or(false);
+
+    println!("new-checkout: {enabled}");
+    Ok(())
+}
+```
+
+## Flag types
+
+The Rust SDK supports all OpenFeature server-side flag types.
+
+```rust
+use cloudflare_flagship::open_feature::StructValue;
+
+let enabled = client.get_bool_value("new-checkout", Some(&context), None).await;
+let variant = client.get_string_value("homepage-hero", Some(&context), None).await;
+let rate = client.get_float_value("sample-rate", Some(&context), None).await;
+let limit = client.get_int_value("upload-limit", Some(&context), None).await;
+let config = client
+    .get_struct_value::<StructValue>("ui-config", Some(&context), None)
+    .await;
+```
+
+Use the `get_*_details` methods when you need the reason, variant, metadata, or error code.
+
+The Rust OpenFeature SDK does not pass a default value to providers, so each method returns a `Result`. Handle the error case to fall back to a default value. A disabled flag resolves to the value Flagship serves, with the `Disabled` reason.
+
+## Local evaluation
+
+With local evaluation, the provider downloads the app's flag definitions and evaluates flags in-process. No network request is made per evaluation. The provider refreshes the definitions in the background.
+
+Local evaluation requires an API token with Flagship Read or Flagship App Read permission. Local evaluations do not appear in Flagship analytics.
+
+```rust
+use std::time::Duration;
+
+let provider = FlagshipServerProvider::builder(options)
+    .local_evaluation(true)
+    .refresh_interval(Duration::from_secs(30))
+    .build()?;
+
+// Returns an error if the first definitions download fails.
+provider.initialize_provider().await?;
+api.set_provider(provider.clone()).await;
+
+// Evaluate flags.
+
+provider.shutdown_provider().await;
+```
+
+Call `initialize_provider` before you register the provider, and `shutdown_provider` when you no longer need it. The Rust OpenFeature SDK does not call these for you.
+
+If a background refresh fails, the provider keeps serving the last downloaded definitions and reports the `STALE` status. To find out why the refresh failed, call `last_refresh_error()`.
+
+Local evaluation cannot be combined with response caching.
+
+## Response caching
+
+The provider can cache evaluations to avoid a network round trip for repeated flag and context pairs. Caching is off by default. To turn it on, set `cache_ttl`:
+
+```rust
+let provider = FlagshipServerProvider::builder(options)
+    .cache_ttl(Duration::from_secs(30)) // values may be up to this stale
+    .cache_max_entries(1_000)           // LRU-evicted beyond this many entries
+    .build()?;
+```
+
+Each cache entry is keyed by flag key, flag type, and the full evaluation context, so distinct contexts never share a cached value. Cache hits resolve with the `Cached` reason.
+
+Disabled flags, errors, and type mismatches are never cached. Because freshness is TTL-based, a flag change in Flagship takes effect after the entry expires.
+
+## Configuration options
+
+`FlagshipClientOptions::builder()` accepts the following options:
+
+| Option           | Description                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `app_id`         | Flagship app ID.                                                                                                                  |
+| `account_id`     | Required with `app_id`, and always required for local evaluation.                                                                 |
+| `base_url`       | Base URL override. Defaults to `https://api.cloudflare.com`.                                                                      |
+| `endpoint`       | Full evaluation endpoint URL. Use instead of `app_id` and `base_url`.                                                             |
+| `auth_token`     | Adds `Authorization: Bearer <token>` to each request.                                                                             |
+| `static_headers` | Static headers. Explicit `Authorization` overrides `auth_token`.                                                                  |
+| `header_factory` | Async per-request headers. Values override `static_headers` and `auth_token`.                                                     |
+| `http_client`    | Custom `reqwest::Client`.                                                                                                         |
+| `timeout`        | Per-attempt timeout. Defaults to 5 seconds. Use `disable_timeout()` to remove it.                                                 |
+| `retries`        | Retry attempts on network errors, timeouts, and HTTP `408`, `425`, `429`, and `5xx` responses. Defaults to 1 and is capped at 10. |
+| `retry_delay`    | Delay between retries. Defaults to 1 second and is capped at 30 seconds.                                                          |
+
+`FlagshipServerProvider::builder(options)` accepts the following provider options:
+
+| Option              | Description                                                                       |
+| ------------------- | --------------------------------------------------------------------------------- |
+| `cache_ttl`         | Enables in-memory response caching when greater than zero.                        |
+| `cache_max_entries` | Maximum number of cached entries. Defaults to 1000.                               |
+| `local_evaluation`  | Downloads flag definitions and evaluates flags in-process. Off by default.        |
+| `refresh_interval`  | How often local evaluation refreshes flag definitions. Defaults to 30 seconds.    |
+| `hook`              | Adds a provider-level OpenFeature hook, such as `LoggingHook` or `TelemetryHook`. |
+
+The default `rustls` feature uses Rustls for TLS. To use the platform TLS library instead, install with `cargo add cloudflare-flagship --no-default-features --features native-tls`.
+
+## Evaluation context
+
+Context attributes can contain strings, finite numbers, booleans, and date-time values. Structured values can be an OpenFeature `StructValue` or a `serde_json::Value` wrapped in an `Arc`, including nested objects, arrays, and `null`. The provider normalizes date-time values to RFC 3339 strings.
+
+The provider sends structured context using `POST` with a JSON body. Context containing only strings, numbers, booleans, or date-time values uses `GET` query parameters. Unsupported values and context over the [Flagship limits](/flagship/reference/limits/) return `INVALID_CONTEXT` without sending an HTTP request.
+
+## Direct client
+
+To evaluate flags without OpenFeature, use `FlagshipClient`. It returns the raw JSON value, variant, reason, and metadata.
+
+```rust
+use cloudflare_flagship::FlagshipClient;
+
+let client = FlagshipClient::new(options);
+let response = client.evaluate("new-checkout", &context).await?;
+println!("{} ({})", response.value, response.reason);
+```

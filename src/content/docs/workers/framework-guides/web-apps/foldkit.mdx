@@ -15,6 +15,8 @@ import { PackageManagers, Steps, WranglerConfig } from "~/components";
 
 You need Node.js 22.22.2 or newer and a Cloudflare account.
 
+This guide uses Wrangler. To deploy with infrastructure as code, refer to [Deploy with Alchemy](#deploy-with-alchemy).
+
 ## Create a Foldkit application
 
 <Steps>
@@ -112,3 +114,13 @@ directory = "./dist/client"
 </Steps>
 
 Open the `workers.dev` URL printed by Wrangler to verify the deployed application. For more information about SSG and SSR builds, refer to [Foldkit's server rendering guide](https://foldkit.dev/core/server-rendering).
+
+## Deploy with Alchemy
+
+[Alchemy](https://alchemy.run/) is a third-party infrastructure-as-code tool built on TypeScript and Effect. You can define a Worker and its Cloudflare resources in one program.
+
+Alchemy's [`Cloudflare.Website.Foldkit`](https://alchemy.run/cloudflare/frontend/foldkit/) integration supports SPA, SSG, and SSR. It builds your application using its existing Vite configuration.
+
+Configure rendering in the `foldkit()` Vite plugin. Alchemy reads the build metadata to select the client assets, generated server handler, and routing defaults. SSG and SSR require `@foldkit/vite-plugin` 0.27.0 or newer and Foldkit 0.167.0 or newer.
+
+Follow [Alchemy's Cloudflare setup guide](https://alchemy.run/cloudflare/setup/), then its [Foldkit deployment guide](https://alchemy.run/cloudflare/frontend/foldkit/). Alchemy manages the Worker configuration, so this deployment path does not require a `wrangler.jsonc` file.

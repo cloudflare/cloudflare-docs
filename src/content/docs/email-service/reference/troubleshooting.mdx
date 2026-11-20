@@ -133,6 +133,8 @@ If DKIM validation is failing:
 
 While not required, DMARC significantly improves email deliverability. When Email Sending is enabled on a domain, Cloudflare adds a `p=reject` DMARC record to the sending domain if none exists. If you already have a DMARC record, Cloudflare keeps it unchanged.
 
+You can edit the record Cloudflare adds, and Cloudflare keeps your changes. To choose a policy, refer to [Sending records](/email-service/configuration/domains/#sending-records).
+
 To add a DMARC record manually:
 
 1. Go to **DNS** > **Records** in the Cloudflare dashboard.

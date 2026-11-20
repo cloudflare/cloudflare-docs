@@ -14,6 +14,10 @@ head:
 
 **Hash steering** guides Cloudflare to send requests to endpoints based on a combination of [endpoint weights](/load-balancing/understand-basics/traffic-steering/origin-level-steering/#weights) and previous requests from that IP address. Ensures requests from the same IP address will hit the same endpoint, but actual traffic distribution may differ from endpoint weights.
 
+## Private load balancers
+
+On [private load balancers](/load-balancing/private-network/), hash steering does not use the `x-forwarded-for` header. It uses the same client identifier as [session affinity on private load balancers](/load-balancing/understand-basics/session-affinity/#private-load-balancers): the client device for traffic from the Cloudflare One Client, or the source IP address for other on-ramps. Hash steering on a private load balancer picks the endpoint, not the `cloudflared` replica that carries the traffic.
+
 ## Limitation when using Workers
 
 Hash Steering relies on the `x-forwarded-for` header to determine the originating IP address of a request. However, when a [Cloudflare Worker](/workers/) is used in front of a load balancer, this can affect how Hash Steering functions.

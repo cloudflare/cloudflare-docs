@@ -134,11 +134,11 @@ const resolvedSocialImage = socialImage ?? CHANGELOG_OG_IMAGE;
 
 	/* Subtle 1px outline on entry images for consistent depth — pure
 	     black/white at 10%, never a tinted neutral. */
-	.nb-cl-prose img {
+	.nb-cl-prose img:not(.mermaid-annotation-logo) {
 		outline: 1px solid rgba(0, 0, 0, 0.1);
 		outline-offset: -1px;
 	}
-	[data-mode="dark"] .nb-cl-prose img {
+	[data-mode="dark"] .nb-cl-prose img:not(.mermaid-annotation-logo) {
 		outline-color: rgba(255, 255, 255, 0.1);
 	}
 </style>

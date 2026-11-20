@@ -1,0 +1,135 @@
+{
+	"model_id": "google/lyria-3.5",
+	"name": "Lyria 3.5",
+	"description": "Google's Lyria 3.5 model generates full-length MP3 songs from text prompts and optional image prompts.",
+	"task": "Music Generation",
+	"tags": [
+		"Music",
+		"Audio Generation",
+		"Full Songs",
+		"Vocals",
+		"Instrumental"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per track": 0.08
+	},
+	"examples": [
+		{
+			"name": "Full-Length Alternative Pop",
+			"description": "Generate a full-length song with verses, a chorus, and a bridge",
+			"input": {
+				"prompt": "A soulful alternative pop song about starting over, with two verses, a memorable chorus, a contrasting bridge, warm electric piano, expressive vocals, and a powerful final chorus"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/google/lyria-3.5/full-length-alternative-pop.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/google/lyria-3.5/full-length-alternative-pop.mp3"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/lyria-3.5',\n  {\n    prompt:\n      'A soulful alternative pop song about starting over, with two verses, a memorable chorus, a contrasting bridge, warm electric piano, expressive vocals, and a powerful final chorus',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/lyria-3.5\",\n  \"input\": {\n    \"prompt\": \"A soulful alternative pop song about starting over, with two verses, a memorable chorus, a contrasting bridge, warm electric piano, expressive vocals, and a powerful final chorus\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/music/generate-music",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/lyria-3.5.png",
+	"metadata": {
+		"Audio Format": "MP3",
+		"Audio Quality": "44.1 kHz stereo",
+		"Duration": "A couple of minutes, prompt-controlled"
+	},
+	"request_formats": null,
+	"provider_id": "google",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-ai-studio",
+			"pricing": {
+				"output_tracks": 0.08
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "google-ai-studio",
+			"pricing": {
+				"output_tracks": 0.08
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_tracks",
+							"label": "Per track",
+							"unit": null,
+							"value": 0.08
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-17 20:12:10",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 5000
+				},
+				"image": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Base64-encoded image used as visual inspiration"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"type": "string",
+					"description": "Generated music as an audio URL"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

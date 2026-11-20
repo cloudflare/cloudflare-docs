@@ -27,9 +27,17 @@ Requests can reuse established connections, and a proxied request may traverse m
 
 The TCP establishment and request-acknowledgment rows describe specific TCP timeout conditions. They are not an exhaustive list of every operation that can produce [522](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-522/). Neither value is a universal TCP-plus-TLS setup budget. A timeout while TLS remains pending can be reported as `522` rather than [525](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-525/).
 
-:::note
+:::note[Cloudflare Tunnel timeout behavior]
 
-If you are using [Cloudflare tunnels](/cloudflare-one/networks/connectors/cloudflare-tunnel/), refer to [Origin configuration](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/) to view or modify your connection settings.
+When using Cloudflare Tunnel with **published applications** (proxied DNS records), both timeout layers apply to the same request:
+
+1. **CDN layer** (this table): Proxy Read Timeout and Proxy Write Timeout apply between the client and Cloudflare's Tunnel service
+2. **Tunnel layer** ([Origin parameters](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/origin-parameters/)): Connection and TLS timeout parameters apply between `cloudflared` and your origin server
+
+**When both layers apply, the shorter timeout takes precedence.** Configure timeouts in both layers to ensure requests complete successfully.
+
+For **private network routes**, only Tunnel origin parameters apply—the CDN timeouts in this table do not affect private network traffic.
+
 :::
 
 | Type                                                                                      | Limit (seconds) | HTTP status code at limit                                                                                                              | [Configurable](/fundamentals/reference/connection-limits/#configurable-limits) |

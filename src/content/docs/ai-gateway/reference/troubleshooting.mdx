@@ -1,7 +1,7 @@
 ---
 pcx_content_type: troubleshooting
 title: Troubleshooting
-description: Resolve common AI Gateway issues including authentication errors, missing logs, and provider connectivity problems.
+description: Resolve common AI Gateway issues and error codes, including authentication, Unified Billing, and bad request (7003) errors.
 sidebar:
   order: 5
 products:
@@ -17,15 +17,12 @@ This page covers common issues when using AI Gateway. For provider-specific trou
 If you receive authentication errors from your AI provider, AI Gateway did not pass valid credentials upstream. Check the following:
 
 1. **Verify header placement**: On provider-native endpoints, put your Cloudflare token in `cf-aig-authorization`. Supply provider credentials in the [format AI Gateway recognizes for the provider and endpoint](/ai-gateway/features/unified-billing/#credential-precedence). For example, Anthropic Messages requires `x-api-key`, while OpenAI uses `Authorization: Bearer`.
-
 2. **Check your configuration based on endpoint type**:
    - **Provider-specific endpoints**: Confirm your request URL includes the provider path (for example, `/google-vertex-ai/` or `/openai/`). AI Gateway uses this to identify the provider and apply the correct stored credentials.
    - **Unified `/compat/chat/completions` endpoint**: Confirm your `model` name starts with the provider prefix (for example, `google-vertex-ai/google/gemini-2.5-flash` or `openai/gpt-4o`). AI Gateway uses this prefix to route the request and select the correct stored credentials.
-
 3. **Verify BYOK key selection**: If you have multiple keys configured for a provider, ensure either:
    - You are using the key with alias `default`, or
    - You include the `cf-aig-byok-alias` header with the correct alias name
-
 4. **Verify BYOK configuration**: If using BYOK, confirm in the dashboard that your credentials were saved correctly.
 
 For provider-specific authentication issues:
@@ -44,16 +41,147 @@ To resolve the error:
 - For Anthropic Messages (`/anthropic/v1/messages`), send `x-api-key: <PROVIDER_API_KEY>`. AI Gateway does not recognize `Authorization: Bearer` as provider credentials on this endpoint.
 - If using [stored BYOK keys](/ai-gateway/configuration/bring-your-own-keys/), verify gateway authentication and the key alias. Use `default`, or select an applicable alias with `cf-aig-byok-alias` on provider-native requests.
 
+### 401: Provider credentials rejected (2009)
+
+AI Gateway returns HTTP `401` with error code `2009` when the provider rejects the credentials sent with the request or your stored [BYOK key](/ai-gateway/configuration/bring-your-own-keys/). On the `/ai/run` endpoint and the AI binding, the message starts with `Credential error: your credential is invalid or was rejected by the provider`, followed by details.
+
+To resolve the error:
+
+- Check with the provider that the key is valid and active.
+- Update the key in your request, or update the stored BYOK key in AI Gateway.
+
+If the request uses [Unified Billing](/ai-gateway/features/unified-billing/), AI Gateway returns HTTP `503` instead. Refer to [503: Unified Billing temporarily unavailable (7005)](#503-unified-billing-temporarily-unavailable-7005).
+
+## Unified Billing and credit errors
+
+These errors relate to [Unified Billing](/ai-gateway/features/unified-billing/) credits and to payment for requests.
+
+### 403: Unified Billing not available for the request (2049)
+
+AI Gateway returns HTTP `403` with error code `2049` when it cannot use Unified Billing for the request. AI Gateway checks these causes in order and returns the message for the first one that applies. Each message points to a different fix.
+
+- `Gateway authentication is required to use unified billing. Enable authentication on your gateway or provide your own API key (BYOK).`
+
+  The gateway does not have [authentication](/ai-gateway/configuration/authentication/) turned on. Unified Billing requires an authenticated gateway. Turn on authentication, or use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+
+- `This request requires customer-provided provider credentials, but no applicable provider key was found.`
+
+  **Require provider credentials** is on for the gateway, or the request includes `cf-aig-no-wholesale: true`, and no provider key applies to the request. Supply a provider key. For details, refer to [400: Provider credentials required (2044)](#400-provider-credentials-required-2044).
+
+- `Unified billing is not enabled for this gateway. Provide your own API key (BYOK) or contact Cloudflare support.`
+
+  Unified Billing is turned off for the gateway. Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/), or [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+- `Insufficient balance; add money to your gateway or use BYOK`
+
+  Your account does not have enough credits for the request. [Load credits](/ai-gateway/features/unified-billing/#load-credits) to your account, or use your own provider key with BYOK.
+
+The `Insufficient balance` message can also come with error code `2021`. For low-balance fixes, refer to [402: Insufficient Unified Billing balance (2052)](#402-insufficient-unified-billing-balance-2052).
+
+### 402: Insufficient Unified Billing balance (2052)
+
+AI Gateway returns HTTP `402` with error code `2052` when your credit balance is too low for the request. The message has this format:
+
+```txt
+Insufficient unified billing balance for this request. Your available balance is $<AMOUNT>. Add credits on the AI Gateway Cloudflare dashboard, or use your own provider key (BYOK).
+```
+
+The response also includes an `extra` object with `reason` set to `insufficient_balance` and `availableBalanceCents` set to your available balance in cents.
+
+To resolve the error:
+
+- [Load more credits](/ai-gateway/features/unified-billing/#load-credits) to your account.
+- Set up [auto top-up](/ai-gateway/features/unified-billing/#auto-top-up) so that your balance does not run out.
+- Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+
+### 402: Payment error (2021)
+
+AI Gateway returns HTTP `402` with error code `2021` when the request cannot be paid for. There are two cases:
+
+- `Payment error from model using BYOK: <DETAILS>`
+
+  The provider rejected payment on your own [BYOK key](/ai-gateway/configuration/bring-your-own-keys/). Check the billing status and balance of the key with the provider. To use Unified Billing credits instead, remove the stored key.
+
+- `Insufficient balance; add money to your gateway or use BYOK`, with the description `Insufficient AI Gateway credits`
+
+  Your Unified Billing credits ran out. Refer to [402: Insufficient Unified Billing balance (2052)](#402-insufficient-unified-billing-balance-2052).
+
+### 429: Unified Billing rate limit (2018)
+
+AI Gateway returns HTTP `429` with error code `2018` when a gateway exceeds the [Unified Billing request rate limit](/ai-gateway/reference/limits/#gateway-limits). This error is a rate limit, not a balance problem. On the `/ai/run` endpoint and the AI binding, the message is `Unified billing rate limit exceeded for this gateway. Please reduce request rate or use BYOK.`
+
+To resolve the error:
+
+- Reduce your request rate, and retry with exponential backoff.
+- Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/). The limit does not apply to BYOK requests.
+
+### 503: Unified Billing temporarily unavailable (7005)
+
+AI Gateway returns HTTP `503` with error code `7005` and the message `Unified billing is temporarily unavailable for this provider; retry, or configure your own provider API key (BYOK).` when Cloudflare-managed credentials for the provider cannot be used.
+
+To resolve the error:
+
+- Retry the request later.
+- Use your own provider key with [BYOK](/ai-gateway/configuration/bring-your-own-keys/).
+
+## Account access errors
+
+### 403: AI Gateway is not enabled for this account (2042)
+
+AI Gateway returns HTTP `403` with error code `2042` and the message `AI Gateway is not enabled for this account` when AI Gateway access is turned off for your account. To resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+### 403: Feature not enabled (2036)
+
+AI Gateway returns HTTP `403` with error code `2036` when the request uses a feature that is not enabled. The general message is `This feature is not enabled for this gateway`.
+
+If you use [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/) with a custom domain, the message is `AI Gateway Access integration is not enabled for this account`.
+
+To resolve the error, [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
 ## DLP issues
 
 For troubleshooting Data Loss Prevention issues such as DLP not triggering or unexpected blocking, refer to [DLP troubleshooting](/ai-gateway/features/dlp/set-up-dlp/#troubleshooting).
 
 ## Request failures
 
+### 400: Bad request (7003)
+
+Error code `7003` is the general bad-request code for AI Gateway. AI Gateway returns it when AI Gateway or the provider rejects a request as invalid and no more specific code applies, and the error message describes the actual problem.
+
+The error message usually has this format:
+
+```txt
+Model execution failed (User Input Error): <REASON>
+```
+
+If the provider rejected the request, `<REASON>` is the provider's own error message.
+
+To resolve the error:
+
+- Read the full error message, which usually names the rejected field or value, and fix the request before you retry.
+- If you call the model through the [AI binding](/ai-gateway/usage/worker-binding-methods/) (`env.AI.run()`), the error may only show `AiGatewayError: 7003: User Input Error`, with no reason. To see the full error message, send the same request through the [REST API](/ai-gateway/usage/rest-api/).
+- If [logging](/ai-gateway/observability/logging/) or payload collection is turned off, AI Gateway does not store the error message. Record the error response in your application, or turn on logging while you reproduce the problem.
+
+#### Known causes
+
+| Cause                                                                              | Example                                                                                                                              | Resolution                                                                                                                                                                                         |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Provider requirement not met                                                       | `'messages' must contain the word 'json' in some form, to use 'response_format' of type 'json_object'`                               | Follow the provider's requirement. For OpenAI JSON mode, include the word "JSON" in the prompt.                                                                                                    |
+| Field not accepted by the model, such as `watermark: false` sent to an image model | `7003: User Input Error` from the AI binding                                                                                         | Remove any fields that are not listed on the model's page in the [model catalog](/ai/models/).                                                                                                     |
+| Input in the wrong shape for a third-party model on the AI binding                 | `Unsupported field passed: input. Valid fields: prompt, ...`                                                                         | Pass the input object directly, exactly as the model catalog shows. Do not wrap it in an `input` field. This applies to the AI binding only. The `/ai/run` REST endpoint expects an `input` field. |
+| Dynamic route called on `/ai/run`                                                  | `messages: Invalid input: expected array, received undefined`                                                                        | Call [dynamic routes](/ai-gateway/features/routing/dynamic-routing/) through `/ai/v1/chat/completions` or the AI binding.                                                                          |
+| Model ID not recognized (HTTP `404`)                                               | `Model not found: <MODEL_ID>`                                                                                                        | Use the exact model ID from the [model catalog](/ai/models/).                                                                                                                                      |
+| Tool not supported on the endpoint                                                 | `tools: [{"type":"web_search"}]` sent to an xAI model on the Chat Completions endpoint                                               | Use the endpoint and tool listed for the provider in [Web search](/ai-gateway/usage/web-search/).                                                                                                  |
+| Input too large (HTTP `413`)                                                       | `Run input is too large`                                                                                                             | Reduce the size of the request input.                                                                                                                                                              |
+| Model access denied (HTTP `403`)                                                   | `Model execution failed (Model access denied): <REASON>`                                                                             | Check that your account has access to the model. The reason describes what is missing.                                                                                                             |
+| Model not available in your region (HTTP `451`)                                    | `Model execution failed (Model unavailable in this region): <REASON>`                                                                | Use a model that is available in your region.                                                                                                                                                      |
+| Dynamic route not found (HTTP `404`)                                               | `Dynamic route '<ROUTE_NAME>' not found`                                                                                             | Check the route name. Make sure the request targets the gateway that owns the [dynamic route](/ai-gateway/features/routing/dynamic-routing/).                                                      |
+| Wrong URL or account ID on the Cloudflare API                                      | `Could not route to /accounts/..., perhaps your object identifier is invalid?`, returned with error `7000` (`No route for that URI`) | Check the endpoint path and the account ID.                                                                                                                                                        |
+
 ### Requests timing out
 
 - Check if the upstream provider is experiencing issues
-- Consider implementing [dynamic routing](/ai-gateway/features/dynamic-routing/) with fallbacks for transient failures
+- Consider implementing [dynamic routes](/ai-gateway/features/routing/dynamic-routing/) with fallbacks for transient failures
 - Review your [rate limiting](/ai-gateway/features/rate-limiting/) configuration
 
 ### Requests returning errors from the provider
@@ -61,6 +189,24 @@ For troubleshooting Data Loss Prevention issues such as DLP not triggering or un
 - Verify your API key or credentials are valid with the provider directly
 - Check the provider's status page for outages
 - Review [AI Gateway logs](/ai-gateway/observability/logging/) for detailed error information
+
+### 500: Model execution failed (2002)
+
+AI Gateway returns HTTP `500` with error code `2002` and the message `Model execution failed (Error)` when the provider or AI Gateway fails to process the request.
+
+To resolve the error:
+
+- Retry the request.
+- Set up [dynamic routing](/ai-gateway/features/routing/dynamic-routing/) with a fallback model.
+
+### 400: Failed to get response from provider (2005)
+
+AI Gateway returns HTTP `400` with error code `2005` and the message `Failed to get response from provider` when it does not receive a response from the provider.
+
+To resolve the error:
+
+- Check the provider's status page for outages.
+- Retry the request.
 
 ## Caching issues
 
