@@ -70,9 +70,14 @@ Setup with missing DNS records in Cloudflare DNS
 
 ```
 
-After adding `sub2.example.com` to Cloudflare DNS
+You can resolve this in one of two ways.
 
-```
+### Option 1: Add a DNS record in Cloudflare
+
+Add a record for the hostname in the zone's Cloudflare DNS. If Cloudflare should not proxy the hostname, set the record to **DNS only**.
+
+In a Partial setup, your authoritative DNS provider remains authoritative. Records you add in Cloudflare are not published publicly and do not change how other clients resolve the hostname. Cloudflare only uses them for requests it handles, such as Worker subrequests. If the hostname's target changes at your authoritative DNS, update the Cloudflare record to match.
+
 // Zone in partial setup: example.com
 // DNS records at Authoritative DNS: sub1.example.com, sub2.example.com, ...
 // DNS records at Cloudflare DNS: sub1.example.com, sub2.example.com
@@ -81,7 +86,20 @@ After adding `sub2.example.com` to Cloudflare DNS
 // -> Can be resolved by Fetch API
 "sub2.example.com/"
 // -> Can be resolved by Fetch API
-```
+
+### Option 2: Enable the `global_fetch_strictly_public` compatibility flag
+
+If you cannot add a DNS record in Cloudflare, enable the [`global_fetch_strictly_public`](/workers/configuration/compatibility-flags/#global-fetch-strictly-public) compatibility flag on the Worker that makes the `fetch()` call. With this flag, global `fetch()` resolves and routes requests as if they were made from the public Internet, so a hostname that exists only at your authoritative DNS is resolved through public DNS.
+
+:::caution
+This flag changes how **all** global `fetch()` calls from the Worker are routed, not only calls to the affected hostname. Requests to hostnames that Cloudflare proxies on the Worker's own zone no longer go directly to the origin. They go through the full Cloudflare request flow, as if they came from the Internet. Your WAF and custom rules, rate limiting, Bot Management, Access policies, cache, and Worker routes apply to these requests, and they may be blocked, challenged, or routed back to the same Worker. Review the Worker's other `fetch()` calls and test before enabling the flag in production.
+:::
+
+Compatibility flags are set per Worker script:
+
+- Set the flag on the Worker that makes the `fetch()` call. It does not affect other Workers on the zone or account.
+- For [Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/), set the flag on the user Worker in the dispatch namespace that makes the `fetch()` call. You do not need to set it on the dispatch Worker.
+- If the dispatch namespace uses an [Outbound Worker](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/), the Outbound Worker makes the outbound `fetch()` calls on behalf of user Workers, so set the flag on the Outbound Worker.
 
 ## Fetch to IP addresses
 
