@@ -23,4 +23,7 @@ Wrangler commands for managing Workers for Platforms [dispatch namespace](/cloud
 You must delete all user Workers in the dispatch namespace before it can be deleted.
 :::
 
-<WranglerCommand command="dispatch-namespace rename" />
+:::note
+
+You cannot rename a dispatch namespace, and `wrangler dispatch-namespace rename` returns an error. To use a different name, refer to [Dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
+:::
