@@ -169,7 +169,7 @@ The browser creates the Code Mode tool and registers it as a dynamic client tool
        const ai = createAI({ binding: this.env.AI });
 
        const result = streamText({
-         model: ai("@cf/moonshotai/kimi-k2.7-code"),
+         model: ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017"),
          system:
            "Use the codemode tool to write JavaScript that calls browser-provided tools.",
          messages: await convertToModelMessages(this.messages),
