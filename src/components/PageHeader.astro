@@ -24,17 +24,13 @@ const hasTagline = Boolean(tagline) || Astro.slots.has("tagline");
 ---
 
 <header class:list={["mx-auto max-w-2xl pt-14 text-center", className]}>
-	<h1
-		class="text-foreground text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance"
-	>
+	<h1 class="text-foreground text-[clamp(2.75rem,5vw,3.5rem)] leading-[1.05] font-medium text-balance">
 		{title}
 	</h1>
-	{
-		hasTagline && (
-			<p class="text-muted-foreground mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty sm:text-lg">
-				{tagline || <slot name="tagline" />}
-			</p>
-		)
-	}
+	{hasTagline && (
+		<p class="text-muted-foreground mx-auto mt-4 max-w-md text-base leading-relaxed text-pretty sm:text-lg">
+			{tagline || <slot name="tagline" />}
+		</p>
+	)}
 	<slot />
 </header>

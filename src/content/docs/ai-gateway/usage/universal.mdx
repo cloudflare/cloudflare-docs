@@ -13,7 +13,7 @@ import { Render, Badge, WranglerConfig } from "~/components";
 
 :::caution[Deprecated]
 
-The Universal Endpoint is deprecated. Use the [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) for new integrations, and [Dynamic Routing](/ai-gateway/features/dynamic-routing/) for fallbacks, retries, and conditional routing. The Universal Endpoint will continue to work for existing integrations.
+The Universal Endpoint is deprecated. Use the [OpenAI-compatible endpoint](/ai-gateway/usage/chat-completion/) for new integrations, and [dynamic routes](/ai-gateway/features/routing/dynamic-routing/) for fallbacks, retries, and conditional routing. The Universal Endpoint will continue to work for existing integrations.
 
 :::
 
@@ -127,7 +127,7 @@ config:{
 ```
 
 - `maxAttempts`: Maximum number of retry attempts (up to 5).
-- `retryDelay`: Delay before retrying, in milliseconds (maximum of 5 seconds).
+- `retryDelay`: Delay before retrying, in milliseconds (maximum of 60 seconds).
 - `backoff`: Backoff method — `constant`, `linear`, or `exponential`.
 
 On the final retry attempt, your gateway will wait until the request completes, regardless of how long it takes. Each provider can have different retry settings.

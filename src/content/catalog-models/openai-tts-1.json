@@ -11,6 +11,9 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Per character": 0.000015
+	},
 	"examples": [
 		{
 			"name": "Simple Speech",
@@ -196,6 +199,14 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "openai",
+			"pricing": {
+				"input_characters": 0.000015
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:43",
 	"schema": {
@@ -204,13 +215,13 @@
 			"type": "object",
 			"properties": {
 				"text": {
-					"description": "The text to generate audio for. Maximum length is 4096 characters.",
 					"type": "string",
-					"maxLength": 4096
+					"maxLength": 4096,
+					"description": "The text to generate audio for. Maximum length is 4096 characters."
 				},
 				"voice": {
-					"description": "The voice to use when generating the audio. Defaults to alloy.",
 					"default": "alloy",
+					"description": "The voice to use when generating the audio. Defaults to alloy.",
 					"type": "string",
 					"enum": [
 						"alloy",
@@ -222,8 +233,8 @@
 					]
 				},
 				"response_format": {
-					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
 					"default": "mp3",
+					"description": "The output format for the audio. Supported formats are mp3, opus, wav, aac and flac.",
 					"type": "string",
 					"enum": [
 						"mp3",
@@ -234,8 +245,8 @@
 					]
 				},
 				"speed": {
-					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
 					"default": 1,
+					"description": "The speed of the generated audio. Select a value from 0.25 to 4.0. 1.0 is the default.",
 					"type": "number",
 					"minimum": 0.25,
 					"maximum": 4
@@ -254,8 +265,8 @@
 			"type": "object",
 			"properties": {
 				"audio": {
-					"description": "URL to the generated audio file",
-					"type": "string"
+					"type": "string",
+					"description": "URL to the generated audio file"
 				}
 			},
 			"required": [

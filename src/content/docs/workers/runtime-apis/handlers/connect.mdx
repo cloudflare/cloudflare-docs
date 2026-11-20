@@ -1,0 +1,96 @@
+---
+pcx_content_type: configuration
+title: Connect Handler
+description: Handle inbound TCP connections forwarded to a Worker using the connect() handler.
+products:
+  - workers
+---
+
+import { TabItem, Tabs } from "~/components";
+
+## Background
+
+Export a `connect()` handler to let a Worker accept an inbound TCP connection and read and write raw bytes on it. The handler receives a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) object, the same type returned by [`connect()` from `cloudflare:sockets`](/workers/runtime-apis/tcp-sockets/) for outbound connections.
+
+A Worker receives a connection in its `connect()` handler when another Worker forwards a TCP connection to it over a [service binding](/workers/runtime-apis/bindings/service-bindings/), by calling `connect()` on the binding:
+
+```js
+// Worker A forwards a TCP connection to Worker B over a service binding
+export default {
+	async fetch(request, env) {
+		const socket = env.BACKEND.connect("example.com:1234");
+		// Read from and write to socket.readable / socket.writable
+		return new Response(socket.readable);
+	},
+};
+```
+
+:::note
+
+Direct inbound TCP connections from the public Internet, for example by using the HTTP `CONNECT` method against a Worker's public URL, are not supported at present. A `connect()` handler only receives connections forwarded from another Worker over a service binding.
+
+:::
+
+## Syntax
+
+<Tabs>
+<TabItem label="JavaScript" icon="seti:javascript">
+
+```js
+export default {
+	async connect(socket, env, ctx) {
+		const writer = socket.writable.getWriter();
+		await writer.write(new TextEncoder().encode("hello"));
+		await writer.close();
+	},
+};
+```
+
+</TabItem>
+<TabItem label="TypeScript" icon="seti:typescript">
+
+```ts
+interface Env {}
+
+export default {
+	async connect(socket: Socket, env: Env, ctx: ExecutionContext) {
+		const writer = socket.writable.getWriter();
+		await writer.write(new TextEncoder().encode("hello"));
+		await writer.close();
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TabItem>
+</Tabs>
+
+You can also implement `connect()` as a method on a [`WorkerEntrypoint`](/workers/runtime-apis/bindings/service-bindings/rpc/) class, which lets a single Worker expose a `connect()` handler alongside other RPC methods:
+
+```js
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class Backend extends WorkerEntrypoint {
+	async connect(socket) {
+		const writer = socket.writable.getWriter();
+		await writer.write(new TextEncoder().encode("hello"));
+		await writer.close();
+	}
+}
+```
+
+### Parameters
+
+- `socket` Socket
+  - The inbound [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) used to read and write raw bytes on the connection.
+  - [`socket.opened`](/workers/runtime-apis/tcp-sockets/#socket) resolves with a [`SocketInfo`](/workers/runtime-apis/tcp-sockets/#socketinfo) object. On a `connect()` handler, `localAddress` is set to the address the caller passed to `connect()` on the service binding.
+- `env` object
+  - The [bindings](/workers/runtime-apis/bindings/) available to the Worker.
+- `ctx` object
+  - The context associated with the Worker, containing [`waitUntil()`](/workers/runtime-apis/context/#waituntil) and [`passThroughOnException()`](/workers/runtime-apis/context/#passthroughonexception).
+
+A Worker that does not export a `connect()` handler rejects any connection forwarded to it.
+
+## Related resources
+
+- [TCP sockets](/workers/runtime-apis/tcp-sockets/) — Create outbound TCP connections and work with the `Socket` API.
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) — Call one Worker from another, including forwarding TCP connections with `connect()`.

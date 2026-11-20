@@ -43,8 +43,8 @@ export class MyAgent extends Agent<Env> {
 
 		if (url.pathname.endsWith("/connect") && request.method === "POST") {
 			const { id, authUrl } = await this.addMcpServer(
-				"Cloudflare Observability",
-				"https://observability.mcp.cloudflare.com/mcp",
+				"Cloudflare API",
+				"https://mcp.cloudflare.com/mcp",
 			);
 
 			if (authUrl) {
@@ -297,7 +297,7 @@ Failed connections remain in state until removed with `removeMcpServer(serverId)
 
 ## Complete example
 
-This example demonstrates a complete OAuth integration with Cloudflare Observability. Users connect, authorize in a popup window, and the connection becomes available. Errors are automatically stored in the connection state for display in your UI.
+This example demonstrates a complete OAuth integration with the Cloudflare API MCP server. Users connect, authorize in a popup window, and the connection becomes available. Errors are automatically stored in the connection state for display in your UI.
 
 <TypeScriptExample>
 
@@ -326,8 +326,8 @@ export class MyAgent extends Agent<Env> {
 		// Connect to MCP server
 		if (url.pathname.endsWith("/connect") && request.method === "POST") {
 			const { id, authUrl } = await this.addMcpServer(
-				"Cloudflare Observability",
-				"https://observability.mcp.cloudflare.com/mcp",
+				"Cloudflare API",
+				"https://mcp.cloudflare.com/mcp",
 			);
 
 			if (authUrl) {

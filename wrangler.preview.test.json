@@ -6,7 +6,8 @@
 	"compatibility_flags": ["nodejs_compat"],
 	"main": "./worker/index.preview.ts",
 	"rules": [
-		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true }
+		{ "type": "Text", "globs": ["**/__redirects"], "fallthrough": true },
+		{ "type": "Data", "globs": ["**/*.woff"], "fallthrough": true }
 	],
 	"assets": {
 		"directory": "./dist",
@@ -14,5 +15,8 @@
 		"not_found_handling": "404-page",
 		"run_worker_first": true
 	},
-	"r2_buckets": [{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" }]
+	"r2_buckets": [
+		{ "binding": "MIDDLECACHE", "bucket_name": "middlecache" },
+		{ "binding": "PRIVATE_ASSETS", "bucket_name": "cloudflare-docs-private" }
+	]
 }

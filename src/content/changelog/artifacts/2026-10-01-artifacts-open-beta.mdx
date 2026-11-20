@@ -1,0 +1,30 @@
+---
+title: Artifacts is now in open beta
+description: Artifacts is now in open beta with Workers Builds integration, programmable repository workflows, event subscriptions, data localization, and metrics.
+products:
+  - artifacts
+  - workers
+date: 2026-10-01
+---
+
+[Artifacts](/artifacts/), Cloudflare's versioned file system that speaks Git, is now in open beta. Artifacts is built for scale, so you can create a repository per project, user, session, or task.
+
+With Artifacts, you can:
+
+- **Deploy repositories to Workers** — Connect an Artifacts repository through [Workers Builds](/workers/ci-cd/builds/git-integration/artifacts-integration/). Pushes to the production branch deploy the updated Worker, while other branches create or update [Worker Previews](/workers/previews/).
+- **Programmatically manage repositories** — Use an [Artifacts binding](/artifacts/api/workers-binding/) from a Worker to create or fork repos, inspect files and commits, read files by path, and issue repo-scoped Git tokens.
+- **React to repository changes** — [Subscribe to events](/artifacts/guides/event-subscriptions/) when a repository is created, imported, forked, deleted, pushed to, cloned, or fetched.
+- **Control where repository data is stored** — Choose to [store and process](/artifacts/guides/data-localization/) your data in the US or EU.
+- **Monitor repository usage** — View total operations, pulls, pushes, errors, and error rates in the Cloudflare dashboard or [via API for analytics](/artifacts/observability/metrics/).
+
+Artifacts is available for customers on the Workers Paid plan. Cloudflare will begin [billing](/artifacts/platform/pricing/) for Artifacts on October 14, 2026.
+
+# Build the next GitHub on Cloudflare
+
+We are hosting a competition to see who can build the next GitHub on Cloudflare using Workers and Artifacts.
+
+[Apply today](https://www.cloudflare.com/git-competition/) — submissions are open until October 14, 2026.
+
+The first-place team will receive $25,000 in Cloudflare credits. The top three teams will be flown to San Francisco to present what they built at Cloudflare Connect.
+
+Get started with the [Artifacts documentation](/artifacts/).

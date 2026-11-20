@@ -6,6 +6,7 @@ params:
   - originServerNameURL
   - caPoolURL
   - noTLSVerifyURL
+  - httpsOriginURL
   - ulimitsURL
 ---
 
@@ -48,9 +49,11 @@ The third component, the token, consists of the zone ID (for the selected domain
 
 This means the origin is using a certificate that `cloudflared` does not trust. For example, you may get this error if you are using SSL/TLS inspection in a proxy between your server and Cloudflare. To resolve:
 
-- Add the certificate to the system certificate pool.
-- Use the `--origin-ca-pool` flag and specify the path to the certificate.
-- Use the `--no-tls-verify` flag to stop `cloudflared` checking the certificate for a trust chain.
+- Add the CA certificate to the system trust store, then restart `cloudflared`.
+- Set <a href={props.caPoolURL}>`caPool`</a> to a local PEM file that contains the CA certificate.
+- As a temporary last resort, set <a href={props.noTLSVerifyURL}>`noTLSVerify`</a> to `true`. Turn it off after you fix the certificate trust chain.
+
+The `--origin-ca-pool` and `--no-tls-verify` command-line flags apply only when you define a single origin with `--url`. For ingress rules, configure these settings under `originRequest`.
 
 ## I see an error 1033 when attempting to run a tunnel.
 
@@ -94,7 +97,7 @@ To resolve, update the service URL in your tunnel route to match the <a href={pr
 
 If the port in your tunnel route does not match the port your service is listening on, `cloudflared` will log a `connection refused` error for that port. Double-check the service URL in your ingress rule and compare it against the port your application is bound to.
 
-#### Origin uses a certificate that `cloudflared` does not trust
+#### `cloudflared` cannot validate the origin certificate
 
 If the origin presents a TLS certificate that `cloudflared` cannot verify, the logs will show an error similar to:
 
@@ -102,7 +105,7 @@ If the origin presents a TLS certificate that `cloudflared` cannot verify, the l
 error="x509: certificate is valid for example.com, not localhost"
 ```
 
-This commonly occurs when the origin uses a self-signed certificate or when an SSL/TLS inspection proxy sits between `cloudflared` and the origin.
+This error indicates that the certificate does not cover the service hostname. An `x509: certificate signed by unknown authority` error instead indicates that `cloudflared` does not trust the certificate authority.
 
 To resolve, use one of the following approaches:
 
@@ -126,7 +129,7 @@ To resolve, use one of the following approaches:
         caPool: /path/to/ca-cert.pem
   ```
 
-- As a last resort, disable TLS verification with <a href={props.noTLSVerifyURL}>`noTLSVerify`</a>. This is not recommended for production environments.
+- As a temporary last resort, disable TLS verification with <a href={props.noTLSVerifyURL}>`noTLSVerify`</a>. Turn it off after resolving the certificate issue.
 
   ```yml
   ingress:
@@ -136,17 +139,11 @@ To resolve, use one of the following approaches:
         noTLSVerify: true
   ```
 
-## I see `ERR_TOO_MANY_REDIRECTS` when attempting to connect to an Access self-hosted app.
+## A published application returns `ERR_TOO_MANY_REDIRECTS`.
 
-This error occurs when `cloudflared` does not recognize the SSL/TLS certificate presented by your origin. To resolve the issue, set the <a href={props.originServerNameURL}>origin server name</a> parameter to the hostname on your origin certificate. Here is an example of a locally-managed tunnel configuration:
+This error can occur when the origin redirects HTTP requests to HTTPS but the published application route uses an `http://` `Service URL`. Each request reaches the origin over HTTP and receives the same redirect.
 
-```txt
-ingress:
-  - hostname: test.example.com
-    service: https://localhost:443
-    originRequest:
-      originServerName: test.example.com
-```
+To choose the correct service URL and origin settings, refer to <a href={props.httpsOriginURL}>Troubleshoot HTTPS origins</a>. If the redirect chain alternates between HTTP and HTTPS, also refer to [ERR_TOO_MANY_REDIRECTS](/ssl/troubleshooting/too-many-redirects/).
 
 ## `cloudflared access` shows an error `websocket: bad handshake`.
 

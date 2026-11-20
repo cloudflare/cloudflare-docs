@@ -35,18 +35,14 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		npx skills add https://github.com/cloudflare/skills
 		```
 
-	3. **Configure Cloudflare MCP servers**
+	3. **Configure the Cloudflare MCP server**
 
 		For VS Code, add to `.vscode/mcp.json`. For Copilot CLI, add to `~/.copilot/mcp-config.json` for user-level configuration or `.mcp.json` or `.github/mcp.json` for project-level configuration. For domain-specific MCP servers, refer to [mcp-server-cloudflare](https://github.com/cloudflare/mcp-server-cloudflare). For the full Cloudflare API MCP server (Code Mode), refer to [cloudflare/mcp](https://github.com/cloudflare/mcp).
 
 		```json
 		{
 		  "mcpServers": {
-		    "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" },
-		    "cloudflare-docs": { "url": "https://docs.mcp.cloudflare.com/mcp" },
-		    "cloudflare-bindings": { "url": "https://bindings.mcp.cloudflare.com/mcp" },
-		    "cloudflare-builds": { "url": "https://builds.mcp.cloudflare.com/mcp" },
-		    "cloudflare-observability": { "url": "https://observability.mcp.cloudflare.com/mcp" }
+		    "cloudflare": { "url": "https://mcp.cloudflare.com/mcp" }
 		  }
 		}
 		```
@@ -91,12 +87,20 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		skills](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
 		guide for details on where Copilot looks for Skills.
 	</FAQItem>
-	<FAQItem question="Should I use Skills, the MCP server, Wrangler CLI, or all of them?">
+	<FAQItem question="Should I use Skills, the MCP server, a CLI, or all of them?">
 		All three. Skills load Cloudflare expertise into every agent-mode session.
 		The Cloudflare API MCP server handles platform operations (DNS, WAF, Zero
 		Trust, R2 buckets). Wrangler runs local dev and deploys in the VS Code
 		terminal. The bundled `wrangler` Skill teaches Copilot when to reach for
-		which.
+		which. For tasks across the whole Cloudflare API, Copilot can also use the
+		[Cloudflare CLI](/cf/), `cf`.
+	</FAQItem>
+	<FAQItem question="Can Copilot use the Cloudflare CLI?">
+		Yes. The [Cloudflare CLI](/cf/), `cf`, is in beta and covers the whole
+		Cloudflare API and prints JSON output. Install it with
+		`npm install -g cf`, sign in with `cf auth login`, and tell Copilot to
+		prefer it in `.github/copilot-instructions.md` or `AGENTS.md`. Refer to
+		[Use cf with AI agents](/cf/agents/).
 	</FAQItem>
 	<FAQItem question="Do I still need .github/copilot-instructions.md?">
 		It's complementary. Use custom instructions for simple repository-wide
@@ -105,7 +109,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		only load when relevant.
 	</FAQItem>
 	<FAQItem question="Can Copilot deploy to Cloudflare directly?">
-		Yes, via Wrangler in the VS Code terminal, or via a GitHub Actions workflow
+		Yes, via Wrangler or `cf` in the VS Code terminal, or via a GitHub Actions workflow
 		that Copilot can generate for you.
 	</FAQItem>
 </FAQList>
@@ -125,9 +129,7 @@ import OtherAgents from "~/components/agent-setup/OtherAgents.astro";
 		server configuration to `.vscode/mcp.json`.
 	</TroubleshootingItem>
 	<TroubleshootingItem issue="Getting outdated information about Cloudflare products">
-		Enable the <a href="https://github.com/cloudflare/mcp-server-cloudflare" target="_blank" rel="noopener noreferrer">Cloudflare docs MCP server</a> so the agent can fetch
-		current documentation at runtime. If you prefer not to use the MCP server, point
-		the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
+		Point the agent directly at <a href="/llms.txt">developers.cloudflare.com/llms.txt</a> for
 		a directory of every product, or <code>developers.cloudflare.com/&lt;product&gt;/llms.txt</code>
 		for a product-specific index.
 	</TroubleshootingItem>

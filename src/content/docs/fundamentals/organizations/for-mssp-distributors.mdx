@@ -8,12 +8,6 @@ products:
   - fundamentals
 ---
 
-:::note
-
-Cloudflare Organizations is currently in public beta. Organizations is actively used in production by Enterprise and MSSP/Distributor customers. Review [current limitations](/fundamentals/organizations/limitations/) before getting started.
-
-:::
-
 Organizations provides a multi-tier structure for MSSP (Managed Security Service Provider) and Distributor partners to manage customer accounts and create child partner Organizations.
 
 ## Who is this for?
@@ -57,7 +51,7 @@ Distributor Organization
 - Each MSSP Organization manages its own customer accounts
 - MSSP Organization members have [implicit access](#implicit-access) to their customer accounts
 - Accounts can be moved between MSSP Organizations
-- Maximum: **500 accounts** and **5,000 zones** per Organization
+- Maximum: **20,000 accounts** and **200,000 zones** per Organization
 
 ## Example: Distributor A
 
@@ -111,7 +105,7 @@ Distributors can create child MSSP partner Organizations. Each MSSP Organization
 
 ### Create new accounts
 
-MSSP Organizations can self-serve create new customer accounts within their Organization. This is a key difference from [Enterprise Organizations](/fundamentals/organizations/for-enterprise/), which cannot self-serve create accounts.
+MSSP Organizations can self-serve create new customer accounts within their Organization. Enterprise Organizations can self-serve create up to five Free accounts within their Organization.
 
 ### Move accounts between Organizations
 
@@ -233,7 +227,7 @@ You can manage Organizations programmatically using the [Cloudflare Organization
 You can manage Organizations using the [Cloudflare Terraform provider](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/organization).
 
 :::note
-The Terraform provider currently requires **API Keys** for authentication with Organization resources. API Token support is not yet fully available for all Organization operations.
+To manage Organization resources through their full Terraform lifecycle, configure the provider with a [Global API key](/fundamentals/api/get-started/keys/) and the registered account email. User API Tokens support only some Organization operations. Refer to [API authentication](/fundamentals/organizations/limitations/#api-authentication).
 :::
 
 If you encounter errors during setup or management, refer to [Troubleshooting](/fundamentals/organizations/limitations/#troubleshooting).

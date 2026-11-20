@@ -1,0 +1,252 @@
+{
+	"model_id": "google/nano-banana-2.1",
+	"provider_id": "google",
+	"name": "Nano Banana 2.1",
+	"description": "Google's Nano Banana 2.1 image generation and editing model, optimized for a balance of quality and performance.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Image Editing",
+		"Fast",
+		"High Quality"
+	],
+	"context_length": 131072,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input text tokens (per 1M)": 1.5,
+		"Input image tokens (per 1M)": 1.5,
+		"output_text_tokens": 7.5,
+		"Reasoning tokens (per 1M)": 7.5,
+		"Output image tokens (per 1M)": 30
+	},
+	"examples": [
+		{
+			"name": "Cinematic Landscape",
+			"description": "Generate a cinematic landscape",
+			"input": {
+				"prompt": "A cinematic landscape of a misty mountain valley at sunrise, with warm golden light and dramatic clouds",
+				"aspect_ratio": "16:9"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/cinematic-landscape.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/cinematic-landscape.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2.1',\n  {\n    prompt:\n      'A cinematic landscape of a misty mountain valley at sunrise, with warm golden light and dramatic clouds',\n    aspect_ratio: '16:9',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2.1\",\n  \"input\": {\n    \"prompt\": \"A cinematic landscape of a misty mountain valley at sunrise, with warm golden light and dramatic clouds\",\n    \"aspect_ratio\": \"16:9\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Watercolor Edit",
+			"description": "Edit an image with a text prompt",
+			"input": {
+				"prompt": "Turn the scene into a watercolor illustration with soft pastel colors",
+				"image_input": [
+					"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg"
+				],
+				"aspect_ratio": "match_input_image",
+				"output_format": "png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/watercolor-edit.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/watercolor-edit.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2.1',\n  {\n    prompt: 'Turn the scene into a watercolor illustration with soft pastel colors',\n    image_input: ['https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg'],\n    aspect_ratio: 'match_input_image',\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2.1\",\n  \"input\": {\n    \"prompt\": \"Turn the scene into a watercolor illustration with soft pastel colors\",\n    \"image_input\": [\n      \"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/scones.jpg\"\n    ],\n    \"aspect_ratio\": \"match_input_image\",\n    \"output_format\": \"png\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Grounded Travel Poster",
+			"description": "Create a search-grounded travel poster",
+			"input": {
+				"prompt": "A stylish vintage travel poster celebrating the latest landmarks and cultural highlights of Tokyo, with bold Japanese-inspired typography, Mount Fuji in the distance, and a warm limited-color print palette",
+				"aspect_ratio": "2:3",
+				"google_search": true,
+				"output_format": "jpg"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/grounded-travel-poster.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/grounded-travel-poster.jpg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2.1',\n  {\n    prompt:\n      'A stylish vintage travel poster celebrating the latest landmarks and cultural highlights of Tokyo, with bold Japanese-inspired typography, Mount Fuji in the distance, and a warm limited-color print palette',\n    aspect_ratio: '2:3',\n    google_search: true,\n    output_format: 'jpg',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2.1\",\n  \"input\": {\n    \"prompt\": \"A stylish vintage travel poster celebrating the latest landmarks and cultural highlights of Tokyo, with bold Japanese-inspired typography, Mount Fuji in the distance, and a warm limited-color print palette\",\n    \"aspect_ratio\": \"2:3\",\n    \"google_search\": true,\n    \"output_format\": \"jpg\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Editorial Product Campaign",
+			"description": "Create a polished product campaign image from a reference",
+			"input": {
+				"prompt": "Transform this product photo into a premium editorial campaign image on a sculptural stone pedestal, with soft studio lighting, deep emerald accents, realistic shadows, and a clean luxury magazine aesthetic",
+				"image_input": [
+					"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/320px-Felis_catus-cat_on_snow.jpg"
+				],
+				"aspect_ratio": "4:5",
+				"output_format": "jpg",
+				"resolution": "2K"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/editorial-product-campaign.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/google/nano-banana-2.1/editorial-product-campaign.jpg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/nano-banana-2.1',\n  {\n    prompt:\n      'Transform this product photo into a premium editorial campaign image on a sculptural stone pedestal, with soft studio lighting, deep emerald accents, realistic shadows, and a clean luxury magazine aesthetic',\n    image_input: [\n      'https://storage.googleapis.com/cloud-samples-data/generative-ai/image/320px-Felis_catus-cat_on_snow.jpg',\n    ],\n    aspect_ratio: '4:5',\n    output_format: 'jpg',\n    resolution: '2K',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/nano-banana-2.1\",\n  \"input\": {\n    \"prompt\": \"Transform this product photo into a premium editorial campaign image on a sculptural stone pedestal, with soft studio lighting, deep emerald accents, realistic shadows, and a clean luxury magazine aesthetic\",\n    \"image_input\": [\n      \"https://storage.googleapis.com/cloud-samples-data/generative-ai/image/320px-Felis_catus-cat_on_snow.jpg\"\n    ],\n    \"aspect_ratio\": \"4:5\",\n    \"output_format\": \"jpg\",\n    \"resolution\": \"2K\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/nano-banana-2-1",
+	"terms": "https://ai.google.dev/gemini-api/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/nano-banana-2.1.png",
+	"metadata": {
+		"Output Format": "JPEG"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_text_tokens": 1.5,
+				"input_image_tokens": 1.5,
+				"output_text_tokens": 7.5,
+				"output_reasoning_tokens": 7.5,
+				"output_image_tokens": 30
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-07 22:12:13",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string"
+				},
+				"image_input": {
+					"maxItems": 3,
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"aspect_ratio": {
+					"type": "string",
+					"enum": [
+						"match_input_image",
+						"1:1",
+						"2:3",
+						"3:2",
+						"3:4",
+						"4:3",
+						"4:5",
+						"5:4",
+						"9:16",
+						"16:9",
+						"21:9"
+					]
+				},
+				"output_format": {
+					"type": "string",
+					"enum": [
+						"jpg",
+						"png"
+					]
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"1K",
+						"2K",
+						"4K"
+					]
+				},
+				"google_search": {
+					"type": "boolean"
+				},
+				"image_search": {
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}

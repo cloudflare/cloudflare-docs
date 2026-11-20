@@ -3,15 +3,13 @@ title: Markdown for Agents
 description: Cloudflare's Markdown for Agents converts HTML to Markdown at the edge, allowing AI systems to request content in text/markdown format.
 pcx_content_type: navigation
 sidebar:
-  badge:
-    text: Beta
   group:
     hideIndex: false
 products:
   - fundamentals
 ---
 
-import { Render, TypeScriptExample } from "~/components";
+import { DashButton, Render, TypeScriptExample } from "~/components";
 
 ## What is Markdown for Agents
 
@@ -45,8 +43,6 @@ const r = await fetch(
 		},
 	},
 );
-const tokenCount = r.headers.get("x-markdown-tokens");
-const originalTokenCount = r.headers.get("x-original-tokens");
 const markdown = await r.text();
 ```
 
@@ -58,12 +54,9 @@ The response to this request is now formatting in markdown:
 HTTP/2 200
 date: Wed, 11 Feb 2026 11:44:48 GMT
 content-type: text/markdown; charset=utf-8
-content-length: 2899
 vary: accept
 cache-control: public, max-age=3600
 strict-transport-security: max-age=63072000; includeSubDomains
-x-markdown-tokens: 725
-x-original-tokens: 12345
 content-signal: ai-train=yes, search=yes, ai-input=yes
 
 ---
@@ -86,14 +79,8 @@ Because the body is replaced with converted Markdown, the following changes are 
 
 - `Content-Type` is set to `text/markdown; charset=utf-8`.
 - `Vary` includes `Accept` (any `Vary` dimensions your origin already declared are preserved) so that caches store separate variants for Markdown and HTML.
-- `Content-Length` is recalculated to match the size of the Markdown response.
+- `Content-Length` is removed because the Markdown response is streamed.
 - Headers that describe the original body are removed, because they no longer match the converted response: `Content-Encoding`, `Content-Range`, `Transfer-Encoding`, `ETag`, and `Last-Modified`. `ETag` and `Last-Modified` are dropped because conditional requests (`If-None-Match`, `If-Modified-Since`) cannot be honored for converted responses.
-
-Markdown for Agents also adds the token count headers described below.
-
-### Token count headers
-
-Note that we include token count headers with the converted response. `x-markdown-tokens` indicates the estimated number of tokens in the Markdown document, and `x-original-tokens` indicates the estimated number of tokens in the original HTML document before conversion. You can use these values in your flow, for example to calculate the size of a context window, estimate the token savings from Markdown conversion, or decide on your chunking strategy.
 
 ### Content Signals Policy
 
@@ -166,6 +153,139 @@ Example output:
 
 <Render file="markdown-for-agents" product="fundamentals" />
 
+## Analytics
+
+Use the dashboard or the [GraphQL Analytics API](/analytics/graphql-api/) to monitor conversions, estimate token savings, and diagnose partial or failed conversions.
+
+### Dashboard
+
+In the Cloudflare dashboard, select your zone and go to **Agent Readiness** > **Markdown for Agents**.
+
+<DashButton url="/?to=/:account/:zone/agent-readiness/markdown-for-agents" />
+
+Use the hostname selector and time range to narrow analytics and logs. The page provides **Analytics**, **Logs**, and **Playground** tabs.
+
+#### Analytics
+
+The **Analytics** tab shows conversion attempts, full conversion rate, estimated token reduction, partial conversions, and unfinished or failed conversions.
+
+![Markdown for Agents dashboard showing conversion totals, full conversion rate, estimated token reduction, and conversions over time.](~/assets/images/fundamentals/markdown-for-agents-analytics.png)
+
+Use the charts and breakdowns to inspect conversions:
+
+- **Conversions over time**
+- **Top converted pages**
+- **Top user agents**
+- **Failure reasons**
+- **Content limits**
+- **Top pages not converted**
+
+**Top pages not converted** includes pages with partial or failed conversions. **Content limits** identifies conversions with truncated input, omitted front matter, or omitted JSON-LD. A conversion can reach more than one limit.
+
+#### Logs
+
+The **Logs** tab shows sampled conversion events with page URLs, user agents, outcomes, failure reasons, and content limits. Filter by outcome, failure reason, or content limit to investigate issues.
+
+Each row represents an estimated request count, not necessarily one request.
+
+#### Playground
+
+The **Playground** tab tests a path with `Accept: text/markdown` and compares the response with HTML. Inspect Markdown, a rendered preview, response headers, and estimated token reduction.
+
+Playground uses the selected hostname, or the zone apex when **All hostnames** is selected. If your browser cannot read the response because of cross-origin resource sharing (CORS) restrictions or a network error, use the provided `curl` command.
+
+### GraphQL Analytics API
+
+Query the `markdownForAgentsAdaptiveGroups` dataset under `viewer.zones` for one zone or `viewer.accounts` for an account. Use an [API token with Analytics Read access](/analytics/graphql-api/getting-started/authentication/api-token-auth/) scoped to the resources you query.
+
+The dataset is available on all plans. Analytics access does not turn on conversion or change [conversion availability](#availability-and-pricing).
+
+Queries cover up to seven days of history, with a maximum seven-day query window and 1,000 groups per dataset query.
+
+For example, this query returns conversion totals and the top pages by estimated conversion attempts for a zone:
+
+```graphql
+query MarkdownForAgents($zoneTag: string, $start: Time, $end: Time) {
+	viewer {
+		zones(filter: { zoneTag: $zoneTag }) {
+			totals: markdownForAgentsAdaptiveGroups(
+				limit: 1
+				filter: { datetime_geq: $start, datetime_lt: $end }
+			) {
+				count
+				sum {
+					fullRequests
+					partialRequests
+					completedUnknownRequests
+					failedRequests
+					unfinishedRequests
+					savingsInputTokens
+					savingsOutputTokens
+					estimatedTokensSaved
+				}
+			}
+			pages: markdownForAgentsAdaptiveGroups(
+				limit: 10
+				filter: { datetime_geq: $start, datetime_lt: $end }
+				orderBy: [count_DESC]
+			) {
+				count
+				dimensions {
+					pageUrl
+				}
+			}
+		}
+	}
+}
+```
+
+Set `zoneTag` to your zone ID. Set `start` and `end` to UTC timestamps within the last seven days. For instructions on submitting the query and variables, refer to [Querying basics](/analytics/graphql-api/getting-started/querying-basics/).
+
+Group or filter results with dimensions such as `hostname`, `pageUrl`, `userAgent`, `outcome`, and `errorCode`. The `inputStatus`, `frontmatterStatus`, and `jsonLdStatus` dimensions identify content limits. Account-scoped queries also support the `zoneTag` dimension.
+
+### Interpret analytics
+
+Analytics and logs use sampled conversion attempts. Counts and token sums are sample-weighted estimates, excluding skipped requests and some early cancellations.
+
+User agents are client-supplied strings, not verified bot identities. Page URLs exclude query strings, fragments, and credentials.
+
+Conversion outcomes distinguish the following results:
+
+| Outcome             | Meaning                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `full`              | Conversion completed with all content-limit flags known to be false. This does not mean lossless HTML preservation. |
+| `partial`           | Conversion completed, but a content limit truncated the input or omitted front matter or JSON-LD.                   |
+| `completed_unknown` | Conversion completed, but limit information cannot establish whether output was full or partial.                    |
+| `error`             | Conversion ended with a terminal error. Inspect `errorCode` for the failure reason.                                 |
+| `unfinished`        | The stream did not reach a terminal conversion outcome. The cause is unknown.                                       |
+
+Token estimates use bytes divided by four, rounded down, rather than a tokenizer. Savings include only full conversions with a positive input token estimate.
+
+Partial, failed, unfinished, and unverified conversions do not contribute to savings. `estimatedTokensSaved` is signed: Markdown larger than its HTML input contributes a negative value.
+
+Calculate token reduction as `1 - savingsOutputTokens / savingsInputTokens` when `savingsInputTokens` is greater than zero. Completion and output token estimates do not prove delivery to the client.
+
+## Cloudflare Traces
+
+[Cloudflare Traces](/observability/traces/) records Markdown conversion within the request timeline. When tracing is enabled and a request is sampled, a streaming conversion adds a `markdown_conversion` span under `response`. Skipped conversions and `HEAD` responses do not create this span.
+
+To capture and inspect conversions, [configure tracing for your domain](/observability/traces/configuration/), then [find a trace](/observability/traces/#inspect-a-trace) by Ray ID. Expand `response` and select `markdown_conversion` to inspect its attributes:
+
+| Attribute                                 | Meaning                                                                                                                      |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `cloudflare.markdown.outcome`             | `completed`, `completed_partial`, or a conversion error code, including `unfinished` for streams without a terminal outcome. |
+| `cloudflare.markdown.input_bytes`         | Decompressed HTML bytes queued for conversion, capped at the input limit.                                                    |
+| `cloudflare.markdown.output_bytes`        | Markdown bytes emitted by the converter, not necessarily delivered to the client.                                            |
+| `cloudflare.markdown.cpu_time_us`         | Approximate converter CPU time, in microseconds.                                                                             |
+| `cloudflare.markdown.longest_slice_us`    | Longest converter processing slice, in microseconds.                                                                         |
+| `cloudflare.markdown.input_truncated`     | Whether a content limit truncated the HTML input.                                                                            |
+| `cloudflare.markdown.frontmatter_omitted` | Whether a content limit omitted front matter.                                                                                |
+| `cloudflare.markdown.jsonld_omitted`      | Whether a content limit omitted JSON-LD.                                                                                     |
+
+Span duration includes waits for the origin body and downstream backpressure. It is not converter CPU time, and a completed conversion does not guarantee delivery to the client.
+
+Content-limit flags are omitted for panicked or unfinished conversions because their final state is unknown. The span does not capture HTML or Markdown content.
+
 ## Availability and Pricing
 
 Markdown for Agents is available to Pro, Business and Enterprise plans, and SSL for SaaS customers at no cost.
@@ -182,7 +302,7 @@ curl https://blog.cloudflare.com/markdown-for-agents/ \
 ## Limitations
 
 - We only convert from HTML, other types of documents may be included in the future.
-- The origin response cannot exceed 2 MB (2,097,152 bytes).
+- Conversion is limited to 6 MiB (6,291,456 bytes) of decompressed HTML. The limit applies after decompression, not to the compressed response size.
 
 ## Other Markdown conversion APIs
 

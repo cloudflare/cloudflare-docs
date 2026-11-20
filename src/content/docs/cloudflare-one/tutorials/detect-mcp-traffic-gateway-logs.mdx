@@ -24,7 +24,7 @@ As an IT administrator, you want to identify shadow MCP traffic to prevent unaut
 ## Prerequisites
 
 - A Cloudflare account with a [Zero Trust organization](/cloudflare-one/setup/)
-- [Gateway](/cloudflare-one/traffic-policies/) with HTTP filtering enabled and actively proxying user traffic
+- [Gateway](/cloudflare-one/traffic-controls/) with HTTP filtering enabled and actively proxying user traffic
 - An [API token](/fundamentals/api/get-started/create-token/) with the following permissions:
   - Account-level `Zero Trust: Read`
   - Account-level `DLP: Write`
@@ -314,7 +314,7 @@ When analyzing Gateway logs, it is helpful to differentiate between two types of
 
 | Traffic type       | Characteristics                                                                                      | Risk level  | Action                    |
 | ------------------ | ---------------------------------------------------------------------------------------------------- | ----------- | ------------------------- |
-| MCP Portal traffic | `httpHost` matches your portal domain (for example, `mcp.yourcompany.com` or `mcp-portal.pages.dev`) | Authorized  | Monitor                   |
+| MCP Portal traffic | `httpHost` matches your portal domain (for example, `mcp.yourcompany.com`) | Authorized  | Monitor                   |
 | Shadow MCP traffic | `httpHost` does not match any portal domain (for example, `mcp.datadog.com`, `api.stripe.com/mcp`)   | Investigate | Block, redirect or review |
 
 Extend the query processing from [Process the query results](#3-process-the-query-results) to classify traffic by comparing hostnames against your list of approved portal domains:
@@ -324,8 +324,8 @@ Extend the query processing from [Process the query results](#3-process-the-quer
 ```ts
 const portalDomains = [
 	"mcp.yourcompany.com",
-	"mcp-portal.pages.dev",
-	"approved-mcp.workers.dev",
+	"mcp-portal.example.com",
+	"approved-mcp.example.com",
 ];
 
 const results = groups.map((group) => {
@@ -356,7 +356,7 @@ Replace the `portalDomains` array with the actual domains of your approved MCP S
 ## Related resources
 
 - [Zero Trust documentation](/cloudflare-one/)
-- [Gateway policies](/cloudflare-one/traffic-policies/)
+- [Gateway policies](/cloudflare-one/traffic-controls/)
 - [DLP profiles](/cloudflare-one/data-loss-prevention/)
 - [GraphQL Analytics API](/analytics/graphql-api/)
 - [Rules language and wirefilter expressions](/ruleset-engine/rules-language/)

@@ -1,0 +1,22 @@
+---
+title: Access for Infrastructure now supports tagged targets and tag-based target criteria
+description: Add tags to targets and define infrastructure applications based on tag values.
+date: 2026-09-15
+products:
+  - cloudflare-one
+  - access
+---
+
+[Access for Infrastructure](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/) now integrates with [Resource Tagging](/resource-tagging/). You can attach key-value tags to [infrastructure targets](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/#1-add-a-target) and use them in access policies.
+
+You can manage tags on targets inline when you create or edit a target or through the central [Resource Tagging API](/resource-tagging/how-to/manage-tags/). Cloudflare keeps tags in sync across both methods.
+
+Infrastructure applications also support a target criteria model with `include`, `require`, and `exclude` operators. Each operator can match targets by hostname, tag, or both.
+
+- **Include** matches targets that have any of the specified values.
+- **Require** matches targets that have all of the specified values.
+- **Exclude** rejects targets that have any of the specified values.
+
+![Infrastructure application builder showing target criteria with an included tag, port 22, and SSH as the selected protocol](~/assets/images/cloudflare-one/access/tags-in-infra-app.png)
+
+For more information, refer to [Add an infrastructure application](/cloudflare-one/access-controls/applications/non-http/infrastructure-apps/).

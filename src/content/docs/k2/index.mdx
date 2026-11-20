@@ -1,0 +1,88 @@
+---
+title: K2
+description: Serverless durable logs
+pcx_content_type: overview
+products:
+  - k2
+sidebar:
+  order: 1
+---
+
+import {
+	Description,
+	Feature,
+	LinkButton,
+	Plan,
+	RelatedProduct,
+} from "~/components";
+
+<Description>
+
+Decouple event producers and consumers with a durable log
+
+</Description>
+
+<Plan type="workers-paid" />
+
+:::note
+
+K2 is in **public beta**, and any developer with a [Workers Paid plan](/workers/platform/pricing/) can start using it. During the beta, each account can store up to 10 GB. To request a higher limit, refer to [Limits](/k2/platform/limits/#account-limits).
+
+:::
+
+Cloudflare K2 is a durable log. Produce records to a log, store them for a configurable
+retention period, and consume them from one or more independent consumers.
+
+<LinkButton href="/k2/get-started/">Get started</LinkButton>
+
+---
+
+## Features
+
+<Feature header="Create a K2 stream" href="/k2/get-started/">
+	Create a K2 stream, produce records to it, and consume them through a
+	subscription.
+</Feature>
+
+<Feature
+	header="Produce with a Workers binding or HTTP"
+	href="/k2/features/produce/"
+	cta="Produce to K2"
+>
+	Produce records to a K2 stream with a Workers binding or the HTTP API.
+</Feature>
+
+<Feature
+	header="Configure retention period"
+	href="/k2/configuration/#retention"
+>
+	Records in K2 can be stored for up to 30 days, with longer retention available
+	by request.
+</Feature>
+
+<Feature
+	header="Create a subscription to consume"
+	href="/k2/features/consume/"
+	cta="Create a subscription"
+>
+	Share records across a group of consumers, or deliver every record to multiple
+	independent consumers, with subscriptions.
+</Feature>
+
+---
+
+## Related products
+
+<RelatedProduct header="Workers" href="/workers/" product="workers">
+
+Build serverless applications and deploy instantly across the globe for exceptional performance, reliability, and scale.
+
+</RelatedProduct>
+
+<RelatedProduct header="Queues" href="/queues/" product="queues">
+
+Complete asynchronous tasks with guaranteed delivery and pull-based Worker consumers.
+
+</RelatedProduct>
+
+---

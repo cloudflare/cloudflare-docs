@@ -17,19 +17,43 @@ Similarly to breakout traffic, prioritized traffic also works via DNS requests i
 
 ## Add an application to your account
 
-Before you can add or remove Prioritized traffic applications to your Cloudflare One Appliance, you need to create an account-level list with the applications that you want to configure. Currently, adding to or modifying this list is only possible via API, through the [`managed_app_id`](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
+Before you can add or remove Prioritized traffic applications to your Cloudflare One Appliance, you need an account-level list with the applications that you want to configure. This list contains two kinds of applications:
 
-To add applications to your account:
+- **Cloudflare-managed applications** — Cloudflare's built-in catalog of recognized applications. These already exist in your account and do not need to be created. Select them directly when assigning application traffic.
+- **Custom applications** — applications you define by **hostname**, **IP subnet**, and/or **source subnet**. You can create, edit, and delete custom applications directly from the dashboard or through the [Create an account app](/api/resources/magic_transit/subresources/apps/methods/create/) endpoint.
 
-Send a `POST` request to add new apps to your account.
+### Create, edit, or delete a custom application
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+1. Go to the **Connectors** page.
+
+<DashButton url="/?to=/:account/magic-networks/connections" />
+
+2. Go to the **Appliances** tab > **Profiles**.
+3. Select the Cloudflare One Appliance you want to configure > **Edit**.
+4. Select **Traffic Steering**.
+5. In **Prioritized traffic**, select **Assign application traffic**.
+6. In **Custom applications**, select **Add** to create a new custom application, and enter:
+   - **Name** — a display name for the application.
+   - **Category** — an optional group label, such as `Productivity` or `Video conferencing`.
+   - At least one of **Hostnames**, **IP subnets**, or **Source subnets** — the traffic that identifies this application. Hostnames must be valid FQDNs (for example `auth.example.com`). IP subnets and source subnets must be valid IPv4 CIDRs (for example `10.0.0.0/24`). A single address needs a `/32` suffix. IPv6 is not yet supported.
+7. Select **Add application**.
+8. To change or remove an existing custom application, select the **three dots** next to it in the **Custom applications** table, then **Edit** or **Delete**.
+
+</TabItem> <TabItem label="API">
+
+Send a `POST` request to create a custom application in your account. The following example uses all three optional match criteria:
 
 <APIRequest
 	path="/accounts/{account_id}/magic/apps"
 	method="POST"
 	json={{
-    "managed_app_id": "<APP_ID>",
-    "name": "<APP_NAME>",
-    "type": "<APP_TYPE>",
+		"name": "Example application",
+		"type": "Productivity",
+		"hostnames": ["auth.example.com"],
+		"ip_subnets": ["192.0.2.0/24"],
+		"source_subnets": ["10.0.0.0/24"]
 	}}
 	/>
 
@@ -37,8 +61,11 @@ Send a `POST` request to add new apps to your account.
 {
 	"result": {
 		"account_app_id": "eb09v665c0784618a3e4ba9809258fd4",
-		"name": "<APP_NAME>",
-		"type": "<APP_TYPE>",
+		"name": "Example application",
+		"type": "Productivity",
+		"hostnames": ["auth.example.com"],
+		"ip_subnets": ["192.0.2.0/24"],
+		"source_subnets": ["10.0.0.0/24"]
 	},
 	"success": true,
 	"errors": [],
@@ -47,6 +74,8 @@ Send a `POST` request to add new apps to your account.
 ```
 
 You can now add this new app to the Prioritized traffic list in your Cloudflare One Appliance.
+
+</TabItem> </Tabs>
 
 ### Add an application to Cloudflare One Appliance
 
@@ -63,7 +92,7 @@ You need to configure Prioritized traffic applications for each of your existing
 3. Select the Cloudflare One Appliance you want to configure > **Edit**.
 4. Select **Traffic Steering**.
 5. In **Prioritized traffic**, select **Assign application traffic**.
-6. Select one or more applications that should bypass Cloudflare filtering from the list. You can also use the search box.
+6. Select one or more applications that should be processed first, from either **Custom applications** or **Cloudflare-managed applications**. You can also use the search box, or select **Add** to define a new custom application without leaving this panel — refer to [Create, edit, or delete a custom application](#create-edit-or-delete-a-custom-application).
 
 7. Select **Save**.
 
@@ -125,6 +154,8 @@ You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/
 	```
 
 </TabItem> </Tabs>
+
+Custom applications defined with **Source subnets** can also be marked as prioritized this way. Refer to [Breakout by source](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/breakout-traffic/#breakout-by-source) for the full set of source-based match criteria.
 
 ### Delete an application from Cloudflare One Appliance
 

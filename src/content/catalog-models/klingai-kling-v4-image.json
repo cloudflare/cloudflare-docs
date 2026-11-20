@@ -1,0 +1,192 @@
+{
+	"model_id": "klingai/kling-v4-image",
+	"name": "Kling Image 4.0",
+	"description": "Kling Image 4.0 is Kling AI's latest image model, generating 2K images from a text prompt and up to 10 reference images, in nine aspect ratios including auto.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Photorealistic"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.063,
+		"Per input image": 0.003
+	},
+	"examples": [
+		{
+			"name": "Simple Generation",
+			"description": "Basic text-to-image with default settings",
+			"input": {
+				"aspect_ratio": "16:9",
+				"prompt": "A photorealistic portrait of a fox in an autumn forest, golden hour lighting",
+				"resolution": "2k"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/klingai/kling-v4-image/simple-generation.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/klingai/kling-v4-image/simple-generation.png",
+					"images": [
+						"https://examples.aig.cloudflare.com/klingai/kling-v4-image/simple-generation.png"
+					]
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"code": "const response = await env.AI.run(\n  'klingai/kling-v4-image',\n  {\n    prompt:\n      'A photorealistic portrait of a fox in an autumn forest, golden hour lighting',\n    resolution: '2k',\n    aspect_ratio: '16:9',\n  },\n  {\n    gateway: { id: 'default' },\n  }\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"klingai/kling-v4-image\",\n  \"input\": {\n    \"aspect_ratio\": \"16:9\",\n    \"prompt\": \"A photorealistic portrait of a fox in an autumn forest, golden hour lighting\",\n    \"resolution\": \"2k\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://kling.ai/document-api",
+	"terms": "https://klingai.com/terms",
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/klingai/kling-v4-image.png",
+	"metadata": {
+		"Aspect Ratios": "auto, 16:9, 9:16, 1:1, 4:3, 3:4, 3:2, 2:3, 21:9",
+		"Reference Images": "Up to 10",
+		"Resolutions": "2K"
+	},
+	"request_formats": null,
+	"provider_id": "klingai",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "klingai",
+			"pricing": {
+				"output_image_count": 0.063,
+				"input_image_count": 0.003
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "klingai",
+			"pricing": {
+				"output_image_count": 0.063,
+				"input_image_count": 0.003
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_image_count",
+							"label": "Per image",
+							"unit": null,
+							"value": 0.063
+						},
+						{
+							"key": "input_image_count",
+							"label": "Per input image",
+							"unit": null,
+							"value": 0.003
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-17 15:51:31",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 50000,
+					"description": "Text prompt describing the image, up to 50,000 English characters. Refer to reference images as @image_1, @image_2, and so on."
+				},
+				"images": {
+					"description": "Reference images for image-to-image: https URLs, data URIs or raw base64 (JPG or PNG, up to 30 MB, at least 300 px per side, aspect ratio between 2:5 and 5:2)",
+					"maxItems": 10,
+					"type": "array",
+					"items": {
+						"type": "string",
+						"minLength": 1
+					}
+				},
+				"n": {
+					"default": 1,
+					"description": "Number of images to generate",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 9
+				},
+				"resolution": {
+					"default": "2k",
+					"description": "Output resolution",
+					"type": "string",
+					"enum": [
+						"2k"
+					]
+				},
+				"aspect_ratio": {
+					"default": "auto",
+					"description": "Aspect ratio of the generated image; auto picks one from the input",
+					"type": "string",
+					"enum": [
+						"auto",
+						"16:9",
+						"9:16",
+						"1:1",
+						"4:3",
+						"3:4",
+						"3:2",
+						"2:3",
+						"21:9"
+					]
+				}
+			},
+			"required": [
+				"prompt",
+				"n",
+				"resolution",
+				"aspect_ratio"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"description": "URL to the first generated image"
+				},
+				"images": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"description": "URLs to all generated images"
+				}
+			},
+			"required": [
+				"image",
+				"images"
+			],
+			"additionalProperties": false
+		}
+	}
+}

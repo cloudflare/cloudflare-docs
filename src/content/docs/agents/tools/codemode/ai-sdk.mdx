@@ -125,9 +125,9 @@ The default namespace is `codemode`. `createCodeTool()` also accepts a custom `d
 
 A tool provider groups tools under one sandbox namespace. Pass the tool set directly when every tool belongs under `codemode.*`.
 
-Use `aiTools()` when combining AI SDK tools with providers from other packages. The following optional workspace example also requires `@cloudflare/shell`:
+Use `aiTools()` when combining AI SDK tools with providers from other packages. The following optional workspace example also requires [`@cloudflare/computer`](https://github.com/cloudflare/computer):
 
-<PackageManagers pkg="@cloudflare/shell" />
+<PackageManagers pkg="@cloudflare/computer" />
 
 <TypeScriptExample>
 
@@ -135,16 +135,22 @@ Use `aiTools()` when combining AI SDK tools with providers from other packages. 
 import { AIChatAgent } from "@cloudflare/ai-chat";
 import { DynamicWorkerExecutor } from "@cloudflare/codemode";
 import { aiTools, createCodeTool } from "@cloudflare/codemode/ai";
-import { Workspace } from "@cloudflare/shell";
-import { stateTools } from "@cloudflare/shell/workers";
+import { Workspace } from "@cloudflare/computer";
+import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
 import { weatherTools } from "./tools";
 
 export class Chat extends AIChatAgent<Env> {
-	workspace = new Workspace({ sql: this.ctx.storage.sql });
+	workspace = new Workspace({ storage: this.ctx.storage });
 
 	codemodeTool() {
 		return createCodeTool({
-			tools: [aiTools(weatherTools), stateTools(this.workspace)],
+			tools: [
+				aiTools(weatherTools),
+				{
+					name: "workspace",
+					tools: createAITools({ workspace: this.workspace }),
+				},
+			],
 			executor: new DynamicWorkerExecutor({ loader: this.env.LOADER }),
 		});
 	}
@@ -153,7 +159,7 @@ export class Chat extends AIChatAgent<Env> {
 
 </TypeScriptExample>
 
-This example exposes AI SDK tools as `codemode.*` and workspace tools as `state.*`.
+This example exposes AI SDK tools as `codemode.*` and workspace tools as `workspace.*`, for example `workspace.read({ path })`.
 
 To assign custom namespaces, pass provider objects instead:
 

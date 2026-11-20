@@ -22,21 +22,29 @@ For example, a rule can target users on the `enterprise` plan, then serve the ne
 {
 	"priority": 1,
 	"conditions": [
-		{ "attribute": "plan", "operator": "equals", "value": "enterprise" }
+		{
+			"attribute": "profile.plan",
+			"operator": "equals",
+			"value": "enterprise"
+		}
 	],
 	"serve_variation": "on",
 	"rollout": {
 		"percentage": 10,
-		"attribute": "userId"
+		"attribute": "profile.id"
 	}
 }
 ```
+
+The `profile.id` path resolves an ID from nested context. A bucketing path can contain at most five segments.
 
 The `reason` in evaluation details is `SPLIT` when a percentage rollout serves the variant.
 
 ## Sticky bucketing
 
 Flagship uses consistent hashing on a configurable attribute to assign users to a rollout bucket. The same user always receives the same flag value for a given rollout configuration. This ensures a consistent experience across repeated evaluations.
+
+For sticky bucketing, the resolved attribute must be a string, number, or boolean. Flagship converts that scalar to a stable hash input.
 
 By default, the bucketing attribute is `targetingKey`. You can configure which attribute to use for bucketing when you set up the rollout in the dashboard.
 
@@ -53,11 +61,13 @@ Choose a bucketing attribute based on what should remain stable:
 
 For most feature releases and experiments, use a stable user or account identifier. Use request-level values only when changing between requests is acceptable, such as for traffic sampling.
 
-:::caution[Random assignment without targetingKey]
-If `targetingKey` is not present in the evaluation context and no alternative bucketing attribute is configured, Flagship cannot produce a stable hash. In this case the rollout bucket is assigned randomly on each evaluation, meaning the same user may receive different flag values across requests.
+:::caution[Random assignment without a bucketing value]
+If the bucketing path is missing or resolves to `null`, Flagship assigns a random bucket for each evaluation. The same user may receive different values across requests.
 
 Always provide a stable `targetingKey` (or configure a consistent bucketing attribute) to guarantee sticky bucketing.
 :::
+
+If the bucketing path resolves to an array or object, the rule fails. Evaluation then continues to the next rule.
 
 ## Common rollout patterns
 

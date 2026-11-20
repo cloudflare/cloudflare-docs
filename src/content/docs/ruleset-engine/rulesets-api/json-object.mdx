@@ -111,6 +111,8 @@ The JSON object properties for a rule are defined as follows:
 
 - `description` <Type text="String" />
   - A descriptive name of the rule.
+  - The Rulesets API accepts rule descriptions of up to 4,096 bytes.
+  - When included in logs, the description is truncated to at most 128 bytes without splitting a UTF-8 character.
 
 - `action` <Type text="String" />
   - Defines what happens when there is a match for the rule expression.

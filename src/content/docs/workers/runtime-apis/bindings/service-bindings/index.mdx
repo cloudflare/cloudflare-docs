@@ -53,7 +53,7 @@ For example, if you want Worker A to be able to call Worker B — you'd add the 
 </WranglerConfig>
 
 - `binding`: The name of the key you want to expose on the `env` object.
-- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account.
+- `service`: The name of the target Worker you would like to communicate with. This Worker must be on your Cloudflare account. If the target Worker uses an [environment](/workers/wrangler/environments/#service-bindings), use `<WORKER_NAME>-<ENVIRONMENT_NAME>`.
 
 ## Interfaces
 
@@ -61,6 +61,7 @@ Worker A that declares a Service binding to Worker B can call Worker B in two di
 
 1. [RPC](/workers/runtime-apis/bindings/service-bindings/rpc) lets you communicate between Workers using function calls that you define. For example, `await env.BINDING_NAME.myMethod(arg1)`. This is recommended for most use cases, and allows you to create your own internal APIs that your Worker makes available to other Workers.
 2. [HTTP](/workers/runtime-apis/bindings/service-bindings/http) lets you communicate between Workers by calling the [`fetch()` handler](/workers/runtime-apis/handlers/fetch) from other Workers, sending `Request` objects and receiving `Response` objects back. For example, `env.BINDING_NAME.fetch(request)`.
+3. [Connect](/workers/runtime-apis/handlers/connect/) forwards a raw TCP connection to the [`connect()` handler](/workers/runtime-apis/handlers/connect/) of another Worker.
 
 :::note[Cloudflare Access context]
 Cloudflare Access does not propagate `ctx.access` from Worker A to Worker B. This applies to HTTP requests and RPC invocations. Do not treat the downstream invocation as authenticated by the caller's Access context. For more information, refer to [`ctx.access` limitations](/workers/configuration/cloudflare-access/#ctxaccess-limitations).
@@ -77,7 +78,8 @@ First, create the Worker that you want to communicate with. Let's call this "Wor
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_b",
-	"main": "./src/workerB.js"
+	"main": "./src/workerB.js",
+	"upload_source_maps": true
 }
 ```
 
@@ -107,6 +109,7 @@ Next, create the Worker that will call Worker B. Let's call this "Worker A". Wor
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "worker_a",
 	"main": "./src/workerA.js",
+	"upload_source_maps": true,
 	"services": [
 		{
 			"binding": "WORKER_B",
@@ -133,9 +136,45 @@ Each Worker is deployed separately.
 
 ## Lifecycle
 
-The Service bindings API is asynchronous — you must `await` any method you call. If Worker A invokes Worker B via a Service binding, and Worker A does not await the completion of Worker B, Worker B will be terminated early.
+Use `return` or `await` for service-binding calls needed to answer a request. Otherwise, work in the called Worker can stop when the caller finishes. For a short task that should continue after the response, pass the whole task to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil).
 
-For more about the lifecycle of calling a Worker over a Service Binding via RPC, refer to the [RPC Lifecycle](/workers/runtime-apis/rpc/lifecycle) docs.
+### Request cancellation
+
+When a client disconnects, work handling its request may be canceled. This includes pending subrequests and open streams or connections tied to that request.
+
+If Worker A calls Worker B through an HTTP or RPC service binding, cancellation can continue down that chain. Worker A is Worker B's client. When Worker A's execution context ends, Worker B loses its caller, even though it has no direct connection to the original client.
+
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant A as Worker A
+    participant B as Worker B
+    C->>A: Request
+    A->>B: HTTP or RPC call
+    C--xA: Disconnects
+    Note over A: Request work may be canceled
+    A--xB: Call is canceled when A's context ends
+    Note over B: B loses its caller
+```
+
+The original client can be any application or service, such as a browser or mobile app. The calling Worker can also be a Pages Function.
+
+Using `await` does not prevent cancellation when the client disconnects. Use `ctx.waitUntil()` for short tasks that should continue after the request ends.
+
+- **HTTP:** Follow [Handle canceled requests](/workers/runtime-apis/bindings/service-bindings/http/#handle-canceled-requests) to handle response bodies and compare logs from both Workers.
+- **RPC:** When the caller's execution context ends, the called Worker's RPC execution context is canceled, even if RPC object references still exist. Refer to [RPC lifecycle](/workers/runtime-apis/rpc/lifecycle/#end-of-event-handler--execution-context) for object lifetimes and extending work with `ctx.waitUntil()`.
+
+### Choose when work should stop
+
+Choose how to run the work based on what should happen if the client disconnects:
+
+| What you need                                                              | What to do                                                                                                                                                                                                                                               |
+| -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Work only needed to answer this request                                    | Return or await the call. For HTTP calls, forward the response or finish reading its body. Let the work stop if the client disconnects.                                                                                                                  |
+| A short task that should finish after the response, such as a cache update | Pass the whole task to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil), including any response-body processing it needs. For HTTP-triggered Workers, it can run for up to 30 seconds after the response is sent or the client disconnects. |
+| A job that must finish even if the client disconnects                      | Send the job to [Queues](/queues/) or start a [Workflow](/workflows/). Wait for the message to be accepted or the workflow instance to be created before telling the client the job was accepted.                                                        |
+
+`waitUntil()` gives work more time. It does not guarantee completion or send a response to a disconnected client. For jobs that can retry, make it safe to run the same operation more than once. For example, [Queues can deliver the same message more than once](/queues/reference/delivery-guarantees/).
 
 ## Local development
 

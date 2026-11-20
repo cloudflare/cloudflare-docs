@@ -6,7 +6,7 @@ sidebar:
   order: 3
 meta:
   title: Using Drizzle ORM with Hyperdrive for PostgreSQL
-reviewed: 2025-05-12
+reviewed: 2026-10-01
 products:
   - hyperdrive
   - workers
@@ -97,8 +97,11 @@ export default {
 ```
 
 :::note
-You may use [node-postgres](https://orm.drizzle.team/docs/get-started-postgresql#node-postgres) or [Postgres.js](https://orm.drizzle.team/docs/get-started-postgresql#postgresjs)
-when using Drizzle ORM. Both are supported and compatible.
+Use [node-postgres](https://orm.drizzle.team/docs/get-started-postgresql#node-postgres) with Drizzle ORM when connecting through Hyperdrive.
+:::
+
+:::caution[Known issue with Postgres.js]
+Pairing Drizzle ORM with the Postgres.js driver over Hyperdrive is not currently supported. Switch your driver to [node-postgres](https://orm.drizzle.team/docs/get-started-postgresql#node-postgres) (`pg`), the recommended driver for Drizzle ORM with Hyperdrive.
 :::
 
 ### 2.3. Configure Drizzle-Kit for migrations (optional)

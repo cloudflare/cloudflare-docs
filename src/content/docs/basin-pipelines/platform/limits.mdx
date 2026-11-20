@@ -1,0 +1,23 @@
+---
+pcx_content_type: concept
+title: Limits
+description: Account-level limits for Basin Pipelines streams, sinks, and pipelines.
+sidebar:
+  order: 2
+products:
+  - basin-pipelines
+---
+
+import { Render } from "~/components";
+
+The following limits are currently in effect:
+
+| Feature                                    | Limit  |
+| ------------------------------------------ | ------ |
+| Maximum streams per account                | 20     |
+| Maximum payload size per ingestion request | 5 MB   |
+| Maximum ingest rate per stream             | 1 GB/s |
+| Maximum sinks per account                  | 20     |
+| Maximum pipelines per account              | 20     |
+
+<Render file="limits_increase" product="workers" />

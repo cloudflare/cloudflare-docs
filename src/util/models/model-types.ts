@@ -59,6 +59,7 @@ export interface ModelView {
 	source: number;
 	task: string;
 	description: string;
+	tags: string[];
 	/** Derived capability labels (filter facet + badges). */
 	capabilities: string[];
 	beta: boolean;
@@ -71,6 +72,7 @@ export interface ModelView {
 	modelId?: string;
 	/** Accepted request formats (e.g. `["responses","chat-completions"]`). Catalog-only. */
 	requestFormats?: string[] | null;
+	pricing?: Record<string, unknown>;
 	/** Usage (first) + Examples list (rest). Catalog-only. */
 	examples?: ModelExample[];
 	/** In-page notice. Catalog-only. */

@@ -33,8 +33,7 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 						stroke="currentColor"
 						stroke-width="2"
 					>
-						<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"
-						></path>
+						<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path>
 						<path d="M14 3v5h5M9 13h6M9 17h6"></path>
 					</svg>
 				</span>
@@ -56,25 +55,29 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 							y1="0"
 							x2="60"
 							y2="13"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 						<line
 							x1="30"
 							y1="13"
 							x2="90"
 							y2="13"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 						<line
 							x1="30"
 							y1="13"
 							x2="30"
 							y2="26"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 						<line
 							x1="90"
 							y1="13"
 							x2="90"
 							y2="26"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 					</svg>
 				</div>
 
@@ -90,9 +93,9 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 							<span class="asid-opt">Optional</span>
 						</span>
 						<span class="asid-node-body">
-							<span class="asid-icon" aria-hidden="true"
-								><Icon name="r2" /></span
-							>
+							<span class="asid-icon" aria-hidden="true">
+								<Icon name="r2" />
+							</span>
 							<span class="asid-node-title">R2 bucket</span>
 						</span>
 					</a>
@@ -106,9 +109,9 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 							<span class="asid-opt">Optional</span>
 						</span>
 						<span class="asid-node-body">
-							<span class="asid-icon" aria-hidden="true"
-								><Icon name="browser-run" /></span
-							>
+							<span class="asid-icon" aria-hidden="true">
+								<Icon name="browser-run" />
+							</span>
 							<span class="asid-node-title">Website</span>
 						</span>
 					</a>
@@ -122,25 +125,29 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 							y1="0"
 							x2="30"
 							y2="13"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 						<line
 							x1="90"
 							y1="0"
 							x2="90"
 							y2="13"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 						<line
 							x1="30"
 							y1="13"
 							x2="90"
 							y2="13"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 						<line
 							x1="60"
 							y1="13"
 							x2="60"
 							y2="26"
-							vector-effect="non-scaling-stroke"></line>
+							vector-effect="non-scaling-stroke"
+						></line>
 					</svg>
 				</div>
 
@@ -152,9 +159,9 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 				>
 					<span class="asid-node-head">AI Search · R2</span>
 					<span class="asid-node-body">
-						<span class="asid-icon" aria-hidden="true"
-							><Icon name="ai-search" /></span
-						>
+						<span class="asid-icon" aria-hidden="true">
+							<Icon name="ai-search" />
+						</span>
 						<span class="asid-node-title">Built-in storage</span>
 					</span>
 				</a>
@@ -173,9 +180,9 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 			>
 				<span class="asid-node-head">Workers AI · toMarkdown()</span>
 				<span class="asid-node-body">
-					<span class="asid-icon" aria-hidden="true"
-						><Icon name="workers-ai" /></span
-					>
+					<span class="asid-icon" aria-hidden="true">
+						<Icon name="workers-ai" />
+					</span>
 					<span class="asid-node-title">Parsing</span>
 				</span>
 			</a>
@@ -190,168 +197,166 @@ const { autoPlay = true, loop = true, keyword = true } = Astro.props;
 			>
 				<span class="asid-node-head">AI Search</span>
 				<span class="asid-node-body">
-					<span class="asid-icon" aria-hidden="true"
-						><Icon name="ai-search" /></span
-					>
+					<span class="asid-icon" aria-hidden="true">
+						<Icon name="ai-search" />
+					</span>
 					<span class="asid-node-title">Chunking</span>
 				</span>
 			</a>
 
-			{
-				keyword ? (
-					<>
-						{/* Line into the "index & store" scope */}
-						<div class="asid-connector" data-step="10" />
+			{keyword ? (
+				<>
+					{/* Line into the "index & store" scope */}
+					<div class="asid-connector" data-step="10" />
 
-						<div class="asid-group asid-group-terminal">
-							<span class="asid-group-label">index &amp; store</span>
+					<div class="asid-group asid-group-terminal">
+						<span class="asid-group-label">index &amp; store</span>
 
-							{/* Split: chunks fan out to two parallel lanes */}
-							<div
-								class="asid-bracket asid-split"
-								data-step="11"
-								aria-hidden="true"
-							>
-								<svg viewBox="0 0 120 26" preserveAspectRatio="none">
-									<line
-										x1="60"
-										y1="0"
-										x2="60"
-										y2="13"
-										vector-effect="non-scaling-stroke"
-									/>
-									<line
-										x1="30"
-										y1="13"
-										x2="90"
-										y2="13"
-										vector-effect="non-scaling-stroke"
-									/>
-									<line
-										x1="30"
-										y1="13"
-										x2="30"
-										y2="26"
-										vector-effect="non-scaling-stroke"
-									/>
-									<line
-										x1="90"
-										y1="13"
-										x2="90"
-										y2="26"
-										vector-effect="non-scaling-stroke"
-									/>
-								</svg>
+						{/* Split: chunks fan out to two parallel lanes */}
+						<div
+							class="asid-bracket asid-split"
+							data-step="11"
+							aria-hidden="true"
+						>
+							<svg viewBox="0 0 120 26" preserveAspectRatio="none">
+								<line
+									x1="60"
+									y1="0"
+									x2="60"
+									y2="13"
+									vector-effect="non-scaling-stroke"
+								/>
+								<line
+									x1="30"
+									y1="13"
+									x2="90"
+									y2="13"
+									vector-effect="non-scaling-stroke"
+								/>
+								<line
+									x1="30"
+									y1="13"
+									x2="30"
+									y2="26"
+									vector-effect="non-scaling-stroke"
+								/>
+								<line
+									x1="90"
+									y1="13"
+									x2="90"
+									y2="26"
+									vector-effect="non-scaling-stroke"
+								/>
+							</svg>
+						</div>
+
+						<div class="asid-lanes">
+							<div class="asid-lane asid-optional">
+								<a
+									class="asid-node"
+									data-step="12"
+									href="/ai-search/configuration/models/"
+								>
+									<span class="asid-node-head">
+										AI Gateway / Workers AI
+										<span class="asid-opt">Optional</span>
+									</span>
+									<span class="asid-node-body">
+										<span class="asid-icon" aria-hidden="true">
+											<Icon name="ai-gateway" />
+										</span>
+										<span class="asid-node-title">Embedding</span>
+									</span>
+								</a>
+								<div class="asid-connector" data-step="13" />
+								<a
+									class="asid-node asid-terminal"
+									data-step="14"
+									href="/ai-search/configuration/indexing/vector-search/"
+								>
+									<span class="asid-node-head">
+										AI Search · Vectorize
+										<span class="asid-opt">Optional</span>
+									</span>
+									<span class="asid-node-body">
+										<span class="asid-icon" aria-hidden="true">
+											<Icon name="ai-search" />
+										</span>
+										<span class="asid-node-title">Vector index</span>
+									</span>
+								</a>
 							</div>
 
-							<div class="asid-lanes">
-								<div class="asid-lane asid-optional">
-									<a
-										class="asid-node"
-										data-step="12"
-										href="/ai-search/configuration/models/"
-									>
-										<span class="asid-node-head">
-											AI Gateway / Workers AI
-											<span class="asid-opt">Optional</span>
+							<div class="asid-lane asid-optional">
+								<a
+									class="asid-node"
+									data-step="12"
+									href="/ai-search/configuration/indexing/keyword-search/"
+								>
+									<span class="asid-node-head">
+										AI Search
+										<span class="asid-opt">Optional</span>
+									</span>
+									<span class="asid-node-body">
+										<span class="asid-icon" aria-hidden="true">
+											<Icon name="ai-search" />
 										</span>
-										<span class="asid-node-body">
-											<span class="asid-icon" aria-hidden="true">
-												<Icon name="ai-gateway" />
-											</span>
-											<span class="asid-node-title">Embedding</span>
+										<span class="asid-node-title">Keyword tokenizer</span>
+									</span>
+								</a>
+								<div class="asid-connector" data-step="13" />
+								<a
+									class="asid-node asid-terminal"
+									data-step="14"
+									href="/ai-search/configuration/indexing/keyword-search/"
+								>
+									<span class="asid-node-head">
+										AI Search
+										<span class="asid-opt">Optional</span>
+									</span>
+									<span class="asid-node-body">
+										<span class="asid-icon" aria-hidden="true">
+											<Icon name="ai-search" />
 										</span>
-									</a>
-									<div class="asid-connector" data-step="13" />
-									<a
-										class="asid-node asid-terminal"
-										data-step="14"
-										href="/ai-search/configuration/indexing/vector-search/"
-									>
-										<span class="asid-node-head">
-											AI Search · Vectorize
-											<span class="asid-opt">Optional</span>
-										</span>
-										<span class="asid-node-body">
-											<span class="asid-icon" aria-hidden="true">
-												<Icon name="ai-search" />
-											</span>
-											<span class="asid-node-title">Vector index</span>
-										</span>
-									</a>
-								</div>
-
-								<div class="asid-lane asid-optional">
-									<a
-										class="asid-node"
-										data-step="12"
-										href="/ai-search/configuration/indexing/keyword-search/"
-									>
-										<span class="asid-node-head">
-											AI Search
-											<span class="asid-opt">Optional</span>
-										</span>
-										<span class="asid-node-body">
-											<span class="asid-icon" aria-hidden="true">
-												<Icon name="ai-search" />
-											</span>
-											<span class="asid-node-title">Keyword tokenizer</span>
-										</span>
-									</a>
-									<div class="asid-connector" data-step="13" />
-									<a
-										class="asid-node asid-terminal"
-										data-step="14"
-										href="/ai-search/configuration/indexing/keyword-search/"
-									>
-										<span class="asid-node-head">
-											AI Search
-											<span class="asid-opt">Optional</span>
-										</span>
-										<span class="asid-node-body">
-											<span class="asid-icon" aria-hidden="true">
-												<Icon name="ai-search" />
-											</span>
-											<span class="asid-node-title">Inverted index</span>
-										</span>
-									</a>
-								</div>
+										<span class="asid-node-title">Inverted index</span>
+									</span>
+								</a>
 							</div>
 						</div>
-					</>
-				) : (
-					<>
-						<div class="asid-connector" data-step="10" />
-						<a
-							class="asid-node"
-							data-step="12"
-							href="/ai-search/configuration/models/"
-						>
-							<span class="asid-node-head">AI Gateway / Workers AI</span>
-							<span class="asid-node-body">
-								<span class="asid-icon" aria-hidden="true">
-									<Icon name="ai-gateway" />
-								</span>
-								<span class="asid-node-title">Embedding</span>
+					</div>
+				</>
+			) : (
+				<>
+					<div class="asid-connector" data-step="10" />
+					<a
+						class="asid-node"
+						data-step="12"
+						href="/ai-search/configuration/models/"
+					>
+						<span class="asid-node-head">AI Gateway / Workers AI</span>
+						<span class="asid-node-body">
+							<span class="asid-icon" aria-hidden="true">
+								<Icon name="ai-gateway" />
 							</span>
-						</a>
-						<div class="asid-connector" data-step="13" />
-						<a
-							class="asid-node asid-terminal"
-							data-step="14"
-							href="/ai-search/configuration/indexing/vector-search/"
-						>
-							<span class="asid-node-head">AI Search · Vectorize</span>
-							<span class="asid-node-body">
-								<span class="asid-icon" aria-hidden="true">
-									<Icon name="ai-search" />
-								</span>
-								<span class="asid-node-title">Vector index</span>
+							<span class="asid-node-title">Embedding</span>
+						</span>
+					</a>
+					<div class="asid-connector" data-step="13" />
+					<a
+						class="asid-node asid-terminal"
+						data-step="14"
+						href="/ai-search/configuration/indexing/vector-search/"
+					>
+						<span class="asid-node-head">AI Search · Vectorize</span>
+						<span class="asid-node-body">
+							<span class="asid-icon" aria-hidden="true">
+								<Icon name="ai-search" />
 							</span>
-						</a>
-					</>
-				)
-			}
+							<span class="asid-node-title">Vector index</span>
+						</span>
+					</a>
+				</>
+			)}
 		</div>
 	</cfdocs-ai-search-indexing-diagram>
 </figure>

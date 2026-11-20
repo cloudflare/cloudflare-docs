@@ -352,7 +352,7 @@ const PROXY_ENDPOINT = "/corsproxy/";
 const app = new Hono();
 
 // Demo page handler
-app.get("*", async (c) => {
+app.get("*", async (c, next) => {
 	// Only handle non-proxy requests with this handler
 	if (c.req.path.startsWith(PROXY_ENDPOINT)) {
 		return next();

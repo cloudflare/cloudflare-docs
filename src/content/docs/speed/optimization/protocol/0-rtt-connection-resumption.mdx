@@ -47,3 +47,7 @@ To adjust your 0-RTT Connection Resumption settings with the API, send a [`PATCH
 :::note
 The 0-RTT Connection Resumption is only established between the client and Cloudflare. It does not extend to the origin server.
 :::
+
+## Security considerations
+
+0-RTT reduces latency by allowing requests before the connection handshake completes. By design, these requests can be replayed and, for QUIC, processed before the client source IP address is validated. Before enabling 0-RTT, evaluate whether these risks are compatible with your security requirements.

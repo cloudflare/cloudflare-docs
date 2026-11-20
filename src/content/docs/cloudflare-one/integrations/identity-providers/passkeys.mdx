@@ -1,0 +1,146 @@
+---
+pcx_content_type: how-to
+description: Configure passkeys as an Access login method, enroll a passkey, and manage or remove registered passkeys.
+products:
+  - cloudflare-one
+title: Passkeys
+tags:
+  - REST API
+---
+
+import { CURL, DashButton, Steps, Tabs, TabItem } from "~/components";
+
+Cloudflare Access supports passkeys as a login method. Users can sign in with a passkey instead of entering a password or one-time PIN (OTP).
+
+Passkeys use WebAuthn to authenticate users with a device, security key, or password manager. The authenticator must support discoverable credentials and user verification, such as a fingerprint, face scan, or PIN.
+
+## Set up passkeys
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+If **Passkeys** is already listed under **Identity providers**, select it to review its settings. Otherwise, add it:
+
+<Steps>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
+
+   <DashButton url="/?to=/:account/one/integrations/identity-providers" zeroTrust />
+
+2. Select **Add an identity provider**.
+3. Select **Passkeys**.
+4. (Optional) Turn on **Automatically prompt on the login page** to open the browser's passkey prompt for returning users when they open the login page.
+5. Select **Save**.
+
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+Send a `POST` request to the [Identity Providers endpoint](/api/resources/zero_trust/subresources/identity_providers/methods/create/) with `type` set to `passkeys`. Use an [API token](/fundamentals/api/get-started/create-token/) with **Access: Organizations, Identity Providers, and Groups Write** permission.
+
+<CURL
+	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/access/identity_providers"
+	method="POST"
+	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
+	json={{
+		name: "Passkeys",
+		type: "passkeys",
+		config: {
+			login_page_auto_prompt: false,
+		},
+	}}
+/>
+
+Set `config.login_page_auto_prompt` to `true` to turn on automatic browser prompts for returning passkey users.
+
+</TabItem>
+</Tabs>
+
+### Allow passkeys for an application
+
+After adding the provider, allow it in your application's login methods.
+
+<Steps>
+
+1. Go to **Access controls** > **Applications**.
+
+   <DashButton url="/?to=/:account/access/apps" zeroTrust />
+
+2. Find your application, open its menu, and select **Edit**.
+3. Select **Login methods** to find the application's authentication settings.
+4. If **Accept all available identity providers** is turned off, add **Passkeys** under **Choose available identity providers for this application**. Keep any other login methods that users need.
+5. Select **Save**.
+
+</Steps>
+
+For the [App Launcher](/cloudflare-one/access-controls/access-settings/app-launcher/), allow **Passkeys** on its **Authentication** tab.
+
+Passkey enrollment and sign-in do not grant access by themselves. Users must still match an [Access policy](/cloudflare-one/access-controls/policies/). Passkey authentication does not retrieve group memberships or custom attributes from another identity provider. Review policies that depend on those attributes before adding passkeys as an alternative login method.
+
+## Enroll a passkey
+
+Before enrolling, users need a compatible browser and passkey authenticator.
+
+<Steps>
+
+1. Open an application that allows passkey authentication.
+2. On the Access login page, select **Sign in with a passkey**, then **Don't have a passkey? Set one up**.
+3. Verify your identity using an available login method. If passkeys are the application's only login method, Access sends a verification code to your email address during enrollment.
+4. Enter a name for the passkey and select **Add passkey**.
+5. Follow your browser or operating system's prompts to save the passkey.
+6. When setup finishes, select **Back to sign in**.
+
+</Steps>
+
+## Sign in with a passkey
+
+<Steps>
+
+1. Open an application that allows passkey authentication.
+2. On the Access login page, select **Sign in with a passkey**.
+3. Choose a saved passkey and complete your authenticator's verification prompt.
+
+</Steps>
+
+After verifying the passkey, Access evaluates your application's policies. You do not need to enter your email address to sign in with a passkey.
+
+If automatic browser prompts are turned on, Access can start the passkey prompt for returning users. Users can cancel the prompt and choose another allowed login method. Supported browsers can also offer saved passkeys in the email field.
+
+## Manage passkeys
+
+Users can add, rename, or delete their own passkeys.
+
+<Steps>
+
+1. On the Access login page, select **Manage passkeys**.
+2. Authenticate using an available login method.
+3. On the management page, select **Add passkey**, **Rename passkey**, or **Delete passkey**. Confirm the change when prompted.
+
+</Steps>
+
+### Remove a user's passkey
+
+Administrators can remove a passkey if a device is lost or a user needs to enroll again.
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Zero Trust** > **Team & Resources** > **Users**.
+
+   <DashButton url="/?to=/:account/team-resources/users" buttonName="Users" zeroTrust />
+
+2. Select the user and open **User identity**.
+3. In **Passkeys**, open the passkey's menu and select **Delete**.
+4. Confirm that you want to remove the passkey.
+
+</Steps>
+
+You can also [delete a user's passkey through the API](/api/resources/zero_trust/subresources/access/subresources/users/subresources/passkeys/methods/delete/).
+
+Deleting a registered passkey prevents Access from accepting it for future sign-ins. To end a user's active Access sessions, [revoke their sessions](/cloudflare-one/access-controls/access-settings/session-management/#revoke-user-sessions).
+
+## Troubleshoot passkey sign-in
+
+If a saved passkey does not appear, check that it is available on the device or in the password manager you are using. Follow your browser's prompts to use a passkey from another device, if supported.
+
+If you cannot use a registered passkey, choose another allowed login method or contact your administrator. To replace it, follow [Enroll a passkey](#enroll-a-passkey).

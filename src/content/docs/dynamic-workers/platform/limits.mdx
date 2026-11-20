@@ -1,0 +1,20 @@
+---
+title: Limits
+description: Limits for concurrent Dynamic Worker requests.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - dynamic-workers
+---
+
+Cloudflare limits the number of distinct Dynamic Workers with in-flight requests. Multiple in-flight requests to the same Dynamic Worker count as one toward this limit.
+
+| Context | Concurrent Dynamic Workers |
+| --- | --- |
+| Worker request | 4 |
+| [Durable Object](/durable-objects/) | 10 (previously 4) |
+
+In a Worker, each request has its own input/output (I/O) context. Each request can therefore have up to four distinct Dynamic Workers with in-flight requests.
+
+A Durable Object shares one I/O context across all concurrent requests to the same object. Those requests can collectively have up to ten distinct Dynamic Workers with in-flight requests. To set lower CPU time or subrequest limits, refer to [Custom resource limits](/dynamic-workers/usage/limits/).

@@ -24,7 +24,7 @@ This guide will instruct you through:
 
 :::note
 
-Hyperdrive currently works with PostgreSQL, MySQL and many compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), and PlanetScale.
+Hyperdrive currently works with PostgreSQL, MySQL and many compatible databases. This includes CockroachDB and Materialize (which are PostgreSQL-compatible), Supabase, and PlanetScale.
 
 Learn more about the [databases that Hyperdrive supports](/hyperdrive/reference/supported-databases-and-features).
 
@@ -35,7 +35,11 @@ Learn more about the [databases that Hyperdrive supports](/hyperdrive/reference/
 Before you begin, ensure you have completed the following:
 
 1. Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages) if you have not already.
-2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm). Use a Node version manager like [nvm](https://github.com/nvm-sh/nvm) or [Volta](https://volta.sh/) to avoid permission issues and change Node.js versions. [Wrangler](/workers/wrangler/install-and-update/) requires a Node version of `16.17.0` or later.
+2. Install [`Node.js`](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
+   <Render file="nodejs-version-manager" product="workers" />
+
+   For supported Node.js versions, refer to the [Wrangler system requirements](/workers/wrangler/install-and-update/#install-wrangler).
 3. Have a publicly accessible PostgreSQL or MySQL (or compatible) database. _If your database is in a private network_, refer to [Connect to a private database using Workers VPC](/hyperdrive/configuration/connect-to-private-database-vpc/).
 
 ## 1. Log in
@@ -188,7 +192,7 @@ To connect to your database, you will need a database driver which allows you to
 
 To install `pg`, ensure you are in the `hyperdrive-tutorial` directory. Open your terminal and run the following command:
 
-<PackageManagers pkg="pg" comment="This should install v8.13.0 or later" />
+<PackageManagers pkg="pg" comment="This should install v8.16.3 or later" />
 
 If you are using TypeScript, you should also install the type definitions for `pg`:
 
@@ -227,7 +231,7 @@ The `index.ts` file is where you configure your Worker's interactions with Hyper
 Populate your `index.ts` file with the following code:
 
 ```typescript
-// pg 8.13.0 or later is recommended
+// pg 8.16.3 or later is recommended
 import { Client } from "pg";
 
 export interface Env {

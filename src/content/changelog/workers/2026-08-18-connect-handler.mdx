@@ -1,0 +1,38 @@
+---
+title: "Connect handler no longer requires an experimental flag"
+description: Workers can export a connect() handler to accept TCP connections forwarded from another Worker over a service binding.
+products:
+  - workers
+date: 2026-08-18
+---
+
+Workers can now export a [`connect()` handler](/workers/runtime-apis/handlers/connect/) without enabling any [compatibility flag](/workers/configuration/compatibility-flags/). Previously, using a `connect()` handler required the `experimental` compatibility flag, which cannot be enabled in production.
+
+A `connect()` handler lets a Worker accept a TCP connection forwarded from another Worker over a [service binding](/workers/runtime-apis/bindings/service-bindings/), and read and write raw bytes on it using a [`Socket`](/workers/runtime-apis/tcp-sockets/#socket) object:
+
+```js title="backend-worker.js"
+export default {
+	async connect(socket, env, ctx) {
+		const writer = socket.writable.getWriter();
+		await writer.write(new TextEncoder().encode("hello"));
+		await writer.close();
+	},
+};
+```
+
+Another Worker forwards a connection to it by calling `connect()` on the service binding:
+
+```js title="frontend-worker.js"
+export default {
+	async fetch(request, env) {
+		const socket = env.BACKEND.connect("example.com:1234");
+		return new Response(socket.readable);
+	},
+};
+```
+
+On the `connect()` handler side, `socket.opened` resolves with `localAddress` set to the address the caller passed to `connect()`.
+
+Direct inbound TCP connections remain unsupported at present.
+
+For more information, refer to the [connect handler documentation](/workers/runtime-apis/handlers/connect/).

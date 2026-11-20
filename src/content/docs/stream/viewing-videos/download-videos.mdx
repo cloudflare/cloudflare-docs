@@ -26,6 +26,8 @@ You can enable MP4 support on a per video basis by following the steps below:
 
 You can enable downloads for an uploaded video once it is ready to view by making an HTTP request to either the `/downloads` or `/downloads/default` endpoint.
 
+MP4 downloads are not supported for [live recordings longer than four hours](/stream/stream-live/download-stream-live-videos/).
+
 To get notified when a video is ready to view, refer to [Using webhooks](/stream/manage-video-library/using-webhooks/#notifications).
 
 <Tabs>
@@ -93,6 +95,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
@@ -179,6 +182,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
@@ -233,7 +237,7 @@ const downloads = await client.stream.downloads.get({
 			"status": "ready",
 			"url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/audio.m4a",
 			"percentComplete": 100.0
-		}
+		},
 		"default": {
 			"status": "ready",
 			"url": "https://customer-<CODE>.cloudflarestream.com/<VIDEO_UID>/downloads/default.mp4",
@@ -268,6 +272,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
@@ -355,6 +360,7 @@ export default {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true

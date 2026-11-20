@@ -26,11 +26,35 @@ All Workers are assigned a `workers.dev` route when they are created or renamed 
 
 ## Manage access to `workers.dev`
 
-When enabled, your `workers.dev` URL is available publicly. To require visitors to sign in before they can access a `workers.dev` URL, use [Cloudflare Access](/workers/configuration/cloudflare-access/).
+When enabled, your `workers.dev` URL is available publicly. You can use [Cloudflare Access](/cloudflare-one/access-controls/policies/) to require visitors to authenticate before accessing [Version URLs](/workers/versions-and-deployments/version-urls/), [Preview URLs](/workers/previews/), and Deployment URLs. You can limit access to yourself, your teammates, your organization, or anyone else you specify in your [access policy](/cloudflare-one/access-controls/policies/).
 
 Access can protect one Worker's production `workers.dev` URL, preview URLs, or both. You can also protect all Workers or all Worker previews in an account.
 
 To use details about the signed-in user in your Worker, use [`ctx.access`](/workers/configuration/cloudflare-access/#read-authenticated-user-identity-with-ctxaccess). You can also read the [user's identity](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/#user-identity) from the validated JWT or the `/cdn-cgi/access/get-identity` endpoint.
+
+## Browser Integrity Check on `workers.dev`
+
+All requests to a `workers.dev` hostname are evaluated by [Browser Integrity Check](/waf/tools/browser-integrity-check/) (BIC) on the Cloudflare-managed `workers.dev` zone. This includes [Preview URLs](/workers/previews/) and [Version URLs](/workers/versions-and-deployments/version-urls/).
+
+- You cannot turn off this check for a `workers.dev` hostname.
+- Turning off BIC in your own zone, or adding a [custom rule](/waf/custom-rules/skip/) or [configuration rule](/rules/configuration-rules/) that skips or turns off BIC, only affects your zone. It does not affect the check on the `workers.dev` zone.
+- Automated clients that send some default library `User-Agent` headers (for example, the default Python `urllib` user agent) receive [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/) before your Worker runs. These requests do not appear in your Worker logs.
+
+To allow automated clients to reach your Worker:
+
+1. **Recommended:** Configure the client to send a descriptive `User-Agent` header that identifies your application. The client does not need to send a browser user agent. For example, in Python:
+
+   ```python
+   import urllib.request
+
+   req = urllib.request.Request(
+       "https://example.com/data.json",
+       headers={"User-Agent": "my-app/1.0 (+https://example.com)"},
+   )
+   urllib.request.urlopen(req)
+   ```
+
+2. Serve your Worker on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in a zone you own. You can then create a [configuration rule](/rules/configuration-rules/) that turns off Browser Integrity Check, or a [custom rule](/waf/custom-rules/skip/) that skips it, for only the paths that need it.
 
 ## Disabling `workers.dev`
 
@@ -61,7 +85,7 @@ To disable the `workers.dev` route for a Worker, include the following in your W
 
 </WranglerConfig>
 
-When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Preview URLs default to matching your `workers_dev` setting unless explicitly configured. If you explicitly enabled Preview URLs, [disable them separately](/workers/versions-and-deployments/preview-urls/#toggle-preview-urls-enable-or-disable).
+When you redeploy your Worker with this change, the `workers.dev` route will be disabled. Disabling your `workers.dev` route does not disable [Version URLs](/workers/versions-and-deployments/version-urls/), [Preview URLs](/workers/previews/), or Deployment URLs.
 
 If you do not specify `workers_dev = false` but add a [`routes` component](/workers/wrangler/configuration/#routes) to your [Wrangler configuration file](/workers/wrangler/configuration/), the value of `workers_dev` will be inferred as `false` on the next deploy.
 

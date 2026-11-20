@@ -1,0 +1,61 @@
+---
+pcx_content_type: navigation
+title: RtkAudioVisualizer
+description: API reference for RtkAudioVisualizer component (React Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-audio-visualizer/rtk-audio-visualizer.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+An audio visualizer component which visualizes a participants audio.
+ Commonly used inside `rtk-name-tag`.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `hideMuted` | `boolean` | ✅ | - | Hide the visualizer if audio is muted |
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `isScreenShare` | `boolean` | ✅ | - | Audio visualizer for screensharing, it will use screenShareTracks.audio instead of audioTrack |
+| `participant` | `Peer` | ✅ | - | Participant object |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `AudioVisualizerVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```tsx
+import { RtkAudioVisualizer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return <RtkAudioVisualizer />;
+}
+```
+
+### With Properties
+
+```tsx
+import { RtkAudioVisualizer } from '@cloudflare/realtimekit-react-ui';
+
+function MyComponent() {
+  return (
+    <RtkAudioVisualizer
+      hideMuted={true}
+      isScreenShare={true}
+      participant={participant}
+    />
+  );
+}
+```
+

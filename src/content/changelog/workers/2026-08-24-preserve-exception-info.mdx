@@ -1,0 +1,51 @@
+---
+title: Preserve exception details in console logs
+description: Log events now preserve the name, message, and stack of exceptions passed to console methods.
+products:
+  - workers
+date: 2026-08-24
+---
+
+import { TypeScriptExample } from "~/components";
+
+Console methods now preserve exception details in your Worker's logs. When your Worker logs an exception, the corresponding log entry includes the exception name, message, and stack.
+
+For example, your Worker can catch and log an exception:
+
+<TypeScriptExample>
+
+```ts
+try {
+	throw new Error("Deliberately created exception");
+} catch (error) {
+	console.error("caught exception:", error);
+}
+```
+
+</TypeScriptExample>
+
+If you use [Workers Observability](/workers/observability/), your log is automatically enriched with structured error information. The following example shows how the enriched log appears in the Cloudflare dashboard:
+
+![Workers Observability log entry showing a caught exception and its stack trace](~/assets/images/changelog/workers/observability/2026-08-24-error-info.png)
+
+The exception's stack trace appears directly in the log message.
+
+If you send telemetry to a [Tail Worker](/workers/observability/logs/tail-workers/), the Tail Worker now receives a log entry with an `errorInfo` array:
+
+```json
+{
+	"message": ["Request failed:", "RangeError: Value out of range"],
+	"errorInfo": [
+		null,
+		{
+			"name": "RangeError",
+			"message": "Value out of range",
+			"stack": "RangeError: Value out of range\n    at ..."
+		}
+	],
+	"level": "error",
+	"timestamp": 1784851200000
+}
+```
+
+Each `errorInfo` item corresponds to the console argument at the same index in `message`. Arguments that are not exceptions have a `null` entry.

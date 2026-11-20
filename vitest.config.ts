@@ -1,5 +1,5 @@
-import { defineConfig, defineProject } from "vitest/config";
-import { cloudflareTest } from "@cloudflare/vitest-pool-workers";
+import { configDefaults, defineConfig, defineProject } from "vitest/config";
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
 import { getViteConfig } from "astro/config";
 
 export default defineConfig({
@@ -14,7 +14,7 @@ export default defineConfig({
 				test: {
 					name: "Workers",
 					include: ["**/*.worker.test.ts"],
-					exclude: ["**/*.preview.worker.test.ts"],
+					exclude: [...configDefaults.exclude, "**/*.preview.worker.test.ts"],
 					deps: {
 						optimizer: {
 							ssr: {

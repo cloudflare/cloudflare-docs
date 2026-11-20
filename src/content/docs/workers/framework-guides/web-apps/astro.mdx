@@ -37,6 +37,8 @@ import {
 
 [![Deploy to Workers](https://deploy.workers.cloudflare.com/button)](https://dash.cloudflare.com/?to=/:account/workers-and-pages/create/deploy-to-workers&repository=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
 
+To move an existing Astro project from Vercel, refer to [Migrate Astro from Vercel to Cloudflare Workers](/workers/static-assets/migration-guides/vercel-to-workers/astro/).
+
 ## What is Astro?
 
 [Astro](https://astro.build/) is a JavaScript web framework designed for creating websites that display large amounts of content (such as blogs, documentation sites, or online stores).
@@ -44,6 +46,8 @@ import {
 Astro emphasizes performance through minimal client-side JavaScript - by default, it renders as much content as possible at build time, or [on-demand](https://docs.astro.build/en/guides/on-demand-rendering/) on the "server" - this can be a Cloudflare Worker. [“Islands”](https://docs.astro.build/en/concepts/islands/) of JavaScript are added only where interactivity or personalization is needed.
 
 Astro is also framework-agnostic, and supports every major UI framework, including React, Preact, Svelte, Vue, SolidJS, via its official [integrations](https://astro.build/integrations/).
+
+To add a content management system (CMS) to an Astro site on Workers, refer to [EmDash](/workers/framework-guides/web-apps/emdash/).
 
 ## Deploy a new Astro project on Workers
 
@@ -89,7 +93,6 @@ Learn more about [automatic project configuration](/workers/framework-guides/aut
 	configs={[
 		{ label: "main", file: "wrangler.jsonc", value: "dist/_worker.js/index.js" },
 		{ label: "assets", file: "wrangler.jsonc", value: "directory: ./dist, binding: ASSETS" },
-		{ label: "compatibility_flags", file: "wrangler.jsonc", value: "nodejs_compat" },
 		{ label: "observability", file: "wrangler.jsonc", value: "enabled: true" },
 		{ label: "adapter", file: "astro.config.mjs", value: "@astrojs/cloudflare" },
 	]}
@@ -133,7 +136,7 @@ If your Astro project is entirely pre-rendered, follow these steps:
         		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
         		<PackageManagers type="exec" pkg="astro" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+        		<PackageManagers type="dlx" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 
@@ -170,9 +173,9 @@ If your Astro project uses [on demand rendering (also known as SSR)](https://doc
         {
         	"name": "my-astro-app",
         	"main": "./dist/_worker.js/index.js",
+            "upload_source_maps": true,
         	// Update to today's date
         	"compatibility_date": "$today",
-        	"compatibility_flags": ["nodejs_compat"],
         	"assets": {
         		"binding": "ASSETS",
         		"directory": "./dist"
@@ -196,7 +199,7 @@ If your Astro project uses [on demand rendering (also known as SSR)](https://doc
         		You can deploy your project to a [`*.workers.dev` subdomain](/workers/configuration/routing/workers-dev/) or a [custom domain](/workers/configuration/routing/custom-domains/) from your local machine or any CI/CD system (including [Workers Builds](/workers/ci-cd/#workers-builds)). Use the following command to build and deploy. If you're using a CI service, be sure to update your "deploy command" accordingly.
 
         		<PackageManagers type="exec" pkg="astro" args="build" />
-        		<PackageManagers type="exec" pkg="wrangler@latest" args="deploy" />
+        		<PackageManagers type="dlx" pkg="wrangler@latest" args="deploy" />
 
 </Steps>
 

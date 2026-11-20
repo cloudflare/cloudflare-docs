@@ -28,17 +28,11 @@ const currentPath = Astro.url.pathname;
 	<div class="flex h-full flex-col">
 		<Header showSidebar />
 
-		<div
-			class="bg-background text-foreground flex w-full flex-col overflow-x-clip"
-		>
+		<div class="bg-background text-foreground flex w-full flex-col overflow-x-clip">
 			<div class="flex">
-				{
-					/* Full-height column carries the divider so it runs the entire
-				    page length; the inner <aside> stays sticky for the nav. */
-				}
-				<div
-					class="border-border hidden w-(--nb-sidebar-width) shrink-0 border-r lg:block"
-				>
+				{/* Full-height column carries the divider so it runs the entire
+				    page length; the inner <aside> stays sticky for the nav. */}
+				<div class="border-border hidden w-(--nb-sidebar-width) shrink-0 border-r lg:block">
 					<aside
 						data-nb-desktop-sidebar
 						class="sticky top-14 flex h-[calc(100vh-3.5rem)] flex-col overflow-y-auto"
@@ -47,10 +41,7 @@ const currentPath = Astro.url.pathname;
 							<SidebarFilter placeholder="Filter sidebar" />
 							<Sidebar currentPath={currentPath} />
 						</nav>
-						<div
-							class="from-background pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t to-transparent"
-						>
-						</div>
+						<div class="from-background pointer-events-none sticky bottom-0 h-8 bg-gradient-to-t to-transparent"></div>
 					</aside>
 				</div>
 
@@ -58,9 +49,7 @@ const currentPath = Astro.url.pathname;
 					<div class="relative">
 						<FullPageLines />
 						<StructuralGrid />
-						<div
-							class="relative z-10 mx-auto max-w-[1280px] px-4 pt-16 min-[800px]:pt-[max(2rem,4vw)] lg:px-[max(2rem,4vw)]"
-						>
+						<div class="relative z-10 mx-auto max-w-[1280px] px-4 pt-16 min-[800px]:pt-[max(2rem,4vw)] lg:px-[max(2rem,4vw)]">
 							<Hero />
 							<BuildFromScratch />
 							<AgentSetup />
@@ -73,14 +62,12 @@ const currentPath = Astro.url.pathname;
 				</main>
 			</div>
 
-			{
-				/* Footer spans the full page width (beneath the sidebar), rendered
+			{/* Footer spans the full page width (beneath the sidebar), rendered
 			    outside the sidebar+main row. Its own lines layer repeats
 			    FullPageLines offset by the sidebar width on desktop, so the vertical
 			    dashed rules stay vertically aligned with the content column above
 			    and read as one continuous run. Footer fill is transparent in light
-			    mode (globals.css) so the rules show through. */
-			}
+			    mode (globals.css) so the rules show through. */}
 			<div class="relative">
 				<div
 					class="pointer-events-none absolute inset-0 z-0 hidden lg:left-(--nb-sidebar-width) lg:block"
@@ -103,9 +90,7 @@ const currentPath = Astro.url.pathname;
 			data-mobile-sidebar-panel
 			class="bg-card h-full w-full -translate-x-full overflow-y-auto shadow-lg transition-transform duration-250 ease-out group-data-[state=open]:translate-x-0 motion-reduce:transition-none"
 		>
-			<div
-				class="border-border bg-card sticky top-0 z-[1] flex items-center justify-between border-b px-4 py-3"
-			>
+			<div class="border-border bg-card sticky top-0 z-[1] flex items-center justify-between border-b px-4 py-3">
 				<a href="/" class="group flex items-center gap-2 no-underline">
 					<img
 						src={logo.src}
@@ -114,9 +99,7 @@ const currentPath = Astro.url.pathname;
 						height="23"
 						class="h-[20px] w-auto"
 					/>
-					<span
-						class="text-foreground group-hover:text-primary text-lg font-semibold tracking-tight transition-colors"
-					>
+					<span class="text-foreground group-hover:text-primary text-lg font-semibold tracking-tight transition-colors">
 						{config.title}
 					</span>
 				</a>

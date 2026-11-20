@@ -1,22 +1,12 @@
 {
-    "id": "c1c12ce4-c36a-4aa6-8da4-f63ba4b8984d",
-    "source": 1,
     "name": "@cf/openai/whisper",
-    "description": "Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multitasking model that can perform multilingual speech recognition, speech translation, and language identification.",
-    "task": {
-        "id": "dfce1c48-2a81-462e-a7fd-de97ce985207",
-        "name": "Automatic Speech Recognition",
-        "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
-    },
-    "created_at": "2023-09-25 19:21:11.898",
-    "tags": [],
     "properties": [
         {
             "property_id": "price",
             "value": [
                 {
                     "unit": "per audio minute",
-                    "price": 0.00045,
+                    "price": 0.000453,
                     "currency": "USD"
                 }
             ]
@@ -26,6 +16,16 @@
             "value": "https://openai.com/research/whisper"
         }
     ],
+    "id": "c1c12ce4-c36a-4aa6-8da4-f63ba4b8984d",
+    "source": 1,
+    "description": "Whisper is a general-purpose speech recognition model. It is trained on a large dataset of diverse audio and is also a multitasking model that can perform multilingual speech recognition, speech translation, and language identification.",
+    "task": {
+        "id": "dfce1c48-2a81-462e-a7fd-de97ce985207",
+        "name": "Automatic Speech Recognition",
+        "description": "Automatic speech recognition (ASR) models convert a speech signal, typically an audio input, to text."
+    },
+    "created_at": "2023-09-25 19:21:11.898",
+    "tags": [],
     "schema": {
         "input": {
             "oneOf": [
@@ -89,5 +89,6 @@
                 "text"
             ]
         }
-    }
+    },
+    "deprecated": false
 }

@@ -51,6 +51,17 @@ The [Google tag ID](https://support.google.com/analytics/answer/9539598?hl=en) c
 
 Now that you have authenticated into your Cloudflare account and configured GTM in first-party mode, your Google Tags will be loaded using `https://your-domain/measurement-path/...`and subsequent measurement requests will be served by Cloudflare.
 
+## Verify your setup
+
+To confirm that Google tag gateway for advertisers is working:
+
+1. Make sure your Google Tag Manager container has at least one tag that fires.
+2. Open [Tag Assistant](https://tagassistant.google.com/) and enter your website URL to connect to it.
+3. Navigate through your website to trigger tags.
+4. In **Summary** > **Output** > **Hits Sent**, verify that hits are sent to your measurement path (`https://your-domain/measurement-path/...`).
+
+After a successful setup, the **Google tag gateway** screen in your Google tag settings shows an **Active** status.
+
 ## Zone-level configuration
 
 Google tag gateway for advertisers is configured at the zone level. When you enable it for a zone (for example, `example.com`), it applies to all hostnames and subdomains within that zone, including custom hostnames. Currently, it is not possible to enable or disable the feature for individual subdomains independently. [Configuration Rules](/rules/configuration-rules/) cannot be used to control or disable the tag injection on specific subdomains.

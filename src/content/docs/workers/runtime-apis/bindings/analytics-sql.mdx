@@ -1,0 +1,102 @@
+---
+pcx_content_type: reference
+title: Analytics SQL binding
+description: Review the Analytics SQL binding interface for queries from Cloudflare Workers.
+products:
+  - workers
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Use the Analytics SQL binding to query analytics datasets from a Worker.
+
+## Configure the binding
+
+Add an Analytics SQL binding to your Worker's Wrangler configuration. The `analytics` key requires Wrangler 4.145.0 or later.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"analytics": {
+		"binding": "ANALYTICS_SQL"
+	}
+}
+```
+
+</WranglerConfig>
+
+The `binding` value determines the property used to access the binding on your Worker's `env` object.
+
+## Use the binding
+
+<TypeScriptExample>
+
+```ts
+interface Env {
+	ANALYTICS_SQL: AnalyticsSQLBinding;
+}
+
+type CountRow = {
+	requests: number;
+};
+
+export default {
+	async fetch(_request, env): Promise<Response> {
+		const start = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+		const result = await env.ANALYTICS_SQL.query<CountRow>({
+			query: "SELECT COUNT(*) AS requests FROM events.httpRequests WHERE timestamp >= $start",
+			params: { start },
+		});
+
+		return Response.json(result);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+For available datasets and supported SQL syntax, refer to the [Analytics SQL documentation](/analytics/sql-api/).
+
+## `query()`
+
+The `query()` method executes one SQL `SELECT` statement:
+
+```ts
+query<T extends Record<string, unknown> = Record<string, unknown>>(
+	request: AnalyticsSQLQuery,
+): Promise<AnalyticsSQLResult<T>>;
+```
+
+The optional type parameter defines the shape of each result row.
+
+### Request
+
+The `AnalyticsSQLQuery` object has the following properties:
+
+| Property | Type            | Required | Description                                                                                   |
+| -------- | --------------- | -------- | --------------------------------------------------------------------------------------------- |
+| `query`  | `string`        | Yes      | SQL statement to execute. Use `$1` for positional parameters or `$name` for named parameters. |
+| `params` | array or object | No       | Values for the placeholders in `query`.                                                       |
+
+An `AnalyticsSQLParameter` can be a `string`, `number`, `boolean`, or `null`.
+
+The binding derives account scope from the Worker. It does not accept `scope` or `time_range` request properties.
+
+### Result
+
+The `AnalyticsSQLResult<T>` object has the following properties:
+
+| Property     | Type                     | Description                                       |
+| ------------ | ------------------------ | ------------------------------------------------- |
+| `data`       | `T[]`                    | Query result rows keyed by selected column names. |
+| `rows`       | `number`                 | Number of rows in `data`.                         |
+| `statistics` | `AnalyticsSQLStatistics` | Execution statistics for the query.               |
+
+The `statistics` object contains `elapsed_ms`, `rows_read`, and `bytes_read`. For details about these values, refer to [Query the SQL API](/analytics/sql-api/query-api/#response-formats).
+
+## Errors
+
+The method rejects its promise when a query fails. The thrown error has a boolean `retryable` property. Retry with bounded exponential backoff only when this property is `true`.
+
+The binding does not retry queries automatically. For query and service errors, refer to [SQL API errors](/analytics/sql-api/errors/).

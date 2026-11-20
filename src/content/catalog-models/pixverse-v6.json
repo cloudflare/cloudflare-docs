@@ -13,6 +13,17 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.06,
+		"@360p (per second)": 0.025,
+		"@540p (per second)": 0.035,
+		"@720p (per second)": 0.045,
+		"@1080p (per second)": 0.09,
+		"@360p w/ audio (per second)": 0.035,
+		"@540p w/ audio (per second)": 0.045,
+		"@720p w/ audio (per second)": 0.06,
+		"@1080p w/ audio (per second)": 0.115
+	},
 	"examples": [
 		{
 			"name": "Simple Video",
@@ -173,6 +184,22 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "pixverse",
+			"pricing": {
+				"default": 0.06,
+				"360p": 0.025,
+				"540p": 0.035,
+				"720p": 0.045,
+				"1080p": 0.09,
+				"360p_audio": 0.035,
+				"540p_audio": 0.045,
+				"720p_audio": 0.06,
+				"1080p_audio": 0.115
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:46",
 	"schema": {
@@ -181,9 +208,9 @@
 			"type": "object",
 			"properties": {
 				"prompt": {
-					"description": "Text prompt describing the video to generate",
 					"type": "string",
-					"maxLength": 2048
+					"maxLength": 2048,
+					"description": "Text prompt describing the video to generate"
 				},
 				"negative_prompt": {
 					"description": "Negative text prompt",
@@ -195,15 +222,15 @@
 					"type": "string"
 				},
 				"duration": {
-					"description": "Video duration in seconds (1 to 15)",
 					"default": 5,
+					"description": "Video duration in seconds (1 to 15)",
 					"type": "integer",
 					"minimum": 1,
 					"maximum": 15
 				},
 				"aspect_ratio": {
-					"description": "Video aspect ratio",
 					"default": "16:9",
+					"description": "Video aspect ratio",
 					"type": "string",
 					"enum": [
 						"16:9",
@@ -217,8 +244,8 @@
 					]
 				},
 				"quality": {
-					"description": "Video quality",
 					"default": "720p",
+					"description": "Video quality",
 					"type": "string",
 					"enum": [
 						"360p",
@@ -234,8 +261,8 @@
 					"maximum": 2147483647
 				},
 				"generate_audio": {
-					"description": "Whether to generate audio with the video",
 					"default": true,
+					"description": "Whether to generate audio with the video",
 					"type": "boolean"
 				}
 			},
@@ -253,9 +280,9 @@
 			"type": "object",
 			"properties": {
 				"video": {
-					"description": "URL to the generated video",
 					"type": "string",
-					"format": "uri"
+					"format": "uri",
+					"description": "URL to the generated video"
 				}
 			},
 			"required": [

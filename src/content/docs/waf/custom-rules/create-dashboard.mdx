@@ -32,6 +32,8 @@ import { Render, Steps, DashButton } from "~/components";
 
 5. Under **Then take action**, select the rule action in the **Choose action** dropdown. For example, selecting _Block_ tells Cloudflare to refuse requests that match the conditions you specified.
 
+   To validate a new rule before enforcing it, use the _Log_ action (Enterprise plans only). On plans where _Log_ is not available, start with _Managed Challenge_, review the matched requests in [Security Events](/waf/analytics/security-events/), and then switch to _Block_.
+
 6. (Optional) If you selected the _Block_ action, you can [configure a custom response](#configure-a-custom-response-for-blocked-requests).
 
 7. To save and deploy your rule, select **Deploy**. If you are not ready to deploy your rule, select **Save as Draft**.

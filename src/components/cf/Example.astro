@@ -20,13 +20,11 @@ const { title = "" } = Astro.props;
 ---
 
 <article class="bg-card ring-border my-4 rounded-lg p-5 shadow-sm ring">
-	{
-		title && (
-			<h3 class="text-foreground m-0 mb-1.5 text-base leading-snug font-semibold">
-				{title}
-			</h3>
-		)
-	}
+	{title && (
+		<h3 class="text-foreground m-0 mb-1.5 text-base leading-snug font-semibold">
+			{title}
+		</h3>
+	)}
 	<div
 		class={cn(
 			"text-sm leading-normal text-muted-foreground",

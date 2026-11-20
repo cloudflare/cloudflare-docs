@@ -68,32 +68,25 @@ const changelogs =
 
 <RSSButton href={rss} />
 
-{
-	changelogs.length === 0 && (
+{changelogs.length === 0 && (
+	<>
+		<br />
+		<br />
+		<p>There are no scheduled entries at this time.</p>
+	</>
+)}
+
+{changelogs.map(async (entry) => {
+	const { Content } = await render(entry);
+
+	return (
 		<>
+			<AnchorHeading depth={2} title={format(entry.data.date, "yyyy-MM-dd")} />
+			{"area" in input && <ProductPills products={entry.data.products} />}
 			<br />
+			<strong>{entry.data.title}</strong>
 			<br />
-			<p>There are no scheduled entries at this time.</p>
+			<Content components={components} />
 		</>
-	)
-}
-
-{
-	changelogs.map(async (entry) => {
-		const { Content } = await render(entry);
-
-		return (
-			<>
-				<AnchorHeading
-					depth={2}
-					title={format(entry.data.date, "yyyy-MM-dd")}
-				/>
-				{"area" in input && <ProductPills products={entry.data.products} />}
-				<br />
-				<strong>{entry.data.title}</strong>
-				<br />
-				<Content components={components} />
-			</>
-		);
-	})
-}
+	);
+})}

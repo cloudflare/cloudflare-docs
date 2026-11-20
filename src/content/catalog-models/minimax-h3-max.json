@@ -1,0 +1,683 @@
+{
+	"model_id": "minimax/h3-max",
+	"provider_id": "minimax",
+	"name": "MiniMax H3 Max",
+	"description": "A fast multimodal video generation model supporting text-to-video and image-to-video generation at 480P and 768P.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Text-to-Video",
+		"Image-to-Video",
+		"Fast Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.05,
+		"@480p (per second)": 0.05,
+		"@768p (per second)": 0.08
+	},
+	"examples": [
+		{
+			"name": "Balanced Text to Video",
+			"description": "Generate a fast 768P landscape video from text.",
+			"input": {
+				"content": [
+					{
+						"type": "text",
+						"text": "A golden retriever runs along a beach at sunrise while the camera tracks beside it in a cinematic slow motion shot."
+					}
+				],
+				"duration": 5,
+				"extra": {
+					"prompt_expansion_mode": "balanced"
+				},
+				"ratio": "16:9",
+				"resolution": "768P"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/minimax/h3-max/balanced-text-to-video.mp4"
+			},
+			"raw_response": {
+				"task": {
+					"id": "441805798383681",
+					"model": "MiniMax-H3-Max",
+					"status": "succeeded",
+					"created_at": 1789415547,
+					"updated_at": 1789415554,
+					"content": {
+						"url": "https://examples.aig.cloudflare.com/minimax/h3-max/balanced-text-to-video.mp4"
+					},
+					"resolution": "768P",
+					"duration": 5,
+					"usage": {
+						"total_seconds": 5,
+						"input_seconds": 0,
+						"output_seconds": 5,
+						"input_image_count": 0
+					},
+					"ratio": "16:9",
+					"task_type": "generation"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-max',\n  {\n    content: [\n      {\n        type: 'text',\n        text: 'A golden retriever runs along a beach at sunrise while the camera tracks beside it in a cinematic slow motion shot.',\n      },\n    ],\n    duration: 5,\n    extra: { prompt_expansion_mode: 'balanced' },\n    ratio: '16:9',\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-max\",\n  \"input\": {\n    \"content\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"A golden retriever runs along a beach at sunrise while the camera tracks beside it in a cinematic slow motion shot.\"\n      }\n    ],\n    \"duration\": 5,\n    \"extra\": {\n      \"prompt_expansion_mode\": \"balanced\"\n    },\n    \"ratio\": \"16:9\",\n    \"resolution\": \"768P\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Disabled Prompt Expansion",
+			"description": "Generate a fast 480P vertical social video with prompt expansion disabled.",
+			"input": {
+				"content": [
+					{
+						"type": "text",
+						"text": "A chef tosses vegetables in a wok in a bright street-food kitchen, energetic handheld camera."
+					}
+				],
+				"duration": 5,
+				"extra": {
+					"prompt_expansion_mode": "disabled"
+				},
+				"ratio": "9:16",
+				"resolution": "480P"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/minimax/h3-max/disabled-prompt-expansion.mp4"
+			},
+			"raw_response": {
+				"task": {
+					"id": "441804654764158",
+					"model": "MiniMax-H3-Max",
+					"status": "succeeded",
+					"created_at": 1789415577,
+					"updated_at": 1789415583,
+					"content": {
+						"url": "https://examples.aig.cloudflare.com/minimax/h3-max/disabled-prompt-expansion.mp4"
+					},
+					"resolution": "480P",
+					"duration": 5,
+					"usage": {
+						"total_seconds": 5,
+						"input_seconds": 0,
+						"output_seconds": 5,
+						"input_image_count": 0
+					},
+					"ratio": "9:16",
+					"task_type": "generation"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-max',\n  {\n    content: [\n      {\n        type: 'text',\n        text: 'A chef tosses vegetables in a wok in a bright street-food kitchen, energetic handheld camera.',\n      },\n    ],\n    duration: 5,\n    extra: { prompt_expansion_mode: 'disabled' },\n    ratio: '9:16',\n    resolution: '480P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-max\",\n  \"input\": {\n    \"content\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"A chef tosses vegetables in a wok in a bright street-food kitchen, energetic handheld camera.\"\n      }\n    ],\n    \"duration\": 5,\n    \"extra\": {\n      \"prompt_expansion_mode\": \"disabled\"\n    },\n    \"ratio\": \"9:16\",\n    \"resolution\": \"480P\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Quality Prompt Expansion",
+			"description": "Prioritize prompt expansion quality for a detailed 768P scene.",
+			"input": {
+				"content": [
+					{
+						"type": "text",
+						"text": "A detailed miniature railway travels through a glowing underground crystal cavern, with tiny passengers looking out of the windows."
+					}
+				],
+				"duration": 8,
+				"extra": {
+					"prompt_expansion_mode": "quality"
+				},
+				"ratio": "21:9",
+				"resolution": "768P"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/minimax/h3-max/quality-prompt-expansion.mp4"
+			},
+			"raw_response": {
+				"task": {
+					"id": "441805071421550",
+					"model": "MiniMax-H3-Max",
+					"status": "succeeded",
+					"created_at": 1789415588,
+					"updated_at": 1789415659,
+					"content": {
+						"url": "https://examples.aig.cloudflare.com/minimax/h3-max/quality-prompt-expansion.mp4"
+					},
+					"resolution": "768P",
+					"duration": 8,
+					"usage": {
+						"total_seconds": 8,
+						"input_seconds": 0,
+						"output_seconds": 8,
+						"input_image_count": 0
+					},
+					"ratio": "21:9",
+					"task_type": "generation"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-max',\n  {\n    content: [\n      {\n        type: 'text',\n        text: 'A detailed miniature railway travels through a glowing underground crystal cavern, with tiny passengers looking out of the windows.',\n      },\n    ],\n    duration: 8,\n    extra: { prompt_expansion_mode: 'quality' },\n    ratio: '21:9',\n    resolution: '768P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-max\",\n  \"input\": {\n    \"content\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"A detailed miniature railway travels through a glowing underground crystal cavern, with tiny passengers looking out of the windows.\"\n      }\n    ],\n    \"duration\": 8,\n    \"extra\": {\n      \"prompt_expansion_mode\": \"quality\"\n    },\n    \"ratio\": \"21:9\",\n    \"resolution\": \"768P\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "H3 Max Image to Video",
+			"description": "Animate a supplied first-frame image at 480P.",
+			"input": {
+				"content": [
+					{
+						"type": "text",
+						"text": "The camera slowly pans across the scene while fabric and hair move naturally in the wind."
+					},
+					{
+						"type": "image_url",
+						"image_url": {
+							"url": "https://filecdn.minimax.chat/public/85c96368-6ead-4eae-af9c-116be878eac3.png"
+						},
+						"role": "first_frame"
+					}
+				],
+				"duration": 5,
+				"extra": {
+					"prompt_expansion_mode": "balanced"
+				},
+				"ratio": "adaptive",
+				"resolution": "480P"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/minimax/h3-max/h3-max-image-to-video.mp4"
+			},
+			"raw_response": {
+				"task": {
+					"id": "441804606931065",
+					"model": "MiniMax-H3-Max",
+					"status": "succeeded",
+					"created_at": 1789415661,
+					"updated_at": 1789415668,
+					"content": {
+						"url": "https://examples.aig.cloudflare.com/minimax/h3-max/h3-max-image-to-video.mp4"
+					},
+					"resolution": "480P",
+					"duration": 5,
+					"usage": {
+						"total_seconds": 5,
+						"input_seconds": 0,
+						"output_seconds": 5,
+						"input_image_count": 1
+					},
+					"ratio": "adaptive",
+					"task_type": "generation"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-max',\n  {\n    content: [\n      {\n        type: 'text',\n        text: 'The camera slowly pans across the scene while fabric and hair move naturally in the wind.',\n      },\n      {\n        type: 'image_url',\n        image_url: {\n          url: 'https://filecdn.minimax.chat/public/85c96368-6ead-4eae-af9c-116be878eac3.png',\n        },\n        role: 'first_frame',\n      },\n    ],\n    duration: 5,\n    extra: { prompt_expansion_mode: 'balanced' },\n    ratio: 'adaptive',\n    resolution: '480P',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-max\",\n  \"input\": {\n    \"content\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"The camera slowly pans across the scene while fabric and hair move naturally in the wind.\"\n      },\n      {\n        \"type\": \"image_url\",\n        \"image_url\": {\n          \"url\": \"https://filecdn.minimax.chat/public/85c96368-6ead-4eae-af9c-116be878eac3.png\"\n        },\n        \"role\": \"first_frame\"\n      }\n    ],\n    \"duration\": 5,\n    \"extra\": {\n      \"prompt_expansion_mode\": \"balanced\"\n    },\n    \"ratio\": \"adaptive\",\n    \"resolution\": \"480P\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "H3 Max Reference Images",
+			"description": "Use multiple reference images to guide a fast character generation.",
+			"input": {
+				"content": [
+					{
+						"type": "text",
+						"text": "Create a short cinematic portrait of the character walking through a modern gallery, preserving the face and clothing from the references."
+					},
+					{
+						"type": "image_url",
+						"image_url": {
+							"url": "https://cdn.hailuoai.com/prod/hailuo_demo/testsets/h3_promo_eval_ref2va/gallery/sr_v2p26_trio_seed42_20260724/inputs/9d5c7a33fa6e_01_%E5%9B%BE1_MHGgbVga3o_gpt4o-image-1780651118146.png"
+						},
+						"role": "reference_image"
+					},
+					{
+						"type": "image_url",
+						"image_url": {
+							"url": "https://cdn.hailuoai.com/prod/hailuo_demo/testsets/h3_promo_eval_ref2va/gallery/sr_v2p26_trio_seed42_20260724/inputs/7af326902315_00_%E5%9B%BE2_YqtKbY1jpo_u4391985813_Young_male_wearing_cream_hoodie_and_dark_brown_sh_45d56ed0-d626-4c37-9a5b-77f51f374982_1.png"
+						},
+						"role": "reference_image"
+					}
+				],
+				"duration": 5,
+				"extra": {
+					"prompt_expansion_mode": "balanced"
+				},
+				"resolution": "768P",
+				"ratio": "16:9"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/minimax/h3-max/h3-max-reference-images.mp4"
+			},
+			"raw_response": {
+				"task": {
+					"id": "441805100810489",
+					"model": "MiniMax-H3-Max",
+					"status": "succeeded",
+					"created_at": 1789415671,
+					"updated_at": 1789415685,
+					"content": {
+						"url": "https://examples.aig.cloudflare.com/minimax/h3-max/h3-max-reference-images.mp4"
+					},
+					"resolution": "768P",
+					"duration": 5,
+					"usage": {
+						"total_seconds": 5,
+						"input_seconds": 0,
+						"output_seconds": 5,
+						"input_image_count": 2
+					},
+					"ratio": "16:9",
+					"task_type": "generation"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'minimax/h3-max',\n  {\n    content: [\n      {\n        type: 'text',\n        text: 'Create a short cinematic portrait of the character walking through a modern gallery, preserving the face and clothing from the references.',\n      },\n      {\n        type: 'image_url',\n        image_url: {\n          url: 'https://cdn.hailuoai.com/prod/hailuo_demo/testsets/h3_promo_eval_ref2va/gallery/sr_v2p26_trio_seed42_20260724/inputs/9d5c7a33fa6e_01_%E5%9B%BE1_MHGgbVga3o_gpt4o-image-1780651118146.png',\n        },\n        role: 'reference_image',\n      },\n      {\n        type: 'image_url',\n        image_url: {\n          url: 'https://cdn.hailuoai.com/prod/hailuo_demo/testsets/h3_promo_eval_ref2va/gallery/sr_v2p26_trio_seed42_20260724/inputs/7af326902315_00_%E5%9B%BE2_YqtKbY1jpo_u4391985813_Young_male_wearing_cream_hoodie_and_dark_brown_sh_45d56ed0-d626-4c37-9a5b-77f51f374982_1.png',\n        },\n        role: 'reference_image',\n      },\n    ],\n    duration: 5,\n    extra: { prompt_expansion_mode: 'balanced' },\n    resolution: '768P',\n    ratio: '16:9',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"minimax/h3-max\",\n  \"input\": {\n    \"content\": [\n      {\n        \"type\": \"text\",\n        \"text\": \"Create a short cinematic portrait of the character walking through a modern gallery, preserving the face and clothing from the references.\"\n      },\n      {\n        \"type\": \"image_url\",\n        \"image_url\": {\n          \"url\": \"https://cdn.hailuoai.com/prod/hailuo_demo/testsets/h3_promo_eval_ref2va/gallery/sr_v2p26_trio_seed42_20260724/inputs/9d5c7a33fa6e_01_%E5%9B%BE1_MHGgbVga3o_gpt4o-image-1780651118146.png\"\n        },\n        \"role\": \"reference_image\"\n      },\n      {\n        \"type\": \"image_url\",\n        \"image_url\": {\n          \"url\": \"https://cdn.hailuoai.com/prod/hailuo_demo/testsets/h3_promo_eval_ref2va/gallery/sr_v2p26_trio_seed42_20260724/inputs/7af326902315_00_%E5%9B%BE2_YqtKbY1jpo_u4391985813_Young_male_wearing_cream_hoodie_and_dark_brown_sh_45d56ed0-d626-4c37-9a5b-77f51f374982_1.png\"\n        },\n        \"role\": \"reference_image\"\n      }\n    ],\n    \"duration\": 5,\n    \"extra\": {\n      \"prompt_expansion_mode\": \"balanced\"\n    },\n    \"resolution\": \"768P\",\n    \"ratio\": \"16:9\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://platform.minimax.io/docs/guides/video-generation.md",
+	"terms": "https://platform.minimax.io/docs/guides/terms-of-service.md",
+	"cover_image_url": null,
+	"metadata": {
+		"Billing": "Pay-as-you-go, per output second",
+		"Duration": "5-15 seconds",
+		"Input Types": "Text, image, video, audio",
+		"Resolutions": "480P, 768P"
+	},
+	"request_formats": null,
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "minimax",
+			"pricing": {
+				"default": 0.05,
+				"480p": 0.05,
+				"768p": 0.08
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-09-16 19:46:57",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"content": {
+					"minItems": 1,
+					"type": "array",
+					"items": {
+						"oneOf": [
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "text"
+									},
+									"text": {
+										"type": "string",
+										"minLength": 1,
+										"maxLength": 7000
+									}
+								},
+								"required": [
+									"type",
+									"text"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "image_url"
+									},
+									"image_url": {
+										"type": "object",
+										"properties": {
+											"url": {
+												"type": "string",
+												"minLength": 1
+											}
+										},
+										"required": [
+											"url"
+										],
+										"additionalProperties": false
+									},
+									"role": {
+										"type": "string",
+										"enum": [
+											"first_frame",
+											"last_frame",
+											"reference_image"
+										]
+									}
+								},
+								"required": [
+									"type",
+									"image_url"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "video_url"
+									},
+									"video_url": {
+										"type": "object",
+										"properties": {
+											"url": {
+												"type": "string",
+												"minLength": 1
+											}
+										},
+										"required": [
+											"url"
+										],
+										"additionalProperties": false
+									},
+									"role": {
+										"type": "string",
+										"const": "reference_video"
+									}
+								},
+								"required": [
+									"type",
+									"video_url",
+									"role"
+								],
+								"additionalProperties": false
+							},
+							{
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "audio_url"
+									},
+									"audio_url": {
+										"type": "object",
+										"properties": {
+											"url": {
+												"type": "string",
+												"minLength": 1
+											}
+										},
+										"required": [
+											"url"
+										],
+										"additionalProperties": false
+									},
+									"role": {
+										"type": "string",
+										"const": "reference_audio"
+									}
+								},
+								"required": [
+									"type",
+									"audio_url",
+									"role"
+								],
+								"additionalProperties": false
+							}
+						]
+					}
+				},
+				"duration": {
+					"type": "integer",
+					"minimum": 5,
+					"maximum": 15
+				},
+				"ratio": {
+					"type": "string",
+					"enum": [
+						"adaptive",
+						"21:9",
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16"
+					]
+				},
+				"callback_url": {
+					"type": "string",
+					"format": "uri"
+				},
+				"resolution": {
+					"type": "string",
+					"enum": [
+						"480P",
+						"768P"
+					]
+				},
+				"extra": {
+					"type": "object",
+					"properties": {
+						"prompt_expansion_mode": {
+							"default": "balanced",
+							"type": "string",
+							"enum": [
+								"disabled",
+								"balanced",
+								"quality"
+							]
+						}
+					},
+					"required": [
+						"prompt_expansion_mode"
+					],
+					"additionalProperties": false
+				}
+			},
+			"required": [
+				"content",
+				"duration",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"task": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string"
+						},
+						"model": {
+							"type": "string"
+						},
+						"status": {
+							"type": "string",
+							"enum": [
+								"queued",
+								"running",
+								"succeeded",
+								"failed",
+								"cancelled"
+							]
+						},
+						"error": {
+							"type": "object",
+							"properties": {
+								"code": {
+									"type": "string"
+								},
+								"message": {
+									"type": "string"
+								}
+							},
+							"required": [
+								"code",
+								"message"
+							],
+							"additionalProperties": false
+						},
+						"created_at": {
+							"type": "integer",
+							"minimum": -9007199254740991,
+							"maximum": 9007199254740991
+						},
+						"updated_at": {
+							"type": "integer",
+							"minimum": -9007199254740991,
+							"maximum": 9007199254740991
+						},
+						"content": {
+							"type": "object",
+							"properties": {
+								"url": {
+									"type": "string",
+									"format": "uri"
+								},
+								"prompt": {
+									"type": "string"
+								}
+							},
+							"additionalProperties": false
+						},
+						"resolution": {
+							"type": "string"
+						},
+						"duration": {
+							"type": "integer",
+							"minimum": -9007199254740991,
+							"maximum": 9007199254740991
+						},
+						"usage": {
+							"type": "object",
+							"properties": {
+								"total_seconds": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"input_seconds": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"output_seconds": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"input_image_count": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"input_audio_seconds": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"total_tokens": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"prompt_tokens": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								},
+								"completion_tokens": {
+									"type": "integer",
+									"minimum": -9007199254740991,
+									"maximum": 9007199254740991
+								}
+							},
+							"additionalProperties": false
+						},
+						"ratio": {
+							"type": "string"
+						},
+						"task_type": {
+							"type": "string",
+							"enum": [
+								"generation",
+								"regeneration",
+								"h3_context_ir"
+							]
+						},
+						"modality": {
+							"type": "string",
+							"enum": [
+								"video",
+								"text"
+							]
+						}
+					},
+					"required": [
+						"id",
+						"model",
+						"status",
+						"created_at",
+						"updated_at"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"task"
+			],
+			"additionalProperties": false
+		}
+	}
+}

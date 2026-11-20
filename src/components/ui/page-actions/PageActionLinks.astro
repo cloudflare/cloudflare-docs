@@ -12,14 +12,12 @@ const linkClass =
 ---
 
 <nav aria-label="Page actions" class="flex flex-col gap-3">
-	{
-		editUrl && (
-			<a href={editUrl} target="_blank" rel="noopener" class={linkClass}>
-				<Icon name="ph:pencil-simple" class="h-3.5 w-3.5" aria-hidden="true" />
-				<span>Edit page</span>
-			</a>
-		)
-	}
+	{editUrl && (
+		<a href={editUrl} target="_blank" rel="noopener" class={linkClass}>
+			<Icon name="ph:pencil-simple" class="h-3.5 w-3.5" aria-hidden="true" />
+			<span>Edit page</span>
+		</a>
+	)}
 	<a
 		href="https://github.com/cloudflare/cloudflare-docs/issues/new/choose"
 		target="_blank"

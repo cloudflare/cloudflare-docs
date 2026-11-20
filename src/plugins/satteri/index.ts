@@ -7,6 +7,7 @@
 //     produces.
 
 import { externalLinks, titleFigure } from "@cloudflare/nimbus-docs/markdown";
+import { EXTERNAL_LINK_ARROW } from "../../util/external-link-arrow";
 import mermaid from "./mermaid";
 import headingSlugs from "./heading-slugs";
 import autolinkHeadings from "./autolink-headings";
@@ -26,7 +27,7 @@ export {
 
 export const hastPlugins: HastPluginDefinition[] = [
 	mermaid,
-	externalLinks(),
+	externalLinks({ arrow: EXTERNAL_LINK_ARROW }),
 	headingSlugs,
 	autolinkHeadings,
 	titleFigure(),

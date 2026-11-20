@@ -1,0 +1,15 @@
+---
+title: Cloudflare API MCP server now supports step-up authorization
+description: Grant only the required scopes when you connect, and authorize more on demand as your agent performs a task.
+products:
+  - agents
+date: 2026-10-19
+---
+
+The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) now supports [step-up authorization](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#step-up-authorization-flow).
+
+Grant only the required scopes when you connect, then authorize more on demand as your agent performs a task. When a tool call needs a scope you have not granted, the server returns an [`insufficient_scope` challenge](https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization#scope-challenge-handling) naming it, and your MCP client asks you to approve it. Scopes you already granted are kept.
+
+To start with the least access, choose **Minimal** on the consent page when you connect `https://mcp.cloudflare.com/mcp`. Refer to [authorization in MCP](/agents/model-context-protocol/protocol/authorization/).
+
+Available now in all MCP clients that support step-up authorization.

@@ -1,0 +1,29 @@
+---
+title: Pipecat PhoneLLM Mini now available on Workers AI
+description: PhoneLLM Mini Alpha 2 from the Pipecat team is a fast model for voice agents, post-trained from NVIDIA Nemotron to follow instructions and call tools in multi-turn conversations without reasoning mode.
+products:
+  - workers-ai
+  - realtime
+date: 2026-10-15
+---
+
+import { CopyPromptButton } from "~/components";
+
+[`@cf/daily-co/phonellm-mini-alpha-2`](/workers-ai/models/phonellm-mini-alpha-2/), a model from the [Pipecat](https://www.pipecat.ai/) team at Daily, is now available on [Workers AI](/workers-ai/). PhoneLLM is built for voice agents and other realtime AI applications, where a model has to reply quickly and call the right tool mid-conversation.
+
+In a voice agent, the language model sits between speech-to-text and text-to-speech, so every second it takes adds to the caller's wait. Developers usually choose between a fast model without reasoning mode, which can miss instructions or tool calls, and a slower model in reasoning mode, which handles both well. Pipecat post-trained NVIDIA Nemotron 3 Nano 30B on phone and customer support scenarios so PhoneLLM follows instructions and calls tools better without reasoning mode.
+
+You can use PhoneLLM through the [Workers AI binding](/workers-ai/configuration/bindings/) (`env.AI.run()`) or the [REST API](/workers-ai/get-started/rest-api/) at `/ai/run`. Pipecat recommends `temperature: 0`. Also set `chat_template_kwargs: { enable_thinking: false }`.
+
+## Run a voice agent with Pipecat on Workers
+
+[Pipecat](https://docs.pipecat.ai/) is an open-source Python framework for building voice agents. Now that [Python Workers](/workers/languages/python/) are generally available, you can run a Pipecat voice agent on Cloudflare.
+
+Our [Pipecat voice agent example](https://github.com/cloudflare/realtime-examples/tree/main/pipecat-voice-agent) runs in a [Durable Object](/durable-objects/) and uses WebRTC as the voice transport through the [Realtime SFU](/realtime/sfu/). It uses [DeepSeek V4 Flash](/workers-ai/models/deepseek-v4-flash-0731/) by default. To deploy it with PhoneLLM, give this prompt to your coding agent:
+
+<CopyPromptButton
+	tooltip="Deploy the Pipecat voice agent with PhoneLLM"
+	prompt="Deploy the Pipecat voice agent example at https://github.com/cloudflare/realtime-examples/tree/main/pipecat-voice-agent with @cf/daily-co/phonellm-mini-alpha-2 as the LLM and thinking disabled. Use the Cloudflare CLI, cf (https://developers.cloudflare.com/cf/), to create Cloudflare resources."
+/>
+
+For more information, refer to the [PhoneLLM Mini model page](/workers-ai/models/phonellm-mini-alpha-2/), [Pipecat's model card](https://huggingface.co/pipecat-ai/phonellm-mini-alpha-2), and [Workers AI pricing](/workers-ai/platform/pricing/).

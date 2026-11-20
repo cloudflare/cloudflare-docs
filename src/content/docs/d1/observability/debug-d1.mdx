@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { Example } from "~/components";
+import { DashButton, Example } from "~/components";
 
 D1 allows you to capture exceptions and log errors returned when querying a database. To debug D1, you will use the same tools available when [debugging Workers](/workers/observability/).
 
@@ -73,7 +73,7 @@ Before retrying any failed operation:
 | `Your account has exceeded D1's free tier daily row write limit. Upgrade to a paid plan or wait until tomorrow (midnight UTC) to continue. See https://developers.cloudflare.com/d1/platform/limits/ for more details.` | Your account has reached its daily D1 Free tier row write limit. | App action: Wait until midnight UTC for the limit to reset, or upgrade your account to a paid plan. Refer to [Limits](/d1/platform/limits/). |
 | `D1 DB reset because its code was updated.`                                 | Cloudflare has updated the code for D1 (or the underlying Durable Object), and the Durable Object which contains the D1 database is restarting.                           | Retry the operation.                                                                                                                              |
 | `Internal error while starting up D1 DB storage caused object to be reset.` | The Durable Object containing the D1 database is failing to start.                                                                                                        | Retry the operation.                                                                                                                              |
-| `Network connection lost.`                                                  | A network error.                                                                                                                                                          | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
+| `Network connection lost.`                                                  | A network error affecting the specific D1 database instance. Each D1 database runs as its own Durable Object. A disruption to one database does not affect other databases on the account. D1 automatically retries read-only queries up to two additional times. Write queries are not retried automatically.                | Retry the operation. For write queries, use idempotent application-level retry logic — refer to [Retry queries](/d1/best-practices/retry-queries/). |
 | `Replica disconnected from primary.`                                        | A network error between the read replica and its primary instance.                                                                                                        | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
 | `Internal error in D1 DB storage caused object to be reset.`                | An error has caused the D1 database to restart.                                                                                                                           | Retry the operation.                                                                                                                              |
 | `Cannot resolve D1 DB due to transient issue on remote node.`               | The query cannot reach the Durable Object containing the D1 database.                                                                                                     | Retry the operation. Refer to the "Retry operation" note above.                                                                                   |
@@ -81,8 +81,10 @@ Before retrying any failed operation:
 | `D1 DB storage operation exceeded timeout which caused object to be reset.` | A query is trying to write a large amount of information (e.g. GBs), and is taking too long.                                                                              | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
 | `D1 DB is overloaded. Requests queued for too long.`                        | The requests to the D1 database are queued for too long, either because there are too many requests, or the queued requests are taking too long.                          | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
 | `D1 DB is overloaded. Too many requests queued.`                            | The request queue to the D1 database is too long, either because there are too many requests, or the queued requests are taking too long.                                 | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
+| `D1 DB is overloaded. Too many resources consumed within a 10 second window` | D1 rate limited the database after it consumed excessive CPU and memory resources over a ten-second period. Very large responses, frequent table scans over many rows, and slow queries can cause excessive resource consumption. | App action: Find and remediate slow and expensive queries. Refer to [Find expensive queries](/d1/observability/find-expensive-queries/). |
 | `D1 DB's isolate exceeded its memory limit and was reset.`                  | A query loaded too much into memory, causing the D1 database to crash.                                                                                                    | App action: Optimize the queries (so that each query takes less time), send fewer requests by spreading the load over time, or shard the queries. |
 | `D1 DB exceeded its CPU time limit and was reset.`                          | A query is taking up a lot of CPU time (e.g. scanning over 9 GB table, or attempting a large import/export).                                                              | App action: Split the query into smaller shards.                                                                                                  |
+| `D1 query result exceeded the maximum response size limit of 50 MB`         | The query returned a result larger than the [maximum query result size](/d1/platform/limits/) of 50 MB. This limit is enforced from 2026-11-04. | App action: Select only the columns you need instead of using `SELECT *`, or paginate large result sets with `LIMIT` and `OFFSET`. |
 
 </Example>
 
@@ -118,3 +120,54 @@ You should include as much of the following in any bug report:
 * Learn [how to debug Workers](/workers/observability/).
 * Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
 * Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and [debug issues before deploying](/workers/local-development/).
+
+## D1 binding timeout behavior
+
+D1 binding methods — `run()`, `all()`, `first()`, and `batch()` — do not accept a timeout option or an `AbortSignal`. There is no per-call timeout built into the D1 binding client.
+
+Workers have no wall-time limit on incoming HTTP requests while the client connection is open — see [Workers limits](/workers/platform/limits/). If the D1 database is temporarily unreachable, a D1 binding call blocks until the operation completes, an internal limit is reached, or the Worker is terminated by an external event such as the client disconnecting.
+
+To limit how long your Worker waits on a D1 call, use `Promise.race` with a timer:
+
+```js
+const timeout = new Promise((_, reject) =>
+  setTimeout(() => reject(new Error('D1 call timed out')), 5000)
+);
+const result = await Promise.race([
+  db.prepare('SELECT 1').first(),
+  timeout,
+]);
+```
+
+:::caution[Write operations and Promise.race]
+`Promise.race` bounds how long your Worker waits — it does not cancel the D1 query. A write that loses the race may still commit in the background. Always confirm the outcome of a write before retrying to avoid duplicate writes.
+:::
+
+## API error codes
+
+In addition to the `D1_ERROR` constants in the [Error list](#error-list), D1 returns numeric error codes on certain failures. Use the following table to identify the cause and recommended action.
+
+| Code  | Name                          | Common cause                                                                                     | Recommended action                                                                                                                                                                                                   |
+| ----- | ----------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 7403  | Service authorization failure | The API token or Wrangler OAuth session does not have sufficient scope for the operation.        | Verify the token has the required permission for the endpoint. Run `wrangler login` to refresh the Wrangler OAuth session.                                                                                            |
+| 7404  | Database not found            | The database UUID does not exist in the account, or the binding is misconfigured.                | Confirm the `database_id` in your `wrangler.toml` matches the database UUID shown in the Cloudflare dashboard.                                                                                                       |
+| 7406  | Limit exceeded                | The account has reached the maximum number of D1 databases allowed on its plan.                  | Review your [current limits](/d1/platform/limits/). Enterprise accounts with a custom database limit should contact Cloudflare support if the limit is not reflected.                                                  |
+| 7429  | DB overloaded                 | Too many concurrent requests are queued, or queued requests are taking too long to complete.     | Retry with exponential backoff and jitter. If the error recurs while SQL execution time (`queryBatchTimeMs`) is fast and your workload is low, check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. |
+| 7500  | Internal error                | A platform-side storage event made the database temporarily unavailable.                         | Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page. Retry with exponential backoff. If the database remains unavailable after the incident resolves, [contact Cloudflare support](/support/contacting-cloudflare-support/). |
+| 10000 | Authentication error          | The API token does not have the required scope for the endpoint.                                 | Check the required permission for the endpoint in the [API reference](/api/resources/d1/) and create a token with the correct scope. Refer to [Error 10000 and token permissions](#error-10000-and-token-permissions). |
+
+### Error 7429 and analytics
+
+If you receive error 7429 while your analytics show fast SQL execution times, the error may originate from a server-side platform event rather than your application's workload. The `queryBatchTimeMs` metric measures only SQL execution time inside the database, not the total time a request spends waiting to reach SQL. Check the [Cloudflare System Status](https://www.cloudflarestatus.com/) page before reducing application concurrency. If the error recurs and you suspect slow or expensive queries are contributing, refer to [Find slow and expensive queries](/d1/observability/find-expensive-queries/) to identify the databases and queries using the most resources.
+
+### Error 10000 and token permissions
+
+Error 10000 is an authentication error that occurs when the API token does not have the required permission for the endpoint. It is not specific to the export endpoint.
+
+The most common cause for error 10000 during export is using a **D1 Read** token instead of a **D1 Write** token. The export operation requires D1 Write permission because it locks the database until the export completes — it is not a read-only operation.
+
+To resolve this:
+
+1. Go to **API Tokens** in your Cloudflare dashboard. <DashButton url="/profile/api-tokens" />
+2. Create a new token with D1 Write permission — or check the [API reference](/api/resources/d1/) for the required permission for the specific endpoint you are calling.
+3. Use that token for the request.

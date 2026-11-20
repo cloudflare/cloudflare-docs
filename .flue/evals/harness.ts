@@ -3,14 +3,22 @@ import {
 	type JsonValue,
 	type TranscriptEvent,
 } from "vitest-evals";
+import { SPECIALIST_DURABILITY } from "../lib/agents/durability";
+
+/** Longest time any evaluated agent may run; matches the specialist durability timeout. */
+export const EVAL_AGENT_TIMEOUT_MS = SPECIALIST_DURABILITY.timeoutMs;
 
 export interface FlueAgentHarnessOptions {
 	baseUrl: string;
 	agentName: string;
 	dataKey: string;
 	message: string;
+	buildMessage?: (input: unknown) => string;
+	buildInitialData?: (input: unknown) => unknown;
 	token?: string;
 	headers?: Record<string, string>;
+	/** How long to wait for the agent to settle. Use the agent's durability timeout. */
+	timeoutMs?: number;
 }
 
 interface TextPart {
@@ -133,8 +141,8 @@ export function createFlueAgentHarness<TInput = unknown>(
 				headers,
 				body: JSON.stringify({
 					kind: "user",
-					body: options.message,
-					initialData: input,
+					body: options.buildMessage?.(input) ?? options.message,
+					initialData: options.buildInitialData?.(input) ?? input,
 				}),
 				signal,
 			});
@@ -147,7 +155,8 @@ export function createFlueAgentHarness<TInput = unknown>(
 			}
 
 			// Poll history until the submission settles
-			const deadline = Date.now() + 120_000;
+			const deadline =
+				Date.now() + (options.timeoutMs ?? EVAL_AGENT_TIMEOUT_MS);
 			let history: ConversationHistory | undefined;
 			let terminal: { submissionId: string; outcome: string } | undefined;
 			let lastHistoryError: string | undefined;

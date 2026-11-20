@@ -63,10 +63,10 @@ describe("Nimbus Satteri HAST pipeline", () => {
 		const html = render("## Has [link](https://example.com)");
 
 		expect(html).toContain(
-			`<a href="https://example.com" target="_blank" rel="noopener">link<span class="external-link"> ↗</span></a>`,
+			`<a href="https://example.com" target="_blank" rel="noopener">link<span class="external-link"> ↗\uFE0E</span></a>`,
 		);
 		expect(html).toContain(`<h2 id="has-link">`);
-		expectWrappedHeading(html, 2, "has-link", "Has link ↗");
+		expectWrappedHeading(html, 2, "has-link", "Has link ↗\uFE0E");
 		expect(html).not.toContain(`id="has-link-"`);
 	});
 

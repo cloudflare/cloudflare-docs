@@ -11,7 +11,7 @@
  */
 import { getCollection } from "astro:content";
 import { z } from "astro/zod";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
 
 type Props = z.infer<typeof props>;
 
@@ -43,4 +43,4 @@ general_definition =
 	general_definition.charAt(0).toUpperCase() + general_definition.slice(1);
 ---
 
-<Fragment set:html={marked.parse(general_definition)} />
+<Fragment set:html={renderMarkdown(general_definition)} />

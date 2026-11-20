@@ -40,28 +40,26 @@ const cards = [
 	<div class="border-border relative border-t border-l">
 		<CornerMarks />
 		<div class="grid grid-cols-1 sm:grid-cols-2">
-			{
-				cards.map((card) => (
-					<a
-						href={card.href}
-						class="group/build-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
-					>
-						<div class="text-foreground mb-2 text-base font-medium">
-							{card.title}
-						</div>
-						<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
-							{card.desc}
-						</p>
-						<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/build-card:underline">
-							Learn more
-							<Icon
-								name="ph:arrow-right"
-								class="h-3.5 w-3.5 transition-transform group-hover/build-card:translate-x-0.5"
-							/>
-						</span>
-					</a>
-				))
-			}
+			{cards.map((card) => (
+				<a
+					href={card.href}
+					class="group/build-card border-border bg-background text-foreground hover:bg-muted/40 focus-visible:outline-primary relative flex flex-col border-r border-b p-6 no-underline transition-colors focus-visible:outline-2 focus-visible:-outline-offset-2"
+				>
+					<div class="text-foreground mb-2 text-base font-medium">
+						{card.title}
+					</div>
+					<p class="text-muted-foreground mb-6 flex-1 text-sm leading-relaxed">
+						{card.desc}
+					</p>
+					<span class="text-muted-foreground mt-auto inline-flex w-fit items-center gap-2 text-sm font-medium underline-offset-4 group-hover/build-card:underline">
+						Learn more
+						<Icon
+							name="ph:arrow-right"
+							class="h-3.5 w-3.5 transition-transform group-hover/build-card:translate-x-0.5"
+						/>
+					</span>
+				</a>
+			))}
 		</div>
 	</div>
 </div>

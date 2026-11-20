@@ -1,0 +1,14 @@
+id: NEbumj
+name: Web Search API
+
+entry:
+  title: Web Search API
+  url: /web-search/
+  group: Developer platform
+  additional_groups: [AI]
+  tags: [AI]
+
+meta:
+  title: Cloudflare Web Search API docs
+  description: Ground AI agents and applications with real-time web search results
+  author: "@cloudflare"

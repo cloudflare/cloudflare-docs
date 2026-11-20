@@ -1,31 +1,25 @@
 ---
 {}
-
 ---
 
-### Rate limit by user (JWT claim)
+### Rate limit by JWT claim
 
-You can rate limit requests based on any claim inside of a JSON Web Token (JWT), such as:
+Rate Limiting can use string claims from a valid JSON Web Token (JWT) as rate-limit characteristics. This includes registered claims, such as `sub`, and custom claims.
 
-- Registered claims like `aud` or `sub`
-- Custom claims like `userEmail`, including nested custom claims like `user.email`
+For nested claims, pass each object key separately to [`lookup_json_string()`](/ruleset-engine/rules-language/functions/#lookup_json_string). For example, use `"user", "email"` to access `user.email`.
 
-Rate limiting based on JWT claim values will only work on valid JSON Web Tokens. If you do not block invalid JSON Web Tokens on your path, the [JWT claims will all be counted and possibly blocked](/waf/rate-limiting-rules/parameters/#missing-field-versus-empty-value) if high traffic is detected in the Point of Presence (PoP).
+Only valid JWTs populate JWT claim fields. If a rule also matches requests without the selected claim, those requests use a separate missing-value counter. Refer to [Missing field versus empty value](/waf/rate-limiting-rules/parameters/#missing-field-versus-empty-value).
 
-You must also count the JWT claim that uniquely identifies the user. If you select a claim that is the same for many of your users, their rate limits will all be counted together.
+For per-user limits, select a claim that uniquely identifies the user, such as `sub` when it is unique within your application. Requests with the same characteristic value share a rate-limit counter.
 
 ### Rate limit by user tier
 
-If you offer multiple tiers on your website or application and you want to enforce rate limiting based on the tiers, such as:
+To apply different per-user limits by tier, create one rate limiting rule for each tier. Match the tier claim in the rule expression and use a separate user identifier claim as the rate-limit characteristic.
 
-- If `"aud": "free-tier"`, rate limit to five requests per minute.
-- If `"aud": "premium-tier"`, rate limit to 50 requests per minute.
-
-You can follow the rate limiting rule example below:
+For example, a free-tier rule can use:
 
 ```txt title="Example rule expression"
-(http.request.method eq "GET" and
-http.host eq "<YOUR_DOMAIN>" and
-http.request.uri.path matches "</EXAMPLE_PATH>" and
-lookup_json_string(http.request.jwt.claims["<JWT_TOKEN_CONFIGURATION_ID>"][0], "aud") eq "free-tier"
+lookup_json_string(http.request.jwt.claims["<JWT_TOKEN_CONFIGURATION_ID>"][0], "tier") eq "free"
 ```
+
+Use `sub` as the rate-limit characteristic and set the limit to five requests per minute. Create another rule that matches `"tier" eq "premium"` and applies the appropriate premium-tier limit.

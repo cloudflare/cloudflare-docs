@@ -1,0 +1,146 @@
+---
+import RealtimeDiagramFrame from "./RealtimeDiagramFrame.astro";
+---
+
+<RealtimeDiagramFrame
+	ariaLabel="A publisher sends messages through Realtime SFU to subscribers and a selected subscriber. The selected subscriber can send authorized replies through Realtime SFU to the publisher."
+	className="rt-datachannels"
+>
+	<div class="rtdc-desktop">
+		<div class="rt-diagram__node rtdc-publisher">
+			<strong>Publisher</strong>
+		</div>
+
+		<div class="rt-diagram__connector rtdc-publish">
+			<span class="rt-diagram__connector-label">Messages</span>
+		</div>
+
+		<div class="rt-diagram__connector rt-diagram__connector--left rtdc-reply">
+			<span class="rt-diagram__connector-label">Replies</span>
+		</div>
+
+		<div class="rt-diagram__node rt-diagram__node--accent rtdc-sfu">
+			<span class="rt-diagram__eyebrow">Cloudflare</span>
+			<strong>Realtime SFU</strong>
+		</div>
+
+		<div class="rt-diagram__connector rtdc-subscribers-link">
+			<span class="rt-diagram__connector-label">Messages</span>
+		</div>
+
+		<div class="rtdc-selected-links">
+			<div class="rt-diagram__connector">
+				<span class="rt-diagram__connector-label">Messages</span>
+			</div>
+			<div class="rt-diagram__connector rt-diagram__connector--left">
+				<span class="rt-diagram__connector-label">Authorized replies</span>
+			</div>
+		</div>
+
+		<div class="rt-diagram__node rtdc-subscribers">
+			<strong>Subscribers</strong>
+		</div>
+
+		<div class="rt-diagram__node rtdc-selected">
+			<strong>Selected subscriber</strong>
+		</div>
+	</div>
+
+	<div class="rt-diagram__mobile-routes">
+		<div class="rt-diagram__mobile-route">
+			<span>Publisher</span>
+			<small>Messages →</small>
+			<span>Realtime SFU</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Realtime SFU</span>
+			<small>Messages →</small>
+			<span>Subscribers</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Realtime SFU</span>
+			<small>Messages →</small>
+			<span>Selected subscriber</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Selected subscriber</span>
+			<small>Authorized replies →</small>
+			<span>Realtime SFU</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Realtime SFU</span>
+			<small>Replies →</small>
+			<span>Publisher</span>
+		</div>
+	</div>
+</RealtimeDiagramFrame>
+
+<style>
+	.rtdc-desktop {
+		display: grid;
+		grid-template-columns:
+			minmax(7rem, 1fr) minmax(5.5rem, 0.7fr) minmax(8rem, 1fr)
+			minmax(6.5rem, 0.8fr) minmax(8rem, 1fr);
+		grid-template-rows: repeat(2, minmax(5.5rem, auto));
+		gap: 0.75rem 0;
+		align-items: stretch;
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.rtdc-publisher,
+	.rtdc-sfu {
+		grid-row: 1 / 3;
+		align-self: center;
+	}
+
+	.rtdc-publisher {
+		grid-column: 1;
+	}
+
+	.rtdc-publish {
+		grid-column: 2;
+		grid-row: 1;
+	}
+
+	.rtdc-reply {
+		grid-column: 2;
+		grid-row: 2;
+	}
+
+	.rtdc-sfu {
+		grid-column: 3;
+	}
+
+	.rtdc-subscribers-link {
+		grid-column: 4;
+		grid-row: 1;
+	}
+
+	.rtdc-selected-links {
+		display: grid;
+		grid-column: 4;
+		grid-row: 2;
+		grid-template-rows: repeat(2, 1fr);
+	}
+
+	.rtdc-subscribers {
+		grid-column: 5;
+		grid-row: 1;
+	}
+
+	.rtdc-selected {
+		grid-column: 5;
+		grid-row: 2;
+	}
+
+	@container (max-width: 40rem) {
+		.rtdc-desktop {
+			display: none;
+		}
+
+		.rt-diagram__mobile-routes {
+			display: grid;
+		}
+	}
+</style>

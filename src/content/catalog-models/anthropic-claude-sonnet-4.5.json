@@ -13,6 +13,12 @@
 	"context_length": 200000,
 	"max_output_tokens": 8192,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 3,
+		"Output tokens (per 1M)": 15,
+		"Cached input tokens (per 1M)": 0.3,
+		"Cache creation tokens (per 1M)": 3.75
+	},
 	"examples": [
 		{
 			"name": "Simple Question",
@@ -635,12 +641,24 @@
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/anthropic/claude-sonnet-4.5.png",
 	"metadata": {
 		"Architecture": "Transformer",
-		"Extended Thinking": "Yes"
+		"Extended Thinking": "Yes",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"anthropic-messages"
 	],
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "anthropic",
+			"pricing": {
+				"input_tokens": 3,
+				"output_tokens": 15,
+				"input_cached_tokens": 0.3,
+				"input_cache_creation_tokens": 3.75
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:52:57",
 	"schema": {
@@ -657,7 +675,8 @@
 								"type": "string",
 								"enum": [
 									"user",
-									"assistant"
+									"assistant",
+									"system"
 								]
 							},
 							"content": {
@@ -719,7 +738,51 @@
 					"exclusiveMinimum": 0
 				},
 				"system": {
-					"type": "string"
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "text"
+									},
+									"text": {
+										"type": "string"
+									},
+									"cache_control": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "ephemeral"
+											},
+											"ttl": {
+												"type": "string",
+												"enum": [
+													"5m",
+													"1h"
+												]
+											}
+										},
+										"required": [
+											"type"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"text"
+								],
+								"additionalProperties": {}
+							}
+						}
+					]
 				},
 				"temperature": {
 					"type": "number",
@@ -789,13 +852,9 @@
 					"type": "string"
 				},
 				"stop_reason": {
-					"anyOf": [
-						{
-							"type": "string"
-						},
-						{
-							"type": "null"
-						}
+					"type": [
+						"string",
+						"null"
 					]
 				},
 				"usage": {
@@ -806,13 +865,31 @@
 						},
 						"output_tokens": {
 							"type": "number"
+						},
+						"cache_creation_input_tokens": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"cache_read_input_tokens": {
+							"type": [
+								"number",
+								"null"
+							]
+						},
+						"speed": {
+							"type": [
+								"string",
+								"null"
+							]
 						}
 					},
 					"required": [
 						"input_tokens",
 						"output_tokens"
 					],
-					"additionalProperties": false
+					"additionalProperties": {}
 				}
 			},
 			"required": [

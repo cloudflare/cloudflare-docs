@@ -27,7 +27,7 @@ AI Security for Apps can operate in two distinct modes. Understanding the trade-
 | Feature                | Production mode                                                                              | Log mode                                                                                                                              |
 | ---------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
 | **How it works**       | You write WAF [custom rules](/waf/custom-rules/) using AI Security for Apps detection fields | You enable the AI Security Log Mode Ruleset with pre-built rules                                                                      |
-| **Prompt logging**     | No — only request metadata is logged                                                         | Yes — the full request body is logged (encrypted via [payload logging](/waf/managed-rules/payload-logging/))                          |
+| **Prompt logging**     | No — only request metadata is logged                                                         | Yes — the full request body is logged (encrypted via [payload logging](/waf/payload-logging/))                          |
 | **Response logging**   | No — use [AI Gateway](/ai-gateway/) if response visibility is required                       | No — same limitation                                                                                                                  |
 | **Policy flexibility** | Full — combine injection scores, PII categories, bot scores, custom topics, and more         | Limited — three fixed rules (PII detected, unsafe topic detected, prompt injection detected) with no score-based or subcategory logic |
 | **Blocking behavior**  | Customizable — issue custom responses including custom JSON                                  | Default WAF block page only                                                                                                           |
@@ -56,7 +56,7 @@ Log mode uses the AI Security Log Mode Ruleset — a pre-built ruleset that logs
 In log mode:
 
 - The managed ruleset fires on three broad conditions: PII detected, unsafe topic detected, and prompt injection detected.
-- The entire request body is logged using [payload logging](/waf/managed-rules/payload-logging/) (encrypted — you must configure a key pair to decrypt payloads).
+- The entire request body is logged using [payload logging](/waf/payload-logging/) (encrypted — you must configure a key pair to decrypt payloads).
 - You can correlate specific prompts with their detection scores to understand how the model classifies your traffic.
 
 **When to use log mode:**
@@ -78,7 +78,7 @@ In log mode:
 2. Under **AI Security for Apps**, find the **Managed Ruleset** section.
 3. Enable the **AI Security Log Mode Ruleset**.
 4. Set the action to _Log_.
-5. (Recommended) Configure [payload logging](/waf/managed-rules/payload-logging/) so you can decrypt and view the full prompt content alongside detection results.
+5. (Recommended) Configure [payload logging](/waf/payload-logging/) so you can decrypt and view the full prompt content alongside detection results.
 
 </Steps>
 
@@ -120,7 +120,7 @@ Since the managed ruleset uses broad, binary detection logic (detected/not detec
 
 <Steps>
 
-1. **Start in log mode.** Enable the AI Security Log Mode Ruleset with the action set to _Log_. Configure [payload logging](/waf/managed-rules/payload-logging/) so you can view prompts alongside detection results.
+1. **Start in log mode.** Enable the AI Security Log Mode Ruleset with the action set to _Log_. Configure [payload logging](/waf/payload-logging/) so you can view prompts alongside detection results.
 
 2. **Review detections in [Security Analytics](/waf/analytics/security-analytics/).** Filter on events from the managed ruleset. Decrypt payloads and review the prompts that triggered detections. Note the scores to understand where to set thresholds.
 

@@ -1,0 +1,186 @@
+/**
+ * CommentSpamWorkflow — durable spam gate for issue comments (D7).
+ *
+ * Cloudflare `WorkflowEntrypoint` bound as `COMMENT_SPAM`. Kicked from
+ * `pipeline-entry.ts` for `issue_comment` created events whose author is not
+ * exempt by payload-derived checks (write access, bots, item author). The
+ * codeowner check requires GitHub API calls, so it runs here.
+ *
+ * Why a workflow: the spam filter is an AI call, so it cannot run inline in
+ * the webhook handler without blowing GitHub's delivery timeout. Running it
+ * as a durable step lets the handler return 202 immediately while the gate
+ * runs in the background.
+ *
+ * Steps:
+ *   1. spam-context — fetches the comment and parent item, then re-runs the
+ *      exemption checks against fresh data (including the codeowner check).
+ *      Skips without consulting the agent when any exemption matches.
+ *   2. spam-verdict — asks Clef (Workers AI) directly; no agent.
+ *   3. act — on a high-confidence spam verdict: writes an R2 audit record
+ *      first, then deletes the comment. Every failure path fails open — an
+ *      Clef error or audit failure never deletes a comment.
+ */
+import { WorkflowEntrypoint } from "cloudflare:workers";
+import type { WorkflowEvent, WorkflowStep } from "cloudflare:workers";
+import type { AiRunner, SpamVerdict } from "../lib/clef";
+import {
+	buildCommentSpamAuditRecord,
+	evaluateCommentSpam,
+	getCommentSpamContext,
+	shouldDeleteComment,
+	spamDeletionAuditKey,
+	type CommentSpamParams,
+} from "../lib/comment-spam";
+import { reviewMode, type ReviewRunEnv } from "../lib/review/run-context";
+import { deleteIssueComment, getInstallationToken } from "../lib/github";
+
+interface CommentSpamEnv {
+	DOCS_FLUE_BUCKET: R2Bucket;
+	AI: AiRunner;
+	DOCS_FLUE_REVIEW_MODE?: string;
+	DOCS_FLUE_AI_GATEWAY_ID?: string;
+	[key: string]: unknown;
+}
+
+export class CommentSpamWorkflow extends WorkflowEntrypoint<
+	CommentSpamEnv,
+	CommentSpamParams
+> {
+	async run(
+		event: Readonly<WorkflowEvent<CommentSpamParams>>,
+		step: WorkflowStep,
+	): Promise<Record<string, unknown>> {
+		const { commentId, parentNumber, isPullRequest, replay } = event.payload;
+		const mode = reviewMode(this.env as unknown as ReviewRunEnv);
+		// A log-mode replay is a dry run: real webhooks always act.
+		const dryRun = replay === true && mode === "log";
+		const ghEnv = this.env as unknown as Record<string, string>;
+
+		// ── 1. Context + exemptions ─────────────────────────────────────────────
+		const fetched = await step.do("spam-context", async () => {
+			const token = await getInstallationToken(ghEnv);
+			return getCommentSpamContext(token, ghEnv.GITHUB_ORG_TOKEN ?? "", {
+				commentId,
+				parentNumber,
+				isPullRequest,
+			});
+		});
+		if (fetched.skip) {
+			console.log({
+				message: `Comment spam gate skipped comment ${commentId} on #${parentNumber}: ${fetched.skip}`,
+				event: "comment_spam_filter_verdict",
+				commentId,
+				number: parentNumber,
+				isPullRequest,
+				action: "skipped",
+				reason: fetched.skip,
+			});
+			return { acted: true, deleted: false, skipped: fetched.skip, mode };
+		}
+		const context = fetched.context;
+
+		// ── 2. Clef verdict ─────────────────────────────────────────────────────
+		// A Clef failure is captured as a result (not thrown) so the act step
+		// fails open instead of retrying into a stuck workflow.
+		const verdict = await step.do<
+			{ ok: true; value: SpamVerdict } | { ok: false; error: string }
+		>(
+			"spam-verdict",
+			{ retries: { limit: 2, delay: "5 seconds", backoff: "exponential" } },
+			async () => {
+				try {
+					return {
+						ok: true,
+						value: await evaluateCommentSpam(
+							this.env.AI,
+							context,
+							this.env.DOCS_FLUE_AI_GATEWAY_ID,
+						),
+					};
+				} catch (error) {
+					return { ok: false, error: String(error) };
+				}
+			},
+		);
+
+		// ── 3. Act ──────────────────────────────────────────────────────────────
+		const parent = context.parent;
+		const label = `${parent.kind === "pull_request" ? "PR" : "Issue"} #${parent.number} comment ${commentId}`;
+		const result = await step.do<{
+			deleted: boolean;
+			wouldDelete?: boolean;
+			verdict?: SpamVerdict;
+			error?: string;
+		}>("act", async () => {
+			if (!verdict.ok) {
+				console.log({
+					message: `Comment spam filter errored (failing open): ${label} — ${verdict.error}`,
+					event: "comment_spam_filter_verdict",
+					commentId,
+					number: parent.number,
+					isPullRequest,
+					action: "filter_error",
+				});
+				return { deleted: false, error: verdict.error };
+			}
+			if (!shouldDeleteComment(verdict.value)) {
+				console.log({
+					message: `Comment left: ${label} (${verdict.value.confidence} confidence, not spam)`,
+					event: "comment_spam_filter_verdict",
+					commentId,
+					number: parent.number,
+					isPullRequest,
+					...verdict.value,
+					action: "left_undeleted",
+				});
+				return { deleted: false, wouldDelete: false, verdict: verdict.value };
+			}
+			if (dryRun) {
+				console.log({
+					message: `Replay (log mode): would delete ${label}`,
+					event: "comment_spam_filter_verdict",
+					commentId,
+					...verdict.value,
+					action: "replay_would_delete",
+				});
+				return { deleted: false, wouldDelete: true, verdict: verdict.value };
+			}
+
+			// Audit before deleting: if the audit write fails, fail open — no
+			// un-auditable deletions.
+			const auditKey = spamDeletionAuditKey(commentId);
+			const record = buildCommentSpamAuditRecord(
+				context,
+				verdict.value,
+				event.instanceId,
+				new Date(),
+			);
+			try {
+				await this.env.DOCS_FLUE_BUCKET.put(
+					auditKey,
+					JSON.stringify(record, null, 2),
+				);
+			} catch (error) {
+				console.warn(
+					`Comment spam audit write failed for ${auditKey}; failing open: ${error}`,
+				);
+				return { deleted: false };
+			}
+
+			const token = await getInstallationToken(ghEnv);
+			await deleteIssueComment(token, commentId);
+			console.log({
+				message: `Comment deleted: ${label} (high confidence spam)`,
+				event: "comment_spam_filter_verdict",
+				commentId,
+				number: parent.number,
+				isPullRequest,
+				...verdict.value,
+				action: "comment_deleted",
+			});
+			return { deleted: true, wouldDelete: true, verdict: verdict.value };
+		});
+
+		return { acted: true, mode, replay: replay === true, ...result };
+	}
+}

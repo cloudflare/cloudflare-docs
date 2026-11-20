@@ -1,0 +1,17 @@
+---
+title: Precursor adds Monitor mode
+description: Monitor mode lets you test Precursor without applying its signals to bot score or Challenge clearance.
+date: 2026-10-19
+---
+
+We released Monitor mode at customers' request so they can test Precursor and the Precursor Interstitial without updating bot score.
+
+In **Security** > **Settings**, the Precursor **Status** dropdown now offers _Off_, _Monitor_, and _Arm_. Selecting _Arm_ means Precursor detections can affect bot score and Challenge clearance. Selecting _Monitor_ means Precursor detections do not affect bot score or Challenge clearance.
+
+![Precursor Status dropdown with Off, Monitor, and Arm options](~/assets/images/cloudflare-challenges/precursor-monitor-mode-status.png)
+
+We also separated the Precursor Interstitial from the mode. Set the sitewide default with **Show Interstitial**, then add **Interstitial Rules** to customize it for specific requests. For example, leave **Show Interstitial** off across most of your site, but require an interstitial Challenge on `/checkout` to enforce a valid session before purchase.
+
+![Precursor settings with Show Interstitial off and an Open interstitial rules button](~/assets/images/cloudflare-challenges/precursor-interstitial-settings.png)
+
+For more information, refer to the [**Precursor**](/cloudflare-challenges/precursor/) documentation.

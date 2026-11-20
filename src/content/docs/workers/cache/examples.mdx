@@ -32,6 +32,7 @@ Two facts shape every pattern below. They follow directly from "the cache is in 
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -73,6 +74,7 @@ Disable caching on the default entrypoint so it runs on every request to authent
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -238,6 +240,7 @@ The fix is a gateway entrypoint that restores `Accept-Encoding` from `request.cf
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -335,6 +338,7 @@ You can cache those responses by wrapping the Durable Object behind a named entr
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -476,6 +480,7 @@ Workers Caching lets you put your own cache layer in front of that origin withou
 {
 	"name": "my-worker",
 	"main": "src/index.ts",
+	"upload_source_maps": true,
 	"compatibility_date": "$today",
 	"cache": { "enabled": true },
 	"exports": {
@@ -566,7 +571,7 @@ All four examples are the same architecture seen through four lenses:
 | Route reads vs. writes    | Caching reads, invalidating them on writes    | Wraps a Durable Object behind a `Cache-Tag`       |
 | Forward the request as-is | Caching a third-party origin under your terms | Fetches the upstream and overlays `Cache-Control` |
 
-The only thing that changes between rows is what the outer entrypoint does before the call and what the inner entrypoint does on a miss. The cache stage in the middle is the same primitive every time — keyed by the inner entrypoint, the request path and query string, and `ctx.props`; configured by the inner entrypoint's `Cache-Control` and `Cache-Tag`; invalidated by `ctx.cache.purge()` from whichever entrypoint owns the data.
+The only thing that changes between rows is what the outer entrypoint does before the call and what the inner entrypoint does on a miss. The cache stage in the middle is the same primitive every time — keyed by the inner entrypoint, the request path and query string, and `ctx.props`; configured by the inner entrypoint's `Cache-Control` and `Cache-Tag`; purged by `ctx.cache.purge()` or invalidated by `ctx.cache.invalidate()` from whichever entrypoint owns the data.
 
 That uniformity is what makes the patterns compose. Nothing stops you from stacking them in a single Worker:
 

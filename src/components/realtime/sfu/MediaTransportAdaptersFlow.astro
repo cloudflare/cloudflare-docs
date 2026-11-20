@@ -1,0 +1,84 @@
+---
+import RealtimeDiagramFrame from "./RealtimeDiagramFrame.astro";
+---
+
+<RealtimeDiagramFrame
+	ariaLabel="A WebRTC endpoint exchanges media tracks with Realtime SFU. Realtime SFU exchanges media with WebSocket adapters, which exchange binary media packets with a WebSocket service."
+	className="rt-adapters"
+>
+	<div class="rtad-desktop">
+		<div class="rt-diagram__node">
+			<strong>WebRTC endpoint</strong>
+		</div>
+
+		<div class="rt-diagram__connector rt-diagram__connector--both">
+			<span class="rt-diagram__connector-start" aria-hidden="true"></span>
+			<span class="rt-diagram__connector-label">Media tracks</span>
+		</div>
+
+		<div class="rt-diagram__node rt-diagram__node--accent">
+			<span class="rt-diagram__eyebrow">Cloudflare</span>
+			<strong>Realtime SFU</strong>
+		</div>
+
+		<div class="rt-diagram__connector rt-diagram__connector--both">
+			<span class="rt-diagram__connector-start" aria-hidden="true"></span>
+		</div>
+
+		<div class="rt-diagram__node rt-diagram__node--accent">
+			<strong>WebSocket adapters</strong>
+		</div>
+
+		<div class="rt-diagram__connector rt-diagram__connector--both">
+			<span class="rt-diagram__connector-start" aria-hidden="true"></span>
+			<span class="rt-diagram__connector-label">Binary media packets</span>
+		</div>
+
+		<div class="rt-diagram__node">
+			<strong>Your WebSocket service</strong>
+		</div>
+	</div>
+
+	<div class="rt-diagram__mobile-routes">
+		<div class="rt-diagram__mobile-route">
+			<span>WebRTC endpoint</span>
+			<small>Media tracks ↔</small>
+			<span>Realtime SFU</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>Realtime SFU</span>
+			<small>Media ↔</small>
+			<span>WebSocket adapters</span>
+		</div>
+		<div class="rt-diagram__mobile-route">
+			<span>WebSocket adapters</span>
+			<small>Binary media packets ↔</small>
+			<span>Your WebSocket service</span>
+		</div>
+	</div>
+</RealtimeDiagramFrame>
+
+<style>
+	.rtad-desktop {
+		display: grid;
+		grid-template-columns:
+			minmax(5.5rem, 1fr) minmax(3.5rem, 0.65fr) minmax(5.5rem, 1fr)
+			minmax(2rem, 0.4fr) minmax(5.5rem, 1fr) minmax(4.5rem, 0.8fr) minmax(
+				5.5rem,
+				1fr
+			);
+		align-items: stretch;
+		max-width: 920px;
+		margin: 0 auto;
+	}
+
+	@container (max-width: 32rem) {
+		.rtad-desktop {
+			display: none;
+		}
+
+		.rt-diagram__mobile-routes {
+			display: grid;
+		}
+	}
+</style>

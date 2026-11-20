@@ -1,0 +1,20 @@
+---
+title: BGP route filtering for IPsec and GRE tunnels
+description: Cloudflare WAN and Magic Transit tunnels now support import and export filtering.
+date: 2026-10-15
+products:
+  - cloudflare-wan
+  - magic-transit
+  - cloudflare-one
+---
+
+Cloudflare WAN and Magic Transit IPsec and GRE tunnels now support BGP import and export filtering.
+
+Create reusable filter profiles that specify an `allow` or `deny` action and a list of Classless Inter-Domain Routing (CIDR) targets with exact, more-specific, or prefix-length matching. Each tunnel supports one import filter and one export filter.
+
+You can create and assign profiles through the dashboard, API, or Terraform. Profile changes apply without resetting the BGP session.
+
+For configuration details, refer to:
+
+- [Filter BGP routes for Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-routes/#filter-bgp-routes)
+- [Filter BGP routes for Magic Transit](/magic-transit/how-to/configure-routes/#filter-bgp-routes)

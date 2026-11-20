@@ -1,0 +1,31 @@
+---
+title: Pay for AI inference with Machine Payments
+description: Use x402 to pay for eligible AI Gateway inference requests directly from a stablecoin wallet.
+date: 2026-09-30
+---
+
+AI Gateway now supports Machine Payments in beta. With Machine Payments, clients can use the x402 protocol to pay for eligible inference requests directly from a stablecoin wallet instead of maintaining a prepaid credit balance.
+
+Machine Payments is available for the `/ai/run` endpoint with select open models. To request x402 payment, authenticate with a Cloudflare API token and include the Cloudflare-specific `Payment-Method: x402` header:
+
+```bash
+curl -iX POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Payment-Method: x402" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "model": "z-ai/glm-4.7-flash",
+    "input": {
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is Cloudflare?"
+        }
+      ]
+    }
+  }'
+```
+
+An x402-compatible client handles the payment challenge, signs an authorization from the client's wallet, and retries the request. Machine Payments currently requires customers to be based in the United States and have a credit card on file.
+
+For prerequisites, eligible models, and transaction details, refer to [Machine Payments (x402)](/ai-gateway/features/machine-payments/).

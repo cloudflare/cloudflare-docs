@@ -17,6 +17,10 @@
  *     generated JS (upstream's Expressive Code plugin has no Shiki analogue,
  *     so the link is rendered directly via the shared LinkButton).
  *   - `code` is spread onto every rendered `<Code>` block, mirroring upstream.
+ *   - Type-only snippets throw: they would render an empty JavaScript tab.
+ *   - `omitTabs` still renders both panels, just without the `<Tabs>`
+ *     wrapper, so the caller can nest them in its own `<Tabs>` next to other
+ *     languages (for example a Python `<TabItem>`).
  */
 import { parse } from "node-html-parser";
 import { format } from "prettier";
@@ -59,6 +63,20 @@ raw = raw.replaceAll(
 
 const js = await format(tsBlankSpace(raw), { parser: "babel", useTabs: true });
 
+// A snippet that contains only types (type aliases, interfaces, `declare`)
+// strips to nothing, which renders an empty JavaScript tab. Comments survive
+// stripping, so ignore them too. Any real code before a comment marker stays,
+// so this cannot flag a block that has runtime code.
+const jsWithoutComments = js
+	.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/gm, "")
+	.replace(/[\s;]/g, "");
+
+if (!jsWithoutComments) {
+	throw new Error(
+		`[TypeScriptExample] The JavaScript tab would be empty because the snippet only contains types (on "${Astro.url.pathname}"). Use a plain \`\`\`ts code block for type definitions instead of <TypeScriptExample>.`,
+	);
+}
+
 // Serialise the generated JS into a Workers module bundle and lz-compress it
 // into the playground fragment, matching upstream's workers-playground plugin.
 let playgroundHref: string | undefined;
@@ -93,33 +111,29 @@ const wrapperProps = omitTabs ? {} : { syncKey: "workersExamples" };
 				{...code}
 				lang="js"
 				code={js}
-				meta={filename
-					? `title="${filename.replace(".ts", ".js")}"`
-					: undefined}
+				meta={
+					filename ? `title="${filename.replace(".ts", ".js")}"` : undefined
+				}
 			/>
-			{
-				playgroundHref && (
-					<div class="flex justify-end pt-3">
-						<LinkButton
-							href={playgroundHref}
-							variant="primary"
-							target="_blank"
-							rel="noopener"
-						>
-							Run Worker in Playground
-						</LinkButton>
-					</div>
-				)
-			}
+			{playgroundHref && (
+				<div class="flex justify-end pt-3">
+					<LinkButton
+						href={playgroundHref}
+						variant="primary"
+						target="_blank"
+						rel="noopener"
+					>
+						Run Worker in Playground
+					</LinkButton>
+				</div>
+			)}
 		</TabItem>
 		<TabItem label="TypeScript">
-			{
-				filename ? (
-					<Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
-				) : (
-					<Fragment set:html={slot} />
-				)
-			}
+			{filename ? (
+				<Code {...code} lang="ts" code={raw} meta={`title="${filename}"`} />
+			) : (
+				<Fragment set:html={slot} />
+			)}
 		</TabItem>
 	</Wrapper>
 </div>

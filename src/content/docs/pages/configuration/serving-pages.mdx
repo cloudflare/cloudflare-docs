@@ -18,7 +18,7 @@ You can define a custom page to be displayed when Pages cannot find a requested 
 
 ## Single-page application (SPA) rendering
 
-If your project does not include a top-level `404.html` file, Pages assumes that you are deploying a single-page application. This includes frameworks like React, Vue, and Angular. Pages' default single-page application behavior matches all incoming paths to the root (`/`), allowing you to capture URLs like `/about` or `/help` and respond to them from within your SPA.
+If your project does not include a top-level `404.html` file, Pages assumes that you are deploying a single-page application. This includes frameworks like React, Vue, and Angular. Pages' default single-page application behavior serves the root (`/`) for any incoming path that does not correspond to a static asset, allowing your application to handle routes like `/about` or `/help` client-side from within your SPA.
 
 ## Caching and performance
 
@@ -26,7 +26,7 @@ If your project does not include a top-level `404.html` file, Pages assumes that
 
 In most situations, you should avoid setting up any custom caching on your site. Pages comes with built in caching defaults that are optimized for caching as much as possible, while providing the most up to date content. Every time you deploy an asset to Pages, the asset remains cached on the Cloudflare CDN until your next deployment.
 
-Therefore, if you add caching to your [custom domain](/pages/configuration/custom-domains/), it may lead to stale assets being served after a deployment.
+For a [proxied custom domain](/pages/configuration/custom-domains/#zone-settings), Cache Rules and legacy Page Rules can cache responses in your zone before requests reach Pages. This cache is separate from Pages' built-in caching and can serve stale content after a deployment.
 
 In addition, adding caching to your custom domain may cause issues with [Pages redirects](/pages/configuration/redirects/) or [Pages functions](/pages/functions/). These issues can occur because the cached response might get served to your end user before Pages can act on the request.
 
@@ -36,7 +36,7 @@ Note that when you use Cloudflare Pages, the static assets that you upload as pa
 
 :::note[Purging the cache]
 
-If you notice stale assets being served after a new deployment, go to your zone and then **Caching** > **Configuration** > [**Purge Everything**](/cache/how-to/purge-cache/purge-everything/) to ensure the latest deployment gets served.
+If a custom caching rule serves stale content after a deployment, remove or narrow the rule, then [purge the affected URLs](/cache/how-to/purge-cache/purge-by-single-file/) in your custom domain's zone. Purging alone does not prevent stale content after future deployments. You can also [purge everything](/cache/how-to/purge-cache/purge-everything/) if you need to clear all cached content in that zone.
 
 :::
 

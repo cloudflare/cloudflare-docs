@@ -12,7 +12,6 @@ releaseNotes: |-
   - Added monitoring for tunnel statistics collection timeouts.
   - Switched tunnel congestion control algorithm for local proxy mode to Cubic for improved reliability across platforms.
   - Fixed initiating managed network detections checks when no network is available, which caused device profile flapping.
-
 version: 2026.3.846.0
 releaseDate: 2026-04-02T15:39:10.549Z
 packageURL: https://downloads.cloudflareclient.com/v1/download/fedora35-intel/version/2026.3.846.0

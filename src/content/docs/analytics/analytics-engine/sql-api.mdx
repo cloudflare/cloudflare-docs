@@ -15,6 +15,8 @@ The Workers Analytics Engine SQL API is an HTTP API that allows executing SQL qu
 
 The API is hosted at `https://api.cloudflare.com/client/v4/accounts/<account_id>/analytics_engine/sql`.
 
+This endpoint and its SQL dialect are separate from the [Analytics SQL API](/analytics/sql-api/). To query Analytics Engine data through that API, use `events.analyticsEngine.<DATASET_NAME>`. Double-quote dataset names that are not ordinary SQL identifiers, for example `events.analyticsEngine."example-dataset"`.
+
 ## Authentication
 
 Authentication is done via bearer token. An `Authorization: Bearer <token>` header must be supplied with every request to the API.

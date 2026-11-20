@@ -1,0 +1,977 @@
+{
+	"model_id": "particle/particle-1",
+	"provider_id": "particle",
+	"name": "Particle-1",
+	"description": "Particle-1 is Particle AI's reasoning model for chat, agentic coding, and tool use. It accepts text and images, with a 1,048,576-token context window, streaming responses, and configurable reasoning effort.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Coding",
+		"Reasoning",
+		"Function Calling",
+		"Vision"
+	],
+	"context_length": 1048576,
+	"max_output_tokens": 131072,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.25,
+		"Cached input tokens (per 1M)": 0.03,
+		"Output tokens (per 1M)": 1
+	},
+	"examples": [
+		{
+			"name": "Chat completion",
+			"description": "Explain KV caching with reasoning disabled for a concise response.",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain KV caching in two sentences."
+					}
+				],
+				"reasoning_effort": "none",
+				"max_completion_tokens": 256
+			},
+			"output": {
+				"text": "KV caching stores the key and value tensors computed for each token during transformer attention so they can be reused instead of recomputed at every decoding step. This turns generation from quadratic to roughly linear work per new token, dramatically speeding up autoregressive inference at the cost of extra memory."
+			},
+			"raw_response": {
+				"id": "e5778c6255f749c6ac49ebfaa882266d",
+				"object": "chat.completion",
+				"created": 1793303112,
+				"model": "particle/particle-1",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "KV caching stores the key and value tensors computed for each token during transformer attention so they can be reused instead of recomputed at every decoding step. This turns generation from quadratic to roughly linear work per new token, dramatically speeding up autoregressive inference at the cost of extra memory.",
+							"tool_calls": null,
+							"reasoning_content": null
+						},
+						"finish_reason": "stop",
+						"logprobs": null,
+						"matched_stop": 1
+					}
+				],
+				"usage": {
+					"prompt_tokens": 64,
+					"completion_tokens": 57,
+					"total_tokens": 121,
+					"completion_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"reasoning_tokens": 0
+				},
+				"metadata": null,
+				"service_tier": "free"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'particle/particle-1',\n  {\n    messages: [{ role: 'user', content: 'Explain KV caching in two sentences.' }],\n    reasoning_effort: 'none',\n    max_completion_tokens: 256,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"particle/particle-1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Explain KV caching in two sentences.\"\n    }\n  ],\n  \"reasoning_effort\": \"none\",\n  \"max_completion_tokens\": 256\n}'"
+				}
+			]
+		},
+		{
+			"name": "Streaming chat",
+			"description": "Stream a short explanation of exponential backoff.",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain exponential backoff in two sentences."
+					}
+				],
+				"reasoning_effort": "none",
+				"max_completion_tokens": 256,
+				"stream": true
+			},
+			"output": {
+				"text": [
+					"Ex",
+					"ponential backoff is a strategy",
+					" where a",
+					" system",
+					" retries a",
+					" failed operation after",
+					" waiting progressively",
+					" longer intervals, typically",
+					" doubling the",
+					" delay after",
+					" each attempt",
+					". It helps",
+					" reduce contention",
+					" and avoid overwhelming",
+					" a",
+					" struggling",
+					" service by",
+					" spreading out",
+					" retries over",
+					" time."
+				]
+			},
+			"raw_response": [
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"role": "assistant",
+								"content": ""
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": "Ex"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": "ponential backoff is a strategy"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " where a"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " system"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " retries a"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " failed operation after"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " waiting progressively"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " longer intervals, typically"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " doubling the"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " delay after"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " each attempt"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": ". It helps"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " reduce contention"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " and avoid overwhelming"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " a"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " struggling"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " service by"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " spreading out"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " retries over"
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null,
+								"content": " time."
+							},
+							"logprobs": null,
+							"finish_reason": null,
+							"matched_stop": null
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": null
+							},
+							"logprobs": null,
+							"finish_reason": "stop",
+							"matched_stop": 1
+						}
+					],
+					"service_tier": "free"
+				},
+				{
+					"id": "819751464b54400dadedfd50c69e91ca",
+					"object": "chat.completion.chunk",
+					"created": 1793303113,
+					"model": "particle-ai/particle-1",
+					"choices": [],
+					"usage": {
+						"prompt_tokens": 65,
+						"total_tokens": 113,
+						"completion_tokens": 48,
+						"completion_tokens_details": {
+							"reasoning_tokens": 0
+						},
+						"prompt_tokens_details": {
+							"cached_tokens": 0
+						},
+						"reasoning_tokens": 0
+					},
+					"service_tier": "free"
+				}
+			],
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'particle/particle-1',\n  {\n    messages: [{ role: 'user', content: 'Explain exponential backoff in two sentences.' }],\n    reasoning_effort: 'none',\n    max_completion_tokens: 256,\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"particle/particle-1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Explain exponential backoff in two sentences.\"\n    }\n  ],\n  \"reasoning_effort\": \"none\",\n  \"max_completion_tokens\": 256,\n  \"stream\": true\n}'"
+				}
+			]
+		},
+		{
+			"name": "Tool calling",
+			"description": "Ask Particle-1 to call a weather lookup function.",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What is the weather in Paris?"
+					}
+				],
+				"reasoning_effort": "none",
+				"max_completion_tokens": 256,
+				"tools": [
+					{
+						"type": "function",
+						"function": {
+							"name": "get_weather",
+							"description": "Get the current weather for a city.",
+							"parameters": {
+								"type": "object",
+								"properties": {
+									"city": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"city"
+								]
+							}
+						}
+					}
+				],
+				"tool_choice": {
+					"type": "function",
+					"function": {
+						"name": "get_weather"
+					}
+				}
+			},
+			"output": {
+				"tool_calls": [
+					{
+						"id": "call_b6bcda29bef84dcf80a570a1",
+						"type": "function",
+						"function": {
+							"name": "get_weather",
+							"arguments": "{\"city\": \"Paris\"}"
+						}
+					}
+				]
+			},
+			"raw_response": {
+				"id": "3831fab494624c51ba5cd542d5b807a6",
+				"object": "chat.completion",
+				"created": 1793303113,
+				"model": "particle/particle-1",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "",
+							"tool_calls": [
+								{
+									"id": "call_b6bcda29bef84dcf80a570a1",
+									"type": "function",
+									"function": {
+										"name": "get_weather",
+										"arguments": "{\"city\": \"Paris\"}"
+									}
+								}
+							],
+							"reasoning_content": null
+						},
+						"finish_reason": "tool_calls",
+						"logprobs": null,
+						"matched_stop": 1
+					}
+				],
+				"usage": {
+					"prompt_tokens": 324,
+					"completion_tokens": 39,
+					"total_tokens": 363,
+					"completion_tokens_details": {
+						"reasoning_tokens": 0
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 0
+					},
+					"reasoning_tokens": 0
+				},
+				"metadata": null,
+				"service_tier": "free"
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'particle/particle-1',\n  {\n    messages: [{ role: 'user', content: 'What is the weather in Paris?' }],\n    reasoning_effort: 'none',\n    max_completion_tokens: 256,\n    tools: [\n      {\n        type: 'function',\n        function: {\n          name: 'get_weather',\n          description: 'Get the current weather for a city.',\n          parameters: {\n            type: 'object',\n            properties: { city: { type: 'string' } },\n            required: ['city'],\n          },\n        },\n      },\n    ],\n    tool_choice: { type: 'function', function: { name: 'get_weather' } },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"particle/particle-1\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the weather in Paris?\"\n    }\n  ],\n  \"reasoning_effort\": \"none\",\n  \"max_completion_tokens\": 256,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Get the current weather for a city.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"city\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"city\"\n          ]\n        }\n      }\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"get_weather\"\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.particle.ai/models",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/particle/particle-1.png",
+	"metadata": {
+		"Function Calling": "Yes",
+		"Reasoning": "Yes",
+		"Vision": "Yes"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "particle",
+			"pricing": {
+				"input_tokens": 0.25,
+				"input_cached_tokens": 0.03,
+				"output_tokens": 1
+			}
+		}
+	],
+	"banner": null,
+	"created_at": "2026-10-30 17:20:28",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {},
+				"modalities": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"text",
+							"audio"
+						]
+					}
+				},
+				"audio": {
+					"type": "object",
+					"properties": {
+						"voice": {
+							"type": "string",
+							"enum": [
+								"alloy",
+								"ash",
+								"ballad",
+								"coral",
+								"echo",
+								"sage",
+								"shimmer",
+								"verse"
+							]
+						},
+						"format": {
+							"type": "string",
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							]
+						}
+					},
+					"additionalProperties": false
+				},
+				"reasoning_effort": {
+					"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+					"type": [
+						"string",
+						"null"
+					]
+				}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"tool_calls": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"audio": {
+										"anyOf": [
+											{
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"type": [
+									"string",
+									"null"
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

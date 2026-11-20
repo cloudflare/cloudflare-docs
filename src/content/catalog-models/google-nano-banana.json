@@ -11,6 +11,12 @@
 	"context_length": null,
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 0.3,
+		"Output tokens (per 1M)": 30,
+		"Cached input tokens (per 1M)": 0.03,
+		"Cache creation tokens (per 1M)": 0.083333
+	},
 	"examples": [
 		{
 			"name": "Cozy Coffee Shop",
@@ -188,6 +194,17 @@
 	},
 	"request_formats": null,
 	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"input_tokens": 0.3,
+				"output_tokens": 30,
+				"input_cached_tokens": 0.03,
+				"input_cache_creation_tokens": 0.083333
+			}
+		}
+	],
 	"banner": null,
 	"created_at": "2026-05-22 17:53:12",
 	"schema": {

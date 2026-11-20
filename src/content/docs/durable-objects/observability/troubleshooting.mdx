@@ -16,6 +16,12 @@ products:
 
 ## Common errors
 
+### Exceeded the account's spending cap for Durable Objects
+
+The account has reached a [Durable Objects spending limit](/durable-objects/platform/spend-management/). In **Billing** > **Spend Management**, raise the limit above current spend, turn it off, or remove it. Changes can take a few minutes to apply.
+
+The block also expires at the next subscription billing period. If you use alarms, review [alarm recovery](/durable-objects/platform/spend-management/#alarm-recovery) before resuming your application.
+
 ### No event handlers were registered. This script does nothing.
 
 In your Wrangler file, make sure the `dir` and `main` entries point to the correct file containing your Worker code, and that the file extension is `.mjs` instead of `.js` if using ES modules syntax.
@@ -43,13 +49,15 @@ There is a limit on how quickly you can create new [stubs](/durable-objects/api/
 
 ### Durable Object reset because its code was updated.
 
-Reset in error messages refers to in-memory state. Any durable state that has already been successfully persisted via `state.storage` is not affected.
+This error occurs when a code update is applied before a Durable Object reaches hibernation. This includes an `immediate` code update strategy and `deferred` deployments whose `max_delay` is reached before the object hibernates.
 
-Refer to [Global Uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
+Reset in error messages refers to in-memory state. Any durable state already persisted with `ctx.storage` is not affected. Make operations retryable and persist important state so a forced update can safely restart the object.
+
+Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) and [Global uniqueness](/durable-objects/platform/known-issues/#global-uniqueness).
 
 ### Durable Object storage operation exceeded timeout which caused object to be reset.
 
-To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Durable Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds. Otherwise contact [Cloudflare support](/support/contacting-cloudflare-support/).
+To prevent indefinite blocking, there is a limit on how much time storage operations can take. In Durable Objects containing a sufficiently large number of key-value pairs, `deleteAll()` may hit that time limit and fail. When this happens, note that each `deleteAll()` call does make progress and that it is safe to retry until it succeeds.
 
 ### Your account is doing too many concurrent storage operations. Please back off and try again later.
 

@@ -22,7 +22,7 @@ To configure GitHub access in both GitHub and Cloudflare One:
 
 3. In **Developer Settings**, select **OAuth Apps** and select **New OAuth app**.
 
-4. On the **Register a new OAuth application** page, enter an **Application name**. Your users will see this application name on the login page.
+4. On the **Register a new OAuth app** page, enter an **Application name**. Your users will see this application name on the login page.
 
 5. In the **Homepage URL** field, enter your team domain:
 
@@ -32,7 +32,7 @@ To configure GitHub access in both GitHub and Cloudflare One:
 
    <Render file="find-team-name" product="cloudflare-one" />
 
-6. In the GitHub **Authorization callback URL** field, enter the following URL:
+6. Under **Redirect URIs**, enter the following URL in the **Redirect URI** field:
 
    ```txt
    https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback

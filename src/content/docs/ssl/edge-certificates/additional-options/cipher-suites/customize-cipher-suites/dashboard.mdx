@@ -61,3 +61,7 @@ When used with [TLS 1.3](/ssl/edge-certificates/additional-options/cipher-suites
 :::
 
 [^1]: When used with TLS 1.3, Modern is the same as PCI DSS.
+
+:::note[Testing with external scanners]
+Cipher suite profiles are applied per hostname. When using external scanners such as [SSL Labs](https://www.ssllabs.com/ssltest/), ensure you are testing the exact hostname where the profile is configured. Scanning an IP address or a different hostname will return the default Cloudflare edge profile — not your custom configuration.
+:::

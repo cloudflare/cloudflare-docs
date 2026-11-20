@@ -1,0 +1,43 @@
+---
+title: "WAF Release - 2026-10-14 - Emergency"
+description: Cloudflare WAF managed rulesets 2026-10-14 emergency release
+date: 2026-10-14
+---
+
+import { RuleID } from "~/components";
+
+This emergency release adds a new managed rule to block active exploitation of a critical remote code execution (RCE)  vulnerability found in popular web frameworks.
+
+**Key Findings**
+
+Key Findings
+
+- Generic Rules - Remote Code Execution: Attackers can execute arbitrary system commands with web server privileges by sending malicious input containing invalid path sequences during request processing.
+
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Managed Ruleset</td>
+			<td>
+				<RuleID id="44131076d2fa41fb97c61ec2fd1bf420" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Remote Code Execution</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>  
+	</tbody>
+</table>

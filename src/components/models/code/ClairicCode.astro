@@ -1,0 +1,157 @@
+---
+import { z } from "astro/zod";
+import { Code } from "~/components/ui/code";
+import { Tabs, TabItem } from "~/components/ui/tabs";
+
+type Props = z.infer<typeof props>;
+
+const props = z.object({
+	name: z.string(),
+});
+
+const { name } = props.parse(Astro.props);
+
+// Request body `model` selector is the last segment of the model ID.
+const selector = name.split("/").at(-1);
+
+const state =
+	"Invoice INV-2291 from Northwind Supply, issued 2026-09-02, net 30. 4 pallets at $250.00 each, shipping $80.00. Contact: Dana Ruiz, Priya Shah.";
+
+const worker = `
+export interface Env {
+	AI: Ai;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const response = await env.AI.run("${name}", {
+			model: "${selector}",
+			state: "${state}",
+			fields: {
+				invoice_number: { type: "text" },
+				due_date: {
+					type: "date",
+					instructions: "Issue date plus the net payment days",
+				},
+				total: {
+					type: "number",
+					decimals: 2,
+					unit: "USD",
+					instructions: "Amount due including shipping",
+				},
+				contacts: { type: "list", items: "text" },
+				po_number: { type: "text", instructions: "Purchase order number" },
+				days_to_pay: {
+					type: "estimate",
+					min: 0,
+					max: 120,
+					step: 1,
+					instructions: "Days after issue until this invoice is paid",
+				},
+			},
+		});
+
+		// response.answers.invoice_number -> exact span of the state, with character offsets
+		// response.answers.due_date       -> date worked out from the issue date and terms
+		// response.answers.po_number      -> null: the invoice has no PO number
+		// response.answers.days_to_pay    -> median and 80% interval (p10 to p90)
+		return Response.json(response);
+	},
+} satisfies ExportedHandler<Env>;
+`;
+
+const python = `
+import os
+import requests
+
+ACCOUNT_ID = "your-account-id"
+AUTH_TOKEN = os.environ.get("CLOUDFLARE_AUTH_TOKEN")
+
+response = requests.post(
+    f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/ai/run/${name}",
+    headers={"Authorization": f"Bearer {AUTH_TOKEN}"},
+    json={
+        "model": "${selector}",
+        "state": "${state}",
+        "fields": {
+            "invoice_number": {"type": "text"},
+            "due_date": {
+                "type": "date",
+                "instructions": "Issue date plus the net payment days",
+            },
+            "total": {
+                "type": "number",
+                "decimals": 2,
+                "unit": "USD",
+                "instructions": "Amount due including shipping",
+            },
+            "contacts": {"type": "list", "items": "text"},
+            "po_number": {"type": "text", "instructions": "Purchase order number"},
+            "days_to_pay": {
+                "type": "estimate",
+                "min": 0,
+                "max": 120,
+                "step": 1,
+                "instructions": "Days after issue until this invoice is paid",
+            },
+        },
+    },
+)
+print(response.json())
+`;
+
+const curl = `
+curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run/${name} \\
+  -X POST \\
+  -H "Authorization: Bearer $CLOUDFLARE_AUTH_TOKEN" \\
+  -d '{
+    "model": "${selector}",
+    "state": "${state}",
+    "fields": {
+      "invoice_number": { "type": "text" },
+      "due_date": { "type": "date", "instructions": "Issue date plus the net payment days" },
+      "total": { "type": "number", "decimals": 2, "unit": "USD", "instructions": "Amount due including shipping" },
+      "contacts": { "type": "list", "items": "text" },
+      "po_number": { "type": "text", "instructions": "Purchase order number" },
+      "days_to_pay": {
+        "type": "estimate",
+        "min": 0,
+        "max": 120,
+        "step": 1,
+        "instructions": "Days after issue until this invoice is paid"
+      }
+    }
+  }'
+`;
+
+// Real response to the request above (Workers AI wraps it in `result`); probabilities rounded.
+const response = `
+{
+  "model": "clairic",
+  "answers": {
+    "invoice_number": {"type": "text", "p_null": 3.8e-10, "span": [8, 16], "guess": "INV-2291", "confidence": 1, "value": "INV-2291"},
+    "due_date": {"type": "date", "p_null": 1.9e-08, "guess": "2026-10-02", "confidence": 0.9999, "value": "2026-10-02"},
+    "total": {"type": "number", "p_null": 2.3e-08, "guess": 1080, "confidence": 0.9999, "value": 1080},
+    "contacts": {"type": "list", "value": ["Dana Ruiz", "Priya Shah"], "spans": [[120, 129], [131, 141]], "confidence": 0.9999},
+    "po_number": {"type": "text", "p_null": 1, "span": [8, 16], "guess": "INV-2291", "confidence": 0.9995, "value": null},
+    "days_to_pay": {"type": "estimate", "value": 30, "mean": 29.535, "median": 30, "p10": 21, "p90": 38, "p_below": 5.9e-06, "p_above": 1.2e-05}
+  },
+  "truncated": false,
+  "usage": {"state_tokens": 61, "image_tokens": 0, "schema_tokens": 472, "input_tokens": 655, "output_tokens": 0, "passes": 3}
+}
+`;
+---
+
+<Tabs syncKey="workersAiExamples">
+	<TabItem label="TypeScript">
+		<Code code={worker} lang="ts" title="" />
+	</TabItem>
+	<TabItem label="Python">
+		<Code code={python} lang="py" title="" />
+	</TabItem>
+	<TabItem label="curl">
+		<Code code={curl} lang="sh" />
+	</TabItem>
+</Tabs>
+
+<Code code={response} lang="json" title="Response" />

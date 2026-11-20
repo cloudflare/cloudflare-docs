@@ -1,0 +1,48 @@
+---
+pcx_content_type: navigation
+title: rtk-leave-button
+description: API reference for rtk-leave-button component (Angular Library)
+products:
+  - realtime
+---
+
+{/*
+  AUTO-GENERATED FILE. DO NOT EDIT MANUALLY.
+  Any manual changes will be overwritten the next time the docs are generated.
+
+  Source: https://github.com/cloudflare/realtimekit-ui/blob/main/packages/core/src/components/rtk-leave-button/rtk-leave-button.tsx
+  Generator: https://github.com/cloudflare/realtimekit-ui/blob/main/scripts/generate-stencil-docs.js
+
+  To update this page, edit the component source in the realtimekit-ui repository and submit a pull request against the staging branch; the changes will automatically sync here upon the next release.
+*/}
+
+A button which toggles visilibility of the leave confirmation dialog.
+
+## Properties
+
+| Property | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `iconPack` | `IconPack` | ❌ | `defaultIconPack` | Icon pack |
+| `size` | `Size` | ✅ | - | Size |
+| `t` | `RtkI18n` | ❌ | `useLanguage()` | Language |
+| `variant` | `ControlBarVariant` | ✅ | - | Variant |
+
+## Usage Examples
+
+### Basic Usage
+
+```html
+<!-- component.html -->
+<rtk-leave-button></rtk-leave-button>
+```
+
+### With Properties
+
+```html
+<!-- component.html -->
+<rtk-leave-button
+ size="md"
+ variant="button">
+</rtk-leave-button>
+```
+

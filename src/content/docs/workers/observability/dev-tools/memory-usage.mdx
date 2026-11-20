@@ -16,6 +16,8 @@ You can profile memory usage with snapshots in DevTools. Memory snapshots let yo
 memory usage, see how much memory is allocated to different data types, and get details on specific
 objects in memory.
 
+To identify allocating code in a deployed Worker, [capture a Heap profile in production](/workers/observability/profiling-in-production/). Unlike a DevTools snapshot, this profile measures allocations, not retained memory.
+
 When using DevTools to profile memory, it may be difficult to replicate specific behavior you are
 seeing in production. To mimic production behavior, make sure the requests you send to the local Worker
 are similar to requests in production. This might mean sending a large volume of requests, making requests

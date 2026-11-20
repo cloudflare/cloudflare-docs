@@ -23,11 +23,14 @@ const aiSearchApiUrl =
 				fill="none"
 				fill-rule="evenodd"
 				stroke-linecap="round"
-				stroke-linejoin="round"></path>
+				stroke-linejoin="round"
+			></path>
 		</svg>
 		<span class="search-placeholder">Search</span>
 		<span class="search-keys">
-			<kbd class="search-key" data-search-shortcut-modifier>Ctrl</kbd>
+			<kbd class="search-key" data-search-shortcut-modifier>
+				Ctrl
+			</kbd>
 			<kbd class="search-key">K</kbd>
 		</span>
 	</button>
@@ -38,7 +41,8 @@ const aiSearchApiUrl =
 		max-render-results="10"
 		group-by="product"
 		hide-thumbnails="true"
-		show-url="false"></search-modal-snippet>
+		show-url="false"
+	></search-modal-snippet>
 </cfdocs-search>
 
 <style is:global>
@@ -203,6 +207,14 @@ const aiSearchApiUrl =
 			this.modal?.open();
 		};
 
+		private openFromQueryParam = async () => {
+			const params = new URLSearchParams(window.location.search);
+			const term = (params.get("q") ?? "").trim();
+			if (!term) return;
+			await customElements.whenDefined("search-modal-snippet");
+			await this.modal?.search(term);
+		};
+
 		private prepareModal = () => {
 			const dialog =
 				this.modal?.shadowRoot?.querySelector<HTMLElement>('[role="dialog"]');
@@ -261,6 +273,8 @@ const aiSearchApiUrl =
 			document.addEventListener("keydown", this.handleModalKeydown, {
 				capture: true,
 			});
+			document.addEventListener("astro:page-load", this.openFromQueryParam);
+			this.openFromQueryParam();
 			this.prepareModal();
 
 			const modifier = this.querySelector("[data-search-shortcut-modifier]");
@@ -277,6 +291,7 @@ const aiSearchApiUrl =
 			document.removeEventListener("keydown", this.handleModalKeydown, {
 				capture: true,
 			});
+			document.removeEventListener("astro:page-load", this.openFromQueryParam);
 		}
 	}
 

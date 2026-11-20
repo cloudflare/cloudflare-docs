@@ -11,15 +11,18 @@
  *     RSS variant (`/changelog/rss/index.md.xml`) is not ported.
  */
 import type { RSSFeedItem } from "@astrojs/rss";
+import { config } from "virtual:nimbus/config";
 import {
 	getCollection,
 	getEntries,
 	getEntry,
 	type CollectionEntry,
 } from "astro:content";
-import { config } from "virtual:nimbus/config";
+import { sortByPubDateDesc } from "~/util/changelog-updates";
 import { entryToString } from "~/util/container";
-import { marked } from "marked";
+import { renderMarkdown } from "~/util/markdown";
+import { absolutizeUrls } from "~/util/rss";
+import { compareWarpVersions } from "~/util/warp-version";
 import { sub } from "date-fns";
 
 export const slugifyArea = (value: string) =>
@@ -48,15 +51,8 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 
 	// Versions up to and including 2026.3.566.1 render as "WARP client";
 	// newer versions render as "Cloudflare One Client".
-	const isLegacyVersion = (ver: string): boolean => {
-		const legacyThreshold = [2026, 3, 566, 1];
-		const parts = ver.split(".").map(Number);
-		for (let i = 0; i < legacyThreshold.length; i++) {
-			if ((parts[i] ?? 0) < legacyThreshold[i]) return true;
-			if ((parts[i] ?? 0) > legacyThreshold[i]) return false;
-		}
-		return true;
-	};
+	const isLegacyVersion = (ver: string): boolean =>
+		compareWarpVersions(ver, "2026.3.566.1") <= 0;
 
 	return releases.map((release) => {
 		const { platformName, version, releaseNotes, releaseDate } = release.data;
@@ -92,11 +88,10 @@ async function getWARPReleases(): Promise<Array<CollectionEntry<"changelog">>> {
 				date: releaseDate,
 				products: [{ id: "cloudflare-one-client", collection: "directory" }],
 				publish_future_dated_entry: false,
+				updates: [],
 			},
 			rendered: {
-				html: marked.parse([prefix, releaseNotes].join("\n\n"), {
-					async: false,
-				}),
+				html: renderMarkdown([prefix, releaseNotes].join("\n\n")),
 			},
 		};
 	});
@@ -165,18 +160,6 @@ export const changelogProductIds: string[] = [
 	),
 ];
 
-const SITE_ORIGIN = new URL(config.site).origin;
-
-// Rewrite root-relative URLs (href="/..", src="/..") to absolute so feed
-// readers resolve them. Leaves protocol-relative (`//`) and absolute URLs
-// untouched.
-function absolutizeUrls(html: string): string {
-	return html.replace(
-		/\b(href|src)="\/(?!\/)/g,
-		(_match, attr) => `${attr}="${SITE_ORIGIN}/`,
-	);
-}
-
 type GetRSSItemsOptions = {
 	notes: Array<CollectionEntry<"changelog">>;
 	locals: App.Locals;
@@ -186,25 +169,57 @@ export async function getRSSItems({
 	notes,
 	locals,
 }: GetRSSItemsOptions): Promise<Array<RSSFeedItem>> {
-	return await Promise.all(
+	const itemsPerNote = await Promise.all(
 		notes.map(async (note) => {
 			const { title, date, products } = note.data;
 
 			const productEntries = await getEntries(products);
 			const productTitles = productEntries.map((p) => p.data.name as string);
+			const productLabel = productTitles.join(", ");
+			const customData = `<product>${productTitles.at(0)}</product>`;
+			const postLink = `/changelog/post/${note.id}/`;
 
 			const html = absolutizeUrls((await entryToString(note, locals)) ?? "");
 
-			const itemTitle = `${productTitles.join(", ")} - ${title}`;
-
-			return {
-				title: itemTitle,
+			const item: RSSFeedItem = {
+				title: `${productLabel} - ${title}`,
 				description: html,
 				pubDate: date,
 				categories: productTitles,
-				link: `/changelog/post/${note.id}/`,
-				customData: `<product>${productTitles.at(0)}</product>`,
+				link: postLink,
+				customData,
 			};
+
+			// Each update gets its own item. The fragment in `link` gives it a
+			// distinct GUID (`@astrojs/rss` derives the GUID from the link), so
+			// feed readers deliver it as new instead of treating the edited post
+			// as already seen.
+			const updates =
+				note.data.updates.length > 0
+					? (await import("~/util/changelog-git")).liveUpdates(
+							note.data.updates,
+							note.filePath,
+						)
+					: [];
+
+			const updateItems = updates.map(
+				({ anchor, liveAt, summary }): RSSFeedItem => ({
+					title: `${productLabel} - Update: ${title}`,
+					description: absolutizeUrls(
+						`${renderMarkdown(summary)}<p>Refer to the <a href="${postLink}">full release notes</a>.</p>`,
+					),
+					pubDate: liveAt,
+					categories: productTitles,
+					// Absolute, because `@astrojs/rss` appends a trailing slash after
+					// the fragment when it resolves relative links.
+					link: new URL(`${postLink}#${anchor}`, config.site).href,
+					customData,
+				}),
+			);
+
+			return [item, ...updateItems];
 		}),
 	);
+
+	return sortByPubDateDesc(itemsPerNote.flat());
 }

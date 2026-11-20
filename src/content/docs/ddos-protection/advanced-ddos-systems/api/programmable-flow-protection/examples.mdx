@@ -1,7 +1,7 @@
 ---
 title: Common API calls
 pcx_content_type: configuration
-description: Example API requests for managing Programmable Flow Protection programs and rules.
+description: Example API requests for managing Programmable Flow Protection programs, rules, and parameter maps.
 products:
   - ddos-protection
 tags:
@@ -29,6 +29,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
       "id": "<PROGRAM_ID>",
       "name": "rate-limiter",
       "status": "success",
+      "version": 1,
       "created_on": "<TIMESTAMP>",
       "modified_on": "<TIMESTAMP>"
     }
@@ -59,6 +60,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
     "id": "<PROGRAM_ID>",
     "name": "my-rate-limiter",
     "status": "success",
+    "version": 1,
     "created_on": "<TIMESTAMP>",
     "modified_on": "<TIMESTAMP>"
   },
@@ -86,7 +88,7 @@ If the program fails compilation or verification, the API returns a detailed err
 
 ## Update a program
 
-This example updates an existing program with new source code. You can update a program even if it is currently in use by one or more rules. If the new program fails compilation or verification, the update fails and the existing program remains active.
+This example updates an existing program with new source code. Each update creates a new version under the same program ID. Rules using the program remain pinned to their existing `program_version`. If the new program fails compilation or verification, the update fails and the existing version remains active.
 
 ```bash title="Request"
 curl --request PATCH \
@@ -102,6 +104,7 @@ curl --request PATCH \
     "id": "<PROGRAM_ID>",
     "name": "program",
     "status": "success",
+    "version": 2,
     "created_on": "<TIMESTAMP>",
     "modified_on": "<TIMESTAMP>"
   },
@@ -145,6 +148,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
     {
       "id": "<RULE_ID>",
       "program_id": "<PROGRAM_ID>",
+      "program_version": 1,
       "scope": "global",
       "name": "global",
       "mode": "enabled",
@@ -180,6 +184,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
   "result": {
     "id": "<RULE_ID>",
     "program_id": "<PROGRAM_ID>",
+    "program_version": 1,
     "scope": "global",
     "name": "global",
     "mode": "monitoring",
@@ -217,6 +222,7 @@ curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programma
   "result": {
     "id": "<RULE_ID>",
     "program_id": "<PROGRAM_ID>",
+    "program_version": 1,
     "scope": "region",
     "name": "WEUR",
     "mode": "enabled",
@@ -234,7 +240,7 @@ Refer to [JSON objects](/ddos-protection/advanced-ddos-systems/api/programmable-
 
 ## Update a rule
 
-This example updates an existing rule. You can update the mode, scope, and expression, but not the program. To change the program, delete the rule and create a new one.
+This example updates an existing rule's mode and pins it to version `2` of its program. If you omit `program_version`, the rule remains pinned to its existing version.
 
 ```bash title="Request"
 curl --request PATCH \
@@ -242,7 +248,8 @@ curl --request PATCH \
 --header "Authorization: Bearer <API_TOKEN>" \
 --header "Content-Type: application/json" \
 --data '{
-  "mode": "enabled"
+  "mode": "enabled",
+  "program_version": 2
 }'
 ```
 
@@ -251,6 +258,7 @@ curl --request PATCH \
   "result": {
     "id": "<RULE_ID>",
     "program_id": "<PROGRAM_ID>",
+    "program_version": 2,
     "scope": "global",
     "name": "global",
     "mode": "enabled",
@@ -306,3 +314,123 @@ The Packet Comment annotation may contain:
 - `Ignored`: if the incoming packet is not UDP
 - `Analytics tag`: the custom network analytics tag set by the program on this packet, if any
 - `Challenge packet`: the challenge packet emitted from the program back to the client, if any
+
+## Get parameters
+
+This example fetches the account's parameter maps.
+
+```bash title="Request"
+curl "https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/parameters" \
+--header "Authorization: Bearer <API_TOKEN>"
+```
+
+```json title="Response"
+{
+  "result": {
+    "params": {
+      "source_policy": {
+        "id": 0,
+        "type": "map",
+        "key": "ipv4",
+        "value": "u8",
+        "entries": {
+          "192.0.2.1": 1,
+          "198.51.100.7": 2
+        }
+      }
+    }
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}
+```
+
+## Replace parameters
+
+This example replaces all of the account's parameter maps with a single IPv4 map. The response contains the saved maps.
+
+```bash title="Request"
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/parameters" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "params": {
+    "source_policy": {
+      "id": 0,
+      "type": "map",
+      "key": "ipv4",
+      "value": "u8",
+      "entries": {
+        "192.0.2.1": 1,
+        "198.51.100.7": 2
+      }
+    }
+  }
+}'
+```
+
+## Replace parameters with an IPv6 map
+
+This example uses an IPv6 map with `u16` values.
+
+```bash title="Request"
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/parameters" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "params": {
+    "ipv6_policy": {
+      "id": 0,
+      "type": "map",
+      "key": "ipv6",
+      "value": "u16",
+      "entries": {
+        "2001:db8::1": 1,
+        "2001:db8:1::5": 443
+      }
+    }
+  }
+}'
+```
+
+## Replace parameters with large u64 values
+
+This example writes `u64` values above `9007199254740991` as strings so that JSON libraries do not round them.
+
+```bash title="Request"
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/parameters" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "params": {
+    "client_tokens": {
+      "id": 0,
+      "type": "map",
+      "key": "ipv4",
+      "value": "u64",
+      "entries": {
+        "192.0.2.1": 42,
+        "192.0.2.2": "18446744073709551615"
+      }
+    }
+  }
+}'
+```
+
+## Clear parameters
+
+This example removes all of the account's parameter maps.
+
+```bash title="Request"
+curl --request PUT \
+"https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/programmable_flow_protection/configs/parameters" \
+--header "Authorization: Bearer <API_TOKEN>" \
+--header "Content-Type: application/json" \
+--data '{
+  "params": {}
+}'
+```

@@ -1,15 +1,5 @@
 {
-    "id": "86b3e51a-4b05-43fa-a403-0f27821919d2",
-    "source": 1,
     "name": "@cf/zai-org/glm-4.7-flash",
-    "description": "GLM-4.7-Flash is a fast and efficient multilingual text generation model with a 131,072 token context window. Optimized for dialogue, instruction-following, and multi-turn tool calling across 100+ languages.",
-    "task": {
-        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
-        "name": "Text Generation",
-        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
-    },
-    "created_at": "2026-01-28 16:04:39.346",
-    "tags": [],
     "properties": [
         {
             "property_id": "context_window",
@@ -20,7 +10,7 @@
             "value": [
                 {
                     "unit": "per M input tokens",
-                    "price": 0.06,
+                    "price": 0.0605,
                     "currency": "USD"
                 },
                 {
@@ -37,8 +27,25 @@
         {
             "property_id": "reasoning",
             "value": "true"
+        },
+        {
+            "property_id": "reasoning_effort",
+            "value": {
+                "mandatory": false,
+                "default_enabled": true
+            }
         }
     ],
+    "id": "86b3e51a-4b05-43fa-a403-0f27821919d2",
+    "source": 1,
+    "description": "GLM-4.7-Flash is a fast and efficient multilingual text generation model with a 131,072 token context window. Optimized for dialogue, instruction-following, and multi-turn tool calling across 100+ languages.",
+    "task": {
+        "id": "c329a1f9-323d-4e91-b2aa-582dd4188d34",
+        "name": "Text Generation",
+        "description": "Family of generative text models, such as large language models (LLM), that can be adapted for a variety of natural language tasks."
+    },
+    "created_at": "2026-01-28 16:04:39.346",
+    "tags": [],
     "schema": {
         "input": {
             "type": "object",
@@ -279,29 +286,13 @@
                             "default": 0,
                             "description": "Penalizes new tokens based on whether they appear in the text so far."
                         },
-                        "reasoning_effort": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "low",
-                                        "medium",
-                                        "high"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                        },
                         "chat_template_kwargs": {
                             "type": "object",
                             "properties": {
                                 "enable_thinking": {
                                     "type": "boolean",
                                     "default": true,
-                                    "description": "Whether to enable reasoning, enabled by default."
+                                    "description": "Whether to enable reasoning for this model."
                                 },
                                 "clear_thinking": {
                                     "type": "boolean",
@@ -399,25 +390,6 @@
                                 }
                             ],
                             "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": "auto",
-                            "description": "Specifies the processing type used for serving the request."
                         },
                         "stop": {
                             "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -993,6 +965,7 @@
                                                                     "enum": [
                                                                         "text",
                                                                         "image_url",
+                                                                        "video_url",
                                                                         "input_audio",
                                                                         "file"
                                                                     ]
@@ -1014,6 +987,14 @@
                                                                                 "high"
                                                                             ],
                                                                             "default": "auto"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "video_url": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "url": {
+                                                                            "type": "string"
                                                                         }
                                                                     }
                                                                 },
@@ -1536,29 +1517,13 @@
                             "default": 0,
                             "description": "Penalizes new tokens based on whether they appear in the text so far."
                         },
-                        "reasoning_effort": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "low",
-                                        "medium",
-                                        "high"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "description": "Constrains effort on reasoning for reasoning models (o1, o3-mini, etc.)."
-                        },
                         "chat_template_kwargs": {
                             "type": "object",
                             "properties": {
                                 "enable_thinking": {
                                     "type": "boolean",
                                     "default": true,
-                                    "description": "Whether to enable reasoning, enabled by default."
+                                    "description": "Whether to enable reasoning for this model."
                                 },
                                 "clear_thinking": {
                                     "type": "boolean",
@@ -1656,25 +1621,6 @@
                                 }
                             ],
                             "description": "If specified, the system will make a best effort to sample deterministically."
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ],
-                            "default": "auto",
-                            "description": "Specifies the processing type used for serving the request."
                         },
                         "stop": {
                             "description": "Up to 4 sequences where the API will stop generating further tokens.",
@@ -2604,23 +2550,6 @@
                                     "type": "null"
                                 }
                             ]
-                        },
-                        "service_tier": {
-                            "anyOf": [
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "auto",
-                                        "default",
-                                        "flex",
-                                        "scale",
-                                        "priority"
-                                    ]
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
                         }
                     },
                     "required": [
@@ -2638,5 +2567,6 @@
                 }
             ]
         }
-    }
+    },
+    "deprecated": false
 }

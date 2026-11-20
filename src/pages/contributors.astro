@@ -100,7 +100,8 @@ function resolveAvatarUrl(c: unknown): string {
 
 					<div id="contributors-status" class="text-muted-foreground text-sm">
 						<span>
-							Showing {totalVisibleContributors} of {totalContributorsAll} total contributors
+							Showing {totalVisibleContributors} of {totalContributorsAll} total
+							contributors
 						</span>
 						<button
 							type="button"
@@ -109,7 +110,10 @@ function resolveAvatarUrl(c: unknown): string {
 							data-content={tooltipContent}
 							aria-label="Why not all contributors are shown"
 						>
-							<span aria-hidden="true" class="font-semibold"> i </span>
+							<span aria-hidden="true" class="font-semibold">
+								{" "}
+								i{" "}
+							</span>
 						</button>
 					</div>
 
@@ -128,17 +132,15 @@ function resolveAvatarUrl(c: unknown): string {
 								avatarUrl=""
 							/>
 						</template>
-						{
-							initialContributors.map((c) => (
-								<ContributorCard
-									name={c.name}
-									profileUrl={c.profile_url}
-									contributionsUrl={c.contributions_url}
-									contributions={c.contributions}
-									avatarUrl={resolveAvatarUrl(c)}
-								/>
-							))
-						}
+						{initialContributors.map((c) => (
+							<ContributorCard
+								name={c.name}
+								profileUrl={c.profile_url}
+								contributionsUrl={c.contributions_url}
+								contributions={c.contributions}
+								avatarUrl={resolveAvatarUrl(c)}
+							/>
+						))}
 					</div>
 
 					<div id="contributors-sentinel" aria-hidden="true" class="h-px"></div>

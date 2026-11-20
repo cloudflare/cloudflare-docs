@@ -55,6 +55,13 @@ There are two approaches:
 
 Each agent's [Agent setup](#set-up-your-agent) guide includes MCP server installation as part of its Quick start. For the full list of available MCP servers, refer to [MCP servers for Cloudflare](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/).
 
+### Command-line tools
+
+Agents that can run shell commands can also use a Cloudflare CLI:
+
+- **[Cloudflare CLI](/cf/)** (`cf`, beta): Covers the whole Cloudflare API and prints JSON output. Agents can discover commands with `cf cli search` and inspect them with `cf schema`. To set it up, refer to [Use cf with AI agents](/cf/agents/).
+- **[Wrangler](/workers/wrangler/)**: Develops and deploys Workers projects configured with `wrangler.jsonc` or `wrangler.toml`.
+
 ### Model flexibility
 
 AI agents use large language models (LLMs) to understand your requests and generate responses. The model affects response quality, speed, and cost. How many models you can choose from depends on the agent:

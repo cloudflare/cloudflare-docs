@@ -85,7 +85,7 @@ After adding `sub2.example.com` to Cloudflare DNS
 
 ## Fetch to IP addresses
 
-For Workers subrequests, requests can only be made to URLs, not to IP addresses directly. To overcome this limitation [add a A or AAAA name record to your zone](https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-dns-records/) and then fetch that resource.
+For Workers subrequests, requests can only be made to URLs, not to IP addresses directly. To overcome this limitation [add an A or AAAA record to your zone](/dns/manage-dns-records/how-to/create-dns-records/) and then fetch that resource.
 
 For example, in the zone `example.com` create a record of type `A` with the name `server` and value `192.0.2.1`, and then use:
 

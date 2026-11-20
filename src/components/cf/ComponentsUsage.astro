@@ -10,11 +10,9 @@ const alphabetical = Object.entries(components).sort(([a], [b]) =>
 );
 ---
 
-{
-	alphabetical.map(([component]) => (
-		<>
-			<AnchorHeading depth={2} title={component} />
-			<ComponentUsage component={component} />
-		</>
-	))
-}
+{alphabetical.map(([component]) => (
+	<>
+		<AnchorHeading depth={2} title={component} />
+		<ComponentUsage component={component} />
+	</>
+))}

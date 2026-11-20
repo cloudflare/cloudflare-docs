@@ -1,0 +1,38 @@
+releaseNotes: |-
+  This release includes the following highlights:
+
+  - macOS 15.0 is now the minimum supported version. This release does not run on macOS 14.
+  - Added automatic endpoint selection for Global Acceleration. When Global Acceleration is enabled for an organization, the client connects to the Global Acceleration endpoints while the device is in the acceleration region and to the standard anycast endpoints otherwise, and reconnects when a network change moves the device between them without requiring action from the user.. The Connectivity page shows which tunnel and API endpoints are in use, and users who are allowed to override the selection can choose endpoints in Settings.
+  - The client now shows a banner when the network limits the tunnel MTU to a degraded or critically low value. The banner clears when the MTU recovers or the client disconnects.
+
+
+  **Additional Changes and improvements**
+
+  - The client now applies tunnel MTUs between 1147 and 1199 bytes measured by Path MTU Discovery. Previously the client ignored these values and kept a larger MTU, which could drop larger packets on networks such as mobile hotspots while the client showed as connected.
+  - When Path MTU Discovery is enabled, the client now accepts larger packets from Cloudflare instead of limiting them to the size it uses for its own outbound packets.
+  - Access reauthentication requests now trust certificates in the operating system's certificate store, so reauthentication works on networks that perform TLS inspection.
+  - For Zero Trust deployments, the client now records a traceroute of the network path outside the tunnel when the tunnel degrades or fails to connect. warp-diag includes the same trace.
+  - warp-diag now includes redacted copies of the deployed MDM files and reports a QUIC path MTU only when one was measured.
+  - The consumer client home screen now shows when the connection is post-quantum encrypted.
+  - Fixed a managed registration being removed when the MDM configuration file was briefly missing or unreadable. The client now keeps the last applied policy for 20 seconds after the file becomes unavailable. The new MDM parameters mdm_file_debounce_secs (1–60) and mdm_file_unavailable_debounce_secs (0–300) change how long the client waits before applying a changed file and before acting on a missing one.
+  - Fixed a hostname-based split tunnel entry not taking effect until the next reconnect after its firewall rule failed to apply.
+  - Fixed split tunnel updates for hostname-based entries failing when the client tried to remove a route that macOS had not installed.
+  - Fixed the client UI not showing onboarding on first launch while a notification permission request was pending.
+  - Fixed warp-cli registration license reporting an error on slow networks even though the license was applied, which left the client registered to a WARP+ account it did not recognize.
+  - Fixed Digital Experience Monitoring (DEX) results being reported with timestamps offset from the actual time after the system clock was corrected.
+  - Fixed an upgrade sometimes leaving the client without a running service when the previous service was slow to stop. The installer now waits up to 10 seconds for the old service to be removed before starting the new one.
+  - Fixed the OS version detail stored for a device keeping an outdated value, including the text "Usage: sw_vers…" reported by client versions 2023.5.587.1 through 2024.12.760.0. The client now clears the value the next time it connects.
+  - Added the MDM parameters managed_network_probe_interval_secs (30–300, default 30) and managed_network_probe_count (0 disables probing, 1–10, or -1 to keep probing until a managed network is found; default 1). After a registration or network change finds no managed network, the client now rechecks, so a device doesn't stay on the default profile because of a transient connection failure. Set the count to 0 to keep the previous behavior.
+  - In proxy mode for Zero Trust, the client now sends hostnames from HTTP/HTTPS and SOCKS5 requests to Cloudflare for resolution, instead of resolving them on the device.
+  - When the app cannot reach the client service, the home screen now says why (service not running, not accepting connections, not responding, or connection dropped and reconnecting). It shows an error code and a Learn more link instead of "IPC error".
+
+  **Known issues**
+
+  None.
+
+  For Zero Trust documentation please see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/ For Consumer documentation please see: https://developers.cloudflare.com/warp-client/
+version: 2026.9.1555.1
+releaseDate: 2026-10-22T13:08:01.749Z
+packageURL: https://downloads.cloudflareclient.com/v1/download/macos/version/2026.9.1555.1
+packageSize: 171198339
+platformName: macOS

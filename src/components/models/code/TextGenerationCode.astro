@@ -121,42 +121,40 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
 `;
 ---
 
-{
-	lora ? (
+{lora ? (
+	<Tabs syncKey="workersAiExamples">
+		<TabItem label="TypeScript">
+			<Code code={loraWorker} lang="ts" title="" />
+		</TabItem>
+		<TabItem label="curl">
+			<Code code={loraCurl} lang="sh" />
+		</TabItem>
+	</Tabs>
+) : (
+	<>
 		<Tabs syncKey="workersAiExamples">
+			<TabItem label="Worker (Streaming)">
+				<Code code={streamingWorker} lang="ts" />
+			</TabItem>
 			<TabItem label="TypeScript">
-				<Code code={loraWorker} lang="ts" title="" />
+				<Code code={worker} lang="ts" title="" />
+			</TabItem>
+			<TabItem label="Python">
+				<Code code={python} lang="py" title="" />
 			</TabItem>
 			<TabItem label="curl">
-				<Code code={loraCurl} lang="sh" />
+				<Code code={curl} lang="sh" />
 			</TabItem>
 		</Tabs>
-	) : (
-		<>
-			<Tabs syncKey="workersAiExamples">
-				<TabItem label="Worker (Streaming)">
-					<Code code={streamingWorker} lang="ts" />
-				</TabItem>
-				<TabItem label="TypeScript">
-					<Code code={worker} lang="ts" title="" />
-				</TabItem>
-				<TabItem label="Python">
-					<Code code={python} lang="py" title="" />
-				</TabItem>
-				<TabItem label="curl">
-					<Code code={curl} lang="sh" />
-				</TabItem>
-			</Tabs>
 
-			<Aside type="note" title="OpenAI compatible endpoints">
-				Workers AI also supports OpenAI compatible API endpoints for{" "}
-				<code>/v1/chat/completions</code> and <code>/v1/embeddings</code>. For
-				more details, refer to{" "}
-				<a href="/workers-ai/configuration/open-ai-compatibility/">
-					Configurations
-				</a>
-				.
-			</Aside>
-		</>
-	)
-}
+		<Aside type="note" title="OpenAI compatible endpoints">
+			Workers AI also supports OpenAI compatible API endpoints for{" "}
+			<code>/v1/chat/completions</code> and <code>/v1/embeddings</code>. For
+			more details, refer to{" "}
+			<a href="/workers-ai/configuration/open-ai-compatibility/">
+				Configurations
+			</a>
+			.
+		</Aside>
+	</>
+)}

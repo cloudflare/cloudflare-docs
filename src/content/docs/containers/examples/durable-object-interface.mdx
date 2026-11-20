@@ -1,13 +1,19 @@
 ---
-
 summary: Various examples calling Containers directly from Durable Objects
 pcx_content_type: example
-title: Using Durable Objects Directly
-external_link: https://github.com/cloudflare/containers-demos
+title: More examples
 sidebar:
   order: 10
 description: Various examples calling Containers directly from Durable Objects
-reviewed: 2025-06-24
+reviewed: 2026-10-01
 products:
   - containers
 ---
+
+Explore more ways to control a Container from its Durable Object:
+
+- [Execute commands](/containers/guides/execute-commands/): Run a process and read its output.
+- [Use snapshots](/containers/guides/snapshots/): Save a filesystem and restore it when starting a Container.
+- [Roll out a named image update](/containers/guides/image-management/#roll-out-a-named-image-update): Compare the running image with the configured image, then restart when needed.
+
+Use the [`durable_object` scheduling policy](/containers/configuration/scheduling-policy/#use-the-durable-object-scheduling-policy) and the [Durable Object Container API](/containers/api/durable-object-container/) for these workflows.

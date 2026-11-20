@@ -8,5 +8,5 @@ entry:
 
 meta:
   title: Cloudflare Builds docs
-  description: Workers Builds lets you connect a Worker to a GitHub or GitLab repository, enabling automated builds and deployments on push.
+  description: Workers Builds connects a Worker to an Artifacts, GitHub, or GitLab repository for automated builds and deployments on push.
   author: "@cloudflare"

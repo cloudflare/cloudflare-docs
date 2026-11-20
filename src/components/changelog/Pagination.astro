@@ -59,45 +59,43 @@ const disabled = cn(btn, "opacity-40");
 const active = cn(btn, "bg-foreground font-bold text-background");
 ---
 
-{
-	lastPage > 1 && (
-		<nav
-			class="mt-8 flex flex-wrap items-center justify-between gap-y-2"
-			aria-label="Pagination"
-		>
-			{prevUrl ? (
-				<a href={prevUrl} class={link}>
-					← Prev
-				</a>
-			) : (
-				<span class={disabled}>← Prev</span>
-			)}
+{lastPage > 1 && (
+	<nav
+		class="mt-8 flex flex-wrap items-center justify-between gap-y-2"
+		aria-label="Pagination"
+	>
+		{prevUrl ? (
+			<a href={prevUrl} class={link}>
+				← Prev
+			</a>
+		) : (
+			<span class={disabled}>← Prev</span>
+		)}
 
-			<div class="flex items-center gap-1 max-sm:order-first max-sm:w-full max-sm:justify-center">
-				{items.map((item) =>
-					item === null ? (
-						<span class="text-muted-foreground flex h-9 items-center justify-center px-2 text-sm">
-							…
-						</span>
-					) : item === currentPage ? (
-						<span class={active} aria-current="page">
-							{item}
-						</span>
-					) : (
-						<a href={pageUrl(item)} class={link}>
-							{item}
-						</a>
-					),
-				)}
-			</div>
-
-			{nextUrl ? (
-				<a href={nextUrl} class={link}>
-					Next →
-				</a>
-			) : (
-				<span class={disabled}>Next →</span>
+		<div class="flex items-center gap-1 max-sm:order-first max-sm:w-full max-sm:justify-center">
+			{items.map((item) =>
+				item === null ? (
+					<span class="text-muted-foreground flex h-9 items-center justify-center px-2 text-sm">
+						…
+					</span>
+				) : item === currentPage ? (
+					<span class={active} aria-current="page">
+						{item}
+					</span>
+				) : (
+					<a href={pageUrl(item)} class={link}>
+						{item}
+					</a>
+				),
 			)}
-		</nav>
-	)
-}
+		</div>
+
+		{nextUrl ? (
+			<a href={nextUrl} class={link}>
+				Next →
+			</a>
+		) : (
+			<span class={disabled}>Next →</span>
+		)}
+	</nav>
+)}

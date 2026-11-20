@@ -1,0 +1,11 @@
+---
+title: Updated unsafe topic detection for AI Security for Apps
+description: AI Security for Apps now supports an updated set of unsafe topic categories.
+date: 2026-10-07
+---
+
+AI Security for Apps now supports an updated set of categories for detecting unsafe topics in incoming prompts.
+
+The values available in [`cf.llm.prompt.unsafe_topic_categories`](/ruleset-engine/rules-language/fields/reference/cf.llm.prompt.unsafe_topic_categories/) have changed. Existing WAF custom rules remain valid, but rules that reference a removed or renamed category will no longer match that category. Review any rules that use this field and update their expressions to use the currently supported values.
+
+For category descriptions and configuration guidance, refer to [Unsafe topics](/waf/detections/ai-security-for-apps/unsafe-topics/).

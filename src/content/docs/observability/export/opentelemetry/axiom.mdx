@@ -1,0 +1,85 @@
+---
+pcx_content_type: how-to
+title: Export to Axiom
+description: Send Cloudflare traces and logs to Axiom with OpenTelemetry.
+sidebar:
+  order: 3
+products:
+  - observability
+---
+
+import { DashButton, Steps } from "~/components";
+
+Axiom stores, searches, and analyzes telemetry data. Export Cloudflare traces and logs to query data and create dashboards.
+
+![Trace view with timing information displayed on a timeline](~/assets/images/workers-observability/axiom-example.png)
+
+This guide configures Axiom to receive Cloudflare traces and logs.
+
+## Prerequisites
+
+Before you begin, you need an active [Axiom account](https://app.axiom.co/register). You also need Cloudflare logs or traces to export.
+
+## 1. Create a dataset
+
+Skip this step if you already have a dataset.
+
+<Steps>
+
+1. Log in to your [Axiom account](https://app.axiom.co/).
+2. Go to **Datasets**.
+3. Select **New Dataset**.
+4. Enter a name, such as `cloudflare-otel`.
+5. Select **Create Dataset**.
+
+</Steps>
+
+## 2. Get an Axiom API token
+
+<Steps>
+
+1. Go to **Settings** > **API Tokens**.
+2. Select **Create API Token**.
+3. Enter a descriptive name, such as `cloudflare-otel`.
+4. Select the **Ingest** permission.
+5. Select datasets for the token, or select **All Datasets**.
+6. Select **Create**.
+7. Copy and securely store the API token.
+
+</Steps>
+
+The API token starts with `xaat-`.
+
+## 3. Configure a Cloudflare Observability destination
+
+Axiom provides separate OpenTelemetry Protocol (OTLP) endpoints for traces and logs:
+
+- **Traces**: `https://api.axiom.co/v1/traces`
+- **Logs**: `https://api.axiom.co/v1/logs`
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to **Observability** > **Destinations**.
+
+   <DashButton url="/?to=/:account/observability/destinations" />
+
+2. Select **Add destination**.
+3. Configure the destination:
+   - **Destination name**: Enter `axiom-traces` or `axiom-logs`.
+   - **Destination type**: Select _Traces_ or _Logs_.
+   - **OTLP endpoint**: Enter the matching Axiom endpoint.
+4. Add an authentication header:
+   - **Header name**: `Authorization`
+   - **Header value**: `Bearer <YOUR_API_TOKEN>`
+5. Add the dataset header:
+   - **Header name**: `X-Axiom-Dataset`
+   - **Header value**: Your dataset name
+6. Select **Save**.
+
+</Steps>
+
+## 4. Enable export
+
+Creating a destination does not start exporting telemetry. To export [Workers Logs](/workers/observability/logs/workers-logs/) or [Workers Traces](/workers/observability/traces/), [configure OpenTelemetry export for your Worker](/workers/observability/opentelemetry-export/). To export [Cloudflare Traces](/observability/traces/), [configure export for your domain](/observability/traces/configuration/#export-traces).
+
+Data may take several minutes to appear in Axiom.

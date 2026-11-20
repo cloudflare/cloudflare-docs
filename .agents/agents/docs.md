@@ -89,7 +89,7 @@ Documentation should read as timeless. Do not use:
 
 ## Code Examples
 
-**You must use the named components below instead of plain code fences whenever they apply.** Do not use a raw ` ```ts ` fence when `TypeScriptExample` is appropriate. Do not use a raw ` ```toml ` or ` ```jsonc ` fence for Wrangler config when `WranglerConfig` is appropriate.
+**You must use the named components below instead of plain code fences whenever they apply.** Do not use a raw ` ```ts ` fence when `TypeScriptExample` is appropriate. The exception is a snippet that only contains types (`type`, `interface`, `declare`): use a plain ` ```ts ` fence, because the generated JS tab would be empty. Do not use a raw ` ```toml ` or ` ```jsonc ` fence for Wrangler config when `WranglerConfig` is appropriate.
 
 | Scenario                     | Component                                 | Why                                                              |
 | ---------------------------- | ----------------------------------------- | ---------------------------------------------------------------- |

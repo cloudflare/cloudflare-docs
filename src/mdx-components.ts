@@ -10,6 +10,10 @@ import { TabItem, Tabs } from "./components/ui/tabs";
 import LinkButton from "./components/ui/link-button/LinkButton.astro";
 import Render from "./components/Render.astro";
 import APIRequest from "./components/cf/APIRequest.astro";
+import CfCommand from "./components/cf/CfCommand.astro";
+import CfNamespace from "./components/cf/CfNamespace.astro";
+import CliVariant from "./components/cf/CliVariant.astro";
+import CliVariants from "./components/cf/CliVariants.astro";
 import DashButton from "./components/cf/DashButton.astro";
 import DirectoryListing from "./components/cf/DirectoryListing.astro";
 import Description from "./components/cf/Description.astro";
@@ -54,6 +58,10 @@ export const components = {
 	CURL,
 	Card,
 	CardGrid,
+	CfCommand,
+	CfNamespace,
+	CliVariant,
+	CliVariants,
 	Code,
 	DashButton,
 	Description,

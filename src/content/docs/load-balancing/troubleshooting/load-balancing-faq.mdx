@@ -49,7 +49,7 @@ If you know that your endpoint is healthy but load balancing is reporting it as 
 * If your endpoint responds with a `301` or `302` status code, make sure **Follow Redirects** is selected.
 * Try increasing the **Timeout** value.
 * Review the **Host Header** for the health monitor.
-* If you are using [Authenticated Origin Pulls (mTLS)](/ssl/origin-configuration/authenticated-origin-pull/), [Argo Smart Routing](/argo-smart-routing/), [Bring your own CA (mTLS)](/ssl/client-certificates/byo-ca/), [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), or require [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/), make sure that you entered a zone value for **Simulate Zone** corresponding to the zone with these features configured.
+* If you are using [Authenticated Origin Pulls (mTLS)](/ssl/origin-configuration/authenticated-origin-pull/), [Origin CA (mTLS)](/ssl/origin-configuration/origin-ca/), [Argo Smart Routing](/argo-smart-routing/), [Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/), or require [HTTP/2 to Origin](/speed/optimization/protocol/http2-to-origin/), make sure that you entered a zone value for **Simulate Zone** corresponding to the zone with these features configured.
 
 ***
 
@@ -68,6 +68,8 @@ When a pool or endpoint becomes unhealthy, traffic may be rerouted to other heal
 1 - Pools with **All-Datacenters** monitoring and the monitor fails in a specific data center. In this case, all traffic will be steered away from impacted endpoints in that datacenter until the monitor succeeds again. These instances are reflected in LB request analytics as steering away from an unhealthy endpoint or pool.
 
 2 - Pools with FQDN endpoint addresses and the recursive DNS lookup fails in a specific data center. In this case, only requests for which the DNS request fails will be steered away from impacted endpoints. This could be sporadic, especially if upstream authoritative resolvers occasionally time out or fail, when the local DNS cache TTL expires and a remote lookup is required in the hot path. This also appears in LB request analytics as steering away from an unhealthy endpoint, and the resolved endpoint IP will be missing from the request log.
+
+   A specific case of this failure occurs when the endpoint hostname has a DNS answer that exceeds 512 bytes over UDP — for example, a hostname that resolves to many A records. The monitor performs an uncached DNS lookup on every health check using UDP by default and does not fall back to TCP when the response is truncated. The monitor reports `DNS Unknown Host` even though the hostname resolves correctly for clients. For more information, refer to [DNS Unknown Host](/load-balancing/troubleshooting/common-error-codes/#dns-unknown-host).
 
 To avoid these scenarios:
 

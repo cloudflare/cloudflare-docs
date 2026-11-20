@@ -1,0 +1,20 @@
+---
+{}
+---
+
+import { DashButton } from "~/components";
+
+Each member has settings that apply only to them, such as their API access.
+
+To manage a member's settings:
+
+1. In the Cloudflare dashboard, go to the **Members** page.
+
+   <DashButton url="/?to=/:account/members" />
+
+2. On the member's row, select **...** > **Manage member settings**.
+3. Under **API access for this member**, choose one of the following:
+
+   - **Account default**: Follow the account-wide API access setting.
+   - **Allow access**: Always allow API access, even if the account-wide setting is off.
+   - **Block access**: Always block API access, even if the account-wide setting is on.
