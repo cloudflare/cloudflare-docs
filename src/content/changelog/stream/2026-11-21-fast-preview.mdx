@@ -1,0 +1,56 @@
+---
+title: Faster uploads and higher quality previews with Stream
+description: Use the new preview-first encoding mode for a faster, higher quality preview during video encoding
+pcx_content_type: changelog
+date: 2026-11-21
+---
+
+Cloudflare Stream customers can now request a faster, high-quality preview while Stream processes newly uploaded videos. Set the new encoding_mode property to previewFirst when defining an upload. For eligible videos, Stream will prioritize making an original-quality preview ready for playback while the video finishes processing through the remaining quality levels. Overall, previews are ready to play 20-30% faster, and start at maximum quality instead of a more compressed rendition.
+
+**What viewers will see**
+
+This is an opt-in feature, set by you when starting the upload or provisioning a direct creator upload. When this setting is applied, viewers who play the video when it is first ready will see higher quality playback, which may be more bandwidth intensive. The quality selector menu in Stream’s player as well as the track name in the HLS manifest will show “preview” while this rendition is available.
+
+In the background, our standard video processing continues. When that is complete, the preview will be replaced with our standard set of quality levels. This way users’ devices will be able to select the ideal quality for the device size, capability, and network conditions — just as before.
+
+**How to get started**
+
+You can upload a video to Stream using the `cf` CLI or the API, and specify an `encoding_mode` when making the request. This setting can be used with any of our upload methods. For simplicity, these examples show how to set it when copying a video from a URL:
+
+```
+cf stream videos copy --url "https://pub-2da57dbfcf5f4369863991d59747d686.r2.dev/acadia.mp4"
+(( PLACEHOLDER: How to spec this prop with cf? ))
+```
+
+Or the API:
+
+```
+curl \
+--data '{
+  "url":"https://pub-2da57dbfcf5f4369863991d59747d686.r2.dev/acadia.mp4",
+  "meta":{"name":"My First Stream Video"},
+  "encoding_mode":"previewFirst",
+}' \
+--header "Authorization: Bearer <API_TOKEN>" \
+https://api.cloudflare.com/client/v4/accounts/{account_id}/stream/copy
+```
+
+**What kind of videos are supported**
+
+For preview-first encoding, the input must be:
+
+- An MP4 or MOV file
+- Encoded with h264 video and AAC audio
+- Maximum resolution of 1920x1080
+- Combined bitrate under 10Mpbs
+- yuv420p pixel format
+- Keyframe interval of 10 seconds or less.
+
+Videos that do not meet these qualifications will still be accepted, but will follow our standard processing flow. To generate or transcode a video that follows to match these specifications with ffmpeg, you can specify it this way:
+
+```
+ffmpeg -i input.mp4 -vf "scale=w=min(iw\,1920):h=-2" -c:v libx264 \
+-b:v 8000k -profile high -pix_fmt yuv420p -c:a aac -g 240 output.mp4
+```
+
+For more information, see [Upload a video](https://developers.cloudflare.com/stream/uploading-videos/)
