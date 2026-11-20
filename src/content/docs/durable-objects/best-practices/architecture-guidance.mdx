@@ -288,9 +288,9 @@ RIGHT: clients → room:lobby | room:42 | room:dev (one object per room)
 
 ### Shared isolates and event-loop contention {/* shared-isolates */}
 
-Multiple instances of the same Durable Object class can share an [isolate](/workers/reference/how-workers-works/#isolates). Only one thread can execute JavaScript in that isolate at a time, so synchronous work in one object can delay other objects sharing it. Different object IDs do not guarantee separate isolates.
+Cloudflare does not deliberately place your Durable Objects together on the same physical host. For most accounts, a Durable Object is typically the only Durable Object in its isolate. However, multiple instances of the same Durable Object class can share an [isolate](/workers/reference/how-workers-works/#isolates). Different object IDs do not guarantee separate isolates.
 
-Asynchronous operations from these objects can interleave, but long synchronous work can cause delays even if the objects never communicate. For example, parsing a large JSON payload in one room object can increase latency in another room object.
+Only one thread can execute JavaScript in an isolate at a time. Synchronous work—including expensive SQLite queries or parsing large JSON payloads—can delay other objects sharing that isolate. For example, a query that scans a large table because an appropriate index is missing can cause delays even if the objects never communicate.
 
 Staying within the [per-request CPU limit](/durable-objects/platform/limits/) does not prevent this contention. Design for shared execution as your application grows:
 
