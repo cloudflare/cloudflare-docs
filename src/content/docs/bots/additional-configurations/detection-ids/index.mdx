@@ -39,6 +39,18 @@ It is possible, but uncommon, for you to have beta detection IDs on the Cloudfla
 
 Detection tags refer to the category associated with the detection ID at the time that Cloudflare has fingerprinted a bot. For example, if a detection tag is `go`, this means that Cloudflare has observed traffic from that detection ID from a Go programming language bot.
 
+The `ai_bot` tag means a bot detection identified the request as AI crawler or AI agent traffic. The tag is a category. It does not identify one bot, and it does not mean the client is a [verified bot](/bots/concepts/bot/verified-bots/).
+
+To review `ai_bot` traffic, filter [Security Analytics](/waf/analytics/security-analytics/) by the **Bot detection tags** value `ai_bot`, then open **Bot analysis**. Bot analysis plots these series separately:
+
+- **Automated**: The request matched the tag and is not a verified bot.
+- **Verified bot**: Cloudflare confirmed the bot.
+- **Personal assistants**: Verified AI assistants acting on behalf of a user, such as Muse, Gemini Spark, Claude Duet, and dots. Do not assume these requests are included in the **Verified bot** count.
+
+The `ai_bot` tag is not an [attack score](/waf/detections/attack-score/) verdict. Attack score is a separate detection.
+
+You can filter Security Analytics and [Bot Analytics](/bots/bot-analytics/) by a detection tag. You cannot match a detection tag in a custom rule. To act on a specific detection, use the `cf.bot_management.detection_ids` field. To control AI crawler and agent traffic by behavior, refer to [AI Crawler and Agent access policies](/bots/additional-configurations/block-ai-bots/).
+
 :::note
 
 Detection tags are available in Security Analytics, but not in the Security Events.
