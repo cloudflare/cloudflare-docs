@@ -80,6 +80,7 @@ The `emailSendingAdaptiveGroups` dataset supports the following dimensions for g
 | `isSpam`                 | uint8  | Whether the email was flagged as spam                                                                                         |
 | `isNDR`                  | uint8  | Whether the email is a non-delivery report                                                                                    |
 | `isLastEvent`            | uint8  | Whether this is the last event for this email                                                                                 |
+| `isVerifiedRecipient`    | uint8  | Whether the recipient is a verified destination address of the account                                                        |
 
 The `emailSendingAdaptive` dataset includes all of the above plus per-event fields: `from`, `to`, `subject`, `messageId`, `sessionId`, `errorDetail`.
 
