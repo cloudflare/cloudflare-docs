@@ -10,7 +10,7 @@ products:
 
 import { PackageManagers } from "~/components";
 
-`@cloudflare/vitest-plugin` replaces `@cloudflare/vitest-pool-workers`. The package API and Vitest configuration are unchanged.
+`@cloudflare/vitest-plugin` replaces `@cloudflare/vitest-pool-workers`. Configuration helpers move from the `/config` subpath to the package root; other APIs and Vitest options are unchanged.
 
 ## Run the codemod
 
@@ -24,7 +24,7 @@ To update your project automatically, run the following command from the project
 
 Use `--dry-run` to preview the changes. Use `--files <glob>` to limit the files the codemod updates.
 
-The codemod updates your dependency, imports, and test TypeScript configuration.
+The codemod updates your dependency, imports, and test TypeScript configuration. It renames the package in imports but leaves `/config` subpaths in place. Update those helper imports [manually](#update-manually).
 
 ## Update manually
 
@@ -41,7 +41,12 @@ If you cannot run the codemod, update the package name in your `package.json`, i
 + "types": ["@cloudflare/vitest-plugin/types"]
 ```
 
-The same rename applies to subpath imports, including `@cloudflare/vitest-plugin/config`.
+Import configuration helpers from the package root. `@cloudflare/vitest-plugin` does not export a `/config` subpath.
+
+```diff
+- import { readD1Migrations } from "@cloudflare/vitest-pool-workers/config";
++ import { readD1Migrations } from "@cloudflare/vitest-plugin";
+```
 
 ## Update request mocking
 

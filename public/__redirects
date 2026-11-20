@@ -1897,8 +1897,7 @@
 /security-center/indicator-feeds/get-started/ /security-center/indicator-feeds/ 301
 
 # spectrum
-/spectrum/changelog/ /spectrum/ 301
-/spectrum/changelog/index.xml /changelog/rss/index.xml 301
+/spectrum/changelog/index.xml /changelog/rss/spectrum.xml 301
 /spectrum/getting-started/ /spectrum/get-started/ 301
 /spectrum/getting-started/byoip/ /spectrum/about/byoip/ 301
 /spectrum/getting-started/getting-started/ /spectrum/get-started/ 301
@@ -2629,6 +2628,9 @@
 /workers/development-testing/wrangler-vs-vite/ /workers/local-development/wrangler-vs-vite/ 301
 /workers/development-testing/remote-data/ /workers/local-development/#remote-bindings 301
 /workers/development-testing/testing/ /workers/testing/ 301
+
+# workers ai - model moved to unified catalog
+/workers-ai/models/jev/ /ai/models/typesafe/jev/ 301
 
 # workers ai - legacy task type URLs redirect to unified catalog
 /workers-ai/models/llm/ /ai/models/#text-generation 301

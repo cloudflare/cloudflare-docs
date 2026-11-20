@@ -38,6 +38,9 @@ To configure a Workers AI binding in your Pages Function, you must use the Cloud
 
 ## Methods
 
+You can route binding calls through [AI Gateway](/ai-gateway/usage/providers/workersai/) to use its [spend limits](/ai-gateway/features/spend-limits/) and [rate limiting](/ai-gateway/features/rate-limiting/). These limits apply only to requests routed through the gateway.
+
+
 ### async env.AI.run()
 
 `async env.AI.run()` runs a model. Takes a model as the first parameter, and an object as the second parameter.

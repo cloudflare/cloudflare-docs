@@ -42,7 +42,7 @@ After your token has been successfully created, review your **Secret Access Key*
 
 Update your [`cloudflare.tf`](/terraform/tutorial/initialize-terraform/) file to include a [backend](https://developer.hashicorp.com/terraform/language/backend) for the `<YOUR_BUCKET_NAME>` bucket you created above.
 
-<Render file="v4-code-snippets" product="terraform" />
+<Render file="v5-code-snippets" product="terraform" />
 
 ```tf
 terraform {
@@ -63,7 +63,7 @@ terraform {
   required_providers {
     cloudflare = {
       source = "cloudflare/cloudflare"
-      version = "~> 4"
+      version = "~> 5"
     }
   }
 }

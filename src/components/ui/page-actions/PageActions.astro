@@ -28,7 +28,8 @@ const formattedDate = lastUpdated
 // click — the intended state until nimbus serves Markdown-for-Agents at the edge.
 ---
 
-<div
+<nav
+	aria-label="Page actions"
 	data-nb-page-actions
 	class={cn(
 		"not-prose -ml-2 flex flex-wrap items-center gap-y-1 text-[0.8125rem]",
@@ -100,7 +101,7 @@ const formattedDate = lastUpdated
 		<Icon name="ph:robot" class="h-3.5 w-3.5" />
 		Agent setup
 	</a>
-</div>
+</nav>
 
 <script>
 	import "./page-actions.client";

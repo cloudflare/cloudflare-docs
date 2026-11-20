@@ -868,7 +868,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://platform.claude.com/docs/en/models/haiku-5-5/overview",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",

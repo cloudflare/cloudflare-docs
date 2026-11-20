@@ -110,6 +110,42 @@ class MyDurableObject(DurableObject):
 
 </TabItem> </Tabs>
 
+### `connect`
+
+:::note[Public beta]
+Raw TCP connections to Workers and Durable Objects are in public beta.
+:::
+
+- <code>connect(socket <Type text="Socket" />)</code>
+  : <Type text="void" /> | <Type text="Promise<void>" />
+  - Called when a Worker or another Durable Object opens a raw socket through a [`DurableObjectStub`](/durable-objects/api/stub/#connect).
+  - Use the socket's readable and writable streams to process or proxy the connection.
+  - This method can be `async`.
+
+#### Parameters
+
+- `socket` <Type text="Socket"/> - the established TCP connection. Refer to the [Socket API](/workers/runtime-apis/tcp-sockets/#socket).
+
+#### Return values
+
+- None.
+
+Keep the returned promise pending while the Durable Object is processing the connection. When the promise settles, the inbound socket closes.
+
+#### Example
+
+<TypeScriptExample>
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export class TcpSession extends DurableObject<Env> {
+	async connect(socket: Socket): Promise<void> {
+		await socket.readable.pipeTo(socket.writable);
+	}
+}
+```
+</TypeScriptExample>
+
 ### `alarm`
 
 - <code>alarm(alarmInfo? <Type text="AlarmInvocationInfo" />)</code>
@@ -321,3 +357,4 @@ class MyDurableObject(DurableObject):
 - [Use WebSockets](/durable-objects/best-practices/websockets/) for WebSocket handler best practices.
 - [Alarms API](/durable-objects/api/alarms/) for scheduling future work.
 - [RPC methods](/durable-objects/best-practices/create-durable-object-stubs-and-send-requests/) for type-safe method calls.
+- [Connect handler](/workers/runtime-apis/handlers/connect/) for inbound TCP connections to Workers.

@@ -59,11 +59,25 @@ those steps with `cf build` in your own script instead:
 }
 ```
 
-`cf dev` forwards extra arguments to the development server it starts, so
-`cf dev --port 8788` works in a Vite project. The development server decides
-which arguments it accepts and rejects the rest. To separate the server's
-arguments from `cf` options, put them after `--`, as in
-`cf dev -- --host 0.0.0.0`. `cf build` accepts only `--mode`.
+`cf dev` forwards extra arguments to the selected development server. This
+applies to framework commands and installed Cloudflare build tools. To set
+the port and host in a Vite project, run:
+
+```sh
+cf dev --port 8788 --host 127.0.0.1
+```
+
+Use `--` to separate server arguments from `cf` options:
+
+```sh
+cf dev -- --port 8788 --host 127.0.0.1
+```
+
+Supported arguments depend on the selected development server. The server
+rejects arguments it does not support, even after `--`.
+
+`cf build` accepts only `--mode`. For framework support for `--mode`, refer to
+[Modes](#modes).
 
 ## Automatic configuration
 
@@ -469,6 +483,12 @@ In a configured project whose dependencies are not installed, Vite reports that
 it cannot resolve `@cloudflare/vite-plugin`, or `cf` reports that a build tool
 is declared but not installed. Install dependencies with your package manager,
 then run the command again.
+
+### Arguments are rejected
+
+Check which development server `cf dev` selects and which arguments it supports.
+If a server argument conflicts with a `cf` option, pass it after `--`. The
+selected server still rejects unsupported arguments and invalid values.
 
 ### A framework rejects `--mode`
 

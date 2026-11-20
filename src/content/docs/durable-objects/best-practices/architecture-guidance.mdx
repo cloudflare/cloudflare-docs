@@ -1,0 +1,908 @@
+---
+title: Architecture guidance
+description: Choose coordination boundaries, separate control and data planes, and scale Durable Objects with other Cloudflare services.
+pcx_content_type: concept
+sidebar:
+  order: 2
+products:
+  - durable-objects
+---
+
+import { Details, Render, TypeScriptExample, WranglerConfig } from "~/components";
+
+Durable Objects provide stateful coordination in both control planes and data planes. Applications scale best by distributing independent work across many objects, rather than requiring every request to pass through one object.
+
+Use this page for guidance on how to choose coordination boundaries, size workloads, route requests, and plan for growth. For worked designs that apply these decisions, refer to [Architecture examples](/durable-objects/best-practices/architecture-examples/).
+
+## Recommended architecture: separate control and data planes {/* control-plane */}
+
+Use this common pattern as a starting point for applications with shared account configuration and many independent resources. It shows how Durable Objects work with other Cloudflare developer platform services, keeping administrative coordination separate from live resource traffic.
+
+![Account Durable Objects publish through propagation layers to separate stateless and stateful data-plane groups, with an independent analytics path.](~/assets/images/durable-objects/architecture-guidance/01-control-plane-model.svg)
+
+<Details header="Diagram as text">
+
+```txt
+CONTROL PLANE
+  Account administrators → Config API → one Durable Object per account ID
+  Account objects own authoritative configuration and resource lifecycle state.
+
+PROPAGATION
+  Account objects → KV Instant: small configuration and hostname-to-account mapping
+  Account objects → KV / R2: larger blobs, with optional Workers Cache
+
+DATA PLANE
+  End users → stateless Workers: authentication, routing, transforms
+  End users → stateful Durable Objects: one room / document / session per object
+  KV Instant → stateless Workers: read configuration
+  KV / R2 → stateful Durable Objects: get blobs
+  The two groups are separate responsibilities, not a mandatory sequential chain.
+  No direct calls or writes go from the data plane to the control plane in this pattern.
+
+ANALYTICS
+  Data-plane usage events → Pipelines → R2 / Basin → scheduled job
+  Scheduled job → Config API: reads summaries and decides on configuration changes
+  Analytics queries and feedback are not on the user request path.
+```
+
+</Details>
+
+- **Control plane:** Account-scoped Durable Objects coordinate configuration and resource lifecycle changes through an administrative API.
+- **Propagation:** Publish small configuration through KV and larger blobs through KV or R2, so readers do not need to query the account's control object for every request.
+- **Data plane:** Workers handle stateless authentication, routing, and transforms. Separate Durable Objects coordinate each room, document, or session and own its application state.
+- **Analytics:** Export usage events through Pipelines to R2 and Basin. A scheduled job can read summaries and propose configuration changes through the administrative API, outside the resource request path.
+
+The recommendation is to separate responsibilities, not to reserve Durable Objects for only one plane. Adapt the services and coordination boundaries to your workload; not every application needs every component shown.
+
+The arrows show logical responsibilities, not separate public endpoints or required Worker deployments. Durable Objects [receive requests through Workers or other Durable Objects](/durable-objects/get-started/#3-instantiate-and-communicate-with-a-durable-object), not directly from the Internet. Keeping routine data-plane traffic out of the control plane is the design choice illustrated here, not a platform restriction.
+
+<Render file="kv-instant-beta" product="kv" />
+
+For a worked design that follows the administrative, resource, and analytics flows, refer to [Account control and resource traffic](/durable-objects/best-practices/architecture-examples/#control-and-data-planes).
+
+## Starting considerations {/* decision-summary */}
+
+### Primary recommendations
+
+1. **Separate control-plane changes from data-plane traffic.** Durable Objects can serve either role. Publish configuration outward so routine application requests do not depend on a control-plane object.
+2. **Choose an atom of coordination.** Use one object for a room, session, document, account, or other unit whose state must change together.
+3. **Measure each object's capacity.** Load-test the expected workload, allow headroom, and shard when one object cannot meet your targets.
+4. **Route with deterministic names** built from the resource key, using `getByName()`.
+5. **Use complementary services.** Distribute configuration with KV, store large objects in R2, and send analytical events to [Basin Pipelines](/basin-pipelines/) instead of collecting them in one global object.
+6. **Plan for hot Durable Objects.** Identify the limiting resource, then add shards or layers that preserve the coordination your application needs.
+
+### Anti-patterns
+
+- Avoid routing unrelated, high-volume application requests through the same object just to discover their destination or update shared configuration.
+- Avoid making each data-plane request write control-plane state or wait for a control-plane decision that could be published in advance.
+- Avoid waking many objects to list, search, or aggregate when an index or analytics service can answer the query.
+- Avoid creating one object per row, message, tool call, or agent turn when those operations need shared state.
+- Avoid splitting a hot Durable Object without considering upstream connections, hot keys, or cross-object transactions.
+- Avoid changing shard assignments without a plan for existing state and in-flight requests.
+- Avoid letting independent timer owners overwrite the same object's alarm.
+
+### Terms used on this page {/* terms */}
+
+| Term              | Meaning                                                                                                                                                                                   |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Atom              | The unit whose state needs coordinated updates, such as one document or one account's configuration.                                                                                      |
+| Control plane     | Administrative operations that create resources and manage their configuration, policies, or placement.                                                                                   |
+| Data plane        | Operations that deliver the application's primary function, such as editing a document or sending a message. Request routing and enforcement of published policies are part of this path. |
+| Propagation layer | Published configuration or snapshots that let the data plane operate without querying its authoritative control-plane object for each request.                                            |
+| Analytics         | Event collection and queries used to observe the application, separate from its authoritative operational state.                                                                          |
+| Shard             | One of several objects that divide a workload by a stable key, region, or time period.                                                                                                    |
+| Hub, relay, leaf  | Broadcast roles: a hub receives an upstream stream, a relay forwards updates, and leaves hold client connections.                                                                         |
+| Bounded parent    | An object that coordinates a defined set of children, such as one account's resources. Its role depends on the operations it owns.                                                        |
+
+## Apply the separation pattern {/* apply-separation-pattern */}
+
+Control plane and data plane describe **responsibilities, not products**. A Worker can expose administrative APIs or serve user traffic. A Durable Object can coordinate account configuration or own a live document. Using a Durable Object for the control plane is not itself an anti-pattern.
+
+Cloudflare's [control and data plane reference architecture](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/) uses Durable Objects in both planes. The important property is that high-volume resource requests reach their data-plane objects directly, rather than passing through a shared control-plane object.
+
+![Two request paths, each with a Worker, one account control Durable Object, and three separate document Durable Objects. The separated path routes directly to the selected document object.](~/assets/images/durable-objects/architecture-guidance/02-registry-vs-worker.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Coupled request path:
+  User requests → Worker → account control Durable Object → selected document object
+  Separate document Durable Objects: doc:1, doc:2, doc:3.
+  Data-plane throughput depends on the control object.
+
+Separated request paths:
+  Administrative requests → config API Worker → account control Durable Object
+  Account control Durable Object → published configuration in KV / R2
+  User requests → request Worker → selected document Durable Object (doc:1, doc:2, or doc:3)
+  Request Worker reads published configuration, not the control object.
+```
+
+</Details>
+
+### Keep routine traffic independent of control-plane writes
+
+For a high-volume data plane, use these two design rules:
+
+- **Do not make routine data-plane operations write back to control-plane state.** Keep messages, edits, and session activity in the resource objects that own them. Send observations to a separate analytics path.
+- **Propagate control-plane changes outward.** Publish configuration for request-serving Workers and Durable Objects to consume. Avoid a synchronous call to the control-plane object on every resource request.
+
+Administrative changes still go through the control API. A background process can also propose changes through that API after analyzing usage. This is different from requiring every user request to update the control plane.
+
+A direct call to a control-plane object can be a reasonable trade-off for a small workload or an operation that requires an immediate, authoritative decision. Measure that dependency and its failure behavior rather than treating all cross-plane calls as forbidden.
+
+### Recommended service responsibilities {/* where-each-responsibility-belongs */}
+
+| Responsibility                                            | Options                                                      | Design consideration                                                                                                 |
+| --------------------------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| Authoritative account configuration or resource lifecycle | Scoped Durable Objects                                       | Use Durable Objects when changes need per-account or per-resource coordination. Choose the scope from measured load. |
+| Administrative API                                        | Worker calling the appropriate control-plane object or store | Authenticate administrative changes separately from routine resource traffic.                                        |
+| Configuration distribution                                | KV; R2 for larger snapshots                                  | Publish read-oriented copies. Define how consumers handle stale or missing configuration.                            |
+| Request authentication, authorization, and routing        | Worker; resource-specific checks in a Durable Object         | Enforcing a policy is data-plane work. Changing that policy is control-plane work.                                   |
+| Resource state, ordering, and live connections            | Durable Objects                                              | Keep each object's responsibility and load bounded.                                                                  |
+| Searchable resource index                                 | A scoped Durable Object                                      | Listing a tenant's resources can query an index without waking every child.                                          |
+| Large payloads and archived state                         | R2                                                           | Keep references or coordination state in the object rather than all payloads.                                        |
+| Analytical event ingestion and queries                    | Basin Pipelines, R2, Basin SQL, or Analytics Engine          | Use an analytics service for cross-resource observations. Add a coordinating object only when the workload needs it. |
+| Background delivery or multi-step execution               | Queues or Workflows                                          | Choose delivery and retry semantics separately from the coordination boundary.                                       |
+
+### Account for propagation consistency {/* configuration-propagation */}
+
+[Classic Workers KV is eventually consistent](/kv/concepts/how-kv-works/#consistency). Publishing a change does not make it visible immediately to every reader. [KV Instant](/kv/get-started/#kv-instant-namespaces) is a separate, private-beta mode for small, infrequently updated configurations that are proactively propagated. Choose the mode for the workload and check its [limits](/kv/platform/limits/#workers-kv-instant); do not assume a new routing map or permission policy takes effect everywhere at once.
+
+Version configuration and plan for readers using the previous version. Retain old shard layouts during transitions, define behavior for missing configuration, and retry failed publication. R2 can hold larger versioned snapshots; caching still needs an explicit refresh policy.
+
+If an operation requires immediate revocation or a strongly consistent read, choose a path that provides that guarantee. A synchronous check with a scoped Durable Object may be appropriate, with its capacity and latency included in the design.
+
+### Use Durable Objects as coordinators {/* bounded-coordinators */}
+
+An account object can own configuration changes and resource creation, while document or session objects handle independent user activity. A parent that creates and lists children acts as their control plane. A session coordinating its active participants acts as a data-plane coordinator.
+
+Scope each coordinator by the work it owns, not by a rule that all control-plane state must live outside Durable Objects. A low-volume global administrative object may be sufficient; split it by account, resource type, or region when measurements require it.
+
+For a worked topology with configuration propagation and analytics, refer to [Separate account control from resource traffic](/durable-objects/best-practices/architecture-examples/#control-and-data-planes).
+
+## Step 1: Choose the atom of coordination {/* step-1-choose-the-atom */}
+
+### Model your Durable Objects around your "atom" of coordination {/* model-around-atom */}
+
+The most important design decision is choosing what each Durable Object represents. Create one Durable Object per logical unit that needs coordination: a chat room, a game session, a document, a user's data, or a tenant's workspace.
+
+This is the key insight that makes Durable Objects powerful. Instead of a shared database with locks, each "atom" of your application gets its own single-threaded execution environment with private storage.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	CHAT_ROOM: DurableObjectNamespace<ChatRoom>;
+}
+
+// Each chat room is its own Durable Object instance
+export class ChatRoom extends DurableObject<Env> {
+	async sendMessage(userId: string, message: string) {
+		// All messages to this room are processed sequentially by this single instance.
+		// No race conditions, no distributed locks needed.
+		this.ctx.storage.sql.exec(
+			"INSERT INTO messages (user_id, content, created_at) VALUES (?, ?, ?)",
+			userId,
+			message,
+			Date.now(),
+		);
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const roomId = url.searchParams.get("room") ?? "lobby";
+
+		// Each room ID maps to exactly one Durable Object instance globally
+		const stub = env.CHAT_ROOM.getByName(`room:${roomId}`);
+
+		await stub.sendMessage("user-123", "Hello, room!");
+		return new Response("Message sent");
+	},
+};
+```
+
+</TypeScriptExample>
+
+:::note
+
+If you have global application or user configuration that you need to access frequently (on every request), consider using [Workers KV](/kv/) instead.
+
+:::
+
+### Find the right level of granularity {/* find-the-right-granularity */}
+
+Use one test to pick your atom: **the atom is the largest unit you need to update atomically, and the smallest unit you can serve on its own.** Most applications land on a room, session, document, or match. Tenants and users make good parents and per-entity databases.
+
+![The granularity ladder. Choose the rung where one object owns everything that must change together, and nothing else.](~/assets/images/durable-objects/architecture-guidance/03-granularity-ladder.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Granularity ladder, coarse to fine:
+  Global ...................... TOO COARSE: every request queues on one thread; one failure affects everyone
+  Tenant or workspace ......... OK as a bounded parent or per-tenant database; too coarse if one tenant is busy
+  User ........................ OK for per-user state, settings, inbox
+  Room, session, document ..... SWEET SPOT: largest unit updated atomically, smallest unit served on its own
+  Row, message, tool call, agent turn ... TOO FINE when each operation needs shared state from other objects
+```
+
+</Details>
+
+Signs your atom is too coarse
+
+- Unrelated requests queue behind each other.
+- Peak requests per second for one object approach its limit.
+- Storage grows without bound as the product grows.
+- One customer's spike slows down other customers.
+
+Signs your atom is too fine
+
+- You need a transaction that spans several objects.
+- One user action fans out to many objects.
+- Every read reassembles state from several objects.
+- You have one object per row, message, tool call, or agent turn, but each operation needs shared conversation or run state.
+
+One application can, and often should, use several Durable Object classes at different rungs. For example, a consumer AI app might use one object per user profile, one per conversation, and one per agent run. Refer to [Per-user constellation](/durable-objects/best-practices/architecture-examples/#pattern-per-user).
+
+### Avoid one object for unrelated application traffic {/* do-not-create-a-global-durable-object */}
+
+Avoid routing all rooms through one "global" object. This is a workload boundary problem, not a restriction on administrative objects. Name each room object after the coordination unit instead:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+// 🔴 Bad: every room shares one global instance (one thread for the whole app)
+const globalStub = env.CHAT_ROOM.getByName("global");
+await globalStub.sendMessage(roomId, userId, message);
+
+// ✅ Good: one instance per room
+const roomStub = env.CHAT_ROOM.getByName(`room:${roomId}`);
+await roomStub.sendMessage(userId, message);
+```
+
+</TypeScriptExample>
+
+![A single global object serializes unrelated work. One object per room spreads the same load across many threads and locations.](~/assets/images/durable-objects/architecture-guidance/04-global-vs-per-room.svg)
+
+<Details header="Diagram as text">
+
+```txt
+WRONG: all clients → ChatRoom "global" (every room, one thread)
+       result: queues grow; one failure affects everyone
+RIGHT: clients → room:lobby | room:42 | room:dev (one object per room)
+       result: rooms run in parallel; failures are isolated
+```
+
+</Details>
+
+## Step 2: Size each atom {/* step-2-size */}
+
+### Limits at a glance {/* limits-at-a-glance */}
+
+The [Limits](/durable-objects/platform/limits/) page is the source of truth for platform limits. Note the scope of each limit:
+
+| Resource and scope                                         | Value                                                                                                      |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Requests per second, per object                            | Soft limit of 1,000; not guaranteed throughput                                                             |
+| SQLite-backed storage, per object on Workers Paid          | 10 GB; refer to [Limits](/durable-objects/platform/limits/) for Workers Free per-object and account limits |
+| CPU per request                                            | 30 seconds by default, configurable up to 5 minutes                                                        |
+| Alarm handler wall time                                    | 15 minutes                                                                                                 |
+| Key and value size, per entry in the key-value storage API | 2 MB combined                                                                                              |
+| Bound parameters per SQL query                             | 100                                                                                                        |
+| Simultaneous outgoing connections, per request             | 6                                                                                                          |
+
+### Message throughput: measure before sharding {/* message-throughput-limits */}
+
+The documented **1,000 requests per second per object is a soft limit**, not a throughput benchmark. The rate an object sustains depends on its CPU work, storage operations, payload sizes, and other work performed for each request. Do not assign fixed capacities to categories such as JSON validation or storage writes.
+
+Load-test the operations your application performs, including expected bursts. Measure latency, CPU usage, storage work, and [overload errors](/durable-objects/observability/troubleshooting/#durable-object-is-overloaded). Choose a target rate below both the documented soft limit and the rate your workload sustains, with headroom for bursts and variation.
+
+For writes that can be partitioned independently, estimate an initial shard count from that measured target, then load-test the sharded design:
+
+```txt
+Required shards = ceil(Peak requests/second for one atom / Target requests/second per shard)
+```
+
+:::note[Size per atom, not per system]
+
+Apply the formula to _one atom's_ traffic, not the application's total traffic. Separate chat rooms already spread load across separate objects. Shard a room only when that room's object cannot meet your latency and throughput targets with headroom. Fan-in does not by itself require sharding.
+
+:::
+
+WebSocket fan-out needs its own load test. Incoming requests per second and outbound messages per second measure different work: one incoming update can produce many outgoing messages. Measure broadcast latency at the expected subscriber count rather than deriving fan-out capacity from the request soft limit.
+
+### Illustrative sizing decisions {/* worked-examples */}
+
+These hypothetical workloads show how to choose a boundary. They are not customer measurements or throughput guarantees.
+
+| Workload                      | What to measure for one atom                                     | Decision                                                                                                  |
+| ----------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Collaborative editing session | Event processing and broadcast latency with the expected viewers | Start with one object per session; split responsibilities if measurements require it                      |
+| Chat room                     | Message rate, storage work, and subscriber count                 | Start with one object per room and test busy rooms separately                                             |
+| Coordinated work intake       | Burst write rate and time to drain the backlog                   | Add [hash shards](#scale-hash-shards) when one buffer cannot meet the target                              |
+| Live status feed              | Time to deliver an update to the expected subscribers            | Keep a regional hub as the atom and add a [fan-out tree](#scale-fan-out-tree) when broadcasts fall behind |
+
+## Step 3: Name and route {/* step-3-name */}
+
+### Use deterministic IDs for predictable routing {/* use-deterministic-ids-for-predictable-routing */}
+
+Use `getByName()` with meaningful, deterministic strings for consistent routing. The same input always produces the same Durable Object ID, ensuring requests for the same logical entity always reach the same instance.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_SESSION: DurableObjectNamespace<GameSession>;
+}
+
+export class GameSession extends DurableObject<Env> {
+	async join(playerId: string) {
+		// Game logic here
+	}
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const gameId = url.searchParams.get("game");
+
+		if (!gameId) {
+			return new Response("Missing game ID", { status: 400 });
+		}
+
+		// ✅ Good: Deterministic ID from a meaningful string
+		// All requests for "game-abc123" go to the same Durable Object
+		const stub = env.GAME_SESSION.getByName(gameId);
+
+		await stub.join("player-xyz");
+		return new Response("Joined game");
+	},
+};
+```
+
+</TypeScriptExample>
+
+Creating a stub does not instantiate or wake up the Durable Object. The Durable Object is only activated when you call a method on the stub.
+
+Use `newUniqueId()` only when you need a new, random instance and will store the mapping externally:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		// newUniqueId() creates a random ID - useful when creating new instances
+
+		const id = env.GAME_SESSION.newUniqueId();
+		const stub = env.GAME_SESSION.get(id);
+
+		return Response.json({ gameId: id.toString() });
+	},
+};
+```
+
+</TypeScriptExample>
+
+### Recommended naming pattern: compound names from your atom key {/* compound-names */}
+
+When an atom has a scale-out dimension, such as a region or a shard, consider this naming pattern: `{class}:{atomId}[:{dimension}:{value}]`. A consistent scheme lets any Worker compute the right object without a lookup.
+
+![Anatomy of a compound Durable Object name. The stable atom key comes first and the scale-out dimension comes last.](~/assets/images/durable-objects/architecture-guidance/05-compound-name.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Name: stream:7:v2:shard:5
+  stream    = class or type prefix
+  7         = atom ID
+  v2        = layout version (bump it before changing the shard count)
+  shard:5   = scale-out dimension (shard or region), always last
+```
+
+</Details>
+
+- **Start with a type prefix** (`room:`, `session:`, `stream:`) so that names stay readable in logs and never collide across uses.
+- **Put the scale-out dimension last.** Everything before it identifies the atom.
+- **Derive shards from a stable key.** Hash a user ID, an event ID, or a connection ID. Never use a random number per request, or the same key lands on different objects.
+- **Version the layout** before you change the shard count. Otherwise the same key maps to a different object mid-flight.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+// Stable 32-bit FNV-1a hash: the same key maps to the same shard within a layout
+function shardFor(key: string, shardCount: number): number {
+	let hash = 0x811c9dc5;
+	for (let index = 0; index < key.length; index++) {
+		hash ^= key.charCodeAt(index);
+		hash = Math.imul(hash, 0x01000193);
+	}
+	return (hash >>> 0) % shardCount;
+}
+
+type StreamConfig = { shardCount: number; layout: number };
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const { streamId, eventId, payload } = await request.json<{
+			streamId: string;
+			eventId: string;
+			payload: string;
+		}>();
+
+		// Per-stream settings are read-heavy config: keep them in KV
+		const config = await env.CONFIG.get<StreamConfig>(
+			`stream:${streamId}`,
+			"json",
+		);
+		if (!config) return new Response("Unknown stream", { status: 404 });
+
+		// The layout version is part of the name, so changing the shard
+		// count starts a new set of shards
+		const shard = shardFor(eventId, config.shardCount);
+		const stub = env.INGEST_SHARD.getByName(
+			`stream:${streamId}:v${config.layout}:shard:${shard}`,
+		);
+
+		const accepted = await stub.record(eventId, payload);
+		return new Response(null, { status: accepted ? 202 : 409 });
+	},
+};
+```
+
+</TypeScriptExample>
+
+This example routes new events using the current layout. If an event can be retried after a layout change, retain its original layout version and shard count so that retries reach the original shard.
+
+## Step 4: Compose parents and children {/* step-4-compose */}
+
+### Use parent-child relationships for related entities {/* use-parent-child-relationships */}
+
+Do not put all your data in a single Durable Object. When you have hierarchical data (workspaces containing projects, game servers managing matches), create separate child Durable Objects for each entity. The parent coordinates and tracks children, while children handle their own state independently.
+
+This enables parallelism: operations on different children can happen concurrently, while each child maintains its own single-threaded consistency.
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+
+export interface Env {
+	GAME_SERVER: DurableObjectNamespace<GameServer>;
+	GAME_MATCH: DurableObjectNamespace<GameMatch>;
+}
+
+// Parent: Coordinates matches, but doesn't store match data
+export class GameServer extends DurableObject<Env> {
+	async createMatch(matchName: string): Promise<string> {
+		const matchId = crypto.randomUUID();
+
+		// Store reference to the child in parent's database
+		this.ctx.storage.sql.exec(
+			"INSERT INTO matches (id, name, created_at) VALUES (?, ?, ?)",
+			matchId,
+			matchName,
+			Date.now(),
+		);
+
+		// Initialize the child Durable Object
+		const childStub = this.env.GAME_MATCH.getByName(`match:${matchId}`);
+		await childStub.init(matchId, matchName);
+
+		return matchId;
+	}
+
+	async listMatches(): Promise<{ id: string; name: string }[]> {
+		// Parent knows about all matches without waking up each child
+		const cursor = this.ctx.storage.sql.exec<{ id: string; name: string }>(
+			"SELECT id, name FROM matches ORDER BY created_at DESC",
+		);
+		return cursor.toArray();
+	}
+}
+
+// Child: Handles its own game state independently
+export class GameMatch extends DurableObject<Env> {
+	async init(matchId: string, matchName: string) {
+		await this.ctx.storage.put("matchId", matchId);
+		await this.ctx.storage.put("matchName", matchName);
+		this.ctx.storage.sql.exec(`
+			CREATE TABLE IF NOT EXISTS players (
+				id TEXT PRIMARY KEY,
+				name TEXT NOT NULL,
+				score INTEGER DEFAULT 0
+			)
+		`);
+	}
+
+	async addPlayer(playerId: string, playerName: string) {
+		this.ctx.storage.sql.exec(
+			"INSERT INTO players (id, name, score) VALUES (?, ?, 0)",
+			playerId,
+			playerName,
+		);
+	}
+
+	async updateScore(playerId: string, score: number) {
+		this.ctx.storage.sql.exec(
+			"UPDATE players SET score = ? WHERE id = ?",
+			score,
+			playerId,
+		);
+	}
+}
+```
+
+</TypeScriptExample>
+
+With this pattern:
+
+- Listing matches only queries the parent (children stay hibernated)
+- Different matches process player actions in parallel
+- Each match has its own SQLite database for player data
+
+### Keep parents bounded and off the hot path {/* keep-parents-bounded */}
+
+A parent can be an **index and lifecycle manager** for a set of children, such as one account's matches or one workspace's documents. In that role, it serves as their control plane. Keep routine child operations independent of it when those operations do not need parent coordination.
+
+![A bounded parent tracks its children, but the Worker routes data traffic straight to each child by name.](~/assets/images/durable-objects/architecture-guidance/06-bounded-parent.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Worker → tenant:acme (bounded parent, index of its children): create and list only (rare)
+Worker → match:1 | match:2 | match:3: directly, for every player action (hot path)
+tenant:acme → match:N: initialize resources through an explicit lifecycle operation
+Player actions go directly to match objects; match activity does not update parent configuration.
+```
+
+</Details>
+
+- **Route independent resource operations straight to the child.** Avoid consulting the parent for every player action or document edit.
+- **Keep administrative changes explicit.** Create or delete resources through the lifecycle API. Publish operational events separately when listing or analytics needs them.
+- **Size the parent independently.** Its administrative workload may be much smaller than the combined traffic of its children. Shard it only when its own measurements require that.
+
+## Step 5: Place near users and spread capacity {/* step-5-place */}
+
+### Consider location hints for latency-sensitive applications {/* location-hints */}
+
+By default, a Durable Object is created near the location of the first request it receives. For most applications, this works well. However, you can provide a location hint to influence where the Durable Object is created. To pass a hint, create the ID with `idFromName()` and pass the option to `get()`:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const url = new URL(request.url);
+		const gameId = url.searchParams.get("game") ?? "default";
+		const regions: DurableObjectLocationHint[] = [
+			"wnam",
+			"enam",
+			"weur",
+			"eeur",
+			"apac",
+			"oc",
+			"afr",
+			"me",
+			"sam",
+		];
+		const region =
+			regions.find((hint) => hint === url.searchParams.get("region")) ?? "wnam";
+
+		// Provide a location hint for where this Durable Object should be created
+		const id = env.GAME_SESSION.idFromName(gameId);
+		const stub = env.GAME_SESSION.get(id, { locationHint: region });
+
+		await stub.join("player-xyz");
+		return new Response("Joined game");
+	},
+};
+```
+
+</TypeScriptExample>
+
+Location hints are suggestions, not guarantees. Refer to [Data location](/durable-objects/reference/data-location/) for available regions and details.
+
+### Use regional instances for global audiences {/* regional-instances */}
+
+A Durable Object lives in one location. If one atom serves users on several continents (for example, a live feed), give it **one instance per region**. Put the region in the name and pass a matching location hint:
+
+![Regional instances. The region is part of the name, and a location hint places each instance near its users.](~/assets/images/durable-objects/architecture-guidance/07-regional-instances.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Upstream source (one stream)
+  → topic:42:sam   (locationHint "sam")  ← users in South America
+  → topic:42:weur  (locationHint "weur") ← users in Western Europe
+  → topic:42:enam  (locationHint "enam") ← users in Eastern North America
+Regional instances do not share state; use them only for single-source data such as a feed.
+```
+
+</Details>
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+// Map the caller's continent to a Durable Objects location hint
+const HINTS: Record<string, DurableObjectLocationHint> = {
+	NA: "enam",
+	SA: "sam",
+	EU: "weur",
+	AF: "afr",
+	AS: "apac",
+	OC: "oc",
+};
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const topic = new URL(request.url).searchParams.get("topic");
+		if (!topic) return new Response("Missing topic", { status: 400 });
+
+		const hint = HINTS[String(request.cf?.continent)] ?? "enam";
+
+		// The region is part of the name: one instance per topic per region
+		const id = env.HUB.idFromName(`topic:${topic}:${hint}`);
+		return env.HUB.get(id, { locationHint: hint }).fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+:::caution
+
+Regional instances do not share state. Use them for data that has a single upstream source, such as a broadcast feed or cache. Do not use them for data that users write and that must stay consistent globally.
+
+:::
+
+### Spread capacity across regions {/* spread-capacity-across-regions */}
+
+When a backend Worker first calls many objects (for example, a pool of executor shards), their default placement can concentrate them near that Worker. Use location hints to request placement across regions, while remembering that hints are not guarantees:
+
+<TypeScriptExample filename="index.ts">
+
+```ts
+// Spread executor shards across regions so no single location carries them all
+const REGIONS: DurableObjectLocationHint[] = [
+	"wnam",
+	"enam",
+	"weur",
+	"eeur",
+	"apac",
+];
+const EXECUTOR_SHARDS = 16;
+
+function executorFor(env: Env, instanceId: string) {
+	const shard = shardFor(instanceId, EXECUTOR_SHARDS);
+	const id = env.EXECUTOR.idFromName(`executor:${shard}`);
+
+	// A hint only applies when the object is first created,
+	// so keep the shard → region mapping stable
+	return env.EXECUTOR.get(id, {
+		locationHint: REGIONS[shard % REGIONS.length],
+	});
+}
+```
+
+</TypeScriptExample>
+
+## Step 6: Select an architecture example {/* step-6-patterns */}
+
+Use [Architecture examples](/durable-objects/best-practices/architecture-examples/) to see how these decisions fit together. Each example identifies its coordination unit, request path, and limits. The examples are illustrative designs, not customer architectures or capacity guarantees.
+
+| Requirement                                                             | Example                                                                                                                | Apply this guidance                                                                                                 |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Administrative state changes less often than resource traffic           | [Account control and resource traffic](/durable-objects/best-practices/architecture-examples/#control-and-data-planes) | [Separate the planes](#control-plane) and [plan for propagation](#configuration-propagation).                       |
+| One upstream stream serves many viewers                                 | [Fan out](/durable-objects/best-practices/architecture-examples/#pattern-fan-out-hub)                                  | [Place regional instances](#regional-instances) and measure [broadcast capacity](#scale-fan-out-tree).              |
+| Writes need application-specific coordination before backend processing | [Fan in](/durable-objects/best-practices/architecture-examples/#pattern-ingest-buffer)                                 | [Size each atom](#step-2-size) and use [hash shards](#scale-hash-shards) only when needed.                          |
+| Several clients share one live session                                  | [Session per Durable Object](/durable-objects/best-practices/architecture-examples/#pattern-session)                   | [Choose the atom](#step-1-choose-the-atom) and [split responsibilities](#scale-split) if measured load requires it. |
+| Conversations and agent runs have independent state                     | [Per-user constellation](/durable-objects/best-practices/architecture-examples/#pattern-per-user)                      | [Choose granularity](#find-the-right-granularity) from state ownership, not from each tool call.                    |
+| Many quiet entities share a changing, uneven workload                   | [Shared shards placed by load](/durable-objects/best-practices/architecture-examples/#pattern-place-by-load)           | [Version routing](#compound-names) and plan a safe state handoff.                                                   |
+| Customers deploy their own application code                             | [Workers for Platforms](/durable-objects/best-practices/architecture-examples/#workers-for-platforms)                  | Separate deployment administration from runtime dispatch.                                                           |
+
+## Step 7: Plan for scalability with a hot Durable Object {/* step-7-scale */}
+
+When a Durable Object becomes hot, identify which resource or measured capacity its workload approaches. Then choose a scale-out technique that preserves the coordination your application needs. Smaller units can multiply upstream connections (one hub per sub-topic) or concentrate load on hot keys (one shard per event type). Consider adding shards or layers beneath the existing coordination boundary instead:
+
+![Choosing a scale-out technique for a hot Durable Object. Identify the limiting resource, then add the matching shards or layers.](~/assets/images/durable-objects/architecture-guidance/13-scale-decision.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Does one Durable Object approach a platform limit or miss its performance target?
+  no  → stop: one object per atom
+  yes → which resource?
+        broadcast or socket count → fan-out tree
+        write rate                → hash shards
+        storage growth            → time buckets or child objects
+        mixed workloads           → split by responsibility
+Before choosing smaller units, consider upstream connections and hot keys.
+```
+
+</Details>
+
+### Broadcast capacity: add a fan-out tree {/* scale-fan-out-tree */}
+
+**Trigger:** one hub's broadcast latency exceeds your target at the expected subscriber count. **Example:** a live status feed gains subscribers faster than a regional hub can deliver updates.
+
+![Fan-out tree. Keep the topic hub as the atom, and add leaf objects beneath it when one topic outgrows a single object.](~/assets/images/durable-objects/architecture-guidance/14-fan-out-tree.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Origin → topic:feed:weur (relay; still exactly one upstream link per region)
+  → topic:feed:weur:leaf:0 → capped share of client sockets
+  → topic:feed:weur:leaf:1 → capped share of client sockets
+  → topic:feed:weur:leaf:2 → capped share of client sockets
+  → topic:feed:weur:leaf:3 → capped share of client sockets
+Add leaves only for topics above a threshold.
+```
+
+</Details>
+
+- The regional hub becomes a **relay**. It keeps the single upstream link and forwards each update to its leaves.
+- Each **leaf** (`topic:{id}:{region}:leaf:{k}`) holds a capped share of client sockets. The Worker assigns new sockets by hashing a connection ID across the current leaf count.
+- Enable leaves only for topics above a threshold. Most topics stay single-hub.
+- **Trade-off:** one extra internal hop per update, plus some routing logic.
+
+:::caution[Anti-pattern: one hub per sub-topic]
+
+Splitting a feed into one hub per field multiplies upstream connections and can force clients to hold many subscriptions. Filter per subscriber inside the topic hub instead.
+
+:::
+
+### Write capacity: add hash shards {/* scale-hash-shards */}
+
+**Trigger:** peak writes for one atom exceed the target rate established by load-testing, or latency and overload errors show insufficient headroom. **Example:** an application work stream receives a burst that one ingestion buffer cannot absorb within the latency target.
+
+![Hash-sharded ingest. Hashing event IDs distributes events across shards and routes retries to the same shard for local deduplication.](~/assets/images/durable-objects/architecture-guidance/15-hash-shards.svg)
+
+<Details header="Diagram as text">
+
+```txt
+event A        → Worker: shard = hash(eventId) % shardCount → shard:5 → accepted
+event B        → Worker → shard:6 → accepted
+event A retry  → Worker → shard:5 → duplicate detected by PRIMARY KEY (event_id)
+Same key → same shard, every time: deduplication is a local SQLite constraint.
+```
+
+</Details>
+
+- Choose the shard count from measured per-shard capacity and peak load, with headroom, and route by **hash of the event ID**. The diagram shows illustrative mappings, not a recommended shard count.
+- The same event ID lands on the same shard within a layout, so a `UNIQUE` or `PRIMARY KEY` constraint detects retries locally.
+- Store the shard count in per-stream configuration and version it in the name. Preserve the original layout when retrying an event across a layout change.
+- **Trade-off:** more shards can mean more, smaller batches for the backend to merge. Retention, replay, and recovery still need an end-to-end design.
+
+:::caution[Anti-pattern: one object per event type]
+
+Grouping by event type makes per-type counts easy, but a common event type can still send most writes to one object. Hash event IDs when events can be processed independently.
+
+:::
+
+### Storage limit: add time buckets {/* scale-time-buckets */}
+
+**Trigger:** one atom's append-only data approaches its [storage limit](/durable-objects/platform/limits/) (10 GB per object on Workers Paid). **Example:** a tenant's audit log.
+
+![Time buckets. Append-only data rolls over to a new object each period, so no single object grows without bound.](~/assets/images/durable-objects/architecture-guidance/16-time-buckets.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Worker: bucket = yyyy-mm → audit:acme:2026-11 (hot, receives all new writes)
+audit:acme:2026-10, audit:acme:2026-09 (cold, read-only, hibernated)
+audit:acme:2026-08 (archived to R2, then deleted)
+Monitor bucket size and roll over before reaching the applicable storage limit.
+```
+
+</Details>
+
+Name buckets by period (`audit:{tenantId}:{yyyy-mm}`). Only the current bucket receives writes. Older buckets hibernate, serve occasional reads, and can be exported to R2 and deleted.
+
+### Mixed load: split by responsibility {/* scale-split */}
+
+**Trigger:** one object is doing writes, read fan-out, and coordination at once. **Example:** an agent session serves read-only viewers while coordinating concurrent background runs.
+
+![Split by responsibility. The session keeps the writes, a relay serves read-only viewers, and each sub-agent runs in its own object.](~/assets/images/durable-objects/architecture-guidance/17-split-by-responsibility.svg)
+
+<Details header="Diagram as text">
+
+```txt
+session:91 (source of truth, accepts all writes)
+  → publish events → session:91:viewers (read-only fan-out) → viewers
+  → spawn → run:a | run:b | run:… (one object per sub-agent, each ↔ its own sandbox)
+  ⇠ each run reports its result on completion, not per token
+```
+
+</Details>
+
+- The **session object** stays the source of truth and accepts all writes.
+- A **viewer relay** (`session:{id}:viewers`) serves read-only audiences, using a fan-out tree if needed.
+- Each **sub-agent run** is its own object. It reports back to the session on completion, not on every token.
+
+:::caution[Anti-pattern: one object per tool call]
+
+Tool calls inside an agent loop need ordered, atomic checkpoints. Keep them inside the run object, or use [Workflows](/workflows/) when you need durable per-step retries.
+
+:::
+
+### When not to split further {/* when-not-to-split */}
+
+- The atom is within its limits with headroom. Sharding speculatively adds hops and complexity for no benefit.
+- The split would require a transaction across the new objects.
+- The split adds one upstream connection, or one round trip, per new object.
+- The new key is skewed. One event type or tenant would still get most of the traffic.
+
+## Deploy related classes independently {/* build-control-plane */}
+
+Deployment boundaries are separate from control-plane and data-plane roles. A small application can keep related classes in one Worker. Split class families when independent releases reduce the scope of disruptive updates.
+
+### Split Workers by class family {/* split-workers-by-class-family */}
+
+A Worker that defines Durable Object classes is deployed together with them. By default, active Durable Objects defer code updates for up to 300 seconds while waiting to hibernate. WebSockets using the Hibernation API remain connected when an object adopts new code after hibernating. If the delay expires, or you select `immediate` mode, the object is [reset](/durable-objects/observability/troubleshooting/#durable-object-reset-because-its-code-was-updated), losing in-memory state and disconnecting WebSockets. Refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/) and [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/). If one Worker defines every class, a deploy can affect objects across all of those classes, regardless of whether they serve control-plane or data-plane work.
+
+![One Worker exports six Durable Object classes, compared with three independent Workers that each export two classes. Updating only the shards-and-timers Worker limits which objects can reset under the immediate update strategy.](~/assets/images/durable-objects/architecture-guidance/18-class-families.svg)
+
+<Details header="Diagram as text">
+
+```txt
+Worker logos identify deployment boundaries; Durable Objects icons identify DO classes.
+Shared deployment: one Worker defines Run, Step, Shard, Timer, Account, and Index DO classes.
+  An immediate update can reset active objects across every class.
+Separate deployments: Worker A (Run, Step), Worker B (Shard, Timer), Worker C (Account, Index).
+  Updating Worker B does not update objects defined in Workers A and C.
+Default deferred updates can allow objects to adopt code after hibernation without a reset.
+```
+
+</Details>
+
+- **Group classes that change together** (for example, runs and steps, or shards and timers) into their own Worker.
+- **Bind across Workers** with `script_name`, so the API Worker can call a class it does not deploy.
+- **Keep RPC interfaces forwards and backwards compatible**, because callers and objects now deploy independently.
+- Use [gradual deployments](/workers/versions-and-deployments/gradual-deployments/) to spread resets over time within a family.
+
+The diagram illustrates immediate updates. The default `deferred` [code update strategy](/durable-objects/deployments/durable-objects-code-updates/) can postpone an object's update until it hibernates or reaches its configured `max_delay`. Deferral is best effort, so keep interfaces compatible across versions with either strategy.
+
+<WranglerConfig>
+
+```toml
+name = "api"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[[durable_objects.bindings]]
+name = "ENGINE"
+class_name = "EngineShard"
+script_name = "engine"
+```
+
+</WranglerConfig>
+
+## Design checklist {/* design-checklist */}
+
+- **Responsibilities:** identify administrative operations, routine resource traffic, and analytics. Workers and Durable Objects can participate in either application plane.
+- **Propagation:** data-plane traffic does not need to write control-plane state. Configuration has a version, a freshness policy, and a recovery path for failed publication.
+- **Coordination:** each object owns a defined unit of state. Cross-object operations account for the absence of a shared transaction.
+- **Capacity:** objects meet latency and throughput targets under load, with headroom for bursts and growth.
+- **Routing:** names are deterministic, and layout changes preserve access to existing state and retries.
+- **Composition:** resource requests bypass administrative parents when parent coordination is unnecessary.
+- **Placement:** location hints match the workload and are treated as hints, not placement guarantees.
+- **Examples:** the selected [architecture example](/durable-objects/best-practices/architecture-examples/) matches the workload and its trade-offs.
+- **Scale-out:** you know which resource is limiting a hot object before adding shards or layers.
+- **Lifecycle:** required state is durable, alarm ownership is explicit, and independently deployed interfaces remain compatible.
+
+## Related resources {/* related-resources */}
+
+- [Architecture examples](/durable-objects/best-practices/architecture-examples/)
+- [Rules of Durable Objects](/durable-objects/best-practices/rules-of-durable-objects/)
+- [Control and data plane architectural pattern](/reference-architecture/diagrams/storage/durable-object-control-data-plane-pattern/)
+- [Durable Objects limits](/durable-objects/platform/limits/)
+- [Data location](/durable-objects/reference/data-location/)
+- [How KV works](/kv/concepts/how-kv-works/)
+- [Basin](/basin/)
+- [Gradual deployments with Durable Objects](/workers/versions-and-deployments/gradual-deployments/with-durable-objects/)

@@ -1,0 +1,135 @@
+{
+	"model_id": "google/lyria-3-pro",
+	"name": "Lyria 3 Pro",
+	"description": "Google's Lyria 3 Pro model generates full-length MP3 songs from detailed text prompts and optional image prompts.",
+	"task": "Music Generation",
+	"tags": [
+		"Music",
+		"Audio Generation",
+		"Full Songs",
+		"Vocals",
+		"Instrumental"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per track": 0.08
+	},
+	"examples": [
+		{
+			"name": "Cinematic Folk Song",
+			"description": "Generate a full song from a detailed text prompt",
+			"input": {
+				"prompt": "A cinematic folk song about finding home, with acoustic guitar, intimate vocals, brushed drums, and a soaring final chorus"
+			},
+			"output": {
+				"audio": "https://examples.aig.cloudflare.com/google/lyria-3-pro/cinematic-folk-song.mp3"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"audio": "https://examples.aig.cloudflare.com/google/lyria-3-pro/cinematic-folk-song.mp3"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'google/lyria-3-pro',\n  {\n    prompt:\n      'A cinematic folk song about finding home, with acoustic guitar, intimate vocals, brushed drums, and a soaring final chorus',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"google/lyria-3-pro\",\n  \"input\": {\n    \"prompt\": \"A cinematic folk song about finding home, with acoustic guitar, intimate vocals, brushed drums, and a soaring final chorus\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/lyria/lyria-3",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/google/lyria-3-pro.png",
+	"metadata": {
+		"Audio Format": "MP3",
+		"Clip Duration": "Up to 184 seconds",
+		"Sample Rate": "44.1 kHz"
+	},
+	"request_formats": null,
+	"provider_id": "google",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "google-vertex-ai",
+			"pricing": {
+				"output_tracks": 0.08
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "google-vertex-ai",
+			"pricing": {
+				"output_tracks": 0.08
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_tracks",
+							"label": "Per track",
+							"unit": null,
+							"value": 0.08
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:40:06",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"maxLength": 5000
+				},
+				"image": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Base64-encoded image used as visual inspiration"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"audio": {
+					"type": "string",
+					"description": "Generated music as an audio URL"
+				}
+			},
+			"required": [
+				"audio"
+			],
+			"additionalProperties": false
+		}
+	}
+}

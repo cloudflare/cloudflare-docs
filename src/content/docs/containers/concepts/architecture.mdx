@@ -59,9 +59,13 @@ by a datacenter in a location with the best latency between itself and the reque
 A different datacenter may be selected to optimize overall latency, if [Smart Placement](/workers/configuration/placement/)
 is on, or if the nearest location is under heavy load.
 
-Because all Container requests are passed through a Worker, end-users cannot make non-HTTP TCP or
-UDP requests to a Container instance. If you have a use case that requires inbound TCP
-or UDP from an end-user, please [let us know](https://forms.gle/AGSq54VvUje6kmKu8).
+HTTP requests reach a Container through the Worker's [`fetch()` handler](/workers/runtime-apis/handlers/fetch/).
+
+For raw TCP traffic, a [Spectrum application with a Worker origin](/spectrum/how-to/route-tcp-traffic-to-a-worker/) invokes the Worker's [`connect()` handler](/workers/runtime-apis/handlers/connect/). The Worker can forward the socket through the Container's Durable Object to a process listening on a container port. This path supports protocols such as bidirectional gRPC. Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/) for a complete example.
+
+:::note[Public beta]
+Inbound TCP connections to Workers are in public beta.
+:::
 
 ### Worker to Durable Object
 

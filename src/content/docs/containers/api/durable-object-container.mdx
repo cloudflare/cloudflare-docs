@@ -346,7 +346,9 @@ Container snapshots are immutable. Snapshot handles have an implicit 30-day time
 
 ### `destroy`
 
-`destroy()` stops the container and can include an optional reason for the operation.
+`destroy()` stops the container immediately, without a graceful shutdown period.
+
+To request a graceful shutdown, send `SIGTERM` with [`signal()`](#signal), wait for [`monitor()`](#monitor) within an application-defined deadline, and call `destroy()` if the container has not stopped.
 
 ```js
 await this.ctx.container.destroy("Manually Destroyed");
@@ -476,6 +478,8 @@ try {
 #### Return values
 
 - `Fetcher`: Object used to send HTTP requests or TCP connections to the container port.
+
+For a complete raw TCP example, refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/).
 
 ### `monitor`
 

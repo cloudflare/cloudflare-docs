@@ -1,0 +1,19 @@
+---
+title: Redesigned Spectrum dashboard
+description: The Spectrum dashboard has a new applications list and full-page forms for creating and editing applications.
+date: 2026-11-19T00:00:00Z
+---
+
+The Spectrum pages in the Cloudflare dashboard have been redesigned. Your existing applications and their settings do not change.
+
+The **Spectrum Applications** page lists each application's type, edge port, origin, and edge IP type, with the last minute of connections, ingress, and egress. You can search the list and sort it by column.
+
+Creating or editing an application now opens a full page instead of a modal, with settings grouped into **Application Configuration**, **Origin Configuration**, and **Advanced Options**. To edit an application, select its hostname, or select the three dots next to it > **Edit**.
+
+You can now create and edit applications that use [static IPs](/spectrum/about/static-ip/) or [BYOIP](/spectrum/about/byoip/) addresses in the dashboard. Under **Edge IP Type**, select **Dedicated IPs**. Leave **Subdomain** blank to create an application on the zone apex.
+
+New TCP and UDP applications created in the dashboard now have **IP Access Rules** turned off by default, which matches the API default. To enforce IP Access rules for an application, turn on **IP Access Rules** under **Advanced Options**. Existing applications keep their current setting.
+
+To create your first application, refer to [Get started with Spectrum](/spectrum/get-started/).
+
+To share feedback on the redesigned dashboard, complete [this form](https://forms.gle/BW9RoXZpgx7B5HZC6).
