@@ -993,7 +993,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": true,
+	"zdr": false,
 	"zdr_comment": null,
 	"external_info": "https://platform.claude.com/docs/en/models/fable-5-2/overview",
 	"terms": "https://www.anthropic.com/legal/commercial-terms",
