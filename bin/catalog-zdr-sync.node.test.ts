@@ -38,25 +38,22 @@ describe("syncZdrFields", () => {
 		const comment = "Retention disabled by the provider.";
 		const fetched = modelFile({ zdr: true, zdr_comment: comment });
 
-		expect(parse(syncZdrFields(modelFile(), fetched)).zdr_comment).toBe(
-			comment,
-		);
+		const updated = syncZdrFields(modelFile(), fetched);
+
+		expect(parse(updated).zdr_comment).toBe(comment);
 	});
 
 	it("changes only the ZDR fields and keeps the file's formatting", () => {
 		const fetched = modelFile({ zdr: true, description: "Fetched." });
+		const expected = modelFile({ zdr: true });
 
-		expect(syncZdrFields(modelFile(), fetched)).toBe(
-			modelFile({ zdr: true }),
-		);
+		expect(syncZdrFields(modelFile(), fetched)).toBe(expected);
 	});
 
-	it("escapes non-ASCII characters in the comment like the fetch script", () => {
+	it("escapes non-ASCII in the comment like the fetch script", () => {
 		const comment = "Confirmed \u2014 terms";
-		const updated = syncZdrFields(
-			modelFile(),
-			modelFile({ zdr: true, zdr_comment: comment }),
-		);
+		const fetched = modelFile({ zdr: true, zdr_comment: comment });
+		const updated = syncZdrFields(modelFile(), fetched);
 
 		expect(updated).toContain('"zdr_comment": "Confirmed \\u2014 terms"');
 		expect(parse(updated).zdr_comment).toBe(comment);
