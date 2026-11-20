@@ -282,6 +282,7 @@ describe("Nimbus Satteri HAST pipeline", () => {
 			[
 				"## About CVE-2021-44228",
 				"[CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228) `CVE-2021-44228`",
+				"[**CVE-2021-44228**](https://example.com)",
 				"Not CVE-2021-123 or XCVE-2021-44228.",
 				"```txt\nCVE-2021-44228\n```",
 			].join("\n\n"),
@@ -293,6 +294,7 @@ describe("Nimbus Satteri HAST pipeline", () => {
 	test.each([
 		'<LinkButton href="/waf/">CVE-2021-44228</LinkButton>',
 		'<GlossaryTooltip term="WAF" link="/waf/">CVE-2021-44228</GlossaryTooltip>',
+		'<a href="/waf/"><strong>CVE-2021-44228</strong></a>',
 	])("does not link CVE IDs inside link components: %s", (mdx) => {
 		const { code } = mdxToJs(mdx, { hastPlugins }) as unknown as {
 			code: string;
