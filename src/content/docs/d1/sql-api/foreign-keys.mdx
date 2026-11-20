@@ -26,6 +26,8 @@ Instead, D1 allows you to call `PRAGMA defer_foreign_keys = on` or `off`, which 
 
 Calling `PRAGMA defer_foreign_keys = on` does not disable foreign key enforcement outside of the current transaction. If you have not resolved outstanding foreign key violations at the end of your transaction, it will fail with a `FOREIGN KEY constraint failed` error.
 
+Deferring checks does not disable `ON DELETE CASCADE`. Dropping a parent table can still delete child rows. Test table rebuilds on a copy of your data and check child row counts.
+
 To defer foreign key enforcement, set `PRAGMA defer_foreign_keys = on` at the start of your transaction, or ahead of changes that would violate constraints:
 
 ```sql

@@ -12,7 +12,7 @@ The vulnerability stemmed from an unimplemented feature in the Cloudflare adapte
 
 This issue allowed attackers to load remote resources from arbitrary hosts under the victim site's domain for any site deployed using the Cloudflare adapter for Open Next. For example: `https://victim-site.com/_next/image?url=https://attacker.com`. In this example, attacker-controlled content from `attacker.com` is served through the victim site's domain (`victim-site.com`), violating the same-origin policy and potentially misleading users or other services.
 
-References: https://www.cve.org/cverecord?id=CVE-2025-6087, https://github.com/opennextjs/opennextjs-cloudflare/security/advisories/GHSA-rvpw-p7vw-wj3m
+References: CVE-2025-6087, https://github.com/opennextjs/opennextjs-cloudflare/security/advisories/GHSA-rvpw-p7vw-wj3m
 
 ## Impact
 

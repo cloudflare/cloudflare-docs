@@ -29,7 +29,7 @@ You will also need access to [Vectorize](/vectorize/platform/pricing/). During t
 
 ## 1. Create a new Worker project
 
-C3 (`create-cloudflare-cli`) is a command-line tool designed to help you setup and deploy Workers to Cloudflare as fast as possible.
+C3 (`create-cloudflare-cli`) is a command-line tool designed to help you set up and deploy Workers to Cloudflare as fast as possible.
 
 Open a terminal window and run C3 to create your Worker project:
 
@@ -84,7 +84,7 @@ To begin using Cloudflare's AI products, you can add the `ai` block to the [Wran
 
 :::note
 
-If you have not used Wrangler before, it will try to open your web browser to login with your Cloudflare account.
+If you have not used Wrangler before, it will try to open your web browser to log in to your Cloudflare account.
 
 If you have issues with this step or you do not have access to a browser interface, refer to the [`wrangler login`](/workers/wrangler/commands/general/#login) documentation for more information.
 
@@ -504,7 +504,7 @@ app.delete("/notes/:id", async (c) => {
 
 For large pieces of text, it is recommended to split the text into smaller chunks. This allows LLMs to more effectively gather relevant context, without needing to retrieve large pieces of text.
 
-To implement this, we'll add a new NPM package to our project, `@langchain/textsplitters':
+To implement this, we will add a new NPM package to our project, `@langchain/textsplitters`:
 
 <PackageManagers pkg="@langchain/textsplitters" />
 

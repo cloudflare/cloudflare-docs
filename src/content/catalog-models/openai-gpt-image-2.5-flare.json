@@ -127,7 +127,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://developers.openai.com/api/docs/models/gpt-image-2.5-flare",
 	"terms": "https://openai.com/policies/",

@@ -1,12 +1,14 @@
 ---
 pcx_content_type: reference
 title: Local Development
-description: Learn how to run Container-enabled Workers locally with `wrangler dev` and `vite dev`.
+description: Run Container-enabled Workers locally and test raw TCP and gRPC traffic with Wrangler.
 sidebar:
   order: 2
 products:
   - containers
 ---
+
+import { WranglerConfig } from "~/components";
 
 You can run both your container and your Worker locally by running [`npx wrangler dev`](/workers/wrangler/commands/workers/#dev) (or `vite dev` for Vite projects using the [Cloudflare Vite plugin](/workers/vite-plugin/)) in your project's directory.
 
@@ -32,6 +34,22 @@ As a workaround for Cloudflare Registry images, point `vite dev` at a local Dock
 
 Container instances will be launched locally when your Worker code calls to create
 a new container. Requests will then automatically be routed to the correct locally-running container.
+
+## Test TCP and gRPC locally
+
+To receive raw TCP connections locally, export a [`connect()` handler](/workers/runtime-apis/handlers/connect/) and configure a TCP listener in `wrangler.jsonc`:
+
+<WranglerConfig>
+```jsonc
+{
+	"connect": [{ "protocol": "tcp", "port": 8788 }],
+}
+```
+</WranglerConfig>
+
+Connect TCP or gRPC clients to `localhost:8788`. The port comes from this configuration; exporting the handler alone does not create a listener.
+
+Refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/) for a complete local development workflow.
 
 When the dev session ends, all associated container instances should be stopped, but
 local images are not removed, so that they can be reused in subsequent builds.

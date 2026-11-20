@@ -188,7 +188,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
 	"terms": "https://ai.google.dev/gemini-api/terms",

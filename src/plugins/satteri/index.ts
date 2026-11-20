@@ -1,4 +1,5 @@
 // Order is load-bearing:
+//   - cve-links before external-links: the links it adds need the arrow.
 //   - external-links before heading-slugs: the arrow must exist so it can be
 //     stripped before slugging.
 //   - heading-slugs before autolink-headings: ids must exist before anchors
@@ -9,6 +10,7 @@
 import { externalLinks, titleFigure } from "@cloudflare/nimbus-docs/markdown";
 import { EXTERNAL_LINK_ARROW } from "../../util/external-link-arrow";
 import mermaid from "./mermaid";
+import cveLinks from "./cve-links";
 import headingSlugs from "./heading-slugs";
 import autolinkHeadings from "./autolink-headings";
 import shiftHeadings from "./shift-headings";
@@ -18,6 +20,7 @@ import type { HastPluginDefinition } from "./types";
 
 export {
 	mermaid,
+	cveLinks,
 	headingSlugs,
 	autolinkHeadings,
 	shiftHeadings,
@@ -27,6 +30,7 @@ export {
 
 export const hastPlugins: HastPluginDefinition[] = [
 	mermaid,
+	cveLinks,
 	externalLinks({ arrow: EXTERNAL_LINK_ARROW }),
 	headingSlugs,
 	autolinkHeadings,

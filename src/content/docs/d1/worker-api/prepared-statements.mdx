@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { Type, MetaInfo, Details, Tabs, TabItem } from "~/components";
+import { Type, MetaInfo, Details, Tabs, TabItem, TypeScriptExample } from "~/components";
 
 This chapter documents the various ways you can run and retrieve the results of a query after you have [prepared your statement](/d1/worker-api/d1-database/#prepare).
 
@@ -91,6 +91,25 @@ stmt = self.env.DB.prepare(
 	stmt = db.prepare("SELECT * FROM Customers WHERE CompanyName = ?2 AND CustomerId = ?1").bind(1, "Alfreds Futterkiste")
 	```
 	</TabItem> </Tabs>
+
+#### Bind a list with one parameter
+
+D1 allows [100 bound parameters per query](/d1/platform/limits/).
+
+For an `IN` query, bind a JSON array as one string and expand it with [`json_each()`](/d1/sql-api/query-json/#expand-arrays-for-in-queries):
+
+<TypeScriptExample>
+
+```ts
+const customerIds = [1, 2, 3];
+const result = await env.DB.prepare(
+  "SELECT * FROM Customers WHERE CustomerId IN (SELECT value FROM json_each(?1))",
+).bind(JSON.stringify(customerIds)).all();
+```
+
+</TypeScriptExample>
+
+The JSON string counts as one bound parameter. The [maximum string size](/d1/platform/limits/) still applies.
 
 #### Static statements
 
