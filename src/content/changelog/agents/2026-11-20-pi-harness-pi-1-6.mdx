@@ -10,19 +10,19 @@ import { CopyPromptButton, TypeScriptExample } from "~/components";
 
 Agents SDK v0.34.0 upgrades [`PiHarness`](/agents/harnesses/pi/) to [Pi 1.6](https://github.com/earendil-works/pi/blob/v1.6.0/packages/durable/CHANGELOG.md#160---2026-11-20). A Pi tool can now wait for a person, a deadline, or another session without keeping the Durable Object awake, and a session can start from a history that your application already has.
 
-### Tools that wait
+## Tools that wait
 
 - **Park until a signal or a deadline.** A tool can return a park instead of a result, and Pi runs it again when a signal arrives or the deadline passes. While it waits, the call holds no invocation, so the Durable Object can hibernate. Deliver signals with the new `harness.signal()`. Refer to [Tools that wait](/agents/harnesses/pi/#tools-that-wait).
 - **Wait for a subagent.** `submit()` and `continue()` take `notify`, so a parked tool wakes when another session's input settles. Refer to [Wait for a subagent](/agents/harnesses/pi/#wait-for-a-subagent).
 - **Approval gates.** A `beforeTool` hook can park a tool call before it runs, for example until a person approves it.
 
-### Session updates
+## Session updates
 
 - **Start a session from an existing history.** `harness.root()`, `sessions.create()`, and `sessions.fork()` take Pi's `init`, which writes messages into the transcript in the commit that creates the session. The root session is now created on its first use, so `harness.root()` can seed it. Refer to [Seed a session with an existing history](/agents/harnesses/pi/#seed-a-session-with-an-existing-history).
 - **Keep queued input across an abort.** With `submit(input, { onAbort: "keep" })`, stopping an answer does not drop the message that the user or another agent sent next.
 - **Steadier runs.** Pi retries more dropped provider connections. When Anthropic can no longer continue a message thread, `agents/models/pi-ai` sends the whole conversation again instead of failing the turn. `PiHarness.dispose()` frees Pi AI's per-session state.
 
-### Wait for a person's answer
+## Wait for a person's answer
 
 This tool asks the user a question, then parks until your agent delivers the answer:
 
@@ -65,7 +65,7 @@ await this.harness.signal(taskId, Answer, "answer", { text: "Yes" });
 
 While the question is open, the session's run is still going, and the object can hibernate or be evicted. `harness.signal()` wakes the object, and Pi runs the tool again with the answer.
 
-### Other changes
+## Other changes
 
 - **MCP re-authorization.** A request that needs the user to sign in again throws `MCPAuthorizationRequiredError` with a link. A failed server stays failed until you call the new `reconnectMcpServer(id)`. Refer to [Failures and reconnecting](/agents/model-context-protocol/apis/client-api/#failures-and-reconnecting).
 - **Failed requests no longer send error details.** A failed request gets a generic `500` response, and a failed WebSocket upgrade closes with code `1011`. Use `onFetchError()` to choose the response. Refer to [Failed requests](/agents/runtime/lifecycle/#failed-requests).

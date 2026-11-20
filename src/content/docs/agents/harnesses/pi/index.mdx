@@ -476,7 +476,13 @@ if (state !== undefined && "value" in state) {
 		};
 	}
 	const answer = await api.commit((tx) => tx.entry(settled.answer), context);
-	const message = answer?.model?.[0] as AssistantMessage;
+	const message = answer?.model?.[0] as AssistantMessage | undefined;
+	if (message === undefined) {
+		return {
+			output: [{ type: "text", text: "Subagent gave no answer" }],
+			isError: true,
+		};
+	}
 	return { output: message.content.filter((part) => part.type === "text") };
 }
 // The call's own child: found again on a rerun, stopped with the call.
