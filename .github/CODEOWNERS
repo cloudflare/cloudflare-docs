@@ -451,14 +451,15 @@ package.json @cloudflare/content-engineering
 
 # email-security
 
-/src/content/docs/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
-/src/assets/images/changelog/email-security/ @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @krystyna26
-/src/assets/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
-/src/content/partials/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
-/src/content/directory/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
-/src/content/glossary/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
-/src/icons/email-security.svg @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
-/public/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @krystyna26
+/public/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/assets/images/changelog/email-security/ @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/assets/images/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/content/changelog/email-security-cf1/ @cloudflare/cf1-reviewers @cloudflare/pm-changelogs @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/content/directory/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/content/docs/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/content/glossary/email-security.yaml @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/content/partials/email-security/ @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
+/src/icons/email-security.svg @cloudflare/cf1-reviewers @cloudflare/product-owners @akumar0630 @krystyna26 @ltentrup
 
 # email-service
 
