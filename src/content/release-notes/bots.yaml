@@ -3,6 +3,12 @@ link: "/bots/changelog/"
 productName: Bots
 productLink: "/bots/"
 entries:
+  - publish_date: "2026-11-13"
+    title: Swahili language support for Challenge Pages
+    description: |-
+      Cloudflare Challenge Pages now support Swahili (Kenya), allowing visitors whose browser language preference is `sw` or `sw-ke` to receive a localized challenge experience.
+
+      Refer to [supported languages](/cloudflare-challenges/reference/supported-languages/) for more information about language detection and supported language codes.
   - publish_date: "2026-07-01"
     title: New options to manage AI traffic
     description: |-
