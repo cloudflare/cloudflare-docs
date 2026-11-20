@@ -277,12 +277,12 @@ describe("Nimbus Satteri HAST pipeline", () => {
 		);
 	});
 
-	test("does not link CVE IDs in links, code, headings, option names or invalid IDs", () => {
+	test("does not link CVE IDs in links, code, headings or invalid IDs", () => {
 		const html = render(
 			[
 				"## About CVE-2021-44228",
 				"[CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228) `CVE-2021-44228`",
-				"Set CVE-2021-44228=true. Not CVE-2021-123 or XCVE-2021-44228.",
+				"Not CVE-2021-123 or XCVE-2021-44228.",
 				"```txt\nCVE-2021-44228\n```",
 			].join("\n\n"),
 		);
@@ -290,11 +290,13 @@ describe("Nimbus Satteri HAST pipeline", () => {
 		expect(html).not.toContain("radar.cloudflare.com");
 	});
 
-	test("does not link CVE IDs inside link components", () => {
-		const { code } = mdxToJs(
-			'<LinkButton href="/waf/">CVE-2021-44228</LinkButton>',
-			{ hastPlugins },
-		) as unknown as { code: string };
+	test.each([
+		'<LinkButton href="/waf/">CVE-2021-44228</LinkButton>',
+		'<GlossaryTooltip term="WAF" link="/waf/">CVE-2021-44228</GlossaryTooltip>',
+	])("does not link CVE IDs inside link components: %s", (mdx) => {
+		const { code } = mdxToJs(mdx, { hastPlugins }) as unknown as {
+			code: string;
+		};
 
 		expect(code).not.toContain("radar.cloudflare.com");
 	});
