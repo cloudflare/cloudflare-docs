@@ -60,18 +60,39 @@ Choose the dashboard, Cloudflare CLI, or API procedure.
 
 <TabItem label="Dashboard">
 
+The dashboard steps depend on whether the zone has Spectrum Enterprise.
+
+**Pro or Business zone without Spectrum Enterprise**
+
 <Steps>
 1. In the Cloudflare dashboard, go to **Spectrum**.
 
    <DashButton url="/?to=/:account/:zone/spectrum" />
 
-2. Select **Create an application**.
-3. For **Application type**, select **TCP**.
-4. For **Subdomain**, enter the subdomain that clients will connect to. The dashboard appends your zone's domain name.
-5. For **Edge port**, enter a single TCP port.
-6. For **Origin type**, select **Worker**.
-7. Select the Worker that will receive the connections.
-8. If **Edge TLS termination** is available, turn it off to pass the TCP payload to the Worker without TLS termination.
+2. Select **Create an Application**.
+3. Under **Application Configuration**, select **Workers (tcp)** as the **Application Type**. This option is unavailable if the zone already has a Worker-origin application.
+4. In **Subdomain**, enter the subdomain that clients will connect to. The dashboard adds your zone name after it.
+5. In **Edge Port**, enter a single TCP port.
+6. In **Origin Worker**, select the Worker that will receive the connections. The list shows deployed Workers that export a `connect()` handler.
+7. Select **Add Application**.
+</Steps>
+
+These applications have no TLS or advanced options. Spectrum passes the TCP payload to the Worker without terminating TLS.
+
+**Zone with Spectrum Enterprise**
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Spectrum**.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Select **Create an Application**.
+3. Under **Application Configuration**, select **TCP** as the **Application Type**.
+4. In **Subdomain**, enter the subdomain that clients will connect to. The dashboard adds your zone name after it.
+5. In **Edge Port**, enter a single TCP port.
+6. Under **Origin Configuration**, select **Worker** as the **Origin type**.
+7. In **Origin Worker**, select the Worker that will receive the connections. The list shows deployed Workers that export a `connect()` handler.
+8. Leave **Edge TLS Termination** turned off to pass the TCP payload to the Worker without terminating TLS.
 9. Select **Add Application**.
 </Steps>
 
