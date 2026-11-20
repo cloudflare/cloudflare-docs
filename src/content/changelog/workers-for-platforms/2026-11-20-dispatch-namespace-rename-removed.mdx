@@ -1,29 +1,29 @@
 ---
-title: Workers for Platforms - Dispatch namespaces can no longer be renamed
-description: Requests that change the name of a dispatch namespace now return an error. To use a new name, create a new namespace and move your user Workers to it.
+title: Dispatch namespaces can no longer be renamed
+description: Dispatch namespace names are now fixed at creation. To use a different name, create a new namespace and redeploy your user Workers.
 products:
   - workers-for-platforms
 date: 2026-11-20
 ---
 
-You can no longer rename a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) after you create it. Dispatch Workers and [outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) keep the namespace name they were deployed with. After a rename, reading, deploying, or deleting those Workers through the API could fail.
+You can no longer rename a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) after creating it.
 
-**What you will notice:**
+Renaming a namespace could cause API requests to read, deploy, or delete Workers to fail because dispatch Workers and [outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) retained the namespace name they were deployed with. This change prevents those failures by rejecting rename requests.
 
-- A `PUT` or `PATCH` request to the [dispatch namespace API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/methods/update/) that changes `name` returns an error
-- `wrangler dispatch-namespace rename` returns the same error
-- In Terraform, changing `name` on a `cloudflare_workers_for_platforms_dispatch_namespace` resource fails the apply
+**What changes:**
 
-**What is not affected:**
+- `PUT` and `PATCH` requests to the [dispatch namespace API](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/methods/update/) return an error if they change `name`.
+- `wrangler dispatch-namespace rename` returns an error.
+- Terraform applies that attempt to change `name` on a `cloudflare_workers_for_platforms_dispatch_namespace` resource fail.
 
-- Existing namespaces keep their current names
-- You can still update `trusted_workers`. A `PUT` request that sends the current `name` works as before, as does a `PATCH` request that omits `name`
+Existing namespaces keep their current names. You can still update `trusted_workers`. `PUT` requests that include the current `name` and `PATCH` requests that omit `name` continue to work.
 
 **To move your Workers to a namespace with a different name:**
 
-1. Create a new namespace with the name you want.
-2. Upload your user Workers to the new namespace.
-3. Update the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) in your dispatch Worker to use the new namespace, then deploy the dispatch Worker.
-4. Delete the old namespace.
+1. Create a new dispatch namespace with the name you want.
+2. Deploy your user Workers to the new namespace.
+3. Update the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) in your dispatch Worker to reference the new namespace, then redeploy the dispatch Worker.
+4. Verify that requests are routed to the new namespace and your Workers work as expected.
+5. Delete the user Workers in the old namespace, then delete the old namespace.
 
 For more information, refer to [How Workers for Platforms works](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
