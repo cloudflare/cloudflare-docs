@@ -1,0 +1,241 @@
+{
+	"model_id": "pruna/z-image-turbo",
+	"name": "Z-Image Turbo",
+	"description": "Z-Image Turbo is Tongyi-MAI's 6B-parameter distilled text-to-image model, served by Pruna. It generates photorealistic images in about 8 steps, renders English and Chinese text well, and supports custom sizes up to 2048\u00d72048.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Text-to-Image",
+		"Image Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.005
+	},
+	"examples": [
+		{
+			"name": "Fox in the Snow",
+			"description": "Photorealistic image from a short prompt with the default 8 steps.",
+			"input": {
+				"prompt": "A red fox curled up asleep in fresh snow, soft morning light, photorealistic"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/pruna/z-image-turbo/fox-in-the-snow.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/pruna/z-image-turbo/fox-in-the-snow.jpg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/z-image-turbo',\n  { prompt: 'A red fox curled up asleep in fresh snow, soft morning light, photorealistic' },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/z-image-turbo\",\n  \"input\": {\n    \"prompt\": \"A red fox curled up asleep in fresh snow, soft morning light, photorealistic\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Bilingual Neon Sign",
+			"description": "Renders Chinese and English text in the same image, wide format, PNG.",
+			"input": {
+				"prompt": "A rainy night street in Shanghai, a glowing neon sign that reads \"\u8425\u4e1a\u4e2d OPEN LATE\" in red Chinese characters and blue English letters, reflections on wet pavement, cinematic",
+				"width": 1440,
+				"height": 768,
+				"output_format": "png",
+				"seed": 42
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/pruna/z-image-turbo/bilingual-neon-sign.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/pruna/z-image-turbo/bilingual-neon-sign.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/z-image-turbo',\n  {\n    prompt:\n      'A rainy night street in Shanghai, a glowing neon sign that reads \"\u8425\u4e1a\u4e2d OPEN LATE\" in red Chinese characters and blue English letters, reflections on wet pavement, cinematic',\n    width: 1440,\n    height: 768,\n    output_format: 'png',\n    seed: 42,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/z-image-turbo\",\n  \"input\": {\n    \"prompt\": \"A rainy night street in Shanghai, a glowing neon sign that reads \\\"\u8425\u4e1a\u4e2d OPEN LATE\\\" in red Chinese characters and blue English letters, reflections on wet pavement, cinematic\",\n    \"width\": 1440,\n    \"height\": 768,\n    \"output_format\": \"png\",\n    \"seed\": 42\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Fast Product Shot",
+			"description": "Studio product photo with go_fast for the lowest latency.",
+			"input": {
+				"prompt": "Studio product photo of a matte black wireless earbud case on a white marble pedestal, soft rim light, shallow depth of field",
+				"go_fast": true
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/pruna/z-image-turbo/fast-product-shot.jpg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/pruna/z-image-turbo/fast-product-shot.jpg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'pruna/z-image-turbo',\n  {\n    prompt:\n      'Studio product photo of a matte black wireless earbud case on a white marble pedestal, soft rim light, shallow depth of field',\n    go_fast: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"pruna/z-image-turbo\",\n  \"input\": {\n    \"prompt\": \"Studio product photo of a matte black wireless earbud case on a white marble pedestal, soft rim light, shallow depth of field\",\n    \"go_fast\": true\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.api.pruna.ai/guides/models/z-image-turbo",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Max Resolution": "2048\u00d72048",
+		"Output Formats": "jpg, png, webp"
+	},
+	"request_formats": null,
+	"provider_id": "pruna",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "pruna",
+			"pricing": {
+				"output_image_count": 0.005
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "pruna",
+			"pricing": {
+				"output_image_count": 0.005
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_image_count",
+							"label": "Per image",
+							"unit": null,
+							"value": 0.005
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-20 17:11:27",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Text description of the image to generate."
+				},
+				"width": {
+					"description": "Width of the generated image in pixels (64-2048). Defaults to 1024.",
+					"type": "integer",
+					"minimum": 64,
+					"maximum": 2048
+				},
+				"height": {
+					"description": "Height of the generated image in pixels (64-2048). Defaults to 1024.",
+					"type": "integer",
+					"minimum": 64,
+					"maximum": 2048
+				},
+				"num_inference_steps": {
+					"description": "Number of inference steps (1-50). Defaults to 8.",
+					"type": "integer",
+					"minimum": 1,
+					"maximum": 50
+				},
+				"guidance_scale": {
+					"description": "Guidance scale (0-20). Should be 0 for Turbo models, which is the default.",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 20
+				},
+				"go_fast": {
+					"description": "Apply additional optimizations for faster generation. Defaults to false.",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"output_format": {
+					"description": "Format of the output image. Defaults to jpg.",
+					"type": "string",
+					"enum": [
+						"jpg",
+						"png",
+						"webp"
+					]
+				},
+				"output_quality": {
+					"description": "Quality when saving jpg or webp output, from 0 to 100. Defaults to 80.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 100
+				},
+				"enable_safety_filter": {
+					"description": "Check the prompt against the content policy. Defaults to false; the always-on categories are still blocked.",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "Presigned URL for the generated image."
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": {}
+		}
+	}
+}
