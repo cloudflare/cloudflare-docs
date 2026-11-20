@@ -37,7 +37,10 @@ On the **Set up Email security** page:
 2. (**Optional**) **Add manual domains**: Manually enter additional domains. Then, select **Continue**.
 3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>, and then select **Continue**.
 4. **Select your processing location**: Configure where you want Cloudflare to process your email. **Global** will be the default option. If you choose **Global**, `<account tag>@CF-emailsecurity.com` will be your regional service address. Once you have chosen your processing location, select **Continue**.
-5. **Review details**: Review your connected domains and regional service address. Then, select **Go to domains.**
+5. (**Optional**) **Domain verification**: Shown only if you entered manual domains. Copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours. Domains connected from an active Cloudflare zone or a [Cloudflare One integration](/cloudflare-one/email-security/reference/verify-domain-ownership/#verification-methods) are verified automatically. Then, select **Continue**.
+6. **Review details**: Review your connected domains and regional service address. Then, select **Go to domains.**
+
+Refer to [Verify domain ownership](/cloudflare-one/email-security/reference/verify-domain-ownership/) for more information.
 
 ## Users who do not have domains with Cloudflare
 
@@ -58,7 +61,10 @@ On the **Set up Email security** page:
 2. (**Optional**) **Add manual domains**: Manually enter additional domains. Then, select **Continue**.
 3. (**Optional**) **Adjust hop count**: Enter the number of <GlossaryTooltip term="Hops">hops</GlossaryTooltip>, and then select **Continue**.
 4. **Configure service address with your third party email provider**: Copy and paste the service address into your third-party email provider to allow BCC/Journaling: `<account tag>@CF-emailsecurity.com`.
-5. **Review details**: Review your connected domains. Then, select **Go to domains.**
+5. **Domain verification**: Copy the **TXT domain name** and **TXT record** values, then add them at your DNS provider. DNS updates and verification can take up to 24 hours. Then, select **Continue**.
+6. **Review details**: Review your connected domains. Then, select **Go to domains.**
+
+Refer to [Verify domain ownership](/cloudflare-one/email-security/reference/verify-domain-ownership/) for more information.
 
 ## Enable auto-moves
 
