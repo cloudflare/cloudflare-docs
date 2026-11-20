@@ -290,6 +290,15 @@ describe("Nimbus Satteri HAST pipeline", () => {
 		expect(html).not.toContain("radar.cloudflare.com");
 	});
 
+	test("does not link CVE IDs inside link components", () => {
+		const { code } = mdxToJs(
+			'<LinkButton href="/waf/">CVE-2021-44228</LinkButton>',
+			{ hastPlugins },
+		) as unknown as { code: string };
+
+		expect(code).not.toContain("radar.cloudflare.com");
+	});
+
 	test("links CVE IDs in MDX JSX table cells", () => {
 		const { code } = mdxToJs(
 			"<table><tbody><tr><td>Magento - XXE - CVE:CVE-2024-34102</td></tr></tbody></table>",
