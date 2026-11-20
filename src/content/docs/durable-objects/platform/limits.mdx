@@ -84,6 +84,12 @@ Cloudflare limits each HTTP request body a Durable Object sends to an external s
 
 <Render file="outbound-request-body-limits" product="workers" />
 
+## Authenticated Origin Pulls
+
+[Zone-level Authenticated Origin Pulls](/ssl/origin-configuration/authenticated-origin-pull/set-up/zone-level/) does not apply to requests originating from Durable Objects. This includes requests that continue through service bindings.
+
+To present a client certificate for supported origin destinations, configure and use a [Workers mTLS certificate binding](/workers/runtime-apis/bindings/mtls/).
+
 ## Frequently Asked Questions
 
 <Render file="do-faq-limits" product="durable-objects" />
