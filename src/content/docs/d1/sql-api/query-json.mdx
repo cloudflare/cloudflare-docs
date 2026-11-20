@@ -10,6 +10,8 @@ products:
   - d1
 ---
 
+import { TypeScriptExample } from "~/components";
+
 D1 has built-in support for querying and parsing JSON data stored within a database. This enables you to:
 
 * [Query paths](#extract-values) within a stored JSON object - for example, extracting the value of named key or array index directly, which is especially useful with larger JSON objects.
@@ -212,15 +214,22 @@ key|value|type|id|fullkey|path
 2|94944|integer|3|$[2]|$
 ```
 
-You can use `json_each` with [D1 Workers Binding API](/d1/worker-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/worker-api/d1-database/#guidance):
+You can use `json_each` with [D1 Workers Binding API](/d1/worker-api/) in a Worker by creating a statement and using `JSON.stringify` to pass an array as a [bound parameter](/d1/worker-api/prepared-statements/#bind):
+
+<TypeScriptExample>
 
 ```ts
-const stmt = context.env.DB
-    .prepare("UPDATE users SET last_audited = ? WHERE id IN (SELECT value FROM json_each(?1))")
-const resp = await stmt.bind(
+const stmt = context.env.DB.prepare(
+    "UPDATE users SET last_audited = ?1 WHERE id IN (SELECT value FROM json_each(?2))",
+);
+const resp = await stmt
+  .bind(
     "2023-05-16T11:24:08+00:00",
-    JSON.stringify([183183, 13913, 94944])
-    ).run()
+    JSON.stringify([183183, 13913, 94944]),
+  )
+  .run();
 ```
+
+</TypeScriptExample>
 
 This would only update rows in your `users` table where the `id` matches one of the three provided.
