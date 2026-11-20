@@ -33,7 +33,7 @@ If you need to test changes safely, create a separate `staging` namespace.
 
 :::
 
-You cannot rename a dispatch namespace after you create it. To use a different name, create a new namespace and upload your user Workers to it. Then update the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) in your dispatch Worker to use the new namespace, and delete the old one.
+You cannot rename a dispatch namespace after you create it. A request that changes the name of a namespace returns error `100413`. To use a different name, create a new namespace and upload your user Workers to it. Then update the [dispatch namespace binding](/cloudflare-for-platforms/workers-for-platforms/configuration/dynamic-dispatch/) in your dispatch Worker to use the new namespace, and delete the old one.
 
 ### Dynamic dispatch Worker
 
