@@ -50,6 +50,11 @@
 		"parent": ["Compute & AI"]
 	},
 	{
+		"deeplink": "/?to=/:account/workers/browser-run/script-studio",
+		"name": "Browser Run Script Studio",
+		"parent": ["Compute & AI"]
+	},
+	{
 		"deeplink": "/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1",
 		"name": "Create a PlanetScale database",
 		"parent": ["Storage & databases", "Hyperdrive"]
