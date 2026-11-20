@@ -16,8 +16,6 @@ Renaming a namespace could cause API requests to read, deploy, or delete Workers
 - `wrangler dispatch-namespace rename` returns an error.
 - Terraform applies that attempt to change `name` on a `cloudflare_workers_for_platforms_dispatch_namespace` resource fail.
 
-Existing namespaces keep their current names. You can still update `trusted_workers`. `PUT` requests that include the current `name` and `PATCH` requests that omit `name` continue to work.
-
 **To move your Workers to a namespace with a different name:**
 
 1. Create a new dispatch namespace with the name you want.
