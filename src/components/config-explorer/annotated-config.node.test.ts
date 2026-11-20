@@ -72,6 +72,7 @@ describe("annotated config explorer", () => {
 		expect(d1.options.map((option) => option.signature)).toEqual([
 			"id?: string",
 			"name?: string",
+			"jurisdiction?: string",
 			"dev?: BindingDevOptions",
 		]);
 	});

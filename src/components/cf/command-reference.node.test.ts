@@ -11,15 +11,16 @@ import {
 
 describe("CF command metadata", () => {
 	test("uses the pinned CF package version", () => {
-		expect(getCfCommandMetadataVersion()).toBe("0.15.0");
+		expect(getCfCommandMetadataVersion()).toBe("1.0.0-rc.2");
 	});
 
 	test("resolves a command from generated metadata", () => {
 		const command = resolveCfCommand("deploy");
 		expect(command).toMatchObject({
 			key: "deploy",
-			invocation: "cf deploy [options]",
-			description: "Deploy a worker to Cloudflare",
+			invocation: "cf deploy [directory] [options]",
+			description:
+				"Deploy a Worker, static site, or full-stack application to Cloudflare",
 		});
 		expect(command.args["dry-run"]).toMatchObject({
 			type: "boolean",
@@ -28,26 +29,24 @@ describe("CF command metadata", () => {
 	});
 
 	test("does not expose hidden CF commands without explicit opt-in", () => {
-		expect(() => resolveCfCommand("tunnels create")).toThrow(
+		expect(() => resolveCfCommand("rum rules create")).toThrow(
 			"is hidden by the installed CF CLI",
 		);
 		expect(
-			resolveCfCommand("tunnels create", { includeHidden: true }).key,
-		).toBe("tunnels create");
+			resolveCfCommand("rum rules create", { includeHidden: true }).key,
+		).toBe("rum rules create");
 	});
 
 	test("filters hidden commands from native CF namespaces", () => {
-		const visibleCommands = resolveCfNamespace("tunnels").map(
-			(command) => command.key,
+		// Every `rum` command is hidden, so the namespace is empty by default.
+		expect(() => resolveCfNamespace("rum")).toThrow(
+			'does not contain namespace "rum"',
 		);
-
-		expect(visibleCommands.length).toBeGreaterThan(0);
-		expect(visibleCommands).not.toContain("tunnels create");
 		expect(
-			resolveCfNamespace("tunnels", { includeHidden: true }).map(
+			resolveCfNamespace("rum", { includeHidden: true }).map(
 				(command) => command.key,
 			),
-		).toContain("tunnels create");
+		).toContain("rum rules create");
 		expect(() => resolveCfNamespace("deploy")).toThrow(
 			'does not contain namespace "deploy"',
 		);
@@ -58,13 +57,13 @@ describe("CF command metadata", () => {
 			resolveCfNamespace("cf hyperdrive").map((command) => command.key),
 		).toEqual([
 			"hyperdrive create",
-			"hyperdrive create-database-signature",
 			"hyperdrive delete",
+			"hyperdrive edit",
 			"hyperdrive get",
+			"hyperdrive integration planetscale signature",
 			"hyperdrive list",
 			"hyperdrive replace",
 			"hyperdrive restart",
-			"hyperdrive update",
 		]);
 	});
 });
