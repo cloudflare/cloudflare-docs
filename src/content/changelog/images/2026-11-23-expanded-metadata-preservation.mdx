@@ -1,0 +1,65 @@
+---
+title: Preserve EXIF and XMP metadata across more image formats
+description: Retain copyright, creator, location, and asset-management metadata when Images converts supported image formats for web delivery.
+date: 2026-11-23
+publish_future_dated_entry: true
+---
+
+import { TypeScriptExample } from "~/components";
+
+In [Images](/images/), the [`metadata` parameter](/images/optimization/features/#metadata) now supports Extensible Metadata Platform (XMP) metadata and expands Exchangeable Image File Format (EXIF) metadata preservation to additional image formats.
+
+This release does not change existing [Content Credentials](/images/optimization/preserve-content-credentials/) support, which can provide tamper-evident provenance and disclose how AI contributed to an image.
+
+## What changed
+
+Previously, Images preserved EXIF metadata only when both the source and output were JPEG, and did not support XMP metadata preservation. You can now preserve EXIF and XMP metadata when both the source and output formats support the corresponding metadata type.
+
+EXIF and XMP provide complementary and valuable information about an image. For example, publishers can retain copyright and attribution, and photographers can display capture settings alongside images on portfolio sites. E-commerce and digital asset management workflows can carry product details, captions, and internal asset information into optimized images without reattaching that information.
+
+EXIF and XMP support varies by source and output format:
+
+| Format | Read from source | Write to output      |
+| ------ | ---------------- | -------------------- |
+| JPEG   | EXIF and XMP     | EXIF and XMP         |
+| PNG    | EXIF and XMP     | EXIF and XMP         |
+| WebP   | EXIF and XMP     | EXIF and XMP         |
+| AVIF   | EXIF and XMP     | EXIF                 |
+| HEIC   | EXIF and XMP     | Not an output format |
+| GIF    | Not supported    | XMP                  |
+| TIFF   | Not supported    | Not an output format |
+
+For example, you can convert a high-resolution JPEG to WebP while keeping both EXIF and XMP metadata.
+
+## How it works
+
+Use `metadata` to control how Images handles supported EXIF and XMP metadata in re-encoded outputs. The default remains `copyright`, so existing requests may now preserve an EXIF copyright tag in PNG, WebP, or AVIF outputs when the source contains one.
+
+The following URL transformation converts a JPEG source to WebP and requests metadata preservation:
+
+```txt
+https://example.com/cdn-cgi/image/format=webp,metadata=keep/source.jpg
+```
+
+Use the same setting in a [Worker `fetch()`](/images/optimization/transformations/transform-via-workers/) subrequest:
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch() {
+		return fetch("https://example.com/source.jpg", {
+			cf: {
+				image: {
+					format: "webp",
+					metadata: "keep",
+				},
+			},
+		});
+	},
+};
+```
+
+</TypeScriptExample>
+
+Refer to the [`metadata` parameter](/images/optimization/features/#metadata).
