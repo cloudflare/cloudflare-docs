@@ -173,4 +173,6 @@ To test the echo handler with Spectrum TLS termination, run:
 openssl s_client -connect tcp.example.com:50051 -servername tcp.example.com -quiet
 ```
 
+Clients that require ALPN, such as gRPC clients, need the application to set `edge_alpn_protocols`. With `"edge_alpn_protocols": ["h2"]`, Spectrum negotiates HTTP/2 with the client, and the Worker receives HTTP/2 without TLS, starting with the HTTP/2 connection preface. Refer to [ALPN](/spectrum/reference/configuration-options/#alpn).
+
 For an end-to-end bidirectional gRPC example, refer to [Bidirectional gRPC with Workers and Containers](/containers/examples/bidirectional-grpc/).
