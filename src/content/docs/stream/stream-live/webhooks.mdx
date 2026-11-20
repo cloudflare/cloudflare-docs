@@ -26,7 +26,9 @@ Webhooks work differently for uploaded and on-demand videos. For more informatio
 
 <Render file="event-subscriptions/intro" product="queues" />
 
-Stream publishes `live_input.connected`, `live_input.disconnected`, and `live_input.errored` events. For the full list of events and example payloads, refer to [Events & schemas](/queues/event-subscriptions/events-schemas/#stream).
+Stream publishes `live_input.connected`, `live_input.disconnected`, and `live_input.errored` events. For the full list of events and example payloads, refer to [Events & schemas](/queues/event-subscriptions/events-schemas/#stream-on-demand-and-live).
+
+For possible live input errors, refer to [Error codes](/stream/stream-live/troubleshooting/#error-codes).
 
 To create an event subscription, refer to [Manage event subscriptions](/queues/event-subscriptions/manage-event-subscriptions/). When combined with the [Stream bindings](/stream/manage-video-library/bindings/) for Workers, you can act on events from a queue consumer without managing credentials or signature verification.
 
@@ -70,34 +72,6 @@ Stream Live uses Cloudflare Notifications to notify your service when an Input c
 
 The `event_type` property of the data object will either be `live_input.connected`, `live_input.disconnected`, or `live_input.errored`.
 
-If there are issues detected with the input, the `event_type` will be `live_input.errored`. Additional data will be under the `live_input_errored` json key and will include a `code` with one of the values listed below.
+If Stream detects issues with the input, `event_type` is `live_input.errored`. The `live_input_errored.error.code` field identifies the issue.
 
-### Error codes
-
-- `ERR_GOP_OUT_OF_RANGE` – The input GOP size or keyframe interval is out of range.
-- `ERR_UNSUPPORTED_VIDEO_CODEC` – The input video codec is unsupported for the protocol used.
-- `ERR_UNSUPPORTED_AUDIO_CODEC` – The input audio codec is unsupported for the protocol used.
-- `ERR_STORAGE_QUOTA_EXHAUSTED` – The account storage quota has been exceeded. Delete older content or purchase additional storage.
-- `ERR_MISSING_SUBSCRIPTION` – Unauthorized to start a live stream. Check subscription or log into Dash for details.
-
-```json title="Example live_input.errored webhook payload"
-{
-	"name": "Live Webhook Test",
-	"text": "Notification type: Stream Live Input\nInput ID: 2c28dd2cc444cb77578c4840b51e43a8\nEvent type: live_input.errored\nUpdated at: 2024-07-09T18:07:51.077371662Z\nError Code: ERR_GOP_OUT_OF_RANGE\nError Message: Input GOP size or keyframe interval is out of range.\nVideo Codec: \nAudio Codec: ",
-	"data": {
-		"notification_name": "Stream Live Input",
-		"input_id": "eb222fcca08eeb1ae84c981ebe8aeeb6",
-		"event_type": "live_input.errored",
-		"updated_at": "2024-07-09T18:07:51.077371662Z",
-		"live_input_errored": {
-			"error": {
-				"code": "ERR_GOP_OUT_OF_RANGE",
-				"message": "Input GOP size or keyframe interval is out of range."
-			},
-			"video_codec": "",
-			"audio_codec": ""
-		}
-	},
-	"ts": 1720548474
-}
-```
+For the full list and an example payload, refer to [Error codes](/stream/stream-live/troubleshooting/#error-codes).
