@@ -182,19 +182,22 @@ export class ExpenseAgent extends Agent<Env, ExpenseState> {
 
 ### Timeout handling
 
-Set timeouts to prevent workflows from waiting indefinitely:
+Set timeouts to prevent workflows from waiting indefinitely. An approval without metadata returns `undefined`, so do not use the return value to detect a timeout. The underlying `waitForEvent()` rejects when the wait expires, and `waitForApproval()` propagates the error. Catch it to handle a failed wait:
 
 <TypeScriptExample>
 
 ```ts
-const approval = await this.waitForApproval<{ approvedBy: string }>(step, {
-	timeout: "7 days", // Also supports: "1 hour", "30 minutes", etc.
-});
+import { WorkflowRejectedError } from "agents/workflows";
 
-if (!approval) {
-	// Timeout expired - escalate or auto-reject
-	await step.reportError("Approval timeout - escalating to manager");
-	throw new Error("Approval timeout");
+try {
+	await this.waitForApproval(step, { timeout: "7 days" });
+	// Approval succeeded, even if no metadata was provided.
+} catch (error) {
+	// The helper already reports explicit rejections.
+	if (error instanceof WorkflowRejectedError) throw error;
+	// Timeouts and other wait failures reach this branch.
+	await step.reportError("Approval wait failed");
+	throw error;
 }
 ```
 
