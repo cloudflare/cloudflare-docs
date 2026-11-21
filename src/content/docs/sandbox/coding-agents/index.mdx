@@ -62,7 +62,9 @@ Then switch the runner to another agent:
 
 ## The vendor runs the agent loop
 
-Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent loop in their own service. The loop sends commands and file edits to sandboxes in your Cloudflare account. Each vendor template gives every session its own sandbox. In the Devin, Cursor, and OpenAI Agents API templates, the vendor worker process runs inside the sandbox, so the sandbox also holds a vendor credential.
+Devin, Cursor, Claude Managed Agents, Gemini API managed agents, and the OpenAI Agents API run their agent loop in their own service. The loop sends commands and file edits to sandboxes in your Cloudflare account.
+
+Each vendor template assigns a sandbox to a session or environment. Gemini agent runs can share an environment and its sandbox. In the Devin, Cursor, Gemini, and OpenAI Agents API examples, the vendor worker process runs inside the sandbox, so the sandbox also holds a vendor credential.
 
 <CardGrid>
 	<LinkTitleCard
@@ -88,6 +90,12 @@ Devin, Cursor, Claude Managed Agents, and the OpenAI Agents API run their agent 
 		href="/sandbox/coding-agents/openai-agents-api/"
 		icon="simple-icons:openai"
 		description="Deploy a self-hosted environment that runs each Codex session in its own sandbox on Containers."
+	/>
+	<LinkTitleCard
+		title="Gemini API managed agents"
+		href="/sandbox/coding-agents/gemini-managed-agents/"
+		icon="simple-icons:googlegemini"
+		description="Run Gemini API managed agent file and shell tools in a sandbox on Containers with Bring Your Own Sandbox."
 	/>
 </CardGrid>
 
