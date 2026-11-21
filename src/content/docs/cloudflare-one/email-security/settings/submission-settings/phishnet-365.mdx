@@ -22,3 +22,21 @@ To set up PhishNet Microsoft 365:
 4. Select **Upload custom apps**.
 5. Choose **Provide link to manifest file** and paste the URL you copied from the Cloudflare One dashboard.
 6. Verify and complete the wizard.
+
+## Cloudy summaries
+
+When you review a message in the PhishNet add-in, the panel shows a "Reasons summary by Cloudy" box: an AI-generated explanation of the message assessment, starting with a verdict such as "We think this email is Clean because:".
+
+The verdict reflects the message's stored Email security [disposition](/cloudflare-one/email-security/reference/dispositions-and-attributes/). It is not an independent AI scan. Only the explanation is AI-generated, using fields from the stored assessment, such as the sender domain, sending organization and geography, links, attachments and QR codes, detected brands, authentication results (DMARC and SPF), and detection reasons. Cloudflare does not use customer data to generate summaries. For more information on how Cloudy handles data, refer to [Cloudy AI agent](/fundamentals/reference/cloudy-ai-agent/). The panel states that the summary "is not a guarantee of safety" and that the summarization may have inaccuracies.
+
+For the feature announcement, refer to the [Email security changelog](/cloudflare-one/changelog/email-security/#2026-05-06).
+
+### Phishing simulation campaigns
+
+Phishing simulation products send legitimate, authenticated mail. Because these messages pass authentication checks such as DMARC and SPF and contain no detected malicious payload, Email security assesses them as clean. The summary then reports a Clean verdict, even though the message is designed to look like a phishing email. This is expected behavior and applies for the duration of a simulation campaign.
+
+To prevent Email security from scanning simulation mail, configure an [allow policy](/cloudflare-one/email-security/policies/inbound/allow-policies/) for your phishing simulation sender.
+
+### Turn off Cloudy summaries
+
+There is currently no dashboard or add-in setting to turn off Cloudy summaries.
