@@ -27,6 +27,8 @@ Flagship provides official OpenFeature-compatible SDKs for TypeScript, Python, G
 | Go         | [`github.com/cloudflare/flagship/sdks/go`](https://pkg.go.dev/github.com/cloudflare/flagship/sdks/go) | Go server applications         | HTTP, local evaluation                                          |
 | Rust       | [`cloudflare-flagship`](https://crates.io/crates/cloudflare-flagship)                                 | Async Rust server applications | HTTP, local evaluation                                          |
 
+For languages without an official SDK, such as .NET, use an [OpenFeature Remote Evaluation Protocol (OFREP) provider](/flagship/sdk/ofrep/). OFREP providers evaluate flags over HTTP and do not support local evaluation or the Workers binding.
+
 ## SDKs
 
 Flagship SDKs are organized by language. The TypeScript SDK has separate setup guides for server-side and browser usage because they use different OpenFeature packages and runtime behavior.
@@ -36,6 +38,7 @@ Flagship SDKs are organized by language. The TypeScript SDK has separate setup g
 - [Python SDK](/flagship/sdk/python/) — For Python server applications.
 - [Go SDK](/flagship/sdk/go/) — For Go server applications.
 - [Rust SDK](/flagship/sdk/rust/) — For async Rust server applications.
+- [OFREP providers](/flagship/sdk/ofrep/) — For .NET and other languages without an official SDK.
 
 :::note
 If you are running inside a Cloudflare Worker, the [binding](/flagship/binding/) is the recommended approach because it avoids HTTP overhead. You can also [pass the binding to the OpenFeature SDK](/flagship/sdk/server-provider/) to get the best of both. Use the SDK without a binding when running in non-Worker runtimes like Node.js or the browser.
@@ -53,6 +56,7 @@ The TypeScript, Python, and Go SDKs support structured context from version `0.6
 | Python provider            | Recursive JSON values and `datetime`                              |
 | Go provider                | Recursive JSON values and `time.Time`                             |
 | Rust provider              | Recursive JSON values and OpenFeature date-time values            |
+| OFREP providers            | Recursive JSON values                                             |
 | Wrangler                   | String values from each `--context` argument                      |
 | Evaluation API `POST`      | Recursive JSON values                                             |
 
@@ -103,3 +107,4 @@ cargo add cloudflare-flagship
 - Set up the [Python SDK](/flagship/sdk/python/) for Python server applications.
 - Set up the [Go SDK](/flagship/sdk/go/) for Go server applications.
 - Set up the [Rust SDK](/flagship/sdk/rust/) for async Rust server applications.
+- Use an [OFREP provider](/flagship/sdk/ofrep/) for .NET and other languages.

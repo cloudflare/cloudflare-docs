@@ -49,3 +49,7 @@ The `POST` response contains the same fields as `GET`:
 ```
 
 Invalid context returns a `400` response. Refer to [Limits](/flagship/reference/limits/) and [evaluation error codes](/flagship/reference/evaluation-reasons/#error-codes) for details.
+
+## Use OFREP endpoints
+
+Flagship also supports the [OpenFeature Remote Evaluation Protocol (OFREP)](https://openfeature.dev/specification/appendix-c) evaluation endpoints. Use them with an OpenFeature OFREP provider for languages without an official SDK, such as .NET. For more information, refer to [OFREP providers](/flagship/sdk/ofrep/).
