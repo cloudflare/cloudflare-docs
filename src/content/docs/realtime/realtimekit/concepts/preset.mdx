@@ -10,6 +10,7 @@ products:
 ---
 
 import RTKPill from "~/components/realtimekit/RTKPill/RTKPill.astro";
+import RealtimeKitPresetDiagram from "~/components/realtimekit/RealtimeKitPresetDiagram.astro";
 
 A Preset is a **re-usable configuration** that defines a participant’s experience in a Meeting.
 It determines:
@@ -27,6 +28,8 @@ Example: Large Ed-Tech Classroom
 - **Teacher** uses the `webinar-host` preset — they can share media and access host controls.
 - **Students** use the `webinar-participant` preset — they cannot share media but can use features like chat.
 - **Teaching** assistant uses the `group-call-host` preset — they can share media but don’t have full host privileges.
+
+<RealtimeKitPresetDiagram />
 
 ### Create a Preset
 
