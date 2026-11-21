@@ -15,6 +15,7 @@ import {
 	Type,
 	WranglerConfig,
 	TypeScriptExample,
+	Render,
 } from "~/components";
 
 Durable Objects can act as WebSocket servers that connect thousands of clients per instance. You can also use WebSockets as a client to connect to other servers or Durable Objects.
@@ -43,6 +44,16 @@ The Hibernation WebSocket API reduces costs by allowing Durable Objects to sleep
 - Clients remain connected while the Durable Object is not in memory
 - [Billable Duration (GB-s) charges](/durable-objects/platform/pricing/) do not accrue during hibernation
 - When a message arrives, the Durable Object wakes up automatically
+
+## Handle disconnects
+
+<Render file="websocket-disconnections" product="workers" />
+
+### Durable Object sessions
+
+Restore session state from [Durable Object storage](/durable-objects/api/sqlite-storage-api/) after reconnecting. [WebSocket attachments](#websocketserializeattachment) are lost when the connection closes.
+
+If your application tracks online users, use heartbeats to refresh a presence deadline and mark users offline when that deadline expires. Close callbacks can remove presence immediately when a disconnect is detected.
 
 ## Durable Objects Hibernation WebSocket API
 
