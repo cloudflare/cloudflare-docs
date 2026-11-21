@@ -30,7 +30,7 @@ Choose how to configure spending limits and email alerts for Workers or Durable 
 | Control                                        | Scope                                           | What happens at the threshold                                           |
 | ---------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------------- |
 | Spending limit                                 | Workers or Durable Objects, across your account | Cloudflare blocks the product's supported operations.                   |
-| [AI Gateway spend limit](/ai-gateway/features/spend-limits/) | AI requests routed through your gateway, scoped by user, model, or provider | AI Gateway blocks matching requests until the budget window resets. |
+| [AI Gateway spend limit](/ai-gateway/features/spend-limits/) | AI requests routed through your gateway, scoped by user, model, or provider | AI Gateway blocks matching requests until spending falls within the budget. |
 | Email alert                                    | Workers or Durable Objects, across your account | Cloudflare emails the address you configure. The product keeps running. |
 | [Budget alert](/billing/manage/budget-alerts/) | Account-wide usage-based spend                  | Cloudflare emails your recipients. Products keep running.               |
 

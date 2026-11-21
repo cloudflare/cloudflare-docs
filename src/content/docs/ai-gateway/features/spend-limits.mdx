@@ -11,7 +11,7 @@ products:
 
 import { Steps } from "~/components";
 
-Spend limits let you set cost-based budgets on your AI Gateway. When cumulative spend reaches the limit within a time window, AI Gateway blocks further requests with a `429` response until the window resets.
+Spend limits let you set cost-based budgets on your AI Gateway. When cumulative spend reaches the limit within a time window, AI Gateway blocks further requests with a `429` response until spending falls within the budget.
 
 Unlike [rate limiting](/ai-gateway/features/rate-limiting/), which caps the number of requests, spend limits track actual dollar cost per request based on model pricing. You can scope limits to any combination of model, provider, or [custom metadata](/ai-gateway/observability/custom-metadata/) dimensions like user ID, team, or application.
 
@@ -22,6 +22,8 @@ Spend limits apply to both [Unified Billing](/ai-gateway/features/unified-billin
 ## How it works
 
 Each spend limit rule defines a budget (in dollars) over a rolling or fixed time window. AI Gateway calculates the cost of each request based on token usage and model pricing, then tracks cumulative spend against the limit in real time.
+
+In a rolling window, earlier spend stops counting as it leaves the window. There is no fixed daily reset.
 
 Before sending a request to the provider, AI Gateway evaluates all applicable spend limit rules at once. If any individual rule is over budget, the request is blocked with a `429` response.
 
@@ -98,9 +100,13 @@ If your gateway is not behind Access, pass your own user identifier as [custom m
 
 ## Behavior when a limit is reached
 
-When a spend limit is exceeded, AI Gateway returns a `429 Too Many Requests` response. You have two options:
+When a spend limit is exceeded, AI Gateway returns a `429 Too Many Requests` response.
 
-- **Block requests** (default) - The request is rejected until the budget window resets.
+If you use the [AI binding](/ai-gateway/usage/worker-binding-methods/), `env.AI.run()` rejects with an `AiGatewayError`. A spend-limit rejection includes `2045: Spend limit exceeded` and the matching rule's budget and time window in its message. Other rate limits can also return HTTP `429`, so the status alone does not identify a spend limit.
+
+Choose how AI Gateway handles requests when a spend limit is reached:
+
+- **Block requests** (default) - Requests remain blocked until spending falls within the budget.
 - **Fall back to a cheaper model** - Create a [dynamic route](/ai-gateway/features/routing/dynamic-routing/) with a primary model and a fallback (for example, `anthropic/claude-opus-4.7` with a fallback to `@cf/moonshotai/kimi-k2.6`). Then set a spend limit on the primary model using this feature. When the primary model's budget is exceeded, AI Gateway automatically routes requests to the fallback model instead of blocking them.
 
 ## Monitoring spend
