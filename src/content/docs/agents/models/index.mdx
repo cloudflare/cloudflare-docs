@@ -33,7 +33,7 @@ Both take the same options, route through the same gateway, and handle Workers A
 Name a model with a string, or pass a model object built by the vendor's own package:
 
 ```ts
-ai("@cf/zai-org/glm-5.3-flash"); // Workers AI
+ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017"); // Workers AI
 ai("anthropic/claude-opus-5.5"); // AI Gateway catalog
 ai("dynamic/support"); // AI Gateway dynamic route
 ai(anthropic("claude-opus-5-5")); // the vendor's own model object
@@ -142,7 +142,7 @@ export class MyAgent extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-To use a different model, change the string, such as `ai("openai/gpt-5.5")` or `ai("@cf/zai-org/glm-5.3-flash")`, or pass the vendor's own model object, such as `ai(openai("gpt-5.5"))`. All of these route through AI Gateway, so you do not need a vendor API key in your Worker.
+To use a different model, change the string, such as `ai("openai/gpt-5.5")` or `ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017")`, or pass the vendor's own model object, such as `ai(openai("gpt-5.5"))`. All of these route through AI Gateway, so you do not need a vendor API key in your Worker.
 
 You can also use any other AI SDK provider directly, without `createAI`. The call then goes straight to the vendor, with your own API key, and skips AI Gateway:
 
@@ -251,7 +251,7 @@ export class MyAgent extends DurableObject<Env> {
 	readonly lifecycle = Lifecycle.install(this);
 
 	async onRequest(request: Request): Promise<Response> {
-		const stream = await this.env.AI.run("@cf/zai-org/glm-5.3-flash", {
+		const stream = await this.env.AI.run("@cf/deepseek-ai/deepseek-v4.1-flash-1017", {
 			messages: [
 				{
 					role: "user",
@@ -287,7 +287,7 @@ export class MyAgent extends DurableObject<Env> {
 
 	async onRequest(request: Request): Promise<Response> {
 		const response = await this.env.AI.run(
-			"@cf/zai-org/glm-5.3-flash",
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
 			{
 				messages: [
 					{

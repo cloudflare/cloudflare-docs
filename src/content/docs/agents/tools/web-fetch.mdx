@@ -83,6 +83,22 @@ Ask your agent to read a URL, such as a documentation page or PDF report. The mo
 
 The Pi tool is marked `replay: "safe"`. Pi reruns a fetch interrupted by an eviction when the session recovers. Completed results remain stored and are not fetched again during recovery. The tool also honors Pi's abort signal when you cancel a running call.
 
+In [Pi's code mode](/agents/tools/browser/#use-it-in-pis-code-mode), a script calls `tools.web_fetch({ url, offset, format })` and gets the window as an object instead of the model's text:
+
+```ts
+{ url, status, contentType, title?, content, offset, nextOffset, totalChars }
+```
+
+`url` is the URL after redirects. `content` stays wrapped in the `untrusted_web_content` tags, so text that a script hands back to the model is still marked as data. Pass `nextOffset` as `offset` to read on. It is `null` at the end. A failed fetch rejects with the model's text. With [`web_search`](/agents/tools/web-search/) installed too, one script can search and read the results in parallel:
+
+```ts
+const found = await tools.web_search({ query: "Durable Objects alarms" });
+const pages = await Promise.all(
+	found.items.slice(0, 3).map((item) => tools.web_fetch({ url: item.url })),
+);
+return pages.map((page) => ({ title: page.title, content: page.content }));
+```
+
 ### AI SDK
 
 Add the tool to the `tools` object in your existing `streamText()` or `generateText()` call:

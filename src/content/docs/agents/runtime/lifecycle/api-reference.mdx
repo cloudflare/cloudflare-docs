@@ -86,13 +86,14 @@ This page lists every export of `agents/lifecycle`. For a guided introduction, r
 
 `LifecycleObject<Env, Props>` extends `DurableObject<Env>` with a `lifecycle: Lifecycle<Env, Props>` field and these optional host hooks. Each one runs inside the host context:
 
-| Hook                          | Returns                                    | When it runs                                                        |
-| ----------------------------- | ------------------------------------------ | ------------------------------------------------------------------- |
-| `onStart(props?)`             | `void \| Promise<void>`                    | Once per in-memory lifetime, after every capability has started     |
-| `onRequest(request)`          | `Response \| Promise<Response>`            | For each HTTP request no capability handled                         |
-| `onAlarm()`                   | `void \| Promise<void>`                    | Once per alarm, after due jobs                                      |
-| `onJob(context)`              | `LifecycleJobOutcome \| void` or a promise | When a host job comes due                                           |
-| `onAlarmMemoryLimit(context)` | `void \| Promise<void>`                    | After an alarm ends in a memory-limit reset, after capability hooks |
+| Hook                           | Returns                                     | When it runs                                                                                                                                                                                      |
+| ------------------------------ | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onStart(props?)`              | `void \| Promise<void>`                    | Once per in-memory lifetime, after every capability has started                                                                                                                                   |
+| `onRequest(request)`           | `Response \| Promise<Response>`            | For each HTTP request no capability handled                                                                                                                                                       |
+| `onFetchError(request, error)` | `Response \| void` or a promise            | When a request or WebSocket upgrade fails. Return a response to replace the default `500`, or `1011` close for an upgrade. Refer to [Failed requests](/agents/runtime/lifecycle/#failed-requests) |
+| `onAlarm()`                    | `void \| Promise<void>`                    | Once per alarm, after due jobs                                                                                                                                                                    |
+| `onJob(context)`               | `LifecycleJobOutcome \| void` or a promise | When a host job comes due                                                                                                                                                                         |
+| `onAlarmMemoryLimit(context)`  | `void \| Promise<void>`                    | After an alarm ends in a memory-limit reset, after capability hooks                                                                                                                               |
 
 `LifecycleObject` is the default type parameter of `getCurrentAgent()`.
 
