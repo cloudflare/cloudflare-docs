@@ -397,6 +397,12 @@ To encode the hash as a string, combine `md5()` with [`encode_base64()`](#encode
 encode_base64(md5("hello world"))
 ```
 
+:::note[Notes]
+
+Access to the `md5()` function requires a Cloudflare Pro, Business, or Enterprise plan.
+
+:::
+
 ### `regex_replace`
 
 <code>regex_replace(source <Type text="String" />, regular_expression <Type text="String" />, replacement <Type text="String" />)</code>: <Type text="String" />
@@ -487,6 +493,12 @@ To encode the hash as a string, combine `sha1()` with [`encode_base64()`](#encod
 encode_base64(sha1("hello world"))
 ```
 
+:::note[Notes]
+
+Access to the `sha1()` function requires a Cloudflare Pro, Business, or Enterprise plan.
+
+:::
+
 ### `sha256`
 
 <code>sha256(input <Type text="String | Bytes" />)</code>: <Type text="Bytes" />
@@ -517,9 +529,7 @@ encode_base64(sha256(concat(to_string(ip.src), to_string(http.request.timestamp.
 
 :::note[Notes]
 
-The `sha256()` function is available as an Enterprise add-on and requires a specific entitlement. Contact your account team to enable it.
-
-You can only use the `sha256()` function in rewrite expressions of [Transform Rules](/rules/transform/).
+Access to the `sha256()` function requires a Cloudflare Pro, Business, or Enterprise plan.
 
 :::
 
@@ -534,6 +544,12 @@ To encode the hash as a string, combine `sha512()` with [`encode_base64()`](#enc
 ```txt
 encode_base64(sha512("hello world"))
 ```
+
+:::note[Notes]
+
+Access to the `sha512()` function requires a Cloudflare Pro, Business, or Enterprise plan.
+
+:::
 
 ### `split`
 
