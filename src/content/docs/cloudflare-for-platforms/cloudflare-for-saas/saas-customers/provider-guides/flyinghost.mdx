@@ -1,0 +1,28 @@
+---
+pcx_content_type: configuration
+title: FlyingHost
+products:
+  - cloudflare-for-saas
+head:
+  - tag: title
+    content: FlyingHost | Provider guides
+description: Configure Orange-to-Orange (O2O) routing for a FlyingHost site using your own Cloudflare zone.
+---
+
+With [Orange-to-Orange (O2O) routing](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/how-it-works/), traffic passes through your Cloudflare zone before reaching FlyingHost's Cloudflare zone. You can apply your own Cloudflare WAF rules and redirects to that traffic. Refer to [O2O product compatibility](/cloudflare-for-platforms/cloudflare-for-saas/saas-customers/product-compatibility/) for details.
+
+## Enable O2O
+
+Your domain must use Cloudflare as its authoritative DNS provider. If you are connecting the domain for the first time, open your site in FlyingHost and go to **Domains** > **Connect domain**.
+
+In your Cloudflare zone, [add or update a DNS record](/dns/manage-dns-records/how-to/create-dns-records/#create-dns-records) for each hostname you connect to FlyingHost.
+
+| Type    | Name                                           | Target                   | Proxy status |
+| ------- | ---------------------------------------------- | ------------------------ | ------------ |
+| `CNAME` | `@` for the apex, or a subdomain such as `www` | `connect.flyinghost.app` | **Proxied**  |
+
+If an existing FlyingHost hostname uses an `A` record pointing to `104.17.15.101`, replace it with the proxied `CNAME`.
+
+If FlyingHost provides an `_acme-challenge` record for certificate validation, set it to **DNS only**.
+
+After saving, open each connected hostname over HTTPS. For more details, refer to the [FlyingHost setup guide](https://docs.flyinghost.com/en/article/use-your-own-cloudflare-account-with-flyinghost-1nfkfik/).
