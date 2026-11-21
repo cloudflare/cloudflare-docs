@@ -1,0 +1,353 @@
+---
+pcx_content_type: concept
+title: Hyperdrive with Dynamic Workers
+description: Connect Dynamic Workers to external databases via Hyperdrive.
+sidebar:
+  order: 5
+products:
+  - hyperdrive
+---
+
+import {
+	HyperdriveDynamicWorkersDiagram,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+## Overview
+
+Hyperdrive lets you connect to external databases from [Dynamic Workers](/dynamic-workers/).
+
+In this model, a [Loader Worker](/dynamic-workers/getting-started/#configure-worker-loader) creates each Dynamic Worker and controls its outbound network access by providing the database connection details for that Dynamic Worker. Each Dynamic Worker can then connect to the provided database through Hyperdrive.
+
+When a Dynamic Worker connects to a database, Cloudflare creates a Hyperdrive configuration for that database at runtime using the database connection details. Hyperdrive reuses that per-database configuration for connection pooling and query caching across Dynamic Worker requests that connect to the same database.
+
+This means you do not need to pre-provision a separate Hyperdrive configuration for every database that your Dynamic Workers use. Instead, Dynamic Workers can connect to specific databases provided by the Loader Worker, while Hyperdrive manages the configuration at runtime, pooling, and caching for each database.
+
+![A loader Worker creates Dynamic Worker invocations that connect to databases through Hyperdrive pools](~/assets/images/hyperdrive/configuration/hyperdrive-dynamic-workers.svg)
+
+## How it works
+
+Hyperdrive with Dynamic Workers uses the Dynamic Workers [egress control model](/dynamic-workers/usage/egress-control/#intercept-outbound-requests). The `globalOutbound` option lets the Loader Worker define a `WorkerEntrypoint` (`OutboundInterceptor`) to intercept outbound `connect()` calls from Dynamic Workers and to handle database connections with Hyperdrive.
+
+The Loader Worker fetches the chosen database's config from [Workers KV](/kv/), including the real connection string and target region. It then calls `getHyperdriveConnectionString()` at runtime to produce a generated connection string and passes that value to the Dynamic Worker. The Dynamic Worker never receives the real database credentials. It uses the generated connection string as a Hyperdrive routing handle to connect to the database through Hyperdrive.
+
+At request time:
+
+1. The Loader Worker retrieves the selected database's config from KV and calls `getHyperdriveConnectionString()` to generate a Hyperdrive connection string at runtime.
+2. The Loader Worker loads a Dynamic Worker and passes the generated connection string to it through the environment.
+3. The Dynamic Worker's database client calls `connect()` when it queries the database. `globalOutbound` routes the outbound TCP connection to `OutboundInterceptor.connect()`.
+4. `OutboundInterceptor` checks whether the connection is meant for Hyperdrive. If it is, `DYNAMIC_HYPERDRIVE.get()` receives the database config, including the real connection string and target region, and Hyperdrive opens or reuses a pooled connection. The Dynamic Worker then runs its query through that connection.
+
+<HyperdriveDynamicWorkersDiagram />
+
+## Getting started
+
+A Dynamic Worker connects to a database through Hyperdrive at runtime.
+
+Before you start:
+
+- Add the Dynamic Hyperdrive binding to your Wrangler configuration file as an `unsafe` binding.
+- Store each database's connection string and target region in [Workers KV](/kv/). Your Loader Worker will need access to database configuration details for each database a Dynamic Worker uses, including database connection string and region where your database is located. Database region is required for Hyperdrive to run your connection pool by your database at runtime.
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }],
+	"unsafe": {
+		"bindings": [
+			{
+				"type": "hyperdrive_dynamic",
+				"name": "DYNAMIC_HYPERDRIVE",
+			},
+		],
+	},
+}
+```
+
+</WranglerConfig>
+
+### 1. Get database configuration details
+
+The Loader Worker reads each database's config object from Workers KV, including the real database connection string and target region. It then calls `env.DYNAMIC_HYPERDRIVE.getHyperdriveConnectionString()` to generate a Hyperdrive connection string on demand, and passes that value to the Dynamic Worker when it starts.
+
+This keeps the database config object as the source of truth. Multiple Dynamic Workers can connect to the same database, and the Loader Worker controls which database a Dynamic Worker can access.
+
+<TypeScriptExample filename="loader-worker.ts">
+
+```ts
+// Read database details and create generated connection string.
+const databaseConfig = await env.KV.get("database_A", { type: "json" });
+
+if (databaseConfig === null) {
+	return new Response("Database configuration not found", { status: 404 });
+}
+
+const { connectionString } = databaseConfig;
+const generatedConnectionString =
+	await env.DYNAMIC_HYPERDRIVE.getHyperdriveConnectionString(connectionString);
+```
+
+</TypeScriptExample>
+
+### 2. Provide the generated connection string
+
+Load the Dynamic Worker and pass the generated connection string to it through the environment. The Dynamic Worker uses this value, so it never handles the real database credentials.
+
+Pass `OutboundInterceptor` as [`globalOutbound`](/dynamic-workers/api-reference/#globaloutbound) and include the database configuration details via `props`.
+
+<TypeScriptExample filename="loader-worker.ts">
+
+```ts
+const worker = env.LOADER.load({
+	compatibilityDate: "$today",
+	mainModule: "src/index.js",
+	modules: { "src/index.js": code },
+	env: {
+		// The Dynamic Worker only ever sees the generated connection string.
+		HD_CONNECTION_STRING: generatedConnectionString,
+	},
+	globalOutbound: ctx.exports.OutboundInterceptor({
+		props: { databaseConfig },
+	}),
+});
+
+return worker.getEntrypoint().fetch(request);
+```
+
+</TypeScriptExample>
+
+### 3. Intercept the outbound connection
+
+The Dynamic Worker's database client calls `connect()` with the generated connection string. `globalOutbound` routes that outbound TCP connection to `OutboundInterceptor.connect()`.
+
+<TypeScriptExample filename="dynamic-worker.ts">
+
+```ts
+import { Client } from "pg";
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		const client = new Client({
+			connectionString: env.HD_CONNECTION_STRING,
+			ssl: false,
+		});
+
+		await client.connect();
+		const result = await client.query("SELECT * FROM pg_tables");
+
+		return Response.json({ success: true, result: result.rows });
+	},
+};
+```
+
+</TypeScriptExample>
+
+:::note
+
+Dynamic Workers resolve `import` specifiers against the modules map passed to `load()` or `get()`. To use npm packages like `pg`, bundle them first with [`@cloudflare/worker-bundler`](/dynamic-workers/getting-started/#using-typescript-and-npm-dependencies) or an equivalent tool and include the output in `modules`.
+
+:::
+
+### 4. Route the connection through Hyperdrive
+
+`OutboundInterceptor` checks whether the outbound connection is meant for Hyperdrive. For an allowed connection, it calls `DYNAMIC_HYPERDRIVE.get()` with the database config, including the real connection string and target region. Any other outbound connection is blocked, which keeps `globalOutbound` restrictive.
+
+<TypeScriptExample filename="outbound-interceptor.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+export class OutboundInterceptor extends WorkerEntrypoint {
+	async connect(socket: Socket): Promise<void> {
+		// Await socket initialization and read the target address.
+		const { localAddress } = await socket.opened;
+
+		if (!localAddress) {
+			throw new Error(
+				"Outbound TCP connection failed: missing socket address.",
+			);
+		}
+
+		// Parse the host from the generated connection string.
+		const { connectionString, generatedConnectionString, databaseRegion } =
+			this.ctx.props.databaseConfig;
+		const generatedHost = new URL(generatedConnectionString).host;
+
+		// Route matching connections through Hyperdrive with the database config.
+		if (localAddress.includes(generatedHost)) {
+			const db = this.env.DYNAMIC_HYPERDRIVE.get({
+				connectionString,
+				dynamicHyperdriveConnectionString: generatedConnectionString,
+				targetRegion: databaseRegion || "aws:us-east-1",
+			});
+
+			const upstream = await db.connect();
+			await this.bridge(socket, upstream);
+			return;
+		}
+
+		// Block any unauthorized outbound TCP connections.
+		throw new Error("Outbound TCP connections are not allowed.");
+	}
+
+	// Relay bytes between the Dynamic Worker and Hyperdrive in both directions.
+	private async bridge(
+		dynamicWorkerSocket: Socket,
+		hyperdriveSocket: Socket,
+	): Promise<void> {
+		await Promise.all([
+			dynamicWorkerSocket.readable.pipeTo(hyperdriveSocket.writable),
+			hyperdriveSocket.readable.pipeTo(dynamicWorkerSocket.writable),
+		]);
+	}
+}
+```
+
+</TypeScriptExample>
+
+`connect()` must return `Promise<void>`, so the worker cannot return the Hyperdrive socket directly. Instead, `bridge()` relays bytes in both directions between the Dynamic Worker and the Hyperdrive-managed database connection until either side closes.
+
+For the full list of target regions, refer to [supported regions](/api/resources/cache/subresources/origin_cloud_regions/methods/supported_regions/).
+
+### Full example
+
+This example shows the Loader Worker with `OutboundInterceptor` and the Dynamic Worker code together.
+
+<TypeScriptExample filename="loader-worker.ts">
+
+```ts
+import { WorkerEntrypoint } from "cloudflare:workers";
+
+// Intercepts outbound TCP sockets from the Dynamic Worker, checks the target
+// address, connects to Dynamic Hyperdrive, and relays data bidirectionally.
+export class OutboundInterceptor extends WorkerEntrypoint {
+	async connect(socket: Socket): Promise<void> {
+		// Await socket initialization and read the target address.
+		const { localAddress } = await socket.opened;
+
+		if (!localAddress) {
+			throw new Error(
+				"Outbound TCP connection failed: missing socket address.",
+			);
+		}
+
+		// Unpack the database configuration details passed through props.
+		const { connectionString, generatedConnectionString, databaseRegion } =
+			this.ctx.props.databaseConfig;
+
+		const generatedHost = new URL(generatedConnectionString).host;
+
+		// Route connections targeting the generated host through Hyperdrive.
+		if (localAddress.includes(generatedHost)) {
+			const db = this.env.DYNAMIC_HYPERDRIVE.get({
+				connectionString,
+				dynamicHyperdriveConnectionString: generatedConnectionString,
+				targetRegion: databaseRegion || "aws:us-east-1",
+			});
+
+			const upstream = await db.connect();
+			await this.bridge(socket, upstream);
+			return;
+		}
+
+		// Block any unauthorized outbound TCP connections.
+		throw new Error("Outbound TCP connections are not allowed.");
+	}
+
+	// Relay bytes between the Dynamic Worker and Hyperdrive in both directions.
+	private async bridge(
+		dynamicWorkerSocket: Socket,
+		hyperdriveSocket: Socket,
+	): Promise<void> {
+		await Promise.all([
+			dynamicWorkerSocket.readable.pipeTo(hyperdriveSocket.writable),
+			hyperdriveSocket.readable.pipeTo(dynamicWorkerSocket.writable),
+		]);
+	}
+}
+
+// Retrieves database configuration details from Workers KV, attaches
+// OutboundInterceptor, and runs the Dynamic Worker.
+export default {
+	async fetch(request, env, ctx) {
+		// Retrieve the database configuration (real connection string + target region) from KV.
+		const databaseConfig = await env.KV.get("database_A", { type: "json" });
+
+		if (databaseConfig === null) {
+			return new Response("Database configuration not found", { status: 404 });
+		}
+
+		const { connectionString } = databaseConfig;
+		const generatedConnectionString =
+			await env.DYNAMIC_HYPERDRIVE.getHyperdriveConnectionString(
+				connectionString,
+			);
+
+		// Load the Dynamic Worker with outbound interception attached.
+		// globalOutbound forces all outbound traffic through OutboundInterceptor.
+		const worker = env.LOADER.load({
+			compatibilityDate: "$today",
+			mainModule: "src/index.js",
+			modules: {
+				"src/index.js": `
+					import { Client } from "pg";
+
+					export default {
+						async fetch(request, env): Promise<Response> {
+							const client = new Client({
+								connectionString: env.HD_CONNECTION_STRING,
+								ssl: false,
+							});
+
+							await client.connect();
+							const result = await client.query("SELECT * FROM pg_tables");
+
+							return Response.json({ success: true, result: result.rows });
+						}
+					};
+				`,
+			},
+			env: {
+				// Expose only the generated connection string to the Dynamic Worker.
+				HD_CONNECTION_STRING: generatedConnectionString,
+			},
+			// Attach the interceptor and pass the database configuration into it.
+			globalOutbound: ctx.exports.OutboundInterceptor({
+				props: { databaseConfig },
+			}),
+		});
+
+		// Run the Dynamic Worker entrypoint and return the response.
+		return worker.getEntrypoint().fetch(request);
+	},
+};
+```
+
+</TypeScriptExample>
+
+## Pricing
+
+Hyperdrive with Dynamic Workers adds a separate usage charge for active Hyperdrive configurations. This charge applies only to Hyperdrive configurations created at runtime with `DYNAMIC_HYPERDRIVE.get()`.
+
+This pricing does not change standard [Hyperdrive pricing](/hyperdrive/platform/pricing/). Hyperdrive connection pooling and query caching remain included in Workers Paid.
+
+| Billable unit                   | Rate                             |
+| ------------------------------- | -------------------------------- |
+| Active Hyperdrive configuration | $0.002 per configuration per day |
+
+[Dynamic Workers pricing](/dynamic-workers/pricing/) still applies separately. Dynamic Workers created daily, requests, and CPU time remain part of Dynamic Workers billing.
+
+### Active configurations
+
+A Hyperdrive configuration is active for a UTC day if either action occurs during that day:
+
+- It serves at least one customer-originated database query through Hyperdrive. This includes cached and uncached queries.
+- It opens or maintains at least one origin database connection.
+
+Each active configuration counts once per UTC day. Query volume does not increase the Hyperdrive with Dynamic Workers charge for the same configuration and day.
+
+### Billing example
+
+If 1,000 Hyperdrive configurations are active every day for a 30-day billing period, the charge is 1,000 × 30 × $0.002, or $60.00.
