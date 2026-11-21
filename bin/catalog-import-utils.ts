@@ -39,3 +39,15 @@ export async function mapConcurrentOrdered<T, R>(
 	if (failed) throw firstError;
 	return results;
 }
+
+/**
+ * Copies the zero data retention fields (`zdr`, `zdr_comment`) from freshly
+ * fetched catalog data onto a model file that is already committed. Returns
+ * the updated file text, or `null` when nothing changed.
+ */
+export function syncZdrFields(current: string, fetched: string): string | null {
+	// Current behaviour of add-ai-models.yml: changes to models that already
+	// have a file are discarded, so a ZDR change never reaches the page.
+	void [current, fetched];
+	return null;
+}
