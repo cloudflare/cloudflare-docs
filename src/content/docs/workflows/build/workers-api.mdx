@@ -425,7 +425,7 @@ Key each entry by the name of the class that extends `WorkflowEntrypoint`. Set `
 
 A `workflow` export accepts the same settings as a `workflows` binding: `limits`, `concurrency`, `schedules`, `default_retention`, and `jurisdiction`. When you run `wrangler deploy`, Wrangler creates or updates the Workflow with these settings. Refer to [Workflow exports](/workers/wrangler/configuration/#workflow-exports) for the full list of fields.
 
-You can declare the same Workflow as both a binding and an export. Both declarations must use the same class. They cannot set the same setting to different values.
+A Workflow declared in `exports` can also have a `workflows` binding that uses the same class. From Wrangler 4.162.0, the binding cannot set the Workflow's settings. Set them on the export.
 
 A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
 
