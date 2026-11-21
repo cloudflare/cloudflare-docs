@@ -53,6 +53,10 @@ You cannot delete the primary certificate if secondary certificates are present 
 
 You can use Cloudflare to generate a [Certificate Signing Request (CSR)](/ssl/edge-certificates/additional-options/certificate-signing-requests/) for your custom certificate. When you do, Cloudflare generates and securely stores the private key associated with the CSR.
 
+:::note
+[Geo Key Manager](/ssl/edge-certificates/geokey-manager/) policies are not applied to private keys generated through Cloudflare CSRs, and cannot be added when you later upload the certificate. If you need to restrict where your private key is stored or used, generate the CSR and private key outside of Cloudflare.
+:::
+
 ### Geo Key Manager (private key restriction)
 
 By default, Cloudflare encrypts and securely distributes private keys to all Cloudflare data centers, where they can be used for local SSL/TLS termination. If you want to restrict where your private keys may be used, use [Geo Key Manager](/ssl/edge-certificates/geokey-manager/).
