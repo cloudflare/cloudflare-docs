@@ -16,6 +16,10 @@ Use load shedding to prevent an at-risk endpoint from [becoming unhealthy](/load
 
 Once you configure load shedding on a pool, that pool will begin diverting traffic to other pools according to your load shedding settings and the load balancer's [steering policy](/load-balancing/understand-basics/traffic-steering/steering-policies/).
 
+:::note
+To shed traffic automatically, based on load that your endpoints report, use [dynamic load shedding](/load-balancing/additional-options/dynamic-load-shedding/). A pool uses one load shedding mode at a time.
+:::
+
 ## Step 1 — Identify at-risk endpoints
 
 Using your internal metrics, identify endpoints at risk of reaching their failure threshold.
