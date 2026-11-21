@@ -103,7 +103,7 @@ For more information about target criteria formats, refer to [Target criteria](/
 <TabItem label="Terraform (v4)">
 
 :::note[Provider versions]
-The following example requires Cloudflare provider version `>=4.45.0`.
+The following example uses Cloudflare provider v4 (`>=4.45.0, <5.0.0`). Provider v5 uses a different configuration syntax.
 :::
 
 1.  Add the following permission to your [`cloudflare_api_token`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/api_token):
@@ -129,7 +129,7 @@ The following example requires Cloudflare provider version `>=4.45.0`.
     }
     ```
 
-	To match targets by tag, define `include`, `require`, or `exclude` blocks with `tags` selectors.
+	Provider v4 supports the hostname-based `target_attributes` format shown above, not operator-based `include`, `require`, or `exclude` blocks. To configure tag-based target criteria, use the dashboard or API instructions in this guide.
 
 3.  Use the [`cloudflare_zero_trust_access_policy`](https://registry.terraform.io/providers/cloudflare/cloudflare/4.45.0/docs/resources/zero_trust_access_policy) resource to add an infrastructure policy to the application:
 
