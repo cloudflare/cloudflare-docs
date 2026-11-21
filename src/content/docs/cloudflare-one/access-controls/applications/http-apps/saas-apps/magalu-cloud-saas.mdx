@@ -1,0 +1,169 @@
+---
+pcx_content_type: integration-guide
+description: Integrate Magalu Cloud with Access.
+products:
+  - cloudflare-one
+title: Magalu Cloud
+tags:
+  - SAML
+reviewed: 2026-11-19
+sidebar:
+  order: 20
+---
+
+This guide covers how to configure [Magalu Cloud](https://docs.magalu.cloud/) as a SAML SaaS application in Cloudflare One. This integration enables Single Sign-On (SSO) for both the [Magalu Cloud Console](https://console.magalu.cloud) and the [Magalu Cloud CLI (mgc)](https://github.com/MagaluCloud/mgccli).
+
+## Prerequisites
+
+- An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
+- An active Magalu Cloud account with administrative access to your organization
+- The [MGC CLI](https://github.com/MagaluCloud/mgccli) installed and authenticated with your administrator account
+- A verified domain (such as `yourcompany.com`) configured in Magalu Cloud Turia IAM:
+  - **Exclusivity**: Each domain can only be registered once globally across Magalu Cloud.
+  - **Limit**: Each domain supports only **one active federation** at a time (SAML or OIDC).
+  - To register and verify your domain:
+    1. Register the domain:
+       ```bash
+       mgc iam domains create --domain yourcompany.com
+       ```
+    2. Note the `txt_name` and `txt_value` from the output and add the corresponding `TXT` record at your authoritative DNS provider (or in [Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/) if your domain is managed by Cloudflare).
+    3. Once the DNS record propagates, verify ownership:
+       ```bash
+       mgc iam domains check-dns <DOMAIN_ID>
+       ```
+
+## 1. Get Magalu Cloud Service Provider parameters
+
+Magalu Cloud operates as a SAML Service Provider (SP) using the following parameters:
+
+- **Entity ID**: `magalu-cloud-saml`
+- **Root URL**: `https://api.magalu.cloud/federation/`
+- **Assertion Consumer Service (ACS) URL**: `https://api.magalu.cloud/federation/api/v1/authflow/saml/callback`
+
+:::caution
+The ACS URL must match `https://api.magalu.cloud/federation/api/v1/authflow/saml/callback` exactly. Ensure you use `HTTPS` and avoid trailing slashes, as mismatched URLs cause silent authentication failures.
+:::
+
+## 2. Add Magalu Cloud to Cloudflare One
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
+2. Select **Create new application** > **SaaS application**.
+3. For **Application**, enter `Magalu Cloud` and select the custom option that appears.
+4. For the authentication protocol, select **SAML**.
+5. Select **Add application**.
+6. Fill in the following fields:
+   - **Entity ID**: `magalu-cloud-saml`
+   - **Assertion Consumer Service URL**: `https://api.magalu.cloud/federation/api/v1/authflow/saml/callback`
+   - **Name ID format**: _Email_
+7. Add the mandatory SAML attribute statement. Magalu Cloud requires the `email` attribute to identify and provision users:
+
+   | Name    | Name format | IdP claim |
+   | ------- | ----------- | --------- |
+   | `email` | Basic       | `email`   |
+
+   :::caution
+   If the `email` attribute is omitted from the SAML assertion, Magalu Cloud returns a `No email in SAML Response` authentication error.
+   :::
+
+8. Copy the following values from the application configuration page:
+   - **SSO endpoint**: Cloudflare Access single sign-on URL (`https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/sso/saml/<app-id>`)
+   - **Access Entity ID or Issuer**: Cloudflare Access entity identifier (`https://<your-team-name>.cloudflareaccess.com`)
+   - **Public key**: Cloudflare Access X.509 signing certificate
+9. Configure [Access policies](/cloudflare-one/access-controls/policies/) for the application.
+10. Save the application.
+
+## 3. Format the X.509 certificate
+
+Magalu Cloud requires the public X.509 certificate to validate digital signatures on SAML assertions.
+
+Cloudflare One provides the **Public key** as a raw Base64 string without certificate header or footer markers. Before passing it to the MGC CLI, copy the public key and ensure any line breaks or newlines are removed so that it forms a single continuous line.
+
+## 4. Configure SAML federation in Magalu Cloud
+
+In Magalu Cloud Turia IAM, identity federations are configured via the MGC CLI.
+
+1. Retrieve your verified domain ID:
+
+   ```bash
+   mgc iam domains list
+   ```
+
+2. Register the SAML federation:
+
+   ```bash
+   mgc iam domains federations saml \
+     --domain-id <DOMAIN_ID> \
+     --name "Cloudflare Access" \
+     --entity-id "<ACCESS_ENTITY_ID_OR_ISSUER>" \
+     --sso-url "<SSO_ENDPOINT>" \
+     --idp-certificate "<CERTIFICATE_SINGLE_LINE_BASE64>"
+   ```
+
+3. Confirm that the federation is registered:
+
+   ```bash
+   mgc iam domains federations list --domain-id <DOMAIN_ID>
+   ```
+
+:::note
+If you need to rotate certificates or update the SSO endpoint in the future, use the update command:
+
+```bash
+mgc iam domains federations update \
+  --domain-id <DOMAIN_ID> \
+  --federation-id <FEDERATION_ID> \
+  --saml.sso-url "<NEW_SSO_ENDPOINT>" \
+  --saml.idp-certificate "<NEW_CERTIFICATE_SINGLE_LINE_BASE64>"
+```
+:::
+
+## 5. Test the integration
+
+### Test the Magalu Cloud Console
+
+1. Open an incognito browser window.
+2. Go to the [Magalu Cloud Console](https://console.magalu.cloud).
+3. Enter an email address matching your verified federated domain.
+4. Magalu Cloud identifies the domain and redirects you to the Cloudflare Access login screen.
+5. Authenticate with your identity provider. Upon successful authentication, Cloudflare Access posts the SAML assertion to Magalu Cloud and logs you into the console. On first login, Magalu Cloud automatically creates the account using Just-In-Time (JIT) provisioning.
+
+### Test the MGC CLI
+
+1. In your terminal, run:
+
+   ```bash
+   mgc auth login
+   ```
+
+2. The CLI opens a browser tab directed to the Magalu authentication portal.
+3. Enter your corporate email address to trigger the Cloudflare Access SSO flow and authenticate.
+4. Once authenticated, the browser hands off the session tokens back to the local CLI listener.
+5. Verify your session:
+
+   ```bash
+   mgc auth access-token
+   ```
+
+:::tip
+When working in headless or remote server environments over SSH, run the login command with the headless flag:
+
+```bash
+mgc auth login --headless=true
+```
+
+Open the generated authentication URL in a local browser, log in through Cloudflare Access, and paste the authorization callback URL back into your terminal.
+:::
+
+## Troubleshooting
+
+### Error: "No email in SAML Response"
+
+This error occurs when Cloudflare Access does not include the `email` attribute claim in the SAML assertion. Verify that step 7 in [2. Add Magalu Cloud to Cloudflare One](#2-add-magalu-cloud-to-cloudflare-one) includes an attribute statement named `email` mapped to your identity provider's email claim.
+
+### Error: "409 Conflict"
+
+This error occurs when attempting to create a SAML federation on a domain that already has an active federation (OIDC or SAML). Magalu Cloud enforces a strict limit of one active federation per domain. You must update the existing federation or contact Magalu Cloud support to remove the previous federation.
+
+### Error: "404 Domain not found"
+
+This error indicates that the provided `<DOMAIN_ID>` does not exist or has not been verified yet. Run `mgc iam domains list` to confirm your domain ID, and verify DNS propagation with `mgc iam domains check-dns <DOMAIN_ID>`.
