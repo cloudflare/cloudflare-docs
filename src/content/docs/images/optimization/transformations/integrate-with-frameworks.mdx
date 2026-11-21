@@ -100,6 +100,6 @@ For local development, you can enable [Resize images from any origin checkbox](/
 
 `https://<YOUR_DOMAIN.COM>/cdn-cgi/image/${paramsString}/${normalizeSrc(src)}`
 
-The same applies to `*.workers.dev` and preview URLs. Relative `/cdn-cgi/image/` paths only resolve on a zone with transformations enabled, so on a `workers.dev` hostname they return `404`. Use the absolute URL above, or [transform images in a Worker](/images/optimization/transformations/transform-via-workers/) with `cf.image`.
+The same applies to `*.workers.dev` and preview URLs. Relative `/cdn-cgi/image/` paths only resolve on a zone with transformations enabled, so on a `workers.dev` hostname they return `404`. Use an absolute URL on your zone instead, or [transform images in a Worker](/images/optimization/transformations/transform-via-workers/) with `cf.image`.
 
 :::
