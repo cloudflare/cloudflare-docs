@@ -28,6 +28,20 @@ Use the following Cloudflare products to perform URL redirects, according to you
 	params={{ sentenceIntro: "Single Redirects and Bulk Redirects require" }}
 />
 
+## Choose a redirect product
+
+| I want to…                                                                       | Use                                                                                                                                                       |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Redirect a URL pattern, such as `/blog/*` to `blog.example.com/*`                | Single Redirects with a wildcard pattern. Refer to [Move a website section to a subdomain](/rules/url-forwarding/examples/redirect-section-to-subdomain/). |
+| Redirect HTTP to HTTPS, `www` to the root domain, or the root domain to `www`    | Single Redirects with a [rule template](#redirect-rules-templates).                                                                                       |
+| Redirect based on country, device, header, or cookie                             | Single Redirects with a custom filter expression.                                                                                                         |
+| Redirect using regular expressions                                               | Single Redirects with a custom filter expression. Requires a Business or Enterprise plan.                                                                 |
+| Redirect a list of specific URLs, such as old and new URLs from a site migration | Bulk Redirects.                                                                                                                                           |
+| Apply the same redirects across several domains in your account                  | Bulk Redirects.                                                                                                                                           |
+| Redirect with custom logic that rules cannot express                             | Snippets.                                                                                                                                                 |
+
+If you can describe your redirects as a pattern, use Single Redirects. If you have a list of specific URLs, use Bulk Redirects.
+
 ## Redirect Rules templates
 
 <Render file="rules-templates" product="rules" />
