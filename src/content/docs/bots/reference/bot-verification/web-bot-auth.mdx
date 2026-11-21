@@ -177,14 +177,18 @@ Construct a [`Signature` header](https://www.rfc-editor.org/rfc/rfc9421#name-the
 
 #### `Signature-Agent` header
 
-Construct a [`Signature-Agent` header](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-03#name-header-field-definition) that points to your key directory. Cloudflare implements the `Signature-Agent` format from `draft-meunier-http-message-signatures-directory-03`, where the header value is a structured string such as `"https://signature-agent.test"`.
+Construct a [`Signature-Agent` header](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory-03#name-header-field-definition) that points to your key directory. Cloudflare accepts two forms.
+
+- Structured string: `"https://signature-agent.test"`. Cover it in `Signature-Input` as `"signature-agent"`, with no parameters.
+- Dictionary: `sig1="https://signature-agent.test"`. Cover the member by its label: `"signature-agent";key="sig1"`. RFC 9421 identifies a dictionary member by its key.
+
+The dictionary form lets one request name more than one agent. Cloudflare selects the member named by the `key` component parameter.
 
 Cloudflare will fail to verify a message if:
 
-- The message includes a `Signature-Agent` header that is not an `https://`.
-- The message includes a valid URI but does not enclose it in double quotes. This is due to Signature-Agent being a structured field.
-- The message uses the dictionary form from later drafts, such as `sig2="https://signature-agent.test"`.
-- The message has a valid `Signature-Agent` header, but does not include it in the component list in `Signature-Input`.
+- The header value is not an `https://` URI.
+- A structured string is not enclosed in double quotes.
+- The header is not covered in the component list in `Signature-Input`.
 
 ### 4.4. Add the headers to your bot's requests
 
@@ -202,6 +206,20 @@ Signature-Input: sig2=("@authority" "signature-agent")
  ;nonce="e8N7S2MFd/qrd6T2R3tdfAuuANngKI7LFtKYI/vowzk4lAZYadIX6wW25MwG7DCT9RUKAJ0qVkU0mEeLElW1qg=="
  ;tag="web-bot-auth"
 Signature: sig2=:jdq0SqOwHdyHr9+r5jw3iYZH6aNGKijYp/EstF4RQTQdi5N5YYKrD+mCT1HA1nZDsi6nJKuHxUi/5Syp3rLWBA==:
+```
+
+The same request can use the dictionary form:
+
+```txt
+Signature-Agent: sig1="https://signature-agent.test"
+Signature-Input: sig1=("@authority" "signature-agent";key="sig1")
+ ;created=1735689600
+ ;keyid="poqkLGiymh_W0uP6PZFw-dvez3QJT5SolqXBCW38r0U"
+ ;alg="ed25519"
+ ;expires=1735693200
+ ;nonce="e8N7S2MFd/qrd6T2R3tdfAuuANngKI7LFtKYI/vowzk4lAZYadIX6wW25MwG7DCT9RUKAJ0qVkU0mEeLElW1qg=="
+ ;tag="web-bot-auth"
+Signature: sig1=:...:
 ```
 
 :::note
@@ -245,7 +263,7 @@ The following component parameters defined in IETF RFC 9421 are not supported, a
 
 - `sf` (for HTTP header fields)
 - `bs` (for HTTP header fields)
-- `key` (for HTTP header fields)
+- `key` (for HTTP header fields other than `signature-agent`)
 - `req` (for HTTP header fields or derived components)
 - `name` (for `@query-param` support - this requires `@query-param` support)
 
@@ -258,7 +276,7 @@ The following component parameters defined in IETF RFC 9421 are not supported, a
 If your message is failing validation, the cause(s) may include:
 
 - Ensure you have a [`Signature-Agent` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header), and that its value is in double-quotes.
-- Ensure your [`Signature-Agent` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header) uses a structured string, not a dictionary.
+- Ensure a dictionary [`Signature-Agent` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header) member is covered with its `key` parameter, such as `("signature-agent";key="sig1")`. A structured string is covered without parameters.
 - Ensure you include `signature-agent` in the component list in your [`Signature-Input` header](/bots/reference/bot-verification/web-bot-auth/#signature-agent-header).
 - Ensure your `expires` timestamp is not too short, such that, by the time it arrives at Cloudflare servers, it has already expired. A minute is often sufficient.
 - Ensure you are not signing components containing non-ASCII values, or on the unsupported list.
