@@ -173,6 +173,8 @@ Run `wrangler d1 insights --help` to view current options.
 
 `wrangler d1 insights` reads data from the GraphQL Analytics API. If you use an API token, the token must have the **Account Analytics Read** permission.
 
+D1 Insights can also return stored [index recommendations](/d1/observability/metrics-analytics/index-recommendations/). Use `--filter recommendations` to fetch recommendations for active databases.
+
 Pass a database name, binding, or ID to get the top queries for that database. Leave it out to run account-wide and get the top queries across every D1 database in your account:
 
 ```sh
@@ -191,6 +193,7 @@ When run account-wide, each result also includes a `databaseId` field with the I
 | `--sort-type`      | The operation you want to sort insights by. Select between `sum` and `avg` (default: `sum`).                                |
 | `--sort-by`        | The field you want to sort insights by. Select between `time`, `reads`, `writes`, and `count` (default: `time`).            |
 | `--sort-direction` | The sort direction. Select between `ASC` and `DESC` (default: `DESC`).                                                      |
+| `--filter`         | The insights category to fetch. Use `recommendations` to fetch stored index recommendations.                                |
 | `--json`           | A boolean value to specify whether to return the result as clean JSON (default: `false`).                                   |
 | `--limit`          | The maximum number of queries to be fetched. When run account-wide, this limit applies across all databases (default: `5`). |
 

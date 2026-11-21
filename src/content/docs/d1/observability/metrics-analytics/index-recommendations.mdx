@@ -1,0 +1,276 @@
+---
+title: Index recommendations
+description: Review recommended indexes for D1 databases.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - d1
+---
+
+import { PackageManagers, Steps, Tabs, TabItem } from "~/components";
+
+D1 Insights can recommend indexes for active [D1](/d1/) databases. Each recommendation includes validated `CREATE INDEX` SQL, the impacted queries, and the measured workload behind the recommendation.
+
+An [index](/d1/best-practices/use-indexes/) helps D1 find rows without scanning an entire table. Fewer scanned rows can improve performance and reduce rows-read charges.
+
+Indexes also use storage and add work to database writes. Review each recommendation before you change your schema.
+
+## Availability
+
+Index recommendations are available automatically on the [Workers Paid plan](/workers/platform/pricing/).
+
+If you are an Enterprise customer, contact your account team to enable D1 Insights. Recommendation generation uses [Workers AI](/workers-ai/).
+
+## Generate recommendations
+
+D1 evaluates active databases in the background. It stores recommendations for the dashboard, Cloudflare CLI (`cf`), Wrangler, and REST API.
+
+D1 uses Workers AI to precompute recommendations where indexes provide measurable impact. On-demand recommendation generation is not supported.
+
+Some databases may not have recommendations. This can happen when D1 does not have enough recent query activity, or when D1 does not find an index that should improve the measured workload.
+
+## View recommendations
+
+You can view recommendations across an account or for one database.
+
+<Tabs syncKey="d1IndexRecommendations">
+<TabItem label="Cloudflare CLI">
+
+List recommendations across your account:
+
+```sh
+cf d1 insights --filter recommendations --json
+```
+
+List recommendations for one database:
+
+```sh
+cf d1 insights <DATABASE_NAME_OR_ID> --filter recommendations --json
+```
+
+</TabItem>
+<TabItem label="Wrangler">
+
+List recommendations across your account:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"d1 insights --filter recommendations --json"}
+/>
+
+List recommendations for one database:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args={"d1 insights <DATABASE_NAME_OR_ID> --filter recommendations --json"}
+/>
+
+</TabItem>
+<TabItem label="REST API">
+
+Fetch recommendations across an account:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights?filter=recommendations&limit=20" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Fetch recommendations for one database:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database/$DATABASE_ID/insights?filter=recommendations" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem>
+</Tabs>
+
+If you use an API token, the token must have permission to read D1 databases and account analytics.
+
+## View in the dashboard
+
+Index recommendations are also visible in the Cloudflare dashboard under the **Queries** tab for a database.
+
+## Interpret a recommendation
+
+Each recommendation includes a validated `CREATE INDEX` statement. The summary and reasoning identify the target table, columns, and query patterns.
+
+Recommendation payloads contain these fields:
+
+| Field | Description |
+| --- | --- |
+| `recommendations.query_window.from` | Inclusive start of the query metrics window. |
+| `recommendations.query_window.to` | Exclusive end of the query metrics window. |
+| `recommendations.items[].id` | Stable recommendation identifier. |
+| `recommendations.items[].generated_at` | RFC 3339 timestamp for the completed evaluation. |
+| `recommendations.items[].type` | Recommendation type, which is `index_suggestion`. |
+| `recommendations.items[].priority` | Suggested review priority, either `high` or `low`. |
+| `recommendations.items[].summary` | Short description of the recommended change. |
+| `recommendations.items[].reasoning` | Performance bottleneck that produced the recommendation. |
+| `recommendations.items[].suggestions[].kind` | Suggestion type, which is `index_creation`. |
+| `recommendations.items[].suggestions[].sql` | Validated `CREATE INDEX` statement. |
+| `recommendations.items[].impacted_queries` | Query patterns affected by the suggested index. |
+
+Impacted query metrics come from D1 query analytics. They are not Workers AI estimates.
+
+The following response recommends an index for `OrderDetail.OrderId`:
+
+```json
+{
+	"success": true,
+	"result": {
+		"recommendations": {
+			"query_window": {
+				"from": "<WINDOW_START>",
+				"to": "<WINDOW_END>"
+			},
+			"items": [
+				{
+					"id": "9f8a7b6c-5d4e-4a21-9234-6f7890abcdef",
+					"generated_at": "<GENERATED_AT>",
+					"type": "index_suggestion",
+					"priority": "high",
+					"summary": "Create an index on OrderDetail.OrderId",
+					"reasoning": "Two query patterns join OrderDetail by OrderId.",
+					"suggestions": [
+						{
+							"kind": "index_creation",
+							"sql": "CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);"
+						}
+					],
+					"impacted_queries": [
+						{
+							"query": "SELECT * FROM OrderDetail WHERE OrderId = ?",
+							"metrics": {
+								"execution_count": 320,
+								"total_rows_read": 1250000,
+								"total_rows_written": 0,
+								"p95_query_duration_ms": 42.8
+							}
+						}
+					]
+				}
+			]
+		}
+	},
+	"errors": [],
+	"messages": []
+}
+```
+
+Account-level responses also include the database for each recommendation:
+
+```json
+{
+	"success": true,
+	"result": {
+		"recommendations": {
+			"items": [
+				{
+					"id": "9f8a7b6c-5d4e-4a21-9234-6f7890abcdef",
+					"database_id": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47",
+					"database_name": "orders-prod",
+					"type": "index_suggestion",
+					"priority": "high",
+					"generated_at": "<GENERATED_AT>",
+					"query_window": {
+						"from": "<WINDOW_START>",
+						"to": "<WINDOW_END>"
+					},
+					"summary": "Create an index on OrderDetail.OrderId",
+					"reasoning": "Two query patterns join OrderDetail by OrderId.",
+					"suggestions": [
+						{
+							"kind": "index_creation",
+							"sql": "CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);"
+						}
+					],
+					"impacted_queries": [
+						{
+							"query": "SELECT * FROM OrderDetail WHERE OrderId = ?",
+							"metrics": {
+								"execution_count": 320,
+								"total_rows_read": 1250000,
+								"total_rows_written": 0,
+								"p95_query_duration_ms": 42.8
+							}
+						}
+					]
+				}
+			]
+		},
+		"result_info": {
+			"next_cursor": null
+		}
+	},
+	"errors": [],
+	"messages": []
+}
+```
+
+## Apply a recommendation
+
+Apply recommended SQL through a [D1 migration](/d1/reference/migrations/). This stores the schema change with your application code.
+
+<Steps>
+1. Review the suggested SQL, target table, columns, and impacted queries.
+
+2. From your Worker project directory, create a migration file:
+
+   <PackageManagers
+    type="exec"
+    pkg="wrangler"
+    args={"d1 migrations create <DATABASE_NAME> add_query_insights_index"}
+   />
+
+3. Add the suggested `CREATE INDEX` statement to the generated file.
+
+   The migration should contain the reviewed statement:
+
+   ```sql title="migrations/0001_add_query_insights_index.sql"
+   CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);
+   ```
+
+4. Apply the migration to your local database:
+
+   <PackageManagers
+    type="exec"
+    pkg="wrangler"
+    args={"d1 migrations apply <DATABASE_NAME> --local"}
+   />
+
+5. Test the impacted queries against your local database.
+
+6. Apply the migration to the corresponding remote environment:
+
+   <PackageManagers
+    type="exec"
+    pkg="wrangler"
+    args={"d1 migrations apply <DATABASE_NAME> --remote --env <ENVIRONMENT>"}
+   />
+</Steps>
+
+Confirm that your Wrangler configuration maps the database name to the intended environment. Omit `--env` when the binding uses your top-level configuration.
+
+Repeat the local review and test process for each environment. Apply the migration remotely only after testing it against representative queries.
+
+## Use an AI agent
+
+You can use the unmodified CLI JSON in an AI-agent workflow. Copy the prompt below, paste it into your agent, and replace the placeholder with the raw CLI JSON output.
+
+````txt
+You are a Database Engineer specializing in Cloudflare D1 (SQLite).
+
+Analyze the provided raw, unmodified CLI JSON report for query performance, costs, and index recommendations. Convert it into a production-ready Cloudflare D1 SQL migration script.
+
+Review each recommendation before writing SQL. Include only the recommended CREATE INDEX statements that are safe to apply for the impacted queries.
+
+### INPUT JSON DATA
+
+```json
+<INSERT_UNMODIFIED_CLI_JSON_HERE>
+```
+````
