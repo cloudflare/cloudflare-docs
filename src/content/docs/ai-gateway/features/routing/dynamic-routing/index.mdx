@@ -39,6 +39,12 @@ while making it accessible to both developers and non-technical team members.
 - **Metadata**: Arbitrary key-value context attached to the request (for example, userId, orgId, plan). You pass this from your app so rules can reference it. Rules read metadata only, not the request body or headers. Refer to [Request metadata](/ai-gateway/features/routing/dynamic-routing/json-configuration/#request-metadata) for the available keys.
 - **Versions**: Each change produces a new draft. Deploy to make it live with instant rollback.
 
+:::note[Budgets without fallbacks]
+
+To set budgets or control model access for users and teams without falling back to another model, use [policies](/ai-gateway/features/policies/) instead of a **Budget Limit** node. Policies apply to every request on the gateway and reject requests that exceed a budget. Use a **Budget Limit** node when you want requests to fall back to a cheaper model after a budget is used up.
+
+:::
+
 ## Getting Started
 
 :::caution

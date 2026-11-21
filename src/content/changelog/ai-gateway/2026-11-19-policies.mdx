@@ -1,0 +1,31 @@
+---
+title: Control spend and model access with AI Gateway policies
+description: Set budgets and block or allow models on AI Gateway based on the verified identity of the caller, including IdP groups, email domains, and custom metadata.
+date: 2026-11-19
+---
+
+You can now control who can use which models and providers on your gateway, and how much each user or team can spend, with AI Gateway [policies](/ai-gateway/features/policies/). Policies use the verified identity of the caller from [Cloudflare Access](/ai-gateway/configuration/cloudflare-access/), such as the user's email or identity provider (IdP) groups, or values you pass in [custom metadata](/ai-gateway/observability/custom-metadata/).
+
+With policies, you can:
+
+- Give a team or an email domain a shared monthly budget.
+- Cap spend for each individual user, including inside a shared team budget.
+- Block an IdP group from expensive models, or allow it to use only specific models.
+
+Each policy targets an identity and a set of models or providers, then allows, blocks, or caps matching requests. Spend caps reset hourly, daily, weekly, or monthly on UTC boundaries. Use **Test policies** in the dashboard, or the simulate endpoint in the API, to check how your policies handle a request before it reaches real traffic.
+
+The following policy blocks members of the `contractors` IdP group from all Claude Opus models:
+
+```json
+{
+	"name": "Block contractors from Claude Opus",
+	"actor": "company:all",
+	"resource": { "model": "anthropic/claude-opus-*" },
+	"condition": "\"contractors\" in cf.user.groups",
+	"action": { "type": "block" }
+}
+```
+
+Policies replace [spend limits](/ai-gateway/features/spend-limits/), which are now deprecated. Existing spend limit rules continue to work. To move them to policies, refer to [Migrate from spend limits](/ai-gateway/features/policies/#migrate-from-spend-limits).
+
+For more details, refer to the [Policies documentation](/ai-gateway/features/policies/).
