@@ -26,6 +26,12 @@ Create a bucket with the [`r2 bucket create`](/workers/wrangler/commands/r2/#r2-
 wrangler r2 bucket create your-bucket-name
 ```
 
+:::caution[API Token Permissions for Bucket Creation]
+
+Creating an R2 bucket via the Cloudflare API or Wrangler CLI requires the **Workers R2 Storage: Edit** permission on your API token. If your deployment environment uses a restricted service token with read-only permissions, the bucket must be provisioned manually in the Cloudflare Dashboard before deploying Worker bindings.
+
+:::
+
 :::note
 
 - Bucket names can only contain lowercase letters (a-z), numbers (0-9), and hyphens (-).
