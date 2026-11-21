@@ -9,7 +9,7 @@ products:
   - workers
 ---
 
-import { Details } from "~/components";
+import { Details, TypeScriptExample } from "~/components";
 
 The Workers Vitest integration provides additional configuration on top of Vitest's usual options using the `cloudflareTest()` Vite plugin.
 
@@ -50,6 +50,37 @@ export default defineConfig({
 Custom Vitest `environment`s or `runner`s are not supported when using the Workers Vitest integration.
 
 :::
+
+## Use explicit test bindings
+
+Use explicit bindings when tests need fixed values across developer machines and CI. For example, a local `.dev.vars` file can supply an API token that is absent in CI, causing a test to pass locally and fail in CI. A self-contained test configuration keeps those local credentials out of the suite.
+
+Tests using `wrangler` load its `.dev.vars` entries. Tests using `config: true` also load local `.dev.vars` or `.env` values to resolve declared secrets. Values in `miniflare.bindings` override matching names, but other loaded bindings remain.
+
+Omit both `config` and `wrangler` to skip Worker configuration files and local secret loading:
+
+<TypeScriptExample filename="vitest.config.ts">
+
+```ts
+import { cloudflareTest } from "@cloudflare/vitest-plugin";
+import { defineConfig } from "vitest/config";
+
+export default defineConfig({
+	plugins: [
+		cloudflareTest({
+			main: "./src/index.ts",
+			miniflare: {
+				compatibilityDate: "$today",
+				bindings: { API_TOKEN: "synthetic-test-value" },
+			},
+		}),
+	],
+});
+```
+
+</TypeScriptExample>
+
+Declare any storage, service, or Durable Object bindings that the suite needs in the same test configuration.
 
 ## APIs
 
