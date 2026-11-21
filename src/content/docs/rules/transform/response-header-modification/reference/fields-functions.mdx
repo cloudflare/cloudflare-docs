@@ -100,6 +100,7 @@ Refer to [Fields](/ruleset-engine/rules-language/fields/reference/) for referenc
 
 - Use the `to_string()` function to get the string representation of a non-string value like an Integer value. For example, `to_string(cf.bot_management.score)`.
 
+- In header value expressions, only `http.request.body.json.*` is allowed. All other `http.request.body.*` fields can only be used in matching expressions.
 :::
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
