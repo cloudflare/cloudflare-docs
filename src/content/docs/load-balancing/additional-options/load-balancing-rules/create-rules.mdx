@@ -78,3 +78,10 @@ If you want to host `example.com/blog` separately from your main website, for ex
 | Overrides | Pools   | `<BLOG_SERVER>` |
 
 </Example>
+
+
+:::note[Terraform: set `priority` explicitly on every rule]
+
+When using the `cloudflare_load_balancer` Terraform resource, always set the `priority` field explicitly on every rule. If `priority` is omitted, Cloudflare assigns a value at write time that is not recorded in the Terraform state file. Subsequent `terraform plan` runs will detect a difference and report perpetual drift.
+
+:::
