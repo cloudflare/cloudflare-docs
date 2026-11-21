@@ -20,6 +20,12 @@ You can define a custom page to be displayed when Pages cannot find a requested 
 
 If your project does not include a top-level `404.html` file, Pages assumes that you are deploying a single-page application. This includes frameworks like React, Vue, and Angular. Pages' default single-page application behavior serves the root (`/`) for any incoming path that does not correspond to a static asset, allowing your application to handle routes like `/about` or `/help` client-side from within your SPA.
 
+:::note[SPA fallback and custom 404.html]
+
+SPA fallback only applies when there is no top-level `404.html`. If you add a `404.html` to customize error pages, Pages serves that file for unmatched routes instead of your SPA root, which breaks client-side routing for deep links such as `/about`. To keep SPA routing while still customizing 404s, either include a client-side routing script in your `404.html`, or rewrite unmatched routes to your `index.html` with a [catch-all Pages Function](/pages/functions/).
+
+:::
+
 ## Caching and performance
 
 ### Recommendations
