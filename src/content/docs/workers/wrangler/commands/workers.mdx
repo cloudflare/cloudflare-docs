@@ -473,6 +473,24 @@ The minimum required wrangler version to use these commands is 3.40.0. For versi
 	headingLevel={3}
 />
 
+For CI scripts, use [structured output](/workers/wrangler/system-environment-variables/#example-output-file) to read the Worker name and version ID. Use a new output file for each command and read it only if the upload succeeds. For example, in a POSIX shell:
+
+```sh
+export WRANGLER_OUTPUT_FILE_PATH="$(mktemp)"
+```
+
+<PackageManagers type="exec" pkg="wrangler" args={'versions upload && cat "$WRANGLER_OUTPUT_FILE_PATH"'} />
+
+The `version-upload` record includes these fields:
+
+```json title="Version upload record (other fields omitted)"
+{
+  "type": "version-upload",
+  "worker_name": "my-worker",
+  "version_id": "<VERSION_ID>"
+}
+```
+
 <WranglerCommand
 	command="versions deploy"
 	description="Deploy a previously created [version](/workers/versions-and-deployments/#versions) of your Worker all at once or create a [gradual deployment](/workers/versions-and-deployments/gradual-deployments/) to incrementally shift traffic to a new version by following an interactive prompt."
