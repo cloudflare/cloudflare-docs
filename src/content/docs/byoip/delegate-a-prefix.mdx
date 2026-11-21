@@ -1,0 +1,179 @@
+---
+title: Delegate a prefix
+pcx_content_type: how-to
+description: Create, verify, and remove a prefix delegation so that another Cloudflare account can use IP addresses from your BYOIP prefix.
+products:
+  - byoip
+sidebar:
+  order: 7
+---
+
+import {
+	APIRequest,
+	DashButton,
+	Steps,
+	Tabs,
+	TabItem,
+} from "~/components";
+
+Use a prefix delegation to let another Cloudflare account use IP addresses from your BYOIP prefix. To learn how delegations work, refer to [Prefix delegations](/byoip/concepts/prefix-delegations/).
+
+In this page, Account A is the account that owns the prefix. Account B is the account that receives the delegation.
+
+## Before you begin
+
+- Account A has an approved BYOIP prefix. Refer to [Get started](/byoip/get-started/).
+- You have the account ID of Account B. To find an account ID, refer to [Find account and zone IDs](/fundamentals/account/find-account-and-zone-ids/).
+- If Account B will use address maps, address maps are enabled on Account A.
+
+## Choose the dashboard or the API
+
+In the dashboard, you create and remove delegations in the **Edit IP Prefixes** form. The form has these limits:
+
+| Requirement                                 | Dashboard (Edit IP Prefixes form) | API |
+| ------------------------------------------- | --------------------------------- | --- |
+| Delegate the entire prefix                  | Yes       | Yes |
+| Delegate part of the prefix (a smaller CIDR) | No        | Yes |
+| Delegate to an account that you are not a member of | No  | Yes |
+| Delegate to an account that is not in your first 50 accounts, sorted by name | No | Yes |
+
+On the **BYOIP addresses** tab, the dashboard shows an account name only for your first 50 accounts. For other delegated accounts, it shows the account ID. The delegation is still valid.
+
+## Create a delegation
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. In the Cloudflare dashboard for Account A, go to **IP addresses** > **Address space**.
+
+   <DashButton url="/?to=/:account/ip-addresses/address-space" />
+
+2. Select the **BYOIP addresses** tab.
+3. Find the prefix, and then select **Edit**. **Edit IP Prefixes** opens.
+4. Under **Delegations**, select **Add Delegation**.
+5. In the new list, select Account B. The list shows the first 50 accounts that your user is a member of, sorted by name. Accounts that already have a delegation for this prefix are not available.
+6. Select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+Send a `POST` request with the CIDR to delegate and the account ID of Account B. The CIDR must be inside the prefix.
+
+<APIRequest
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/delegations"
+	method="POST"
+	json={{
+		cidr: "203.0.113.16/28",
+		delegated_account_id: "<ACCOUNT_B_ID>",
+	}}
+/>
+
+The response includes an `id` for the delegation. You need this ID to remove the delegation.
+
+To delegate one IP address, use a `/32` CIDR for IPv4 or a `/128` CIDR for IPv6. For example, `203.0.113.17/32` or `2001:db8::17/128`.
+
+To delegate IP addresses to more than one account, send one request for each account.
+
+</TabItem> </Tabs>
+
+After you create the delegation, make sure that Account A binds the IP addresses to the correct service. Refer to [Service bindings](/byoip/service-bindings/).
+
+## Verify a delegation
+
+To list the delegations for a prefix, send a `GET` request:
+
+<APIRequest
+	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/delegations"
+	method="GET"
+/>
+
+Each delegation includes the `cidr` and the `delegated_account_id`. Compare the `delegated_account_id` with the account ID of Account B.
+
+In Account B, confirm that the delegated IP addresses are available. For example, add one IP address to an [address map](/byoip/address-maps/setup/) or a [Spectrum application](/spectrum/about/byoip/).
+
+## Change a delegation
+
+You cannot edit a delegation. To change the CIDR or the account, [remove the delegation](#remove-a-delegation) and then [create a new one](#create-a-delegation).
+
+## Remove a delegation
+
+:::caution
+Removing a delegation can stop services in Account B that use the delegated IP addresses. Tell the owner of Account B before you remove a delegation.
+:::
+
+Before you remove a delegation, ask the owner of Account B to check its address maps. If an address map has zones or accounts attached and contains only delegated IP addresses, the removal fails. Refer to [If the removal fails](#if-the-removal-fails).
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. In the Cloudflare dashboard for Account A, go to **IP addresses** > **Address space**.
+
+   <DashButton url="/?to=/:account/ip-addresses/address-space" />
+
+2. Select the **BYOIP addresses** tab.
+3. Find the prefix, and then select **Edit**. **Edit IP Prefixes** opens.
+4. Under **Delegations**, find Account B, and then select **Remove**.
+5. Select **Save**.
+
+</Steps>
+
+:::note
+If Account B has more than one delegation on the same prefix, use the API to remove them. The dashboard cannot remove these delegations correctly.
+:::
+
+</TabItem> <TabItem label="API">
+
+<Steps>
+
+1. Get the delegation ID. Refer to [Verify a delegation](#verify-a-delegation).
+2. Send a `DELETE` request:
+
+   <APIRequest
+   	path="/accounts/{account_id}/addressing/prefixes/{prefix_id}/delegations/{delegation_id}"
+   	method="DELETE"
+   />
+
+</Steps>
+
+</TabItem> </Tabs>
+
+When the removal completes, Cloudflare removes the delegated IP addresses from address maps in Account B. Cloudflare also deletes geofeed entries in Account B for the delegated CIDR.
+
+### If the removal fails
+
+An address map that has zones or accounts attached must keep at least one IP address. Cloudflare stops the removal if it would leave such an address map with no IP addresses. Cloudflare then makes no changes. The API returns `address_map_has_memberships`.
+
+**If you own Account A (the prefix owner):** ask the owner of Account B to change the address map. Then remove the delegation again.
+
+**If you own Account B (the delegated account):** change the address map that uses the delegated IP addresses. Do one of the following:
+
+- Add other IP addresses to the address map. Your zones then use those IP addresses.
+- Remove all zones and accounts from the address map. Those zones then stop using the address map.
+- Turn off the address map, and then delete it. Those zones then stop using the address map.
+
+Then tell the owner of Account A to remove the delegation again.
+
+## Troubleshooting
+
+Use the following table to fix common problems with delegations:
+
+| Problem                                                    | Cause                                                              | Solution                                                                                   |
+| ---------------------------------------------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
+| Account B is not in the **Edit IP Prefixes** list.          | Your user is not a member of Account B. Account B can also be outside your first 50 accounts, sorted by name. | Use the API with the account ID of Account B.                          |
+| The **BYOIP addresses** tab shows an account ID instead of a name. | Account B is not in your first 50 accounts, sorted by name.        | This is expected. Ask the owner of Account B to confirm the account ID.                    |
+| The API returns `cidr_not_within_prefix`.                  | The CIDR is not inside the prefix, or the prefix is not approved.  | Use a CIDR inside the prefix. Make sure that the prefix is approved.                       |
+| The API returns `invalid_account_id`.                      | The account ID is not valid, or the account does not exist.        | Copy the account ID again from the dashboard of Account B.                                 |
+| The API returns `delegation_exists`.                       | A delegation for the same CIDR and account already exists.         | List the delegations to confirm. No action is necessary.                                   |                                     |
+| The removal returns `address_map_has_memberships`.         | Account B has an address map that uses the delegated IP addresses and has zones or accounts attached. The removal would leave this address map with no IP addresses. | Refer to [If the removal fails](#if-the-removal-fails). |
+| Account B gets `address_maps_not_enabled_on_account` when it saves an address map. | Address maps are not enabled on Account A. No other account with address maps delegated IP addresses to Account B. | Contact your account team to enable address maps on Account A. |
+| Account B cannot use the IP addresses with a service.      | Account A did not bind the IP addresses to that service.           | Ask Account A to update the [service binding](/byoip/service-bindings/).                   |
+
+## Related resources
+
+- [Prefix delegations](/byoip/concepts/prefix-delegations/)
+- [Service bindings](/byoip/service-bindings/)
+- [Address maps](/byoip/address-maps/)
+- [Prefix Delegations API](/api/resources/addressing/subresources/prefixes/subresources/delegations/methods/list/)

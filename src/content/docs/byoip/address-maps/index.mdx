@@ -43,6 +43,8 @@ Leased static IPs allow you to use a set of specifically assigned Cloudflare IPs
 
 With BYOIP, you use your IPs by bringing an address space that you lease or own and creating an address map.
 
+Another account can delegate IP addresses to your account. You can then create address maps in your account with those IP addresses. For more information, refer to [Prefix delegations](/byoip/concepts/prefix-delegations/#address-maps-in-account-b).
+
 ---
 
 ## Immutable address maps
@@ -64,7 +66,7 @@ However, to control what IP address Cloudflare will use when responding to reque
 ```json
 "edge_ips": {
   "type": "static",
-  "ips": ["1.2.3.4"]
+  "ips": ["203.0.113.4"]
 }
 ```
 
