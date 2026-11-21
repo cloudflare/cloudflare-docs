@@ -1,0 +1,45 @@
+---
+title: FedRAMP High
+pcx_content_type: reference
+description: Use Secrets Store in Cloudflare's FedRAMP High environment, and review how it differs from the standard environment.
+products:
+  - secrets-store
+sidebar:
+  order: 6
+---
+
+Secrets Store is available to accounts in Cloudflare's [FedRAMP High](https://www.cloudflare.com/cloudflare-for-government/) environment. It uses the same API routes, Workers binding, and error codes as the standard environment, with the differences listed on this page.
+
+## Data location
+
+For accounts in the FedRAMP High environment, Secrets Store runs only in FedRAMP High data centers, and secrets and their metadata are stored within the FedRAMP High boundary. Secret values are encrypted with AES-256-GCM using FIPS 140-3 validated cryptographic modules.
+
+## Feature availability
+
+| Feature                                                                  | Standard environment | FedRAMP High environment |
+| ------------------------------------------------------------------------ | -------------------- | ------------------------ |
+| [Secrets Store API](/api/resources/secrets_store/)                       | Yes                  | Yes                      |
+| [Wrangler commands](/workers/wrangler/commands/secrets-store/)           | Yes                  | Yes                      |
+| [Workers binding](/secrets-store/integrations/workers/)                  | Yes                  | Yes                      |
+| Dashboard                                                                | Yes                  | Yes                      |
+| [AI Gateway integration](/ai-gateway/configuration/bring-your-own-keys/) | Yes                  | No                       |
+
+## Manage secrets
+
+You can create and manage secrets, and add Secrets Store bindings to your Workers, from the dashboard, the API, or Wrangler.
+
+### Use the dashboard
+
+Log in to the FedRAMP High dashboard at `https://dash.fed.cloudflare.com`. The steps are the same as in [Manage account secrets](/secrets-store/manage-secrets/how-to/).
+
+### Use the API
+
+Send Secrets Store API requests to the FedRAMP High API endpoint, `https://api.fed.cloudflare.com/client/v4`, instead of `https://api.cloudflare.com/client/v4`. The request paths and bodies are the same as in the [Secrets Store API](/api/resources/secrets_store/) reference.
+
+### Use Wrangler
+
+Set the `CLOUDFLARE_COMPLIANCE_REGION` environment variable to `fedramp_high` so that Wrangler sends requests to the FedRAMP High environment:
+
+```sh
+CLOUDFLARE_COMPLIANCE_REGION=fedramp_high npx wrangler secrets-store secret create <STORE_ID> --name MY_SECRET_NAME --scopes workers --remote
+```
