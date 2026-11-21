@@ -1,14 +1,14 @@
 ---
 pcx_content_type: how-to
 title: Activate Polish
-description: Turn on Cloudflare Polish in the dashboard to automatically optimize images with lossy or lossless compression.
+description: Activate Cloudflare Polish with the Cloudflare CLI, REST API, or dashboard to optimize images and serve AVIF or WebP when supported.
 sidebar:
   order: 1
 products:
   - images
 ---
 
-import { Render, DashButton } from "~/components";
+import { APIRequest, DashButton, Render } from "~/components";
 
 Images in the [cache must be purged](/cache/how-to/purge-cache/) or expired before seeing any changes in Polish settings.
 
@@ -18,14 +18,79 @@ Do not activate Polish and [image transformations](/images/optimization/transfor
 
 :::
 
+## Cloudflare CLI
+
+Before you begin, [install the Cloudflare CLI and sign in](/cf/get-started/).
+
+Set Polish to `lossy` or `lossless` for your zone. The following command uses lossy compression:
+
+```sh
+cf zones settings edit polish --zone example.com --body '{"value":"lossy"}'
+```
+
+To serve AVIF or WebP to browsers that support these formats, enable the corresponding settings:
+
+```sh
+cf zones settings edit avif --zone example.com --body '{"value":"on"}'
+cf zones settings edit webp --zone example.com --body '{"value":"on"}'
+```
+
+Replace `example.com` with your domain or zone ID. To review a request without changing your zone, add `--dry-run`.
+
+## REST API
+
+Use an [API token](/fundamentals/api/get-started/create-token/) with the _Zone_ > _Zone Settings_ > _Edit_ permission.
+
+Set `polish` to `lossy` or `lossless`. The following request uses lossy compression:
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	parameters={{
+		setting_id: "polish",
+	}}
+	json={{
+		value: "lossy",
+	}}
+/>
+
+To serve AVIF to browsers that support it, set `avif` to `on`:
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	parameters={{
+		setting_id: "avif",
+	}}
+	json={{
+		value: "on",
+	}}
+/>
+
+To serve WebP to browsers that support it, set `webp` to `on`:
+
+<APIRequest
+	path="/zones/{zone_id}/settings/{setting_id}"
+	method="PATCH"
+	parameters={{
+		setting_id: "webp",
+	}}
+	json={{
+		value: "on",
+	}}
+/>
+
+## Dashboard
+
 1. In the Cloudflare dashboard, go to the **Account home** page.
 
    <DashButton url="/?to=/:account/home" />
 
 2. Select the domain where you want to activate Polish.
 3. Select **Speed** > **Settings** > **Image Optimization**.
-4. Under **Polish**, select _Lossy_ or _Lossless_ from the drop-down menu. [_Lossy_](/images/polish/compression/#lossy) gives greater file size savings.
-5. (Optional) Select **WebP**. Enable this option if you want to further optimize PNG and JPEG images stored in the origin server, and serve them as WebP files to browsers that support this format.
+4. Under **Polish**, select _Lossy_ or _Lossless_ from the drop-down menu. [_Lossy_](/images/polish/compression-and-format-selection/#lossy) gives greater file size savings.
+5. (Optional) Enable **AVIF** to serve optimized AVIF images to browsers that support this format.
+6. (Optional) Enable **WebP** to serve optimized WebP images to browsers that support this format.
 
 To ensure WebP is not served from cache to a browser without WebP support, disable any WebP conversion utilities at your origin web server when using Polish.
 
