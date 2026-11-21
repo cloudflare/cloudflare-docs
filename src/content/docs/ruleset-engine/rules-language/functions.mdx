@@ -391,10 +391,12 @@ For example, if `http.host` is `"WWW.cloudflare.com"`, then `lower(http.host) ==
 
 Computes the MD5 hash of the `input` string or byte array. Returns a 16-byte hash value.
 
+The `input` must be a field or a function result. It cannot be a literal value.
+
 To encode the hash as a string, combine `md5()` with [`encode_base64()`](#encode_base64):
 
 ```txt
-encode_base64(md5("hello world"))
+encode_base64(md5(http.request.uri.path))
 ```
 
 ### `regex_replace`
@@ -481,10 +483,12 @@ You can only use the `remove_query_args()` function in [rewrite expressions of T
 
 Computes the SHA-1 hash of the `input` string or byte array. Returns a 20-byte hash value.
 
+The `input` must be a field or a function result. It cannot be a literal value.
+
 To encode the hash as a string, combine `sha1()` with [`encode_base64()`](#encode_base64):
 
 ```txt
-encode_base64(sha1("hello world"))
+encode_base64(sha1(http.request.uri.path))
 ```
 
 ### `sha256`
@@ -493,12 +497,14 @@ encode_base64(sha1("hello world"))
 
 Computes the SHA-256 cryptographic hash of the `input` string or byte array. Returns a 32-byte hash value.
 
+The `input` must be a field or a function result. It cannot be a literal value.
+
 Use this function to generate signed request headers, validate request integrity, or create secure tokens directly in rule expressions.
 
 Examples:
 
 ```txt
-sha256("my-token")
+sha256(http.request.uri.path)
 ```
 
 The example above returns a 32-byte hash that your origin can validate to authenticate requests.
@@ -506,7 +512,7 @@ The example above returns a 32-byte hash that your origin can validate to authen
 You can combine `sha256()` with [`encode_base64()`](#encode_base64) to create Base64-encoded signatures:
 
 ```txt
-encode_base64(sha256("my-token"))
+encode_base64(sha256(http.request.uri.path))
 ```
 
 To create a signed header value from request attributes:
@@ -529,10 +535,12 @@ You can only use the `sha256()` function in rewrite expressions of [Transform Ru
 
 Computes the SHA-512 hash of the `input` string or byte array. Returns a 64-byte hash value.
 
+The `input` must be a field or a function result. It cannot be a literal value.
+
 To encode the hash as a string, combine `sha512()` with [`encode_base64()`](#encode_base64):
 
 ```txt
-encode_base64(sha512("hello world"))
+encode_base64(sha512(http.request.uri.path))
 ```
 
 ### `split`
