@@ -75,7 +75,11 @@ To delete a certificate using the API, send a [DELETE request](/api/resources/ss
 
 ## Restart validation
 
-To restart validation for a certificate in a `validation_timed_out` status, send a [PATCH request](/api/resources/ssl/subresources/certificate_packs/methods/edit/) to the API.
+The Cloudflare dashboard does not have a **Retry** or **Re-validate** button for Advanced Certificate Manager certificates. Use the API depending on your certificate's status:
+
+- **Pending Validation** — The certificate is waiting for DCV to complete. Use the [Edit SSL Certificate Pack Validation Method](/api/resources/ssl/subresources/verification/methods/edit/) endpoint with the same `validation_method` currently in use. Refer to [Trigger an immediate DCV recheck](/ssl/edge-certificates/changing-dcv-method/troubleshooting/#trigger-an-immediate-dcv-recheck) for full instructions.
+
+- **Validation timed out** — Send a [PATCH request](/api/resources/ssl/subresources/certificate_packs/methods/edit/) to the API to restart validation.
 
 ---
 
