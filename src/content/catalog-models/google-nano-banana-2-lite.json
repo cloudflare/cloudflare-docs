@@ -149,9 +149,7 @@
 				"resolution": {
 					"type": "string",
 					"enum": [
-						"1K",
-						"2K",
-						"4K"
+						"1K"
 					]
 				}
 			},
