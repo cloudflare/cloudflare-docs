@@ -351,9 +351,13 @@ Key behaviors:
 - If either side closes the connection, attachments are lost
 - Modifications to `value` after calling this method are not retained unless you call it again
 - The `value` can be any type supported by the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
-- Maximum serialized size is 16,384 bytes
+- Maximum size is 16,384 serialized bytes, including serialization overhead.
 
 For larger values or data that must persist beyond WebSocket lifetime, use the [Storage API](/durable-objects/api/sqlite-storage-api/) and store the corresponding key as an attachment.
+
+:::note[Local development]
+For the 16,384-byte limit in local development, use [Wrangler 4.72.0](https://github.com/cloudflare/workers-sdk/releases/tag/wrangler%404.72.0) or later. Older local runtimes enforce a 2,048-byte limit.
+:::
 
 #### `WebSocket.deserializeAttachment`
 
