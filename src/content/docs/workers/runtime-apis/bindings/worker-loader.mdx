@@ -99,7 +99,7 @@ To add a dynamic worker loader binding to your worker, add it to your Wrangler c
 
 </WranglerConfig>
 
-The local `workerd` runtime does not enforce a dynamic Worker's [`limits.cpuMs`](#limits) CPU budget. Use a [Worker Preview](/workers/previews/) to test CPU-limit failures on Cloudflare before deploying to production.
+The local `workerd` runtime does not enforce a dynamic Worker's [`limits.cpuMs`](#limits) CPU budget. Use a [Worker Preview](/workers/previews/) to test CPU-limit failures on Cloudflare before deploying to production. Add the binding under `previews.worker_loaders` too. Previews do not inherit it from the top level.
 
 ## API Reference
 
