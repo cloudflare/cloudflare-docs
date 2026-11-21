@@ -216,6 +216,20 @@ For TCP applications, default settings will apply. The minimum TLS version will 
 
 :::
 
+### ALPN
+
+Some protocols require the client and server to agree on an application protocol during the TLS handshake, using ALPN. For example, gRPC clients require `h2`, and PostgreSQL clients using direct TLS require `postgresql`. By default, Spectrum does not negotiate ALPN, so these clients fail when Edge TLS Termination is on.
+
+To fix this, set `edge_alpn_protocols` on the application to the protocols your origin speaks, in order of preference, using the [Spectrum API](/api/resources/spectrum/subresources/apps/methods/update/):
+
+```json
+"edge_alpn_protocols": ["h2"]
+```
+
+When this is set, Cloudflare rejects clients that offer none of the listed protocols, or no ALPN at all, before any data reaches your origin. Leave it empty to keep the default behavior.
+
+`edge_alpn_protocols` requires Edge TLS Termination (**Flexible**, **Full** or **Full (Strict)**) and is not available for FTP applications.
+
 ## Origin TLS Termination
 
 Below are the cipher suites Cloudflare presents to origins during an SSL/TLS handshake. For cipher suites supported at our edge or presented to browsers and other user agents, refer to [Cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/).
