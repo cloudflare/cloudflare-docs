@@ -20,6 +20,10 @@ You can only use Data Studio to access data for [SQLite-backed Durable Objects](
 At the moment, you can only read/write data persisted using the [SQL API](/durable-objects/api/sqlite-storage-api/#sql-api). Key-value data persisted using the KV API will be made read-only in the future.
 :::
 
+:::caution[Queries can run application code]
+Data Studio queries run against your deployed Durable Object. If the object is inactive, a query can initialize it and run its constructor. This also applies to read-only queries such as `SELECT`. Any application work started by the constructor can run as a result.
+:::
+
 ## View Data Studio
 
 You need at least `Editor` access to the Worker that implements the Durable Object to access Data Studio. Refer to [Durable Objects roles and permissions](/workers/authorization/durable-objects/) for more information.
