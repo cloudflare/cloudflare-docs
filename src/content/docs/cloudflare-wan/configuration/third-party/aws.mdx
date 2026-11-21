@@ -236,7 +236,7 @@ For more information about Cloudflare anycast IPs and tunnel addressing, refer t
 1. Log in to the Cloudflare dashboard.
 2. Go to **Address Space** > **Leased IPs**.
 3. Confirm the account has the baseline IPv4 anycast IP `162.159.135.1`.
-4. Go to **Networking** > **Routes** > **WAN configuration**.
+4. Go to **Networking** > **Routes** > **BGP settings**.
 5. Confirm Unified Routing and BGP over IPsec are available for the account.
 6. Record the **CF Account ASN**. The default is `13335`.
 7. Inventory the eligible routes in the Unified Routing dataplane that AWS should learn.
@@ -538,10 +538,10 @@ BGP over IPsec requires Unified Routing. AWS initiates each BGP session; Cloudfl
 ### Record the CF Account ASN
 
 1. Go to **Networking** > **Routes**.
-2. Select **WAN configuration**.
+2. Select **BGP settings**.
 3. Record the **CF Account ASN**.
 
-The CF Account ASN defaults to `13335` and can be changed to a private ASN from `64512` through `65534`. It applies to every BGP session in the Cloudflare account and must differ from the AWS Transit Gateway ASN. This guide uses `13335` as the reference value. If your account uses a different CF Account ASN, use that value wherever this guide shows `13335`, including the BGP ASN of each AWS customer gateway.
+The CF Account ASN defaults to `13335` and can be changed to any ASN from `1` to `4294967294`, except `23456` and `65535`. AWS customer gateways configured with the `bgp_asn` argument accept ASNs up to `2147483647`, so the Terraform reference deployment accepts only ASNs in that range. It applies to every BGP session in the Cloudflare account and must differ from the AWS Transit Gateway ASN. This guide uses `13335` as the reference value. If your account uses a different CF Account ASN, use that value wherever this guide shows `13335`, including the BGP ASN of each AWS customer gateway.
 
 For more information, refer to [Configure routes](/cloudflare-wan/configuration/how-to/configure-routes/#choose-an-asn-for-bgp-peering).
 
@@ -1003,7 +1003,7 @@ PowerShell:
 $env:CLOUDFLARE_API_TOKEN = "<API_TOKEN>"
 ```
 
-Run `terraform plan` and `terraform apply` from the same environment where the token is set. In the Cloudflare dashboard, select the target account and copy its Account ID from the account overview; avoid relying on a fixed navigation path because the dashboard can change. Set this 32-character value as `cloudflare_account_id` in `terraform.tfvars`. Set `cloudflare_asn` to the account's CF Account ASN, recorded under **Networking** > **Routes** > **WAN configuration**. Terraform accepts `13335` or a private ASN from `64512` through `65534` that differs from `aws_transit_gateway_asn`. Terraform does not change the CF Account ASN because Cloudflare provider v5.27 does not expose the account-wide BGP settings as a resource.
+Run `terraform plan` and `terraform apply` from the same environment where the token is set. In the Cloudflare dashboard, select the target account and copy its Account ID from the account overview; avoid relying on a fixed navigation path because the dashboard can change. Set this 32-character value as `cloudflare_account_id` in `terraform.tfvars`. Set `cloudflare_asn` to the account's CF Account ASN, recorded under **Networking** > **Routes** > **BGP settings**. Terraform accepts an ASN from `1` to `2147483647`, except `23456` and `65535`, that differs from `aws_transit_gateway_asn`. Terraform does not change the CF Account ASN because Cloudflare provider v5.27 does not expose the account-wide BGP settings as a resource.
 
 Confirm that every value in `cloudflare_anycast_ips` appears under **Address Space** > **Leased IPs** in the account identified by `cloudflare_account_id`. These values are the public Cloudflare anycast IPs, not Cloudflare WAN routed prefixes or link-local tunnel interface addresses.
 
@@ -1330,9 +1330,10 @@ variable "cloudflare_asn" {
   default     = 13335
 
   validation {
-    # Cloudflare defaults to 13335 and permits a private 2-byte ASN instead.
-    condition     = floor(var.cloudflare_asn) == var.cloudflare_asn && (var.cloudflare_asn == 13335 || (var.cloudflare_asn >= 64512 && var.cloudflare_asn <= 65534))
-    error_message = "cloudflare_asn must match the CF Account ASN: 13335 or a private ASN from 64512 through 65534."
+    # Cloudflare rejects 23456 (AS_TRANS) and 65535. The AWS customer gateway
+    # bgp_asn argument accepts ASNs from 1 through 2147483647.
+    condition     = floor(var.cloudflare_asn) == var.cloudflare_asn && var.cloudflare_asn >= 1 && var.cloudflare_asn <= 2147483647 && !contains([23456, 65535], var.cloudflare_asn)
+    error_message = "cloudflare_asn must match the CF Account ASN: an ASN from 1 through 2147483647, except 23456 and 65535."
   }
 
   validation {
@@ -1833,7 +1834,7 @@ vpn_preshared_keys = [
 # One anycast IP is the baseline and backs tunnels 01-02.
 cloudflare_anycast_ips  = ["162.159.135.1"]
 aws_transit_gateway_asn = 65020
-# Set to the CF Account ASN shown under Networking > Routes > WAN configuration.
+# Set to the CF Account ASN shown under Networking > Routes > BGP settings.
 cloudflare_asn                            = 13335
 cloudflare_additional_advertised_prefixes = []
 
@@ -1887,7 +1888,7 @@ vpn_preshared_keys = [
 # connection 01; anycast IP 2 backs tunnels 03-04 and VPN connection 02.
 cloudflare_anycast_ips  = ["162.159.135.1", "172.64.135.1"]
 aws_transit_gateway_asn = 65020
-# Set to the CF Account ASN shown under Networking > Routes > WAN configuration.
+# Set to the CF Account ASN shown under Networking > Routes > BGP settings.
 cloudflare_asn                            = 13335
 cloudflare_additional_advertised_prefixes = []
 
@@ -2238,7 +2239,7 @@ run "reject_unsupported_cloudflare_asn" {
   command = plan
 
   variables {
-    cloudflare_asn = 64511
+    cloudflare_asn = 23456
   }
 
   expect_failures = [var.cloudflare_asn]
@@ -2449,7 +2450,7 @@ The configuration validates the following conditions before creating resources:
 - `tunnel_inside_cidrs` contains exactly two unique `/30` networks within `169.254.240.0/20` per configured anycast IP
 - `vpn_preshared_keys` contains exactly two unique PSKs per configured anycast IP, and each PSK meets the AWS requirements of 8-64 letters, numbers, periods, or underscores without a leading `0`
 - `cloudflare_anycast_ips` contains one or two distinct IPv4 addresses
-- `cloudflare_asn` is `13335` or a private ASN from `64512` through `65534`, and differs from `aws_transit_gateway_asn`
+- `cloudflare_asn` is an ASN from `1` through `2147483647`, except `23456` and `65535`, and differs from `aws_transit_gateway_asn`
 - `cloudflare_tunnel_names` is empty or contains two unique names per configured anycast IP, using only letters, numbers, hyphens, and underscores
 - The Cloudflare account ID is a 32-character hexadecimal identifier
 - Additional advertised prefixes are unique IPv4 network CIDRs

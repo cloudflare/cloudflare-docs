@@ -1,0 +1,22 @@
+---
+title: Control static route redistribution to BGP peers
+description: Cloudflare WAN and Magic Transit accounts can now choose whether static WAN routes are advertised to BGP peers.
+date: 2026-11-20
+products:
+  - cloudflare-wan
+  - magic-transit
+  - cloudflare-one
+---
+
+Cloudflare WAN and Magic Transit accounts can now control whether Cloudflare advertises static WAN routes to BGP peers over IPsec and GRE tunnels.
+
+Static route redistribution is on by default, so existing BGP sessions keep their current behavior. When you turn it off, your BGP peers still receive routes learned from your other BGP peers and the prefixes in each tunnel's **Additional Advertised prefix list**.
+
+The setting applies to every BGP session over IPsec and GRE tunnels in your account. Changes apply without resetting BGP sessions.
+
+You can change the setting in the dashboard, under **Routes** > **BGP settings**, or through the API. The **BGP settings** tab replaces the **WAN configuration** tab and also contains the **CF Account ASN** setting.
+
+For configuration details, refer to:
+
+- [Configure route redistribution for Cloudflare WAN](/cloudflare-wan/configuration/how-to/configure-routes/#configure-route-redistribution)
+- [Configure route redistribution for Magic Transit](/magic-transit/how-to/configure-routes/#configure-route-redistribution)
