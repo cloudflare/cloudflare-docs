@@ -35,6 +35,12 @@ You can use the "Deploy to Cloudflare" button to create a remote MCP server.
 
 #### Remote MCP server (without authentication)
 
+:::caution[Keep unauthenticated examples limited to public data]
+This example does not authenticate callers. Anyone who can reach the deployed `/mcp` endpoint can invoke `hello` or any other tools you add. Keep this version limited to harmless examples that expose no private data or privileged actions.
+
+Before adding a tool that reads private information or changes state, require authentication and check the caller’s permissions for that operation. Limit which credentials and resources the tool can access. CORS and Origin checks help protect browser and transport boundaries but do not authorize a caller. For OAuth, consent, and token validation, refer to [Securing MCP servers](/agents/model-context-protocol/guides/securing-mcp-server/).
+:::
+
 Create an MCP server using `createMcpHandler`. View the [complete example on GitHub](https://github.com/cloudflare/agents/tree/main/examples/mcp-worker).
 
 <TypeScriptExample>
