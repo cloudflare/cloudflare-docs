@@ -32,27 +32,27 @@ Open a terminal window and run:
 Running this command will prompt you to install the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) package, and then ask you questions about the type of application you wish to create.
 
 :::note
-To create a Pages project you must now specify the `--platform=pages` arg, otherwise C3 will always create a Workers project.
+To create a Pages project, specify `--platform=pages`. Otherwise, C3 creates a Workers project. With `--platform=pages`, C3 only shows frameworks that support Pages.
 :::
 
 ## Web frameworks
 
-If you choose the "Framework Starter" option, you will be prompted to choose a framework to use. The following frameworks are currently supported:
+If you choose "Framework Starter" with `--platform=pages`, C3 shows the following frameworks:
 
 - [Angular](/pages/framework-guides/deploy-an-angular-site/)
 - [Astro](/pages/framework-guides/deploy-an-astro-site/)
 - [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
 - [Gatsby](/pages/framework-guides/deploy-a-gatsby-site/)
 - [Hono](/pages/framework-guides/deploy-a-hono-site/)
-- [Next.js static exports](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/)
 - [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
 - [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
 - [React](/pages/framework-guides/deploy-a-react-site/)
-- [Redwood](/workers/framework-guides/web-apps/redwoodsdk/)
-- [Remix](/pages/framework-guides/deploy-a-remix-site/)
-- [SolidStart](/pages/framework-guides/deploy-a-solid-start-site/)
 - [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)
 - [Vue](/pages/framework-guides/deploy-a-vue-site/)
+
+:::note
+For Workers frameworks, including [TanStack Start](/workers/framework-guides/web-apps/tanstack-start/), refer to the [Workers framework guides](/workers/framework-guides/web-apps/).
+:::
 
 When you use a framework, `npm create cloudflare` directly uses the framework's own command for generating a new projects, which may prompt additional questions. This ensures that the project you create is up-to-date with the latest version of the framework, and you have all the same options when creating you project via `npm create cloudflare` that you would if you created your project using the framework's tooling directly.
 
@@ -66,7 +66,7 @@ If you choose to deploy, you will be asked to sign into your Cloudflare account 
 
 To create a new project using `npm create cloudflare`, and then connect it to a Git repository on your Github or Gitlab account, take the following steps:
 
-1. Run `npm create cloudflare@latest`, and choose your desired options
+1. Run `npm create cloudflare@latest -- --platform=pages`, and choose your desired options
 2. Select `no` to the prompt, "Do you want to deploy your application?". This is important — if you select `yes` and deploy your application from your terminal ([Direct Upload](/pages/get-started/direct-upload/)), then it will not be possible to connect this Pages project to a git repository later on. You will have to create a new Cloudflare Pages project.
 3. Create a new git repository, using the application that `npm create cloudflare@latest` just created for you.
 4. Follow the steps outlined in the [Git integration guide](/pages/get-started/git-integration/)
@@ -93,13 +93,13 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 
 - `--category` <Type text="string" /> <MetaInfo text="optional" />
 
-  - The kind of templates that should be created.
+  - The kind of templates that should be created. With `--platform=pages`, C3 accepts `web-framework` and `remote-template`. Remote templates use their own deployment configuration.
 
   - The possible values for this option are:
 
-    - `hello-world`: Hello World example
+    - `hello-world`: Hello World example (Workers only)
     - `web-framework`: Framework Starter
-    - `demo`: Application Starter
+    - `demo`: Application Starter (Workers only)
     - `remote-template`: Template from a GitHub repo
 
 - `--type` <Type text="string" /> <MetaInfo text="optional" />
@@ -120,22 +120,20 @@ This is the full format of a C3 invocation alongside the possible CLI arguments:
 
   - The type of framework to use to create a web application (when using this option, `--type` is ignored).
 
-  - The possible values for this option are:
+  - The supported values for Pages (with `--platform=pages`) are:
 
     - `angular`
     - `astro`
     - `docusaurus`
     - `gatsby`
     - `hono`
-    - `next`
     - `nuxt`
     - `qwik`
     - `react`
-    - `redwood`
-    - `remix`
-    - `solid`
     - `svelte`
     - `vue`
+
+  - For Workers frameworks, including `tanstack-start`, refer to the [Workers framework guides](/workers/framework-guides/web-apps/).
 
 - `--template` <Type text="string" /> <MetaInfo text="optional" />
 
