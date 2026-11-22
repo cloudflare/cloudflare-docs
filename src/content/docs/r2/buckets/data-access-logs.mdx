@@ -85,7 +85,7 @@ Every event can include these fields:
 | `action`                | R2 operation name.                                                                                     |
 | `actor.type`            | Actor type: `user` or `service`. Public bucket requests use `service`.                                 |
 | `actor.id`              | Identifier for the authenticated actor. Public bucket requests use `public`.                           |
-| `actor.email`           | Email address for a user actor.                                                                        |
+| `actor.email`           | Email address for a user actor, when available.                                                        |
 | `actor.accessKeyId`     | Access key ID for a request authenticated with AWS Signature Version 4.                                |
 | `bucket`                | Target bucket name.                                                                                    |
 | `interface`             | Request interface: `S3`, `API`, `Workers`, or `Public`.                                                |
