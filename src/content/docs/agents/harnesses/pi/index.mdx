@@ -427,7 +427,19 @@ For anything `PiHarness` does not cover, `await harness.pi()` returns the opened
 
 ## Tools that wait
 
-A Pi tool can park instead of returning a result: it returns `{ sleep: { signals, until } }`, and Pi runs it again when one of the signals arrives or the deadline passes. While the call waits, it holds no invocation, so the Durable Object can hibernate or be evicted. Deliver a signal with `harness.signal()`, for example from the request that carries a person's answer:
+A tool call usually ends when its `execute()` returns a result. A Pi tool can instead return a "park" (Pi's `ToolPark` type), which says what the call is waiting for: a signal, a deadline, or both. Returning a park registers the wait. Pi stores it with the call, and when the signal arrives or the deadline passes, Pi runs `execute()` again with the same arguments.
+
+Think of a park as an `await` that survives hibernation. A call cannot keep a promise open while the Durable Object sleeps, so it tells Pi what it is waiting for, and Pi keeps that in storage instead of in memory. While the call is parked, it holds no invocation, so the Durable Object can hibernate or be evicted. Your agent delivers a signal with `harness.signal()`, for example from the request that carries a person's answer.
+
+![A sequence diagram of a tool that asks the user a question. The model calls the tool. The tool has no answer yet, so it shows the question with its task id and returns a park naming the signal it waits for. Pi stores the park with the call, and the Durable Object can hibernate. Later your app calls harness.signal() with the task id and the answer. Pi matches the stored signal key and runs execute() again with the same arguments. This time readSignal() returns the answer, and the tool returns it to the model as its result.](~/assets/images/agents/pi-tool-park.svg)
+
+Because Pi runs the whole of `execute()` again after a wake, a tool that waits for a person's answer does three things each time it runs, in this order:
+
+1. Check for the answer with `api.readSignal()`. On the first run there is none. After the wake, the answer is there, and the tool returns it as its result.
+2. If there is no answer yet, show the question. Send `api.taskId` with it: your agent needs the task id later to deliver the answer.
+3. Return a park that names the signal key to wait for.
+
+Checking first means the question is shown once, not again on the run that has the answer:
 
 ```ts
 import { defineSignal } from "@earendil-works/pi-durable";
@@ -439,23 +451,42 @@ const Answer = defineSignal({
 	schema: obj({ text: str() }),
 });
 
-// In the tool's execute(args, api, context): park until the answer comes.
+// In the tool's execute(args, api, context):
+// 1. Check for the answer. After the wake, it is there.
 const answer = await api.readSignal(Answer, "answer", context);
 if (answer !== undefined && "value" in answer) {
 	return { output: [{ type: "text", text: answer.value.text }] };
 }
+// 2. No answer yet: show the question, with the task id to answer it with.
+// showQuestion() is your code, for example a message to the user's client.
 await showQuestion(api.taskId, args.question);
+// 3. Park until a value arrives for the "answer" key.
 return { sleep: { signals: [Answer.key("answer")] } };
 
 // Later, in your agent, with the task id the question was shown with:
 await this.harness.signal(taskId, Answer, "answer", { text: "Yes" });
 ```
 
+The signal key (`"answer"` here) ties the three calls together: `readSignal()`, `Answer.key()` in the park, and `harness.signal()` must use the same one. A park can also set `until`, a time on Pi's clock such as `api.now()` plus two hours, to stop waiting at a deadline. After the deadline, `readSignal()` returns `{ expired: true }` instead of a value, so handle that case before showing the question again.
+
 `harness.signal()` returns Pi's result: `delivered`, or `duplicate`, `invalid`, `closed`, or `not_found` when the call did not take the value. It schedules the harness's wake-up job before it hands Pi the value, so if the object dies while the woken call runs, the job's alarm restarts it. Deliver signals through `harness.signal()`, not through `harness.pi()`.
 
 A tool can also have a `cancel()` function, which Pi runs when a parked call is aborted, for example to cancel the work it was waiting on. A `beforeTool` hook can park a call the same way before the call runs, to hold it for an approval, a rate limit, or a budget. Pi runs the hook again each time it reopens, so keep the hook idempotent.
 
-While a call is parked, its run is still going: `pending()` lists its operation as `running`, `busy()` is `true`, and Pi's `pi.live` shows the call's slot as `sleeping` or `waiting`. For the rules a parking tool follows, refer to [Tools that park](https://github.com/earendil-works/pi/tree/main/packages/durable#tools-that-park) and [Gates before a tool runs](https://github.com/earendil-works/pi/tree/main/packages/durable#gates-before-a-tool-runs) in the Pi Durable README.
+While a call is parked, its run is still going: `pending()` lists its operation as `running`, `busy()` is `true`, and Pi's `pi.live` shows the call's slot as `sleeping` or `waiting`. The same wait appears under different names:
+
+| Name | Where you see it | What it means |
+| --- | --- | --- |
+| Park, `ToolPark` | What `execute()` returns | The call waits instead of ending. A `beforeTool` hook can return a `sleep` the same way. |
+| `sleep` | In a park | Wait for signals, a deadline (`until`), or both. |
+| `wait` | In a park | Wait for tasks the call owns, such as nested tool calls started with `wait: false`. |
+| `sleeping`, `waiting` | A call's slot in `pi.live` | The call is parked on a `sleep` or a `wait`. |
+| `running` | `PiPendingOperation.status` from `pending()` | The run has not ended. A parked call keeps its run going. |
+| `invalid_park` | An error result the model sees | The park was not valid, for example it set both `sleep` and `wait`, or reused a signal key that already woke the call. |
+
+A park is not the `parked` status that `pending()` showed in Agents SDK 0.31.0 and 0.32.0. That status marked a task stopped by Pi's restart limit, and it was removed in 0.33.0.
+
+For the rules a parking tool follows, refer to [Tools that park](https://github.com/earendil-works/pi/tree/main/packages/durable#tools-that-park) and [Gates before a tool runs](https://github.com/earendil-works/pi/tree/main/packages/durable#gates-before-a-tool-runs) in the Pi Durable README.
 
 ### Wait for a subagent
 
