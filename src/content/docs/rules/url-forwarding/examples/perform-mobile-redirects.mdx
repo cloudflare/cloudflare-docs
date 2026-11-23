@@ -28,8 +28,8 @@ This example static redirect will redirect requests for the current zone (`examp
 **Then**
 
 - **Type:** _Static_
-- **URL:** `m.example.com`
-- **Status code:** _301_
+- **URL:** `https://m.example.com/`
+- **Status code:** _302_
 
 </Example>
 
@@ -37,7 +37,9 @@ Notes about this example:
 
 - The `not http.host in {"m.example.com"}` condition prevents redirect loops.
 - The user agent condition follows [Mozilla's recommendation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox#device-specific_user_agent_strings) for identifying mobile devices.
-- The **Then** > **URL** value should be the same as the one you entered in the `http.host` condition of the rule's filter expression.
+- The **Then** > **URL** value should use the same hostname you entered in the `http.host` condition of the rule's filter expression.
+- Include the URI scheme (`https://`) in the target URL. Cloudflare sends a target URL without a scheme, such as `m.example.com`, unchanged in the `Location` header, and browsers treat it as a relative path on the current hostname.
+- This example uses a `302` (temporary) status code. Browsers can cache `301` (permanent) redirects, and Cloudflare does not add a `Cache-Control` header to redirect responses. A visitor who later uses the same browser on a desktop device might keep receiving a cached `301` redirect.
 - You can redirect users to other zones on Cloudflare or to other hostnames not on Cloudflare.
 
 ## Redirect mobile users keeping the original path
@@ -55,7 +57,7 @@ This example single redirect will redirect requests for the current zone (`examp
 
 - **Type:** _Dynamic_
 - **Expression:** `concat("https://m.example.com", http.request.uri.path)`
-- **Status code:** _301_
+- **Status code:** _302_
 
 </Example>
 
@@ -64,5 +66,5 @@ Notes about this example:
 - The `not http.host in {"m.example.com"}` condition prevents redirect loops.
 - The user agent condition follows [Mozilla's recommendation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/User-Agent/Firefox#device-specific_user_agent_strings) for identifying mobile devices.
 - The hostname in **Then** > **Expression** should be the same as the one you entered in the `http.host` condition of the rule's filter expression.
-- Depending on your use case, you may want to enable **Then** > **Preserve query string** to also keep the query string of the original request.
+- Depending on your use case, you might want to enable **Then** > **Preserve query string** to also keep the query string of the original request.
 - You can redirect users to other zones on Cloudflare or to other hostnames not on Cloudflare.
