@@ -30,7 +30,7 @@ A transcript is a list of messages, and a message has whatever shape the model S
 
 These transcripts are not interchangeable. A Pi session holds Pi entries, and a Think session holds AI SDK messages. They store tool calls, reasoning, and model usage differently, and one harness cannot read the other's transcript as it is. Pick the harness first. Its session comes with it. To move a conversation between them, convert each message, the way Pi's [seeded sessions](/agents/harnesses/pi/#seed-a-session-with-an-existing-history) write an imported history as Pi entries.
 
-Each harness has its own API for sessions. The ideas below are common to all of them.
+Each harness has its own API for sessions. The ideas in the rest of this page are common to all of them.
 
 ## Messages and branches
 
