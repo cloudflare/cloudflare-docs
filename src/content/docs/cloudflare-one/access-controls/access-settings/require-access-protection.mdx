@@ -10,6 +10,8 @@ tags:
 - Security
 ---
 
+import { APIRequest } from "~/components";
+
 Cloudflare Access allows you to require Access protection for all hostnames in your account. When this setting is turned on, traffic to any hostname without a matching [Access application](/cloudflare-one/access-controls/applications/) is automatically blocked.
 
 This deny-by-default approach prevents accidental exposure of internal resources to the public Internet. Without this setting, a developer could deploy a new application or create a DNS record and inadvertently expose the resource before configuring an Access application.
@@ -30,6 +32,18 @@ Turning on Access protection blocks traffic to any hostname that does not have a
 	:::note
 	Cloudflare recommends limiting exemptions to hostnames that host only public-facing content. Internal applications should have an Access application configured.
 	:::
+
+## Verify active exemptions
+
+Access evaluates the current value of `deny_unmatched_requests_exempted_zone_names` from the Access settings API for every request. Audit log entries record that a change was made at a specific time. They are historical records and do not affect request handling.
+
+If the API returns an empty array, no zone is exempted. Requests to hostnames without a matching Access application then return [Error 1050](#blocked-request-behavior), even when the audit log shows the domain as exempted.
+
+To check the active exemptions, get the Access organization settings for your account:
+
+<APIRequest path="/accounts/{account_id}/access/organizations" method="GET" />
+
+The response includes `deny_unmatched_requests` and `deny_unmatched_requests_exempted_zone_names`. These values determine which hostnames are exempt, regardless of what the audit log shows.
 
 ## Allow traffic to a hostname
 
