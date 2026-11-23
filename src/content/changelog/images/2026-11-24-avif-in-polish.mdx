@@ -5,11 +5,11 @@ date: 2026-11-24
 publish_future_dated_entry: true
 ---
 
-[Cloudflare Polish](/images/polish/) can now create AVIF versions of JPEG and PNG source images, alongside existing WebP support. AVIF often produces smaller files than WebP, reducing transfer sizes and improving load times for image-heavy sites such as product catalogs, photo galleries, and news publications.
+[Polish](/images/polish/) can now create AVIF versions of JPEG and PNG images served from your origin, alongside its existing WebP conversion. AVIF often produces smaller files than WebP, reducing transfer sizes and improving load times for image-heavy sites such as product catalogs, photo galleries, and news publications.
 
-Polish automatically optimizes images on your zone that are served from your origin server. It strips metadata, applies compression, and transcodes JPEG and PNG files to more efficient image formats.
+Polish automatically optimizes images on your zone that are served from your origin server. It strips metadata, applies compression, and can convert JPEG and PNG files to more efficient image formats.
 
-[Activate Polish](/images/polish/activate-polish/) with AVIF and WebP through the Cloudflare CLI, REST API, or dashboard. With the CLI, run:
+[Configure Polish](/images/polish/configure-polish/) with AVIF through the [Cloudflare CLI](/images/polish/configure-polish/#cloudflare-cli), [dashboard](/images/polish/configure-polish/#dashboard), or [REST API](/images/polish/configure-polish/#rest-api):
 
 ```sh
 cf zones settings edit polish --zone example.com --body '{"value":"lossy"}'
@@ -17,13 +17,11 @@ cf zones settings edit avif --zone example.com --body '{"value":"on"}'
 cf zones settings edit webp --zone example.com --body '{"value":"on"}'
 ```
 
-AVIF and WebP can be enabled at the same time. When both formats are enabled, Polish transcodes JPEG and PNG files based on browser support:
+AVIF and WebP can be enabled at the same time. When both formats are enabled, Polish selects an output based on browser support, file size, and image quality:
 
 - The browser must advertise AVIF support in its `Accept` header.
 - Polish serves AVIF only if the converted image is smaller than the original.
-- If the browser supports both AVIF and WebP, Polish prefers AVIF.
+- If the browser supports both AVIF and WebP, then Polish prefers AVIF.
 - Browsers without AVIF support continue to receive WebP or the optimized original format.
 
-Polish skips AVIF conversion when the result would be larger, the source image is animated or smaller than 16 by 16 pixels, or AVIF capacity is temporarily unavailable. During periods of high demand, Polish may also use faster compression settings to maintain response times while still serving only AVIF files that are smaller than the original.
-
-For format selection and fallback behavior, refer to [Compression and format selection](/images/polish/compression-and-format-selection/) and [AVIF is not served](/images/polish/troubleshooting/avif-not-served/).
+Refer to [Configure Polish](/images/polish/configure-polish/#avif-and-webp) and [AVIF may be skipped](/images/polish/no-avif/) for format selection and fallback behavior.
