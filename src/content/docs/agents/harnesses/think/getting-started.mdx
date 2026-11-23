@@ -269,10 +269,13 @@ Override `getTools()` to add your own tools alongside the built-in workspace too
 ```ts
 import { tool } from "ai";
 import { z } from "zod";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	getModel(): LanguageModel {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 	configureContext(): ContextConfig[] {
 		/* ... */
@@ -321,10 +324,13 @@ import type {
 	TurnConfig,
 	ChatResponseResult,
 } from "@cloudflare/think";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	getModel(): LanguageModel {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	beforeTurn(ctx: TurnContext): TurnConfig | void {

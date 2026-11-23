@@ -71,6 +71,7 @@ import { Workspace } from "@cloudflare/computer";
 import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
 import { createGitClient } from "@cloudflare/computer/git";
 import { createGitModule } from "@cloudflare/computer/modules/git";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	override workspace = new Workspace({
@@ -86,7 +87,9 @@ export class MyAgent extends Think<Env> {
 	});
 
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 }
 ```
@@ -173,10 +176,13 @@ import { Think } from "@cloudflare/think";
 import { tool } from "ai";
 import type { ToolSet } from "ai";
 import { z } from "zod";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	getTools(): ToolSet {
@@ -291,10 +297,13 @@ Add MCP servers programmatically or via `@callable` methods:
 
 ```ts
 import { callable } from "agents";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	@callable()
@@ -331,10 +340,13 @@ The one-liner infers the executor from `env.LOADER` and a live browser (`cdp.*`)
 import { Think } from "@cloudflare/think";
 import { createAITools } from "@cloudflare/computer/tools/ai-sdk";
 import { createExecuteTool } from "@cloudflare/think/tools/execute";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	getTools() {
@@ -516,6 +528,7 @@ The browser tool is built on the `Browser` capability from `agents/browser`, whi
 import { Think } from "@cloudflare/think";
 import { Browser, browserRun } from "agents/browser";
 import { browserTool } from "agents/browser/ai-sdk";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	readonly browser = new Browser({ provider: browserRun(this.env.BROWSER) });
@@ -526,7 +539,9 @@ export class MyAgent extends Think<Env> {
 	}
 
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	getTools() {
@@ -567,12 +582,15 @@ Extensions require a `worker_loaders` binding:
 
 ```ts
 import { Think } from "@cloudflare/think";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	extensionLoader = this.env.LOADER;
 
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 }
 ```
@@ -628,12 +646,15 @@ Give the model `createExtensionTools` so it can load extensions dynamically:
 
 ```ts
 import { createExtensionTools } from "@cloudflare/think/tools/extensions";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	extensionLoader = this.env.LOADER;
 
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	getTools() {

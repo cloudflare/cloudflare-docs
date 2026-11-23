@@ -78,10 +78,13 @@ Expose configuration to the client via `@callable`:
 
 ```ts
 import { callable } from "agents";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Think<Env> {
 	getModel() {
-		/* ... */
+		return createAI({ binding: this.env.AI })(
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
+		);
 	}
 
 	@callable()
