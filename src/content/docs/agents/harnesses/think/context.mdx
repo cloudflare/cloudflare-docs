@@ -80,7 +80,7 @@ A block's provider is where its value lives. What the provider can do decides wh
 | `get()`, `search(query)`, and `set` | Searchable | A summary, such as a count   | `search_context`, `set_context` |
 | No provider                         | Writable   | The full text and its budget | `set_context`                   |
 
-A block with no provider is stored in the agent's SQLite database, so `memory` above is memory the agent keeps for itself with no extra code. `maxTokens` limits what the model can write to it. `AgentSearchProvider` searches with SQLite full-text search. A provider of your own can read from R2 or an API, or search [Vectorize](/vectorize/). Providers are checked by shape, so any object with the right methods works.
+A block with no provider is stored in the agent's SQLite database, so the `memory` block in the example is memory the agent keeps for itself with no extra code. `maxTokens` limits what the model can write to it. `AgentSearchProvider` searches with SQLite full-text search. A provider of your own can read from R2 or an API, or search [Vectorize](/vectorize/). Providers are checked by shape, so any object with the right methods works.
 
 Think adds `set_context` and `search_context` to the turn's tools when a block needs them. Your code can change blocks through `this.context`:
 

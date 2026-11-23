@@ -86,7 +86,7 @@ Model providers cache a prompt up to the first byte that differs from an earlier
 | Media eviction       | An aged file part becomes a marker                                                 | With the read-time truncation cutoff        |
 | Compaction           | A span of older turns becomes one summary                                          | Once per compaction                         |
 
-Read-time truncation keeps at least the 4 most recent messages whole, and moves its cutoff in steps of `truncationStep` messages (8 by default). A cutoff that moved on every turn would rewrite the end of the cached prefix on every turn, which costs more than it saves. For a model with a small context window, cut more often:
+Read-time truncation keeps at least the four most recent messages whole, and moves its cutoff in steps of `truncationStep` messages (8 by default). A cutoff that moved on every turn would rewrite the end of the cached prefix on every turn, which costs more than it saves. For a model with a small context window, cut more often:
 
 <TypeScriptExample>
 
