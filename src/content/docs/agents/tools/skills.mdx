@@ -53,43 +53,11 @@ These examples require an existing harness. For a new agent, start with [Think](
 
 ### Think
 
-Think adds the tools and the catalog for you. Return your sources from `getSkills()`:
-
-<TypeScriptExample>
-
-```ts
-import { Think, skills } from "@cloudflare/think";
-
-export class MyAgent extends Think<Env> {
-	getSkills() {
-		return [skills.workspace(this.workspace)];
-	}
-}
-```
-
-</TypeScriptExample>
-
-Think lists the sources again before each turn, so new and edited skills take effect on the next turn.
+Think adds the tools and the catalog for you. Return your sources from `getSkills()`. Refer to [Think skills](/agents/harnesses/think/skills/).
 
 ### Pi Durable
 
-In your [Pi harness factory](/agents/harnesses/pi/extensions/#add-skills), install the `skills()` extension. It adds `activate_skill`, `read_skill_resource`, and a `skills` system prompt section:
-
-<TypeScriptExample>
-
-```ts
-import { skills } from "agents/harness/pi";
-import { r2 } from "agents/skills";
-
-// Inside the harness factory, before Harness.open():
-this.registry.install(
-	await skills([r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })]),
-);
-```
-
-</TypeScriptExample>
-
-The extension reads the sources once, when the factory builds it. Both tools are marked `replay: "safe"`.
+Install the `skills()` extension from `agents/harness/pi` in your harness factory. It adds `activate_skill`, `read_skill_resource`, and a `skills` system prompt section. Refer to [Pi skills](/agents/harnesses/pi/skills/).
 
 ### AI SDK
 

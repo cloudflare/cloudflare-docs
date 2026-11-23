@@ -1,0 +1,177 @@
+---
+title: Skills
+pcx_content_type: how-to
+description: Load skills into a Think agent with getSkills(), from a Workspace, R2, or code, and run skill scripts with exec or the script runner.
+sidebar:
+  order: 2.7
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+Think loads [skills](/agents/skills/) for you. Return sources from `getSkills()`, and Think builds the catalog, adds it to the system prompt, and gives the model the skill tools. This page covers what Think does on top of `agents/skills`. For the format, the sources, and validation, refer to the [Skills](/agents/skills/) section.
+
+:::note
+Skills are experimental. This page describes `@cloudflare/think` v0.24.0.
+:::
+
+## Return sources from getSkills()
+
+`@cloudflare/think` re-exports `agents/skills` as the `skills` namespace. `this.workspace` is a Computer Workspace, so `skills.workspace(this.workspace)` reads skills from `/workspace/.agents/skills/`:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [
+			skills.workspace(this.workspace),
+			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
+		];
+	}
+}
+```
+
+</TypeScriptExample>
+
+| Source                                                    | Reads skills from                              |
+| --------------------------------------------------------- | ---------------------------------------------- |
+| [`skills.workspace()`](/agents/skills/sources/#workspace) | Files in the agent's Workspace, or another one |
+| [`skills.r2()`](/agents/skills/sources/#r2)               | Objects in an R2 bucket                        |
+| [`skills.manifest()`](/agents/skills/sources/#code)       | Skills defined in code                         |
+
+Sources apply in order, and the first source to provide a skill name wins. Think logs each problem a source reports, such as a duplicate name or a skill with no description, once per object lifetime. A source that fails when the agent starts is logged, and the agent runs without skills.
+
+## When skills change
+
+Think lists every source again before each turn, so a new, edited, or deleted skill takes effect on the next turn. If a source fails to list, Think keeps its skills from the last turn.
+
+The catalog goes in its own [context block](/agents/harnesses/think/configuration/), below your `getSystemPrompt()` instructions. Think does not rebuild the system prompt when the catalog changes mid-conversation, so the provider's prompt cache stays warm. The new catalog reaches the model as a reminder at the end of the next request, and moves into the system prompt at the next compaction or history clear.
+
+Use `getSystemPrompt()` or a context block from `configureContext()` for instructions that apply to every turn. Use skills for procedures, references, and scripts that only some tasks need.
+
+## Skill tools
+
+When at least one skill is available, Think adds `activate_skill` and `read_skill_resource` to the turn's tools, and `run_skill_script` when you set a script runner. Refer to [Tools](/agents/harnesses/think/tools/) for how they merge with the workspace, custom, MCP, and client tools.
+
+## Add skills to the Workspace
+
+Skills in the Workspace are plain files, so the agent's own `write` tool, a user upload, or your code can add one. For example, write a starter skill when the agent starts:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+const ROOT = "/workspace/.agents/skills";
+
+const STARTER_SKILLS: Record<string, string> = {
+	"pirate-voice/SKILL.md": `---
+name: pirate-voice
+description: Answer in a pirate voice. Use when the user asks for a pirate tone.
+---
+
+Answer accurately, then rewrite the answer in a light pirate voice.
+`,
+};
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [skills.workspace(this.workspace)];
+	}
+
+	async onStart() {
+		for (const [path, content] of Object.entries(STARTER_SKILLS)) {
+			const file = `${ROOT}/${path}`;
+			await this.workspace.fs.mkdir(file.slice(0, file.lastIndexOf("/")), {
+				recursive: true,
+			});
+			await this.workspace.fs.writeFile(file, content);
+		}
+	}
+}
+```
+
+</TypeScriptExample>
+
+## Run skill scripts
+
+### With exec
+
+Give the Workspace a backend, and Think adds the `exec` tool. Activating a skill tells the model where the skill's folder is, so it can run a script from there:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	workspace = new Workspace({
+		storage: this.ctx.storage,
+		backends: [
+			new CodemodeBackend({
+				id: "js",
+				loader: this.env.LOADER,
+				access: "read-write",
+			}),
+		],
+	});
+
+	getSkills() {
+		return [skills.workspace(this.workspace)];
+	}
+}
+```
+
+</TypeScriptExample>
+
+<WranglerConfig>
+
+```jsonc
+{
+	"worker_loaders": [{ "binding": "LOADER" }],
+}
+```
+
+</WranglerConfig>
+
+Refer to [Execution](/agents/skills/execution/#run-scripts-in-the-workspace) for how scripts run in the Workspace.
+
+### With the script runner
+
+For skills that do not live in a Workspace, such as R2 or manifest skills, return the experimental script runner from `getSkillScriptRunner()`. Think then adds `run_skill_script`:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Think, skills } from "@cloudflare/think";
+
+export class MyAgent extends Think<Env> {
+	getSkills() {
+		return [skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })];
+	}
+
+	getSkillScriptRunner() {
+		return skills.runner({ loader: this.env.LOADER });
+	}
+}
+```
+
+</TypeScriptExample>
+
+`skills.runner()` takes the options listed in [Execution](/agents/skills/execution/#runner-options).
+
+## Examples
+
+- The [`computer-skills` example](https://github.com/cloudflare/agents/tree/main/examples/computer-skills) stores skills in a Workspace, runs their scripts with `exec`, and lets you add and delete skills from the UI.
+- The [`r2-skills` example](https://github.com/cloudflare/agents/tree/main/examples/r2-skills) loads skills from a bucket, runs a script with the script runner, and lets you upload and delete skills from the UI.
+
+## Related
+
+- [Skills](/agents/skills/): the format, sources, and validation
+- [Configuration](/agents/harnesses/think/configuration/): `getSkills()` and `getSkillScriptRunner()` with the other overrides
