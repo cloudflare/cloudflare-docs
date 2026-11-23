@@ -10,7 +10,7 @@ tags:
   - REST API
 ---
 
-import { Tabs, TabItem, CURL, Details } from "~/components";
+import { Tabs, TabItem, CURL, Details, APIRequest } from "~/components";
 
 IdP federation allows organizations with multiple Cloudflare accounts to use a single identity provider (IdP) configuration across accounts. Instead of configuring the same IdP (for example, Okta or Entra ID) separately in every account, you configure it once in a source account and share it with the other accounts in your organization.
 
@@ -28,8 +28,9 @@ When a user in a recipient account authenticates, the request is routed through 
 ## Prerequisites
 
 - You must have permission to edit the source IdP in the source account.
-- You must be a member of a [Cloudflare Organization](/fundamentals/organizations/).
+- You must be an Organization Super Administrator. Refer to [Resource sharing permissions](/fundamentals/organizations/resource-sharing/#required-permissions).
 - The source account must belong to a Cloudflare Organization.
+- To share the grant with the API, you must use a Global API key. API tokens cannot create shares.
 
 ## Share an IdP
 
@@ -79,10 +80,9 @@ Specify only one of these fields per recipient. If you provide neither, the gran
 
 To share the grant with one or more specific accounts:
 
-<CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/shares"
+<APIRequest
+	path="/accounts/{account_id}/shares"
 	method="POST"
-	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
 		name: "Identity provider: OpenID Connect",
 		recipients: [{ recipient_account_id: "<RECIPIENT_ACCOUNT_ID>" }],
@@ -99,10 +99,9 @@ To share the grant with one or more specific accounts:
 
 To share the grant with every account in your Organization, replace the `recipients` array with your Organization ID:
 
-<CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/shares"
+<APIRequest
+	path="/accounts/{account_id}/shares"
 	method="POST"
-	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
 	json={{
 		name: "Identity provider: OpenID Connect",
 		recipients: [{ organization_id: "<ORGANIZATION_ID>" }],
@@ -152,11 +151,7 @@ Unfederating an IdP via the API is a two-step process. Deleting the grant stops 
 
 #### 2. (Optional) Delete the share
 
-<CURL
-	url="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/shares/$SHARE_ID"
-	method="DELETE"
-	headers={{ Authorization: "Bearer $CLOUDFLARE_API_TOKEN" }}
-/>
+<APIRequest path="/accounts/{account_id}/shares/{share_id}" method="DELETE" />
 </TabItem></Tabs>
 
 ## Limitations

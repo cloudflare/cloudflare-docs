@@ -1089,6 +1089,7 @@
 /firewall/cf-firewall-rules/cloudflare-challenges/ /cloudflare-challenges/ 301
 
 # fundamentals
+/fundamentals/organizations/policy-sharing/ /fundamentals/organizations/resource-sharing/ 301
 /fundamentals/account-and-billing/account-setup/ /fundamentals/account/ 301
 /fundamentals/account-and-billing/account-setup/account-roles/ /fundamentals/manage-members/roles/ 301
 /fundamentals/account-and-billing/account-setup/manage-account-members/ /fundamentals/manage-members/ 301
