@@ -83,7 +83,9 @@ export class Assistant extends DurableObject<Env> {
 To read skills from another directory, pass an absolute `root`:
 
 ```ts
-workspace(this.workspace, { root: "/workspace/skills" });
+import { workspace } from "agents/skills";
+
+const source = workspace(this.workspace, { root: "/workspace/skills" });
 ```
 
 If the root directory does not exist, the source lists no skills. `.git`, `node_modules`, and `.DS_Store` inside a skill directory are ignored.
@@ -194,6 +196,9 @@ Sources apply in order, so put the source you want to win first:
 <TypeScriptExample>
 
 ```ts
+import { loadSkillCatalog, workspace } from "agents/skills";
+import { handbook } from "./handbook";
+
 const catalog = await loadSkillCatalog([workspace(this.workspace), handbook]);
 ```
 
