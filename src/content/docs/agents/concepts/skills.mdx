@@ -121,9 +121,9 @@ A skill adds instructions to the agent's context, and its scripts can run code. 
 
 The Agents SDK reads the format in `agents/skills` and checks every `SKILL.md` against the specification. As the specification's guide for agents recommends, it loads skills that break a rule and logs a warning, so skills written for other agents still work. Skills that cannot be used, such as ones without a description, are skipped. To check a skill when you write it, parse it with `parseSkill()` and require no warnings.
 
-Skills reach the model in two parts. The catalog, one line per skill with its name and description, goes into the system prompt. The model then loads a skill's instructions with the `activate_skill` tool and its files with `read_skill_resource`. A loaded skill comes back as a tool result, so it is part of the [session](/agents/concepts/sessions/) from then on, like any other message.
+A skill is one kind of [context](/agents/concepts/context/), and it reaches the model in two parts. The catalog, one line per skill with its name and description, goes into the system prompt. The model then loads a skill's instructions with the `activate_skill` tool and its files with `read_skill_resource`. A loaded skill comes back as a tool result, so it is part of the [session](/agents/concepts/sessions/) from then on, like any other message.
 
-`agents/skills` builds the catalog and the tools. It does not decide where the catalog goes or how often it is reloaded: each harness does. Think puts the catalog in a context block and lists the sources again before each turn. Pi adds it as a section of its system prompt when its skills extension is built.
+`agents/skills` builds the catalog and the tools. It does not decide where the catalog goes or how often it is reloaded: each harness does. Think puts the catalog in a [context block](/agents/harnesses/think/context/) and lists the sources again before each turn. Pi adds it as a section of its system prompt when its skills extension is built.
 
 Skills come from three kinds of [source](/agents/skills/sources/): a Computer Workspace, an R2 bucket, or code. The SDK uses the `.agents/skills/` folder convention that several agents share, so `/workspace/.agents/skills/` in a Workspace holds the agent's skills. Refer to [Execution](/agents/skills/execution/) for running skill scripts.
 

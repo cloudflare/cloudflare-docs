@@ -50,7 +50,7 @@ The files in `scripts/`, `references/`, and `assets/` are the skill's resources.
 
 ## Load skills into an agent
 
-Three pieces put skills in front of a model:
+To give a model skills, you need three pieces:
 
 1. One or more [sources](/agents/skills/sources/) say where the skills live.
 2. `loadSkillCatalog()` lists every source and merges the skills into a catalog.
@@ -127,7 +127,7 @@ Sources apply in order. The first source to provide a skill name wins, and later
 | `read_skill_resource` | Read a resource by `{ name, path }` or a qualified path such as `name/path`      |
 | `run_skill_script`    | Run a bundled script, when you pass a [script runner](/agents/skills/execution/) |
 
-The model's `name` argument is limited to the skills in the catalog. Failures, such as a missing file, are thrown, so the AI SDK returns them to the model as tool errors. For a harness that is not built on the AI SDK, call `catalog.activate()` and `catalog.readResource()` from your own tool handlers. Refer to [Skills tools](/agents/tools/skills/).
+The model can only pass the name of a skill in the catalog. The tools throw on a failure, such as a missing file, and the AI SDK returns the error to the model. For a harness that is not built on the AI SDK, call `catalog.activate()` and `catalog.readResource()` from your own tool handlers. Refer to [Skills tools](/agents/tools/skills/).
 
 ## The catalog and the prompt cache
 
@@ -140,11 +140,11 @@ Available skills. When a task matches a skill, use activate_skill with its name 
 - pirate-voice: Answer in a pirate voice.
 ```
 
-It returns `null` when there are no skills. The catalog text is part of the system prompt, so a skill added, edited, or deleted mid-conversation changes the prompt, and the provider's prompt cache starts over from that point. `catalog.fingerprint` changes whenever `prompt()` would, so compare it between turns to tell whether the prompt changed. How often to reload the catalog, and where in the prompt to put it, is up to the harness. Each harness's skills page says what it does.
+It returns `null` when there are no skills. The catalog text is part of the system prompt, so adding, editing, or deleting a skill mid-conversation changes the prompt, and the provider's [prompt cache](/agents/concepts/context/#prompt-caching) starts over from that point. `catalog.fingerprint` changes whenever `prompt()` would, so compare it between turns to tell whether the prompt changed. Your harness decides how often to reload the catalog and where in the prompt to put it, and each harness's skills page says what it does.
 
 ## Validation
 
-Every `SKILL.md` is checked against these rules from the [Agent Skills specification](https://agentskills.io/specification):
+`agents/skills` checks every `SKILL.md` against these rules from the [Agent Skills specification](https://agentskills.io/specification):
 
 - `name` must be 1 to 64 lowercase letters, digits, and hyphens. It cannot start or end with a hyphen or contain `--`. It must match the skill's directory name.
 - `description` is required and can be at most 1,024 characters.

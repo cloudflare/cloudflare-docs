@@ -18,7 +18,7 @@ A source tells an agent where its [skills](/agents/skills/) live. `agents/skills
 | [`r2()`](#r2)               | Objects in an R2 bucket                     | Many agents share one set of skills managed outside your Worker                  |
 | [`manifest()`](#code)       | Skills defined in code                      | Tests, or a small fixed set of skills that ships with your Worker                |
 
-Pass sources to `loadSkillCatalog()`. A source lists every skill it holds each time the catalog is loaded, so a change in the store shows up the next time you load it. Each `SKILL.md` is checked against the [specification](/agents/skills/#validation) when it is listed.
+Pass sources to `loadSkillCatalog()`. A source lists every skill it holds each time the catalog is loaded, so a change in the store shows up the next time you load it. `agents/skills` checks each `SKILL.md` against the [specification](/agents/skills/#validation) when it lists the source.
 
 ## Workspace
 
