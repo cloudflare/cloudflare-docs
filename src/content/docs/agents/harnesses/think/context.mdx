@@ -10,7 +10,7 @@ products:
 
 import { TypeScriptExample } from "~/components";
 
-Context is how a Think agent builds up what the model is told besides the conversation: who the agent is, what it has learned about the user, what it can look up. You declare labelled blocks, and Think renders them into the system prompt, saves what the model writes to them, and keeps the prompt stable so the provider's prompt cache holds.
+Context is how a Think agent builds up what the model is told besides the conversation: who the agent is, what it has learned about the user, what it can look up. You declare labelled blocks, and Think renders them into the system prompt, saves what the model writes to them, and keeps the prompt the same from turn to turn, so the provider's prompt cache keeps working.
 
 :::caution[Experimental]
 Context is experimental, and only Think uses it. Its API may change between releases. This page describes `@cloudflare/think` v0.24.0.
@@ -94,12 +94,12 @@ await this.context.appendToBlock("memory", `Timezone: ${timezone}`);
 
 ## What the model is sent
 
-The system prompt sits at the start of every request, so it sits at the start of the provider's prompt cache. Think keeps it stable:
+The system prompt is at the start of every request, so any change to it loses the provider's prompt cache. Think avoids that:
 
-- **The prompt is frozen.** The first turn renders every block, and Think stores that prompt. Every later request opens with the same text, even after a block changes, and the same text comes back after the object is evicted.
-- **Writes wait.** When the model writes to a block, the value is saved at once. The model already knows what it wrote, because the tool call is in the transcript, so the prompt stays as it was.
-- **Reminders go after the cached prefix.** While a block declared `whenChanged: "remind"` differs from the frozen prompt, Think adds its current value to the last user message of each request, after the history, until a refresh folds the value into the prompt.
-- **Refreshes are deliberate.** A refresh renders every block again and freezes the new prompt. Think refreshes after a compaction and when history is cleared, where the cache is already lost. Call `this.context.refreshSystemPrompt()` to refresh yourself.
+- On the first turn, Think renders every block and stores the result. Every later request starts with that same text, even after a block changes or the object restarts.
+- When the model writes to a block, Think saves the new value at once but leaves the prompt as it was. The model already knows what it wrote, because the tool call is in the transcript.
+- While a block declared `whenChanged: "remind"` differs from the stored prompt, Think adds its current value to the last user message of each request, after the history.
+- A refresh renders every block again and stores the new prompt. Think refreshes after a compaction and when history is cleared, where the cache is lost anyway. To refresh at another moment, call `this.context.refreshSystemPrompt()`.
 
 ```txt
 system:    frozen prompt (unchanged)
@@ -109,7 +109,7 @@ user:      What day is it?
            + environment changed: "Today is Tuesday."
 ```
 
-A reminder is not stored. It rides on the newest user message of every request until a refresh, so the previous user message changes from one request to the next, and the provider's cache ends there. Declare as reminders only the blocks the model needs to see change during a conversation, such as the date or the state of a workspace.
+Think does not store a reminder. It adds it to the newest user message of every request until a refresh, so the previous user message changes from one request to the next, and the provider's cache ends there. Declare as reminders only the blocks the model needs to see change during a conversation, such as the date or the state of a workspace.
 
 To configure compaction and the other settings that shape the conversation part of the request, refer to [Sessions](/agents/harnesses/think/sessions/).
 

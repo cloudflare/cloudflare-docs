@@ -60,13 +60,13 @@ Annotate a `configureSession()` override with the `Session` type from `@cloudfla
 
 ## Message storage
 
-Think stores messages, not files. A message larger than one SQLite row is split across rows and put back together when it is read, so no message is too large to store and nothing is truncated. The real limit is the Durable Object's storage, so bound untrusted input in your application. Keep files in the [workspace](/agents/harnesses/think/tools/#connect-a-workspace), and put a reference to a file in the message.
+Think splits a message larger than one SQLite row across several rows and reads it back whole, so it never cuts a stored message short. Your limit is the Durable Object's storage: check the size of what clients send, and keep files in the [workspace](/agents/harnesses/think/tools/#connect-a-workspace) with a reference to the file in the message.
 
 At startup, Think loads a recent window of the conversation, bounded by `hydrationByteBudget` (32 MiB by default). The budget counts each row's stored bytes plus the attachment bytes it loads, so it bounds memory use, not storage.
 
 ## Media eviction
 
-Sending an image the model has already seen back on every later turn costs tokens for nothing. Once a message is older than `mediaEviction.keepRecentMessages` (8 by default), Think moves its media out of the conversation and leaves a marker in its place:
+An image the model has already seen costs tokens again on every later turn. Once a message is older than `mediaEviction.keepRecentMessages` (8 by default), Think moves its media out of the conversation and leaves a marker in its place:
 
 ```txt
 [evicted image/png, 812004 bytes; preserved at /workspace/attachments/evicted/msg_01H8-0.png]
