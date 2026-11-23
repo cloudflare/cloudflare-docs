@@ -79,6 +79,6 @@ To re-enable Universal SSL with the Cloudflare API, send a [`PATCH`](/api/resour
 
 Disabling Universal SSL removes the certificate from Cloudflare's network immediately — it is no longer served to visitors.
 
-However, Cloudflare does not automatically submit a revocation request to the CA. The certificate remains listed as valid in the CA's OCSP responses and CRL until it expires. If you check the certificate's OCSP status after disabling Universal SSL, the CA reports it as good until the natural expiry date.
+However, Cloudflare does not automatically submit a revocation request to the CA. Because the certificate is not revoked, it does not appear in the CA's CRL. Where the CA runs an OCSP responder, it reports the certificate as good until it expires.
 
 If you need the certificate to be explicitly revoked at the CA — for example, to satisfy a compliance or security audit requirement — contact [Cloudflare Support](https://support.cloudflare.com) to request a CA revocation submission.

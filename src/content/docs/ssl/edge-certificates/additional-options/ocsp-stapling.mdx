@@ -26,7 +26,7 @@ To check whether a Cloudflare edge certificate has a stapled OCSP response, run:
 echo | openssl s_client -connect <your-domain>:443 -status 2>/dev/null | grep -A 10 "OCSP response"
 ```
 
-A stapled response returns `OCSP Response Status: successful (0x0)`. If stapling is not active, the output shows `OCSP response: no response sent`.
+A stapled response returns `OCSP Response Status: successful (0x0)`. If stapling is not active, the output reports that no OCSP response was sent or received. The exact wording depends on your OpenSSL version.
 
 ## Use OCSP stapling with a compliance requirement
 
