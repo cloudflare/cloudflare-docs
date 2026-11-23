@@ -95,6 +95,11 @@
 		"parent": ["Storage & databases", "R2 object storage"]
 	},
 	{
+		"deeplink": "/?to=/:account/k2",
+		"name": "K2 Streams",
+		"parent": ["Storage & databases"]
+	},
+	{
 		"deeplink": "/?to=/:account/workers/services/view/:worker/production/issues?status=active",
 		"name": "Issues",
 		"parent": ["Compute & AI", "Workers & Pages"]
