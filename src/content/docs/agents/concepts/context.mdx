@@ -62,6 +62,22 @@ To see whether you are hitting the cache, read the usage the provider returns wi
 - **[OpenCode](/agents/harnesses/opencode/)** builds its prompt from its own configuration and the plugins you bundle.
 - **Your own loop** builds the request itself. [`agents/skills`](/agents/skills/) returns a skill catalog to add to your system prompt, and the order rules in [Prompt caching](#prompt-caching) are yours to follow.
 
+## `agents/context` exports
+
+`agents/context` is the experimental library Think builds its context with. From `agents` v0.35.0 it exports:
+
+| Export                                                         | What it is                                                                                                                                                                                                                                                                                                                             |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Context`                                                      | Context blocks bound to a session. It records the system prompt and each delivered change on the session, and builds each request from that record. Methods: `freezeSystemPrompt()`, `refreshSystemPrompt()`, `reminder()`, `getBlock()`, `getBlocks()`, `setBlock()`, `appendToBlock()`, `addBlock()`, `removeBlock()`, and `tools()` |
+| `ContextOptions`                                               | Options for `Context`: `blocks`, `sql`, `defaultProvider`, and `promptStore`                                                                                                                                                                                                                                                           |
+| `ContextBlocks`                                                | The blocks and their tools, with no session and no stored prompt. `renderSystemPrompt()` renders the blocks as they are now                                                                                                                                                                                                            |
+| `ContextConfig`, `ContextBlock`                                | One block's configuration, and a loaded block with its content and token count                                                                                                                                                                                                                                                         |
+| `ContextProvider`, `WritableContextProvider`, `SearchProvider` | The source of a read-only, a writable, and a searchable block                                                                                                                                                                                                                                                                          |
+| `AgentContextProvider`, `AgentSearchProvider`                  | A writable block in SQLite, and a searchable block backed by SQLite full-text search                                                                                                                                                                                                                                                   |
+| `SqlProvider`                                                  | Any object with a tagged-template `sql`, such as an `Agent` or `this.lifecycle`                                                                                                                                                                                                                                                        |
+
+To use it, refer to [Think context](/agents/harnesses/think/context/).
+
 ## Related
 
 - [Sessions](/agents/concepts/sessions/): the transcript, and how it becomes a request.
