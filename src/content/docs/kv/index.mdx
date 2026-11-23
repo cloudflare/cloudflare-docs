@@ -10,6 +10,8 @@ products:
 
 import {
 	CardGrid,
+	CliVariant,
+	CliVariants,
 	Description,
 	Feature,
 	LinkTitleCard,
@@ -18,6 +20,7 @@ import {
 	Tabs,
 	TabItem,
 	LinkButton,
+	WranglerConfig,
 } from "~/components";
 
 <Description>
@@ -70,9 +73,28 @@ export default {
 
     ```
     </TabItem>
-    <TabItem label="wrangler.jsonc">
+    <TabItem label="Configuration">
 
-```json
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "2025-02-04",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			KV: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});`}
+>
+
+```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
@@ -82,7 +104,6 @@ export default {
 	"observability": {
 		"enabled": true
 	},
-
 	"kv_namespaces": [
 		{
 			"binding": "KV",
@@ -91,6 +112,8 @@ export default {
 	]
 }
 ```
+
+</WranglerConfig>
 
     </TabItem>
     </Tabs>
@@ -161,11 +184,26 @@ See the full Workers KV [REST API and SDK reference](/api/resources/kv/) for det
 	Learn how Workers KV stores and retrieves data.
 </Feature>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Feature header="Wrangler" href="/workers/wrangler/install-and-update/">
 
-The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/general/#init), [test](/workers/wrangler/commands/general/#dev), and [deploy](/workers/wrangler/commands/pages/#pages-deploy) your Workers projects.
+The Workers command-line interface, Wrangler, allows you to [create](/workers/wrangler/commands/general/#init), [test](/workers/wrangler/commands/general/#dev), and [deploy](/workers/wrangler/commands/general/#deploy) your Workers projects.
 
 </Feature>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Feature header="Cloudflare CLI (cf)" href="/cf/">
+
+The Cloudflare CLI (`cf`) allows you to [create](/cf/get-started/first-worker/), develop, and deploy your Workers projects and manage KV namespaces from the terminal.
+
+</Feature>
+
+</CliVariant>
+</CliVariants>
 
 <Feature header="Bindings" href="/kv/concepts/kv-bindings/">
 
