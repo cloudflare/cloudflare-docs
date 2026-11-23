@@ -1,0 +1,116 @@
+---
+title: Sessions
+pcx_content_type: concept
+description: A session is an agent's transcript. Learn which message format each harness stores, how messages form branches, how a harness reads a window of the transcript, how compaction and attachments work, and what the model sees.
+tags:
+  - AI
+sidebar:
+  order: 4.5
+products:
+  - agents
+---
+
+A session is an agent's transcript: every message the user sent, every reply, and every tool call and its result, in order. Some harnesses call it a conversation. Pi does. It is the same thing.
+
+The agent keeps its sessions in its own storage, in the Durable Object's SQLite database, so a conversation survives hibernation, eviction, and deploys. When the agent wakes up, the transcript is already there.
+
+A session records what happened. What the model is told besides the conversation, such as its instructions and what it remembers about the user, goes in the system prompt, and each harness builds that in its own way. Think has [context blocks](/agents/harnesses/think/configuration/) for it.
+
+## Sessions follow the model SDK
+
+A transcript is a list of messages, and a message has whatever shape the model SDK that wrote it uses. A session is written for one SDK, and the harness you pick decides which:
+
+| Harness                                                                       | Where the transcript lives                                                  | Message format                           |
+| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------- | ---------------------------------------- |
+| [Think](/agents/harnesses/think/)                                             | [`Sessions`](/agents/runtime/capabilities/sessions/) from `agents/sessions` | AI SDK `UIMessage`                       |
+| [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) | `Sessions` from `agents/sessions`                                           | AI SDK `UIMessage`                       |
+| [Pi](/agents/harnesses/pi/)                                                   | The conversation store built into Pi Durable                                | Pi AI messages, as Pi transcript entries |
+| [OpenCode](/agents/harnesses/opencode/)                                       | OpenCode's own session storage                                              | OpenCode messages                        |
+| Your own loop on the AI SDK                                                   | `Sessions` from `agents/sessions`                                           | AI SDK `UIMessage`                       |
+
+These transcripts are not interchangeable. A Pi session holds Pi entries, and a Think session holds AI SDK messages. They store tool calls, reasoning, and model usage differently, and one harness cannot read the other's transcript as it is. Pick the harness first. Its session comes with it. To move a conversation between them, convert each message, the way Pi's [seeded sessions](/agents/harnesses/pi/#seed-a-session-with-an-existing-history) write an imported history as Pi entries.
+
+Each harness has its own API for sessions. The ideas below are common to all of them.
+
+## Messages and branches
+
+A message has an identity, a role (user, assistant, or a tool result), and its content: text, reasoning, tool calls with their inputs and outputs, and files. In `Sessions`, appending a message whose ID is already stored writes nothing, so a harness can retry a write after a failure without storing the message twice.
+
+Each message follows a parent. Most of the time that makes a straight line. When a user regenerates a reply or edits an earlier message, the new message takes the same parent as the old one, and the conversation branches:
+
+```txt
+user: Plan a trip to Lisbon
+└─ assistant: Here is a 3-day plan...
+   └─ user: Make it 5 days
+      ├─ assistant: Here is a 5-day plan...        (first attempt)
+      └─ assistant: A 5-day plan, slower pace...   (regenerated, latest)
+```
+
+Nothing is overwritten. The first attempt is still stored, and a client can offer both. A path is the line of messages from the first message to one leaf. The active path ends at the latest leaf, and it is the conversation the model sees. Read from another leaf and you get another conversation from the same transcript.
+
+Harnesses give branches different names. In `Sessions`, any message can have several children. Pi forks a session into a new one that sees the history up to that point.
+
+## History windows
+
+A long conversation can hold more than an isolate should load at once, so a harness reads a session in parts:
+
+- **As a stream.** Messages arrive one at a time, oldest first or newest first, and only a small window of them is in memory. Stop early and the rest is never read.
+- **As a window.** The harness asks for the most recent messages that fit in a byte budget. The newest message is always included, and the result says whether older messages were left out.
+
+In `Sessions`, a window's budget counts each message's full stored size, attachments included, so it bounds memory. Think reads its transcript through such a window, `hydrationByteBudget`, 32 MiB by default.
+
+A window changes where the request starts. Once the transcript outgrows the budget, the start of the window moves forward as messages are added, and the request no longer begins the way the previous one did. That costs the provider's prompt cache, described in [What the model sees](#what-the-model-sees).
+
+## Compaction and overlays
+
+A long conversation eventually needs a shorter request. Compaction summarizes a range of older messages. In `Sessions`, the summary is an overlay on that range: when the harness reads the path, the overlay stands in for the messages it covers.
+
+```txt
+Stored:     [1] [2] [3] [4] [5] [6] [7] [8] [9]
+Read:       [1] [2] [summary of 3-6]   [7] [8] [9]
+```
+
+The original messages stay in storage. Search still finds them, and a branch from an earlier message still sees them. The overlay is applied each time the path is read and is never stored as a message, so a client that posts its transcript back after a compaction cannot write the summary into the record.
+
+A compaction function usually keeps the first messages and a recent tail verbatim, summarizes what is between them, and never separates a tool call from its result. When a conversation is compacted again, it updates the existing summary. A harness runs compaction when an estimated token count crosses a threshold, or on demand.
+
+## Attachments
+
+Images, audio, and PDFs are large, and a transcript would be slow to read if every message carried its files inline. In `Sessions`, a part that declares a non-text media type and carries its bytes inline is stored apart from its message and put back when the message is read. Identical files are stored once. Nothing is lost: the message you read is the message you wrote.
+
+Storing a file and sending it to the model are separate choices. Think stops sending an image to the model once it has aged past a few turns, and leaves a marker that names a Workspace file the agent can read back. That changes the request only. The stored message keeps its bytes.
+
+## What the model sees
+
+The session stores everything. The model never gets everything. Each time a harness calls a model, it builds a request from the session:
+
+1. Read the active path, or a window of it, with overlays applied.
+2. Shorten what the model does not need in full, such as large tool outputs in older messages and aged media.
+3. Convert the messages to the provider's format.
+4. Put the system prompt in front.
+
+Every step after the first works on a copy. The request is a projection of the record, and the record does not change when the request does. That is how a conversation outgrows the model's context window without losing anything. The record is for audit, search, branching, and showing the conversation to people. The request only has to fit the model.
+
+Projection has a cost. Model providers cache the start of a request: when a request begins with the same bytes as the previous one, the provider skips the work for that prefix, so the call is faster and costs less. A transcript that only grows at the end keeps that cache warm, because each request extends the one before. Anything that changes earlier bytes loses the cache from that point on:
+
+- compacting a range into a summary
+- a window whose start moves forward
+- shortening an earlier message that was sent in full before
+- changing the system prompt
+
+None of these is wrong, and some are necessary. Each should happen seldom, and the same transcript should always produce the same request. Think moves its truncation cutoff in steps of eight messages (`truncationStep`) for this reason, so the prefix changes once per step instead of every turn.
+
+## Search
+
+Because the record keeps every message, an agent can search its own transcript: what did the user say about the deployment last week? In `Sessions`, search covers messages that compaction has summarized, because the originals are still stored.
+
+## One conversation, one session
+
+A session holds one conversation. For chat applications, give each conversation its own Durable Object, so conversations hibernate, scale, and fail on their own. Use more than one session in one object for drafts, forks, or side threads.
+
+## Related
+
+- [`Sessions`](/agents/runtime/capabilities/sessions/): store AI SDK messages in a Durable Object.
+- [Pi sessions](/agents/harnesses/pi/#work-with-sessions): Pi conversations and their API.
+- [OpenCode sessions](/agents/harnesses/opencode/#work-with-sessions): OpenCode's session API.
+- [Think](/agents/harnesses/think/): how Think builds each request from its session.
