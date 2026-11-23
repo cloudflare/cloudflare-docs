@@ -317,8 +317,7 @@ For large values, the choice of `type` can have a noticeable effect on latency a
 
 Every KV read result is cached in the global network location it is accessed from, including results for keys that do not exist (negative lookups). `cacheTtl` defines how long, in seconds, that result stays cached. If you omit `cacheTtl`, results are cached for 60 seconds. Caching cannot be turned off.
 
-- **Increase `cacheTtl`** if your data is write-once or write-rarely. This reduces cold read latency on keys that are read relatively infrequently.
-- **Decrease `cacheTtl` to the minimum of `30`** if you need updates to become visible sooner in other global network locations. This results in more cold reads.
+Increase `cacheTtl` if your data is write-once or write-rarely, to reduce cold read latency on keys that are read relatively infrequently. Decrease it to the minimum of `30` if you need updates to become visible sooner in other global network locations, at the cost of more cold reads.
 
 :::note[Hot and cold read]
 
