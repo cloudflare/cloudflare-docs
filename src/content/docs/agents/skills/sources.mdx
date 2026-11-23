@@ -82,11 +82,15 @@ export class Assistant extends DurableObject<Env> {
 
 To read skills from another directory, pass an absolute `root`:
 
+<TypeScriptExample>
+
 ```ts
 import { workspace } from "agents/skills";
 
 const source = workspace(this.workspace, { root: "/workspace/skills" });
 ```
+
+</TypeScriptExample>
 
 If the root directory does not exist, the source lists no skills. `.git`, `node_modules`, and `.DS_Store` inside a skill directory are ignored.
 
