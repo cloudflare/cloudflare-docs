@@ -10,7 +10,13 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+} from "~/components";
 
 Workers KV can be used as a persistent, single, global cache accessible from Cloudflare Workers to speed up your application.
 Data cached in Workers KV is accessible from all other Cloudflare locations as well, and persists until expiry or deletion.
@@ -111,8 +117,28 @@ if (!bodyMatch) return 'No content found';
 
 ```
 </TabItem>
-<TabItem label="wrangler.jsonc">
-```json
+<TabItem label="Configuration">
+
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "2025-03-03",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			CACHE_KV: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});`}
+>
+
+```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
@@ -130,6 +156,8 @@ if (!bodyMatch) return 'No content found';
 	]
 }
 ```
+
+</WranglerConfig>
 
 </TabItem>
 </Tabs>
