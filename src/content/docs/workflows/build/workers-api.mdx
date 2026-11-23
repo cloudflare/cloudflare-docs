@@ -777,7 +777,7 @@ Passing an array to `createBatch` is deprecated. Use the `instances` option inst
 
 - <code>createBatch(batch: WorkflowInstanceCreateOptions[]): Promise&lt;WorkflowInstance[]&gt;</code>
 
-The array form returns an array of `WorkflowInstance`. It skips entries whose ID already exists or repeats within the batch, or whose `params` contain a value that Workflows cannot store, and excludes them from the returned array without reporting an error.
+The array form returns an array of `WorkflowInstance`. It skips entries whose ID already exists or repeats within the batch, or whose `params` contain a value that cannot be stored, and excludes them from the returned array without reporting an error.
 
 To migrate, pass the array as `instances` and read the instances from `created`:
 
