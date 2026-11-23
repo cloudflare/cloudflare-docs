@@ -6,36 +6,53 @@ import { Tabs, TabItem } from "~/components";
 
 ### `metadata`
 
-Controls how Images handles EXIF and XMP metadata in re-encoded output images.
+Controls how Images handles EXIF, XMP, and [IPTC-IIM](#iptc-iim) metadata in re-encoded output images.
 
 Supports [Content Credentials](https://contentcredentials.org/) (or C2PA) when the [**Preserve Content Credentials** setting](/images/optimization/preserve-content-credentials/) is enabled.
 
 Accepts the following values:
 
-- `copyright` (default) — Preserves C2PA metadata and the EXIF copyright tag, and discards all other EXIF and XMP metadata.
-- `keep` — Preserves C2PA metadata, supported EXIF metadata except orientation, and supported XMP metadata.
-- `none` — Discards all C2PA, EXIF, and XMP metadata.
+- `copyright` (default) — Preserves C2PA metadata and the EXIF copyright tag, and discards all other EXIF, XMP, and IPTC-IIM metadata.
+- `keep` — Preserves C2PA metadata, supported EXIF metadata except orientation, and supported XMP metadata. For JPEG sources, it also preserves supported IPTC-IIM metadata.
+- `none` — Discards all C2PA, EXIF, XMP, and IPTC-IIM metadata.
 
 The following rules apply:
-
-- The `metadata` parameter is available through the URL interface and in `cf.image` subrequests. The Images binding does not expose this parameter.
+- The `metadata` parameter is available through the URL interface, `cf.image` subrequests, and preset variants. The Images binding does not expose this parameter.
 - When Images returns the source file unchanged, all embedded metadata, including Content Credentials, remains intact.
 - Cloudflare does not create Content Credentials for sources that do not already contain them.
 - Each of EXIF and XMP is capped at 64 KB after `metadata` mode filtering is applied. If the filtered metadata still exceeds this limit, it is dropped entirely rather than truncated.
-- Cloudflare still uses embedded color profiles and applies EXIF orientation when processing image pixels, even when it omits that metadata from the output.
+- When supported by the source format, Cloudflare applies embedded color information and orientation before filtering output metadata.
 - If [Polish](/images/polish/) is enabled, then all metadata may already be removed and this option will have no effect.
 
 Support for extracting metadata from the source image (decode) and writing it to the output image (encode) varies by format:
 
 | Format | Read from source | Write to output |
 | --- | --- | --- |
-| JPEG | C2PA, EXIF, XMP | C2PA, EXIF, XMP |
+| JPEG | C2PA, EXIF, XMP, IPTC-IIM | C2PA, EXIF, XMP, IPTC-IIM |
 | PNG | C2PA, EXIF, XMP | C2PA, EXIF, XMP |
 | WebP | C2PA, EXIF, XMP | C2PA, EXIF, XMP |
 | AVIF | C2PA, EXIF, XMP | C2PA, EXIF |
 | HEIC | C2PA, EXIF, XMP | Not an output format |
 | GIF | C2PA | C2PA, XMP |
 | TIFF | C2PA | Not an output format |
+
+#### IPTC-IIM
+
+The Information Interchange Model (IIM) is a legacy metadata standard developed by the International Press Telecommunications Council (IPTC). It stores attribution and rights information in JPEG images, including creator names, credits, sources, copyright notices, and special instructions.
+
+With `metadata=keep`, Images preserves the original IPTC-IIM metadata in JPEG output. When Images converts a JPEG to PNG, WebP, or GIF, it maps supported IPTC-IIM fields to XMP:
+
+| IPTC-IIM field |	XMP destination |
+| -- | -- |
+| Copyright Notice | `dc:rights` |
+| By-line |	`dc:creator` |
+| Credit | `photoshop:Credit` |
+| Source | `photoshop:Source` |
+| Special Instructions | `photoshop:Instructions` |
+
+Invalid UTF-8 and other IPTC-IIM fields are not mapped. If the source already contains XMP, Images preserves that XMP without merging the IPTC-IIM fields. AVIF output does not preserve these mapped fields.
+
+The default `metadata=copyright` value does not preserve IPTC-IIM Copyright Notice. Use `metadata=keep` to retain supported IPTC-IIM metadata.
 
 <Tabs>
   <TabItem label="URL format">

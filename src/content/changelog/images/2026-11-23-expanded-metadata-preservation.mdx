@@ -1,38 +1,40 @@
 ---
-title: Preserve EXIF and XMP metadata across more image formats
+title: Expanded support for EXIF, XMP, and IPTC-IIM metadata in Images
 description: Retain copyright, creator, location, and asset-management metadata when Images converts supported image formats for web delivery.
 date: 2026-11-23
 ---
 
 import { TypeScriptExample } from "~/components";
 
-In [Images](/images/), the [`metadata` parameter](/images/optimization/features/#metadata) now supports Extensible Metadata Platform (XMP) metadata and expands Exchangeable Image File Format (EXIF) metadata preservation to additional image formats.
+In [Images](/images/), the [`metadata` parameter](/images/optimization/features/#metadata) now supports Extensible Metadata Platform (XMP) metadata preservation and expands Exchangeable Image File Format (EXIF) metadata preservation to additional image formats. It can also preserve selected legacy Information Interchange Model (IPTC-IIM) metadata from JPEG sources, mapping it to XMP when converting to compatible formats.
 
 This release does not change existing [Content Credentials](/images/optimization/preserve-content-credentials/) support, which can provide tamper-evident provenance and disclose how AI contributed to an image.
 
 ## What changed
 
-Previously, Images preserved EXIF metadata only when both the source and output were JPEG, and did not support XMP metadata preservation. You can now preserve EXIF and XMP metadata when both the source and output formats support the corresponding metadata type.
+Previously, Images preserved EXIF metadata only for JPEG-to-JPEG optimizations, and did not preserve XMP or IPTC-IIM metadata. You can now keep EXIF and XMP metadata when both the source and output formats support the corresponding metadata type. For JPEG sources, you can also retain selected legacy IPTC-IIM attribution and rights metadata.
 
-EXIF and XMP provide complementary and valuable information about an image. For example, publishers can retain copyright and attribution, and photographers can display capture settings alongside images on portfolio sites. E-commerce and digital asset management workflows can carry product details, captions, and internal asset information into optimized images without reattaching that information.
+EXIF, XMP, and IPTC-IIM carry complementary information about an image. For example, publishers can retain copyright and attribution, and photographers can display capture settings alongside images on portfolio sites. E-commerce and digital asset management workflows can carry product details, captions, and internal asset information into optimized images without reattaching that information.
 
-EXIF and XMP support varies by source and output format:
+EXIF, XMP, and IPTC-IIM support varies by source and output format:
 
-| Format | Read from source | Write to output      |
-| ------ | ---------------- | -------------------- |
-| JPEG   | EXIF and XMP     | EXIF and XMP         |
-| PNG    | EXIF and XMP     | EXIF and XMP         |
-| WebP   | EXIF and XMP     | EXIF and XMP         |
-| AVIF   | EXIF and XMP     | EXIF                 |
-| HEIC   | EXIF and XMP     | Not an output format |
-| GIF    | Not supported    | XMP                  |
-| TIFF   | Not supported    | Not an output format |
+| Format | Read from source        | Write to output         |
+| ------ | ----------------------- | ----------------------- |
+| JPEG   | EXIF, XMP, and IPTC-IIM | EXIF, XMP, and IPTC-IIM |
+| PNG    | EXIF and XMP            | EXIF and XMP            |
+| WebP   | EXIF and XMP            | EXIF and XMP            |
+| AVIF   | EXIF and XMP            | EXIF                    |
+| HEIC   | EXIF and XMP            | Not an output format    |
+| GIF    | Not supported           | XMP                     |
+| TIFF   | Not supported           | Not an output format    |
 
 For example, you can convert a high-resolution JPEG to WebP while keeping both EXIF and XMP metadata.
 
+With `metadata=keep`, JPEG outputs retain the original IPTC-IIM metadata. For PNG, WebP, and GIF outputs, Images maps supported IPTC-IIM fields to XMP. If the source already contains XMP, Images preserves that XMP without merging the IPTC-IIM fields.
+
 ## How it works
 
-Use `metadata` to control how Images handles supported EXIF and XMP metadata in re-encoded outputs. The default remains `copyright`, so existing requests may now preserve an EXIF copyright tag in PNG, WebP, or AVIF outputs when the source contains one.
+Use `metadata` to control how Images handles supported metadata in re-encoded outputs. The default remains `copyright`, so existing requests may now preserve an EXIF copyright tag in PNG, WebP, or AVIF outputs when the source contains one.
 
 The following URL transformation converts a JPEG source to WebP and requests metadata preservation:
 
