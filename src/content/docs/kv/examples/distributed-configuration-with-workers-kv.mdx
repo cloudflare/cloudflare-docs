@@ -10,7 +10,13 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+} from "~/components";
 
 Storing application configuration data is an ideal use case for Workers KV. Configuration data can include data to personalize an application for each user or tenant, enable features for user groups, restrict access with allow-lists/deny-lists, etc. These use-cases can have high read volumes that are highly cacheable by Workers KV, which can ensure low-latency reads from your Workers application.
 
@@ -201,8 +207,28 @@ export default {
 
 ```
 </TabItem>
-<TabItem label="wrangler.jsonc">
-```json
+<TabItem label="Configuration">
+
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "2025-03-03",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			USER_CONFIGURATION: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});`}
+>
+
+```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
@@ -220,6 +246,8 @@ export default {
 	]
 }
 ```
+
+</WranglerConfig>
 
 </TabItem>
 </Tabs>
