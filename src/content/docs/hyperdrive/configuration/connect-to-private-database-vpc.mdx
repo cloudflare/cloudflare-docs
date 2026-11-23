@@ -106,7 +106,7 @@ npx wrangler vpc service create my-postgres-db \
   --cert-verification-mode verify_ca
 ```
 
-To change the verification mode of an existing VPC Service, use [`wrangler vpc service update`](/workers-vpc/reference/wrangler-commands/#vpc-service-update). Wrangler sends the full service configuration on update, so pass all of the service's settings again, not only `--cert-verification-mode`. The `--name`, `--type`, and `--tunnel-id` flags are required, and you must also specify the host with `--ipv4`, `--ipv6`, or `--hostname`:
+To change the verification mode of an existing VPC Service, use [`wrangler vpc service update`](/workers-vpc/reference/wrangler-commands/#vpc-service-update):
 
 ```sh
 npx wrangler vpc service update <YOUR_SERVICE_ID> \
