@@ -29,7 +29,7 @@ A wildcard URL redirect has the following configuration parameters:
 
   <Render file="redirects-status-codes" product="rules" />
 
-- **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default). When enabled, Cloudflare replaces any query string in the target URL with the query string of the original request. If the original request has no query string, the redirect URL has no query string. With a wildcard pattern, a target URL that ends with a wildcard reference keeps the query string even when this setting is disabled. Refer to [Query strings in wildcard patterns](#query-strings-in-wildcard-patterns).
+- **Preserve query string**: Whether to preserve the query string when redirecting (disabled by default). When enabled, Cloudflare replaces any query string in the target URL with the query string of the original request. If the original request has no query string, the redirect URL has no query string. With a wildcard pattern, if the request URL ends with `*` and the target URL ends with the matching wildcard reference, the redirect keeps the query string even when this setting is disabled. Refer to [Query strings in wildcard patterns](#query-strings-in-wildcard-patterns).
 
 <Details header="API information">
 

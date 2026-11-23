@@ -96,6 +96,6 @@ This redirect replaces a Page Rule with the following configuration:
 - **Select Status code**: _301 - Permanent Redirect_
 - **Destination URL**: `https://blog.example.com/$1`
 
-This Page Rule URL does not include a URI scheme, so its first wildcard (`$1`) is the path. In the redirect rule, the `*` in `http*` is the first wildcard (`${1}`), so the path is `${2}`.
+This Page Rule URL does not include a URI scheme, so its first wildcard (`$1`) is the rest of the path after `/blog/`. In the redirect rule, the `*` in `http*` is the first wildcard (`${1}`), so the path is `${2}`.
 
 For more information, refer to [Migrate Forwarding URL](/rules/reference/page-rules-migration/#migrate-forwarding-url).

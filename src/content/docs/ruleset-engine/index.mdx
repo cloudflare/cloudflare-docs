@@ -38,7 +38,7 @@ For more information, refer to [About Ruleset Engine](/ruleset-engine/about/).
 3. Within a phase, Cloudflare checks rules in the order you define them.
 4. When an expression matches, Cloudflare runs the rule's action.
 
-Terminating actions, such as _Redirect_, _Block_, or a challenge, stop rule evaluation, and Cloudflare responds immediately. The remaining rules in the phase and later request phases do not run for that request. Response phases, such as [Response Header Transform Rules](/rules/transform/response-header-modification/) and [Custom Error Rules](/rules/custom-errors/), can still apply to the response that Cloudflare generates.
+Terminating actions, such as _Redirect_, _Block_, or a challenge, stop rule evaluation, and Cloudflare responds immediately. The remaining rules in the phase and later request phases do not run for that request. Response phases can still apply to the response that Cloudflare generates. For example, [Response Header Transform Rules](/rules/transform/response-header-modification/) apply to redirect responses, and [Custom Error Rules](/rules/custom-errors/) apply to the error response of a _Block_ action.
 
 Non-terminating actions, such as setting a header, do not stop evaluation. If several rules in the same phase change the same value, the last rule wins. Refer to [Actions](/ruleset-engine/rules-language/actions/) for details.
 
