@@ -58,7 +58,7 @@ To see whether you are hitting the cache, read the usage the provider returns wi
 ## How each harness builds context
 
 - **[Think](/agents/harnesses/think/context/)** builds its system prompt from context blocks that you declare: read-only instructions, memory the model can write, and knowledge it can search. It freezes the prompt after the first turn, refreshes it after compaction, and sends changes to the environment after the latest message. Its skill catalog is one of those blocks.
-- **[Pi](/agents/harnesses/pi/extensions/)** builds its system prompt from sections that extensions add. Its [skills extension](/agents/harnesses/pi/extensions/#add-skills) adds the skill catalog as a section.
+- **[Pi](/agents/harnesses/pi/extensions/)** builds its system prompt from sections that extensions add. Its [skills extension](/agents/harnesses/pi/skills/) adds the skill catalog as a section.
 - **[OpenCode](/agents/harnesses/opencode/)** builds its prompt from its own configuration and the plugins you bundle.
 - **Your own loop** builds the request itself. [`agents/skills`](/agents/skills/) returns a skill catalog to add to your system prompt, and the order rules in [Prompt caching](#prompt-caching) are yours to follow.
 
