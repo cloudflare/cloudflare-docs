@@ -119,11 +119,28 @@ npx wrangler vpc service update <YOUR_SERVICE_ID> \
   --cert-verification-mode verify_ca
 ```
 
-:::note
-Workers VPC trusts publicly trusted certificates and [Cloudflare Origin CA certificates](/ssl/origin-configuration/origin-ca/). Uploading a custom CA certificate to Workers VPC is not supported yet. If your database uses a certificate signed by a private CA, set `--cert-verification-mode` to `verify_ca` or `disabled` until custom CA support is available.
-:::
-
 For the full list of verification modes, refer to [TLS certificate verification mode](/workers-vpc/configuration/vpc-services/#tls-certificate-verification-mode).
+
+### Private CA and client certificates
+
+If your database uses a certificate signed by a private CA (for example, the Amazon RDS CA bundle), or requires a client certificate, upload the certificates and attach them to the VPC Service instead of weakening verification:
+
+```sh
+npx wrangler cert upload certificate-authority --ca-cert ./db-ca.pem --name db-ca
+npx wrangler cert upload mtls-certificate --cert ./client.pem --key ./client-key.pem --name db-client
+
+npx wrangler vpc service create my-postgres-db \
+  --type tcp \
+  --tcp-port 5432 \
+  --app-protocol postgresql \
+  --tunnel-id <YOUR_TUNNEL_ID> \
+  --hostname <YOUR_DATABASE_HOSTNAME> \
+  --certificate-authority <CA_CERTIFICATE_ID> \
+  --client-certificate <CLIENT_CERTIFICATE_ID> \
+  --cert-verification-mode verify_full
+```
+
+Omit `--client-certificate` if your database does not require client certificate authentication. Refer to [Custom CA and client certificates](/workers-vpc/configuration/vpc-services/#custom-ca-and-client-certificates) for all options, including the API and certificate rotation.
 
 ## 3. Create a Hyperdrive configuration
 

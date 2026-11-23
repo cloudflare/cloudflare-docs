@@ -12,7 +12,7 @@ products:
 
 Oftentimes APIs are defined and documented via [OpenAPI specification](https://swagger.io/specification/). The Cloudflare `ai-utils` package's `createToolsFromOpenAPISpec` function creates tools from the OpenAPI spec, which the LLM can then leverage to fulfill the prompt.
 
-In this example the LLM will describe the a Github user, based Github's API and its OpenAPI spec.
+In this example, the LLM will describe a GitHub user based on GitHub's API and its OpenAPI spec.
 
 ```ts title="Embedded function calling example from OpenAPI Spec"
 import { createToolsFromOpenAPISpec, runWithTools } from '@cloudflare/ai-utils';
@@ -54,7 +54,7 @@ export default {
 				messages: [
 					{
 						role: 'user',
-						content: 'Who is cloudflare on Github and how many repos does the organization have?',
+						content: 'Who is Cloudflare on GitHub and how many repos does the organization have?',
 					},
 				],
 				tools: toolsFromOpenAPISpec,

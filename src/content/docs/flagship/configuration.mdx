@@ -109,7 +109,7 @@ npx wrangler flagship flags pull <APP_ID>
 
 Flags are not pulled automatically, so `wrangler dev` works offline and never overwrites flags you changed locally.
 
-`pull` writes to the default local store in `.wrangler/state`. If your dev server keeps its data in a different directory, pass `--persist-to <DIRECTORY>` so that `pull` writes to the same place. For example, the Cloudflare Vite plugin 2.0 beta keeps its data in `.cloudflare/state`:
+`pull` writes to the default local store in `.wrangler/state`. If your dev server keeps its data in a different directory, pass `--persist-to <DIRECTORY>` so that `pull` writes to the same place. For example, the Cloudflare Vite plugin 2.0 keeps its data in `.cloudflare/state`:
 
 ```sh
 npx wrangler flagship flags pull <APP_ID> --persist-to .cloudflare/state
@@ -167,7 +167,7 @@ These commands support `--local`:
 
 Other `cf flagship` commands, such as `cf flagship apps get`, `cf flagship apps definitions get`, and `cf flagship apps flags changelog`, fail with `This command has no local equivalent.` Run them without `--local` to use the remote app.
 
-By default, `cf` keeps [local data in its own directory](/cf/projects/#local-resource-data), which `wrangler dev` and the Cloudflare Vite plugin do not read. To work on the same flags as your dev server, pass its data directory. This is `.wrangler/state` for `wrangler dev` and the Cloudflare Vite plugin 1.x, and `.cloudflare/state` for the Vite plugin 2.0 beta:
+By default, `cf` keeps [local data](/cf/projects/#local-resource-data) in `.cloudflare/state` next to `cloudflare.config.ts`, the same directory as the Cloudflare Vite plugin 2.0. To work on the same flags as `wrangler dev` or the Cloudflare Vite plugin 1.x, pass their data directory, `--persist-to=".wrangler/state"`:
 
 ```sh
 cf flagship apps flags list --app-id <APP_ID> --local --persist-to .wrangler/state

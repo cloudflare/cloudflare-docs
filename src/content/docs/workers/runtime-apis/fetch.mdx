@@ -90,6 +90,8 @@ class Default(WorkerEntrypoint):
       the origin before responding.
   - An object that defines the content and behavior of the request.
 
+Cache Rules can also affect `fetch()` requests to external APIs. Refer to [Workers and Cache Rules](/cache/interaction-cloudflare-products/workers-cache-rules/) for precedence and compatibility requirements.
+
 ---
 
 ## How the `Accept-Encoding` header is handled
@@ -130,6 +132,7 @@ export default {
 ```
 
 ## Related resources
+
 
 - [Example: use `fetch` to respond with another site](/workers/examples/respond-with-another-site/)
 - [Example: Fetch HTML](/workers/examples/fetch-html/)

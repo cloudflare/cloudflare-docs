@@ -576,7 +576,7 @@ Ensure you have a compatibility date `2024-10-22` or later installed when bindin
 :::
 
 The `Workflow` type provides methods that allow you to create, inspect the status, and manage running Workflow instances from within a Worker script.
-It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/general/#types).
+It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/workers/#types).
 
 ```ts title="./worker-configuration.d.ts"
 interface Env {
@@ -611,6 +611,34 @@ return Response.json({
 Returns a `WorkflowInstance`.
 
 Throws an error if the provided ID is already used by an existing instance that has not yet passed its [retention limit](/workflows/reference/limits/). To re-run a workflow with the same ID, you can [`restart`](/workflows/build/trigger-workflows/#restart-a-workflow) the existing instance.
+
+`create()` rejects with an `Error` when it cannot create the instance. For the following failures, `error.message` includes an identifier in parentheses:
+
+| Identifier                  | Cause                                                                                                               |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `(instance.already_exists)` | An instance with this ID already exists.                                                                            |
+| `(instance.invalid_id)`     | The ID is not valid, for example because it is longer than 100 characters.                                          |
+| `(body)`                    | An option has an invalid value, such as a `retention` duration in the wrong format or an `id` that is not a string. |
+
+These errors have no numeric `code` property. Other failures, such as rate limiting, can include a different identifier or none.
+
+To handle a duplicate ID, check `error.message` for the identifier:
+
+```ts
+try {
+	await env.MY_WORKFLOW.create({ id: myIdDefinedFromOtherSystem });
+} catch (err) {
+	if (
+		!(err instanceof Error) ||
+		!err.message.includes("(instance.already_exists)")
+	) {
+		throw err;
+	}
+	// An instance with this ID already exists
+}
+```
+
+To get numeric codes for duplicate IDs instead, use the object form of [`createBatch()`](#createbatch). It does not throw when an ID is already in use. Instead, it returns an entry in `errors` with code `10405` if the ID already exists, or `10415` if the ID repeats within the same batch.
 
 <Render file="workflows-type-parameters" product="workflows" />
 

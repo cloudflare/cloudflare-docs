@@ -1,0 +1,758 @@
+---
+// Three-column map used on the "Choose a connector" page:
+// how traffic arrives -> Cloudflare One -> what it reaches.
+//
+// variant="connectors": the connector mental model (one card per connector).
+// variant="agents": three on-ramps for AI agents and one policy plane.
+//
+// Hovering or focusing an on-ramp highlights it, dims the others, and shows
+// its one-line summary in the centre panel. Without JavaScript the diagram
+// is a static, fully linked figure.
+/* `role="list"` on the lists below is intentional, not redundant: Safari
+   + VoiceOver drop the implicit list role when `list-style: none` is
+   applied, so the explicit role is required to preserve list semantics
+   for screen reader users. */
+/* eslint-disable astro/jsx-a11y/no-redundant-roles */
+import Icon from "@cloudflare/nimbus-docs/components/Icon.astro";
+
+type Variant = "connectors" | "agents";
+
+interface Props {
+	variant?: Variant;
+}
+
+const { variant = "connectors" } = Astro.props;
+
+type Item = {
+	key: string;
+	icon?: string;
+	glyph?: string;
+	title: string;
+	caption: string;
+	href?: string;
+	hint?: string;
+	tone?: string;
+	mono?: boolean;
+	// Consecutive inbound items with the same group render side by side
+	// under one shared label, for example "Whole sites".
+	group?: string;
+};
+
+type Row = { group?: string; cls: string; items: Item[] };
+
+function toRows(items: Item[]): Row[] {
+	const rows: Row[] = [];
+	for (const item of items) {
+		const last = rows.at(-1);
+		if (last && item.group && last.group === item.group) {
+			last.items.push(item);
+			continue;
+		}
+		const tone = `tone-${item.tone ?? "neutral"}`;
+		const cls = item.group ? `pair ${tone}` : tone;
+		rows.push({ group: item.group, cls, items: [item] });
+	}
+	return rows;
+}
+
+interface MapData {
+	label: string;
+	inTitle: string;
+	outTitle: string;
+	coreTitle: string;
+	coreLines: string[];
+	pills: { label: string; href: string }[];
+	defaultHint: string;
+	inbound: Item[];
+	outbound: Item[];
+}
+
+const GLYPH = {
+	globe:
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3c-2.6 3-2.6 15 0 18"/></svg>',
+	app: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18"/></svg>',
+	network:
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="18" r="2.2"/><circle cx="19" cy="18" r="2.2"/><path d="M10.9 6.9 6.1 16M13.1 6.9l4.8 9.1M7.2 18h9.6"/></svg>',
+	code: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/></svg>',
+	db: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><ellipse cx="12" cy="6" rx="7" ry="2.8"/><path d="M5 6v12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8V6M5 12c0 1.5 3.1 2.8 7 2.8s7-1.3 7-2.8"/></svg>',
+	api: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8 3 12l4 4M17 8l4 4-4 4"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>',
+	mcp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/></svg>',
+	cloud:
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M7 18h10.5a4 4 0 0 0 .5-8 6 6 0 0 0-11.6 1.5A3.3 3.3 0 0 0 7 18Z"/></svg>',
+	appliance:
+		'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 12h5"/><circle cx="16" cy="12" r="0.9" fill="currentColor"/><circle cx="18.5" cy="12" r="0.9" fill="currentColor"/></svg>',
+};
+
+const data: Record<Variant, MapData> = {
+	connectors: {
+		label:
+			"How traffic arrives at Cloudflare One through each connector, and what it reaches: Internet and SaaS, private applications, private networks, and Cloudflare code.",
+		inTitle: "How traffic arrives",
+		outTitle: "What it reaches",
+		coreTitle: "Cloudflare One",
+		coreLines: [
+			"One global network",
+			"One set of policies",
+			"One view of traffic",
+		],
+		pills: [
+			{ label: "Gateway", href: "/cloudflare-one/traffic-controls/" },
+			{ label: "Access", href: "/cloudflare-one/access-controls/" },
+			{ label: "Logs", href: "/cloudflare-one/insights/logs/" },
+		],
+		defaultHint: "Choose the connector that matches what you are connecting.",
+		inbound: [
+			{
+				key: "client",
+				icon: "warp-client",
+				title: "Cloudflare One Client",
+				caption: "People and devices",
+				href: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
+				hint: "People and their devices sign in through your IdP and send traffic through Cloudflare.",
+				tone: "client",
+			},
+			{
+				key: "mesh",
+				icon: "cloudflare-mesh",
+				title: "Cloudflare Mesh",
+				caption: "Private networks",
+				href: "/mesh/",
+				hint: "The default for private access. Every participant gets a private IP, and TCP, UDP, and ICMP flow in both directions. Usually run by platform, DevOps, and cloud teams.",
+				tone: "mesh",
+			},
+			{
+				key: "tunnel",
+				icon: "tunnel",
+				title: "Cloudflare Tunnel",
+				caption: "Web applications",
+				href: "/tunnel/",
+				hint: "Publishes HTTP applications on a public hostname, with or without Access. cloudflared connects out, so the origin needs no inbound port. Usually run by application teams.",
+				tone: "tunnel",
+			},
+			{
+				key: "wan",
+				icon: "cloudflare-wan",
+				title: "Cloudflare WAN",
+				caption: "IPsec or GRE",
+				href: "/cloudflare-one/networks/connectors/cloudflare-wan/",
+				hint: "Connects whole sites over IPsec or GRE from your routers, with BGP and route control. Usually run by network engineering teams.",
+				tone: "wan",
+				group: "Whole sites",
+			},
+			{
+				key: "appliance",
+				glyph: GLYPH.appliance,
+				title: "Cloudflare One Appliance",
+				caption: "Box or VM",
+				href: "/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/",
+				hint: "A managed hardware or virtual appliance for branches and data centers. It configures itself and connects the site to Cloudflare WAN.",
+				tone: "wan",
+				group: "Whole sites",
+			},
+		],
+		outbound: [
+			{
+				key: "internet",
+				glyph: GLYPH.globe,
+				title: "Internet and SaaS",
+				caption: "Filtered and inspected",
+			},
+			{
+				key: "apps",
+				glyph: GLYPH.app,
+				title: "Private applications",
+				caption: "Published by hostname",
+			},
+			{
+				key: "networks",
+				glyph: GLYPH.network,
+				title: "Private networks",
+				caption: "Reached by IP or name",
+			},
+			{
+				key: "code",
+				glyph: GLYPH.code,
+				title: "Cloudflare code",
+				caption: "Workers, through Workers VPC",
+				href: "/workers-vpc/",
+			},
+		],
+	},
+	agents: {
+		label:
+			"Three on-ramps for AI agents, a Mesh node, a Worker with a cf1:network binding, and the Cloudflare One Client, share one Cloudflare One policy plane to reach private databases, APIs, MCP servers, and other clouds.",
+		inTitle: "Where the agent runs",
+		outTitle: "What it reaches privately",
+		coreTitle: "Cloudflare One",
+		coreLines: [
+			"Gateway network and HTTP policies",
+			"DLP on what moves",
+			"DNS, HTTP, and network logs",
+			"Unified routing: Mesh, Tunnel, WAN",
+		],
+		pills: [
+			{ label: "Gateway", href: "/cloudflare-one/traffic-controls/" },
+			{ label: "DLP", href: "/cloudflare-one/data-loss-prevention/" },
+			{ label: "Logs", href: "/cloudflare-one/insights/logs/" },
+		],
+		defaultHint:
+			"Agents and employees reach private resources through the same controls.",
+		inbound: [
+			{
+				key: "node",
+				icon: "cloudflare-mesh",
+				title: "Mesh node",
+				caption: "VM, container, or CI runner",
+				href: "/mesh/guides/run-mesh-in-containers/",
+				hint: "Agents on a server, in a container, or in another cloud get a service identity. A node beside each resource or in each VPC makes it reachable, with no open ports.",
+				tone: "mesh",
+			},
+			{
+				key: "worker",
+				icon: "workers",
+				title: "Worker",
+				caption: "cf1:network binding",
+				href: "/workers-vpc/configuration/vpc-networks/",
+				hint: "Agents on Workers call private hostnames and IPs with fetch() or connect(). The address picks the destination.",
+				tone: "workers",
+			},
+			{
+				key: "laptop",
+				icon: "warp-client",
+				title: "Cloudflare One Client",
+				caption: "Coding agents on a laptop",
+				href: "/cloudflare-one/team-and-resources/devices/cloudflare-one-client/",
+				hint: "Coding agents on a laptop use the signed-in user's identity. They reach a node's Mesh IP with no bastion host or port forwarding.",
+				tone: "client",
+			},
+		],
+		outbound: [
+			{
+				key: "pg",
+				glyph: GLYPH.db,
+				title: "Private Postgres",
+				caption: "10.0.1.20:5432",
+				mono: true,
+			},
+			{
+				key: "api",
+				glyph: GLYPH.api,
+				title: "Internal API",
+				caption: "api.corp.internal",
+				mono: true,
+			},
+			{
+				key: "mcp",
+				glyph: GLYPH.mcp,
+				title: "Internal MCP server",
+				caption: "mcp.internal:8080",
+				mono: true,
+			},
+			{
+				key: "vpc",
+				glyph: GLYPH.cloud,
+				title: "Another cloud VPC",
+				caption: "10.10.0.0/16",
+				mono: true,
+			},
+		],
+	},
+};
+
+const d = data[variant];
+---
+
+<figure
+	class="connector-map not-content"
+	aria-label={d.label}
+	data-connector-map
+>
+	<div class="col col-in">
+		<p class="col-title">{d.inTitle}</p>
+		<ul class="stack" role="list">
+			{toRows(d.inbound).map((row) => (
+				<li class={row.cls}>
+					{row.group && <p class="pair-label">{row.group}</p>}
+					<div class={row.group ? "pair-cards" : "single"}>
+						{row.items.map((item) => (
+							<a
+								class={`card in-card tone-${item.tone ?? "neutral"}`}
+								href={item.href}
+								data-key={item.key}
+								data-hint={item.hint}
+							>
+								<span class="icon" aria-hidden="true">
+									{item.icon && <Icon name={item.icon} />}
+									{item.glyph && <Fragment set:html={item.glyph} />}
+								</span>
+								<span class="text">
+									<span class="title">{item.title}</span>
+									<span class="caption">{item.caption}</span>
+								</span>
+							</a>
+						))}
+					</div>
+					<span class="rail" aria-hidden="true">
+						<span class="pulse"></span>
+					</span>
+				</li>
+			))}
+		</ul>
+	</div>
+
+	<div class="col col-core">
+		<div class="core">
+			<span class="core-glow" aria-hidden="true"></span>
+			<p class="core-title">{d.coreTitle}</p>
+			<ul class="core-lines" role="list">
+				{d.coreLines.map((l) => (
+					<li>
+						<span>{l}</span>
+					</li>
+				))}
+			</ul>
+			<div class="pills">
+				{d.pills.map((p) => (
+					<a class="pill" href={p.href}>
+						{p.label}
+					</a>
+				))}
+			</div>
+			<p class="hint" data-hint-target data-default={d.defaultHint}>
+				{d.defaultHint}
+			</p>
+		</div>
+	</div>
+
+	<div class="col col-out">
+		<p class="col-title">{d.outTitle}</p>
+		<ul class="stack" role="list">
+			{d.outbound.map((item) => (
+				<li>
+					<a class="card out-card" href={item.href}>
+						<span class="rail rail-out" aria-hidden="true">
+							<span class="pulse"></span>
+						</span>
+						<span class="icon icon-out" aria-hidden="true">
+							<Fragment set:html={item.glyph} />
+						</span>
+						<span class="text">
+							<span class="title">{item.title}</span>
+							<span class={item.mono ? "caption mono" : "caption"}>
+								{item.caption}
+							</span>
+						</span>
+					</a>
+				</li>
+			))}
+		</ul>
+	</div>
+</figure>
+
+<script>
+	function initConnectorMaps() {
+		const selector = "[data-connector-map]:not([data-ready])";
+		for (const map of document.querySelectorAll<HTMLElement>(selector)) {
+			map.dataset.ready = "true";
+			const hint = map.querySelector<HTMLElement>("[data-hint-target]");
+			const cards = map.querySelectorAll<HTMLElement>(".in-card");
+			const activate = (card: HTMLElement | null) => {
+				cards.forEach((c) => c.classList.toggle("is-active", c === card));
+				map.classList.toggle("has-active", card !== null);
+				const text = card?.dataset.hint ?? hint?.dataset.default ?? "";
+				if (hint) hint.textContent = text;
+			};
+			cards.forEach((card) => {
+				card.addEventListener("mouseenter", () => activate(card));
+				card.addEventListener("focus", () => activate(card));
+				card.addEventListener("mouseleave", () => activate(null));
+				card.addEventListener("blur", () => activate(null));
+			});
+		}
+	}
+	initConnectorMaps();
+	document.addEventListener("astro:page-load", initConnectorMaps);
+</script>
+
+<style>
+	.connector-map {
+		--map-bg: light-dark(#fafafa, #0f0f10);
+		--map-card: light-dark(#ffffff, #171719);
+		--map-elevated: light-dark(#fafafa, #111113);
+		--map-line: light-dark(rgb(0 0 0 / 12%), rgb(255 255 255 / 14%));
+		--map-text: light-dark(#171717, #f5f5f5);
+		--map-caption: light-dark(#737373, #a3a3a3);
+		--map-brand: #f6821f;
+		--tone-client: light-dark(#2563eb, #60a5fa);
+		--tone-tunnel: #f6821f;
+		--tone-mesh: light-dark(#7c3aed, #a78bfa);
+		--tone-wan: light-dark(#0d9488, #2dd4bf);
+		--tone-workers: #f6821f;
+		--tone-neutral: light-dark(#525252, #a3a3a3);
+
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1fr);
+		align-items: center;
+		gap: 0;
+		margin: 1.25rem 0;
+		padding: 20px 16px;
+		border: 1px solid var(--map-line);
+		border-radius: 12px;
+		background:
+			radial-gradient(circle, var(--map-line) 1px, transparent 1px),
+			var(--map-bg);
+		background-size: 14px 14px;
+		font-family: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+		-webkit-font-smoothing: antialiased;
+		letter-spacing: -0.01em;
+		color: var(--map-text);
+	}
+
+	.connector-map a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.col-title {
+		margin: 0 0 10px;
+		color: var(--map-caption);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-align: center;
+	}
+
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.card {
+		--tone: var(--tone-neutral);
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		min-height: 52px;
+		padding: 9px 12px;
+		border: 1px solid var(--map-line);
+		border-radius: 10px;
+		background: var(--map-card);
+		box-shadow: 0 5px 14px rgb(0 0 0 / 6%);
+		transition:
+			border-color 160ms ease,
+			box-shadow 160ms ease,
+			opacity 160ms ease,
+			transform 160ms ease;
+	}
+
+	.tone-client {
+		--tone: var(--tone-client);
+	}
+	.tone-tunnel {
+		--tone: var(--tone-tunnel);
+	}
+	.tone-mesh {
+		--tone: var(--tone-mesh);
+	}
+	.tone-wan {
+		--tone: var(--tone-wan);
+	}
+	.tone-workers {
+		--tone: var(--tone-workers);
+	}
+
+	a.in-card:hover,
+	a.in-card:focus-visible,
+	.in-card.is-active {
+		border-color: color-mix(in srgb, var(--tone) 60%, var(--map-line));
+		box-shadow:
+			0 0 0 3px color-mix(in srgb, var(--tone) 14%, transparent),
+			0 8px 20px rgb(0 0 0 / 8%);
+		transform: translateX(2px);
+		outline: none;
+	}
+
+	.has-active .in-card:not(.is-active) {
+		opacity: 0.5;
+	}
+
+	a.out-card[href]:hover {
+		border-color: color-mix(in srgb, var(--map-brand) 50%, var(--map-line));
+	}
+
+	.icon {
+		display: inline-flex;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		width: 30px;
+		height: 30px;
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--tone) 13%, transparent);
+		color: var(--tone);
+	}
+
+	.icon :global(svg) {
+		width: 18px;
+		height: 18px;
+	}
+
+	.icon:not(.icon-out) :global(svg) {
+		fill: currentColor;
+	}
+
+	.icon :global(svg[fill="none"]) {
+		fill: none;
+	}
+
+	.col-in .stack > li {
+		position: relative;
+	}
+
+	/* Paired on-ramps (Cloudflare WAN and the Appliance) share one row. */
+	.pair {
+		padding: 6px;
+		border: 1px dashed color-mix(in srgb, var(--tone) 35%, var(--map-line));
+		border-radius: 12px;
+	}
+
+	.pair-label {
+		margin: 0 0 6px;
+		color: var(--map-caption);
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-align: center;
+	}
+
+	.pair-cards {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+		gap: 6px;
+	}
+
+	.pair .card {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 6px;
+		min-height: 0;
+		padding: 8px 10px;
+	}
+
+	.pair .title {
+		font-size: 12px;
+	}
+
+	.icon-out {
+		background: var(--map-elevated);
+		border: 1px solid var(--map-line);
+		color: var(--map-caption);
+	}
+
+	.text {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.title {
+		font-size: 13px;
+		font-weight: 600;
+		line-height: 1.3;
+	}
+
+	.caption {
+		color: var(--map-caption);
+		font-size: 12px;
+		line-height: 1.35;
+	}
+
+	.caption.mono {
+		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+		font-size: 11px;
+	}
+
+	/* Rails: short connectors from each card to the core panel. */
+	.rail {
+		position: absolute;
+		top: 50%;
+		right: -17px;
+		width: 16px;
+		height: 2px;
+		background: var(--map-line);
+		overflow: hidden;
+	}
+
+	.rail-out {
+		right: auto;
+		left: -17px;
+	}
+
+	.pulse {
+		position: absolute;
+		top: 0;
+		left: -6px;
+		width: 6px;
+		height: 2px;
+		background: var(--tone, var(--map-brand));
+		opacity: 0;
+	}
+
+	li:has(.is-active) > .rail,
+	li:has(a.in-card:hover) > .rail {
+		background: color-mix(in srgb, var(--tone) 45%, var(--map-line));
+	}
+
+	li:has(.is-active) > .rail .pulse,
+	li:has(a.in-card:hover) > .rail .pulse {
+		animation: map-pulse 900ms linear infinite;
+	}
+
+	.has-active .rail-out .pulse {
+		background: var(--map-brand);
+		animation: map-pulse 900ms linear infinite;
+		animation-delay: 450ms;
+	}
+
+	@keyframes map-pulse {
+		0% {
+			left: -6px;
+			opacity: 1;
+		}
+		100% {
+			left: 100%;
+			opacity: 1;
+		}
+	}
+
+	.col-core {
+		padding: 0 16px;
+		align-self: stretch;
+		display: flex;
+		align-items: center;
+	}
+
+	.core {
+		position: relative;
+		width: 100%;
+		padding: 18px 14px 14px;
+		border: 1px solid color-mix(in srgb, var(--map-brand) 45%, var(--map-line));
+		border-radius: 14px;
+		background: var(--map-card);
+		box-shadow:
+			0 0 0 4px color-mix(in srgb, var(--map-brand) 8%, transparent),
+			0 10px 26px rgb(0 0 0 / 8%);
+		text-align: center;
+		overflow: hidden;
+	}
+
+	.core-glow {
+		position: absolute;
+		inset: -40% -20% auto;
+		height: 120px;
+		--glow: color-mix(in srgb, var(--map-brand) 18%, transparent);
+		background: radial-gradient(closest-side, var(--glow), transparent);
+		pointer-events: none;
+	}
+
+	.core-title {
+		position: relative;
+		margin: 0 0 8px;
+		color: var(--map-brand);
+		font-size: 16px;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
+
+	.core-lines {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		margin: 0 0 12px;
+		padding: 0;
+		list-style: none;
+		font-size: 12px;
+		line-height: 1.35;
+	}
+
+	.pills {
+		position: relative;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 6px;
+		margin-bottom: 12px;
+	}
+
+	.pill {
+		padding: 3px 9px;
+		border: 1px solid var(--map-line);
+		border-radius: 6px;
+		background: var(--map-elevated);
+		font-size: 11px;
+		font-weight: 500;
+		transition: border-color 150ms ease;
+	}
+
+	.pill:hover {
+		border-color: var(--map-brand);
+	}
+
+	.hint {
+		position: relative;
+		min-height: 3.2em;
+		margin: 0;
+		padding-top: 10px;
+		border-top: 1px dashed var(--map-line);
+		color: var(--map-caption);
+		font-size: 12px;
+		line-height: 1.4;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pulse {
+			animation: none !important;
+			opacity: 0 !important;
+		}
+		.card {
+			transition: none;
+			transform: none !important;
+		}
+	}
+
+	/* Phones and narrow columns: stack the three columns vertically. */
+	@media (max-width: 720px) {
+		.connector-map {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 18px;
+			padding: 16px 12px;
+		}
+		.col-core {
+			padding: 0;
+		}
+		.col-core::before,
+		.col-core::after {
+			content: "↓";
+			display: block;
+			text-align: center;
+			color: var(--map-caption);
+		}
+		.col-core {
+			flex-direction: column;
+			gap: 6px;
+		}
+		.rail {
+			display: none;
+		}
+	}
+</style>

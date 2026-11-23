@@ -22,7 +22,7 @@ In essence, function calling allows you to perform actions with LLMs by executin
 
 ## How can I use function calling?
 
-Workers AI has [embedded function calling](/workers-ai/features/function-calling/embedded/) which allows you to execute function code alongside your inference calls. We have a package called [`@cloudflare/ai-utils`](https://www.npmjs.com/package/@cloudflare/ai-utils) to help facilitate this, which we have open-sourced on [Github](https://github.com/cloudflare/ai-utils).
+Workers AI has [embedded function calling](/workers-ai/features/function-calling/embedded/) which allows you to execute function code alongside your inference calls. We have a package called [`@cloudflare/ai-utils`](https://www.npmjs.com/package/@cloudflare/ai-utils) to help facilitate this, which we have open-sourced on [GitHub](https://github.com/cloudflare/ai-utils).
 
 For industry-standard function calling, take a look at the documentation on [Traditional Function Calling](/workers-ai/features/function-calling/traditional/).
 
@@ -48,7 +48,7 @@ export default {
 			env.AI,
 			"@hf/nousresearch/hermes-2-pro-mistral-7b",
 			{
-				messages: [{ role: "user", content: "Who is Cloudflare on github?" }],
+				messages: [{ role: "user", content: "Who is Cloudflare on GitHub?" }],
 				tools: [
 					// You can pass the OpenAPI spec link or contents directly
 					...(await createToolsFromOpenAPISpec(
@@ -119,7 +119,7 @@ export default {
 				const url = `https://api.github.com/users/${username}`;
 				res = await fetch(url, {
 					headers: {
-						// Github API requires a User-Agent header
+						// GitHub API requires a User-Agent header
 						"User-Agent":
 							"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
 					},

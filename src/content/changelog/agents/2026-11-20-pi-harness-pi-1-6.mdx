@@ -1,0 +1,89 @@
+---
+title: Agents SDK now supports Pi 1.6 with tools that wait without keeping your agent awake
+description: Agents SDK v0.34.0 adds Pi 1.6, so a Pi tool can wait for a person, a deadline, or another session while the Durable Object hibernates, and a Pi session can start from an existing history.
+products:
+  - agents
+date: 2026-11-20
+---
+
+import { CopyPromptButton, TypeScriptExample } from "~/components";
+
+Agents SDK v0.34.0 upgrades [`PiHarness`](/agents/harnesses/pi/) to [Pi 1.6](https://github.com/earendil-works/pi/blob/v1.6.0/packages/durable/CHANGELOG.md#160---2026-11-20). A Pi tool can now wait for a person, a deadline, or another session without keeping the Durable Object awake, and a session can start from a history that your application already has.
+
+## Tools that wait
+
+- **Park until a signal or a deadline.** A tool can return a park instead of a result, and Pi runs it again when a signal arrives or the deadline passes. While it waits, the call holds no invocation, so the Durable Object can hibernate. Deliver signals with the new `harness.signal()`. Refer to [Tools that wait](/agents/harnesses/pi/#tools-that-wait).
+- **Wait for a subagent.** `submit()` and `continue()` take `notify`, so a parked tool wakes when another session's input settles. Refer to [Wait for a subagent](/agents/harnesses/pi/#wait-for-a-subagent).
+- **Approval gates.** A `beforeTool` hook can park a tool call before it runs, for example until a person approves it.
+
+## Session updates
+
+- **Start a session from an existing history.** `harness.root()`, `sessions.create()`, and `sessions.fork()` take Pi's `init`, which writes messages into the transcript in the commit that creates the session. The root session is now created on its first use, so `harness.root()` can seed it. Refer to [Seed a session with an existing history](/agents/harnesses/pi/#seed-a-session-with-an-existing-history).
+- **Keep queued input across an abort.** With `submit(input, { onAbort: "keep" })`, stopping an answer does not drop the message that the user or another agent sent next.
+- **Steadier runs.** Pi retries more dropped provider connections. When Anthropic can no longer continue a message thread, `agents/models/pi-ai` sends the whole conversation again instead of failing the turn. `PiHarness.dispose()` frees Pi AI's per-session state.
+
+## Wait for a person's answer
+
+This tool asks the user a question, then parks until your agent delivers the answer:
+
+<TypeScriptExample>
+
+```ts
+import {
+	defineSignal,
+	type ToolRegistration,
+} from "@earendil-works/pi-durable";
+import { obj, str } from "@earendil-works/pi-schema";
+
+const Answer = defineSignal({
+	name: "app.answer",
+	version: 1,
+	schema: obj({ text: str() }),
+});
+
+const AskParameters = obj({ question: str() });
+
+const askUser: ToolRegistration<typeof AskParameters> = {
+	name: "ask_user",
+	description: "Ask the user a question and wait for the answer.",
+	parameters: AskParameters,
+	async execute({ question }, api, context) {
+		const answer = await api.readSignal(Answer, "answer", context);
+		if (answer !== undefined && "value" in answer) {
+			return { output: [{ type: "text", text: answer.value.text }] };
+		}
+		await showQuestion(api.taskId, question);
+		return { sleep: { signals: [Answer.key("answer")] } };
+	},
+};
+
+// Later, in your agent, when the user answers:
+await this.harness.signal(taskId, Answer, "answer", { text: "Yes" });
+```
+
+</TypeScriptExample>
+
+While the question is open, the session's run is still going, and the object can hibernate or be evicted. `harness.signal()` wakes the object, and Pi runs the tool again with the answer.
+
+## Other changes
+
+- **MCP re-authorization.** A request that needs the user to sign in again throws `MCPAuthorizationRequiredError` with a link. A failed server stays failed until you call the new `reconnectMcpServer(id)`. Refer to [Failures and reconnecting](/agents/model-context-protocol/apis/client-api/#failures-and-reconnecting).
+- **Failed requests no longer send error details.** A failed request gets a generic `500` response, and a failed WebSocket upgrade closes with code `1011`. Use `onFetchError()` to choose the response. Refer to [Failed requests](/agents/runtime/lifecycle/#failed-requests).
+- **Chat fixes.** Stop, clear, regenerate, and resume now work across tabs and during recovery.
+- **Scheduling fixes.** A schedule, queue item, or Task run that is cancelled or replaced no longer runs again.
+- **Models.** `ai.image()` and Pi AI's `ai.images()` run the FLUX.2 image models. `claudeCode()` defaults to `claude-sonnet-5-5`. Examples move off the Workers AI models retired on November 20, 2026.
+
+## Upgrade
+
+Once a conversation runs on Pi 1.6, Pi 1.5 cannot run its tool calls or model requests. After upgrading, roll forward to fix deployment issues rather than rolling back to Pi 1.5.
+
+Deliver signals with `harness.signal()` instead of `(await harness.pi()).signal()`, and call `harness.root()` before you reach the root session through `harness.pi()`. If you use Pi Durable directly, `RunEndTask` is now `HookTask`, and code mode namespaces come from `Extension.namespace`. Refer to the [Pi Durable 1.6.0 changelog](https://github.com/earendil-works/pi/blob/v1.6.0/packages/durable/CHANGELOG.md#160---2026-11-20) for the full list of breaking changes.
+
+If you use the MCP client, catch `MCPAuthorizationRequiredError` and send the user to `error.authUrl`, and give users a way to call `reconnectMcpServer(id)` for a failed server. If you relied on error details in failed responses, implement `onFetchError()`.
+
+The [Agents SDK v0.34.0 changelog](https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0340) has step-by-step upgrade instructions. Point your coding agent at them and upgrade today:
+
+<CopyPromptButton
+	tooltip="Upgrade to Pi 1.6"
+	prompt="Upgrade my agent to Agents SDK v0.34.0 and Pi 1.6 by following the upgrade steps at https://github.com/cloudflare/agents/blob/main/packages/agents/CHANGELOG.md#0340. Refer to https://developers.cloudflare.com/agents/harnesses/pi/ for the current PiHarness API."
+/>

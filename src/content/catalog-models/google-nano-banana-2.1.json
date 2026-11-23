@@ -152,7 +152,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://cloud.google.com/vertex-ai/generative-ai/docs/models/gemini/nano-banana-2-1",
 	"terms": "https://ai.google.dev/gemini-api/terms",

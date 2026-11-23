@@ -1,0 +1,114 @@
+---
+title: Cloudflare CLI (cf) 1.0 release candidate
+description: The release candidate for Cloudflare CLI 1.0 is available. Configuration, Build Output, and the commands that develop and deploy projects are now stable.
+products:
+  - workers
+date: 2026-11-17
+---
+
+import { PackageManagers } from "~/components";
+
+Cloudflare CLI (`cf`) `1.0.0-rc.1` is a release candidate for `cf` 1.0. `cf` has been in beta since late September. This is the release we recommend you try on your own projects, and we want your feedback before 1.0.
+
+To install or update to the latest release:
+
+<PackageManagers type="add" pkg="cf@latest" global />
+
+## What is stable
+
+We expect the following features to remain stable to `cf` 1.0:
+
+- The `cloudflare.config.ts` configuration format.
+- The Build Output format that `cf build` writes and `cf deploy` reads.
+- The commands that create, develop, build, and deploy projects, including `cf init`, `cf dev`, `cf build`, `cf deploy`, `cf previews deploy`, and `cf workers versions create`.
+- The large majority of commands generated from the Cloudflare API and used in the beta.
+
+A small number of less commonly used API commands may still change before 1.0. `cf` generates these commands from the Cloudflare API schema, so their call path may still change before 1.0.
+
+## Upgrade from a beta
+
+This release moves Build Output to version 1, in `.cloudflare/output/v1/`. `cf deploy` will automatically create a new build on first run in this location.
+
+The release candidate also moves to caret (`^`) version ranges for its dependencies, requiring:
+
+- `@cloudflare/vite-plugin` 2.0.0-rc.0 or later, for projects that build with Vite.
+- Wrangler 4.163.0 or later, for legacy projects that build with Wrangler.
+
+`1.0.0-rc.1` renames a few generated API commands without aliases. For example, `cf workers secrets bulk` is now `cf workers secrets bulk-edit`. For the full list, refer to the [release notes](https://github.com/cloudflare/cf/blob/main/packages/cli/CHANGELOG.md).
+
+If you last updated early in the beta, these earlier changes may also affect you:
+
+- Prompts, progress, and status messages are written to stderr. Stdout holds only command output, so scripts that read messages from stdout must read stderr instead.
+- Commands generated from camelCase or snake_case API names use kebab-case. For example, `cf accounts billing getCredits` is now `cf accounts billing get-credits`.
+- `cf previews deploy` takes the Preview name as `--preview-name` instead of a positional argument.
+- Commands run with `--local` store state in the project's `.cloudflare/state` directory.
+- `cf` no longer saves your account choice between runs. Set `accountId` in `cloudflare.config.ts` or `CLOUDFLARE_ACCOUNT_ID` to skip the prompt.
+- Streaming tail consumers move to `experimental.streamingTailConsumers` in `cloudflare.config.ts`.
+- Destructive commands run without a terminal exit with an error unless you pass `--force`.
+- `cf` supports the latest versions of the Node.js LTS releases and the latest active release of Node.js.
+
+## Stream live logs
+
+`cf observability tail` streams live logs and other observability events as newline-delimited JSON. Select a Worker with `--worker`, a zone and its subdomains with `--zone`, or every event in the account with `--all`. Narrow the results with `--filters`, as inline JSON or from a file:
+
+```sh
+cf observability tail --worker my-worker
+cf observability tail --worker my-worker --filters @filters.json
+```
+
+Worker events require [Workers Logs](/workers/observability/logs/workers-logs/) to be turned on for the Worker. For filter shapes and examples, run `cf observability tail --help`.
+
+## What changed during the beta
+
+### Deploy
+
+- Deploy a directory of static assets with `cf deploy ./dist`. `cf` skips the build step and creates an assets-only Worker.
+- `cf deploy --no-provision` fails when a binding has no resource ID, instead of creating a new resource.
+- `cf deploy --force` deploys when the Worker was last deployed through the API, or when its remote configuration conflicts with your local Build Output.
+- Redeploying no longer removes secrets that you added outside `cloudflare.config.ts`.
+- Stack traces from deployed Workers show project paths such as `src/index.ts`.
+- Python Workers with vendored packages deploy correctly.
+- `cf deploy` applies SSH settings for Containers managed by Durable Objects.
+- `cf deploy --dry-run` shows the project setup changes it would make, without making them.
+- Set `CLOUDFLARE_DEPENDENCIES_INSTRUMENTATION=false` to stop uploading package dependency metadata with each deployment.
+
+### Develop
+
+- `cf init` creates new Worker projects with Vite+, including checks, formatting, and tests that run in the Workers runtime.
+- `cf dev` and `cf build` run the Vite or Vite+ executable installed in your project, including dependencies hoisted in a workspace.
+- `cf dev` passes arguments such as `--port` and `--host` to your framework's development server.
+- `cf dev --profile <name>` passes the selected authentication profile to your development server.
+- `cf dev`, `cf build`, and `cf deploy` offer to run `cf migrate` when they find a Wrangler configuration file.
+- On Windows, Ctrl+C exits cleanly when your framework runs through npm, Wrangler and Vite start without `spawn EFTYPE` errors, and `cf d1 migrations create` rejects names that Windows cannot store.
+- `cf init` approves the build scripts that pnpm 11 and later block by default, so installation succeeds.
+
+### Sign in and accounts
+
+- Pass `--temporary-account` to create a short-lived account without signing in. `cf` prints a URL you can use to claim the account.
+- `cf auth login` summarizes the scopes you granted, and `cf auth scopes` lists them by product.
+- `cf auth whoami`, also available as `cf whoami`, prints a short summary in a terminal and full JSON for scripts and agents.
+- `cf auth login` now uses the system keyring where available.
+- Long-running commands, such as `cf observability tail`, refresh an expired OAuth login instead of failing.
+- `cf auth whoami` reports the status of scoped API tokens correctly.
+- Set `CLOUDFLARE_API_HEADERS` to [send custom headers with API requests](/cf/environment-variables/#custom-api-headers).
+
+### API commands
+
+- Every command accepts `--dry-run` to preview what it would do and it redacts sensitive fields in request previews.
+- `cf` checks `--body` input before it asks you to sign in or confirm, and rejects array bodies larger than the API allows instead of splitting them across several requests.
+- More request fields are available as flags, including JSON objects and maps, arrays of objects, and file uploads. For example, `cf pages deployments create --worker-js @./_worker.js` and `cf ai to-markdown --files @first.html @second.pdf`.
+- Error outputs have been improved with additional messages the API returns, such as the names of missing parameters.
+- `cf workers` commands accept `--worker` to select a Worker.
+- `--zone` finds zones by name in accounts with many zones.
+- `cf tunnels quick-start --allowed-mail` limits a temporary tunnel to the email addresses and domains you allow.
+
+### Scripts and agents
+
+- `cf --version` prints only the version number.
+- Shell completions and `cf tools` list every flag a command accepts.
+- `cf cli search` has reranked `cf deploy` and other key commands to improve their ranking for static site and Pages deployment searches.
+- `cf docs search` [finds Cloudflare documentation](/cf/agents/) from the terminal.
+
+## Send feedback
+
+To report a bug or tell us what is missing, [open an issue in the `cf` repository](https://github.com/cloudflare/cf/issues). For every change in each release, refer to the [Cloudflare CLI release notes](https://github.com/cloudflare/cf/blob/main/packages/cli/CHANGELOG.md).

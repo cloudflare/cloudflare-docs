@@ -35,11 +35,8 @@ IdP-based MFA enforcement is only available with the following identity provider
 To enforce an IdP MFA requirement on an application:
 
 1.  In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Applications**.
-
 2.  Find the application for which you want to enforce MFA and select **Edit**. Alternatively, [create a new application](/cloudflare-one/access-controls/applications/http-apps/).
-
 3.  Go to **Policies**.
-
 4.  If your application already has a policy containing an identity requirement, find it and select **Edit**.
 
     :::note
@@ -78,14 +75,14 @@ You can configure MFA requirements at three levels:
 | [Application](#configure-independent-mfa-for-an-application)                     | Require or turn off MFA for a specific application.            |
 | [Policy](#configure-independent-mfa-for-a-policy)                                | Require or turn off MFA for users who match a specific policy. |
 
-MFA settings use this precedence: **Policy** > **Application** > **Organization**.
+Allowed authenticators and MFA session durations use this precedence: **Policy** > **Application** > **Organization**. For browser-based applications, selecting **Disable MFA** at either the application or matching policy level skips independent MFA. A custom policy MFA configuration does not re-enable MFA on an application where it is disabled.
 
 ### Prerequisites
 
 Before you configure independent MFA on applications or policies, you must [turn on independent MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/) at the organization level.
 
 :::tip
-At the organization level, you can also [restrict which authenticators can be enrolled using AAGUIDs](/cloudflare-one/access-controls/access-settings/independent-mfa/#restrict-authenticators-by-aaguid) and [skip independent MFA when the identity provider already performed MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/#use-identity-provider-mfa.
+At the organization level, you can also [restrict which authenticators can be enrolled using AAGUIDs](/cloudflare-one/access-controls/access-settings/independent-mfa/#restrict-authenticators-by-aaguid) and [skip independent MFA when the identity provider already performed MFA](/cloudflare-one/access-controls/access-settings/independent-mfa/#use-identity-provider-mfa).
 :::
 
 ### Configure independent MFA for an application
@@ -113,7 +110,7 @@ To configure MFA for an infrastructure application, refer to [Infrastructure app
 
 ### Configure independent MFA for a policy
 
-Each policy has the same three MFA options described in [Configure independent MFA for an application](#configure-independent-mfa-for-an-application). Policy-level settings override application-level settings.
+Each policy has the same three MFA options described in [Configure independent MFA for an application](#configure-independent-mfa-for-an-application). Policy-level allowed authenticators and session durations override inherited values, but do not re-enable MFA when the application has **Disable MFA** selected.
 
 1. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Access controls** > **Policies**.
 2. Choose an **Allow** policy and select **Edit**.
@@ -190,7 +187,7 @@ In this example:
 
 - Users who access Application A and match Policy 1 must use a security key and re-authenticate every hour.
 - Users who access Application A and match Policy 2 are not prompted for MFA.
-- Users who access Application A and match neither policy must use an authenticator application or a security key, with a 24-hour session.
+- Users allowed by another policy on Application A that inherits MFA settings must use an authenticator application or a security key, with a 24-hour session. Users who do not match any Allow policy are denied access.
 - Users who access Application B are not prompted for MFA.
 
 ## Infrastructure applications
@@ -242,11 +239,11 @@ https://api.cloudflare.com/client/v4/accounts/{account_id}/access/apps/{app_id} 
 }'
 ```
 
-| Field                     | Type    | Description                                                                                                                                           |
-| ------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `mfa_disabled`            | Boolean | If `true`, MFA is not required for this application, even if global settings enforce MFA.                                                             |
-| `session_duration`        | String  | Duration before the user must re-authenticate with MFA (for example, `30m`, `1h`, `24h`). Set to `0m` to require MFA on every SSH connection.         |
-| `allowed_authenticators`  | Array   | Use `["piv_key"]`, `["ssh_fido2_key"]`, or `["piv_key", "ssh_fido2_key"]`.                                                                            |
+| Field                    | Type    | Description                                                                                                                                   |
+| ------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `mfa_disabled`           | Boolean | If `true`, MFA is not required for this application, even if global settings enforce MFA.                                                     |
+| `session_duration`       | String  | Duration before the user must re-authenticate with MFA (for example, `30m`, `1h`, `24h`). Set to `0m` to require MFA on every SSH connection. |
+| `allowed_authenticators` | Array   | Use `["piv_key"]`, `["ssh_fido2_key"]`, or `["piv_key", "ssh_fido2_key"]`.                                                                    |
 
 </Details>
 

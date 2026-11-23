@@ -107,7 +107,7 @@ import { routeAgentRequest } from "agents";
 export class MyAgent extends Think<Env> {
 	getModel() {
 		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
 		);
 	}
 
@@ -227,7 +227,7 @@ Override `configureSession` to give the model writable memory that survives rest
 export class MyAgent extends Think<Env> {
 	getModel(): LanguageModel {
 		return createAI({ binding: this.env.AI })(
-			"@cf/moonshotai/kimi-k2.6",
+			"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
 		);
 	}
 

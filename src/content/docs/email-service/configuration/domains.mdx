@@ -106,11 +106,20 @@ TXT _dmarc.yourdomain.com "v=DMARC1; p=reject;"
 - **Value**: DMARC policy
 - **TTL**: Auto
 
+Cloudflare adds this record only if the domain has no DMARC record. If a DMARC record already exists, Cloudflare keeps it unchanged.
+
+The DMARC record is not locked, so you can edit or delete it in **DNS** > **Records**. Cloudflare does not overwrite your changes.
+
 **Policy options:**
 
-- `p=none` - Monitor only (recommended for new setups)
+- `p=none` - Monitor only
 - `p=quarantine` - Quarantine suspicious emails
 - `p=reject` - Reject unauthenticated emails
+
+**Choose a policy:**
+
+- If Email Service is the only service that sends email for the domain, keep the default `p=reject` policy.
+- If other services also send email for the domain, change the policy to `p=none` until their mail passes SPF or DKIM alignment. Then move to `p=quarantine` and `p=reject`. Refer to [DMARC deployment strategy](/email-service/concepts/email-authentication/#dmarc-domain-based-message-authentication-reporting--conformance).
 
 </TabItem>
 </Tabs>
@@ -338,7 +347,6 @@ If your domain has `MX` records from another provider, Email Routing onboarding 
    If you no longer send through your current provider, you can also remove its SPF `include:` entry and DKIM records at this point. If you continue to send through it, keep its SPF `include:` and leave its DKIM records in place. DKIM selectors use different names and do not conflict.
 
 3. Enable Email Routing for your domain. Cloudflare adds the required `MX` records and a DKIM record at `cf2024-1._domainkey.<yourdomain>`. If no SPF record exists, Cloudflare also adds one. If you already have an SPF record, add the Cloudflare `include:` manually — refer to [Routing records](#routing-records) for the correct value.
-
 4. Create your routing rules immediately. When the `MX` records point to Cloudflare, mail to an address with no matching rule is rejected with "Address does not exist", and the sender does not retry.
 
 Until Email Routing is active, keep the old provider account open. Messages sent to cached old `MX` records arrive in your previous mailbox rather than being lost.

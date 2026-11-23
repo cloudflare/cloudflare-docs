@@ -131,6 +131,7 @@ entries:
 
   - publish_date: "2026-05-28"
     title: RealtimeKit Web UI Kit 1.2.0
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Web Core 1.5.1 or later.
 
@@ -149,12 +150,14 @@ entries:
 
   - publish_date: "2026-03-31"
     title: RealtimeKit Web UI Kit 1.1.2
+    deprecated: true
     description: |-
       **Enhancements**
 
       - AI sidebar component now uses `activeSidebar` state instead of `activeAI` state, streamlining all sidebar components under a single state.
   - publish_date: "2026-03-10"
     title: RealtimeKit Web UI Kit 1.1.1
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Web Core 1.2.5 or later.
 
@@ -174,6 +177,7 @@ entries:
 
   - publish_date: "2026-01-30"
     title: RealtimeKit Web UI Kit 1.1.0
+    deprecated: true
     description: |-
       **Compatibility:** Works best with RealtimeKit Web Core 1.2.4 or later.
 
@@ -243,12 +247,14 @@ entries:
 
   - publish_date: "2025-12-17"
     title: RealtimeKit Web UI Kit 1.0.8
+    deprecated: true
     description: |-
       **Fixes**
 
       - Fixed iOS issue where the chat compose view would zoom when typing a message.
   - publish_date: "2025-11-18"
     title: RealtimeKit Web UI Kit 1.0.7
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -257,6 +263,7 @@ entries:
 
   - publish_date: "2025-10-30"
     title: RealtimeKit Web UI Kit 1.0.6
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -274,6 +281,7 @@ entries:
 
   - publish_date: "2025-08-14"
     title: RealtimeKit Web UI Kit 1.0.5
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -285,6 +293,7 @@ entries:
 
   - publish_date: "2025-07-17"
     title: RealtimeKit Web UI Kit 1.0.4
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -297,6 +306,7 @@ entries:
 
   - publish_date: "2025-07-08"
     title: RealtimeKit Web UI Kit 1.0.3
+    deprecated: true
     description: |-
       **Fixes**
 
@@ -309,6 +319,7 @@ entries:
 
   - publish_date: "2025-07-02"
     title: RealtimeKit Web UI Kit 1.0.2
+    deprecated: true
     description: |-
       **Performance**
 
@@ -316,6 +327,7 @@ entries:
 
   - publish_date: "2025-06-30"
     title: RealtimeKit Web UI Kit 1.0.1
+    deprecated: true
     description: |-
       **Deprecated API**
 
@@ -323,6 +335,7 @@ entries:
 
   - publish_date: "2025-05-29"
     title: RealtimeKit Web UI Kit 1.0.0
+    deprecated: true
     description: |-
       **Features**
 

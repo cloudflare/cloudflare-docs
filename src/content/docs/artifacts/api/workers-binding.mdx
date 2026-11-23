@@ -33,7 +33,7 @@ Add the Artifacts binding to your Wrangler config file:
 [[artifacts]]
 binding = "ARTIFACTS"
 namespace = "default" # replace with your Artifacts namespace
-# remote = true # optional: use the remote Artifacts service in local dev
+# Set remote = true to use deployed Artifacts during local development.
 ```
 
 </WranglerConfig>
@@ -46,7 +46,7 @@ export interface Env {
 }
 ```
 
-Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment.
+Wrangler generates the `Artifacts` type for consumers and binds it directly in your environment. In local development, omitting `remote` or setting `remote = false` uses the local simulator. Set `remote = true` to reach the deployed service. For the local Git prerequisite, storage boundaries, and setup instructions, refer to [Local development](/artifacts/guides/local-development/).
 
 :::note
 

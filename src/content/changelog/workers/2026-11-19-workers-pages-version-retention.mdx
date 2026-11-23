@@ -1,0 +1,23 @@
+---
+title: Workers and Pages now keep versions for 30 days
+description: Versions and deployments older than 30 days are now deleted, except your 100 most recent and what is currently deployed. Your running applications and Worker Previews are not affected.
+products:
+  - workers
+  - pages
+date: 2026-11-19
+---
+
+Cloudflare now keeps [versions](/workers/versions-and-deployments/) of your Workers and [deployments](/pages/configuration/preview-deployments/) of your Pages projects for 30 days. After 30 days, they are deleted, except your 100 most recent and what is currently deployed.
+
+**What is not affected:**
+
+- **Running applications:** Deployed Worker versions and your current Pages production deployment are always kept
+- **Rollbacks:** You can still [roll back](/workers/versions-and-deployments/rollbacks/) to any of your 100 most recent Worker versions, and to any Pages [production deployment](/pages/configuration/rollbacks/) that has not been deleted
+- **Worker Previews:** [Worker Preview](/workers/previews/) URLs always serve the latest deployment of that Preview. Use Worker Previews for branches and pull requests instead of Version URLs, which run with your production bindings
+
+**What you will notice:**
+
+- Deleted versions and deployments no longer appear in the dashboard or API
+- The URL associated with each deleted Worker version, known as its [Version URL](/workers/versions-and-deployments/version-urls/) (including any `--preview-alias`), stops working, as does the [preview URL](/pages/configuration/preview-deployments/) of each deleted Pages deployment
+
+For more information, refer to [Workers version retention](/workers/versions-and-deployments/#version-retention), [Pages deployment limits](/pages/platform/limits/#deployments), and [Compare workflows](/workers/previews/compare-workflows/).

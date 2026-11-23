@@ -1,0 +1,17 @@
+---
+title: Improved Durable Object Reliability During Runtime Updates
+description: Cloudflare has improved how Durable Object storage handles runtime updates, which can reduce storage resets and WebSocket disconnects for SQLite-backed Durable Objects.
+date: 2026-11-19
+---
+
+Cloudflare has improved how Durable Object storage handles machines restarting during runtime updates.
+
+Each write to a Durable Object's storage must be confirmed by a majority within a group of machines for durability. Machines now proactively remove themselves from the group when restarting, so that they can be replaced before the restart happens.
+
+Previously, this could take up to a few minutes. During that time, a write could fail to reach a majority, and the object was reset with `Internal error in Durable Object storage caused object to be reset`, disconnecting its WebSockets.
+
+This can make these resets less frequent for SQLite-backed Durable Objects, especially ones that write to storage only occasionally, such as those using WebSocket hibernation. Actual results depend on your workload and traffic patterns.
+
+The change is live in all regions. No action is needed by customers to see benefits from this change. Some disconnects during runtime updates are still expected, so clients should continue to reconnect when a WebSocket closes.
+
+To learn more, refer to [Use WebSockets](/durable-objects/best-practices/websockets/).

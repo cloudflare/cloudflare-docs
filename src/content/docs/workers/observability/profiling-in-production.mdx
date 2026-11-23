@@ -76,7 +76,7 @@ Run the following to see all the available options for the profiling command:
 cf workers versions profile --help
 ```
 
-The command requires a positional version identifier and `--worker-id`. Use `latest-deployed`, a version's universally unique identifier (UUID), or a UUID prefix of at least eight characters.
+The command requires a positional version identifier and `--worker`. Use `latest-deployed`, a version's universally unique identifier (UUID), or a UUID prefix of at least eight characters.
 
 `latest-deployed` profiles a version in the active deployment. When traffic is split, versions are tried in traffic-share order until one has a loaded isolate. To profile a specific version, replace `latest-deployed` in the examples with that version's identifier.
 
@@ -93,7 +93,7 @@ The command writes raw binary pprof data to standard output.
 
    ```bash
    cf workers versions profile latest-deployed \
-     --worker-id "$WORKER_ID" \
+     --worker "$WORKER_ID" \
      --duration-ms 5000 \
      --profile-type cpu > worker-cpu.pprof
    ```
@@ -110,7 +110,7 @@ The command writes raw binary pprof data to standard output.
 
    ```bash
    cf workers versions profile latest-deployed \
-     --worker-id "$WORKER_ID" \
+     --worker "$WORKER_ID" \
      --duration-ms 5000 \
      --profile-type heap \
      --namespace-id "$NAMESPACE_ID" \
@@ -128,11 +128,11 @@ The selected version must be loaded and running, with traffic during capture. Th
 
 Use these fields in the request body:
 
-| Field          | Meaning                                                                                                                            |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `duration_ms`  | Required integer from `1000` to `50000` milliseconds.                                                                              |
-| `profile_type` | Optional: `cpu` (default) or `heap`.                                                                                               |
-| `namespace_id` | Durable Object namespace ID. Required together with `actor_id` for a Durable Object capture.                                       |
+| Field          | Meaning                                                                                                                                                        |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `duration_ms`  | Required integer from `1000` to `50000` milliseconds.                                                                                                          |
+| `profile_type` | Optional: `cpu` (default) or `heap`.                                                                                                                           |
+| `namespace_id` | Durable Object namespace ID. Required together with `actor_id` for a Durable Object capture.                                                                   |
 | `actor_id`     | Durable Object [instance ID](/durable-objects/api/id/), a 64-character hexadecimal string. Required together with `namespace_id` for a Durable Object capture. |
 
 #### Profile a Worker
@@ -190,11 +190,11 @@ Select a frame to focus on its subtree. Use the breadcrumbs to return to a paren
 
 Use **Search frames** to find function names or source locations. Switch to **Table** to compare these values:
 
-| Value              | Meaning                                                                    |
-| ------------------ | -------------------------------------------------------------------------- |
+| Value              | Meaning                                                                     |
+| ------------------ | --------------------------------------------------------------------------- |
 | Self               | CPU time or allocated memory attributed to the frame, excluding descendants |
 | Total              | CPU time or allocated memory attributed to the frame and its descendants    |
-| Percent of profile | Share of the whole capture                                                 |
+| Percent of profile | Share of the whole capture                                                  |
 
 Percentages remain relative to the whole capture, even when you focus on a subtree.
 
@@ -208,10 +208,10 @@ Capture requests are rate limited, and the API returns HTTP `429` when you excee
 
 The API can also return these error messages:
 
-| Error message                                                                  | Meaning or action                                                                                       |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| `No recent executions were found for this Worker.`                              | Send traffic to the selected Worker version or target Durable Object instance, then retry capture.       |
-| `The Worker has no loaded isolate in its recent execution locations.`           | Send traffic to the target version or Durable Object instance, then retry capture.                       |
-| `Worker profiling is unavailable in this environment.`                          | Profiling is unavailable in the target environment.                                                      |
-| `This Worker does not support runtime profiling.`                              | The selected Worker does not support profiling.                                                         |
-| `The Worker runtime could not start profiling. Please try again.`               | Retry capture.                                                                                          |
+| Error message                                                         | Meaning or action                                                                                  |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `No recent executions were found for this Worker.`                    | Send traffic to the selected Worker version or target Durable Object instance, then retry capture. |
+| `The Worker has no loaded isolate in its recent execution locations.` | Send traffic to the target version or Durable Object instance, then retry capture.                 |
+| `Worker profiling is unavailable in this environment.`                | Profiling is unavailable in the target environment.                                                |
+| `This Worker does not support runtime profiling.`                     | The selected Worker does not support profiling.                                                    |
+| `The Worker runtime could not start profiling. Please try again.`     | Retry capture.                                                                                     |
