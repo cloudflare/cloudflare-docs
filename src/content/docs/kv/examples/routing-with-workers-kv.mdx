@@ -10,7 +10,13 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+import {
+	Render,
+	PackageManagers,
+	Tabs,
+	TabItem,
+	WranglerConfig,
+} from "~/components";
 
 Using Workers KV to store routing data to route requests across various web servers with Workers is an ideal use case for Workers KV. Routing workloads can have high read volume, and Workers KV's low-latency reads can help ensure that routing decisions are made quickly and efficiently.
 
@@ -115,8 +121,28 @@ export default {
 
 ```
 </TabItem>
-<TabItem label="wrangler.jsonc">
-```json
+<TabItem label="Configuration">
+
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "2025-03-03",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			ROUTING_CONFIG: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});`}
+>
+
+```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
@@ -134,6 +160,8 @@ export default {
 	]
 }
 ```
+
+</WranglerConfig>
 
 </TabItem>
 </Tabs>
