@@ -1370,7 +1370,9 @@
 /images/optimization/transformations/draw-overlays/ /images/optimization/draw-overlays/ 301
 /images/transform-images/integrate-with-frameworks/ /images/optimization/transformations/integrate-with-frameworks/ 301
 /images/transform-images/make-responsive-images/ /images/optimization/make-responsive-images/ 301
-/images/transform-images/preserve-content-credentials/ /images/optimization/transformations/preserve-content-credentials/ 301
+/images/transform-images/preserve-content-credentials/ /images/optimization/preserve-content-credentials/ 301
+/images/optimization/transformations/preserve-content-credentials/ /images/optimization/preserve-content-credentials/ 301
+/images/optimization/hosted-images/preserve-content-credentials/ /images/optimization/preserve-content-credentials/ 301
 /images/transform-images/serve-images-custom-paths/ /images/optimization/transformations/rewrite-rules/ 301
 /images/transform-images/sources/ /images/optimization/transformations/sources/ 301
 /images/manage-images/ /images/storage/manage-images/ 301

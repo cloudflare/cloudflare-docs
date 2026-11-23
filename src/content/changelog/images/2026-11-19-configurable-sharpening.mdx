@@ -1,5 +1,5 @@
 ---
-title: Apply Gaussian sharpening with Images
+title: Gaussian sharpening in Images
 description: Configure Gaussian sharpening to control the strength, scale, and edge sensitivity of optimized images.
 date: 2026-11-19
 publish_future_dated_entry: true
@@ -30,6 +30,7 @@ In the URL interface, these settings are grouped beneath the `sharpen` parameter
 ```txt
 sharpen=(mode=gaussian,amount=1,sigma=1.5,threshold=0)
 ```
+
 The same structure maps directly to the `cf.image` object in a [Workers](/workers/) `fetch()` subrequest:
 
 ```js
