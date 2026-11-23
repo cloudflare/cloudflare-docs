@@ -1,16 +1,16 @@
 ---
 pcx_content_type: concept
 title: Test and debug
-description: Test and debug Previews with logs, traces, metrics, Tail Workers, and browser evidence.
+description: Test and debug Previews with logs, traces, metrics, profiles, Tail Workers, and browser evidence.
 sidebar:
   order: 5
 products:
   - workers
 ---
 
-import { WranglerConfig } from "~/components";
+import { DashButton, Steps, WranglerConfig } from "~/components";
 
-Previews support the same [Workers Observability](/workers/observability/) features as production — [logs](/workers/observability/logs/workers-logs/), [traces](/workers/observability/traces/), [metrics](/workers/observability/metrics-and-analytics/), and [Tail Workers](/workers/observability/logs/tail-workers/) — configured independently so your Preview telemetry stays separate.
+Previews support the same [Workers Observability](/workers/observability/) features as production — [logs](/workers/observability/logs/workers-logs/), [traces](/workers/observability/traces/), [metrics](/workers/observability/metrics-and-analytics/), [profiles](/workers/observability/profiling-in-production/), and [Tail Workers](/workers/observability/logs/tail-workers/) — configured independently so your Preview telemetry stays separate.
 
 ## Logs and traces
 
@@ -106,6 +106,73 @@ Useful fields include `scriptName` (Worker name), `previewSlug` (Preview name), 
 Per-Preview metrics are also visible in the dashboard under the Preview's **Metrics** tab.
 
 You can also query Preview observability data using the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server).
+
+## Profile a Preview
+
+Capture CPU and heap profiles from a Preview to find expensive functions and allocating code before your change reaches production. You can profile a Preview's Worker or a [Durable Object](/durable-objects/) instance running on the Preview.
+
+Profiling a Preview works the same way as [profiling in production](/workers/observability/profiling-in-production/). Before you capture a profile:
+
+- [Enable source maps](/workers/observability/profiling-in-production/#enable-source-maps) so the flamegraph shows readable function names.
+- Send traffic to the Preview URL before and during the capture. Capturing a profile does not invoke your code for you.
+
+### Use dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Workers & Pages** and select your Worker:
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select **Previews**, then select your Preview.
+3. Select **Observability**. In the view dropdown, select _Flamegraph_.
+4. In **Profile type**, select _CPU_ or _Heap_.
+5. In **Duration (ms)**, enter a capture duration from 1000 to 50000 milliseconds. The default is 10000 milliseconds.
+6. In **Deployment**, select the Preview deployment to profile.
+7. Select **Capture profile**.
+
+   ![Flamegraph view for a Preview with Profile type, Duration, and Deployment fields and the Capture profile button](~/assets/images/workers/previews/profile-capture.png)
+</Steps>
+
+When capture completes, the dashboard displays the profile as a flamegraph. Switch to **Table** to sort functions by self or total value, which is CPU time for CPU profiles and allocated memory for Heap profiles. Select **Download profile** to download the raw pprof profile.
+
+![Flamegraph of a Preview CPU profile with the Download profile button and Flamegraph and Table toggle](~/assets/images/workers/previews/profile-flamegraph.png)
+
+To profile a Durable Object instance on the Preview, go to **Durable Objects**, select the Preview's namespace, select **Observability**, and switch the view to _Flamegraph_. Enter the 64-character object ID in **Instance ID** before you capture.
+
+### Use Cloudflare CLI
+
+[Install `cf` and sign in](/cf/get-started/), then capture a CPU profile for 5 seconds from a Preview deployment. Pass `latest` or a specific deployment ID:
+
+```sh
+cf previews deployments profile "$DEPLOYMENT_ID" \
+  --worker my-worker \
+  --preview my-preview \
+  --duration-ms 5000 \
+  --profile-type cpu > preview-cpu.pprof
+```
+
+To profile a Durable Object instance on the Preview, also pass `--namespace-id` and `--actor-id`.
+
+### Use API
+
+Send a `POST` request to the Preview deployment's `profile` endpoint. Use an API token with the same permissions as the [production profiling API](/workers/observability/profiling-in-production/#use-api): **Workers Scripts Read** or the **Content Read-Only** [Workers role](/workers/authorization/workers/).
+
+Set `$DEPLOYMENT_ID` to `latest` to profile the newest deployment of the Preview. To profile a specific deployment, copy its ID from the Preview's **Deployments** tab.
+
+The request body accepts the same fields as the production profiling API: `duration_ms`, `profile_type`, and, for a Durable Object, `namespace_id` and `actor_id`.
+
+```bash
+curl --fail --silent --show-error --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews/$PREVIEW_ID/deployments/$DEPLOYMENT_ID/profile" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "duration_ms": 10000,
+    "profile_type": "cpu"
+  }' \
+  --output preview-cpu.pprof.gz
+```
+
+To read the results, refer to [Inspect the results](/workers/observability/profiling-in-production/#inspect-the-results). For pprof tools, rate limits, and error messages, refer to [Download the capture](/workers/observability/profiling-in-production/#download-the-capture) and [Limits](/workers/observability/profiling-in-production/#limits).
 
 ## Browser evidence
 
