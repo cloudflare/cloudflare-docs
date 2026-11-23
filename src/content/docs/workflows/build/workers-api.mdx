@@ -753,7 +753,7 @@ type WorkflowBatchCreateResult = {
 };
 ```
 
-`created` contains a `WorkflowInstance` for each created instance, in input order. `errors` contains the entries that were not created. Each error includes the position of the entry in the input (`index`), its `id`, and an error code and message. If you did not provide an `id` for the entry, the error includes the ID that Workflows generated for it.
+`created` contains a `WorkflowInstance` for each created instance, in input order. `errors` contains the entries that were not created. Each error includes the position of the entry in the input (`index`), its `id`, and an error code and message. If you did not provide an `id` for the entry, the error includes the ID that was generated for it.
 
 Unlike [`create`](/workflows/build/workers-api/#create), `createBatch` does not throw when it cannot create an entry for one of the following reasons. Instead, it reports the entry in `errors` with the matching code:
 
