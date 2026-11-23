@@ -1,0 +1,75 @@
+---
+title: K2 metrics in the dashboard and GraphQL Analytics API
+description: Monitor throughput, storage, and subscription lag for your K2 streams in the Cloudflare dashboard, or query the same metrics with the GraphQL Analytics API.
+products:
+  - k2
+date: 2026-11-23
+---
+
+import { Image } from "astro:assets";
+import screenshot from "~/assets/images/k2/k2-stream-metrics.png";
+
+You can now monitor your [K2](/k2/) streams in the Cloudflare dashboard: how fast records are produced and consumed, how much each stream stores, and how far behind each subscription is.
+
+<Image
+	src={screenshot}
+	alt="A K2 stream's Metrics tab, charting bytes produced by input and bytes stored"
+/>
+
+Go to [K2 Streams](https://dash.cloudflare.com/?to=/:account/k2) in the Cloudflare dashboard and select a stream:
+
+- **Overview** — Produce and consume rates over the last 5 minutes, stored bytes, and each subscription's records behind, oldest unread record, lag over the last hour, and bytes consumed.
+- **Metrics** — Charts of bytes produced by input, bytes stored, and bytes delivered to each subscription, over a time range you choose.
+- **Subscription page** — Select a subscription to see its records and bytes behind, its oldest unread record, its consume rate, and charts of its lag and throughput.
+
+The same metrics are available in the [GraphQL Analytics API](/analytics/graphql-api/), in four beta datasets:
+
+- `k2ProduceAdaptiveGroups` — Bytes produced to a stream, by input (`http` or `binding`).
+- `k2ConsumeAdaptiveGroups` — Bytes delivered to each subscription.
+- `k2StorageAdaptiveGroups` — Bytes a stream stores, measured about every ten minutes.
+- `k2SubscriptionLagAdaptiveGroups` — Records a subscription has not committed, and the age of the oldest one in milliseconds.
+
+This query reads a stream's bytes produced by input in 5-minute buckets, and a subscription's current lag. To get a subscription's full lag, set the lag query's time range to cover the stream's whole retention period (7 days in this example). A shorter range leaves out older records the subscription has not committed. Replace `<ACCOUNT_ID>`, `<STREAM_ID>`, and `<SUBSCRIPTION_ID>` with your own values.
+
+```graphql graphql-api-explorer title="Bytes produced by input, and a subscription's lag"
+query K2StreamMetrics {
+	viewer {
+		accounts(filter: { accountTag: "<ACCOUNT_ID>" }) {
+			produced: k2ProduceAdaptiveGroups(
+				limit: 100
+				filter: {
+					streamId: "<STREAM_ID>"
+					datetime_geq: "2026-11-23T11:00:00Z"
+					datetime_lt: "2026-11-23T12:00:00Z"
+				}
+				orderBy: [datetimeFiveMinutes_ASC]
+			) {
+				dimensions {
+					input
+					datetimeFiveMinutes
+				}
+				sum {
+					bytes
+				}
+			}
+			lag: k2SubscriptionLagAdaptiveGroups(
+				limit: 1
+				filter: {
+					streamId: "<STREAM_ID>"
+					datetime_geq: "2026-11-16T12:00:00Z"
+					datetime_leq: "2026-11-23T12:00:00Z"
+				}
+			) {
+				max(subscriptionId: "<SUBSCRIPTION_ID>") {
+					records
+					timeMs
+				}
+			}
+		}
+	}
+}
+```
+
+:::note
+Queries need an [API token](/analytics/graphql-api/getting-started/authentication/api-token-auth/) with the **Account Analytics Read** permission.
+:::
