@@ -18,13 +18,13 @@ This guide covers how to configure [Magalu Cloud](https://docs.magalu.cloud/) as
 - An [identity provider](/cloudflare-one/integrations/identity-providers/) configured in Cloudflare One
 - An active Magalu Cloud account with administrative access to your organization
 - The [MGC CLI](https://github.com/MagaluCloud/mgccli) installed and authenticated with your administrator account
-- A verified domain (such as `yourcompany.com`) configured in Magalu Cloud Turia IAM:
+- A verified domain (such as `example.com`) configured in Magalu Cloud Turia IAM:
   - **Exclusivity**: Each domain can only be registered once globally across Magalu Cloud.
   - **Limit**: Each domain supports only **one active federation** at a time (SAML or OIDC).
   - To register and verify your domain:
     1. Register the domain:
        ```bash
-       mgc iam domains create --domain yourcompany.com
+       mgc iam domains create --domain example.com
        ```
     2. Note the `txt_name` and `txt_value` from the output and add the corresponding `TXT` record at your authoritative DNS provider (or in [Cloudflare DNS](/dns/manage-dns-records/how-to/create-dns-records/) if your domain is managed by Cloudflare).
     3. Once the DNS record propagates, verify ownership:
