@@ -10,13 +10,7 @@ products:
   - kv
 ---
 
-import {
-	Render,
-	PackageManagers,
-	Tabs,
-	TabItem,
-	WranglerConfig,
-} from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 Using Workers KV to store routing data to route requests across various web servers with Workers is an ideal use case for Workers KV. Routing workloads can have high read volume, and Workers KV's low-latency reads can help ensure that routing decisions are made quickly and efficiently.
 
@@ -37,8 +31,6 @@ Our Cloudflare Worker is responsible for receiving all requests for all storefro
 For simplicity of demonstration, the storefront will be identified with a path element containing the storefront ID, where
 `https://<WORKER_HOSTNAME>/<STOREFRONT_ID>/...` is the URL pattern for the storefront. You may prefer to use subdomains to identify storefronts in a real-world scenario.
 
-<Tabs>
-<TabItem label="index.ts">
 ```js title="index.ts" collapse={17-22, 34-39, 69-73}
 
 // Example routing data stored in Workers KV:
@@ -120,8 +112,6 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 ```
-</TabItem>
-<TabItem label="Configuration">
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
@@ -131,7 +121,7 @@ export default defineConfig({
 	worker: {
 		name: "<ENTER_WORKER_NAME>",
 		entrypoint,
-		compatibilityDate: "2025-03-03",
+		compatibilityDate: "$today",
 		observability: {
 			enabled: true,
 		},
@@ -148,7 +138,7 @@ export default defineConfig({
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-03-03",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
 	},
@@ -162,9 +152,6 @@ export default defineConfig({
 ```
 
 </WranglerConfig>
-
-</TabItem>
-</Tabs>
 
 In this example, the Cloudflare Worker receives a request and extracts the storefront ID from the URL path.
 The storefront ID is used to look up the origin server URL from Workers KV using the `get()` method.

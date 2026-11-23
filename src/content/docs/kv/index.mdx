@@ -20,7 +20,6 @@ import {
 	Tabs,
 	TabItem,
 	LinkButton,
-	WranglerConfig,
 } from "~/components";
 
 <Description>
@@ -43,9 +42,8 @@ Access your Workers KV namespace from Cloudflare Workers using [Workers Bindings
 
 <Tabs>
 <TabItem label="Workers Binding API">
-	<Tabs>
-	<TabItem label="index.ts">
-```ts
+
+```ts title="src/index.ts"
 export default {
 	async fetch(request, env, ctx): Promise<Response> {
 		// write a key-value pair
@@ -68,39 +66,19 @@ export default {
 			}),
 		);
 	},
-
 } satisfies ExportedHandler<{ KV: KVNamespace }>;
+```
 
-    ```
-    </TabItem>
-    <TabItem label="Configuration">
+<CliVariants>
+<CliVariant cli="wrangler">
 
-<WranglerConfig
-	cfConfig={`import { bindings, defineConfig } from "cf/config";
-import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
-
-export default defineConfig({
-	worker: {
-		name: "<ENTER_WORKER_NAME>",
-		entrypoint,
-		compatibilityDate: "2025-02-04",
-		observability: {
-			enabled: true,
-		},
-		env: {
-			KV: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
-		},
-	},
-});`}
->
-
-```jsonc
+```jsonc title="wrangler.jsonc"
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-02-04",
+	"compatibility_date": "<COMPATIBILITY_DATE>",
 	"observability": {
 		"enabled": true
 	},
@@ -113,12 +91,32 @@ export default defineConfig({
 }
 ```
 
-</WranglerConfig>
+</CliVariant>
+<CliVariant cli="cf">
 
-    </TabItem>
-    </Tabs>
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
 
-See the full [Workers KV binding API reference](/kv/api/read-key-value-pairs/).
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			KV: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});
+```
+
+</CliVariant>
+</CliVariants>
+
+For the full binding reference, refer to [Workers KV binding API](/kv/api/read-key-value-pairs/).
 
 </TabItem>
 <TabItem label="REST API">

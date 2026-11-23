@@ -134,8 +134,6 @@ The application also uses exponential backoff to handle retries in case of error
 
 With the configuration data now in the Workers KV namespace, we can use it in our Workers application to personalize the application for each user.
 
-<Tabs>
-<TabItem label="index.ts">
 ```js title="index.ts"
 // Example configuration data stored in Workers KV:
 // Key: "user-id-abc" | Value: {"preview_features_enabled": false}
@@ -206,8 +204,6 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 ```
-</TabItem>
-<TabItem label="Configuration">
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
@@ -217,7 +213,7 @@ export default defineConfig({
 	worker: {
 		name: "<ENTER_WORKER_NAME>",
 		entrypoint,
-		compatibilityDate: "2025-03-03",
+		compatibilityDate: "$today",
 		observability: {
 			enabled: true,
 		},
@@ -234,7 +230,7 @@ export default defineConfig({
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-03-03",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
 	},
@@ -248,9 +244,6 @@ export default defineConfig({
 ```
 
 </WranglerConfig>
-
-</TabItem>
-</Tabs>
 
 This code will use the path within the URL and find the file associated to the path within the KV store. It also sets the proper MIME type in the response to inform the browser how to handle the response. To retrieve the value from the KV store, this code uses `arrayBuffer` to properly handle binary data such as images, documents, and video/audio files.
 

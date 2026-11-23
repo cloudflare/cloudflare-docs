@@ -15,8 +15,6 @@ import {
 	CliVariants,
 	PackageManagers,
 	Render,
-	TabItem,
-	Tabs,
 	WranglerConfig,
 } from "~/components";
 
@@ -71,9 +69,7 @@ By default, `cf` writes to your remote KV namespace. Add `--local` to write to l
 
 In this example, our Workers application will accept any key name as the path of the HTTP request and return the value stored in the KV store for that key.
 
-<Tabs>
-<TabItem label="index.ts">
-```js
+```js title="index.ts"
 
 import mime from "mime";
 
@@ -126,8 +122,6 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 ```
-</TabItem>
-<TabItem label="Configuration">
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
@@ -137,7 +131,7 @@ export default defineConfig({
 	worker: {
 		name: "<ENTER_WORKER_NAME>",
 		entrypoint,
-		compatibilityDate: "2025-03-03",
+		compatibilityDate: "$today",
 		observability: {
 			enabled: true,
 		},
@@ -154,7 +148,7 @@ export default defineConfig({
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-03-03",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
 	},
@@ -168,9 +162,6 @@ export default defineConfig({
 ```
 
 </WranglerConfig>
-
-</TabItem>
-</Tabs>
 
 This code parses the key name for the key-value pair to fetch from the HTTP request. Then, it determines the proper MIME type for the response to inform the browser how to handle the response.
 To retrieve the value from the KV store, this code uses `arrayBuffer` to properly handle binary data such as images, documents, and video/audio files.
@@ -234,9 +225,7 @@ In addition to serving static assets, we can also generate dynamic HTML or API r
 
 3. Update your Workers code to add logic to serve a translated HTML file based on the language of the Accept-Language header of the request:
 
-<Tabs>
-<TabItem label="index.ts">
-```js {2, 26-63}
+```js title="index.ts" {2, 26-63}
 import mime from 'mime';
 import parser from 'accept-language-parser'
 
@@ -328,8 +317,6 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 ```
-</TabItem>
-<TabItem label="Configuration">
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
@@ -339,7 +326,7 @@ export default defineConfig({
 	worker: {
 		name: "<ENTER_WORKER_NAME>",
 		entrypoint,
-		compatibilityDate: "2025-03-03",
+		compatibilityDate: "$today",
 		observability: {
 			enabled: true,
 		},
@@ -356,7 +343,7 @@ export default defineConfig({
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-03-03",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
 	},
@@ -370,9 +357,6 @@ export default defineConfig({
 ```
 
 </WranglerConfig>
-
-</TabItem>
-</Tabs>
 
 This new code provides a specific endpoint, `/hello-world`, which will provide translated responses. When this URL is accessed, our Worker code will first retrieve the language that is requested by the client in the `Accept-Language` request header and the translations from our KV store for the `hello-world.json` key. It then gets the translated message and returns the generated HTML.
 

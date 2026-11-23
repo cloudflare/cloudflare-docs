@@ -25,7 +25,7 @@ Pass a function to `defineConfig(({ mode }) => ...)` and return a complete confi
 ```ts title="cloudflare.config.ts"
 import { bindings, defineConfig } from "cf/config";
 import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
-import { prodNamespaceId, stagingNamespaceId } from "./kv-namespaces";
+import { prodNamespaceId, stagingNamespaceId } from "./kv-namespaces.ts";
 
 export default defineConfig(({ mode }) => {
 	const isProduction = mode === "production";
@@ -62,7 +62,7 @@ You can also vary routes and Worker settings per mode in `cloudflare.config.ts`:
 ```ts title="cloudflare.config.ts"
 import { bindings, defineConfig, triggers } from "cf/config";
 import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
-import { prodNamespaceId, stagingNamespaceId } from "./kv-namespaces";
+import { prodNamespaceId, stagingNamespaceId } from "./kv-namespaces.ts";
 
 export default defineConfig(({ mode }) => {
 	const isProduction = mode === "production";
@@ -156,7 +156,7 @@ Since `--namespace-id` is always unique (unlike binding names), you do not need 
 
 :::caution
 
-Since version 3.60.0, Wrangler KV commands support the `kv ...` syntax. If you are using versions of Wrangler below 3.60.0, the command follows the `kv:...` syntax. Learn more about the deprecation of the `kv:...` syntax on the [KV CLI commands](/kv/reference/kv-commands/) page.
+Since version 3.60.0, Wrangler KV commands support the `kv ...` syntax. If you are using versions of Wrangler below 3.60.0, the command follows the `kv:...` syntax. For more information on the `kv:...` syntax deprecation, refer to [KV CLI commands](/kv/reference/kv-commands/#deprecations).
 :::
 
 Most `wrangler kv` subcommands allow you to specify an environment with the optional `--env` flag.

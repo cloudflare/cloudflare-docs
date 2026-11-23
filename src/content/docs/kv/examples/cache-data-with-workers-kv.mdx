@@ -10,13 +10,7 @@ products:
   - kv
 ---
 
-import {
-	Render,
-	PackageManagers,
-	Tabs,
-	TabItem,
-	WranglerConfig,
-} from "~/components";
+import { Render, PackageManagers, WranglerConfig } from "~/components";
 
 Workers KV can be used as a persistent, single, global cache accessible from Cloudflare Workers to speed up your application.
 Data cached in Workers KV is accessible from all other Cloudflare locations as well, and persists until expiry or deletion.
@@ -39,8 +33,6 @@ With Workers KV, the data is persisted by default to [central stores](/kv/concep
 
 In the following `index.ts` file, the Worker fetches data from an external server and caches the response in Workers KV. If the data is already cached in Workers KV, the Worker reads the cached data from Workers KV instead of calling the external API.
 
-<Tabs>
-<TabItem label="index.ts">
 ```js title="index.ts" collapse={42-1000}
 interface Env {
   CACHE_KV: KVNamespace;
@@ -116,8 +108,6 @@ if (!bodyMatch) return 'No content found';
 }
 
 ```
-</TabItem>
-<TabItem label="Configuration">
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
@@ -127,7 +117,7 @@ export default defineConfig({
 	worker: {
 		name: "<ENTER_WORKER_NAME>",
 		entrypoint,
-		compatibilityDate: "2025-03-03",
+		compatibilityDate: "$today",
 		observability: {
 			enabled: true,
 		},
@@ -144,7 +134,7 @@ export default defineConfig({
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-03-03",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
 	},
@@ -158,9 +148,6 @@ export default defineConfig({
 ```
 
 </WranglerConfig>
-
-</TabItem>
-</Tabs>
 
 This code snippet demonstrates how to read and update cached data in Workers KV from your Worker.
 If the data is not in the Workers KV cache, the Worker fetches the data from an external server and caches it in Workers KV.
