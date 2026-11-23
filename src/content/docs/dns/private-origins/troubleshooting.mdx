@@ -52,10 +52,6 @@ Refer to [Cloudflare source IP ranges](/dns/private-origins/private-network-rout
 
 On IPsec tunnels, the MSS clamp is missing or above `1360`. Set the TCP MSS clamp on your tunnels to `1360` or lower.
 
-## Cacheable assets return 403
-
-Known issue with Tiered Cache when the origin is reached over Cloudflare WAN. As a workaround, create a [Cache Rule](/cache/how-to/cache-rules/) that bypasses cache for the affected hostnames. Refer to [Limitations](/dns/private-origins/#limitations).
-
 ## 525 or 526 errors
 
 The origin certificate does not match the hostname, or the private CA is not in the Custom Origin Trust Store. Verify the certificate served by the origin and the trust store configuration.
