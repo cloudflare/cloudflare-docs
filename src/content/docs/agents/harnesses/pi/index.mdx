@@ -431,7 +431,7 @@ A tool call usually ends when its `execute()` returns a result. A Pi tool can in
 
 Think of a park as an `await` that survives hibernation. A call cannot keep a promise open while the Durable Object sleeps, so it tells Pi what it is waiting for, and Pi keeps that in storage instead of in memory. While the call is parked, it holds no invocation, so the Durable Object can hibernate or be evicted. Your agent delivers a signal with `harness.signal()`, for example from the request that carries a person's answer.
 
-![A sequence diagram of a tool that asks the user a question. The model calls the tool. The tool has no answer yet, so it shows the question with its task id and returns a park naming the signal it waits for. Pi stores the park with the call, and the Durable Object can hibernate. Later your app calls harness.signal() with the task id and the answer. Pi matches the stored signal key and runs execute() again with the same arguments. This time readSignal() returns the answer, and the tool returns it to the model as its result.](~/assets/images/agents/pi-tool-park.svg)
+![A sequence diagram of a tool that asks the user a question. The model calls the tool, and run 1 of execute() starts. readSignal() finds no answer, so the tool shows the question with its task id and returns a park naming the signal key it waits for. Run 1 ends there. Pi stores the park: the call's task id and the signal key. Between the runs the object can hibernate, with no tool code in memory and only the stored park kept. Later your app calls harness.signal() with the task id and the answer. Pi matches the stored park and starts run 2 of execute() with the same arguments. This time readSignal() returns the answer, and the tool returns it to the model as its result.](~/assets/images/agents/pi-tool-park.svg)
 
 Because Pi runs the whole of `execute()` again after a wake, a tool that waits for a person's answer does three things each time it runs, in this order:
 
@@ -439,7 +439,9 @@ Because Pi runs the whole of `execute()` again after a wake, a tool that waits f
 2. If there is no answer yet, show the question. Send `api.taskId` with it: your agent needs the task id later to deliver the answer.
 3. Return a park that names the signal key to wait for.
 
-Checking first means the question is shown once, not again on the run that has the answer:
+![The ask_user tool's execute() code, with two gutters marking which lines each run reaches. Run 1, before the answer: readSignal() returns nothing, the if is skipped, the tool shows the question and returns the park. Run 2, after the wake, starts again from the top with the same arguments: readSignal() returns the answer, and the tool returns it as its result, so the question is not shown again.](~/assets/images/agents/pi-tool-park-runs.svg)
+
+The whole example, with the signal it waits on and the call your agent makes later:
 
 ```ts
 import { defineSignal } from "@earendil-works/pi-durable";
