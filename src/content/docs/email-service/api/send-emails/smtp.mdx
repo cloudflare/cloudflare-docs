@@ -127,6 +127,7 @@ Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.or
 | `354`         | Ready to receive the message body — terminate with `<CR><LF>.<CR><LF>`.   |
 | `421`         | Service temporarily unavailable. Retry later.                             |
 | `451 4.3.0`   | Local error — the message was accepted but deferred. Retry later.         |
+| `451 4.7.1`   | Sending rate or daily sending limit exceeded. Retry later.                |
 | `452 4.5.3`   | Too many recipients in this session. Open a new session for the rest.     |
 | `500` / `501` | Syntax error in command or arguments.                                     |
 | `503`         | Bad sequence of commands (for example, `MAIL FROM` before `AUTH`).        |
@@ -168,6 +169,14 @@ The address in `MAIL FROM` is on a domain that is not onboarded for Email Sendin
 ### `552 5.3.4 Message too big`
 
 The message body (including attachments after MIME encoding) is larger than 25 MiB. Reduce the attachment size or split the message.
+
+### `451 4.7.1 rate limit exceeded, try again later`
+
+The account has reached its sending rate limit or its [daily sending limit](/email-service/platform/limits/#daily-sending-limits). Email Service checks these limits after it receives the message body, so `MAIL FROM` and `RCPT TO` still return `250` and the `451 4.7.1` reply arrives at the end of `DATA`. The message is not accepted.
+
+The reply is the same for a rate limit and for the daily limit. Because it is a temporary (`4xx`) reply, most mail servers and SMTP libraries queue the message and retry it later rather than treat it as a failure.
+
+If you want to fail over to another provider when you reach a limit, configure your mail server or application to do so explicitly. Fail over on any `4xx` reply at the end of `DATA`, not only on `451 4.7.1`, so that other temporary failures are covered too.
 
 ### TLS handshake failures
 
