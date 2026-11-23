@@ -1,0 +1,124 @@
+---
+title: Context
+pcx_content_type: how-to
+description: Build a Think agent's system prompt from context blocks, give the model memory it can write and knowledge it can search, and keep the prompt cache warm.
+sidebar:
+  order: 2.8
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+Context is how a Think agent builds up what the model is told besides the conversation: who the agent is, what it has learned about the user, what it can look up. You declare labelled blocks, and Think renders them into the system prompt, saves what the model writes to them, and keeps the prompt stable so the provider's prompt cache holds.
+
+:::caution[Experimental]
+Context is experimental, and only Think uses it. Its API may change between releases. This page describes `@cloudflare/think` v0.24.0.
+:::
+
+Most agents need [skills](/agents/skills/) more than context. Use skills for instructions and references that only some tasks need: the model loads them on demand, and they follow an open format other agents read too. Use context for the few things the model should see on every turn, and for memory the agent writes itself.
+
+## Declare blocks
+
+Return blocks from `configureContext()`, in the order they appear in the prompt:
+
+<TypeScriptExample filename="src/server.ts">
+
+```ts
+import { Think } from "@cloudflare/think";
+import { AgentSearchProvider, type ContextConfig } from "agents/context";
+
+export class MyAgent extends Think<Env> {
+	configureContext(): ContextConfig[] {
+		return [
+			{
+				label: "soul",
+				provider: { get: async () => "You are a concise coding assistant." },
+			},
+			{
+				label: "memory",
+				description: "Facts about the user worth keeping",
+				maxTokens: 1_000,
+			},
+			{
+				label: "knowledge",
+				description: "Product documentation. Search before answering.",
+				provider: new AgentSearchProvider(this),
+			},
+			{
+				label: "environment",
+				provider: {
+					get: async () => `Today is ${new Date().toDateString()}.`,
+				},
+				whenChanged: "remind",
+			},
+		];
+	}
+}
+```
+
+</TypeScriptExample>
+
+Each block renders as its own section of the system prompt, below the instructions from your `getSystemPrompt()` override, with a header that names it and says what the model can do with it. Without an override, the blocks are the whole system prompt, and Think's default `getSystemPrompt()` text is used only when there are no blocks:
+
+```txt
+══════════════════════════════════════════════
+MEMORY (Facts about the user worth keeping) [45% — 450/1000 tokens] [writable]
+══════════════════════════════════════════════
+User prefers dark mode.
+User's project uses React and TypeScript.
+```
+
+## Providers
+
+A block's provider is where its value lives. What the provider can do decides what the block is:
+
+| Provider has                        | Block      | The prompt shows             | The model gets                  |
+| ----------------------------------- | ---------- | ---------------------------- | ------------------------------- |
+| `get()`                             | Read-only  | The full text                | Nothing to change it            |
+| `get()` and `set(content)`          | Writable   | The full text and its budget | `set_context`                   |
+| `get()`, `search(query)`, and `set` | Searchable | A summary, such as a count   | `search_context`, `set_context` |
+| No provider                         | Writable   | The full text and its budget | `set_context`                   |
+
+A block with no provider is stored in the agent's SQLite database, so `memory` above is memory the agent keeps for itself with no extra code. `maxTokens` limits what the model can write to it. `AgentSearchProvider` searches with SQLite full-text search. A provider of your own can read from R2 or an API, or search [Vectorize](/vectorize/). Providers are checked by shape, so any object with the right methods works.
+
+Think adds `set_context` and `search_context` to the turn's tools when a block needs them. Your code can change blocks through `this.context`:
+
+<TypeScriptExample>
+
+```ts
+await this.context.appendToBlock("memory", `Timezone: ${timezone}`);
+```
+
+</TypeScriptExample>
+
+## What the model is sent
+
+The system prompt sits at the start of every request, so it sits at the start of the provider's prompt cache. Think keeps it stable:
+
+- **The prompt is frozen.** The first turn renders every block, and Think stores that prompt. Every later request opens with the same text, even after a block changes, and the same text comes back after the object is evicted.
+- **Writes wait.** When the model writes to a block, the value is saved at once. The model already knows what it wrote, because the tool call is in the transcript, so the prompt stays as it was.
+- **Reminders go after the cached prefix.** While a block declared `whenChanged: "remind"` differs from the frozen prompt, Think adds its current value to the last user message of each request, after the history, until a refresh folds the value into the prompt.
+- **Refreshes are deliberate.** A refresh renders every block again and freezes the new prompt. Think refreshes after a compaction and when history is cleared, where the cache is already lost. Call `this.context.refreshSystemPrompt()` to refresh yourself.
+
+```txt
+system:    frozen prompt (unchanged)
+user:      What should I work on?
+assistant: ...
+user:      What day is it?
+           + environment changed: "Today is Tuesday."
+```
+
+A reminder is not stored. It rides on the newest user message of every request until a refresh, so the previous user message changes from one request to the next, and the provider's cache ends there. Declare as reminders only the blocks the model needs to see change during a conversation, such as the date or the state of a workspace.
+
+To configure compaction and the other settings that shape the conversation part of the request, refer to [Sessions](/agents/harnesses/think/sessions/).
+
+## Skills and context
+
+Think's [skills](/agents/skills/) use a context block. The skill catalog is a block declared `whenChanged: "remind"`, so a skill added mid-conversation reaches the model as a reminder, and the prompt is not rebuilt. What a skill loads comes back as a tool result in the session, not in context.
+
+## Related
+
+- [Skills](/agents/skills/): instructions and references the model loads on demand
+- [Sessions](/agents/harnesses/think/sessions/): compaction, storage, and prompt caching for Think's conversation
+- [Configuration](/agents/harnesses/think/configuration/): `configureContext()` with the other overrides
