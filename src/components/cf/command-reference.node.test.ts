@@ -7,6 +7,7 @@ import {
 import {
 	formatCommandArgumentName,
 	formatCommandInvocation,
+	kebabCaseFlagNames,
 } from "./command-reference";
 
 describe("CF command metadata", () => {
@@ -92,6 +93,75 @@ describe("formatCommandArgumentName", () => {
 				value: {},
 			}),
 		).toBe("secret put <KEY> [VALUE]");
+	});
+
+	test("includes required flags after positionals in command invocations", () => {
+		expect(
+			formatCommandInvocation("secrets-store secret create", ["store-id"], {
+				"store-id": { type: "string", demandOption: true },
+				name: { type: "string", demandOption: true },
+				value: { type: "string" },
+				scopes: { type: "string", demandOption: true },
+				comment: { type: "string" },
+				remote: { type: "boolean" },
+			}),
+		).toBe(
+			"secrets-store secret create <STORE-ID> --name <NAME> --scopes <SCOPES>",
+		);
+	});
+
+	test("formats required boolean, choice, and array flags", () => {
+		expect(
+			formatCommandInvocation("example", [], {
+				force: { type: "boolean", demandOption: true },
+				type: { type: "string", choices: ["a", "b"], demandOption: true },
+				"event-types": { choices: ["x"], demandOption: true },
+			}),
+		).toBe("example --force --type <TYPE> --event-types <EVENT-TYPES>");
+	});
+
+	test("omits hidden required flags from command invocations", () => {
+		expect(
+			formatCommandInvocation("example", [], {
+				internal: { type: "string", demandOption: true, hidden: true },
+			}),
+		).toBe("example");
+	});
+
+	test("renders camelCase flags in kebab-case", () => {
+		const args = kebabCaseFlagNames(
+			{
+				name: { type: "string", demandOption: true },
+				propertyName: { type: "string", demandOption: true },
+				type: { type: "string", demandOption: true },
+			},
+			["name"],
+		);
+		expect(Object.keys(args)).toEqual(["name", "property-name", "type"]);
+		expect(
+			formatCommandInvocation(
+				"vectorize create-metadata-index",
+				["name"],
+				args,
+			),
+		).toBe(
+			"vectorize create-metadata-index <NAME> --property-name <PROPERTY-NAME> --type <TYPE>",
+		);
+	});
+
+	test("keeps positional and colliding camelCase names unchanged", () => {
+		expect(
+			Object.keys(
+				kebabCaseFlagNames(
+					{
+						objectPath: { type: "string", demandOption: true },
+						dryRun: { type: "boolean" },
+						"dry-run": { type: "boolean" },
+					},
+					["objectPath"],
+				),
+			),
+		).toEqual(["objectPath", "dryRun", "dry-run"]);
 	});
 
 	test("rejects a positional without an argument definition", () => {
