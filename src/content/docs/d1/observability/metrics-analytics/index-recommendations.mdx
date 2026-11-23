@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { PackageManagers, Steps, Tabs, TabItem } from "~/components";
+import { DashButton, PackageManagers, Steps, Tabs, TabItem } from "~/components";
 
 D1 Insights can recommend indexes for active [D1](/d1/) databases. Each recommendation includes validated `CREATE INDEX` SQL, the impacted queries, and the measured workload behind the recommendation.
 
@@ -18,13 +18,60 @@ Indexes also use storage and add work to database writes. Review each recommenda
 
 ## Availability
 
-Index recommendations are available automatically on the [Workers Paid plan](/workers/platform/pricing/).
+Index recommendations are available on the [Workers Paid plan](/workers/platform/pricing/) and are turned on by default. Recommendation generation uses [Workers AI](/workers-ai/).
 
-If you are an Enterprise customer, contact your account team to enable D1 Insights. Recommendation generation uses [Workers AI](/workers-ai/).
+Enterprise customers can opt in from the dashboard. No account team request is required.
+
+## Opt in or out
+
+Insights controls whether D1 sends your account's query data to Workers AI to generate recommendations.
+
+When Insights is on, D1 generates and stores recommendations for active databases in your account. When Insights is off, D1 stops generating recommendations and hides existing recommendations in the dashboard and API.
+
+Stored recommendations are kept and show again if you turn Insights back on. Opting out does not affect D1 query metrics, billing, or other D1 features.
+
+<Tabs syncKey="d1InsightsOptIn">
+<TabItem label="Dashboard">
+
+1. In the Cloudflare dashboard, go to **D1** and select a database.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+
+2. Select the **Metrics** tab.
+
+3. In the **Recommendations** card, open the settings menu and turn index recommendations on or off.
+
+The setting applies to every database in your account and requires an account-level admin. Enterprise customers use the same toggle to opt in. When Insights is off, the card shows a disabled state.
+
+</TabItem>
+<TabItem label="API">
+
+The API token needs the **Account Settings Write** permission.
+
+Check the current setting. The response includes `ai_enabled`:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+Turn Insights on or off:
+
+```sh
+curl --request PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--header "Content-Type: application/json" \
+	--data '{"ai_enabled": false}'
+```
+
+Set `ai_enabled` to `false` to opt out.
+
+</TabItem>
+</Tabs>
 
 ## Generate recommendations
 
-D1 evaluates active databases in the background. It stores recommendations for the dashboard, Cloudflare CLI (`cf`), Wrangler, and REST API.
+When Insights is on, D1 evaluates active databases in the background. It stores recommendations for the dashboard, Cloudflare CLI (`cf`), Wrangler, and REST API.
 
 D1 uses Workers AI to precompute recommendations where indexes provide measurable impact. On-demand recommendation generation is not supported.
 
@@ -74,25 +121,40 @@ List recommendations for one database:
 Fetch recommendations across an account:
 
 ```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights?filter=recommendations&limit=20" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/recommendations?limit=20" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-Fetch recommendations for one database:
+Fetch recommendations for one database with the `database_id` filter:
 
 ```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database/$DATABASE_ID/insights?filter=recommendations" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/recommendations?database_id=$DATABASE_ID" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
 </TabItem>
 </Tabs>
 
+The `database_id` filter accepts one or more database IDs. Pass a comma-separated list or repeat the parameter, for example `?database_id=$DATABASE_ID_1,$DATABASE_ID_2`. You can pass up to 50 IDs. Results are paginated, and each page includes a `result_info.next_cursor` value.
+
+If a database ID does not exist or belongs to another account, the response is an empty list.
+
 If you use an API token, the token must have permission to read D1 databases and account analytics.
 
 ## View in the dashboard
 
-Index recommendations are also visible in the Cloudflare dashboard under the **Queries** tab for a database.
+Recommendations appear in the **Recommendations** card at the top of the **Metrics** tab for a database. The card shows up to 10 recommendations.
+
+The D1 database list marks databases that have recommendations. Their actions menu also includes **View recommendations**, which links to the Metrics tab.
+
+To find databases with recommendations from the API, add `recommendation_count` to the `fields` list on the database list request:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database?fields=uuid,name,recommendation_count" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+`recommendation_count` is returned only when you request it and Insights is available for the account. A missing value means the count is unknown, not zero.
 
 ## Interpret a recommendation
 
@@ -102,8 +164,10 @@ Recommendation payloads contain these fields:
 
 | Field | Description |
 | --- | --- |
-| `recommendations.query_window.from` | Inclusive start of the query metrics window. |
-| `recommendations.query_window.to` | Exclusive end of the query metrics window. |
+| `recommendations.items[].database_id` | Database identifier. |
+| `recommendations.items[].database_name` | Database name. |
+| `recommendations.items[].query_window.from` | Inclusive start of the query metrics window. |
+| `recommendations.items[].query_window.to` | Exclusive end of the query metrics window. |
 | `recommendations.items[].id` | Stable recommendation identifier. |
 | `recommendations.items[].generated_at` | RFC 3339 timestamp for the completed evaluation. |
 | `recommendations.items[].type` | Recommendation type, which is `index_suggestion`. |
@@ -113,55 +177,11 @@ Recommendation payloads contain these fields:
 | `recommendations.items[].suggestions[].kind` | Suggestion type, which is `index_creation`. |
 | `recommendations.items[].suggestions[].sql` | Validated `CREATE INDEX` statement. |
 | `recommendations.items[].impacted_queries` | Query patterns affected by the suggested index. |
+| `result_info.next_cursor` | Cursor for the next page of results. |
 
 Impacted query metrics come from D1 query analytics. They are not Workers AI estimates.
 
 The following response recommends an index for `OrderDetail.OrderId`:
-
-```json
-{
-	"success": true,
-	"result": {
-		"recommendations": {
-			"query_window": {
-				"from": "<WINDOW_START>",
-				"to": "<WINDOW_END>"
-			},
-			"items": [
-				{
-					"id": "9f8a7b6c-5d4e-4a21-9234-6f7890abcdef",
-					"generated_at": "<GENERATED_AT>",
-					"type": "index_suggestion",
-					"priority": "high",
-					"summary": "Create an index on OrderDetail.OrderId",
-					"reasoning": "Two query patterns join OrderDetail by OrderId.",
-					"suggestions": [
-						{
-							"kind": "index_creation",
-							"sql": "CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);"
-						}
-					],
-					"impacted_queries": [
-						{
-							"query": "SELECT * FROM OrderDetail WHERE OrderId = ?",
-							"metrics": {
-								"execution_count": 320,
-								"total_rows_read": 1250000,
-								"total_rows_written": 0,
-								"p95_query_duration_ms": 42.8
-							}
-						}
-					]
-				}
-			]
-		}
-	},
-	"errors": [],
-	"messages": []
-}
-```
-
-Account-level responses also include the database for each recommendation:
 
 ```json
 {
@@ -173,13 +193,13 @@ Account-level responses also include the database for each recommendation:
 					"id": "9f8a7b6c-5d4e-4a21-9234-6f7890abcdef",
 					"database_id": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47",
 					"database_name": "orders-prod",
-					"type": "index_suggestion",
-					"priority": "high",
 					"generated_at": "<GENERATED_AT>",
 					"query_window": {
 						"from": "<WINDOW_START>",
 						"to": "<WINDOW_END>"
 					},
+					"type": "index_suggestion",
+					"priority": "high",
 					"summary": "Create an index on OrderDetail.OrderId",
 					"reasoning": "Two query patterns join OrderDetail by OrderId.",
 					"suggestions": [
