@@ -1,24 +1,23 @@
 ---
-title: Agent Skills
+title: Skills
 pcx_content_type: overview
-description: Give an agent on-demand instructions, references, and scripts as Agent Skills, loaded from a Computer Workspace, R2, or code.
+description: Give an agent on-demand instructions, references, and scripts as skills, loaded from a Computer Workspace, R2, or code with agents/skills.
 sidebar:
   order: 4.8
   group:
     hideIndex: false
-  label: Skills
 products:
   - agents
 ---
 
 import { DirectoryListing, TypeScriptExample } from "~/components";
 
-[Agent Skills](https://agentskills.io/) are on-demand instructions, references, and scripts for an agent. Each skill is a directory with a `SKILL.md` file. The agent sees a short catalog of skill names and descriptions. It loads a full skill only when a task matches it, so a large library of skills does not fill every prompt.
+A skill is a set of instructions, references, and scripts that an agent loads when a task needs it. Each skill is a directory with a `SKILL.md` file, in the open [Agent Skills](https://agentskills.io/) format. The agent sees a short catalog of skill names and descriptions, and loads a full skill only when a task matches it, so a large library of skills does not fill every prompt.
 
-For background on the format and how agents use it, refer to [Agent Skills concepts](/agents/concepts/agent-skills/).
+`agents/skills` reads skills from a source, merges them into a catalog, and builds the tools the model uses to load them. It works with any harness. For background on the format, refer to [Skills concepts](/agents/concepts/skills/).
 
 :::note
-Agent Skills are experimental. The API may change in a future release. These pages describe [Agents SDK v0.32.0](https://github.com/cloudflare/agents/releases/tag/agents%400.32.0) and Think v0.23.0 or later.
+Skills are experimental. The API may change in a future release. These pages describe `agents` v0.34.0.
 :::
 
 ## What a skill looks like
@@ -51,48 +50,97 @@ The files in `scripts/`, `references/`, and `assets/` are the skill's resources.
 
 ## Load skills into an agent
 
-Skills come from a source. Return sources from `getSkills()` in a [Think](/agents/harnesses/think/) agent:
+Three pieces put skills in front of a model:
 
-<TypeScriptExample filename="src/server.ts">
+1. One or more [sources](/agents/skills/sources/) say where the skills live.
+2. `loadSkillCatalog()` lists every source and merges the skills into a catalog.
+3. `catalog.prompt()` returns the catalog text for the system prompt, and `createSkillTools()` from `agents/skills/tools/ai-sdk` returns the [AI SDK](https://ai-sdk.dev/) tools that load a skill.
+
+This Durable Object stores its conversation in [`Sessions`](/agents/runtime/capabilities/sessions/) and loads skills from an R2 bucket on every turn:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
-import { Think, skills } from "@cloudflare/think";
+import { DurableObject } from "cloudflare:workers";
+import {
+	convertToModelMessages,
+	stepCountIs,
+	streamText,
+	type UIMessage,
+} from "ai";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/ai-sdk";
+import { Sessions } from "agents/sessions";
+import { loadSkillCatalog, r2, type SkillCatalog } from "agents/skills";
+import { createSkillTools } from "agents/skills/tools/ai-sdk";
 
-export class MyAgent extends Think<Env> {
-	getSkills() {
-		return [
-			skills.workspace(this.workspace),
-			skills.r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
-		];
+export class Assistant extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
+	readonly sessions = new Sessions();
+	readonly lifecycle = Lifecycle.install(this).use(this.sessions);
+	readonly session = this.sessions.session();
+	readonly sources = [r2(this.env.SKILLS_BUCKET, { prefix: "skills/" })];
+	catalog: SkillCatalog | undefined;
+
+	async onRequest(request: Request): Promise<Response> {
+		await this.session.appendMessage(await request.json<UIMessage>(), {
+			source: "client",
+		});
+
+		// List the sources again each turn, so new and edited skills take effect.
+		// `previous` keeps a source's last skills if it fails to list.
+		this.catalog = await loadSkillCatalog(this.sources, {
+			previous: this.catalog,
+		});
+
+		const { messages } = await this.session.getRecentHistory(8 * 1024 * 1024);
+		const result = streamText({
+			model: this.ai("@cf/moonshotai/kimi-k2.7-code"),
+			system: ["You are a helpful assistant.", this.catalog.prompt()]
+				.filter(Boolean)
+				.join("\n\n"),
+			messages: await convertToModelMessages(messages as UIMessage[]),
+			tools: createSkillTools(this.catalog),
+			stopWhen: stepCountIs(10),
+		});
+
+		return result.toUIMessageStreamResponse({
+			onFinish: async ({ responseMessage }) => {
+				await this.session.appendMessage(responseMessage);
+			},
+		});
 	}
 }
 ```
 
 </TypeScriptExample>
 
-| Source                                                   | Reads skills from                                          |
-| -------------------------------------------------------- | ---------------------------------------------------------- |
-| [`skills.workspace()`](/agents/skills/sources/computer/)    | Files in a `@cloudflare/computer` Workspace                |
-| [`skills.r2()`](/agents/skills/sources/r2/)                 | Objects in an R2 bucket                                    |
-| [`skills.manifest()`](/agents/skills/sources/code/)     | Skills defined in code                                     |
-
-Sources are applied in order. The first source to provide a skill name wins. Later duplicates are skipped with a logged warning. Think lists every source again before each turn, so new, edited, and deleted skills take effect on the next turn.
-
-The [Pi harness](/agents/harnesses/pi/extensions/#add-skills) takes the same sources through `skills(sources)` from `agents/harness/pi`.
+Sources apply in order. The first source to provide a skill name wins, and later duplicates are reported in `catalog.diagnostics`. A source that fails to list, or a skill that cannot be used, becomes a diagnostic too, so one bad source never hides the others.
 
 ## Skill tools
 
-When at least one skill is available, the agent gets these tools:
+`createSkillTools(catalog)` returns these tools when the catalog has at least one skill, and none otherwise:
 
-| Tool                  | Purpose                                                                       |
-| --------------------- | ----------------------------------------------------------------------------- |
-| `activate_skill`      | Load a skill's instructions and its list of resources                         |
-| `read_skill_resource` | Read a resource by `{ name, path }` or a qualified path such as `name/path`   |
-| `run_skill_script`    | Run a bundled script, when a [script runner](/agents/skills/execution/) is set |
+| Tool                  | Purpose                                                                          |
+| --------------------- | -------------------------------------------------------------------------------- |
+| `activate_skill`      | Load a skill's instructions, its folder when it has one, and its resource list   |
+| `read_skill_resource` | Read a resource by `{ name, path }` or a qualified path such as `name/path`      |
+| `run_skill_script`    | Run a bundled script, when you pass a [script runner](/agents/skills/execution/) |
 
-The catalog is added to the system prompt as its own context block, below your `getSystemPrompt()` instructions. When a skill changes mid-conversation, Think does not rebuild the system prompt, so the model provider's prompt cache stays warm. The new catalog reaches the model as a reminder on the next turn and moves into the system prompt at the next compaction or history clear.
+The model's `name` argument is limited to the skills in the catalog. Failures, such as a missing file, are thrown, so the AI SDK returns them to the model as tool errors. For a harness that is not built on the AI SDK, call `catalog.activate()` and `catalog.readResource()` from your own tool handlers. Refer to [Skills tools](/agents/tools/skills/).
 
-Use `getSystemPrompt()` or a context block from `configureContext()` for instructions that apply to every turn. Use skills for procedures, references, and scripts that only some tasks need.
+## The catalog and the prompt cache
+
+`catalog.prompt()` lists each skill's name and description:
+
+```txt
+Available skills. When a task matches a skill, use activate_skill with its name before proceeding.
+
+- release-notes: Turn a list of changes into release notes.
+- pirate-voice: Answer in a pirate voice.
+```
+
+It returns `null` when there are no skills. The catalog text is part of the system prompt, so a skill added, edited, or deleted mid-conversation changes the prompt, and the provider's prompt cache starts over from that point. `catalog.fingerprint` changes whenever `prompt()` would, so compare it between turns to tell whether the prompt changed. How often to reload the catalog, and where in the prompt to put it, is up to the harness. Each harness's skills page says what it does.
 
 ## Validation
 
@@ -104,22 +152,22 @@ Every `SKILL.md` is checked against these rules from the [Agent Skills specifica
 - `metadata`, when present, must map string keys to string values.
 - `allowed-tools`, when present, must be a space-separated string.
 
-Skills load the way the specification's [guide for agents](https://agentskills.io/client-implementation/adding-skills-support) recommends. Skills written for other agents often break a rule, so a skill that breaks one still loads, and the agent logs a warning:
+Skills load the way the specification's [guide for agents](https://agentskills.io/client-implementation/adding-skills-support) recommends. Skills written for other agents often break a rule, so a skill that breaks one still loads, with a warning:
 
-| Problem | What happens |
-| --- | --- |
-| `name` breaks the format, is too long, or does not match the directory | Loads, with a warning |
-| `name` is missing | Loads with the directory name, with a warning |
-| `description` or `compatibility` is too long | Loads, with a warning |
-| `license`, `metadata`, or `allowed-tools` is invalid | Loads without that field, with a warning |
-| A value contains an unquoted `: `, so the YAML does not parse | Loads after quoting the value, with a warning |
-| `description` is missing | Skipped and logged |
-| `name` contains `/`, `\`, or control characters, or is `.` or `..` | Skipped and logged |
-| The frontmatter is missing or still not YAML | Skipped and logged |
+| Problem                                                                | What happens                                  |
+| ---------------------------------------------------------------------- | --------------------------------------------- |
+| `name` breaks the format, is too long, or does not match the directory | Loads, with a warning                         |
+| `name` is missing                                                      | Loads with the directory name, with a warning |
+| `description` or `compatibility` is too long                           | Loads, with a warning                         |
+| `license`, `metadata`, or `allowed-tools` is invalid                   | Loads without that field, with a warning      |
+| A value contains an unquoted `: `, so the YAML does not parse          | Loads after quoting the value, with a warning |
+| `description` is missing                                               | Skipped, with a diagnostic                    |
+| `name` contains `/`, `\`, or control characters, or is `.` or `..`     | Skipped, with a diagnostic                    |
+| The frontmatter is missing or still not YAML                           | Skipped, with a diagnostic                    |
 
 Skipped skills are not shown to the model. Frontmatter keys that the specification does not define are kept in `skill.extraFields`. A skill with `disable-model-invocation: true` is not shown to the model.
 
-To check a skill before you write or publish it, parse it with `parseSkill()` from `agents/skills`. A skill follows the specification when it parses with no warnings:
+To check a skill before you write or publish it, parse it with `parseSkill()`. A skill follows the specification when it parses with no warnings:
 
 <TypeScriptExample>
 
@@ -138,29 +186,9 @@ if (!parsed.ok) {
 
 </TypeScriptExample>
 
-## Use skills without Think
+## Skills in a harness
 
-The parser, sources, and catalog live in `agents/skills` and do not depend on Think. `loadSkillCatalog()` merges sources. `createSkillTools()` from `agents/skills/tools/ai-sdk` builds the [AI SDK](https://ai-sdk.dev/) tools for a catalog:
-
-<TypeScriptExample>
-
-```ts
-import { streamText } from "ai";
-import { loadSkillCatalog, workspace } from "agents/skills";
-import { createSkillTools } from "agents/skills/tools/ai-sdk";
-
-// `computerWorkspace` is a Workspace from @cloudflare/computer.
-const catalog = await loadSkillCatalog([workspace(computerWorkspace)]);
-
-const result = streamText({
-	model,
-	system: catalog.prompt() ?? undefined,
-	tools: createSkillTools(catalog),
-	messages,
-});
-```
-
-</TypeScriptExample>
+A harness can do all of this for you. [Think](/agents/harnesses/think/) takes sources from `getSkills()`, and [Pi](/agents/harnesses/pi/extensions/#add-skills) takes them through its `skills()` extension. Both use the same sources and the same tools as the example above.
 
 ## Pages in this section
 

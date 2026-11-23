@@ -1,0 +1,206 @@
+---
+title: Sources
+pcx_content_type: how-to
+description: Load skills from a Computer Workspace, an R2 bucket, or code, and combine sources with agents/skills.
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+A source tells an agent where its [skills](/agents/skills/) live. `agents/skills` has three:
+
+| Source                      | Reads skills from                           | Use it when                                                                      |
+| --------------------------- | ------------------------------------------- | -------------------------------------------------------------------------------- |
+| [`workspace()`](#workspace) | Files in a `@cloudflare/computer` Workspace | Skills should be files the agent, a user, or your code adds and edits at runtime |
+| [`r2()`](#r2)               | Objects in an R2 bucket                     | Many agents share one set of skills managed outside your Worker                  |
+| [`manifest()`](#code)       | Skills defined in code                      | Tests, or a small fixed set of skills that ships with your Worker                |
+
+Pass sources to `loadSkillCatalog()`. A source lists every skill it holds each time the catalog is loaded, so a change in the store shows up the next time you load it. Each `SKILL.md` is checked against the [specification](/agents/skills/#validation) when it is listed.
+
+## Workspace
+
+`workspace()` reads skills from files in a Workspace from [`@cloudflare/computer`](https://github.com/cloudflare/computer). A skill is a folder in the Workspace. Writing, editing, or deleting a `SKILL.md` changes the agent's skills the next time the catalog is loaded, with no deploy.
+
+By default, every `/workspace/.agents/skills/<name>/SKILL.md` is a skill, and the files beside it are its resources:
+
+```text
+/workspace/.agents/skills/
+  release-notes/
+    SKILL.md
+    references/style-guide.md
+    scripts/format-release-notes.js
+  pirate-voice/
+    SKILL.md
+```
+
+Skills are plain files, so anything that writes to the Workspace can add one: the agent's own `write` tool, a user upload, or your code. This Durable Object writes a starter skill when it starts:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Workspace } from "@cloudflare/computer";
+import { Lifecycle } from "agents/lifecycle";
+import { loadSkillCatalog, workspace } from "agents/skills";
+
+const ROOT = "/workspace/.agents/skills";
+
+const STARTER_SKILLS: Record<string, string> = {
+	"pirate-voice/SKILL.md": `---
+name: pirate-voice
+description: Answer in a pirate voice. Use when the user asks for a pirate tone.
+---
+
+Answer accurately, then rewrite the answer in a light pirate voice.
+`,
+};
+
+export class Assistant extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+	readonly workspace = new Workspace({ storage: this.ctx.storage });
+
+	async onStart() {
+		for (const [path, content] of Object.entries(STARTER_SKILLS)) {
+			const file = `${ROOT}/${path}`;
+			await this.workspace.fs.mkdir(file.slice(0, file.lastIndexOf("/")), {
+				recursive: true,
+			});
+			await this.workspace.fs.writeFile(file, content);
+		}
+	}
+
+	skills() {
+		return loadSkillCatalog([workspace(this.workspace)]);
+	}
+}
+```
+
+</TypeScriptExample>
+
+To read skills from another directory, pass an absolute `root`:
+
+```ts
+workspace(this.workspace, { root: "/workspace/skills" });
+```
+
+If the root directory does not exist, the source lists no skills. `.git`, `node_modules`, and `.DS_Store` inside a skill directory are ignored.
+
+A Workspace skill has a folder, so the model can run its scripts with the Workspace `exec` tool. Refer to [Execution](/agents/skills/execution/#run-scripts-in-the-workspace).
+
+## R2
+
+`r2()` reads skills from an [R2](/r2/) bucket. The bucket uses the same layout as a skills folder, under a key prefix. Every `<prefix><name>/SKILL.md` object is a skill, and the objects beside it are its resources:
+
+```text
+skills/release-notes/SKILL.md
+skills/release-notes/references/style-guide.md
+skills/release-notes/scripts/format-release-notes.js
+skills/pirate-voice/SKILL.md
+```
+
+Upload skills with any R2 interface. For example, with Wrangler:
+
+```sh
+npx wrangler r2 object put my-agent-skills/skills/pirate-voice/SKILL.md --file ./pirate-voice/SKILL.md --remote
+```
+
+Bind the bucket to your Worker:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"r2_buckets": [
+		{ "binding": "SKILLS_BUCKET", "bucket_name": "my-agent-skills" },
+	],
+}
+```
+
+</WranglerConfig>
+
+Then pass the bucket to `r2()`:
+
+<TypeScriptExample>
+
+```ts
+import { loadSkillCatalog, r2 } from "agents/skills";
+
+const catalog = await loadSkillCatalog([
+	r2(env.SKILLS_BUCKET, { prefix: "skills/" }),
+]);
+```
+
+</TypeScriptExample>
+
+| Option              | Default       | Description                                                                      |
+| ------------------- | ------------- | -------------------------------------------------------------------------------- |
+| `prefix`            | `""`          | Key prefix that holds the skill directories                                      |
+| `skills`            | all skills    | Only serve these skill names                                                     |
+| `refreshIntervalMs` | `60000`       | How long to reuse a bucket listing before listing again. `0` lists on every call |
+| `id`                | `r2:<prefix>` | Source ID used in diagnostics                                                    |
+
+R2 stores files but cannot run them. To run scripts from R2 skills, pass the experimental [script runner](/agents/skills/execution/#script-runner) to `createSkillTools()`.
+
+## Code
+
+`manifest()` creates a source from skills defined in code. It needs no Workspace or bucket. Each entry holds the `SKILL.md` fields and, optionally, its resources:
+
+<TypeScriptExample>
+
+```ts
+import { manifest } from "agents/skills";
+
+export const handbook = manifest({
+	id: "handbook",
+	skills: [
+		{
+			name: "release-notes",
+			description: "Turn a list of changes into release notes.",
+			body: "Read `references/style-guide.md`, then write one line per change.",
+			metadata: { author: "my-team" },
+			resources: [
+				{
+					path: "references/style-guide.md",
+					content: "Start each line with a past-tense verb.",
+				},
+			],
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+| Field           | Required | Description                                                             |
+| --------------- | -------- | ----------------------------------------------------------------------- |
+| `name`          | Yes      | Skill name. Must follow the [naming rules](/agents/skills/#validation)  |
+| `description`   | Yes      | What the skill does and when to use it                                  |
+| `body`          | Yes      | Markdown instructions                                                   |
+| `license`       | No       | License name or bundled license file                                    |
+| `compatibility` | No       | Environment requirements                                                |
+| `metadata`      | No       | String key-value metadata                                               |
+| `allowedTools`  | No       | Space-separated list of pre-approved tools                              |
+| `resources`     | No       | Files as `{ path, content }`. Use `encoding: "base64"` for binary files |
+
+Entries pass the same checks as `SKILL.md` files. `fromManifest()` is a deprecated alias of `manifest()`.
+
+## Combine sources
+
+Sources apply in order, so put the source you want to win first:
+
+<TypeScriptExample>
+
+```ts
+const catalog = await loadSkillCatalog([workspace(this.workspace), handbook]);
+```
+
+</TypeScriptExample>
+
+Here, a Workspace skill named `release-notes` replaces the manifest's version, and `catalog.diagnostics` reports the duplicate.
+
+## Write your own source
+
+A source is any object that implements `SkillSource`: an `id`, a `list()` method that returns every skill it holds, and a `readResource()` method that reads one file. Both return a result instead of throwing for expected failures, such as a store that cannot be read. Use `parseSkill()` to turn each `SKILL.md` into a skill.
