@@ -1,0 +1,123 @@
+---
+pcx_content_type: how-to
+title: Set up BIMI records
+description: Learn how to configure Brand Indicators for Message Identification (BIMI) TXT records in Cloudflare DNS.
+products:
+  - dns
+sidebar:
+  order: 7.5
+---
+
+import { Tabs, TabItem, DashButton, APIRequest } from "~/components";
+
+[Brand Indicators for Message Identification (BIMI)](https://bimigroup.org/) allows organizations that have implemented strong email authentication to display an official brand logo next to authenticated emails in supported email clients (such as Google Workspace/Gmail, Apple Mail, and Yahoo).
+
+:::note[BIMI is a TXT record]
+BIMI is not a separate DNS record type. There is no `BIMI` option in the record **Type** dropdown. Like SPF and DMARC, a BIMI record is created in Cloudflare as a standard **TXT** record.
+:::
+
+---
+
+## Prerequisites
+
+Before creating a BIMI record, your domain must meet strict email authentication and asset requirements:
+
+1. **SPF and DKIM**: Configured and passing alignment for your sending domain. Refer to [email security records](/dmarc-management/security-records/).
+2. **DMARC enforcement**: Your domain must publish an active DMARC policy with enforcement enabled:
+   - `p=quarantine` with `pct=100` (or omitted `pct`, which defaults to 100), or
+   - `p=reject`
+   - A policy of `p=none` will cause mailbox providers to ignore your BIMI record.
+3. **SVG logo**: Your brand logo must be hosted publicly over HTTPS and formatted as a square SVG file adhering to the [SVG Tiny Portable/Secure (SVG Tiny P/S)](https://bimigroup.org/svg-conversion-tools-guidelines/) profile.
+4. **Verified Mark Certificate (VMC) / Common Mark Certificate (CMC)**: Major mailbox providers (such as Google and Apple Mail) require a digital certificate issued by an approved Certificate Authority (such as DigiCert or Entrust) that confirms trademark ownership. The certificate chain (`.pem` format) must also be hosted publicly over HTTPS.
+
+---
+
+## Record format
+
+A BIMI DNS record consists of tag-value pairs separated by semicolons:
+
+| Tag | Required | Description | Example |
+| --- | --- | --- | --- |
+| `v` | Yes | BIMI version. Must be `BIMI1`. | `v=BIMI1;` |
+| `l` | Yes | Public HTTPS URL pointing to the square SVG Tiny P/S logo. | `l=https://example.com/images/logo.svg;` |
+| `a` | Conditional | Public HTTPS URL pointing to the Verified Mark Certificate (`.pem`). Required by providers like Gmail and Apple Mail; may be empty (`a=;`) or omitted if not using a VMC. | `a=https://example.com/certs/vmc.pem;` |
+
+### Example record values
+
+- **With a Verified Mark Certificate (recommended for full provider support):**
+  ```text
+  v=BIMI1; l=https://example.com/assets/logo.svg; a=https://example.com/assets/certificate.pem;
+  ```
+
+- **Without a certificate (self-asserted):**
+  ```text
+  v=BIMI1; l=https://example.com/assets/logo.svg; a=;
+  ```
+
+---
+
+## Create a BIMI record
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+To create a BIMI record using the Cloudflare dashboard:
+
+1. In the Cloudflare dashboard, go to the **DNS Records** page.
+
+   <DashButton url="/?to=/:account/:zone/dns/records" />
+
+2. Select **Add record**.
+3. In the **Type** dropdown, select **TXT**.
+4. In the **Name** field, enter:
+   - `default._bimi` (if using the default selector), or
+   - `<selector>._bimi` (if your email service provider requires a specific selector).
+   Cloudflare automatically appends your domain name (for example, `default._bimi.example.com`).
+5. In the **Content** field, enter your BIMI string, such as:
+   ```text
+   v=BIMI1; l=https://example.com/assets/logo.svg; a=https://example.com/assets/certificate.pem;
+   ```
+6. Set the **TTL** to **Auto** (or your preferred TTL).
+7. Select **Save**.
+
+</TabItem>
+<TabItem label="API">
+
+To create a BIMI record using the Cloudflare API, send a [POST request](/api/resources/dns/subresources/records/methods/create/):
+
+<APIRequest
+	path="/zones/{zone_id}/dns_records"
+	method="POST"
+	json={{
+		type: "TXT",
+		name: "default._bimi.example.com",
+		content: "v=BIMI1; l=https://example.com/assets/logo.svg; a=https://example.com/assets/certificate.pem;",
+		ttl: 1
+	}}
+/>
+
+</TabItem>
+</Tabs>
+
+---
+
+## Verify your BIMI record
+
+After saving your record, allow time for DNS propagation. You can verify your BIMI record configuration using:
+
+- Command-line DNS query tools:
+  ```sh
+  dig TXT default._bimi.example.com +short
+  ```
+- Public validation tools such as the [BIMI Group Inspector](https://bimigroup.org/bimi-generator/) to validate SVG formatting, VMC certificates, and DMARC alignment.
+
+---
+
+## Troubleshooting
+
+- **Record type not found**: Remember that BIMI is a standard `TXT` record, not a custom record type.
+- **Logo not appearing in inboxes**:
+  - Check that DMARC is set to `p=quarantine` (100%) or `p=reject`. DMARC in monitoring mode (`p=none`) will not display BIMI logos.
+  - Verify your SVG image complies with the SVG Tiny P/S specification. Standard SVG images exported from graphic tools often contain unsupported tags or scripts.
+  - Confirm whether the recipient mailbox provider requires a VMC/CMC (Google and Apple Mail mandate a valid certificate).
+  - Check that both the SVG logo URL and certificate URL are accessible via HTTPS with a valid SSL/TLS certificate.

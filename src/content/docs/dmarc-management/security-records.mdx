@@ -27,6 +27,24 @@ To set up email security records:
 3. In **Email record overview**, select **View records**.
 4. Use the available options to set up [SPF](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-spf-record/), [DKIM](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dkim-record/), and [DMARC records](https://www.cloudflare.com/en-gb/learning/dns/dns-records/dns-dmarc-record/). This page will also list any previous records you might already have in your account.
 
+## Set up BIMI records
+
+[Brand Indicators for Message Identification (BIMI)](/dns/manage-dns-records/how-to/bimi-records/) allows your brand logo to display next to authenticated emails in supported inboxes (such as Gmail and Apple Mail).
+
+To set up a BIMI record in Cloudflare:
+
+1. Ensure your domain has strong email authentication:
+   - **SPF** and **DKIM** must be configured and passing alignment.
+   - **DMARC** policy must be in enforcement mode (`p=quarantine` with `pct=100` or `p=reject`).
+2. Host a square SVG logo in SVG Tiny P/S format over HTTPS, and optionally obtain a Verified Mark Certificate (VMC) or Common Mark Certificate (CMC).
+3. In **Email** > **DMARC Management**, select **Add your BIMI record** (or go to **DNS** > **Records**).
+4. Because BIMI is published as a DNS TXT record rather than a separate record type, select **TXT** for the record **Type**.
+5. In **Name**, enter `default._bimi` (or `<selector>._bimi`).
+6. In **Content**, enter your BIMI string (for example, `v=BIMI1; l=https://example.com/logo.svg; a=https://example.com/certificate.pem;`).
+7. Select **Save**.
+
+For more detailed requirements and configuration options, refer to [Set up BIMI records](/dns/manage-dns-records/how-to/bimi-records/).
+
 ## Edit or delete records
 
 Refer to [Manage DNS records](/dns/manage-dns-records/how-to/create-dns-records/) for more information.
