@@ -43,13 +43,13 @@ export class MyAgent extends Think<Env> {
 | [`skills.r2()`](/agents/skills/sources/#r2)               | Objects in an R2 bucket                        |
 | [`skills.manifest()`](/agents/skills/sources/#code)       | Skills defined in code                         |
 
-Sources apply in order, and the first source to provide a skill name wins. Think logs each problem a source reports, such as a duplicate name or a skill with no description, once per object lifetime. A source that fails when the agent starts is logged, and the agent runs without skills.
+Sources apply in order, and the first source to provide a skill name wins. Think logs each problem a source reports, such as a duplicate name or a skill with no description, once per object lifetime. If a source fails when the agent starts, Think logs the error and the agent runs without skills.
 
 ## When skills change
 
 Think lists every source again before each turn, so a new, edited, or deleted skill takes effect on the next turn. If a source fails to list, Think keeps its skills from the last turn.
 
-The catalog goes in its own [context block](/agents/harnesses/think/configuration/), below your `getSystemPrompt()` instructions. Think does not rebuild the system prompt when the catalog changes mid-conversation, so the provider's prompt cache stays warm. The new catalog reaches the model as a reminder at the end of the next request, and moves into the system prompt at the next compaction or history clear.
+The catalog goes in its own [context block](/agents/harnesses/think/context/), below your `getSystemPrompt()` instructions. When the catalog changes mid-conversation, Think leaves the system prompt as it was, so the provider's [prompt cache](/agents/concepts/context/#prompt-caching) still covers it. The new catalog reaches the model as a reminder at the end of the next request, and moves into the system prompt at the next compaction or history clear.
 
 Use `getSystemPrompt()` or a context block from `configureContext()` for instructions that apply to every turn. Use skills for procedures, references, and scripts that only some tasks need.
 

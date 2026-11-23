@@ -71,7 +71,7 @@ export class Assistant extends DurableObject<Env> {
 
 </TypeScriptExample>
 
-Both tools are marked `replay: "safe"`. A tool failure, such as an unknown skill or a missing file, returns `isError: true`, so the model sees the error and can try again. Problems with a source or a skill are logged with the prefix `pi skills:`.
+Both tools are marked `replay: "safe"`. A tool failure, such as an unknown skill or a missing file, returns `isError: true`, so the model sees the error and can try again. The extension logs problems with a source or a skill with the prefix `pi skills:`.
 
 ## When skills change
 
