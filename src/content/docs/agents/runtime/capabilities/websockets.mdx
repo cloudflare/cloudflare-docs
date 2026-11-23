@@ -80,6 +80,8 @@ The handlers run inside your object's invocation context, so [`getCurrentAgent()
 
 A message wakes a hibernated object. The constructor and Lifecycle startup run again before `onMessage`. Keep anything you need after a wake in storage or on the connection.
 
+Once the host closes a connection with `connection.close()`, no handler or callable runs for another message from it, on either [transport](#transports). This includes frames the client sent before it received the Close frame, so a client that `onConnect` rejects cannot run anything. Messages the client sent before closing the connection itself still run.
+
 ### Connections
 
 A `Connection` is a `WebSocket` with these extra fields:
@@ -258,7 +260,7 @@ export class Assistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
 	});
 	readonly webSockets = new WebSockets({
 		callables: new RunCallables(this.harness),

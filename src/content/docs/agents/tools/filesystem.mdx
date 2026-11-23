@@ -183,7 +183,7 @@ export class WriterAgent extends DurableObject<Env> {
 	async write(prompt: string) {
 		const { text } = await generateText({
 			model: createAI({ binding: this.env.AI })(
-				"@cf/moonshotai/kimi-k2.6",
+				"@cf/deepseek-ai/deepseek-v4.1-flash-1017",
 			),
 			system:
 				"You are a writing assistant. Keep drafts and notes as files under /workspace.",

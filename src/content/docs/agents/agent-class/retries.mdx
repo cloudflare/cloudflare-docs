@@ -383,7 +383,7 @@ With `maxAttempts: 5` and `baseDelayMs: 500`:
 
 ### MCP server retries
 
-When adding an MCP server, you can configure retry options for connection and reconnection attempts:
+When adding an MCP server, you can configure how many quick attempts each connection makes:
 
 <TypeScriptExample>
 
@@ -395,12 +395,9 @@ await this.addMcpServer("github", "https://mcp.github.com", {
 
 </TypeScriptExample>
 
-These options are persisted and used when:
+These options are persisted and used for every connection attempt: adding the server, restoring it after hibernation, establishing it after OAuth completes, and `reconnectMcpServer()`.
 
-- Restoring server connections after hibernation
-- Establishing connections after OAuth completion
-
-Default: 3 attempts, 500ms base delay, 5s max delay.
+Default: 3 attempts, 500ms base delay, 5s max delay. If those attempts fail, the server is `failed` until you call `reconnectMcpServer()`. Refer to [Failures and reconnecting](/agents/model-context-protocol/apis/client-api/#failures-and-reconnecting).
 
 ## Patterns
 

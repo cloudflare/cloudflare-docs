@@ -70,7 +70,7 @@ export class BrowserAssistant extends DurableObject<Env> {
 				context,
 			);
 		},
-		defaults: { model: this.ai("@cf/zai-org/glm-5.3-flash") },
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
 	});
 
 	lifecycle = Lifecycle.install(this).use(this.browser).use(this.harness);

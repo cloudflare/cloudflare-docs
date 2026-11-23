@@ -881,7 +881,8 @@
 /d1/learning/data-location/ /d1/configuration/data-location/ 301
 /d1/migrations/ /d1/reference/migrations/ 301
 /d1/platform/wrangler-commands/ /workers/wrangler/commands/#d1 301
-/d1/platform/community-projects/ /d1/reference/community-projects/ 301
+/d1/platform/community-projects/ /d1/ 301
+/d1/reference/community-projects/ /d1/ 301
 /d1/platform/client-api/ /d1/worker-api/ 301
 /d1/platform/data-security/ /d1/reference/data-security/ 301
 /d1/platform/environments/ /d1/configuration/environments/ 301

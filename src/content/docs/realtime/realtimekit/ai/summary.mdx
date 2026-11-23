@@ -16,14 +16,9 @@ Summarization requires a transcript. To generate summaries automatically when a 
 
 ## Models and Workers AI usage
 
-RealtimeKit automatically selects a [Workers AI](/workers-ai/) model based on the estimated size of the transcript and prompts, plus an output token allowance. It currently uses these models:
+RealtimeKit generates summaries with the [`@cf/zai-org/glm-4.7-flash`](/workers-ai/models/glm-4.7-flash/) model on [Workers AI](/workers-ai/).
 
-| Model                                                                         | When used                                                                                    |
-| ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| [`@cf/meta/llama-3.2-3b-instruct`](/workers-ai/models/llama-3.2-3b-instruct/) | Requests that fit the Llama context budget or chunks from requests exceeding the GLM budget. |
-| [`@cf/zai-org/glm-4.7-flash`](/workers-ai/models/glm-4.7-flash/)              | Requests that exceed the Llama context budget but fit the GLM budget.                        |
-
-If a request exceeds the GLM context budget, RealtimeKit splits the transcript into chunks. It uses Llama to summarize the chunks and combine their results, which requires multiple model calls. Cloudflare may change the models or how they are selected at any time.
+If the estimated size of the transcript and prompts, plus an output token allowance, exceeds the model's context budget, RealtimeKit splits the transcript into chunks. It summarizes the chunks and combines their results, which requires multiple model calls. Cloudflare may change the model or how it is used at any time.
 
 Both summarization and [transcription](/realtime/realtimekit/ai/transcription/) contribute to Workers AI usage on your Cloudflare account. Summarization usage depends on the model and the input and output tokens across model calls. For rates, refer to [Workers AI model pricing](/workers-ai/platform/pricing/#llm-model-pricing).
 

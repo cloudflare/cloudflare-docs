@@ -196,6 +196,8 @@ back a Durable Object lifecycle change to a version from before the change.
 For transfers between Workers and the full list of states, refer to
 [Manage Durable Object lifecycle](/cf/projects/cloudflare-config/#manage-durable-object-lifecycle).
 
+For isolated Durable Objects in Previews, use [`ctx.exports` with `cf` configuration](/workers/previews/resources/#use-cf-configuration). A named `bindings.durableObject()` binding targets the deployed Worker.
+
 ## Complete example {/* complete-example */}
 
 This example finishes the migration of `orders-api`, the Worker used in

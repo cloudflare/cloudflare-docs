@@ -65,6 +65,10 @@ Route requests to the Agent with [`routeAgentRequest()`](/agents/agent-class/rou
 
 These methods map to the `WebSockets` capability's handlers and options. For the `Connection` object, refer to [Connections](/agents/runtime/capabilities/websockets/#connections).
 
+`onError()` observes errors. If `onConnect()` or startup throws during an upgrade, the client gets a socket that closes with code `1011`, without the error's details. To choose the response instead, override [`onFetchError()`](/agents/agent-class/internals/#thisonfetcherror).
+
+To reject a client, check it in your Worker with `onBeforeConnect`, before `routeAgentRequest()` forwards the upgrade. A client you reject there never reaches the Agent, and the Agent does not wake up for it. Refer to [Authentication](/agents/runtime/routing/authentication/). You can also reject a connection from `onConnect()` by calling `connection.close()`. The Agent runs no message, callable, or state update that the client sends after that close, including frames the client sends as soon as it connects, before it receives the Close frame. `onConnect()` runs inside the Agent, so every client rejected there still wakes it.
+
 ## Hibernation
 
 An idle Agent hibernates while its WebSocket connections stay open. A message wakes it, and `onMessage()` runs as usual. Keep anything you need after a wake in `this.state`, `connection.state`, or SQLite, not in class fields. To keep the Agent in memory instead, set `static options = { hibernate: false }`.
