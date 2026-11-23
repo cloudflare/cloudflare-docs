@@ -27,7 +27,7 @@ To enable DMARC Management:
 2. Go to **Email** > **DMARC Management**.
 3. Select **Enable DMARC Management**.
 4. DMARC Management will scan your zone for DMARC records, and will present you with two outcomes:
-   - If no DMARC record is found, Cloudflare will automatically invite you to add one that you can edit later. Select **Add** to continue.
+   - If no DMARC record is found, Cloudflare will automatically invite you to add one that you can edit later. The record is created with `p=none` (monitoring mode) by default, which means receiving mail servers will take no action on DMARC failures while you review your traffic. Select **Add** to continue, then update the policy to `p=quarantine` or `p=reject` once you have confirmed your SPF and DKIM setup is working correctly.
    - If a DMARC record is found in your zone, Cloudflare will add another `rua` (Reporting URI for Aggregate data) entry to it. The `rua` tag specifies the URI (typically a `mailto:` address) where aggregate DMARC reports are sent. This additional entry uses a Cloudflare email address so that Cloudflare can receive and process DMARC reports on your behalf. Select **Next** to continue.
 
-DMARC Management (beta) is now active. However, it may take up to 24 hours to receive your first DMARC report and to display this information in DMARC Management.
+DMARC Management is now active. However, it may take up to 24 hours to receive your first DMARC report and to display this information in DMARC Management.
