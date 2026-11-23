@@ -1,0 +1,122 @@
+---
+pcx_content_type: how-to
+title: Route UDP traffic to a Worker
+description: Create a Spectrum application that sends inbound UDP datagrams to a Cloudflare Worker.
+products:
+  - spectrum
+  - workers
+sidebar:
+  order: 2
+---
+
+import { APIRequest, Steps, TabItem, Tabs, TypeScriptExample } from "~/components";
+
+To receive public User Datagram Protocol (UDP) traffic in a Worker, use the Worker as the origin of a Spectrum UDP application. Clients send datagrams to the Spectrum hostname and port. Spectrum forwards each UDP flow to the Worker's [`connect()` handler](/workers/runtime-apis/handlers/connect/#udp-flows).
+
+A `workers.dev` URL, Workers route, or Worker Custom Domain does not expose a UDP port.
+
+## Prerequisites
+
+- A Cloudflare zone that supports Spectrum UDP applications with a Worker origin. Use a hostname in that zone and deploy the Worker in the same account.
+- A [Cloudflare CLI Worker project](/cf/get-started/first-worker/) and an authenticated `cf` session.
+- Netcat (`nc`) or another UDP client to verify that the Worker replies.
+
+## Deploy the Worker
+
+<Steps>
+1. Enable [UDP ingress](/workers/configuration/compatibility-flags/#udp-ingress). If your Worker's configured `compatibilityDate` is earlier than the default-on date, add `"udp_ingress"` to `worker.compatibilityFlags` in `cloudflare.config.ts`.
+2. Replace the contents of your Worker entrypoint with this echo handler. The handler reads one datagram at a time and sends its payload back to the same client.
+
+   <TypeScriptExample filename="src/index.ts">
+   ```ts
+   export default {
+       async connect(socket: Socket): Promise<void> {
+           const reader = socket.readable.getReader();
+           const writer = socket.writable.getWriter();
+
+           try {
+               while (true) {
+                   const { done, value: datagram } = await reader.read();
+                   if (done) {
+                       break;
+                   }
+                   await writer.write(new Datagram(datagram.data));
+               }
+           } finally {
+               reader.releaseLock();
+               writer.releaseLock();
+           }
+       },
+   } satisfies ExportedHandler;
+   ```
+   </TypeScriptExample>
+
+3. From your project directory, deploy the Worker:
+
+   ```sh
+   cf deploy
+   ```
+</Steps>
+
+## Create the Spectrum application
+
+Use a `CNAME` hostname, a single UDP port, and the Worker's immutable 32-character tag. Do not use the Worker name or its `workers.dev` URL as `origin_worker_id`. For unsupported settings, refer to [Worker origin configuration](/spectrum/reference/configuration-options/#worker-origin).
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Cloudflare CLI">
+
+<Steps>
+1. Find your deployed Worker. Copy the matching Worker's ID, also called its tag.
+
+   ```sh
+   cf workers scripts search --name "<WORKER_NAME>"
+   ```
+
+2. Create the application. Replace the zone ID, hostname, port, and Worker tag with your values. The explicit `--body` sends only the fields needed for a UDP Worker origin.
+
+   ```sh
+   cf spectrum apps create --zone "<ZONE_ID>" --body '{
+     "dns": {"type": "CNAME", "name": "udp.example.com"},
+     "protocol": "udp/9000",
+     "traffic_type": "worker",
+     "origin_worker_id": "<WORKER_TAG>"
+   }'
+   ```
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+<Steps>
+1. Find the Worker by its `id` in the response from the [List Workers endpoint](/api/resources/workers/subresources/scripts/methods/list/) and copy its `tag`.
+
+   <APIRequest path="/accounts/{account_id}/workers/scripts" method="GET" />
+
+2. Create the application. Replace the zone ID, hostname, port, and Worker tag with your values.
+
+   <APIRequest
+       path="/zones/{zone_id}/spectrum/apps"
+       method="POST"
+       json={{
+           dns: { type: "CNAME", name: "udp.example.com" },
+           protocol: "udp/9000",
+           traffic_type: "worker",
+           origin_worker_id: "<WORKER_TAG>",
+       }}
+   />
+</Steps>
+
+</TabItem>
+</Tabs>
+
+## Verify the reply
+
+Send UDP traffic to the Spectrum hostname and port, not to the Worker URL:
+
+```sh
+nc -u udp.example.com 9000
+```
+
+Enter a message and confirm the Worker echoes it. If you do not receive a reply, check that the Spectrum application uses `udp/9000`, points to the deployed Worker's tag, and the Worker has UDP ingress enabled.
+
+If you created the application only to test the echo handler, [delete the Spectrum application](/api/resources/spectrum/subresources/apps/methods/delete/) when you finish.

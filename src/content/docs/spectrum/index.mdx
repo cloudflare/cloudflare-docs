@@ -32,7 +32,7 @@ Spectrum provides security and acceleration for any [TCP](https://www.cloudflare
 Spectrum allows you to route MQTT, email, file transfer, version control, games, and more over TCP or UDP through Cloudflare to mask the origin and protect it from [DDoS attacks](https://www.cloudflare.com/learning/ddos/what-is-a-ddos-attack/).
 
 :::note
-Custom TCP/UDP applications require an Enterprise plan with Spectrum as a paid add-on. See [Protocols per plan](/spectrum/protocols-per-plan/) for details, or contact your account team to enable.
+For applications without a Worker origin, custom TCP/UDP ports require an Enterprise plan with Spectrum as a paid add-on. See [Protocols per plan](/spectrum/protocols-per-plan/) for details, or contact your account team to enable.
 :::
 ---
 
@@ -42,8 +42,14 @@ Custom TCP/UDP applications require an Enterprise plan with Spectrum as a paid a
 	header="Route TCP traffic to a Worker"
 	href="/spectrum/how-to/route-tcp-traffic-to-a-worker/"
 >
-	Send inbound TCP connections to a Worker's `connect()` handler. Worker origins
-	are in public beta.
+	Send inbound TCP connections to a Worker's `connect()` handler (public beta).
+</Feature>
+
+<Feature
+	header="Route UDP traffic to a Worker"
+	href="/spectrum/how-to/route-udp-traffic-to-a-worker/"
+>
+	Send inbound UDP flows to a Worker's `connect()` handler.
 </Feature>
 
 <Feature

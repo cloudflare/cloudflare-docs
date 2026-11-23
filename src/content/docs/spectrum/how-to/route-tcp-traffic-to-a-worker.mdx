@@ -22,8 +22,10 @@ import {
 You can use a Cloudflare Worker as the origin of a Spectrum TCP application. Spectrum accepts the public TCP connection and invokes the Worker's [`connect()` handler](/workers/runtime-apis/handlers/connect/) with a bidirectional socket.
 
 :::note[Public beta]
-Spectrum applications with Worker origins are in public beta.
+Spectrum TCP applications with Worker origins are in public beta.
 :::
+
+For UDP, refer to [Route UDP traffic to a Worker](/spectrum/how-to/route-udp-traffic-to-a-worker/).
 
 Worker origins support use cases such as:
 
@@ -42,7 +44,7 @@ Before creating the Spectrum application:
 - In the same account as the zone, deploy a Worker that exports a [`connect()` handler](/workers/runtime-apis/handlers/connect/).
 - For API and CLI configuration, find the Worker's immutable 32-character tag. The tag is different from the Worker name.
 
-Without Spectrum Enterprise, Pro and Business zones support one Worker-origin application per zone, on one TCP port. This application is in addition to existing plan-supported applications, such as SSH or Minecraft. Refer to [Protocols per plan](/spectrum/protocols-per-plan/) for availability.
+Without Spectrum Enterprise, Pro and Business zones support one TCP Worker-origin application per zone, on one TCP port. This application is in addition to existing plan-supported applications, such as SSH or Minecraft. Refer to [Protocols per plan](/spectrum/protocols-per-plan/) for availability.
 
 Review your Spectrum subscription charges and [Workers pricing](/workers/platform/pricing/) before deploying. Workers usage is billed separately from Spectrum.
 
@@ -70,7 +72,7 @@ The dashboard steps depend on whether the zone has Spectrum Enterprise.
    <DashButton url="/?to=/:account/:zone/spectrum" />
 
 2. Select **Create an Application**.
-3. Under **Application Configuration**, select **Workers (tcp)** as the **Application Type**. This option is unavailable if the zone already has a Worker-origin application.
+3. Under **Application Configuration**, select **Workers (tcp)** as the **Application Type**. This option is unavailable if the zone already has a TCP Worker-origin application.
 4. In **Subdomain**, enter the subdomain that clients will connect to. The dashboard adds your zone name after it.
 5. In **Edge Port**, enter a single TCP port.
 6. In **Origin Worker**, select the Worker that will receive the connections. The list shows deployed Workers that export a `connect()` handler.

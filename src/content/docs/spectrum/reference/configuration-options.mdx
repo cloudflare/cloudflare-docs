@@ -24,22 +24,22 @@ The application type determines how data travels from the edge to your origin:
 - Select **TCP/UDP** to proxy directly to an IP address, hostname, load balancer, or virtual network.
 - Select **HTTP/HTTPS** to route traffic through Cloudflare's Layer 7 pipeline.
 
-For a TCP application, you can select a [Worker origin](#worker-origin) to send connections to a Worker's `connect()` handler.
+For a TCP or UDP application, you can configure a [Worker origin](#worker-origin) to send traffic to a Worker's `connect()` handler.
 
 ## Worker origin
 
 :::note[Public beta]
-Spectrum applications with Worker origins are in public beta.
+Spectrum TCP applications with Worker origins are in public beta.
 :::
 
-Set `traffic_type` to `worker` and `origin_worker_id` to the immutable 32-character tag assigned to the target Worker. Refer to [Route TCP traffic to a Worker](/spectrum/how-to/route-tcp-traffic-to-a-worker/) for setup instructions.
+Set `traffic_type` to `worker` and `origin_worker_id` to the immutable 32-character tag assigned to the target Worker. Refer to [Route TCP traffic to a Worker](/spectrum/how-to/route-tcp-traffic-to-a-worker/) or [Route UDP traffic to a Worker](/spectrum/how-to/route-udp-traffic-to-a-worker/) for setup instructions.
 
 Worker origins have the following constraints:
 
-- For the TCP beta, `protocol` must specify TCP on a single port. Port ranges are not supported.
-- Pro and Business zones without Spectrum Enterprise support one Worker-origin application per zone, in addition to their existing plan-supported applications. Free zones are not supported.
+- `protocol` must specify TCP or UDP on a single port. Port ranges are not supported.
+- Eligible zones without Spectrum Enterprise support one Worker-origin application per transport, in addition to their existing plan-supported applications.
 - On Pro and Business zones without Spectrum Enterprise, omit `tls`. Spectrum does not terminate TLS for these applications.
-- With Spectrum Enterprise, `tls` can be `off` or `flexible`.
+- With Spectrum Enterprise, `tls` can be `off` or `flexible` for TCP. UDP does not support edge TLS termination.
 - `origin_direct`, `origin_dns`, `origin_port`, `virtual_network_id`, Proxy Protocol, and Argo Smart Routing are not supported.
 
 Without TLS termination, Spectrum passes the TCP payload to the Worker. An encrypted service must terminate TLS behind the Worker. With Spectrum Enterprise and `tls` set to `flexible`, Spectrum terminates TLS at the edge and sends the decrypted TCP payload to the Worker.
@@ -75,7 +75,7 @@ Cloudflare supports all TCP ports.
 
 Spectrum applications can be configured to proxy traffic on ranges of ports.
 
-Worker origins do not support port ranges. Configure a single TCP port instead.
+Worker origins do not support port ranges. Configure a single TCP or UDP port instead.
 
 For direct origins:
 
