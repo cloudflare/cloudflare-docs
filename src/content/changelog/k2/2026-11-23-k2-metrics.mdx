@@ -7,6 +7,7 @@ date: 2026-11-23
 ---
 
 import { Image } from "astro:assets";
+import { DashButton } from "~/components";
 import screenshot from "~/assets/images/k2/k2-stream-metrics.png";
 
 You can now monitor your [K2](/k2/) streams in the Cloudflare dashboard: how fast records are produced and consumed, how much each stream stores, and how far behind each subscription is.
@@ -16,7 +17,11 @@ You can now monitor your [K2](/k2/) streams in the Cloudflare dashboard: how fas
 	alt="A K2 stream's Metrics tab, charting bytes produced by input and bytes stored"
 />
 
-Go to [K2 Streams](https://dash.cloudflare.com/?to=/:account/k2) in the Cloudflare dashboard and select a stream:
+In the Cloudflare dashboard, go to the **K2 Streams** page and select a stream.
+
+<DashButton url="/?to=/:account/k2" />
+
+Metrics appear in three places:
 
 - **Overview** — Produce and consume rates over the last 5 minutes, stored bytes, and each subscription's records behind, oldest unread record, lag over the last hour, and bytes consumed.
 - **Metrics** — Charts of bytes produced by input, bytes stored, and bytes delivered to each subscription, over a time range you choose.
