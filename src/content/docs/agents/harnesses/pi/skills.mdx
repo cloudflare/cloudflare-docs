@@ -8,6 +8,8 @@ products:
   - agents
 ---
 
+import { TypeScriptExample } from "~/components";
+
 `skills(sources)` from `agents/harness/pi` turns [skills](/agents/skills/) sources from `agents/skills` into a Pi [extension](/agents/harnesses/pi/extensions/) named `agents.skills`. Sources can read skills from a [Computer Workspace](/agents/skills/sources/#workspace), [R2](/agents/skills/sources/#r2), or a [manifest](/agents/skills/sources/#code).
 
 :::note
@@ -17,6 +19,8 @@ Skills are experimental. This page describes `agents` v0.34.0 with Pi 1.6.
 ## Install the extension
 
 The extension has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section in Pi's system prompt that lists each skill's name and description. It reads the sources when it is built, so install it in an `async` harness factory:
+
+<TypeScriptExample filename="src/index.ts">
 
 ```ts
 import { skills } from "agents/harness/pi";
@@ -40,6 +44,8 @@ harness = new PiHarness({
 	},
 });
 ```
+
+</TypeScriptExample>
 
 Both tools are marked `replay: "safe"`. A tool failure, such as an unknown skill or a missing file, returns `isError: true`, so the model sees the error and can try again. Problems with a source or a skill are logged with the prefix `pi skills:`.
 
