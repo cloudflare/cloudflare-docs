@@ -1,5 +1,5 @@
 ---
-title: Programmable Flow Protection (Beta)
+title: Programmable Flow Protection
 pcx_content_type: concept
 description: Create custom flow-based rules to detect and mitigate volumetric DDoS attacks.
 products:
@@ -10,17 +10,17 @@ sidebar:
   order: 4
   label: Programmable Flow Protection
   badge:
-    text: Beta
+    text: GA
 head:
   - tag: title
-    content: Cloudflare Programmable Flow Protection (Beta)
+    content: Cloudflare Programmable Flow Protection
 ---
 
 import { Render, Steps, Tabs, TabItem } from "~/components";
 
 Programmable Flow Protection is a DDoS protection system that protects against DDoS attacks over custom or standardized Layer 7 UDP-based protocols, such as gaming protocols, financial services protocols, VoIP, telecom, and streaming. In terms of topology, it supports both asymmetric and symmetric configurations, but it will only inspect ingress traffic.
 
-Programmable Flow Protection is currently in closed beta and available as an add-on for the [Magic Transit](/magic-transit/) ([BYOIP](/byoip/) or Cloudflare-leased IPs) service only. If you would like to enable the system, contact your account team or fill out this [form](https://www.cloudflare.com/lp/programmableddosprotection/).
+Programmable Flow Protection is available as an add-on for the [Magic Transit](/magic-transit/) ([BYOIP](/byoip/) or Cloudflare-leased IPs) service only. If you would like to enable the system, contact your account team or fill out this [form](https://www.cloudflare.com/lp/programmableddosprotection/).
 
 ## How it works
 
@@ -30,7 +30,7 @@ Programmable Flow Protection inspects and parses your UDP-based application's pr
 
 The system is built on top of the `flowtrackd` platform, Cloudflare's stateful mitigation platform. The Programmable Flow Protection system relies on the DDoS Advanced Protection system's [general settings](/ddos-protection/advanced-ddos-systems/overview/) to operate. It respects the [prefixes](/ddos-protection/advanced-ddos-systems/overview/#prefixes) that you have selected to route through the Advanced Protection systems, as well as the [allowlist](/ddos-protection/advanced-ddos-systems/concepts/#allowlist). The Advanced DDoS Protection system should be [enabled](/ddos-protection/advanced-ddos-systems/overview/#enablement) for the Programmable Flow Protection system to operate.
 
-While in beta, Cloudflare will assist and provide guidance to users to write their own code. Out-of-the-box code snippets (templates) for popular gaming protocols and VoIP protocols may be provided later on.
+Out-of-the-box code snippets (templates) for popular gaming protocols and VoIP protocols may be provided later on.
 
 ---
 
@@ -52,11 +52,6 @@ After Programmable Flow Protection has been enabled to your account, go to **Net
 You can create additional rules with different [rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings) [scoped](/ddos-protection/advanced-ddos-systems/concepts/#scope) to various regions and Cloudflare locations to change the [mode](/ddos-protection/advanced-ddos-systems/concepts/#mode) (Mitigation or Monitoring) to accommodate for your traffic patterns and business use cases.
 
 The Programmable Flow Protection system supports the [Data Localization suite](/data-localization/).
-
-:::caution[Beta functionality limitations]
-
-For more information on beta services, refer to section 2.6 in the [Enterprise Terms of Service](https://www.cloudflare.com/enterpriseterms/).
-  :::
 
 ### Write a basic program
 
