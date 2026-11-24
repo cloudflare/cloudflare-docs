@@ -9,11 +9,19 @@ products:
   - workers
 ---
 
-import { TypeScriptExample } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
 
-This guide shows how to write a basic integration test for a Worker with `createTestHarness()`. The example uses Vitest as the test runner and exercises a Worker built with Wrangler.
+This guide shows how to write a basic integration test for a Worker with `createTestHarness()`. The example uses Vitest as the test runner.
 
 ## Prerequisites
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 You need:
 
@@ -21,7 +29,24 @@ You need:
 - A Node.js test runner such as [Vitest](https://vitest.dev/)
 - `wrangler` installed as a development dependency
 
+</CliVariant>
+<CliVariant cli="cf">
+
+You need:
+
+- A Worker project with a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file
+- A Node.js test runner such as [Vitest](https://vitest.dev/)
+- `@cloudflare/test-harness` installed as a development dependency:
+
+<PackageManagers pkg="@cloudflare/test-harness" dev />
+
+</CliVariant>
+</CliVariants>
+
 ## Create a test harness
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 Import `createTestHarness()` from `wrangler`. Point the test harness at your Worker configuration file.
 
@@ -36,6 +61,34 @@ const server = createTestHarness({
 ```
 
 </TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+The test harness runs your project's Build Output, so build the project before you run the tests:
+
+```sh
+cf build
+```
+
+Import `createTestHarness()` from `@cloudflare/test-harness`. Point the test harness at the project directory that contains the Build Output.
+
+<TypeScriptExample filename="test/index.test.ts">
+
+```ts
+import { createTestHarness } from "@cloudflare/test-harness";
+
+const server = createTestHarness({
+	workers: [{ projectDir: "./" }],
+});
+```
+
+</TypeScriptExample>
+
+Run `cf build` again after you change the Worker, so the tests run the latest build.
+
+</CliVariant>
+</CliVariants>
 
 ## Manage the test harness lifecycle
 

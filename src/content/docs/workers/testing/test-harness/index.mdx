@@ -1,16 +1,42 @@
 ---
 pcx_content_type: overview
 title: Integration test harness
-description: Write integration tests for Cloudflare Workers with the createTestHarness API in Wrangler.
+description: Write integration tests for Cloudflare Workers with the createTestHarness API.
 sidebar:
   order: 16
 products:
   - workers
 ---
 
-import { CardGrid, LinkCard, LinkButton } from "~/components";
+import {
+	CardGrid,
+	CliVariant,
+	CliVariants,
+	LinkCard,
+	LinkButton,
+} from "~/components";
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 [`createTestHarness()`](/workers/wrangler/api/#createtestharness) is a Wrangler API for integration testing from any Node.js test runner. It runs one or more Workers from [Wrangler](/workers/wrangler/) projects or Vite projects that use the [Cloudflare Vite plugin](/workers/vite-plugin/).
+
+<LinkButton href="/workers/testing/test-harness/get-started/">
+	Get started
+</LinkButton>
+<LinkButton
+	variant="secondary"
+	href="https://github.com/cloudflare/workers-sdk/tree/wrangler@4.168.0/fixtures/create-test-harness-example"
+>
+	View complete example
+</LinkButton>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+`createTestHarness()` from the `@cloudflare/test-harness` package runs one or more Workers in integration tests from any Node.js test runner. It runs each project's Build Output, which [`cf build`](/cf/projects/#build) writes, so your tests exercise what you deploy.
+
+`@cloudflare/test-harness` is experimental, and its API may change in minor versions.
 
 <LinkButton href="/workers/testing/test-harness/get-started/">
 	Get started
@@ -22,9 +48,12 @@ import { CardGrid, LinkCard, LinkButton } from "~/components";
 	View complete example
 </LinkButton>
 
+</CliVariant>
+</CliVariants>
+
 ## Features
 
-- Runs production build output from Wrangler or the Cloudflare Vite plugin
+- Runs your project's production build
 - Dispatches requests and events to one or more Workers
 - Provides access to bindings and local storage from tests
 - Captures logs and diagnostic output from the Workers runtime
@@ -51,5 +80,10 @@ import { CardGrid, LinkCard, LinkButton } from "~/components";
 		title="Integrations"
 		description="Use the test harness with MSW and Playwright."
 		href="/workers/testing/test-harness/integrations/"
+	/>
+	<LinkCard
+		title="Migrate from Wrangler"
+		description="Move tests from Wrangler's createTestHarness() to @cloudflare/test-harness."
+		href="/workers/testing/test-harness/migrate-from-wrangler/"
 	/>
 </CardGrid>
