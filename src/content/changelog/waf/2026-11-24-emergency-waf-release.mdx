@@ -1,0 +1,47 @@
+---
+title: "WAF Emergency Release - 2026-11-24"
+description: Cloudflare WAF free ruleset 2026-11-24 release
+date: 2026-11-24
+---
+
+import { RuleID } from "~/components";
+
+This release introduces two new detections in the Cloudflare Free Ruleset.
+
+<table style="width: 100%">
+	<thead>
+		<tr>
+			<th>Ruleset</th>
+			<th>Rule ID</th>
+			<th>Legacy Rule ID</th>
+			<th>Description</th>
+			<th>Previous Action</th>
+			<th>New Action</th>
+			<th>Comments</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="dbf3eed87710452b8eaccb3263c3ebd4" />
+			</td>
+			<td>N/A</td>
+			<td>Anomaly - Embedded Application Request</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+		<tr>
+			<td>Cloudflare Free Ruleset</td>
+			<td>
+				<RuleID id="ed9ff428605646f4a1672ff08a1681fb" />
+			</td>
+			<td>N/A</td>
+			<td>Generic Rules - Authentication Bypass</td>
+			<td>N/A</td>
+			<td>Block</td>
+			<td>This is a new detection.</td>
+		</tr>
+	</tbody>
+</table>
