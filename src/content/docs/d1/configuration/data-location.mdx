@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { DashButton } from "~/components";
+import { CliVariant, CliVariants, DashButton } from "~/components";
 
 Learn how the location of data stored in D1 is determined, including where the database runs and how you optimize that location based on your needs.
 
@@ -45,11 +45,24 @@ Jurisdictions can only be set on database creation and cannot be added or update
 3. Under **Data location**, select **Specify jurisdiction** and choose a jurisdiction from the list.
 4. Select **Create** to create your database.
 
-### Use wrangler
+### Use the CLI
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 npx wrangler@latest d1 create db-with-jurisdiction --jurisdiction=eu
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 create --name db-with-jurisdiction --jurisdiction eu
+```
+
+</CliVariant>
+</CliVariants>
 
 ### Use REST API
 
@@ -72,17 +85,20 @@ You may want to explicitly provide a location hint in cases where the majority o
 
 Provide a location hint when creating a D1 database when:
 
-- Using [`wrangler d1`](/workers/wrangler/commands/d1/) to create a database.
+- Using [D1 CLI commands](/d1/wrangler-commands/) to create a database.
 - Creating a database [via the Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/workers/d1).
 
 :::caution
 Providing a location hint does not guarantee that D1 runs in your preferred location. Instead, it will run in the nearest possible location (by latency) to your preference.
 :::
 
-### Use wrangler
+### Use the CLI
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 :::note
-To install wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
+To install Wrangler, the command-line interface for D1 and Workers, refer to [Install and Update Wrangler](/workers/wrangler/install-and-update/).
 :::
 
 To provide a location hint when creating a new database, pass the `--location` flag with a valid location hint:
@@ -90,6 +106,22 @@ To provide a location hint when creating a new database, pass the `--location` f
 ```sh
 wrangler d1 create new-database --location=weur
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+:::note
+To install `cf`, refer to [Get started with the Cloudflare CLI](/cf/get-started/).
+:::
+
+To provide a location hint when creating a new database, pass the `--primary-location-hint` flag with a valid location hint:
+
+```sh
+cf d1 create --name new-database --primary-location-hint weur
+```
+
+</CliVariant>
+</CliVariants>
 
 ### Use the dashboard
 
