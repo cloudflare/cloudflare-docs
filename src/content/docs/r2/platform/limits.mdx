@@ -6,7 +6,7 @@ products:
   - r2
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 | Feature                                                      | Limit                                             |
 | ------------------------------------------------------------ | ------------------------------------------------- |
@@ -60,10 +60,14 @@ If your account exceeds the bandwidth limit, R2 throttles requests rather than r
 
 R2 returns `429 Too Many Requests` only for new requests if your account has so many concurrent requests that a new one would not get enough bandwidth to make progress.
 
-To monitor your bandwidth usage, use the R2 **Metrics** in the Cloudflare dashboard or query [R2 analytics](/r2/platform/metrics-analytics/). You can break down bandwidth by:
+You can view your bandwidth limit and usage on the R2 **Metrics** page in the Cloudflare dashboard, or query [R2 analytics](/r2/platform/metrics-analytics/).
+
+<DashButton url="/?to=/:account/r2/metrics" buttonName="R2 Metrics" />
+
+You can break down bandwidth usage by:
 
 - Bucket
 - Upload or download
 - Request location
 
-If your workload requires more than 100 Gbps of upload or download bandwidth, contact Cloudflare to request a higher limit.
+If your workload requires more upload or download bandwidth than your current limit, complete the [Limit Increase Request Form](https://forms.gle/eX6pXvit1wBv77Yw5) to request a higher limit.

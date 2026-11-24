@@ -1,0 +1,22 @@
+---
+title: R2 default bandwidth limit
+description: R2 accounts have a default bandwidth limit of 100 Gbps for uploads and 100 Gbps for downloads, and you can view your current limit in the dashboard.
+pcx_content_type: changelog
+products:
+  - r2
+date: 2026-11-24
+---
+
+import { DashButton } from "~/components";
+
+Each Cloudflare account now has a default [R2](/r2/) bandwidth limit of up to 100 Gbps. Upload and download bandwidth are separate limits, so your account can upload at up to 100 Gbps and download at up to 100 Gbps at the same time.
+
+Cloudflare has raised the limit for some accounts based on their historical R2 traffic. To find your account's current bandwidth limit, go to the R2 **Metrics** page in the Cloudflare dashboard.
+
+<DashButton url="/?to=/:account/r2/metrics" buttonName="R2 Metrics" />
+
+![R2 Metrics page showing the account bandwidth limit above the bandwidth charts](~/assets/images/r2/r2-bandwidth-limit.png)
+
+If your account exceeds its bandwidth limit, R2 throttles requests instead of rejecting them, which can increase request latency. For more information, refer to [R2 limits](/r2/platform/limits/#bandwidth).
+
+If your workload needs more bandwidth than your current limit, complete the [Limit Increase Request Form](https://forms.gle/eX6pXvit1wBv77Yw5) to request a higher limit.
