@@ -10,7 +10,7 @@ products:
 
 import { DashButton, AnchorHeading, Steps, WranglerConfig } from "~/components";
 
-Use transformation URLs to optimize images stored outside Images. [Optimization parameters](/images/optimization/features) tell Images how to process an image, such as setting its [quality](/images/optimization/features/#quality), [format](/images/optimization/features/#format), and [size](/images/optimization/features/#width), and other options.
+Use transformation URLs to optimize images from any origin. [Optimization parameters](/images/optimization/features) tell Images how to process an image, such as setting its [quality](/images/optimization/features/#quality), [format](/images/optimization/features/#format), and [size](/images/optimization/features/#width), and other options.
 
 By default, transformation URLs use the following structure:
 
@@ -83,6 +83,8 @@ You can optionally configure allowed origins with [`transformations_allowed_orig
 
 Enable the URL interface on a `workers.dev` subdomain through Wrangler, the [Cloudflare CLI](#worker-wrangler-cli), or [REST API](#worker-rest-api).
 
+Worker-scoped settings also apply through Worker routes that match the transformation request. Transformation URLs use `/cdn-cgi/image/*`, so a route such as `example.com/*` matches, but `example.com/foo/*` does not.
+
 Deployed transformation settings remain active until you explicitly change them. To disable transformation URLs, set `enabled` to `false` through your configuration or the REST API.
 
 <AnchorHeading
@@ -150,7 +152,9 @@ allowed_origins = [
 
 Run `wrangler deploy` or `cf deploy` to apply them to the deployed Worker. For local development, run `wrangler dev` or `cf dev`.
 
-Named Wrangler environments do not inherit `images.url_transformations`. Worker Previews do not support this setting.
+Named Wrangler environments do not inherit `images.url_transformations`.
+
+[Version URLs](/workers/versions-and-deployments/version-urls/) support the URL interface using the Worker's deployed settings, rather than version-specific settings. `wrangler versions upload` does not update `images.url_transformations`.
 
 ### Local development
 
