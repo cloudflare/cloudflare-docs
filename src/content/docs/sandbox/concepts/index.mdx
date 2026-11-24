@@ -52,7 +52,7 @@ For example, your Worker can pass a `listPullRequests()` method that works for o
 
 ## How each environment isolates code
 
-A Container runs in a [Firecracker](/containers/concepts/architecture/#container-runtime) microVM with its own kernel and network, which no other workload shares. Your image runs as a Linux container inside that VM.
+A Container runs in a [microVM](/containers/concepts/architecture/#container-runtime) with its own kernel and network, which no other workload shares. Your image runs as a Linux container inside that VM.
 
 V8, the JavaScript engine in Chrome, runs each Dynamic Worker in a sandbox that cannot read memory outside itself. The Workers runtime adds a process-level sandbox around it. For more information, refer to the [Workers security model](/workers/reference/security-model/).
 
