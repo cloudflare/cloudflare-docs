@@ -8,7 +8,7 @@ sidebar:
   order: 1
 ---
 
-import { DashButton, Render } from "~/components";
+import { APIRequest, DashButton, Render, Steps, Tabs, TabItem } from "~/components";
 
 Cloudflare runs regular security scans on your account. These scans check your Cloudflare account settings, DNS record configurations, and product configurations — such as SSL/TLS, WAF, and Access — across all domains in your account.
 
@@ -36,6 +36,119 @@ For a full list of insight types and their descriptions, refer to [Security Insi
 Automated scans for Free accounts may be paused due to account inactivity. To ensure scans continue to run, regularly review Security Insights in the Cloudflare dashboard or through the [API](/api/resources/security_center/).
 :::
 
-All accounts can also manually start a scan from the **Security Insights** page in the Cloudflare dashboard.
+## Enable or disable scans
 
-<DashButton url="/?to=/:account/security-center" />
+Automatic Security Insights scans are enabled by default. This setting applies to the entire account, including all its zones. Turning scans on resumes automatic scanning. It does not start an on-demand scan.
+
+To change this setting, you need permission to manage scan settings. Refer to [Roles and permissions](/security/security-insights/roles-and-permissions/).
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Steps>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Security Insights** page.
+
+   <DashButton url="/?to=/:account/security-center" />
+
+2. Change the scan setting:
+   - To turn off automatic scans, under **Disable Security Center scans**, select **Disable scans**.
+   - To turn on automatic scans, under **Enable Security Center scans**, select **Enable scans**.
+
+3. Confirm the setting changed. When scans are enabled, the page offers **Disable scans**. When scans are disabled, it offers **Enable scans**.
+
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+Use an [API token](/fundamentals/api/get-started/create-token/) with **Account Security Center Insights Edit** permission scoped to your account. A zone-scoped token cannot change this account-level setting.
+
+<Steps>
+
+1. To check the current setting, send a `GET` request:
+
+   <APIRequest
+     path="/accounts/{account_id}/security-center/state"
+     method="GET"
+   />
+
+2. To turn on automatic scans, send a `PUT` request with `scans_enabled` set to `true`:
+
+   <APIRequest
+     path="/accounts/{account_id}/security-center/state"
+     method="PUT"
+     json={{ scans_enabled: true }}
+   />
+
+   To turn off automatic scans, use the same endpoint with `scans_enabled` set to `false`:
+
+   <APIRequest
+     path="/accounts/{account_id}/security-center/state"
+     method="PUT"
+     json={{ scans_enabled: false }}
+   />
+
+3. Confirm that the response returns the intended value in `result.scans_enabled`. Both `GET` and `PUT` return the account's scan state. The `scans_enabled` boolean is required in every `PUT` request.
+
+</Steps>
+
+</TabItem>
+<TabItem label="Terraform">
+
+<Steps>
+
+1. [Set up the Cloudflare Terraform provider](/terraform/tutorial/initialize-terraform/). Authenticate with an API token that has **Account Security Center Insights Edit** permission scoped to your account.
+
+2. Add the following account-level resource to your Terraform configuration:
+
+   ```hcl
+   resource "cloudflare_security_insights_configuration" "account" {
+     account_id    = "<ACCOUNT_ID>"
+     scans_enabled = true
+   }
+   ```
+
+   To turn off automatic scans, set `scans_enabled = false`. To turn them on, set `scans_enabled = true`.
+
+3. Review and apply the change:
+
+   ```sh
+   terraform plan
+   terraform apply
+   ```
+
+4. In the dashboard, confirm that the available action changes to **Disable scans** when enabled, or **Enable scans** when disabled. You can also check `result.scans_enabled` with the `GET` request in the API tab.
+
+</Steps>
+
+Removing this resource or running `terraform destroy` only removes it from Terraform state. It does not turn off scans. To turn off scans, apply `scans_enabled = false` before removing the resource.
+
+</TabItem>
+</Tabs>
+
+## Start a new scan
+
+Accounts on all plans can start on-demand scans, subject to [Roles and permissions](/security/security-insights/roles-and-permissions/). Each account can start up to five on-demand scans in a rolling 24-hour window. Account-wide and zone-scoped scans share this quota.
+
+<Steps>
+
+1. In the [Cloudflare dashboard](https://dash.cloudflare.com), go to the **Security Insights** page.
+
+   <DashButton url="/?to=/:account/security-center" />
+
+2. Select **Scan now** > **Full scan** to scan the account. To narrow the scan, select **By insight** or **By insight type**, then select an option.
+
+3. [Review Security Insights](/security/security-insights/review-insights/) for the account.
+
+</Steps>
+
+To start a full account scan through the API, send a `POST` request with an empty JSON object. Use an API token with **Account Security Center Insights Edit** permission scoped to the account:
+
+<APIRequest
+  path="/accounts/{account_id}/security-center/insights/scans"
+  method="POST"
+  json={{}}
+/>
+
+The response returns the new scan ID in `result.scan_id`.

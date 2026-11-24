@@ -3,6 +3,7 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+/security-center/get-started/ /security/security-insights/how-it-works/ 301
 /workers/observability/exporting-opentelemetry-data/ /observability/export/opentelemetry/ 301
 /workers/observability/exporting-opentelemetry-data/honeycomb/ /observability/export/opentelemetry/honeycomb/ 301
 /workers/observability/exporting-opentelemetry-data/grafana-cloud/ /observability/export/opentelemetry/grafana-cloud/ 301
