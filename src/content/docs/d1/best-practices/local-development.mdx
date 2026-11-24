@@ -1,6 +1,6 @@
 ---
 title: Local development
-description: Run D1 locally with Wrangler to test your Worker and database before deploying to production.
+description: Run D1 locally with the Cloudflare CLI (cf) or Wrangler to test your Worker and database before deploying to production.
 pcx_content_type: concept
 sidebar:
   order: 8
@@ -8,7 +8,94 @@ products:
   - d1
 ---
 
-import { WranglerConfig, Render } from "~/components";
+import { TabItem, Tabs, WranglerConfig } from "~/components";
+
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
+
+D1 supports local development with the [Cloudflare CLI (`cf`)](/cf/), running an emulated local D1 database powered by the same SQLite engine that D1 runs in production.
+
+## Start a local development session
+
+:::note
+If you are new to D1 or Cloudflare Workers, refer to the [D1 Getting started guide](/d1/get-started/) to install `cf` and deploy your first database.
+:::
+
+Local development sessions create a standalone, local-only environment so you can test your Worker and D1 queries before deploying to production.
+
+Declare your D1 binding in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) using `bindings.d1()`:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		env: {
+			DB: bindings.d1({
+				id: "<DATABASE_ID>",
+				name: "test-db",
+			}),
+		},
+	},
+});
+```
+
+Start a local development session:
+
+```sh
+cf dev
+```
+
+`cf dev` starts your project's local development server and prints its local URL (by default `http://localhost:5173/` in Vite projects).
+
+`cf dev` separates local and remote (production) data by default. To connect a local development session to your remote D1 database instead, set `dev: { remote: true }` on the binding:
+
+```ts title="cloudflare.config.ts"
+DB: bindings.d1({
+	id: "<DATABASE_ID>",
+	name: "test-db",
+	dev: { remote: true },
+}),
+```
+
+Changes made against a remote database cannot be undone. For more information, refer to [Remote bindings](/workers/local-development/#remote-bindings) and [Start development](/cf/projects/#start-development).
+
+## Run local queries and migrations
+
+`cf d1` commands operate on your remote Cloudflare database by default. Pass `--local` to run queries or migrations against your local development state instead.
+
+To run SQL statements or a `.sql` file locally, use `cf d1 raw --local` (`cf d1 query` targets the remote Cloudflare API only):
+
+```sh
+cf d1 raw <DATABASE_ID> --sql "CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY, email_address TEXT);" --local
+```
+
+```sh
+cf d1 raw <DATABASE_ID> --sql @schema.sql --local
+```
+
+To apply [D1 migrations](/d1/reference/migrations/) to your local database:
+
+```sh
+cf d1 migrations apply <DATABASE_ID> --local
+```
+
+## Persist data
+
+Local D1 data persists across runs of `cf dev` in `.cloudflare/state` next to `cloudflare.config.ts` by default. If your local development or tests expect an empty database, include `DROP TABLE IF EXISTS <table_name>` before `CREATE TABLE`.
+
+To target a different local state directory from `cf d1` commands, pass `--persist-to <DIR>`:
+
+```sh
+cf d1 migrations apply <DATABASE_ID> --local --persist-to ./tmp-state
+```
+
+</TabItem>
+<TabItem label="Wrangler">
 
 D1 has fully-featured support for local development, running the same version of D1 as Cloudflare runs globally. Local development uses [Wrangler](/workers/wrangler/install-and-update/), the command-line interface for Workers, to manage local development sessions and state.
 
@@ -75,13 +162,28 @@ In this example, the Worker has access to local-only D1 database. The correspond
 
 </WranglerConfig>
 
-Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/local-development/#remote-bindings) for more information. Any changes you make when running against a remote database cannot be undone.
+Note that `wrangler dev` separates local and production (remote) data. A local session does not have access to your production data by default. To access your production (remote) database, set `"remote" : true` in the D1 binding configuration. For more information, refer to [Remote bindings](/workers/local-development/#remote-bindings). Any changes you make when running against a remote database cannot be undone.
 
-Refer to the [`wrangler dev` documentation](/workers/wrangler/commands/general/#dev) to learn more about how to configure a local development session.
+For more information on configuring a local development session, refer to [`wrangler dev`](/workers/wrangler/commands/general/#dev).
+
+## Persist data
+
+:::note
+
+By default, in Wrangler v3 and above, data is persisted across each run of `wrangler dev`. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
+
+:::
+
+Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific location. This can be useful when working in a team (allowing you to share) the same copy, when deploying via CI/CD (to ensure the same starting state), or as a way to keep data when migrating across machines.
+
+Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
+
+</TabItem>
+</Tabs>
 
 ## Develop locally with Pages
 
-You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal [Wrangler configuration file](/workers/wrangler/configuration/) in the root of your Pages project. This can be useful when creating schemas, seeding data or otherwise managing a D1 database directly, without adding to your application logic.
+Cloudflare Pages projects use [Wrangler](/workers/wrangler/install-and-update/) for local development. You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal [Wrangler configuration file](/workers/wrangler/configuration/) in the root of your Pages project. This can be useful when creating schemas, seeding data, or otherwise managing a D1 database directly, without adding to your application logic.
 
 :::caution[Local development for remote databases]
 
@@ -108,41 +210,45 @@ Your [Wrangler configuration file](/workers/wrangler/configuration/) should rese
 
 </WranglerConfig>
 
-You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to wrangler:
+You can then execute queries and/or run migrations against a local database as part of your local development process by passing the `--local` flag to Wrangler:
 
 ```bash
 wrangler d1 execute YOUR_DATABASE_NAME \
   --local --command "CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);"
 ```
 
-The preceding command would execute queries the **local only** version of your D1 database. Without the `--local` flag, the commands are executed against the remote version of your D1 database running on Cloudflare's network.
-
-## Persist data
-
-:::note
-
-By default, in Wrangler v3 and above, data is persisted across each run of `wrangler dev`. If your local development and testing requires or assumes an empty database, you should start with a `DROP TABLE <tablename>` statement to delete existing tables before using `CREATE TABLE` to re-create them.
-
-:::
-
-Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific location. This can be useful when working in a team (allowing you to share) the same copy, when deploying via CI/CD (to ensure the same starting state), or as a way to keep data when migrating across machines.
-
-Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
+The preceding command executes queries against the **local-only** version of your D1 database.
 
 ## Test programmatically
 
 ### Miniflare
 
-[Miniflare](https://miniflare.dev/) allows you to simulate a Workers and resources like D1 using the same underlying runtime and code as used in production.
+[Miniflare](https://miniflare.dev/) allows you to simulate Workers and resources like D1 using the same underlying runtime and code used in production.
 
 You can use Miniflare's [support for D1](https://miniflare.dev/storage/d1) to create D1 databases you can use for testing:
 
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
 
-
-<WranglerConfig>
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "$today",
+		env: {
+			DB: bindings.d1({
+				id: "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+				name: "test-db",
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
+	"compatibility_date": "$today",
 	"d1_databases": [
 		{
 			"binding": "DB",
@@ -174,9 +280,9 @@ const { results } = await stmt.run();
 console.log(results);
 ```
 
-### `unstable_dev`
+### `unstable_dev` (Wrangler only)
 
-Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your Wrangler configuration.
+Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) API that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your Wrangler configuration.
 
 Given the below Wrangler configuration:
 
@@ -188,7 +294,7 @@ Given the below Wrangler configuration:
 		{
 			"binding": "DB", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
 			"database_name": "your-database", // the name of your D1 database, set when created
-			"database_id": "<UUID>", // The unique ID of your D1 database, returned when you create your database or run `
+			"database_id": "<UUID>", // The unique ID of your D1 database, returned when you create your database or run `wrangler d1 list`
 			"preview_database_id": "local-test-db" // A user-defined ID for your local test database.
 		}
 	]
@@ -252,6 +358,6 @@ Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for mo
 
 ## Related resources
 
-- Use [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and debug issues before deploying.
-- Learn [how to debug D1](/d1/observability/debug-d1/).
-- Understand how to [access logs](/workers/observability/logs/) generated from your Worker and D1.
+- Use [`cf dev`](/cf/projects/#start-development) or [`wrangler dev`](/workers/wrangler/commands/general/#dev) to run your Worker and D1 locally and debug issues before deploying.
+- For troubleshooting guidance, refer to [Debug D1](/d1/observability/debug-d1/).
+- For log access, refer to [Workers Observability](/workers/observability/logs/).
