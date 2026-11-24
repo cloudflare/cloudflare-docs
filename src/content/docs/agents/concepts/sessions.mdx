@@ -34,7 +34,7 @@ Each model SDK has its own message shape, and a session stores messages in one o
 | [`AIChatAgent`](/agents/agent-class/communication-channels/chat/chat-agents/) | `Sessions` from `agents/sessions`                                           | AI SDK `UIMessage`                       |
 | [Pi](/agents/harnesses/pi/)                                                   | The conversation store built into Pi Durable                                | Pi AI messages, as Pi transcript entries |
 | [OpenCode](/agents/harnesses/opencode/)                                       | OpenCode's own session storage                                              | OpenCode messages                        |
-| Your own loop on the AI SDK                                                   | `Sessions` from `agents/sessions`                                           | AI SDK `UIMessage`                       |
+| No harness: your own model loop, calling the AI SDK and `Sessions` directly   | `Sessions` from `agents/sessions`                                           | AI SDK `UIMessage`                       |
 
 A Think session and a Pi session store tool calls, reasoning, and model usage differently, and neither harness can read the other's transcript. If you later move a conversation to another harness, you convert each message, the way Pi's [seeded sessions](/agents/harnesses/pi/#seed-a-session-with-an-existing-history) write an imported history as Pi entries.
 
