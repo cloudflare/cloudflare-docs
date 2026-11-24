@@ -2,7 +2,7 @@
 {}
 ---
 
-import { Details, GlossaryTooltip } from "~/components";
+import { CliVariant, CliVariants, Details, GlossaryTooltip } from "~/components";
 
 The PRAGMA statement examples on this page use the following SQL.
 
@@ -61,52 +61,65 @@ One row per each table. Each row contains:
 
 <Details header = "Example of `PRAGMA table_list`">
 
-    ```sh
-    npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA table_list'
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh output
-    🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 0.5874ms
-    ┌────────┬──────────────────────┬───────┬──────┬────┬────────┐
-    │ schema │ name                 │ type  │ ncol │ wr │ strict │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Territory            │ table │ 3    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ CustomerDemographic  │ table │ 2    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ OrderDetail          │ table │ 6    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ sqlite_schema        │ table │ 5    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Region               │ table │ 2    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ _cf_KV               │ table │ 2    │ 1  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ ProductDetails_V     │ view  │ 14   │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ EmployeeTerritory    │ table │ 3    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Employee             │ table │ 18   │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Category             │ table │ 3    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Customer             │ table │ 11   │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Shipper              │ table │ 3    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Supplier             │ table │ 12   │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Order                │ table │ 14   │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ CustomerCustomerDemo │ table │ 2    │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ main   │ Product              │ table │ 10   │ 0  │ 0      │
-    ├────────┼──────────────────────┼───────┼──────┼────┼────────┤
-    │ temp   │ sqlite_temp_schema   │ table │ 5    │ 0  │ 0      │
-    └────────┴──────────────────────┴───────┴──────┴────┴────────┘
-    ```
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA table_list'
+```
+
+```sh output
+🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.5874ms
+┌────────┬──────────────────────┬───────┬──────┬────┬────────┐
+│ schema │ name                 │ type  │ ncol │ wr │ strict │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Territory            │ table │ 3    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ CustomerDemographic  │ table │ 2    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ OrderDetail          │ table │ 6    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ sqlite_schema        │ table │ 5    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Region               │ table │ 2    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ _cf_KV               │ table │ 2    │ 1  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ ProductDetails_V     │ view  │ 14   │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ EmployeeTerritory    │ table │ 3    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Employee             │ table │ 18   │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Category             │ table │ 3    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Customer             │ table │ 11   │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Shipper              │ table │ 3    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Supplier             │ table │ 12   │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Order                │ table │ 14   │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ CustomerCustomerDemo │ table │ 2    │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ main   │ Product              │ table │ 10   │ 0  │ 0      │
+├────────┼──────────────────────┼───────┼──────┼────┼────────┤
+│ temp   │ sqlite_temp_schema   │ table │ 5    │ 0  │ 0      │
+└────────┴──────────────────────┴───────┴──────┴────┴────────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA table_list'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
@@ -126,46 +139,60 @@ One row for each column in the specified table. Each row contains:
 6. `pk`: `1` if the column is a primary key, `0` otherwise
 
 <Details header ='Example of `PRAGMA table_info`'>
-	```sh
-	npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA table_info("Order")'
-	```
 
-    ```sh output
-    🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 0.8502ms
-    ┌─────┬────────────────┬───────────────┬─────────┬────────────┬────┐
-    │ cid │ name           │ type          │ notnull │ dflt_value │ pk │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 0   │ Id             │ INTEGER       │ 0       │            │ 1  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 1   │ CustomerId     │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 2   │ EmployeeId     │ INTEGER       │ 1       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 3   │ OrderDate      │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 4   │ RequiredDate   │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 5   │ ShippedDate    │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 6   │ ShipVia        │ INTEGER       │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 7   │ Freight        │ DECIMAL       │ 1       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 8   │ ShipName       │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 9   │ ShipAddress    │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 10  │ ShipCity       │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 11  │ ShipRegion     │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 12  │ ShipPostalCode │ VARCHAR(8000) │ 0       │            │ 0  │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
-    │ 13  │ ShipCountry    │ VARCHAR(8000) │ 0       │            │ 0  │
-    └─────┴────────────────┴───────────────┴─────────┴────────────┴────┘
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
+
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA table_info("Order")'
+```
+
+```sh output
+🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.8502ms
+┌─────┬────────────────┬───────────────┬─────────┬────────────┬────┐
+│ cid │ name           │ type          │ notnull │ dflt_value │ pk │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 0   │ Id             │ INTEGER       │ 0       │            │ 1  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 1   │ CustomerId     │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 2   │ EmployeeId     │ INTEGER       │ 1       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 3   │ OrderDate      │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 4   │ RequiredDate   │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 5   │ ShippedDate    │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 6   │ ShipVia        │ INTEGER       │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 7   │ Freight        │ DECIMAL       │ 1       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 8   │ ShipName       │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 9   │ ShipAddress    │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 10  │ ShipCity       │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 11  │ ShipRegion     │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 12  │ ShipPostalCode │ VARCHAR(8000) │ 0       │            │ 0  │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┤
+│ 13  │ ShipCountry    │ VARCHAR(8000) │ 0       │            │ 0  │
+└─────┴────────────────┴───────────────┴─────────┴────────────┴────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA table_info("Order")'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
@@ -175,46 +202,59 @@ Similar to `PRAGMA table_info(TABLE_NAME)` but also includes [generated columns]
 
 <Details header='Example of `PRAGMA table_xinfo`'>
 
-    ```sh
-    npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA table_xinfo("Order")'
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh output
-    🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 0.3854ms
-    ┌─────┬────────────────┬───────────────┬─────────┬────────────┬────┬────────┐
-    │ cid │ name           │ type          │ notnull │ dflt_value │ pk │ hidden │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 0   │ Id             │ INTEGER       │ 0       │            │ 1  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 1   │ CustomerId     │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 2   │ EmployeeId     │ INTEGER       │ 1       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 3   │ OrderDate      │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 4   │ RequiredDate   │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 5   │ ShippedDate    │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 6   │ ShipVia        │ INTEGER       │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 7   │ Freight        │ DECIMAL       │ 1       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 8   │ ShipName       │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 9   │ ShipAddress    │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 10  │ ShipCity       │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 11  │ ShipRegion     │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 12  │ ShipPostalCode │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    ├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
-    │ 13  │ ShipCountry    │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
-    └─────┴────────────────┴───────────────┴─────────┴────────────┴────┴────────┘
-    ```
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA table_xinfo("Order")'
+```
+
+```sh output
+🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.3854ms
+┌─────┬────────────────┬───────────────┬─────────┬────────────┬────┬────────┐
+│ cid │ name           │ type          │ notnull │ dflt_value │ pk │ hidden │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 0   │ Id             │ INTEGER       │ 0       │            │ 1  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 1   │ CustomerId     │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 2   │ EmployeeId     │ INTEGER       │ 1       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 3   │ OrderDate      │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 4   │ RequiredDate   │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 5   │ ShippedDate    │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 6   │ ShipVia        │ INTEGER       │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 7   │ Freight        │ DECIMAL       │ 1       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 8   │ ShipName       │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 9   │ ShipAddress    │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 10  │ ShipCity       │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 11  │ ShipRegion     │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 12  │ ShipPostalCode │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+├─────┼────────────────┼───────────────┼─────────┼────────────┼────┼────────┤
+│ 13  │ ShipCountry    │ VARCHAR(8000) │ 0       │            │ 0  │ 0      │
+└─────┴────────────────┴───────────────┴─────────┴────────────┴────┴────────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA table_xinfo("Order")'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
@@ -234,20 +274,33 @@ One row for each index associated with the specified table. Each row contains:
 
 <Details header='Example of `PRAGMA index_list`'>
 
-    ```sh
-    npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA index_list("Territory")'
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh output
-    🌀 Executing on remote database d1-pragma-db (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 0.2177ms
-    ┌─────┬──────────────────────────────┬────────┬────────┬─────────┐
-    │ seq │ name                         │ unique │ origin │ partial │
-    ├─────┼──────────────────────────────┼────────┼────────┼─────────┤
-    │ 0   │ sqlite_autoindex_Territory_1 │ 1      │ pk     │ 0       │
-    └─────┴──────────────────────────────┴────────┴────────┴─────────┘
-    ```
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA index_list("Territory")'
+```
+
+```sh output
+🌀 Executing on remote database d1-pragma-db (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.2177ms
+┌─────┬──────────────────────────────┬────────┬────────┬─────────┐
+│ seq │ name                         │ unique │ origin │ partial │
+├─────┼──────────────────────────────┼────────┼────────┼─────────┤
+│ 0   │ sqlite_autoindex_Territory_1 │ 1      │ pk     │ 0       │
+└─────┴──────────────────────────────┴────────┴────────┴─────────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA index_list("Territory")'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
@@ -265,20 +318,33 @@ One row for each key column in the specified index. Each row contains:
 
 <Details header='Example of `PRAGMA index_info`'>
 
-    ```sh
-    npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA index_info("sqlite_autoindex_Territory_1")'
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh output
-    🌀 Executing on remote database d1-pragma-db (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 0.2523ms
-    ┌───────┬─────┬──────┐
-    │ seqno │ cid │ name │
-    ├───────┼─────┼──────┤
-    │ 0     │ 0   │ Id   │
-    └───────┴─────┴──────┘
-    ```
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA index_info("sqlite_autoindex_Territory_1")'
+```
+
+```sh output
+🌀 Executing on remote database d1-pragma-db (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.2523ms
+┌───────┬─────┬──────┐
+│ seqno │ cid │ name │
+├───────┼─────┼──────┤
+│ 0     │ 0   │ Id   │
+└───────┴─────┴──────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA index_info("sqlite_autoindex_Territory_1")'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
@@ -288,22 +354,35 @@ Similar to `PRAGMA index_info("TABLE_NAME")` but also includes hidden columns.
 
 <Details header ='Example of `PRAGMA index_xinfo`'>
 
-    ```sh
-    npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA index_xinfo("sqlite_autoindex_Territory_1")'
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh output
-    🌀 Executing on remote database d1-pragma-db (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 0.6034ms
-    ┌───────┬─────┬──────┬──────┬────────┬─────┐
-    │ seqno │ cid │ name │ desc │ coll   │ key │
-    ├───────┼─────┼──────┼──────┼────────┼─────┤
-    │ 0     │ 0   │ Id   │ 0    │ BINARY │ 1   │
-    ├───────┼─────┼──────┼──────┼────────┼─────┤
-    │ 1     │ -1  │      │ 0    │ BINARY │ 0   │
-    └───────┴─────┴──────┴──────┴────────┴─────┘
-    ```
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA index_xinfo("sqlite_autoindex_Territory_1")'
+```
+
+```sh output
+🌀 Executing on remote database d1-pragma-db (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 0.6034ms
+┌───────┬─────┬──────┬──────┬────────┬─────┐
+│ seqno │ cid │ name │ desc │ coll   │ key │
+├───────┼─────┼──────┼──────┼────────┼─────┤
+│ 0     │ 0   │ Id   │ 0    │ BINARY │ 1   │
+├───────┼─────┼──────┼──────┼────────┼─────┤
+│ 1     │ -1  │      │ 0    │ BINARY │ 0   │
+└───────┴─────┴──────┴──────┴────────┴─────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA index_xinfo("sqlite_autoindex_Territory_1")'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
@@ -322,20 +401,33 @@ Checks the formatting and consistency of the table, including:
 
 <Details header='Example of `PRAGMA quick_check`'>
 
-    ```sh
-    npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA quick_check'
-    ```
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh output
-    🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
-    🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
-    🚣 Executed 1 commands in 1.4073ms
-    ┌─────────────┐
-    │ quick_check │
-    ├─────────────┤
-    │ ok          │
-    └─────────────┘
-    ```
+```sh
+npx wrangler d1 execute [DATABASE_NAME] --command='PRAGMA quick_check'
+```
+
+```sh output
+🌀 Executing on remote database [DATABASE_NAME] (DATABASE_ID):
+🌀 To execute on your local development database, remove the --remote flag from your wrangler command.
+🚣 Executed 1 commands in 1.4073ms
+┌─────────────┐
+│ quick_check │
+├─────────────┤
+│ ok          │
+└─────────────┘
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```sh
+cf d1 query <DATABASE_ID> --sql 'PRAGMA quick_check'
+```
+
+</CliVariant>
+</CliVariants>
 
 </Details>
 
