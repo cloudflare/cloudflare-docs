@@ -25,6 +25,8 @@ With this release, more models are available from alternate providers on gateway
 - Google Gemini models and `google/gemma-4-26b-a4b-it` on Google AI Studio.
 - `moonshotai/kimi-k3` and `deepseek-ai/deepseek-v4.1-flash-1017` on Fireworks.
 
+More models and providers are on the way.
+
 ## Set the provider order
 
 You can also control which provider AI Gateway tries first for a model. Set `routing.providerOrder` in the request body, or the `cf-aig-provider-order` header, to list the providers to try first. Set `routing.providerSort` to `price`, or the `cf-aig-provider-sort` header to `price`, to order the remaining providers by their input and output token price.
