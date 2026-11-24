@@ -12,7 +12,7 @@ import { Steps, Tabs, TabItem } from "~/components";
 
 A small number of databases and queries usually cause most of the rows read and written in an account. These rows are what you pay for, and these queries make your databases slow. A query is usually slow when it reads many more rows than it returns. A read query that runs many times also puts load on a database. Many small queries that your Worker sends one after another also make a request slow, because each query is a separate round trip to D1.
 
-To find these databases and queries, use the [`cf sql query`](/analytics/sql-api/get-started/#use-the-cloudflare-cli) command of the Cloudflare CLI, or `wrangler d1 insights`. `cf sql query` sends SQL to the [SQL API](/analytics/sql-api/). You can change the SQL in the examples to get different results. `wrangler d1 insights` returns the top queries from the GraphQL Analytics API. For all its options, refer to [Query `insights`](/d1/observability/metrics-analytics/#query-insights).
+To find these databases and queries, use the [`cf sql query`](/analytics/sql-api/get-started/#use-the-cloudflare-cli) command of the Cloudflare CLI (`cf`), or `wrangler d1 insights`. `cf sql query` sends SQL to the [SQL API](/analytics/sql-api/), so you can change the SQL in the examples to get different results. For quick top-database and top-query summaries without writing SQL, you can also use `cf d1 insights databases` and `cf d1 insights queries`. `wrangler d1 insights` returns the top queries from the GraphQL Analytics API. For all options, refer to [Query `insights`](/d1/observability/metrics-analytics/#query-insights).
 
 If you use an API token, the token must have the **Account Analytics Read** permission. Both commands return JSON, so an AI agent can run them and read the results.
 
@@ -26,8 +26,8 @@ The `events.d1Queries` dataset is sampled. The SQL API applies the sample weight
 
 Find the databases that read the most rows in your account during the last 7 days:
 
-<Tabs syncKey="d1Insights">
-<TabItem label="Cloudflare CLI">
+<Tabs syncKey="cli">
+<TabItem label="Cloudflare CLI (cf)">
 
 ```sh
 npx cf sql query --scope-account <account_id> "
@@ -69,8 +69,8 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
 <Steps>
 1. Find the queries that read the most rows in your account during the last 7 days:
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf sql query --scope-account <account_id> "
@@ -167,8 +167,8 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
 
 2. Get the top queries for the database that you want to fix. Use the `databaseId` from step 1, or from [Find the most expensive databases](#find-the-most-expensive-databases):
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf sql query --scope-account <account_id> "
@@ -209,8 +209,8 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
 
 5. If you use [D1 migrations](/d1/reference/migrations/) to manage your database schema, add the index with a migration. First, create a migration for the index:
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf d1 migrations create add_orderdetail_orderid_index
@@ -243,8 +243,8 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
 
    Apply the migration to your remote database:
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf d1 migrations apply <database_id>
@@ -270,8 +270,8 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
 
 6. Make sure that D1 uses the new index. Put `EXPLAIN QUERY PLAN` in front of the query and run it:
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf d1 query <database_id> --sql "EXPLAIN QUERY PLAN <query>"
@@ -301,8 +301,8 @@ A read query that runs many times often returns the same data each time. If you 
 <Steps>
 1. Find the queries that run the most in your account during the last day:
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf sql query --scope-account <account_id> "
@@ -410,8 +410,8 @@ Each time your Worker calls `run()`, `all()`, `first()`, or `raw()` on a stateme
 <Steps>
 1. Find the write queries that write the most rows in your account during the last day:
 
-   <Tabs syncKey="d1Insights">
-   <TabItem label="Cloudflare CLI">
+   <Tabs syncKey="cli">
+   <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
    npx cf sql query --scope-account <account_id> "
