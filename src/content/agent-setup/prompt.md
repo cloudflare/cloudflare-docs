@@ -95,6 +95,35 @@ OAuth triggers automatically on first Cloudflare tool use.
 
 ---
 
+## Install for Vibe
+
+From the project root, install skills for the current project:
+
+```
+npx -y skills add cloudflare/skills --skill '*' --yes
+```
+
+Back up `~/.vibe/config.toml` before editing it, and preserve unrelated settings. Update entries with the same name instead of adding duplicates. Add these entries:
+
+```toml
+[[mcp_servers]]
+name = "cloudflare"
+transport = "streamable-http"
+url = "https://mcp.cloudflare.com/mcp"
+
+[mcp_servers.auth]
+type = "oauth"
+scopes = []
+```
+
+Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruct them to authenticate the Cloudflare MCP server:
+
+```
+/mcp login cloudflare
+```
+
+---
+
 ## (Optional) Install the Cloudflare CLI
 
 The Cloudflare CLI, `cf`, is in beta. It covers the whole Cloudflare API, returns JSON by default, and works alongside Wrangler. Ask the user whether they want to install it. If they do not, skip this section.
@@ -124,35 +153,6 @@ Once done, tell the user:
 │                                                      │
 │  ⚡ Restart your agent to load the MCP servers       │
 └──────────────────────────────────────────────────────┘
-```
-
----
-
-## Install for Vibe
-
-From the project root, install skills for the current project:
-
-```
-npx -y skills add cloudflare/skills --skill '*' --yes
-```
-
-Back up `~/.vibe/config.toml` before editing it, and preserve unrelated settings. Update entries with the same name instead of adding duplicates. Add these entries:
-
-```toml
-[[mcp_servers]]
-name = "cloudflare"
-transport = "streamable-http"
-url = "https://mcp.cloudflare.com/mcp"
-
-[mcp_servers.auth]
-type = "oauth"
-scopes = []
-```
-
-Then instruct the user to enter `/reload` and `/mcp status` inside Vibe. Instruct them to authenticate the Cloudflare MCP server:
-
-```
-/mcp login cloudflare
 ```
 
 ---
