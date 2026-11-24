@@ -1,0 +1,96 @@
+---
+title: Move from @cloudflare/codemode
+description: Move a Code Mode tool built with createCodeTool, DynamicWorkerExecutor, and connectors from @cloudflare/codemode to Cloudflare Computer.
+pcx_content_type: how-to
+sidebar:
+  order: 9
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+`@cloudflare/codemode` is the earlier Code Mode toolkit: `createCodeTool()`, `DynamicWorkerExecutor`, connectors, a durable runtime with approvals and snippets, MCP server helpers, a browser executor, and a Vite plugin. It keeps working, but new agents should use [Computer](/agents/runtime/code-mode/computer/). Think's `createExecuteTool()`, which is built on `@cloudflare/codemode`, is deprecated in favor of Computer's `exec` tool.
+
+## What replaces what
+
+| Legacy API                                      | Replacement                                                                                         |
+| ----------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `createCodeTool()` from `/ai` or `/tanstack-ai` | The `exec` tool from `createAITools()`, `createTanStackTools()`, or `createPiTools()` in Computer   |
+| `DynamicWorkerExecutor`, `Executor`             | `CodemodeBackend` from `@cloudflare/computer/backends/codemode`, on a Computer workspace            |
+| Tools as `codemode.*` globals, `ToolProvider`   | Tools imported from [`codemode:tools`](/agents/runtime/code-mode/computer/#supply-the-agents-tools) |
+| `CodemodeConnector`, `OpenApiConnector`         | A [host module](/agents/runtime/code-mode/computer/#supply-an-api) under a `codemode:` name         |
+| `McpConnector`, `ToolSetConnector`              | [`codemode:tools` with MCP tools](/agents/runtime/code-mode/computer/#supply-mcp-tools)             |
+| `workspace.*` tools in the sandbox              | `node:fs` in the code                                                                               |
+| `createCodemodeRuntime()` approvals and replay  | [`ctx.interrupt()`](/agents/runtime/code-mode/computer/#ask-for-approval) in a host module          |
+
+These have no replacement:
+
+- `codeMcpServer()` and `openApiMcpServer()` from `/mcp`. For a server-side Code Mode MCP server, start from the [Cloudflare MCP server source](https://github.com/cloudflare/mcp). Refer to [Code Mode on the server](/agents/concepts/code-mode/#code-mode-on-the-server).
+- `IframeSandboxExecutor` and `createBrowserCodeTool()` from `/browser`.
+- Rollback, through `revert` and `runtime.rollback()`.
+- Snippets, through `saveSnippet()` and `codemode.run()`. Save the code as a workspace file and import it instead.
+- The Vite plugin from `/vite`.
+
+## Move a code tool to Computer
+
+Before, with `@cloudflare/codemode`:
+
+<TypeScriptExample>
+
+```ts
+import { DynamicWorkerExecutor } from "@cloudflare/codemode";
+import { createCodeTool } from "@cloudflare/codemode/ai";
+import { streamText } from "ai";
+
+const codemode = createCodeTool({
+	tools: myTools,
+	executor: new DynamicWorkerExecutor({ loader: env.LOADER }),
+});
+
+streamText({ model, messages, tools: { codemode } });
+```
+
+</TypeScriptExample>
+
+After, with Computer:
+
+<TypeScriptExample>
+
+```ts
+import { Workspace } from "@cloudflare/computer";
+import { CodemodeBackend } from "@cloudflare/computer/backends/codemode";
+import { createToolBindings } from "@cloudflare/computer/modules/tools";
+import { createAITools, forAISDKTools } from "@cloudflare/computer/tools/ai-sdk";
+import { streamText } from "ai";
+
+const workspace = new Workspace({
+	storage: this.ctx.storage,
+	backends: [
+		new CodemodeBackend({
+			loader: this.env.LOADER,
+			modules: {
+				"codemode:tools": createToolBindings(forAISDKTools(() => myTools)),
+			},
+		}),
+	],
+});
+
+streamText({ model, messages, tools: createAITools({ workspace }) });
+```
+
+</TypeScriptExample>
+
+The model's code changes too. Code for `createCodeTool()` was an async arrow function that called `codemode.toolName()`. Computer code is a module with a default export that imports the tools:
+
+```js
+import { getWeather } from "codemode:tools";
+
+export default async function () {
+	return (await getWeather({ city: "Lisbon" })).text;
+}
+```
+
+## `@cloudflare/codemode` documentation
+
+The guides for `@cloudflare/codemode` are in the [Agents SDK repository](https://github.com/cloudflare/agents/tree/main/docs/codemode), including the runtime, approvals, connectors, snippets, and the Vite plugin.

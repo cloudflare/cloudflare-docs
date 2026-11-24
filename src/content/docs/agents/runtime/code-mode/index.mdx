@@ -1,0 +1,87 @@
+---
+title: Code Mode
+description: Run code that a model writes. Use Cloudflare Computer, a container, or skill scripts.
+pcx_content_type: overview
+sidebar:
+  order: 5
+  group:
+    hideIndex: false
+products:
+  - agents
+---
+
+import { CardGrid, LinkCard } from "~/components";
+
+Any code execution in an agent is Code Mode. The model writes a program, the agent runs it in a sandbox, and the result goes back to the model. For why this works better than calling tools one at a time, refer to the [Code Mode concept](/agents/concepts/code-mode/).
+
+This section covers the ways to run that code.
+
+## Choose how to run code
+
+| Way                                                           | Code runs in                              | Use when                                                                         |
+| ------------------------------------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------- |
+| [Computer](/agents/runtime/code-mode/computer/) (recommended) | A Dynamic Worker, against workspace files | You want an `exec` tool for the model, with your tools supplied as modules.      |
+| [A container](/agents/tools/sandbox/)                         | A Linux virtual machine                   | The code needs a shell, native binaries, package installs, or a build toolchain. |
+| [Skill scripts](/agents/skills/execution/)     | A Dynamic Worker or the workspace         | You run scripts bundled with [Agent Skills](/agents/skills/).                    |
+
+Start with Computer.
+
+## How Computer runs code
+
+[`@cloudflare/computer`](https://github.com/cloudflare/computer) gives the model an `exec` tool next to its file tools. `CodemodeBackend` runs each call as one ECMAScript module in a fresh [Dynamic Worker](/dynamic-workers/). The code reads workspace files through `node:fs` and imports host modules, whose functions run in your Durable Object. Computer ships prebuilt modules such as `codemode:tools`, `codemode:git`, and `codemode:container`.
+
+```mermaid
+flowchart TB
+    Model["Model writes code"] -->|"exec tool"| Computer
+    subgraph Computer["@cloudflare/computer"]
+        WS["Workspace files"]
+        Mods["codemode:* modules"]
+        Backend["CodemodeBackend"]
+    end
+    Backend --> DW["Dynamic Worker<br/>one isolate per run"]
+```
+
+You supply tools to the code as modules. Each module is imported under a `codemode:` name, and each of its functions runs in your agent, not in the sandbox:
+
+```js
+import { readFile } from "node:fs/promises";
+import { lookup } from "codemode:orders";
+
+export default async function () {
+	const ids = JSON.parse(await readFile("/workspace/orders.json", "utf8"));
+	return Promise.all(ids.map((id) => lookup(id)));
+}
+```
+
+## Run code in a container
+
+Some code needs a full Linux environment. Use a container when the model must run shell commands, install packages, or build and test a project.
+
+- [Sandbox](/agents/tools/sandbox/) attaches a container to an agent and gives the model a tool that runs commands in it.
+- Computer can also run a container backend next to its JavaScript backend. With the `codemode:container` module, JavaScript code can call the container, so the model only needs one `exec` tool. Refer to [Call a container from code](/agents/runtime/code-mode/computer/#call-a-container-from-code).
+
+A container starts slower than a Dynamic Worker and costs more to run. If the code only calls functions that you provide, use Computer instead.
+
+## Move from `@cloudflare/codemode`
+
+`@cloudflare/codemode` is the earlier Code Mode toolkit, with `createCodeTool()`, `DynamicWorkerExecutor`, connectors, and a durable approval runtime. It keeps working, but new agents should use Computer. Refer to [Move from `@cloudflare/codemode`](/agents/runtime/code-mode/legacy/) for what replaces each part.
+
+## Pages in this section
+
+<CardGrid>
+	<LinkCard
+		title="Run code with Computer"
+		href="/agents/runtime/code-mode/computer/"
+		description="Give the model an exec tool, and supply your tools, MCP servers, and APIs as modules."
+	/>
+	<LinkCard
+		title="Run skill scripts"
+		href="/agents/skills/execution/"
+		description="Run the scripts bundled with Agent Skills."
+	/>
+	<LinkCard
+		title="Move from @cloudflare/codemode"
+		href="/agents/runtime/code-mode/legacy/"
+		description="Map createCodeTool, executors, connectors, and approvals to Computer."
+	/>
+</CardGrid>
