@@ -32,7 +32,7 @@ export class MyAgent extends Think<Env> {
 
 This setting skips Think's automatic `getAITools()` call. MCP registration, restoration, discovery, raw catalog access, direct calls, and Code Mode connectors continue to work.
 
-Use [`listTools()`](/agents/model-context-protocol/apis/client-api/#thismcplisttools) when you only need the raw MCP catalog. For connector setup, refer to [Use MCP tools with Code Mode](/agents/tools/codemode/mcp/).
+Use [`listTools()`](/agents/model-context-protocol/apis/client-api/#thismcplisttools) when you only need the raw MCP catalog. For connector setup, refer to [Use MCP tools with Code Mode](/agents/runtime/code-mode/computer/).
 
 ## Invoke the Code Mode runtime without the AI SDK
 
@@ -52,7 +52,7 @@ const outcome = await runtime.execute({
 
 Search and describe results include `requiresApproval: true` for protected connector methods. Resolve a paused execution with the existing `approve()` and `reject()` methods.
 
-For setup and exact method types, refer to [Create a durable Code Mode runtime](/agents/tools/codemode/durable-runtime/) and the [Code Mode API reference](/agents/tools/codemode/api-reference/).
+For setup and exact method types, refer to [Create a durable Code Mode runtime](/agents/runtime/code-mode/legacy/) and the [Code Mode API reference](/agents/runtime/code-mode/legacy/).
 
 ## Upgrade
 

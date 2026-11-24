@@ -22,7 +22,7 @@ This section covers the ways to run that code.
 | ------------------------------------------------------------- | ----------------------------------------- | -------------------------------------------------------------------------------- |
 | [Computer](/agents/runtime/code-mode/computer/) (recommended) | A Dynamic Worker, against workspace files | You want an `exec` tool for the model, with your tools supplied as modules.      |
 | [A container](/agents/tools/sandbox/)                         | A Linux virtual machine                   | The code needs a shell, native binaries, package installs, or a build toolchain. |
-| [Skill scripts](/agents/skills/execution/)     | A Dynamic Worker or the workspace         | You run scripts bundled with [Agent Skills](/agents/skills/).                    |
+| [Skill scripts](/agents/skills/execution/)                    | A Dynamic Worker or the workspace         | You run scripts bundled with [skills](/agents/skills/).                          |
 
 Start with Computer.
 
@@ -77,7 +77,7 @@ A container starts slower than a Dynamic Worker and costs more to run. If the co
 	<LinkCard
 		title="Run skill scripts"
 		href="/agents/skills/execution/"
-		description="Run the scripts bundled with Agent Skills."
+		description="Run the scripts bundled with skills."
 	/>
 	<LinkCard
 		title="Move from @cloudflare/codemode"
