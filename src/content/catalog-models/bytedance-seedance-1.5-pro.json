@@ -1,0 +1,363 @@
+{
+	"model_id": "bytedance/seedance-1.5-pro",
+	"name": "Seedance 1.5 Pro",
+	"description": "ByteDance's joint audio-video model. A dual-branch diffusion transformer generates synchronized native audio and video in a single pass, giving millisecond-precision lip-sync across English, Mandarin, Japanese, Korean, Spanish, Portuguese, Indonesian, and Chinese dialects, plus cinematic camera control and character consistency at up to 1080p.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Image-to-Video",
+		"Reference Images",
+		"Audio Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.0247104,
+		"@480p (per second)": 0.011664,
+		"@720p (per second)": 0.0247104,
+		"@1080p (per second)": 0.058752,
+		"@480p w/ audio (per second)": 0.023328,
+		"@720p w/ audio (per second)": 0.0494208,
+		"@1080p w/ audio (per second)": 0.117504
+	},
+	"examples": [
+		{
+			"name": "Aurora on the Lake",
+			"description": "Silent cinematic generation with visual storytelling",
+			"input": {
+				"prompt": "A small sailboat crosses a glassy lake beneath the northern lights, its reflection rippling softly in the dark water, wide cinematic shot, tranquil atmosphere",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/aurora-on-the-lake.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/aurora-on-the-lake.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1.5-pro',\n  {\n    prompt:\n      'A small sailboat crosses a glassy lake beneath the northern lights, its reflection rippling softly in the dark water, wide cinematic shot, tranquil atmosphere',\n    aspect_ratio: '16:9',\n    duration: 5,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1.5-pro\",\n  \"input\": {\n    \"prompt\": \"A small sailboat crosses a glassy lake beneath the northern lights, its reflection rippling softly in the dark water, wide cinematic shot, tranquil atmosphere\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Spoken Workshop Scene",
+			"description": "Joint audio-video generation with an expressive spoken performance",
+			"input": {
+				"prompt": "A young scientist in a bright workshop looks at the camera and says, 'Every small experiment brings us closer to a better future,' then smiles as a tiny robot rolls across the desk, natural conversational delivery, warm room tone",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"generate_audio": true,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/spoken-workshop-scene.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/spoken-workshop-scene.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1.5-pro',\n  {\n    prompt:\n      \"A young scientist in a bright workshop looks at the camera and says, 'Every small experiment brings us closer to a better future,' then smiles as a tiny robot rolls across the desk, natural conversational delivery, warm room tone\",\n    aspect_ratio: '16:9',\n    duration: 5,\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1.5-pro\",\n  \"input\": {\n    \"prompt\": \"A young scientist in a bright workshop looks at the camera and says, '\\''Every small experiment brings us closer to a better future,'\\'' then smiles as a tiny robot rolls across the desk, natural conversational delivery, warm room tone\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Jazz Performance",
+			"description": "High-resolution music-performance scene with synchronized native audio",
+			"input": {
+				"prompt": "A jazz pianist plays an intimate melody in a dimly lit club, fingers moving across the keys as the camera slowly circles the grand piano, warm amber spotlights, natural piano music and room ambience",
+				"aspect_ratio": "16:9",
+				"duration": 5,
+				"generate_audio": true,
+				"resolution": "1080p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/jazz-performance.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/jazz-performance.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1.5-pro',\n  {\n    prompt:\n      'A jazz pianist plays an intimate melody in a dimly lit club, fingers moving across the keys as the camera slowly circles the grand piano, warm amber spotlights, natural piano music and room ambience',\n    aspect_ratio: '16:9',\n    duration: 5,\n    generate_audio: true,\n    resolution: '1080p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1.5-pro\",\n  \"input\": {\n    \"prompt\": \"A jazz pianist plays an intimate melody in a dimly lit club, fingers moving across the keys as the camera slowly circles the grand piano, warm amber spotlights, natural piano music and room ambience\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": 5,\n    \"generate_audio\": true,\n    \"resolution\": \"1080p\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Rainy Cafe Animation",
+			"description": "Animate a first-frame image with synchronized ambient sound",
+			"input": {
+				"image": "https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg",
+				"prompt": "The camera slowly moves closer as steam rises from the cup and gentle rain can be heard against a nearby window, quiet cafe ambience",
+				"duration": 5,
+				"generate_audio": true,
+				"resolution": "720p"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/rainy-cafe-animation.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/bytedance/seedance-1.5-pro/rainy-cafe-animation.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bytedance/seedance-1.5-pro',\n  {\n    image: 'https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg',\n    prompt:\n      'The camera slowly moves closer as steam rises from the cup and gentle rain can be heard against a nearby window, quiet cafe ambience',\n    duration: 5,\n    generate_audio: true,\n    resolution: '720p',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bytedance/seedance-1.5-pro\",\n  \"input\": {\n    \"image\": \"https://ark-doc.tos-ap-southeast-1.bytepluses.com/doc_image/r2v_tea_pic1.jpg\",\n    \"prompt\": \"The camera slowly moves closer as steam rises from the cup and gentle rain can be heard against a nearby window, quiet cafe ambience\",\n    \"duration\": 5,\n    \"generate_audio\": true,\n    \"resolution\": \"720p\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://seed.bytedance.com/en/seedance1_5_pro",
+	"terms": null,
+	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/bytedance/seedance-1.5-pro.png",
+	"metadata": {
+		"Aspect Ratios": "16:9, 4:3, 1:1, 3:4, 9:16, 21:9, 9:21",
+		"Max Duration": "12 seconds",
+		"Native Audio": "Yes",
+		"Resolutions": "480p, 720p, 1080p"
+	},
+	"request_formats": null,
+	"provider_id": "bytedance",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bytedance",
+			"pricing": {
+				"default": 0.0247104,
+				"480p": 0.011664,
+				"720p": 0.0247104,
+				"1080p": 0.058752,
+				"480p_audio": 0.023328,
+				"720p_audio": 0.0494208,
+				"1080p_audio": 0.117504
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "bytedance",
+			"pricing": {
+				"default": 0.0247104,
+				"480p": 0.011664,
+				"720p": 0.0247104,
+				"1080p": 0.058752,
+				"480p_audio": 0.023328,
+				"720p_audio": 0.0494208,
+				"1080p_audio": 0.117504
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "default",
+							"label": "Default (per second)",
+							"unit": null,
+							"value": 0.0247104
+						},
+						{
+							"key": "1080p",
+							"label": "@1080p (per second)",
+							"unit": null,
+							"value": 0.058752
+						},
+						{
+							"key": "1080p_audio",
+							"label": "@1080p w/ audio (per second)",
+							"unit": null,
+							"value": 0.117504
+						},
+						{
+							"key": "480p",
+							"label": "@480p (per second)",
+							"unit": null,
+							"value": 0.011664
+						},
+						{
+							"key": "480p_audio",
+							"label": "@480p w/ audio (per second)",
+							"unit": null,
+							"value": 0.023328
+						},
+						{
+							"key": "720p",
+							"label": "@720p (per second)",
+							"unit": null,
+							"value": 0.0247104
+						},
+						{
+							"key": "720p_audio",
+							"label": "@720p w/ audio (per second)",
+							"unit": null,
+							"value": 0.0494208
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 00:41:04",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"maxLength": 10000,
+					"description": "Text prompt describing the video to generate"
+				},
+				"image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for image-to-video",
+					"type": "string"
+				},
+				"last_frame_image": {
+					"description": "Reference image (HTTP(S) URL or base64 data URI) for last-frame guidance. Only works if an image start frame is also given.",
+					"type": "string"
+				},
+				"duration": {
+					"default": 5,
+					"description": "Video duration in seconds",
+					"type": "integer",
+					"minimum": 4,
+					"maximum": 12
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Video resolution",
+					"type": "string",
+					"enum": [
+						"480p",
+						"720p",
+						"1080p"
+					]
+				},
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Video aspect ratio. Ignored if an image is used.",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"4:3",
+						"1:1",
+						"3:4",
+						"9:16",
+						"21:9",
+						"9:21"
+					]
+				},
+				"fps": {
+					"default": 24,
+					"description": "Frame rate (frames per second)",
+					"type": "number",
+					"const": 24
+				},
+				"camera_fixed": {
+					"default": false,
+					"description": "Whether to fix camera position",
+					"type": "boolean"
+				},
+				"generate_audio": {
+					"default": false,
+					"description": "Whether to generate synchronized native audio with the video. Audio output is billed at a higher rate than silent output.",
+					"type": "boolean"
+				},
+				"watermark": {
+					"default": false,
+					"description": "Whether to add a watermark to the output video",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Random seed for reproducible generation",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"use_virtual_avatar": {
+					"default": false,
+					"description": "Route image reference inputs (image, reference_images, last_frame_image) through ByteDance's trusted virtual avatar asset library before generation. Intended for AI-generated/virtual character avatars that would otherwise be blocked by face or deepfake detection",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"prompt",
+				"duration",
+				"resolution",
+				"aspect_ratio",
+				"fps",
+				"camera_fixed",
+				"generate_audio",
+				"watermark",
+				"use_virtual_avatar"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL to the generated video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

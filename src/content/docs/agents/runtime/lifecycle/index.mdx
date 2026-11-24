@@ -106,13 +106,14 @@ To reach the object from your Worker, refer to [Routing](/agents/runtime/routing
 
 Implement these optional methods on your class. The Lifecycle calls them inside the host context, so [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) works inside them.
 
-| Hook                          | When it runs                                                                         |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `onStart(props?)`             | Once per in-memory lifetime, after every capability has started                      |
-| `onRequest(request)`          | For each HTTP request that no capability handled                                     |
-| `onAlarm()`                   | Once per alarm, after the Lifecycle has run the due jobs                             |
-| `onJob(context)`              | When a job the host pushed through `lifecycle.jobs` comes due                        |
-| `onAlarmMemoryLimit(context)` | After an alarm ends in a memory-limit reset, after every capability's policy has run |
+| Hook                           | When it runs                                                                                                                                              |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onStart(props?)`              | Once per in-memory lifetime, after every capability has started                                                                                           |
+| `onRequest(request)`           | For each HTTP request that no capability handled                                                                                                          |
+| `onFetchError(request, error)` | When startup, a capability's request or upgrade hook, or `onRequest()` throws. Returns the response to send. Refer to [Failed requests](#failed-requests) |
+| `onAlarm()`                    | Once per alarm, after the Lifecycle has run the due jobs                                                                                                  |
+| `onJob(context)`               | When a job the host pushed through `lifecycle.jobs` comes due                                                                                             |
+| `onAlarmMemoryLimit(context)`  | After an alarm ends in a memory-limit reset, after every capability's policy has run                                                                      |
 
 Without `onRequest()`, an HTTP request that no capability handles returns `404`. The type `LifecycleObject` describes a Durable Object with these hooks and a `lifecycle` field.
 
@@ -199,6 +200,52 @@ Only one catch-all can exist for each hook. `use()` throws when you install a se
 | WebSocket upgrade                  | The first capability that returns a `Response`, otherwise `404`                                     |
 | WebSocket message, close, or error | The capability that owns the connection, otherwise ignored                                          |
 | Alarm                              | Due jobs, then the host's `onAlarm()`                                                               |
+
+## Failed requests
+
+When startup, a capability's `onRequest()` or `onWebSocketUpgrade()` hook, or the host's `onRequest()` throws, the Lifecycle logs the error with `console.error` and sends a response that does not include it:
+
+- An HTTP request gets `500 Internal Server Error`.
+- A WebSocket upgrade gets a socket that closes at once with code `1011`.
+
+An error's message and stack can reveal internals, such as secret names or file paths, to callers who are not authenticated. To send something else, implement `onFetchError()`. It runs after the error is logged, with the request and the thrown value:
+
+<TypeScriptExample>
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class MyObject extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	onFetchError(request: Request, error: unknown): Response | undefined {
+		// Show details only in local development.
+		if (this.env.ENVIRONMENT !== "development") return;
+		const detail = error instanceof Error ? error.stack : String(error);
+		return new Response(detail, { status: 500 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+Return nothing to send the default response. If `onFetchError()` throws, the Lifecycle logs that error and also sends the default. In both cases, if the original thrown value is not an `Error`, the Lifecycle rethrows it to the runtime instead. `error` is whatever was thrown, so narrow it before you read it. `request` may already have had its body read.
+
+For a WebSocket upgrade, return either an HTTP error response or a `101` response with your own socket:
+
+```ts
+onFetchError(request: Request, error: unknown): Response | undefined {
+	if (request.headers.get("Upgrade")?.toLowerCase() !== "websocket") return;
+	const pair = new WebSocketPair();
+	pair[1].accept();
+	pair[1].send(JSON.stringify({ error: "unavailable" }));
+	pair[1].close(1011, "Startup failed");
+	return new Response(null, { status: 101, webSocket: pair[0] });
+}
+```
+
+`onFetchError()` runs in the object's context, so [`getCurrentAgent()`](/agents/runtime/lifecycle/get-current-agent/) returns the object and the request. After a failed startup, `onStart()` has not finished, so do not rely on state it sets up.
 
 ## Install capabilities
 

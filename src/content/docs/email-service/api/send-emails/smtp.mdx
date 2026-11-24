@@ -127,6 +127,7 @@ Cloudflare's SMTP server returns standard [RFC 5321](https://datatracker.ietf.or
 | `354`         | Ready to receive the message body — terminate with `<CR><LF>.<CR><LF>`.   |
 | `421`         | Service temporarily unavailable. Retry later.                             |
 | `451 4.3.0`   | Local error — the message was accepted but deferred. Retry later.         |
+| `451 4.7.1`   | Sending rate or daily sending limit exceeded. Retry later.                |
 | `452 4.5.3`   | Too many recipients in this session. Open a new session for the rest.     |
 | `500` / `501` | Syntax error in command or arguments.                                     |
 | `503`         | Bad sequence of commands (for example, `MAIL FROM` before `AUTH`).        |

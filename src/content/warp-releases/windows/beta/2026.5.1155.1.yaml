@@ -14,7 +14,7 @@ releaseNotes: |-
   - Added new warp-cli debug commands for interactive connection diagnosis. See [Extra debug logging](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/#extra-debug-logging) for details.
   - The local DNS proxy now supports DNSSEC passthrough. DNSSEC-signed responses are forwarded to the application intact (including DO/AD bits and RRSIG records), so applications that validate DNSSEC locally — including resolvers and the dig/drill tooling — work correctly through the client.
   - Added a new MDM format for organization-wide settings, including a cleaner way to configure the compliance environment (e.g. FedRAMP). The previous per-configuration approach still works, but the new format is now recommended. See the updated [Cloudflare One MDM documentation](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#organization_configs) for details.
-  - Client Certificate device-posture checks now support template variables (e.g. `${serial_number}`, `${device_uuid}`) in the Subject Alternative Name field, matching what the documentation has always claimed. Previously only the Common Name field accepted variables, which broke posture rules that pinned identity to a SAN entry.
+  - Client Certificate device-posture checks now support template variables (e.g. `${serial_number}`, `${hostname}`) in the Subject Alternative Name field, matching what the documentation has always claimed. Previously only the Common Name field accepted variables, which broke posture rules that pinned identity to a SAN entry.
   - The UseWebView2 registry value (HKLM\SOFTWARE\Cloudflare\CloudflareWARP\UseWebView2 = y) is once again honored by the new GUI for authentication, so administrators who prefer the embedded WebView2 browser for sign-in can opt back in. This setting was effectively ignored in the previous release; the default browser was always used. This key is now also honored for re-authentications.
   - Fixed a crash in the authentication browser when navigating to a site that prompts for browser permissions (microphone, camera, notifications, etc.). The same fix had previously landed for the captive-portal browser; this extends it to the auth browser.
   - Fixed an issue in proxy mode where hostnames containing underscores (e.g. ai_app.com) were rejected, breaking apps that depend on such hostnames (notably ChatGPT sandbox apps). The local proxy now accepts underscore-containing hostnames in CONNECT requests.
@@ -29,7 +29,7 @@ releaseNotes: |-
   - DNS resolution may be broken when the following conditions are all true:
     - The client is in Secure Web Gateway without DNS filtering (tunnel-only) mode.
     - A custom DNS server address is configured on the primary network adapter.
-    - The custom DNS server address on the primary network adapter is changed while the client is connected.  
+    - The custom DNS server address on the primary network adapter is changed while the client is connected.
     To work around this issue, please reconnect the client by selecting "disconnect" and then "connect" in the client user interface.
 version: 2026.5.1155.1
 releaseDate: 2026-05-29T00:55:37.673Z

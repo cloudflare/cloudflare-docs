@@ -1,0 +1,28 @@
+---
+title: Hyperdrive-connected PlanetScale databases now available to Cloudflare Startup Program customers
+description: Connect PlanetScale Postgres and MySQL databases to Workers through Hyperdrive, with usage and caps tied to your startup tier.
+products:
+  - hyperdrive
+  - workers
+date: 2026-11-18
+---
+
+import { DashButton } from "~/components";
+
+Customers in the [Cloudflare Startup Program](https://www.cloudflare.com/startups/) can now create PlanetScale Postgres and MySQL databases from Cloudflare, with usage billed through their Cloudflare account.
+
+Startup credits applied to PlanetScale usage is limited for each tier. PlanetScale usage beyond a tier's limit is billed to your account.
+
+| Tier   | PlanetScale credit limit |
+| ------ | ---------------------- |
+| Tier 3 | $2,500                 |
+| Tier 2 | $10,000                |
+| Tier 1 | $50,000                |
+
+Check your program tier to confirm the limit that applies to your account.
+
+To start using it, open the Hyperdrive section of the dashboard. The **Create PlanetScale** button appears there for eligible accounts.
+
+<DashButton url="/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1" />
+
+For database setup and how Hyperdrive connects Workers to PlanetScale, refer to [PlanetScale Postgres and MySQL with Hyperdrive](/hyperdrive/planetscale/).

@@ -35,6 +35,26 @@ Based on your Cloudflare plan type, a Pages project is limited to a specific num
 
 [^1]: If you need more custom domains, contact your account team.
 
+## Deployments
+
+| Limit                   | Value                                                    |
+| ----------------------- | -------------------------------------------------------- |
+| Deployment retention    | 30 days                                                  |
+| Deployments always kept | 100 most recent, plus your current production deployment |
+
+Deployments are kept for 30 days. After 30 days, a deployment is deleted unless:
+
+- It is one of the project's 100 most recent deployments. Both production and preview deployments count.
+- It is your current production deployment.
+
+For example, a project has 250 deployments. Its 100 most recent deployments are always kept. Of the other 150, deployments created in the last 30 days are kept, and older ones are deleted unless one of them is your current production deployment.
+
+When a deployment is deleted:
+
+- It no longer appears in your project's deployment list in the dashboard or API.
+- Its unique preview URL, such as `<hash>.<project>.pages.dev`, stops working.
+- You cannot [roll back](/pages/configuration/rollbacks/) to it.
+
 ## Files
 
 Pages uploads each file on your site to Cloudflare's globally distributed network to deliver a low latency experience to every user that visits your site. Cloudflare Pages sites can contain up to 20,000 files on the Free plan.
@@ -65,7 +85,7 @@ An individual header in a `_headers` file can have a maximum of 2,000 characters
 
 ## Preview deployments
 
-You can have an unlimited number of [preview deployments](/pages/configuration/preview-deployments/) active on your project at a time.
+Preview deployments count toward the deployments that Cloudflare keeps for each project. Preview deployments older than 30 days are deleted, unless they are one of the project's 100 most recent deployments. For more information, refer to [Deployments](#deployments).
 
 ## Redirects
 

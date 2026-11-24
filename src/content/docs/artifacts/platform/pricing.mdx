@@ -12,21 +12,23 @@ Artifacts is currently only available on the Workers Paid plan.
 
 :::note
 
-Cloudflare will begin billing for Artifacts operations and storage on November 12, 2026.
+Cloudflare will begin billing for Artifacts operations and storage on November 19, 2026.
 
 :::
 
 Artifacts pricing is billed on two dimensions:
 
-- **Operations**: the number of repo operations, such as `create`, `push`, `pull`, and `clone`.
+- **Operations**: the number of repo operations, such as `create`, `push`, and `pull`.
 - **Storage**: the total amount of stored data, measured in gigabyte-months (`GB-mo`).
 
 ## Artifacts pricing
 
-| Unit                          | Workers Free | Workers Paid                                                   |
-| ----------------------------- | ------------ | -------------------------------------------------------------- |
-| Operations (1,000 operations) | Unavailable  | First 10,000 per month + $0.15 per additional 1,000 operations |
-| Storage (GB-mo)               | Unavailable  | First 1 GB per month + $0.50 per additional GB-mo              |
+| Unit                                      | Workers Free | Workers Paid                                                   |
+| ----------------------------------------- | ------------ | -------------------------------------------------------------- |
+| Operations (1,000 operations)<sup>1</sup> | Unavailable  | First 10,000 per month + $0.15 per additional 1,000 operations |
+| Storage (GB-mo)                           | Unavailable  | First 1 GB per month + $0.50 per additional GB-mo              |
+
+<sup>1</sup> Pulls (including Git clones and fetches), pushes, creates, forks, and deletes each count as 1 operation. Reads of repo content, such as files, trees, commits, and logs, are billed at a 100:1 ratio, and token operations, such as creating or revoking a repo token, at a 5:1 ratio. For example, 100 reads or 5 token operations count as 1 operation for billing purposes. These ratios do not affect Artifacts metrics and analytics, which reflect actual usage.
 
 ## Storage usage
 
@@ -35,3 +37,11 @@ Storage is billed using gigabyte-month (`GB-mo`) as the billing metric, identica
 - Storage is calculated across all repositories.
 - Replicas do not add storage charges. Storage is replicated by default, and you do not need to manage repository availability or uptime.
 - Repos remain stored until you explicitly delete them.
+
+## Repository pricing (coming soon)
+
+In addition to operations and storage, Artifacts will bill for the number of repositories an account stores. Repository charges are not part of the November 19, 2026 billing start. Cloudflare will notify you before repository charges begin.
+
+| Unit         | Workers Free | Workers Paid                                              |
+| ------------ | ------------ | --------------------------------------------------------- |
+| Repositories | Unavailable  | First 100,000 per month + $0.01 per additional repository |

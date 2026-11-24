@@ -74,7 +74,7 @@ AI Search counts ingestion tokens the same way for every instance, regardless of
 - Each chunk is tokenized with the `cl100k_base` tokenizer. You can estimate usage for your own content with any `cl100k_base` implementation, such as [tiktoken](https://github.com/openai/tiktoken).
 - For images and scanned documents processed with OCR, the extracted text is also counted as image processing tokens, in addition to base ingestion.
 
-Workers AI embedding and reranking usage is included in AI Search usage and does not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
+Workers AI embedding and reranking usage is included in AI Search usage and does not appear on your Workers AI bill or in your AI Gateway logs. Generation, query rewriting, [file summaries](/ai-search/configuration/data-source/#file-summaries), and external model providers continue to use your account and gateway. Their usage is billed and logged through the applicable service.
 
 The R2, Vectorize, and [Browser Run](/browser-run/pricing/) usage that AI Search runs on your behalf for storage, vector indexing, and website crawling does not appear on separate R2, Vectorize, or Browser Run bills. Storage is billed as AI Search storage, as described in [How storage is measured](#how-storage-is-measured).
 

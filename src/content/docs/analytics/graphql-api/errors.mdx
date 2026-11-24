@@ -93,6 +93,8 @@ An `Unauthorized` response means the API token or bearer token is missing, expir
 
 A `403` response means the token does not have the required permissions for the requested account or zone. Verify the token has the **Analytics: Read** permission for the relevant resources. Refer to the [Tokens](/fundamentals/api/get-started/create-token/) section for more details.
 
+A `does not have access to the path` error means the dataset is not available for the requested zone or account, for example because of its plan. Cloudflare returns this error even when the token has the correct permissions, and it can be returned with HTTP `200`. For example, a Free zone that queries `firewallEventsAdaptiveGroups` receives this error, while the same query succeeds on a Pro, Business, or Enterprise zone. To check availability, query the dataset's `enabled` field in the [Settings node](/analytics/graphql-api/features/discovery/settings/), or refer to [Dataset availability by plan](/analytics/graphql-api/limits/#dataset-availability-by-plan).
+
 ### Internal server errors
 
 Sample error message:

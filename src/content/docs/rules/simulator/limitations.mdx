@@ -19,6 +19,16 @@ For more information, refer to [Why are some rules bypassed?](/waf/troubleshooti
 
 ---
 
+## Requests handled by Snippets or Workers
+
+When a simulated request matches a [Snippet](/rules/snippets/) rule or a [Worker](/workers/) route, the simulation results do not include the **Cache Parameters** > **Cache Key** section.
+
+Cloudflare computes the cache key on the subrequest that the Snippet or Worker sends with `fetch()`, not on the incoming request. Rules simulator does not trace that subrequest, so it cannot show the cache key. The Snippet or Worker code can also change the URL or headers of the subrequest, which changes the cache key.
+
+To check whether the response is served from cache, send a real request and inspect the `cf-cache-status` response header.
+
+---
+
 ## Unsupported features
 
 Rules simulator currently does not support:

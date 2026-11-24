@@ -14,10 +14,15 @@ On this table, you have information about which protocols are available per plan
 |  | Free | Pro | Business | Enterprise |
 | - | - | - | - | - |
 | Availability | No | Paid add-on | Paid add-on | Yes |
-| TCP | No | No | No | Paid add-on |
+| TCP (IP or DNS origin) | No | No | No | Paid add-on |
+| TCP (Worker origin, beta) | No | One app per zone | One app per zone | Paid add-on |
 | UDP | No | No | No | Paid add-on |
 | HTTP | No | No | No | Paid add-on |
 | HTTPS | No | No | No | Paid add-on |
 | Minecraft (one app allowed) | No | Yes | Yes | Yes |
 | SSH (one app allowed) | No | Yes | Yes | Yes |
 | RDP (one app allowed) | No | No | Yes | Yes |
+
+For [Worker origins](/spectrum/how-to/route-tcp-traffic-to-a-worker/), each application uses a single TCP port. Pro and Business zones without Spectrum Enterprise can create one Worker-origin application in addition to their existing plan-supported applications. Port ranges are not supported.
+
+The Enterprise column requires Spectrum Enterprise access, which is separate from a zone's Enterprise plan. [TLS termination](/spectrum/reference/settings-by-plan/) requires Spectrum Enterprise. Applications on Pro and Business subscriptions without Spectrum Enterprise pass TCP traffic through without terminating TLS.

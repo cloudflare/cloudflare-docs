@@ -12,6 +12,9 @@
  * tagged `pcx_content_type: changelog` and points at the per-page feed
  * served by `src/pages/[...changelog].xml.ts` (`/<id>/index.xml`).
  * AnchorHeading is this app's port of the upstream component.
+ *
+ * Not in upstream: entries with `deprecated: true` show a Deprecated badge
+ * after the title (standard entries only, not `individual_page`).
  */
 import { getEntry, type CollectionEntry } from "astro:content";
 import { renderMarkdown } from "~/util/markdown";
@@ -20,6 +23,7 @@ import { getReleaseNotes } from "~/util/release-notes";
 
 import AnchorHeading from "~/components/cf/AnchorHeading.astro";
 import RSSButton from "~/components/cf/RSSButton.astro";
+import InlineBadge from "~/components/cf/InlineBadge.astro";
 
 const page = await getEntry("docs", Astro.params.slug!);
 
@@ -109,6 +113,12 @@ if (!releaseNotes) {
 						<AnchorHeading depth={2} title={date} />
 						<div data-product={entry.product.toLowerCase()}>
 							{entry.title && <strong>{entry.title}</strong>}
+							{entry.deprecated && (
+								<>
+									{" "}
+									<InlineBadge preset="deprecated" />
+								</>
+							)}
 							{<Fragment set:html={description} />}
 						</div>
 					</>

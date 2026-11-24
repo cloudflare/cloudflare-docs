@@ -219,7 +219,26 @@ Connection states flow: `authenticating` (needs OAuth) → `connecting` (complet
 
 ## Handle failures
 
-When OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field. Display this error in your UI and allow users to retry:
+When OAuth fails, the connection state becomes `"failed"` and the error message is stored in the `server.error` field. A failed server stays failed: the agent does not retry it on a timer or when it wakes, so a flow the user turned down does not start again on its own. Display the error in your UI, and let users try again with `reconnectMcpServer(id)`.
+
+Expose `reconnectMcpServer()` to the client with a callable method:
+
+<TypeScriptExample>
+
+```ts title="src/index.ts"
+import { Agent, callable } from "agents";
+
+export class MyAgent extends Agent<Env> {
+	@callable()
+	async reconnectServer(id: string) {
+		return this.reconnectMcpServer(id);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Call it from a **Reconnect** button, and open the new authorization link when the server needs one:
 
 <TypeScriptExample>
 
@@ -227,6 +246,7 @@ When OAuth fails, the connection state becomes `"failed"` and the error message 
 import { useAgent } from "agents/react";
 import { useState } from "react";
 import type { MCPServersState } from "agents";
+import type { MyAgent } from "./index";
 
 function App() {
 	const [mcpState, setMcpState] = useState<MCPServersState>({
@@ -236,30 +256,16 @@ function App() {
 		tools: [],
 	});
 
-	const agent = useAgent({
+	const agent = useAgent<MyAgent>({
 		agent: "my-agent",
 		name: "session-id",
 		onMcpUpdate: setMcpState,
 	});
 
-	const handleRetry = async (
-		serverId: string,
-		serverUrl: string,
-		name: string,
-	) => {
-		// Remove failed connection
-		await fetch(`/agents/my-agent/session-id/disconnect`, {
-			method: "POST",
-			body: JSON.stringify({ serverId }),
-		});
-
-		// Retry connection
-		const response = await fetch(`/agents/my-agent/session-id/connect`, {
-			method: "POST",
-			body: JSON.stringify({ serverUrl, name }),
-		});
-		const { authUrl } = await response.json();
-		if (authUrl) window.open(authUrl, "_blank");
+	const handleReconnect = async (serverId: string) => {
+		const result = await agent.stub.reconnectServer(serverId);
+		if (result.state === "authenticating")
+			window.open(result.authUrl, "_blank");
 	};
 
 	return (
@@ -270,10 +276,8 @@ function App() {
 					{server.state === "failed" && (
 						<div>
 							{server.error && <p className="error">{server.error}</p>}
-							<button
-								onClick={() => handleRetry(id, server.server_url, server.name)}
-							>
-								Retry Connection
+							<button onClick={() => void handleReconnect(id)}>
+								Reconnect
 							</button>
 						</div>
 					)}
@@ -288,12 +292,16 @@ function App() {
 
 Common failure reasons:
 
-- **User canceled**: Closed OAuth window before completing authorization
+- **User canceled**: Denied access, or closed the OAuth window before completing authorization
 - **Invalid credentials**: Provider credentials were incorrect
-- **Permission denied**: User lacks required permissions
+- **Permission denied**: User lacks required permissions, or the authorization server refused the requested scopes
 - **Expired session**: OAuth session timed out
 
-Failed connections remain in state until removed with `removeMcpServer(serverId)`. The error message is automatically escaped to prevent XSS attacks, so it is safe to display directly in your UI.
+Calling `addMcpServer()` again for a failed server throws its recorded error instead of retrying. Failed connections remain in state until you reconnect them with `reconnectMcpServer(serverId)` or remove them with `removeMcpServer(serverId)`. The error message is automatically escaped to prevent XSS attacks, so it is safe to display directly in your UI. For which failures count as refused, refer to [Failures and reconnecting](/agents/model-context-protocol/apis/client-api/#failures-and-reconnecting).
+
+### Authorize again during a session
+
+A server that is `ready` can need authorization again, for example when a tool call needs a scope the grant lacks, or a token refresh fails. The request throws `MCPAuthorizationRequiredError`, the server moves to `authenticating`, and `onMcpUpdate` delivers its new `auth_url`, so the **Authorize** button in [Monitor connection status](#monitor-connection-status) shows again. Refer to [Re-authorization during a session](/agents/model-context-protocol/apis/client-api/#re-authorization-during-a-session).
 
 ## Complete example
 

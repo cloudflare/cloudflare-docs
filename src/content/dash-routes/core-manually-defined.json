@@ -50,6 +50,11 @@
 		"parent": ["Compute & AI"]
 	},
 	{
+		"deeplink": "/?to=/:account/workers/browser-run/script-studio",
+		"name": "Browser Run Script Studio",
+		"parent": ["Compute & AI"]
+	},
+	{
 		"deeplink": "/?to=/:account/workers/hyperdrive?modal=1&type=planetscale&step=1",
 		"name": "Create a PlanetScale database",
 		"parent": ["Storage & databases", "Hyperdrive"]
@@ -88,6 +93,11 @@
 		"deeplink": "/?to=/:account/r2/metrics",
 		"name": "R2 Metrics",
 		"parent": ["Storage & databases", "R2 object storage"]
+	},
+	{
+		"deeplink": "/?to=/:account/k2",
+		"name": "K2 Streams",
+		"parent": ["Storage & databases"]
 	},
 	{
 		"deeplink": "/?to=/:account/workers/services/view/:worker/production/issues?status=active",

@@ -162,6 +162,7 @@ You can also:
 - Create services using IP addresses by replacing `--hostname <YOUR_HOSTNAME>` with `--ipv4 <YOUR_IPV4_ADDRESS>`, `--ipv6 <YOUR_IPV6_ADDRESS>`, or both for dual-stack configuration
 - Specify custom ports for HTTP services by adding `--http-port <PORT>` and/or `--https-port <PORT>` (for example, `--http-port 8080 --https-port 8443`)
 - Set the TLS certificate verification mode with `--cert-verification-mode` (`verify_full`, `verify_ca`, or `disabled`)
+- Trust a private certificate authority or present a client certificate for mTLS with `--certificate-authority` and `--client-certificate`. Refer to [Custom CA and client certificates](/workers-vpc/configuration/vpc-services/#custom-ca-and-client-certificates).
 
 The command will return a service ID. Save this for the next step.
 

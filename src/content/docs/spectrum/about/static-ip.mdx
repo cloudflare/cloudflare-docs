@@ -8,7 +8,7 @@ weight: 0
 
 ---
 
-import { APIRequest, Render } from "~/components"
+import { APIRequest, DashButton, Render } from "~/components"
 
 When you create a Spectrum application, you are assigned an IP. These IPs are normally dynamic, meaning that they will change over time. But, for instance, if you want to set up WAF custom rules for specific IPs, you may want to use static IPs.
 
@@ -24,9 +24,24 @@ Importantly, the static IP is associated with the DNS name, not with each indivi
 Static IP is an Enterprise feature that does not come standard with Spectrum. Contact your account team to request access.
 :::
 
-Once you get your static IP from Cloudflare, you can use it via API, just like [BYOIP](/byoip/). For the moment, there is still no UI available for this feature.
+Once you get your static IP from Cloudflare, you can use it in the dashboard or the API, just like [BYOIP](/spectrum/about/byoip/).
 
-When creating a Spectrum application through the API, specify the static IPs that you have been provided. See, for instance, the API example below that creates an application routing traffic through Cloudflare’s HTTP pipeline.
+The edge IP type cannot change after the application is created. To move an existing application to static IPs, delete it and create it again.
+
+### Use static IPs in the dashboard
+
+1. In the Cloudflare dashboard, go to the **Spectrum** page.
+
+   <DashButton url="/?to=/:account/:zone/spectrum" />
+
+2. Select **Create an Application** and fill in the application and origin details. Refer to [Get started](/spectrum/get-started/) for each field.
+3. Under **Edge IP Type**, select **Dedicated IPs**.
+4. In **Leased IPs**, enter each static IP that you have been provided.
+5. Select **Add Application**.
+
+### Use static IPs with the API
+
+When creating a Spectrum application through the API, specify the static IPs that you have been provided and set the DNS `type` to `ADDRESS`. See, for instance, the API example below that creates an application routing traffic through Cloudflare’s HTTP pipeline.
 
 <APIRequest
   path="/zones/{zone_id}/spectrum/apps"

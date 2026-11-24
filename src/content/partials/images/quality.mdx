@@ -8,10 +8,14 @@ import { Tabs, TabItem} from "~/components";
 
 ### `quality` | `q`
 
-Specifies the output quality of an image for JPEG, WebP, and AVIF formats, expressed as a fixed value or perceptual quality level. The default is `85`.
+Specifies the output quality of an image for JPEG, WebP, and AVIF formats. The default is `85`.
+
+Accepts either a fixed value or a perceptual quality level:
 
 - **Fixed quality** — Accepts a positive integer from `1` (low quality, small file size) to `100` (high quality, large file size).
 - **Perceptual quality** — Accepts `high`, `medium-high`, `medium-low`, and `low`.
+
+To override the specified quality when Cloudflare detects a slow connection, use the `level` setting for standard quality and the [`slow-connection`](#slow-connection) setting for the quality for slow connections.
 
 When the output format is PNG, an explicit `quality` setting allows the use of PNG8 (palette) variant of the format.
 
@@ -20,7 +24,9 @@ When the output format is PNG, an explicit `quality` setting allows the use of P
     ```txt
     quality=50
     quality=low
+    quality=(level=80,slow-connection=40)
     q=50
+    q=(v=80,sc=40)
     ```
   </TabItem>
 <TabItem label="Workers">
@@ -31,3 +37,25 @@ cf: {image: {quality: "high"}}
 
   </TabItem>
 </Tabs>
+
+<a id="slow-connection-quality"></a>
+#### `slow-connection`
+
+Overrides `level` when Images detects a slow connection. Accepts the same fixed or perceptual values as `quality`. The default is none.
+
+:::note
+This setting is available only when optimizing through the URL interface on Chromium-based browsers such as Chrome, Edge, and Opera.
+:::
+
+To detect slow connections, enable any of the following client hints with an HTTP header:
+
+```txt
+accept-ch: rtt, save-data, ect, downlink
+```
+
+The `slow-connection` setting applies when the client hint is present and any of the following conditions are met:
+
+- [rtt](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/RTT): Greater than 150 ms.
+- [save-data](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Save-Data): Value is `on`.
+- [ect](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/ECT): Value is `slow-2g`, `2g`, or `3g`.
+- [downlink](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Downlink): Less than 5 Mbps.

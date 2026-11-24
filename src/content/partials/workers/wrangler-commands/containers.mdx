@@ -9,10 +9,10 @@ import { Render, AnchorHeading, Type, MetaInfo } from "~/components";
 Build a Container image from a Dockerfile.
 
 ```txt
-wrangler containers build [PATH] [OPTIONS]
+wrangler containers build <PATH> --tag <TAG> [OPTIONS]
 ```
 
-- `PATH` <Type text="string" /> <MetaInfo text="optional" />
+- `PATH` <Type text="string" /> <MetaInfo text="required" />
   - Path for the directory containing the Dockerfile to build.
 - `-t, --tag` <Type text="string" /> <MetaInfo text="required" />
   - Name and optionally a tag (format: "name:tag").
@@ -61,7 +61,7 @@ wrangler containers images list [OPTIONS]
 Remove an image from your containers registry.
 
 ```txt
-wrangler containers images delete [IMAGE] [OPTIONS]
+wrangler containers images delete <IMAGE> [OPTIONS]
 ```
 
 - `IMAGE` <Type text="string" /> <MetaInfo text="required" />
@@ -97,7 +97,7 @@ wrangler containers registries list [OPTIONS]
 Configure a new registry for your account.
 
 ```txt
-wrangler containers registries configure [DOMAIN] [OPTIONS]
+wrangler containers registries configure <DOMAIN> [OPTIONS]
 ```
 
 - `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
@@ -128,7 +128,7 @@ the secret created for you.
 Remove a registry configuration from your account.
 
 ```txt
-wrangler containers registries delete [DOMAIN] [OPTIONS]
+wrangler containers registries delete <DOMAIN> [OPTIONS]
 ```
 
 - `DOMAIN` <Type text="string" /> <MetaInfo text="required" />
@@ -232,7 +232,7 @@ wrangler containers list [OPTIONS]
 Push a tagged image to a Cloudflare managed registry, which is automatically integrated with your account.
 
 ```txt
-wrangler containers push [TAG] [OPTIONS]
+wrangler containers push <TAG> [OPTIONS]
 ```
 
 - `TAG` <Type text="string" /> <MetaInfo text="required" />

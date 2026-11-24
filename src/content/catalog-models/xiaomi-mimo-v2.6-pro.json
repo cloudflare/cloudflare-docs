@@ -1,0 +1,1019 @@
+{
+	"model_id": "xiaomi/mimo-v2.6-pro",
+	"name": "MiMo-V2.6-Pro",
+	"description": "Xiaomi MiMo-V2.6-Pro is a reasoning model served by PrimaLabs. It thinks before it answers, supports tool calling and prompt caching, and has a context window of about 1M tokens through an OpenAI-compatible Chat Completions API.",
+	"task": "Text Generation",
+	"tags": [
+		"LLM",
+		"Reasoning",
+		"Tool Calling"
+	],
+	"context_length": 1048576,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Input tokens (per 1M)": 4,
+		"Output tokens (per 1M)": 8,
+		"Cached input tokens (per 1M)": 0.036
+	},
+	"examples": [
+		{
+			"name": "Chat completion",
+			"description": "Explain KV caching.",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain KV caching in two sentences."
+					}
+				],
+				"max_completion_tokens": 2048
+			},
+			"output": {
+				"text": "KV caching stores the key and value tensors computed at each layer during the autoregressive generation of a transformer so that, on the next token prediction, the model only needs to compute attention for the new token against the cached keys and values rather than reprocessing the entire sequence from scratch. This avoids redundant computation across decoding steps, reducing time complexity from O(n\u00b2) to O(n) per new token and making text generation significantly faster."
+			},
+			"raw_response": {
+				"id": "chatcmpl-b690f48c7de59601",
+				"object": "chat.completion",
+				"created": 1794584767,
+				"model": "xiaomi/mimo-v2.6-pro",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "KV caching stores the key and value tensors computed at each layer during the autoregressive generation of a transformer so that, on the next token prediction, the model only needs to compute attention for the new token against the cached keys and values rather than reprocessing the entire sequence from scratch. This avoids redundant computation across decoding steps, reducing time complexity from O(n\u00b2) to O(n) per new token and making text generation significantly faster.",
+							"reasoning_content": "The user wants a concise two-sentence explanation of KV caching.",
+							"provider_specific_fields": {
+								"refusal": null,
+								"reasoning": "The user wants a concise two-sentence explanation of KV caching."
+							}
+						},
+						"finish_reason": "stop",
+						"provider_specific_fields": {
+							"token_ids": null,
+							"routed_experts": null
+						}
+					}
+				],
+				"usage": {
+					"prompt_tokens": 15,
+					"completion_tokens": 103,
+					"total_tokens": 118,
+					"completion_tokens_details": {
+						"reasoning_tokens": 13
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 0,
+						"created_cache_tokens": 0
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xiaomi/mimo-v2.6-pro',\n  {\n    messages: [{ role: 'user', content: 'Explain KV caching in two sentences.' }],\n    max_completion_tokens: 2048,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xiaomi/mimo-v2.6-pro\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Explain KV caching in two sentences.\"\n    }\n  ],\n  \"max_completion_tokens\": 2048\n}'"
+				}
+			]
+		},
+		{
+			"name": "Streaming chat",
+			"description": "Stream a short explanation of exponential backoff.",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "Explain exponential backoff in two sentences."
+					}
+				],
+				"max_completion_tokens": 2048,
+				"stream": true
+			},
+			"output": {
+				"text": [
+					"Exponential backoff is a retry",
+					" strategy where the",
+					" wait time",
+					" between successive",
+					" attempts increases",
+					" exponentially (",
+					"e.g., ",
+					"1s, 2s, ",
+					"4s, 8s\u2026)",
+					" rather",
+					" than remaining",
+					" constant.",
+					" This",
+					" prevents",
+					" overwhelming",
+					" a struggling",
+					" service",
+					" or network with",
+					" rapid",
+					" repeated requests",
+					" and",
+					" gives it",
+					" time to",
+					" recover before",
+					" the",
+					" next attempt."
+				]
+			},
+			"raw_response": [
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"role": "assistant",
+								"content": ""
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"object": "chat.completion.chunk",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"reasoning_content": "The user wants a concise two-sentence explanation of exponential backoff."
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": "Exponential backoff is a retry"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " strategy where the"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " wait time"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " between successive"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " attempts increases"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " exponentially ("
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": "e.g., "
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": "1s, 2s, "
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": "4s, 8s\u2026)"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " rather"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " than remaining"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " constant."
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " This"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " prevents"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " overwhelming"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " a struggling"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " service"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " or network with"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " rapid"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " repeated requests"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " and"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " gives it"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " time to"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " recover before"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " the"
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {
+								"content": " next attempt."
+							}
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"object": "chat.completion.chunk",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {},
+							"finish_reason": "stop"
+						}
+					]
+				},
+				{
+					"id": "chatcmpl-b41c1b2c54f92779",
+					"created": 1794584769,
+					"model": "primalabs-ai/MiMo-V2.6-Pro-cloudflare",
+					"object": "chat.completion.chunk",
+					"choices": [
+						{
+							"index": 0,
+							"delta": {}
+						}
+					],
+					"usage": {
+						"completion_tokens": 82,
+						"prompt_tokens": 16,
+						"total_tokens": 98,
+						"completion_tokens_details": {
+							"reasoning_tokens": 14
+						},
+						"prompt_tokens_details": {
+							"cached_tokens": 0,
+							"created_cache_tokens": 16
+						},
+						"cost": 0.00072
+					}
+				}
+			],
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xiaomi/mimo-v2.6-pro',\n  {\n    messages: [{ role: 'user', content: 'Explain exponential backoff in two sentences.' }],\n    max_completion_tokens: 2048,\n    stream: true,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xiaomi/mimo-v2.6-pro\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Explain exponential backoff in two sentences.\"\n    }\n  ],\n  \"max_completion_tokens\": 2048,\n  \"stream\": true\n}'"
+				}
+			]
+		},
+		{
+			"name": "Tool calling",
+			"description": "Ask MiMo-V2.6-Pro to call a weather lookup function.",
+			"input": {
+				"messages": [
+					{
+						"role": "user",
+						"content": "What is the weather in Paris?"
+					}
+				],
+				"max_completion_tokens": 2048,
+				"tools": [
+					{
+						"type": "function",
+						"function": {
+							"name": "get_weather",
+							"description": "Get the current weather for a city.",
+							"parameters": {
+								"type": "object",
+								"properties": {
+									"city": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"city"
+								]
+							}
+						}
+					}
+				],
+				"tool_choice": {
+					"type": "function",
+					"function": {
+						"name": "get_weather"
+					}
+				}
+			},
+			"output": {
+				"tool_calls": [
+					{
+						"function": {
+							"arguments": "{\"city\": \"Paris\"}",
+							"name": "get_weather"
+						},
+						"id": "chatcmpl-tool-85225333bedb366a",
+						"type": "function"
+					}
+				]
+			},
+			"raw_response": {
+				"id": "chatcmpl-8692555c2e4e4ec8",
+				"object": "chat.completion",
+				"created": 1794584770,
+				"model": "xiaomi/mimo-v2.6-pro",
+				"choices": [
+					{
+						"index": 0,
+						"message": {
+							"role": "assistant",
+							"content": "",
+							"tool_calls": [
+								{
+									"function": {
+										"arguments": "{\"city\": \"Paris\"}",
+										"name": "get_weather"
+									},
+									"id": "chatcmpl-tool-85225333bedb366a",
+									"type": "function"
+								}
+							],
+							"reasoning_content": "The user wants weather in Paris.",
+							"provider_specific_fields": {
+								"refusal": null,
+								"reasoning": "The user wants weather in Paris."
+							}
+						},
+						"finish_reason": "tool_calls",
+						"provider_specific_fields": {
+							"token_ids": null,
+							"routed_experts": null
+						}
+					}
+				],
+				"usage": {
+					"prompt_tokens": 90,
+					"completion_tokens": 27,
+					"total_tokens": 117,
+					"completion_tokens_details": {
+						"reasoning_tokens": 7
+					},
+					"prompt_tokens_details": {
+						"cached_tokens": 16,
+						"created_cache_tokens": 64
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'xiaomi/mimo-v2.6-pro',\n  {\n    messages: [{ role: 'user', content: 'What is the weather in Paris?' }],\n    max_completion_tokens: 2048,\n    tools: [\n      {\n        type: 'function',\n        function: {\n          name: 'get_weather',\n          description: 'Get the current weather for a city.',\n          parameters: {\n            type: 'object',\n            properties: { city: { type: 'string' } },\n            required: ['city'],\n          },\n        },\n      },\n    ],\n    tool_choice: { type: 'function', function: { name: 'get_weather' } },\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/v1/chat/completions \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"xiaomi/mimo-v2.6-pro\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"What is the weather in Paris?\"\n    }\n  ],\n  \"max_completion_tokens\": 2048,\n  \"tools\": [\n    {\n      \"type\": \"function\",\n      \"function\": {\n        \"name\": \"get_weather\",\n        \"description\": \"Get the current weather for a city.\",\n        \"parameters\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"city\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"city\"\n          ]\n        }\n      }\n    }\n  ],\n  \"tool_choice\": {\n    \"type\": \"function\",\n    \"function\": {\n      \"name\": \"get_weather\"\n    }\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.primalabs.ai/inference/models.md",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Input Modalities": "Text",
+		"Output Modalities": "Text",
+		"Prompt Caching": "Yes",
+		"Provider": "PrimaLabs",
+		"Reasoning": "Yes",
+		"Tool Calling": "Yes"
+	},
+	"request_formats": [
+		"chat-completions"
+	],
+	"provider_id": "primalabs",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "primalabs",
+			"pricing": {
+				"input_tokens": 4,
+				"output_tokens": 8,
+				"input_cached_tokens": 0.036
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "primalabs",
+			"pricing": {
+				"input_tokens": 4,
+				"output_tokens": 8,
+				"input_cached_tokens": 0.036
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "input_tokens",
+							"label": "Input",
+							"unit": "per_1m_tokens",
+							"value": 4
+						},
+						{
+							"key": "input_cached_tokens",
+							"label": "Cached input",
+							"unit": "per_1m_tokens",
+							"value": 0.036
+						},
+						{
+							"key": "output_tokens",
+							"label": "Output",
+							"unit": "per_1m_tokens",
+							"value": 8
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-13 23:29:12",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"messages": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"role": {
+								"type": "string",
+								"enum": [
+									"system",
+									"developer",
+									"user",
+									"assistant",
+									"tool"
+								]
+							},
+							"content": {
+								"anyOf": [
+									{
+										"type": "string"
+									},
+									{
+										"type": "null"
+									},
+									{
+										"type": "array",
+										"items": {}
+									}
+								]
+							}
+						},
+						"required": [
+							"role"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"temperature": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 2
+				},
+				"max_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"max_completion_tokens": {
+					"type": "number",
+					"exclusiveMinimum": 0
+				},
+				"top_p": {
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1
+				},
+				"frequency_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"presence_penalty": {
+					"type": "number",
+					"minimum": -2,
+					"maximum": 2
+				},
+				"stream": {
+					"type": "boolean"
+				},
+				"stream_options": {
+					"type": "object",
+					"properties": {
+						"include_usage": {
+							"type": "boolean"
+						}
+					},
+					"additionalProperties": false
+				},
+				"tools": {
+					"type": "array",
+					"items": {}
+				},
+				"tool_choice": {},
+				"response_format": {},
+				"modalities": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"text",
+							"audio"
+						]
+					}
+				},
+				"audio": {
+					"type": "object",
+					"properties": {
+						"voice": {
+							"type": "string",
+							"enum": [
+								"alloy",
+								"ash",
+								"ballad",
+								"coral",
+								"echo",
+								"sage",
+								"shimmer",
+								"verse"
+							]
+						},
+						"format": {
+							"type": "string",
+							"enum": [
+								"wav",
+								"mp3",
+								"flac",
+								"opus",
+								"pcm16"
+							]
+						}
+					},
+					"additionalProperties": false
+				},
+				"reasoning_effort": {
+					"description": "Optional reasoning control; availability and accepted values are model-dependent.",
+					"type": [
+						"string",
+						"null"
+					]
+				}
+			},
+			"required": [
+				"messages"
+			],
+			"additionalProperties": {}
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"object": {
+					"type": "string"
+				},
+				"created": {
+					"type": "number"
+				},
+				"model": {
+					"type": "string"
+				},
+				"choices": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"index": {
+								"type": "number"
+							},
+							"message": {
+								"type": "object",
+								"properties": {
+									"role": {
+										"type": "string"
+									},
+									"content": {
+										"type": [
+											"string",
+											"null"
+										]
+									},
+									"tool_calls": {
+										"anyOf": [
+											{
+												"type": "array",
+												"items": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									},
+									"audio": {
+										"anyOf": [
+											{
+												"type": "object",
+												"properties": {
+													"id": {
+														"type": "string"
+													},
+													"data": {
+														"type": "string"
+													},
+													"expires_at": {
+														"type": "number"
+													},
+													"transcript": {
+														"type": "string"
+													}
+												},
+												"additionalProperties": {}
+											},
+											{
+												"type": "null"
+											}
+										]
+									}
+								},
+								"required": [
+									"role"
+								],
+								"additionalProperties": {}
+							},
+							"finish_reason": {
+								"type": [
+									"string",
+									"null"
+								]
+							}
+						},
+						"required": [
+							"index",
+							"message",
+							"finish_reason"
+						],
+						"additionalProperties": {}
+					}
+				},
+				"usage": {
+					"type": "object",
+					"properties": {
+						"prompt_tokens": {
+							"type": "number"
+						},
+						"completion_tokens": {
+							"type": "number"
+						},
+						"total_tokens": {
+							"type": "number"
+						}
+					},
+					"required": [
+						"prompt_tokens",
+						"completion_tokens",
+						"total_tokens"
+					],
+					"additionalProperties": {}
+				}
+			},
+			"required": [
+				"id",
+				"object",
+				"created",
+				"model",
+				"choices"
+			],
+			"additionalProperties": {}
+		}
+	}
+}

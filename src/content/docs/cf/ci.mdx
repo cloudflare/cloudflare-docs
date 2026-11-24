@@ -11,7 +11,7 @@ products:
 
 import { PackageManagers, Render, Steps } from "~/components";
 
-<Render file="beta-note" product="cf" />
+<Render file="release-candidate-note" product="cf" />
 
 Run `cf` in continuous integration (CI) to check every pull request and deploy
 your Worker without a person present. In CI, `cf` authenticates with an API
@@ -58,7 +58,7 @@ pushes to `main`.
          - uses: actions/checkout@v6
          - uses: actions/setup-node@v6
            with:
-             node-version: 22
+             node-version: 24
              cache: npm
          - run: npm ci
          - run: npx cf build
@@ -83,18 +83,18 @@ following sections explain each part.
 `cf auth login` needs a person to approve access in a browser. In CI, set these
 environment variables instead:
 
-| Variable                | Purpose                                                                                                                                                                            |
-| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                                                                                  |
-| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then an account saved by an earlier run in the same checkout, then the only account available. |
-| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                                                                              |
+| Variable                | Purpose                                                                                                                                                       |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | Authenticates API requests. Takes priority over any stored login.                                                                                             |
+| `CLOUDFLARE_ACCOUNT_ID` | Selects the account. Without it, `cf` uses `accountId` from `cloudflare.config.ts`, then prompts you to choose if the token can access more than one account. |
+| `CLOUDFLARE_ZONE_ID`    | Selects a zone for zone-level commands when you do not pass `--zone`.                                                                                         |
 
-If the token can access more than one account and no account is set or saved,
-the command fails instead of prompting:
+If the token can access more than one account and no account is set, the
+command fails instead of prompting:
 
 ```txt
 More than one account available but unable to select one in non-interactive mode.
-Please set the appropriate `account_id` in your cf config file or assign it to the `CLOUDFLARE_ACCOUNT_ID` environment variable.
+Please set the appropriate account ID in your cloudflare.config.ts file or assign it to the `CLOUDFLARE_ACCOUNT_ID` environment variable.
 Available accounts are (`<name>`: `<account_id>`):
   `(redacted)`: `<ACCOUNT_ID>`
 ```
@@ -106,9 +106,10 @@ In CI, `cf` replaces account names with `(redacted)`. To fix the error, set
 ### Use a `.env` file for local automation
 
 For scripts on your own machine, `cf` commands that call the Cloudflare API
-can also read these variables from a `.env` file in the current directory.
-They do not read `.env.local`. Variables already set in the environment take
-priority. For details, refer to
+can also read these variables from `.env` and `.env.local` files in the current
+directory, and from `.env.<MODE>` and `.env.<MODE>.local` when you pass
+`--mode`. Variables already set in the environment take priority. For
+details, refer to
 [Load credentials from a .env file](/cf/get-started/#load-credentials-from-a-env-file).
 
 :::caution
@@ -123,8 +124,8 @@ each command to the project's copy. Collaborators, coding agents, and CI then
 run the same version. One-off runs such as `npx cf@<VERSION>` are not handed
 off.
 
-Use Node.js 22.18 or later. For details, refer to
-[Requirements](/cf/get-started/#requirements).
+Use the latest version of a Node.js LTS release or the latest active release
+of Node.js. For details, refer to [Requirements](/cf/get-started/#requirements).
 
 ## Understand non-interactive behavior
 
@@ -135,7 +136,7 @@ non-interactive run:
 - **Prompts** use their default answer. Prompts without a default fail, so pass
   the value as an option instead.
 - **Destructive commands** abort without `--force`. They print `Aborted.` to
-  standard error, make no change, and exit with status `0`.
+  standard error, make no change, and exit with status `1`.
 - **`cf init`** needs a directory, such as `cf init my-worker` or `cf init .`.
   A new project uses the package manager that started `cf`, or npm. Pass
   `--package-manager` to choose another.
@@ -198,7 +199,7 @@ recorded `--mode`, as the example workflow does.
 ## Deploy previews from CI
 
 `cf previews deploy` builds the project and deploys a Worker Preview. It needs
-credentials and has no `--dry-run` option.
+credentials. `--dry-run` checks the arguments without building or uploading.
 
 <PackageManagers type="exec" pkg="cf" args="previews deploy" />
 
