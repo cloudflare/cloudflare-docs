@@ -76,7 +76,13 @@ Otherwise, an `If-Range` value that exactly matches the cached `ETag` or `Last-M
 
 ### Decompression
 
-If Cloudflare must decompress a complete encoded response, it ignores `Range`. Cloudflare sends the complete, uncompressed body as `200 OK`. This applies to cached responses and responses received from the origin.
+Cloudflare serves a range of a cached file encoded with gzip or Brotli (`br`) only if the client accepts that encoding. The client's `Accept-Encoding` header must list the encoding, and a Brotli range also requires HTTPS. Cloudflare then sends `206 Partial Content` with the cached `Content-Encoding`. The range counts bytes of the encoded file, not of the decompressed content.
+
+Otherwise, Cloudflare ignores `Range` and sends the complete, decompressed file as `200 OK`. Cloudflare always does this for a cached file encoded with Zstandard (`zstd`) or `deflate`. HTTP allows a server to ignore `Range` ([RFC 9110, section 14.2](https://www.rfc-editor.org/rfc/rfc9110.html#section-14.2)).
+
+A cached file without `Content-Encoding` keeps the range behavior described on this page. So does a file with an encoding Cloudflare does not recognize.
+
+If Cloudflare must decompress a complete encoded response from the origin, it also ignores `Range` and sends the complete, uncompressed body as `200 OK`.
 
 A range request for an empty, encoded response returns an empty `200 OK`, not `416 Range Not Satisfiable`.
 
@@ -113,3 +119,18 @@ Other incompatible origin responses during a response assembled from several req
 Origin Range Requests do not make an otherwise ineligible request or response cacheable. Cloudflare checks the [maximum cacheable file size](/cache/concepts/default-cache-behavior/#cacheable-size-limits) against the complete size from `Content-Range`. Requesting a small range does not bypass this limit.
 
 Origin Range Requests are not supported with [Cache Reserve](/cache/advanced-configuration/cache-reserve/#limits).
+
+## Uncached range requests
+
+If caching is bypassed or the request is not eligible for caching, Cloudflare forwards the client's `Range` header to your origin. Over HTTPS, Cloudflare also forwards the client's own `Accept-Encoding` header instead of its [default header](/speed/optimization/content/compression/#content-compression-from-origin-servers-to-the-cloudflare-network). Your origin can then return a range in an encoding the client accepts.
+
+Cloudflare passes a `206 Partial Content` response from your origin to the client without decoding it. Cloudflare does not compress a `206 Partial Content` response.
+
+The forwarded `Accept-Encoding` header has these exceptions:
+
+- **No header from the client**: Your origin receives no `Accept-Encoding` header, or an empty one.
+- **Shared dictionaries**: Cloudflare removes `dcb` and `dcz` on zones that use [shared dictionaries](/speed/optimization/content/shared-dictionaries/).
+- **Workers subrequests**: Subrequests from Workers without the [`brotli_content_encoding`](/workers/configuration/compatibility-flags/#brotli-content-encoding-support) compatibility flag get the default header.
+- **Origin Range Requests**: Requests handled by Origin Range Requests get `Accept-Encoding: identity`, as described in [Origin request behavior](#origin-request-behavior).
+
+An empty `Accept-Encoding` header means the client accepts no encoding ([RFC 9110, section 12.5.3](https://www.rfc-editor.org/rfc/rfc9110.html#section-12.5.3)). Your origin should answer it with an unencoded response, not `406 Not Acceptable`.
