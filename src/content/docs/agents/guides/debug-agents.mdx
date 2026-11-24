@@ -474,9 +474,10 @@ In this example, the object was reset 6 seconds into a turn. The next alarm, 0.4
 
 ### Pi
 
-- `PiHarness` keeps each run in Pi's own tables and drives it with one Lifecycle job, `pi-wake`, owned by `pi-harness`. Look for that row in `cf_agents_jobs`.
-- `harness.pending()` lists submissions Pi has not finished, and `onReport`, passed to `Harness.open()`, receives the failures Pi handles itself. A `task_interrupted` report with reason `restart_limit` means a task kept crashing the object and Pi ended it.
-- For the API and for following a run from a client, refer to [Pi](/agents/harnesses/pi/), [Recovery](/agents/harnesses/pi/#recovery), and [Watch sessions from clients](/agents/harnesses/pi/#watch-sessions-from-clients).
+- `PiHarness` drives Pi with one Lifecycle job. While Pi works, `cf_agents_jobs` holds a row with `id` `pi-wake`, `capability` `pi-harness`, and `fn` `wake`, due about 30 seconds ahead: that is its heartbeat. When Pi has nothing left to do, the row is gone.
+- `harness.pending()` lists operations Pi has not settled, such as `{"operationId":"…","session":"1","status":"running"}`, and `harness.sessions.list()` shows whether each session is `busy`. Call them from an RPC method of your object.
+- Pass `onReport` to `Harness.open()` and log each report as a structured line with its `kind` and `String(report.error)`. A run whose object was reset five times while the model streamed ended with a `task_interrupted` report, `The host stopped while the model was answering, on attempt 4`, and `harness.wait(operationId)` returned `{"status":"unanswered","reason":"interrupted"}`.
+- For retries, `restart_limit`, and following a run from a client, refer to [Recovery](/agents/harnesses/pi/#recovery) and [Watch sessions from clients](/agents/harnesses/pi/#watch-sessions-from-clients).
 
 ## On the `Agent` class
 
