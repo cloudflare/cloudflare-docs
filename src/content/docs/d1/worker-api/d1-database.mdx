@@ -15,7 +15,7 @@ To interact with your D1 database from your Worker, you need to access it throug
 <Tabs syncKey="workersExamples"> <TabItem label="JavaScript" icon="seti:javascript">
 ```js
 async fetch(request, env) {
-	// D1 database is 'env.DB', where "DB" is the binding name from the Wrangler configuration file.
+	// D1 database is 'env.DB', where "DB" is the binding name from your Worker configuration.
 }
 ```
 </TabItem> <TabItem label="Python" icon="seti:python">
@@ -319,7 +319,7 @@ return Response.json(return_value)
 ### `dump`
 
 :::caution
-This API only works on databases created during D1's alpha period. Check which version your database uses with `wrangler d1 info <DATABASE_NAME>`.
+This API only works on databases created during D1's alpha period. Check which version your database uses with `cf d1 get <DATABASE_ID> --fields version` or `wrangler d1 info <DATABASE_NAME>`.
 :::
 
 Dumps the entire D1 database to an SQLite compatible file inside an ArrayBuffer.
