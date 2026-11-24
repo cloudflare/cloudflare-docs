@@ -26,25 +26,23 @@ What you build on depends on where the agent loop runs:
 
 ## Run the loop inside the Durable Object
 
-This sketch stores the user's message, runs the turn as a task, and streams the reply to the client over Server-Sent Events (SSE). Replace `generateReply()` with your model call.
+This harness stores the user's message, runs the turn as a task, calls a Workers AI model through the [AI SDK](https://ai-sdk.dev/), and streams the reply to the client over Server-Sent Events (SSE). Swap the model call for any other provider or SDK.
 
 <TypeScriptExample>
 
 ```ts
 import { DurableObject } from "cloudflare:workers";
+import { convertToModelMessages, streamText, type UIMessage } from "ai";
 import { Lifecycle } from "agents/lifecycle";
-import { Sessions, type SessionMessage } from "agents/sessions";
+import { createAI } from "agents/models/ai-sdk";
+import { Sessions } from "agents/sessions";
 import { sseResponse, Streams } from "agents/streams";
 import { Tasks, type TaskStep } from "agents/tasks";
-
-// Replace with your model call. It yields text deltas.
-declare function generateReply(
-	history: SessionMessage[],
-): AsyncIterable<string>;
 
 type TurnInput = { streamId: string };
 
 export class MyHarness extends DurableObject<Env> {
+	readonly ai = createAI({ binding: this.env.AI });
 	readonly sessions = new Sessions();
 	readonly streams = new Streams();
 	readonly tasks = new Tasks({
@@ -53,8 +51,13 @@ export class MyHarness extends DurableObject<Env> {
 				const text = await step.do("generate", async () => {
 					const history = await this.session.getHistory();
 					const stream = await this.streams.open(streamId);
+					const result = streamText({
+						model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017"),
+						system: "You are a helpful assistant.",
+						messages: await convertToModelMessages(history as UIMessage[]),
+					});
 					let reply = "";
-					for await (const delta of generateReply(history)) {
+					for await (const delta of result.textStream) {
 						reply += delta;
 						stream.append({ delta });
 					}
@@ -100,15 +103,13 @@ export class MyHarness extends DurableObject<Env> {
 
 How the pieces work together:
 
-- **Sessions** keeps the transcript in the object's SQLite database. `getHistory()` reads the active path, and `appendMessage()` writes a message.
+- **Sessions** keeps the transcript in the object's SQLite database as AI SDK messages. `getHistory()` reads the active path, and `appendMessage()` writes a message.
 - **Tasks** journals each `step.do()`. After an eviction, a finished step returns its stored result, and the run continues from the first unfinished step. A model call cannot resume halfway, so an interrupted `generate` step runs again from the start. Check `step.interrupted` in the handler to decide what to do with a partial reply.
 - **Streams** stores each delta as it is appended. `sseResponse()` replays what a client missed, then follows the live stream, so a client that reconnects mid-turn catches up.
 
 To turn the sketch into a reusable harness, move the loop into a class that extends `LifecycleCapability` and takes the three capabilities as constructor options. The host object installs all four on its Lifecycle. Refer to [Build a capability](/agents/runtime/capabilities/build-a-capability/).
 
 For a complete harness built this way, refer to the [Codex harness](/agents/harnesses/codex/). It runs a turn loop derived from Codex, compiled to WebAssembly, as a capability on a plain Durable Object. The transcript lives in Sessions, operation events go to Streams, model and tool steps run as Tasks, files live in a [Cloudflare Computer workspace](/agents/tools/filesystem/), and the [WebSockets](/agents/runtime/capabilities/websockets/) capability serves the events to the browser.
-
-The Agents SDK also includes a small experimental AI SDK harness, `AiSdkHarness` from `agents/harness/ai-sdk`. It runs one AI SDK `streamText` call per operation and keeps its sessions in the Durable Object's storage. It is the smallest complete harness in the SDK, and a useful reference when you write your own.
 
 ## Keep the record of an agent that runs elsewhere
 
