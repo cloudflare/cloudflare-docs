@@ -1,0 +1,196 @@
+{
+	"model_id": "bria/rmbg-3.0",
+	"name": "RMBG 3.0",
+	"description": "Bria's RMBG 3.0 removes the background from an image and returns a PNG cutout with a transparent background, with cleaner edges than RMBG 2.0 on hair, fur, glass, smoke and other fine or see-through detail. In Bria's blind test on 234 hard images it gave the best or tied-best cutout on 185, more than Photoroom, remove.bg, Ideogram, BiRefNet or RMBG 2.0. It is trained only on licensed data and takes a few seconds per image; for speed and high volume use bria/remove-background (RMBG 2.0).",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image Editing",
+		"Image-to-Image",
+		"Background Removal"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.018
+	},
+	"examples": [
+		{
+			"name": "Loose Curly Hair",
+			"description": "Cut out a portrait against a busy street and keep every strand of curly hair, the edge RMBG 3.0 was built for. Input from Bria's RMBG 3.0 launch page.",
+			"input": {
+				"image": "https://docs.bria.ai/assets/hair-in.ecdf8abae813b036bf5f0db7f48f2e8128a2c2c7f24504803c798d87a63750e4.3d71a9a0.webp"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/rmbg-3.0/loose-curly-hair.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/rmbg-3.0/loose-curly-hair.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/rmbg-3.0',\n  {\n    image:\n      'https://docs.bria.ai/assets/hair-in.ecdf8abae813b036bf5f0db7f48f2e8128a2c2c7f24504803c798d87a63750e4.3d71a9a0.webp',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/rmbg-3.0\",\n  \"input\": {\n    \"image\": \"https://docs.bria.ai/assets/hair-in.ecdf8abae813b036bf5f0db7f48f2e8128a2c2c7f24504803c798d87a63750e4.3d71a9a0.webp\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "See-Through Glassware",
+			"description": "Remove the background behind wine glasses and a glass carafe while the glass stays see-through. Input from Bria's RMBG 3.0 launch page.",
+			"input": {
+				"image": "https://docs.bria.ai/assets/glass-in.93980e97cdade22040b0254f2a98edd7735e0fa32d800bebe8da60c4d2635ca8.3d71a9a0.webp"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/rmbg-3.0/see-through-glassware.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/rmbg-3.0/see-through-glassware.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/rmbg-3.0',\n  {\n    image:\n      'https://docs.bria.ai/assets/glass-in.93980e97cdade22040b0254f2a98edd7735e0fa32d800bebe8da60c4d2635ca8.3d71a9a0.webp',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/rmbg-3.0\",\n  \"input\": {\n    \"image\": \"https://docs.bria.ai/assets/glass-in.93980e97cdade22040b0254f2a98edd7735e0fa32d800bebe8da60c4d2635ca8.3d71a9a0.webp\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Wisps of Smoke",
+			"description": "Isolate incense smoke from a patterned textile, keeping the semi-transparent wisps. Input from Bria's RMBG 3.0 launch page.",
+			"input": {
+				"image": "https://docs.bria.ai/assets/smoke-in.5cd10f54a22f918882c091233932184895c120b58d382728d97b83c692216773.3d71a9a0.webp"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/bria/rmbg-3.0/wisps-of-smoke.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/bria/rmbg-3.0/wisps-of-smoke.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'bria/rmbg-3.0',\n  {\n    image:\n      'https://docs.bria.ai/assets/smoke-in.5cd10f54a22f918882c091233932184895c120b58d382728d97b83c692216773.3d71a9a0.webp',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"bria/rmbg-3.0\",\n  \"input\": {\n    \"image\": \"https://docs.bria.ai/assets/smoke-in.5cd10f54a22f918882c091233932184895c120b58d382728d97b83c692216773.3d71a9a0.webp\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bria.ai/whats-new/rmbg-3",
+	"terms": "https://bria.ai/terms-of-use",
+	"cover_image_url": null,
+	"metadata": {
+		"Input Formats": "JPEG, PNG, WEBP",
+		"Output Format": "PNG with transparency"
+	},
+	"request_formats": null,
+	"provider_id": "bria",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "bria",
+			"pricing": {
+				"output_image_count": 0.018
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "bria",
+			"pricing": {
+				"output_image_count": 0.018
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_image_count",
+							"label": "Per image",
+							"unit": null,
+							"value": 0.018
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-20 17:10:54",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"minLength": 1,
+					"description": "JPEG, PNG, or WEBP image, a public URL or base64-encoded image data (a `data:` URI prefix is accepted)."
+				},
+				"preserve_alpha": {
+					"description": "Keep partial transparency from the input alpha channel. When false, every foreground pixel is fully opaque. Default true.",
+					"type": "boolean"
+				},
+				"visual_input_content_moderation": {
+					"description": "Reject the request if the input image fails content moderation. Default false.",
+					"type": "boolean"
+				},
+				"visual_output_content_moderation": {
+					"description": "Fail the request if the result fails content moderation. Default false.",
+					"type": "boolean"
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the PNG cutout with a transparent background. Bria hosts it for a limited time (3 days by default); download it to keep it."
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
