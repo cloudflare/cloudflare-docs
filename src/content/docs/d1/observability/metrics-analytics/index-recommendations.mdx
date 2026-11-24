@@ -4,184 +4,196 @@ description: Review recommended indexes for D1 databases.
 pcx_content_type: how-to
 sidebar:
   order: 1
+  badge: Beta
 products:
   - d1
 ---
 
-import { DashButton, PackageManagers, Steps, Tabs, TabItem } from "~/components";
+import {
+	DashButton,
+	PackageManagers,
+	Steps,
+	Tabs,
+	TabItem,
+} from "~/components";
 
-D1 Insights can recommend indexes for active [D1](/d1/) databases. Each recommendation includes validated `CREATE INDEX` SQL, the impacted queries, and the measured workload behind the recommendation.
+D1 Insights recommends indexes for your [D1](/d1/) databases. Each recommendation includes a `CREATE INDEX` statement, the queries it is expected to speed up, and usage metrics for those queries.
 
-An [index](/d1/best-practices/use-indexes/) helps D1 find rows without scanning an entire table. Fewer scanned rows can improve performance and reduce rows-read charges.
+An [index](/d1/best-practices/use-indexes/) lets D1 find rows without scanning a whole table. Scanning fewer rows makes queries faster and lowers rows-read charges. Indexes also use storage and add work to every write to the table, so review each recommendation before you change your schema.
 
-Indexes also use storage and add work to database writes. Review each recommendation before you change your schema.
+## How recommendations are generated
 
-## Availability
+D1 analyzes your databases in the background. For a database with recent queries that scan many more rows than they return, D1 sends the query statements, their usage, and the database schema to [Workers AI](/workers-ai/), which suggests indexes.
 
-Index recommendations are available on the [Workers Paid plan](/workers/platform/pricing/) and are turned on by default. Recommendation generation uses [Workers AI](/workers-ai/).
+D1 checks that each suggested statement is a single valid `CREATE INDEX` statement. It does not run the statement or check it against your schema, so test it before you apply it.
 
-Enterprise customers can opt in from the dashboard. No account team request is required.
+Each analysis replaces the previous recommendations for that database. Recommendations that are not refreshed expire after 7 days. You cannot request an analysis on demand.
 
-## Opt in or out
+A database has no recommendations when it had little recent query activity, its queries already use indexes well, or D1 did not find an index that would help.
 
-Insights controls whether D1 sends your account's query data to Workers AI to generate recommendations.
+## Turn recommendations on or off
 
-When Insights is on, D1 generates and stores recommendations for active databases in your account. When Insights is off, D1 stops generating recommendations and hides existing recommendations in the dashboard and API.
+The Insights setting controls whether D1 sends your account's query data to Workers AI. It applies to every database in the account.
 
-Stored recommendations are kept and show again if you turn Insights back on. Opting out does not affect D1 query metrics, billing, or other D1 features.
+Until you change it, the setting is on for accounts on the Free and Paid plans, and off for Enterprise accounts.
 
-<Tabs syncKey="d1InsightsOptIn">
+When you turn the setting off, D1 stops generating recommendations for your account and stops returning them in the dashboard and API. D1 query metrics, billing, and other D1 features are not affected. Recommendations generated less than 7 days earlier show again if you turn the setting back on.
+
+<Tabs syncKey="d1InsightsSettings">
 <TabItem label="Dashboard">
 
-1. In the Cloudflare dashboard, go to **D1** and select a database.
+<Steps>
+1. In the Cloudflare dashboard, go to the **D1 SQL database** page.
 
    <DashButton url="/?to=/:account/workers/d1" />
 
-2. Select the **Metrics** tab.
+2. Select a database, then select the **Metrics** tab.
 
-3. In the **Recommendations** card, open the settings menu and turn index recommendations on or off.
+3. In the **Recommendations** card, select the settings icon. If recommendations are off, select **Turn on** instead.
 
-The setting applies to every database in your account and requires an account-level admin. Enterprise customers use the same toggle to opt in. When Insights is off, the card shows a disabled state.
+4. Confirm the change.
+</Steps>
+
+Only account administrators can change the setting.
+
+</TabItem>
+<TabItem label="Cloudflare CLI">
+
+Check the setting:
+
+```sh
+cf d1 insights settings get
+```
+
+Turn it off:
+
+```sh
+cf d1 insights settings update --ai-enabled=false
+```
 
 </TabItem>
 <TabItem label="API">
 
-The API token needs the **Account Settings Write** permission.
-
-Check the current setting. The response includes `ai_enabled`:
+Check the setting. The API token needs the **Account Settings Read** permission:
 
 ```sh
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-Turn Insights on or off:
+```json output
+{
+	"success": true,
+	"result": { "ai_enabled": true },
+	"errors": [],
+	"messages": []
+}
+```
+
+Turn it off. The API token needs the **Account Settings Write** permission:
 
 ```sh
 curl --request PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--header "Content-Type: application/json" \
-	--data '{"ai_enabled": false}'
+	--json '{ "ai_enabled": false }'
 ```
 
-Set `ai_enabled` to `false` to opt out.
+Set `ai_enabled` to `true` to turn it back on.
 
 </TabItem>
 </Tabs>
 
-## Generate recommendations
-
-When Insights is on, D1 evaluates active databases in the background. It stores recommendations for the dashboard, Cloudflare CLI (`cf`), Wrangler, and REST API.
-
-D1 uses Workers AI to precompute recommendations where indexes provide measurable impact. On-demand recommendation generation is not supported.
-
-Some databases may not have recommendations. This can happen when D1 does not have enough recent query activity, or when D1 does not find an index that should improve the measured workload.
-
 ## View recommendations
 
-You can view recommendations across an account or for one database.
+<Tabs syncKey="d1IndexRecommendations">
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **D1 SQL database** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+
+   Databases with recommendations have a dot on their **...** menu button. Their menu includes **View recommendations**.
+
+2. Select a database, then select the **Metrics** tab.
+
+   The **Recommendations** card at the top lists up to 10 recommendations for the database, highest impact first.
+</Steps>
+
+</TabItem>
+<TabItem label="Cloudflare CLI">
+
+List recommendations for every database in your account:
+
+```sh
+cf d1 insights recommendations
+```
+
+List recommendations for specific databases:
+
+```sh
+cf d1 insights recommendations --database-id <DATABASE_ID_1>,<DATABASE_ID_2>
+```
+
+</TabItem>
+<TabItem label="API">
+
+The API token needs the **D1 Read** permission.
+
+List recommendations for every database in your account:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/recommendations" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+List recommendations for specific databases:
+
+```sh
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/recommendations?database_id=$DATABASE_ID_1,$DATABASE_ID_2" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
+```
+
+</TabItem>
+</Tabs>
+
+Recommendations are sorted from highest to lowest estimated impact. The CLI and API accept these options:
+
+| API parameter | CLI flag        | Description                                                                                                                            |
+| ------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `database_id` | `--database-id` | Only return recommendations for these databases, up to 50. A database that does not exist or is in another account returns no results. |
+| `limit`       | `--limit`       | Number of recommendations per page, from 1 to 100 (default: `20`).                                                                     |
+| `cursor`      | `--cursor`      | `result_info.next_cursor` from the previous page. Pass the same `database_id` values as the previous request.                          |
+
+`result_info.next_cursor` is `null` on the last page. When the Insights setting is off, the list is empty.
+
+### Find databases with recommendations
+
+To count recommendations per database, add `recommendation_count` to `fields` when you [list databases](/api/resources/d1/subresources/database/methods/list/):
 
 <Tabs syncKey="d1IndexRecommendations">
 <TabItem label="Cloudflare CLI">
 
-List recommendations across your account:
-
 ```sh
-cf d1 insights --filter recommendations --json
-```
-
-List recommendations for one database:
-
-```sh
-cf d1 insights <DATABASE_NAME_OR_ID> --filter recommendations --json
+cf d1 list --fields uuid,name,recommendation_count
 ```
 
 </TabItem>
-<TabItem label="Wrangler">
-
-List recommendations across your account:
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args={"d1 insights --filter recommendations --json"}
-/>
-
-List recommendations for one database:
-
-<PackageManagers
-	type="exec"
-	pkg="wrangler"
-	args={"d1 insights <DATABASE_NAME_OR_ID> --filter recommendations --json"}
-/>
-
-</TabItem>
-<TabItem label="REST API">
-
-Fetch recommendations across an account:
-
-```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/recommendations?limit=20" \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
-
-Fetch recommendations for one database with the `database_id` filter:
-
-```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/recommendations?database_id=$DATABASE_ID" \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
-
-</TabItem>
-</Tabs>
-
-The `database_id` filter accepts one or more database IDs. Pass a comma-separated list or repeat the parameter, for example `?database_id=$DATABASE_ID_1,$DATABASE_ID_2`. You can pass up to 50 IDs. Results are paginated, and each page includes a `result_info.next_cursor` value.
-
-If a database ID does not exist or belongs to another account, the response is an empty list.
-
-If you use an API token, the token must have permission to read D1 databases and account analytics.
-
-## View in the dashboard
-
-Recommendations appear in the **Recommendations** card at the top of the **Metrics** tab for a database. The card shows up to 10 recommendations.
-
-The D1 database list marks databases that have recommendations. Their actions menu also includes **View recommendations**, which links to the Metrics tab.
-
-To find databases with recommendations from the API, add `recommendation_count` to the `fields` list on the database list request:
+<TabItem label="API">
 
 ```sh
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database?fields=uuid,name,recommendation_count" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-`recommendation_count` is returned only when you request it and Insights is available for the account. A missing value means the count is unknown, not zero.
+</TabItem>
+</Tabs>
 
-## Interpret a recommendation
+`recommendation_count` is only returned when you request it. It is left out when the Insights setting is off or the count is unavailable, so a missing value means unknown, not zero.
 
-Each recommendation includes a validated `CREATE INDEX` statement. The summary and reasoning identify the target table, columns, and query patterns.
+## Read a recommendation
 
-Recommendation payloads contain these fields:
-
-| Field | Description |
-| --- | --- |
-| `recommendations.items[].database_id` | Database identifier. |
-| `recommendations.items[].database_name` | Database name. |
-| `recommendations.items[].query_window.from` | Inclusive start of the query metrics window. |
-| `recommendations.items[].query_window.to` | Exclusive end of the query metrics window. |
-| `recommendations.items[].id` | Stable recommendation identifier. |
-| `recommendations.items[].generated_at` | RFC 3339 timestamp for the completed evaluation. |
-| `recommendations.items[].type` | Recommendation type, which is `index_suggestion`. |
-| `recommendations.items[].priority` | Suggested review priority, either `high` or `low`. |
-| `recommendations.items[].summary` | Short description of the recommended change. |
-| `recommendations.items[].reasoning` | Performance bottleneck that produced the recommendation. |
-| `recommendations.items[].suggestions[].kind` | Suggestion type, which is `index_creation`. |
-| `recommendations.items[].suggestions[].sql` | Validated `CREATE INDEX` statement. |
-| `recommendations.items[].impacted_queries` | Query patterns affected by the suggested index. |
-| `result_info.next_cursor` | Cursor for the next page of results. |
-
-Impacted query metrics come from D1 query analytics. They are not Workers AI estimates.
-
-The following response recommends an index for `OrderDetail.OrderId`:
+The following response contains one recommendation for the `orders-prod` database:
 
 ```json
 {
@@ -193,15 +205,15 @@ The following response recommends an index for `OrderDetail.OrderId`:
 					"id": "9f8a7b6c-5d4e-4a21-9234-6f7890abcdef",
 					"database_id": "7c9e2b14-3f6a-4d8e-9b21-5a0c8f3e6d47",
 					"database_name": "orders-prod",
-					"generated_at": "<GENERATED_AT>",
+					"generated_at": "2026-11-20T10:32:00.000Z",
 					"query_window": {
-						"from": "<WINDOW_START>",
-						"to": "<WINDOW_END>"
+						"from": "2026-11-19T10:00:00.000Z",
+						"to": "2026-11-20T10:00:00.000Z"
 					},
 					"type": "index_suggestion",
 					"priority": "high",
 					"summary": "Create an index on OrderDetail.OrderId",
-					"reasoning": "Two query patterns join OrderDetail by OrderId.",
+					"reasoning": "Two query patterns filter OrderDetail by OrderId and scan the whole table.",
 					"suggestions": [
 						{
 							"kind": "index_creation",
@@ -221,36 +233,53 @@ The following response recommends an index for `OrderDetail.OrderId`:
 					]
 				}
 			]
-		},
-		"result_info": {
-			"next_cursor": null
 		}
+	},
+	"result_info": {
+		"next_cursor": null
 	},
 	"errors": [],
 	"messages": []
 }
 ```
 
+Each item in `result.recommendations.items` has these fields:
+
+| Field                                  | Description                                                                                                                                                                                               |
+| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                                   | Recommendation identifier.                                                                                                                                                                                |
+| `database_id`, `database_name`         | The database the recommendation is for.                                                                                                                                                                   |
+| `generated_at`                         | When D1 generated the recommendation.                                                                                                                                                                     |
+| `query_window.from`, `query_window.to` | The window of query usage the recommendation is based on. `from` is inclusive, `to` is exclusive.                                                                                                         |
+| `type`                                 | Always `index_suggestion`.                                                                                                                                                                                |
+| `priority`                             | `high` or `low`. `high` means the impacted queries spend a lot of time scanning rows they do not return. Review these first.                                                                              |
+| `summary`                              | A short description of the change.                                                                                                                                                                        |
+| `reasoning`                            | Why the change is recommended.                                                                                                                                                                            |
+| `suggestions[].kind`                   | Always `index_creation`.                                                                                                                                                                                  |
+| `suggestions[].sql`                    | The `CREATE INDEX` statement to apply.                                                                                                                                                                    |
+| `impacted_queries[].query`             | A query the index is expected to speed up.                                                                                                                                                                |
+| `impacted_queries[].metrics`           | How many times the query ran (`execution_count`), the rows it read and wrote (`total_rows_read`, `total_rows_written`), and its 95th percentile duration (`p95_query_duration_ms`) during `query_window`. |
+
+The metrics come from D1 query analytics, not from Workers AI. Like other D1 per-query analytics, they are estimates computed from sampled data.
+
 ## Apply a recommendation
 
-Apply recommended SQL through a [D1 migration](/d1/reference/migrations/). This stores the schema change with your application code.
+Apply the suggested statement with a [D1 migration](/d1/reference/migrations/), so the schema change is stored with your application code.
 
 <Steps>
-1. Review the suggested SQL, target table, columns, and impacted queries.
+1. Review the suggested statement, the table and columns it indexes, and the impacted queries.
 
-2. From your Worker project directory, create a migration file:
+2. From your Worker project directory, create a migration:
 
    <PackageManagers
     type="exec"
     pkg="wrangler"
-    args={"d1 migrations create <DATABASE_NAME> add_query_insights_index"}
+    args={"d1 migrations create <DATABASE_NAME> add_orderdetail_orderid_index"}
    />
 
-3. Add the suggested `CREATE INDEX` statement to the generated file.
+3. Add the suggested statement to the new migration file:
 
-   The migration should contain the reviewed statement:
-
-   ```sql title="migrations/0001_add_query_insights_index.sql"
+   ```sql title="migrations/0001_add_orderdetail_orderid_index.sql"
    CREATE INDEX idx_OrderDetail_OrderId ON OrderDetail(OrderId);
    ```
 
@@ -262,35 +291,34 @@ Apply recommended SQL through a [D1 migration](/d1/reference/migrations/). This 
     args={"d1 migrations apply <DATABASE_NAME> --local"}
    />
 
-5. Test the impacted queries against your local database.
+5. Run the impacted queries against your local database, and check that they return the same results and read fewer rows.
 
-6. Apply the migration to the corresponding remote environment:
+6. Apply the migration to your remote database:
 
    <PackageManagers
     type="exec"
     pkg="wrangler"
-    args={"d1 migrations apply <DATABASE_NAME> --remote --env <ENVIRONMENT>"}
+    args={"d1 migrations apply <DATABASE_NAME> --remote"}
    />
+
+   If you use [environments](/workers/wrangler/environments/), add `--env <ENVIRONMENT>` and repeat steps 4 to 6 for each environment.
 </Steps>
 
-Confirm that your Wrangler configuration maps the database name to the intended environment. Omit `--env` when the binding uses your top-level configuration.
-
-Repeat the local review and test process for each environment. Apply the migration remotely only after testing it against representative queries.
+If the index fixes the impacted queries, the next analysis of the database no longer recommends it.
 
 ## Use an AI agent
 
-You can use the unmodified CLI JSON in an AI-agent workflow. Copy the prompt below, paste it into your agent, and replace the placeholder with the raw CLI JSON output.
+You can give the recommendations to an AI coding agent to write the migration. Copy the following prompt and replace the placeholder with the output of `cf d1 insights recommendations --database-id <DATABASE_ID>`:
 
 ````txt
-You are a Database Engineer specializing in Cloudflare D1 (SQLite).
+You are a database engineer working on a Cloudflare D1 (SQLite) database.
 
-Analyze the provided raw, unmodified CLI JSON report for query performance, costs, and index recommendations. Convert it into a production-ready Cloudflare D1 SQL migration script.
-
-Review each recommendation before writing SQL. Include only the recommended CREATE INDEX statements that are safe to apply for the impacted queries.
-
-### INPUT JSON DATA
+Below is a JSON list of D1 index recommendations. For each recommendation, review the
+suggested CREATE INDEX statement against the impacted queries and the current schema.
+Write a D1 migration file that contains only the statements that are safe to apply.
+Explain any recommendation you leave out.
 
 ```json
-<INSERT_UNMODIFIED_CLI_JSON_HERE>
+<PASTE_RECOMMENDATIONS_JSON_HERE>
 ```
 ````

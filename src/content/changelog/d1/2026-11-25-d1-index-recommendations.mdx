@@ -1,15 +1,19 @@
 ---
 title: D1 Insights index recommendations
-description: Review recommended indexes for active D1 databases.
+description: Review recommended indexes for your D1 databases.
 products:
   - d1
 date: 2026-11-25
 ---
 
-D1 Insights can recommend indexes for active D1 databases. Each recommendation includes validated `CREATE INDEX` SQL, impacted queries, and measured query metrics.
+D1 Insights now recommends indexes for your D1 databases. Each recommendation includes a `CREATE INDEX` statement, the queries it is expected to speed up, and usage metrics for those queries.
 
-Index recommendations are available on the Workers Paid plan and are turned on by default. Enterprise customers can opt in from the dashboard. You can turn Insights on or off for your account in the dashboard or with the API.
+Recommendations are on by default for accounts on the Free and Paid plans. Enterprise accounts can turn them on in the dashboard, with the Cloudflare CLI, or with the API.
 
-Use the Cloudflare dashboard, Cloudflare CLI (`cf`), Wrangler, or the REST API to review recommendations.
+Review recommendations on the **Metrics** tab of a database in the dashboard, or list them with the Cloudflare CLI:
+
+```sh
+cf d1 insights recommendations
+```
 
 For more information, refer to [Index recommendations](/d1/observability/metrics-analytics/index-recommendations/).
