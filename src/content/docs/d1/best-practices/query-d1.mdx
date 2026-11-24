@@ -1,6 +1,6 @@
 ---
 title: Query a database
-description: Query D1 using SQL statements through the Workers Binding API, REST API, or Wrangler commands.
+description: Query D1 using SQL statements through the Workers Binding API, REST API, Cloudflare CLI (cf), or Wrangler.
 pcx_content_type: concept
 sidebar:
   order: 1
@@ -8,17 +8,19 @@ products:
   - d1
 ---
 
+import { CliVariant, CliVariants } from "~/components";
+
 D1 is compatible with most SQLite's SQL convention since it leverages SQLite's query engine. You can use SQL commands to query D1.
 
 There are a number of ways you can interact with a D1 database:
 
 1. Using [D1 Workers Binding API](/d1/worker-api/) in your code.
 2. Using [D1 REST API](/api/resources/d1/subresources/database/methods/create/).
-3. Using [D1 Wrangler commands](/d1/wrangler-commands/).
+3. Using [D1 CLI commands](/d1/wrangler-commands/) (`cf` or Wrangler).
 
 ## Use SQL to query D1
 
-D1 understands SQLite semantics, which allows you to query a database using SQL statements via Workers BindingAPI or REST API (including Wrangler commands). Refer to [D1 SQL API](/d1/sql-api/sql-statements/) to learn more about supported SQL statements.
+D1 understands SQLite semantics, which allows you to query a database using SQL statements via the Workers Binding API, REST API, or CLI commands (`cf` or Wrangler). For more information on supported SQL statements, refer to [D1 SQL API](/d1/sql-api/sql-statements/).
 
 ### Use foreign key relationships
 
@@ -107,9 +109,12 @@ REST API primarily interacts with the control plane, and allows you to create/ma
 
 Refer to [D1 REST API](/api/resources/d1/subresources/database/methods/create/) for D1 REST API documentation.
 
-## Query D1 with Wrangler commands
+## Query D1 with CLI commands
 
-You can use Wrangler commands to query a D1 database. Note that Wrangler commands use REST APIs to perform its operations.
+<CliVariants>
+<CliVariant cli="wrangler">
+
+You can use Wrangler commands to query a D1 database. Note that Wrangler commands use REST APIs to perform their operations.
 
 ```sh
 npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
@@ -129,3 +134,21 @@ npx wrangler d1 execute prod-d1-tutorial --command="SELECT * FROM Customers"
 │ 13         │ Bs Beverages        │ Random Name       │
 └────────────┴─────────────────────┴───────────────────┘
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+You can use the [Cloudflare CLI (`cf`)](/cf/) to query a D1 database by its UUID (returned by `cf d1 list`):
+
+```sh
+cf d1 query <DATABASE_ID> --sql "SELECT * FROM Customers"
+```
+
+`cf d1 query` targets your remote Cloudflare database by default. To query a local development database instead, use `cf d1 raw` with `--local`:
+
+```sh
+cf d1 raw <DATABASE_ID> --sql "SELECT * FROM Customers" --local
+```
+
+</CliVariant>
+</CliVariants>
