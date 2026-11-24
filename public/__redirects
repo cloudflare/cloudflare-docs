@@ -3076,7 +3076,7 @@
 # Workers tutorials & demos reorganization
 /workers/best-practices/workers-best-practices/ /workers/best-practices/ 301
 /workers/local-development/vite-plugin/ /workers/vite-plugin/ 301
-/workers/framework-guides/ai-and-agents/ /workers/framework-guides/agents/ 301
+/workers/framework-guides/ai-and-agents/ /workers/framework-guides/agent-harnesses/ 301
 /workers/framework-guides/ai-and-agents/agents-sdk/ /agents/ 301
 /workers/framework-guides/ai-and-agents/langchain/ /workers/languages/python/packages/langchain/ 301
 /workers/demos/chatgpt-app/ /agents/examples/chatgpt-app/ 301
