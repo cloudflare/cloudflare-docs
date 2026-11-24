@@ -1,0 +1,36 @@
+---
+title: API token permissions
+description: Scope account API tokens to individual Workers for Platforms dispatch namespaces and choose permissions for inspection, deployment, or administration.
+pcx_content_type: reference
+products:
+  - cloudflare-for-platforms
+---
+
+Scope [account API tokens](/fundamentals/api/get-started/account-owned-tokens/) to individual dispatch namespaces to control access to Workers for Platforms. Each role defines what a token can view or change within its namespace, without granting account-wide Workers access.
+
+## Available roles
+
+The following permissions apply only to the dispatch namespace in the token's scope:
+
+| Role                   | Permissions                                                                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Metadata Read-Only** | List Workers and view their settings and bindings. Excludes script code and secrets.                                         |
+| **Content Read-Only**  | Everything in Metadata Read-Only, plus access to script code and secret names. Does not grant access to secret values.       |
+| **Editor**             | Create, update, deploy, and delete Workers, including their code, settings, and secrets. Cannot delete the namespace itself. |
+| **Admin**              | Everything in Editor, plus permission to view and delete the namespace itself.                                               |
+
+## Choose a role
+
+Use **Editor** for deployment pipelines and continuous integration (CI) jobs. This role lets your pipeline create and delete Workers within an existing namespace. Use **Admin** when a tool also needs to delete the namespace itself.
+
+Use **Metadata Read-Only** for tools that inspect Worker settings and bindings. Use **Content Read-Only** when a tool also needs to read script code or list secret names.
+
+To create a token, refer to [Create an account owned token](/fundamentals/api/get-started/account-owned-tokens/#create-an-account-owned-token). Assign the appropriate Workers for Platforms role and scope it to the dispatch namespace your tool needs.
+
+## Namespace scope
+
+A token scoped only to one dispatch namespace cannot view or modify Workers in other namespaces or elsewhere in the account.
+
+For example, an Editor token scoped to `staging` can deploy and delete Workers in `staging`. It cannot access Workers in `production` or delete the `staging` namespace itself.
+
+For deployment and management examples, refer to [API examples](/cloudflare-for-platforms/workers-for-platforms/reference/platform-examples/).

@@ -1,0 +1,18 @@
+---
+title: Scope Workers for Platforms API tokens to dispatch namespaces
+description: Limit account API tokens to individual dispatch namespaces with four roles for inspecting Workers, deploying code, and administering namespaces.
+date: 2026-11-24
+---
+
+[Workers for Platforms](/cloudflare-for-platforms/workers-for-platforms/) now supports account API tokens scoped to individual dispatch namespaces. Give deployment pipelines and other tools access to the namespace they need without granting account-wide Workers access.
+
+Four roles control what a token can access within its namespace:
+
+- **Metadata Read-Only**: View Workers, settings, and bindings. Excludes script code and secrets.
+- **Content Read-Only**: Everything in Metadata Read-Only, plus script code and secret names.
+- **Editor**: Create, update, deploy, and delete Workers, including their code, settings, and secrets. Cannot delete the namespace itself.
+- **Admin**: Everything in Editor, plus view and delete the namespace itself.
+
+Use **Editor** for deployment and continuous integration (CI) tokens. For example, a token scoped only to `staging` can deploy Workers there without access to Workers in `production` or elsewhere in your account.
+
+For role details and token setup, refer to [API token permissions](/cloudflare-for-platforms/workers-for-platforms/configuration/api-token-permissions/).
