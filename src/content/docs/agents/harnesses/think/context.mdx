@@ -127,8 +127,10 @@ Think's [skills](/agents/harnesses/think/skills/) use a context block. The skill
 
 If you used Think's context before `@cloudflare/think` v0.25.0:
 
-- In a Think agent, your code does not change. `this.context` keeps its method names, and `configureContext()`, the `withContext()` chain, and `withCachedPrompt()` work as before.
-- The system prompt is recorded on the session instead of in a separate stored prompt. On the first turn after the upgrade, Think sends the prompt it had frozen before, so the provider's cache still applies.
+- In a Think agent, your code does not change. `this.context` keeps its method names, and `configureContext()` and the `withContext()` chain work as before.
+- Think records the system prompt on the session and no longer writes a separate `_system_prompt` row. On the first turn after the upgrade, Think sends the prompt it froze before, so the provider's cache still applies. Regenerating an answer from before the upgrade sends that same prompt.
+- A conversation that starts after the upgrade, or after the history is cleared, never uses the prompt frozen before the upgrade.
+- Think reads a store passed to `withCachedPrompt()` for the prompt frozen before the upgrade, and no longer writes new prompts to it. A store that throws or holds nothing counts as having no prompt, and the turn goes on.
 - A reminder no longer moves. Before, Think added it to the newest user message of every request until a refresh, which changed the previous user message in each request. Now Think sends it once and it stays on the turn that noticed the change.
 - If you use `agents/context` directly, `freezeSystemPrompt()`, `refreshSystemPrompt()`, and `reminder()` moved from `ContextBlocks` to `Context`, which Think's `this.context` now is. `ContextBlocks` takes `(configs, { defaultProvider })` without a prompt store, and `renderSystemPrompt()` renders the blocks as they stand without storing anything.
 
