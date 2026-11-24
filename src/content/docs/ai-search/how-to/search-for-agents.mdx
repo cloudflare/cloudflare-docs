@@ -4,6 +4,8 @@ description: Make your website searchable by AI agents with automatic indexing, 
 pcx_content_type: how-to
 sidebar:
   order: 3.5
+  badge:
+    text: Beta
 difficulty: Beginner
 products:
   - ai-search
@@ -17,7 +19,9 @@ Search for Agents makes your website searchable by AI agents. Turn it on for you
 
 Cloudflare advertises the endpoint on your pages so agents can discover it automatically. The endpoint returns relevant content in Markdown, not an AI-generated answer. Agents can use that content with their own models and conversations.
 
-Search for Agents is available on all plans. Usage is subject to [AI Search pricing and plan limits](/ai-search/platform/limits-pricing/), including content ingestion, index storage, and queries.
+You can use Search for Agents alongside [Markdown for Agents](/fundamentals/reference/markdown-for-agents/). Markdown for Agents converts individual pages to Markdown on request, while Search for Agents retrieves relevant content from your site's index.
+
+Search for Agents is available in beta on all plans. Usage is subject to [AI Search pricing and plan limits](/ai-search/platform/limits-pricing/), including content ingestion, index storage, and queries.
 
 Read the [Search for Agents blog post](https://blog.cloudflare.com/search-for-agents) for more information.
 
@@ -32,6 +36,9 @@ Your domain must be [onboarded to your Cloudflare account](/fundamentals/manage-
    <DashButton url="/?to=/:account/:zone/" />
 
 2. Under **Quick Actions**, turn on **Search for Agents**.
+
+   ![Search for Agents toggle turned on in the Cloudflare dashboard, with a Beta badge and a link to feature documentation.](~/assets/images/ai-search/search-for-agents.png)
+
 3. Review the [default settings](#default-settings) and pricing notice, then confirm.
 4. Wait for AI Search to crawl and index your content before running a search.
 
