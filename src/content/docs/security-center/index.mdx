@@ -19,8 +19,8 @@ import { LinkButton, Render } from "~/components";
 
 <Render file="main-features" product="security-center" />
 
-<LinkButton variant="primary" href="/security-center/get-started/">
-	Get started
+<LinkButton variant="primary" href="/security/security-insights/how-it-works/#enable-or-disable-scans">
+	Manage Security Insights scans
 </LinkButton>
 
 ---
@@ -29,11 +29,11 @@ import { LinkButton, Render } from "~/components";
 
 Cloudflare Security Center is available to customers on all plans.
 
-The frequency of automatic security scans depends on your Cloudflare plan, ranging from every 7 days on Free, Pro, and Business plans to every 3 days on Enterprise plans. Refer to [Scan frequency](/security/security-insights/how-it-works/#scan-frequency) for more information.
+For automatic scan schedules, refer to [Security Insights scan frequency](/security/security-insights/how-it-works/#scan-frequency).
 
 If you have any comments, questions, or bugs to report, create a post in the [Cloudflare Community forum](https://community.cloudflare.com/c/security/security-center/65).
 
 ## Limitations
 
 - Users with an [Administrator Read Only](/fundamentals/manage-members/roles/#account-scoped-roles) role cannot access the Cloudflare Security Center.
-- Only Cloudflare accounts with at least one Business or Enterprise zone (domain on your account), or accounts on the Teams Standard or Teams Enterprise plans, can manually start a new scan.
+- Accounts on all plans can [start an on-demand Security Insights scan](/security/security-insights/how-it-works/#start-a-new-scan), subject to permissions and scan quotas.
