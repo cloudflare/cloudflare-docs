@@ -17,6 +17,6 @@ Cloudflare has raised the limit for some accounts based on their historical R2 t
 
 ![R2 Metrics page showing the account bandwidth limit above the bandwidth charts](~/assets/images/r2/r2-bandwidth-limit.png)
 
-If your account exceeds its bandwidth limit, R2 throttles requests instead of rejecting them, which can increase request latency. For more information, refer to [R2 limits](/r2/platform/limits/#bandwidth).
+If your account exceeds its bandwidth limit, R2 throttles requests, which can increase request latency. Requests that are already in progress are not rejected, but new requests can receive a `429 Too Many Requests` response if your account has so many concurrent requests that a new one would not get enough bandwidth to make progress. For more information, refer to [R2 limits](/r2/platform/limits/#bandwidth).
 
 If your workload needs more bandwidth than your current limit, complete the [Limit Increase Request Form](https://forms.gle/eX6pXvit1wBv77Yw5) to request a higher limit.

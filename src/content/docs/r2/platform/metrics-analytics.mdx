@@ -20,7 +20,7 @@ R2 has three datasets:
 | ---------- | -------------------------------- | ---------------------------------------------------------------------------- |
 | Operations | `r2OperationsAdaptiveGroups`     | This dataset consists of the operations taken on a bucket within an account. |
 | Storage    | `r2StorageAdaptiveGroups`        | This dataset consists of the storage of a bucket within an account.          |
-| Bandwidth  | `r2BandwidthUsageAdaptiveGroups` | Dataset contains uploaded and downloaded bytes for buckets within an account.       |
+| Bandwidth  | `r2BandwidthUsageAdaptiveGroups` | Dataset contains uploaded and downloaded bytes for buckets within an account, and the account bandwidth limit.       |
 
 Metrics can be queried for a maximum range of 31 days. These datasets require an `accountTag` filter with your Cloudflare account ID.
 
@@ -73,6 +73,12 @@ The following fields can be summed:
 | --------------- | --------------------------------------------------------------------- |
 | `bytesDownload` | Downloaded bytes. |
 | `bytesUpload`   | Uploaded bytes. |
+
+The following field can be queried with `max`:
+
+| Field                        | Description                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `bandwidthLimitBitsPerSecond` | Your account's [bandwidth limit](/r2/platform/limits/#bandwidth), in bits per second. The limit applies separately to uploads and downloads. |
 
 ## View via the dashboard
 
@@ -167,7 +173,7 @@ query R2StorageExample(
 
 ### Bandwidth
 
-To query hourly uploads and downloads for a bucket. Results contain byte totals, not transfer rates, and excluded transfers smaller than 100 KiB.
+To query hourly uploads and downloads for a bucket, along with your account bandwidth limit. Byte results contain totals, not transfer rates, and exclude transfers smaller than 100 KiB.
 
 ```graphql graphql-api-explorer
 query R2BandwidthExample(
@@ -190,6 +196,9 @@ query R2BandwidthExample(
 				sum {
 					bytesUpload
 					bytesDownload
+				}
+				max {
+					bandwidthLimitBitsPerSecond
 				}
 				dimensions {
 					datetimeHour

@@ -21,7 +21,7 @@ import { DashButton, Render } from "~/components";
 | Maximum upload size [^3]                                     | 5 GiB (single-part) / 4.995 TiB (multi-part) [^4] |
 | Maximum upload parts                                         | 10,000                                            |
 | Maximum concurrent writes to the same object name (key)      | 1 per second [^5]                                 |
-| Bandwidth per account                                        | 100 Gbps upload / 100 Gbps download ([details](#bandwidth)) |
+| Default bandwidth per account                                        | 100 Gbps upload / 100 Gbps download ([details](#bandwidth)) |
 
 [^1]: Bucket management operations include creating, deleting, listing, and configuring buckets. This limit does _not_ apply to reading or writing objects to a bucket.
 
@@ -60,7 +60,7 @@ If your account exceeds the bandwidth limit, R2 throttles requests rather than r
 
 R2 returns `429 Too Many Requests` only for new requests if your account has so many concurrent requests that a new one would not get enough bandwidth to make progress.
 
-You can view your bandwidth limit and usage on the R2 **Metrics** page in the Cloudflare dashboard, or query [R2 analytics](/r2/platform/metrics-analytics/).
+You can view your bandwidth limit and usage on the R2 **Metrics** page in the Cloudflare dashboard, or query both through [R2 analytics](/r2/platform/metrics-analytics/#bandwidth-dataset) with the GraphQL Analytics API.
 
 <DashButton url="/?to=/:account/r2/metrics" buttonName="R2 Metrics" />
 
