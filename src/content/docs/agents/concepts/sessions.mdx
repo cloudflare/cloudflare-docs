@@ -91,7 +91,7 @@ Read:       [1] [2] [summary of 3-6]   [7] [8] [9]
 
 `Sessions` never stores the summary as a message, so a client that posts its transcript back after a compaction cannot write the summary into the session. The original messages stay stored, and full-text search over the session still finds them. Compaction usually keeps the first messages and a recent tail word for word, and never separates a tool call from its result. You decide when it runs: when an estimated token count crosses a threshold, or when your code asks for it.
 
-## Deleting and privacy
+## Privacy and deletion
 
 Compaction does not delete anything and does not make storage smaller. The original messages stay in the Durable Object's SQLite database, where search can find them, and count against its storage. To remove what a user said, delete the messages or clear the session:
 
