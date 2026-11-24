@@ -353,8 +353,8 @@
 /agents/guides/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301
 /agents/guides/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/guides/build-mcp-client/ /agents/model-context-protocol/guides/build-mcp-client/ 301
-/agents/guides/chatgpt-app/ /workers/demos/chatgpt-app/ 301
-/agents/communication-channels/chat/chatgpt-app/ /workers/demos/chatgpt-app/ 301
+/agents/guides/chatgpt-app/ /agents/examples/chatgpt-app/ 301
+/agents/communication-channels/chat/chatgpt-app/ /agents/examples/chatgpt-app/ 301
 /agents/guides/connect-mcp-client/ /agents/model-context-protocol/guides/connect-mcp-client/ 301
 /agents/guides/cross-domain-authentication/ /agents/runtime/routing/authentication/ 301
 /agents/guides/human-in-the-loop/ /agents/concepts/agentic-patterns/human-in-the-loop/ 301
@@ -393,7 +393,7 @@
 /agents/channels/chat/chat-agents/ /agents/agent-class/communication-channels/chat/chat-agents/ 301
 /agents/channels/chat/client-sdk/ /agents/agent-class/communication-channels/chat/client-sdk/ 301
 /agents/channels/chat/autonomous-responses/ /agents/agent-class/communication-channels/chat/autonomous-responses/ 301
-/agents/channels/chat/chatgpt-app/ /workers/demos/chatgpt-app/ 301
+/agents/channels/chat/chatgpt-app/ /agents/examples/chatgpt-app/ 301
 /agents/channels/voice/ /agents/agent-class/communication-channels/voice/ 301
 /agents/channels/voice/build-a-voice-agent/ /agents/examples/voice-agent/ 301
 /agents/channels/email/ /agents/agent-class/communication-channels/email/ 301
@@ -2494,7 +2494,7 @@
 /workers/learning/service-worker/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrating-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
 /workers/learning/migrate-to-module-workers/ /workers/reference/migrate-to-module-workers/ 301
-/workers/tutorials/query-postgres-from-workers-using-database-connectors/ /workers/tutorials/postgres/ 301
+/workers/tutorials/query-postgres-from-workers-using-database-connectors/ /hyperdrive/examples/connect-to-postgres/ 301
 /workers/platform/headers/ /workers/runtime-apis/headers/ 301
 /workers/platform/nodejs-compatibility/ /workers/runtime-apis/nodejs/ 301
 /workers/learning/using-websockets/ /workers/examples/websockets/ 301
@@ -2628,7 +2628,7 @@
 /workers/development-testing/local-dev-tunnels/ /workers/local-development/local-dev-tunnels/ 301
 /workers/development-testing/local-explorer/ /workers/local-development/local-explorer/ 301
 /workers/development-testing/multi-workers/ /workers/local-development/multi-workers/ 301
-/workers/development-testing/vite-plugin/ /workers/local-development/vite-plugin/ 301
+/workers/development-testing/vite-plugin/ /workers/vite-plugin/ 301
 /workers/development-testing/wrangler-vs-vite/ /workers/local-development/wrangler-vs-vite/ 301
 /workers/development-testing/remote-data/ /workers/local-development/#remote-bindings 301
 /workers/development-testing/testing/ /workers/testing/ 301
@@ -3072,6 +3072,17 @@
 
 # WAF
 /waf/detections/ai-security-for-apps/log-mode-vs-production-mode/ /waf/detections/ai-security-for-apps/get-started/#7-optional-log-prompts-for-matching-rules 301
+
+# Workers tutorials & demos reorganization
+/workers/best-practices/workers-best-practices/ /workers/best-practices/ 301
+/workers/local-development/vite-plugin/ /workers/vite-plugin/ 301
+/workers/framework-guides/ai-and-agents/ /workers/framework-guides/agents/ 301
+/workers/framework-guides/ai-and-agents/agents-sdk/ /agents/ 301
+/workers/framework-guides/ai-and-agents/langchain/ /workers/languages/python/packages/langchain/ 301
+/workers/demos/chatgpt-app/ /agents/examples/chatgpt-app/ 301
+/workers/tutorials/postgres/ /hyperdrive/examples/connect-to-postgres/ 301
+/workers/tutorials/mysql/ /hyperdrive/examples/connect-to-mysql/ 301
+/workers/tutorials/using-prisma-postgres-with-workers/ /workers/databases/third-party-integrations/prisma-postgres/ 301
 
 # ============================================================================
 # DYNAMIC REDIRECTS
