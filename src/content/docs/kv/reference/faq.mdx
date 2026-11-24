@@ -56,9 +56,9 @@ When writing to Workers KV via the [Workers Binding API](/kv/api/write-key-value
 
 Each key-value pair in the `PUT` request is counted as a single write, identical to how each call to `PUT` in the Workers API counts as a write. Writing 5,000 keys via the REST API incurs the same write costs as making 5,000 `PUT` calls in a Worker.
 
-### Do queries I issue from the dashboard or wrangler (the CLI) count as billable usage?
+### Do queries I issue from the dashboard or CLI count as billable usage?
 
-Yes, any operations via the Cloudflare dashboard or wrangler, including updating (writing) keys, deleting keys, and listing the keys in a namespace count as billable Workers KV usage.
+Yes, any operations via the Cloudflare dashboard, the Cloudflare CLI (`cf`), or Wrangler, including updating (writing) keys, deleting keys, and listing the keys in a namespace, count as billable Workers KV usage.
 
 ### Does Workers KV charge for data transfer / egress?
 
