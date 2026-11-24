@@ -514,6 +514,23 @@ function workerLines() {
 						"},",
 					);
 				}
+				if (ref.name === "images") {
+					return exampleObjectLines(
+						ref,
+						[
+							{
+								name: "urlTransformations",
+								value: [
+									{ name: "enabled", value: "true" },
+									{ name: "allowedOrigins", value: '["images.example.com"]' },
+								],
+							},
+						],
+						2,
+						[{ ref }, ": "],
+						"},",
+					);
+				}
 				if (ref.name === "experimental") {
 					const streamingTailConsumers = requireChildReference(
 						ref,

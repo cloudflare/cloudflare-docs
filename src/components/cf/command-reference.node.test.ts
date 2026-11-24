@@ -11,7 +11,7 @@ import {
 
 describe("CF command metadata", () => {
 	test("uses the pinned CF package version", () => {
-		expect(getCfCommandMetadataVersion()).toBe("1.0.0-rc.2");
+		expect(getCfCommandMetadataVersion()).toBe("1.0.0-rc.4");
 	});
 
 	test("resolves a command from generated metadata", () => {
@@ -29,24 +29,24 @@ describe("CF command metadata", () => {
 	});
 
 	test("does not expose hidden CF commands without explicit opt-in", () => {
-		expect(() => resolveCfCommand("rum rules create")).toThrow(
+		expect(() => resolveCfCommand("ips list")).toThrow(
 			"is hidden by the installed CF CLI",
 		);
-		expect(
-			resolveCfCommand("rum rules create", { includeHidden: true }).key,
-		).toBe("rum rules create");
+		expect(resolveCfCommand("ips list", { includeHidden: true }).key).toBe(
+			"ips list",
+		);
 	});
 
 	test("filters hidden commands from native CF namespaces", () => {
-		// Every `rum` command is hidden, so the namespace is empty by default.
-		expect(() => resolveCfNamespace("rum")).toThrow(
-			'does not contain namespace "rum"',
+		// Every `ips` command is hidden, so the namespace is empty by default.
+		expect(() => resolveCfNamespace("ips")).toThrow(
+			'does not contain namespace "ips"',
 		);
 		expect(
-			resolveCfNamespace("rum", { includeHidden: true }).map(
+			resolveCfNamespace("ips", { includeHidden: true }).map(
 				(command) => command.key,
 			),
-		).toContain("rum rules create");
+		).toContain("ips list");
 		expect(() => resolveCfNamespace("deploy")).toThrow(
 			'does not contain namespace "deploy"',
 		);
