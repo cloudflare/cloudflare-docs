@@ -20,12 +20,12 @@ For the platform-wide permission model, refer to the [Roles and permissions over
 
 ## Workers Namespace roles
 
-| Role                                 | Description                                                                                                                                     |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Workers Namespace Metadata Read-Only | List Workers in the namespace and view their settings, bindings, and tags.                                                                      |
-| Workers Namespace Content Read-Only  | Everything in Metadata Read-Only, plus view script source content and secret names.                                                             |
-| Workers Namespace Editor             | Everything in Content Read-Only, plus upload, update, deploy, and delete Workers in the namespace, including their settings, tags, and secrets. |
-| Workers Namespace Admin              | Everything in Editor, plus view, update, and delete the namespace itself.                                                                       |
+| Role                                 | Description                                                                                             |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| Workers Namespace Metadata Read-Only | Read metadata and settings for Workers in a namespace. Does not include script source content.          |
+| Workers Namespace Content Read-Only  | Read metadata and script source content for Workers in a namespace.                                     |
+| Workers Namespace Editor             | Add, update, deploy, and remove Workers in a namespace. Does not include managing the namespace itself. |
+| Workers Namespace Admin              | Full access to Workers in a namespace, including adding, updating, deploying, and removing Workers.     |
 
 Namespace roles apply to the namespace as a whole, so the Editor role can upload new Workers to the namespace and delete existing ones.
 
