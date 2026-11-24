@@ -7,6 +7,8 @@ products:
 date: 2026-11-23
 ---
 
+import { DashButton } from "~/components";
+
 You can now grant access to the Workers in specific [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Previously, managing Workers in a namespace required account-wide Workers access.
 
 Choose from four roles to control the level of access:
@@ -20,10 +22,14 @@ A namespace role applies to every current and future Worker in the selected name
 
 ### Grant access to members and User Groups
 
-In the Cloudflare dashboard, go to the [**Members**](https://dash.cloudflare.com/?to=/:account/members) page and select a [member](/fundamentals/manage-members/manage/). Add a [permission policy](/fundamentals/manage-members/policies/), set the scope to **Individual Namespaces**, then select the namespaces and a Workers Namespace role.
+In the Cloudflare dashboard, go to the **Members** page and select a [member](/fundamentals/manage-members/manage/). Add a [permission policy](/fundamentals/manage-members/policies/), set the scope to **Individual Namespaces**, then select the namespaces and a Workers Namespace role.
+
+<DashButton url="/?to=/:account/members" />
 
 ### Create a scoped API token
 
-Go to the [**Account API Tokens**](https://dash.cloudflare.com/?to=/:account/api-tokens) page and create an [account-owned API token](/fundamentals/api/get-started/account-owned-tokens/). Select a Workers Namespace role, set the scope to **Specified Namespaces**, and select the namespaces the token can access.
+Go to the **Account API Tokens** page and create an [account-owned API token](/fundamentals/api/get-started/account-owned-tokens/). Select a Workers Namespace role, set the scope to **Specified Namespaces**, and select the namespaces the token can access.
+
+<DashButton url="/?to=/:account/api-tokens" />
 
 For more information, refer to [Workers for Platforms roles and permissions](/workers/authorization/workers-for-platforms/).
