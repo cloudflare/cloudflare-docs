@@ -21,86 +21,6 @@ D1 Insights recommends indexes for your [D1](/d1/) databases. Each recommendatio
 
 An [index](/d1/best-practices/use-indexes/) lets D1 find rows without scanning a whole table. Scanning fewer rows makes queries faster and lowers rows-read charges. Indexes also use storage and add work to every write to the table, so review each recommendation before you change your schema.
 
-## How recommendations are generated
-
-D1 analyzes your databases in the background. For a database with recent queries that scan many more rows than they return, D1 sends the query statements, their usage, and the database schema to [Workers AI](/workers-ai/), which suggests indexes.
-
-D1 checks that each suggested statement is a single valid `CREATE INDEX` statement. It does not run the statement or check it against your schema, so test it before you apply it.
-
-Each analysis replaces the previous recommendations for that database. Recommendations that are not refreshed expire after 7 days. You cannot request an analysis on demand.
-
-A database has no recommendations when it had little recent query activity, its queries already use indexes well, or D1 did not find an index that would help.
-
-## Turn recommendations on or off
-
-The Insights setting controls whether D1 sends your account's query data to Workers AI. It applies to every database in the account.
-
-When you turn the setting off, D1 stops generating recommendations for your account and stops returning them in the dashboard and API. D1 query metrics, billing, and other D1 features are not affected. Recommendations generated less than 7 days earlier show again if you turn the setting back on.
-
-<Tabs syncKey="d1InsightsSettings">
-<TabItem label="Dashboard">
-
-<Steps>
-1. In the Cloudflare dashboard, go to the **D1 SQL database** page.
-
-   <DashButton url="/?to=/:account/workers/d1" />
-
-2. Select a database, then select the **Metrics** tab.
-
-3. In the **Recommendations** card, select the settings icon. If recommendations are off, select **Turn on** instead.
-
-4. Confirm the change.
-</Steps>
-
-Only account administrators can change the setting.
-
-</TabItem>
-<TabItem label="Cloudflare CLI">
-
-Check the setting:
-
-```sh
-cf d1 insights settings get
-```
-
-Turn it off:
-
-```sh
-cf d1 insights settings update --ai-enabled=false
-```
-
-</TabItem>
-<TabItem label="API">
-
-Check the setting. The API token needs the **Account Settings Read** permission:
-
-```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
-```
-
-```json output
-{
-	"success": true,
-	"result": { "ai_enabled": true },
-	"errors": [],
-	"messages": []
-}
-```
-
-Turn it off. The API token needs the **Account Settings Write** permission:
-
-```sh
-curl --request PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
-	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-	--json '{ "ai_enabled": false }'
-```
-
-Set `ai_enabled` to `true` to turn it back on.
-
-</TabItem>
-</Tabs>
-
 ## View recommendations
 
 <Tabs syncKey="d1IndexRecommendations">
@@ -124,13 +44,13 @@ Set `ai_enabled` to `true` to turn it back on.
 List recommendations for every database in your account:
 
 ```sh
-cf d1 insights recommendations
+npx cf d1 insights recommendations
 ```
 
 List recommendations for specific databases:
 
 ```sh
-cf d1 insights recommendations --database-id <DATABASE_ID_1>,<DATABASE_ID_2>
+npx cf d1 insights recommendations --database-id <DATABASE_ID_1>,<DATABASE_ID_2>
 ```
 
 </TabItem>
@@ -165,29 +85,91 @@ Recommendations are sorted from highest to lowest estimated impact. The CLI and 
 
 `result_info.next_cursor` is `null` on the last page. When the Insights setting is off, the list is empty.
 
-### Find databases with recommendations
+## How recommendations are generated
 
-To count recommendations per database, add `recommendation_count` to `fields` when you [list databases](/api/resources/d1/subresources/database/methods/list/):
+D1 analyzes your databases in the background. For a database with recent queries that scan many more rows than they return, D1 sends the query statements, their usage, and the database schema to [Workers AI](/workers-ai/), which suggests indexes.
 
-<Tabs syncKey="d1IndexRecommendations">
+D1 checks that each suggested statement is a single valid `CREATE INDEX` statement. It does not run the statement or check it against your schema, so test it before you apply it.
+
+Each analysis replaces the previous recommendations for that database. Recommendations that are not refreshed expire after 7 days. You cannot request an analysis on demand, but you can [fetch the underlying query data](/d1/observability/find-expensive-queries/#find-queries-that-need-an-index) and have an AI agent find missing indexes for you.
+
+A database has no recommendations when it had little recent query activity, its queries already use indexes well, or D1 did not find an index that would help.
+
+## Turn recommendations on or off
+
+The Insights setting controls whether D1 sends your account's query data to Workers AI. It applies to every database in the account.
+
+When you turn the setting off, D1 stops generating recommendations for your account and stops returning them in the dashboard and API. D1 query metrics, billing, and other D1 features are not affected. Recommendations generated less than 7 days earlier show again if you turn the setting back on.
+
+<Tabs syncKey="d1InsightsSettings">
+<TabItem label="Dashboard">
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **D1 SQL database** page.
+
+   <DashButton url="/?to=/:account/workers/d1" />
+
+2. Select a database, then select the **Metrics** tab.
+
+3. In the **Recommendations** card, select the settings icon. If recommendations are off, select **Turn on** instead.
+
+4. Confirm the change.
+</Steps>
+
+Only account administrators can change this setting.
+
+</TabItem>
 <TabItem label="Cloudflare CLI">
 
+Check the setting:
+
 ```sh
-cf d1 list --fields uuid,name,recommendation_count
+npx cf d1 insights settings get
+```
+
+```json output
+{
+	"ai_enabled": true
+}
+```
+
+Turn it off:
+
+```sh
+npx cf d1 insights settings update --ai-enabled=false
 ```
 
 </TabItem>
 <TabItem label="API">
 
+Check the setting. The API token needs the **Account Settings Read** permission:
+
 ```sh
-curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/database?fields=uuid,name,recommendation_count" \
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
 	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
+```json output
+{
+	"success": true,
+	"result": { "ai_enabled": true },
+	"errors": [],
+	"messages": []
+}
+```
+
+Turn it off. The API token needs the **Account Settings Write** permission:
+
+```sh
+curl --request PUT "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/d1/insights/settings" \
+	--header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+	--json '{ "ai_enabled": false }'
+```
+
+Set `ai_enabled` to `true` to turn it back on.
+
 </TabItem>
 </Tabs>
-
-`recommendation_count` is only returned when you request it. It is left out when the Insights setting is off or the count is unavailable, so a missing value means unknown, not zero.
 
 ## Read a recommendation
 
@@ -269,11 +251,24 @@ Apply the suggested statement with a [D1 migration](/d1/reference/migrations/), 
 
 2. From your Worker project directory, create a migration:
 
+   <Tabs syncKey="d1Migrations">
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf d1 migrations create add_orderdetail_orderid_index
+   ```
+
+   </TabItem>
+   <TabItem label="Wrangler">
+
    <PackageManagers
     type="exec"
     pkg="wrangler"
     args={"d1 migrations create <DATABASE_NAME> add_orderdetail_orderid_index"}
    />
+
+   </TabItem>
+   </Tabs>
 
 3. Add the suggested statement to the new migration file:
 
@@ -283,15 +278,38 @@ Apply the suggested statement with a [D1 migration](/d1/reference/migrations/), 
 
 4. Apply the migration to your local database:
 
+   <Tabs syncKey="d1Migrations">
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf d1 migrations apply <DATABASE_ID> --local
+   ```
+
+   </TabItem>
+   <TabItem label="Wrangler">
+
    <PackageManagers
     type="exec"
     pkg="wrangler"
     args={"d1 migrations apply <DATABASE_NAME> --local"}
    />
 
+   </TabItem>
+   </Tabs>
+
 5. Run the impacted queries against your local database, and check that they return the same results and read fewer rows.
 
 6. Apply the migration to your remote database:
+
+   <Tabs syncKey="d1Migrations">
+   <TabItem label="Cloudflare CLI">
+
+   ```sh
+   npx cf d1 migrations apply <DATABASE_ID>
+   ```
+
+   </TabItem>
+   <TabItem label="Wrangler">
 
    <PackageManagers
     type="exec"
@@ -299,14 +317,17 @@ Apply the suggested statement with a [D1 migration](/d1/reference/migrations/), 
     args={"d1 migrations apply <DATABASE_NAME> --remote"}
    />
 
-   If you use [environments](/workers/wrangler/environments/), add `--env <ENVIRONMENT>` and repeat steps 4 to 6 for each environment.
+   </TabItem>
+   </Tabs>
+
+   If you use [Wrangler environments](/workers/wrangler/environments/), add `--env <ENVIRONMENT>` to the Wrangler commands and repeat steps 4 to 6 for each environment.
 </Steps>
 
 If the index fixes the impacted queries, the next analysis of the database no longer recommends it.
 
 ## Use an AI agent
 
-You can give the recommendations to an AI coding agent to write the migration. Copy the following prompt and replace the placeholder with the output of `cf d1 insights recommendations --database-id <DATABASE_ID>`:
+You can give the recommendations to an AI coding agent to write the migration. Copy the following prompt and replace the placeholder with the output of `npx cf d1 insights recommendations --database-id <DATABASE_ID>`:
 
 ````txt
 You are a database engineer working on a Cloudflare D1 (SQLite) database.
