@@ -39,9 +39,9 @@ No.
 
 D1 itself does not charge for additional compute. Workers querying D1 and computing results: for example, serializing results into JSON and/or running queries, are billed per [Workers pricing](/workers/platform/pricing/#workers), in addition to your D1 specific usage.
 
-### Do queries I run from the dashboard or Wrangler (the CLI) count as billable usage?
+### Do queries I run from the dashboard or the CLI count as billable usage?
 
-Yes, any queries you run against your database, including inserting (`INSERT`) existing data into a new database, table scans (`SELECT * FROM table`), or creating indexes count as either reads or writes.
+Yes, any queries you run against your remote database – whether from the dashboard, `cf`, or Wrangler – including inserting (`INSERT`) existing data into a new database, table scans (`SELECT * FROM table`), or creating indexes count as either reads or writes.
 
 ### Can I use an index to reduce the number of rows read by a query?
 
