@@ -14,7 +14,14 @@ products:
   - d1
 ---
 
-import { Render, Steps, PackageManagers, DashButton } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	DashButton,
+	PackageManagers,
+	Render,
+	Steps,
+} from "~/components";
 
 In this tutorial, you will learn how to import a database into D1 using the [REST API](/api/resources/d1/subresources/database/methods/import/).
 
@@ -57,18 +64,34 @@ To create the table, follow these steps:
    CREATE TABLE IF NOT EXISTS TargetD1Table (id INTEGER PRIMARY KEY, text TEXT, date_added TEXT);
    ```
 
-   Alternatively, you can use the [Wrangler CLI](/workers/wrangler/install-and-update/).
-
-   ```bash
-   # Create a D1 database
-   npx wrangler d1 create d1-import-tutorial
-
-   # Create a D1 table
-   npx wrangler d1 execute d1-import-tutorial --command="DROP TABLE IF EXISTS TargetD1Table; CREATE TABLE IF NOT EXISTS TargetD1Table (id INTEGER PRIMARY KEY, text TEXT, date_added TEXT);" --remote
-
-   ```
-
 </Steps>
+
+Alternatively, create the database and table from your terminal:
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+```bash
+# Create a D1 database
+npx wrangler d1 create d1-import-tutorial
+
+# Create a D1 table
+npx wrangler d1 execute d1-import-tutorial --command="DROP TABLE IF EXISTS TargetD1Table; CREATE TABLE IF NOT EXISTS TargetD1Table (id INTEGER PRIMARY KEY, text TEXT, date_added TEXT);" --remote
+```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+```bash
+# Create a D1 database (keep the returned uuid)
+cf d1 create --name d1-import-tutorial
+
+# Create a D1 table on the remote database
+cf d1 query <DATABASE_ID> --sql "DROP TABLE IF EXISTS TargetD1Table; CREATE TABLE IF NOT EXISTS TargetD1Table (id INTEGER PRIMARY KEY, text TEXT, date_added TEXT);"
+```
+
+</CliVariant>
+</CliVariants>
 
 ## 3. Create an `index.js` file
 
