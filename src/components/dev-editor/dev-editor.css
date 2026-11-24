@@ -1,0 +1,588 @@
+/* Dev-only inline content editor styles.
+ * Loaded dynamically under `import.meta.env.DEV` so nothing ships to production. */
+
+html[data-dev-editor-active="true"] [data-dev-editable-node] {
+	border-radius: 4px;
+	transition:
+		outline-color 120ms ease,
+		background-color 120ms ease;
+}
+
+html[data-dev-editor-active="true"]
+	[data-dev-editable-node]:not([data-dev-active-block="true"]):hover {
+	outline: 1px dashed color-mix(in oklch, var(--nb-primary) 55%, transparent);
+	outline-offset: 4px;
+	cursor: pointer;
+}
+
+html[data-dev-editor-active="true"]
+	[data-dev-editable-node][data-dev-active-block="true"] {
+	outline: 2px solid var(--nb-primary);
+	outline-offset: 4px;
+	background-color: color-mix(in oklch, var(--nb-primary) 6%, transparent);
+	cursor: text;
+}
+
+/* Disable stretched-link ::after overlays on Card/LinkCard/Feature/RelatedProduct
+ * while editing so clicking description or CTA targets that exact field. */
+html[data-dev-editor-active="true"] .docs-content a::after {
+	pointer-events: none !important;
+}
+
+/* Ensure editable code blocks display cleanly and don't fight the floating copy button. */
+html[data-dev-editor-active="true"] pre > code[data-dev-editable-node] {
+	display: block;
+	white-space: pre;
+}
+
+html[data-dev-editor-active="true"]
+	.nb-code-figure:has([data-dev-active-block="true"])
+	.nb-code-copy {
+	opacity: 0 !important;
+	pointer-events: none !important;
+}
+
+/* Keep inline editable badges/tabs/file-tree labels aligned with a tight outline. */
+html[data-dev-editor-active="true"]
+	:is(span, a, button)[data-dev-editable-node]:hover,
+html[data-dev-editor-active="true"]
+	:is(span, a, button)[data-dev-editable-node][data-dev-active-block="true"] {
+	outline-offset: 2px;
+}
+
+[data-dev-editable-node][data-dev-edited="true"] {
+	box-shadow: -3px 0 0 0 var(--nb-primary);
+	padding-inline-start: 0.375rem;
+	margin-inline-start: -0.375rem;
+	border-radius: 2px;
+}
+
+html[data-dev-editor-active="true"]
+	[data-dev-editable-node][data-dev-edited="true"]:not(
+		[data-dev-active-block="true"]
+	) {
+	background-color: color-mix(in oklch, var(--nb-primary) 8%, transparent);
+}
+
+cfdocs-dev-editor {
+	font-family: var(--nb-font-sans);
+	color: var(--nb-foreground);
+}
+
+/* ---- Floating inline block bar (docked to the active isolated block) ---- */
+.cfdocs-de-block-bar {
+	position: fixed;
+	z-index: 65;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	gap: 0.375rem;
+	max-width: min(44rem, calc(100vw - 1.5rem));
+	padding: 0.3125rem 0.4375rem;
+	border-radius: 0.625rem;
+	border: 1px solid var(--nb-border-strong);
+	background: var(--nb-card);
+	box-shadow:
+		0 8px 24px oklch(0 0 0 / 0.14),
+		0 2px 6px oklch(0 0 0 / 0.08);
+	font-size: 0.75rem;
+}
+
+.cfdocs-de-block-bar[hidden] {
+	display: none;
+}
+
+.cfdocs-de-block-tag {
+	display: inline-flex;
+	align-items: center;
+	flex-shrink: 1;
+	max-width: 14rem;
+	padding: 0.1875rem 0.4375rem;
+	border-radius: 0.375rem;
+	background: color-mix(in oklch, var(--nb-primary) 12%, transparent);
+	color: var(--nb-primary);
+	font-size: 0.6875rem;
+	font-weight: 600;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.cfdocs-de-block-note {
+	flex: 1 1 13rem;
+	min-width: 8rem;
+	height: 1.625rem;
+	padding: 0 0.5rem;
+	border-radius: 0.375rem;
+	border: 1px solid var(--nb-border);
+	background: var(--nb-muted);
+	color: var(--nb-foreground);
+	font-family: var(--nb-font-sans);
+	font-size: 0.75rem;
+}
+
+.cfdocs-de-block-note::placeholder {
+	color: var(--nb-muted-foreground);
+}
+
+.cfdocs-de-block-note:focus {
+	outline: 2px solid var(--nb-primary);
+	outline-offset: -1px;
+	background: var(--nb-card);
+}
+
+/* ---- Bottom-left Edit Mode toggle ---- */
+.cfdocs-de-toggle {
+	position: fixed;
+	left: 1rem;
+	bottom: 1.25rem;
+	z-index: 60;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	height: 2.25rem;
+	padding: 0 0.875rem;
+	border-radius: 9999px;
+	border: 1px solid var(--nb-border-strong);
+	background: var(--nb-card);
+	color: var(--nb-foreground);
+	font-size: 0.8125rem;
+	font-weight: 500;
+	line-height: 1;
+	cursor: pointer;
+	box-shadow:
+		0 2px 8px oklch(0 0 0 / 0.08),
+		0 1px 2px oklch(0 0 0 / 0.05);
+	transition:
+		border-color 150ms ease,
+		background-color 150ms ease,
+		color 150ms ease,
+		box-shadow 150ms ease;
+}
+
+.cfdocs-de-toggle:hover {
+	border-color: var(--nb-primary);
+	color: var(--nb-primary);
+}
+
+.cfdocs-de-toggle:focus-visible {
+	outline: 2px solid var(--nb-primary);
+	outline-offset: 2px;
+}
+
+.cfdocs-de-toggle[aria-pressed="true"] {
+	border-color: var(--nb-primary);
+	background: color-mix(in oklch, var(--nb-primary) 10%, var(--nb-card));
+	color: var(--nb-foreground);
+}
+
+.cfdocs-de-dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 9999px;
+	background: var(--nb-muted-foreground);
+	transition: background-color 150ms ease;
+}
+
+.cfdocs-de-toggle[aria-pressed="true"] .cfdocs-de-dot {
+	background: var(--nb-primary);
+	box-shadow: 0 0 0 3px color-mix(in oklch, var(--nb-primary) 22%, transparent);
+}
+
+.cfdocs-de-kbd {
+	font-family: var(--nb-font-mono);
+	font-size: 0.6875rem;
+	color: var(--nb-muted-foreground);
+	padding: 0.125rem 0.3125rem;
+	border-radius: 4px;
+	background: var(--nb-muted);
+	border: 1px solid var(--nb-border);
+}
+
+/* ---- Bottom-centre pop-in overlay (visible when edits exist) ---- */
+.cfdocs-de-overlay {
+	position: fixed;
+	left: 50%;
+	bottom: 1.25rem;
+	z-index: 60;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+	width: min(40rem, calc(100vw - 2rem));
+	transform: translate(-50%, 1rem);
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		opacity 180ms ease,
+		transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cfdocs-de-overlay[data-open="true"] {
+	transform: translate(-50%, 0);
+	opacity: 1;
+	pointer-events: auto;
+}
+
+.cfdocs-de-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem;
+	width: 100%;
+	padding: 0.5rem 0.625rem 0.5rem 0.875rem;
+	border-radius: 0.875rem;
+	border: 1px solid var(--nb-border-strong);
+	background: var(--nb-card);
+	box-shadow:
+		0 10px 30px oklch(0 0 0 / 0.14),
+		0 2px 6px oklch(0 0 0 / 0.08);
+}
+
+.cfdocs-de-summary-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.375rem 0.5rem;
+	margin-inline-start: -0.375rem;
+	border: 0;
+	border-radius: 0.5rem;
+	background: transparent;
+	color: var(--nb-foreground);
+	font-size: 0.8125rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background-color 120ms ease;
+}
+
+.cfdocs-de-summary-btn:hover {
+	background: var(--nb-accent);
+}
+
+.cfdocs-de-summary-btn:focus-visible {
+	outline: 2px solid var(--nb-primary);
+	outline-offset: 1px;
+}
+
+.cfdocs-de-count-badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.375rem;
+	height: 1.375rem;
+	padding: 0 0.375rem;
+	border-radius: 9999px;
+	background: color-mix(in oklch, var(--nb-primary) 16%, transparent);
+	color: var(--nb-primary);
+	font-size: 0.75rem;
+	font-weight: 600;
+	font-variant-numeric: tabular-nums;
+}
+
+.cfdocs-de-chevron {
+	width: 0.875rem;
+	height: 0.875rem;
+	color: var(--nb-muted-foreground);
+	transition: transform 150ms ease;
+}
+
+.cfdocs-de-summary-btn[aria-expanded="true"] .cfdocs-de-chevron {
+	transform: rotate(180deg);
+}
+
+.cfdocs-de-actions {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-shrink: 0;
+}
+
+.cfdocs-de-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.375rem;
+	height: 2rem;
+	padding: 0 0.75rem;
+	border-radius: 0.5rem;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	line-height: 1;
+	cursor: pointer;
+	transition:
+		background-color 120ms ease,
+		border-color 120ms ease,
+		color 120ms ease;
+}
+
+.cfdocs-de-btn:focus-visible {
+	outline: 2px solid var(--nb-primary);
+	outline-offset: 2px;
+}
+
+.cfdocs-de-btn[hidden] {
+	display: none;
+}
+
+.cfdocs-de-btn-ghost {
+	border: 1px solid var(--nb-border);
+	background: transparent;
+	color: var(--nb-muted-foreground);
+}
+
+.cfdocs-de-btn-ghost:hover {
+	border-color: var(--nb-border-strong);
+	background: var(--nb-accent);
+	color: var(--nb-foreground);
+}
+
+.cfdocs-de-btn-primary {
+	border: 1px solid transparent;
+	background: var(--nb-primary);
+	color: var(--nb-primary-foreground);
+	min-width: 7.5rem;
+}
+
+.cfdocs-de-btn-primary:hover {
+	background: var(--nb-primary-hover);
+}
+
+.cfdocs-de-btn-primary[data-copied="true"] {
+	background: var(--nb-success);
+}
+
+/* ---- Temporary Undo toast (shown when reverting/resetting clears all edits) ---- */
+.cfdocs-de-toast {
+	position: fixed;
+	left: 50%;
+	bottom: 1.25rem;
+	z-index: 60;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 0.5rem 0.625rem 0.5rem 0.875rem;
+	border-radius: 0.875rem;
+	border: 1px solid var(--nb-border-strong);
+	background: var(--nb-card);
+	color: var(--nb-foreground);
+	font-size: 0.8125rem;
+	box-shadow:
+		0 10px 30px oklch(0 0 0 / 0.14),
+		0 2px 6px oklch(0 0 0 / 0.08);
+	transform: translate(-50%, 1rem);
+	opacity: 0;
+	pointer-events: none;
+	transition:
+		opacity 160ms ease,
+		transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cfdocs-de-toast[data-open="true"] {
+	transform: translate(-50%, 0);
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/* ---- Expandable review drawer ---- */
+.cfdocs-de-drawer {
+	width: 100%;
+	max-height: min(24rem, 52vh);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	border-radius: 0.875rem;
+	border: 1px solid var(--nb-border-strong);
+	background: var(--nb-card);
+	box-shadow:
+		0 12px 32px oklch(0 0 0 / 0.16),
+		0 2px 6px oklch(0 0 0 / 0.08);
+}
+
+.cfdocs-de-drawer[hidden] {
+	display: none;
+}
+
+.cfdocs-de-drawer-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: 0.5rem 0.75rem;
+	border-bottom: 1px solid var(--nb-border);
+	background: var(--nb-surface-sunken);
+}
+
+.cfdocs-de-tabs {
+	display: inline-flex;
+	gap: 0.25rem;
+}
+
+.cfdocs-de-tab {
+	padding: 0.25rem 0.625rem;
+	border: 0;
+	border-radius: 0.375rem;
+	background: transparent;
+	color: var(--nb-muted-foreground);
+	font-size: 0.75rem;
+	font-weight: 500;
+	cursor: pointer;
+}
+
+.cfdocs-de-tab[aria-selected="true"] {
+	background: var(--nb-card);
+	color: var(--nb-foreground);
+	box-shadow: 0 1px 2px oklch(0 0 0 / 0.08);
+}
+
+.cfdocs-de-source-label {
+	font-family: var(--nb-font-mono);
+	font-size: 0.6875rem;
+	color: var(--nb-muted-foreground);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cfdocs-de-drawer-body {
+	overflow-y: auto;
+	padding: 0.625rem 0.75rem;
+}
+
+.cfdocs-de-edit-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cfdocs-de-edit-item {
+	padding: 0.5rem 0.625rem;
+	border-radius: 0.5rem;
+	border: 1px solid var(--nb-border);
+	background: var(--nb-muted);
+	font-size: 0.75rem;
+}
+
+.cfdocs-de-edit-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	margin-bottom: 0.375rem;
+}
+
+.cfdocs-de-edit-title {
+	font-weight: 600;
+	color: var(--nb-foreground);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.cfdocs-de-edit-subtitle {
+	font-weight: 400;
+	color: var(--nb-muted-foreground);
+}
+
+.cfdocs-de-edit-controls {
+	display: inline-flex;
+	gap: 0.375rem;
+	flex-shrink: 0;
+}
+
+.cfdocs-de-mini-btn {
+	padding: 0.1875rem 0.5rem;
+	border-radius: 0.375rem;
+	border: 1px solid var(--nb-border);
+	background: var(--nb-card);
+	color: var(--nb-muted-foreground);
+	font-size: 0.6875rem;
+	font-weight: 500;
+	line-height: 1.2;
+	cursor: pointer;
+}
+
+.cfdocs-de-mini-btn:hover:not(:disabled) {
+	color: var(--nb-foreground);
+	border-color: var(--nb-border-strong);
+	background: var(--nb-accent);
+}
+
+.cfdocs-de-mini-btn:disabled {
+	opacity: 0.45;
+	cursor: not-allowed;
+}
+
+.cfdocs-de-diff-row {
+	margin: 0.125rem 0;
+	line-height: 1.4;
+	word-break: break-word;
+	white-space: pre-wrap;
+}
+
+.cfdocs-de-diff-before {
+	color: var(--nb-danger);
+	text-decoration: line-through;
+	opacity: 0.85;
+}
+
+.cfdocs-de-diff-after {
+	color: var(--nb-success);
+}
+
+.cfdocs-de-diff-unchanged {
+	color: var(--nb-muted-foreground);
+}
+
+.cfdocs-de-note-input {
+	width: 100%;
+	margin-top: 0.4375rem;
+	padding: 0.3125rem 0.5rem;
+	border-radius: 0.375rem;
+	border: 1px solid var(--nb-border);
+	background: var(--nb-card);
+	color: var(--nb-foreground);
+	font-family: var(--nb-font-sans);
+	font-size: 0.75rem;
+}
+
+.cfdocs-de-note-input::placeholder {
+	color: var(--nb-muted-foreground);
+}
+
+.cfdocs-de-note-input:focus {
+	outline: 2px solid var(--nb-primary);
+	outline-offset: -1px;
+}
+
+.cfdocs-de-prompt-preview {
+	margin: 0;
+	padding: 0.625rem;
+	border-radius: 0.5rem;
+	border: 1px solid var(--nb-border);
+	background: var(--nb-muted);
+	font-family: var(--nb-font-mono);
+	font-size: 0.75rem;
+	line-height: 1.5;
+	white-space: pre-wrap;
+	word-break: break-word;
+	color: var(--nb-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.cfdocs-de-overlay,
+	.cfdocs-de-toast,
+	.cfdocs-de-toggle,
+	.cfdocs-de-chevron,
+	html[data-dev-editor-active="true"] [data-dev-editable-node] {
+		transition: none;
+	}
+}
+
+@media print {
+	cfdocs-dev-editor {
+		display: none !important;
+	}
+}

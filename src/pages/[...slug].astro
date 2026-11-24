@@ -209,6 +209,7 @@ const rssHref =
 	hideTitle={isSplash}
 	feedback={entry.data.feedback}
 	styleGuide={entry.data.styleGuide}
+	devSourcePath={import.meta.env.DEV ? entry.filePath : undefined}
 	meta={{
 		titleSuffix: productMetaTitle,
 		canonical: entry.data.canonical,

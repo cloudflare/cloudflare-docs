@@ -127,4 +127,14 @@ function closest(
 }
 ---
 
-<Content components={components} {...(params ?? {})} />
+{import.meta.env.DEV && partial.filePath ? (
+	<Fragment>
+		<Fragment
+			set:html={`<!--cfdocs-dev-partial-start:${partial.filePath}-->`}
+		/>
+		<Content components={components} {...(params ?? {})} />
+		<Fragment set:html="<!--cfdocs-dev-partial-end-->" />
+	</Fragment>
+) : (
+	<Content components={components} {...(params ?? {})} />
+)}

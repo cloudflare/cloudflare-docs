@@ -324,6 +324,9 @@ export default defineConfig({
 	server: {
 		port: 1111,
 	},
+	devToolbar: {
+		enabled: false,
+	},
 	integrations,
 	vite: {
 		...appVite,

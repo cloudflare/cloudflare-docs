@@ -59,6 +59,7 @@ const { Content } = await render(note);
 	noindex={note.data.hidden}
 	socialImage={await changelogOgImage(note)}
 	lastUpdated={lastUpdated}
+	devSourcePath={import.meta.env.DEV ? note.filePath : undefined}
 	meta={{
 		titleSuffix: "Changelog",
 		product: primaryProduct?.data.entry?.title,
@@ -97,6 +98,9 @@ const { Content } = await render(note);
 			<h2
 				class="text-foreground mt-2 mb-0 leading-[1.15] text-balance"
 				style="font-size:var(--nb-h1-size);font-weight:var(--nb-h1-weight);letter-spacing:var(--nb-h1-tracking)"
+				data-dev-editable={
+					import.meta.env.DEV ? "frontmatter:title" : undefined
+				}
 			>
 				{title}
 			</h2>
