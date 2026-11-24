@@ -322,15 +322,30 @@ console.log({
 });
 ```
 
-- `served_by_region` and `served_by_primary` fields are present for all D1 remote requests, regardless of whether read replication is enabled or if the Sessions API is used. On local development, `npx wrangler dev`, these fields are `undefined`.
+- `served_by_region` and `served_by_primary` fields are present for all D1 remote requests, regardless of whether read replication is enabled or if the Sessions API is used. During local development (`cf dev` or `npx wrangler dev`), these fields are `undefined`.
 
-### Enable read replication via REST API
+### Enable read replication via CLI or REST API
 
-With the REST API, set `read_replication.mode: auto` to enable read replication on a D1 database.
+You can enable read replication using the [Cloudflare CLI (`cf`)](/cf/) or the REST API by setting read replication mode to `auto`.
 
-For this REST endpoint, you need to have an API token with `D1:Edit` permission. If you do not have an API token, follow the guide: [Create API token](/fundamentals/api/get-started/create-token/).
+When using the REST API directly, you need an API token with `D1:Edit` permission. For more information, refer to [Create API token](/fundamentals/api/get-started/create-token/).
 
-<Tabs>
+<Tabs syncKey="d1ReadReplicationApi">
+<TabItem label="Cloudflare CLI (cf)">
+
+To enable read replication on an existing database:
+
+```sh
+cf d1 edit <DATABASE_ID> --read-replication-mode auto
+```
+
+You can also enable read replication when creating a new database:
+
+```sh
+cf d1 create --name <DATABASE_NAME> --read-replication-mode auto
+```
+
+</TabItem>
 <TabItem label="cURL">
 ```sh
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
@@ -357,17 +372,24 @@ await fetch ("/v4/accounts/{account_id}/d1/database/{database_id}", {
 </TabItem>
 </Tabs>
 
-### Disable read replication via REST API
+### Disable read replication via CLI or REST API
 
-With the REST API, set `read_replication.mode: disabled` to disable read replication on a D1 database.
+You can disable read replication using the [Cloudflare CLI (`cf`)](/cf/) or the REST API by setting read replication mode to `disabled`.
 
-For this REST endpoint, you need to have an API token with `D1:Edit` permission. If you do not have an API token, follow the guide: [Create API token](/fundamentals/api/get-started/create-token/).
+When using the REST API directly, you need an API token with `D1:Edit` permission. For more information, refer to [Create API token](/fundamentals/api/get-started/create-token/).
 
 :::note
 Disabling read replication takes up to 24 hours for replicas to stop processing requests. Sessions API works with databases that do not have read replication enabled, so it is safe to run code with Sessions API even after disabling read replication.
 :::
 
-<Tabs>
+<Tabs syncKey="d1ReadReplicationApi">
+<TabItem label="Cloudflare CLI (cf)">
+
+```sh
+cf d1 edit <DATABASE_ID> --read-replication-mode disabled
+```
+
+</TabItem>
 <TabItem label="cURL">
 ```sh
 curl -X PUT "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
@@ -397,11 +419,16 @@ await fetch ("/v4/accounts/{account_id}/d1/database/{database_id}", {
 
 On the Cloudflare dashboard, check **Settings** for your D1 database to view if read replication is enabled.
 
-Alternatively, `GET` D1 database REST endpoint returns if read replication is enabled or disabled.
+Alternatively, check the database configuration with `cf d1 get` or the `GET` D1 database REST endpoint. When using the REST API directly, you need an API token with `D1:Read` permission. For more information, refer to [Create API token](/fundamentals/api/get-started/create-token/).
 
-For this REST endpoint, you need to have an API token with `D1:Read` permission. If you do not have an API token, follow the guide: [Create API token](/fundamentals/api/get-started/create-token/).
+<Tabs syncKey="d1ReadReplicationApi">
+<TabItem label="Cloudflare CLI (cf)">
 
-<Tabs>
+```sh
+cf d1 get <DATABASE_ID> --fields read_replication
+```
+
+</TabItem>
 <TabItem label="cURL">
 ```sh
 curl -X GET "https://api.cloudflare.com/client/v4/accounts/{account_id}/d1/database/{database_id}" \
