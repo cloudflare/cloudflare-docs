@@ -12,7 +12,15 @@ description: >-
   This tutorial shows how to create an API that allows you to securely run queries against a D1 database. The API can be used to customize access controls and/or limit what tables can be queried.
 ---
 
-import { Render, PackageManagers, Steps, Details, WranglerConfig } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	Details,
+	PackageManagers,
+	Render,
+	Steps,
+	WranglerConfig,
+} from "~/components";
 
 In this tutorial, you will learn how to create an API that allows you to securely run queries against a D1 database.
 
@@ -38,12 +46,16 @@ D1 uses parameterized queries. This prevents SQL injection. To make your API mor
 	<Render file="nodejs-version-manager" product="workers" />
 
 	For supported Node.js versions, refer to the
+	[Cloudflare CLI (`cf`) requirements](/cf/get-started/#requirements) or
 	[Wrangler system requirements](/workers/wrangler/install-and-update/#install-wrangler).
 </Details>
 
 ## 1. Create a new project
 
 Create a new Worker to create and deploy your API.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 1. Create a Worker named `d1-http` by running:
@@ -66,6 +78,27 @@ Create a new Worker to create and deploy your API.
     ```
 
 </Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+1. Create a Worker named `d1-http` by running:
+
+    ```sh frame="none"
+    cf init d1-http
+    ```
+
+2.  Change into your new project directory to start developing:
+
+    ```sh frame="none"
+    cd d1-http
+    ```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 ## 2. Install Hono
 
@@ -169,7 +202,7 @@ To initialize the application, you need to import the required packages, initial
 
 3. To test the API locally, open a second terminal.
 
-4. In the second terminal, execute the below cURL command. Replace `YOUR_API_KEY` with the value you set in the `.dev.vars` file.
+4. In the second terminal, execute the below cURL command (using the local URL printed by your dev server, such as `http://localhost:5173` for `cf dev` or `http://localhost:8787` for Wrangler). Replace `YOUR_API_KEY` with the value you set in the `.dev.vars` file.
 
    ```sh frame="none"
    curl -H "Authorization: Bearer YOUR_API_KEY" "http://localhost:8787/api/all" --data '{}'
@@ -181,7 +214,7 @@ To initialize the application, you need to import the required packages, initial
    /api/all endpoint
    ```
 
-5. Stop the local server from running by pressing `x` in the first terminal.
+5. Stop the local server from running in the first terminal (`Ctrl+C`, or `x` in Wrangler).
 
 </Steps>
 
@@ -189,7 +222,10 @@ The Hono application is now set up. You can test the other endpoints and add mor
 
 ## 6. Create a database
 
-If you do not have a D1 database already, you can create a new database with `wrangler d1 create`.
+If you do not have a D1 database already, create a new database from your terminal.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 
@@ -215,10 +251,31 @@ If you do not have a D1 database already, you can create a new database with `wr
 
 Make a note of the displayed `database_name` and `database_id`. You will use this to reference the database by creating a [binding](/workers/runtime-apis/bindings/).
 
-## 7. Add a binding
+</CliVariant>
+<CliVariant cli="cf">
 
 <Steps>
-1. From your `d1-http` folder, open the Wrangler file, Wrangler's configuration file.
+
+1.  In your terminal, run:
+
+    ```sh frame="none"
+    cf d1 create --name d1-http-example
+    ```
+
+</Steps>
+
+Make a note of the `uuid` returned in the JSON output. You will use it to bind and query this database in the following steps.
+
+</CliVariant>
+</CliVariants>
+
+## 7. Add a binding
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+<Steps>
+1. From your `d1-http` folder, open the Wrangler configuration file.
 2. Add the following binding in the file. Make sure that the `database_name` and the `database_id` are correct.
 
     <WranglerConfig>
@@ -237,16 +294,48 @@ Make a note of the displayed `database_name` and `database_id`. You will use thi
 
     </WranglerConfig>
 
-3.  In your `src/index.ts` file, update the `Bindings` type by adding `DB: D1Database`.
+</Steps>
 
-    ```ts ins={2}
-    type Bindings = {
-    	DB: D1Database;
-    	API_KEY: string;
-    };
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+1. Open `cloudflare.config.ts` in your `d1-http` folder.
+2. Add the `DB` binding using `bindings.d1()` and declare the `API_KEY` secret using `bindings.secret()`:
+
+    ```ts title="cloudflare.config.ts"
+    import { bindings, defineConfig } from "cf/config";
+    import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+    export default defineConfig({
+    	worker: {
+    		name: "d1-http",
+    		entrypoint,
+    		compatibilityDate: "<COMPATIBILITY_DATE>",
+    		env: {
+    			DB: bindings.d1({
+    				id: "<DATABASE_ID>",
+    				name: "d1-http-example",
+    			}),
+    			API_KEY: bindings.secret(),
+    		},
+    	},
+    });
     ```
 
 </Steps>
+
+</CliVariant>
+</CliVariants>
+
+Next, in your `src/index.ts` file, update the `Bindings` type by adding `DB: D1Database`:
+
+```ts
+type Bindings = {
+	DB: D1Database;
+	API_KEY: string;
+};
+```
 
 You can now access the database in the Hono application.
 
@@ -254,40 +343,45 @@ You can now access the database in the Hono application.
 
 To create a table in your newly created database:
 
-<Steps>
+1. Create a new folder called `schemas` inside your `d1-http` folder.
+2. Create a new file called `schema.sql`, and paste the following SQL statement into the file:
 
-1.  Create a new folder called `schemas` inside your `d1-http` folder.
-2.  Create a new file called `schema.sql`, and paste the following SQL statement into the file.
+```sql title="schemas/schema.sql"
+DROP TABLE IF EXISTS posts;
+CREATE TABLE IF NOT EXISTS posts (
+	id integer PRIMARY KEY AUTOINCREMENT,
+	author text NOT NULL,
+	title text NOT NULL,
+	body text NOT NULL,
+	post_slug text NOT NULL
+);
+INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api');
+```
 
-    ```sql title="schema.sql"
-    DROP TABLE IF EXISTS posts;
-    CREATE TABLE IF NOT EXISTS posts (
-    	id integer PRIMARY KEY AUTOINCREMENT,
-    	author text NOT NULL,
-    	title text NOT NULL,
-    	body text NOT NULL,
-    	post_slug text NOT NULL
-    );
-    INSERT INTO posts (author, title, body, post_slug) VALUES ('Harshil', 'D1 HTTP API', 'Learn to create an API to query your D1 database.','d1-http-api');
-    ```
+The code drops any table named `posts` if it exists, then creates a new table `posts` with the fields `id`, `author`, `title`, `body`, and `post_slug`. It then uses an `INSERT` statement to populate the table.
 
-    The code drops any table named `posts` if it exists, then creates a new table `posts` with the field `id`, `author`, `title`, `body`, and `post_slug`. It then uses an INSERT statement to populate the table.
+3. Execute the schema against your local development database:
 
-3.  In your terminal, execute the following command to create this table:
+<CliVariants>
+<CliVariant cli="wrangler">
 
-    ```sh frame="none"
-    npx wrangler d1 execute d1-http-example --file=./schemas/schema.sql
-    ```
+```sh frame="none"
+npx wrangler d1 execute d1-http-example --file=./schemas/schema.sql
+```
 
-</Steps>
+Upon successful execution, a new table is added to your local database. To connect local development to your remote database instead, set `"remote": true` on the D1 binding. For more information, refer to [Remote bindings](/workers/local-development/#remote-bindings).
 
-Upon successful execution, a new table will be added to your database.
+</CliVariant>
+<CliVariant cli="cf">
 
-:::note
+```sh frame="none"
+cf d1 raw <DATABASE_ID> --sql @schemas/schema.sql --local
+```
 
-The table will be created in the local instance of the database. If you want to add this table to your production database set `"remote" : true` in the D1 binding configuration. Refer to the [remote bindings documentation](/workers/local-development/#remote-bindings) for more information.
+Upon successful execution, a new table is added to your local database (`cf d1` targets remote by default, so pass `--local` with `cf d1 raw` for local development state). To connect local development to your remote database instead, set `dev: { remote: true }` on `bindings.d1()`. For more information, refer to [Remote bindings](/workers/local-development/#remote-bindings).
 
-:::
+</CliVariant>
+</CliVariants>
 
 ## 9. Query the database
 
@@ -399,7 +493,10 @@ If everything is implemented correctly, the above commands should result success
 
 ## 11. Deploy the API
 
-Now that everything is working as expected, the last step is to deploy it to the Cloudflare network. You will use Wrangler to deploy the API.
+Now that everything is working as expected, deploy the API to the Cloudflare network.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <Steps>
 1. To use the API in production instead of using it locally, you need to add the table to your remote (production) database. To add the table to your production database, run the following command:
@@ -442,7 +539,7 @@ Now that everything is working as expected, the last step is to deploy it to the
     [YOUR_API_KEY]
     ```
 
-4.  Execute the `wrangler secret put` command to add an API to the deployed project.
+4.  Execute the `wrangler secret put` command to add an API key to the deployed project.
 
     ```sh frame="none"
     npx wrangler secret put API_KEY
@@ -475,6 +572,49 @@ Now that everything is working as expected, the last step is to deploy it to the
     ```
 
 </Steps>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<Steps>
+1. Add the table to your remote (production) database (without `--local`, `cf d1 query` targets your remote database by default):
+
+    ```sh frame="none"
+    cf d1 query <DATABASE_ID> --sql @schemas/schema.sql
+    ```
+
+    You should now be able to view the table in the [Cloudflare dashboard > **Storage & Databases** > **D1**](https://dash.cloudflare.com/?to=/:account/workers/d1/).
+
+2. Deploy your Worker to Cloudflare:
+
+    ```sh frame="none"
+    cf deploy
+    ```
+
+    Make a note of the deployed Worker URL (`DEPLOYED_APP_LINK`).
+
+3. Generate a new API key to use in production:
+
+    ```sh
+    openssl rand -base64 32
+    ```
+
+4. Upload the secret to your deployed Worker with `cf workers secrets update`:
+
+    ```sh frame="none"
+    cf workers secrets update API_KEY --worker d1-http --type secret_text --text "<YOUR_API_KEY>"
+    ```
+
+5. Test the deployed API with `curl`, using your production `YOUR_API_KEY` and `DEPLOYED_APP_LINK`:
+
+    ```sh frame="none"
+    curl -H "Authorization: Bearer YOUR_API_KEY" "https://DEPLOYED_APP_LINK/api/exec" --data '{"query": "SELECT 1"}'
+    ```
+
+</Steps>
+
+</CliVariant>
+</CliVariants>
 
 ## Summary
 
