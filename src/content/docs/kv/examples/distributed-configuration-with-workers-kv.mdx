@@ -11,10 +11,11 @@ products:
 ---
 
 import {
-	Render,
 	PackageManagers,
-	Tabs,
+	Render,
 	TabItem,
+	Tabs,
+	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
 
@@ -134,7 +135,8 @@ The application also uses exponential backoff to handle retries in case of error
 
 With the configuration data now in the Workers KV namespace, we can use it in our Workers application to personalize the application for each user.
 
-```js title="index.ts"
+<TypeScriptExample filename="src/index.ts">
+```ts
 // Example configuration data stored in Workers KV:
 // Key: "user-id-abc" | Value: {"preview_features_enabled": false}
 // Key: "user-id-def" | Value: {"preview_features_enabled": true}
@@ -202,8 +204,8 @@ export default {
     });
   }
 } satisfies ExportedHandler<Env>;
-
 ```
+</TypeScriptExample>
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";

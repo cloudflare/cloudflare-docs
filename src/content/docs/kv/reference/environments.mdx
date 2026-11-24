@@ -20,7 +20,14 @@ import {
 
 In [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), environments are modeled as [modes](/cf/projects/cloudflare-config/#evaluate-configuration). This is useful when your Worker code refers to a single KV binding like `MY_KV`, and you want that binding to point to different KV namespaces for staging and production.
 
-Pass a function to `defineConfig(({ mode }) => ...)` and return a complete configuration for each mode, binding `MY_KV` to a different namespace `id`:
+Store your staging and production namespace IDs in a separate module (for example, `kv-namespaces.ts`):
+
+```ts title="kv-namespaces.ts"
+export const prodNamespaceId = "<PROD_NAMESPACE_ID>";
+export const stagingNamespaceId = "<STAGING_NAMESPACE_ID>";
+```
+
+Then pass a function to `defineConfig(({ mode }) => ...)` and return a complete configuration for each mode, binding `MY_KV` to the namespace ID for that mode:
 
 ```ts title="cloudflare.config.ts"
 import { bindings, defineConfig } from "cf/config";

@@ -15,6 +15,7 @@ import {
 	CliVariants,
 	PackageManagers,
 	Render,
+	TypeScriptExample,
 	WranglerConfig,
 } from "~/components";
 
@@ -69,8 +70,8 @@ By default, `cf` writes to your remote KV namespace. Add `--local` to write to l
 
 In this example, our Workers application will accept any key name as the path of the HTTP request and return the value stored in the KV store for that key.
 
-```js title="index.ts"
-
+<TypeScriptExample filename="src/index.ts">
+```ts
 import mime from "mime";
 
 interface Env {
@@ -120,8 +121,8 @@ export default {
     },
 
 } satisfies ExportedHandler<Env>;
-
 ```
+</TypeScriptExample>
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
@@ -225,7 +226,8 @@ In addition to serving static assets, we can also generate dynamic HTML or API r
 
 3. Update your Workers code to add logic to serve a translated HTML file based on the language of the Accept-Language header of the request:
 
-```js title="index.ts" {2, 26-63}
+<TypeScriptExample filename="src/index.ts">
+```ts
 import mime from 'mime';
 import parser from 'accept-language-parser'
 
@@ -315,8 +317,8 @@ export default {
 
 },
 } satisfies ExportedHandler<Env>;
-
 ```
+</TypeScriptExample>
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";

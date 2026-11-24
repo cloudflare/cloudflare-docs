@@ -10,7 +10,12 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	PackageManagers,
+	Render,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Workers KV can be used as a persistent, single, global cache accessible from Cloudflare Workers to speed up your application.
 Data cached in Workers KV is accessible from all other Cloudflare locations as well, and persists until expiry or deletion.
@@ -33,7 +38,8 @@ With Workers KV, the data is persisted by default to [central stores](/kv/concep
 
 In the following `index.ts` file, the Worker fetches data from an external server and caches the response in Workers KV. If the data is already cached in Workers KV, the Worker reads the cached data from Workers KV instead of calling the external API.
 
-```js title="index.ts" collapse={42-1000}
+<TypeScriptExample filename="src/index.ts" code={{ collapse: "42-1000" }}>
+```ts
 interface Env {
   CACHE_KV: KVNamespace;
 }
@@ -106,8 +112,8 @@ if (!bodyMatch) return 'No content found';
     return textContent;
 
 }
-
 ```
+</TypeScriptExample>
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";

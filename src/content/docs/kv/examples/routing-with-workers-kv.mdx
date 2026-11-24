@@ -10,7 +10,12 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, WranglerConfig } from "~/components";
+import {
+	PackageManagers,
+	Render,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Using Workers KV to store routing data to route requests across various web servers with Workers is an ideal use case for Workers KV. Routing workloads can have high read volume, and Workers KV's low-latency reads can help ensure that routing decisions are made quickly and efficiently.
 
@@ -31,7 +36,8 @@ Our Cloudflare Worker is responsible for receiving all requests for all storefro
 For simplicity of demonstration, the storefront will be identified with a path element containing the storefront ID, where
 `https://<WORKER_HOSTNAME>/<STOREFRONT_ID>/...` is the URL pattern for the storefront. You may prefer to use subdomains to identify storefronts in a real-world scenario.
 
-```js title="index.ts" collapse={17-22, 34-39, 69-73}
+<TypeScriptExample filename="src/index.ts" code={{ collapse: "17-22, 34-39, 69-73" }}>
+```ts
 
 // Example routing data stored in Workers KV:
 // Key: "storefrontA" | Value: {"origin": "https://storefrontA-server.example.com"}
@@ -110,8 +116,8 @@ export default {
 
 }
 } satisfies ExportedHandler<Env>;
-
 ```
+</TypeScriptExample>
 
 <WranglerConfig
 	cfConfig={`import { bindings, defineConfig } from "cf/config";
