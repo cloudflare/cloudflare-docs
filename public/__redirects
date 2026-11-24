@@ -3,6 +3,12 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+# Polish navigation
+/images/polish/activate-polish/ /images/polish/configure-polish/ 301
+/images/polish/compression/ /images/polish/configure-polish/ 301
+/images/polish/compression-and-format-selection/ /images/polish/configure-polish/ 301
+/images/polish/cf-polished-statuses/ /images/polish/troubleshooting-polish/ 301
+
 /workers/observability/exporting-opentelemetry-data/ /observability/export/opentelemetry/ 301
 /workers/observability/exporting-opentelemetry-data/honeycomb/ /observability/export/opentelemetry/honeycomb/ 301
 /workers/observability/exporting-opentelemetry-data/grafana-cloud/ /observability/export/opentelemetry/grafana-cloud/ 301
@@ -1324,7 +1330,7 @@
 /images/url-format/ /images/optimization/features/ 301
 /images/variants/ /images/optimization/hosted-images/enable-flexible-variants/ 301
 /images/worker/ /images/optimization/transformations/transform-via-workers/ 301
-/support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
+/support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/troubleshooting-polish/ 301
 /images/cloudflare-images/ /images/ 301
 /images/cloudflare-images/api-request/ /images/storage/upload-images/methods/#upload-using-api 301
 /images/cloudflare-images/images-analytics/ /images/ 301
