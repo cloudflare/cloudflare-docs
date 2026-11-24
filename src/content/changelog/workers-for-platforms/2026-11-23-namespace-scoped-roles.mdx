@@ -1,0 +1,29 @@
+---
+title: Grant access to Workers in specific dispatch namespaces
+description: Four new Workers Namespace roles let you control what members, User Groups, and API tokens can do with the Workers in a dispatch namespace.
+products:
+  - workers-for-platforms
+  - workers
+date: 2026-11-23
+---
+
+You can now grant access to the Workers in specific [dispatch namespaces](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Previously, managing Workers in a namespace required account-wide Workers access.
+
+Choose from four roles to control the level of access:
+
+- **Workers Namespace Metadata Read-Only**: Read metadata and settings for Workers in the namespace, without script source content.
+- **Workers Namespace Content Read-Only**: Read metadata and script source content for Workers in the namespace.
+- **Workers Namespace Editor**: Add, update, deploy, and remove Workers in the namespace.
+- **Workers Namespace Admin**: Everything in Editor, plus the ability to view, update, and delete the namespace itself.
+
+A namespace role applies to every current and future Worker in the selected namespaces, and only to those Workers. For example, give the deploy pipeline for your `production` namespace an Editor token scoped to that namespace, so it can manage your customers' Workers there and nothing else in your account.
+
+### Grant access to members and User Groups
+
+In the Cloudflare dashboard, go to the [**Members**](https://dash.cloudflare.com/?to=/:account/members) page and select a [member](/fundamentals/manage-members/manage/). Add a [permission policy](/fundamentals/manage-members/policies/), select **Namespaces** as the resource type, then select the namespaces and a Workers Namespace role.
+
+### Create a scoped API token
+
+Go to the [**Account API Tokens**](https://dash.cloudflare.com/?to=/:account/api-tokens) page and create an [account-owned API token](/fundamentals/api/get-started/account-owned-tokens/). Select a Workers Namespace role, set the scope to **Specified Namespaces**, and select the namespaces the token can access.
+
+For more information, refer to [Workers for Platforms roles and permissions](/workers/authorization/workers-for-platforms/).
