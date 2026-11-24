@@ -663,9 +663,9 @@ package.json @cloudflare/content-engineering
 
 # network-interconnect
 
-/src/content/changelog/network-interconnect/ @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/pm-changelogs @cloudflare/product-owners
-/src/content/docs/network-interconnect/ @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/product-owners
-/src/content/directory/network-interconnect.yaml @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/product-owners
+/src/content/changelog/network-interconnect/ @aasaya4116 @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/pm-changelogs @cloudflare/product-owners
+/src/content/docs/network-interconnect/ @aasaya4116 @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/product-owners
+/src/content/directory/network-interconnect.yaml @aasaya4116 @alpdot @jeffh-cloudflare @steve-cloudflare @cloudflare/product-owners
 /src/icons/network-interconnect.svg @cloudflare/product-owners
 
 # networking-services
