@@ -1,0 +1,13 @@
+---
+title: Updated prompt logging for AI Security for Apps
+description: Use payload logging with custom rules to store matching prompt content for AI Security for Apps.
+products:
+  - waf
+date: 2026-11-24
+---
+
+To log prompt content for AI Security for Apps, configure [payload logging](/waf/payload-logging/configure-api/) and use a WAF custom rule that references a field with the `cf.llm.prompt` prefix.
+
+When a custom rule matches, payload logging stores the extracted prompt. If no prompt is extracted and analysis falls back to the full request body, payload logging stores the full request body.
+
+This workflow replaces the previous AI Security Log Mode Ruleset procedure. For more information, refer to [Log prompts for matching rules](/waf/detections/ai-security-for-apps/get-started/#7-optional-log-prompts-for-matching-rules).

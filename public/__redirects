@@ -3070,6 +3070,9 @@
 # Agent setup (Windsurf rebranded to Devin Desktop)
 /agent-setup/windsurf/ /agent-setup/devin/ 301
 
+# WAF
+/waf/detections/ai-security-for-apps/log-mode-vs-production-mode/ /waf/detections/ai-security-for-apps/get-started/#7-optional-log-prompts-for-matching-rules 301
+
 # ============================================================================
 # DYNAMIC REDIRECTS
 # Rules simulator (renamed from Cloudflare Trace, DEE-4058)
