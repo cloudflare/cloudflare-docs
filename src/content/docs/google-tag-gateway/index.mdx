@@ -20,6 +20,22 @@ Learn more about why we built it and how it works in our [blog post](https://blo
 
 Google tag gateway for advertisers is free to use. Requests routed through the gateway do not count toward usage or billing for other Cloudflare products such as [CDN](/cache/), [WAF](/waf/), or [Bot Management](/bots/).
 
+## Before you enable
+
+Before enabling Google tag gateway for advertisers on your zone, review the following to avoid conflicts with your existing Cloudflare configuration:
+
+**Workers routes**: Google tag gateway for advertisers deploys a Cloudflare Worker on your zone. If you have existing [Workers routes](/workers/configuration/routing/routes/) that use a catch-all pattern (for example, `/*`), the route may conflict with the Worker deployed by Google tag gateway. Review your existing Workers routes and ensure none overlap with the measurement path you plan to use (for example, `/gtm/`).
+
+**WAF and firewall rules**: Review your [WAF custom rules](/waf/custom-rules/), [rate limiting rules](/waf/rate-limiting-rules/), and [Bot Fight Mode](/bots/get-started/bot-fight-mode/) configuration. Requests to your measurement path must reach the Google tag gateway Worker without being blocked or modified by these rules.
+
+**Cache rules**: The measurement path must not be cached. If you have [Cache Rules](/cache/how-to/cache-rules/) or Page Rules configured to cache everything, add an exception to exclude the measurement path.
+
+**Rocket Loader**: If [Rocket Loader](/speed/optimization/content/rocket-loader/) is enabled on your zone, it can interfere with how Google tags are injected on your pages. If you observe tag loading issues after turning on Google tag gateway for advertisers, turn off Rocket Loader for the affected pages or the entire zone.
+
+:::tip
+Use [Cloudflare Trace](/rules/trace-request/) to simulate a request to your measurement path and verify that no existing rules would block or modify it before going live.
+:::
+
 ## Get started
 
 Site owners can enable this feature in one of two ways: through the Google tag console, or through the [Cloudflare dashboard](https://dash.cloudflare.com/?to=/:account/tag-management/google-tag-gateway).
