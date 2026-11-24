@@ -8,7 +8,7 @@ products:
   - d1
 ---
 
-import { GlossaryTooltip } from "~/components";
+import { CliVariant, CliVariants, GlossaryTooltip } from "~/components";
 
 Time Travel is D1's approach to backups and point-in-time recovery. You can restore a database to any minute within the last 7 days on the Workers Free plan or 30 days on the Workers Paid plan.
 
@@ -22,7 +22,7 @@ By not having to rely on scheduled backups and/or manually initiated backups, yo
 
 Databases using D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/) can use Time Travel. Time Travel replaces the [snapshot-based backups](/d1/reference/backups/) used for legacy alpha databases.
 
-To understand which storage subsystem your database uses, run `wrangler d1 info YOUR_DATABASE` and inspect the `version` field in the output. Databases with `version: production` support the new Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
+To understand which storage subsystem your database uses, run `cf d1 get <DATABASE_ID> --fields version` (or `wrangler d1 info YOUR_DATABASE`) and inspect the `version` field in the output. Databases with `version: production` support the Time Travel API. Databases with `version: alpha` only support the older, snapshot-based backup API.
 
 :::
 
@@ -34,7 +34,7 @@ Time Travel leverages D1's concept of a <GlossaryTooltip term="bookmark"> bookma
 - Restoring a database to a specific bookmark does not remove or delete older bookmarks. For example, if you restore to a bookmark representing the state of your database 10 minutes ago, and determine that you needed to restore to an earlier point in time, you can still do so.
 - Bookmarks are lexicographically sortable. Sorting orders a list of bookmarks from oldest-to-newest.
 - Bookmarks can be derived from a [Unix timestamp](https://en.wikipedia.org/wiki/Unix_time) (seconds since Jan 1st, 1970), and conversion between a specific timestamp and a bookmark is deterministic (stable).
-- Bookmarks can advance due to Cloudflare internal maintenance events, such as instance restarts or storage checkpointing, without any SQL writes from your application. A newer current bookmark does not mean your data changed. To verify data state, compare row counts or use `wrangler d1 time-travel info` with a specific past timestamp.
+- Bookmarks can advance due to Cloudflare internal maintenance events, such as instance restarts or storage checkpointing, without any SQL writes from your application. A newer current bookmark does not mean your data changed. To verify data state, compare row counts or check a specific past timestamp with `cf d1 time-travel get-bookmark` or `wrangler d1 time-travel info`.
 
 Bookmarks are also leveraged by [Sessions API](/d1/best-practices/read-replication/#use-sessions-api) to ensure sequential consistency within a Session.
 
@@ -47,12 +47,27 @@ Time Travel supports two timestamp formats:
 
 ## Requirements
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 - [`Wrangler`](/workers/wrangler/install-and-update/) `v3.4.0` or later installed to use Time Travel commands.
-- A database on D1's production backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` - the output show `version: production`.
+- A database on D1's production backend. You can check whether a database is using this backend via `wrangler d1 info DB_NAME` – the output shows `version: production`.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+- The [Cloudflare CLI (`cf`)](/cf/get-started/) installed and authenticated.
+- A database on D1's production backend. You can check whether a database is using this backend with `cf d1 get <DATABASE_ID> --fields version` – the output shows `"version": "production"`.
+
+</CliVariant>
+</CliVariants>
 
 ## Retrieve a bookmark
 
-You can retrieve a bookmark for the current timestamp by calling the `d1 info` command, which defaults to returning the current bookmark:
+<CliVariants>
+<CliVariant cli="wrangler">
+
+You can retrieve a bookmark for the current timestamp by calling `wrangler d1 time-travel info`, which defaults to returning the current bookmark:
 
 ```sh
 wrangler d1 time-travel info YOUR_DATABASE
@@ -71,6 +86,24 @@ To retrieve the bookmark for a timestamp in the past, pass the `--timestamp` fla
 wrangler d1 time-travel info YOUR_DATABASE --timestamp="2023-07-09T17:31:11+00:00"
 ```
 
+</CliVariant>
+<CliVariant cli="cf">
+
+You can retrieve the current bookmark by running `cf d1 time-travel get-bookmark` with your database ID:
+
+```sh
+cf d1 time-travel get-bookmark <DATABASE_ID>
+```
+
+To retrieve the nearest bookmark at or before a specific point in time, pass `--timestamp` with an ISO 8601 timestamp:
+
+```sh title="Using an ISO 8601 timestamp"
+cf d1 time-travel get-bookmark <DATABASE_ID> --timestamp "2023-07-09T17:31:11+00:00"
+```
+
+</CliVariant>
+</CliVariants>
+
 ## Restore a database
 
 To restore a database to a specific point-in-time:
@@ -80,6 +113,9 @@ To restore a database to a specific point-in-time:
 Restoring a database to a specific point-in-time is a _destructive_ operation, and overwrites the database in place. In the future, D1 will support branching & cloning databases using Time Travel.
 
 :::
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 ```sh
 wrangler d1 time-travel restore YOUR_DATABASE --timestamp=UNIX_TIMESTAMP
@@ -98,6 +134,24 @@ In-flight queries and transactions will be cancelled.
 ↩️ To undo this operation, you can restore to the previous bookmark: 00000085-ffffffff-00004c6d-2510c8b03a2eb2c48b2422bb3b33fad5
 ```
 
+</CliVariant>
+<CliVariant cli="cf">
+
+Pass either `--timestamp` (an ISO 8601 timestamp) or `--bookmark`:
+
+```sh
+cf d1 time-travel restore <DATABASE_ID> --timestamp "2023-07-09T17:31:11+00:00"
+```
+
+```sh
+cf d1 time-travel restore <DATABASE_ID> --bookmark <BOOKMARK>
+```
+
+Pass `--force` (`-f`) to skip the interactive confirmation prompt in scripts or CI.
+
+</CliVariant>
+</CliVariants>
+
 Note that:
 
 - Timestamps are converted to a deterministic, stable bookmark. The same timestamp will always represent the same bookmark.
@@ -108,12 +162,15 @@ Note that:
 
 You can undo a restore by:
 
-- Taking note of the previous bookmark returned as part of a `wrangler d1 time-travel restore` operation
+- Taking note of the previous bookmark returned as part of the restore operation.
 - Restoring directly to a bookmark in the past, prior to your last restore.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 To fetch a bookmark from an earlier state:
 
-```sh title: "Get a historical bookmark"
+```sh title="Get a historical bookmark"
 wrangler d1 time-travel info YOUR_DATABASE
 ```
 
@@ -123,6 +180,22 @@ wrangler d1 time-travel info YOUR_DATABASE
 ⚡️ To restore to this specific bookmark, run:
  `wrangler d1 time-travel restore YOUR_DATABASE --bookmark=00000085-0000024c-00004c6d-8e61117bf38d7adb71b934ebbf891683`
 ```
+
+</CliVariant>
+<CliVariant cli="cf">
+
+To fetch a bookmark for a point in time before your restore, then restore to it:
+
+```sh
+cf d1 time-travel get-bookmark <DATABASE_ID> --timestamp "2023-07-09T17:31:11+00:00"
+```
+
+```sh
+cf d1 time-travel restore <DATABASE_ID> --bookmark <PREVIOUS_BOOKMARK>
+```
+
+</CliVariant>
+</CliVariants>
 
 ## Export D1 into R2 using Workflows
 
