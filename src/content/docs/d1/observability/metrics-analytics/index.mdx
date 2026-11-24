@@ -9,7 +9,7 @@ products:
   - d1
 ---
 
-import { Details, DashButton } from "~/components";
+import { CliVariant, CliVariants, DashButton, Details } from "~/components";
 
 D1 exposes database analytics that allow you to inspect query volume, query latency, and storage size across all and/or each database in your account.
 
@@ -159,9 +159,12 @@ query D1ObservabilitySampleQuery3(
 
 ## Query `insights`
 
-D1 provides metrics that let you understand and debug query performance. You can access these via GraphQL's `d1QueriesAdaptiveGroups` or `wrangler d1 insights` command.
+D1 provides metrics that let you understand and debug query performance. You can access these via GraphQL's `d1QueriesAdaptiveGroups`, `cf d1 insights`, or `wrangler d1 insights`.
 
 D1 captures your query strings to make it easier to analyze metrics across query executions. [Bound parameters](/d1/worker-api/prepared-statements/#guidance) are not captured to remove any sensitive information.
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 :::note
 
@@ -351,6 +354,41 @@ npx wrangler d1 insights --sort-type=sum --sort-by=writes --limit=3 --time-perio
 Each result includes the `databaseId` of the database that ran the query.
 
 </Details>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+The [Cloudflare CLI (`cf`)](/cf/) provides two insights commands:
+
+- `cf d1 insights databases`: Lists the databases in your account with the highest usage in a time window (computed from the same data as D1 billing and the GraphQL Analytics API).
+- `cf d1 insights queries`: Lists the top SQL statements by usage across your account or for a single database (estimated from sampled per-statement data).
+
+```sh
+# Top databases by rows read (defaults to the last 24 hours)
+cf d1 insights databases --order-by rows_read --limit 5
+
+# Top queries across all databases by rows read
+cf d1 insights queries --order-by rows_read --limit 5
+
+# Top queries for a single database by total duration
+cf d1 insights queries --database-id <DATABASE_ID> --order-by duration --limit 5
+```
+
+To look up the name of a database returned in insights output, run `cf d1 get <DATABASE_ID>`.
+
+| Command / option                       | Description                                                                                                                               |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `databases --order-by`                 | Usage metric to sort by: `rows_read`, `rows_written`, or `queries`.                                                                       |
+| `databases --database-name` / `--exact` | Filter to databases whose name contains `--database-name` (case-insensitive), or exact case-sensitive match with `--exact`.               |
+| `queries --order-by`                   | Usage metric to sort by: `rows_read`, `duration` (sorts by `total_duration_ms`), or `executions`.                                         |
+| `queries --database-id`                | Restrict results to a single database UUID (defaults to all databases in the account).                                                    |
+| `--since` / `--until`                  | Time window in RFC 3339 format (defaults to the last 24 hours; up to 90 days ago; max window 31 days for `databases`, 7 days for `queries`). |
+| `--limit`                              | Maximum number of databases or queries to return.                                                                                         |
+
+For custom groupings, filtering, or metrics beyond these endpoints, query the `events.d1Queries` dataset directly with `cf sql query`. For examples, refer to [Find slow and expensive queries](/d1/observability/find-expensive-queries/).
+
+</CliVariant>
+</CliVariants>
 
 :::note
 The quantity `queryEfficiency` measures how efficient your query was. It is calculated as: the number of rows returned divided by the number of rows read.
