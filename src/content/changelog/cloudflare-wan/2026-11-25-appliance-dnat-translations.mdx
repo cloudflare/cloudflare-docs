@@ -7,11 +7,16 @@ products:
   - cloudflare-one
 ---
 
+import { DashButton } from "~/components";
+
 You can now configure DNAT (destination NAT) translations on a [Cloudflare One Appliance](/cloudflare-wan/configuration/appliance/) LAN, in beta. A DNAT translation maps a local **pre-NAT prefix** to a **post-NAT prefix** of the same size, which is the real prefix of a remote subnet reachable through Cloudflare WAN, such as a data center connected over an IPsec tunnel. Hosts on the LAN send traffic to the pre-NAT prefix, and the Appliance translates it 1:1 to the remote subnet and back.
 
 Use DNAT translations to reach a remote network that uses the same addresses as your site, without renumbering either side. You can also use them to avoid adding routes for remote subnets to your local network. Combine DNAT translations with [static NAT for a subnet](/cloudflare-wan/configuration/appliance/network-options/nat-subnet/) when both sides of the connection use the same addresses.
 
 - In the dashboard, edit a LAN in your Appliance profile's **Network configuration**, then select **Add DNAT translation** under **DNAT translations**.
+
+  <DashButton url="/?to=/:account/magic-networks/connections/appliances" />
+
 - In the API, set the `remote_subnets` array when you [create](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/create/) or [update](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/edit/) a LAN. Each item has a `local_alias_prefix` (pre-NAT) and a `remote_prefix` (post-NAT).
 
 ```bash
