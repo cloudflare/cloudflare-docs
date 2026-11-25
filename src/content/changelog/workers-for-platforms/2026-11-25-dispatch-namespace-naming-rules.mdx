@@ -1,5 +1,5 @@
 ---
-title: New naming requirements for dispatch namespaces
+title: Dispatch namespace names now follow Worker naming rules
 description: New dispatch namespace names can only use lowercase letters, numbers, underscores, and dashes, and must start with a letter, number, or underscore.
 products:
   - workers-for-platforms
@@ -12,7 +12,7 @@ New [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-wor
 - Start with a letter, number, or underscore.
 - Be 256 characters or fewer.
 
-Previously, namespace names could contain characters such as `/`, `%`, spaces, and uppercase letters. Some of these characters caused API requests to read, deploy, or delete Workers in the namespace to fail.
+Previously, namespace names could contain characters such as `/`, `%`, spaces, and uppercase letters. Some of these characters could cause API requests to read, deploy, or delete Workers in the namespace to fail.
 
 **What changes:**
 
@@ -25,8 +25,8 @@ Previously, namespace names could contain characters such as `/`, `%`, spaces, a
 - `wrangler dispatch-namespace create` returns the same `100120` error.
 - Terraform applies that create a `cloudflare_workers_for_platforms_dispatch_namespace` resource with an invalid `name` fail.
 
-Existing namespaces keep their current names and continue to work.
+Existing namespaces are not affected.
 
-These are the same naming rules that apply to Worker names. Error messages for invalid Worker names (`10016`) and environment names (`10094`) now also list the allowed characters.
+These are the same naming rules that apply to Worker names.
 
 For more information, refer to [How Workers for Platforms works](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace).
