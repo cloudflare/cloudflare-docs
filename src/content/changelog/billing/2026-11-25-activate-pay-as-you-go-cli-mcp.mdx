@@ -1,0 +1,23 @@
+---
+title: Activate Cloudflare subscriptions from the CLI and MCP
+description: You and your agents can now activate Cloudflare subscriptions, including Workers Paid, R2, and Zero Trust, from the Cloudflare CLI or MCP servers.
+products:
+  - billing
+  - cf
+  - agents
+date: 2026-11-25
+---
+
+You and your agents can now activate Cloudflare subscriptions from the [Cloudflare CLI](/cf/) (`cf`) or [Cloudflare Model Context Protocol (MCP) servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/), without switching to the dashboard.
+
+Previously, OAuth sessions used by `cf` and MCP could not create subscriptions, so activating a product meant leaving your terminal or agent session to complete checkout in the dashboard. You can now activate subscriptions in place for common workflows:
+
+- **[Workers Paid](/workers/platform/pricing/)**: Move beyond [Free plan limits](/workers/platform/limits/#account-plan-limits) such as 100,000 requests per day and 10 ms of CPU time, with 10 million requests and 30 million CPU milliseconds included each month for $5 per month plus usage.
+- **[R2](/r2/pricing/)**: Activate an R2 subscription to start creating buckets, with 10 GB of free monthly storage plus usage-based billing beyond the free tier.
+- **[Zero Trust](/cloudflare-one/setup/)**: Sign up for Zero Trust (with up to 50 users included on the Free plan) to put a Worker behind [Cloudflare Access](/workers/configuration/cloudflare-access/).
+
+To use this from the CLI, update to `cf` `1.0.0-rc.5` or later and reauthenticate with `cf auth login` so your session receives the updated OAuth scopes. Your account must also have a verified email address and an existing [billing profile with a payment method on file](/billing/get-started/create-billing-profile/).
+
+In MCP clients that support the MCP `2026-07-28` specification and [MCP elicitation](https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation), Cloudflare displays the plan price and asks for your permission before activating a subscription on your account. Clients that do not support elicitation are directed to the dashboard.
+
+For more information, refer to [Usage-based billing](/billing/understand/usage-based-billing/) and [Use cf with coding agents](/cf/agents/).
