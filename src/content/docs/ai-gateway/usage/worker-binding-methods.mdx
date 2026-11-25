@@ -145,7 +145,7 @@ When `collectLog` is `false`, AI Gateway does not store the log or the request a
 
 ### Example: Process an image without storing request bodies
 
-The following Worker sends an image to a Workers AI model and to a third-party model. Each request sets `collectLog: false` and `skipCache: true`, so AI Gateway does not store the request or response bodies and does not cache the response.
+The following Worker sends an image to a Workers AI model. The request sets `collectLog: false` and `skipCache: true`, so AI Gateway does not store the request or response bodies and does not cache the response.
 
 <TypeScriptExample>
 
@@ -160,41 +160,35 @@ export default {
 		const contentType = request.headers.get("content-type") ?? "image/jpeg";
 		const imageUrl = `data:${contentType};base64,${btoa(binary)}`;
 
-		const messages = [
+		const result = await env.AI.run(
+			"@cf/meta/llama-4-scout-17b-16e-instruct",
 			{
-				role: "user",
-				content: [
-					{ type: "text", text: "Describe this image in one sentence." },
-					{ type: "image_url", image_url: { url: imageUrl } },
+				messages: [
+					{
+						role: "user",
+						content: [
+							{ type: "text", text: "Describe this image in one sentence." },
+							{ type: "image_url", image_url: { url: imageUrl } },
+						],
+					},
 				],
 			},
-		];
-
-		const gateway = { id: "default", collectLog: false, skipCache: true };
-
-		const workersAi = await env.AI.run(
-			"@cf/meta/llama-4-scout-17b-16e-instruct",
-			{ messages },
-			{ gateway },
+			{ gateway: { id: "default", collectLog: false, skipCache: true } },
 		);
 
-		const thirdParty = await env.AI.run(
-			"openai/gpt-4.1-mini",
-			{ messages },
-			{ gateway },
-		);
-
-		return Response.json({ workersAi, thirdParty });
+		return Response.json(result);
 	},
 } satisfies ExportedHandler<Env>;
 ```
 
 </TypeScriptExample>
 
-With these options, AI Gateway stores the following for each request:
+With `collectLog: false`, AI Gateway stores the following:
 
 - **Workers AI model:** no log entry. If the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) is **Unified billing**, AI Gateway stores a log entry with billing details, but without the bodies.
 - **Third-party model on Unified Billing:** a log entry with billing details, but without the bodies. If the request uses a [BYOK](/ai-gateway/configuration/bring-your-own-keys/) key, AI Gateway stores no log entry.
+
+To confirm that a stored log entry has no bodies, [list the gateway logs](/api/resources/ai_gateway/subresources/logs/methods/list/) and check that `collect_log_payload` is `false`. You do not need to fetch the request or response body.
 
 These options do not control exports. To keep the image and the model responses out of external destinations, turn off [Logpush](/ai-gateway/observability/logging/logpush/) on the gateway and do not add [OpenTelemetry](/ai-gateway/observability/otel-integration/) exporters to it.
 
