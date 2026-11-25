@@ -20,6 +20,11 @@
 		"parent": ["Networking"]
 	},
 	{
+		"deeplink": "/?to=/:account/magic-networks/connections/appliances",
+		"name": "Appliances",
+		"parent": ["Networking", "Connectors"]
+	},
+	{
 		"deeplink": "/?to=/:account/magic-networks/routes/virtual-networks",
 		"name": "Virtual networks",
 		"parent": ["Networking", "Routes"]
