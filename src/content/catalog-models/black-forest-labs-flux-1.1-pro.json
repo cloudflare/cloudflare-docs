@@ -1,0 +1,234 @@
+{
+	"model_id": "black-forest-labs/flux-1.1-pro",
+	"name": "FLUX1.1 [pro]",
+	"description": "FLUX1.1 [pro] is Black Forest Labs' fast, reliable text-to-image model. It follows long, detailed prompts closely, renders legible text, and generates custom sizes up to 1440\u00d71440.",
+	"task": "Text-to-Image",
+	"tags": [
+		"Image Generation",
+		"Text-to-Image"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.04
+	},
+	"examples": [
+		{
+			"name": "Detailed Scene, Exact Layout",
+			"description": "Follows a long prompt closely: three objects in the stated positions, the exact sign text, and a custom 1440\u00d7960 size.",
+			"input": {
+				"prompt": "A cozy bookshop window at dusk. On the left, a stack of three cobalt-blue books; in the center, an orange tabby cat asleep on a red velvet cushion; on the right, a brass telescope on a wooden stand. A chalkboard sign in the window reads \"OPEN UNTIL 9\". Warm lamplight inside, rain streaks on the glass, photorealistic.",
+				"width": 1440,
+				"height": 960
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1.1-pro/detailed-scene-exact-layout.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1.1-pro/detailed-scene-exact-layout.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1.1-pro',\n  {\n    prompt:\n      'A cozy bookshop window at dusk. On the left, a stack of three cobalt-blue books; in the center, an orange tabby cat asleep on a red velvet cushion; on the right, a brass telescope on a wooden stand. A chalkboard sign in the window reads \"OPEN UNTIL 9\". Warm lamplight inside, rain streaks on the glass, photorealistic.',\n    width: 1440,\n    height: 960,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1.1-pro\",\n  \"input\": {\n    \"prompt\": \"A cozy bookshop window at dusk. On the left, a stack of three cobalt-blue books; in the center, an orange tabby cat asleep on a red velvet cushion; on the right, a brass telescope on a wooden stand. A chalkboard sign in the window reads \\\"OPEN UNTIL 9\\\". Warm lamplight inside, rain streaks on the glass, photorealistic.\",\n    \"width\": 1440,\n    \"height\": 960\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Poster with Typography",
+			"description": "Portrait poster with a large title and a small caption rendered as written, saved as PNG.",
+			"input": {
+				"prompt": "Minimalist travel poster for Kyoto: a vermilion torii gate at sunrise over still water, flat geometric shapes, a palette of cream, vermilion and indigo. A large serif title at the top reads \"KYOTO\" and a small caption at the bottom reads \"Autumn 2026\".",
+				"width": 832,
+				"height": 1440,
+				"output_format": "png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1.1-pro/poster-with-typography.png"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1.1-pro/poster-with-typography.png"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1.1-pro',\n  {\n    prompt:\n      'Minimalist travel poster for Kyoto: a vermilion torii gate at sunrise over still water, flat geometric shapes, a palette of cream, vermilion and indigo. A large serif title at the top reads \"KYOTO\" and a small caption at the bottom reads \"Autumn 2026\".',\n    width: 832,\n    height: 1440,\n    output_format: 'png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1.1-pro\",\n  \"input\": {\n    \"prompt\": \"Minimalist travel poster for Kyoto: a vermilion torii gate at sunrise over still water, flat geometric shapes, a palette of cream, vermilion and indigo. A large serif title at the top reads \\\"KYOTO\\\" and a small caption at the bottom reads \\\"Autumn 2026\\\".\",\n    \"width\": 832,\n    \"height\": 1440,\n    \"output_format\": \"png\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Prompt Upsampling",
+			"description": "Turns a four-word prompt into a rich scene with prompt_upsampling; the seed makes it repeatable.",
+			"input": {
+				"prompt": "a lighthouse in a storm",
+				"prompt_upsampling": true,
+				"seed": 42
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1.1-pro/prompt-upsampling.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-1.1-pro/prompt-upsampling.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-1.1-pro',\n  { prompt: 'a lighthouse in a storm', prompt_upsampling: true, seed: 42 },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-1.1-pro\",\n  \"input\": {\n    \"prompt\": \"a lighthouse in a storm\",\n    \"prompt_upsampling\": true,\n    \"seed\": 42\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": true,
+	"zdr_comment": null,
+	"external_info": "https://docs.bfl.ml/api-reference/models/generate-an-image-with-flux11-[pro]",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": null,
+	"metadata": {
+		"Max Resolution": "1440\u00d71440",
+		"Output Formats": "JPEG, PNG, WebP",
+		"Pricing": "$0.04 per image"
+	},
+	"request_formats": null,
+	"provider_id": "black-forest-labs",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "black-forest-labs",
+			"pricing": {
+				"output_image_count": 0.04
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "black-forest-labs",
+			"pricing": {
+				"output_image_count": 0.04
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_image_count",
+							"label": "Per image",
+							"unit": null,
+							"value": 0.04
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 21:01:01",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Text description of the image to generate."
+				},
+				"image_prompt": {
+					"description": "Optional reference image (Flux Redux) as an HTTPS URL, data URI or base64.",
+					"type": "string"
+				},
+				"width": {
+					"description": "Image width in pixels, 256-1440, a multiple of 32. Defaults to 1024.",
+					"type": "integer",
+					"minimum": 256,
+					"maximum": 1440,
+					"multipleOf": 32
+				},
+				"height": {
+					"description": "Image height in pixels, 256-1440, a multiple of 32. Defaults to 768.",
+					"type": "integer",
+					"minimum": 256,
+					"maximum": 1440,
+					"multipleOf": 32
+				},
+				"prompt_upsampling": {
+					"description": "Let the model rewrite the prompt for a more creative result. Defaults to false.",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Seed for reproducible results.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"safety_tolerance": {
+					"description": "Moderation level, from 0 (strictest) to 6 (most permissive). Defaults to 2.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 6
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					]
+				}
+			},
+			"required": [
+				"prompt"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the generated image."
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
