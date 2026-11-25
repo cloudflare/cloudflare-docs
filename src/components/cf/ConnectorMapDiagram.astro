@@ -392,7 +392,9 @@ const d = data[variant];
 
 		display: grid;
 		grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1fr);
-		align-items: center;
+		/* Top-align so a longer hint grows the diagram downward instead of
+		   shifting the cards under the cursor, which caused a hover loop. */
+		align-items: start;
 		gap: 0;
 		margin: 1.25rem 0;
 		padding: 20px 16px;
@@ -419,6 +421,7 @@ const d = data[variant];
 		font-family: "Paper Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 		font-size: 10px;
 		font-weight: 500;
+		line-height: 1.75;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		text-align: center;
@@ -634,11 +637,13 @@ const d = data[variant];
 		}
 	}
 
+	/* The core sits level with the first inbound card (below the column
+	   title) and grows downward, so its title never moves on hover. */
 	.col-core {
-		padding: 0 16px;
+		padding: calc(10px * 1.75 + 10px) 16px 0;
 		align-self: stretch;
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 	}
 
 	.core {
@@ -749,6 +754,7 @@ const d = data[variant];
 		}
 		.col-core {
 			flex-direction: column;
+			align-items: stretch;
 			gap: 6px;
 		}
 		.rail {
