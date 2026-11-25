@@ -118,10 +118,11 @@ When you have more than one anycast IP configured in your account (set up during
 4. In **VLAN ID**, enter a number between `0` and `4094` to specify a [VLAN ID](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/reference/#vlan-id).
 5. In **Priority**, choose the priority for your WAN. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to [Traffic steering](/cloudflare-one/networks/connectors/cloudflare-wan/reference/traffic-steering/).
 6. In **Health check rate** configure the health check frequency for your site. Options are `low`, `mid`, and `high`. For details, refer to [Update tunnel health checks frequency](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/).
-7. **Addressing**: Select **DHCP**. This is needed the first time you set up your Cloudflare One Appliance to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
+7. (Optional) In **Provisioned upload bandwidth (Mbps)** and **Provisioned download bandwidth (Mbps)**, enter the upload and download speeds of the WAN circuit. The appliance uses the upload value to shape upload traffic so that [prioritized traffic](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) takes effect when the circuit is congested. Download traffic is not currently shaped. For details, refer to [Set the provisioned upload bandwidth](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/#set-the-provisioned-upload-bandwidth).
+8. **Addressing**: Select **DHCP**. This is needed the first time you set up your Cloudflare One Appliance to successfully download all settings to the machine and activate it. If you need a static IP address in your network environment:
 	1. Continue the set up flow to activate your Cloudflare One Appliance.
 	2. Refer to [WAN with a static IP address](#wan-with-a-static-ip-address). If you choose a static IP, you also need to specify the static IP and gateway addresses.
-8. Select **Save** when you are finished.
+9. Select **Save** when you are finished.
 
 </TabItem> <TabItem label="API">
 
@@ -132,6 +133,8 @@ You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/
 Make a `POST` request [using the API](/api/resources/magic_transit/subresources/sites/subresources/wans/methods/create/) to create a WAN.
 
 The `static_addressing` object is optional. Omit it if you are using DHCP. If you are using static addressing, add the `secondary_address` parameter when your site is in high availability (HA) mode. If the secondary appliance uses a different default gateway than the primary appliance (for example, because each appliance connects to a different ISP), also add the `secondary_gateway_address` parameter. If you omit `secondary_gateway_address`, the secondary appliance uses `gateway_address`. You can only use `secondary_gateway_address` on sites in HA mode.
+
+To shape upload traffic for [prioritized traffic](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/), add the optional `provisioned_upload_kbps` parameter with the circuit's upload speed in kilobits per second. You can also add `provisioned_download_kbps` to record the circuit's download speed. Download traffic is not currently shaped.
 
 Example:
 
