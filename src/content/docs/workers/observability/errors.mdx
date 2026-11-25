@@ -210,6 +210,7 @@ These errors occur when a Worker is uploaded or modified.
 | `10057`    | An [`inherit` binding](/workers/observability/errors/#inherit-binding-errors-10057) could not be resolved.                  |
 | `10068`    | The uploaded Worker has no registered [event handlers](/workers/runtime-apis/handlers/).                                    |
 | `10069`    | The uploaded Worker contains [event handlers](/workers/runtime-apis/handlers/) unsupported by the Workers runtime.          |
+| `100120`   | The [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace) name is already in use or is invalid. Use only lowercase letters, numbers, underscores, and dashes (do not start with a dash). |
 | `100342`   | The upload metadata field `observability.traces.propagation_policy` requests a policy unavailable for this account. Omit the field to use the default propagation policy, then retry the upload. |
 | `100413`   | A request tried to rename a [dispatch namespace](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dispatch-namespace). Dispatch namespaces cannot be renamed, so the `name` in the request must match the current name of the namespace. |
 
