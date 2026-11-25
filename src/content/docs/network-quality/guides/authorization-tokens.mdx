@@ -1,0 +1,108 @@
+---
+title: Authorization tokens
+pcx_content_type: how-to
+description: Request short-lived Network Quality authorization tokens from Cloudflare and use them to authorize tests.
+products:
+  - network-quality
+sidebar:
+  order: 1
+---
+
+Authorization tokens let clients run Network Quality tests on behalf of your Cloudflare account. Only you can define which end users or devices should be allowed to do that, so you need a service that you operate between your clients and Cloudflare. Your service holds your Cloudflare API credentials, decides whether each end user or device is authorized, and requests a token for it. Cloudflare issues and signs the token, and your service returns it to the client unchanged. The client then sends the token with every measurement request. Tests run with a token are attributed to your account.
+
+Each token:
+
+- Expires 10 minutes after Cloudflare issues it.
+- Limits how many bytes the test can transfer.
+- Can optionally be restricted to one or more IP addresses.
+
+## Before you begin
+
+- [Turn on Network Quality](/network-quality/get-started/#1-turn-on-network-quality) for your account.
+- [Create an API token](/network-quality/get-started/#2-create-an-api-token) with the _Account_ > _Network Quality_ > _Edit_ permission.
+
+## Decide who can get a token
+
+Cloudflare does not decide which end users or devices can run tests on your behalf. You define the policy, and your service enforces it before it requests a token. Every test run with a token you request counts toward the usage of your account.
+
+The right model depends on your product. For example:
+
+- **Embedded devices**, such as routers or set-top boxes: authenticate the device directly, for example with a per-device credential or a client certificate.
+- **Public visitors** to your website: verify visitors with [Turnstile](/turnstile/), and [validate the Turnstile token](/turnstile/get-started/server-side-validation/) on your service before you request a Network Quality token.
+- **Signed-in users** of your application: use your existing session or login.
+
+## Request a token
+
+Send a `POST` request to the token endpoint from your service:
+
+```sh
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/networkquality/token" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "bytes": 2000000000,
+    "eyeball_id": "3f8a1c9e2b7d4f60a5e1",
+    "source_ips": ["203.0.113.42", "2001:db8:1234:5678::/64"]
+  }'
+```
+
+```json output
+{
+	"success": true,
+	"errors": [],
+	"messages": [],
+	"result": {
+		"token": "<TOKEN>"
+	}
+}
+```
+
+The request body accepts the following fields:
+
+| Field        | Type               | Required | Description                                                                                                                                               |
+| ------------ | ------------------ | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bytes`      | `integer`          | Yes      | Maximum number of bytes that tests can transfer with this token. Must be between 1 and 34,359,738,368 (32 GiB).                                           |
+| `eyeball_id` | `string`           | Yes      | Identifier you choose for the end user or device that the token is for. Must contain 8 to 128 characters from `A-Z`, `a-z`, `0-9`, `_`, `.`, `:`, or `-`. |
+| `source_ips` | `array` of strings | No       | Up to eight IPv4 or IPv6 addresses or CIDR ranges that can use the token. Defaults to an empty list, which does not restrict the token.                   |
+
+The API rejects requests with any other fields.
+
+Treat the token as an opaque string. Do not parse it or depend on its format.
+
+## How tokens work
+
+- **Byte budget**: Each measurement request reserves its `bytes` value from the budget of the token before it starts. If a request is larger than the remaining budget, it fails with a `429` status code.
+- **Issuance limit**: Cloudflare limits how often it issues tokens for the same `eyeball_id`. When you reach the limit, the API returns a `429` status code with a `Retry-After` header. A client can run more than one test with the same token while it is valid and has budget left, so keep the token instead of requesting a new one for each test.
+- **Privacy**: The client can read the contents of the token, so `eyeball_id` must not contain personal data, such as email addresses, or secrets. Use a random ID that your service stores for each end user or device, or an HMAC of an internal ID with a secret key that only your service knows. A plain hash of an email address or a short ID can be reversed by guessing likely inputs.
+- **Anonymous visitors**: If a visitor has no account, such as a public visitor verified with Turnstile, generate a random ID for the visitor and keep it, for example in a first-party cookie. Do not use the same `eyeball_id` for every visitor, because the issuance limit applies to each `eyeball_id`.
+- **IP restrictions**: The IP address your service sees for a client can differ from the address the client uses for the test, for example with IPv4 and IPv6, or with carrier-grade NAT. A token restricted with `source_ips` fails when the client uses an address you did not list. The API rejects unspecified addresses, such as `0.0.0.0` and `::`, and catch-all ranges, such as `0.0.0.0/0` and `::/0`.
+
+## Use the token
+
+Send the token in an `Authorization` header on every measurement request:
+
+```txt
+Authorization: Bearer <TOKEN>
+```
+
+Only send the token over HTTPS. Cloudflare rejects requests that carry a token over plain HTTP. For all endpoints and parameters, refer to [Measurement endpoints](/network-quality/reference/measurement-endpoints/).
+
+## Handle expired or rejected tokens
+
+Tokens cannot be refreshed. Request a new token only when the current one has expired or run out of budget.
+
+If a measurement request returns `401` or `403`, stop the test.
+
+- `401`: The token is invalid or expired. Get a new token from your service and start a new test. Start the new test on demand, instead of retrying automatically.
+- `403`: The IP address of the client does not match `source_ips`. A new token with the same `source_ips` fails in the same way. Refer to the IP restrictions guidance in [How tokens work](#how-tokens-work).
+
+For a list of possible responses, refer to [Error codes](/network-quality/reference/error-codes/).
+
+## Security recommendations
+
+- Request tokens only from your service. Never ship your Cloudflare API token in a website, app, or device firmware.
+- Only request tokens for end users or devices that your policy allows. For examples, refer to [Decide who can get a token](#decide-who-can-get-a-token).
+- To prevent a token from being used from other IP addresses, restrict it with `source_ips`.
+- Return tokens unchanged, and do not log them.
+- Serve your application over HTTPS, and send measurement requests over HTTPS.

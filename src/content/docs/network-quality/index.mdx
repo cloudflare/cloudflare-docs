@@ -1,0 +1,54 @@
+---
+title: Network Quality
+pcx_content_type: overview
+description: Measure the quality of connections between your end users or devices and the Cloudflare network, including speed, latency, and jitter.
+products:
+  - network-quality
+sidebar:
+  order: 1
+head:
+  - tag: title
+    content: Overview
+---
+
+import { Description, Feature, LinkButton, Plan } from "~/components";
+
+<Description>
+
+Measure the quality of connections between your end users or devices and the Cloudflare network.
+
+</Description>
+
+<Plan type="private-beta" />
+
+The Network Quality API lets clients measure the quality of their connection to the nearest Cloudflare data center, including download and upload speed, latency, and jitter. Only authorized clients can run Network Quality tests on behalf of your Cloudflare account.
+
+A service you operate decides which clients, such as end users or devices, are authorized. This service requests authorization tokens from Cloudflare and hands them over to authorized clients. Refer to [Authorization tokens](/network-quality/guides/authorization-tokens/) for more information.
+
+<LinkButton variant="primary" href="/network-quality/get-started/">
+	Get started
+</LinkButton>
+
+---
+
+## Features
+
+<Feature
+	header="Global network"
+	href="/network-quality/reference/measurement-endpoints/"
+	cta="Review the measurement endpoints"
+>
+
+Tests run against the closest Cloudflare data center, selected by anycast routing.
+
+</Feature>
+
+<Feature
+	header="Usage control"
+	href="/network-quality/guides/authorization-tokens/"
+	cta="Request authorization tokens"
+>
+
+Decide who can run tests on your behalf, attribute each test to your account, cap how much data it can transfer, and optionally restrict it to specific IP addresses.
+
+</Feature>

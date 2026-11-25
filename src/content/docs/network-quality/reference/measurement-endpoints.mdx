@@ -1,0 +1,83 @@
+---
+title: Measurement endpoints
+pcx_content_type: reference
+description: Reference for the Network Quality measurement endpoints that clients use to download and upload data.
+products:
+  - network-quality
+sidebar:
+  order: 1
+---
+
+Clients send measurement requests to the Network Quality measurement endpoints over HTTPS.
+
+## Hosts
+
+Cloudflare serves the measurement endpoints from `https://speed.cloudflare.com` and `https://h3.speed.cloudflare.com`, which also supports HTTP/3. Anycast routing sends each request to the closest Cloudflare data center.
+
+To run parallel requests over separate connections, spread them across `https://t0.speed.cloudflare.com` to `https://t3.speed.cloudflare.com`. These hosts serve only `/__down` and `/__up`.
+
+All hosts accept the same authorization tokens and parameters.
+
+## Authorization
+
+Send an [authorization token](/network-quality/guides/authorization-tokens/) on every request.
+
+```txt
+Authorization: Bearer <TOKEN>
+```
+
+Only send the token over HTTPS. Cloudflare rejects requests that carry a token over plain HTTP.
+
+The endpoints accept cross-origin requests from any origin, including requests with an `Authorization` header.
+
+## Endpoints
+
+### Download
+
+```txt
+GET /__down?bytes=<N>
+```
+
+Returns a response body of `N` bytes with `Content-Type: application/octet-stream`.
+
+| Parameter | Type      | Required | Description                          | Default |
+| --------- | --------- | -------- | ------------------------------------ | ------- |
+| `bytes`   | `integer` | No       | Size of the response body, in bytes. | `0`     |
+
+### Upload
+
+```txt
+POST /__up?bytes=<N>
+```
+
+Accepts a request body of `N` bytes. Send the body with `Content-Type: application/octet-stream`.
+
+Always set `bytes` when you use an authorization token. Each request reserves `bytes` from the byte budget of the token, and a request without `bytes` reserves 4 GB.
+
+| Parameter | Type      | Required | Description                                                                         | Default |
+| --------- | --------- | -------- | ----------------------------------------------------------------------------------- | ------- |
+| `bytes`   | `integer` | No       | Size of the request body, in bytes. The server stops reading after this many bytes. | 4 GB    |
+
+## Response headers
+
+Measurement responses include the following headers:
+
+| Header          | Endpoints          | Description                                                                                             |
+| --------------- | ------------------ | ------------------------------------------------------------------------------------------------------- |
+| `Server-Timing` | `/__down`, `/__up` | Includes a `cfReqDur` entry with the time, in milliseconds, that Cloudflare spent handling the request. |
+
+## Status codes
+
+The endpoints return the following status codes:
+
+| Status code | Description                                                                                                                                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `200`       | The measurement request succeeded.                                                                                                                                  |
+| `400`       | The `bytes` parameter is invalid, or the client sent the token over plain HTTP.                                                                                     |
+| `401`       | The token is invalid or expired.                                                                                                                                    |
+| `403`       | The IP address of the client does not match any entry in `source_ips`.                                                                                              |
+| `408`       | An upload was still in progress 60 seconds after the token expired.                                                                                                 |
+| `413`       | The upload body is larger than Cloudflare accepts in a single request. Browsers report this as a network error, because the response does not include CORS headers. |
+| `429`       | The request is larger than the remaining byte budget of the token.                                                                                                  |
+
+For causes and resolutions, refer to [Error codes](/network-quality/reference/error-codes/#measurement-endpoints).
