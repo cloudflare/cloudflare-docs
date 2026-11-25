@@ -20,16 +20,14 @@ For the platform-wide permission model, refer to the [Roles and permissions over
 
 ## Workers Namespace roles
 
-| Role                                 | Description                                                                                             |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| Workers Namespace Metadata Read-Only | Read metadata and settings for Workers in a namespace. Does not include script source content.          |
-| Workers Namespace Content Read-Only  | Read metadata and script source content for Workers in a namespace.                                     |
-| Workers Namespace Editor             | Add, update, deploy, and remove Workers in a namespace. Does not include managing the namespace itself. |
-| Workers Namespace Admin              | Full access to Workers in a namespace, including adding, updating, deploying, and removing Workers.     |
+| Role                                 | Description                                                                                                                                                 |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Workers Namespace Metadata Read-Only | View Workers, settings, and bindings in a namespace. Cannot view script code or secrets.                                                                    |
+| Workers Namespace Content Read-Only  | Everything in Metadata Read-Only, plus script code and secret names. Cannot make changes.                                                                   |
+| Workers Namespace Editor             | Create, update, deploy, and delete Workers in a namespace, including their code, settings, and secrets. Cannot view, update, or delete the namespace itself. |
+| Workers Namespace Admin              | Everything in Editor, plus view, update, and delete the namespace itself.                                                                                   |
 
-Only Workers Namespace Admin can view, update, and delete the namespace itself.
-
-Namespace roles apply to the namespace as a whole, so the Editor role can upload new Workers to the namespace and delete existing ones.
+Namespace roles apply to the namespace as a whole. Unlike [Workers Editor](/workers/authorization/workers/#workers-roles), which cannot create or delete Workers, Workers Namespace Editor can upload new Workers to the namespace and delete existing ones.
 
 Creating and listing dispatch namespaces requires account-level Workers access.
 
@@ -72,7 +70,15 @@ To create the token with the API, use the namespace ID without dashes in the res
 }
 ```
 
-To find permission group IDs, use the [list permission groups](/api/resources/accounts/subresources/tokens/subresources/permission_groups/methods/list/) endpoint.
+To find permission group IDs, use the [list permission groups](/api/resources/accounts/subresources/tokens/subresources/permission_groups/methods/list/) endpoint. To find a namespace ID, use the `namespace_id` field returned by the [list dispatch namespaces](/api/resources/workers_for_platforms/subresources/dispatch/subresources/namespaces/methods/list/) endpoint.
+
+## Limitations
+
+- Namespace roles apply to every Worker in a namespace. You cannot scope a namespace role to an individual user Worker.
+- Creating and listing dispatch namespaces requires account-level Workers access.
+- Your [dynamic dispatch Worker](/cloudflare-for-platforms/workers-for-platforms/how-workers-for-platforms-works/#dynamic-dispatch-worker) and [outbound Workers](/cloudflare-for-platforms/workers-for-platforms/configuration/outbound-workers/) are regular Workers, so they use [Workers roles](/workers/authorization/workers/).
+- The [`wrangler login`](/workers/wrangler/commands/general/#login) OAuth flow does not support namespace roles. To use them with Wrangler, [authenticate with an account-owned API token](/workers/authorization/#use-granular-permissions-with-wrangler).
+- Namespace roles do not include observability data such as logs, metrics, and traces for user Workers.
 
 ## Related resources
 
