@@ -1,0 +1,492 @@
+---
+title: Debug agents
+description: Find out why an agent misbehaves. Reproduce it locally with the Local Explorer, query its production logs and traces with the cf CLI, read its storage, and fix the failures that come up most often.
+pcx_content_type: how-to
+sidebar:
+  order: 1
+products:
+  - agents
+---
+
+import { TypeScriptExample, WranglerConfig } from "~/components";
+
+An agent built with the Agents SDK is a [Durable Object](/durable-objects/) with the [Lifecycle](/agents/runtime/lifecycle/) installed. When it misbehaves, you usually need three answers: which object the failing request reached, what that object has in storage, and what happened when its alarm fired or when it was reset.
+
+This guide gets those answers with tools you do not have to build. You reproduce the problem locally with the [Local Explorer](/workers/local-development/local-explorer/), query production with the [`cf` CLI](/cf/), and read the object's SQLite database with [Data Studio](/durable-objects/observability/data-studio/). The commands need `cf` 1.0.0-rc.4 or later. To install or update it, refer to [Get started with `cf`](/cf/get-started/).
+
+## What do you see, what do you run
+
+| What you see                                             | Run first                                                                            | Section                                                                  |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+| Every request to one agent returns `500`                 | `cf observability tail --worker <WORKER>` and repeat the request                     | [Startup throws](#startup-throws)                                        |
+| Requests hang for 30 seconds, then return `1101`         | The same tail. Look for `blockConcurrencyWhile() ... waited for too long`            | [Startup takes too long](#startup-takes-too-long)                        |
+| A method returns `undefined` or stale data               | Call it again after any `fetch` to the object                                        | [A method runs before startup](#a-method-runs-before-startup)            |
+| The agent forgot its data                                | Query its storage by name                                                            | [The wrong object](#the-wrong-object-or-an-object-with-no-name)          |
+| A scheduled job never ran                                | `SELECT * FROM cf_agents_jobs` on the object                                         | [An alarm that never fires](#an-alarm-that-never-fires)                  |
+| A job ran twice, or not at all                           | `cf o11y telemetry query` for your job's log lines                                   | [A job that fails or runs twice](#a-job-that-fails-or-runs-twice)        |
+| `Durable Object's isolate exceeded its memory limit`     | Query the CPU and memory outcome per object                                          | [The memory limit](#the-memory-limit)                                    |
+| A WebSocket does not connect, or a message never arrives | `curl` the upgrade URL, then tail                                                    | [WebSockets](#websocket-connections-and-messages)                        |
+| A reply stopped halfway                                  | `cf o11y telemetry query` for `chat:recovery` events                                 | [A turn cut off mid-stream](#a-turn-cut-off-mid-stream)                  |
+| A call to another agent fails or never returns           | Tail both objects' errors                                                            | [Another agent does not answer](#another-agent-does-not-answer)          |
+| `SQLITE_TOOBIG`                                          | Check the size of what you store                                                     | [A value too large for a row](#a-value-too-large-for-a-row)              |
+
+## Set up before something breaks
+
+### Turn on logs and traces
+
+Production debugging starts with [Workers Logs](/workers/observability/logs/workers-logs/) and [traces](/workers/observability/traces/). `observability.enabled` turns on logs only, so turn on traces as well:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"enabled": true,
+		},
+		"traces": {
+			"enabled": true,
+		},
+	},
+}
+```
+
+</WranglerConfig>
+
+Workers Logs keeps logs for three days on the Workers Free plan and seven days on Workers Paid, and traces for seven days. Both count toward your observability usage. Set `head_sampling_rate` to keep a share of invocations when traffic is high, and remember that a sampled-out failure leaves no record. For prices, refer to [Workers Logs pricing](/workers/observability/logs/workers-logs/#pricing) and [Cloudflare Observability pricing](/observability/pricing/).
+
+### Put the object's name in your logs
+
+Each log line from a Durable Object carries the object's ID in `$workers.durableObjectId`, not its name. The Lifecycle prefixes its own error lines with the class and the name, such as `Error in Notes:alice fetch:`. For your own lines, log a structured object that includes `this.lifecycle.name`, so you can filter on it later:
+
+```ts
+console.log({ agent: "Notes", name: this.lifecycle.name, event: "note_saved" });
+```
+
+Workers Logs indexes each field of a logged object, so `name` becomes a filter key.
+
+### Log errors as strings
+
+Workers Logs records an `Error` passed to `console.error()` as its stack frames, without the `Error: <message>` line. The Lifecycle's own lines show the same gap: `Error in Notes:alice fetch:` followed by frames, with no message. [`wrangler tail`](/workers/observability/logs/real-time-logs/) and the Local Explorer show the message. When you log a caught error, include it as a string field so stored logs keep it:
+
+```ts
+console.error({ name: this.lifecycle.name, event: "sync_failed", error: String(error) });
+```
+
+Uncaught exceptions, such as a Durable Object reset, keep their message in Workers Logs.
+
+### Forward the SDK's events to your logs
+
+The Lifecycle, Think, and the capabilities publish structured events to [diagnostics channels](/agents/runtime/observability/diagnostics-channels/), such as `chat:recovery:detected`, `task:attempt:interrupted`, and `job:slow_dispatch`. Workers Logs does not store them, and `cf observability tail` does not show them. `wrangler tail --format json` shows them under `diagnosticsChannelEvents`, and so does a [Tail Worker](/workers/observability/logs/tail-workers/).
+
+To make them queryable with `cf`, subscribe at the top of your Worker's entry module and log each event. This needs the `nodejs_compat` compatibility flag:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { subscribe } from "node:diagnostics_channel";
+
+// Each Agents SDK event becomes a structured log line in Workers Logs.
+for (const channel of [
+	"agents:lifecycle",
+	"agents:schedule",
+	"agents:task",
+	"agents:chat",
+]) {
+	subscribe(channel, (event) => console.log(event));
+}
+```
+
+</TypeScriptExample>
+
+Each event is logged with its `type`, the class in `agent`, the object's `name`, and a `payload`. Every event is one more log line, so subscribe only to the channels you need. `chat` and `task` are the busiest: a short Think turn emitted seven events on those two channels.
+
+## The workflow
+
+Work from the cheapest tool to the most targeted one: reproduce locally, find the failure in production logs, read the object's state, then narrow down to the component that failed.
+
+| Tool                                      | Where       | What it costs                                                                                                                   |
+| ----------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Local Explorer, its UI and API            | Local       | Nothing                                                                                                                         |
+| `cf observability tail`                   | Production  | Shows Workers Logs events as they arrive, so it needs Workers Logs, which is [billed per event written](/workers/observability/logs/workers-logs/#pricing) |
+| `cf o11y telemetry query`                 | Production  | Reads the logs and traces already stored, for as long as they are kept                                                          |
+| `cf o11y agents traces`                   | Production  | Reads stored traces. Traces count toward [Cloudflare Observability pricing](/observability/pricing/) from December 1, 2026       |
+| `wrangler tail`                           | Production  | Live only, nothing is stored                                                                                                    |
+| A [Tail Worker](/workers/observability/logs/tail-workers/) | Production  | Billed by CPU time, on the Workers Paid plan                                                                       |
+| Data Studio and its query API             | Production  | Each statement is a request to the object, billed as [Durable Objects usage](/durable-objects/platform/pricing/)              |
+| `cf workers versions profile`             | Production  | Needs traffic to the isolate during the capture                                                                                 |
+
+### 1. Reproduce it locally
+
+Run the agent with `cf dev`, or `npx wrangler dev` in a project with a Wrangler configuration file. Local development runs the same runtime as production, including Durable Objects, SQLite storage, alarms, and hibernating WebSockets. To start from empty storage, use a new object name.
+
+Open the Local Explorer at `/cdn-cgi/local/explorer` on the dev server, such as `http://localhost:8787/cdn-cgi/local/explorer`. It shows every local invocation as a trace with its logs, and lets you browse and query each Durable Object's SQLite tables. It needs no code.
+
+The same data is available from its API, which suits scripts and coding agents. This query lists the jobs queued on the object named `alice`:
+
+```sh
+curl -s -X POST http://localhost:8787/cdn-cgi/local/explorer/api/workers/durable_objects/namespaces/my-agent-Notes/query \
+  -H "Content-Type: application/json" \
+  -d '{"durable_object_name":"alice","queries":[{"sql":"SELECT id, capability, fn, time, running FROM cf_agents_jobs"}]}'
+```
+
+```json
+{"success":true,"result":[{"columns":["id","capability","fn","time","running"],"rows":[["digest","host","sendDigest",1795523382295,0]],"meta":{"rows_read":1,"rows_written":0}}]}
+```
+
+Locally, the namespace ID is `<worker name>-<class name>`. `GET /cdn-cgi/local/explorer/api/workers/durable_objects/namespaces` lists them. To search local logs with SQL:
+
+```sh
+curl -s -X POST http://localhost:8787/cdn-cgi/local/explorer/api/local/observability/query \
+  -H "Content-Type: application/json" \
+  -d '{"sql":"SELECT ts_ms, message FROM logs WHERE level = ? ORDER BY ts_ms DESC LIMIT 5","params":["error"]}'
+```
+
+```json
+{"result":{"columns":["ts_ms","message"],"rows":[[1795522807875,"[\"Error in Notes:broken-1 fetch:\",\"Error: settings table is missing for broken-1\"]"]]}}
+```
+
+The schema of the `spans` and `logs` tables is in the API's OpenAPI document at `/cdn-cgi/local/explorer/api`. For more information, refer to [Local Explorer](/workers/local-development/local-explorer/).
+
+### 2. Query production with `cf`
+
+These commands read your Worker's [Workers Logs](/workers/observability/logs/workers-logs/) and traces. They work in any directory, including projects that deploy with Wrangler. Set the time window once:
+
+```sh
+NOW=$(date +%s000); FROM=$((NOW - 3600000))
+```
+
+**Watch live.** `cf observability tail` streams new events as newline-delimited JSON, and replaces `wrangler tail` for Workers Logs. Add `--filters` to keep only errors:
+
+```sh
+cf observability tail --worker my-agent \
+  --filters '{"filterCombination":"and","filters":[{"key":"$metadata.level","type":"string","operation":"eq","value":"error"}]}'
+```
+
+```txt
+{"$workers":{"entrypoint":"Notes","durableObjectId":"0a4478…","eventType":"fetch",…},"$metadata":{"level":"error","message":"Error in Notes:broken-2 fetch:     at Notes.onStart (index.js:180245:13)\n…","requestId":"…","traceId":"…"}}
+```
+
+**Query one object's logs.** Filter on the `name` field you log, or on `$workers.durableObjectId` to include the Lifecycle's own lines:
+
+```sh
+cf o11y telemetry query --query-id debug --view events \
+  --timeframe-from $FROM --timeframe-to $NOW --limit 20 \
+  --parameters-filters '[{"key":"$workers.scriptName","type":"string","operation":"eq","value":"my-agent"},{"key":"name","type":"string","operation":"eq","value":"alice"}]'
+```
+
+The result is JSON. Each item in `.events.events` has your fields under `source`, and `$metadata.requestId` and `$metadata.traceId` for the next step. To see which keys you can filter on, run `cf o11y telemetry keys --from $FROM --to $NOW`.
+
+**Find the failing requests.** The `invocations` view groups log lines by request, so one failed request is one entry:
+
+```sh
+cf o11y telemetry query --query-id debug --view invocations \
+  --timeframe-from $FROM --timeframe-to $NOW --limit 10 \
+  --parameters-filters '[{"key":"$workers.scriptName","type":"string","operation":"eq","value":"my-agent"},{"key":"$metadata.level","type":"string","operation":"eq","value":"error"}]'
+```
+
+For text search, the `needle` parameter has no flag of its own yet. Pass the whole query with `--body`:
+
+```sh
+cf o11y telemetry query --body "{\"queryId\":\"debug\",\"view\":\"events\",\"limit\":20,\"timeframe\":{\"from\":$FROM,\"to\":$NOW},\"parameters\":{\"needle\":{\"value\":\"Notes:alice\"}}}"
+```
+
+For the filter operators and views, refer to [Query Builder](/workers/observability/query-builder/). [Workers Issues](/workers/observability/issues/) groups repeated failures, and `cf o11y issues list` lists them.
+
+### 3. Inspect the object's state
+
+Everything an agent keeps across evictions is in its SQLite database. These tables are the ones you read most:
+
+| Table               | What it holds                                                                                          |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| `cf_agents_jobs`    | The Lifecycle's job queue. Each schedule, Think submission, and recovery wake is a row here            |
+| `cf_agents_state`   | Data stored by the [`State`](/agents/runtime/capabilities/state/) capability                           |
+| Your own tables     | Whatever your `onStart()` creates                                                                      |
+
+In production, open [Data Studio](/durable-objects/observability/data-studio/): go to **Durable Objects**, select the namespace, select **Data Studio**, and enter the object's name. To run the same query from a script, call the API that Data Studio uses with an API token that has the **Workers Scripts Write** permission. Find the namespace ID with `cf durable-objects namespaces list`:
+
+```sh
+curl -s -X POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/durable_objects/namespaces/$NAMESPACE_ID/query/v2" \
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"durable_object_name":"bob","jurisdiction":"none","queries":[{"sql":"SELECT id, capability, fn, datetime(time / 1000, '\''unixepoch'\'') AS due, running FROM cf_agents_jobs ORDER BY time"}]}'
+```
+
+```json
+{"result":{"results":[{"columns":["id","capability","fn","due","running"],"rows":[["digest","host","sendDigest","2026-11-24 12:14:42",0]],"meta":{"rows_read":2,"rows_written":0}}]},"success":true}
+```
+
+Each query is a request to the live object and is billed like one. It wakes the object if it is asleep, but it does not start the Lifecycle. Treat a write here as a write to production.
+
+Read a job row like this:
+
+- `capability` is the job's owner: `host` for jobs your class pushed, or the ID of a capability such as `queue` or `scheduler`.
+- `time` is when the job is due, in epoch milliseconds. A job due in the past runs at the next alarm.
+- `running` is `1` while a run is in progress. It stays `1` when the run was cut off by a reset, and the job runs again.
+
+SQL cannot see the object's alarm time, and nothing built in shows it for a deployed object. If you need it, add a protected route, as shown in [An alarm that never fires](#an-alarm-that-never-fires).
+
+### 4. Narrow it down
+
+**Follow the request through the Worker and the object.** The Worker's invocation and the Durable Object's invocation share a trace ID. Filter on it to see both, with the platform's spans in between:
+
+```sh
+cf o11y telemetry query --query-id debug --view events \
+  --timeframe-from $FROM --timeframe-to $NOW --limit 50 \
+  --parameters-filters '[{"key":"$metadata.traceId","type":"string","operation":"eq","value":"<TRACE_ID>"}]'
+```
+
+For one request to `/notes/alice/ping`, this returned the Worker's `fetch` event, the `Notes` object's `fetch` event, and spans named `durable_object_subrequest`, `durable_object_storage_getAlarm`, and `durable_object_storage_exec`, each with its outcome. The dashboard's trace view draws the same spans as a waterfall. Work that runs from the object's alarm, such as a Think turn started with `submitMessages()`, has its own trace, not the trace of the request that queued it.
+
+**Find the expensive object.** The `calculations` view aggregates numeric fields. This lists the objects that used the most CPU in one invocation:
+
+```sh
+cf o11y telemetry query --query-id debug --view calculations --ignore-series \
+  --timeframe-from $FROM --timeframe-to $NOW \
+  --parameters-filters '[{"key":"$workers.scriptName","type":"string","operation":"eq","value":"my-agent"},{"key":"$workers.executionModel","type":"string","operation":"eq","value":"durableObject"}]' \
+  --parameters-calculations '[{"operator":"max","key":"$workers.cpuTimeMs","keyType":"number","alias":"maxCpu"},{"operator":"count","alias":"invocations"}]' \
+  --parameters-group-bys '[{"type":"string","value":"$workers.durableObjectId"}]' \
+  --parameters-order-by-value maxCpu --parameters-order-by-order desc --parameters-limit 5
+```
+
+To see which functions use the CPU or allocate the memory, capture a profile with `cf workers versions profile`. The object must be running and receiving requests while the profile is captured. For more information, refer to [Profiling in production](/workers/observability/profiling-in-production/).
+
+## Common failures
+
+### Startup throws
+
+**Symptom.** Every request to one object returns `500 Internal Server Error`, and other objects of the same class work.
+
+**Confirm.** Tail errors and repeat the request. Each attempt logs `Error in <Class>:<name> fetch:` with the stack of your `onStart()`. Startup runs again on every request, so the same line repeats. The response body in production is only `Internal Server Error`. To read the error message, repeat the request against `wrangler tail --format json` or reproduce it locally.
+
+**Cause.** The Lifecycle runs startup inside [`blockConcurrencyWhile()`](/durable-objects/api/state/#blockconcurrencywhile): each capability's `onStart()`, then yours. If startup throws, the event that woke the object fails. While the job queue holds jobs, a fallback alarm also retries startup every 30 seconds or more.
+
+**Fix.** Keep startup to local work, such as creating tables. Handle missing data in `onStart()` instead of throwing, and move anything that can fail into a job with a stable ID, which runs after startup with retries. For more information, refer to [Jobs and alarms](/agents/runtime/lifecycle/job-queue/).
+
+### Startup takes too long
+
+**Symptom.** Requests to one object wait about 30 seconds, then fail with `error code: 1101`.
+
+**Confirm.** The tail shows `A call to blockConcurrencyWhile() in a Durable Object waited for too long. The call was canceled and the Durable Object was reset.`, and the invocation's outcome is `exceededWallTime`.
+
+**Cause.** Startup awaited something slow, such as an external API or a model call, in `onStart()`. The runtime resets an object whose `blockConcurrencyWhile()` runs longer than 30 seconds.
+
+**Fix.** Move the slow work into a job. A capability you write has one more trap: if a public method starts work that `onStart()` also awaits, and an RPC call reaches that method before startup, startup waits on itself until it times out. Call `await this.lifecycle.ready()` at the top of such a method. For more information, refer to [Wait for startup in public methods](/agents/runtime/capabilities/build-a-capability/#wait-for-startup-in-public-methods).
+
+### A method runs before startup
+
+**Symptom.** An RPC method returns `undefined` for a field that `onStart()` sets, but only on the first call to a fresh object.
+
+**Confirm.** Call the method, then send any `fetch` to the same object, and call it again. For example, the first call to a fresh object returns `{"greeting":null,"started":false}`, and the same call after startup returns `{"greeting":"hello from carol","started":true}`.
+
+**Cause.** RPC methods do not go through `fetch`, so the Lifecycle does not start the object for them.
+
+**Fix.** Call `await this.lifecycle.start()` at the top of each RPC method that needs a started object. Capability methods, such as `scheduler.set()`, wait for startup on their own. For more information, refer to [Start from an RPC method](/agents/runtime/lifecycle/#start-from-an-rpc-method).
+
+### The wrong object, or an object with no name
+
+**Symptom.** The agent does not remember earlier data, or every request to it fails and the logs name it `<unnamed>`.
+
+**Confirm.** Query the object's storage by the name you expect, as in [Inspect the object's state](#3-inspect-the-objects-state). An empty result for a name that should have data means requests go to another object. An object created without a name logs `Error in <Class>:<unnamed> fetch:` from `get name`.
+
+**Cause.** Each name is its own object with its own storage, so a different spelling or casing reaches a different, empty object. The Lifecycle needs the object's name, and the runtime only has one for objects reached with `getByName()` or `idFromName()`. IDs from `newUniqueId()` and `idFromString()` have none.
+
+**Fix.** Derive the name from one place, and address objects with `getByName()`. With [`routeAgentRequest()`](/agents/runtime/routing/), the URL `/agents/:binding/:name` picks the object. For more information, refer to [Object names](/agents/runtime/lifecycle/#object-names).
+
+### Work lost on eviction or deploy
+
+**Symptom.** Work that was in progress stops, and nothing records why.
+
+**Confirm.** Look for reset messages for the object, such as `Durable Object reset because its code was updated.`, or for invocations whose outcome is `aborted` or `exceededMemory`.
+
+**Cause.** An idle object is evicted from memory. A reset also ends an object. Anything that lived only in memory is gone: class fields, timers from `setTimeout()`, and promises nothing awaited. A deploy does not always reset a busy object: by default the runtime defers the code update while the object is busy. For example, a 200-second Think turn that started before a deploy finished on the old version, 3 minutes after the deploy.
+
+**Fix.** Write state to SQLite and read it back in `onStart()`. Push a job for future work instead of setting a timer: a job is durable once `push()` resolves. For long work, refer to [Run long work](/agents/runtime/lifecycle/job-queue/#run-long-work). To control when objects move to new code, refer to [Durable Objects code updates](/durable-objects/deployments/durable-objects-code-updates/).
+
+### An alarm that never fires
+
+**Symptom.** A job or schedule is in `cf_agents_jobs` with a `time` in the past or the future, and it never runs.
+
+**Confirm.** Compare the job row with the object's alarm. No built-in tool shows the alarm time of a deployed object, so expose it from a route you protect:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle } from "agents/lifecycle";
+
+export class Notes extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onRequest(request: Request): Promise<Response> {
+		const url = new URL(request.url);
+		if (url.pathname.endsWith("/debug/alarm")) {
+			if (request.headers.get("Authorization") !== `Bearer ${this.env.DEBUG_TOKEN}`) {
+				return new Response("Unauthorized", { status: 401 });
+			}
+			return Response.json({
+				alarm: await this.ctx.storage.getAlarm(),
+				jobs: this.lifecycle.jobs.list(),
+			});
+		}
+		return new Response("Not found", { status: 404 });
+	}
+}
+```
+
+</TypeScriptExample>
+
+`lifecycle.jobs.list()` returns the jobs your class pushed. If jobs exist and `alarm` is `null`, nothing will wake the object. For example, a job due in 10 minutes has an `alarm` equal to its `time`. After code calls `ctx.storage.deleteAlarm()`, `alarm` reads `null`, the row stays in `cf_agents_jobs`, and later requests do not restore the alarm.
+
+**Cause.** Check these, most common first:
+
+- Your code called `ctx.storage.setAlarm()` or `ctx.storage.deleteAlarm()`. Both replace the alarm the Lifecycle manages.
+- Your class defines `alarm()`. `Lifecycle.install()` leaves an existing `alarm()` in place, so jobs never run. Use the `onAlarm()` hook instead.
+- `lifecycle.disableAlarms()` ran, during teardown for example.
+- The job's owner is no longer installed, or a host job was pushed from a class without `onJob()`. The Lifecycle logs `No installed capability or host handler for job` and deletes the job.
+
+**Fix.** Push jobs instead of setting the alarm. To restore the alarm for jobs that already exist, call `await this.lifecycle.rearmAlarm()`, which sets the alarm from the earliest job's `time`.
+
+### A job that fails or runs twice
+
+**Symptom.** A job's work happened twice, or it never happened and nothing logged an error.
+
+**Confirm.** Log each run with the job's ID and attempt, then query those lines for the object:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { Lifecycle, type LifecycleJobContext } from "agents/lifecycle";
+
+export class Notes extends DurableObject<Env> {
+	readonly lifecycle = Lifecycle.install(this);
+
+	async onJob({ job, attempt }: LifecycleJobContext): Promise<void> {
+		const run = { name: this.lifecycle.name, job: job.id, attempt };
+		console.log({ ...run, event: "job_started" });
+		try {
+			await this.syncCrm();
+		} catch (error) {
+			console.error({ ...run, event: "job_failed", error: String(error) });
+			throw error;
+		}
+	}
+
+	async syncCrm(): Promise<void> {
+		const response = await fetch("https://crm.example.com/sync", { method: "POST" });
+		if (!response.ok) throw new Error(`CRM returned ${response.status}`);
+	}
+}
+```
+
+</TypeScriptExample>
+
+The log lines tell these cases apart:
+
+- **The job failed.** A host job whose `onJob()` throws on every attempt logs three runs in the same alarm, attempts 1, 2, and 3, and is then deleted. The Lifecycle logs nothing about it, because a host job completes after its last attempt. Only your own `job_failed` lines record the failure.
+- **The job ran twice.** A job whose object is reset during the run runs again about 30 seconds later, from the Lifecycle's backup alarm. Both runs log `attempt: 1`, because `attempt` counts within one alarm, so only the job's `id` and your own records show the repeat.
+
+**Cause.** Jobs run at least once. The Lifecycle deletes a job after `onJob()` returns, so a reset, an eviction, or a deploy during a run leaves the job in the queue and it runs again. A job that throws is retried in the same alarm up to `retry.maxAttempts`, three by default, and then completes.
+
+**Fix.** Make each job safe to repeat: write results with `INSERT OR REPLACE` or an `UPDATE` keyed by ID, record progress and skip finished steps, and pass an idempotency key derived from the job's `id` to external APIs. For work that must not be dropped after the last attempt, write the failure to storage in your `catch` and push the job again later. For the retry options, refer to [Retries and failures](/agents/runtime/lifecycle/job-queue/#retries-and-failures).
+
+When 10 or more due jobs from one owner run in a single alarm, the Lifecycle logs a warning and emits `job:backlog_warning`. This usually means a job is pushed without a stable `id`. A job that runs for more than 30 seconds logs `has been dispatching for over 30s` and emits `job:slow_dispatch`, because jobs on one object run one at a time.
+
+### The memory limit
+
+**Symptom.** The logs show `Durable Object's isolate exceeded its memory limit and was reset.`, often repeating.
+
+**Confirm.** Query the object's errors. A job that keeps allocating logs the same three lines every 30 seconds for as long as its row exists: its own `job_started` line, the memory-limit error, and an alarm invocation with outcome `exceededMemory`. Its row in `cf_agents_jobs` has `running = 1` and a `time` in the past. A request that reaches the object while the job runs fails with `1101`, because they share the isolate.
+
+**Cause.** A Durable Object's isolate has a memory limit. A job that loads a whole transcript, file, or result set at once, or a buffer that grows without bound, resets the object, and the job runs again on the next wake. The Lifecycle has [memory-limit protection](/agents/runtime/lifecycle/job-queue/#memory-limit-protection) for some of these loops, but do not rely on it to stop yours.
+
+**Fix.** Load data in pages, and keep only what the current step needs. To stop a loop while you fix the code, delete the job's row with Data Studio, or with `DELETE FROM cf_agents_jobs WHERE id = ?` through the query API. To see what allocates, capture a heap profile while the object runs. For more information, refer to [Profiling in production](/workers/observability/profiling-in-production/) and [Durable Objects limits](/durable-objects/platform/limits/).
+
+### WebSocket connections and messages
+
+**Symptom.** The client cannot connect, connects to the wrong handler, or never receives a message the server sent.
+
+**Confirm.** Work from the Worker inward:
+
+1. **Request the upgrade URL with `curl`.** `routeAgentRequest()` answers `400 Invalid request` when the URL matches no binding, and logs `The URL ... with namespace "note" and name "alice" does not match any Durable Object binding.` The URL segment is the kebab-case form of the binding name: `Notes` becomes `notes`, `MyAgent` and `MY_AGENT` become `my-agent`, and `AIAgent` becomes `a-i-agent`. The client's `agent` option is converted the same way. `routeAgentRequest()` returns `null` for paths outside its prefix, `agents` by default. If you change `prefix` on the server, set `basePath` on the client.
+2. **Check that something accepts the upgrade.** Without the [`WebSockets`](/agents/runtime/capabilities/websockets/) capability, the Lifecycle answers upgrades with `404` and `WebSocket upgrades are not enabled on this Durable Object`. A capability that returns a `Response` from `onWebSocketUpgrade()` takes the connection before `WebSockets`, which always runs last.
+3. **Check that your class does not handle sockets itself.** If your class defines `webSocketMessage()`, `webSocketClose()`, or `webSocketError()`, the Lifecycle leaves that method in place and capabilities never see those events. A socket accepted with `ctx.acceptWebSocket()` in your own code belongs to no capability.
+4. **Check the size of what you send.** A message larger than 32 MiB sent from the object is dropped without an error on either side. A `send()` of 34 MB returns, the client never receives it, and a later small message on the same socket arrives. Log the size of large messages before you send them.
+
+An idle connection does not close: the object hibernates, and the next message wakes it. In the logs, each wake is an invocation with `eventType` `hibernatableWebSocket`. For more information, refer to [WebSockets](/agents/runtime/capabilities/websockets/) and [Routing](/agents/runtime/routing/).
+
+### A turn cut off mid-stream
+
+**Symptom.** A reply stopped partway, or a client saw the stream end and then the reply continue.
+
+**Confirm.** Query the recovery events for the object, with [the SDK's events forwarded to your logs](#forward-the-sdks-events-to-your-logs):
+
+```sh
+cf o11y telemetry query --query-id debug --view events \
+  --timeframe-from $FROM --timeframe-to $NOW --limit 20 \
+  --parameters-filters '[{"key":"name","type":"string","operation":"eq","value":"h3"},{"key":"type","type":"string","operation":"starts_with","value":"chat:recovery"}]'
+```
+
+```txt
+{"type":"chat:recovery:detected","agent":"Helper","name":"h3","payload":{"recoveryKind":"continue","attempt":1,"maxAttempts":10,…}}
+{"type":"chat:recovery:attempt",…}
+{"type":"chat:recovery:scheduled",…}
+{"type":"chat:recovery:completed",…}
+```
+
+In this example, the object was reset 6 seconds into a turn. The next alarm, 0.4 seconds later, logged `task:attempt:interrupted`, then the recovery events above, and the stored reply kept the text streamed before the reset and continued it. Without the forwarded events, Workers Logs shows only the reset error and the alarm outcomes `aborted` and `ok`.
+
+**Cause.** A reset, a memory-limit reset, or a deploy with immediate code updates ended the isolate while the model was streaming. Think runs each turn as a durable task and recovers an interrupted one on the next wake.
+
+**Fix.** Recovery runs by default. If it ends with `chat:recovery:exhausted` or `chat:recovery:failed`, the payload says which attempt it reached. To change what recovery does, refer to [Recovery](/agents/harnesses/think/recovery/). Find what reset the object with the steps in [Work lost on eviction or deploy](#work-lost-on-eviction-or-deploy).
+
+### Another agent does not answer
+
+**Symptom.** A call from one agent to another, such as a sub-agent or a tool that calls another object, throws or never returns.
+
+**Confirm.** Tail errors from both objects. The caller logs the error it received. The callee's line tells you why: a startup error, a reset, or the memory limit.
+
+**Cause.** When the called object resets, a call in flight to it rejects at once with the reason the callee was reset. A stub obtained before the reset keeps failing with the same error on every later call, even after the callee is healthy again.
+
+**Fix.** Get a new stub with `getByName()` after a failed call, instead of keeping one in a class field. For Think sub-agents and agent tools, refer to [Sub-agents](/agents/harnesses/think/sub-agents/).
+
+### A value too large for a row
+
+**Symptom.** A write fails with `string or blob too big: SQLITE_TOOBIG`.
+
+**Confirm.** Workers Logs shows `failed to execute sql query: INSERT ...` with the statement and the stack, without the SQLite message. `wrangler tail --format json` and the Local Explorer show `Error: string or blob too big: SQLITE_TOOBIG`.
+
+**Cause.** A row in a Durable Object's SQLite database holds about 8 MiB in total, counted in UTF-8 bytes. A bound parameter has the same cap. Very long transcripts, tool outputs, or files stored in one row reach it.
+
+**Fix.** Store large values in [R2](/r2/) and keep a reference in the row, or split them across rows. For the limits, refer to [Durable Objects limits](/durable-objects/platform/limits/).
+
+## Harness notes
+
+### Think
+
+- Think instruments each turn, so `cf o11y agents traces list --service my-agent` lists turns with their model, token counts, tool calls, and errors. `--agent <ClassName>` narrows to one class. In each span, `gen_ai.agent.id` is the object's name. `cf o11y agents traces events <TRACE_ID>` returns the turn's spans, such as `chat` and `execute_tool`, with their token usage. For more information, refer to [Tracing](/agents/runtime/observability/tracing/).
+- A turn that was cut off by a reset has no agent trace. Only the recovered continuation appears, so use the [recovery events](#a-turn-cut-off-mid-stream) to find it.
+- A turn started with `submitMessages()` runs from the object's alarm. `listSubmissions()` and `inspectSubmission(id)` return each submission's `status`, `error`, and timestamps. For more information, refer to [Programmatic submissions](/agents/harnesses/think/programmatic-submissions/#inspect-list-cancel-and-delete).
+- A submitted turn that streams for more than 30 seconds logs `Job submission:<id> (queue/_cfRunSubmission) has been dispatching for over 30s`. This is the job queue's slow-run warning, and the turn continues.
+
+### Pi
+
+- `PiHarness` drives Pi with one Lifecycle job. While Pi works, `cf_agents_jobs` holds a row with `id` `pi-wake`, `capability` `pi-harness`, and `fn` `wake`, due about 30 seconds ahead: that is its heartbeat. When Pi has nothing left to do, the row is gone.
+- `harness.pending()` lists operations Pi has not settled, such as `{"operationId":"…","session":"1","status":"running"}`, and `harness.sessions.list()` shows whether each session is `busy`. Call them from an RPC method of your object.
+- Pass `onReport` to `Harness.open()` and log each report as a structured line with its `kind` and `String(report.error)`. A run whose object was reset five times while the model streamed ended with a `task_interrupted` report, `The host stopped while the model was answering, on attempt 4`, and `harness.wait(operationId)` returned `{"status":"unanswered","reason":"interrupted"}`.
+- For retries, `restart_limit`, and following a run from a client, refer to [Recovery](/agents/harnesses/pi/#recovery) and [Watch sessions from clients](/agents/harnesses/pi/#watch-sessions-from-clients).
+
+## On the `Agent` class
+
+The `Agent` class installs the same Lifecycle, so the commands and failures in this guide apply to it. For its own logging and error hooks, refer to [On the `Agent` class](/agents/runtime/observability/diagnostics-channels/#on-the-agent-class) in Diagnostics channels.
+
+## Related resources
+
+- [Workers observability](/workers/observability/) covers logs, traces, Issues, and export to other tools with [OpenTelemetry](/workers/observability/opentelemetry-export/).
+- [`cf` for Wrangler users](/cf/wrangler/) maps Wrangler commands to `cf`.
+- [Jobs and alarms](/agents/runtime/lifecycle/job-queue/) describes the job queue, retries, and memory-limit protection.
+- [Diagnostics channels](/agents/runtime/observability/diagnostics-channels/) lists every SDK event.
+- [Durable Objects troubleshooting](/durable-objects/observability/troubleshooting/) lists platform errors, such as overloaded objects and storage timeouts.
