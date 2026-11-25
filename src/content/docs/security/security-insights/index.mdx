@@ -56,13 +56,11 @@ Listed below are the specific insights currently available:
 
 ## Known limitations
 
-Security Insights scans run periodically and use heuristics to detect potential issues. In some cases, an insight may not accurately reflect your current configuration:
+**Account-level managed rules**: The **Managed Rules not deployed** check evaluates zone-level deployments. For Enterprise zones in accounts with access to account-level managed rules, this check is skipped. The absence of this insight does not confirm your account-level managed rules configuration.
 
-- **_Managed Rules not deployed_ on zones with account-level managed rules**: If you deploy managed rules at the account level rather than the zone level, Security Center may not detect them and may report that managed rules are not deployed. If your account-level configuration is correct, you can [archive the insight](/security/security-insights/review-insights/#archive-insights) to dismiss it.
+**Insight updates**: Configuration changes may not immediately update existing insights. An insight leaves the active list after the relevant check runs again and no longer detects the issue.
 
-- **Vulnerability insights for rules in log mode**: If you configure a managed rule with a _Log_ action (for example, to monitor traffic before enforcing), Security Center may still generate a vulnerability insight because the rule is not actively blocking traffic. This is expected behavior. You can archive the insight if you are intentionally using log mode.
-
-To remove a resolved or inaccurate insight from your dashboard, [archive the insight](/security/security-insights/review-insights/#archive-insights) or wait for the next automatic scan.
+After reviewing an insight's risk, you can [archive it](/security/security-insights/review-insights/#archive-insights). Archiving hides the insight from the active list without changing your security configuration.
 
 ## More resources
 
