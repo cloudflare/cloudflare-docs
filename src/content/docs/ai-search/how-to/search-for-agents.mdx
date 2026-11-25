@@ -95,11 +95,16 @@ Cloudflare adds search metadata to the `<head>` of HTML responses:
 ```html
 <meta
 	name="agent:instructions"
-	content="This site offers a search API that returns relevant content across the entire site. Use the search endpoint to find information instead of crawling individual pages."
+	content="Use this search API to find relevant content across this site with keywords or natural-language queries, instead of crawling individual pages. Results are returned in Markdown."
 />
 <meta
-	name="agent:search"
+	name="agent:endpoint"
 	content="https://example.com/.well-known/search?q={query}"
+/>
+<meta name="agent:method" content="GET" />
+<meta
+	name="agent:documentation"
+	content="https://developers.cloudflare.com/ai-search/how-to/search-for-agents/"
 />
 ```
 
@@ -108,8 +113,10 @@ If you also turn on [Markdown for Agents](/fundamentals/reference/markdown-for-a
 ```yaml
 ---
 agent:
-  instructions: "This site offers a search API that returns relevant content across the entire site. Use the search endpoint to find information instead of crawling individual pages."
-  search: "https://example.com/.well-known/search?q={query}"
+  instructions: "Use this search API to find relevant content across this site with keywords or natural-language queries, instead of crawling individual pages. Results are returned in Markdown."
+  endpoint: "https://example.com/.well-known/search?q={query}"
+  method: "GET"
+  documentation: "https://developers.cloudflare.com/ai-search/how-to/search-for-agents/"
 ---
 ```
 
