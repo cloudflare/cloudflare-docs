@@ -12,7 +12,7 @@ Agents SDK v0.34.0 upgrades [`PiHarness`](/agents/harnesses/pi/) to [Pi 1.6](htt
 
 ## Tools that wait
 
-- **Park until a signal or a deadline.** A tool can return a park instead of a result, and Pi runs it again when a signal arrives or the deadline passes. While it waits, the call holds no invocation, so the Durable Object can hibernate. Deliver signals with the new `harness.signal()`. Refer to [Tools that wait](/agents/harnesses/pi/#tools-that-wait).
+- **Park until a signal or a deadline.** A tool can return a "tool park" (Pi's `ToolPark` type) instead of a result. The tool park registers what the call waits for, and Pi runs it again when a signal arrives or the deadline passes. While it waits, the call holds no invocation, so the Durable Object can hibernate. Deliver signals with the new `harness.signal()`. Refer to [Tools that wait](/agents/harnesses/pi/#tools-that-wait).
 - **Wait for a subagent.** `submit()` and `continue()` take `notify`, so a parked tool wakes when another session's input settles. Refer to [Wait for a subagent](/agents/harnesses/pi/#wait-for-a-subagent).
 - **Approval gates.** A `beforeTool` hook can park a tool call before it runs, for example until a person approves it.
 
@@ -24,7 +24,9 @@ Agents SDK v0.34.0 upgrades [`PiHarness`](/agents/harnesses/pi/) to [Pi 1.6](htt
 
 ## Wait for a person's answer
 
-This tool asks the user a question, then parks until your agent delivers the answer:
+This tool asks the user a question, then parks until your agent delivers the answer. Each time it runs, it checks for the answer first, so the question is shown once:
+
+![A sequence diagram of a tool that asks the user a question. The model calls the tool, and run 1 of execute() starts. readSignal() finds no answer, so the tool shows the question with its task id and returns a tool park naming the signal key it waits for. Run 1 ends there. Pi stores the tool park: the call's task id and the signal key. Between the runs the object can hibernate, with no tool code in memory and only the stored tool park kept. Later your app calls harness.signal() with the task id and the answer. Pi matches the stored tool park and starts run 2 of execute() with the same arguments. This time readSignal() returns the answer, and the tool returns it to the model as its result.](~/assets/images/agents/pi-tool-park.svg)
 
 <TypeScriptExample>
 
