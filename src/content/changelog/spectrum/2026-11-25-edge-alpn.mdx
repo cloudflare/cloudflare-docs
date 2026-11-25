@@ -1,12 +1,12 @@
 ---
 title: ALPN for Spectrum applications
 description: Spectrum applications with Edge TLS Termination can negotiate ALPN, so gRPC and PostgreSQL direct TLS clients can connect.
-date: 2026-11-20T00:00:00Z
+date: 2026-11-25T00:00:00Z
 ---
 
 Spectrum applications that terminate TLS at the edge can now negotiate an application protocol with clients using ALPN. Clients that require ALPN, such as gRPC clients (`h2`) and PostgreSQL clients using direct TLS (`postgresql`), can now connect to these applications.
 
-To turn it on, set `edge_alpn_protocols` on the application to the protocols your origin speaks, in order of preference, using the [Spectrum API](/api/resources/spectrum/subresources/apps/methods/update/):
+To turn it on, list the protocols your origin speaks, in order of preference, in the application's **Edge ALPN protocols** setting in the dashboard, or in `edge_alpn_protocols` with the [Spectrum API](/api/resources/spectrum/subresources/apps/methods/update/) or the Cloudflare CLI:
 
 ```json
 "edge_alpn_protocols": ["h2"]

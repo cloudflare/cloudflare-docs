@@ -230,24 +230,26 @@ Some protocols require the client and server to agree on an application protocol
 
 To fix this, set the application's edge ALPN protocols (`edge_alpn_protocols`) to the protocols your origin speaks, in order of preference. When this is set, Cloudflare rejects clients that offer none of the listed protocols, or no ALPN at all, before any data reaches your origin. Leave it empty to keep the default behavior.
 
-Edge ALPN protocols require Edge TLS Termination (**Flexible**, **Full** or **Full (Strict)**) and are not available for FTP applications. Protocol IDs are case-sensitive, and each is 1 to 255 bytes.
+Edge ALPN protocols require Edge TLS Termination (**Flexible**, **Full**, or **Full (Strict)**) and are not available for FTP applications. Protocol IDs are case-sensitive, and each is 1 to 255 bytes.
 
 <Tabs syncKey="dashPlusAPI">
 
 <TabItem label="Dashboard">
 
 <Steps>
-1. In the Cloudflare dashboard, go to **Spectrum** and select **Edit** on the application.
-2. Under **Advanced options**, make sure **Edge TLS Termination** is on.
+1. In the Cloudflare dashboard, go to **Spectrum**. Select **Create an Application**, or open an existing application's menu and select **Edit**.
+2. Under **Advanced Options**, make sure **Edge TLS Termination** is on.
 3. In **Edge ALPN protocols**, enter each protocol ID, such as `h2`, and press **Enter** after each one. Enter them in order of preference.
-4. Select **Save**.
+4. Select **Add Application** or **Save**.
 </Steps>
 
 </TabItem>
 
 <TabItem label="Cloudflare CLI">
 
-An update replaces the whole application configuration, and fields you leave out are reset to their defaults. Send the complete configuration with `edge_alpn_protocols` added.
+When you create an application, pass the protocol IDs with `--edge-alpn-protocols`, for example `--tls flexible --edge-alpn-protocols h2`.
+
+To change an existing application, use `--body`. An update replaces the whole application configuration, and fields you leave out are reset to their defaults. Send the complete configuration with `edge_alpn_protocols` added.
 
 <Steps>
 1. Get the application's current configuration:
@@ -266,7 +268,7 @@ An update replaces the whole application configuration, and fields you leave out
       args={`spectrum apps update <APP_ID> --zone example.com --body '{"dns":{"type":"CNAME","name":"grpc.example.com"},"protocol":"tcp/443","traffic_type":"direct","origin_direct":["tcp://192.0.2.1:50051"],"tls":"full","edge_alpn_protocols":["h2"]}'`}
    />
 
-   Replace the example fields with the application's current values, keeping any other fields it has, such as `edge_ips`, `ip_firewall` or `proxy_protocol`.
+   Replace the example fields with the application's current values, keeping any other fields it has, such as `edge_ips`, `ip_firewall`, or `proxy_protocol`.
 </Steps>
 
 </TabItem>
@@ -301,7 +303,7 @@ An update replaces the whole application configuration, and fields you leave out
       }}
    />
 
-   Replace the example fields with the application's current values, keeping any other fields it has, such as `edge_ips`, `ip_firewall` or `proxy_protocol`.
+   Replace the example fields with the application's current values, keeping any other fields it has, such as `edge_ips`, `ip_firewall`, or `proxy_protocol`.
 </Steps>
 
 </TabItem>
