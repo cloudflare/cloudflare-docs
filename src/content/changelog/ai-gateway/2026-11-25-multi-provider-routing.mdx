@@ -5,9 +5,9 @@ date: 2026-11-25
 publish_future_dated_entry: true
 ---
 
-AI Gateway now supports multi-provider routing. When it is on, AI Gateway can send a request to any provider that offers the requested model, instead of only the providers the model launched with.
+AI Gateway now supports multi-provider routing. When it is on, a request for a model can go to any provider that serves that model. For example, a request for a Claude model can go to Anthropic or to Google Vertex AI.
 
-Multi-provider routing is on by default for new gateways. Existing gateways keep their current behavior, so a provider added to a model later does not receive their traffic until you turn the setting on.
+Multi-provider routing is on by default for new gateways. Existing gateways keep using the providers they use today until you turn the setting on.
 
 To turn on multi-provider routing for an existing gateway, go to your gateway's **Settings** and turn on **Multi-Provider Routing**. To use the API, set `multiprovider_enabled` to `true` in the request body of a [`PUT` request to update the gateway](/api/resources/ai_gateway/methods/update/):
 
@@ -17,14 +17,14 @@ To turn on multi-provider routing for an existing gateway, go to your gateway's 
 }
 ```
 
-Requests that name providers with the `cf-aig-allowed-providers` header or `routing.allowedProviders` can use any of those providers, whether the setting is on or off. [Model aliases](/ai-gateway/features/routing/model-aliases/) are not restricted.
+When the setting is off, you can still choose a provider for a single request. Name the provider in the `cf-aig-allowed-providers` header or in `routing.allowedProviders`. [Model aliases](/ai-gateway/features/routing/model-aliases/) can use every provider whether the setting is on or off.
 
 With this release, more models are available from alternate providers on gateways with multi-provider routing:
 
-- `openai/gpt-oss-20b` and `alibaba/qwen3.8-27b` on Groq.
-- Anthropic Claude models on Google Vertex AI.
-- Google Gemini models on Google AI Studio.
-- `moonshotai/kimi-k3` and `deepseek-ai/deepseek-v4.1-flash-1017` on Fireworks.
+- [`openai/gpt-oss-20b`](https://dash.cloudflare.com/?to=/:account/ai/models/openai/gpt-oss-20b) and [`alibaba/qwen3.8-27b`](https://dash.cloudflare.com/?to=/:account/ai/models/alibaba/qwen3.8-27b) on Groq.
+- [Anthropic Claude models](https://dash.cloudflare.com/?to=/:account/ai/models&authors=anthropic) on Google Vertex AI.
+- [Google Gemini models](https://dash.cloudflare.com/?to=/:account/ai/models&authors=google) on Google AI Studio.
+- [`moonshotai/kimi-k3`](https://dash.cloudflare.com/?to=/:account/ai/models/moonshotai/kimi-k3) and [`deepseek-ai/deepseek-v4.1-flash-1017`](https://dash.cloudflare.com/?to=/:account/ai/models/deepseek-ai/deepseek-v4.1-flash-1017) on Fireworks.
 
 More models and providers are on the way.
 
