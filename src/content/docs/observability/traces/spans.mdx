@@ -50,13 +50,11 @@ Ruleset phase spans measure rule execution and application of the phase output. 
 
 ## Workers runtime spans
 
-Cloudflare Traces include spans for supported Workers runtime operations, including handler invocations, fetch calls, and binding operations.
+Workers record spans for supported runtime operations, such as handler invocations, fetch calls, and binding operations. To record them, enable [Workers tracing](/workers/observability/traces/).
+
+Workers spans appear in a separate trace from the Cloudflare Trace for the same request. Both traces have the same Ray ID (`cloudflare.ray_id`), which you can use to find them.
 
 Refer to [Workers spans and attributes](/workers/observability/traces/spans-and-attributes/) for the complete runtime reference. You can also [create custom spans](/workers/observability/traces/custom-spans/) for application-specific operations.
-
-:::note
-[Workers tracing](/workers/observability/traces/) needs to be enabled to see Workers spans in a Cloudflare Trace.
-:::
 
 ## Features without spans
 
