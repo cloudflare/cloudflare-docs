@@ -58,13 +58,13 @@ Cloudflare processes the request as a non-range request when:
 - The range syntax cannot be parsed
 - The range unit is not `bytes`
 - A number is too large to parse
-- The header contains more than 300 ranges, or exactly 300 ranges when Cloudflare serves a complete cached file without Origin Range Requests
+- The header contains more than 500 ranges, or exactly 500 ranges when Cloudflare serves a complete cached file without Origin Range Requests
 
 This normally returns the complete file as `200 OK`. Conditional requests can return `304 Not Modified`, and origin errors still apply.
 
 ### Multiple ranges
 
-When Origin Range Requests applies, between two and 300 valid, ascending, non-overlapping ranges return a multipart `206 Partial Content` response. Cloudflare omits individual ranges that cannot be satisfied. The response remains multipart if only one range remains. If no ranges remain, Cloudflare returns `416 Range Not Satisfiable`.
+When Origin Range Requests applies, between two and 500 valid, ascending, non-overlapping ranges return a multipart `206 Partial Content` response. Cloudflare omits individual ranges that cannot be satisfied. The response remains multipart if only one range remains. If no ranges remain, Cloudflare returns `416 Range Not Satisfiable`.
 
 When Cloudflare serves a complete cached file without Origin Range Requests, one remaining satisfiable range produces a single-range `206 Partial Content` response.
 
