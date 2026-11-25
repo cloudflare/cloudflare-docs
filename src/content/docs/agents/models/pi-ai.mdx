@@ -20,7 +20,7 @@ import {
 
 ## Install
 
-The provider needs `@earendil-works/pi-ai@~1.6.0`, an optional peer dependency of `agents`:
+The provider needs `@earendil-works/pi-ai@~1.6.1`, an optional peer dependency of `agents`:
 
 <PackageManagers pkg="agents @earendil-works/pi-ai" />
 
@@ -155,7 +155,9 @@ await session.setModel(ai("anthropic/claude-opus-5.5"));
 
 A Pi session stores only its model's provider and id, then looks the model up in the `Models` registry. Use the `@cf/`, `dynamic/`, and `<provider>/<id>` forms there. They belong to the `cloudflare` provider (`CLOUDFLARE_PROVIDER_ID`) that you registered. A model object keeps its vendor's provider id, which this registry does not know. Options passed to `ai(model, options)` do not reach a session. Set them on `createAI` instead.
 
-A model stream that is cut off, or that sends nothing for `streamIdleTimeoutMs`, ends in an error that Pi AI's `isRetryableAssistantError()` treats as transient. The Pi harness retries the turn under its retry settings instead of failing it.
+A model stream that is cut off, or that sends nothing for `streamIdleTimeoutMs`, ends in an error that Pi AI's `isRetryableAssistantError()` treats as transient. So does a chat completions stream that ends with `finish_reason: "error"`, and an OpenRouter stream that stops with no output for a reason that marks a failure. The Pi harness retries the turn under its retry settings instead of failing it.
+
+The message's `rawStopReason` records the finish reason the provider sent. For OpenRouter, it adds the upstream provider's own reason, for example `stop.MALFORMED_RESPONSE`.
 
 The provider's model list is every Workers AI model Pi AI knows, plus every `<provider>/<id>` in Pi AI's AI Gateway catalog, so `models.getModel("cloudflare", "anthropic/claude-opus-5.5")` resolves.
 
@@ -216,7 +218,7 @@ const cloudflare = message.diagnostics?.find(
 //   step?, traceId?, runId? }
 ```
 
-A failed request ends the stream with an `error` event. Its message has a `cloudflare-error` diagnostic with `status`, `code`, and `logId`. `onResponse` receives the status and headers of every request.
+A failed request ends the stream with an `error` event. Its message has a `cloudflare-error` diagnostic with `status`, `code`, and `logId`. `onResponse` receives the status and headers of every response, including a vendor's error response and the gateway's own failure, so you can read headers such as `retry-after` from a failed request.
 
 The gateway's own failures, such as a missing gateway or an unpaid account, become a `CloudflareAIError`. Errors from the vendor come back as the vendor sent them.
 
