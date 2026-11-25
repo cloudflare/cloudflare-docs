@@ -1,0 +1,17 @@
+---
+title: Activate pay-as-you-go products from the Cloudflare CLI and MCP
+description: You and your agents can now activate pay-as-you-go Cloudflare products with no upfront charge from the Cloudflare CLI or MCP servers.
+products:
+  - billing
+  - cf
+  - agents
+date: 2026-11-25
+---
+
+You and your agents can now activate pay-as-you-go Cloudflare products with no upfront charge from the [Cloudflare CLI](/cf/) (`cf`) or [Cloudflare Model Context Protocol (MCP) servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/), without switching to the dashboard. Your account only needs an existing [billing profile and payment method on file](/billing/get-started/create-billing-profile/).
+
+Previously, activating a pay-as-you-go subscription meant stopping your terminal or agent session to complete checkout in the dashboard. Creating an [R2](/r2/pricing/) bucket requires a pay-as-you-go subscription even within the 10 GB free monthly allowance, and putting a Worker behind [Cloudflare Access](/workers/configuration/cloudflare-access/) requires signing up for [Zero Trust](/cloudflare-one/setup/) first. Now you can complete both in place.
+
+When using MCP, Cloudflare uses [MCP elicitation](https://modelcontextprotocol.io/specification/2026-07-28/client/elicitation) to ask for your permission before activating a subscription on your account.
+
+For more information, refer to [Usage-based billing](/billing/understand/usage-based-billing/) and [Use cf with coding agents](/cf/agents/).
