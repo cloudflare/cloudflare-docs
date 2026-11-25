@@ -1,0 +1,285 @@
+{
+	"model_id": "topaz/proteus-4",
+	"name": "Proteus 4",
+	"description": "Topaz Labs Proteus 4 (prob-4) is a general-purpose precision video enhancer that upscales, denoises and sharpens low to medium quality footage to 1080p or 4K without generating new detail. It is Topaz's recommended default model and costs far less than the generative Starlight models.",
+	"task": "video-to-video",
+	"tags": [
+		"Video Enhancement",
+		"Upscaling",
+		"Denoising",
+		"Video-to-Video"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per provider unit": 0.12
+	},
+	"examples": [
+		{
+			"name": "Upscale to 1080p",
+			"description": "Upscale a 360p MP4 to 1080p with automatic enhancement settings.",
+			"input": {
+				"frame_count": 150,
+				"frame_rate": 29.97,
+				"source_container": "mp4",
+				"source_height": 360,
+				"source_width": 640,
+				"video_uri": "https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4",
+				"target_resolution": "1920x1080"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/topaz/proteus-4/upscale-to-1080p.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/topaz/proteus-4/upscale-to-1080p.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/proteus-4',\n  {\n    frame_count: 150,\n    frame_rate: 29.97,\n    source_container: 'mp4',\n    source_height: 360,\n    source_width: 640,\n    video_uri:\n      'https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4',\n    target_resolution: '1920x1080',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/proteus-4\",\n  \"input\": {\n    \"frame_count\": 150,\n    \"frame_rate\": 29.97,\n    \"source_container\": \"mp4\",\n    \"source_height\": 360,\n    \"source_width\": 640,\n    \"video_uri\": \"https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4\",\n    \"target_resolution\": \"1920x1080\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "4K with Manual Clean-Up",
+			"description": "Upscale to 4K and set the noise, compression-artifact and detail values yourself.",
+			"input": {
+				"frame_count": 150,
+				"frame_rate": 29.97,
+				"source_container": "mp4",
+				"source_height": 360,
+				"source_width": 640,
+				"video_uri": "https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4",
+				"target_resolution": "3840x2160",
+				"parameter_mode": "Manual",
+				"noise": 0.3,
+				"compression": 0.4,
+				"details": 0.2,
+				"blur": 0.1
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/topaz/proteus-4/4k-with-manual-clean-up.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/topaz/proteus-4/4k-with-manual-clean-up.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'topaz/proteus-4',\n  {\n    frame_count: 150,\n    frame_rate: 29.97,\n    source_container: 'mp4',\n    source_height: 360,\n    source_width: 640,\n    video_uri:\n      'https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4',\n    target_resolution: '3840x2160',\n    parameter_mode: 'Manual',\n    noise: 0.3,\n    compression: 0.4,\n    details: 0.2,\n    blur: 0.1,\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"topaz/proteus-4\",\n  \"input\": {\n    \"frame_count\": 150,\n    \"frame_rate\": 29.97,\n    \"source_container\": \"mp4\",\n    \"source_height\": 360,\n    \"source_width\": 640,\n    \"video_uri\": \"https://replicate.delivery/pbxt/PetLEVcclEkT5H9A3tYETZyAMT5GE2Sa4m6sQqPDpj8vgHga/animatediff.B572L3lv.mp4\",\n    \"target_resolution\": \"3840x2160\",\n    \"parameter_mode\": \"Manual\",\n    \"noise\": 0.3,\n    \"compression\": 0.4,\n    \"details\": 0.2,\n    \"blur\": 0.1\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://developer.topazlabs.com/video-models/upscaling-and-enhancement/precision/proteus",
+	"terms": null,
+	"cover_image_url": null,
+	"metadata": {
+		"Max Source Size": "500 MB",
+		"Parameter Modes": "Auto, Relative, Manual",
+		"Resolutions": "1920x1080, 3840x2160"
+	},
+	"request_formats": null,
+	"provider_id": "topaz",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "topaz",
+			"pricing": {
+				"units": 0.12
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "topaz",
+			"pricing": {
+				"units": 0.12
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "units",
+							"label": "Per provider unit",
+							"unit": null,
+							"value": 0.12
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-20 17:11:33",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video_uri": {
+					"type": "string",
+					"format": "uri",
+					"description": "HTTPS URI of the source video to enhance"
+				},
+				"source_container": {
+					"type": "string",
+					"enum": [
+						"3gp",
+						"avi",
+						"dv",
+						"flv",
+						"m1v",
+						"m2t",
+						"m2ts",
+						"m2v",
+						"m4v",
+						"mkv",
+						"mov",
+						"mp4",
+						"mpeg",
+						"mpg",
+						"mts",
+						"mxf",
+						"ser",
+						"ts",
+						"vob",
+						"webm",
+						"wmv"
+					],
+					"description": "Container format of the source video"
+				},
+				"source_width": {
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"description": "Width of the source video in pixels"
+				},
+				"source_height": {
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"description": "Height of the source video in pixels"
+				},
+				"frame_count": {
+					"type": "integer",
+					"exclusiveMinimum": 0,
+					"maximum": 9007199254740991,
+					"description": "Total frame count of the source video (used by Topaz for credit estimation)"
+				},
+				"frame_rate": {
+					"type": "number",
+					"exclusiveMinimum": 0,
+					"description": "Frame rate of the source video in frames per second (e.g. 29.97)"
+				},
+				"target_resolution": {
+					"default": "1920x1080",
+					"description": "Target output resolution",
+					"type": "string",
+					"enum": [
+						"1920x1080",
+						"3840x2160"
+					]
+				},
+				"parameter_mode": {
+					"description": "\"Auto\" estimates every value, \"Relative\" nudges the estimates by the amounts you send, \"Manual\" uses your values as they are.",
+					"type": "string",
+					"enum": [
+						"Auto",
+						"Manual",
+						"Relative"
+					]
+				},
+				"compression": {
+					"description": "Strength of compression artifact recovery, from -1 to 1. Estimated if omitted.",
+					"type": "number",
+					"minimum": -1,
+					"maximum": 1
+				},
+				"details": {
+					"description": "Amount of detail reconstruction, from -1 to 1. Estimated if omitted.",
+					"type": "number",
+					"minimum": -1,
+					"maximum": 1
+				},
+				"noise": {
+					"description": "Amount of noise reduction, from -1 to 1. Estimated if omitted.",
+					"type": "number",
+					"minimum": -1,
+					"maximum": 1
+				},
+				"halo": {
+					"description": "Amount of halo reduction, from -1 to 1. Estimated if omitted.",
+					"type": "number",
+					"minimum": -1,
+					"maximum": 1
+				},
+				"preblur": {
+					"description": "Anti-aliasing and deblurring strength, from -1 to 1. Estimated if omitted.",
+					"type": "number",
+					"minimum": -1,
+					"maximum": 1
+				},
+				"blur": {
+					"description": "Amount of sharpening, from -1 to 1. Estimated if omitted.",
+					"type": "number",
+					"minimum": -1,
+					"maximum": 1
+				}
+			},
+			"required": [
+				"video_uri",
+				"source_container",
+				"source_width",
+				"source_height",
+				"frame_count",
+				"frame_rate",
+				"target_resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL to the enhanced video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}
