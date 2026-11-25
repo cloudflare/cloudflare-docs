@@ -104,6 +104,7 @@ If you do not have more than one anycast IP configured in your account, and you 
 - **Priority**: Assigns a priority to the WAN interface. Lower numbers have higher priority. For details on how Cloudflare calculates priorities, refer to [Traffic steering](/cloudflare-wan/reference/traffic-steering/).
 - **Health check rate:** Configures the health check frequency for your WAN. Options are low, mid, and high. For details, refer to [Update tunnel health checks frequency](/cloudflare-wan/configuration/common-settings/update-tunnel-health-checks-frequency/).
 - **Addressing:** Configures the Cloudflare One Appliance to work in a DHCP or static IP environment.
+- **Provisioned upload bandwidth** and **Provisioned download bandwidth**: Optional. The upload and download speeds of the WAN circuit, in Mbps in the dashboard or kbps in the API. When you set the upload value, the appliance shapes upload traffic on the WAN to 95% of it, so that [prioritized traffic](/cloudflare-wan/configuration/appliance/network-options/application-based-policies/prioritized-traffic/) takes effect when the circuit is congested. Download traffic is not currently shaped.
 
 ## LAN settings
 
