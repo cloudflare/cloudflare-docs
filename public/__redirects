@@ -1320,6 +1320,7 @@
 # google tag
 /google-tag-first-party-mode/ /google-tag-gateway/ 301
 # images — legacy redirects (updated destinations)
+/images/optimization/transformations/overview/ /images/optimization/transformations/url/ 301
 /images/cloudflare-images/upload-images/supported-formats/ /images/get-started/limits/ 301
 /image-resizing/ /images/optimization/features/ 301
 /image-resizing/url-format/ /images/optimization/features/ 301
@@ -1342,7 +1343,7 @@
 /images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
 /images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
 /images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
-/images/cloudflare-images/transform/ /images/optimization/transformations/overview/ 301
+/images/cloudflare-images/transform/ /images/optimization/transformations/url/ 301
 /images/cloudflare-images/transform/blur-images/ /images/optimization/hosted-images/blur-variants/ 301
 /images/cloudflare-images/transform/delete-images/ /images/storage/manage-images/delete-images/ 301
 /images/cloudflare-images/transform/export-image/ /images/storage/manage-images/export-images/ 301
@@ -1367,8 +1368,8 @@
 /images/platform/pricing/ /images/pricing/ 301
 # images — new IA redirects
 /images/get-started/ /images/get-started/introduction/ 301
-/images/transform-images/ /images/optimization/transformations/overview/ 301
-/images/transform-images/transform-via-url/ /images/optimization/features/ 301
+/images/transform-images/ /images/optimization/transformations/url/ 301
+/images/transform-images/transform-via-url/ /images/optimization/transformations/url/ 301
 /images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
 /images/transform-images/bindings/ /images/optimization/binding/ 301
 /images/optimization/transformations/bindings/ /images/optimization/binding/ 301
