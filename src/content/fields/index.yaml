@@ -2446,6 +2446,135 @@ entries:
     example_block: |-
       any(http.request.body.multipart.filenames[*][0] in {"token.txt" "password.txt"})
 
+  - name: http.request.body.multipart.headers
+    data_type: Array<Map<Array<String>>>
+    categories: [Request, Body, Headers]
+    keywords: [request, body, multipart, headers]
+    plan_info_label: Enterprise
+    summary: The headers of each parsed multipart part, grouped by lowercase header name.
+    description: |-
+      Requires a Cloudflare Enterprise plan.
+
+      The outer array follows the same part order as [`http.request.body.multipart.values`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.values/). Each map includes standard and custom headers. Repeated header names share an array of values in occurrence order.
+
+      A part with a body but no headers has an empty map. Parts with no headers and an empty body are excluded from the part arrays and counted by [`http.request.body.multipart.empty_parts_count`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.empty_parts_count/).
+
+      Folded header values are unfolded. Request body inspection and multipart parsing limits apply.
+    example_value: |-
+      [{"content-type": ["text/plain"], "x-upload-tag": ["first", "second"]}, {}]
+    example_block: |-
+      http.request.body.multipart.headers[0]["x-upload-tag"][0] eq "first"
+
+  - name: http.request.body.multipart.headers.names
+    data_type: Array<Array<String>>
+    categories: [Request, Body, Headers]
+    keywords: [request, body, multipart, headers]
+    plan_info_label: Enterprise
+    summary: The header names of each parsed multipart part, in occurrence order.
+    description: |-
+      Requires a Cloudflare Enterprise plan.
+
+      Header names retain their original case. Repeated names appear multiple times.
+
+      The outer array follows the same part order as [`http.request.body.multipart.values`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.values/). Within each part, each name corresponds to the value at the same index in [`http.request.body.multipart.headers.values`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.headers.values/).
+
+      A part with a body but no headers has an empty array. Request body inspection and multipart parsing limits apply.
+    example_value: |-
+      [["Content-Type", "X-Upload-Tag", "x-upload-tag"], []]
+    example_block: |-
+      http.request.body.multipart.headers.names[0][0] eq "Content-Type"
+
+  - name: http.request.body.multipart.headers.values
+    data_type: Array<Array<String>>
+    categories: [Request, Body, Headers]
+    keywords: [request, body, multipart, headers]
+    plan_info_label: Enterprise
+    summary: The header values of each parsed multipart part, in occurrence order.
+    description: |-
+      Requires a Cloudflare Enterprise plan.
+
+      The outer array follows the same part order as [`http.request.body.multipart.values`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.values/). Within each part, each value corresponds to the name at the same index in [`http.request.body.multipart.headers.names`](/ruleset-engine/rules-language/fields/reference/http.request.body.multipart.headers.names/).
+
+      Folded header values are unfolded. Repeated headers appear multiple times. A part with a body but no headers has an empty array.
+
+      Request body inspection and multipart parsing limits apply.
+    example_value: |-
+      [["text/plain", "first", "second"], []]
+    example_block: |-
+      http.request.body.multipart.headers.values[0][0] eq "text/plain"
+
+  - name: http.request.body.multipart.preamble
+    data_type: String
+    categories: [Request, Body]
+    keywords: [request, body, multipart, preamble]
+    plan_info_label: Enterprise
+    summary: The bytes before the first multipart boundary delimiter.
+    description: |-
+      Requires a Cloudflare Enterprise plan.
+
+      The value preserves the original bytes, including the line ending immediately before the first delimiter. It is empty when the body starts with a delimiter.
+
+      Request body inspection limits apply.
+    example_value: |-
+      "upload metadata\x0d\x0a"
+    example_block: |-
+      http.request.body.multipart.preamble eq "upload metadata\x0d\x0a"
+
+  - name: http.request.body.multipart.empty_parts_count
+    data_type: Integer
+    categories: [Request, Body]
+    keywords: [request, body, multipart, empty]
+    plan_info_label: Enterprise
+    summary: The number of headerless multipart parts with empty bodies skipped during parsing.
+    description: |-
+      Requires a Cloudflare Enterprise plan.
+
+      These parts do not appear in the multipart part arrays and do not consume the exposed-part limit.
+
+      A part with headers and an empty body is not counted. A part with a whitespace-only body is not counted.
+
+      The count includes only parts encountered before parsing stops. Request body inspection and multipart parsing limits apply.
+    example_value: |-
+      2
+    example_block: |-
+      http.request.body.multipart.empty_parts_count gt 0
+
+  - name: http.response.set_cookies
+    data_type: Map<Array<String>>
+    categories: [Response, Headers]
+    keywords: [response, cookie, set-cookie, header]
+    summary: The parsed cookies from the current HTTP response `Set-Cookie` headers.
+    description: |-
+      Map keys are URL-decoded cookie names. Cookie names that become identical after decoding share an array of values, in occurrence order.
+
+      Cookie values are not URL decoded. Attributes such as `Path`, `Secure`, and `HttpOnly` are not included in the values.
+
+      This field reflects response header changes from earlier phases. Fields remain immutable within a phase. Refer to [Field values during rule evaluation](/ruleset-engine/about/rules/#field-values-during-rule-evaluation).
+
+      To inspect the original response cookies, use [`raw.http.response.set_cookies`](/ruleset-engine/rules-language/fields/reference/raw.http.response.set_cookies/).
+
+      The availability of HTTP response fields depends on the Cloudflare feature and your plan.
+    example_value: |-
+      {"app": ["test", "preview"]}
+    example_block: |-
+      http.response.set_cookies["app"][0] eq "test"
+
+  - name: raw.http.response.set_cookies
+    data_type: Map<Array<String>>
+    categories: [Response, Headers]
+    keywords: [response, cookie, set-cookie, header, raw]
+    summary: The parsed cookies from the original HTTP response `Set-Cookie` headers.
+    description: |-
+      This is the raw field version of [`http.response.set_cookies`](/ruleset-engine/rules-language/fields/reference/http.response.set_cookies/). It preserves the original response cookies and is unaffected by subsequent response header changes.
+
+      The same cookie parsing applies to both fields: names are URL decoded, duplicate names share an array of values, and values exclude cookie attributes. The `raw.` prefix does not disable parsing or name decoding.
+
+      The availability of HTTP response fields depends on the Cloudflare feature and your plan.
+    example_value: |-
+      {"app": ["test", "preview"]}
+    example_block: |-
+      raw.http.response.set_cookies["app"][0] eq "test"
+
   - name: http.response.code
     data_type: Integer
     categories: [Response]
