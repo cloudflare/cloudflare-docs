@@ -1,58 +1,188 @@
 ---
-pcx_content_type: concept
+pcx_content_type: how-to
 title: Set up your security.txt file
-description: Manage your security.txt file via the dashboard or the API.
+description: Create and manage your security.txt file through the Cloudflare dashboard, API, or Terraform.
 products:
   - security-center
 sidebar:
   order: 4
 ---
 
-You can manage your [security.txt](https://en.wikipedia.org/wiki/Security.txt) file via the dashboard or the [API](/api/resources/security_txt/).
+import { APIRequest, DashButton, Steps, Tabs, TabItem } from "~/components";
 
-:::note
-When using the API, the preferred languages field name is `preferred_languages` (snake_case). For example: `"preferred_languages": "en, de"`.
-:::
+A [security.txt](https://www.rfc-editor.org/rfc/rfc9116.html) file tells security researchers how to report vulnerabilities to your organization. Cloudflare stores one `security.txt` configuration per zone. You can manage it through the dashboard, API, or Terraform.
 
-To manage your security.txt file via the Cloudflare dashboard:
+When you turn on **Security.txt**, Cloudflare serves your file at `/.well-known/security.txt`. Turning it off preserves your configuration and sends requests for the file to your origin server. Deleting the file removes the configuration saved in Cloudflare.
 
-1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/), select your account and domain.
-2. Go to **Security** > **Settings** and filter by **Web application exploits**.
-3. Under **Security.txt** > **Configurations**, select the edit icon.
+## Before you begin
 
-From here, you can create and manage your `security.txt` file to provide the security research team with a standardized way to report vulnerabilities.
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
 
-Fill in the following information:
+<Steps>
 
-- **(Required) Contact**: You can enter one of the following to contact you about security issues:
-  - An email address: The email address must start with `mailto:` (for example, `mailto:help@example.com`).
-  - A phone number: The phone number must start with `tel:` (for example, `tel:+1 1234567890`).
-  - A URL link: The URL link must start with `https://` (for example, `https://example.com`).
+1. In the Cloudflare dashboard, go to **Security** > **Settings**.
 
-  Select **Add more** to add multiple contacts.
+   <DashButton url="/?to=/:account/:zone/security/settings" />
 
-- **(Required) Expires at**: Enter the expiration date and time of the `security.txt` file.
-- **Encryption**: A link to a key which security researchers can use to communicate with you.
-- **Acknowledgements**: A link to your acknowledgements page.
-- **Canonical**: Links to your `security.txt` file.
-- **Hiring**: A link to your security-related job openings.
-- **Policy**: A link to a policy describing what security researchers should do when searching for or reporting security issues.
-- **Preferred languages**: A list of language codes that your security team speaks.
+2. Filter by **Web application exploits**.
 
-Once you have entered the necessary information, select **Save**.
+</Steps>
 
-To edit your security.txt file:
+</TabItem>
+<TabItem label="API">
 
-1. Go to **Security** > **Settings** and filter by **Web application exploits**.
-2. Under **Security.txt** > **Configurations**, select the edit icon.
+Use an [API token](/fundamentals/api/get-started/create-token/) with **Zone Settings Write** permission to create, update, or delete the configuration. **Zone Settings Read** permission is sufficient to retrieve it. Scope the token to the zone you want to manage.
 
-To download your security.txt file:
+Replace `$ZONE_ID` with your [zone ID](/fundamentals/account/find-account-and-zone-ids/) and use your token as `$CLOUDFLARE_API_TOKEN` in these requests.
 
-1. Go to **Security** > **Settings** and filter by **Web application exploits**.
-2. Under **Security.txt** > **Configurations**, select the download icon.
+</TabItem>
+<TabItem label="Terraform">
 
-To delete your security.txt file:
+[Set up the Cloudflare Terraform provider](/terraform/tutorial/initialize-terraform/) with an API token that has **Zone Settings Write** permission for your zone.
 
-1. Select **Security** > **Settings** and filter by **Web application exploits**.
-2. Under **Security.txt** > **Configurations**, select the edit icon.
-3. Select **Delete**.
+</TabItem>
+</Tabs>
+
+## Create or update your security.txt file
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+<Steps>
+
+1. Under **Security.txt** > **Configurations**, select the edit icon.
+2. Complete the required **Contact** and **Expires** fields and any [optional fields](#file-fields). Select **Add more** to add multiple contacts or links.
+3. Select **Save**.
+4. To publish the file, turn on the **Security.txt** toggle.
+
+</Steps>
+
+In the Cloudflare dashboard, under **Security.txt** > **Configurations**, select the download icon to download your `security.txt` file. You can also select **Download Security.txt** in the edit dialog.
+
+</TabItem>
+<TabItem label="API">
+
+Use the [Retrieve security.txt](/api/resources/security_txt/methods/get/) endpoint to retrieve your configuration as JSON. The response contains the field values, not the published `security.txt` file.
+
+<APIRequest
+	path="/zones/{zone_id}/security-center/securitytxt"
+	method="GET"
+	roles={false}
+/>
+
+Use the [Update security.txt](/api/resources/security_txt/methods/update/) endpoint to create or replace the configuration. Send structured JSON fields, not raw `security.txt` text:
+
+<APIRequest
+	path="/zones/{zone_id}/security-center/securitytxt"
+	method="PUT"
+	roles={false}
+	json={{
+		enabled: true,
+		contact: ["mailto:security@example.com"],
+		expires: "2027-06-01T00:00:00Z",
+		policy: ["https://example.com/security-policy"],
+		preferred_languages: "en, de",
+	}}
+/>
+
+Replace the example values with your own [field values](#file-fields) and use a future expiration date. Include all fields you want to keep in each `PUT` request. Omitted optional fields are cleared.
+
+The `enabled` field controls whether Cloudflare serves your `security.txt` file.
+
+</TabItem>
+<TabItem label="Terraform">
+
+<Steps>
+
+1. Add a [`cloudflare_security_txt`](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/security_txt) resource to your Terraform configuration. Replace `<ZONE_ID>` with your [zone ID](/fundamentals/account/find-account-and-zone-ids/) and enter your [security.txt field values](#file-fields). Use a future expiration date.
+
+   ```hcl
+   resource "cloudflare_security_txt" "example" {
+     zone_id = "<ZONE_ID>"
+     enabled = true
+     contact = ["mailto:security@example.com"]
+     expires = "2027-06-01T00:00:00Z"
+
+     policy              = ["https://example.com/security-policy"]
+     preferred_languages = "en, de"
+   }
+   ```
+
+2. (Optional) If your zone already has a `security.txt` configuration in Cloudflare, match the resource arguments to its current values and import it before applying changes. Use your zone ID as the import identifier:
+
+   ```sh
+   terraform import cloudflare_security_txt.example '<ZONE_ID>'
+   ```
+
+3. Review and apply your changes:
+
+   ```sh
+   terraform plan
+   terraform apply
+   ```
+
+</Steps>
+
+To update your `security.txt` file, edit the resource arguments and run `terraform plan` and `terraform apply` again. Terraform uses individual field values rather than the contents of a `security.txt` file. The required `enabled` argument controls whether Cloudflare serves the file.
+
+</TabItem>
+</Tabs>
+
+After turning on **Security.txt**, visit `https://<YOUR_DOMAIN>/.well-known/security.txt`. Check that your `security.txt` file contains the correct contact information and expiration date.
+
+## Stop serving or delete your security.txt file
+
+<Tabs syncKey="dashPlusAPI">
+<TabItem label="Dashboard">
+
+To stop serving the file without deleting its configuration, turn off the **Security.txt** toggle.
+
+To delete the saved configuration:
+
+<Steps>
+
+1. Under **Security.txt** > **Configurations**, select the edit icon.
+2. Select **Delete**, then confirm by selecting **Delete** again.
+
+</Steps>
+
+</TabItem>
+<TabItem label="API">
+
+To stop serving the file without deleting its configuration, send the complete configuration to the [Update security.txt](/api/resources/security_txt/methods/update/) endpoint with `enabled` set to `false`.
+
+Use the [Delete security.txt](/api/resources/security_txt/methods/delete/) endpoint to remove the saved configuration and stop serving the file through Cloudflare:
+
+<APIRequest
+	path="/zones/{zone_id}/security-center/securitytxt"
+	method="DELETE"
+	roles={false}
+/>
+
+</TabItem>
+<TabItem label="Terraform">
+
+To stop serving the file while retaining its configuration, set `enabled = false` and apply the change.
+
+To delete the saved configuration, remove the resource block and run `terraform plan` and `terraform apply`. Destroying the resource deletes the configuration from Cloudflare rather than just turning off `security.txt`.
+
+</TabItem>
+</Tabs>
+
+## File fields
+
+Use these fields to tell researchers how to report security issues. In the API and Terraform, contact methods and links are lists of strings. The `expires` and `preferred_languages` fields each accept a single string.
+
+| Dashboard field         | API / Terraform field | Description                                                                                                                                                                                                                                                 |
+| ----------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Contact** (required)  | `contact`             | One or more contact methods. Use `mailto:` for email addresses (for example, `mailto:security@example.com`), `tel:` for phone numbers (for example, `tel:+1-201-555-0123`), or `https://` for URLs.                                                         |
+| **Expires** (required)  | `expires`             | The date and time after which the file is considered stale. Use a future date and renew the file before it expires. For the API and Terraform, use RFC 3339 format, such as `2027-06-01T00:00:00Z`. A date less than one year in the future is recommended. |
+| **Encryption**          | `encryption`          | Links to encryption keys that researchers can use for secure communication. Do not include the key itself.                                                                                                                                                  |
+| **Acknowledgements**    | `acknowledgments`     | Links to pages recognizing researchers who report vulnerabilities.                                                                                                                                                                                          |
+| **Canonical**           | `canonical`           | Canonical URLs for your `security.txt` file.                                                                                                                                                                                                                |
+| **Hiring**              | `hiring`              | Links to security-related job openings.                                                                                                                                                                                                                     |
+| **Policy**              | `policy`              | Links to your vulnerability disclosure policy, describing how researchers should search for or report security issues.                                                                                                                                      |
+| **Preferred-Languages** | `preferred_languages` | A comma-separated string of language codes, such as `en, de`, for languages your security team uses.                                                                                                                                                        |
+
+The configuration request body cannot exceed 2,048 bytes.
