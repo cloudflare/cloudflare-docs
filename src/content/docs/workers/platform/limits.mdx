@@ -207,7 +207,11 @@ A subrequest is any request a Worker makes using the [Fetch API](/workers/runtim
 
 Each subrequest in a redirect chain counts against this limit. The total number of subrequests may exceed the number of `fetch()` calls in your code. You can change the subrequest limit per Worker using the [`limits` configuration](/workers/wrangler/configuration/#limits) in your Wrangler configuration file.
 
-The Workers runtime does not impose a fixed duration limit on individual subrequests. The [invocation's duration limit](#duration) still applies, and an outbound HTTP request can hit a [proxy timeout](/workers/runtime-apis/fetch/#outbound-request-timeouts) before the invocation ends. When the client disconnects or the response is complete, outstanding work may be canceled unless it is passed to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil), which can extend execution for up to 30 seconds.
+The Workers runtime does not impose a fixed time limit on individual subrequests. HTTP-triggered Workers have no hard wall-clock limit while the client stays connected. Other triggers can have a [wall-clock limit](#duration) for the entire invocation. For example, a Queue consumer can run for up to 15 minutes per invocation.
+
+For HTTP-triggered Workers, outstanding work may be canceled when the client disconnects or the response is complete. Pass that work to [`ctx.waitUntil()`](/workers/runtime-apis/context/#waituntil) to extend execution by up to 30 seconds.
+
+An outbound `fetch()` can still hit a [proxy timeout](/workers/runtime-apis/fetch/#outbound-request-timeouts) while the Worker is running. This can happen when a proxy forwards the subrequest to an origin but does not receive a response in time.
 
 ### Worker-to-Worker subrequests
 
