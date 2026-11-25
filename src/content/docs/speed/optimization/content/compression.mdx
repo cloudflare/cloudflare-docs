@@ -145,6 +145,8 @@ If you do not want a particular response from your origin to be encoded with Bro
 
 :::caution
 Cloudflare will take into consideration the `accept-encoding` header value in website visitors' requests when sending responses to those visitors. However, when requesting content from your origin server, Cloudflare will send a different `Accept-Encoding` header, supporting Brotli and Gzip compression.
+
+`GET` range requests over HTTPS that Cloudflare does not cache are an exception. For those, Cloudflare forwards the visitor's own `Accept-Encoding` header. For details, refer to [Uncached range requests](/cache/reference/range-requests/#uncached-range-requests).
 :::
 
 ---
