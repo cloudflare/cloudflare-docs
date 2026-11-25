@@ -64,6 +64,8 @@ To get the name of a database, run `npx cf d1 get <database_id>` or `npx wrangle
 
 ## Find queries that need an index
 
+D1 Insights generates index recommendations for databases with queries that can benefit from an index. To review recommended `CREATE INDEX` statements, refer to [Index recommendations](/d1/observability/metrics-analytics/index-recommendations/).
+
 <Steps>
 1. Find the queries that read the most rows in your account during the last 7 days:
 
