@@ -92,6 +92,15 @@ class Default(WorkerEntrypoint):
 
 Cache Rules can also affect `fetch()` requests to external APIs. Refer to [Workers and Cache Rules](/cache/interaction-cloudflare-products/workers-cache-rules/) for precedence and compatibility requirements.
 
+## Outbound request timeouts
+
+An outbound `fetch()` can return [Error 524](/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-524/) before the Worker reaches its [invocation duration limit](/workers/platform/limits/#duration). For example, a [Queue consumer](/queues/configuration/javascript-apis/#consumer) can run for up to 15 minutes, but its outbound `fetch()` can receive a `524` after about 125 seconds. The elapsed time alone does not tell you whether the timeout occurred on the Workers outbound path or at a Cloudflare proxy in front of the destination.
+
+- **Check which request returned `524`.** In [Workers Traces](/workers/observability/traces/), compare the outbound `fetch()` span's duration and `http.response.status_code` with the response the Worker returned to its caller. An outbound `524` does not necessarily mean the caller received a `524`.
+- **Identify the proxy that timed out.** Compare the subrequest hostname and time with the destination's proxy and origin logs, using the outbound response's [Ray ID](/fundamentals/reference/cloudflare-ray-id/) if present. If you use Logpush, [correlate the requests by `RayID` and `ParentRayID`](/logs/faq/worker-subrequests/). If you cannot identify the proxy, include the Ray ID and UTC timestamp when you [contact Cloudflare Support](/support/contacting-cloudflare-support/).
+
+The [zone-level Proxy Read Timeout](/fundamentals/reference/connection-limits/#configurable-limits) applies to requests proxied by that zone. Changing it on the zone that receives the incoming Worker request does not change the timeout of a separate outbound proxy.
+
 ---
 
 ## How the `Accept-Encoding` header is handled
