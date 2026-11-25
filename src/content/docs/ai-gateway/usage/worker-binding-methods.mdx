@@ -132,8 +132,16 @@ The third argument to `env.AI.run()` accepts a `gateway` object with the followi
 | `skipCache`  | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                         |
 | `cacheTtl`   | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                                                                                                                                                                                                                    |
 | `cacheKey`   | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                       |
-| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                                                                                                                                                                                                           |
+| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request. Equivalent to the `cf-aig-collect-log` header.                                                                                                                                                            |
 | `metadata`   | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.                                                                                                                                                                                                 |
+
+:::note[Logging and payloads on the binding path]
+The `gateway` object has no option equivalent to the `cf-aig-collect-log-payload` header.
+
+When `collectLog` is `false`, AI Gateway does not store the log or the request and response bodies. [Unified Billing](/ai-gateway/features/unified-billing/) requests still store a log entry with billing details, but without the bodies.
+
+`collectLog` does not change what [Logpush](/ai-gateway/observability/logging/logpush/) exports, and does not remove prompts and responses from all [OpenTelemetry](/ai-gateway/observability/otel-integration/#prompt-and-response-content) spans.
+:::
 
 ## `env.AI.aiGatewayLogId`
 

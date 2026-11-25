@@ -36,7 +36,9 @@ You can turn off collection for privacy or compliance requirements.
 
 To override the default logging behavior set in the settings tab, you can define headers on a per-request basis.
 
-These headers only control the logs that AI Gateway stores. They do not change what [Logpush](/ai-gateway/observability/logging/logpush/) exports.
+These headers only control the logs that AI Gateway stores. They do not change what [Logpush](/ai-gateway/observability/logging/logpush/) exports. Logpush exports include the request and response bodies whatever the header values are.
+
+The `cf-aig-collect-log-payload` header also controls whether prompts and responses are included in [OpenTelemetry](/ai-gateway/observability/otel-integration/#prompt-and-response-content) spans. The `cf-aig-collect-log` header does not remove this content from all spans.
 
 ### Collect logs (`cf-aig-collect-log`)
 
