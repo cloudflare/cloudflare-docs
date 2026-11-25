@@ -320,8 +320,11 @@ curl https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{sit
    - **Prefix**: The CIDR prefix for the subnet behind the L3 router.
    - **Next hop**: The address of the L3 router to which the Virtual Appliance should forward packets for this subnet.
    - **Static NAT prefix**: Optional setting. If you want to enable NAT for a routed subnet, supply an "external" prefix for the overlay-facing side of the NAT to use. It must be the same size as **Prefix**. <br /> For details, refer to [Routed subnets](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/routed-subnets/).
-8. Select **Save**.
-9. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Virtual Appliance, once it boots up.
+8. (Optional) To reach a remote subnet through Cloudflare using a different local prefix, select **Add DNAT translation** under **DNAT translations**:
+   - **Pre-NAT prefix**: The prefix that hosts on the LAN send traffic to. It cannot overlap the LAN's static address or routed subnets.
+   - **Post-NAT prefix**: The real prefix of the remote subnet, reachable through Cloudflare. It must be the same size as **Pre-NAT prefix**. <br /> For details, refer to [DNAT translations](/cloudflare-one/networks/connectors/cloudflare-wan/configuration/appliance/network-options/dnat-translations/).
+9. Select **Save**.
+10. Select **Done** to finish your configuration. Tunnels and <GlossaryTooltip term="static route">static routes</GlossaryTooltip> will be automatically created for your Virtual Appliance, once it boots up.
 
 </TabItem> <TabItem label="API">
 
