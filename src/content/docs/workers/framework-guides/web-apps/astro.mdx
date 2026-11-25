@@ -211,7 +211,22 @@ You cannot use bindings if you're using Astro to generate a purely static site.
 
 With bindings, your Astro application can be fully integrated with the Cloudflare Developer Platform, giving you access to compute, storage, AI and more. Refer to the [bindings overview](/workers/runtime-apis/bindings/) for more information on what's available and how to configure them.
 
-The [Astro docs](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#cloudflare-runtime) provide information about how you can access them in your `locals`.
+With Astro 6 and `@astrojs/cloudflare` v13 or later, import `env` from `cloudflare:workers` to access bindings in server-rendered pages and endpoints. Refer to the [Astro docs](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#cloudflare-runtime) for more on accessing the Workers runtime.
+
+To follow this example, [add a KV binding](/kv/concepts/kv-namespaces/#bind-your-kv-namespace-through-wrangler) named `MY_KV`. Run `wrangler types` to regenerate your binding types after updating your Wrangler configuration.
+
+```astro title="src/pages/index.astro"
+---
+import { env } from "cloudflare:workers";
+
+export const prerender = false;
+const message = await env.MY_KV.get("message");
+---
+
+<p>{message ?? "No message stored."}</p>
+```
+
+If you are migrating from an earlier version that uses `Astro.locals.runtime.env`, refer to the [Astro migration guide](https://docs.astro.build/en/guides/integrations-guide/cloudflare/#removed-astrolocalsruntime-api).
 
 ## Sessions
 
