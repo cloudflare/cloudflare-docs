@@ -142,7 +142,7 @@ set -euo pipefail
 project="${1:?usage: $0 <project-name> [parallelism]}"
 parallel="${2:-5}"
 
-deployments=$(npx --no-install wrangler pages deployment list \
+deployments=$(npx --yes wrangler pages deployment list \
     --project-name "$project" --json)
 
 prod_id=$(jq -r '[.[] | select(.Environment == "Production")][0].Id // empty' <<<"$deployments")
@@ -164,7 +164,7 @@ fi
 echo "Production: $prod_id. Deleting $count preview deployments..."
 
 failed=$(printf '%s\n' "$to_delete" | xargs -n1 -P "$parallel" -I{} \
-    sh -c 'npx --no-install wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
+    sh -c 'npx --yes wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
            || echo "$1"' _ {} "$project")
 
 if [ -n "$failed" ]; then
@@ -188,7 +188,7 @@ param(
 $ErrorActionPreference = "Stop"
 $env:CLOUDFLARE_ACCOUNT_ID = $env:CLOUDFLARE_ACCOUNT_ID  # ensure inherited into runspaces
 
-$deployments = npx --no-install wrangler pages deployment list `
+$deployments = npx --yes wrangler pages deployment list `
     --project-name $ProjectName --json | ConvertFrom-Json
 
 $prod = $deployments | Where-Object { $_.Environment -eq "Production" } | Select-Object -First 1
@@ -207,7 +207,7 @@ Write-Output "Production: $($prod.Id). Deleting $($toDelete.Count) preview deplo
 
 $results = $toDelete | ForEach-Object -Parallel {
     $id = $_.Id
-    npx --no-install wrangler pages deployment delete $id `
+    npx --yes wrangler pages deployment delete $id `
         --project-name $using:ProjectName --force *> $null
     [pscustomobject]@{ Id = $id; ExitCode = $LASTEXITCODE }
 } -ThrottleLimit $Throttle
