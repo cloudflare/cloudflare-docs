@@ -111,10 +111,10 @@ The complete file size must also remain consistent across responses. Violations 
 To check whether your origin supports range requests, send a range request directly to your origin. A request through a proxied hostname can return `206 Partial Content` from Cloudflare even when your origin ignores `Range`. Cloudflare requests ranges aligned to 1 MiB, so test with the first 1 MiB of a file larger than 1 MiB.
 
 ```sh
-curl https://example.com/large-file.mp4 --connect-to example.com:443:<ORIGIN_ADDRESS>:443 --header "Range: bytes=0-1048575" --header "Accept-Encoding: identity" --dump-header - --output /dev/null
+curl https://example.com/large-file.mp4 --connect-to ::<ORIGIN_ADDRESS> --header "Range: bytes=0-1048575" --header "Accept-Encoding: identity" --dump-header - --output /dev/null
 ```
 
-Replace `<ORIGIN_ADDRESS>` with your origin's IP address or hostname. If your origin uses a [Cloudflare Origin CA certificate](/ssl/origin-configuration/origin-ca/), add `--insecure`, because curl does not trust that certificate.
+Replace `<ORIGIN_ADDRESS>` with your origin's IP address or hostname. The `--connect-to` flag routes the request to that address while keeping the `Host` header as `example.com`. If your origin uses a [Cloudflare Origin CA certificate](/ssl/origin-configuration/origin-ca/), add `--insecure`, because curl does not trust that certificate.
 
 A `206 Partial Content` response with `Content-Range: bytes 0-1048575/<FILE_SIZE>` and `Content-Length: 1048576` shows that your origin supports range requests. Check that the response also meets the [partial response requirements](#partial-response-requirements). A `200 OK` response means that your origin ignores `Range`.
 
