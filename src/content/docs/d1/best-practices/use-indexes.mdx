@@ -135,6 +135,12 @@ An index only pays off when a query runs often enough for the saved rows to matt
 When trying to spot queries that might be improved by adding an index, focus on read-heavy queries with a large value for `Rows read / rows returned`.
 :::
 
+## Full-text search and short terms
+
+FTS5's `trigram` tokenizer matches sequences of at least three Unicode characters. A `MATCH` term shorter than three characters does not match rows. A `LIKE` pattern without three consecutive non-wildcard characters can fall back to a scan; it does not gain the same index benefit.
+
+For whole-token search, choose a tokenizer such as `unicode61` instead. This does not provide arbitrary substring matching. FTS5 has no built-in `bigram` tokenizer. For short substrings, use `LIKE` and check the query plan and rows read for your workload. Review [SQLite's FTS5 tokenizers](https://www.sqlite.org/fts5.html#tokenizers) and keep the index synchronized with inserts, updates, and deletes using the [external-content table guidance](https://www.sqlite.org/fts5.html#external_content_tables).
+
 ## Multi-column indexes
 
 For a multi-column index (an index that specifies multiple columns), queries will only use the index if they specify either _all_ of the columns, or a subset of the columns provided all columns to the "left" are also within the query.
