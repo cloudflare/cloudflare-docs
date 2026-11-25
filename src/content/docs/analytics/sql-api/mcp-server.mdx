@@ -1,0 +1,79 @@
+---
+pcx_content_type: how-to
+title: MCP server
+description: Query SQL API datasets from an AI agent with the Cloudflare API MCP server.
+sidebar:
+  order: 5
+tags:
+  - MCP
+---
+
+import { CopyPrompt } from "~/components";
+
+The [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server) lets an AI agent call the SQL API for you. The agent discovers datasets, writes `SELECT` statements, and summarizes the results. You do not need a separate MCP server for the SQL API.
+
+## Connect your MCP client
+
+Add the Cloudflare API MCP server to your MCP client:
+
+```json
+{
+	"mcpServers": {
+		"cloudflare-api": {
+			"url": "https://mcp.cloudflare.com/mcp"
+		}
+	}
+}
+```
+
+For client-specific instructions, refer to [Cloudflare's own MCP servers](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#connect-to-the-cloudflare-api-mcp-server).
+
+## Grant access to analytics data
+
+The SQL API requires **Account Analytics Read** to query an account and to list datasets. Some datasets and fields require additional permissions. Refer to [Prerequisites](/analytics/sql-api/get-started/#prerequisites).
+
+You can authorize the MCP server in one of two ways:
+
+- **OAuth**: When you connect, Cloudflare asks you to authorize the server. The **Read only** template includes **Account Analytics Read**. If you choose **Minimal**, your MCP client asks you to approve the scope the first time the agent queries analytics data. This requires a client that supports [step-up authorization](/changelog/post/2026-10-19-cloudflare-mcp-step-up/).
+- **API token**: Create an [API token](/fundamentals/api/get-started/create-token/) with **Account Analytics Read** and any dataset-specific permissions. Pass the token as a bearer token in the `Authorization` header.
+
+## How the agent queries data
+
+The MCP server provides Code Mode tools. The agent writes JavaScript that calls the Cloudflare API from a sandbox. To answer an analytics question, the agent:
+
+1. Lists datasets and columns with the [introspection endpoint](/analytics/sql-api/datasets/#discover-datasets), `GET /analytics/sql/introspection`.
+2. Sends a `SELECT` statement to `POST /analytics/sql` with parameters in `params`.
+
+For example, the agent might run the following request to count HTTP requests in the last hour:
+
+```js
+cloudflare.request({
+	method: "POST",
+	path: "/analytics/sql",
+	body: {
+		query:
+			"SELECT COUNT(*) AS requests FROM events.httpRequests WHERE accountTag = $account AND timestamp >= NOW() - INTERVAL '1' HOUR",
+		params: { account: accountId },
+	},
+});
+```
+
+Every query must still include an account or zone scope and a lower time bound. Refer to [Query scope](/analytics/sql-api/#query-scope).
+
+The SQL API accepts only `SELECT` statements, so queries do not change your account.
+
+### Use direct tools
+
+If your MCP client already uses Code Mode, connect to `https://mcp.cloudflare.com/mcp?codemode=false` instead. The server then registers one tool for each Cloudflare API method. Use `sql_datasets` to list datasets and `sql_query` to run a query. For more information, refer to the [Cloudflare MCP repository](https://github.com/cloudflare/mcp#disable-code-mode).
+
+## Example prompts
+
+After you connect, try prompts such as:
+
+<CopyPrompt text="List the SQL API datasets available in my Cloudflare account." />
+
+<CopyPrompt text="Show the columns of the events.httpRequests dataset." />
+
+<CopyPrompt text="Show the five most common HTTP response statuses for my account in the last 24 hours." />
+
+<CopyPrompt text="Which hosts returned the most 5xx errors in the last hour?" />
