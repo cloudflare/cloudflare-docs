@@ -8,7 +8,7 @@ sidebar:
   badge: Beta
 ---
 
-import { DashButton, Tabs, TabItem } from "~/components";
+import { APIRequest, DashButton, Tabs, TabItem } from "~/components";
 
 DNAT (destination network address translation) translations let hosts on a Cloudflare One Appliance (formerly Magic WAN Connector) LAN reach a remote subnet through a different local prefix. A remote subnet is a network your Appliance reaches through Cloudflare WAN (formerly Magic WAN), such as a data center connected over an IPsec tunnel. For each translation, you map:
 
@@ -98,20 +98,18 @@ You will need your [account ID](/fundamentals/account/find-account-and-zone-ids/
 
 Set the `remote_subnets` array when you [create](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/create/) or [update](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/edit/) a LAN. Each item has a `local_alias_prefix` (the pre-NAT prefix) and a `remote_prefix` (the post-NAT prefix).
 
-```bash
-curl --request PATCH \
-https://api.cloudflare.com/client/v4/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id} \
---header "Authorization: Bearer <API_TOKEN>" \
---header "Content-Type: application/json" \
---data '{
-	"remote_subnets": [
-		{
-			"local_alias_prefix": "100.64.1.0/24",
-			"remote_prefix": "10.1.1.0/24"
-		}
-	]
-}'
-```
+<APIRequest
+  path="/accounts/{account_id}/magic/sites/{site_id}/lans/{lan_id}"
+  method="PATCH"
+  json={{
+    "remote_subnets": [
+      {
+        "local_alias_prefix": "100.64.1.0/24",
+        "remote_prefix": "10.1.1.0/24"
+      }
+    ]
+  }}
+/>
 
 The array you send replaces all existing translations on the LAN. If you leave out `remote_subnets` in an update, the existing translations stay. To remove all translations, send an empty array (`"remote_subnets": []`).
 
