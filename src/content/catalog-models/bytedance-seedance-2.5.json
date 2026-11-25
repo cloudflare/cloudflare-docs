@@ -181,7 +181,7 @@
 		"Max Reference Images": "30",
 		"Max Reference Videos": "10",
 		"Native Audio": "Yes",
-		"Resolutions": "480p, 720p"
+		"Resolutions": "480p, 720p, 1080p, 4k"
 	},
 	"request_formats": null,
 	"providers": null,
@@ -262,7 +262,9 @@
 					"type": "string",
 					"enum": [
 						"480p",
-						"720p"
+						"720p",
+						"1080p",
+						"4k"
 					]
 				},
 				"aspect_ratio": {
