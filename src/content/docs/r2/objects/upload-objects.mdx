@@ -822,10 +822,10 @@ Wrangler supports uploading files up to 315 MB and only allows one object at a t
 Use [Wrangler](/workers/wrangler/install-and-update/) to upload objects. Run the [`r2 object put` command](/workers/wrangler/commands/r2/#r2-object-put):
 
 ```sh
-wrangler r2 object put test-bucket/image.png --file=image.png
+wrangler r2 object put test-bucket/image.png --file=image.png --content-type=image/png --remote
 ```
 
-You can set the `Content-Type` (MIME type), `Content-Disposition`, `Cache-Control` and other HTTP header metadata through optional flags.
+Set `Content-Type` explicitly when the serving application relies on stored MIME metadata. You can also set `Content-Disposition`, `Cache-Control`, and other HTTP metadata through optional flags. When serving the object from a Worker, use [`writeHttpMetadata()`](/r2/api/workers/workers-api-reference/#r2object-definition) to copy stored HTTP metadata to the response. For directories, use the [rclone bulk upload example](#rclone).
 
 ## Multipart upload details
 
