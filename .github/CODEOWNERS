@@ -670,9 +670,9 @@ package.json @cloudflare/content-engineering
 
 # network-quality
 
-/src/content/directory/network-quality.yaml @laiyi-ohlsen @cloudflare/radar @cloudflare/product-owners
-/src/content/docs/network-quality/ @laiyi-ohlsen @cloudflare/radar @cloudflare/product-owners
-/src/icons/network-quality.svg @laiyi-ohlsen @cloudflare/radar @cloudflare/product-owners
+/src/content/directory/network-quality.yaml @laiyi-ohlsen @cloudflare/product-owners
+/src/content/docs/network-quality/ @andre-j3sus @devandrepascoa @laiyi-ohlsen @cloudflare/product-owners
+/src/icons/network-quality.svg @laiyi-ohlsen @cloudflare/product-owners
 
 # networking-services
 
