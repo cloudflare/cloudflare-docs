@@ -15,7 +15,7 @@ Use DNAT translations to reach a remote network that uses the same addresses as 
 
 - In the dashboard, edit a LAN in your Appliance profile's **Network configuration**, then select **Add DNAT translation** under **DNAT translations**.
 
-  <DashButton url="/?to=/:account/magic-networks/connections/appliances" />
+  <DashButton url="/?to=/:account/magic-networks/connections" />
 
 - In the API, set the `remote_subnets` array when you [create](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/create/) or [update](/api/resources/magic_transit/subresources/sites/subresources/lans/methods/edit/) a LAN. Each item has a `local_alias_prefix` (pre-NAT) and a `remote_prefix` (post-NAT).
 
