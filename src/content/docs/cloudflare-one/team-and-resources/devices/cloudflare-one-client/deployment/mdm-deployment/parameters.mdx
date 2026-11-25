@@ -11,7 +11,7 @@ tags:
   - Post-quantum
 ---
 
-import { GlossaryTooltip, Details, InlineBadge } from "~/components";
+import { Badge, GlossaryTooltip, Details, InlineBadge } from "~/components";
 
 Each Cloudflare One Client (formerly WARP) supports the following set of parameters as part of their deployment, regardless of the deployment mechanism.
 
@@ -196,6 +196,21 @@ The Cloudflare One Client uses [post-quantum cryptography](/ssl/post-quantum-cry
 
 - `false` — Disables post-quantum key agreement.
 - `true` — Enables post-quantum key agreement for all traffic through the WARP tunnel.
+
+### `enforce_routes` <Badge text="Beta" variant="caution" size="small" />
+
+:::note
+Only valid for macOS devices that use the [Network Extension tunnel provider](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/).
+:::
+
+Controls whether the Cloudflare One Client VPN configuration enforces its routes. With enforced routes, macOS sends traffic that matches the tunnel routes through the tunnel, even when an application binds its connection to another network interface.
+
+**Value Type:** `boolean`
+
+**Value:**
+
+- `false` — (default) macOS does not enforce the tunnel routes.
+- `true` — macOS enforces the tunnel routes.
 
 ### `environment`
 
@@ -585,6 +600,23 @@ On new deployments, you must also include the `auto_connect` parameter with at l
 :::note
 This parameter replaces the old `enabled` property, which can no longer be used in conjunction with the new `switch_locked` and `auto_connect`. If you want to use these parameters, you must remove `enabled`.
 :::
+
+### `tunnel_provider` <Badge text="Beta" variant="caution" size="small" />
+
+:::note
+Only valid for macOS.
+:::
+
+Chooses which process hosts the WARP tunnel on macOS. For more information, refer to [macOS Network Extension](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/).
+
+**Value Type:** `string`
+
+**Value:**
+
+- `daemon` — (default) The Cloudflare One Client daemon runs the tunnel on its own virtual interface.
+- `network_extension` — A packet tunnel provider, installed as a macOS system extension, runs the tunnel.
+
+The client ignores unrecognized values and uses `daemon`. In Local proxy mode and Device information only mode, the client uses `daemon` regardless of this value.
 
 ### `unique_client_id`
 

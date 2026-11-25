@@ -1,0 +1,278 @@
+---
+pcx_content_type: how-to
+description: Run the Cloudflare One Client tunnel on macOS in a Network Extension packet tunnel provider, and pre-approve it with MDM profiles.
+products:
+  - cloudflare-one
+title: macOS Network Extension
+sidebar:
+  order: 5
+  badge:
+    text: Beta
+tags:
+  - MDM
+---
+
+import { Details, Steps } from "~/components";
+
+<Details header="Feature availability">
+
+| [Client modes](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/) | [Zero Trust plans](https://www.cloudflare.com/teams-pricing/) |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| <ul><li>Traffic and DNS mode</li><li>Traffic only mode</li><li>DNS only mode</li></ul>            | All plans                                                     |
+
+| System   | Availability | Minimum client version |
+| -------- | ------------ | ---------------------- |
+| Windows  | ❌           |                        |
+| macOS    | ✅           | 2026.9.XXXX.X          |
+| Linux    | ❌           |                        |
+| iOS      | ❌           |                        |
+| Android  | ❌           |                        |
+| ChromeOS | ❌           |                        |
+
+</Details>
+
+By default, the Cloudflare One Client (formerly WARP) daemon on macOS creates its own virtual interface and runs the WARP tunnel itself. With the Network Extension tunnel provider, the tunnel runs instead in a packet tunnel provider that the client installs as a macOS system extension. macOS manages the tunnel through a VPN configuration named **Cloudflare WARP**, which appears in **System Settings** > **VPN**.
+
+The daemon still runs the local DNS proxy, applies the system firewall, and decides which traffic enters the tunnel. Your [Split Tunnel](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/split-tunnels/) and [Local Domain Fallback](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/route-traffic/local-domains/) rules continue to apply.
+
+You turn on the Network Extension tunnel provider with the [`tunnel_provider`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#tunnel_provider) MDM parameter. It has no dashboard setting.
+
+## Prerequisites
+
+- macOS devices running a Cloudflare One Client version that supports the Network Extension tunnel provider. Refer to **Feature availability**.
+- An MDM solution that can deploy configuration profiles to the devices. You can also turn on the feature without MDM profiles, but each user must then approve two macOS prompts. Refer to [User approval without MDM profiles](#user-approval-without-mdm-profiles).
+
+## Turn on the Network Extension tunnel provider
+
+To avoid user prompts, deploy the configuration profiles in steps 1 and 2 before you set the MDM parameter in step 3.
+
+<Steps>
+
+1. Allow the system extension.
+
+   Deploy a System Extensions payload (`com.apple.system-extension-policy`) that allows the Cloudflare One Client system extension:
+
+   | Field                  | Value                              |
+   | ---------------------- | ---------------------------------- |
+   | Team identifier        | `68WVV388M8`                       |
+   | Bundle identifier      | `com.cloudflare.warp.PacketTunnel` |
+   | System extension type  | `NetworkExtension`                 |
+
+   macOS accepts this payload only from an MDM server. A manually installed profile cannot pre-approve system extensions.
+
+   To let the client remove the system extension during uninstall without asking for administrator credentials, also add the same team and bundle identifiers to `RemovableSystemExtensions`.
+
+2. Pre-provision the VPN configuration.
+
+   Deploy a VPN payload (`com.apple.vpn.managed`) for the Cloudflare One Client packet tunnel provider:
+
+   | Field                           | Value                                                                       |
+   | ------------------------------- | --------------------------------------------------------------------------- |
+   | `VPNType`                       | `VPN`                                                                       |
+   | `VPNSubType`                    | `com.cloudflare.1dot1dot1dot1.macos`                                        |
+   | `ProviderBundleIdentifier`      | `com.cloudflare.warp.PacketTunnel`                                          |
+   | `ProviderType`                  | `packet-tunnel`                                                             |
+   | `ProviderDesignatedRequirement` | Refer to the [example profile](#example-configuration-profile).            |
+   | `RemoteAddress`                 | Any value, for example `Cloudflare WARP`. The client replaces this value.  |
+   | `UserDefinedName`               | Any value. The client replaces this value.                                 |
+
+   When the client finds a VPN configuration for its packet tunnel provider, it uses that configuration instead of creating a new one, so macOS does not ask the user to allow a VPN configuration. The client then manages the configuration: it renames it to **Cloudflare WARP** and sets its on-demand rules and routing options. Do not rely on values that you set for `UserDefinedName`, `RemoteAddress`, or `OnDemandRules`.
+
+3. Set the MDM parameter.
+
+   In your [MDM file](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/#macos), set `tunnel_provider` to `network_extension`. For example:
+
+   ```xml
+   <dict>
+     <key>organization</key>
+     <string>your-team-name</string>
+     <key>tunnel_provider</key>
+     <string>network_extension</string>
+   </dict>
+   ```
+
+   If your MDM file contains multiple configurations in a [`configs`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/parameters/#configs) array, set `tunnel_provider` in each configuration that should use the Network Extension.
+
+</Steps>
+
+Changing `tunnel_provider` interrupts the connection while the client switches tunnel providers.
+
+### Example configuration profile
+
+The following `.mobileconfig` contains the System Extensions and VPN payloads from steps 1 and 2. Before you deploy it, run `uuidgen` in Terminal to replace each `PayloadUUID` value.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadDisplayName</key>
+  <string>Cloudflare One Client Network Extension</string>
+  <key>PayloadIdentifier</key>
+  <string>com.example.cloudflare-one-client.network-extension</string>
+  <key>PayloadScope</key>
+  <string>System</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>00000000-0000-0000-0000-000000000001</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDisplayName</key>
+      <string>System Extensions</string>
+      <key>PayloadIdentifier</key>
+      <string>com.example.cloudflare-one-client.system-extension-policy</string>
+      <key>PayloadType</key>
+      <string>com.apple.system-extension-policy</string>
+      <key>PayloadUUID</key>
+      <string>00000000-0000-0000-0000-000000000002</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>AllowedSystemExtensions</key>
+      <dict>
+        <key>68WVV388M8</key>
+        <array>
+          <string>com.cloudflare.warp.PacketTunnel</string>
+        </array>
+      </dict>
+      <key>AllowedSystemExtensionTypes</key>
+      <dict>
+        <key>68WVV388M8</key>
+        <array>
+          <string>NetworkExtension</string>
+        </array>
+      </dict>
+      <key>RemovableSystemExtensions</key>
+      <dict>
+        <key>68WVV388M8</key>
+        <array>
+          <string>com.cloudflare.warp.PacketTunnel</string>
+        </array>
+      </dict>
+    </dict>
+    <dict>
+      <key>PayloadDisplayName</key>
+      <string>VPN</string>
+      <key>PayloadIdentifier</key>
+      <string>com.example.cloudflare-one-client.vpn</string>
+      <key>PayloadType</key>
+      <string>com.apple.vpn.managed</string>
+      <key>PayloadUUID</key>
+      <string>00000000-0000-0000-0000-000000000003</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>UserDefinedName</key>
+      <string>Cloudflare WARP</string>
+      <key>VPNType</key>
+      <string>VPN</string>
+      <key>VPNSubType</key>
+      <string>com.cloudflare.1dot1dot1dot1.macos</string>
+      <key>VPN</key>
+      <dict>
+        <key>RemoteAddress</key>
+        <string>Cloudflare WARP</string>
+        <key>AuthenticationMethod</key>
+        <string>Password</string>
+        <key>ProviderBundleIdentifier</key>
+        <string>com.cloudflare.warp.PacketTunnel</string>
+        <key>ProviderType</key>
+        <string>packet-tunnel</string>
+        <key>ProviderDesignatedRequirement</key>
+        <string>anchor apple generic and identifier "com.cloudflare.warp.PacketTunnel" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "68WVV388M8")</string>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>
+```
+
+## User approval without MDM profiles
+
+If you set `tunnel_provider` without deploying the configuration profiles, the user must approve the Network Extension once on each device:
+
+<Steps>
+
+1. Open the Cloudflare One Client. The client shows a **Network extension required** banner.
+2. Select **Install**.
+3. When macOS asks, allow the system extension in **System Settings** > **General** > **Login Items & Extensions** > **Network Extensions**.
+4. Return to the client. When macOS asks to add VPN configurations, select **Allow**.
+
+</Steps>
+
+The client cannot connect until the user completes these steps. It does not fall back to the default tunnel.
+
+## Verify the tunnel provider
+
+To check that a device uses the Network Extension tunnel provider:
+
+<Steps>
+
+1. Open Terminal and run the following command:
+
+   ```sh
+   warp-cli settings | grep -i "tunnel provider"
+   ```
+
+   ```txt output
+   (local policy)	Tunnel Provider: Network Extension
+   ```
+
+   This shows the configured tunnel provider. In [Local proxy mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/#local-proxy-mode) and [Device information only mode](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/configure/modes/device-information-only/), the client uses the default tunnel even when `tunnel_provider` is `network_extension`.
+
+2. Check that the system extension is active:
+
+   ```sh
+   systemextensionsctl list
+   ```
+
+   ```txt output
+   enabled	active	teamID	bundleID (version)	name	[state]
+   *	*	68WVV388M8	com.cloudflare.warp.PacketTunnel (<VERSION>)	Cloudflare One Client	[activated enabled]
+   ```
+
+</Steps>
+
+## Turn off the Network Extension tunnel provider
+
+To return to the default tunnel, set `tunnel_provider` to `daemon` or remove the parameter from your MDM file. The client stops the Network Extension tunnel and uses the default tunnel for its next connection.
+
+## Uninstall behavior
+
+When you [uninstall the Cloudflare One Client](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/uninstall/), the uninstaller:
+
+- Removes the system extension.
+- Removes the VPN configurations that the client created.
+- Turns off on-demand for VPN configurations that an MDM profile installed, but does not remove them. To remove these configurations, remove the configuration profile.
+
+## Troubleshoot the Network Extension tunnel provider
+
+The client shows a banner when the system extension or VPN configuration needs attention:
+
+| Banner                                       | Cause                                                            | Resolution                                                                                                                     |
+| -------------------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| **Network extension required**               | The system extension is not installed.                           | Select **Install**, or deploy the [System Extensions payload](#turn-on-the-network-extension-tunnel-provider).                 |
+| **Approval required**                        | The system extension is waiting for approval.                    | Select **Open System Settings** and allow the extension, or deploy the System Extensions payload.                              |
+| **Network extension turned off**             | The user turned off the extension in System Settings.            | Turn on the extension in **System Settings** > **General** > **Login Items & Extensions** > **Network Extensions**.            |
+| **Network extension blocked**                | An MDM profile prevents the system extension from loading.       | Allow team identifier `68WVV388M8` and bundle identifier `com.cloudflare.warp.PacketTunnel` in your System Extensions payload. |
+| **Network extension could not be installed** | macOS failed to install the system extension.                    | Restart the Mac. If the issue continues, [collect diagnostic logs](#diagnostic-logs).                                          |
+| **VPN configuration required**               | The VPN configuration is waiting for approval.                   | Select **Allow** in the macOS prompt, or deploy the [VPN payload](#turn-on-the-network-extension-tunnel-provider).             |
+| **VPN configuration declined**               | The user declined the macOS prompt to add the VPN configuration. | Select **Retry** and then **Allow**.                                                                                           |
+| **VPN configuration turned off**             | The user turned off the Cloudflare WARP VPN configuration.       | Select **Open System Settings** and turn on the configuration in **System Settings** > **VPN**.                                |
+| **VPN configuration failed**                 | The client could not save its VPN configuration.                 | Restart the client. If the issue continues, [collect diagnostic logs](#diagnostic-logs).                                       |
+
+For error codes that start with `CF_PACKET_TUNNEL_`, refer to [Client errors](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/client-errors/#cf_packet_tunnel_awaiting_system).
+
+### Diagnostic logs
+
+On macOS, [`warp-diag`](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) collects the following files for the Network Extension tunnel provider:
+
+| File name                          | Description                                                                                  |
+| ---------------------------------- | -------------------------------------------------------------------------------------------- |
+| `ne-oslog.txt`                     | Unified logs from the Cloudflare One Client processes, including the packet tunnel provider. |
+| `ne-oslog-system.txt`              | Unified logs from the macOS services that manage VPN configurations and system extensions.   |
+| `network-extension-config.txt`     | The macOS Network Extension preferences, which store the VPN configurations on the device.   |
+| `system-extension-diagnostics.txt` | Status of the system extensions loaded on the device.                                        |
+| `vpn-configurations.txt`           | Each VPN configuration on the device and its connection status.                              |

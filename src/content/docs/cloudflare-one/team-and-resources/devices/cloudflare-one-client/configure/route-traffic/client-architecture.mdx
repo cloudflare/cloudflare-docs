@@ -59,6 +59,10 @@ Next, you will learn how the Cloudflare One Client configures your operating sys
 
 The desktop client consists of two components: a service/daemon that handles all client functionality on your device, and a GUI wrapper that makes it easier for a user to interact with the daemon.
 
+:::note
+On macOS, you can move the WARP tunnel out of the daemon and into a packet tunnel provider. For more information, refer to [macOS Network Extension](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/).
+:::
+
 ### DNS traffic
 
 When you connect the Cloudflare One Client, the client creates a local DNS proxy on the device and binds it to these IP addresses on port 53 (the port designated for DNS traffic):

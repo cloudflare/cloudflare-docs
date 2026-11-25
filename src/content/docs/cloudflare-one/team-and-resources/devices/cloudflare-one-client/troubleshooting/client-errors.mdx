@@ -261,6 +261,58 @@ The device is not connected to a Wi-Fi network or LAN that has connectivity to t
 3. Check that your device is retrieving a valid IP address.
 4. If this does not resolve the error, try rebooting your device or running your system's network diagnostics tool.
 
+## CF_PACKET_TUNNEL_AWAITING_SYSTEM
+
+### Symptoms
+
+- Unable to connect the Cloudflare One Client on macOS
+- The client shows **Restart required**
+
+### Cause
+
+The device uses the [macOS Network Extension](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/) tunnel provider. After a client update, macOS keeps the previous version of the system extension running until it can replace it, typically at the next restart.
+
+### Resolution
+
+Restart the Mac.
+
+## CF_PACKET_TUNNEL_SETUP_REQUIRED
+
+### Symptoms
+
+- Unable to connect the Cloudflare One Client on macOS
+- The client shows **Setup required**
+
+### Cause
+
+The device uses the [macOS Network Extension](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/) tunnel provider, and the system extension or VPN configuration is not approved. The error code ends with one of these reasons:
+
+- `(SystemExtensionApproval)`: The system extension is not installed or not approved.
+- `(VpnConfigurationApproval)`: The user has not allowed the VPN configuration.
+- `(BlockedBySystemPolicy)`: An MDM profile prevents the system extension from loading.
+
+### Resolution
+
+1. For `(SystemExtensionApproval)` or `(VpnConfigurationApproval)`, ask the user to open the Cloudflare One Client and approve the macOS prompts, or deploy the [MDM configuration profiles](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/#turn-on-the-network-extension-tunnel-provider) that pre-approve them.
+2. For `(BlockedBySystemPolicy)`, allow team identifier `68WVV388M8` and bundle identifier `com.cloudflare.warp.PacketTunnel` in your System Extensions payload.
+
+## CF_PACKET_TUNNEL_UNAVAILABLE
+
+### Symptoms
+
+- Unable to connect the Cloudflare One Client on macOS
+- The client shows **Couldn't connect**
+
+### Cause
+
+The device uses the [macOS Network Extension](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/deployment/mdm-deployment/macos-network-extension/) tunnel provider, and the packet tunnel provider failed to start or did not start connecting in time. The client retries automatically.
+
+### Resolution
+
+1. Wait for the client to retry.
+2. If the error continues, restart the Mac.
+3. If this does not resolve the error, retrieve [client diagnostic logs](/cloudflare-one/team-and-resources/devices/cloudflare-one-client/troubleshooting/diagnostic-logs/) for the device.
+
 ## CF_REGISTRATION_MISSING
 
 ### Symptoms
