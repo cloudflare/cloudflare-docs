@@ -1,6 +1,6 @@
 ---
 title: Agent feedback
-description: Use the Cloudflare CLI to send feedback from coding agents and see what diagnostic context the CLI includes in a report.
+description: Ask a coding agent to review a Cloudflare project and send feedback using the Cloudflare CLI or Cloudflare API MCP server.
 pcx_content_type: how-to
 sidebar:
   order: 5.5
@@ -8,62 +8,84 @@ products:
   - cf
 ---
 
-Use `cf feedback` to send bug reports, feature requests, and feedback about
-where you or your coding agent got stuck. Sign in with `cf auth login` or set
-`CLOUDFLARE_API_TOKEN` before running the command.
+Send bug reports, feature requests, and feedback about where you or your coding
+agent got stuck. A short note is enough for a single issue. For a broader
+report, ask your agent to review an existing project for workarounds and blockers.
 
-## Send a note
+## Review an existing project
 
-A short note is enough to submit feedback.
+To retrieve a project review prompt through the [Cloudflare CLI](/cf/get-started/),
+run `cf feedback diagnose`. Or open your coding agent at the project root and
+paste this prompt:
 
-```sh
-cf feedback "The deploy output did not identify the selected environment"
+```txt
+Review how this repository uses Cloudflare and draft feedback for Cloudflare.
+Keep the review read-only: do not edit files, read credential files, install
+dependencies, run project scripts, or deploy anything.
+
+Inspect relevant configuration, dependency manifests, tests, CI workflows,
+and documentation. Look for workarounds, repeated retries, or manual steps
+needed to get Cloudflare products or tools to work. Check current Cloudflare
+docs before concluding that functionality is missing.
+
+Lead with the most useful findings. For each, name the product or tool and
+version if known. Explain the task, what you expected, what happened, any
+workaround, its impact, and what would have helped. Distinguish observations
+from inferences. Skip issues that are specific to this project's own code.
+
+Keep private source references in a separate local summary. Leave out
+secrets, personal data, account and zone IDs, private hostnames, proprietary
+code, and full logs or conversations from the report.
+
+Show me the exact report you propose to send and wait for my explicit
+approval. After approval, submit it once using cf feedback send or the
+Cloudflare API MCP submit_feedback tool. Tell me whether Cloudflare accepted
+it and share the submission ID if available. If there are no concrete
+findings, do not send anything.
 ```
 
-Add details with repeatable `--field key=value` flags.
+## Send with the Cloudflare CLI
+
+Sign in with `cf auth login` or set `CLOUDFLARE_API_TOKEN` before sending
+feedback. Generate a new UUID for each report.
 
 ```sh
-cf feedback --field type=friction --field command="cf deploy" --field expected="Show the selected environment" --field actual="The output only showed the Worker name"
+cf feedback send \
+  --schema-version 1 \
+  --submission-id "$(node -p 'crypto.randomUUID()')" \
+  --type friction \
+  --impact worked_around \
+  --message "The deploy output did not identify the selected environment. I checked the dashboard to confirm."
 ```
 
-## Send an agent report
-
-An agent can send a JSON report from a file or through standard input. Describe
-the task, the expected and actual results, and any workaround. Use the optional
-`agent` object for details such as the agent name or commands it ran.
+To send a JSON report from a file, run `cf feedback send --body @feedback.json`.
+For example, the following report describes a CLI search issue. Replace the
+sample `submission_id` with a new UUID before sending.
 
 ```json title="feedback.json"
 {
+	"schema_version": 1,
+	"submission_id": "ed5704f8-c107-4ff6-8d34-cc0447af6a39",
 	"type": "friction",
+	"impact": "worked_around",
+	"message": "CLI search suggested creating a deployment instead of listing deployments. I found the list command in the docs.",
 	"task": "Find the command to list Worker deployments",
 	"expected": "A search result for listing Worker deployments",
-	"actual": "The first result was a command to create a deployment",
-	"impact": "worked_around",
-	"agent": {
-		"name": "claude-code",
-		"commands": ["cf cli search \"list Worker deployments\""]
-	}
+	"actual": "The first result was a command to create a deployment"
 }
 ```
 
-Send the file with `cf feedback --input-json feedback.json`. To read the JSON
-from standard input, set `--input-json=-`. If a `--field` flag and the JSON
-report supply the same field, the flag takes precedence. Run `cf feedback --help`
-for supported fields.
+Add `--dry-run` to preview the request without sending feedback. Run
+`cf feedback send --help` for the full list of fields. Cloudflare returns a
+receipt with a `submission_id` when it accepts the report.
 
-The command prints a JSON receipt with a `submission_id` after Cloudflare
-accepts the report. If you send feedback as an agent through the CLI or MCP
-tool, tell the user at the next natural break, such as the end of the current
-turn. Include the submission ID.
+## Send with the Cloudflare API MCP server
 
-## Diagnostic context
+If your agent is connected to the [Cloudflare API MCP server](/agents/model-context-protocol/cloudflare/servers-for-cloudflare/#cloudflare-api-mcp-server),
+it can send the approved report with `submit_feedback`. The tool requires
+`message`, `type`, and `impact`. It also accepts optional details such as the
+product, task, and expected and actual results. Keep `message` to 4,000
+characters or fewer.
 
-Every feedback report includes diagnostic details such as the CLI version,
-operating system, and detected agent and model, regardless of your CLI telemetry
-settings. The complete JSON report, including diagnostic context, can be up to
-16 KiB.
-
-Feedback requests include the CLI version and execution mode in their headers,
-along with the agent name when detected. With `DO_NOT_TRACK` enabled,
-`cf feedback --help` reminds you that sending feedback includes diagnostic
-context.
+The tool returns a `submission_id`. Use either the CLI or the MCP tool for a
+given report, not both.
