@@ -1,10 +1,10 @@
 ---
-title: Configure the test harness
+title: Configure the test server
 pcx_content_type: configuration
 sidebar:
   order: 2
 head: []
-description: Configure Workers, test values, and lifecycle options for the test harness.
+description: Configure Workers, test values, and lifecycle options for the test server.
 products:
   - workers
 ---
@@ -16,7 +16,7 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-The test harness runs one or more Workers in a single local server.
+The test server can run one or more Workers at once.
 
 ## Configure Worker projects
 
@@ -39,7 +39,7 @@ For Workers built by the [Cloudflare Vite plugin](/workers/vite-plugin/), run `v
 
 <PackageManagers type="exec" pkg="vite" args="build" />
 
-The generated Wrangler configuration works like any other `configPath`. Each Worker is configured independently, so one harness can run both project types:
+The generated Wrangler configuration works like any other `configPath`. Each Worker is configured independently, so one test server can run both project types:
 
 <TypeScriptExample>
 
@@ -71,7 +71,7 @@ const server = createTestServer({
 
 </TypeScriptExample>
 
-A project's Build Output can contain more than one Worker. The test harness runs the build's default Worker, unless you set `name` to the name of another Worker in the same build:
+A project's Build Output can contain more than one Worker. The test server runs the build's default Worker, unless you set `name` to the name of another Worker in the same build:
 
 <TypeScriptExample>
 
@@ -97,7 +97,7 @@ Remote bindings use the same credentials as `cf`. If you are not logged in, run 
 <CliVariants>
 <CliVariant cli="wrangler">
 
-By default, the test harness loads the top-level Wrangler configuration. Set `env` if you want to load a specific environment from the configuration.
+By default, the test server loads the top-level Wrangler configuration. Set `env` if you want to load a specific environment from the configuration.
 
 <TypeScriptExample>
 
@@ -112,7 +112,7 @@ const server = createTestHarness({
 </CliVariant>
 <CliVariant cli="cf">
 
-The test harness runs Build Output as it was built. To test a [mode](/cf/projects/#modes), build the project in that mode:
+The test server runs Build Output as it was built. To test a [mode](/cf/projects/#modes), build the project in that mode:
 
 ```sh
 cf build --mode staging
@@ -128,7 +128,7 @@ Secrets then read their local values from the `.dev.vars` and `.env` files for t
 <CliVariants>
 <CliVariant cli="wrangler">
 
-You can override `vars` and `secrets` for each Worker in the harness if you want to avoid creating a separate Wrangler environment for testing.
+You can override `vars` and `secrets` for each Worker in the test server if you want to avoid creating a separate Wrangler environment for testing.
 
 <TypeScriptExample>
 
@@ -172,16 +172,16 @@ const server = createTestServer({
 
 </TypeScriptExample>
 
-`envOverrides` can only replace bindings that the Worker declares. A variable or secret takes `bindings.text()` or `bindings.json()`, a Durable Object takes another Durable Object, and any other binding takes one of its own type, or a [test Worker](/workers/testing/test-harness/prepare-test-state/#mock-bindings-with-test-workers) that mocks it.
+`envOverrides` can only replace bindings that the Worker declares. A variable or secret takes `bindings.text()` or `bindings.json()`, a Durable Object takes another Durable Object, and any other binding takes one of its own type, or a [test Worker](/workers/testing/test-server/prepare-test-state/#mock-bindings-with-test-workers) that mocks it.
 
 A secret without an override reads its local value from the project's `.dev.vars` or `.env` files. Only secrets that `cloudflare.config.ts` declares with `bindings.secret()` read these files.
 
 </CliVariant>
 </CliVariants>
 
-## Configure the harness after setup
+## Configure the test server after setup
 
-If part of the Worker configuration depends on the test setup, you can create the test harness without options and configure it with `server.update()` before starting the server.
+If part of the Worker configuration depends on the test setup, you can create the test server without options and configure it with `server.update()` before starting the server.
 
 <CliVariants>
 <CliVariant cli="wrangler">
@@ -250,7 +250,7 @@ afterAll(async () => {
 </CliVariant>
 </CliVariants>
 
-## Reset the harness between tests
+## Reset the test server between tests
 
 When reusing a server across tests, call `server.reset()` after each test. It recreates local storage and restores Workers to the options used when the current session started.
 
@@ -291,7 +291,7 @@ afterEach(async () => {
 </CliVariant>
 </CliVariants>
 
-After a reset, apply any required schema migrations and seed data again. For examples, refer to [Prepare test state](/workers/testing/test-harness/prepare-test-state/).
+After a reset, apply any required schema migrations and seed data again. For examples, refer to [Prepare test state](/workers/testing/test-server/prepare-test-state/).
 
 ## Print debug output when tests fail
 

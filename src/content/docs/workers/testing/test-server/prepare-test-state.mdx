@@ -4,18 +4,18 @@ pcx_content_type: example
 sidebar:
   order: 3
 head: []
-description: Seed local storage and replace dependencies in test harness tests.
+description: Seed local storage and replace dependencies in test server tests.
 products:
   - workers
 ---
 
 import { CliVariant, CliVariants, TypeScriptExample } from "~/components";
 
-An integration test may need data in local storage before it runs. It may also depend on external services that you do not want to call during the test. Use the test harness to prepare this state and replace those dependencies.
+An integration test may need data in local storage before it runs. It may also depend on external services that you do not want to call during the test. Use the test server to prepare this state and replace those dependencies.
 
 ## Access configured bindings
 
-`worker.getEnv()` returns the variables, secrets, and bindings configured for a Worker. You can [specify types](/workers/testing/test-harness/configure/#specify-types-for-worker-handles) for `server.getWorker()` so these values are typed. Then use the returned storage bindings to seed data directly from a test:
+`worker.getEnv()` returns the variables, secrets, and bindings configured for a Worker. You can [specify types](/workers/testing/test-server/configure/#specify-types-for-worker-handles) for `server.getWorker()` so these values are typed. Then use the returned storage bindings to seed data directly from a test:
 
 <CliVariants>
 <CliVariant cli="wrangler">
@@ -187,9 +187,9 @@ expect(rows).toEqual([{ value: 1 }]);
 
 ## Mock outbound requests
 
-The test harness proxies outbound `fetch()` requests from your Workers through the `globalThis.fetch()` function in your Node environment. This allows you to intercept these requests and return a predictable response in your tests.
+The test server proxies outbound `fetch()` requests from your Workers through the `globalThis.fetch()` function in your Node environment. This allows you to intercept these requests and return a predictable response in your tests.
 
-Here is an example using `vi.spyOn()` to mock a single request. But you can also use [Mock Service Worker (MSW)](/workers/testing/test-harness/integrations/#mock-service-worker) to intercept these requests based on your preferences.
+Here is an example using `vi.spyOn()` to mock a single request. But you can also use [Mock Service Worker (MSW)](/workers/testing/test-server/integrations/#mock-service-worker) to intercept these requests based on your preferences.
 
 <TypeScriptExample>
 
@@ -224,7 +224,7 @@ test("loads a user profile", async ({ expect }) => {
 <CliVariants>
 <CliVariant cli="wrangler">
 
-Use `bindingOverrides` when you want to control the behavior of a binding. It routes the binding to a test Worker running inside the harness. For example, a test Worker can replace the Browser Rendering binding and return a known screenshot without starting a browser.
+Use `bindingOverrides` when you want to control the behavior of a binding. It routes the binding to a test Worker running inside the test server. For example, a test Worker can replace the Browser Rendering binding and return a known screenshot without starting a browser.
 
 The test Worker can also expose JSRPC methods that configure its behavior. Use `worker.getExport()` to access the default export from your test.
 
@@ -259,7 +259,7 @@ expect(await response.bytes()).toEqual(Uint8Array.from([137, 80, 78, 71]));
 </CliVariant>
 <CliVariant cli="cf">
 
-Use `envOverrides` with `bindings.worker()` when you want to control the behavior of a binding. It routes the binding to a test Worker running inside the harness. For example, a test Worker can replace the Browser Rendering binding and return a known screenshot without starting a browser.
+Use `envOverrides` with `bindings.worker()` when you want to control the behavior of a binding. It routes the binding to a test Worker running inside the test server. For example, a test Worker can replace the Browser Rendering binding and return a known screenshot without starting a browser.
 
 The test Worker can also expose JSRPC methods that configure its behavior. Use `worker.getExport()` to access the default export from your test.
 

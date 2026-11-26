@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
-title: Integration test harness
-description: Write integration tests for Cloudflare Workers with the test harness.
+title: Integration test server
+description: Write integration tests for Cloudflare Workers with the test server.
 sidebar:
   order: 16
 products:
@@ -21,7 +21,7 @@ import {
 
 [`createTestHarness()`](/workers/wrangler/api/#createtestharness) is a Wrangler API for integration testing from any Node.js test runner. It runs one or more Workers from [Wrangler](/workers/wrangler/) projects or Vite projects that use the [Cloudflare Vite plugin](/workers/vite-plugin/).
 
-<LinkButton href="/workers/testing/test-harness/get-started/">
+<LinkButton href="/workers/testing/test-server/get-started/">
 	Get started
 </LinkButton>
 <LinkButton
@@ -38,7 +38,7 @@ import {
 
 `@cloudflare/test-server` is experimental, and its API may change in minor versions.
 
-<LinkButton href="/workers/testing/test-harness/get-started/">
+<LinkButton href="/workers/testing/test-server/get-started/">
 	Get started
 </LinkButton>
 <LinkButton
@@ -62,28 +62,28 @@ import {
 
 <CardGrid>
 	<LinkCard
-		title="Configure the test harness"
+		title="Configure the test server"
 		description="Configure Workers, test values, lifecycle hooks, and failure diagnostics."
-		href="/workers/testing/test-harness/configure/"
+		href="/workers/testing/test-server/configure/"
 	/>
 	<LinkCard
 		title="Prepare test state"
 		description="Seed storage, mock outbound requests, and replace bindings."
-		href="/workers/testing/test-harness/prepare-test-state/"
+		href="/workers/testing/test-server/prepare-test-state/"
 	/>
 	<LinkCard
 		title="Interact with Workers"
 		description="Test routes, dispatch events, control Workflows, and assert logs."
-		href="/workers/testing/test-harness/interact-with-workers/"
+		href="/workers/testing/test-server/interact-with-workers/"
 	/>
 	<LinkCard
 		title="Integrations"
-		description="Use the test harness with MSW and Playwright."
-		href="/workers/testing/test-harness/integrations/"
+		description="Use the test server with MSW and Playwright."
+		href="/workers/testing/test-server/integrations/"
 	/>
 	<LinkCard
 		title="Migrate from Wrangler"
 		description="Move tests from Wrangler's createTestHarness() to createTestServer()."
-		href="/workers/testing/test-harness/migrate-from-wrangler/"
+		href="/workers/testing/test-server/migrate-from-wrangler/"
 	/>
 </CardGrid>

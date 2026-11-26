@@ -3,6 +3,12 @@
 # STATIC REDIRECTS
 # ============================================================================
 
+# Polish navigation
+/images/polish/activate-polish/ /images/polish/configure-polish/ 301
+/images/polish/compression/ /images/polish/configure-polish/ 301
+/images/polish/compression-and-format-selection/ /images/polish/configure-polish/ 301
+/images/polish/cf-polished-statuses/ /images/polish/troubleshooting-polish/ 301
+
 /workers/observability/exporting-opentelemetry-data/ /observability/export/opentelemetry/ 301
 /workers/observability/exporting-opentelemetry-data/honeycomb/ /observability/export/opentelemetry/honeycomb/ 301
 /workers/observability/exporting-opentelemetry-data/grafana-cloud/ /observability/export/opentelemetry/grafana-cloud/ 301
@@ -1314,6 +1320,7 @@
 # google tag
 /google-tag-first-party-mode/ /google-tag-gateway/ 301
 # images — legacy redirects (updated destinations)
+/images/optimization/transformations/overview/ /images/optimization/transformations/url/ 301
 /images/cloudflare-images/upload-images/supported-formats/ /images/get-started/limits/ 301
 /image-resizing/ /images/optimization/features/ 301
 /image-resizing/url-format/ /images/optimization/features/ 301
@@ -1324,7 +1331,7 @@
 /images/url-format/ /images/optimization/features/ 301
 /images/variants/ /images/optimization/hosted-images/enable-flexible-variants/ 301
 /images/worker/ /images/optimization/transformations/transform-via-workers/ 301
-/support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/cf-polished-statuses/ 301
+/support/troubleshooting/general-troubleshooting/troubleshoot-common-cf-polished-statuses/ /images/polish/troubleshooting-polish/ 301
 /images/cloudflare-images/ /images/ 301
 /images/cloudflare-images/api-request/ /images/storage/upload-images/methods/#upload-using-api 301
 /images/cloudflare-images/images-analytics/ /images/ 301
@@ -1336,7 +1343,7 @@
 /images/cloudflare-images/sourcing-kit/credentials/ /images/storage/upload-images/import-from-s3/credentials/ 301
 /images/cloudflare-images/sourcing-kit/edit/ /images/storage/upload-images/import-from-s3/edit/ 301
 /images/cloudflare-images/sourcing-kit/enable/ /images/storage/upload-images/import-from-s3/enable/ 301
-/images/cloudflare-images/transform/ /images/optimization/transformations/overview/ 301
+/images/cloudflare-images/transform/ /images/optimization/transformations/url/ 301
 /images/cloudflare-images/transform/blur-images/ /images/optimization/hosted-images/blur-variants/ 301
 /images/cloudflare-images/transform/delete-images/ /images/storage/manage-images/delete-images/ 301
 /images/cloudflare-images/transform/export-image/ /images/storage/manage-images/export-images/ 301
@@ -1361,8 +1368,8 @@
 /images/platform/pricing/ /images/pricing/ 301
 # images — new IA redirects
 /images/get-started/ /images/get-started/introduction/ 301
-/images/transform-images/ /images/optimization/transformations/overview/ 301
-/images/transform-images/transform-via-url/ /images/optimization/features/ 301
+/images/transform-images/ /images/optimization/transformations/url/ 301
+/images/transform-images/transform-via-url/ /images/optimization/transformations/url/ 301
 /images/transform-images/transform-via-workers/ /images/optimization/transformations/transform-via-workers/ 301
 /images/transform-images/bindings/ /images/optimization/binding/ 301
 /images/optimization/transformations/bindings/ /images/optimization/binding/ 301
@@ -3278,6 +3285,7 @@
 /workers/reference/apis/* /workers/runtime-apis/:splat 301
 /workers/templates/pages/* /workers/examples/:splat 301
 /workers/observability/logging/* /workers/observability/logs/:splat 301
+/workers/testing/test-harness/* /workers/testing/test-server/:splat 301
 # Workers AI
 /workers-ai/demos/* /workers-ai/guides/demos-architectures/:splat 301
 /workers-ai/tutorials/* /workers-ai/guides/tutorials/:splat 301

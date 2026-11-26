@@ -4,18 +4,18 @@ pcx_content_type: example
 sidebar:
   order: 4
 head: []
-description: Test routes, dispatch events, control Workflows, and assert logged behavior with the test harness.
+description: Test routes, dispatch events, control Workflows, and assert logged behavior with the test server.
 products:
   - workers
 ---
 
 import { CliVariant, CliVariants, TypeScriptExample } from "~/components";
 
-Use the test harness to send requests through configured routes or target a specific Worker directly. You can also dispatch events like scheduled events.
+Use the test server to send requests through configured routes or target a specific Worker directly. You can also dispatch events like scheduled events.
 
 ## Test route dispatch across Workers
 
-When a test harness runs multiple Workers, add each Worker to the `workers` array. The first Worker is the primary Worker. `server.fetch()` sends relative URLs to the primary Worker and matches absolute URLs against configured routes. If no route matches, it falls back to the primary Worker:
+When a test server runs multiple Workers, add each Worker to the `workers` array. The first Worker is the primary Worker. `server.fetch()` sends relative URLs to the primary Worker and matches absolute URLs against configured routes. If no route matches, it falls back to the primary Worker:
 
 <CliVariants>
 <CliVariant cli="wrangler">
@@ -86,7 +86,7 @@ await apiWorker.scheduled({
 
 ## Assert logged behavior
 
-The test harness captures logs from the Workers runtime. To assert that a Worker logged a specific message, use `server.getLogs()` to retrieve the log entries.
+The test server captures logs from the Workers runtime. To assert that a Worker logged a specific message, use `server.getLogs()` to retrieve the log entries.
 
 Captured logs are reset when you call `server.reset()`. You can also call `server.clearLogs()` to isolate logs before and after a specific action:
 

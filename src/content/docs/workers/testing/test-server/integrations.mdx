@@ -4,14 +4,14 @@ pcx_content_type: integration-guide
 sidebar:
   order: 5
 head: []
-description: Use the test harness with Mock Service Worker and Playwright.
+description: Use the test server with Mock Service Worker and Playwright.
 products:
   - workers
 ---
 
 import { CliVariant, CliVariants, TypeScriptExample } from "~/components";
 
-You can use the test harness with existing tools in the Node.js ecosystem. The examples on this page show common integration patterns that you can adapt to your test setup.
+You can use the test server with existing tools in the Node.js ecosystem. The examples on this page show common integration patterns that you can adapt to your test setup.
 
 ## Mock Service Worker
 
@@ -116,11 +116,11 @@ test("loads a user profile", async ({ expect }) => {
 
 ## Playwright
 
-If you are building a web application and want to verify user flows in a real browser, use [Playwright](https://playwright.dev/) with the test harness. Playwright can navigate pages, interact with the user interface, and verify the behavior of your Workers project end to end.
+If you are building a web application and want to verify user flows in a real browser, use [Playwright](https://playwright.dev/) with the test server. Playwright can navigate pages, interact with the user interface, and verify the behavior of your Workers project end to end.
 
-A Playwright fixture can start the test harness before browser tests. If you want to mock outbound `fetch()` requests, you can also use [MSW](#mock-service-worker) to intercept them at the same time.
+A Playwright fixture can start the test server before browser tests. If you want to mock outbound `fetch()` requests, you can also use [MSW](#mock-service-worker) to intercept them at the same time.
 
-The following fixture sets the Playwright `baseURL`, exposes MSW and the test harness to tests, and resets storage state after each test.
+The following fixture sets the Playwright `baseURL`, exposes MSW and the test server to tests, and resets storage state after each test.
 
 <CliVariants>
 <CliVariant cli="wrangler">
