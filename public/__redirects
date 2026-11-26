@@ -895,6 +895,7 @@
 /d1/reference/metrics-analytics/ /d1/observability/metrics-analytics/ 301
 /d1/reference/wrangler-commands/ /d1/cli-commands/ 301
 /d1/wrangler-commands/ /d1/cli-commands/ 301
+/d1/tutorials/import-to-d1-with-rest-api/ /d1/best-practices/import-export-data/#import-using-the-rest-api 301
 /d1/how-to/ /d1/best-practices/ 301
 /d1/how-to/query-databases/ /d1/best-practices/query-d1/ 301
 /d1/how-to/using-indexes/ /d1/best-practices/use-indexes/ 301

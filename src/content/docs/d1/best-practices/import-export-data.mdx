@@ -1,26 +1,40 @@
 ---
-title: Import and export data
-description: Import existing SQLite tables into D1 or export a D1 database for local use.
+title: Import and export data (CLI and REST API)
+description: Import SQLite schemas and data into D1 or export a D1 database using the Cloudflare CLI (cf), Wrangler, or the REST API.
 pcx_content_type: concept
 sidebar:
   order: 1
+  label: Import and export data
 products:
   - d1
 ---
 
-import { CliVariant, CliVariants, TypeScriptExample } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	Render,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+} from "~/components";
 
-D1 allows you to import existing SQLite tables and their data directly, enabling you to migrate existing data into D1 quickly and easily. This can be useful when migrating applications to use Workers and D1, or when you want to prototype a schema locally before importing it to your D1 database(s).
+D1 lets you import existing SQLite tables and data into a database, and export a D1 database to SQL for [local development](/d1/best-practices/local-development/), migrations, or testing.
 
-D1 also allows you to export a database. This can be useful for [local development](/d1/best-practices/local-development/) or testing.
+Choose the method that matches your file size and workflow:
+
+| Method | Import | Export | Best for |
+| --- | --- | --- | --- |
+| **Cloudflare CLI (`cf`)** | `cf d1 query --sql @<file>` (small files or batched script) | Not yet available | Small-to-medium `.sql` files and scripted batch imports using your `cf auth login` session (no API token required). |
+| **Wrangler** | `wrangler d1 execute --remote --file` (up to 5 GiB) | `wrangler d1 export --remote` | Interactive bulk imports up to 5 GiB and full or partial SQL exports. |
+| **REST API** | [`POST /import`](/api/resources/d1/subresources/database/methods/import/) (up to 5 GiB) | [`POST /export`](/api/resources/d1/subresources/database/methods/export/) | Automated bulk imports and exports from CI pipelines or non-CLI environments. |
 
 ## Import an existing database
 
-To import an existing SQLite database into D1, you must have:
+To import an existing SQLite database into D1, you need:
 
-1. The [Cloudflare CLI (`cf`)](/cf/get-started/) or [Wrangler CLI](/workers/wrangler/install-and-update/) installed (bulk imports up to 5 GiB require Wrangler or the [REST API](/d1/tutorials/import-to-d1-with-rest-api/)).
-2. A database to use as the target.
-3. An existing SQLite (version 3.0+) database file to import.
+1. The [Cloudflare CLI (`cf`)](/cf/get-started/), [Wrangler CLI](/workers/wrangler/install-and-update/), or a Cloudflare API token for the [REST API](#import-using-the-rest-api).
+2. A target D1 database.
+3. A SQLite (version 3.0+) `.sql` file to import.
 
 :::note
 
@@ -30,7 +44,7 @@ You cannot import a raw SQLite database (`.sqlite3` files) directly. Refer to [h
 
 For example, consider the following `users_export.sql` schema and values, which includes a `CREATE TABLE IF NOT EXISTS` statement:
 
-```sql
+```sql title="users_export.sql"
 CREATE TABLE IF NOT EXISTS users (
 	id VARCHAR(50),
 	full_name VARCHAR(50),
@@ -46,13 +60,13 @@ INSERT INTO users (id, full_name, created_on) VALUES ('01GREFXCNF67KV7FPPSEJVJME
 <CliVariants>
 <CliVariant cli="wrangler">
 
-With your `users_export.sql` file in the current working directory, you can pass the `--file=users_export.sql` flag to `d1 execute` to execute (import) your table schema and values:
+With your `users_export.sql` file in the current working directory, pass the `--file=users_export.sql` flag to `d1 execute` to import your table schema and values (up to 5 GiB):
 
 ```sh
 npx wrangler d1 execute example-db --remote --file=users_export.sql
 ```
 
-To confirm your table was imported correctly and is queryable, execute a `SELECT` statement to fetch all the tables from your D1 database:
+To confirm your table was imported correctly and is queryable, run a `SELECT` statement to list all tables in your D1 database:
 
 ```sh
 npx wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_schema WHERE type='table' ORDER BY name;"
@@ -74,14 +88,47 @@ npx wrangler d1 execute example-db --remote --command "SELECT name FROM sqlite_s
 </CliVariant>
 <CliVariant cli="cf">
 
-For small `.sql` schema and seed files in the current working directory, pass `--sql @users_export.sql` to `cf d1 query` (which targets your remote D1 database by default):
+For a small `.sql` schema or seed file in the current working directory, pass `--sql @users_export.sql` to `cf d1 query` (which targets your remote D1 database by default):
 
 ```sh
 cf d1 query <DATABASE_ID> --sql @users_export.sql
 ```
 
+To import a larger file containing many statements without creating a separate API token, split the file into batches and invoke `cf d1 query` for each chunk. The following Node.js script reads a line-delimited `.sql` file (such as `users_export.sql` or output from `sqlite3 .dump`), writes temporary batches of 250 lines, and executes each batch through `cf`:
+
+```js title="import-with-cf.mjs"
+import { execFileSync } from "node:child_process";
+import { readFileSync, unlinkSync, writeFileSync } from "node:fs";
+
+const DATABASE_ID = process.env.D1_DATABASE_ID;
+const SQL_FILE = process.argv[2] ?? "users_export.sql";
+const BATCH_SIZE = 250;
+
+const statements = readFileSync(SQL_FILE, "utf8")
+	.split(/\r?\n/)
+	.filter((line) => line.trim().length > 0);
+
+for (let i = 0; i < statements.length; i += BATCH_SIZE) {
+	const batchFile = `.d1-batch-${i}.sql`;
+	writeFileSync(batchFile, statements.slice(i, i + BATCH_SIZE).join("\n"));
+	try {
+		execFileSync("cf", ["d1", "query", DATABASE_ID, "--sql", `@${batchFile}`], {
+			stdio: "inherit",
+		});
+	} finally {
+		unlinkSync(batchFile);
+	}
+}
+```
+
+Run the script against your database UUID:
+
+```sh
+D1_DATABASE_ID="<DATABASE_ID>" node import-with-cf.mjs users_export.sql
+```
+
 :::note
-`cf d1 query --sql @<file>` sends the SQL file in a single `/query` request and is intended for small SQL files. For large bulk imports (up to 5 GiB), use `npx wrangler d1 execute --remote --file` or the [REST API bulk import workflow](/d1/tutorials/import-to-d1-with-rest-api/).
+`cf d1 query --sql @<file>` sends SQL through the `/query` endpoint rather than R2-staged bulk ingestion. For very large SQL files (up to 5 GiB), use `npx wrangler d1 execute --remote --file` or [Import using the REST API](#import-using-the-rest-api).
 :::
 
 To confirm your table was imported correctly and is queryable, run a `SELECT` statement to list all tables in your D1 database:
@@ -99,12 +146,154 @@ The `_cf_KV` table is a reserved table used by D1's underlying storage system. I
 
 :::
 
-From here, you can now query our new table from our Worker [using the D1 Workers Binding API](/d1/worker-api/).
+From here, you can query your new table from a Worker using the [D1 Workers Binding API](/d1/worker-api/).
 
 :::caution[Known limitations]
 
-For imports, `wrangler d1 execute --file` is limited to 5GiB files, the same as the [R2 upload limit](/r2/platform/limits/). For imports larger than 5GiB, we recommend splitting the data into multiple files.
+Bulk imports via `wrangler d1 execute --file` or the REST API `/import` endpoint are limited to 5 GiB files, matching the [R2 upload limit](/r2/platform/limits/). For imports larger than 5 GiB, split the data into multiple files.
+
 :::
+
+### Import using the REST API
+
+Use the [D1 `/import` REST API](/api/resources/d1/subresources/database/methods/import/) when automating bulk imports up to 5 GiB from CI pipelines or scripts without Wrangler. The import runs in four steps:
+
+1. **Init upload**: Send the MD5 hash of your `.sql` file to the `/import` endpoint to receive a temporary R2 upload URL and filename.
+2. **Upload to R2**: `PUT` the `.sql` file to the returned upload URL and verify that the response `ETag` matches your MD5 hash.
+3. **Start ingestion**: Send an `ingest` request with the hash and filename to start importing into D1.
+4. **Poll until complete**: Poll the `/import` endpoint with the returned bookmark until ingestion finishes.
+
+#### 1. Create a D1 API token
+
+Generate an API token with **Account** > **D1** > **Edit** permissions:
+
+<Tabs>
+<TabItem label="Cloudflare CLI (cf)">
+
+1. Look up the **D1 Write** permission group ID for your account:
+
+   ```sh
+   cf accounts tokens permission-groups list --name "D1"
+   ```
+
+2. Create an Account Owned API token scoped to your account (replace `<ACCOUNT_ID>` and `<D1_WRITE_PERMISSION_GROUP_ID>`):
+
+   ```sh
+   cf accounts tokens create \
+     --name "D1 Import API Token" \
+     --policies '[{"effect":"allow","permission_groups":[{"id":"<D1_WRITE_PERMISSION_GROUP_ID>"}],"resources":{"com.cloudflare.api.account.<ACCOUNT_ID>":"*"}}]'
+   ```
+
+3. Copy the `value` field from the JSON output and store it securely.
+
+</TabItem>
+<TabItem label="Dashboard">
+
+<Render file="generate-d1-api-token" product="d1" />
+
+</TabItem>
+</Tabs>
+
+#### 2. Upload and ingest a `.sql` file
+
+Save the following Node.js script as `import-rest.mjs`. It reads a `.sql` file (such as `users_export.sql`), performs all four `/import` steps, and polls until D1 completes ingestion:
+
+```js title="import-rest.mjs"
+import crypto from "node:crypto";
+import { readFileSync } from "node:fs";
+
+const ACCOUNT_ID = process.env.CLOUDFLARE_ACCOUNT_ID;
+const DATABASE_ID = process.env.D1_DATABASE_ID;
+const API_TOKEN = process.env.CLOUDFLARE_API_TOKEN;
+const SQL_FILE = process.argv[2] ?? "users_export.sql";
+
+const D1_IMPORT_URL = `https://api.cloudflare.com/client/v4/accounts/${ACCOUNT_ID}/d1/database/${DATABASE_ID}/import`;
+const headers = {
+	"Content-Type": "application/json",
+	Authorization: `Bearer ${API_TOKEN}`,
+};
+
+async function pollImport(bookmark) {
+	while (true) {
+		const res = await fetch(D1_IMPORT_URL, {
+			method: "POST",
+			headers,
+			body: JSON.stringify({
+				action: "poll",
+				current_bookmark: bookmark,
+			}),
+		});
+		const { result } = await res.json();
+		console.log("Poll status:", result.status, result.messages ?? "");
+
+		if (
+			result.status === "complete" ||
+			result.success ||
+			result.error === "Not currently importing anything."
+		) {
+			return result;
+		}
+		if (result.status === "error") {
+			throw new Error(result.error ?? "D1 import failed");
+		}
+
+		await new Promise((resolve) => setTimeout(resolve, 1000));
+	}
+}
+
+async function importSqlFile() {
+	const sql = readFileSync(SQL_FILE, "utf8");
+	const etag = crypto.createHash("md5").update(sql).digest("hex");
+
+	// 1. Init upload
+	const initRes = await fetch(D1_IMPORT_URL, {
+		method: "POST",
+		headers,
+		body: JSON.stringify({ action: "init", etag }),
+	});
+	const initData = await initRes.json();
+	if (!initData.success) {
+		throw new Error(`Init failed: ${JSON.stringify(initData.errors)}`);
+	}
+	const { upload_url: uploadUrl, filename } = initData.result;
+
+	// 2. Upload to R2
+	const r2Res = await fetch(uploadUrl, {
+		method: "PUT",
+		body: sql,
+	});
+	const r2Etag = r2Res.headers.get("ETag")?.replace(/"/g, "");
+	if (r2Etag !== etag) {
+		throw new Error(`ETag mismatch: expected ${etag}, got ${r2Etag}`);
+	}
+
+	// 3. Start ingestion
+	const ingestRes = await fetch(D1_IMPORT_URL, {
+		method: "POST",
+		headers,
+		body: JSON.stringify({ action: "ingest", etag, filename }),
+	});
+	const ingestData = await ingestRes.json();
+	if (!ingestData.success) {
+		throw new Error(`Ingest failed: ${JSON.stringify(ingestData.errors)}`);
+	}
+
+	// 4. Poll until complete
+	await pollImport(ingestData.result.at_bookmark);
+	console.log("Import completed successfully.");
+}
+
+await importSqlFile();
+```
+
+Run the script with your account ID, database UUID, and API token set as environment variables:
+
+```sh
+CLOUDFLARE_ACCOUNT_ID="<ACCOUNT_ID>" \
+D1_DATABASE_ID="<DATABASE_ID>" \
+CLOUDFLARE_API_TOKEN="<API_TOKEN>" \
+node import-rest.mjs users_export.sql
+```
 
 ### Convert SQLite database files
 
@@ -138,10 +327,10 @@ You can then follow the steps to [import an existing database](#import-an-existi
 ## Export an existing D1 database
 
 :::note
-`cf d1` does not yet provide an `export` command. Use Wrangler (shown below) or the [D1 REST API](/api/resources/d1/subresources/database/methods/export/) to export a database.
+`cf d1` does not yet provide an `export` command. Use Wrangler (shown below) or the [D1 `/export` REST API](/api/resources/d1/subresources/database/methods/export/) to export a database.
 :::
 
-In addition to importing existing SQLite databases, you might want to export a D1 database for local development or testing. You can export a D1 database to a `.sql` file using [`wrangler d1 export`](/workers/wrangler/commands/d1/#d1-export) and then import it with `wrangler d1 execute --file`.
+In addition to importing existing SQLite databases, you might want to export a D1 database for local development or testing. You can export a D1 database to a `.sql` file using [`wrangler d1 export`](/workers/wrangler/commands/d1/#d1-export) and then import it with `wrangler d1 execute --file` or the [REST API](#import-using-the-rest-api).
 
 To export full D1 database schema and data:
 
@@ -178,6 +367,8 @@ To export only D1 table data:
 ```sh
 npx wrangler d1 export <database_name> --remote --table=<table_name> --output=./data.sql --no-schema
 ```
+
+To automate exports without Wrangler, call the [D1 `/export` REST API](/api/resources/d1/subresources/database/methods/export/) with an API token that has **Account** > **D1** > **Edit** permissions (which you can create using `cf accounts tokens create` as shown in [Create a D1 API token](#1-create-a-d1-api-token)). The endpoint returns a polling bookmark and, once complete, a `signed_url` to download the `.sql` dump.
 
 ### Known limitations
 
@@ -224,7 +415,7 @@ INSERT INTO users (id, full_name, created_on)
 VALUES
   ('901', 'Roran Eroi', '2022-08-20 05:39:52'),
   ...
-  ('1000', 'Boris Pewter', '2022-12-15 22:16:15');
+  ('1000', 'Boris Pewter', '2022-12-24 07:59:54');
 ```
 
 If one large value makes an `INSERT` exceed the [100,000-byte SQL statement limit](/d1/platform/limits/), splitting rows cannot help. This can also affect D1 exports. In a restore script, bind the values instead of including them as SQL literals:
@@ -233,10 +424,10 @@ If one large value makes an `INSERT` exceed the [100,000-byte SQL statement limi
 
 ```ts
 await env.DB.prepare(
-  "INSERT INTO users (id, full_name, created_on) VALUES (?, ?, ?)",
+	"INSERT INTO users (id, full_name, created_on) VALUES (?, ?, ?)",
 )
-  .bind(id, fullName, createdOn)
-  .run();
+	.bind(id, fullName, createdOn)
+	.run();
 ```
 
 </TypeScriptExample>
@@ -247,10 +438,10 @@ The value and row size limits still apply. Verify restored data in a separate da
 
 When importing data, you may need to temporarily disable [foreign key constraints](/d1/sql-api/foreign-keys/). To do so, call `PRAGMA defer_foreign_keys = true` before making changes that would violate foreign keys.
 
-Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) to learn more about how to work with foreign keys and D1.
+Refer to the [foreign key documentation](/d1/sql-api/foreign-keys/) for details on working with foreign keys and D1.
 
 ## Next Steps
 
 - Read the SQLite [`CREATE TABLE`](https://www.sqlite.org/lang_createtable.html) documentation.
-- Learn how to [use the D1 Workers Binding API](/d1/worker-api/) from within a Worker.
+- Use the [D1 Workers Binding API](/d1/worker-api/) to query your database from a Worker.
 - Understand how [database migrations work](/d1/reference/migrations/) with D1.
