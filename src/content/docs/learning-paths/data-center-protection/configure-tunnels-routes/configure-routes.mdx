@@ -269,33 +269,61 @@ BGP peering is available when using the following on-ramps:
 
 The Magic Transit Virtual Network routing table is managed by the customer. You can select both the Cloudflare-side ASN (Autonomous System Number) and the ASN for your customer device. The customer device ASN can be 2-byte or 4-byte. [Public ASNs used for Magic Transit](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn) are verified during the onboarding process.
 
-By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Magic Transit Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can configure this to a private 2-byte ASN (any value between `64512` and `65534`, such as `65000`).
+By default, each BGP peering session uses the same Cloudflare-side ASN to represent peering with the Magic Transit Virtual Network routing table. This ASN is called the **CF Account ASN** and is set to `13335`. You can change it to any ASN from `1` to `4294967294`, except `23456` (`AS_TRANS`) and `65535`. For example, you can use a private ASN such as `65000`.
 
-The CF Account ASN applies to all BGP sessions in your account, over both IPsec/GRE tunnels and CNI. It must be different from the customer device ASN on each tunnel.
+The CF Account ASN applies to all BGP sessions in your account, over both IPsec/GRE tunnels and CNI. It must be different from the customer device ASN on each tunnel and interconnect.
+
+:::caution
+Changing the CF Account ASN restarts all BGP sessions in your account. Traffic over BGP-enabled tunnels and interconnects may be disrupted until the sessions re-establish.
+:::
 
 To set this ASN:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
 
-1. Go to the Routes page.
+<Steps>
+
+1. Go to the **Routes** page.
 
    <DashButton url="/?to=/:account/magic-networks/routes" />
 
-2. Select **WAN configuration**.
+2. Select **BGP settings**.
 3. In **CF Account ASN**, enter Cloudflare's ASN.
 4. Select **Update**.
+5. If you changed the ASN, select **Change ASN** to confirm.
+
+</Steps>
 
 </TabItem> <TabItem label="API">
 
-Create a `PUT` request to update the BGP settings for your account. The following example sets the CF Account ASN to `65000`:
+<Render file="account-id-api-key" product="networking-services" />
+
+Create a `PUT` request to update the BGP settings for your account. Fields you omit keep their current values, so this request does not change your route redistribution settings. The following example sets the CF Account ASN to `65000`:
 
 <APIRequest
-  path="/accounts/{account_id}/magic/bgp/settings"
-  method="PUT"
-  json={{
-		"cloudflare_asn": 65000
-  }}
+	path="/accounts/{account_id}/magic/bgp/settings"
+	method="PUT"
+	json={{
+		cloudflare_asn: 65000,
+	}}
 />
+
+```json output
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "cloudflare_asn": 65000,
+    "redistribute": {
+      "static:wan": true
+    },
+    "modified_on": "2026-01-01T00:00:00Z"
+  },
+  "success": true
+}
+```
+
+Cloudflare rejects the request if the new ASN matches the customer device ASN of any BGP-enabled tunnel or interconnect in your account.
 
 </TabItem> </Tabs>
 
@@ -303,6 +331,96 @@ Magic Transit customers should also be aware of the following:
 
 - The Cloudflare side ASN will never be exposed in `AS_PATH` of anycast announcements from the Cloudflare edge. In those announcements, Cloudflare will always use the Cloudflare ASN of `13335` optionally prepended with a bring-your-own ASN as described in [Cloudflare ASN vs. your own ASN](/magic-transit/how-to/advertise-prefixes/#cloudflare-asn-vs-your-own-asn).
 - The customer device ASN can be a private ASN or the ASN they are using for Magic Transit anycast announcements at the edge: this has no impact on the ASN for the anycast announced prefix at the edge of the Cloudflare global network.
+
+### Configure route redistribution
+
+Route redistribution controls which types of routes Cloudflare advertises to your BGP peers. The settings apply to all BGP sessions over IPsec and GRE tunnels in your account.
+
+You can turn redistribution on or off for the following route types:
+
+| Route type        | API field                 | Default |
+| ----------------- | ------------------------- | ------- |
+| Static WAN routes | `redistribute.static:wan` | On      |
+
+If you turn off static route redistribution, BGP peers still receive routes learned from your other BGP peers and the prefixes in each tunnel's **Additional Advertised prefix list**. For more information, refer to <a href="/magic-transit/reference/traffic-steering/#bgp-route-distribution-and-convergence">BGP route distribution and convergence</a>.
+
+To turn redistribution on or off for a route type:
+
+<Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">
+
+<Steps>
+
+1. Go to the **Routes** page.
+
+   <DashButton url="/?to=/:account/magic-networks/routes" />
+
+2. Select **BGP settings**.
+3. In **Route redistribution**, turn the route type on or off. For example, turn off **Static WAN routes**.
+4. Select **Save**.
+
+</Steps>
+
+</TabItem> <TabItem label="API">
+
+<Render file="account-id-api-key" product="networking-services" />
+
+To check the current setting, create a `GET` request to retrieve the BGP settings for your account:
+
+<APIRequest
+	path="/accounts/{account_id}/magic/bgp/settings"
+	method="GET"
+/>
+
+```json output
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "cloudflare_asn": 13335,
+    "redistribute": {
+      "static:wan": true
+    }
+  },
+  "success": true
+}
+```
+
+To turn off static route redistribution, create a `PUT` request that sets `static:wan` to `false`. Fields you omit keep their current values, so this request does not change your CF Account ASN:
+
+<APIRequest
+	path="/accounts/{account_id}/magic/bgp/settings"
+	method="PUT"
+	json={{
+		redistribute: {
+			"static:wan": false,
+		},
+	}}
+/>
+
+```json output
+{
+  "errors": [],
+  "messages": [],
+  "result": {
+    "cloudflare_asn": 13335,
+    "redistribute": {
+      "static:wan": false
+    },
+    "modified_on": "2026-01-01T00:00:00Z"
+  },
+  "success": true
+}
+```
+
+To turn static route redistribution back on, send the same request with `static:wan` set to `true`.
+
+</TabItem> </Tabs>
+
+Changes to route redistribution settings apply to established BGP sessions without resetting them. Cloudflare advertises or withdraws routes as needed. Prefixes in a tunnel's **Additional Advertised prefix list** are always advertised, regardless of this setting, and bypass [export filters](#filter-bgp-routes).
+
+:::caution
+Cloudflare applies this setting after it selects the preferred route for each prefix. When static route redistribution is off, Cloudflare does not advertise a prefix whose preferred route is a static route, even if a BGP route for that prefix also exists. The preferred route is the route with the lowest priority value.
+:::
 
 ### Set up BGP peering
 
@@ -322,8 +440,8 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 
 <DashButton url="/?to=/:account/magic-networks/routes" />
 
-2. Select **WAN configuration**.
-3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**.
+2. Select **BGP settings**.
+3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**. If you changed the ASN, select **Change ASN** to confirm.
 4. Go to **Interconnects**.
 
 <DashButton url="/?to=/:account/magic-networks/connections/cni-tunnels" />
@@ -343,8 +461,8 @@ BGP over CNI is in closed beta and is not currently available to new customers. 
 
 <DashButton url="/?to=/:account/magic-networks/routes" />
 
-2. Select **WAN configuration**.
-3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**.
+2. Select **BGP settings**.
+3. In **CF Account ASN**, enter Cloudflare's ASN, and select **Update**. If you changed the ASN, select **Change ASN** to confirm.
 4. Go to **Connectors**.
 
 <DashButton url="/?to=/:account/magic-networks/connections" />
