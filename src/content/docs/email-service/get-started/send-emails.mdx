@@ -69,7 +69,11 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
 
    </WranglerConfig>
 
-3. Create your Worker code in `src/index.ts`:
+3. Generate TypeScript types for your bindings so that `Env` includes `EMAIL`:
+
+   <PackageManagers type="run" args="cf-typegen" />
+
+4. Create your Worker code in `src/index.ts`:
 
    ```ts
    // Configuration - Update these values
@@ -92,7 +96,7 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
    } satisfies ExportedHandler<Env>;
    ```
 
-4. Use `npx wrangler dev` to develop your Worker project and send emails. This runs your code locally while connecting to Cloudflare Email Service (using [remote bindings](/workers/local-development/#remote-bindings)).
+5. Use `npx wrangler dev` to develop your Worker project and send emails. This runs your code locally while connecting to Cloudflare Email Service (using [remote bindings](/workers/local-development/#remote-bindings)).
 
    ```sh
    npx wrangler dev
@@ -101,7 +105,7 @@ If you are building on Cloudflare Workers, you can use the Workers binding for n
    # [wrangler:info] Ready on http://localhost:8787
    ```
 
-5. Deploy your Worker:
+6. Deploy your Worker:
 
    ```sh
    npm run deploy
