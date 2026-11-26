@@ -30,7 +30,7 @@ Find the databases that read the most rows in your account during the last 7 day
 <TabItem label="Cloudflare CLI (cf)">
 
 ```sh
-npx cf sql query --scope-account <account_id> "
+cf sql query --scope-account <account_id> "
   SELECT
     databaseId,
     COUNT(*) AS numberOfTimesRun,
@@ -60,7 +60,7 @@ npx wrangler d1 insights --sort-by=reads --time-period=7d --limit=20 --json
 </TabItem>
 </Tabs>
 
-To get the name of a database, run `npx cf d1 get <database_id>` or `npx wrangler d1 info <database_id>`. To find out how rows read and rows written affect your bill, refer to [Pricing](/d1/platform/pricing/).
+To get the name of a database, run `cf d1 get <database_id>` or `npx wrangler d1 info <database_id>`. To find out how rows read and rows written affect your bill, refer to [Pricing](/d1/platform/pricing/).
 
 ## Find queries that need an index
 
@@ -73,7 +73,7 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf sql query --scope-account <account_id> "
+   cf sql query --scope-account <account_id> "
      SELECT
        databaseId,
        query,
@@ -171,7 +171,7 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf sql query --scope-account <account_id> "
+   cf sql query --scope-account <account_id> "
      SELECT
        query,
        COUNT(*) AS numberOfTimesRun,
@@ -213,7 +213,7 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf d1 migrations create add_orderdetail_orderid_index
+   cf d1 migrations create add_orderdetail_orderid_index
    ```
 
    </TabItem>
@@ -247,7 +247,7 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf d1 migrations apply <database_id>
+   cf d1 migrations apply <database_id>
    ```
 
    </TabItem>
@@ -274,7 +274,7 @@ D1 Insights can recommend indexes for you. For more information, refer to [Index
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf d1 query <database_id> --sql "EXPLAIN QUERY PLAN <query>"
+   cf d1 query <database_id> --sql "EXPLAIN QUERY PLAN <query>"
    ```
 
    </TabItem>
@@ -305,7 +305,7 @@ A read query that runs many times often returns the same data each time. If you 
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf sql query --scope-account <account_id> "
+   cf sql query --scope-account <account_id> "
      SELECT
        databaseId,
        query,
@@ -414,7 +414,7 @@ Each time your Worker calls `run()`, `all()`, `first()`, or `raw()` on a stateme
    <TabItem label="Cloudflare CLI (cf)">
 
    ```sh
-   npx cf sql query --scope-account <account_id> "
+   cf sql query --scope-account <account_id> "
      SELECT
        databaseId,
        query,
