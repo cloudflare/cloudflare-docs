@@ -4,7 +4,7 @@ pcx_content_type: example
 sidebar:
   order: 3
 head: []
-description: Seed local storage and replace dependencies in createTestHarness tests.
+description: Seed local storage and replace dependencies in test harness tests.
 products:
   - workers
 ---
@@ -82,7 +82,7 @@ beforeEach(async () => {
 </CliVariant>
 <CliVariant cli="cf">
 
-Use `worker.applyD1Migrations(bindingName)` to apply migration files to a D1 binding. It reads `.sql` files from the `migrations` directory in the project directory. To read them from elsewhere, pass the `dir`, `pattern`, and `table` options, which work as in `cf d1 migrations apply`.
+Use `worker.applyD1Migrations(bindingName)` to apply migration files to a D1 binding. It reads `.sql` files from the `migrations` directory in the project directory. To read them from elsewhere, pass the `dir`, `pattern`, and `table` options, which work as in `cf d1 migrations apply`. It does not migrate a remote D1 database. To test against a local one, replace the binding in `envOverrides`, such as `DATABASE: bindings.d1()`.
 
 Call it after storage is reset to apply migrations that have not already run. Then access the database with `worker.getEnv()` and seed the required rows.
 
@@ -266,10 +266,10 @@ The test Worker can also expose JSRPC methods that configure its behavior. Use `
 <TypeScriptExample>
 
 ```ts
-import { createTestHarness } from "@cloudflare/test-harness";
+import { createTestServer } from "@cloudflare/test-server";
 import { bindings } from "cf/config";
 
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [
 		{
 			projectDir: "./workers/web",
@@ -301,7 +301,7 @@ A test Worker does not need a project of its own. Pass its [Miniflare](/workers/
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [
 		{
 			projectDir: "./",

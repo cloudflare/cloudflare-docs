@@ -4,7 +4,7 @@ pcx_content_type: get-started
 sidebar:
   order: 1
 head: []
-description: Write your first integration test for a Cloudflare Worker with createTestHarness.
+description: Write your first integration test for a Cloudflare Worker with the test harness.
 products:
   - workers
 ---
@@ -16,7 +16,7 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-This guide shows how to write a basic integration test for a Worker with `createTestHarness()`. The example uses Vitest as the test runner.
+This guide shows how to write a basic integration test for a Worker with the test harness. The example uses Vitest as the test runner.
 
 ## Prerequisites
 
@@ -36,9 +36,9 @@ You need:
 
 - A Worker project with a [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) file
 - A Node.js test runner such as [Vitest](https://vitest.dev/)
-- `@cloudflare/test-harness` installed as a development dependency:
+- `@cloudflare/test-server` installed as a development dependency:
 
-<PackageManagers pkg="@cloudflare/test-harness" dev />
+<PackageManagers pkg="@cloudflare/test-server" dev />
 
 </CliVariant>
 </CliVariants>
@@ -71,14 +71,14 @@ The test harness runs your project's Build Output, so build the project before y
 cf build
 ```
 
-Import `createTestHarness()` from `@cloudflare/test-harness`. Point the test harness at the project directory that contains the Build Output.
+Import `createTestServer()` from `@cloudflare/test-server`. Point the test harness at the project directory that contains the Build Output.
 
 <TypeScriptExample filename="test/index.test.ts">
 
 ```ts
-import { createTestHarness } from "@cloudflare/test-harness";
+import { createTestServer } from "@cloudflare/test-server";
 
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [{ projectDir: "./" }],
 });
 ```

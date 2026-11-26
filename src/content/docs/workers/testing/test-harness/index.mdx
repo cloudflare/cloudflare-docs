@@ -1,7 +1,7 @@
 ---
 pcx_content_type: overview
 title: Integration test harness
-description: Write integration tests for Cloudflare Workers with the createTestHarness API.
+description: Write integration tests for Cloudflare Workers with the test harness.
 sidebar:
   order: 16
 products:
@@ -34,9 +34,9 @@ import {
 </CliVariant>
 <CliVariant cli="cf">
 
-`createTestHarness()` from the `@cloudflare/test-harness` package runs one or more Workers in integration tests from any Node.js test runner. It runs each project's Build Output, which [`cf build`](/cf/projects/#build) writes, so your tests exercise what you deploy.
+`createTestServer()` from the `@cloudflare/test-server` package runs one or more Workers in integration tests from any Node.js test runner. It runs each project's Build Output, which [`cf build`](/cf/projects/#build) writes, so your tests exercise what you deploy.
 
-`@cloudflare/test-harness` is experimental, and its API may change in minor versions.
+`@cloudflare/test-server` is experimental, and its API may change in minor versions.
 
 <LinkButton href="/workers/testing/test-harness/get-started/">
 	Get started
@@ -83,7 +83,7 @@ import {
 	/>
 	<LinkCard
 		title="Migrate from Wrangler"
-		description="Move tests from Wrangler's createTestHarness() to @cloudflare/test-harness."
+		description="Move tests from Wrangler's createTestHarness() to createTestServer()."
 		href="/workers/testing/test-harness/migrate-from-wrangler/"
 	/>
 </CardGrid>

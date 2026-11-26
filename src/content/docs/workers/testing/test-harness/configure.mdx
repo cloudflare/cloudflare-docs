@@ -4,7 +4,7 @@ pcx_content_type: configuration
 sidebar:
   order: 2
 head: []
-description: Configure Workers, test values, and lifecycle options for createTestHarness.
+description: Configure Workers, test values, and lifecycle options for the test harness.
 products:
   - workers
 ---
@@ -16,7 +16,7 @@ import {
 	TypeScriptExample,
 } from "~/components";
 
-`createTestHarness()` runs one or more Workers in a single local server.
+The test harness runs one or more Workers in a single local server.
 
 ## Configure Worker projects
 
@@ -64,7 +64,7 @@ Point each entry in the `workers` array to a project directory that contains Bui
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [{ projectDir: "./workers/web" }, { projectDir: "./workers/api" }],
 });
 ```
@@ -76,7 +76,7 @@ A project's Build Output can contain more than one Worker. The test harness runs
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [
 		{ projectDir: "./" },
 		// Another Worker from the same build
@@ -154,10 +154,10 @@ Use `envOverrides` to replace a Worker's variables and secrets with test values,
 <TypeScriptExample>
 
 ```ts
-import { createTestHarness } from "@cloudflare/test-harness";
+import { createTestServer } from "@cloudflare/test-server";
 import { bindings } from "cf/config";
 
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [
 		{
 			projectDir: "./",
@@ -181,7 +181,7 @@ A secret without an override reads its local value from the project's `.dev.vars
 
 ## Configure the harness after setup
 
-If part of the Worker configuration depends on the test setup, you can call `createTestHarness()` without options and configure the harness with `server.update()` before starting the server.
+If part of the Worker configuration depends on the test setup, you can create the test harness without options and configure it with `server.update()` before starting the server.
 
 <CliVariants>
 <CliVariant cli="wrangler">
@@ -221,7 +221,7 @@ afterAll(async () => {
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness();
+const server = createTestServer();
 let upstream: { url: string; close(): Promise<void> };
 
 beforeAll(async () => {
@@ -277,7 +277,7 @@ afterEach(async () => {
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [{ projectDir: "./" }],
 });
 
@@ -324,7 +324,7 @@ afterEach(({ task }) => {
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [{ projectDir: "./" }],
 });
 

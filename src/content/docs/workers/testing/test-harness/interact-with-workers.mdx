@@ -4,7 +4,7 @@ pcx_content_type: example
 sidebar:
   order: 4
 head: []
-description: Test routes, dispatch events, control Workflows, and assert logged behavior with createTestHarness.
+description: Test routes, dispatch events, control Workflows, and assert logged behavior with the test harness.
 products:
   - workers
 ---
@@ -45,7 +45,7 @@ const webResponse = await server.fetch("http://example.com/users/123");
 <TypeScriptExample>
 
 ```ts
-const server = createTestHarness({
+const server = createTestServer({
 	workers: [
 		/** Includes `triggers.fetch({ pattern: "example.com/*" })` */
 		{ projectDir: "./workers/web" },

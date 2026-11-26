@@ -4,24 +4,24 @@ pcx_content_type: how-to
 sidebar:
   order: 6
 head: []
-description: Move integration tests from Wrangler's createTestHarness() to @cloudflare/test-harness.
+description: Move integration tests from Wrangler's createTestHarness() to createTestServer() from @cloudflare/test-server.
 products:
   - workers
 ---
 
 import { PackageManagers } from "~/components";
 
-`@cloudflare/test-harness` provides a `createTestHarness()` like Wrangler's, but it runs each Worker from its project's Build Output, which [`cf build`](/cf/projects/#build) writes. Your tests then exercise the build that you deploy.
+`createTestServer()` from `@cloudflare/test-server` works like Wrangler's `createTestHarness()`, but it runs each Worker from its project's Build Output, which [`cf build`](/cf/projects/#build) writes. Your tests then exercise the build that you deploy.
 
 ## Install the package
 
-<PackageManagers pkg="@cloudflare/test-harness" dev />
+<PackageManagers pkg="@cloudflare/test-server" dev />
 
-Import `createTestHarness()` from the new package:
+Import `createTestServer()` from the new package in place of Wrangler's `createTestHarness()`. The `TestHarness` and `TestHarnessOptions` types become `TestServer` and `TestServerOptions`:
 
 ```diff
 - import { createTestHarness } from "wrangler";
-+ import { createTestHarness } from "@cloudflare/test-harness";
++ import { createTestServer } from "@cloudflare/test-server";
 ```
 
 ## Run each project's Build Output
@@ -29,7 +29,8 @@ Import `createTestHarness()` from the new package:
 Build each project with `cf build`. Then replace `configPath` with `projectDir`, the directory that contains the project's Build Output:
 
 ```diff
-const server = createTestHarness({
+- const server = createTestHarness({
++ const server = createTestServer({
 	workers: [
 -		{ configPath: "./workers/web/wrangler.jsonc" },
 -		{ configPath: "./workers/api/wrangler.jsonc" },
@@ -71,7 +72,7 @@ Build once and test the production build. The `env` and `prebuiltWorkerDir` opti
 - **Secrets:** Only secrets that `cloudflare.config.ts` declares with `bindings.secret()` read `.dev.vars` and `.env`. Other keys in those files are ignored and no longer override variables, unlike Wrangler, which binds every key unless `secrets.required` is set. Declare the secret, or set its value with `envOverrides`.
 - **Credentials:** Remote bindings use the same credentials as `cf`. If you have only logged in with Wrangler, run `cf auth login`.
 - **Errors:** An uncaught Worker error is a `500` response from `fetch()`, as in production, instead of a rejected promise.
-- **D1 migrations:** `applyD1Migrations()` takes `dir`, `pattern`, and `table` options, as in `cf d1 migrations apply`, instead of reading the Wrangler configuration.
+- **D1 migrations:** `applyD1Migrations()` takes `dir`, `pattern`, and `table` options, as in `cf d1 migrations apply`, instead of reading the Wrangler configuration. It does not migrate a remote D1 database, so replace one with a local database in `envOverrides`.
 - **Durable Objects and Workflows:** `listDurableObjectIds()`, `evictDurableObject()`, `getDurableObjectStorage()`, `introspectWorkflow()`, and `introspectWorkflowInstance()` take the export name, not a binding name. A Workflow no longer needs a binding to be introspected.
 - **Inline Workers:** An inline Worker takes Miniflare's Worker configuration as `miniflareConfig`, which Miniflare runs as given, instead of an inline Wrangler configuration. Each module's code goes in `manifest`, and each binding takes the value to use, such as `{ type: "text", value }` rather than a secret. Inline Workers do not read `.dev.vars` or `.env`.
 - **Updates:** `update()` can change the number of Workers.
