@@ -1,0 +1,78 @@
+---
+title: Receive SIP webhooks
+description: Verify signed SIP events, answer incoming calls before they time out, and handle duplicate or delayed webhook deliveries.
+pcx_content_type: how-to
+sidebar:
+  label: Webhooks
+  order: 1
+products:
+  - realtime
+---
+
+import { Steps } from "~/components";
+
+Cloudflare sends an HTTPS `POST` to the webhook URL on your SFU SIP configuration. Each event has its own `id`. All events for one call share a `callId`.
+
+| Event                | What your backend does                                                                                                                    |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `sip.incoming_call`  | Look up the destination and send an [accept or reject request](/realtime/sfu/features/sip/api/#control-a-call) while the call is pending. |
+| `sip.call_connected` | Mark the call connected. The SIP provider still needs to acknowledge the answer.                                                          |
+| `sip.call_ended`     | Stop ringing or playing audio and release the caller's resources. This event can arrive even if nobody answered.                          |
+
+An incoming event looks like this. The optional `destination` comes from the dialed SIP URI. An ended event can also include a `reason`.
+
+```json
+{
+	"id": "sip.incoming_call:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+	"type": "sip.incoming_call",
+	"createdAtMs": 1789910400000,
+	"appId": "example-app",
+	"sipConfigId": "0123456789abcdef0123456789abcdef",
+	"callId": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+	"destination": "support"
+}
+```
+
+## Verify and acknowledge an event
+
+<Steps>
+
+1. Read the original request bytes before your framework parses the JSON. Use the app and configuration IDs only to find the stored signing key. Reject an unknown configuration.
+
+2. Verify `Webhook-Signature` against those bytes. The following Node.js function accepts timestamps within five minutes. Pass the headers as a Web API `Headers` object and the raw body as a `Buffer`.
+
+   ```javascript
+   import { createHmac, timingSafeEqual } from "node:crypto";
+
+   function verifySipEvent(headers, rawBody, signingKey) {
+     const id = headers.get("Webhook-Id");
+     const timestamp = headers.get("Webhook-Timestamp");
+     const signature = headers.get("Webhook-Signature");
+     if (!id || !/^\d+$/.test(timestamp ?? "") ||
+         !/^v1=[0-9a-f]{64}$/.test(signature ?? "")) return false;
+
+     const seconds = Number(timestamp);
+     if (!Number.isSafeInteger(seconds) ||
+         Math.abs(Date.now() / 1000 - seconds) > 300) return false;
+
+     const expected = createHmac("sha256", signingKey)
+       .update(`${id}.${timestamp}.`)
+       .update(rawBody)
+       .digest();
+     return timingSafeEqual(expected, Buffer.from(signature.slice(3), "hex"));
+   }
+   ```
+
+   Use the 64-character signing key as UTF-8 text. Hex-decode only the digest in the header. Reserializing JSON changes the signed bytes.
+
+3. Check that `body.id` matches `Webhook-Id`. Validate the event type, app, configuration, and any destination against the routes you serve. Save or queue the event once per event ID. Return `204` for saved events and duplicates. If storage is temporarily unavailable, return `503`.
+
+4. Process the saved event promptly. Use the SFU call API to answer the phone. If events arrive out of order, keep an ended call closed. Read the [current call state](/realtime/sfu/features/sip/api/#control-a-call) if the outcome is unclear.
+
+</Steps>
+
+## Delivery and key rotation
+
+Cloudflare allows five seconds per attempt and up to three attempts within 20 seconds of the event's creation. Network errors, timeouts, HTTP `408`, `429`, and `5xx` can trigger a retry. Redirects stop delivery. Retries preserve the event ID and body and can carry a new timestamp and signature.
+
+Each call keeps the URL and signing key in use when it arrived. When you change or delete a configuration, keep the old receiver and keys available until those calls have ended and their delivery windows have passed. If you rotate a key at the same URL, verify against the retained keys for that configuration.

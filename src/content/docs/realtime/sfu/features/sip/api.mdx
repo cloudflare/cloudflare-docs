@@ -1,0 +1,82 @@
+---
+title: SIP API reference
+description: Look up Realtime SFU SIP configuration and call operations, credential rotation, audio mix limits, and retry behavior.
+pcx_content_type: reference
+sidebar:
+  label: SIP API
+  order: 3
+products:
+  - realtime
+---
+
+Send requests from your backend to `https://rtc.live.cloudflare.com/v1/apps/{appId}/sip`. All paths on this page are relative to that URL. Use the SFU App Secret in `Authorization: Bearer <APP_SECRET>`. Send JSON request bodies with `Content-Type: application/json`.
+
+## Manage a dial-in address
+
+Each configuration has its own SIP URI, digest credentials, and HTTPS webhook. The default limit is 10 configurations per app, including disabled ones.
+
+| Method and path                             | Request and result                                                                                                                                                             |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `POST /configs`                             | Send `name` and `webhook: {url, signingSecret}`. The optional `enabled` defaults to `false`. Save the returned `id`, `version`, `sipUri`, `username`, and one-time `password`. |
+| `GET /configs`                              | Returns `configs`, `configCount`, and `maxConfigsPerApp`. Pass `nextCursor` as `cursor` for the next page. The default page size is 50. Use `limit` to request up to 100.      |
+| `GET /configs/{id}`                         | Read the current version, address, username, and webhook metadata. Reads omit the password and signing key.                                                                    |
+| `PATCH /configs/{id}`                       | Change `name`, `enabled`, or `webhook`. To change the webhook, supply both its HTTPS URL and signing key.                                                                      |
+| `POST /configs/{id}/rotate-credentials`     | Issue a new password. The URI and username stay the same. Save the password from this response.                                                                                |
+| `DELETE /configs/{id}/previous-credentials` | Revoke the previous password immediately during a rotation grace period.                                                                                                       |
+| `DELETE /configs/{id}`                      | Remove the configuration and free its quota slot.                                                                                                                              |
+
+For updates, use the quoted configuration version for the `If-Match` header, for example `If-Match: "1"`. If creation times out, list configurations before creating another. If you find the configuration but lost its password, rotate it.
+
+Rotation invalidates the old password immediately by default. To change providers without interrupting new calls, send a grace period, for example `{"previousSecretTtlSeconds":3600}`. Update the provider during that window. The maximum is seven days. Rotating again replaces the previous password.
+
+Disabling or deleting a configuration stops new calls. Existing calls can finish and still send events to their original webhook. To hang up an existing call, use the terminate operation.
+
+If a configuration request returns `403`, check that the app has SIP access. A `429` with `sip_config_limit_exceeded` means the app has reached its configuration limit. Delete an unused configuration to free a slot.
+
+### Route calls within one configuration
+
+Append an optional destination to the returned address, for example `;destination=support`. Keep the generated username intact. Use one to 256 ASCII letters, digits, or characters from `._~-`. Cloudflare includes the value in the webhook and call state. Check it against the destinations your app serves before selecting a room or audio track.
+
+## Control a call
+
+Use the Cloudflare `callId` from the [signed webhook](/realtime/sfu/features/sip/webhooks/) for every call operation. Your provider's SIP Call-ID and Twilio's Call SID identify different resources.
+
+| Method and path                  | When to use it                                                                                                                                |
+| -------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /calls/{callId}`            | Read `status`, `sipFrom`, `sipTo`, and any `callsIngress` track. An ended call includes its termination details.                              |
+| `POST /calls/{callId}/accept`    | Answer a pending call. Send `{}` for silence or provide `initialMixConfig.inputs`. The response gives you the caller's SFU track.             |
+| `POST /calls/{callId}/reject`    | Decline a pending call, for example with `{"statusCode":486,"reason":"Busy Here"}`. The SIP status code must be an integer from 400 to 699.   |
+| `POST /calls/{callId}/mix`       | Replace the complete set of tracks a connected caller hears.                                                                                  |
+| `POST /calls/{callId}/terminate` | Hang up an accepted or connected call, for example with `{"reason":"agent_hangup"}`. Repeating this on an ended call returns its final state. |
+
+Reject and terminate reasons must be nonempty, single-line strings of up to 256 UTF-8 bytes.
+
+### Call states and timeouts
+
+| `status`                     | Meaning for your app                                                                                                                                          |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `SIP_CALL_STATUS_PENDING`    | The phone is ringing. Send a decision within the default 30-second window. A caller can cancel first.                                                         |
+| `SIP_CALL_STATUS_ACCEPTED`   | Cloudflare has recorded your decision and is setting up the audio.                                                                                            |
+| `SIP_CALL_STATUS_CONNECTED`  | Cloudflare has answered. The provider has up to 32 seconds to acknowledge the SIP answer. A missing acknowledgment can still end the call with `ack_timeout`. |
+| `SIP_CALL_STATUS_TERMINATED` | Stop ringing and release resources. Check `terminatedReason` for details such as `caller_bye` or `pending_timeout`.                                           |
+
+If an accept, reject, or terminate request times out or returns HTTP `503`, read the call state before retrying the same decision. A competing decision or a caller who has already hung up can produce HTTP `409`.
+
+## Change what the caller hears
+
+Use the session ID and track name of each publisher in the same SFU app. Include up to 32 distinct tracks. Each must be a single audio track with no variants, encoded as Opus, PCMA, or PCMU. Exclude the caller's own `callsIngress` track. An empty list sends silence to the caller while the caller's microphone remains available to subscribers.
+
+For a connected call, send the **entire** new list, including tracks you want to keep. For example, to switch the caller to the second agent's microphone, send the following body to `POST /calls/{callId}/mix`.
+
+```json
+{
+	"requestId": "transfer-to-agent-2",
+	"mixConfig": {
+		"inputs": [{ "sessionId": "agent-2-session", "trackName": "microphone" }]
+	}
+}
+```
+
+Make one update at a time per call. Choose a new `requestId` for each change. After a timeout or HTTP `503`, retry with the same ID and input set. Reusing the ID with different inputs returns `400`. Retrying an update that a newer one has replaced returns `409`.
+
+The call state includes `desiredMixConfig` and `desiredMixRevision` as soon as Cloudflare records the request. A successful `POST /mix` confirms that Cloudflare applied that revision. To verify audible media, check that each selected publisher is still sending audio.

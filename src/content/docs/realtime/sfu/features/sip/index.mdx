@@ -1,0 +1,90 @@
+---
+title: Receive SIP calls
+description: Connect a phone or SIP system to Realtime SFU. Answer the call from your backend and exchange audio with a WebRTC client.
+pcx_content_type: how-to
+sidebar:
+  label: SIP dial-in
+  order: 4
+products:
+  - realtime
+---
+
+import { Steps } from "~/components";
+
+A phone caller can talk to a browser user through Realtime SFU. Your voice provider routes the phone number to a Session Initiation Protocol (SIP) address. Cloudflare tells your backend when the phone rings. Your backend decides whether to answer and which audio the caller hears.
+
+If you already have a RealtimeKit meeting, follow [Add phone dial-in to a meeting](/realtime/realtimekit/sip-dial-in/). RealtimeKit answers calls and connects participants for you.
+
+## Before you start
+
+You need an [SFU app and its App Secret](/realtime/sfu/get-started/), a public HTTPS endpoint on your backend, and a SIP provider or phone system that supports digest authentication. To take calls from ordinary phones, get a voice-capable number from your provider.
+
+For a two-way test, [publish a browser microphone](/realtime/sfu/get-started/connection-patterns/#publish-audio-or-video) in the same SFU app. Keep its publisher `sessionId` and `trackName`.
+
+## Set up the dial-in address
+
+<Steps>
+
+1. On your backend, set `APP_ID` and `APP_SECRET` to your SFU credentials. Set `WEBHOOK_URL` to the HTTPS URL that will receive call events. Generate a separate signing key and save it in your secret store. The commands use `openssl`, `jq`, and `curl`.
+
+   ```sh
+   SIP_API="https://rtc.live.cloudflare.com/v1/apps/$APP_ID/sip"
+   export WEBHOOK_URL
+   export SIP_SIGNING_SECRET="$(openssl rand -hex 32)"
+   ```
+
+2. Create a disabled SIP configuration. Run this in a private terminal because the response contains the provider password.
+
+   ```sh
+   jq -n '{
+     name: "Support line",
+     enabled: false,
+     webhook: {url: env.WEBHOOK_URL, signingSecret: env.SIP_SIGNING_SECRET}
+   }' | curl --fail-with-body "$SIP_API/configs" \
+     --header "Authorization: Bearer $APP_SECRET" \
+     --header "Content-Type: application/json" \
+     --data-binary @-
+   ```
+
+   Save the returned `id` as `SIP_CONFIG_ID` and `version` as `SIP_CONFIG_VERSION`. Store the `sipUri`, `username`, and `password` for the provider. Cloudflare returns the password only when you create or rotate it. Associate the signing key with this app and configuration ID on your backend.
+
+3. Set up your [SIP webhook receiver](/realtime/sfu/features/sip/webhooks/). On a verified `sip.incoming_call`, decide whether to accept the call. Use the accept request in the next section for calls you want to connect. A successful webhook response acknowledges delivery. The caller keeps ringing until your backend sends a call decision.
+
+4. Configure your provider to dial the returned SIP URI and authenticate with the returned username and password. For a complete phone-number example, follow [Route a Twilio number to Cloudflare](/realtime/sfu/features/sip/twilio/).
+
+5. Enable the configuration when your receiver and provider are ready.
+
+   ```sh
+   curl --fail-with-body --request PATCH "$SIP_API/configs/$SIP_CONFIG_ID" \
+     --header "Authorization: Bearer $APP_SECRET" \
+     --header "Content-Type: application/json" \
+     --header "If-Match: \"$SIP_CONFIG_VERSION\"" \
+     --data '{"enabled":true}'
+   ```
+
+</Steps>
+
+## Answer and exchange audio
+
+<Steps>
+
+1. Call the provider's phone number. On `sip.incoming_call`, use the event's `callId` as `CALL_ID`. Your backend normally has 30 seconds to accept or reject the call.
+
+2. To let the caller hear the browser, accept with the published microphone as an input. Replace the example session and track names with the actual values.
+
+   ```sh
+   curl --fail-with-body "$SIP_API/calls/$CALL_ID/accept" \
+     --header "Authorization: Bearer $APP_SECRET" \
+     --header "Content-Type: application/json" \
+     --data '{"initialMixConfig":{"inputs":[{"sessionId":"browser-session","trackName":"microphone"}]}}'
+   ```
+
+   To answer before a microphone is available, send `{}`. The caller can speak immediately and hears silence until you [set the return audio mix](/realtime/sfu/features/sip/api/#change-what-the-caller-hears).
+
+3. To let the browser hear the caller, read `callsIngress.sessionId` and `callsIngress.trackName` from the accept response. Give those two values to the browser's authorized subscriber and [subscribe to the remote track](/realtime/sfu/get-started/connection-patterns/#receive-a-published-track). Use the subscriber's own session for the subscription request. If your client filters WebRTC codecs, allow PCMA and PCMU so it can play the caller's G.711 audio.
+
+4. Speak into each device in turn and confirm the other device plays the audio. Hang up the phone. On `sip.call_ended`, stop playback and remove the caller from your app.
+
+</Steps>
+
+Use the [SIP API reference](/realtime/sfu/features/sip/api/) to manage credentials, decline calls, change who the caller hears, or hang up from your app.

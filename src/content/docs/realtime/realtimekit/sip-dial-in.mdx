@@ -1,0 +1,81 @@
+---
+title: Add phone dial-in to a meeting
+description: Let callers join a live RealtimeKit meeting by phone. Enable SIP, connect a voice provider, and test audio with another participant.
+pcx_content_type: how-to
+sidebar:
+  label: SIP dial-in
+  order: 8
+products:
+  - realtime
+---
+
+import { APIRequest, Steps } from "~/components";
+
+A phone caller can join a live RealtimeKit meeting as an audio participant. Your voice provider connects a phone number to the meeting's Session Initiation Protocol (SIP) address. RealtimeKit answers the call, adds the participant, and connects the audio. The caller can use an ordinary phone.
+
+## Enable dial-in
+
+You need a [RealtimeKit app and API token](/realtime/realtimekit/quickstart/) with **Realtime** or **Realtime Admin** permission. Use the meeting API from your backend. A meeting response can contain the SIP password, so keep the response out of browser clients and logs.
+
+<Steps>
+
+1. To create a meeting with dial-in, set `enable_sip` to `true`.
+
+   <APIRequest
+     method="POST"
+     path="/accounts/{account_id}/realtime/kit/{app_id}/meetings"
+     json={{ title: "Support room", enable_sip: true }}
+     roles={false}
+   />
+
+   For an existing meeting, use this update instead. The meeting replacement operation (`PUT`) ignores `enable_sip`.
+
+   <APIRequest
+     method="PATCH"
+     path="/accounts/{account_id}/realtime/kit/{app_id}/meetings/{meeting_id}"
+     json={{ enable_sip: true }}
+     roles={false}
+   />
+
+2. In the response, save the meeting ID and the three fields in `data.sip`. You can also read them with an authenticated `GET` on the meeting. When dial-in is off, the meeting returns `sip: null`.
+
+   | Field | Where it goes |
+   | --- | --- |
+   | `sip_uri` | The destination your provider dials for this meeting |
+   | `username` | The provider's SIP authentication username |
+   | `password` | The provider's SIP authentication password |
+
+3. Configure your voice provider to route a number to this SIP address. For Twilio Programmable Voice, follow [Route a Twilio number to Cloudflare](/realtime/sfu/features/sip/twilio/). Give callers the provider's phone number. RealtimeKit handles the SIP webhooks and SFU tracks for this meeting.
+
+</Steps>
+
+## Test a call
+
+<Steps>
+
+1. Join the meeting from a browser or mobile client using the [RealtimeKit quickstart](/realtime/realtimekit/quickstart/). Turn on the microphone **before dialing**. Creating a meeting reserves the room. A phone caller needs a [live session](/realtime/realtimekit/concepts/session-lifecycle/) to join it.
+2. Call the provider's number from a phone. Look for a new audio participant in the meeting. Its display name comes from the user part of the SIP caller address, often a phone number. The fallback name is `Phone caller`.
+3. Speak in each direction and confirm both participants hear each other. Hang up the phone and confirm the caller leaves. A moderator can also remove the caller or end the session.
+
+</Steps>
+
+## What participants can hear
+
+The phone caller joins with the reserved `sip_preset`, which allows microphone audio and skips the waiting room. Anyone who can call the example Twilio number can reach that live meeting. If you require a PIN or caller screening, configure it at the provider before forwarding the call. Meeting clients receive the caller's audio as a participant track.
+
+When answering, RealtimeKit selects up to 32 unmuted meeting microphone tracks. Screen-share audio is excluded. That selection lasts for the call. If someone joins or publishes a new microphone later, have the phone caller redial to include that microphone.
+
+## Troubleshoot dial-in
+
+| Symptom                                               | What to do                                                                                                                                                                                            |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| The provider receives SIP `480`                       | Have a participant join the meeting, then dial again. The phone caller cannot start a session.                                                                                                        |
+| The meeting hears the caller, but the phone is silent | Make sure a meeting participant has an active microphone, then redial. A call can connect with an empty audio mix.                                                                                    |
+| The call ends after other people leave                | RealtimeKit ends the call after about 60 seconds without another eligible participant. Other phone callers, recording or livestream participants, and people in the waiting room do not keep it open. |
+| The provider repeatedly receives SIP `401`            | Read the current meeting credentials and update the provider. Check that the number points to this meeting's full SIP URI.                                                                            |
+
+## Turn off dial-in
+
+Send `{"enable_sip":false}` with `PATCH` to the same meeting URL. This removes its dial-in configuration. To disconnect a caller already in the meeting, remove that participant. Enabling dial-in again creates a new SIP address and credentials. Update your provider before sharing the number again.
+
+For an application that makes its own accept decisions or changes the audio mix during a call, use [Realtime SFU SIP dial-in](/realtime/sfu/features/sip/).
