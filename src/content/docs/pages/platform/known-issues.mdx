@@ -21,7 +21,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - Uploading a `/functions` directory through the dashboard's Direct Upload option does not work (refer to [Using Functions in Direct Upload](/pages/get-started/direct-upload/#functions)).
 
-- Commits/PRs from forked repositories will not create a preview. Support for this will come in the future.
+- Commits/PRs from forked repositories do not create a preview deployment.
 
 ## Git configuration
 
@@ -31,9 +31,7 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - `*.pages.dev` subdomains currently cannot be changed. If you need to change your `*.pages.dev` subdomain, delete your project and create a new one.
 
-- Hugo builds automatically run an old version. To run the latest version of Hugo (for example, `0.101.0`), you will need to set an environment variable. Set `HUGO_VERSION` to `0.101.0` or the Hugo version of your choice.
-
-- By default, Cloudflare uses Node `12.18.0` in the Pages build environment. If you need to use a newer Node version, refer to the [Build configuration page](/pages/configuration/build-configuration/) for configuration options.
+- Default language and tool versions depend on the project's [build image version](/pages/configuration/build-image/#supported-languages-and-tools). To pin a specific version of Node.js, Hugo, or another tool, set the corresponding environment variable or version file as described in [Override default versions](/pages/configuration/build-image/#override-default-versions).
 
 - For users migrating from Netlify, Cloudflare does not support Netlify's Forms feature. [Pages Functions](/pages/functions/) are available as an equivalent to Netlify's Serverless Functions.
 
@@ -86,7 +84,7 @@ To allow automated clients to reach your Pages project:
 
 ## Enable Access on your `*.pages.dev` domain
 
-If you would like to enable [Cloudflare Access](https://www.cloudflare.com/teams-access/)] for your preview deployments and your `*.pages.dev` domain, you must:
+If you would like to enable [Cloudflare Access](/cloudflare-one/access-controls/policies/) for your preview deployments and your `*.pages.dev` domain, you must:
 
 1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
 

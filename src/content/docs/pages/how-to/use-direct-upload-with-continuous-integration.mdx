@@ -9,7 +9,7 @@ products:
 
 import { DashButton } from "~/components";
 
-Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide will teach you how to deploy your application to Pages, using continuous integration.
+Cloudflare Pages supports directly uploading prebuilt assets, allowing you to use custom build steps for your applications and deploy to Pages with [Wrangler](/workers/wrangler/install-and-update/). This guide explains how to deploy your application to Pages using continuous integration. For CI/CD deployments on Cloudflare Workers, refer to [Workers CI/CD](/workers/ci-cd/) or [Workers Direct Upload](/workers/static-assets/direct-upload/).
 
 ## Deploy with Wrangler
 
@@ -17,7 +17,7 @@ In your project directory, install [Wrangler](/workers/wrangler/install-and-upda
 
 ```sh
 # Publish created project
-$ CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages deploy <DIRECTORY> --project-name=<PROJECT_NAME>
+CLOUDFLARE_ACCOUNT_ID=<ACCOUNT_ID> npx wrangler pages deploy <DIRECTORY> --project-name=<PROJECT_NAME>
 ```
 
 ## Get credentials from Cloudflare
@@ -136,7 +136,7 @@ version: 2.1
 jobs:
   Publish-to-Pages:
     docker:
-      - image: cimg/node:18.7.0
+      - image: cimg/node:22.14
 
     steps:
       - checkout
@@ -151,15 +151,15 @@ workflows:
       - Publish-to-Pages
 ```
 
-Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:18.7.0`. It first checks out the repository with the Node version specified in the image.
+Your continuous integration workflow is broken down into jobs when using CircleCI. From the code block above, you can see that you first define a list of jobs that run on each commit. For example, your repository will run on a prebuilt docker image `cimg/node:22.14`. It first checks out the repository with the Node version specified in the image.
 
 :::note[Note]
 
-Wrangler requires a Node version of at least `16.17.0`. You must upgrade your Node.js version if your version is lower than `16.17.0`.
+Wrangler supports [Current, Active, and Maintenance LTS](https://nodejs.org/en/about/previous-releases) versions of Node.js. Refer to [Install/Update Wrangler](/workers/wrangler/install-and-update/) for current system requirements.
 
 :::
 
-You can modify the Wrangler command with any [`wrangler pages deploy` options](/workers/wrangler/commands/general/#deploy).
+You can modify the Wrangler command with any [`wrangler pages deploy` options](/workers/wrangler/commands/pages/#pages-deploy).
 
 After all the specified steps, define a `workflow` at the end of your file. You can learn more about creating a custom process with CircleCI from the [official documentation](https://circleci.com/docs/2.0/concepts/).
 
@@ -180,7 +180,7 @@ Go to [Travis-ci.com](https://Travis-ci.com) and enable your repository by login
 ```yaml
 language: node_js
 node_js:
-  - "18.0.0" # You can specify more versions of Node you want your CI process to support
+  - "22" # You can specify more versions of Node you want your CI process to support
 branches:
   only:
     - travis-ci-test # Specify what branch you want your CI process to run on
@@ -196,6 +196,6 @@ env:
   - CLOUDFLARE_API_TOKEN: { $CLOUDFLARE_API_TOKEN }
 ```
 
-This will set the Node.js version to 18. You have also set branches you want your continuous integration to run on. Finally, input your `PROJECT NAME` in the script section and your CI process should work as expected.
+This sets the Node.js version to 22 and configures the branch that triggers your continuous integration workflow. Replace `<PROJECT NAME>` with your Pages project name.
 
-You can also modify the Wrangler command with any [`wrangler pages deploy` options](/workers/wrangler/commands/general/#deploy).
+You can also modify the Wrangler command with any [`wrangler pages deploy` options](/workers/wrangler/commands/pages/#pages-deploy).
