@@ -8,7 +8,14 @@ products:
   - d1
 ---
 
-import { TabItem, Tabs, WranglerConfig } from "~/components";
+import {
+	CliVariant,
+	CliVariants,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 <Tabs syncKey="cli">
 <TabItem label="Cloudflare CLI (cf)">
@@ -285,81 +292,86 @@ const { results } = await stmt.run();
 console.log(results);
 ```
 
-### `unstable_dev` (Wrangler only)
+### Integration test harness
 
-Wrangler exposes an [`unstable_dev()`](/workers/wrangler/api/) API that allows you to run a local HTTP server for testing Workers and D1. Run [migrations](/d1/reference/migrations/) against a local database by setting a `preview_database_id` in your Wrangler configuration.
+<CliVariants>
+<CliVariant cli="wrangler">
 
-Given the below Wrangler configuration:
+Use Wrangler's [Integration test harness](/workers/testing/test-harness/) (`createTestHarness()`) to run integration tests against your Worker and a local D1 database from any Node.js test runner such as Vitest.
 
-<WranglerConfig>
+Call `worker.applyD1Migrations("DB")` after starting or resetting storage to apply [D1 migrations](/d1/reference/migrations/) automatically from your configured `migrations_dir` (or `./migrations` by default), then seed test rows through `worker.getEnv()` and send requests with `server.fetch()`:
 
-```jsonc
-{
-	"d1_databases": [
-		{
-			"binding": "DB", // i.e. if you set this to "DB", it will be available in your Worker at `env.DB`
-			"database_name": "your-database", // the name of your D1 database, set when created
-			"database_id": "<UUID>", // The unique ID of your D1 database, returned when you create your database or run `wrangler d1 list`
-			"preview_database_id": "local-test-db" // A user-defined ID for your local test database.
-		}
-	]
-}
-```
-
-</WranglerConfig>
-
-Migrations can be run locally as part of your CI/CD setup by passing the `--local` flag to `wrangler`:
-
-```sh
-wrangler d1 migrations apply your-database --local
-```
-
-### Usage example
-
-The following example shows how to use Wrangler's `unstable_dev()` API to:
-
-- Run migrations against your local test database, as defined by `preview_database_id`.
-- Make a request to an endpoint defined in your Worker. This example uses `/api/users/?limit=2`.
-- Validate the returned results match, including the `Response.status` and the JSON our API returns.
+<TypeScriptExample filename="test/index.test.ts">
 
 ```ts
-import { unstable_dev } from "wrangler";
-import type { UnstableDevWorker } from "wrangler";
+import {
+	afterAll,
+	afterEach,
+	beforeAll,
+	beforeEach,
+	describe,
+	expect,
+	test,
+} from "vitest";
+import { createTestHarness } from "wrangler";
+
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+const worker = server.getWorker<Env>();
 
 describe("Test D1 Worker endpoint", () => {
-	let worker: UnstableDevWorker;
-
 	beforeAll(async () => {
-		// Optional: Run any migrations to set up your `--local` database
-		// By default, this will default to the preview_database_id
-		execSync(`NO_D1_WARNING=true wrangler d1 migrations apply db --local`);
+		await server.listen();
+	});
 
-		worker = await unstable_dev("src/index.ts", {
-			experimental: { disableExperimentalWarning: true },
-		});
+	beforeEach(async () => {
+		await worker.applyD1Migrations("DB");
+		const env = await worker.getEnv();
+		await env.DB.prepare(
+			"INSERT INTO users (user_id, email) VALUES (?, ?), (?, ?)",
+		)
+			.bind(1234, "foo@example.com", 6789, "bar@example.com")
+			.run();
+	});
+
+	afterEach(async () => {
+		await server.reset();
 	});
 
 	afterAll(async () => {
-		await worker.stop();
+		await server.close();
 	});
 
-	it("should return an array of users", async () => {
-		// Our expected results
-		const expectedResults = `{"results": [{"user_id": 1234, "email": "foo@example.com"},{"user_id": 6789, "email": "bar@example.com"}]}`;
-		// Pass an optional URL to fetch to trigger any routing within your Worker
-		const resp = await worker.fetch("/api/users/?limit=2");
-		if (resp) {
-			// https://jestjs.io/docs/expect#tobevalue
-			expect(resp.status).toBe(200);
-			const data = await resp.json();
-			// https://jestjs.io/docs/expect#tomatchobjectobject
-			expect(data).toMatchObject(expectedResults);
-		}
+	test("returns an array of users", async () => {
+		const resp = await server.fetch("/api/users/?limit=2");
+		expect(resp.status).toBe(200);
+		expect(await resp.json()).toEqual({
+			results: [
+				{ user_id: 1234, email: "foo@example.com" },
+				{ user_id: 6789, email: "bar@example.com" },
+			],
+		});
 	});
 });
 ```
 
-Review the [`unstable_dev()`](/workers/wrangler/api/#usage) documentation for more details on how to use the API within your tests.
+</TypeScriptExample>
+
+For more information on configuring the harness, applying migrations, and preparing test state, refer to the [Integration test harness documentation](/workers/testing/test-harness/) and [Prepare test state](/workers/testing/test-harness/prepare-test-state/#apply-d1-migrations).
+
+</CliVariant>
+<CliVariant cli="cf">
+
+:::note
+The [Integration test harness](/workers/testing/test-harness/) (`createTestHarness()`) currently requires a Wrangler configuration and is not yet available for `cloudflare.config.ts` projects in `cf`.
+:::
+
+To test D1 programmatically in a `cf` project, use [Miniflare](#miniflare) directly or the [Vitest integration](/workers/testing/vitest-integration/).
+
+</CliVariant>
+</CliVariants>
 
 ## Related resources
 
