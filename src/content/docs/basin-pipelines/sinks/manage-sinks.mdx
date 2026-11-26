@@ -14,6 +14,7 @@ Learn how to:
 
 - Create and configure sinks for data storage
 - View sink configuration
+- Update sink credentials
 - Delete sinks when no longer needed
 
 ## Create a sink
@@ -63,6 +64,42 @@ To list all sinks in your account, run the `basin pipelines sinks list` command:
 
 <PackageManagers type="exec" pkg="wrangler" args={"basin pipelines sinks list"} />
 
+## Update sink credentials
+
+Replace a sink's credentials when its token expires or is revoked. Pipelines that use the sink keep its earlier credentials until you [update them](/basin-pipelines/pipelines/manage-pipelines/#update-a-pipeline).
+
+### Dashboard
+
+<Steps>
+1. In the Cloudflare dashboard, go to **Basin Pipelines** > **Sinks**.
+
+   <DashButton url="/?to=/:account/pipelines/sinks" />
+2. Select the sink.
+3. In **Destination**, select **Update credentials**.
+4. Select **Create a new API token**, or select **Enter credentials** and enter the credentials of a token you created.
+5. Select **Update credentials**.
+</Steps>
+
+### API
+
+The [API token](/fundamentals/api/get-started/create-token/) for this request must have **Basin Pipelines Edit** permission.
+
+For a Basin Catalog sink, send `token` instead of `credentials`.
+
+```bash wrap
+curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/pipelines/v1/sinks/$SINK_ID" \
+  --request PATCH \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --json '{
+    "config": {
+      "credentials": {
+        "access_key_id": "<ACCESS_KEY_ID>",
+        "secret_access_key": "<SECRET_ACCESS_KEY>"
+      }
+    }
+  }'
+```
+
 ## Delete a sink
 
 ### Dashboard
@@ -72,7 +109,7 @@ To list all sinks in your account, run the `basin pipelines sinks list` command:
 
     2. Select the sink you want to delete.
 
-    3. In the **Settings** tab, go to **General**, and select **Delete**.
+    3. On the sink's page, select **Delete**.
 
 </Steps>
 
@@ -88,5 +125,5 @@ Deleting a sink stops all data writes to that destination.
 
 ## Limitations
 
-- Sinks cannot be modified after creation. To change sink configuration, you must delete and recreate the sink.
+- Only a sink's credentials and, with the API, its rolling policy can be changed after creation. To change anything else, you must delete and recreate the sink.
 - The Basin Catalog Sink does not currently support writing to R2 buckets into a different jurisdiction.
