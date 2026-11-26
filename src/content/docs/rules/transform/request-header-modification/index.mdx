@@ -47,6 +47,8 @@ Through Request Header Transform Rules you can:
 
 You can create a request header transform rule [in the dashboard](/rules/transform/request-header-modification/create-dashboard/), [via API](/rules/transform/request-header-modification/create-api/), or [using Terraform](/terraform/additional-configurations/transform-rules/#create-a-request-header-transform-rule).
 
+With access to the HMAC signing functions, you can [sign requests to private S3 and GCS buckets](/rules/transform/examples/sign-private-storage-requests/). The same rule can generate the signature and the required UTC date header.
+
 <Render
 	file="snippets-alternative"
 	product="rules"

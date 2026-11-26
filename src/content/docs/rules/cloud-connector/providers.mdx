@@ -32,6 +32,8 @@ Additionally, the custom domain must be defined in the same zone where you are c
 
 ## Amazon Web Services - S3
 
+To read a private bucket, use an HTTPS S3 API endpoint and a separate [Request Header Transform Rule for SigV4 signing](/rules/transform/examples/sign-private-storage-requests/). Cloud Connector does not sign requests itself. Website endpoints do not support this authenticated access pattern.
+
 The hostname of your S3 bucket URL must have one of the following formats (where `*` is a wildcard character):
 
 - `*s3.amazonaws.com`
@@ -93,7 +95,7 @@ Cloud Connector supports both subdomain and URI path-style URLs:
 
 </Steps>
 
-If the files in your bucket are not publicly accessible, you must change the bucket permissions. For details, refer to the [Google Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
+For private buckets, use the `<BUCKET_NAME>.storage.googleapis.com` XML API endpoint with a separate [Request Header Transform Rule for GCS V4 signing](/rules/transform/examples/sign-private-storage-requests/). Cloud Connector does not sign requests itself. Without separate authentication, the files must be publicly accessible. For public access configuration, refer to the [Google Cloud Storage documentation](https://cloud.google.com/storage/docs/access-control/making-data-public#buckets).
 
 <Render file="cloud-connector-limit-bucket-to-cloudflare-ips" product="rules" />
 
