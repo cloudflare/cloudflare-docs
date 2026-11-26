@@ -15,21 +15,21 @@ products:
 import { TabItem, Tabs } from "~/components";
 
 :::note
-Remix is no longer recommended for new projects. For new applications, use [React Router](/workers/framework-guides/web-apps/react-router) instead. If you have an existing Remix application, consider [migrating to React Router](https://reactrouter.com/upgrading/remix).
+Remix is no longer recommended for new projects. For new applications, use [React Router](/workers/framework-guides/web-apps/react-router/) on Cloudflare Workers instead. If you have an existing Remix application, consider [migrating to React Router](https://reactrouter.com/upgrading/remix).
 :::
 
 Remix is a full-stack web framework that operates on both client and server. You can query your D1 database(s) from Remix using Remix's [data loading](https://remix.run/docs/en/main/guides/data-loading) API with the [`useLoaderData`](https://remix.run/docs/en/main/hooks/use-loader-data) hook.
 
-To set up a new Remix site on Cloudflare Pages that can query D1:
+To configure a Remix site on Cloudflare that can query D1:
 
-1. **Refer to [the Remix guide](/pages/framework-guides/deploy-a-remix-site/)**.
-2. Bind a D1 database to your [Pages Function](/pages/functions/bindings/#d1-databases).
-3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what call in your code, and `DATABASE_ID` should match the `database_id` defined in your [Wrangler configuration file](/workers/wrangler/configuration/): for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
+1. **For new projects, follow the [React Router Workers guide](/workers/framework-guides/web-apps/react-router/)**.
+2. Configure a [D1 database binding](/workers/wrangler/configuration/#d1-databases) in your Wrangler configuration file.
+3. Pass the `--d1 BINDING_NAME=DATABASE_ID` flag to `wrangler dev` when developing locally. `BINDING_NAME` should match what you call in your code, and `DATABASE_ID` should match the `database_id` defined in your [Wrangler configuration file](/workers/wrangler/configuration/): for example, `--d1 DB=xxxx-xxxx-xxxx-xxxx-xxxx`.
 
 The following example shows you how to define a Remix [`loader`](https://remix.run/docs/en/main/route/loader) that has a binding to a D1 database.
 
 - Bindings are passed through on the `context.cloudflare.env` parameter passed to a `LoaderFunction`.
-- If you configured a [binding](/pages/functions/bindings/#d1-databases) named `DB`, then you would access [D1 Workers Binding API](/d1/worker-api/prepared-statements/) methods via `context.cloudflare.env.DB`.
+- If you configured a [D1 binding](/workers/wrangler/configuration/#d1-databases) named `DB`, you access [D1 Workers Binding API](/d1/worker-api/prepared-statements/) methods via `context.cloudflare.env.DB`.
 
 <Tabs> <TabItem label="TypeScript" icon="seti:typescript">
 
