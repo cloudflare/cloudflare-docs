@@ -1,0 +1,13 @@
+---
+title: R2 custom domains no longer replace existing DNS records
+description: Connecting a custom domain now fails with a conflict error if the hostname already has an `A`, `AAAA`, or `CNAME` record that does not point to R2.
+date: 2026-11-18
+---
+
+Connecting a custom domain to an R2 bucket no longer replaces existing `A`, `AAAA`, or `CNAME` records for that hostname. Previously, R2 deleted these records and replaced them with its own `CNAME`.
+
+If the hostname already has a conflicting `A`, `AAAA`, or `CNAME` record, the request now fails with HTTP `409` and error code `10056` (`DNS record for this domain already exists on zone.`). The only exception is a `CNAME` record that already points to the current R2 custom domain target, which R2 still replaces.
+
+If the hostname already serves a website or another service that should stay live, connect the bucket to an unused hostname instead. To move an existing hostname to R2, confirm that the conflicting records are safe to remove and plan for downtime, because the hostname stops resolving until the new custom domain becomes active. Then [delete all conflicting `A`, `AAAA`, and `CNAME` records](/dns/manage-dns-records/how-to/create-dns-records/#delete-dns-records) for that hostname and connect the domain again. Do not remove records for other hostnames. Deleting a DNS record requires DNS edit permission on the zone.
+
+This applies to the dashboard, the [Cloudflare API](/api/resources/r2/subresources/buckets/subresources/domains/subresources/custom/methods/create/), and [Wrangler](/r2/reference/wrangler-commands/#r2-bucket-domain-add). For more information, refer to [Existing DNS records](/r2/buckets/public-buckets/#existing-dns-records).
