@@ -1,5 +1,5 @@
 ---
-title: Migrate from Wrangler
+title: Migrate from createTestHarness()
 pcx_content_type: how-to
 sidebar:
   order: 6
@@ -12,6 +12,8 @@ products:
 import { PackageManagers } from "~/components";
 
 `createTestServer()` from `@cloudflare/test-server` works like Wrangler's `createTestHarness()`, but it runs each Worker from its project's Build Output, which [`cf build`](/cf/projects/#build) writes. Your tests then exercise the build that you deploy.
+
+This guide covers the tests. If your project still builds with Wrangler, first move it to `cf` with [Migrate a Wrangler project](/cf/wrangler/migrate/).
 
 The first three sections change how the test server starts, so every test suite needs them. The rest apply if your tests use the features they describe.
 
