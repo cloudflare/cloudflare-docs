@@ -8,7 +8,7 @@ name: "Bind AsyncLocalStorage snapshots to the request"
 sort_date: "2025-06-16"
 enable_date: "2025-06-16"
 enable_flag: "bind_asynclocalstorage_snapshot_to_request"
-disable_flag: "do_not_bind_asynclocalstorage_snapshot_to"
+disable_flag: "do_not_bind_asynclocalstorage_snapshot_to-request"
 ---
 
 The AsyncLocalStorage frame can capture values that are bound to the
@@ -19,4 +19,4 @@ flag is set, the runtime binds the snapshot / bound functions to the current
 request context and will throw an error if the bound functions are called
 outside of the request in which they were created.
 
-The `do_not_bind_asynclocalstorage_snapshot_to` flag disables this behavior.
+The `do_not_bind_asynclocalstorage_snapshot_to-request` flag disables this behavior.
