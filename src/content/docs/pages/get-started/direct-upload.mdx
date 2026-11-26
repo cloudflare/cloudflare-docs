@@ -4,14 +4,15 @@ title: Direct Upload
 head:
   - tag: title
     content: Direct Upload
-description: Upload your prebuilt assets to Pages and deploy them via the
-  Wrangler CLI or the Cloudflare dashboard.
+description: Upload prebuilt assets to Cloudflare Pages using Wrangler or drag and drop. For new static asset deployments, use Workers Static Assets.
 products:
   - pages
 
 ---
 
 import { Render, DashButton } from "~/components";
+
+For new static sites and CLI deployments, use [Workers Static Assets](/workers/static-assets/get-started/) to deploy with `wrangler deploy` or [Direct Upload for Workers](/workers/static-assets/direct-upload/).
 
 Direct Upload enables you to upload your prebuilt assets to Pages and deploy them to the Cloudflare global network. You should choose Direct Upload over Git integration if you want to [integrate your own build platform](/pages/how-to/use-direct-upload-with-continuous-integration/) or upload from your local computer.
 
@@ -34,7 +35,7 @@ After you have your prebuilt assets ready, there are two ways to begin uploading
 
 :::note
 
-Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. For existing Git-integrated projects, you can manually create deployments using [`wrangler deploy`](/workers/wrangler/commands/general/#deploy). However, you cannot use drag and drop on the dashboard with existing Git-integrated projects.
+Within a Direct Upload project, you can switch between creating deployments with either Wrangler or drag and drop. For existing Git-integrated projects, you can manually create deployments using [`wrangler pages deploy`](/workers/wrangler/commands/pages/#pages-deploy). However, you cannot use drag and drop on the dashboard with existing Git-integrated projects.
 
 :::
 
@@ -65,7 +66,7 @@ Subsequent deployments will reuse both of these values (saved in your `node_modu
 
 #### Deploy your assets
 
-From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/general/#deploy) command:
+From here, you have created an empty project and can now deploy your assets for your first deployment and for all subsequent deployments in your production environment. To do this, run the [`wrangler pages deploy`](/workers/wrangler/commands/pages/#pages-deploy) command:
 
 ```sh
 npx wrangler pages deploy <BUILD_OUTPUT_DIRECTORY>
