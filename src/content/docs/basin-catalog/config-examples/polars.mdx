@@ -1,0 +1,57 @@
+---
+title: Polars
+description: Connect Polars to Basin Catalog to read, transform, and write Iceberg tables in Python.
+pcx_content_type: example
+reviewed: 2026-11-25
+products:
+  - basin-catalog
+---
+
+The following example uses [Polars](https://pola.rs/) to create, read, and query an Iceberg table in Basin Catalog. For more information on Polars and Iceberg, refer to the [Polars documentation](https://docs.pola.rs/api/python/stable/reference/api/polars.scan_iceberg.html).
+
+## Prerequisites
+
+- Sign up for a [Cloudflare account](https://dash.cloudflare.com/sign-up/workers-and-pages).
+- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable the data catalog](/basin-catalog/manage-catalogs/#enable-basin-catalog-on-a-bucket).
+- [Create an R2 bucket](/r2/buckets/create-buckets/) and [enable Basin Catalog](/basin-catalog/manage-catalogs/#enable-basin-catalog-on-a-bucket) on it.
+- Install [Polars](https://docs.pola.rs/user-guide/installation/) 2.2.0 or later with the `iceberg` extra: `pip install 'polars[iceberg]'`.
+
+## Example usage
+
+```py
+import polars as pl
+from pyiceberg.catalog.rest import RestCatalog
+
+# Connect to Basin Catalog (replace the placeholders)
+catalog = RestCatalog(
+    name="my_catalog",
+    warehouse="<WAREHOUSE>",
+    uri="<CATALOG_URI>",
+    token="<TOKEN>",
+)
+
+# Create an Iceberg table (and the namespace) from a Polars DataFrame
+df = pl.DataFrame({
+    "id": [1, 2, 3],
+    "name": ["Alice", "Bob", "Charlie"],
+})
+df.lazy().sink_iceberg(
+    "default.my_table",
+    catalog=catalog,
+    mode="append",
+    create_if_not_exists=True,
+    create_namespace_if_not_exists=True,
+)
+
+# Read the table back lazily and filter it
+print(
+    pl.scan_iceberg("default.my_table", catalog=catalog)
+    .filter(pl.col("id") > 1)
+    .collect()
+)
+
+# Or query it with SQL
+ctx = pl.SQLContext()
+ctx.register_catalog("my_catalog", catalog, default_namespace="default", default=True)
+print(ctx.execute("SELECT name FROM my_table WHERE id = 2").collect())
+```
