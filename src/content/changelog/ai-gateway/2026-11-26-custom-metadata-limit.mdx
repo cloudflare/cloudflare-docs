@@ -1,0 +1,17 @@
+---
+title: Send up to 10 custom metadata entries per request
+description: AI Gateway now saves up to 10 custom metadata entries per request, and metadata it adds, such as cf.user_id, no longer counts toward the limit.
+date: 2026-11-26
+---
+
+AI Gateway now saves up to 10 [custom metadata](/ai-gateway/observability/custom-metadata/) entries per request, up from five. You can use the extra entries in log filtering, spend limits and dynamic routing conditions.
+
+Metadata that AI Gateway adds, such as the Access user ID [`cf.user_id`](/ai-gateway/observability/custom-metadata/#reserved-metadata), no longer counts toward the limit and no longer replaces your last entry.
+
+Custom metadata can be up to 12,288 bytes (12 KB) per request. If it is larger, AI Gateway removes entries from the end until the rest fit.
+
+```bash
+--header 'cf-aig-metadata: {"team": "AI", "user": 12345, "project": "chat", "cost_center": "cc-42", "env": "prod", "region": "us", "tier": "pro"}'
+```
+
+For details, refer to [Custom metadata](/ai-gateway/observability/custom-metadata/).
