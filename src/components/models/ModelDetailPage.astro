@@ -80,6 +80,11 @@ const isClef = [
 	"@cf/cloudflare/clef-omni",
 ].includes(model.name);
 
+const isDecisionModel =
+	isClef ||
+	model.name === "typesafe/jev" ||
+	model.name === "typesafe/jev-1.14.0";
+
 // Clairic extraction models take typed fields, not chat messages.
 const isClairic =
 	model.name === "@cf/cloudflare/clairic" ||
@@ -369,6 +374,13 @@ const headings: MarkdownHeading[] = [
 	</div>
 
 	<p>{description}</p>
+
+	{isDecisionModel && (
+		<p>
+			Learn how question types, probabilities, and confidence work in{" "}
+			<a href="/workers-ai/concepts/decision-models/">Decision models</a>.
+		</p>
+	)}
 
 	{banner && (
 		<Aside type={bannerAsideType(banner.severity)}>
