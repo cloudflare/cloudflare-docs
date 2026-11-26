@@ -95,6 +95,10 @@ To target a different local state directory from `cf d1` commands, pass `--persi
 cf d1 migrations apply <DATABASE_ID> --local --persist-to ./tmp-state
 ```
 
+## Full-stack apps and static assets
+
+With `cf`, build full-stack and static-asset applications on [Cloudflare Workers with Static Assets](/workers/static-assets/) rather than Cloudflare Pages. Everything you can build on Cloudflare Pages is supported on Workers, with full local development support for D1 via `bindings.d1()` in `cloudflare.config.ts` and `cf dev`. To move an existing Pages project to Workers, refer to [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/).
+
 </TabItem>
 <TabItem label="Wrangler">
 
@@ -179,12 +183,9 @@ Use `wrangler dev --persist-to=/path/to/file` to persist data to a specific loca
 
 Users of wrangler `2.x` must use the `--persist` flag: previous versions of wrangler did not persist data by default.
 
-</TabItem>
-</Tabs>
-
 ## Develop locally with Pages
 
-Cloudflare Pages projects use [Wrangler](/workers/wrangler/install-and-update/) for local development. You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal [Wrangler configuration file](/workers/wrangler/configuration/) in the root of your Pages project. This can be useful when creating schemas, seeding data, or otherwise managing a D1 database directly, without adding to your application logic.
+You can only develop against a _local_ D1 database when using [Cloudflare Pages](/pages/) by creating a minimal [Wrangler configuration file](/workers/wrangler/configuration/) in the root of your Pages project. This can be useful when creating schemas, seeding data, or otherwise managing a D1 database directly, without adding to your application logic.
 
 :::caution[Local development for remote databases]
 
@@ -219,6 +220,9 @@ wrangler d1 execute YOUR_DATABASE_NAME \
 ```
 
 The preceding command executes queries against the **local-only** version of your D1 database.
+
+</TabItem>
+</Tabs>
 
 ## Test programmatically
 
