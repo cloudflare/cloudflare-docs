@@ -8,7 +8,7 @@ products:
   - pages
 ---
 
-import { DirectoryListing, Render } from "~/components";
+import { DirectoryListing } from "~/components";
 
 Cloudflare maintains a number of official Pages Plugins for you to use in your Pages projects:
 
@@ -157,7 +157,7 @@ export default function (args: PluginArgs): PagesFunction;
 
 ### 3. Test your Pages Plugin
 
-We are still working on creating a great testing experience for Pages Plugins authors. Please be patient with us until all those pieces come together. In the meantime, you can create an example project and include your Plugin manually for testing.
+To test a Pages Plugin locally, create an example Pages project, mount your Plugin, and run it with `wrangler pages dev`.
 
 ### 4. Publish your Pages Plugin
 
