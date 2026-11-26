@@ -52,13 +52,14 @@ cf dev
 
 `cf dev` starts your project's local development server and prints its local URL (by default `http://localhost:5173/` in Vite projects).
 
-`cf dev` separates local and remote (production) data by default. To connect a local development session to your remote D1 database instead, set `dev: { remote: true }` on the binding:
+`cf dev` separates local and remote (production) data by default. To connect a local development session to your remote D1 database instead, set `dev: { remote: true }` on the binding. Because `cloudflare.config.ts` is TypeScript, you can also enable remote access conditionally based on an environment variable (such as `NODE_ENV`) or [config mode](/cf/projects/cloudflare-config/#evaluate-configuration):
 
 ```ts title="cloudflare.config.ts"
 DB: bindings.d1({
 	id: "<DATABASE_ID>",
 	name: "test-db",
-	dev: { remote: true },
+	// Set to `true` directly, or toggle conditionally by environment:
+	dev: { remote: process.env.NODE_ENV === "staging" },
 }),
 ```
 
