@@ -1,0 +1,169 @@
+---
+summary: Query your D1 database from a vinext (Next.js) application on Cloudflare Workers.
+tags:
+  - vinext
+  - Next.js
+pcx_content_type: example
+title: Query D1 from vinext
+sidebar:
+  order: 2
+description: Query a D1 database from React Server Components and Route Handlers in a vinext application on Cloudflare Workers.
+reviewed: 2026-11-26
+products:
+  - d1
+---
+
+import { PackageManagers, TabItem, Tabs } from "~/components";
+
+[vinext](/workers/framework-guides/web-apps/nextjs/) runs Next.js applications on Vite and Cloudflare Workers. Because `@cloudflare/vite-plugin` runs the server environment inside the Workers runtime, you can import `env` directly from `cloudflare:workers` to query a D1 database from React Server Components, Route Handlers, and Server Actions — without `getPlatformProxy()` or a custom Worker entrypoint.
+
+## 1. Create or initialize a vinext project
+
+Create a new Cloudflare Workers-ready vinext application:
+
+<PackageManagers type="create" pkg="vinext-app@latest" args="my-d1-app" />
+
+Or add vinext to an existing Next.js project:
+
+<PackageManagers type="dlx" pkg="vinext" args="init" />
+
+Both commands configure `vite.config.ts` and `cloudflare.config.ts` for Cloudflare Workers and the Cloudflare CLI (`cf`).
+
+## 2. Create and bind a D1 database
+
+Create a D1 database (note the `uuid` returned in the JSON output):
+
+```sh
+cf d1 create --name my-db
+```
+
+Add the `DB` binding under `worker.env` in `cloudflare.config.ts`:
+
+```ts title="cloudflare.config.ts"
+import { bindings, defineConfig } from "cf/config";
+// ...existing imports
+
+export default defineConfig({
+	worker: {
+		// ...existing worker configuration
+		env: {
+			// ...existing bindings
+			DB: bindings.d1({
+				id: "<DATABASE_ID>",
+				name: "my-db",
+			}),
+		},
+	},
+});
+```
+
+:::note
+`id` is optional in `bindings.d1()` if you prefer `cf deploy` to provision the database automatically. Provide `id` explicitly when targeting an existing database or running `cf d1` CLI commands against it.
+:::
+
+Binding types are generated automatically in `.cloudflare/types` during development and builds. Make sure `.cloudflare/types` is included in `tsconfig.json`, and run `cf workers types` before running a standalone type-check.
+
+## 3. Create a table and seed local data
+
+Create a `users` table and insert a sample row in your local development database:
+
+```sh
+cf d1 raw <DATABASE_ID> --sql "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, email TEXT NOT NULL); INSERT INTO users (name, email) VALUES ('Ada Lovelace', 'ada@example.com');" --local
+```
+
+Before deploying, apply your schema to your remote database using `cf d1 query <DATABASE_ID> --sql "..."` (without `--local`) or [D1 migrations](/d1/reference/migrations/).
+
+## 4. Query D1 from your application
+
+Import `env` from `cloudflare:workers` and call the [D1 Workers Binding API](/d1/worker-api/prepared-statements/) directly from a React Server Component or a Route Handler:
+
+<Tabs>
+<TabItem label="Server Component">
+
+```tsx title="app/page.tsx"
+import { env } from "cloudflare:workers";
+
+interface User {
+	id: number;
+	name: string;
+	email: string;
+}
+
+export default async function UsersPage() {
+	const { results } = await env.DB.prepare(
+		"SELECT id, name, email FROM users LIMIT 10",
+	).all<User>();
+
+	return (
+		<main>
+			<h1>Users</h1>
+			<ul>
+				{results.map((user) => (
+					<li key={user.id}>
+						{user.name} ({user.email})
+					</li>
+				))}
+			</ul>
+		</main>
+	);
+}
+```
+
+</TabItem>
+<TabItem label="Route Handler">
+
+```ts title="app/api/users/route.ts"
+import { env } from "cloudflare:workers";
+import { NextResponse } from "next/server";
+
+export async function GET() {
+	try {
+		const { results } = await env.DB.prepare(
+			"SELECT id, name, email FROM users LIMIT 10",
+		).all();
+		return NextResponse.json({ users: results });
+	} catch {
+		return NextResponse.json(
+			{ error: "Failed to fetch users" },
+			{ status: 500 },
+		);
+	}
+}
+
+export async function POST(request: Request) {
+	const { name, email } = (await request.json()) as {
+		name: string;
+		email: string;
+	};
+
+	const result = await env.DB.prepare(
+		"INSERT INTO users (name, email) VALUES (?, ?)",
+	)
+		.bind(name, email)
+		.run();
+
+	return NextResponse.json(
+		{ id: result.meta.last_row_id, name, email },
+		{ status: 201 },
+	);
+}
+```
+
+</TabItem>
+</Tabs>
+
+## 5. Develop and deploy
+
+Start the local development server (use `dev:vinext` if you added vinext to an existing Next.js project):
+
+<PackageManagers type="run" args="dev" />
+
+Deploy your application to Cloudflare Workers:
+
+<PackageManagers type="dlx" pkg="@vinext/cloudflare" args="deploy" />
+
+## Related resources
+
+- [Next.js with vinext on Cloudflare Workers](/workers/framework-guides/web-apps/nextjs/)
+- [D1 Workers Binding API](/d1/worker-api/prepared-statements/)
+- [D1 migrations](/d1/reference/migrations/)
