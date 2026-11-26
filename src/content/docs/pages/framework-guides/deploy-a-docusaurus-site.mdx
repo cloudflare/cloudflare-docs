@@ -1,55 +1,13 @@
 ---
-pcx_content_type: how-to
+pcx_content_type: navigation
 title: Docusaurus
-description: Deploy a Docusaurus documentation site to Cloudflare Pages.
+description: Deploy a Docusaurus documentation site to Cloudflare Workers with Workers Static Assets.
 products:
   - pages
 ---
 
-import { PagesBuildPreset, Render, PackageManagers } from "~/components";
+[Docusaurus](https://docusaurus.io/) is a static site generator built with React for documentation and content websites.
 
-[Docusaurus](https://docusaurus.io) is a static site generator. It builds a single-page application with fast client-side navigation, leveraging the full power of React to make your site interactive. It provides out-of-the-box documentation features but can be used to create any kind of site such as a personal website, a product site, a blog, or marketing landing pages.
+To deploy a Docusaurus site to Cloudflare, refer to the [Docusaurus Workers guide](/workers/framework-guides/web-apps/more-web-frameworks/docusaurus/).
 
-## Set up a new project
-
-Use the [`create-cloudflare`](https://www.npmjs.com/package/create-cloudflare) CLI (C3) to set up your project. C3 will create a new project directory, initiate Docusaurus' official setup tool, and provide the option to deploy instantly.
-
-To use `create-cloudflare` to create a new Docusaurus project, run the following command:
-
-<PackageManagers
-	type="create"
-	pkg="cloudflare@latest"
-	args="my-docusaurus-app --framework=docusaurus --platform=pages"
-/>
-
-`create-cloudflare` will install additional dependencies, including the [Wrangler](/workers/wrangler/install-and-update/#check-your-wrangler-version) CLI and any necessary adapters, and ask you setup questions.
-
-<Render file="tutorials-before-you-start" product="pages" />
-
-<Render file="framework-guides/create-github-repository" product="pages" />
-
-## Deploy with Cloudflare Pages
-
-<Render file="deploy-via-c3" params={{ name: "Docusaurus" }} product="pages" />
-
-### Deploy via the Cloudflare dashboard
-
-<Render
-	file="deploy-to-pages-steps-with-preset"
-	product="pages"
-	params={{ name: "Docusaurus" }}
-/>
-
-<PagesBuildPreset framework="docusaurus" />
-
-After deploying your site, you will receive a unique subdomain for your project on `*.pages.dev`.
-
-Every time you commit new code to your Docusaurus site and push those changes to GitHub, Cloudflare Pages will automatically rebuild your project and deploy it. You will also get access to [preview deployments](/pages/configuration/preview-deployments/) on new pull requests and be able to preview how changes look to your site before deploying them to production.
-
-For the complete guide to deploying your first site to Cloudflare Pages, refer to the [Get started guide](/pages/get-started/).
-
-<Render
-	file="framework-guides/learn-more"
-	product="pages"
-	params={{ one: "Docusaurus" }}
-/>
+If you maintain an existing Docusaurus project on Cloudflare Pages, refer to [Framework presets](/pages/configuration/build-configuration/#framework-presets) for build settings, or follow the [Pages to Workers migration guide](/workers/static-assets/migration-guides/migrate-from-pages/) to move to Workers.
