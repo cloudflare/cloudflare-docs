@@ -41,10 +41,12 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 - Your [Internet Routing Registry (IRR)](/byoip/concepts/irr-entries/) records must contain:
   - A `route` or `route6` object that exactly matches each prefix you want to onboard.
   - An `origin` that matches the ASN Cloudflare will use to advertise the prefix.
+  - An editable `aut-num` object for your ASN, if you use your own ASN.
 - Your [Route Origin Authorizations (ROAs)](/byoip/concepts/route-filtering-rpki/) must be accurate. You must verify them with [Cloudflare's RPKI Portal](https://rpki.cloudflare.com/?view=validator) and a second source such as [Routinator](https://rpki-validator.ripe.net/ui/).
+- If your ASN has a published [Autonomous System Provider Authorization (ASPA)](/byoip/concepts/route-filtering-rpki/), its provider list must include AS13335. You do not need to publish an ASPA to onboard a prefix.
 - You must have your Cloudflare account ID and an API token with the permissions required by each operation in this guide. If you are unfamiliar with the Cloudflare API, refer to [Cloudflare API fundamentals](/fundamentals/api/).
 
-<Render file="cloudflare-asn-callout" product="byoip" />
+Self-service onboarding with your own ASN supports ASNs registered with AFRINIC, APNIC, ARIN, or RIPE. For a LACNIC-registered ASN, contact your account team. This ASN requirement is separate from the supported prefix registries.
 
 ## 1. Add and validate your prefix
 
@@ -53,6 +55,8 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 <Steps>
 
 1. Use the [Add Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/create/) to add the prefix to the Cloudflare account that will own it.
+
+   Set `asn` to `13335` to use Cloudflare's ASN. To use your own ASN, enter its number without the `AS` prefix. Your IRR route and ROA must authorize the selected ASN.
 
    ```bash
    curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" --json '{"cidr":"203.0.113.0/24","asn":13335,"delegate_loa_creation":true}'
@@ -86,6 +90,19 @@ You must meet all of the following requirements. Cloudflare cannot onboard your 
 2. Save the prefix `id` and `ownership_validation_token` from the response. You will use them in later steps.
 
 </Steps>
+
+When you use your own ASN, the same response's `result` object can also include the following fields:
+
+```json title="Additional fields in result"
+{
+  "asn_ownership_validation_state": "pending",
+  "aspa_validation_state": "pending"
+}
+```
+
+`asn_ownership_validation_state` is omitted when ASN ownership validation does not apply, such as when you use AS13335. Its initial state can be `valid` if the same account previously verified the ASN.
+
+When `aspa_validation_state` is present, its value is `pending`, `valid`, or `invalid`. If the field is omitted, no ASPA validation result is available. Omission does not indicate successful validation or confirm that no ASPA exists. For more information, refer to [Prefix validation checks](/byoip/troubleshooting/prefix-validation/).
 
 :::note[Letter of Agency]
 This guide uses automated <GlossaryTooltip term="letter of agency" link="/byoip/concepts/loa/">Letter of Agency (LOA)</GlossaryTooltip> generation. If you set `delegate_loa_creation` to `false`, you must upload the LOA manually, [update the prefix](/api/resources/addressing/subresources/prefixes/methods/edit/) after it is approved, and contact your account team. Manual LOA processing can increase onboarding time.
@@ -146,15 +163,31 @@ Prove ownership by adding the validation token to either your IRR record or reve
 </TabItem>
 </Tabs>
 
-After publishing the validation token, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to trigger the prefix validation checks:
+### Validate ASN ownership
+
+If `asn_ownership_validation_state` is present and is not `valid`, add `cf-validation: <OWNERSHIP_VALIDATION_TOKEN>` to an editable field in your ASN's `aut-num` object. Use the same `ownership_validation_token` returned when you added the prefix. Reverse DNS can prove prefix ownership, but it does not replace the `aut-num` check for ASN ownership.
+
+Cloudflare verifies ASN ownership once per Cloudflare account and ASN. If `asn_ownership_validation_state` is already `valid`, you do not need to update the `aut-num` object.
+
+### Check ASPA authorization
+
+If you publish an ASPA for your ASN, use your RIR's RPKI tooling to confirm its provider list includes AS13335. You can keep other authorized providers. Publishing an ASPA is optional.
+
+### Queue validation
+
+After publishing the required ownership tokens and updating any ASPA, use the [Validate Prefix endpoint](/api/resources/addressing/subresources/prefixes/methods/validate/) to queue validation:
 
 ```bash
 curl "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/addressing/prefixes/$PREFIX_ID/validate" --request POST --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN"
 ```
 
-Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to monitor validation. When the IRR, RPKI, and ownership checks pass, the `approved` field for the prefix returns `"V"`. You can then remove the ownership validation token and proceed to create service bindings.
+Checks run asynchronously. Use the [Prefix Details endpoint](/api/resources/addressing/subresources/prefixes/methods/get/) to monitor the results. You do not need to submit repeated validation requests while checks are pending.
 
-If validation fails, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/), correct the reported issues, and trigger validation again.
+When all applicable checks pass, the `approved` field returns `"V"`. Checks include IRR, RPKI, prefix ownership, and, when applicable, ASN ownership and ASPA authorization.
+
+After prefix ownership and any required ASN ownership checks return `valid`, you can remove the token from the IRR, reverse DNS, and `aut-num` records where you added it. Approval allows you to create service bindings. It does not advertise the prefix or activate traffic.
+
+If validation fails, refer to [Troubleshoot prefix validation](/byoip/troubleshooting/prefix-validation/), correct the reported issues, and queue validation again.
 
 ### Optional: Delegate the prefix
 
