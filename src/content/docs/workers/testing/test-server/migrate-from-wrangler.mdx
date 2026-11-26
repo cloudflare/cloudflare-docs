@@ -13,6 +13,8 @@ import { PackageManagers } from "~/components";
 
 `createTestServer()` from `@cloudflare/test-server` works like Wrangler's `createTestHarness()`, but it runs each Worker from its project's Build Output, which [`cf build`](/cf/projects/#build) writes. Your tests then exercise the build that you deploy.
 
+The first three sections change how the test server starts, so every test suite needs them. The rest apply if your tests use the features they describe.
+
 ## Install the package
 
 <PackageManagers pkg="@cloudflare/test-server" dev />
@@ -26,7 +28,7 @@ Import `createTestServer()` from the new package in place of Wrangler's `createT
 
 ## Run each project's Build Output
 
-Build each project with `cf build`. Then replace `configPath` with `projectDir`, the directory that contains the project's Build Output:
+Build each project with `cf build` before the tests run. Then replace `configPath` with `projectDir`, the directory that contains the project's Build Output. A Worker that the same build writes, such as an auxiliary Worker, is selected by its `name`:
 
 ```diff
 - const server = createTestHarness({
@@ -34,15 +36,31 @@ Build each project with `cf build`. Then replace `configPath` with `projectDir`,
 	workers: [
 -		{ configPath: "./workers/web/wrangler.jsonc" },
 -		{ configPath: "./workers/api/wrangler.jsonc" },
+-		{ configPath: "./dist/admin_worker/wrangler.json" },
 +		{ projectDir: "./workers/web" },
 +		{ projectDir: "./workers/api" },
++		{ projectDir: "./workers/api", name: "admin-worker" },
 	],
 });
 ```
 
-List every Worker that the tests use, including other Workers from the same build, which you select with `name`.
+The `env` and `prebuiltWorkerDir` options are gone. To test a [mode](/cf/projects/#modes), build the project in that mode instead:
 
-Build once and test the production build. The `env` and `prebuiltWorkerDir` options are gone. To test a [mode](/cf/projects/#modes), build the project in that mode.
+```diff
+- { configPath: "./wrangler.jsonc", env: "staging" }
++ // After `cf build --mode staging`
++ { projectDir: "./" }
+```
+
+## Log in with `cf` for remote bindings
+
+Remote bindings use the same credentials as `cf`, and a Wrangler login does not carry over. Log in with `cf`, or set `CLOUDFLARE_API_TOKEN` in CI:
+
+```sh
+cf auth login
+```
+
+A Worker whose only remote bindings are remote-only, such as AI, starts without credentials. It needs them only when a test calls one of those bindings.
 
 ## Replace test values with `envOverrides`
 
@@ -67,14 +85,83 @@ Build once and test the production build. The `env` and `prebuiltWorkerDir` opti
 
 `envOverrides` can only replace bindings that the Worker declares. Adding a binding, which Wrangler's `vars` and `secrets` allowed, is an error, and a binding cannot be removed. A replacement must be able to stand in for the binding: a variable or secret takes `bindings.text()` or `bindings.json()`, a Durable Object takes another Durable Object, and any other binding takes one of its own type, such as a local KV namespace for a remote one, or `bindings.worker()` to mock it.
 
+## Declare the secrets that tests read from files
+
+Only secrets that `cloudflare.config.ts` declares read their values from `.dev.vars` and `.env`. Other keys in those files are ignored, and they no longer override variables. Wrangler binds every key unless `secrets.required` is set. Declare each secret the Worker reads, or set its value in `envOverrides`:
+
+```ts title="cloudflare.config.ts"
+env: {
+	API_TOKEN: bindings.secret(),
+},
+```
+
+## Type Worker handles from their configuration
+
+Pass the type of a Worker's `cloudflare.config.ts` module to `getWorker()`, which infers the Worker's environment and exports from it. You no longer need to generate an environment interface for each Worker:
+
+```diff
+- const api = server.getWorker<ApiEnv, typeof import("../workers/api/index")>("api-worker");
++ const api = server.getWorker<typeof import("../workers/api/cloudflare.config")>("api-worker");
+```
+
+Without a config type, a handle's environment and exports are `any`. To type them directly, pass the types to `getEnv<Env>()` and `getExport<Export>()`, where `Export` can be the export's methods, such as `getExport<{ getMessage(): string }>()`.
+
+## Pass export names to Durable Object and Workflow helpers
+
+`listDurableObjectIds()`, `evictDurableObject()`, `getDurableObjectStorage()`, `introspectWorkflow()`, and `introspectWorkflowInstance()` take the name the Worker exports the class as, not a binding name. A Workflow no longer needs a binding to be introspected:
+
+```diff
+- const storage = await worker.getDurableObjectStorage("COUNTER", { name: "user-123" });
++ const storage = await worker.getDurableObjectStorage("Counter", { name: "user-123" });
+
+- await using workflow = await worker.introspectWorkflow("MY_WORKFLOW");
++ await using workflow = await worker.introspectWorkflow("MyWorkflow");
+```
+
+## Pass D1 migration options
+
+Build Output has no migrations configuration, so `applyD1Migrations()` takes the `dir`, `pattern`, and `table` options of `cf d1 migrations apply` instead of reading them from the Wrangler configuration. `dir` defaults to `./migrations` in the project directory:
+
+```diff
+- await worker.applyD1Migrations("DATABASE"); // migrations_dir from wrangler.jsonc
++ await worker.applyD1Migrations("DATABASE", { dir: "./db/migrations" });
+```
+
+It does not migrate a remote D1 database. To test against a local one, replace the binding in `envOverrides`, such as `DATABASE: bindings.d1()`.
+
+## Write inline Workers as Miniflare configuration
+
+An inline Worker takes Miniflare's Worker configuration as `miniflareConfig`, which Miniflare runs as given, instead of an inline Wrangler configuration. Nothing bundles it: each module's JavaScript goes in `manifest`, and each binding takes the value to use, such as `{ type: "text", value }` rather than a secret. Inline Workers do not read `.dev.vars` or `.env`:
+
+```diff
+{
+-	config: {
+-		name: "mock-ai",
+-		main: "./mocks/ai.ts",
+-		compatibility_date: "2026-06-01",
+-	},
++	miniflareConfig: {
++		name: "mock-ai",
++		compatibilityDate: "2026-06-01",
++		manifest: {
++			mainModule: "index.js",
++			modules: { "index.js": { type: "esm", contents: mockAiSource } },
++		},
++	},
+}
+```
+
+## Expect uncaught errors as `500` responses
+
+As in production, an uncaught Worker error is a `500` response from `fetch()`, instead of a rejected promise:
+
+```diff
+- await expect(server.fetch("/boom")).rejects.toThrow();
++ const response = await server.fetch("/boom");
++ expect(response.status).toBe(500);
+```
+
 ## Other changes
 
-- **Secrets:** Only secrets that `cloudflare.config.ts` declares with `bindings.secret()` read `.dev.vars` and `.env`. Other keys in those files are ignored and no longer override variables, unlike Wrangler, which binds every key unless `secrets.required` is set. Declare the secret, or set its value with `envOverrides`.
-- **Credentials:** Remote bindings use the same credentials as `cf`. If you have only logged in with Wrangler, run `cf auth login`.
-- **Errors:** An uncaught Worker error is a `500` response from `fetch()`, as in production, instead of a rejected promise.
-- **D1 migrations:** `applyD1Migrations()` takes `dir`, `pattern`, and `table` options, as in `cf d1 migrations apply`, instead of reading the Wrangler configuration. It does not migrate a remote D1 database, so replace one with a local database in `envOverrides`.
-- **Durable Objects and Workflows:** `listDurableObjectIds()`, `evictDurableObject()`, `getDurableObjectStorage()`, `introspectWorkflow()`, and `introspectWorkflowInstance()` take the export name, not a binding name. A Workflow no longer needs a binding to be introspected.
-- **Inline Workers:** An inline Worker takes Miniflare's Worker configuration as `miniflareConfig`, which Miniflare runs as given, instead of an inline Wrangler configuration. Each module's code goes in `manifest`, and each binding takes the value to use, such as `{ type: "text", value }` rather than a secret. Inline Workers do not read `.dev.vars` or `.env`.
-- **Updates:** `update()` can change the number of Workers.
-- **Types:** `getWorker<typeof import("./cloudflare.config")>()` infers a Worker's types from its configuration. Wrangler's `getWorker<Env, Module>()` becomes `getEnv<Env>()` and `getExport<Export>()`, where `Export` can be the export's methods, such as `getExport<{ getMessage(): string }>()`.
-- **Runtime:** The package is ESM-only, and Bun is not supported.
+- `update()` can change the number of Workers.
+- The package is ESM-only, and Bun is not supported.
