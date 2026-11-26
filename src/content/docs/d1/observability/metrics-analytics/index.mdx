@@ -358,10 +358,12 @@ Each result includes the `databaseId` of the database that ran the query.
 </CliVariant>
 <CliVariant cli="cf">
 
-The [Cloudflare CLI (`cf`)](/cf/) provides two insights commands:
+The [Cloudflare CLI (`cf`)](/cf/) provides `cf d1 insights` commands for database and query analysis:
 
 - `cf d1 insights databases`: Lists the databases in your account with the highest usage in a time window (computed from the same data as D1 billing and the GraphQL Analytics API).
 - `cf d1 insights queries`: Lists the top SQL statements by usage across your account or for a single database (estimated from sampled per-statement data).
+
+For automated index recommendations, refer to [Index recommendations](/d1/observability/metrics-analytics/index-recommendations/).
 
 ```sh
 # Top databases by rows read (defaults to the last 24 hours)
