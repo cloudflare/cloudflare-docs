@@ -41,8 +41,13 @@ To configure Regional Services for hostnames [proxied](/dns/proxy-status/) (mean
 
 ## Customer Metadata Boundary
 
-[Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) are not available outside the US region when using Customer Metadata Boundary.
+[Load Balancing Analytics](/load-balancing/reference/load-balancing-analytics/) are available with Customer Metadata Boundary set to `US` or `EU`. Load balancing request analytics and endpoint health events are stored in, and served from, the region you select.
 
-With Customer Metadata Boundary set to `EU`, **Traffic** > **Load Balancing Analytics** > **Overview and Latency** tab in the zone dashboard will not be populated.
+With Customer Metadata Boundary set to `EU`:
+
+- **Request analytics** are available in the dashboard and the API. **Traffic** > **Load Balancing Analytics** > **Overview** and **Latency** are populated in the zone dashboard, and the [GraphQL Analytics API](/load-balancing/reference/load-balancing-analytics/#graphql-analytics) serves load balancing request datasets from the EU.
+- **Health events** are available in the dashboard and the API. **Traffic** > **Load Balancing Analytics** > **Logs** is populated, and the account-scoped [`lbHealthEvents` and `lbHealthEntitiesGroups`](/load-balancing/reference/load-balancing-analytics/#health-events) GraphQL datasets serve health events from the EU.
+- Refer to [GraphQL datasets](/data-localization/metadata-boundary/graphql-datasets/) for the supported datasets.
+- As with other analytics subject to Customer Metadata Boundary, users outside the EU need [out-of-region access](/data-localization/metadata-boundary/out-of-region-access/) enabled to view these analytics.
 
 Refer to the [Load Balancing documentation](/load-balancing/) for more information.
