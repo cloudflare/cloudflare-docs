@@ -456,30 +456,30 @@ const Answer = defineSignal({
 // In the tool's execute(args, api, context):
 // 1. Check for the answer. After the wake, it is there.
 const answer = await api.readSignal(Answer, "answer", context);
-if (answer !== undefined && "value" in answer) {
+if (answer?.kind === "value") {
 	return { output: [{ type: "text", text: answer.value.text }] };
 }
 // 2. No answer yet: show the question, with the task id to answer it with.
 // showQuestion() is your code, for example a message to the user's client.
 await showQuestion(api.taskId, args.question);
 // 3. Park until a value arrives for the "answer" key.
-return { sleep: { signals: [Answer.key("answer")] } };
+return { kind: "sleep", signals: [Answer.key("answer")] };
 
 // Later, in your agent, with the task id the question was shown with:
 await this.harness.signal(taskId, Answer, "answer", { text: "Yes" });
 ```
 
-The signal key (`"answer"` here) ties the three calls together: `readSignal()`, `Answer.key()` in the tool park, and `harness.signal()` must use the same one. A tool park can also set `until`, a time on Pi's clock such as `api.now()` plus two hours, to stop waiting at a deadline. After the deadline, `readSignal()` returns `{ expired: true }` instead of a value, so handle that case before showing the question again.
+The signal key (`"answer"` here) ties the three calls together: `readSignal()`, `Answer.key()` in the tool park, and `harness.signal()` must use the same one. A tool park can also set `until`, a time on Pi's clock such as `api.now()` plus two hours, to stop waiting at a deadline. After the deadline, `readSignal()` returns `{ kind: "expired" }` instead of a value, so handle that case before showing the question again.
 
 `harness.signal()` returns Pi's result: `delivered`, or `duplicate`, `invalid`, `closed`, or `not_found` when the call did not take the value. It schedules the harness's wake-up job before it hands Pi the value, so if the object dies while the woken call runs, the job's alarm restarts it. Deliver signals through `harness.signal()`, not through `harness.pi()`.
 
-A tool park takes one of two shapes: `{ sleep: { signals, until } }` to wait for a signal, a deadline, or both, or `{ wait: { on, policy } }` to wait for tasks the call owns. Either can also carry a `checkpoint`, which the next run of `execute()` reads as `api.checkpoint`.
+A tool park takes one of two shapes: `{ kind: "sleep", signals, until }` to wait for a signal, a deadline, or both, or `{ kind: "wait", on, policy }` to wait for tasks the call owns. Either can also carry a `checkpoint`, which the next run of `execute()` reads as `api.checkpoint`. A result has no `kind`, so check `kind` to tell a tool park from a result.
 
 - **Cancelling:** a tool can have a `cancel()` function, which Pi runs when a parked call is aborted, for example to cancel the work it was waiting on.
-- **Gates:** a `beforeTool` hook can return `{ sleep: { signals, until } }` to park a call before it runs, for example until a person approves it. Pi runs the hook again on every wake and whenever the harness reopens, so keep it idempotent.
-- **Waiting on nested calls:** start them with `api.executeTool(name, args, context, { key, wait: false })`, park with `{ wait: { on: [taskId], policy: "any" } }`, and read `api.wake.ended` after the wake. For the other policies, refer to [Child Tasks](https://github.com/earendil-works/pi/tree/main/packages/durable#child-tasks).
+- **Gates:** a `beforeTool` hook can return `{ sleep: { signals, until } }` to park a call before it runs, for example until a person approves it. A hook's result nests `signals` and `until` under `sleep`, unlike a tool park. Pi runs the hook again on every wake and whenever the harness reopens, so keep it idempotent.
+- **Waiting on nested calls:** start them with `api.executeTool(name, args, context, { key, wait: false })`, park with `{ kind: "wait", on: [taskId], policy: "any" }`, and read `api.wake.ended` after the wake. For the other policies, refer to [Child Tasks](https://github.com/earendil-works/pi/tree/main/packages/durable#child-tasks).
 - **What a parked call shows:** its slot in `pi.live` is `sleeping` or `waiting`. The operation that made the call stays `running` in `pending()`, and `busy()` is `true`.
-- **Invalid parks:** a tool park that breaks a rule ends the call with an `invalid_park` error. Examples are setting both `sleep` and `wait`, a `sleep` with no `signals` and no `until`, a signal key that already woke the call or expired, and a `wait` on a task the call doesn't own.
+- **Invalid parks:** a tool park that breaks a rule ends the call with an `invalid_park` error. Examples are an object whose `kind` is not `sleep` or `wait`, a `sleep` with no `signals` and no `until`, a signal key that already woke the call or expired, and a `wait` on a task the call does not own.
 
 A tool park is not the `parked` status that `pending()` showed in Agents SDK 0.31.0 and 0.32.0. That status marked a task stopped by Pi's restart limit, and it was removed in 0.33.0.
 
@@ -495,7 +495,7 @@ import { SubmissionSettled } from "@earendil-works/pi-durable";
 
 // Inside a tool's execute({ task }, api, context):
 const state = await api.readSignal(SubmissionSettled, "answered", context);
-if (state !== undefined && "value" in state) {
+if (state?.kind === "value") {
 	const settled = state.value;
 	if (settled.status !== "done" || settled.type === "write") {
 		return {
@@ -533,7 +533,7 @@ await conversation?.submit(
 	},
 	context,
 );
-return { sleep: { signals: [SubmissionSettled.key("answered")] } };
+return { kind: "sleep", signals: [SubmissionSettled.key("answered")] };
 ```
 
 When the child's input settles, Pi delivers the settled record to the call in the same commit, and the tool runs again with it. Because the call owns the child, aborting the parent session stops the child too, and a rerun before the tool park was stored finds the same child instead of creating another. The `requestId` makes a rerun find the same submission. If the task to notify has ended or does not exist, the input still settles as usual. `session.submit()` and `session.continue()` take the same `notify` option, for a child session that your own code created.
