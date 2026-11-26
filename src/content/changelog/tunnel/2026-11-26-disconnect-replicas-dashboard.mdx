@@ -1,0 +1,19 @@
+---
+title: Disconnect Cloudflare Tunnel replicas from the dashboard
+description: Disconnect one or all cloudflared replicas of a tunnel from the dashboard, including right after rotating a compromised tunnel token.
+products:
+  - tunnel
+  - cloudflare-tunnel-sase
+date: 2026-11-26
+---
+
+You can now disconnect [Cloudflare Tunnel](/tunnel/) replicas from the Cloudflare dashboard. Before, this required the API.
+
+On a tunnel's **Overview** tab, the **Replicas** section has two new actions:
+
+- **Disconnect all** disconnects every `cloudflared` replica of the tunnel.
+- The disconnect button in a replica's row disconnects only that replica.
+
+Rotating a tunnel token stops `cloudflared` from opening new connections with the old token, but replicas that are already connected stay active. If your token is compromised, select **Also disconnect existing replicas** when you rotate the token. Cloudflare rotates the token first and then disconnects every replica, so they cannot reconnect with the old token.
+
+For more information, refer to [Rotate a compromised token](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#rotate-a-compromised-token) and [Disconnect replicas](/cloudflare-one/networks/connectors/cloudflare-tunnel/configure-tunnels/remote-tunnel-permissions/#disconnect-replicas).
