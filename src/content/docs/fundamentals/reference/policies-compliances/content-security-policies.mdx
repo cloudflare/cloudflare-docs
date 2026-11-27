@@ -32,7 +32,7 @@ Cloudflare does not:
 If you require the CSP headers to be changed or added, you can change them using some Cloudflare products:
 
 - If your website is [proxied](/dns/proxy-status/) through Cloudflare, you can use a [response header transform rule](/rules/transform/response-header-modification/) to replace or add CSP headers.
-- If your website is hosted using [Cloudflare Pages](/pages/), you can set a [`_headers file`](/pages/configuration/headers/) to modify or add CSP headers.
+- If your website is hosted using [Cloudflare Workers Static Assets](/workers/static-assets/headers/) or [Cloudflare Pages](/pages/configuration/headers/), you can configure a `_headers` file to modify or add CSP headers.
 
 ### Product requirements
 

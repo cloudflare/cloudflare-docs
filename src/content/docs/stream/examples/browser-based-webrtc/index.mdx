@@ -30,7 +30,7 @@ To follow this tutorial, you will need:
 - A modern browser with a camera and microphone.
 - To serve your page over `https` or from `localhost`.
 	- _Why?_ Browsers only allow [`getUserMedia()`](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) in a [secure context](https://developer.mozilla.org/en-US/docs/Web/Security/Secure_Contexts). Opening an HTML file directly with a `file://` URL will _not_ work.
-	- Deploy to Cloudflare [Workers](/workers/) or [Pages](/pages/) to get started quickly, for free.
+	- Deploy to [Cloudflare Workers](/workers/static-assets/) to get started quickly, for free.
 
 ## 1. Create a live input
 
@@ -203,7 +203,7 @@ This applies to both WHIP and WHEP sessions — pass the object returned by `sta
 
 ## 5. Full working example
 
-The following single file combines everything above. Replace the two placeholder URLs with the `webRTC.url` and `webRTCPlayback.url` values from your live input. Then serve the file over `https` (with Workers or Pages) or `localhost` and open it in a browser.
+The following single file combines everything above. Replace the two placeholder URLs with the `webRTC.url` and `webRTCPlayback.url` values from your live input. Then serve the file over `https` (for example, with [Cloudflare Workers](/workers/static-assets/)) or `localhost` and open it in a browser.
 
 ```html title="index.html"
 <!doctype html>
