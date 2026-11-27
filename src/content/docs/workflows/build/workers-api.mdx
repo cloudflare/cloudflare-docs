@@ -9,6 +9,8 @@ products:
 ---
 
 import {
+	CliVariant,
+	CliVariants,
 	MetaInfo,
 	Render,
 	Type,
@@ -305,9 +307,28 @@ Refer to the [step context documentation](/workflows/build/step-context/) for us
 
 ## Workflow step limits
 
-Each workflow on Workers Paid supports 10,000 steps by default. You can increase this up to 25,000 steps by configuring `steps` within the `limits` property of your Workflow definition in your Wrangler configuration:
+Each workflow on Workers Paid supports 10,000 steps by default. You can increase this up to 25,000 steps by configuring `steps` within the `limits` property of your Workflow definition in your configuration file:
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "$today",
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "my-workflow",
+				limits: {
+					steps: 25_000,
+				},
+			}),
+		},
+	},
+});`}
+>
 
 ```toml
 [[workflows]]
@@ -327,9 +348,28 @@ Note that Workflows on Workers Free have a limit of 1,024 steps. Refer to [Workf
 
 ## Workflow concurrency limits
 
-To cap how many instances of a single Workflow run at the same time, configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration:
+To cap how many instances of a single Workflow run at the same time, configure `limit` within the `concurrency` property of your Workflow definition in your configuration file:
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "$today",
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "my-workflow",
+				concurrency: {
+					limit: 10,
+				},
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -352,9 +392,29 @@ Instances above the limit are queued and start automatically as running instance
 
 ## Default instance retention
 
-By default, the state of a finished Workflow instance is retained for 3 days on the Workers Free plan. On the Workers Paid plan, instance state is retained for 7 days by default. Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/) keep their existing 30-day default. To retain instances for a different period, up to your account's [retention limit](/workflows/reference/limits/), configure `default_retention` on the Workflow binding in your Wrangler configuration:
+By default, the state of a finished Workflow instance is retained for 3 days on the Workers Free plan. On the Workers Paid plan, instance state is retained for 7 days by default. Workflows created before the [Workers Paid default changed](/changelog/post/2026-09-10-paid-retention-default/) keep their existing 30-day default. To retain instances for a different period, up to your account's [retention limit](/workflows/reference/limits/), configure `default_retention` in your Wrangler configuration (or `defaultRetention` on `exports.workflow()` in `cloudflare.config.ts`):
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "$today",
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "my-workflow",
+				defaultRetention: {
+					successRetention: "3 days",
+					errorRetention: "7 days",
+				},
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -374,22 +434,25 @@ By default, the state of a finished Workflow instance is retained for 3 days on 
 
 </WranglerConfig>
 
-- `success_retention` applies to instances that complete successfully and to instances that are terminated, and `error_retention` applies to instances that end in an errored state.
+- `success_retention` (`successRetention` in `cloudflare.config.ts`) applies to instances that complete successfully and to instances that are terminated, and `error_retention` (`errorRetention`) applies to instances that end in an errored state.
 - Both fields are optional and accept either a duration string, such as `"3 days"`, or a whole number of milliseconds.
 
-Instance-level retention settings take precedence over Workflow binding settings, which take precedence over the account default. The retention period cannot exceed your account's [retention limit](/workflows/reference/limits/).
+Instance-level retention settings take precedence over Workflow configuration settings, which take precedence over the account default. The retention period cannot exceed your account's [retention limit](/workflows/reference/limits/).
 
 :::note
 
-`default_retention` cannot be combined with `script_name`. If you bind to a Workflow defined in another Worker, set `default_retention` on the Worker that defines the Workflow.
+In Wrangler, `default_retention` cannot be combined with `script_name`. If you bind to a Workflow defined in another Worker, set default retention on the Worker that defines the Workflow.
 
 :::
 
 ## Workflow jurisdiction
 
-To run the instances of a Workflow and store their data only within a region, set `jurisdiction` on the Workflow binding in your Wrangler configuration. Refer to [Data location](/workflows/reference/data-location/).
+To run the instances of a Workflow and store their data only within a region, set `jurisdiction` on your Workflow in your configuration file. Refer to [Data location](/workflows/reference/data-location/).
 
 ## Declare Workflows in `exports`
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 :::note
 Requires Wrangler 4.139.0 or above.
@@ -429,7 +492,44 @@ You can declare the same Workflow as both a binding and an export. Both declarat
 
 A `workflows` binding to a Workflow in another Worker cannot use the same `name` as a Workflow export in this Worker. Workflow names are unique per account.
 
+</CliVariant>
+<CliVariant cli="cf">
+
+In `cloudflare.config.ts`, Workflows defined by a Worker are always declared in `worker.exports` using `exports.workflow()`:
+
+- The Worker that declares the Workflow calls it directly through [`ctx.exports`](#call-a-workflow-through-ctxexports), without needing a separate `env` binding.
+- Other Workers call the Workflow through a [cross-script binding](#cross-script-calls) using `bindings.workflow({ name, worker, exportName })`.
+
+Key each entry in `worker.exports` by the name of the class that extends `WorkflowEntrypoint`, and pass the Workflow `name` to `exports.workflow()`:
+
+```ts title="cloudflare.config.ts"
+import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "billing-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "billing-workflow",
+				schedules: ["0 * * * *"],
+			}),
+		},
+	},
+});
+```
+
+`exports.workflow()` accepts `limits`, `concurrency`, `schedules`, `defaultRetention`, and `jurisdiction`. When you run `cf deploy`, `cf` creates or updates the Workflow with these settings. Refer to [Declare exports](/cf/projects/cloudflare-config/#declare-exports) for the full list of fields.
+
+</CliVariant>
+</CliVariants>
+
 ### Call a Workflow through `ctx.exports`
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 :::note
 Local development requires one of the following, depending on your tooling:
@@ -441,6 +541,14 @@ Local development requires one of the following, depending on your tooling:
 :::
 
 Each Workflow declared in `exports` is available on [`ctx.exports`](/workers/runtime-apis/context/#exports), keyed by class name. It has the same API as a [Workflow binding](#workflow), so the Worker does not need a `workflows` binding to call it.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Each Workflow declared under `worker.exports` in `cloudflare.config.ts` is available on [`ctx.exports`](/workers/runtime-apis/context/#exports), keyed by class name. It has the same API as a [Workflow binding](#workflow), so the Worker does not need a separate `bindings.workflow()` entry to call it.
+
+</CliVariant>
+</CliVariants>
 
 The following Worker creates an instance of `MyWorkflow` through `ctx.exports`, and gets the status of an existing instance:
 
@@ -482,7 +590,18 @@ export default {
 
 </TypeScriptExample>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 If you use TypeScript, run [`wrangler types`](/workers/wrangler/commands/workers/#types) to type `ctx.exports.MyWorkflow` as `Workflow<Params>`. This requires Wrangler 4.142.0 or above.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+If you use TypeScript, run `cf workers types` to type `ctx.exports.MyWorkflow` as `Workflow<Params>` in `.cloudflare/types/index.d.ts`.
+
+</CliVariant>
+</CliVariants>
 
 A `workflows` binding and a `workflow` export with the same `name` share their instances. This includes instances created before you declared the Workflow in `exports`, so you can move a Workflow from a binding to an export without losing its instances.
 
@@ -496,13 +615,37 @@ To test a Workflow declared in `exports` with the Vitest integration, refer to [
 
 ## Call Workflows from Workers
 
-Workflows exposes an API directly to your Workers scripts via the [bindings](/workers/runtime-apis/bindings/#what-is-a-binding) concept. Bindings allow you to securely call a Workflow without having to manage API keys or clients.
+Workflows exposes an API directly to your Workers scripts via [`ctx.exports`](#call-a-workflow-through-ctxexports) (within the same Worker) or via [bindings](/workers/runtime-apis/bindings/#what-is-a-binding). Bindings allow you to securely call a Workflow on `env` (including from another Worker) without having to manage API keys or clients.
 
-You can bind to a Workflow by defining a `[[workflows]]` binding within your Wrangler configuration.
+For example, to bind to a Workflow called `workflows-starter` and make it available on `env.MY_WORKFLOW` in your Worker script, configure the following:
 
-For example, to bind to a Workflow called `workflows-starter` and to make it available on the `MY_WORKFLOW` variable to your Worker script, you would configure the following fields within the `[[workflows]]` binding definition:
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
 
-<WranglerConfig>
+export default defineConfig({
+	worker: {
+		name: "workflows-starter",
+		entrypoint,
+		compatibilityDate: "$today",
+		exports: {
+			// class that extends WorkflowEntrypoint in src/index.ts
+			MyWorkflow: exports.workflow({
+				// name of your workflow
+				name: "workflows-starter",
+			}),
+		},
+		env: {
+			// binding name env.MY_WORKFLOW
+			MY_WORKFLOW: bindings.workflow({
+				name: "workflows-starter",
+				worker: "workflows-starter",
+				exportName: "MyWorkflow",
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -528,17 +671,52 @@ For example, to bind to a Workflow called `workflows-starter` and to make it ava
 
 ### Bind from Pages
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 You can bind and trigger Workflows from [Pages Functions](/pages/functions/) by deploying a Workers project with your Workflow definition and then invoking that Worker using [service bindings](/pages/functions/bindings/#service-bindings) or a standard `fetch()` call.
 
-Visit the documentation on [calling Workflows from Pages](/workflows/build/call-workflows-from-pages/) for examples.
+For examples, refer to [Call Workflows from Pages](/workflows/build/call-workflows-from-pages/).
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Use [Cloudflare Workers with Static Assets](/workers/static-assets/) instead of Cloudflare Pages. Everything you can build on Pages is now supported on Workers, and you can declare and call Workflows directly from the same Worker without deploying a separate Worker or configuring a service binding.
+
+If you have an existing Pages project, refer to [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/).
+
+</CliVariant>
+</CliVariants>
 
 ### Cross-script calls
 
-You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. To do this, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition in your Wrangler configuration.
+You can also bind to a Workflow that is defined in a different Worker script from the script your Workflow definition is in. In Wrangler, provide the `script_name` key with the name of the script to the `[[workflows]]` binding definition. In `cloudflare.config.ts`, omit `exports` in the calling Worker and set `worker` and `exportName` on `bindings.workflow()`.
 
-For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your [Wrangler configuration file](/workers/wrangler/configuration/) would resemble the following:
+For example, if your Workflow is defined in a Worker script named `billing-worker`, but you are calling it from your `web-api-worker` script, your configuration file resembles the following:
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "web-api-worker",
+		entrypoint,
+		compatibilityDate: "$today",
+		env: {
+			// binding name env.MY_WORKFLOW
+			MY_WORKFLOW: bindings.workflow({
+				// name of your workflow
+				name: "billing-workflow",
+				// the Worker where the Workflow is defined
+				worker: "billing-worker",
+				// class that extends WorkflowEntrypoint in billing-worker
+				exportName: "MyWorkflow",
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -565,7 +743,18 @@ For example, if your Workflow is defined in a Worker script named `billing-worke
 
 </WranglerConfig>
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 <Render file="wrangler-typegen" product="workers" />
+
+</CliVariant>
+<CliVariant cli="cf">
+
+If you use TypeScript, run `cf workers types` whenever you modify `cloudflare.config.ts` (or let the Cloudflare Vite plugin update types automatically during `cf dev` and `cf build`). This writes `.cloudflare/types/index.d.ts` with types for `env`, `ctx.exports`, and the Workers runtime.
+
+</CliVariant>
+</CliVariants>
 
 ## Workflow
 
@@ -576,11 +765,11 @@ Ensure you have a compatibility date `2024-10-22` or later installed when bindin
 :::
 
 The `Workflow` type provides methods that allow you to create, inspect the status, and manage running Workflow instances from within a Worker script.
-It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/workers/#types).
+It is part of the generated types produced by [`wrangler types`](/workers/wrangler/commands/workers/#types) or `cf workers types`.
 
 ```ts title="./worker-configuration.d.ts"
 interface Env {
-	// The 'MY_WORKFLOW' variable should match the "binding" value set in the Wrangler config file
+	// The 'MY_WORKFLOW' variable should match the binding name set in your configuration file
 	MY_WORKFLOW: Workflow;
 }
 ```
