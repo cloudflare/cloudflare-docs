@@ -150,6 +150,16 @@ Pages would automatically exclude some files and folders from being uploaded as 
 
 If you use a full-stack framework powered by [Pages Functions](/pages/functions/), ensure you have [updated your framework](#frameworks) to target Workers instead of Pages.
 
+| Framework | Pages setup | Workers equivalent |
+| --- | --- | --- |
+| [Astro](/workers/framework-guides/web-apps/astro/) | `@astrojs/cloudflare` targeting Pages | `@astrojs/cloudflare` targeting Workers with `wrangler.jsonc` |
+| [SvelteKit](/workers/framework-guides/web-apps/sveltekit/) | `@sveltejs/adapter-cloudflare` targeting Pages | `@sveltejs/adapter-cloudflare` with `wrangler.jsonc` |
+| [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/) | Nitro `cloudflare_pages` preset | Nitro `cloudflare` preset with `wrangler.jsonc` |
+| [React Router / Remix](/workers/framework-guides/web-apps/react-router/) | `@remix-run/cloudflare-pages` | React Router with [`@cloudflare/vite-plugin`](/workers/vite-plugin/) (or [Remix 3](/workers/framework-guides/web-apps/remix/)) |
+| [Next.js](/workers/framework-guides/web-apps/nextjs/) | `@cloudflare/next-on-pages` | [vinext](/workers/framework-guides/web-apps/nextjs/) or [OpenNext](/workers/framework-guides/web-apps/nextjs/) |
+| [Hono](/workers/framework-guides/web-apps/more-web-frameworks/hono/) | `hono/cloudflare-pages` adapter | Standard `hono` Worker entrypoint with [`@cloudflare/vite-plugin`](/workers/vite-plugin/) |
+| [SolidStart](/workers/framework-guides/web-apps/more-web-frameworks/solid/) | Nitro `cloudflare_pages` preset | Nitro Workers output with `wrangler.jsonc` |
+
 ##### Pages Functions with an "advanced mode" `_worker.js` file
 
 If you use Pages Functions with an ["advanced mode" `_worker.js` file](/pages/functions/advanced-mode/), you must first ensure this script doesn't get uploaded as a static asset. Either move `_worker.js` out of the static asset directory (recommended), or create [an `.assetsignore` file](/workers/static-assets/binding/#ignoring-assets) in the static asset directory and include `_worker.js` within it.
@@ -263,6 +273,57 @@ export default class extends WorkerEntrypoint {
 
 </WranglerConfig>
 
+##### Translating Pages Functions, middleware, and Pages Plugins
+
+When rewriting `functions/` handlers into a native Worker instead of compiling them with `wrangler pages functions build`, map the Pages `EventContext` API to the standard Workers `fetch(request, env, ctx)` handler:
+
+| Pages Functions (`EventContext`) | Cloudflare Workers (`fetch(request, env, ctx)`) |
+| --- | --- |
+| `context.request` | `request` |
+| `context.env` | `env` (configure `assets.binding` for `env.ASSETS.fetch(request)`) |
+| `context.waitUntil(promise)` | `ctx.waitUntil(promise)` |
+| `context.passThroughOnException()` | `ctx.passThroughOnException()` |
+| `context.next()` | `env.ASSETS.fetch(request)` (or `await next()` in [Hono](/workers/framework-guides/web-apps/more-web-frameworks/hono/) middleware) |
+| `context.params` and `context.data` | Framework router (such as Hono `c.req.param()` and `c.set()` / `c.get()`) or `URLPattern` |
+
+For example, a Pages `_middleware.ts` file that wraps static assets with a custom response header:
+
+<TypeScriptExample filename="functions/_middleware.ts (Pages)">
+
+```ts
+export const onRequest: PagesFunction = async (context) => {
+	const response = await context.next();
+	const updated = new Response(response.body, response);
+	updated.headers.set("X-Frame-Options", "DENY");
+	return updated;
+};
+```
+
+</TypeScriptExample>
+
+Becomes a Workers `fetch` handler (with `assets.binding` set to `"ASSETS"` and `assets.run_worker_first` configured for the paths you want to intercept):
+
+<TypeScriptExample filename="src/index.ts (Workers)">
+
+```ts
+interface Env {
+	ASSETS: Fetcher;
+}
+
+export default {
+	async fetch(request: Request, env: Env): Promise<Response> {
+		const response = await env.ASSETS.fetch(request);
+		const updated = new Response(response.body, response);
+		updated.headers.set("X-Frame-Options", "DENY");
+		return updated;
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+If your project uses [Pages Plugins](/pages/functions/plugins/) (`@cloudflare/pages-plugin-*`), `wrangler pages functions build` compiles them into the generated Worker as a transition step. When moving to a native Worker, replace plugins with standard Workers integrations, such as calling the [Turnstile siteverify API](/turnstile/get-started/server-side-validation/), validating [Cloudflare Access JWTs](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/), or using framework middleware.
+
 #### Assets binding
 
 Pages automatically provided [an `ASSETS` binding](/pages/functions/api-reference/#envassetsfetch) to access static assets from Pages Functions. In Workers, the name of this binding is customizable and it must be manually configured:
@@ -329,6 +390,27 @@ You can customize the port using `--port`.
 ### Builds
 
 If you are using Pages' built-in CI/CD system, you can swap this for Workers Builds by first [connecting your repository to Workers Builds](/workers/ci-cd/builds/#get-started) and then [disabling automatic deployments on your Pages project](/pages/configuration/git-integration/#disable-automatic-deployments).
+
+#### Build environment variables
+
+If your build scripts read default Cloudflare Pages build environment variables, update them to the [Workers Builds default variables](/workers/ci-cd/builds/configuration/#environment-variables):
+
+| Pages build variable | Workers Builds equivalent | Notes |
+| --- | --- | --- |
+| `CF_PAGES` | `WORKERS_CI` | Set to `1` during CI builds. |
+| `CF_PAGES_BRANCH` | `WORKERS_CI_BRANCH` | Branch name from the push event. |
+| `CF_PAGES_COMMIT_SHA` | `WORKERS_CI_COMMIT_SHA` | Full SHA-1 hash of the commit being built. |
+| `CF_PAGES_URL` | None | Workers Builds does not inject a deployment URL at build time. Use a [custom environment variable](/workers/ci-cd/builds/configuration/#environment-variables) for canonical site URLs, or use `WORKERS_CI_BUILD_UUID` to identify a build. |
+
+#### CI/CD feature mapping
+
+| Pages feature | Workers Builds equivalent |
+| --- | --- |
+| [Deploy Hooks](/pages/configuration/deploy-hooks/) | [Workers Builds Deploy Hooks](/workers/ci-cd/builds/deploy-hooks/) |
+| [Build watch paths](/pages/configuration/build-watch-paths/) | [Workers Builds watch paths](/workers/ci-cd/builds/build-watch-paths/) |
+| [Monorepos](/pages/configuration/monorepos/) | [Workers Builds monorepos](/workers/ci-cd/builds/advanced-setups/#monorepos) |
+| [Build caching](/pages/configuration/build-caching/) | [Workers Builds caching](/workers/ci-cd/builds/build-caching/) |
+| [Custom branch aliases](/pages/how-to/custom-branch-aliases/) | [Custom domain Preview URLs](/workers/previews/custom-domains/) |
 
 ### Preview environment
 
@@ -404,6 +486,22 @@ If your domain's nameservers are managed by Cloudflare, you can, like Pages, con
 Unlike Pages, Workers does not support any domain whose nameservers are not managed by Cloudflare.
 
 :::
+
+#### Migrating a live custom domain
+
+Workers [Custom Domains](/workers/configuration/routing/custom-domains/) cannot be created on a hostname that already has a `CNAME` DNS record, including the record managed by your existing Pages custom domain.
+
+To move a live custom domain from Pages to Workers with minimal disruption:
+
+<Steps>
+
+1. Deploy your Worker and verify it on its `*.workers.dev` subdomain or a [Preview URL](/workers/previews/).
+2. (Optional) To cut over production traffic on your domain before changing DNS records, add a temporary [Worker Route](/workers/configuration/routing/routes/) matching your custom domain (for example, `example.com/*`) to your new Worker while the Pages custom domain is still active. Requests route to your Worker immediately, and you can remove the route to roll back to Pages if needed.
+3. Verify production traffic on your Worker.
+4. Remove the custom domain from your Pages project and confirm its `CNAME` record is removed in **DNS** > **Records**.
+5. Immediately add the [Custom Domain](/workers/configuration/routing/custom-domains/#migrate-from-routes) to your Worker, then remove the temporary Worker Route if you created one.
+
+</Steps>
 
 ### Rollout
 
