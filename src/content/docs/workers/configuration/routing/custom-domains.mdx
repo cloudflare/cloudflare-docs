@@ -124,6 +124,12 @@ export default {
 
 However, if `worker-b` was instead set up to run on the Custom Domain `shop.example.com`, the fetch request would succeed.
 
+### Security evaluation of same-zone subrequests
+
+A fetch request sent on the same zone to a Worker running on a Custom Domain is a subrequest. [WAF custom rules](/waf/custom-rules/) and [WAF managed rules](/waf/managed-rules/) on the target hostname are not evaluated for same-zone subrequests. Subrequests to a proxied hostname in a different zone are evaluated by that zone's security configuration.
+
+Do not rely on custom rules on the target hostname to restrict access to same-zone subrequests. To protect the target, apply protections to the incoming request that triggers the Worker, or validate the request in the target Worker itself. For more information, refer to [Security features interoperability](/waf/feature-interoperability/).
+
 ## Request matching behaviour
 
 Custom Domains do not support [wildcard DNS records](/dns/manage-dns-records/reference/wildcard-dns-records/). An incoming request must exactly match the domain or subdomain your Custom Domain is registered to. Other parts (path, query parameters) of the URL are not considered when executing this matching logic. For example, if you create a Custom Domain on `api.example.com` attached to your `api-gateway` Worker, a request to either `api.example.com/login` or `api.example.com/user` would invoke the same `api-gateway` Worker.

@@ -1,0 +1,32 @@
+---
+title: Custom CA and client certificates (mTLS) for Workers VPC
+description: VPC Services can now trust a private certificate authority and present a client certificate when connecting to your private services.
+products:
+  - hyperdrive
+date: 2026-11-18
+---
+
+VPC Services can now verify private services that use certificates from your own certificate authority (CA), and authenticate to services that require mutual TLS (mTLS). Previously, Workers VPC only trusted publicly trusted CAs and [Cloudflare Origin CA](/ssl/origin-configuration/origin-ca/), so connecting to a private CA meant weakening verification with `verify_ca` or `disabled`, and origins that required client certificates were unreachable.
+
+Upload your CA certificate and client certificate, then reference them from the TLS settings of a VPC Service:
+
+```sh
+npx wrangler cert upload certificate-authority --ca-cert ./ca.pem --name private-ca
+npx wrangler cert upload mtls-certificate --cert ./client.pem --key ./client-key.pem --name private-client
+
+npx wrangler vpc service create private-db \
+  --type tcp \
+  --tcp-port 5432 \
+  --app-protocol postgresql \
+  --hostname db.internal.example \
+  --tunnel-id <TUNNEL_ID> \
+  --certificate-authority <CA_CERTIFICATE_ID> \
+  --client-certificate <CLIENT_CERTIFICATE_ID> \
+  --cert-verification-mode verify_full
+```
+
+You can use a custom CA, a client certificate, or both. The settings apply to HTTPS connections from `http` services and to TLS connections from `tcp` services, including PostgreSQL databases used with [Hyperdrive](/hyperdrive/configuration/connect-to-private-database-vpc/), such as Amazon RDS instances that use the RDS CA bundle.
+
+You can configure custom CA and client certificates with Wrangler 4.164.0 or later, the [API](/api/resources/connectivity/subresources/directory/subresources/services/), or Terraform provider 5.29.0 or later.
+
+For details, refer to [Custom CA and client certificates](/workers-vpc/configuration/vpc-services/#custom-ca-and-client-certificates).

@@ -31,18 +31,19 @@ binding = "BROWSER"
 
 ## Session methods
 
-| Method                                | Description                                                                                                               |
-| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `acquire(options?)`                   | Creates a browser session and returns its session ID. Set `targets: true` to include the session's current targets.       |
-| `connectSession(sessionId, options?)` | Returns a connection object with a session-pinned `webSocket` Fetcher for connecting a CDP client to an existing session. |
-| `launch(options?)`                    | Acquires a session and returns the same connection result as `connectSession()`.                                          |
-| `getLiveView(sessionId, options?)`    | Creates a Live View URL for a session or target.                                                                          |
-| `listSessions(options?)`              | Lists active sessions in the account.                                                                                     |
-| `history(options?)`                   | Lists recent active and closed sessions.                                                                                  |
-| `limits()`                            | Returns the current session limits and usage values.                                                                      |
-| `getSession(sessionId)`               | Returns session details or `null` when the session does not exist.                                                        |
-| `closeSession(sessionId)`             | Closes a session and returns `closing` or `closed`.                                                                       |
-| `devtools`                            | Provides typed methods for the DevTools JSON endpoints.                                                                   |
+| Method                                | Description                                                                                                                                   |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acquire(options?)`                   | Creates a browser session and returns its session ID. Set `targets: true` to include the session's current targets.                           |
+| `connectSession(sessionId, options?)` | Returns a connection object with a session-pinned `webSocket` Fetcher for connecting a CDP client to an existing session.                     |
+| `launch(options?)`                    | Acquires a session and returns the same connection result as `connectSession()`.                                                              |
+| `getLiveView(sessionId, options?)`    | Creates a Live View URL for a session or target.                                                                                              |
+| `listSessions(options?)`              | Lists active sessions in the account.                                                                                                         |
+| `history(options?)`                   | Lists recent active and closed sessions.                                                                                                      |
+| `limits()`                            | Returns the current session limits and usage values.                                                                                          |
+| `getSession(sessionId)`               | Returns session details or `null` when the session does not exist.                                                                            |
+| `closeSession(sessionId)`             | Closes a session and returns `closing` or `closed`.                                                                                           |
+| `script(code, options?)`              | Runs a [custom script](/browser-run/script/#use-the-browser-binding) in a new session, or in an existing one when `options.sessionId` is set. |
+| `devtools`                            | Provides typed methods for the DevTools JSON endpoints.                                                                                       |
 
 ## Acquire and connect to a session
 

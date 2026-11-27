@@ -1,0 +1,210 @@
+{
+	"model_id": "kwaivgi/kling-v2.6",
+	"name": "Kling v2.6",
+	"description": "Kling v2.6 generates cinematic 5- or 10-second videos with synchronized audio from text prompts or a base64-encoded starting image. It supports 16:9, 9:16, and 1:1 aspect ratios, with optional negative prompts and standard or pro quality modes.",
+	"task": "Text-to-Video",
+	"tags": [
+		"Video Generation",
+		"Text-to-Video",
+		"Image-to-Video",
+		"Audio Generation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.07,
+		"default_audio": 0.14
+	},
+	"examples": [
+		{
+			"name": "Generate a Cinematic Mountain Sunrise",
+			"description": "Create a widescreen video of a hot-air balloon drifting over a mountain valley at sunrise, with synchronized audio.",
+			"input": {
+				"prompt": "A cinematic wide shot of a red hot-air balloon drifting above a mountain valley at sunrise, the camera slowly tracking forward as golden light breaks through the clouds.",
+				"aspect_ratio": "16:9",
+				"duration": "5",
+				"mode": "pro",
+				"sound": "on"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/kwaivgi/kling-v2.6/generate-a-cinematic-mountain-sunrise.mp4"
+			},
+			"raw_response": {
+				"code": 0,
+				"message": "SUCCEED",
+				"request_id": "088b1870-9e01-49b4-9b8c-485313e0259c",
+				"data": {
+					"task_id": "949523490075068623",
+					"task_status": "succeed",
+					"task_info": {},
+					"task_result": {
+						"videos": [
+							{
+								"id": "949520558369162413",
+								"url": "https://examples.aig.cloudflare.com/kwaivgi/kling-v2.6/generate-a-cinematic-mountain-sunrise.mp4",
+								"duration": "5.041"
+							}
+						]
+					},
+					"task_status_msg": "",
+					"created_at": 1794413587278,
+					"updated_at": 1794413715176,
+					"final_unit_deduction": "0",
+					"final_balance_deduction": {
+						"quota": "0.42",
+						"list_price": "0.7"
+					}
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'kwaivgi/kling-v2.6',\n  {\n    prompt:\n      'A cinematic wide shot of a red hot-air balloon drifting above a mountain valley at sunrise, the camera slowly tracking forward as golden light breaks through the clouds.',\n    aspect_ratio: '16:9',\n    duration: '5',\n    mode: 'pro',\n    sound: 'on',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"kwaivgi/kling-v2.6\",\n  \"input\": {\n    \"prompt\": \"A cinematic wide shot of a red hot-air balloon drifting above a mountain valley at sunrise, the camera slowly tracking forward as golden light breaks through the clouds.\",\n    \"aspect_ratio\": \"16:9\",\n    \"duration\": \"5\",\n    \"mode\": \"pro\",\n    \"sound\": \"on\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://klingai.com/",
+	"terms": "https://klingai.com/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Aspect Ratios": "16:9, 9:16, 1:1",
+		"Audio": "Synchronized audio generation can be enabled or disabled",
+		"Duration": "5 or 10 seconds",
+		"Input": "Text prompt and optional base64-encoded starting image",
+		"Output": "Video with generated audio"
+	},
+	"request_formats": null,
+	"provider_id": "klingai",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "klingai",
+			"pricing": {
+				"default": 0.07,
+				"default_audio": 0.14
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "klingai",
+			"pricing": {
+				"default": 0.07,
+				"default_audio": 0.14
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "default",
+							"label": "Default (per second)",
+							"unit": null,
+							"value": 0.07
+						},
+						{
+							"key": "default_audio",
+							"label": "Default w/ audio (per second)",
+							"unit": null,
+							"value": 0.14
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-13 23:27:26",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"type": "string",
+					"description": "Text prompt for video generation"
+				},
+				"negative_prompt": {
+					"description": "Things to exclude from the video",
+					"type": "string"
+				},
+				"aspect_ratio": {
+					"default": "16:9",
+					"description": "Output aspect ratio",
+					"type": "string",
+					"enum": [
+						"16:9",
+						"9:16",
+						"1:1"
+					]
+				},
+				"duration": {
+					"default": "5",
+					"description": "Video duration in seconds",
+					"type": "string",
+					"enum": [
+						"5",
+						"10"
+					]
+				},
+				"mode": {
+					"default": "pro",
+					"description": "Generation quality mode",
+					"type": "string",
+					"enum": [
+						"std",
+						"pro"
+					]
+				},
+				"sound": {
+					"default": "on",
+					"description": "Generate synchronized audio",
+					"type": "string",
+					"enum": [
+						"on",
+						"off"
+					]
+				}
+			},
+			"required": [
+				"prompt",
+				"aspect_ratio",
+				"duration",
+				"mode",
+				"sound"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"format": "uri",
+					"description": "Generated video URL"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

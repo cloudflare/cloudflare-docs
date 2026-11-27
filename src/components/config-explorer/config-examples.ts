@@ -440,10 +440,7 @@ function workerLines() {
 						refLine(2, "", ref, ": ["),
 						...exampleObjectLines(
 							ref,
-							[
-								{ name: "worker", value: '"log-sink"' },
-								{ name: "streaming", value: "true" },
-							],
+							[{ name: "worker", value: '"log-sink"' }],
 							4,
 							[],
 							"},",
@@ -502,6 +499,56 @@ function workerLines() {
 						[{ ref }, ": "],
 						"},",
 					);
+				}
+				if (ref.name === "access") {
+					return exampleObjectLines(
+						ref,
+						[
+							{
+								name: "dev",
+								value: [{ name: "aud", value: '"<ACCESS_AUD>"' }],
+							},
+						],
+						2,
+						[{ ref }, ": "],
+						"},",
+					);
+				}
+				if (ref.name === "images") {
+					return exampleObjectLines(
+						ref,
+						[
+							{
+								name: "urlTransformations",
+								value: [
+									{ name: "enabled", value: "true" },
+									{ name: "allowedOrigins", value: '["images.example.com"]' },
+								],
+							},
+						],
+						2,
+						[{ ref }, ": "],
+						"},",
+					);
+				}
+				if (ref.name === "experimental") {
+					const streamingTailConsumers = requireChildReference(
+						ref,
+						"streamingTailConsumers",
+					);
+					return [
+						refLine(2, "", ref, ": {"),
+						refLine(4, "", streamingTailConsumers, ": ["),
+						...exampleObjectLines(
+							streamingTailConsumers,
+							[{ name: "worker", value: '"streaming-log-sink"' }],
+							6,
+							[],
+							"},",
+						),
+						plainLine(4, "],"),
+						plainLine(2, "},"),
+					];
 				}
 				if (ref.name === "unsafe") {
 					return exampleObjectLines(

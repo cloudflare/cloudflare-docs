@@ -52,8 +52,13 @@ const { class: className, ...attrs } = Astro.props;
 
 				dialog.addEventListener("close", () => unlockScroll());
 
+				let pressedOn: EventTarget | null = null;
+				dialog.addEventListener("pointerdown", (e) => {
+					pressedOn = e.target;
+				});
 				dialog.addEventListener("click", (e) => {
-					if (e.target === dialog) dialog.close();
+					if (e.target === dialog && pressedOn === dialog) dialog.close();
+					pressedOn = null;
 				});
 			});
 	}

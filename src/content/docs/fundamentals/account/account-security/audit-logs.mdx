@@ -354,6 +354,8 @@ The actor represents who or what performed the action. Its identity attributes d
 - `oauth`: The action was authenticated with an OAuth token.
 - `origin_ca_key`: The action was authenticated with an Origin CA key.
 
+Context is recorded only for actions performed through the Cloudflare dashboard or API. [System-initiated actions](#system-initiated-audit-logs) are performed internally by Cloudflare, so they do not include a context.
+
 ### Action
 
 The action field captures the nature of the event and whether it was successful. It includes a high-level type (e.g., `create`, `update`, `delete`), a specific description (such as `SSO_LOGIN`), the timestamp of when the action occurred, and the result (`success` or `failure`).

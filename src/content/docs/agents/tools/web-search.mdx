@@ -90,6 +90,14 @@ Ask your agent a question that needs current information. The model can call `we
 
 The Pi tool is marked `replay: "safe"`. If an eviction interrupts a search, Pi reruns only that search when the session recovers, which is a second billed search. Finished calls already have their results in the transcript. The tool does not cache results, so when the model repeats a search, it makes and bills a new one. The tool also honors Pi's abort signal when you cancel a running call.
 
+In [Pi's code mode](/agents/tools/browser/#use-it-in-pis-code-mode), a script calls `tools.web_search({ query, limit })` and gets the results as an object instead of the model's text:
+
+```ts
+{ query, items: [{ title, url, description?, lastModifiedDate? }] }
+```
+
+Descriptions are trimmed as they are for the model. A failed search rejects with the model's text. To search, then read the results in the same script, refer to [Web fetch](/agents/tools/web-fetch/#pi-durable).
+
 ### AI SDK
 
 Add the tool to the `tools` object in your existing `streamText()` or `generateText()` call:

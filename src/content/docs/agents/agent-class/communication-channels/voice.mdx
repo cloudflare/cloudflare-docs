@@ -266,7 +266,7 @@ export class MyAgent extends VoiceAgent<Env> {
 		const ai = createAI({ binding: this.env.AI });
 
 		const result = streamText({
-			model: ai("@cf/moonshotai/kimi-k2.6"),
+			model: ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017"),
 			system: "You are a helpful voice assistant. Keep responses concise.",
 			messages: [
 				...context.messages.map((m) => ({

@@ -1,0 +1,20 @@
+---
+title: B-frame detection for Low-Latency HLS live streams
+description: Detect B frames that disrupt Low-Latency HLS live streams.
+pcx_content_type: changelog
+date: 2026-11-19
+---
+
+[Cloudflare Stream](/stream/) now emits a warning when B-frames are detected in Low Latency HLS live broadcasts.
+
+The most common cause of freezing and stuttering in LL-HLS live streams is when encoders include B-frames. These frames can reference content that has not yet been transmitted, stalling preparation for delivery. Therefore, B-Frames are not supported _when LL-HLS is enabled_ for a live input.
+
+Stream sends the warning `ERR_LIVE_INPUT_LLHLS_INCOMPATIBLE` once per live session if applicable. It is reported alongside other error and status events in:
+
+- Your live input's [**Logs** tab](/stream/stream-live/troubleshooting/#error-codes)
+- [Live webhooks](/stream/stream-live/webhooks/)
+- [GraphQL input events](/stream/getting-analytics/fetching-bulk-analytics/#rtmp-and-srt-input-metrics)
+
+To resolve the warning, turn off B frames in your broadcast application settings. Alternatively, turn off Low-Latency HLS in your live input settings, but playback latency will be higher.
+
+For more information, refer to [Stream live troubleshooting](/stream/stream-live/troubleshooting/#error-codes).

@@ -8,3 +8,4 @@ export * from "./model-properties";
 export * from "./model-schema";
 export * from "./model-resolver";
 export * from "./facets";
+export * from "./model-promotions";

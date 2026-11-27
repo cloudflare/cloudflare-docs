@@ -15,14 +15,14 @@ You can use [`node:dns`](https://nodejs.org/api/dns.html) for name resolution vi
 
 <TypeScriptExample filename="index.ts">
 ```ts
-import dns from 'node:dns';
+import dns from "node:dns";
 
-let response = await dns.promises.resolve4('cloudflare.com', 'NS');
-
+const addresses = await dns.promises.resolve4("cloudflare.com");
+console.log(addresses);
 ```
 </TypeScriptExample>
 
-All `node:dns` functions are available, except `lookup`, `lookupService`, and `resolve` which throw "Not implemented" errors when called.
+All `node:dns` functions are available, except `lookupService`, which throws a "Not implemented" error when called.
 
 :::note
 
@@ -31,4 +31,3 @@ DNS requests will execute a subrequest, counts for your [Worker's subrequest lim
 :::
 
 The full `node:dns` API is documented in the [Node.js documentation for `node:dns`](https://nodejs.org/api/dns.html).
-```

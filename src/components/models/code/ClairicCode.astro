@@ -124,7 +124,8 @@ curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run
   }'
 `;
 
-// Real response to the request above (Workers AI wraps it in `result`); probabilities rounded.
+// Real Clairic response to the request above (Workers AI wraps it in `result`); probabilities
+// rounded. Shown on the Clairic page only, so other models never display Clairic's output.
 const response = `
 {
   "model": "clairic",
@@ -154,4 +155,6 @@ const response = `
 	</TabItem>
 </Tabs>
 
-<Code code={response} lang="json" title="Response" />
+{selector === "clairic" && (
+	<Code code={response} lang="json" title="Response" />
+)}

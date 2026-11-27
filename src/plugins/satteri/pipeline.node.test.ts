@@ -1,6 +1,6 @@
 import { pathToFileURL } from "node:url";
 import { describe, expect, test } from "vitest";
-import { markdownToHtml } from "satteri";
+import { markdownToHtml, mdxToJs } from "satteri";
 import type { MarkdownToHtmlResult } from "satteri";
 
 import { hastPlugins } from "./index";
@@ -267,8 +267,59 @@ describe("Nimbus Satteri HAST pipeline", () => {
 		expectWrappedHeading(changelogH4, 4, "release-notes", "Release notes");
 	});
 
+	test("links CVE IDs to their Radar page, with the external-link arrow", () => {
+		const html = render(
+			"Fixes CVE-2021-44228 and Ivanti - Command Injection - CVE:CVE-2024-37397.",
+		);
+
+		expect(html).toBe(
+			`<p>Fixes <a href="https://radar.cloudflare.com/zero-wire/cves/CVE-2021-44228" target="_blank" rel="noopener">CVE-2021-44228<span class="external-link"> ↗\uFE0E</span></a> and Ivanti - Command Injection - CVE:<a href="https://radar.cloudflare.com/zero-wire/cves/CVE-2024-37397" target="_blank" rel="noopener">CVE-2024-37397<span class="external-link"> ↗\uFE0E</span></a>.</p>\n`,
+		);
+	});
+
+	test("does not link CVE IDs in links, code, headings or invalid IDs", () => {
+		const html = render(
+			[
+				"## About CVE-2021-44228",
+				"[CVE-2021-44228](https://www.cve.org/CVERecord?id=CVE-2021-44228) `CVE-2021-44228`",
+				"[**CVE-2021-44228**](https://example.com)",
+				"Not CVE-2021-123 or XCVE-2021-44228.",
+				"```txt\nCVE-2021-44228\n```",
+			].join("\n\n"),
+		);
+
+		expect(html).not.toContain("radar.cloudflare.com");
+	});
+
+	test.each([
+		'<LinkButton href="/waf/">CVE-2021-44228</LinkButton>',
+		'<GlossaryTooltip term="WAF" link="/waf/">CVE-2021-44228</GlossaryTooltip>',
+		'<a href="/waf/"><strong>CVE-2021-44228</strong></a>',
+	])("does not link CVE IDs inside link components: %s", (mdx) => {
+		const { code } = mdxToJs(mdx, { hastPlugins }) as unknown as {
+			code: string;
+		};
+
+		expect(code).not.toContain("radar.cloudflare.com");
+	});
+
+	test("links CVE IDs in MDX JSX table cells", () => {
+		const { code } = mdxToJs(
+			"<table><tbody><tr><td>Magento - XXE - CVE:CVE-2024-34102</td></tr></tbody></table>",
+			{ hastPlugins },
+		) as unknown as { code: string };
+
+		expect(code).toContain(
+			"https://radar.cloudflare.com/zero-wire/cves/CVE-2024-34102",
+		);
+	});
+
 	test("registers order-dependent plugins in the expected sequence", () => {
 		const names = hastPlugins.map((plugin) => plugin.name);
+
+		expect(names.indexOf("cf-cve-links")).toBeLessThan(
+			names.indexOf("nimbus:external-links"),
+		);
 
 		expect(names.indexOf("nimbus:external-links")).toBeLessThan(
 			names.indexOf("headingSlugs"),

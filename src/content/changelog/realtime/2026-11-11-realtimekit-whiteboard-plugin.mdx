@@ -1,0 +1,48 @@
+---
+title: Add a collaborative whiteboard to meetings built on RealtimeKit
+description: Add the Cloudflare-hosted Whiteboard plugin to RealtimeKit meetings so participants can draw, write, and diagram together, with nothing to deploy.
+products:
+  - realtime
+date: 2026-11-11
+---
+
+You can now add a collaborative whiteboard to [RealtimeKit](/realtime/realtimekit/) meetings with the [Whiteboard plugin](/realtime/realtimekit/custom-plugins/whiteboard/), which Cloudflare hosts and runs for you. RealtimeKit provides SDKs for running live audio and video meetings in your app. Many companies use it today to run online education and interview platforms, where participants often need a shared whiteboard to work through ideas together.
+
+You add the Whiteboard plugin with the same [plugins API](/realtime/realtimekit/humans/core/plugins/) you use for your own plugins. Load it in an `iframe`, with the participant's [auth token](/api/resources/realtime_kit/subresources/meetings/methods/add_participant/) after `#` in the URL:
+
+```ts
+const WHITEBOARD_URL = "https://whiteboard-v2.plugins.realtime.cloudflare.com/";
+
+function createWhiteboard(authToken: string): HTMLIFrameElement {
+	const iframe = document.createElement("iframe");
+	iframe.style.width = "100%";
+	iframe.style.height = "100%";
+	iframe.style.border = "none";
+	// Lets participants copy and paste on the board.
+	iframe.allow = "clipboard-read; clipboard-write";
+	// The plugin does not need your page's address.
+	iframe.referrerPolicy = "no-referrer";
+	iframe.src = `${WHITEBOARD_URL}#authToken=${encodeURIComponent(authToken)}`;
+	return iframe;
+}
+
+const whiteboardElement = createWhiteboard("<auth_token>");
+```
+
+Then pass `whiteboardElement` as the plugin's `component` when you initialize the SDK. The [Whiteboard plugin guide](/realtime/realtimekit/custom-plugins/whiteboard/#2-register-the-plugin) has the registration code for web, Android, iOS, and React Native.
+
+You can also [build your own plugins](/realtime/realtimekit/custom-plugins/build-your-own-plugins/) and render them alongside the meeting UI. A whiteboard you build yourself needs a server that sends every stroke to every participant, saves the board between sessions, and checks who can open it. With the Whiteboard plugin, Cloudflare runs all of that for you.
+
+## How it works
+
+- Participants draw shapes, arrows, freehand strokes, and text on one shared board, and see each other's cursors and names.
+- Each meeting has one board. It [stays the same across sessions](/realtime/realtimekit/custom-plugins/whiteboard/#board-data), so participants pick up where they left off.
+- The plugin checks each participant's auth token, so [only participants in the meeting](/realtime/realtimekit/custom-plugins/whiteboard/#access-and-permissions) can open its board.
+- It works on any domain, and you do not need to register your app's origin.
+
+## Learn more
+
+- [Add the Whiteboard plugin](/realtime/realtimekit/custom-plugins/whiteboard/): setup for web and mobile, permissions, and board data
+- [Plugins](/realtime/realtimekit/humans/core/plugins/): register, activate, and listen to plugins
+- [Build your own plugin](/realtime/realtimekit/custom-plugins/build-your-own-plugins/)
+- [RealtimeKit quickstart](/realtime/realtimekit/quickstart/)

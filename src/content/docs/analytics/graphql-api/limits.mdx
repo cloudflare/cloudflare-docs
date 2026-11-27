@@ -68,6 +68,22 @@ intervals.
 
 Adaptive datasets, such as `httpRequestsAdaptiveGroups` and `firewallEventsAdaptive`, retain at least 31 days of data on every plan. Aggregated datasets, such as `httpRequests1hGroups`, keep their own per-plan limits.
 
+Some datasets are not available on every plan. For example, `firewallEventsAdaptive` and `httpRequestsAdaptiveGroups` are available on all plans, but the aggregated `firewallEventsAdaptiveGroups` dataset is only available to zones on Pro, Business, and Enterprise plans. Free zones that query it receive a `does not have access to the path` error. Refer to [Dataset availability by plan](#dataset-availability-by-plan).
+
+### Dataset availability by plan
+
+The following datasets are available on different plans at the zone level:
+
+| Dataset | Free | Pro | Business | Enterprise |
+| --- | --- | --- | --- | --- |
+| `httpRequestsAdaptiveGroups` | Yes | Yes | Yes | Yes |
+| `firewallEventsAdaptive` | Yes | Yes | Yes | Yes |
+| `firewallEventsAdaptiveGroups` | No | Yes | Yes | Yes |
+
+At the account level, `firewallEventsAdaptiveGroups` is available to Enterprise accounts only.
+
+Entitlements assigned to your zone or account can change these defaults. This table is not a complete list of datasets. To check whether a dataset is available for a specific zone or account, query its `enabled` field in the [Settings node](/analytics/graphql-api/features/discovery/settings/).
+
 To get exact boundaries and availability for your zone(s) or account, please
 refer to [settings][1].
 

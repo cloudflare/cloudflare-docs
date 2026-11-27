@@ -1,0 +1,52 @@
+---
+title: "EmbeddingGemma 2 now available on Workers AI"
+description: EmbeddingGemma 2 from Google DeepMind is now available on Workers AI, an open multimodal embedding model that maps text, images, video, and audio into a single 768-dimensional vector space.
+products:
+  - workers-ai
+date: 2026-11-12
+---
+
+import { TypeScriptExample } from "~/components";
+
+[`@cf/google/embeddinggemma-2`](/workers-ai/models/embeddinggemma-2/) is now available on Workers AI. EmbeddingGemma 2 is an open multimodal embedding model from Google DeepMind. It maps text (including code), images, video, and audio into a single 768-dimensional vector space, so you can search a mixed collection of products, documents, and media with one text query.
+
+**Key capabilities:**
+
+- **Multimodal**: Embed text, images, video, audio, or any combination of them in one input. Every embedding shares the same vector space.
+- **Multilingual and code**: Understands more than 100 languages and improves code retrieval over the original EmbeddingGemma.
+- **Flexible dimensions**: Set `dimensions` to 128, 256, or 512 to return shorter vectors and reduce storage, with a small cost to quality.
+- **Long context**: An 8,192 token context window, shared across all content in an input.
+- **Task prefixes**: Add short instructions such as `task: search result | query: ...` to tune embeddings for search, classification, clustering, or similarity.
+
+Send text with `input`. Send images, video, and audio as base64 data URIs in `messages`:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.AI.run("@cf/google/embeddinggemma-2", {
+	messages: [
+		[
+			{
+				role: "user",
+				content: [
+					{ type: "text", text: "Waterproof running shoes." },
+					{ type: "image_url", image_url: { url: imageDataUri } },
+				],
+			},
+		],
+		[
+			{
+				role: "user",
+				content:
+					"task: search result | query: waterproof shoes for trail running",
+			},
+		],
+	],
+});
+```
+
+</TypeScriptExample>
+
+Pricing is $0.0017 per million input tokens.
+
+For more information, refer to the [EmbeddingGemma 2 model page](/workers-ai/models/embeddinggemma-2/) and [pricing](/workers-ai/platform/pricing/#embeddings-model-pricing).

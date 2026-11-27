@@ -112,3 +112,23 @@ Refer to [Fields](/ruleset-engine/rules-language/fields/reference/) for referenc
 :::
 
 For information on the available functions, refer to [Functions](/ruleset-engine/rules-language/functions/).
+
+## Date and signing functions
+
+Use [`format_date()`](/ruleset-engine/rules-language/functions/#format_date) to format `http.request.timestamp.sec` as UTC text. This function is available on all plans without an additional entitlement. You can set a timestamp header and calculate a signature from the same timestamp in one rule.
+
+The [HMAC functions](/ruleset-engine/rules-language/functions/#hmac_sha256) and [`sign_sigv4_hmac_sha256()`](/ruleset-engine/rules-language/functions/#sign_sigv4_hmac_sha256) are available on Pro, Business, and Enterprise plans.
+
+The following limits apply to each header value expression:
+
+| Function | Maximum calls |
+| --- | --- |
+| `concat()` | 3 |
+| `encode_hex()` | 4 |
+| `format_date()` | 4 |
+| Each of `hmac_md5()`, `hmac_sha1()`, `hmac_sha256()`, and `hmac_sha512()` | 5 |
+| `sign_sigv4_hmac_sha256()` | 1 |
+
+Signing and hash functions accept a narrower set of fields than the complete header rewrite field list. Supported inputs include request headers, the method, URI fields, and `http.request.timestamp.sec`. Do not pass `http.host` or request body fields to these functions. For storage signing, put the expected origin hostname in the canonical request as a literal.
+
+For complete expressions, refer to [Sign requests to private S3 and GCS buckets](/rules/transform/examples/sign-private-storage-requests/).

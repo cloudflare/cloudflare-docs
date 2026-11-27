@@ -1,0 +1,68 @@
+---
+title: URL-based image optimization in Workers
+description: Configure image transformation URLs per Worker for workers.dev, local development, and custom domains.
+products:
+  - images
+  - workers
+date: 2026-11-25
+publish_future_dated_entry: true
+---
+
+import { WranglerConfig } from "~/components";
+
+In [Images](/images/), you can add [optimization parameters](/images/optimization/features/) directly to [transformation URL requests](/images/optimization/features/#url-interface) to optimize images from any origin.
+
+[Workers](/workers/) now supports the Images [URL interface](/images/optimization/features/#url-interface) directly on `workers.dev` subdomains through new Worker-scoped configuration. For example, a Worker can serve this transformation URL without connecting a custom domain:
+
+```txt
+https://example-app.<YOUR_SUBDOMAIN>.workers.dev/cdn-cgi/image/format=auto,width=400/image.png
+```
+
+Previously, transformation URLs were not available on `workers.dev` subdomains or during local development. A Worker could serve transformation URLs only through a connected custom domain when the URL interface was enabled for that zone.
+
+The new Worker-scoped settings apply to deployed Workers and during local development. On connected custom domains, they override the zone-scoped settings.
+
+Configure the settings in your [Wrangler configuration file](/workers/wrangler/configuration/) or in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/) for [Cloudflare CLI](/cf/):
+
+<WranglerConfig
+	cfConfig={`import { defineConfig } from "cf/config";
+
+export default defineConfig({
+  worker: {
+    name: "image-app",
+    compatibilityDate: "$today",
+    images: {
+      urlTransformations: {
+        enabled: true,
+        allowedOrigins: [
+          "images.example.com",
+          "image-app.<YOUR_SUBDOMAIN>.workers.dev",
+        ],
+      },
+    },
+  },
+});`}
+>
+
+```toml
+[images.url_transformations]
+enabled = true
+allowed_origins = [
+  "images.example.com",
+  "image-app.<YOUR_SUBDOMAIN>.workers.dev",
+]
+```
+
+</WranglerConfig>
+
+Set `enabled` to `true` to turn on transformation URLs.
+
+By default, Workers accepts source images only from the same zone as the transformation URL. To use external source images, specify up to 10 [hostnames](/images/optimization/transformations/sources/#how-it-works) using `allowed_origins` in Wrangler or `allowedOrigins` in `cloudflare.config.ts`.
+
+Deployed settings remain active if you remove the configuration. To disable transformation URLs on a Worker, deploy with `enabled` set to `false`. Named Wrangler environments require their own configuration, and [Version URLs](/workers/versions-and-deployments/version-urls/) support transformation URLs using the Worker's deployed settings.
+
+`wrangler deploy` and `cf deploy` apply the same settings to the Worker, while `wrangler dev` and `cf dev` use them locally.
+
+Transformation URLs do not require an [`IMAGES` binding](/images/optimization/binding/). Transformed results are automatically cached in production.
+
+Refer to [Transform via URL](/images/optimization/transformations/url/) for URL syntax and configuration methods.

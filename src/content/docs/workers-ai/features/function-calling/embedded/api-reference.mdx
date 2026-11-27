@@ -11,25 +11,27 @@ products:
   - workers-ai
 ---
 
+import { MetaInfo, Type } from "~/components";
+
 Learn more about the API reference for [embedded function calling](/workers-ai/features/function-calling/embedded).
 
 ## runWithTools
 
 This wrapper method enables you to do embedded function calling. You pass it the AI binding, model, inputs (`messages` array and `tools` array), and optional configurations.
 
-- `AI Binding`Ai
+- `ai` <Type text="Ai" /> <MetaInfo text="required" />
   - The AI binding, such as `env.AI`.
-- `model`BaseAiTextGenerationModels
+- `model` <Type text="BaseAiTextGenerationModels" /> <MetaInfo text="required" />
   - The ID of the model that supports function calling. For example, `@hf/nousresearch/hermes-2-pro-mistral-7b`.
-- `input`Object
-  - `messages`RoleScopedChatInput\[]
-  - `tools`AiTextGenerationToolInputWithFunction\[]
-- `config`Object
-  - `streamFinalResponse`boolean optional
-  - `maxRecursiveToolRuns`number optional
-  - `strictValidation`boolean optional
-  - `verbose`boolean optional
-  - `trimFunction`boolean optional - For the `trimFunction`, you can pass it `autoTrimTools`, which is another helper method we've devised to automatically choose the correct tools (using an LLM) before sending it off for inference. This means that your final inference call will have fewer input tokens.
+- `input` <Type text="object" /> <MetaInfo text="required" />
+  - `messages` <Type text="RoleScopedChatInput[]" /> <MetaInfo text="required" />
+  - `tools` <Type text="AiTextGenerationToolInputWithFunction[]" /> <MetaInfo text="required" />
+- `config` <Type text="object" /> <MetaInfo text="optional" />
+  - `streamFinalResponse` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - `maxRecursiveToolRuns` <Type text="number" /> <MetaInfo text="(default: 0) optional" />
+  - `strictValidation` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - `verbose` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />
+  - `trimFunction` <Type text="function" /> <MetaInfo text="optional" /> - For the `trimFunction`, you can pass it `autoTrimTools`, which is another helper method we've devised to automatically choose the correct tools (using an LLM) before sending it off for inference. This means that your final inference call will have fewer input tokens.
 
 ## createToolsFromOpenAPISpec
 
@@ -37,11 +39,10 @@ This method lets you automatically create tool schemas based on OpenAPI specs, s
 
 `createToolsFromOpenAPISpec` has a config input that allows you to perform overrides if you need to provide headers like Authentication or User-Agent.
 
-- `spec`string
+- `spec` <Type text="string" /> <MetaInfo text="required" />
   - The OpenAPI specification in either JSON or YAML format, or a URL to a remote OpenAPI specification.
-- `config`Config optional - Configuration options for the createToolsFromOpenAPISpec function
-  - `overrides`ConfigRule\[] optional
-  - `matchPatterns`RegExp\[] optional
-  - `options` Object optional \{
-    `verbose` boolean optional
-    \}
+- `config` <Type text="Config" /> <MetaInfo text="optional" /> - Configuration options for the `createToolsFromOpenAPISpec` function
+  - `overrides` <Type text="ConfigRule[]" /> <MetaInfo text="required" />
+  - `matchPatterns` <Type text="RegExp[]" /> <MetaInfo text="optional" />
+  - `options` <Type text="object" /> <MetaInfo text="optional" />
+    - `verbose` <Type text="boolean" /> <MetaInfo text="(default: false) optional" />

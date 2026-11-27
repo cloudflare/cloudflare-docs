@@ -29,11 +29,11 @@ Skills are useful for:
 
 Agents load skills in three stages, so an agent can keep many skills on hand at a small cost:
 
-| Stage | What the agent loads | When | Approximate size |
-| --- | --- | --- | --- |
-| 1. Catalog | Each skill's `name` and `description` | When the session starts | 50 to 100 tokens per skill |
-| 2. Instructions | The full `SKILL.md` body | When a task matches the description | Under 5,000 tokens recommended |
-| 3. Resources | Scripts, references, and assets | When the instructions refer to them | Varies |
+| Stage           | What the agent loads                  | When                                | Approximate size               |
+| --------------- | ------------------------------------- | ----------------------------------- | ------------------------------ |
+| 1. Catalog      | Each skill's `name` and `description` | When the session starts             | 50 to 100 tokens per skill     |
+| 2. Instructions | The full `SKILL.md` body              | When a task matches the description | Under 5,000 tokens recommended |
+| 3. Resources    | Scripts, references, and assets       | When the instructions refer to them | Varies                         |
 
 An agent with 20 skills pays for 20 short catalog entries, not 20 sets of instructions. It loads the full instructions only for the skills it uses.
 
@@ -71,14 +71,14 @@ metadata:
 
 ### Frontmatter fields
 
-| Field | Required | Rules |
-| --- | --- | --- |
-| `name` | Yes | 1 to 64 characters. Lowercase letters, digits, and hyphens. Cannot start or end with a hyphen or contain `--`. Must match the directory name. |
-| `description` | Yes | 1 to 1,024 characters. Says what the skill does and when to use it. |
-| `license` | No | A license name or a bundled license file. |
-| `compatibility` | No | 1 to 500 characters. Environment requirements, such as required tools or network access. |
-| `metadata` | No | A map of string keys to string values, for properties the specification does not define. |
-| `allowed-tools` | No | A space-separated list of tools the skill may use without asking. Experimental, and support varies by agent. |
+| Field           | Required | Rules                                                                                                                                         |
+| --------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`          | Yes      | 1 to 64 characters. Lowercase letters, digits, and hyphens. Cannot start or end with a hyphen or contain `--`. Must match the directory name. |
+| `description`   | Yes      | 1 to 1,024 characters. Says what the skill does and when to use it.                                                                           |
+| `license`       | No       | A license name or a bundled license file.                                                                                                     |
+| `compatibility` | No       | 1 to 500 characters. Environment requirements, such as required tools or network access.                                                      |
+| `metadata`      | No       | A map of string keys to string values, for properties the specification does not define.                                                      |
+| `allowed-tools` | No       | A space-separated list of tools the skill may use without asking. Experimental, and support varies by agent.                                  |
 
 Agents may also read their own extra fields. For example, several agents hide a skill from the model when it sets `disable-model-invocation: true`.
 
@@ -121,11 +121,11 @@ A skill adds instructions to the agent's context, and its scripts can run code. 
 
 The Agents SDK reads the open format in `agents/skills` and checks every `SKILL.md` against the specification. As the specification's guide for agents recommends, it loads skills that break a rule and logs a warning, so skills written for other agents still work. Skills that cannot be used, such as ones without a description, are skipped. To check a skill when you write it, parse it with `parseSkill()` and require no warnings. It loads skills from three sources:
 
-| Source | Use it when |
-| --- | --- |
+| Source                                                 | Use it when                                                                        |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------- |
 | [Computer Workspace](/agents/skills/sources/computer/) | Skills should be files the agent, a user, or your code can add and edit at runtime |
-| [R2](/agents/skills/sources/r2/) | Many agents share one set of skills managed outside your Worker |
-| [Code](/agents/skills/sources/code/) | Tests, or a small fixed set of skills that ships with your Worker |
+| [R2](/agents/skills/sources/r2/)                       | Many agents share one set of skills managed outside your Worker                    |
+| [Code](/agents/skills/sources/code/)                   | Tests, or a small fixed set of skills that ships with your Worker                  |
 
 The SDK uses the `.agents/skills/` folder convention that several agents share, so `/workspace/.agents/skills/` in a Workspace holds the agent's skills. The model loads skills with the [skill tools](/agents/tools/skills/) `activate_skill` and `read_skill_resource`. With a Workspace backend, the model runs skill scripts with the Workspace `exec` tool. Refer to [Execution](/agents/skills/execution/).
 
@@ -133,5 +133,5 @@ The SDK uses the `.agents/skills/` folder convention that several agents share, 
 
 - [Agent Skills](/agents/skills/): use skills in Think, Pi, and the AI SDK
 - [Skills tools](/agents/tools/skills/): add the skill tools to your harness
-- [Conversation state and memory](/agents/concepts/conversation-state-and-memory/): how skills compare to other kinds of context
+- [Sessions](/agents/concepts/sessions/): the transcript, where a loaded skill's instructions are kept
 - [Agent Skills specification](https://agentskills.io/specification): the full format

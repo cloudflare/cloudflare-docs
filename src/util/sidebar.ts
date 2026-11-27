@@ -293,7 +293,9 @@ function getExternalBadge(href: string): SidebarBadge | undefined {
 // Basin and Stream WebRTC are generally available, but the remote availability
 // feed may still report the preserved pre-GA product IDs as beta during the
 // rename rollout.
+// Cloud Connector is also GA, but the availability feed still reports Beta.
 const AUTO_BETA_BADGE_EXCLUSIONS = new Set([
+	"/rules/cloud-connector/",
 	"/realtime/",
 	"/basin/",
 	"/basin-pipelines/",
