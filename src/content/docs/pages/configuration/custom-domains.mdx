@@ -8,7 +8,7 @@ products:
 
 import { Render, DashButton, Steps } from "~/components";
 
-When deploying your Pages project, you may wish to point custom domains (or subdomains) to your site.
+When deploying your Pages project, you can point custom domains (or subdomains) to your site. For custom domains on Cloudflare Workers, refer to [Workers Custom Domains](/workers/configuration/routing/custom-domains/).
 
 ## Add a custom domain
 
@@ -93,7 +93,7 @@ Some settings are managed separately from your zone:
 | Setting                                                          | Pages behavior                                                                                                                                                                                                                                                                                                                         |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Minimum Transport Layer Security (TLS) version and cipher suites | Pages manages these settings for the custom hostname. Your zone's [minimum TLS version](/ssl/edge-certificates/additional-options/minimum-tls/#availability) and [cipher suites](/ssl/edge-certificates/additional-options/cipher-suites/#limitations) settings do not apply. You cannot customize these settings for Pages hostnames. |
-| Browser Integrity Check                                          | Pages can block a request even when you turn off or skip Browser Integrity Check in your zone. Refer to [Browser Integrity Check on Pages](/pages/platform/known-issues/#browser-integrity-check).                                                                                                                                     |
+| Browser Integrity Check                                          | Pages can block a request even when you turn off or skip Browser Integrity Check in your zone. Refer to [Browser Integrity Check on Pages](/pages/platform/known-issues/#browser-integrity-check-on-pages).                                                                                                                            |
 | Early Hints                                                      | Pages enables Early Hints independently of your zone's setting. Refer to [Early Hints](/pages/configuration/early-hints/#disable-early-hints-on-pages).                                                                                                                                                                                |
 
 With a DNS-only record or an external DNS provider, requests do not pass through your zone's HTTP settings. Pages-managed settings still apply.
@@ -112,7 +112,7 @@ This can cause issues when adding a [custom domain](/pages/configuration/custom-
 
 To resolve this, add the necessary CAA records to allow Cloudflare to issue a certificate for your custom domain.
 
-```
+```txt
 example.com.            300     IN      CAA     0 issue "letsencrypt.org"
 example.com.            300     IN      CAA     0 issue "pki.goog; cansignhttpexchanges=yes"
 example.com.            300     IN      CAA     0 issue "ssl.com"
@@ -125,7 +125,7 @@ Refer to the [Certification Authority Authorization (CAA) FAQ](/ssl/faq/#caa-rec
 
 ### Change DNS entry away from Pages and then back again
 
-Once a custom domain is set up, if you change the DNS entry to point to something else (for example, your origin), the custom domain will become inactive. If you then change that DNS entry to point back at your custom domain, anybody using that DNS entry to visit your website will get errors until it becomes active again. If you want to redirect traffic away from your Pages project temporarily instead of changing the DNS entry, it would be better to use an [Origin rule](/rules/origin-rules/) or a [redirect rule](/rules/url-forwarding/single-redirects/create-dashboard/) instead.
+Once a custom domain is set up, if you change the DNS entry to point to something else (for example, your origin), the custom domain will become inactive. If you then change that DNS entry to point back at your Pages project (`<YOUR_SITE>.pages.dev`), anybody using that DNS entry to visit your website will get errors until it becomes active again. If you want to redirect traffic away from your Pages project temporarily instead of changing the DNS entry, it is better to use an [Origin Rule](/rules/origin-rules/) or a [Redirect Rule](/rules/url-forwarding/single-redirects/create-dashboard/) instead.
 
 ## Relevant resources
 

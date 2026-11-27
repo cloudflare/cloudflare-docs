@@ -31,13 +31,13 @@ entries:
   - publish_date: "2024-10-24"
     title: Updating Bun version to 1.1.33 in V2 build system
     description: |-
-      * Bun version is being updated from `1.0.1` to `1.1.33` in Pages V2 build system. This is a minor version change, please see details at [Bun](https://bun.sh/blog/bun-v1.1.33).
-      * If you wish to use a previous Bun version, you can [override default version](/pages/configuration/build-image/#overriding-default-versions).
+      * Bun version is being updated from `1.0.1` to `1.1.33` in Pages V2 build system. This is a minor version change; refer to [Bun](https://bun.sh/blog/bun-v1.1.33) for details.
+      * If you wish to use a previous Bun version, you can [override the default version](/pages/configuration/build-image/#override-default-versions).
   - publish_date: "2023-09-13"
     title: Support for D1's new storage subsystem and build error message improvements
     description: |-
       * Added support for D1's [new storage subsystem](https://blog.cloudflare.com/d1-turning-it-up-to-11/). All Git builds and deployments done with Wrangler v3.5.0 and up can use the new subsystem.
-      * Builds which fail due to exceeding the [build time limit](https://developers.cloudflare.com/pages/platform/limits/#builds) will return a proper error message indicating so rather than `Internal error`.
+      * Builds which fail due to exceeding the [build time limit](/pages/platform/limits/#builds) will return a proper error message indicating so rather than `Internal error`.
       * New and improved error messages for other build failures
   - publish_date: "2023-08-23"
     title: Commit message limit increase
@@ -105,7 +105,7 @@ entries:
       - We also made the following updates to Functions:
         - [Functions metrics](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/analytics/production) are now available in the dashboard.
         - [Functions billing](/pages/functions/pricing/) is now available.
-        - The [Unbound usage model](/workers/platform/limits/#response-limits) is now available for Functions.
+        - The [Unbound usage model](/workers/platform/limits/#request-and-response-limits) is now available for Functions.
         - [Secrets](/pages/functions/bindings/#secrets) are now available.
         - Functions tailing is now available via the [dashboard](https://dash.cloudflare.com?to=/:account/pages/view/:pages-project/:pages-deployment/functions) or with Wrangler (`wrangler pages deployment tail`).
   - publish_date: "2022-11-15"
@@ -145,7 +145,7 @@ entries:
   - publish_date: "2022-07-05"
     title: Added support for .dev.vars in wrangler pages
     description: |-
-      Pages now supports `.dev.vars` in `wrangler pages`, which allows you to use use environmental variables during your local development without chaining `--env`s.
+      Pages now supports `.dev.vars` in `wrangler pages`, which allows you to use environment variables during your local development without chaining `--env`s.
 
       This functionality requires Wrangler v2.0.16 or higher.
   - publish_date: "2022-06-13"

@@ -6,11 +6,22 @@ products:
   - pages
 ---
 
-Rollbacks allow you to instantly revert your project to a previous production deployment.
+import { DashButton, Steps } from "~/components";
 
-Any production deployment that has been successfully built, and has not been deleted, is a valid rollback target. Deployments older than 30 days are deleted, except your 100 most recent and your current production deployment, and you cannot roll back to a deleted deployment. For more information, refer to [Deployments limits](/pages/platform/limits/#deployments). When your project has rolled back to a previous deployment, you may still rollback to deployments that are newer than your current version. Note that preview deployments are not valid rollback targets.
+Rollbacks allow you to instantly revert your project to a previous production deployment. For rollbacks and gradual deployments on Cloudflare Workers, refer to [Workers Rollbacks](/workers/versions-and-deployments/rollbacks/).
 
-In order to perform a rollback, go to **Deployments** in your Pages project. Browse the **All deployments** list and select the three dotted actions menu for the desired target. Select **Rollback to this deployment** for a confirmation window to appear. When confirmed, your project's production deployment will change instantly.
+Any production deployment that has been successfully built, and has not been deleted, is a valid rollback target. Deployments older than 30 days are deleted, except your 100 most recent and your current production deployment, and you cannot roll back to a deleted deployment. For more information, refer to [Deployments limits](/pages/platform/limits/#deployments). When your project has rolled back to a previous deployment, you may still roll back to deployments that are newer than your current version. Note that preview deployments are not valid rollback targets.
+
+To perform a rollback:
+
+<Steps>
+1. In the Cloudflare dashboard, go to the **Workers & Pages** page.
+
+   <DashButton url="/?to=/:account/workers-and-pages" />
+2. Select your Pages project and go to **Deployments**.
+3. Browse the **All deployments** list, select the three-dot actions menu for the desired target, and select **Rollback to this deployment**.
+4. Confirm in the dialog window to update your production deployment.
+</Steps>
 
 ![Deployments for your Pages project that can be used for rollbacks](~/assets/images/pages/platform/rollbacks.png)
 
@@ -18,3 +29,4 @@ In order to perform a rollback, go to **Deployments** in your Pages project. Bro
 
 - [Preview Deployments](/pages/configuration/preview-deployments/)
 - [Branch deployment controls](/pages/configuration/branch-build-controls/)
+- [Workers Rollbacks](/workers/versions-and-deployments/rollbacks/)
