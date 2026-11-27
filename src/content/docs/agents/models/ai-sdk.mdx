@@ -294,7 +294,7 @@ const result = streamText({
 
 AI Gateway names each streamed run in the `cf-aig-run-id` header and keeps its events. If the connection drops mid-stream, the provider reconnects through the binding and replays the run from the last complete event. Your stream continues with nothing lost or repeated. The run keeps going on the gateway while the connection is down, so the resumed stream continues the same answer.
 
-The provider gives up and throws a `CloudflareAIError` after five drops in one stream, or once the gateway no longer holds the run. The gateway keeps a run for a few minutes after it ends. Aborting the call never resumes it.
+The provider reconnects up to five times in one stream. The stream fails if the connection drops again after the fifth reconnect. It also fails if a reconnect request fails, such as when the gateway no longer holds the run. The gateway keeps a run for a few minutes after it ends. Aborting the call never resumes it.
 
 Workers AI `@cf/` streams and model objects have no run id, so they do not resume. The run id is in `providerMetadata.cloudflare.runId`.
 
@@ -465,7 +465,7 @@ Only `model` is always present. Check for the other fields before you use them.
 
 ## Handle errors
 
-The provider throws `CloudflareAIError`, which extends the AI SDK's `APICallError`, for Workers AI failures, AI Gateway failures, failed stream resumes, and a fallback chain where every model failed. The AI SDK's retry loop reads its `isRetryable` flag:
+The provider throws `CloudflareAIError`, which extends the AI SDK's `APICallError`, for Workers AI and AI Gateway request failures and when every model in a fallback chain fails. The AI SDK's retry loop reads its `isRetryable` flag:
 
 ```ts
 import { CloudflareAIError } from "agents/models/ai-sdk";
@@ -475,10 +475,11 @@ try {
 } catch (error) {
 	if (error instanceof CloudflareAIError) {
 		console.log(error.status, error.code, error.logId, error.model);
-		// error.attempts lists every fallback model that failed.
 	}
 }
 ```
+
+When every model in a fallback chain fails before producing output, `error.attempts` lists the failed attempts in order, starting with the primary model. If you call a model without fallbacks, `error.attempts` is `undefined`.
 
 `code` is one of `"auth"`, `"rate-limit"`, `"not-found"`, `"bad-request"`, `"provider-error"`, `"gateway-error"`, or `"unknown"`.
 
