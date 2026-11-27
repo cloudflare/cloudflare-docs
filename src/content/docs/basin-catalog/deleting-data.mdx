@@ -17,6 +17,8 @@ import {
 
 Deleting data from Basin Catalog or any Apache Iceberg catalog requires that operations are done in a transaction through the catalog itself. Manually deleting metadata or data files directly can lead to data catalog corruption.
 
+When Basin Catalog is enabled on a bucket, the dashboard warns you before you upload objects, delete objects, or change lifecycle rules in the bucket. Wrangler warns you before you delete objects. These operations can leave the catalog in an invalid state. Use your Iceberg engine to delete data instead.
+
 ## Automatic table maintenance
 
 Basin Catalog can automatically manage table maintenance operations such as snapshot expiration and compaction. These continuous operations help keep latency and storage costs down.
@@ -85,25 +87,45 @@ spark.sql("""
 # Removes table from catalog but keeps data files in R2 storage
 spark.sql("DROP TABLE r2dc.namespace.table_name")
 
-# ⚠️  DANGER: Permanently deletes all data files from R2
+# ⚠️  DANGER: Removes the table and schedules deletion of all its files in R2
 # This operation cannot be undone
 spark.sql("DROP TABLE r2dc.namespace.table_name PURGE")
 
-# Use CASCADE to drop all tables within the namespace
-spark.sql("DROP NAMESPACE r2dc.namespace_name CASCADE")
-
-# You will need to PURGE the tables before running CASCADE to permanently delete data files
-# This can be done with a loop over all tables in the namespace
+# A namespace must be empty before you can drop it
+# Iceberg ignores CASCADE, so drop or purge each table first
 tables = spark.sql("SHOW TABLES IN r2dc.namespace_name").collect()
 for row in tables:
     table_name = row['tableName']
     spark.sql(f"DROP TABLE r2dc.namespace_name.{table_name} PURGE")
-spark.sql("DROP NAMESPACE r2dc.namespace_name CASCADE")
+spark.sql("DROP NAMESPACE r2dc.namespace_name")
 ```
 
+A namespace that contains tables, views, or child namespaces cannot be dropped. Basin Catalog returns `409`, as the [Iceberg REST specification](/basin-catalog/reference/iceberg-rest-api/#namespaces) defines. Spark accepts `DROP NAMESPACE ... CASCADE`, but the Iceberg Spark catalog does not drop the tables in the namespace.
+
 :::caution[Data loss warning]
-`DROP TABLE ... PURGE` permanently deletes all data files from R2 storage. This operation cannot be undone and bypasses time-travel capabilities.
+`DROP TABLE ... PURGE` permanently deletes all data files from R2 storage after a grace period. This operation cannot be undone and bypasses time-travel capabilities.
 :::
+
+### Purge a table
+
+To purge a table, drop it with `purgeRequested=true`. Spark sends this parameter for `DROP TABLE ... PURGE`. PyIceberg sends it for `catalog.purge_table()`.
+
+When you purge a table, Basin Catalog does the following:
+
+1. Removes the table from the catalog immediately. The table can no longer be loaded or queried.
+2. Waits for a grace period. The default grace period is six days.
+3. Deletes all files under the table location in R2, including data files and metadata files.
+
+If table maintenance is running on the table when you purge it, Basin Catalog waits up to 60 hours after the maintenance run started before it deletes files.
+
+To change the grace period for a table or namespace, set the `cloudflare-data-catalog.deletion.grace-period-seconds` property. Set it before you drop the table. For more information, refer to [Table properties](/basin-catalog/reference/table-properties/#cloudflare-data-catalogdeletiongrace-period-seconds).
+
+Basin Catalog cannot restore a purged table, even during the grace period.
+
+Purging has these requirements:
+
+- The catalog must have a valid [maintenance credential](/basin-catalog/manage-catalogs/#manage-the-maintenance-credential) when the grace period ends. If it does not, Basin Catalog does not delete the files, and the files remain in your bucket.
+- The catalog must still exist when the grace period ends. [Deleting the catalog](/basin-catalog/manage-catalogs/#delete-a-catalog) cancels pending purges.
 
 ### Manual maintenance operations
 
@@ -203,7 +225,7 @@ These operations work the same way for both COW and MOR tables:
 | ---------------------- | ------------------------------- | ----------------------- | ------------------------- |
 | `DELETE FROM`          | Removes rows matching condition | No (marked for cleanup) | Via time travel[^1]       |
 | `DROP TABLE`           | Removes table from catalog      | No                      | Yes (if data files exist) |
-| `DROP TABLE ... PURGE` | Removes table and deletes data  | **Yes**                 | **No**                    |
+| `DROP TABLE ... PURGE` | Removes table and deletes data  | **Yes**, after a grace period | **No**              |
 | `expire_snapshots`     | Cleans up old snapshots/files   | **Yes**                 | **No**                    |
 | `remove_orphan_files`  | Removes unreferenced files      | **Yes**                 | **No**                    |
 
