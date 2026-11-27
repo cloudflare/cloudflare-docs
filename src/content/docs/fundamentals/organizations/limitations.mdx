@@ -48,7 +48,7 @@ Account moves and other account-scoped operations are also outside this matrix. 
 | Moving accounts | Accounts cannot be moved between Organizations. |
 | Roles | Organization Super Administrator is the only role available. Additional roles (read-only, billing, audit log) will be available in a future release. |
 | Organization deletion | To delete an Organization, use the [API](/api/resources/organizations/methods/delete). Dashboard support is not yet available. |
-| Account removal | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
+| Account removal | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). When removed, the account becomes standalone — all zones, configurations, members, and resources are preserved. **Removing an account is not the same as [deleting an account](/fundamentals/user-profiles/delete-account/) — account deletion is permanent and cannot be undone.** |
 
 ## MSSP/Distributor Organizations
 
@@ -61,7 +61,7 @@ Account moves and other account-scoped operations are also outside this matrix. 
 | Moving accounts | Accounts can be moved between MSSP Organizations within the same Distributor Organization. |
 | Roles | Organization Super Administrator is the only role available. Additional roles (read-only, billing, audit log) will be available in a future release. |
 | Organization deletion | To delete an Organization, use the [API](/api/resources/organizations/methods/delete). Dashboard support is not yet available. |
-| Account removal | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). |
+| Account removal | Self-service account removal is not yet available. To remove an account from your Organization, contact [Cloudflare Support](/support/contacting-cloudflare-support/). When removed, the account becomes standalone — all zones, configurations, members, and resources are preserved. **Removing an account is not the same as [deleting an account](/fundamentals/user-profiles/delete-account/) — account deletion is permanent and cannot be undone.** |
 | Organization type conversion | Organization type (Enterprise vs MSSP/Distributor) is set at creation and cannot be changed. To switch types, a new Organization must be created. |
 
 ## Troubleshooting

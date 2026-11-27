@@ -8,7 +8,7 @@ products:
   - workers-vpc
 ---
 
-import { WranglerConfig } from "~/components";
+import { TypeScriptExample, WranglerConfig } from "~/components";
 
 VPC Networks allow your Workers to access any service in your private network without pre-registering individual hosts or ports. You can bind to a specific [Cloudflare Tunnel](/workers-vpc/configuration/tunnel/) to reach any service behind that tunnel, or bind to [Cloudflare Mesh](/mesh/) to reach any Mesh node, client device, subnet route or hostname route announced through Cloudflare Tunnel or Mesh, or destination reachable through a [Cloudflare WAN](/cloudflare-wan/) on-ramp (GRE, IPsec, or CNI).
 
@@ -48,7 +48,7 @@ The `remote` flag must be set to `true` to enable remote bindings during local d
 
 ## Bind to Cloudflare Mesh
 
-[Cloudflare Mesh](/mesh/) (formerly WARP Connector) connects your services, devices, and Workers through Cloudflare's global network. When you bind a Worker to Cloudflare Mesh using `network_id: "cf1:network"`, your Worker can reach:
+[Cloudflare Mesh](/mesh/) (formerly WARP Connector) connects your services, devices, and Workers through Cloudflare's global network. When you bind a Worker using `network_id: "cf1:network"`, the binding uses your account's default virtual network. Your Worker can reach:
 
 - Any Mesh node or client device in your account
 - Subnet routes and hostname routes announced through Cloudflare Tunnel or Cloudflare Mesh
@@ -68,7 +68,7 @@ Gateway drops HTTP traffic from Workers VPC if it matches a [Forward policy](/cl
 
 :::note
 
-Your account must have at least one active [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), [Cloudflare Mesh](/mesh/) node, or [Cloudflare WAN](/cloudflare-wan/) on-ramp that can reach the target services.
+To reach **private** destinations, your account must have at least one active [Cloudflare Tunnel](/cloudflare-one/networks/connectors/cloudflare-tunnel/), [Cloudflare Mesh](/mesh/) node, or [Cloudflare WAN](/cloudflare-wan/) on-ramp that can reach the target services. This requirement does not apply to public Internet destinations. Refer to [Egress to the public Internet](#egress-to-the-public-internet).
 
 For destinations behind Cloudflare WAN on-ramps (GRE, IPsec, or CNI), your network must also route the [Cloudflare source IP range](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/) (`100.64.0.0/12` by default) back through the on-ramp so reply traffic returns to Cloudflare. This is part of standard Cloudflare WAN onboarding. If you have already configured this for Gateway, Load Balancing, or other Cloudflare services that reach your private network through Cloudflare WAN, no additional setup is required.
 
@@ -89,6 +89,98 @@ Bind to Cloudflare Mesh using `network_id: "cf1:network"`:
 }
 ```
 </WranglerConfig>
+
+## Egress to the public Internet
+
+A binding with `network_id: "cf1:network"` sends your Worker's traffic to public Internet destinations through [Cloudflare Gateway](/cloudflare-one/traffic-controls/). Gateway enforces your [DNS](/cloudflare-one/traffic-controls/dns-policies/), [HTTP](/cloudflare-one/traffic-controls/http-policies/), and [Network](/cloudflare-one/traffic-controls/network-policies/) policies and logs the traffic.
+
+You do not need a Cloudflare Tunnel, Cloudflare Mesh node, or Cloudflare WAN on-ramp to egress to public destinations. The only dependency is Cloudflare Gateway: your account needs a Zero Trust organization with Gateway set up, and you must [turn on the Gateway proxy](/cloudflare-one/traffic-controls/proxy/#turn-on-the-gateway-proxy) for Network and HTTP policies to apply.
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "EGRESS",
+      "network_id": "cf1:network",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+Call `fetch()` on the binding to send a request through Gateway:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+export default {
+	async fetch(_request: Request, env: Env): Promise<Response> {
+		return env.EGRESS.fetch("https://api.example.com/data");
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
+
+When you route Worker egress through Gateway, note these behaviors:
+
+- Only calls made on the binding go through Gateway. A global `fetch()` does not.
+- The binding works in request handlers, Durable Object alarms, Queue consumers, and Cron Triggers, because it is part of the Worker version.
+- [Service bindings](/workers/runtime-apis/bindings/service-bindings/) between Workers stay inside Cloudflare. They never reach the public Internet and do not use an egress IP.
+- `connect()` supports plaintext TCP only. Refer to [TCP via `connect()`](#tcp-via-connect).
+
+### Use dedicated egress IPs
+
+Gateway [dedicated egress IPs](/cloudflare-one/traffic-controls/egress-policies/dedicated-egress-ips/) and [egress policies](/cloudflare-one/traffic-controls/egress-policies/) apply to Network and HTTP traffic that Gateway proxies, including traffic from a `cf1:network` binding. Dedicated egress IPs are an add-on to Zero Trust Enterprise plans.
+
+Configure a fallback egress IP in every egress policy. Without one, traffic that does not match a policy can fall back to the shared Cloudflare egress range.
+
+[Dedicated CDN Egress IPs](/smart-shield/configuration/dedicated-egress-ips/) from Smart Shield are a different product. They cover proxied HTTP and HTTPS traffic from Cloudflare to your origin, and `connect()` does not use them. They do not give you static IP addresses for traffic you send through `cf1:network`.
+
+## Select a virtual network
+
+Set `network_id` to `cf1:vnet:<VNET_UUID>` to access services through a specific configured [virtual network](/cloudflare-one/networks/virtual-networks/). Separate bindings can select different virtual networks, including when those networks use overlapping IP ranges.
+
+For example, the following bindings select production and staging virtual networks:
+
+<WranglerConfig>
+```jsonc
+{
+  "vpc_networks": [
+    {
+      "binding": "PRODUCTION",
+      "network_id": "cf1:vnet:<PRODUCTION_VNET_UUID>",
+      "remote": true
+    },
+    {
+      "binding": "STAGING",
+      "network_id": "cf1:vnet:<STAGING_VNET_UUID>",
+      "remote": true
+    }
+  ]
+}
+```
+</WranglerConfig>
+
+Each binding can reach a different backend at the same private IP address:
+
+<TypeScriptExample filename="src/index.ts">
+```ts
+export default {
+	async fetch(_request: Request, env: Env): Promise<Response> {
+		const production = await env.PRODUCTION.fetch(
+			"http://10.0.1.50/status",
+		);
+		const staging = await env.STAGING.fetch("http://10.0.1.50/status");
+
+		return Response.json({
+			production: await production.text(),
+			staging: await staging.text(),
+		});
+	},
+} satisfies ExportedHandler<Env>;
+```
+</TypeScriptExample>
 
 ## Runtime usage
 
@@ -136,7 +228,7 @@ When a VPC Network cannot establish a TCP connection, `connect()` throws an exce
 
 :::note
 
-`connect()` over VPC Networks currently supports plaintext TCP only.
+`connect()` over VPC Networks currently supports plaintext TCP only. Workers VPC does not establish TLS for `connect()`, so destinations that require implicit TLS, such as SMTP on port 465, are not supported. To reach an HTTPS destination, use `fetch()` with an `https://` URL.
 
 :::
 
@@ -155,17 +247,17 @@ Traffic sent through a VPC Network binding appears in [Gateway network logs](/cl
 VPC Networks and [VPC Services](/workers-vpc/configuration/vpc-services/) both connect Workers to private infrastructure, but they make different trade-offs.
 
 - **Use VPC Services** when you have a known set of targets and want each binding scoped to a specific host and port.
-- **Use VPC Networks** when you need broader access — an entire Cloudflare Tunnel or all of Cloudflare Mesh — and want the URL in your `fetch()` call to control routing at runtime.
+- **Use VPC Networks** when you need broad access — an entire Cloudflare Tunnel or routes in a virtual network — and want the URL in your `fetch()` call to control routing at runtime.
 
 The following table summarizes the differences:
 
-| Feature              | VPC Networks                                                                  | VPC Services              |
-| -------------------- | ----------------------------------------------------------------------------- | ------------------------- |
-| Scope                | A single Cloudflare Tunnel, or Cloudflare Mesh and Cloudflare WAN routes      | Specific host + port      |
-| Configuration        | `tunnel_id` (single Cloudflare Tunnel) or `cf1:network` (account-wide)        | `service_id`              |
-| Protocols            | HTTP (`fetch()`) and TCP (`connect()`)                                        | HTTP (`fetch()`) or TCP (via [Hyperdrive](/hyperdrive/)) |
-| Service registration | Not required                                                                  | Required for each target  |
-| Use when             | Dynamic discovery, network-wide access, reaching services across your account | Fixed, cataloged services |
+| Feature              | VPC Networks                                                       | VPC Services              |
+| -------------------- | ------------------------------------------------------------------ | ------------------------- |
+| Scope                | Cloudflare Tunnel or routes in a virtual network                  | Specific host + port      |
+| Configuration        | `tunnel_id`, `cf1:network`, or `cf1:vnet:<UUID>`                   | `service_id`              |
+| Protocols            | HTTP (`fetch()`) and TCP (`connect()`)                             | HTTP (`fetch()`) or TCP (via [Hyperdrive](/hyperdrive/)) |
+| Service registration | Not required                                                       | Required for each target  |
+| Use when             | Dynamic discovery or access to routes in a virtual network         | Fixed, cataloged services |
 
 ## Next steps
 

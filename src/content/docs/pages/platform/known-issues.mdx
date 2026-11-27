@@ -52,6 +52,30 @@ Here are some known bugs and issues with Cloudflare Pages:
 
 - [Advanced Certificates](/ssl/edge-certificates/advanced-certificate-manager/) cannot be used with Cloudflare Pages due to Cloudflare for SaaS's [certificate prioritization](/ssl/reference/certificate-and-hostname-priority/).
 
+## Browser Integrity Check on Pages
+
+All requests to a Pages project are evaluated by [Browser Integrity Check](/waf/tools/browser-integrity-check/) (BIC) on the Cloudflare-managed `pages.dev` zone. This includes requests to your `*.pages.dev` subdomain and requests made through a [custom domain](/pages/configuration/custom-domains/).
+
+- You cannot turn off this check for a Pages project.
+- Turning off BIC in your own zone, or adding a [custom rule](/waf/custom-rules/skip/) or [configuration rule](/rules/configuration-rules/) that skips or turns off BIC, only affects your zone. It does not affect the check on the `pages.dev` zone.
+- Clients that send some default library `User-Agent` headers (for example, the default Python `urllib` user agent) receive an HTTP `403` response with [error 1010](/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1010/).
+
+To allow automated clients to reach your Pages project:
+
+1. **Recommended:** Configure the client to send a descriptive `User-Agent` header that identifies your application. The client does not need to send a browser user agent. For example, in Python:
+
+   ```python
+   import urllib.request
+
+   req = urllib.request.Request(
+       "https://example.com/data.json",
+       headers={"User-Agent": "my-app/1.0 (+https://example.com)"},
+   )
+   urllib.request.urlopen(req)
+   ```
+
+2. If you need full control over Browser Integrity Check, and your domain's nameservers are managed by Cloudflare, serve your site with [Workers static assets](/workers/static-assets/) on a [Custom Domain](/workers/configuration/routing/custom-domains/) or [route](/workers/configuration/routing/routes/) in your zone. Your zone's Browser Integrity Check settings and rules then apply. Refer to [Migrate from Pages to Workers](/workers/static-assets/migration-guides/migrate-from-pages/).
+
 ## Pages Functions
 
 - [Functions](/pages/functions/) does not currently support adding/removing polyfills, so your bundler (for example, webpack) may not run.
@@ -118,7 +142,7 @@ set -euo pipefail
 project="${1:?usage: $0 <project-name> [parallelism]}"
 parallel="${2:-5}"
 
-deployments=$(npx --no-install wrangler pages deployment list \
+deployments=$(npx --yes wrangler pages deployment list \
     --project-name "$project" --json)
 
 prod_id=$(jq -r '[.[] | select(.Environment == "Production")][0].Id // empty' <<<"$deployments")
@@ -140,7 +164,7 @@ fi
 echo "Production: $prod_id. Deleting $count preview deployments..."
 
 failed=$(printf '%s\n' "$to_delete" | xargs -n1 -P "$parallel" -I{} \
-    sh -c 'npx --no-install wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
+    sh -c 'npx --yes wrangler pages deployment delete "$1" --project-name "$2" --force >/dev/null 2>&1 \
            || echo "$1"' _ {} "$project")
 
 if [ -n "$failed" ]; then
@@ -164,7 +188,7 @@ param(
 $ErrorActionPreference = "Stop"
 $env:CLOUDFLARE_ACCOUNT_ID = $env:CLOUDFLARE_ACCOUNT_ID  # ensure inherited into runspaces
 
-$deployments = npx --no-install wrangler pages deployment list `
+$deployments = npx --yes wrangler pages deployment list `
     --project-name $ProjectName --json | ConvertFrom-Json
 
 $prod = $deployments | Where-Object { $_.Environment -eq "Production" } | Select-Object -First 1
@@ -183,7 +207,7 @@ Write-Output "Production: $($prod.Id). Deleting $($toDelete.Count) preview deplo
 
 $results = $toDelete | ForEach-Object -Parallel {
     $id = $_.Id
-    npx --no-install wrangler pages deployment delete $id `
+    npx --yes wrangler pages deployment delete $id `
         --project-name $using:ProjectName --force *> $null
     [pscustomobject]@{ Id = $id; ExitCode = $LASTEXITCODE }
 } -ThrottleLimit $Throttle

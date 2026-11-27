@@ -273,6 +273,8 @@ Example:
 
 [Automatic Return Routing](/cloudflare-wan/reference/traffic-steering/#automatic-return-routing) allows Cloudflare to track network flows from your Cloudflare WAN (formerly Magic WAN) connected locations, ensuring return traffic is routed back to the connection where it was received without requiring static or dynamic routes. This functionality requires [Unified Routing mode](/cloudflare-wan/reference/traffic-steering/#unified-routing).
 
+For traffic between a Cloudflare WAN connection with ARR enabled and another Cloudflare WAN connection, Cloudflare will source NAT the traffic to a [Cloudflare Source IP](/cloudflare-wan/configuration/how-to/configure-cloudflare-source-ips/). The destination must route replies to this prefix back to Cloudflare. Allow the prefix in destination-side firewall rules as needed.
+
 To enable ARR:
 
 <Tabs syncKey="dashPlusAPI"> <TabItem label="Dashboard">

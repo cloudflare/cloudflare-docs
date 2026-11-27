@@ -40,7 +40,7 @@ Find your task and read the listed reference(s). Paths are relative to this skil
 | Write or edit a documentation page             | `references/writing-docs.md` (the authoring workflow — start here)                                       |
 | Decide which `pcx_content_type` and page shape | `references/content-types.md`                                                                            |
 | Decide how to present data / which component   | `references/choosing-components.md`                                                                      |
-| Decide where a page belongs, redirects, reuse  | `references/information-architecture.md`                                                                 |
+| Where a page belongs, redirects, reuse, stubs  | `references/information-architecture.md`                                                                 |
 | Look up writing and formatting rules           | `.agents/references/style-guide.md` (canonical) and `.agents/references/procedures.md` for step-by-steps |
 | Look up a component's props and examples       | `.agents/references/components.md`                                                                       |
 | Add or edit a changelog entry                  | `references/changelog.md`                                                                                |

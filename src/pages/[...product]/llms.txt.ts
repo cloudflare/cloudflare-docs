@@ -102,7 +102,9 @@ export const getStaticPaths = (async () => {
 			return {
 				params: { product: urlPath },
 				props: { entry, pages, navigationPages, models },
-				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest ?? model.id).join(",")}`,
+				// Directory-only pages are not listed, but their title and sidebar order
+				// name and place sections, so their digests must invalidate the page.
+				cacheKey: `${entry.digest}:${pages.map((p) => p.digest).join(",")}:${navigationPages.map((p) => p.digest).join(",")}:${models.map((model) => model.digest ?? model.id).join(",")}`,
 			};
 		})
 		.filter((p): p is NonNullable<typeof p> => p !== null);
@@ -145,11 +147,7 @@ export const getStaticPaths = (async () => {
 		const productUrl = `/${product.params.product}/`;
 		const delegatedIndexes = getDelegatedIndexes(productUrl, indexes);
 		const cacheKey = isInDelegatingLlmsTree(productUrl)
-			? [
-					product.cacheKey,
-					product.props.navigationPages.map((page) => page.digest).join(","),
-					JSON.stringify(delegatedIndexes),
-				].join(":")
+			? [product.cacheKey, JSON.stringify(delegatedIndexes)].join(":")
 			: product.cacheKey;
 
 		return {
@@ -283,14 +281,17 @@ function buildSections(
 		sectionMap.get(sectionId)!.delegatedIndexes.push(index);
 	}
 
-	if (hasDelegation) {
-		for (const [sectionId, section] of sectionMap) {
-			const metadataPage = metadataPages.get(sectionId);
-			if (metadataPage) {
-				section.label =
-					getSidebarGroupLabel(metadataPage) ?? metadataPage.data.title;
-				section.order = getSidebarOrder(metadataPage);
-			}
+	for (const [sectionId, section] of sectionMap) {
+		// A section whose index page only renders a directory listing is left
+		// out of `pages`, but its title and sidebar order still name and place
+		// the section.
+		if (!hasDelegation && section.indexPage) continue;
+		const metadataPage = metadataPages.get(sectionId);
+		if (metadataPage) {
+			section.label = hasDelegation
+				? (getSidebarGroupLabel(metadataPage) ?? metadataPage.data.title)
+				: metadataPage.data.title;
+			section.order = getSidebarOrder(metadataPage);
 		}
 	}
 

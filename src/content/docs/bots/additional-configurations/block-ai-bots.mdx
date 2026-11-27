@@ -1,7 +1,7 @@
 ---
-pcx_content_type: reference
-title: Block AI Bots
-description: Block AI crawlers and scrapers from accessing your website content.
+pcx_content_type: configuration
+title: AI Crawler and Agent access policies
+description: Configure how Cloudflare handles AI crawlers, agents, and training bots.
 products:
   - bots
 tags:
@@ -9,37 +9,63 @@ tags:
   - Scraping
 sidebar:
   order: 6
-  label: Block AI Bots
+  label: AI Crawler and Agent access policies
 ---
 
-## Configure AI bot policies
+import { DashButton, Steps } from "~/components";
 
-### New defaults on September 15, 2026
+:::note
+This feature was previously called **Configure AI bot policies**.
+:::
 
-On September 15, 2026, Cloudflare will set updated defaults for new domains: bots classified as Training or as Agent will be blocked on pages that display ads, and Search will remain allowed. Mixed-purpose crawlers that combine Search and Training will also be blocked by all configurations to block AI training, including the legacy "Block AI bots" option. Before September 15, all customers can [opt out of these new defaults](https://dash.cloudflare.com/?to=/:account/:zone/security/settings).
+## AI Crawler and Agent access policies
 
-All Cloudflare customers can choose to block AI bots and agents based on their behavior. Cloudflare offers presets for the most common AI behaviors to give customers the option to treat different AI use cases distinctly:
+AI Crawler and Agent access policies let you control AI crawler and agent traffic by behavior. You can set actions for Search, Agent, and Training traffic, and customize access for the top Personal Agents.
+
+### Behaviors
+
+Cloudflare offers configuration for the most common AI behaviors:
 
 - **Search**: crawlers that collect or index your content to answer questions about it later.
 - **Agent**: automated activity acting in real time on a person's behalf, such as chat fetch bots and browser-use agents.
 - **Training**: crawlers taking your content to train or fine-tune a model, including mixed-purpose crawlers that are used both for Training and for Search.
 
-Each blocking option will block Verified bots classified with that behavior, plus additional unverified bots that fall under these classifications.
+Each policy applies to Verified bots with that behavior and matching unverified bots.
 
-Each setting includes three mitigation options:
+### Policy actions
 
-- **Block (on all pages)** - Issues the block across the entire zone.
-- **Block on pages with ads** - Uses Cloudflare automated detection for pages that display ads on your zone to block only on those pages.
-- **Allow (do not block)** - Does not add any blocking.
+Choose an action for each behavior. Available actions are:
 
-To configure these policies, customers can go to **Security Settings** > **Configure AI bot policies**.
+| Action                    | Effect                                                                            |
+| ------------------------- | --------------------------------------------------------------------------------- |
+| _Block_                   | Block matching requests across the zone.                                          |
+| _Block on pages with ads_ | Block matching requests on pages where Cloudflare detects ads.                    |
+| _Allow (do not block)_    | Do not block matching requests.                                                   |
+| _Disallow_                | For Training only, tell crawlers not to access your content through `robots.txt`. |
 
-## Block AI bots [Deprecating on September 15, 2026]
+`robots.txt` directives are voluntary. Crawlers can ignore them. When Bot Preference Sync is enabled, **Disallow** also blocks AI training crawlers at Cloudflare's edge. Mixed-purpose crawlers used for both Search and Training are excluded from this edge block.
 
-This setting blocks verified bots that are classified as crawling for the purpose of AI training, as well as a number of unverified bots that behave similarly.
+### Configure policies for existing domains
 
-:::note
-This option excludes mixed-purpose bots that are used both for Training and for Search.
-:::
+To configure these policies for an existing zone:
 
-To configure this setting and set their preference for blocking mixed-purpose bots, customers can go to **Security Settings** > **Block AI bots**.
+<Steps>
+  1. In the Cloudflare dashboard, go to **Security** > **Settings**.
+
+     <DashButton url="/?to=/:account/:zone/security/settings" />
+  2. Filter by **Bot traffic**, then select **AI Crawler and Agent access policies**.
+  3. Select an action for each behavior. For Agents, you can also granularly customize access for the top Personal Agents.
+  4. Select **Save**.
+</Steps>
+
+### Default policies for new domains
+
+For new domains, **Search**, **Agents**, and **Training** use **Allow (do not block)** by default. You can change these defaults after onboarding in **Security** > **Settings** > **AI Crawler and Agent access policies**.
+
+Training actions also apply to mixed-purpose crawlers used for both Search and Training.
+
+### Personal Agent policies
+
+Personal Agents inherit the **Agents** policy by default. Changing the **Agents** policies updates each Personal Agent. You can then choose individual actions again. Cloudflare recommends **Allow (do not block)** for Personal Agents.
+
+You can also configure Personal Agent policies during zone onboarding.

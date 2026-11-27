@@ -1,0 +1,487 @@
+---
+pcx_content_type: how-to
+title: Custom scripts
+description: Run your own Playwright, Puppeteer, or Chrome DevTools Protocol (CDP) automation in a Browser Run session with a single API request, using the /script endpoints.
+sidebar:
+  order: 8.6
+  badge: Beta
+products:
+  - browser-run
+---
+
+import {
+	DashButton,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+
+The `/script` endpoint runs JavaScript you submit against a Browser Run session. Use it for multi-step browser automation such as navigation, form completion, clicking, and extracting data when a pre-built [Quick Action](/browser-run/quick-actions/) does not fit the workflow.
+
+Browser Run executes the submitted function in an isolated Worker connected to the session, so you do not need to deploy a Worker.
+
+## Choose an endpoint
+
+| Endpoint                                                      | Use it when                                                                                                       | Session                                                                                       |
+| ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| [`/script`](#run-a-script-in-a-new-session)                   | You need custom multi-step browser automation and want Browser Run to acquire the browser for you.                | Creates a session and returns its session ID and page target ID in the response headers.      |
+| [`/script/<sessionId>`](#run-a-script-in-an-existing-session) | You want to run follow-up scripts in a session you already hold, from `/script` or from `POST /devtools/browser`. | Reuses an existing session, so several runs can share pages, cookies, and navigation history. |
+
+To compare custom scripts with Quick Actions and other Browser Sessions methods, such as CDP, refer to [Get started](/browser-run/get-started/).
+
+You can call both script endpoints in two ways:
+
+- **REST API**: [create a custom API Token](/fundamentals/api/get-started/create-token/) with `Browser Run - Edit` permission.
+- **Workers binding**: call `env.BROWSER.script()` from a [Cloudflare Worker](/workers/). No API token is needed. Refer to [Use the browser binding](#use-the-browser-binding).
+
+:::note
+The response of both `/script` and `/script/<sessionId>` includes the `X-Browser-Ms-Used` header, which reports the cumulative browser time since the session began. Refer to [Pricing](/browser-run/pricing/).
+:::
+
+## Endpoint
+
+```txt
+https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/script
+```
+
+## Common use cases
+
+- Log in, fill forms, or click through a flow before extracting data
+- Combine several page interactions in one request instead of chaining Quick Actions
+- Run follow-up steps in the same session, keeping cookies and navigation history between runs
+
+## Run a script in a new session
+
+Send a `POST` request to `/script`. Browser Run acquires a browser, pins the run to the session's first page, and executes your function.
+
+The request body requires `code` (string), a JavaScript function expression. Browser Run invokes it with the arguments for the selected [library](#runner-arguments).
+
+### Query parameters
+
+| Parameter    | Type      | Required | Default | Description                                                                                                                                                       |
+| ------------ | --------- | -------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `keep_alive` | `number`  | No       | `60000` | Session idle timeout in milliseconds. The value must be between `10000` and `1200000`, inclusive.                                                                 |
+| `lab`        | `boolean` | No       | `false` | Uses Browser Run's experimental pool when set to `true`. These browser instances enable experimental Chrome features for testing before they reach stable Chrome. |
+| `recording`  | `boolean` | No       | `false` | [Records the browser session](/browser-run/features/session-recording/) when set to `true`.                                                                       |
+| `browser`    | `string`  | No       | —       | Selects the browser backend. The accepted value is `kitesurf`. Refer to [Run a script on Kitesurf](#run-a-script-on-kitesurf).                                    |
+
+:::note[Looking for more parameters?]
+Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/script/methods/create/) for all available parameters, such as selecting the runner with `library` and capping the script run with `timeout`.
+:::
+
+### Basic usage
+
+Go to `https://example.com` with Playwright and return the page title and URL.
+
+```bash
+curl -i -X POST "https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/script?keep_alive=120000" \
+  -H "Authorization: Bearer <apiToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "async ({ page }) => { await page.goto(\"https://example.com\"); return { title: await page.title(), url: page.url() }; }",
+    "library": "playwright",
+    "timeout": 60000
+  }'
+```
+
+Response:
+
+```txt
+HTTP/2 200
+content-type: application/json
+cf-browser-session-id: 8f7c2e3a-1b4d-4c6e-9a0f-2d5b7e9c1a3f
+cf-browser-target-id: A1B2C3D4E5F60718293A4B5C6D7E8F90
+
+{
+  "success": true,
+  "result": {
+    "title": "Example Domain",
+    "url": "https://example.com/"
+  }
+}
+```
+
+Save the `cf-browser-session-id` and `cf-browser-target-id` headers to continue in the same session and page with `/script/<sessionId>`. Every `/script` response carries both headers once the session exists, including non-JSON output and error responses, so you can retry a failed run in the same session.
+
+### Run a script on Kitesurf
+
+With `?browser=kitesurf`, `/script` runs your function on [Kitesurf](/browser-run/kitesurf/), Cloudflare's stateless browser. This path differs from the default one:
+
+- Only the CDP runner is supported. Setting `library` returns `400`.
+- Launch options do not apply. Sending `keep_alive`, `recording`, or `lab` together with `browser` returns `400`.
+- No reusable session is created. The response uses the same `{ "success": true, "result" }` body but has no session headers, and it cannot be continued with `/script/<sessionId>`.
+- Kitesurf runs follow [Kitesurf pricing](/browser-run/kitesurf/).
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/script?browser=kitesurf" \
+  -H "Authorization: Bearer <apiToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "async ({ send }) => { await send(\"Page.navigate\", { url: \"https://example.com\" }); return \"ok\"; }"
+  }'
+```
+
+## Run a script in an existing session
+
+Send a `POST` request to `/script/<sessionId>` to continue in a session returned by `/script`, or in one acquired through [session management](/browser-run/cdp/session-management/) (`POST /devtools/browser`). Browser Run dispatches the run directly to that session. It does not acquire another browser and does not count as a new session against your acquisition limits.
+
+This endpoint takes no query parameters. The session keeps the launch options it was acquired with, including its `keep_alive` idle timeout. The request body requires `code`, as for `/script`.
+
+:::note[Looking for more parameters?]
+Visit the [Browser Run API reference](/api/resources/browser_rendering/subresources/script/methods/execute/) for all available parameters, such as attaching the run to a specific page with `targetId`.
+:::
+
+### Basic usage
+
+```bash
+curl -X POST "https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/script/<sessionId>" \
+  -H "Authorization: Bearer <apiToken>" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "code": "async ({ page }) => ({ url: page.url(), title: await page.title() })",
+    "library": "playwright",
+    "timeout": 30000,
+    "targetId": "A1B2C3D4E5F60718293A4B5C6D7E8F90"
+  }'
+```
+
+Response:
+
+```json
+{
+	"success": true,
+	"result": {
+		"url": "https://example.com/",
+		"title": "Example Domain"
+	}
+}
+```
+
+This endpoint does not return the session headers, because you already know both IDs.
+
+### Continue a session with the SDKs
+
+The SDK `create` method returns only `result`. To continue in the same session, read the `cf-browser-session-id` and `cf-browser-target-id` headers from the raw response, then pass them to `execute`.
+
+<Tabs> <TabItem label="TypeScript SDK">
+
+```typescript
+import Cloudflare from "cloudflare";
+
+const client = new Cloudflare({
+	apiToken: process.env["CLOUDFLARE_API_TOKEN"],
+});
+const accountId = process.env["CLOUDFLARE_ACCOUNT_ID"];
+
+const { data: first, response } = await client.browserRendering.script
+	.create({
+		account_id: accountId,
+		library: "playwright",
+		code: `async ({ page }) => { await page.goto("https://example.com"); return { title: await page.title() }; }`,
+	})
+	.withResponse();
+const sessionId = response.headers.get("cf-browser-session-id");
+const targetId = response.headers.get("cf-browser-target-id");
+
+const second = await client.browserRendering.script.execute(sessionId, {
+	account_id: accountId,
+	library: "playwright",
+	targetId,
+	code: `async ({ page }) => ({ url: page.url() })`,
+});
+```
+
+</TabItem> <TabItem label="Python SDK">
+
+```python
+import os
+from cloudflare import Cloudflare
+
+client = Cloudflare(api_token=os.environ["CLOUDFLARE_API_TOKEN"])
+account_id = os.environ["CLOUDFLARE_ACCOUNT_ID"]
+
+raw = client.browser_rendering.script.with_raw_response.create(
+    account_id=account_id,
+    library="playwright",
+    code='async ({ page }) => { await page.goto("https://example.com"); return { title: await page.title() }; }',
+)
+first = raw.parse()
+session_id = raw.headers["cf-browser-session-id"]
+target_id = raw.headers["cf-browser-target-id"]
+
+second = client.browser_rendering.script.execute(
+    session_id,
+    account_id=account_id,
+    library="playwright",
+    target_id=target_id,
+    code="async ({ page }) => ({ url: page.url() })",
+)
+```
+
+In the Python SDK, the body `timeout` field is named `api_timeout`.
+
+</TabItem> </Tabs>
+
+## Use the browser binding
+
+From a [Worker](/workers/), configure a [browser binding](/browser-run/reference/wrangler/#bindings) and call `script()` directly. No API token is needed when using the binding.
+
+<WranglerConfig>
+
+```toml
+name = "browser-script-example"
+main = "src/index.ts"
+compatibility_date = "$today"
+
+[browser]
+binding = "BROWSER"
+```
+
+</WranglerConfig>
+
+| Call                                      | REST equivalent            | Description                                                                                                                       |
+| ----------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `script(code, options?)`                  | `POST /script`             | Acquires a session and runs `code` in it. `options` accepts `library`, `timeout`, `keepAlive`, `lab`, `recording`, and `browser`. |
+| `script(code, { sessionId, ...options })` | `POST /script/<sessionId>` | Runs `code` in a session you already hold. `options` accepts `library`, `timeout`, and `targetId`.                                |
+
+`script()` returns a `Response` with the same status codes, success body, and headers as the REST endpoints, including `cf-browser-session-id` and `cf-browser-target-id` when it acquires a session. An HTTP error is returned as a `Response`, not thrown. Invalid `options` throw an error before the request is sent, including launch options (`keepAlive`, `lab`, `recording`, or `browser`) passed together with `sessionId`: an existing session keeps the launch options it was acquired with.
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+interface Env {
+	BROWSER: BrowserRun;
+}
+
+export default {
+	async fetch(request, env): Promise<Response> {
+		// Acquire a session and run the first script.
+		const first = await env.BROWSER.script(
+			`async ({ page }) => {
+				await page.goto("https://example.com");
+				return { title: await page.title() };
+			}`,
+			{ library: "playwright", keepAlive: 120_000 },
+		);
+		const sessionId = first.headers.get("cf-browser-session-id");
+		const targetId = first.headers.get("cf-browser-target-id");
+		if (!first.ok || !sessionId || !targetId) {
+			return first;
+		}
+
+		try {
+			// Continue on the same page.
+			return await env.BROWSER.script(
+				`async ({ page }) => ({ url: page.url() })`,
+				{ sessionId, targetId, library: "playwright" },
+			);
+		} finally {
+			await env.BROWSER.closeSession(sessionId);
+		}
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+To run a script on [Kitesurf](/browser-run/kitesurf/), pass `browser: "kitesurf"`. The same restrictions as [`?browser=kitesurf`](#run-a-script-on-kitesurf) apply, and an unsupported option returns a `400` response.
+
+:::caution
+`script()` is not supported in local development mode. When developing locally with `wrangler dev`, use `npx wrangler dev --remote` or set `"remote": true` in your browser binding configuration.
+:::
+
+## Try scripts in the dashboard
+
+Script Studio in the Cloudflare dashboard lets you write and run scripts against a live browser, without an API token or a Worker. Use it to try a script before you call `/script` from your own code.
+
+Go to **Browser Run** > **Script Studio**, choose an automation library, and write a script or load an example. When you select **Run**, Script Studio starts a browser session, runs your script in it with `/script/<sessionId>`, and shows the result next to a [live view](/browser-run/features/live-view/) of the page.
+
+<DashButton url="/?to=/:account/workers/browser-run/script-studio" />
+
+## Runner arguments
+
+The runner invokes your function with a library-specific object. Return a JSON value or a `Response` for the clearest result.
+
+### Playwright
+
+```js
+async ({ page, context, browser, request }) => {
+	await page.goto("https://example.com");
+	return {
+		title: await page.title(),
+		url: page.url(),
+	};
+};
+```
+
+- `page`: the selected Playwright page.
+- `context`: the session's default browser context.
+- `browser`: the connected Playwright browser.
+- `request`: the incoming script request.
+
+Browser contexts your script creates (for example with `browser.newContext()`) are closed when the run ends. Only pages in the default context persist across runs.
+
+### Puppeteer
+
+```js
+async ({ page, browser, request }) => {
+	await page.goto("https://example.com");
+	return { title: await page.title() };
+};
+```
+
+- `page`: the selected Puppeteer page.
+- `browser`: the connected Puppeteer browser.
+- `request`: the incoming script request.
+
+### CDP
+
+Omit `library` to use CDP. The CDP runner exposes a thin, page-scoped connection without Puppeteer or Playwright dependencies, so `Page.*`, `Runtime.*`, and `DOM.*` commands address the selected page directly.
+
+```js
+async ({ send, on, off, sessionId, targetId, request }) => {
+	const { result } = await send("Runtime.evaluate", {
+		expression: "document.title",
+		returnByValue: true,
+	});
+	return {
+		sessionId,
+		targetId,
+		title: result.value,
+	};
+};
+```
+
+- `send(method, params?)`: sends a CDP command and resolves with its result, or rejects with the CDP error.
+- `on(event, handler)`: subscribes to a CDP event and returns a cleanup function.
+- `off(event, handler)`: removes an event handler registered with `on`.
+- `sessionId`: the Browser Run session ID (not a CDP session ID).
+- `targetId`: the page target used by the connection.
+- `request`: the incoming script request.
+
+### Page selection
+
+All three runners attach to `targetId` when one is set. `/script` always sets it to the session's first page and returns it in the `cf-browser-target-id` header. On `/script/<sessionId>`, Browser Run does not fall back to another page when `targetId` is not open in the session. Without a `targetId`, the runner reuses the first existing page, creating one if the session has none.
+
+## Return values
+
+Both endpoints turn your function's return value into a response:
+
+| Script return value                                  | Response                                                                                                                              |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| JSON-serializable value                              | `200` with `{ "success": true, "result": <value> }`                                                                                   |
+| `null` or `undefined`                                | `200` with `{ "success": true, "result": null }`                                                                                      |
+| A `Response` with a JSON body                        | `200` with `{ "success": true, "result": <body> }`. Browser Run replaces the status your script set with `200` but keeps its headers. |
+| `ArrayBuffer`, typed array, or a non-JSON `Response` | Returned as is, with its own content type (`application/octet-stream` for binary values) and status.                                  |
+
+A non-2xx response is treated as an error and rewritten to the [error format](#errors-and-timeouts). To report an application-level failure from your script, return a JSON value that describes it.
+
+For example, a script can set its own headers:
+
+```js
+async ({ page }) => {
+	const title = await page.title();
+	return Response.json(
+		{ title },
+		{
+			headers: { "cache-control": "no-store" },
+		},
+	);
+};
+```
+
+## Errors and timeouts
+
+Errors use the standard error format:
+
+```json
+{
+	"success": false,
+	"errors": [
+		{
+			"code": 2000,
+			"message": "Unexpected identifier 'foo'",
+			"detail": "Script location: line 3, column 15"
+		}
+	]
+}
+```
+
+`detail` is present only when Browser Run can locate the failure in the submitted code.
+
+| Status | Endpoint                   | Meaning                                                                                                                                                                                                                                             |
+| ------ | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `400`  | Both                       | Invalid JSON or request parameters, such as an unsupported `library`, an out-of-range `timeout` or `keep_alive`, an unknown body field, or an invalid `targetId`. With `browser=kitesurf`, also an [unsupported option](#run-a-script-on-kitesurf). |
+| `401`  | Both                       | Authentication or account identification is missing.                                                                                                                                                                                                |
+| `404`  | `/script/<sessionId>`      | The session does not exist or `targetId` is not an open page in the session.                                                                                                                                                                        |
+| `404`  | `/script`                  | The new browser has no page to run in.                                                                                                                                                                                                              |
+| `408`  | Both                       | The script exceeded its `timeout`.                                                                                                                                                                                                                  |
+| `410`  | `/script/<sessionId>`      | The session has already been closed.                                                                                                                                                                                                                |
+| `413`  | Both                       | The request body exceeds 10 MiB.                                                                                                                                                                                                                    |
+| `422`  | Both                       | The submitted function failed to compile, threw while running, or awaited a promise that can never resolve (for example, an event that was never emitted). Bound such waits with a timeout.                                                         |
+| `429`  | `/script`                  | The account reached a Browser Run session rate, browser-time, or concurrency limit. Use the `Retry-After` header, if present, before retrying.                                                                                                      |
+| `500`  | Both                       | An unexpected execution or service failure.                                                                                                                                                                                                         |
+| `502`  | `/script?browser=kitesurf` | The Kitesurf script execution failed.                                                                                                                                                                                                               |
+| `503`  | `/script`                  | No browser was available to acquire, or Kitesurf is not available.                                                                                                                                                                                  |
+
+The `timeout` field caps the whole script run, not counting browser acquisition time. CDP commands also have an internal upper bound, so a command that never receives a reply fails instead of hanging indefinitely.
+
+### Library timeouts
+
+Browser Run does not pass `timeout` to Playwright or Puppeteer, so calls inside your script keep their library defaults. In both libraries, `page.goto()` and the `waitFor*` methods time out after 30 seconds by default.
+
+Which limit is reached first determines the error:
+
+- If `timeout` is lower than the library timeout, a slow call is interrupted by the run limit and the request fails with `408`.
+- If `timeout` is higher, the library timeout fires first. Your script throws, for example `Navigation timeout of 30000 ms exceeded`, and the request fails with `422`.
+
+To give a slow page more time, raise the library timeout inside your script and keep it lower than `timeout`, so that your script can still handle the error and return:
+
+```js
+async ({ page }) => {
+	// Applies to all later navigations on this page.
+	page.setDefaultNavigationTimeout(40000);
+	// Or set it for a single call.
+	await page.goto("https://example.com", { timeout: 40000 });
+	return { title: await page.title() };
+};
+```
+
+Send this script with `"timeout": 45000` or higher. `page.setDefaultTimeout()` changes the default for all other waiting methods.
+
+## Close the session
+
+Browser Run closes a session for you only when `/script` fails after acquiring the browser but before your script starts. In that case, you never received the session ID.
+
+Otherwise, once your script starts, `/script` and `/script/<sessionId>` do not close the session, regardless of the outcome: success, compile error, exception, timeout, or failure.
+
+Close the session when you are done, either with [session management](/browser-run/cdp/session-management/):
+
+```txt
+DELETE https://api.cloudflare.com/client/v4/accounts/<accountId>/browser-run/devtools/browser/<sessionId>
+```
+
+or by calling `browser.close()` at the end of your last script. In [Script Studio](#try-scripts-in-the-dashboard), select **Close browser**. Otherwise the session keeps running, and counts toward your browser time, until its idle timeout (`keep_alive`, 60 seconds by default).
+
+Disconnecting, for example with `puppeteer.disconnect()` or by dropping a WebSocket, does not close the browser.
+
+## Run scripts concurrently in one session
+
+Requests to the same session and target are not serialized, so overlapping runs on one page can interfere with each other. To run scripts concurrently in one session, give each run its own target:
+
+1. Create another page with the [DevTools Browser Targets Create API](/api/resources/browser_rendering/subresources/devtools/subresources/browser/subresources/targets/methods/create/) (`PUT /accounts/<accountId>/browser-run/devtools/browser/<sessionId>/json/new`).
+2. Pass the returned target ID as `targetId` to `/script/<sessionId>`.
+
+Pages created this way live in the session's default context, so they persist across runs and can be targeted again later.
+
+## Limits
+
+- Request body: 10 MiB, including the JSON encoding of `code`.
+- Script timeout: 60 seconds by default, 120 seconds maximum.
+- `/script` acquires a session and is subject to the same [rate and concurrency limits](/browser-run/limits/) as `POST /devtools/browser`.
+- Browser hours are billed for the session's lifetime, not per script request. Neither endpoint closes the session after your script runs, so you own its lifecycle. Refer to [Pricing](/browser-run/pricing/).
+
+## Troubleshooting
+
+If you have questions or encounter an error, refer to the [Browser Run FAQ and troubleshooting guide](/browser-run/faq/).

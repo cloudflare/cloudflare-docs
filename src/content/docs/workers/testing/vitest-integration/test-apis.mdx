@@ -135,7 +135,8 @@ The Workers Vitest integration provides runtime helpers for writing tests. Some 
         {
           id: "message-1",
           timestamp: new Date(1000),
-          body: "body-1"
+          body: "body-1",
+          attempts: 1
         }
       ]);
       const ctx = createExecutionContext();
@@ -325,7 +326,7 @@ The Workers Vitest integration provides runtime helpers for writing tests. Some 
 
 * <code>applyD1Migrations(db:D1Database, migrations:D1Migration\[], migrationTableName?:string)</code>: Promise\<void>
 
-  * Applies all un-applied [D1 migrations](/d1/reference/migrations/) stored in the `migrations` array to database `db`, recording migrations state in the `migrationsTableName` table. `migrationsTableName` defaults to `d1_migrations`. Call the [`readD1Migrations()`](/workers/testing/vitest-integration/configuration/#readd1migrationsmigrationspath) function from the `@cloudflare/vitest-plugin/config` package inside Node.js to get the `migrations` array. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/d1) for an example project using migrations.
+  * Applies all un-applied [D1 migrations](/d1/reference/migrations/) stored in the `migrations` array to database `db`, recording migrations state in the `migrationsTableName` table. `migrationsTableName` defaults to `d1_migrations`. Call the [`readD1Migrations()`](/workers/testing/vitest-integration/configuration/#readd1migrationsmigrationspath) function from the `@cloudflare/vitest-plugin` package inside Node.js to get the `migrations` array. Refer to the [D1 recipe](https://github.com/cloudflare/workers-sdk/tree/main/fixtures/vitest-plugin-examples/d1) for an example project using migrations.
 
 
 ### Secrets Store
@@ -460,7 +461,7 @@ Available in `@cloudflare/vitest-plugin` version **1.0.0** and later.
           await env.MY_WORKFLOW.create();
 
           // 3. ASSERTION
-          const instances = introspector.get();
+          const instances = await introspector.get();
           for(const instance of instances) {
             await expect(instance.waitForStatus("complete")).resolves.not.toThrow();
             const output = await instance.getOutput();
@@ -552,7 +553,7 @@ Available in `@cloudflare/vitest-plugin` version **1.0.0** and later.
             expect(error.name).toEqual("Error");
             expect(error.message).toContain("Execution timed out");
 
-          } catch {
+          } finally {
             // 4. DISPOSE
             await instance.dispose();
           }

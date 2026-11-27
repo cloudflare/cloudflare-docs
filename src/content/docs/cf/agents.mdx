@@ -121,6 +121,40 @@ Root and group `--help` output starts with a reminder for agents to use
 If an agent types a command that does not exist, `cf` lists the closest
 matches.
 
+## Find Cloudflare documentation
+
+You and your agent can use `cf docs search` to find guides, tutorials, and
+examples across Cloudflare products. The search uses live Cloudflare
+documentation and requires an Internet connection, but no Cloudflare login.
+
+<Steps>
+1. Describe the task or ask a question:
+
+   ```sh
+   cf docs search "proxy a DNS record"
+   ```
+
+   Put the query in quotes. The command returns up to five ranked JSON
+   results, each with a `title`, `description`, and `url`.
+
+2. Choose a result and fetch its URL with the `Accept: text/markdown` header
+   to read the complete page as Markdown:
+
+   ```sh
+   curl -H "Accept: text/markdown" \
+     https://developers.cloudflare.com/learning-paths/prevent-ddos-attacks/baseline/proxy-dns-records/
+   ```
+</Steps>
+
+Use `cf cli search` to find commands and `cf docs search` to find
+documentation. Keep both kinds of search generic: do not include account IDs,
+domains, email addresses, tokens, or other identifying information.
+
+## Send agent feedback
+
+Use `cf feedback` to report CLI problems your agent encounters. For JSON report
+examples and context settings, refer to [Agent feedback](/cf/agent-feedback/).
+
 ## Read command output
 
 Results go to standard output as JSON. Messages, such as the selected zone,
@@ -144,8 +178,8 @@ error.
 - **Preview changes.** Add `--dry-run` to print the request as JSON without
   sending it. Dry runs need no credentials.
 - **Check for aborted deletes.** In a non-interactive session, a destructive
-  command without `--force` prints `Aborted.` to standard error and exits with
-  status `0`. A successful exit does not mean the resource was deleted.
+  command without `--force` prints `Aborted.` to standard error, makes no
+  change, and exits with status `1`.
 - **Review `--force` before you allow it.** On some commands, `--force` is also
   an API parameter. For example, `cf workers delete --force` also deletes a
   Worker that other Workers still reference.
@@ -157,6 +191,12 @@ error.
 
 For local state, refer to
 [Local resource data](/cf/projects/#local-resource-data).
+
+## Control usage costs
+
+Before your agent runs workloads on Cloudflare, consider setting [spending limits or email alerts](/billing/manage/spend-management/) for Workers and Durable Objects. You can configure them with the cf CLI.
+
+Each limit applies to the product across your account, not to an individual agent or project. Reaching a limit can interrupt other applications on the same account. Choose an email alert if you want notification without blocking usage.
 
 ## Work in Wrangler projects
 

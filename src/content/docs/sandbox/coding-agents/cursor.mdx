@@ -208,10 +208,11 @@ To stream controller and container logs, run:
 npx wrangler tail
 ```
 
-To list container instances, run:
+To list container instances, find the ID of the container application, then list its instances:
 
 ```sh
 npx wrangler containers list
+npx wrangler containers instances <APPLICATION_ID>
 ```
 
 To test one scheduled controller run during local development, start `wrangler` with scheduled-event testing:

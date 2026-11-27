@@ -1,0 +1,83 @@
+releaseNotes: |-
+  This beta release includes the following highlights:
+
+  - Added automatic endpoint selection for Global Acceleration. When Global Acceleration is enabled for an organization, the client connects to the Global Acceleration endpoints while the device is in the acceleration region and to the standard anycast endpoints otherwise, and reconnects when a network change moves the device between them without requiring action from the user. The Connectivity page shows which tunnel and API endpoints are in use, and users who are allowed to override the selection can choose endpoints in Settings.
+  - Added a Diagnostics page to the client that shows the connection status and health, live tunnel and device metrics, network details and the results of DEX tests in one place. Users can run a speed test from the page that compares performance inside and outside the tunnel while the client is connected. The Troubleshooting tools button collects a full warp-diag bundle, or runs a captive portal test that briefly reconnects Wi-Fi, and saves the result to the Desktop, so users no longer need to run warp-diag from a terminal.
+  - The client now shows a banner when the network limits the tunnel MTU to a degraded or critically low value. The banner clears when the MTU recovers or the client disconnects.
+
+  **Additional changes and improvements**
+
+  - The client now applies tunnel MTUs between 1147 and 1199 bytes measured by Path MTU Discovery. Previously the client ignored these values and kept a larger MTU, which could drop larger packets on networks such as mobile hotspots while the client showed as connected.
+  - When Path MTU Discovery is enabled, the client now accepts larger packets from Cloudflare instead of limiting them to the size it uses for its own outbound packets.
+  - When Path MTU Discovery measures an IPv6 path MTU below 1280 bytes, the client now reconnects over IPv4 and keeps preferring IPv4 until the network changes. Previously the client could stay on a smaller tunnel MTU over IPv6 on networks where IPv4 supports larger packets.
+  - Access reauthentication requests now trust certificates in the operating system's certificate store, so reauthentication works on networks that perform TLS inspection.
+  - For Zero Trust deployments, the client now records a traceroute of the network path outside the tunnel when the tunnel degrades or fails to connect. warp-diag includes the same trace.
+  - Added the MDM parameters managed_network_probe_interval_secs (30–300, default 30) and managed_network_probe_count (0 disables probing, 1–10, or -1 to keep probing until a managed network is found; default 1). After a registration or network change finds no managed network, the client now rechecks, so a device doesn't stay on the default profile because of a transient connection failure. Set the count to 0 to keep the previous behavior.
+  - Added the `multicast` network policy and MDM setting (`allow` or `drop`, default `drop`). When set to `allow`, the client sends traffic for multicast addresses through the tunnel instead of dropping it, for networks that use multicast ranges for other traffic.
+  - In proxy mode for Zero Trust, the client now sends hostnames from HTTP/HTTPS and SOCKS5 requests to Cloudflare for resolution, instead of resolving them on the device.
+  - The Connectivity page now shows the IPv4 and IPv6 addresses assigned to the tunnel while the client is connected.
+  - When the app cannot reach the client service, the home screen now says why (service not running, not accepting connections, not responding, or connection dropped and reconnecting). It shows an error code and a Learn more link instead of "IPC error".
+  - The client now shows a notification when an administrator removes the user's selected virtual network, and shows a specific message when the user selects a virtual network that is no longer available.
+  - The consumer client home screen now shows when the connection is post-quantum encrypted.
+  - `warp-cli target list` now accepts `--hostname` to filter targets by one or more comma-separated hostnames.
+  - DEX HTTP tests now send a default User-Agent that identifies the Cloudflare One Client when the test does not configure one.
+  - Reduced the client UI's memory usage on the home screen.
+  - Fixed the client continuing to use the previous tunnel protocol after a key rotation for a protocol change failed. The client now retries the rotation the next time it connects.
+  - Fixed service token enrollment failing when it ran shortly after the service token was created. The client now retries while the new token becomes available.
+  - Fixed the client reconnecting repeatedly when Global Acceleration automatic endpoint selection was enabled on devices in the acceleration region, and fixed the client keeping its previous data center after the selected endpoints changed.
+  - Fixed a hostname-based split tunnel entry not taking effect until the next reconnect after its firewall rule failed to apply.
+  - Fixed `warp-cli dns fallback add` accepting an empty domain, which sent all DNS queries to the local resolver instead of Gateway. Fallback domain and split tunnel entries are now normalized, so removing an entry matches regardless of case or a trailing dot.
+  - Fixed the DNS proxy caching answers for longer than the TTL of a CNAME record in the chain.
+  - Fixed `warp-cli registration license` reporting an error on slow networks even though the license was applied, which left the client registered to a WARP+ account it did not recognize.
+  - Fixed Digital Experience Monitoring (DEX) results being reported with timestamps offset from the actual time after the system clock was corrected.
+
+  **Known issues**
+
+  - When in DNS Only mode, the client may send DNS queries for names that are configured for Local Domain Fallback to the encrypted DNS server instead of falling back to the system configuration. Local Domain Fallback works as expected in other client modes.
+
+  For Zero Trust documentation, see: https://developers.cloudflare.com/cloudflare-one/team-and-resources/devices/cloudflare-one-client/  
+  For Consumer documentation, see: https://developers.cloudflare.com/warp-client/
+version: 2026.9.2663.1
+releaseDate: 2026-11-10T23:13:05.000Z
+packageId: full
+packageURL: https://downloads.cloudflareclient.com/v1/download/trixie-intel/version/2026.9.2663.1/packages/full
+packageSize: 76951614
+platformName: Linux
+linuxPlatforms:
+  trixie-intel: 76951614
+  bookworm-arm: 78854120
+  almalinux9-intel: 79647119
+  almalinux9-arm: 81727298
+  noble-arm: 79381808
+  resolute-intel: 76925172
+  fedora44-intel: 81214891
+  almalinux10-arm: 84162426
+  noble-intel: 76948696
+  fedora43-intel: 81204318
+  resolute-arm: 79126306
+  fedora43-arm: 84152143
+  trixie-arm: 79174454
+  bookworm-intel: 77118314
+  fedora44-arm: 84206680
+  jammy-intel: 77107052
+  almalinux10-intel: 81212522
+  jammy-arm: 78836294
+linuxHeadlessPlatforms:
+  almalinux9-intel: 60051317
+  trixie-intel: 60114036
+  almalinux9-arm: 62466809
+  noble-arm: 62755824
+  resolute-intel: 60086152
+  resolute-arm: 62511268
+  fedora43-arm: 64300019
+  fedora44-intel: 61237000
+  almalinux10-arm: 64306870
+  bookworm-arm: 62233012
+  noble-intel: 60106278
+  almalinux10-intel: 61229991
+  trixie-arm: 62554962
+  fedora44-arm: 64348291
+  jammy-intel: 60262764
+  jammy-arm: 62245550
+  fedora43-intel: 61220549
+  bookworm-intel: 60263350

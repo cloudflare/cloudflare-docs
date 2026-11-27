@@ -290,14 +290,18 @@ function getExternalBadge(href: string): SidebarBadge | undefined {
 // URL → "Beta" badge, from directory entries whose product-availability is
 // "beta". Built once per build (the collections don't change mid-build).
 // Realtime is an umbrella for features with independent availability stages.
-// Basin is generally available, but the remote availability feed may still
-// report the preserved pre-GA product IDs as beta during the rename rollout.
+// Basin and Stream WebRTC are generally available, but the remote availability
+// feed may still report the preserved pre-GA product IDs as beta during the
+// rename rollout.
+// Cloud Connector is also GA, but the availability feed still reports Beta.
 const AUTO_BETA_BADGE_EXCLUSIONS = new Set([
+	"/rules/cloud-connector/",
 	"/realtime/",
 	"/basin/",
 	"/basin-pipelines/",
 	"/basin-catalog/",
 	"/basin-sql/",
+	"/stream/webrtc/",
 ]);
 
 let betaBadgeUrlsPromise: Promise<Map<string, SidebarBadge>> | undefined;

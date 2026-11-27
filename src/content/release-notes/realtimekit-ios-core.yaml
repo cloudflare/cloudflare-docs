@@ -3,6 +3,20 @@ link: "/realtime/realtimekit/release-notes/ios-core/"
 productName: RealtimeKit iOS Core
 productLink: "/realtime/realtimekit/"
 entries:
+  - publish_date: "2026-10-22"
+    title: RealtimeKit iOS Core 3.3.0
+    description: |-
+      **Enhancements**
+
+      - The SDK now enforces the documented [SDK rate limits](/realtime/realtimekit/platform/limits/#sdk-rate-limits).
+      - `RtkStore` and broadcast messages now preserve non-primitive JSON types when sharing data.
+      - When objects are converted to JSON for persistence, dates are encoded as ISO 8601 UTC strings. Numeric timestamps remain numbers.
+      - Added `RtkStoreManager.refresh(storeName)` to refresh a store by name.
+
+      **Fixes**
+
+      - Fixed an API mismatch that caused the SDK to reject null meeting titles. This affected `cf realtime kit meetings create` when `--title` was omitted.
+      - Plugins active in a meeting are now automatically enabled for mobile participants who join later.
   - publish_date: "2026-09-16"
     title: RealtimeKit iOS Core 3.2.0
     description: |-
@@ -51,7 +65,7 @@ entries:
       **Features**
 
       - **AI Transcription** — A new `RtkAi` class (exposed as `client.ai`) provides access to real-time transcripts. Implement `RtkAiEventListener` and register it with `addAiEventListener(_:)` to receive `onTranscript(data:)` callbacks. A `transcriptionEnabled` permission is available on `MiscellaneousPermissions`.
-      - **Connected Meetings (Breakout Rooms)** — A new `RtkConnectedMeetings` class (exposed as `client.connectedMeetings`) enables breakout room workflows. Register an `RtkConnectedMeetingsEventListener` to handle room transitions and state updates. See the [Breakout Rooms](/realtime/realtimekit/core/breakout-rooms/) documentation for a full guide.
+      - **Connected Meetings (Breakout Rooms)** — A new `RtkConnectedMeetings` class (exposed as `client.connectedMeetings`) enables breakout room workflows. Register an `RtkConnectedMeetingsEventListener` to handle room transitions and state updates. See the [Breakout Rooms](/realtime/realtimekit/humans/core/breakout-rooms/) documentation for a full guide.
       - **Chat: Edit and Delete** — Messages can now be edited and deleted. New methods on `RtkChat`: `editTextMessage(messageId:newText:onResult:)`, `editImageMessage(messageId:newUri:onResult:)`, `editFileMessage(messageId:newUri:onResult:)`, and `deleteMessage(messageId:onResult:)`. `RtkChatEventListener` gains `onMessageEdited(message:)` and `onMessageDeleted(messageId:)` callbacks. `ChatMessage` now includes an `isEdited` flag.
       - **Chat: Fetch and Pagination** — New methods on `RtkChat` — `fetchPublicMessages(beforeTimestamp:count:onlyPinned:onResult:)`, `fetchPrivateMessages(userId:beforeTimestamp:count:onlyPinned:onResult:)`, `fetchPinnedMessages(beforeTimestamp:count:onlyPinned:onResult:)`, and `getMessages(timestamp:count:channelId:isPinned:onResult:)` — allow fetching historical messages with cursor-based pagination via `FetchMessagesResult(messages:hasMore:)`.
       - **Client-Declared Plugins** — Plugins are now configured entirely on the client via `RtkClientPluginConfig` and `RtkClientPluginPermissions`. `RtkPlugin` exposes the new `icon` and `permissions` properties accordingly.

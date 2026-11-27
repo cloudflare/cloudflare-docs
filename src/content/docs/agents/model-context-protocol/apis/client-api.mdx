@@ -1,5 +1,5 @@
 ---
-title: McpClient
+title: MCP Client
 description: Connect Agents to external MCP servers to use their tools, resources, and prompts over the Model Context Protocol.
 pcx_content_type: reference
 tags:
@@ -12,7 +12,7 @@ products:
 
 import { Render, TypeScriptExample, LinkCard } from "~/components";
 
-Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.20.0 uses `@modelcontextprotocol/client` and negotiates stateless or legacy behavior automatically.
+Connect your agent to external [Model Context Protocol (MCP)](/agents/model-context-protocol/) servers to use their tools, resources, and prompts. Agents SDK v0.20.0 uses `@modelcontextprotocol/client` and negotiates stateless or legacy behavior automatically. The MCP client does not need `@modelcontextprotocol/sdk` or `@modelcontextprotocol/server`.
 
 Refer to [Migrate to MCP SDK v2](/agents/model-context-protocol/guides/migrate-to-mcp-sdk-v2/) for package, type, OAuth provider, and rollout changes.
 
@@ -27,7 +27,7 @@ The MCP client capability lets your agent:
 
 :::note
 
-This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [Creating MCP servers](/agents/model-context-protocol/apis/agent-api/).
+This page covers connecting to MCP servers as a client. To create your own MCP server, refer to [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/).
 
 :::
 
@@ -62,7 +62,7 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
-Connections persist in the agent's [SQL storage](/agents/runtime/lifecycle/state/), and when an agent connects to an MCP server, all tools from that server become available automatically.
+Connections persist in the agent's [SQL storage](/agents/agent-class/state/), and when an agent connects to an MCP server, all tools from that server become available automatically.
 
 ## Adding MCP servers
 
@@ -125,6 +125,36 @@ await this.addMcpServer("server", "https://mcp.example.com/mcp", {
 | `streamable-http` | HTTP with streaming                                 |
 | `sse`             | Server-Sent Events - legacy/compatibility transport |
 
+### RPC transport
+
+`addMcpServer()` can also connect to an [`McpAgent`](/agents/model-context-protocol/apis/agent-api/) through its Durable Object binding instead of a URL. Messages travel over [Workers RPC](/workers/runtime-apis/bindings/service-bindings/rpc/), so the server needs no HTTP endpoint.
+
+:::caution[Use Streamable HTTP for new servers]
+The RPC transport is still supported, but it only connects to `McpAgent`, which is deprecated. There is no RPC transport for servers built with [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/). For new servers, serve them with `createMcpHandler` and connect with a URL over Streamable HTTP.
+:::
+
+<TypeScriptExample>
+
+```ts
+export class MyAgent extends Agent<Env> {
+	async onStart() {
+		// env.MyMCP is the Durable Object binding for an McpAgent class
+		await this.addMcpServer("my-mcp", this.env.MyMCP, {
+			props: { userId: "user-123", role: "admin" },
+		});
+	}
+}
+```
+
+</TypeScriptExample>
+
+- **No authentication.** The RPC transport has no OAuth flow. Pass user context in `props`. The `McpAgent` reads it as `this.props`.
+- **Restored after hibernation.** The binding name and props are stored, so the connection comes back without extra code.
+- **Deduplicated by name.** Calling `addMcpServer()` again with a name that already has an active RPC connection returns the existing connection, so it is safe to call in `onStart()`.
+- **No MCP SDK v1 on the Agent side.** Connecting does not need `@modelcontextprotocol/sdk`. Import `RPCClientTransport` and `RPC_DO_PREFIX` from `agents/mcp/client`, not `agents/mcp`, which loads the v1 SDK.
+
+For the server side, including bindings and the tool timeout, refer to [RPC transport](/agents/model-context-protocol/apis/agent-api/#rpc-transport) in the `McpAgent` reference.
+
 ### Custom headers
 
 For servers behind authentication (like Cloudflare Access) or using bearer tokens:
@@ -145,6 +175,8 @@ await this.addMcpServer("internal", "https://internal-mcp.example.com/mcp", {
 
 </TypeScriptExample>
 
+The headers are sent with every request, including the SSE stream, and are stored with the server, so a restored connection sends them too. They are stored as plain text in the Durable Object's SQLite storage.
+
 ### URL security
 
 MCP server URLs are validated before connection to prevent Server-Side Request Forgery (SSRF). The following URL targets are blocked:
@@ -158,14 +190,55 @@ MCP server URLs are validated before connection to prevent Server-Side Request F
 
 Loopback addresses (`localhost`, `127.x.x.x`, `[::1]`) are **allowed** for local development.
 
-For production connections to internal services, use the [RPC transport](/agents/model-context-protocol/protocol/transport/) with a Durable Object binding instead of HTTP.
-
 ### Return value
 
 `addMcpServer()` returns the connection state:
 
 - `ready` - Server connected and tools discovered
-- `authenticating` - Server requires OAuth; redirect user to `authUrl`
+- `authenticating` - Server requires OAuth; redirect user to `authUrl`. This includes servers that accept the MCP handshake without a token but require one to list tools, prompts, or resources.
+
+Calling `addMcpServer()` again for a server that is already registered returns its current state, replaces a link that expired, and throws for a failed server. If the server is still connecting, for example while it is restored after the agent wakes, the call waits for that attempt and returns its result. Pass a stable `id` so the server keeps the same ID everywhere.
+
+### Failures and reconnecting
+
+Each connection makes a few quick attempts with the server's [`retry` options](/agents/agent-class/retries/). If they all fail, because the server is down, times out, or returns an error, the server is `failed` with the error, and the failure is recorded with the server. Nothing retries it on a timer, and later wakes show the same `failed` state without contacting the server. The server stays failed until something asks to connect it again.
+
+When a wake finds a server that was not failed, the agent connects it again in the background with the same quick attempts. If the server is unreachable at that moment, it is `failed` from then on.
+
+Retrying cannot help when authorization was refused, so these failures skip the quick attempts:
+
+- The server answered `401` and the agent cannot ask the user, for example because a static token passed in `transport.headers` was revoked, or no OAuth callback is configured. When the agent can ask, the server moves to `authenticating` with a new link instead.
+- The server answered `403`. A `403` with `error="insufficient_scope"` still starts a [step-up](#re-authorization-during-a-session) first. It only counts as refused when no step-up is possible.
+- The authorization server refused with an OAuth error such as `invalid_target`, `invalid_scope`, or `access_denied`. An expired or revoked refresh token (`invalid_grant`) starts a new authorization instead. `server_error` and `temporarily_unavailable` count as an outage.
+- The authorization server rejected dynamic client registration with a `4xx` status other than `429`.
+- The server still answers `401` right after the user completed an authorization, for example because it rejects tokens from its own authorization server. The link that was just used is never shown again.
+
+The server is marked `failed` with `Authorization was refused: ...`. A callback where the user denied access, or whose code could not be exchanged, is recorded the same way, so a later wake does not start another flow that the user just turned down.
+
+#### Reconnect on request
+
+To try a failed server again, for example from a **Reconnect** button, call `reconnectMcpServer(id)`. It clears why the server failed and its pending link, then connects now. It returns the same result as `addMcpServer()`, including a fresh `authUrl` when the user needs to authorize again.
+
+<TypeScriptExample>
+
+```ts
+import { Agent, callable } from "agents";
+
+export class MyAgent extends Agent<Env> {
+	@callable()
+	async reconnectServer(id: string) {
+		return this.reconnectMcpServer(id);
+	}
+}
+```
+
+</TypeScriptExample>
+
+Calling `addMcpServer()` for a server that is already registered does not retry a failure:
+
+- `ready`: returns the server as it is.
+- `authenticating`: returns the link the server is waiting on.
+- `failed`: throws the recorded error, which names `reconnectMcpServer()`.
 
 ## OAuth authentication
 
@@ -224,6 +297,38 @@ https://{host}/{agentsPrefix}/{agent-name}/{instance-name}/callback
 For example: `https://my-worker.workers.dev/agents/my-agent/default/callback`
 
 OAuth tokens are securely stored in SQLite, and persist across agent restarts.
+
+A server waiting for authorization keeps its link, across wakes too, until the user completes it or you call `reconnectMcpServer(id)`. Whether an old link still works is up to the authorization server and the OAuth provider. The default provider accepts a callback for 10 minutes. If the user completes a link that no longer works, the callback reports the error and the server keeps waiting. Call `reconnectMcpServer(id)` to get a fresh link. If a callback already redeemed the link and the agent restarted before it finished, the agent reconnects with the saved tokens instead.
+
+### Re-authorization during a session
+
+A request can need authorization again after the server is `ready`: a tool call that needs a scope the grant lacks (`403 insufficient_scope`), or a `401` whose token refresh fails. `callTool()`, `readResource()`, and `getPrompt()` then throw `MCPAuthorizationRequiredError`. The server moves to `authenticating`, and its `auth_url` is saved, so clients see the new link through `getMcpServers()` as they do when it connects. Send the user to `error.authUrl`. The normal OAuth callback completes the flow and reconnects. Retry the request when the server is `ready` again. Tools from `getAITools()` call `callTool()`, so their `execute` throws the same error.
+
+<TypeScriptExample>
+
+```ts
+import { MCPAuthorizationRequiredError } from "agents/mcp/client";
+
+try {
+	return await this.mcp.callTool({ serverId, name: "deploy", arguments: {} });
+} catch (error) {
+	if (error instanceof MCPAuthorizationRequiredError) {
+		return { needsAuthorization: true, authUrl: error.authUrl };
+	}
+	throw error;
+}
+```
+
+</TypeScriptExample>
+
+`MCPAuthorizationRequiredError` extends the MCP SDK's `UnauthorizedError`, so existing `instanceof UnauthorizedError` checks still match. If no usable link was produced, for example because a custom OAuth provider does not put a fresh `state` in each authorization URL, or a callback for this server is already being processed, the call throws a plain `UnauthorizedError`.
+
+- **Scope step-up.** The session keeps its current grant, so requests it already covers keep working while the user decides. If the user declines, the server goes back to `ready` on that grant, and the next request that needs the scope asks again.
+- **Refused refresh.** No grant is left to keep working on. The server waits for the sign-in as it does when it connects: every request throws `MCPAuthorizationRequiredError` with the same link, and if the user declines, the server is marked `failed`.
+- **First authorization.** A request to a server that is waiting for its first authorization throws `MCPAuthorizationRequiredError` with the link it is waiting on.
+- **No connection.** A call for a `serverId` with no connection, because it was never registered, was removed, or is still being restored, throws `MCPConnectionNotFoundError`.
+
+Re-authorization is limited, as the MCP authorization specification asks. If the user completes three authorizations for the same scopes within an hour and the server still asks for them, for example because the authorization server never grants a scope, the next challenge does not produce a link. The server moves to `failed` with an error that names the scopes, the request throws `UnauthorizedError`, and the server stays failed until you call `reconnectMcpServer(id)`.
 
 ### Protecting instance names in OAuth callbacks
 
@@ -349,13 +454,13 @@ To use MCP tools with the AI SDK, use `this.mcp.getAITools()` which converts MCP
 
 ```ts
 import { generateText } from "ai";
-import { createWorkersAI } from "workers-ai-provider";
+import { createAI } from "agents/models/ai-sdk";
 
 export class MyAgent extends Agent<Env> {
 	async onRequest(request: Request) {
-		const workersai = createWorkersAI({ binding: this.env.AI });
+		const ai = createAI({ binding: this.env.AI });
 		const response = await generateText({
-			model: workersai("@cf/zai-org/glm-4.7-flash"),
+			model: ai("@cf/zai-org/glm-4.7-flash"),
 			prompt: "What's the weather in San Francisco?",
 			tools: this.mcp.getAITools(),
 		});
@@ -572,13 +677,19 @@ class MyAgent extends Agent<Env> {
 
 The example uses a 55-second timeout because MCP SDK requests default to 60 seconds. If your client call sets a longer request timeout, adjust this timeout to finish first.
 
-Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. [`mcp-elicitation-mrtr`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) demonstrates stateless elicitation. [`mcp-elicitation`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation) demonstrates legacy elicitation.
+Refer to the [`mcp-client` example](https://github.com/cloudflare/agents/tree/main/examples/mcp-client) for the browser implementation. [`mcp-elicitation-mrtr`](https://github.com/cloudflare/agents/tree/main/examples/mcp-elicitation-mrtr) demonstrates stateless elicitation.
 
-For server-side patterns, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler) and [Elicitation on legacy servers](/agents/model-context-protocol/apis/agent-api/#elicitation-on-legacy-servers).
+For the server side, refer to [Elicitation with a stateless handler](/agents/model-context-protocol/apis/handler-api/#elicitation-with-a-stateless-handler).
 
 ## Managing servers
 
-MCP server registrations persist across Agent restarts. The SDK stores server configuration in SQLite, stores OAuth tokens securely, and restores connections when the Agent wakes.
+MCP server registrations persist across Agent restarts. The SDK stores server configuration in SQLite, stores OAuth tokens securely, and restores HTTP and RPC connections in the background when the Agent wakes, so startup never waits on an MCP server. Call [`waitForConnections()`](#thismcpwaitforconnections) when you need the restored tools.
+
+When you manage servers:
+
+- Add servers with a stable `id`, from a callable that the user triggers or from `onStart()`.
+- Render each server from `getMcpServers()`, or `onMcpUpdate` in `useAgent`. Send the user to `auth_url` while the server is `authenticating`, and show `error` with a **Reconnect** button that calls [`reconnectMcpServer(id)`](#reconnect-on-request) while it is `failed`.
+- Catch [`MCPAuthorizationRequiredError`](#re-authorization-during-a-session) from `callTool()`, `readResource()`, and `getPrompt()`, and give the user `error.authUrl`.
 
 ### List all servers
 
@@ -638,6 +749,7 @@ function Dashboard() {
 	const [tools, setTools] = useState([]);
 	const [servers, setServers] = useState({});
 
+	// reconnectServer is a @callable() that calls this.reconnectMcpServer(id)
 	const agent = useAgent({
 		agent: "MyAgent",
 		onMcpUpdate: (mcpState) => {
@@ -652,6 +764,19 @@ function Dashboard() {
 			{Object.entries(servers).map(([id, server]) => (
 				<div key={id}>
 					{server.name}: {server.state}
+					{server.state === "authenticating" && server.auth_url && (
+						<a href={server.auth_url} target="_blank">
+							Authorize
+						</a>
+					)}
+					{server.state === "failed" && (
+						<>
+							{server.error}
+							<button onClick={() => agent.call("reconnectServer", [id])}>
+								Reconnect
+							</button>
+						</>
+					)}
 				</div>
 			))}
 
@@ -672,7 +797,7 @@ function Dashboard() {
 
 Add a connection to an MCP server and make its tools available to your agent.
 
-Calling `addMcpServer` is idempotent when both the server name **and** URL match an existing active connection — the existing connection is returned without creating a duplicate. This makes it safe to call in `onStart()` without worrying about duplicate connections on restart.
+Calling `addMcpServer` is idempotent when both the server name **and** URL match an existing connection — the existing connection is returned without creating a duplicate. This makes it safe to call in `onStart()` without worrying about duplicate connections on restart. For a server that is `failed`, it throws the recorded error instead of retrying. Call [`reconnectMcpServer()`](#reconnectmcpserver) to try again.
 
 If you call `addMcpServer` with the same name but a **different** URL, a new connection is created. Both connections remain active and their tools are merged in `getAITools()`. To replace a server, call `removeMcpServer(oldId)` first.
 
@@ -700,15 +825,13 @@ async addMcpServer(
   | { id: string; state: "ready" }
 >
 
-// RPC transport (Durable Object binding — no HTTP overhead)
+// RPC transport (Durable Object binding for an McpAgent)
 async addMcpServer(
   serverName: string,
-  binding: DurableObjectNamespace,
+  binding: DurableObjectNamespace<McpAgent>,
   options?: {
     id?: string;
     props?: Record<string, unknown>;
-    client?: McpClientOptions;
-    retry?: RetryOptions;
   }
 ): Promise<{ id: string; state: "ready" }>
 ```
@@ -726,19 +849,17 @@ async addMcpServer(
   - `transport` — Transport layer configuration:
     - `headers` — Custom HTTP headers for authentication
     - `type` — Transport type: `"auto"` (default), `"streamable-http"`, or `"sse"`
-  - `retry` — Retry options for connection and reconnection attempts. Persisted and used when restoring connections after hibernation or after OAuth completion. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/runtime/execution/retries/) for details on `RetryOptions`.
+  - `retry` — How many quick attempts a connection makes before the server counts as failed. Persisted and used for every connection attempt: when the server is added, when it is restored after hibernation, after OAuth completes, and on `reconnectMcpServer()`. Default: 3 attempts, 500ms base delay, 5s max delay. Refer to [Retries](/agents/agent-class/retries/) for details on `RetryOptions`.
 
 #### Parameters (RPC transport)
 
 - `serverName` (string, required) — Display name for the MCP server
-- `binding` (`DurableObjectNamespace`, required) — The Durable Object binding for the `McpAgent` class
-- `options` (object, optional) — Connection configuration:
+- `binding` (`DurableObjectNamespace`, required) — Durable Object binding for an `McpAgent` class
+- `options` (object, optional):
   - `id` — Optional stable, caller-supplied server ID. Refer to [Stable server IDs](#stable-server-ids)
-  - `props` — Initialization data passed to the `McpAgent`'s `onStart(props)`. Use this to pass user context, configuration, or other data to the MCP server instance
-  - `client` — MCP client configuration options
-  - `retry` — Retry options for the connection
+  - `props` — Data passed to the `McpAgent` and available as `this.props`, such as user context
 
-RPC transport connects your Agent directly to an `McpAgent` via Durable Object bindings without HTTP overhead. Refer to [MCP Transport](/agents/model-context-protocol/protocol/transport/) for details on configuring RPC transport.
+The RPC transport only connects to the deprecated `McpAgent`. Prefer the HTTP transport with a [`createMcpHandler`](/agents/model-context-protocol/apis/handler-api/) server. Refer to [RPC transport](#rpc-transport).
 
 #### Returns
 
@@ -748,10 +869,28 @@ A Promise that resolves to a discriminated union based on connection state:
   - `id` (string) — Unique identifier for this server connection
   - `state` (`"authenticating"`) — Server is waiting for OAuth authorization
   - `authUrl` (string) — OAuth authorization URL for user authentication
-
 - When `state` is `"ready"`:
   - `id` (string) — Unique identifier for this server connection
   - `state` (`"ready"`) — Server is fully connected and operational
+
+### `reconnectMcpServer()`
+
+Connect a registered server again now, for example after it failed. It clears the recorded failure and any pending authorization link before it connects. Refer to [Failures and reconnecting](#failures-and-reconnecting).
+
+```ts
+async reconnectMcpServer(id: string): Promise<
+  | { id: string; state: "authenticating"; authUrl: string }
+  | { id: string; state: "ready" }
+>
+```
+
+#### Parameters
+
+- `id` (string, required) — Server connection ID returned from `addMcpServer()`
+
+#### Returns
+
+The same result as `addMcpServer()`, including a fresh `authUrl` when the user needs to authorize again. Throws when the server is not registered, or when the attempt fails.
 
 ### `removeMcpServer()`
 
@@ -1069,7 +1208,7 @@ const disposable = this.mcp.onServerStateChanged(() => {
 </TypeScriptExample>
 
 :::note
-MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/runtime/communication/protocol-messages/) returned `false`.
+MCP server list broadcasts (`cf_agent_mcp_servers`) are automatically filtered to exclude connections where [`shouldSendProtocolMessages`](/agents/agent-class/protocol-messages/) returned `false`.
 :::
 
 ### Lifecycle methods
@@ -1093,7 +1232,7 @@ async registerServer(
 
 #### `this.mcp.connectToServer()`
 
-Establish a connection to a previously registered server.
+Establish a connection to a previously registered server. On a standalone `MCPClientManager`, this is the explicit retry: it clears a recorded failure and the step-up budget before it connects. On an `Agent`, use `reconnectMcpServer(id)`.
 
 ```ts
 async connectToServer(id: string): Promise<MCPConnectionResult>
@@ -1123,7 +1262,7 @@ type MCPDiscoverResult = {
 
 #### `this.mcp.waitForConnections()`
 
-Wait for all in-flight MCP connection and discovery operations to settle. This is useful when you need `this.mcp.getAITools()` to return the full set of tools immediately after the agent wakes from hibernation.
+Wait for all in-flight MCP connection and discovery operations to settle. This applies to HTTP and RPC servers alike. This is useful when you need `this.mcp.getAITools()` to return the full set of tools immediately after the agent wakes from hibernation.
 
 ```ts
 // Wait indefinitely
@@ -1134,7 +1273,7 @@ await this.mcp.waitForConnections({ timeout: 10_000 });
 ```
 
 :::note
-`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/communication-channels/chat/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
+`AIChatAgent` calls this automatically via its [`waitForMcpConnections`](/agents/agent-class/communication-channels/chat/chat-agents/#waitformcpconnections) property (defaults to `{ timeout: 10_000 }`). You only need `waitForConnections()` directly when using `Agent` with MCP, or when you want finer control inside `onChatMessage`.
 :::
 
 #### `this.mcp.closeConnection()`
@@ -1236,22 +1375,30 @@ export class MyAgent extends Agent {
 
 </TypeScriptExample>
 
+| Error                           | When it is thrown                                                                                                                                                             |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `MCPAuthorizationRequiredError` | A request needs the user to authorize, or authorize again. Send the user to `error.authUrl`. Refer to [Re-authorization during a session](#re-authorization-during-a-session) |
+| `MCPConnectionNotFoundError`    | A call names a `serverId` with no connection: never registered, removed, or still being restored                                                                              |
+| The recorded error              | `addMcpServer()` for a server that is `failed`. Call `reconnectMcpServer(id)` to try again                                                                                    |
+
+Import `MCPAuthorizationRequiredError` and `MCPConnectionNotFoundError` from `agents/mcp/client`.
+
 ## Next steps
 
 <LinkCard
 	title="Creating MCP servers"
-	href="/agents/model-context-protocol/apis/agent-api/"
-	description="Build your own MCP server."
+	href="/agents/model-context-protocol/apis/handler-api/"
+	description="Build your own MCP server with createMcpHandler."
 />
 
 <LinkCard
 	title="Client SDK"
-	href="/agents/communication-channels/chat/client-sdk/"
+	href="/agents/agent-class/communication-channels/chat/client-sdk/"
 	description="Connect from browsers with onMcpUpdate."
 />
 
 <LinkCard
 	title="Store and sync state"
-	href="/agents/runtime/lifecycle/state/"
+	href="/agents/agent-class/state/"
 	description="Learn about agent persistence."
 />

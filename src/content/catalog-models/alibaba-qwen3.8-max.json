@@ -17,8 +17,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 2,
-		"Output tokens (per 1M)": 6,
-		"Cached input tokens (per 1M)": 0.25
+		"Cached input tokens (per 1M)": 0.25,
+		"Output tokens (per 1M)": 6
 	},
 	"examples": [
 		{
@@ -1682,7 +1682,8 @@
 	"cover_image_url": "https://pub-26f1392c1b674324be6786695bd72257.r2.dev/alibaba/qwen3.8-max.png",
 	"metadata": {
 		"Architecture": "Transformer (MoE)",
-		"Context Window": "1M tokens"
+		"Context Window": "1M tokens",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions",
@@ -1694,8 +1695,8 @@
 			"id": "alibaba",
 			"pricing": {
 				"input_tokens": 2,
-				"output_tokens": 6,
-				"input_cached_tokens": 0.25
+				"input_cached_tokens": 0.25,
+				"output_tokens": 6
 			}
 		}
 	],
@@ -1893,12 +1894,15 @@
 							"type": "object",
 							"properties": {
 								"effort": {
+									"description": "Reasoning effort; availability and accepted values are model-dependent.",
 									"type": "string",
 									"enum": [
 										"none",
 										"low",
 										"medium",
-										"high"
+										"high",
+										"xhigh",
+										"max"
 									]
 								}
 							},

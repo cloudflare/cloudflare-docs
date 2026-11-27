@@ -9,6 +9,19 @@ import { GlossaryTooltip, TabItem, Tabs, DashButton } from "~/components";
 
 Origin parameters determine how `cloudflared` sends requests to the origin server of your [published application](/cloudflare-one/networks/connectors/cloudflare-tunnel/routing-to-tunnel/).
 
+:::note[Published applications and dual-layer timeouts]
+
+For **published applications** (proxied DNS records), timeouts apply at two layers:
+
+1. **CDN layer**: [Proxy Read Timeout](/fundamentals/reference/connection-limits/) and Proxy Write Timeout apply between Cloudflare's edge and the Tunnel service
+2. **Tunnel layer**: Connection and TLS timeout parameters on this page apply between `cloudflared` and your origin server
+
+**When both layers apply, the shorter timeout takes precedence.** Configure timeouts in both layers to ensure requests complete successfully. Enterprise customers can adjust CDN timeouts via [Cache Rules](/cache/how-to/cache-rules/settings/#proxy-read-timeout-enterprise-only) or the [zone settings API](/api/resources/zones/subresources/settings/methods/edit/).
+
+For **private network routes**, only Tunnel origin parameters apply.
+
+:::
+
 ## Update origin parameters
 
 This section describes how to update origin parameters for a <GlossaryTooltip term="remotely-managed tunnel">remotely-managed tunnel</GlossaryTooltip>. If you are using a <GlossaryTooltip term="locally-managed tunnel">locally-managed tunnel</GlossaryTooltip>, add these parameters to your <a href={props.configurationFileURL}>configuration file</a>.
@@ -202,6 +215,15 @@ The timeout after which `cloudflared` sends a TCP keepalive packet to the origin
 | `""`    | Protect with Access |
 
 Requires `cloudflared` to validate the <a href={props.validatingJwtURL}>Cloudflare Access JWT</a> prior to proxying traffic to your origin. You can enforce this check on public hostname services that are protected by an Access application. For all L7 requests to these hostnames, Access will send the JWT to `cloudflared` as a `Cf-Access-Jwt-Assertion` request header.
+
+:::note[URL normalization]
+In `cloudflared` version `2026.10.0` and later, URL normalization before ingress matching improves security for rules requiring Access validation. The URL path sent to your origin stays the same.
+
+Normalization removes dot segments (`.` and `..`) according to [RFC 3986](https://www.rfc-editor.org/rfc/rfc3986#section-5.2.4). It also converts backslashes to forward slashes and merges repeated slashes. Version `2026.11.0` and later also removes semicolon-delimited path parameters for ingress matching.
+
+Normalization is off by default in versions `2026.10.0` and `2026.11.0`. For the planned default change, refer to the [URL normalization changelog](/changelog/post/2026-10-22-cloudflared-path-normalization/).
+:::
+
 
 To enable this security control in a <a href={props.configurationFileURL}>configuration file</a>, [get the AUD tag](/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/validating-json/#get-your-aud-tag) for your Access application and add the following rule to `originRequest`:
 

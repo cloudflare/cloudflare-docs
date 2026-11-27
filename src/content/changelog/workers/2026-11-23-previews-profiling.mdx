@@ -1,0 +1,58 @@
+---
+title: CPU and heap profiling for Worker Previews
+description: Capture CPU and heap profiles from Worker Previews and Durable Objects on a Preview, and inspect them as flamegraphs.
+products:
+  - workers
+  - durable-objects
+date: 2026-11-23
+---
+
+import { CopyPromptButton } from "~/components";
+
+You can now profile [Worker Previews](/workers/previews/), following the launch of [on-demand CPU and memory profiling](https://blog.cloudflare.com/workers-on-demand-profiling/) for Workers and Durable Objects. This lets you see what a pull request costs in CPU and memory before you merge it.
+
+Send traffic to a Preview, capture a CPU or heap profile from one of its deployments, and see which functions in your branch use the most CPU time or memory. Push a fix, profile the next deployment, and compare. Production stays untouched the whole time.
+
+![Flamegraph of a Preview CPU profile showing scoreProduct, tokenize, formatPrice, and buildProduct under handleSearch](~/assets/images/changelog/workers/observability/2026-11-23-previews-profiling.png)
+
+In this Preview, `formatPrice` takes almost a third of the CPU time because it creates a new `Intl.NumberFormat` for every product. A slowdown like this is easy to miss in code review, but it stands out in a flamegraph.
+
+## Let your agent optimize performance
+
+Previews give coding agents a safe place to iterate on performance. An agent can deploy a Preview, send it load, capture a profile, rewrite the hottest function, and deploy again, until CPU time stops dropping. Each Preview deployment has its own ID, so every profile maps to an exact version of the code.
+
+<CopyPromptButton
+	tooltip="Profile and optimize a Worker with Previews"
+	prompt="Read https://developers.cloudflare.com/workers/previews/test-and-debug/#profile-a-preview and https://developers.cloudflare.com/workers/observability/profiling-in-production/. Then reduce the CPU time of this Worker without deploying to production: deploy a Preview with `npx wrangler preview`, send steady traffic to its URL, and capture a 10-second CPU profile of the latest Preview deployment with the Cloudflare API. Find the functions with the most self time, make one change, deploy a new Preview, and capture another profile. Repeat until CPU time stops improving. Report each deployment ID with its top functions and what you changed."
+/>
+
+Capture a profile with the [Cloudflare CLI](/cf/):
+
+```sh
+cf previews deployments profile latest \
+  --worker my-worker \
+  --preview my-preview \
+  --duration-ms 5000 \
+  --profile-type cpu > preview-cpu.pprof
+```
+
+Or with the API. Use `latest` to target the newest deployment of the Preview:
+
+```bash
+curl --request POST \
+  "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/workers/workers/$WORKER_ID/previews/$PREVIEW_ID/deployments/latest/profile" \
+  --header "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+  --header "Content-Type: application/json" \
+  --data '{"duration_ms": 5000, "profile_type": "cpu"}' \
+  --output preview-cpu.pprof.gz
+```
+
+## Profile in the dashboard
+
+Open your Preview, select **Observability**, and switch the view to _Flamegraph_. Choose a profile type and a Preview deployment, then select **Capture profile**. Explore the result as a flamegraph or table, or download the raw pprof file.
+
+## Profile Durable Objects on a Preview
+
+Every Preview gets its own [Durable Object namespaces](/workers/previews/resources/#durable-objects). To see what one object is doing on your branch, profile it by ID, just like in production.
+
+To get started, refer to [Profile a Preview](/workers/previews/test-and-debug/#profile-a-preview).

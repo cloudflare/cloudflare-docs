@@ -1,0 +1,195 @@
+{
+	"model_id": "klingai/kling-v3-motion-control",
+	"name": "Kling v3 Motion Control",
+	"description": "Kling AI Motion Control 3.0 transfers a reference video's motion to a character image, generating 3\u201330 seconds when matching the video orientation or up to 10 seconds when matching the image orientation, with optional prompt guidance and 720p or 1080p output.",
+	"task": "video-to-video",
+	"tags": [
+		"Video Generation",
+		"Video-to-Video",
+		"Motion Control",
+		"Character Animation"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Default (per second)": 0.126,
+		"@720p (per second)": 0.126,
+		"@1080p (per second)": 0.168
+	},
+	"examples": [
+		{
+			"name": "Animate a Character from Motion",
+			"description": "Create a character animation from a reference dance video at 720p.",
+			"input": {
+				"audio": "off",
+				"character_orientation": "video",
+				"image_url": "https://p2-kling.klingai.com/kcdn/cdn-kcdn112452/kling-qa-test/35d77e27300cf5e8995704cd858d759c.png",
+				"prompt": "Keep the character's gray T-shirt and denim shorts while matching the dancer's fluid movements.",
+				"resolution": "720p",
+				"video_url": "https://v4-kling.kechuangai.com/kcdn/cdn-kcdn112452/kling-qa-test/dance_10s.mp4"
+			},
+			"output": {
+				"video": "https://examples.aig.cloudflare.com/klingai/kling-v3-motion-control/animate-a-character-from-motion.mp4"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"video": "https://examples.aig.cloudflare.com/klingai/kling-v3-motion-control/animate-a-character-from-motion.mp4"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'klingai/kling-v3-motion-control',\n  {\n    audio: 'off',\n    character_orientation: 'video',\n    image_url:\n      'https://p2-kling.klingai.com/kcdn/cdn-kcdn112452/kling-qa-test/35d77e27300cf5e8995704cd858d759c.png',\n    prompt:\n      \"Keep the character's gray T-shirt and denim shorts while matching the dancer's fluid movements.\",\n    resolution: '720p',\n    video_url: 'https://v4-kling.kechuangai.com/kcdn/cdn-kcdn112452/kling-qa-test/dance_10s.mp4',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"klingai/kling-v3-motion-control\",\n  \"input\": {\n    \"audio\": \"off\",\n    \"character_orientation\": \"video\",\n    \"image_url\": \"https://p2-kling.klingai.com/kcdn/cdn-kcdn112452/kling-qa-test/35d77e27300cf5e8995704cd858d759c.png\",\n    \"prompt\": \"Keep the character'\\''s gray T-shirt and denim shorts while matching the dancer'\\''s fluid movements.\",\n    \"resolution\": \"720p\",\n    \"video_url\": \"https://v4-kling.kechuangai.com/kcdn/cdn-kcdn112452/kling-qa-test/dance_10s.mp4\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://kling.ai/document-api/api/video/motion-control",
+	"terms": "https://klingai.com/terms",
+	"cover_image_url": null,
+	"metadata": {
+		"Audio": "Preserve reference audio or disable it",
+		"Billing": "Pay-as-you-go, per generated second",
+		"Character Orientation": "Match the reference video or image",
+		"Input Types": "Character image, motion reference video, optional prompt",
+		"Resolutions": "720p, 1080p"
+	},
+	"request_formats": null,
+	"provider_id": "klingai",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "klingai",
+			"pricing": {
+				"default": 0.126,
+				"720p": 0.126,
+				"1080p": 0.168
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "klingai",
+			"pricing": {
+				"default": 0.126,
+				"720p": 0.126,
+				"1080p": 0.168
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "default",
+							"label": "Default (per second)",
+							"unit": null,
+							"value": 0.126
+						},
+						{
+							"key": "1080p",
+							"label": "@1080p (per second)",
+							"unit": null,
+							"value": 0.168
+						},
+						{
+							"key": "720p",
+							"label": "@720p (per second)",
+							"unit": null,
+							"value": 0.126
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-18 15:50:14",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"prompt": {
+					"description": "Optional prompt for scene and background details",
+					"type": "string",
+					"maxLength": 2500
+				},
+				"image_url": {
+					"type": "string",
+					"format": "uri",
+					"description": "Public URL of the character image (JPG or PNG)"
+				},
+				"video_url": {
+					"type": "string",
+					"format": "uri",
+					"description": "Public URL of the motion reference video (MP4 or MOV)"
+				},
+				"character_orientation": {
+					"default": "video",
+					"description": "Match character orientation to the reference video or image",
+					"type": "string",
+					"enum": [
+						"video",
+						"image"
+					]
+				},
+				"audio": {
+					"default": "original",
+					"description": "Keep the reference video audio or omit audio",
+					"type": "string",
+					"enum": [
+						"original",
+						"off"
+					]
+				},
+				"resolution": {
+					"default": "720p",
+					"description": "Generated video resolution",
+					"type": "string",
+					"enum": [
+						"720p",
+						"1080p"
+					]
+				}
+			},
+			"required": [
+				"image_url",
+				"video_url",
+				"character_orientation",
+				"audio",
+				"resolution"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"video": {
+					"type": "string",
+					"description": "URL to the generated video"
+				}
+			},
+			"required": [
+				"video"
+			],
+			"additionalProperties": false
+		}
+	}
+}

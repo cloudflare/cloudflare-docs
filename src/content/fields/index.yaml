@@ -72,6 +72,8 @@ entries:
 
       When validating HMAC tokens in an expression, pass this field as the `currentTimestamp` argument to the [`is_timed_hmac_valid_v0()`](/ruleset-engine/rules-language/functions/#hmac-validation) validation function.
 
+      In Transform Rule rewrite expressions, use [`format_date()`](/ruleset-engine/rules-language/functions/#format_date) to format this timestamp as UTC text. Use the same timestamp with [`sign_sigv4_hmac_sha256()`](/ruleset-engine/rules-language/functions/#sign_sigv4_hmac_sha256) to derive the signing date.
+
       To obtain the timestamp milliseconds, use the [`http.request.timestamp.msec`](/ruleset-engine/rules-language/fields/reference/http.request.timestamp.msec/) field.
     example_value: |-
       1484063137
@@ -664,7 +666,7 @@ entries:
     description: |-
       Provides the same information as [`cf.client.bot`](/ruleset-engine/rules-language/fields/reference/cf.client.bot/).
 
-      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled.
+      Requires a Cloudflare Enterprise plan with [Bot Management](/bots/plans/bm-subscription/) enabled, except in [rate limiting rules](/waf/rate-limiting-rules/#availability), where this field is available on all plans.
 
   - name: cf.verified_bot_category
     data_type: String
@@ -807,6 +809,17 @@ entries:
     categories: [Request]
     keywords: [request, cloudflare, saas, platforms, client, visitor]
     summary: Returns the string representation of the per-hostname [custom metadata](/cloudflare-for-platforms/cloudflare-for-saas/domain-support/custom-metadata/) JSON object set by SSL for SaaS customers.
+
+  - name: http.request.clearance.uuid
+    data_type: String
+    categories: [Request, Cloudflare]
+    keywords: [request, cloudflare, clearance, challenge, uuid, visitor]
+    plan_info_label: Enterprise add-on
+    summary: Provides the stable UUID from a valid Cloudflare clearance cookie.
+    description: |-
+      Use this field as an Advanced Rate Limiting characteristic to keep the same request counter when Cloudflare refreshes the encrypted `cf_clearance` cookie value.
+
+      The value is an empty string when the request does not contain a valid clearance cookie. Use `http.request.clearance.uuid ne ""` in the counting expression to exclude those requests from the clearance counter.
 
   - name: cf.random_seed
     data_type: Bytes
@@ -1100,7 +1113,7 @@ entries:
     example_value: |-
       "7zIpdDU5pvFPPBI2/PCzqbaXnRA="
 
-  - name: cf.tls_ciphers_sha1
+  - name: cf.tls_client_ciphers_sha1
     data_type: String
     categories: [Request, SSL/TLS]
     keywords: [request, ssl, tls, client, visitor]
@@ -1171,7 +1184,7 @@ entries:
       20
     example_block: |-
       # Match requests over TCP where the RTT exceeds 200 ms
-      cf.timings.client_quic_rtt_msec > 200
+      cf.timings.client_tcp_rtt_msec > 200
 
   - name: cf.timings.client_quic_rtt_msec
     data_type: Integer
@@ -2233,7 +2246,7 @@ entries:
       - **Whitespace**: Preserved
       - **Non-ASCII**: Preserved
 
-      Requires a Cloudflare Enterprise plan.
+      Requires a Cloudflare Enterprise plan and the Advanced application security plan. Contact your account team for details on current and legacy contracts.
 
   - name: http.request.body.truncated
     data_type: Boolean

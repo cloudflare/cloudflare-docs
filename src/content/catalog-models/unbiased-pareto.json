@@ -16,8 +16,8 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Input tokens (per 1M)": 2.5,
-		"Output tokens (per 1M)": 7.5,
-		"Cached input tokens (per 1M)": 0.25
+		"Cached input tokens (per 1M)": 0.25,
+		"Output tokens (per 1M)": 7.5
 	},
 	"examples": [
 		{
@@ -38,7 +38,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5ww8tss0mj6ofw",
 				"object": "chat.completion",
-				"model": "unbiased/pareto",
+				"model": "union-alpha",
 				"choices": [
 					{
 						"index": 0,
@@ -97,7 +97,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wwcpm6hxi7lsb",
 				"object": "chat.completion",
-				"model": "unbiased/pareto",
+				"model": "union-alpha",
 				"choices": [
 					{
 						"index": 0,
@@ -152,7 +152,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wwj1mqcjfe7xb",
 				"object": "chat.completion",
-				"model": "unbiased/pareto",
+				"model": "union-alpha",
 				"choices": [
 					{
 						"index": 0,
@@ -215,7 +215,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wwqlruoazrxij",
 				"object": "chat.completion",
-				"model": "unbiased/pareto",
+				"model": "union-alpha",
 				"choices": [
 					{
 						"index": 0,
@@ -270,7 +270,7 @@
 			"raw_response": {
 				"id": "chatcmpl-mu5wx6hq2jpgslxe",
 				"object": "chat.completion",
-				"model": "unbiased/pareto",
+				"model": "union-alpha",
 				"choices": [
 					{
 						"index": 0,
@@ -319,7 +319,8 @@
 	"metadata": {
 		"Architecture": "Blended model",
 		"Modalities": "Text and vision",
-		"Provider": "Unbiased"
+		"Provider": "Unbiased",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"
@@ -330,8 +331,8 @@
 			"id": "unbiased",
 			"pricing": {
 				"input_tokens": 2.5,
-				"output_tokens": 7.5,
-				"input_cached_tokens": 0.25
+				"input_cached_tokens": 0.25,
+				"output_tokens": 7.5
 			}
 		}
 	],

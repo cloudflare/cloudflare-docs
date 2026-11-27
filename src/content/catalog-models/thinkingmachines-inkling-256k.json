@@ -212,7 +212,8 @@
 								"type": "string",
 								"enum": [
 									"user",
-									"assistant"
+									"assistant",
+									"system"
 								]
 							},
 							"content": {
@@ -274,7 +275,51 @@
 					"exclusiveMinimum": 0
 				},
 				"system": {
-					"type": "string"
+					"anyOf": [
+						{
+							"type": "string"
+						},
+						{
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"type": {
+										"type": "string",
+										"const": "text"
+									},
+									"text": {
+										"type": "string"
+									},
+									"cache_control": {
+										"type": "object",
+										"properties": {
+											"type": {
+												"type": "string",
+												"const": "ephemeral"
+											},
+											"ttl": {
+												"type": "string",
+												"enum": [
+													"5m",
+													"1h"
+												]
+											}
+										},
+										"required": [
+											"type"
+										],
+										"additionalProperties": false
+									}
+								},
+								"required": [
+									"type",
+									"text"
+								],
+								"additionalProperties": {}
+							}
+						}
+					]
 				},
 				"temperature": {
 					"type": "number",

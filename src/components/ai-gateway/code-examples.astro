@@ -103,81 +103,74 @@ const { forceClient, forceAPI } = props.parse(Astro.props);
 				<Code
 					lang="javascript"
 					title=""
-					code={aiSDKUnifiedCode
-						.replaceAll("{provider}", option.provider)
-						.replaceAll("{apikey}", "")
-						.replace("{model}", option.model)}
+					code={aiSDKUnifiedCode.replace("{id}", option.aiSDK.id)}
 				/>
 			</CodeExample>
 		))}
 	{(!forceClient || forceClient === "aisdk") &&
-		modelOptions.map((option) => (
-			<CodeExample
-				client:load
-				provider={option.provider}
-				clientType="aisdk"
-				keyType="in-request"
-				apiType="unified"
-				forceClientType={forceClient}
-				forceApiType={forceAPI}
-			>
-				<Code
-					lang="javascript"
-					title=""
-					code={aiSDKUnifiedCode
-						.replaceAll("{provider}", option.provider)
-						.replaceAll("{apikey}", "{ apiKey: '{API_KEY}' }")
-						.replace("{model}", option.model)}
-				/>
-			</CodeExample>
-		))}
-
+		modelOptions
+			.filter((option) => option.aiSDK.pkg !== undefined)
+			.flatMap((option) =>
+				(["unified", "native"] as const).map((apiType) => ({
+					option,
+					apiType,
+				})),
+			)
+			.map(({ option, apiType }) => (
+				<CodeExample
+					client:load
+					provider={option.provider}
+					clientType="aisdk"
+					keyType="in-request"
+					apiType={apiType}
+					forceClientType={forceClient}
+					forceApiType={forceAPI}
+				>
+					<Code
+						lang="javascript"
+						title=""
+						code={aiSDKNativeCode
+							.replaceAll("{provider}", option.aiSDK.provider ?? "")
+							.replaceAll(
+								"{providerFactory}",
+								option.aiSDK.providerFactory ?? "",
+							)
+							.replace("{pkg}", option.aiSDK.pkg ?? "")
+							.replace("{apikey}", '{ apiKey: "{API_KEY}" }')
+							.replace("{vendorKey}", ', { vendorKey: "request" }')
+							.replace("{model}", option.model)}
+					/>
+				</CodeExample>
+			))}
 	{(!forceClient || forceClient === "aisdk") &&
-		modelOptions.map((option) => (
-			<CodeExample
-				client:load
-				provider={option.provider}
-				clientType="aisdk"
-				keyType="stored"
-				apiType="native"
-				forceClientType={forceClient}
-				forceApiType={forceAPI}
-			>
-				<Code
-					lang="javascript"
-					title=""
-					code={aiSDKNativeCode
-						.replaceAll("{provider}", option.aiSDK.provider)
-						.replaceAll("{providerFactory}", option.aiSDK.providerFactory)
-						.replaceAll("{providerUsage}", option.aiSDK.providerUsage)
-						.replaceAll("{apikey}", "")
-						.replace("{model}", option.model)}
-				/>
-			</CodeExample>
-		))}
-	{(!forceClient || forceClient === "aisdk") &&
-		modelOptions.map((option) => (
-			<CodeExample
-				client:load
-				provider={option.provider}
-				clientType="aisdk"
-				keyType="in-request"
-				apiType="native"
-				forceClientType={forceClient}
-				forceApiType={forceAPI}
-			>
-				<Code
-					lang="javascript"
-					title=""
-					code={aiSDKNativeCode
-						.replaceAll("{provider}", option.aiSDK.provider)
-						.replaceAll("{providerFactory}", option.aiSDK.providerFactory)
-						.replaceAll("{providerUsage}", option.aiSDK.providerUsage)
-						.replaceAll("{apikey}", "{ apiKey: '{API_KEY}' }")
-						.replace("{model}", option.model)}
-				/>
-			</CodeExample>
-		))}
+		modelOptions
+			.filter((option) => option.aiSDK.pkg !== undefined)
+			.map((option) => (
+				<CodeExample
+					client:load
+					provider={option.provider}
+					clientType="aisdk"
+					keyType="stored"
+					apiType="native"
+					forceClientType={forceClient}
+					forceApiType={forceAPI}
+				>
+					<Code
+						lang="javascript"
+						title=""
+						code={aiSDKNativeCode
+							.replaceAll("{provider}", option.aiSDK.provider ?? "")
+							.replaceAll(
+								"{providerFactory}",
+								option.aiSDK.providerFactory ?? "",
+							)
+							.replace("{pkg}", option.aiSDK.pkg ?? "")
+							.replace("{apikey}", '{ apiKey: "cloudflare" }')
+							.replace("{vendorKey}", "")
+							.replace("{model}", option.model)}
+					/>
+				</CodeExample>
+			))}
 
 	{(!forceClient || forceClient === "curl") &&
 		modelOptions.map((option) => (

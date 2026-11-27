@@ -3,6 +3,22 @@ link: "/workers/platform/changelog/"
 productName: Workers
 productLink: "/workers/"
 entries:
+  - publish_date: "2026-11-05"
+    description: |-
+      - Updated V8 to version 15.8.
+  - publish_date: "2026-11-02"
+    description: |-
+      - The Temporal API is available with the `temporal` compatibility flag, or a compatibility date of 2026-12-01 or later.
+  - publish_date: "2026-10-22"
+    description: |-
+      - Hyperdrive bindings expose `ip`, and `node:dns` resolves a binding's host to it.
+      - Workers traces now include spans for `queue.metrics()` calls.
+  - publish_date: "2026-10-17"
+    description: |-
+      - Updated V8 to version 15.7.
+  - publish_date: "2026-10-14"
+    description: |-
+      - Updated V8 to version 15.6.
   - publish_date: "2026-09-28"
     description: |-
       - Updated v8 to version 15.5.

@@ -56,7 +56,7 @@ console.log("WebSocket server listening on port 8080");
 **Extend the Dockerfile:**
 
 ```dockerfile title="Dockerfile"
-FROM docker.io/cloudflare/sandbox:0.3.3
+FROM docker.io/cloudflare/sandbox:0.12.14
 
 # Copy echo server into the container
 COPY echo-server.ts /workspace/echo-server.ts
@@ -237,7 +237,7 @@ console.log(request.headers.get('Connection')); // 'Upgrade'
 Expose ports in Dockerfile for `wrangler dev`:
 
 ```dockerfile title="Dockerfile"
-FROM docker.io/cloudflare/sandbox:0.3.3
+FROM docker.io/cloudflare/sandbox:0.12.14
 
 COPY echo-server.ts /workspace/echo-server.ts
 COPY startup.sh /container-server/startup.sh

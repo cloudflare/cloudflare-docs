@@ -22,7 +22,7 @@ New AI Gateway customers who create their first gateway on or after September 24
 AI Gateway customers who created a gateway before September 24, 2026 use [Legacy Logs](/ai-gateway/observability/logging/legacy-logs/).
 :::
 
-Use an [authenticated gateway](/ai-gateway/configuration/authentication/) to prevent unauthorized access. Authentication also prevents invalid requests from increasing log volume.
+New gateways require [authentication](/ai-gateway/configuration/authentication/). If you use an existing gateway with authentication turned off, turn it on to prevent unauthorized access and invalid requests from increasing log volume.
 
 ## Default configuration
 
@@ -30,11 +30,17 @@ Logs are enabled by default for each gateway. This setting applies to all reques
 
 You can turn off collection for privacy or compliance requirements.
 
+:::note
+Requests paid through [Unified Billing](/ai-gateway/features/unified-billing/) or [Machine Payments (x402)](/ai-gateway/features/machine-payments/) are always logged, even when logs are turned off for the gateway or the request. The log entry includes metadata and billing details, but not the request and response bodies.
+:::
+
 <Render file="logging" product="ai-gateway" />
 
 ## Per-request logging
 
 To override the default logging behavior set in the settings tab, you can define headers on a per-request basis.
+
+These headers only control the logs that AI Gateway stores. They do not change what [Logpush](/ai-gateway/observability/logging/logpush/) exports.
 
 ### Collect logs (`cf-aig-collect-log`)
 
@@ -92,7 +98,9 @@ curl -X POST "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_
 ```
 
 :::note
-If `cf-aig-collect-log` is set to `false`, the entire log entry (including metadata) is skipped regardless of the `cf-aig-collect-log-payload` value. Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
+If `cf-aig-collect-log` is set to `false`, AI Gateway does not store the request and response bodies, regardless of the `cf-aig-collect-log-payload` value, and skips the rest of the log entry. Requests paid through Unified Billing or Machine Payments (x402) are the exception. Refer to [Default configuration](#default-configuration).
+
+Use `cf-aig-collect-log-payload: false` on its own if you only want to suppress payload storage while retaining metadata logs.
 :::
 
 ## DLP fields in logs

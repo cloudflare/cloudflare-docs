@@ -26,7 +26,8 @@ The following limits apply to gateway configurations, logs, and related features
 
 <sup>1</sup> This rate limit applies to requests that use Cloudflare-managed
 credentials through [Unified Billing](/ai-gateway/features/unified-billing/).
-When the limit is exceeded, AI Gateway returns a `429` error. This limit does
+When the limit is exceeded, AI Gateway returns HTTP `429` with error code
+[`2018`](/ai-gateway/reference/troubleshooting/#429-unified-billing-rate-limit-2018). This limit does
 not apply to requests that use your own provider keys through [bring your own
 keys (BYOK)](/ai-gateway/configuration/bring-your-own-keys/).
 

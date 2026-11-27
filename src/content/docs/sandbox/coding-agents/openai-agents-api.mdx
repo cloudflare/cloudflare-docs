@@ -118,21 +118,13 @@ export OPENAI_AGENT_ID="agent_..."
 
 4. Create a self-hosted session:
 
-<CURL
-	url="https://api.openai.com/v1/agents/sessions"
-	method="POST"
-	headers={{
-		"OpenAI-Beta": "agents=v1",
-		Authorization: "Bearer $OPENAI_API_KEY",
-	}}
-	json={{
-		agent_id: "$OPENAI_AGENT_ID",
-		environment: {
-			type: "self_hosted",
-			workspace_directory: "/workspace",
-		},
-	}}
-/>
+```bash
+curl https://api.openai.com/v1/agents/sessions \
+  --request POST \
+  --header "OpenAI-Beta: agents=v1" \
+  --header "Authorization: Bearer $OPENAI_API_KEY" \
+  --json '{"agent_id": "'"$OPENAI_AGENT_ID"'", "environment": {"type": "self_hosted", "workspace_directory": "/workspace"}}'
+```
 
 Copy the `id` field from the response and save it as the session ID:
 
@@ -150,7 +142,7 @@ curl --no-buffer \
   --header "Accept: text/event-stream"
 ```
 
-While the stream is open, submit a task from another terminal:
+While the stream is open, submit a task from another terminal. Export `OPENAI_API_KEY` and `SESSION_ID` in that terminal first:
 
 <CURL
 	url="https://api.openai.com/v1/agents/sessions/$SESSION_ID/events"

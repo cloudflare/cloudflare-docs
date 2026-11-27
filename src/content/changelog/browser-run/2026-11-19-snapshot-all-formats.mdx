@@ -1,0 +1,42 @@
+---
+title: Capture PDFs, links, scraped elements, and extracted JSON with /snapshot
+description: Browser Run's /snapshot endpoint now returns PDFs, links, scraped elements, and AI-extracted JSON alongside HTML, screenshots, Markdown, and the accessibility tree.
+products:
+  - browser-run
+date: 2026-11-19
+---
+
+import { TypeScriptExample } from "~/components";
+
+[Browser Run](/browser-run/)'s [`/snapshot` endpoint](/browser-run/quick-actions/snapshot/) can now return four more formats from a single page load: `pdf`, `links`, `scrape`, and `json`. Before, `/snapshot` returned HTML, screenshots, Markdown, and the accessibility tree, so a workflow that also needed a PDF or structured data had to prepare the same page again in a second request.
+
+Use the new formats when you need to:
+
+- **PDF**: print the page, with the same `pdfOptions` as the [`/pdf`](/browser-run/quick-actions/pdf-endpoint/) endpoint.
+- **Links**: collect the links on the page, with the same `visibleLinksOnly` and `excludeExternalLinks` options as [`/links`](/browser-run/quick-actions/links-endpoint/).
+- **Scraped elements**: return the elements matched by `elements`, the same payload as [`/scrape`](/browser-run/quick-actions/scrape-endpoint/). `elements` is required when you request it.
+- **Extracted JSON**: extract structured data from the page HTML with [Workers AI](/workers-ai/), with the same `prompt`, `response_format`, and `custom_ai` fields as [`/json`](/browser-run/quick-actions/json-endpoint/). `prompt` or `response_format` is required, and the request incurs Workers AI usage.
+
+Request them through `formats`, the same way as the existing formats. This example returns a PDF, the page links, and the text of each paragraph:
+
+<TypeScriptExample>
+
+```ts
+const response = await env.BROWSER.quickAction("snapshot", {
+	url: "https://example.com/",
+	formats: ["pdf", "links", "scrape"],
+	elements: [{ selector: "p" }],
+});
+
+const { result } = await response.json();
+console.log(result.pdf);
+console.log(result.links);
+```
+
+</TypeScriptExample>
+
+Formats are captured in a fixed order rather than the order of the `formats` array, and the PDF is printed last because print handlers can change the page. A live page can change between captures, and any format that fails fails the whole request. For JSON snapshots, one `actionTimeout` budget (default 60 seconds, maximum 120 seconds) covers navigation, captures, retries, and the AI request.
+
+You still need to request at least two distinct formats. If you only need one, use the corresponding single-format endpoint.
+
+Refer to the [`/snapshot` documentation](/browser-run/quick-actions/snapshot/) for the full list of accepted values and options.

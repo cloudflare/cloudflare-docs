@@ -1,6 +1,6 @@
 Email Sending event subscriptions publish outbound transactional email lifecycle events for messages sent from an enabled sending domain. Each subscription is scoped to one sending domain: either the zone apex, such as `example.com`, or a verified sending subdomain, such as `send.example.com`.
 
-Email Routing events, including inbound forwards, replies, Worker-emitted routing events, and deliveries to verified routing recipients, are not published as Email Sending events.
+Email Service publishes Email Sending events for messages sent from an enabled sending domain to [verified destination addresses](/email-service/configuration/destination-addresses/). It does not publish Email Routing events as Email Sending events. These include inbound forwards, replies, Worker-emitted routing events, and messages sent from a domain that has only Email Routing configured.
 
 #### `message.delivered`
 

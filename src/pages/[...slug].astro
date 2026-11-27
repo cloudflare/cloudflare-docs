@@ -117,7 +117,9 @@ if (
 		console.error(`[toc] rendered-heading scrape failed for ${entry.id}:`, err);
 	}
 }
-const tocHeadings = tocSource.filter((h) => h.slug !== "footnote-label");
+const tocHeadings = tocSource.filter(
+	(h) => h.slug && h.slug !== "footnote-label",
+);
 const toc =
 	tocOn && tocConfig !== false ? getTOC(tocHeadings, tocConfig) : false;
 const markdownPath = `/${entry.id}/index.md`;

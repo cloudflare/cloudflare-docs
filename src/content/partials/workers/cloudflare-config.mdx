@@ -13,17 +13,18 @@ Its default export can define a Worker, Container applications, and account
 settings. Because the file is a TypeScript module, it can use imports,
 functions, environment variables, and asynchronous values.
 
-:::note[Open beta]
-Programmatic configuration with `cloudflare.config.ts` is in open beta.
-The configuration format can change before the stable release.
+:::note[Release candidate]
+Programmatic configuration with `cloudflare.config.ts` is part of the `cf` 1.0
+release candidate. We expect the configuration format to stay the same through
+the stable release.
 :::
 
-Loading `cloudflare.config.ts` requires Node.js 22.18 or later. Bun is not
-supported: when `cf` runs on Bun, loading the file fails with
+`cf` supports the latest versions of the Node.js LTS releases and the latest
+active release of Node.js. Bun is not supported: when `cf` runs on Bun, loading the file fails with
 `cloudflare.config.ts loading is not supported on Bun`. Most `cf` commands load
 the nearest `cloudflare.config.ts`, including commands that only call the
-Cloudflare API, so this is the practical minimum for any `cf` command you run
-inside the project.
+Cloudflare API, so this applies to any `cf` command you run inside the
+project.
 
 Set `"type": "module"` in the project's `package.json`. Without it, Node.js
 prints a warning each time it loads the file. With `"type": "commonjs"`,
@@ -424,6 +425,7 @@ export default defineConfig({
 			OrderWorkflow: exports.workflow({
 				name: "order-workflow",
 				limits: { steps: 100 },
+				concurrency: { limit: 10 },
 				defaultRetention: {
 					successRetention: "3 days",
 					errorRetention: "7 days",
@@ -438,9 +440,15 @@ The builders describe exported code. They do not create JavaScript exports. The
 entrypoint must still export `Admin`, `Counter`, and `OrderWorkflow`.
 
 `exports.workflow()` requires a `name`, which must be unique within the account.
-It also accepts `limits.steps`, `concurrency.limit`, `schedules` for cron
-schedules that start instances, and `defaultRetention`. Retention values accept
-milliseconds or a duration string, such as `"3 days"`.
+It also accepts `limits.steps`, `concurrency.limit` to cap how many instances
+of the Workflow run at the same time (refer to
+[Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits)),
+`schedules` for cron schedules that start instances, `defaultRetention`, and
+`jurisdiction`.
+Retention values accept milliseconds or a duration string, such as `"3 days"`.
+`jurisdiction` restricts where the instances of the Workflow run and store data,
+and cannot be changed after the Workflow is created. Refer to
+[Data location](/workflows/reference/data-location/).
 
 To bind to a Workflow, from the same Worker or another one, use
 `bindings.workflow()`. It requires the Workflow's `name`, the `worker` that
@@ -668,8 +676,7 @@ Supported compliance regions are `public` and `fedramp-high`.
 
 `CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_COMPLIANCE_REGION` take priority over
 these values. When neither the environment nor the configuration sets an
-account, `cf` uses the account it saved on an earlier command, or resolves one
-from your credentials. For the full order, refer to
+account, `cf` resolves one from your credentials. For the full order, refer to
 [Select an account](/cf/get-started/#select-an-account).
 
 `cf` searches from the current directory toward the filesystem root and uses
@@ -706,6 +713,7 @@ configuration:
 | ---------------------------------------------------------------- | ------------- |
 | `cf dev` with the Cloudflare Vite plugin                         | `development` |
 | `cf build`, `cf deploy`, and other commands that build with Vite | `production`  |
+| `vitest` with the Workers Vitest integration                     | `test`        |
 | Commands that build with Wrangler                                | `undefined`   |
 | API commands, such as `cf d1 list`                               | `undefined`   |
 

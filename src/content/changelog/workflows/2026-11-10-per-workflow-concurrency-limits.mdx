@@ -1,0 +1,49 @@
+---
+title: Set a concurrency limit for each Workflow
+description: Cap how many instances of a single Workflow run at the same time by setting a concurrency limit in your Wrangler configuration.
+products:
+  - workflows
+  - workers
+date: 2026-11-10
+---
+
+import { WranglerConfig } from "~/components";
+
+You can now set a [concurrency limit](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits) on an individual Workflow to cap how many of its instances run at the same time. Use it to protect a database or third-party API that slows down or rejects requests past a certain number of concurrent connections, or to distribute load more evenly across your Workflows so that one high-volume Workflow does not use all of your account's concurrency.
+
+For example, to allow only 10 instances of a Workflow to run at a time, set `concurrency.limit` on its `workflows` binding and redeploy:
+
+<WranglerConfig>
+
+```jsonc
+{
+	"workflows": [
+		{
+			"name": "my-workflow",
+			"binding": "MY_WORKFLOW",
+			"class_name": "MyWorkflow",
+			"concurrency": {
+				"limit": 10,
+			},
+		},
+	],
+}
+```
+
+</WranglerConfig>
+
+You can also set `concurrency` on a Workflow declared in [`exports`](/workflows/build/workers-api/#declare-workflows-in-exports), or with `exports.workflow()` in [`@cloudflare/config`](/cf/projects/cloudflare-config/).
+
+Instances above the limit are not rejected. They are queued and start automatically as running instances finish or move to the `waiting` state.
+
+The limit must be a positive integer, and cannot be higher than your account's [concurrency limit](/workflows/reference/limits/) (100 on Workers Free, 50,000 on Workers Paid). Lowering the limit does not stop instances that are already running. Workflows without a concurrency limit can still use up to your account's full concurrency limit.
+
+:::caution
+
+Set `concurrency.limit` in your configuration on every deploy. If you deploy without it, the Workflow's concurrency limit is removed.
+
+:::
+
+Per-Workflow concurrency limits require Wrangler 4.127.0 or above.
+
+For more information, refer to [Concurrency limits](/workflows/build/concurrency-limits/#per-workflow-concurrency-limits).

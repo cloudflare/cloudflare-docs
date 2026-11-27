@@ -391,7 +391,8 @@
 	"metadata": {
 		"Architecture": "Transformer",
 		"Input Modalities": "Text, Image",
-		"Reasoning": "Yes"
+		"Reasoning": "Yes",
+		"fedrampAvailable": "true"
 	},
 	"request_formats": [
 		"chat-completions"

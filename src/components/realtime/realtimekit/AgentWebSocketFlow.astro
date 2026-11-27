@@ -1,0 +1,40 @@
+---
+import RealtimeSequenceDiagram from "../sfu/RealtimeSequenceDiagram.astro";
+
+const participants = [
+	{ id: "worker", label: "My Worker" },
+	{ id: "do", label: "My Durable Object", tone: "blue" as const },
+	{ id: "agent", label: "Agent Participant", tone: "accent" as const },
+	{ id: "meeting", label: "RealtimeKit Meeting", tone: "accent" as const },
+];
+
+const events = [
+	{
+		type: "note" as const,
+		from: "worker",
+		to: "worker",
+		label: "Add participant with the agent preset",
+	},
+	{ from: "worker", to: "do", label: "start(token)" },
+	{ from: "do", to: "agent", label: "Upgrade with token + subscriptions" },
+	{
+		from: "agent",
+		to: "meeting",
+		label: "Join as visible or hidden participant",
+	},
+	{ from: "agent", to: "do", label: "session.started" },
+	{
+		from: "meeting",
+		to: "agent",
+		label: "Transcripts, joins, broadcasts",
+		dashed: true,
+	},
+	{ from: "agent", to: "do", label: "Subscribed events as JSON" },
+];
+---
+
+<RealtimeSequenceDiagram
+	ariaLabel="Your Worker adds a participant with the agent preset and passes the token to an agent Durable Object. The Durable Object opens the WebSocket with the agent participant token and subscriptions. The agent joins the meeting as a participant, sends session.started, forwards subscribed events as JSON, and sends session.ended before closing with code 1000."
+	participants={participants}
+	events={events}
+/>

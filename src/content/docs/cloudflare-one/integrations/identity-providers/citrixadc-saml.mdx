@@ -56,7 +56,7 @@ To set up Citrix ADC (SAML) as your identity provider:
 
    To configure all of the above using just the CLI, run the following:
 
-   ```json
+   ```txt
    add authentication samlIdPProfile samlProf_CloudflareAccess \
        -samlIdPCertName SAML_Signing \
        -assertionConsumerServiceURL "https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback" \
@@ -73,9 +73,7 @@ To set up Citrix ADC (SAML) as your identity provider:
    ```
 
 3. In the [Cloudflare dashboard](https://dash.cloudflare.com/), go to **Zero Trust** > **Integrations** > **Identity providers**.
-
 4. Under **Your identity providers**, select **Add new identity provider**.
-
 5. Configure the fields as follows:
 
    | Field                        | Description                                      |

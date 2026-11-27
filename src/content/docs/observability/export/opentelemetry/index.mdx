@@ -71,6 +71,30 @@ Cloudflare does not support the [binary format](https://opentelemetry.io/docs/sp
 
 ![Edit Destination dialog showing configuration for Honeycomb tracing with destination name, type selection, OTLP endpoint, and custom headers](~/assets/images/workers-observability/destination-setup.png)
 
+## Custom receiver requirements
+
+A custom receiver must accept OTLP over HTTP with JSON encoding. Use separate endpoints for traces and logs, typically `/v1/traces` and `/v1/logs`. Configure any authentication headers when you create the destination. Cloudflare sends a test export to the receiver using those headers before saving the destination.
+
+For traces, accept a JSON export request with a `resourceSpans` array. For logs, accept `resourceLogs`. Handle empty arrays as valid requests. For example, test the traces endpoint with the same authentication headers as your destination:
+
+```sh
+curl --include --request POST https://otel.example.com/v1/traces \
+  --header "Content-Type: application/json" \
+  --header "Authorization: Bearer <TOKEN>" \
+  --data '{"resourceSpans": []}'
+```
+
+For a successful export with no partial failures, return:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{}
+```
+
+If destination creation fails, check the receiver logs, URL, authentication headers, and response against the [OTLP/HTTP response contract](https://opentelemetry.io/docs/specs/otlp/#otlphttp-response).
+
 ## Enable export for Cloudflare Traces
 
 Add the destination under **Export destinations** in your domain settings. Refer to [Cloudflare Traces configuration](/observability/traces/configuration/#export-traces).

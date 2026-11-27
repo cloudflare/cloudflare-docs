@@ -173,14 +173,14 @@ The SDK automatically checks that your npm package version matches the Docker co
 - You updated the npm package (`npm install @cloudflare/sandbox@0`) but forgot to update the `FROM` line in your Dockerfile
 
 **How to fix**:
-Update your Dockerfile to match your npm package version. For example, if using `@cloudflare/sandbox@0.7.0`:
+Update your Dockerfile to match your npm package version. For example, if using `@cloudflare/sandbox@0.12.14`:
 
 ```dockerfile
 # Default image (JavaScript/TypeScript)
-FROM docker.io/cloudflare/sandbox:0.7.0
+FROM docker.io/cloudflare/sandbox:0.12.14
 
 # Or Python image if you need Python support
-FROM docker.io/cloudflare/sandbox:0.7.0-python
+FROM docker.io/cloudflare/sandbox:0.12.14-python
 ```
 
 See [Dockerfile reference](/sandbox/sdk/configuration/dockerfile/) for details on image variants and extending the base image.

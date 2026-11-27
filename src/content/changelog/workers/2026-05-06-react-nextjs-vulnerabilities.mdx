@@ -17,7 +17,7 @@ Cloudflare WAF rules deployed in response to prior React Server Component CVEs (
 
 | Ruleset                    | Rule description                                                                                            | Rule ID                            | Default action |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------- | -------------- |
-| Cloudflare Managed Ruleset | React - DoS - [`CVE-2025-55184`](https://github.com/facebook/react/security/advisories/GHSA-2m3v-v2m8-q956) | `2694f1610c0b471393b21aef102ec699` | Block          |
+| Cloudflare Managed Ruleset | React - DoS - [`CVE-2025-55184`](https://github.com/facebook/react/security/advisories/GHSA-2m3v-v2m8-q956) | `2694f1610c0b471393b21aef102ec699` | Disabled          |
 | Cloudflare Managed Ruleset | React - DoS - [`CVE-2026-23864`](https://github.com/facebook/react/security/advisories/GHSA-83fc-fqcc-2hmg) | `aaede80b4d414dc89c443cea61680354` | Block          |
 
 The existing rules detect the underlying attack patterns generically. As a result, they apply to the new [`CVE-2026-23870`](https://github.com/facebook/react/security/advisories/GHSA-rv78-f8rc-xrxh) denial-of-service vulnerability in Server Components and the corresponding Next.js advisory [`GHSA-8h8q-6873-q5fj`](https://github.com/vercel/next.js/security/advisories/GHSA-8h8q-6873-q5fj).

@@ -2,7 +2,7 @@
 // PR preview deployments (wrangler.preview.json -> dist).
 //
 // It is deployed via CI with:
-//   pnpm exec wrangler deploy --config wrangler.preview.json ...
+//   pnpm exec wrangler preview --config wrangler.preview.json ...
 //
 // Anti-indexing measures (preview-only, not in production worker):
 //   - /robots.txt returns Disallow: / with no AI content signals

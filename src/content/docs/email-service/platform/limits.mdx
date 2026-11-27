@@ -17,23 +17,33 @@ Cloudflare Email Service has the following limits to ensure optimal performance 
 
 New accounts start with a conservative daily quota and scale up over time based on your sending behavior, deliverability rates, and account standing. Limits are applied per account and may be adjusted automatically as your reputation improves.
 
+When an account reaches its daily sending limit, further sends are rejected until the limit allows more:
+
+| Interface                                                      | Response                                             |
+| -------------------------------------------------------------- | ---------------------------------------------------- |
+| [SMTP](/email-service/api/send-emails/smtp/#response-codes)    | `451 4.7.1` at the end of `DATA` (temporary failure) |
+| [Workers binding](/email-service/api/send-emails/workers-api/) | `E_DAILY_LIMIT_EXCEEDED`                             |
+| [REST API](/email-service/api/send-emails/rest-api/)           | HTTP `429`                                           |
+
 If you need higher sending limits sooner than automatic adjustment provides, refer to "Need a higher limit?" at the bottom of this page to request an increase.
 
 ## Verified destination addresses
 
-Before you onboard a sending domain, you can send emails only to [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) in your account. After you onboard a sending domain, you can send to any recipient immediately.
+The recipients you can send to depend on your plan and on whether you have onboarded a [sending domain](/email-service/configuration/domains/):
 
-Sends to verified destination addresses are always free: they do not count toward your monthly [quota](/email-service/platform/pricing/) or your daily sending limits, on any plan, including when only Email Routing is configured. You can only send from your routing domains.
+- **Workers Paid plan, with a sending domain**: Any recipient.
+- **Workers Free plan, with a sending domain**: Only [verified destination addresses](/email-service/configuration/destination-addresses/) in your account.
+
+Domains with only Email Routing configured can also send to verified destination addresses from their routing domains. This is a legacy path: we recommend that you onboard a sending domain and send through Email Sending instead.
 
 ## Email content limits
 
-| Component                    | Limit          | Notes                                                                                                                  |
-| ---------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields                                                                                   |
-| **Subject line**             | 998 characters | RFC 5322 compliant                                                                                                     |
-| **Total message size**       | 5 MiB          | Including attachments                                                                                                  |
-| **Total message size**       | 25 MiB         | For [verified destination addresses](/email-service/configuration/email-routing-addresses/#destination-addresses) only |
-| **Header size**              | 16 KB          | All custom headers combined                                                                                            |
+| Component                    | Limit          | Notes                                |
+| ---------------------------- | -------------- | ------------------------------------ |
+| **Recipients (to, cc, bcc)** | 50 per email   | Combined across all recipient fields |
+| **Subject line**             | 998 characters | RFC 5322 compliant                   |
+| **Total message size**       | 25 MiB         | Including attachments                |
+| **Header size**              | 16 KB          | All custom headers combined          |
 
 ## Suppression list limits
 

@@ -10,7 +10,14 @@ products:
   - kv
 ---
 
-import { Render, PackageManagers, Tabs, TabItem } from "~/components";
+import {
+	PackageManagers,
+	Render,
+	TabItem,
+	Tabs,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
 
 Storing application configuration data is an ideal use case for Workers KV. Configuration data can include data to personalize an application for each user or tenant, enable features for user groups, restrict access with allow-lists/deny-lists, etc. These use-cases can have high read volumes that are highly cacheable by Workers KV, which can ensure low-latency reads from your Workers application.
 
@@ -128,9 +135,8 @@ The application also uses exponential backoff to handle retries in case of error
 
 With the configuration data now in the Workers KV namespace, we can use it in our Workers application to personalize the application for each user.
 
-<Tabs>
-<TabItem label="index.ts">
-```js title="index.ts"
+<TypeScriptExample filename="src/index.ts">
+```ts
 // Example configuration data stored in Workers KV:
 // Key: "user-id-abc" | Value: {"preview_features_enabled": false}
 // Key: "user-id-def" | Value: {"preview_features_enabled": true}
@@ -198,17 +204,35 @@ export default {
     });
   }
 } satisfies ExportedHandler<Env>;
-
 ```
-</TabItem>
-<TabItem label="wrangler.jsonc">
-```json
+</TypeScriptExample>
+
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "<ENTER_WORKER_NAME>",
+		entrypoint,
+		compatibilityDate: "$today",
+		observability: {
+			enabled: true,
+		},
+		env: {
+			USER_CONFIGURATION: bindings.kv({ id: "<YOUR_BINDING_ID>" }),
+		},
+	},
+});`}
+>
+
+```jsonc
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "<ENTER_WORKER_NAME>",
 	"main": "src/index.ts",
 	"upload_source_maps": true,
-	"compatibility_date": "2025-03-03",
+	"compatibility_date": "$today",
 	"observability": {
 		"enabled": true
 	},
@@ -221,8 +245,7 @@ export default {
 }
 ```
 
-</TabItem>
-</Tabs>
+</WranglerConfig>
 
 This code will use the path within the URL and find the file associated to the path within the KV store. It also sets the proper MIME type in the response to inform the browser how to handle the response. To retrieve the value from the KV store, this code uses `arrayBuffer` to properly handle binary data such as images, documents, and video/audio files.
 

@@ -16,14 +16,14 @@
 	"schema_version": "1.0.0",
 	"pricing": {
 		"Default (per second)": 0.15,
-		"@480p video input (per second)": 0.172,
-		"@720p video input (per second)": 0.372,
-		"@1080p video input (per second)": 0.914,
-		"@4k video input (per second)": 1.866,
 		"@480p non-video input (per second)": 0.07,
+		"@480p video input (per second)": 0.172,
 		"@720p non-video input (per second)": 0.15,
+		"@720p video input (per second)": 0.372,
 		"@1080p non-video input (per second)": 0.37,
-		"@4k non-video input (per second)": 0.78
+		"@1080p video input (per second)": 0.914,
+		"@4k non-video input (per second)": 0.78,
+		"@4k video input (per second)": 1.866
 	},
 	"examples": [
 		{
@@ -255,14 +255,14 @@
 			"id": "bytedance",
 			"pricing": {
 				"default": 0.15,
-				"480p_video_in": 0.172,
-				"720p_video_in": 0.372,
-				"1080p_video_in": 0.914,
-				"4k_video_in": 1.866,
 				"480p_non_video_in": 0.07,
+				"480p_video_in": 0.172,
 				"720p_non_video_in": 0.15,
+				"720p_video_in": 0.372,
 				"1080p_non_video_in": 0.37,
-				"4k_non_video_in": 0.78
+				"1080p_video_in": 0.914,
+				"4k_non_video_in": 0.78,
+				"4k_video_in": 1.866
 			}
 		}
 	],
@@ -275,7 +275,7 @@
 			"properties": {
 				"prompt": {
 					"type": "string",
-					"maxLength": 2000,
+					"maxLength": 10000,
 					"description": "Text prompt describing the video to generate"
 				},
 				"image": {

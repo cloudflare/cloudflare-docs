@@ -80,6 +80,8 @@ If the `rua` mailto address is on a different domain than the DMARC record (comm
 2. Gradually increase to `p=quarantine`
 3. Finally implement `p=reject` after confirming legitimate mail authenticates
 
+When you onboard a domain to Email Sending and the domain has no DMARC record, Cloudflare adds a `p=reject` record. If other services also send email for the domain, relax that record and follow the deployment strategy, as described in [Domain configuration](/email-service/configuration/domains/#sending-records).
+
 ## Key benefits
 
 Email authentication provides:

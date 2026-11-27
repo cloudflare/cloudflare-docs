@@ -15,7 +15,6 @@
 	"max_output_tokens": null,
 	"schema_version": "1.0.0",
 	"pricing": {
-		"Default (per second)": 0.015,
 		"Per image": 0.015
 	},
 	"examples": [
@@ -56,7 +55,7 @@
 	"default_example": null,
 	"code_snippets": [],
 	"supports_async": false,
-	"zdr": false,
+	"zdr": true,
 	"zdr_comment": null,
 	"external_info": "https://docs.krea.ai/api-reference/krea/krea-2-medium-turbo",
 	"terms": "https://www.krea.ai/terms",

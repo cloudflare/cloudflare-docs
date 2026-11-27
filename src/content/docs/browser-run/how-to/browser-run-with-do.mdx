@@ -173,7 +173,7 @@ export class Browser extends DurableObject<Env> {
 		const folder = roundedDate.split(" GMT")[0];
 
 		// If there is a browser session open, re-use it
-		if (!this.browser || !this.browser.isConnected()) {
+		if (!this.browser || !this.browser.connected) {
 			console.log(`Browser DO: Starting new instance`);
 			try {
 				this.browser = await puppeteer.launch(this.env.MYBROWSER);
@@ -259,6 +259,6 @@ Run [`npx wrangler deploy`](/workers/wrangler/commands/workers/#deploy) to deplo
 
 ## Related resources
 
-- Other [Puppeteer examples](https://github.com/cloudflare/puppeteer/tree/main/examples)
+- Other [Puppeteer examples](/browser-run/examples/#browser-automation-examples)
 - Get started with [Durable Objects](/durable-objects/get-started/)
 - [Using R2 from Workers](/r2/api/workers/workers-api-usage/)

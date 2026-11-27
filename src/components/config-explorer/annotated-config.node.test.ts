@@ -45,6 +45,7 @@ describe("annotated config explorer", () => {
 		]);
 		expect(new Set(ids).size).toBe(ids.length);
 		for (const category of categories) {
+			expect(category.code).not.toContain(": undefined");
 			expect(category.code).toBe(
 				buildCategoryLines(category.id)
 					.map((line) => line.text)
@@ -72,6 +73,7 @@ describe("annotated config explorer", () => {
 		expect(d1.options.map((option) => option.signature)).toEqual([
 			"id?: string",
 			"name?: string",
+			"jurisdiction?: string",
 			"dev?: BindingDevOptions",
 		]);
 	});

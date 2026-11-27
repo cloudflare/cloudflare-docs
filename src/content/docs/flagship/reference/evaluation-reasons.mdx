@@ -32,9 +32,15 @@ When an evaluation error occurs, the method returns the default value you provid
 | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `TYPE_MISMATCH`   | The flag's variant type does not match the requested type. For example, calling `getBooleanValue` on a flag whose variant is a string. The default value is returned. |
 | `FLAG_NOT_FOUND`  | The specified flag key does not exist in the app. The default value is returned.                                                                                      |
-| `INVALID_CONTEXT` | The evaluation context contains unsupported values, such as objects or arrays in HTTP evaluation. The default value is returned.                                      |
+| `INVALID_CONTEXT` | The context has an invalid shape or unsupported value, contains a non-finite number or cycle, or exceeds a limit.                                                     |
 | `PARSE_ERROR`     | The SDK received an invalid evaluation response. The default value is returned.                                                                                       |
 | `GENERAL`         | An unexpected error occurred during evaluation, such as a timeout or network failure. The default value is returned.                                                  |
+
+## Invalid context behavior
+
+Binding `*Details()` methods return the supplied default value for invalid context. They set `reason` to `ERROR`, `errorCode` to `INVALID_CONTEXT`, and include an `errorMessage`.
+
+The direct data-plane HTTP `POST` endpoint returns a `400` response instead. Refer to [Evaluation API](/flagship/reference/evaluation-api/) for a request example.
 
 ## Example
 
@@ -69,7 +75,7 @@ switch (details.reason) {
 }
 
 if (details.errorCode) {
-	console.error(`Evaluation error: ${details.errorCode}`);
+	console.error(`Evaluation error: ${details.errorCode}`, details.errorMessage);
 }
 ```
 

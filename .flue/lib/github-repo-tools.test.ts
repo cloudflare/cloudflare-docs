@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { renderRepoFile } from "./github-repo-tools";
+import {
+	isBinaryContent,
+	renderBinaryFile,
+	renderRepoFile,
+} from "./github-repo-tools";
 
 const lines = (count: number, width = 10) =>
 	Array.from({ length: count }, (_, i) => `${i + 1}`.padStart(width, "x")).join(
@@ -71,5 +75,36 @@ describe("renderRepoFile", () => {
 
 		expect(last.split("\n").at(-1)).toBe("4000".padStart(10, "x"));
 		expect(reads).toBeGreaterThan(1);
+	});
+});
+
+describe("isBinaryContent", () => {
+	const encode = (text: string) => new TextEncoder().encode(text);
+
+	it("treats plain and non-ASCII text as text", () => {
+		expect(
+			isBinaryContent(encode("# Title\n\nem dash \u2014 \u4f60\u597d")),
+		).toBe(false);
+	});
+
+	it("detects a PNG signature with NUL bytes", () => {
+		const png = new Uint8Array([
+			0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
+		]);
+		expect(isBinaryContent(png)).toBe(true);
+	});
+
+	it("detects invalid UTF-8 without NUL bytes", () => {
+		expect(isBinaryContent(new Uint8Array([0xff, 0xfe, 0xfd, 0x41]))).toBe(
+			true,
+		);
+	});
+});
+
+describe("renderBinaryFile", () => {
+	it("returns metadata only", () => {
+		expect(renderBinaryFile("a/b.png", "abc123", 54776)).toBe(
+			"[a/b.png: binary file, 54776 bytes, exists at abc123. Contents are not shown.]",
+		);
 	});
 });

@@ -25,6 +25,12 @@ On Workers Free plan:
 	params={{ computeDepth: 2, storageDepth: 2, backendDepth: 3 }}
 />
 
+## Control usage costs
+
+Set a [Durable Objects spending limit](/durable-objects/platform/spend-management/) for requests, duration, and storage operations after included usage. Stored data charges are excluded and can continue during a pause.
+
+Review the [operations that can continue](/durable-objects/platform/spend-management/#operations-that-can-continue) before relying on a limit. For email without blocking usage, configure an [email alert](/billing/manage/spend-management/cli/#create-an-email-alert).
+
 ## Compute billing examples
 
 These examples exclude the costs for the Workers calling the Durable Objects. When modelling the costs of a Durable Object, note that:
@@ -119,7 +125,7 @@ In this scenario, the estimated monthly cost would be calculated as:
 
 - 100 WebSocket connections \* 100 Durable Objects to establish the WebSockets = 10,000 initial WebSocket connection requests.
 - 100 messages per minute<sup>1</sup> \* 100 Durable Objects \* 60 minutes \* 24 hours \* 30 days = 432,000,000 requests.
-- 10,000 + (432 million requests / 20 for WebSocket billing ratio) = 21,610,000 million requests.
+- 10,000 + (432 million requests / 20 for WebSocket billing ratio) = 21,610,000 requests.
 - 21,610,000 requests - included 1 million requests = 20,610,000 billable requests.
 - (rounded) 21,000,000 requests x $0.15 / 1,000,000 = $3.15.
 

@@ -30,7 +30,7 @@ Defaulting to timestamp of previous event.
 
 If you cannot upgrade immediately, or if you maintain a customized `props.conf`, update the `cloudflare:json` stanza on your indexer or heavy forwarder to match both keys, then restart the Splunk service:
 
-```conf
+```ini
 [cloudflare:json]
 TRUNCATE = 100000
 TIME_PREFIX = "(?:EdgeStartTimestamp|Datetime)"\s*:\s*"

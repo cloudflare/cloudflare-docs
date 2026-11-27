@@ -1,0 +1,277 @@
+---
+params:
+  - antiReplayLink
+  - tunnelInstabilityLink
+  - antiReplayMismatchLink
+  - configureTunnelsLink
+---
+
+This guide describes how to turn off IPsec anti-replay protection on a Check Point Security Gateway for use with Cloudflare WAN anycast IPsec tunnels, and how to validate, troubleshoot, and roll back the change.
+
+:::note
+This guide focuses only on anti-replay protection for existing Cloudflare WAN and Check Point deployments. Cloudflare will update this guide with comprehensive end-to-end deployment instructions in the future.
+:::
+
+Cloudflare recommends turning off anti-replay protection for Cloudflare WAN anycast IPsec tunnels. For an explanation of why, and for security considerations, refer to <a href={props.antiReplayLink}>Anti-replay protection</a>.
+
+If anti-replay protection is turned on in Check Point but turned off in Cloudflare, Check Point drops IKE and IPsec traffic. Connectivity through the tunnels is inconsistent, and the Check Point logs show IKE drops with the following message:
+
+```txt
+Encryption failure: Warning - possible replay attack
+```
+
+For help with tunnel instability or packet drops, refer to <a href={props.tunnelInstabilityLink}>Troubleshoot tunnel health</a>.
+
+This interim procedure was developed with Check Point Support.
+
+:::caution
+`disable_replay_check` is a gateway-wide setting. Turning off anti-replay protection affects **all** IPsec VPN tunnels terminated on the Security Gateway, not only the Cloudflare tunnels. If the gateway hosts other IPsec peers, evaluate the security impact for every tunnel before proceeding.
+
+This procedure was tested on a standalone Security Gateway deployment only. ClusterXL, VSX, and Multi-Domain deployments were not tested.
+:::
+
+## Testing environment
+
+This procedure was tested with the following Check Point software versions:
+
+- SmartConsole: R82.10 (82.10.9900.426)
+- Check Point Security Management: R82.10 Jumbo Hotfix Take 24 (Gaia — Open Server Platform)
+- Check Point Security Gateway: R82.10 Jumbo Hotfix Take 24 (Gaia — Open Server Platform)
+
+## Applicability
+
+Before using this procedure, confirm the following for your deployment:
+
+- Security Gateway and Management Server versions and hotfix levels.
+- Which other VPN communities or peers on the gateway will be affected by turning off anti-replay globally.
+
+## Check Point configuration
+
+### Prerequisites
+
+GuiDBedit exposes advanced properties that are not available in SmartConsole. Before you proceed, read [sk13009 - Check Point Database Tool (GuiDBedit Tool)](https://support.checkpoint.com/results/sk/sk13009) and the Check Point documentation for your version for complete details on how to use GuiDBedit.
+
+:::caution
+Only experienced Check Point administrators should use GuiDBedit. Incorrect changes can corrupt the management database.
+
+Never use GuiDBedit and SmartConsole at the same time. Close SmartConsole before you open GuiDBedit, and exit GuiDBedit before you open SmartConsole again.
+:::
+
+Complete these prerequisites:
+
+1. Schedule a maintenance window. Resetting the tunnels can interrupt traffic and other VPN tunnels.
+2. Obtain out-of-band or console access to the affected gateway.
+3. Back up the Security Management Server or Multi-Domain Security Management Server and verify the backup completed successfully. Refer to [sk54100 - How to back up your system](https://supportcontent.checkpoint.com/solutions?id=sk54100).
+4. Record the existing value of `disable_replay_check` and the affected gateway object name.
+5. Record the Cloudflare peer IP addresses and current IKE/IPsec SA state.
+6. Capture the current tunnel health, packet-loss symptoms, and relevant logs.
+7. Close SmartConsole before you open GuiDBedit. Keep SmartConsole closed until you exit GuiDBedit.
+
+### Turn off anti-replay protection on security gateway objects
+
+1. Confirm SmartConsole is closed. Do not open SmartConsole again until you exit GuiDBedit.
+2. Open `GuiDBedit.exe` from the installed SmartConsole version and build:
+
+   ```txt
+   C:\Program Files (x86)\CheckPoint\SmartConsole\{VERSION}\{BUILD}\GuiDBedit.exe
+   ```
+
+   Replace `{VERSION}` and `{BUILD}` with the installed SmartConsole version and build (visible in SmartConsole under **Help** > **About**), for example `R82.10\82.10.9900.426`.
+
+3. Go to **Network Objects** > **network_objects**.
+4. Locate the object for the affected Check Point Security Gateway, for example `chkp-sgw`.
+
+   :::note
+   The `disable_replay_check` property exists on both the Management Server object and the Security Gateway object. Make the change only on a Security Gateway object. Changing the property on the Management Server object has no effect.
+   :::
+
+5. Select the gateway record under **Object Name**.
+6. Press **Ctrl+F** and search for `disable_replay_check`. Select **Find Next** until you reach the exact `disable_replay_check` property on the selected Security Gateway object. Other configuration elements may contain similar anti-replay references and must not be changed.
+7. Record the existing value. The default is `false`, but prior administrative changes may have set it otherwise.
+8. Double-click `disable_replay_check` and set the value to `true`.
+
+   ![Set disable_replay_check to true in GuiDBedit](~/assets/images/cloudflare-wan/third-party/check-point/checkpoint-guidb-edit-disable-anti-replay-protection.png)
+
+9. Select **File** > **Save All**, or select the disk icon in the toolbar.
+10. Select **File** > **Exit** and confirm GuiDBedit exits cleanly.
+11. Open SmartConsole. Do not open GuiDBedit again while SmartConsole is open.
+12. Install policy on the affected Security Gateway.
+
+    If directed by Check Point Support, right-click the gateway in the **Install Policy** window and select **Do not use Install Policy Acceleration for all targets**. This forces a full policy compilation and installation.
+
+    ![Turn off Install Policy Acceleration for the gateway](~/assets/images/cloudflare-wan/third-party/check-point/checkpoint-disable-install-policy-acceleration.png)
+
+13. Confirm the policy installation completes successfully.
+14. Use [TunnelUtil (`vpn tunnelutil` or `vpn tu`)](https://sc1.checkpoint.com/documents/R81/WebAdminGuides/EN/CP_R81_SitetoSiteVPN_AdminGuide/Topics-VPNSG/CLI/vpn-tu.htm) to delete the IKE and IPsec SAs on the Security Gateway:
+
+    1. Connect to the Security Gateway via SSH.
+    2. Enter expert mode (`expert` followed by the expert password).
+    3. Run `vpn tu` to run the utility interactively.
+    4. Select option `1` (**List all IKE SAs**) to display active IKE SAs.
+    5. Select option `2` (**List all IPsec SAs**) to display active IPsec SAs.
+    6. Delete the Phase 1 (IKE) and Phase 2 (IPsec) Security Associations to force the tunnels to re-establish. Choose one of the following:
+
+       - Option `7` — delete IKE and IPsec SAs for a specific peer (preferred when only the Cloudflare tunnels need to renegotiate).
+       - Option `0` — delete IKE and IPsec SAs for all peers and users (interrupts every VPN peer on the gateway).
+
+       Using `vpn tunnelutil` to delete the Phase 1 and Phase 2 SAs forces the tunnels to renegotiate. Deleting the SAs removes the need to restart firewall services on the Security Gateway.
+
+    :::note
+    For more detail on `vpn tu`, including links to the official Check Point documentation, refer to [Troubleshooting commands](#troubleshooting-commands).
+    :::
+
+### Verify the installed configuration
+
+From Expert mode on the affected Security Gateway, verify the installed local object definition:
+
+```bash
+grep -n "disable_replay_check" "$FWDIR/database/myself_objects.C"
+```
+
+Expected value:
+
+```txt
+:disable_replay_check: (true)
+```
+
+If the value remains `false`:
+
+1. Close SmartConsole.
+2. Open GuiDBedit and confirm the property was changed on the correct Security Gateway object.
+3. Save and exit GuiDBedit.
+4. Reopen SmartConsole and reinstall policy.
+5. Repeat the verification command.
+
+The configuration-file check confirms that the setting was installed. It does not, by itself, prove that packet drops have stopped.
+
+## Cloudflare configuration
+
+### Turn off replay protection
+
+Anti-replay protection is turned off on Cloudflare IPsec tunnels by default. It may have been turned on when you first deployed your Check Point IPsec tunnels. You can safely turn it off after you change `disable_replay_check` from `false` to `true` and apply the change on the Check Point side.
+
+Replay protection is configured per IPsec tunnel. Repeat these steps for **every** IPsec tunnel that terminates on the affected Check Point Security Gateway. A tunnel left with replay protection turned on can continue to cause packet drops.
+
+1. Log in to the [Cloudflare dashboard](https://dash.cloudflare.com/) and go to **Networking** > **Connectors** > **IPsec/GRE tunnels**.
+2. Find the IPsec tunnel that terminates on the affected Check Point Security Gateway and select **Edit**.
+3. Go to **Security settings**.
+4. Set **Turn on replay protection** to off.
+5. Save your changes.
+6. Repeat steps 2-5 for every other IPsec tunnel that terminates on the same Security Gateway.
+
+### Verify tunnel operation
+
+1. Confirm the IKE and IPsec SAs re-establish for each Cloudflare peer.
+2. Confirm bidirectional traffic passes through each tunnel.
+3. Confirm the Cloudflare dashboard reports the expected tunnel health.
+4. Compare packet loss and application behavior with the pre-change baseline.
+5. After you apply the changes on both Check Point and Cloudflare, confirm the Check Point logs no longer show IKE drops with the message `Encryption failure: Warning - possible replay attack`.
+6. Monitor through at least one expected rekey event when practical.
+
+Cloudflare tunnel health can remain degraded briefly after traffic recovers due to health-check hysteresis. Evaluate actual traffic and logs in addition to the dashboard state.
+
+## Roll back the change
+
+Roll back if policy installation fails, tunnels do not recover, unexpected traffic is affected, or the security impact is unacceptable.
+
+1. Close SmartConsole.
+2. Open GuiDBedit. Do not open SmartConsole again until you exit GuiDBedit.
+3. Select the same Security Gateway object under **Network Objects** > **network_objects**.
+4. Set `disable_replay_check` to its recorded original value, normally `false`.
+5. Save all changes and exit GuiDBedit cleanly.
+6. Open SmartConsole and install policy on the affected gateway.
+7. Use `vpn tunnelutil` to delete the IKE and IPsec SAs, which forces the tunnels to renegotiate. Where possible, delete only the SAs for the affected Cloudflare peers. Deleting the SAs removes the need to restart firewall services on the Security Gateway.
+8. Verify the installed value, tunnel state, traffic flow, and gateway health.
+
+If the management database is damaged or the gateway does not recover, stop the procedure. Use the verified backup to restore the Security Management Server.
+
+## Troubleshooting commands
+
+Run these commands from Expert mode on the Security Gateway. Commands that delete SAs or turn on kernel debugging can affect production traffic and system performance.
+
+### Manage tunnels interactively
+
+```bash
+vpn tu
+```
+
+Common interactive options include:
+
+- Option `1`: List all IKE SAs.
+- Option `2`: List all IPsec SAs.
+- Option `7`: Delete IKE and IPsec SAs for one peer.
+- Option `0`: Delete IKE and IPsec SAs for all peers and users.
+
+Prefer the peer-specific option. Option `0` interrupts every VPN peer and user, so use it only when you need to renegotiate every SA on the gateway.
+
+References:
+
+- [sk33853 - How to use the vpn tu command](https://support.checkpoint.com/results/sk/sk33853)
+- [Check Point Site-to-Site VPN Administration Guide - vpn tu](https://sc1.checkpoint.com/documents/R81/WebAdminGuides/EN/CP_R81_SitetoSiteVPN_AdminGuide/Topics-VPNSG/CLI/vpn-tu.htm)
+
+### List tunnels
+
+```bash
+vpn tu tlist
+```
+
+### Delete SAs for one peer
+
+Replace `<PEER_IP>` with the Cloudflare peer IP address:
+
+```bash
+vpn tu del <PEER_IP>
+```
+
+This deletes the IKE and IPsec SAs for the specified peer. Repeat only for the Cloudflare peers affected by the change.
+
+### Delete SAs for all peers
+
+:::caution
+This command interrupts every IPsec and IKE SA on the gateway, including remote-access users.
+:::
+
+```bash
+vpn tu del all
+```
+
+### Display dropped packets
+
+Run drop debugging only for the minimum time needed to reproduce the issue. Output can be high-volume on a busy gateway, and `fw ctl zdebug` can increase CPU load. Avoid running during peak hours on production systems.
+
+```bash
+fw ctl zdebug + drop
+```
+
+Press **Ctrl+C** after collecting the required output, then explicitly stop kernel debugging:
+
+```bash
+fw ctl debug 0
+```
+
+Resetting kernel debugging options can take time. Confirm debugging is stopped before ending the troubleshooting session.
+
+## Support
+
+For assistance with gateway configuration, database recovery, clusters, or VSX, contact Check Point Support:
+
+- [Check Point Support Center](https://supportcenter.checkpoint.com/)
+- [Contact Check Point Support](https://www.checkpoint.com/support-services/contact-support/)
+
+When contacting Check Point Support, include sanitized gateway and management versions, the affected peer IPs, UTC timestamps, policy installation results, tunnel status, and relevant logs. Never include pre-shared keys or other secrets.
+
+## Related links
+
+Cloudflare documentation:
+
+- <a href={props.antiReplayLink}>Anti-replay protection</a>
+- <a href={props.tunnelInstabilityLink}>IPsec tunnel instability or packet drops</a>
+- <a href={props.antiReplayMismatchLink}>Health checks fail at a low, steady rate</a>
+- <a href={props.configureTunnelsLink}>Configure tunnel endpoints</a>
+
+Check Point documentation:
+
+- [sk13009 - Check Point Database Tool (GuiDBedit Tool)](https://support.checkpoint.com/results/sk/sk13009)
+- [sk54100 - How to back up your system](https://supportcontent.checkpoint.com/solutions?id=sk54100)
+- [sk33853 - How to use the vpn tu command](https://support.checkpoint.com/results/sk/sk33853)
+- [Check Point Site-to-Site VPN Administration Guide](https://sc1.checkpoint.com/documents/R81/WebAdminGuides/EN/CP_R81_SitetoSiteVPN_AdminGuide/)

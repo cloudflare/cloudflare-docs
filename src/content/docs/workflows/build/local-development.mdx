@@ -4,7 +4,7 @@ description: Develop and test Cloudflare Workflows locally using Wrangler's emul
 pcx_content_type: reference
 reviewed: 2024-11-27
 sidebar:
-  order: 8
+  order: 9
 products:
   - workflows
 ---
@@ -108,3 +108,5 @@ Local Explorer also lists Workflows declared only in `exports`, with Wrangler ve
 ## Known Issues
 
 Workflows are not supported as [remote bindings](/workers/local-development/#remote-bindings) or when using `npx wrangler dev --remote`.
+
+Local development ignores the [`jurisdiction`](/workflows/reference/data-location/) setting of a Workflow.

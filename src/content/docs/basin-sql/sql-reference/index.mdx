@@ -27,7 +27,7 @@ FROM namespace_name.table_name
 [HAVING conditions]
 [QUALIFY window_condition]
 [ORDER BY expression [ASC | DESC]]
-[LIMIT number]
+[LIMIT number [OFFSET number]]
 ```
 
 Two or more queries can be combined with [set operations](#set-operations) (`UNION`, `UNION ALL`, `INTERSECT`, `EXCEPT`).
@@ -619,6 +619,29 @@ LIMIT number
 
 ```sql
 SELECT * FROM my_namespace.sales_data LIMIT 100
+```
+
+---
+
+## OFFSET clause
+
+`OFFSET` skips a specified number of rows before returning results. Use it with `LIMIT` to retrieve a page of results. Order by a unique column to keep the row order consistent across pages.
+
+### Syntax
+
+```sql
+LIMIT number OFFSET number
+```
+
+### Example
+
+This query skips the first 100 rows and returns the next 100 rows:
+
+```sql
+SELECT sale_id, total_amount
+FROM my_namespace.sales_data
+ORDER BY sale_id
+LIMIT 100 OFFSET 100
 ```
 
 ---
