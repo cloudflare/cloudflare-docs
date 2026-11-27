@@ -1,0 +1,207 @@
+{
+	"model_id": "black-forest-labs/flux-fill-pro",
+	"name": "FLUX.1 Fill [pro]",
+	"description": "FLUX.1 Fill [pro] is Black Forest Labs' professional inpainting and outpainting model. It repaints only the masked part of an image from a text prompt, blending seamlessly with the rest, and can also fill transparent areas or extend an image past its borders.",
+	"task": "Image-to-Image",
+	"tags": [
+		"Image Editing",
+		"Image-to-Image",
+		"Inpainting",
+		"Outpainting"
+	],
+	"context_length": null,
+	"max_output_tokens": null,
+	"schema_version": "1.0.0",
+	"pricing": {
+		"Per image": 0.05
+	},
+	"examples": [
+		{
+			"name": "Replace Text on a Poster",
+			"description": "Rewrites only the masked title and keeps the rest of the poster untouched. Image and mask from BFL's FLUX.1 Fill docs.",
+			"input": {
+				"prompt": "A movie poster with the title \"FLUX PILL\" in bold yellow letters",
+				"image": "https://replicate.delivery/pbxt/M0gpKVE9wmEtOQFNDOpwz1uGs0u6nK2NcE85IihwlN0ZEnMF/kill-bill-poster.jpg",
+				"mask": "https://replicate.delivery/pbxt/M0gpLCYdCLbnhcz95Poy66q30XW9VSCN65DoDQ8IzdzlQonw/kill-bill-mask.png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-fill-pro/replace-text-on-a-poster.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-fill-pro/replace-text-on-a-poster.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-fill-pro',\n  {\n    prompt: 'A movie poster with the title \"FLUX PILL\" in bold yellow letters',\n    image:\n      'https://replicate.delivery/pbxt/M0gpKVE9wmEtOQFNDOpwz1uGs0u6nK2NcE85IihwlN0ZEnMF/kill-bill-poster.jpg',\n    mask: 'https://replicate.delivery/pbxt/M0gpLCYdCLbnhcz95Poy66q30XW9VSCN65DoDQ8IzdzlQonw/kill-bill-mask.png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-fill-pro\",\n  \"input\": {\n    \"prompt\": \"A movie poster with the title \\\"FLUX PILL\\\" in bold yellow letters\",\n    \"image\": \"https://replicate.delivery/pbxt/M0gpKVE9wmEtOQFNDOpwz1uGs0u6nK2NcE85IihwlN0ZEnMF/kill-bill-poster.jpg\",\n    \"mask\": \"https://replicate.delivery/pbxt/M0gpLCYdCLbnhcz95Poy66q30XW9VSCN65DoDQ8IzdzlQonw/kill-bill-mask.png\"\n  }\n}'"
+				}
+			]
+		},
+		{
+			"name": "Swap an Outfit",
+			"description": "Changes only the masked jacket; the face, pose and background stay the same. Image and mask from Black Forest Labs' official examples.",
+			"input": {
+				"prompt": "a man in a tailored olive-green wool jacket",
+				"image": "https://replicate.delivery/pbxt/M2FNCc6Z6QPv8ERLIcPubmmxAFp9HnpsWi0CtK9o3ZDzchgb/Screenshot%202024-11-25%20at%201.10.30%E2%80%AFPM.png",
+				"mask": "https://replicate.delivery/pbxt/M2FNClMAvaaRYCtWf3VP3Ikiv9U2jGemLQUiU8Hq3EHrk7Mn/denim-mask.png"
+			},
+			"output": {
+				"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-fill-pro/swap-an-outfit.jpeg"
+			},
+			"raw_response": {
+				"state": "Completed",
+				"result": {
+					"image": "https://examples.aig.cloudflare.com/black-forest-labs/flux-fill-pro/swap-an-outfit.jpeg"
+				}
+			},
+			"code_snippets": [
+				{
+					"label": "typescript",
+					"language": "typescript",
+					"code": "const response = await env.AI.run(\n  'black-forest-labs/flux-fill-pro',\n  {\n    prompt: 'a man in a tailored olive-green wool jacket',\n    image:\n      'https://replicate.delivery/pbxt/M2FNCc6Z6QPv8ERLIcPubmmxAFp9HnpsWi0CtK9o3ZDzchgb/Screenshot%202024-11-25%20at%201.10.30%E2%80%AFPM.png',\n    mask: 'https://replicate.delivery/pbxt/M2FNClMAvaaRYCtWf3VP3Ikiv9U2jGemLQUiU8Hq3EHrk7Mn/denim-mask.png',\n  },\n)\nconsole.log(response)"
+				},
+				{
+					"label": "curl",
+					"language": "bash",
+					"code": "curl https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/ai/run \\\n  --header \"Authorization: Bearer $CLOUDFLARE_API_TOKEN\" \\\n  --header \"Content-Type: application/json\" \\\n  --data '{\n  \"model\": \"black-forest-labs/flux-fill-pro\",\n  \"input\": {\n    \"prompt\": \"a man in a tailored olive-green wool jacket\",\n    \"image\": \"https://replicate.delivery/pbxt/M2FNCc6Z6QPv8ERLIcPubmmxAFp9HnpsWi0CtK9o3ZDzchgb/Screenshot%202024-11-25%20at%201.10.30%E2%80%AFPM.png\",\n    \"mask\": \"https://replicate.delivery/pbxt/M2FNClMAvaaRYCtWf3VP3Ikiv9U2jGemLQUiU8Hq3EHrk7Mn/denim-mask.png\"\n  }\n}'"
+				}
+			]
+		}
+	],
+	"default_example": null,
+	"code_snippets": [],
+	"supports_async": false,
+	"zdr": false,
+	"zdr_comment": null,
+	"external_info": "https://docs.bfl.ml/api-reference/models/inpaint-an-image-with-flux1-fill-[pro]-using-an-input-image-and-mask",
+	"terms": "https://blackforestlabs.ai/terms-of-service/",
+	"cover_image_url": null,
+	"metadata": {
+		"Mask": "Separate black-and-white mask or alpha channel",
+		"Output Formats": "JPEG, PNG, WebP",
+		"Pricing": "$0.05 per image"
+	},
+	"request_formats": null,
+	"provider_id": "black-forest-labs",
+	"providers": null,
+	"provider_details": [
+		{
+			"id": "black-forest-labs",
+			"pricing": {
+				"output_image_count": 0.05
+			}
+		}
+	],
+	"model_providers": [
+		{
+			"provider": "black-forest-labs",
+			"pricing": {
+				"output_image_count": 0.05
+			},
+			"rates": [
+				{
+					"key": null,
+					"label": null,
+					"description": null,
+					"rates": [
+						{
+							"key": "output_image_count",
+							"label": "Per image",
+							"unit": null,
+							"value": 0.05
+						}
+					]
+				}
+			]
+		}
+	],
+	"banner": null,
+	"pinned": false,
+	"created_at": "2026-11-25 16:30:41",
+	"schema": {
+		"input": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Image to edit, as an HTTPS URL, data URI or base64. Transparent areas are filled when no mask is sent."
+				},
+				"mask": {
+					"description": "Black-and-white mask the same size as the image: white areas are repainted, black areas are kept.",
+					"type": "string"
+				},
+				"prompt": {
+					"description": "What to paint into the masked area.",
+					"type": "string"
+				},
+				"steps": {
+					"description": "Number of generation steps, 15-50. Defaults to 50.",
+					"type": "integer",
+					"minimum": 15,
+					"maximum": 50
+				},
+				"guidance": {
+					"description": "How strongly to follow the prompt, 1.5-100. Defaults to 60.",
+					"type": "number",
+					"minimum": 1.5,
+					"maximum": 100
+				},
+				"prompt_upsampling": {
+					"description": "Let the model rewrite the prompt for a more creative result. Defaults to false.",
+					"type": "boolean"
+				},
+				"seed": {
+					"description": "Seed for reproducible results.",
+					"type": "integer",
+					"minimum": -9007199254740991,
+					"maximum": 9007199254740991
+				},
+				"safety_tolerance": {
+					"description": "Moderation level, from 0 (strictest) to 6 (most permissive). Defaults to 2.",
+					"type": "integer",
+					"minimum": 0,
+					"maximum": 6
+				},
+				"output_format": {
+					"description": "Output image format. Defaults to jpeg.",
+					"type": "string",
+					"enum": [
+						"jpeg",
+						"png",
+						"webp"
+					]
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		},
+		"output": {
+			"$schema": "https://json-schema.org/draft/2020-12/schema",
+			"type": "object",
+			"properties": {
+				"image": {
+					"type": "string",
+					"format": "uri",
+					"description": "URL of the generated image."
+				}
+			},
+			"required": [
+				"image"
+			],
+			"additionalProperties": false
+		}
+	}
+}
