@@ -24,6 +24,8 @@ type Props = BasePageProps & {
 	 *  false and renders its own footer inside the content column instead. */
 	footer?: boolean;
 	meta?: PageMeta;
+	/** Source file path exposed only in dev mode for the inline editor. */
+	devSourcePath?: string;
 };
 
 const {
@@ -38,6 +40,7 @@ const {
 	entryId,
 	footer = true,
 	meta,
+	devSourcePath,
 } = Astro.props;
 
 const lang = config.locale ?? "en";
@@ -168,6 +171,9 @@ const llmsUrl = Astro.site
 		{markdownUrl && !isHiddenVersion && <AgentDirective llmsUrl={llmsUrl} />}
 		<slot />
 		{footer !== false && <Footer />}
+		{import.meta.env.DEV && (
+			<cfdocs-dev-editor data-source-path={devSourcePath ?? ""} />
+		)}
 
 		<script>
 			import { codeCopy } from "@cloudflare/nimbus-docs/client";
@@ -183,6 +189,10 @@ const llmsUrl = Astro.site
 			// Custom Zaraz analytics event wiring (link/tab/details/copy/search).
 			// Registers delegated document listeners once; safe with view transitions.
 			import "../scripts/analytics";
+
+			if (import.meta.env.DEV) {
+				void import("../components/dev-editor/dev-editor.client");
+			}
 
 			codeCopy();
 		</script>

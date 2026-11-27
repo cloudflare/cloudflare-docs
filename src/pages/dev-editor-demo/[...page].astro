@@ -1,0 +1,410 @@
+---
+/**
+ * Dev-only showcase of every docs component supported by `<cfdocs-dev-editor>`.
+ *
+ * `getStaticPaths` returns an empty list outside `astro dev`, so this route
+ * emits zero pages and adds zero weight to production builds.
+ */
+import DocsLayout from "~/layouts/DocsLayout.astro";
+import {
+	AnchorHeading,
+	Aside,
+	Badge,
+	Card,
+	CardGrid,
+	CliVariant,
+	CliVariants,
+	Code,
+	CopyPrompt,
+	DashButton,
+	Description,
+	Details,
+	Example,
+	Feature,
+	FileTree,
+	GlossaryTooltip,
+	GuideCard,
+	GuideCardGrid,
+	InlineBadge,
+	LinkButton,
+	LinkCard,
+	LinkTitleCard,
+	Markdown,
+	MetaInfo,
+	PackageManagers,
+	RelatedProduct,
+	Render,
+	Step,
+	Steps,
+	TabItem,
+	Tabs,
+	Type,
+	TypeScriptExample,
+	WranglerConfig,
+} from "~/components";
+import type { TOCItem } from "@cloudflare/nimbus-docs/types";
+
+export const prerender = true;
+
+export function getStaticPaths() {
+	if (!import.meta.env.DEV) return [];
+	return [{ params: { page: undefined } }];
+}
+
+const headings: TOCItem[] = [
+	{ depth: 2, slug: "prose-and-inline", text: "Prose and inline components" },
+	{ depth: 2, slug: "callouts-and-details", text: "Asides and details" },
+	{ depth: 2, slug: "cards-and-navigation", text: "Cards and navigation" },
+	{
+		depth: 2,
+		slug: "tabs-steps-and-variants",
+		text: "Tabs, steps, and CLI variants",
+	},
+	{
+		depth: 2,
+		slug: "actions-badges-and-prompts",
+		text: "Actions, badges, and prompts",
+	},
+	{
+		depth: 2,
+		slug: "code-config-and-file-trees",
+		text: "Code, config, CLI, and file trees",
+	},
+	{ depth: 2, slug: "partials", text: "Partials (Render)" },
+];
+
+const tsExampleCode = `export default {
+	async fetch(request: Request): Promise<Response> {
+		return new Response("Hello from Workers!");
+	},
+} satisfies ExportedHandler;`;
+
+const wranglerToml = `name = "demo-worker"
+main = "src/index.ts"
+compatibility_date = "$today"`;
+
+const cfConfigSnippet = `import { defineConfig } from "@cloudflare/config";
+
+export default defineConfig({
+	name: "demo-worker",
+	main: "src/index.ts",
+	compatibilityDate: "$today",
+});`;
+
+const plainCode = `curl https://api.cloudflare.com/client/v4/user/tokens/verify \\
+  -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN"`;
+---
+
+<DocsLayout
+	title="Dev Editor Component Showcase"
+	summary="Click **Edit page** in the bottom-left corner (or press `⇧⌘E`) to test isolated inline editing, optional AI context, and undo across every supported docs component."
+	description="Dev-only component showcase for the inline docs editor."
+	sidebar={false}
+	headings={headings}
+	breadcrumbs={[{ label: "Home", href: "/" }, { label: "Dev Editor Showcase" }]}
+	prevNext={{}}
+	noindex={true}
+	feedback={false}
+	devSourcePath="src/pages/dev-editor-demo/[...page].astro"
+>
+	<Description>
+		<p>
+			This page is rendered only in <code>astro dev</code> and excluded from
+			production builds. Activate edit mode, click any block or component field
+			below, attach optional context, and click <strong>Copy prompt</strong> to
+			inspect the generated AI instructions.
+		</p>
+	</Description>
+
+	<h2 id="prose-and-inline">Prose and inline components</h2>
+
+	<p>
+		Standard paragraphs support inline <code>code</code>, <strong>bold</strong>,
+		<em>italic</em>, <a href="/workers/">internal links</a>, and inline
+		components like <GlossaryTooltip term="binding">bindings</GlossaryTooltip>,{" "}
+		<Type text="Promise<Response>" />, and <MetaInfo text="optional" />.
+	</p>
+
+	<AnchorHeading title="AnchorHeading example" depth={3} />
+
+	<Markdown
+		text="This paragraph was rendered by the `<Markdown>` component and remains editable with its inline **formatting** preserved."
+		inline={false}
+	/>
+
+	<ul>
+		<li>
+			Tight list item with <code>inline code</code>.
+		</li>
+		<li>
+			Second list item linking to{" "}
+			<a href="/workers/get-started/guide/">Workers quickstart</a>.
+		</li>
+	</ul>
+
+	<blockquote>
+		<p>
+			Blockquotes keep their paragraphs editable in isolation while preserving
+			Markdown structure.
+		</p>
+	</blockquote>
+
+	<div class="table-scroll">
+		<table>
+			<thead>
+				<tr>
+					<th>Component</th>
+					<th>Editable regions</th>
+					<th>Isolation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<code>&lt;Aside&gt;</code>
+					</td>
+					<td>Title and body prose</td>
+					<td>Scoped to aside title</td>
+				</tr>
+				<tr>
+					<td>
+						<code>&lt;Code&gt;</code>
+					</td>
+					<td>Filename and source code</td>
+					<td>Fenced code diff</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<h2 id="callouts-and-details">Asides and details</h2>
+
+	<Aside type="note" title="Editable note title">
+		<p>
+			Both the aside title above and this body paragraph can be edited
+			independently.
+		</p>
+	</Aside>
+
+	<Aside type="tip">
+		<p>Tips, cautions, and danger callouts work the same way.</p>
+	</Aside>
+
+	<Aside type="caution" title="Check before deploying">
+		<p>Review your bindings before publishing to production.</p>
+	</Aside>
+
+	<Aside type="danger" title="Destructive action">
+		<p>Deleting a namespace removes all stored keys permanently.</p>
+	</Aside>
+
+	<Details header="Click to edit this Details header" open={true}>
+		<p>
+			In edit mode, clicking the header edits it instead of toggling the
+			disclosure. This body paragraph is attributed inside the{" "}
+			<code>&lt;Details&gt;</code> component.
+		</p>
+	</Details>
+
+	<h2 id="cards-and-navigation">Cards and navigation</h2>
+
+	<CardGrid>
+		<Card title="Informational card" icon="ph:puzzle-piece">
+			<p>Edit the card title or this slotted body paragraph independently.</p>
+		</Card>
+
+		<LinkCard
+			title="LinkCard with description prop"
+			href="/workers/"
+			icon="ph:rocket-launch"
+			description="Edit this description prop or the card title without navigating away."
+		/>
+	</CardGrid>
+
+	<LinkTitleCard
+		title="LinkTitleCard with slotted prose"
+		href="/workers/get-started/guide/"
+		icon="ph:book-open"
+	>
+		<p>
+			Slotted content inside <code>&lt;LinkTitleCard&gt;</code> is isolated to
+			its card title.
+		</p>
+	</LinkTitleCard>
+
+	<GuideCardGrid>
+		<GuideCard
+			icon="ph:lightning"
+			product="Workers"
+			title="Deploy your first Worker"
+			description="Build and publish a serverless function across Cloudflare's global network."
+			href="/workers/get-started/guide/"
+			cta="Start guide"
+		/>
+		<GuideCard
+			icon="ph:database"
+			product="D1"
+			title="Create a SQLite database"
+			description="Bind a serverless SQL database directly to your Worker with zero config."
+			href="/d1/get-started/"
+			cta="Explore D1"
+		/>
+	</GuideCardGrid>
+
+	<Feature
+		header="Feature row header"
+		href="/workers/runtime-apis/"
+		cta="Explore Runtime APIs"
+	>
+		<p>
+			Edit the feature header, this description paragraph, or the CTA label
+			below without triggering the stretched link.
+		</p>
+	</Feature>
+
+	<RelatedProduct header="Cloudflare Queues" href="/queues/" product="queues">
+		<p>
+			Send and receive messages reliably between Workers with guaranteed
+			delivery.
+		</p>
+	</RelatedProduct>
+
+	<h2 id="tabs-steps-and-variants">Tabs, steps, and CLI variants</h2>
+
+	<Tabs syncKey="devEditorDemoTabs">
+		<TabItem label="Dashboard">
+			<p>
+				Click an inactive tab to switch panels. Click the already-active tab
+				label to edit the tab label itself.
+			</p>
+		</TabItem>
+		<TabItem label="API">
+			<p>
+				Edits inside this panel are attributed to{" "}
+				<code>&lt;TabItem label="API"&gt;</code>.
+			</p>
+		</TabItem>
+		<TabItem label="Terraform">
+			<p>Manage configuration declaratively using the Cloudflare provider.</p>
+		</TabItem>
+	</Tabs>
+
+	<h3>Steps with Step children</h3>
+
+	<Steps>
+		<Step title="Install dependencies">
+			<p>Install the CLI and initialise a new project directory.</p>
+		</Step>
+		<Step title="Preview locally">
+			<p>Start the local dev server and verify changes in your browser.</p>
+		</Step>
+	</Steps>
+
+	<h3>Steps with an ordered list</h3>
+
+	<Steps>
+		<ol>
+			<li>Log in to the Cloudflare dashboard and select your account.</li>
+			<li>Navigate to Workers &amp; Pages and select your application.</li>
+		</ol>
+	</Steps>
+
+	<h3>CLI variants</h3>
+
+	<CliVariants>
+		<CliVariant cli="wrangler">
+			<p>
+				Authenticate Wrangler before deploying your Worker from the terminal.
+			</p>
+		</CliVariant>
+		<CliVariant cli="cf">
+			<p>
+				Authenticate the Cloudflare CLI before deploying your Worker from the
+				terminal.
+			</p>
+		</CliVariant>
+	</CliVariants>
+
+	<Example title="Example container">
+		<p>
+			Both the example title and this inner body are editable and isolated to{" "}
+			<code>&lt;Example&gt;</code>.
+		</p>
+	</Example>
+
+	<h2 id="actions-badges-and-prompts">Actions, badges, and prompts</h2>
+
+	<CopyPrompt text="Create a Cloudflare Worker that returns JSON with a timestamp and deploy it." />
+
+	<div class="my-4 flex flex-wrap items-center gap-2">
+		<Badge text="Beta" variant="caution" />
+		<Badge text="New" variant="tip" />
+		<InlineBadge preset="early-access" />
+		<InlineBadge text="Custom badge" variant="info" />
+	</div>
+
+	<div class="my-4 flex flex-wrap items-center gap-3">
+		<LinkButton href="/workers/" variant="primary">
+			Get started with Workers
+		</LinkButton>
+		<LinkButton href="/workers/configuration/" variant="secondary" icon>
+			Read configuration docs
+		</LinkButton>
+		<DashButton url="/?to=/:account/home" />
+	</div>
+
+	<h2 id="code-config-and-file-trees">Code, config, CLI, and file trees</h2>
+
+	<Code code={plainCode} lang="sh" meta='title="verify-token.sh"' />
+
+	<h3>TypeScriptExample</h3>
+
+	<TypeScriptExample filename="src/index.ts">
+		<Code code={tsExampleCode} lang="ts" />
+	</TypeScriptExample>
+
+	<h3>WranglerConfig (with cfConfig)</h3>
+
+	<WranglerConfig cfConfig={cfConfigSnippet}>
+		<Code code={wranglerToml} lang="toml" />
+	</WranglerConfig>
+
+	<h3>PackageManagers (with cfCommand)</h3>
+
+	<PackageManagers
+		type="exec"
+		pkg="wrangler"
+		args="deploy"
+		cfCommand="cf deploy"
+	/>
+
+	<h3>FileTree</h3>
+
+	<FileTree>
+		<ul>
+			<li>
+				src/
+				<ul>
+					<li>
+						<strong>index.ts</strong>
+					</li>
+					<li>utils.ts</li>
+				</ul>
+			</li>
+			<li>wrangler.jsonc</li>
+			<li>package.json</li>
+			<li>...</li>
+		</ul>
+	</FileTree>
+
+	<h2 id="partials">Partials (Render)</h2>
+
+	<p>
+		The block below is included via{" "}
+		<code>&lt;Render file="prereqs" product="workers" /&gt;</code>. Editing any
+		text inside it attributes the change to the partial file in the copied
+		prompt.
+	</p>
+
+	<Render file="prereqs" product="workers" />
+</DocsLayout>
