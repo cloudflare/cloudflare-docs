@@ -71,9 +71,9 @@ Example:
 
 To bind KV namespaces to your Worker in [`cloudflare.config.ts`](/cf/projects/cloudflare-config/), add a property to `worker.env` using `bindings.kv()`. The property key is the binding name used to refer to the KV namespace in your Worker:
 
-* `id` <Type text="string" /> <MetaInfo text="required" />
+* `id` <Type text="string" /> <MetaInfo text="optional" />
 
-  * The ID of the KV namespace.
+  * The ID of an existing KV namespace. Optional when deploying with `cf deploy` (which auto-provisions a namespace by default via `--provision`), and required when targeting an existing namespace or running `cf kv` commands against it.
 
 * `dev` <Type text="object" /> <MetaInfo text="optional" />
 
