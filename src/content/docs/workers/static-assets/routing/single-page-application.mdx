@@ -134,8 +134,8 @@ flowchart TD
 	Request@{ shape: stadium, label: "Incoming request" }
 	Request --> HasWorker
 
-	HasWorker@{ shape: diamond, label: "Worker script<br />configured?" }
-	HasWorker -->|No| AssetLookup
+	HasWorker@{ shape: diamond, label: "Has Worker code<br />(main)?" }
+	HasWorker -->|"No (assets only)"| AssetLookup
 	HasWorker -->|Yes| RunWorkerFirst
 
 	RunWorkerFirst@{ shape: diamond, label: "run_worker_first<br />is true?" }
