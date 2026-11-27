@@ -23,15 +23,16 @@ import hCaptchaPlugin from "@cloudflare/pages-plugin-hcaptcha";
 
 interface Env {
 	HCAPTCHA_SECRET: string;
+	HCAPTCHA_SITEKEY: string;
 }
 
 export const onRequestPost: PagesFunction<Env>[] = [
 	(context) =>
 		hCaptchaPlugin({
-			// Store your production secret key as an encrypted Pages secret.
-			// For testing, hCaptcha provides the test secret "0x0000000000000000000000000000000000000000".
+			// Store your production secret key as an encrypted Pages secret
+			// and your matching sitekey as an environment variable.
 			secret: context.env.HCAPTCHA_SECRET,
-			sitekey: "10000000-ffff-ffff-ffff-000000000001",
+			sitekey: context.env.HCAPTCHA_SITEKEY,
 		})(context),
 	async (context) => {
 		// Request has been validated as coming from a human

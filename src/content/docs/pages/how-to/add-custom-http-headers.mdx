@@ -73,7 +73,7 @@ To deploy a header-modifying Worker with [Wrangler](/workers/wrangler/install-an
 	args="custom-headers-worker"
 />
 
-Replace the contents of `src/index.ts` (or `src/index.js` if you selected JavaScript) with the Worker code shown above.
+Replace the contents of `src/index.ts` (or `src/index.js` if you selected JavaScript) with the Worker code from the previous example.
 
 To operate your Worker alongside your Pages application, deploy it on a route matching your Pages custom domain. Update your [Wrangler configuration file](/workers/wrangler/configuration/) with your route and zone details:
 
@@ -84,7 +84,7 @@ To operate your Worker alongside your Pages application, deploy it on a route ma
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "custom-headers-worker",
 	"main": "src/index.ts",
-	"compatibility_date": "2026-01-01",
+	"compatibility_date": "$today",
 	"workers_dev": false,
 	"routes": [
 		{
