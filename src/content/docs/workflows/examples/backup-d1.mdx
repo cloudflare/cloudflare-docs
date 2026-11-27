@@ -12,9 +12,9 @@ description: Send invoice when shopping cart is checked out and paid for
 reviewed: 2024-12-30
 ---
 
-import { WranglerConfig } from "~/components";
+import { CliVariant, CliVariants, WranglerConfig } from "~/components";
 
-In this example, we implement a Workflow that runs on a schedule using the `schedules` field on the Workflow binding. That Workflow initiates a backup for a D1 database using the REST API, and then stores the SQL dump in an [R2](/r2) bucket.
+In this example, we implement a Workflow that runs on a schedule using `schedules` on the Workflow configuration. That Workflow initiates a backup for a D1 database using the REST API, and then stores the SQL dump in an [R2](/r2/) bucket.
 
 When the Workflow is triggered, it fetches the REST API to initiate an export job for a specific database. Then it fetches the same endpoint to check if the backup job is ready and the SQL dump is available to download.
 
@@ -105,7 +105,10 @@ export default {
 };
 ```
 
-Here is a minimal package.json:
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Here is a minimal `package.json`:
 
 ```json
 {
@@ -115,11 +118,54 @@ Here is a minimal package.json:
 }
 ```
 
+</CliVariant>
+<CliVariant cli="cf">
+
+Here is a minimal `package.json`:
+
+```json
+{
+	"type": "module",
+	"devDependencies": {
+		"cf": "latest"
+	}
+}
+```
+
+</CliVariant>
+</CliVariants>
+
 Create `D1_REST_API_TOKEN` as a [secret](/workers/configuration/secrets/) with permission to export the target D1 database.
 
-Here is a [Wrangler configuration file](/workers/wrangler/configuration/):
+Here is the configuration file:
 
-<WranglerConfig>
+<WranglerConfig
+	cfConfig={`import { bindings, defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "backup-d1",
+		entrypoint,
+		compatibilityDate: "$today",
+		compatibilityFlags: ["nodejs_compat"],
+		exports: {
+			backupWorkflow: exports.workflow({
+				name: "backup-workflow",
+				schedules: ["0 0 * * *"],
+			}),
+		},
+		env: {
+			ACCOUNT_ID: bindings.text("account-id"),
+			DATABASE_ID: bindings.text("database-id"),
+			D1_REST_API_TOKEN: bindings.secret(),
+			BACKUP_BUCKET: bindings.r2({
+				name: "d1-backups",
+			}),
+		},
+	},
+});`}
+>
 
 ```jsonc
 {
@@ -154,8 +200,17 @@ Here is a [Wrangler configuration file](/workers/wrangler/configuration/):
 
 </WranglerConfig>
 
-Each scheduled run creates a new Workflow instance automatically.
-
 Scheduled instances include the matching cron expression and scheduled trigger time on `event.schedule`.
 
-Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Each scheduled run creates a new Workflow instance automatically. Use the latest Wrangler release when configuring Workflow schedules. If your local Wrangler schema does not recognize `schedules` yet, update Wrangler before deploying.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Each scheduled run creates a new Workflow instance automatically once deployed with `cf deploy`.
+
+</CliVariant>
+</CliVariants>
