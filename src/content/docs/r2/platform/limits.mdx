@@ -6,7 +6,7 @@ products:
   - r2
 ---
 
-import { Render } from "~/components";
+import { DashButton, Render } from "~/components";
 
 | Feature                                                      | Limit                                             |
 | ------------------------------------------------------------ | ------------------------------------------------- |
@@ -21,6 +21,7 @@ import { Render } from "~/components";
 | Maximum upload size [^3]                                     | 5 GiB (single-part) / 4.995 TiB (multi-part) [^4] |
 | Maximum upload parts                                         | 10,000                                            |
 | Maximum concurrent writes to the same object name (key)      | 1 per second [^5]                                 |
+| Default bandwidth per account                                        | 100 Gbps upload / 100 Gbps download ([details](#bandwidth)) |
 
 [^1]: Bucket management operations include creating, deleting, listing, and configuring buckets. This limit does _not_ apply to reading or writing objects to a bucket.
 
@@ -50,3 +51,23 @@ For production use cases, connect a [custom domain](/r2/buckets/public-buckets/#
 The [Cloudflare REST API](/api/resources/r2/) is rate limited to 1,200 requests per five minutes across all R2 REST API operations on your account.
 
 For high-throughput object operations, use the [S3-compatible API](/r2/api/s3/api/) or [Workers API](/r2/api/workers/workers-api-reference/) instead. The Cloudflare REST API is best suited for lower-volume management and configuration operations.
+
+## Bandwidth
+
+Each Cloudflare account has a default R2 bandwidth limit of up to 100 Gbps. Upload and download bandwidth are measured separately, and each has its own 100 Gbps limit.
+
+If your account exceeds the bandwidth limit, R2 throttles requests rather than rejecting them, and requests that are already in progress are never rejected. Throttled requests still complete, but more slowly, so you may see higher request latency until your bandwidth usage drops below the limit.
+
+R2 returns `429 Too Many Requests` only for new requests if your account has so many concurrent requests that a new one would not get enough bandwidth to make progress.
+
+You can view your bandwidth limit and usage on the R2 **Metrics** page in the Cloudflare dashboard, or query both through [R2 analytics](/r2/platform/metrics-analytics/#bandwidth-dataset) with the GraphQL Analytics API.
+
+<DashButton url="/?to=/:account/r2/metrics" buttonName="R2 Metrics" />
+
+You can break down bandwidth usage by:
+
+- Bucket
+- Upload or download
+- Request location
+
+If your workload requires more upload or download bandwidth than your current limit, complete the [Limit Increase Request Form](https://forms.gle/eX6pXvit1wBv77Yw5) to request a higher limit.
