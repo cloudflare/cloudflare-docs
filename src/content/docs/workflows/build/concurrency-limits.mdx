@@ -8,7 +8,7 @@ products:
   - workflows
 ---
 
-import { WranglerConfig } from "~/components";
+import { CliVariant, CliVariants, WranglerConfig } from "~/components";
 
 ## Per-Workflow concurrency limits
 
@@ -21,6 +21,9 @@ Use a per-Workflow concurrency limit to:
 - Stop one high-volume Workflow from using all of your account's concurrency and delaying instances of your other Workflows.
 
 ### Set a per-Workflow concurrency limit
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 Configure `limit` within the `concurrency` property of your Workflow definition in your Wrangler configuration, then deploy your Worker:
 
@@ -43,13 +46,7 @@ Configure `limit` within the `concurrency` property of your Workflow definition 
 
 </WranglerConfig>
 
-With this configuration, no more than 10 instances of `MyWorkflow` run at once, no matter how many you create.
-
 You can also set `concurrency` on a Workflow declared in [`exports`](/workflows/build/workers-api/#declare-workflows-in-exports). For all the fields, refer to the [Wrangler configuration reference](/workers/wrangler/configuration/#workflows).
-
-`limit` must be a positive integer, and cannot be higher than your account's concurrency limit. A Workflow's concurrency limit can only make it more restrictive. It does not raise your account limit.
-
-When you choose a limit, count instances that sleep or retry briefly as using a slot while they wait.
 
 Concurrency limits require Wrangler 4.127.0 or above.
 
@@ -60,6 +57,51 @@ Concurrency limits require Wrangler 4.127.0 or above.
 Concurrency limits are not applied in local development.
 
 :::
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Configure `concurrency.limit` on `exports.workflow()` in `cloudflare.config.ts`, then deploy your Worker with `cf deploy`:
+
+```ts title="cloudflare.config.ts"
+import { defineConfig, exports } from "cf/config";
+import * as entrypoint from "./src/index.ts" with { type: "cf-worker" };
+
+export default defineConfig({
+	worker: {
+		name: "my-worker",
+		entrypoint,
+		compatibilityDate: "<COMPATIBILITY_DATE>",
+		exports: {
+			MyWorkflow: exports.workflow({
+				name: "my-workflow",
+				concurrency: {
+					limit: 10,
+				},
+			}),
+		},
+	},
+});
+```
+
+For all fields on `exports.workflow()`, refer to [Declare exports](/cf/projects/cloudflare-config/#declare-exports).
+
+:::note
+
+If you bind to a Workflow defined in another Worker with `bindings.workflow()`, set `concurrency` on `exports.workflow()` in the Worker that defines the Workflow.
+
+Concurrency limits are not applied in local development.
+
+:::
+
+</CliVariant>
+</CliVariants>
+
+With this configuration, no more than 10 instances of `MyWorkflow` run at once, no matter how many you create.
+
+`limit` must be a positive integer, and cannot be higher than your account's concurrency limit. A Workflow's concurrency limit can only make it more restrictive. It does not raise your account limit.
+
+When you choose a limit, count instances that sleep or retry briefly as using a slot while they wait.
 
 ### How per-Workflow concurrency limits are applied
 
@@ -75,7 +117,18 @@ Concurrency limits are not applied in local development.
 
 To change the limit, update `concurrency.limit` and redeploy your Worker.
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 To remove the limit, remove `concurrency` from your Wrangler configuration and run `wrangler deploy`.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+To remove the limit, remove `concurrency` from `exports.workflow()` in `cloudflare.config.ts` and run `cf deploy`.
+
+</CliVariant>
+</CliVariants>
 
 :::caution
 
