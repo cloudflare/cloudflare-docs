@@ -175,13 +175,11 @@ error.
 - **Check for aborted deletes.** In a non-interactive session, a destructive
   command without `--force` prints `Aborted.` to standard error, makes no
   change, and exits with status `1`.
-- **Review `--force` before you allow it.** `--force` skips the confirmation
-  prompt, and on some commands it does more. For example, `cf deploy --force`
-  allows uploads in CI even when the remote Worker has conflicting changes.
-  For `cf workers delete`, `--force` only skips confirmation, and
-  `--delete-with-references` allows deletion even when other Workers still
-  reference the Worker. To delete a referenced Worker in a non-interactive
-  session, pass both flags.
+- **Review the Worker delete flags.** For `cf workers delete`, `--force` only
+  skips the confirmation prompt. `--delete-with-references` allows deletion
+  even when other Workers still reference the target Worker. To delete a
+  referenced Worker, pass `--delete-with-references` and confirm when prompted.
+  In a non-interactive session, pass both flags instead.
 - **Use local data where supported.** `--local` works only for a few
   resources that local development provides, mainly KV keys, D1 databases
   through `cf d1 raw`, `cf d1 migrations list`, and `cf d1 migrations apply`,
