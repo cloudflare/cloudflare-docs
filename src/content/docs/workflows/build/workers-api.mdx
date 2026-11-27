@@ -89,15 +89,13 @@ Refer to the [events and parameters](/workflows/build/events-and-parameters/) do
 ### step
 
 {/* prettier-ignore */}
-- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, callback: (ctx: WorkflowStepContext): RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
-- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
-	RpcSerializable): Promise&lt;T&gt;</code>
+- <code>step.do&lt;T extends Rpc.Serializable&lt;T&gt;&gt;(name: string, callback: (ctx: WorkflowStepContext) =&gt; Promise&lt;T&gt;): Promise&lt;T&gt;</code>
+- <code>step.do&lt;T extends Rpc.Serializable&lt;T&gt;&gt;(name: string, callback: (ctx: WorkflowStepContext) =&gt; Promise&lt;T&gt;, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
+- <code>step.do&lt;T extends Rpc.Serializable&lt;T&gt;&gt;(name: string, config: WorkflowStepConfig, callback: (ctx: WorkflowStepContext) =&gt; Promise&lt;T&gt;): Promise&lt;T&gt;</code>
 	- `name` - the name of the step, up to 256 characters.
 	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
 	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
-- <code>step.do(name: string, config?: WorkflowStepConfig, callback: (ctx: WorkflowStepContext):
-	RpcSerializable, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
+- <code>step.do&lt;T extends Rpc.Serializable&lt;T&gt;&gt;(name: string, config: WorkflowStepConfig, callback: (ctx: WorkflowStepContext) =&gt; Promise&lt;T&gt;, rollbackOptions?: WorkflowStepRollbackOptions&lt;T&gt;): Promise&lt;T&gt;</code>
 	- `name` - the name of the step, up to 256 characters.
 	- `config` (optional) - an optional `WorkflowStepConfig` for configuring [step specific retry behaviour](/workflows/build/sleeping-and-retrying/).
 	- `callback` - an asynchronous function that receives a [`WorkflowStepContext`](/workflows/build/step-context/) and optionally returns serializable state for the Workflow to persist. In JavaScript Workflows, this includes a fresh, unlocked `ReadableStream<Uint8Array>` for large binary output.
