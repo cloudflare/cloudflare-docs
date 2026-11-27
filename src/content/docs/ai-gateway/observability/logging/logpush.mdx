@@ -19,6 +19,8 @@ Logpush supports four jobs per account. Each exported log can be up to 1 MB.
 
 Logpush exports logs whether or not logs are turned on for the gateway. The `cf-aig-collect-log` and `cf-aig-collect-log-payload` headers do not change what Logpush exports. Exported logs include the encrypted request and response bodies, even when payload collection is turned off.
 
+Each exported log includes the encrypted request and response bodies, even when a request sends `cf-aig-collect-log-payload: false`. To keep request and response bodies out of your Logpush destination, turn off Logpush for the gateway.
+
 :::
 
 <Render file="limits-increase" product="ai-gateway" />

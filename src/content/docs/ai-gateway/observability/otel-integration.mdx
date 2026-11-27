@@ -16,7 +16,7 @@ The OpenTelemetry (OTEL) integration automatically exports trace spans for AI re
 
 - Request model and provider
 - Token usage (input and output)
-- Request prompts and completions
+- Request prompts and completions, unless [payload collection is off](#prompt-and-response-content)
 - Cost estimates
 - Custom metadata
 
@@ -44,15 +44,23 @@ AI Gateway exports spans with the following attributes following the [Semantic C
 
 ### Standard Attributes
 
-| Attribute                    | Type   | Description                                     |
-| ---------------------------- | ------ | ----------------------------------------------- |
-| `gen_ai.request.model`       | string | The AI model used for the request               |
-| `gen_ai.model.provider`      | string | The AI provider (e.g., `openai`, `anthropic`)   |
-| `gen_ai.usage.input_tokens`  | int    | Number of input tokens consumed                 |
-| `gen_ai.usage.output_tokens` | int    | Number of output tokens generated               |
-| `gen_ai.prompt_json`         | string | JSON-encoded prompt/messages sent to the model  |
-| `gen_ai.completion_json`     | string | JSON-encoded completion/response from the model |
-| `gen_ai.usage.cost`          | double | Estimated cost of the request                   |
+| Attribute                    | Type   | Description                                   |
+| ---------------------------- | ------ | --------------------------------------------- |
+| `gen_ai.request.model`       | string | The AI model used for the request             |
+| `gen_ai.provider.name`       | string | The AI provider (e.g., `openai`, `anthropic`) |
+| `gen_ai.usage.input_tokens`  | int    | Number of input tokens consumed               |
+| `gen_ai.usage.output_tokens` | int    | Number of output tokens generated             |
+| `gen_ai.input.messages`      | string | Request body sent to the model                |
+| `gen_ai.output.messages`     | string | Response body returned by the model           |
+| `gen_ai.usage.cost`          | double | Estimated cost of the request                 |
+
+### Prompt and response content
+
+Spans include the request and response bodies in `gen_ai.input.messages` and `gen_ai.output.messages` by default. To remove this content from a span, send the [`cf-aig-collect-log-payload: false`](/ai-gateway/observability/logging/#collect-log-payload-cf-aig-collect-log-payload) header with the request. The other span attributes are still exported.
+
+Turning off log collection with the `cf-aig-collect-log: false` header, or with the gateway log setting, does not remove this content from all spans. Use `cf-aig-collect-log-payload: false` to keep prompts and responses out of your OpenTelemetry backend.
+
+Custom metadata is exported whatever the payload setting is. Do not put sensitive data in `cf-aig-metadata` if you do not want it in your traces.
 
 ### Custom Metadata
 

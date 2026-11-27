@@ -132,8 +132,65 @@ The third argument to `env.AI.run()` accepts a `gateway` object with the followi
 | `skipCache`  | `boolean` | `false`    | Skip the [cache](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                         |
 | `cacheTtl`   | `number`  | —          | [Cache TTL](/ai-gateway/features/caching/) in seconds.                                                                                                                                                                                                                                    |
 | `cacheKey`   | `string`  | —          | Custom [cache key](/ai-gateway/features/caching/) for this request.                                                                                                                                                                                                                       |
-| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request.                                                                                                                                                                                                           |
+| `collectLog` | `boolean` | —          | Whether to [collect logs](/ai-gateway/observability/logging/) for this request. Equivalent to the `cf-aig-collect-log` header.                                                                                                                                                            |
 | `metadata`   | `object`  | —          | [Custom metadata](/ai-gateway/observability/custom-metadata/) to attach to the log entry.                                                                                                                                                                                                 |
+
+:::note[Logging and payloads on the binding path]
+The `gateway` object has no option equivalent to the `cf-aig-collect-log-payload` header.
+
+When `collectLog` is `false`, AI Gateway does not store the log or the request and response bodies. [Unified Billing](/ai-gateway/features/unified-billing/) requests still store a log entry with billing details, but without the bodies.
+
+`collectLog` does not change what [Logpush](/ai-gateway/observability/logging/logpush/) exports, and does not remove prompts and responses from all [OpenTelemetry](/ai-gateway/observability/otel-integration/#prompt-and-response-content) spans.
+:::
+
+### Example: Process an image without storing request bodies
+
+The following Worker sends an image to a Workers AI model. The request sets `collectLog: false` and `skipCache: true`, so AI Gateway does not store the request or response bodies and does not cache the response.
+
+<TypeScriptExample>
+
+```ts
+export default {
+	async fetch(request, env): Promise<Response> {
+		const image = new Uint8Array(await request.arrayBuffer());
+		let binary = "";
+		for (const byte of image) {
+			binary += String.fromCharCode(byte);
+		}
+		const contentType = request.headers.get("content-type") ?? "image/jpeg";
+		const imageUrl = `data:${contentType};base64,${btoa(binary)}`;
+
+		const result = await env.AI.run(
+			"@cf/meta/llama-4-scout-17b-16e-instruct",
+			{
+				messages: [
+					{
+						role: "user",
+						content: [
+							{ type: "text", text: "Describe this image in one sentence." },
+							{ type: "image_url", image_url: { url: imageUrl } },
+						],
+					},
+				],
+			},
+			{ gateway: { id: "default", collectLog: false, skipCache: true } },
+		);
+
+		return Response.json(result);
+	},
+} satisfies ExportedHandler<Env>;
+```
+
+</TypeScriptExample>
+
+With `collectLog: false`, AI Gateway stores the following:
+
+- **Workers AI model:** no log entry. If the gateway's [Workers AI billing setting](/ai-gateway/configuration/manage-gateway/#configure-workers-ai-billing) is **Unified billing**, AI Gateway stores a log entry with billing details, but without the bodies.
+- **Third-party model on Unified Billing:** a log entry with billing details, but without the bodies. If the request uses a [BYOK](/ai-gateway/configuration/bring-your-own-keys/) key, AI Gateway stores no log entry.
+
+To confirm that a stored log entry has no bodies, [list the gateway logs](/api/resources/ai_gateway/subresources/logs/methods/list/) and check that `collect_log_payload` is `false`. You do not need to fetch the request or response body.
+
+These options do not control exports. To keep the image and the model responses out of external destinations, turn off [Logpush](/ai-gateway/observability/logging/logpush/) on the gateway and do not add [OpenTelemetry](/ai-gateway/observability/otel-integration/) exporters to it.
 
 ## `env.AI.aiGatewayLogId`
 
