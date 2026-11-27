@@ -1,0 +1,87 @@
+---
+title: Skills
+pcx_content_type: how-to
+description: Load skills into a Pi agent with the skills() extension from agents/harness/pi, from a Workspace, R2, or code.
+sidebar:
+  order: 2
+products:
+  - agents
+---
+
+import { TypeScriptExample } from "~/components";
+
+`skills(sources)` from `agents/harness/pi` turns [skills](/agents/skills/) sources from `agents/skills` into a Pi [extension](/agents/harnesses/pi/extensions/) named `agents.skills`. Sources can read skills from a [Computer Workspace](/agents/skills/sources/#workspace), [R2](/agents/skills/sources/#r2), or a [manifest](/agents/skills/sources/#code).
+
+:::note
+Skills are experimental. This page describes `agents` v0.34.0 with Pi 1.6.
+:::
+
+## Install the extension
+
+The extension has two tools, `activate_skill` and `read_skill_resource`, and a `skills` section in Pi's system prompt that lists each skill's name and description. It reads the sources when it is built, so install it in an `async` harness factory, before `Harness.open()`:
+
+<TypeScriptExample filename="src/index.ts">
+
+```ts
+import { DurableObject } from "cloudflare:workers";
+import { createModels } from "@earendil-works/pi-ai/models";
+import { createRegistry, Harness } from "@earendil-works/pi-durable";
+import { PiHarness, skills } from "agents/harness/pi";
+import { Lifecycle } from "agents/lifecycle";
+import { createAI } from "agents/models/pi-ai";
+import { manifest, r2 } from "agents/skills";
+
+const handbook = manifest({
+	id: "handbook",
+	skills: [
+		{
+			name: "release-notes",
+			description: "Write release notes.",
+			body: "One line per change.",
+		},
+	],
+});
+
+export class Assistant extends DurableObject<Env> {
+	ai = createAI({ binding: this.env.AI });
+	registry = createRegistry();
+
+	harness = new PiHarness({
+		harness: async ({ storage, context, onWake }) => {
+			this.registry.install(
+				await skills([
+					r2(this.env.SKILLS_BUCKET, { prefix: "skills/" }),
+					handbook,
+				]),
+			);
+			const models = createModels();
+			models.setProvider(this.ai.provider);
+			return Harness.open(
+				storage,
+				{ models, registry: this.registry, onWake },
+				context,
+			);
+		},
+		defaults: { model: this.ai("@cf/deepseek-ai/deepseek-v4.1-flash-1017") },
+	});
+
+	lifecycle = Lifecycle.install(this).use(this.harness);
+}
+```
+
+</TypeScriptExample>
+
+Both tools are marked `replay: "safe"`. A tool failure, such as an unknown skill or a missing file, returns `isError: true`, so the model sees the error and can try again. The extension logs problems with a source or a skill with the prefix `pi skills:`.
+
+## When skills change
+
+The extension reads the sources once, when the factory builds it. A skill added to the Workspace or the bucket after that is not in the catalog until the factory runs again, which happens when the object starts.
+
+## Run skill scripts
+
+The model can read a skill's instructions and resources. The extension has no `run_skill_script` tool. To run skill scripts, give the model a shell or Workspace tool. Refer to [Execution](/agents/skills/execution/).
+
+## Related
+
+- [Skills](/agents/skills/): the format, sources, and validation
+- [Extensions](/agents/harnesses/pi/extensions/): install extensions in the Pi harness factory
