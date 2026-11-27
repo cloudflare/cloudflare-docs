@@ -73,7 +73,7 @@ entries:
 
   - term: Pages
     general_definition: |-
-      [Cloudflare Pages](/pages/) is Cloudflare's product offering for building and deploying full-stack applications.
+      [Cloudflare Pages](/pages/) is Cloudflare's product for hosting JAMstack sites and full-stack applications. For new static and full-stack applications, Cloudflare recommends [Cloudflare Workers](/workers/static-assets/).
     associated_products:
       - Pages
 
