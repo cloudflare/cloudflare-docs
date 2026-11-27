@@ -1,0 +1,420 @@
+---
+title: Configure the test server
+pcx_content_type: configuration
+sidebar:
+  order: 2
+head: []
+description: Configure Workers, test values, and lifecycle options for the test server.
+products:
+  - workers
+---
+
+import {
+	CliVariant,
+	CliVariants,
+	PackageManagers,
+	TypeScriptExample,
+} from "~/components";
+
+The test server can run one or more Workers at once.
+
+## Configure Worker projects
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Each Worker can come from a Wrangler project or a Vite project that uses the Cloudflare Vite plugin. Point each entry in the `workers` array to the Wrangler configuration file for a project:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+```
+
+</TypeScriptExample>
+
+For Workers built by the [Cloudflare Vite plugin](/workers/vite-plugin/), run `vite build` first so tests use the production build output:
+
+<PackageManagers type="exec" pkg="vite" args="build" />
+
+The generated Wrangler configuration works like any other `configPath`. Each Worker is configured independently, so one test server can run both project types:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		// Wrangler project
+		{ configPath: "./workers/api/wrangler.jsonc" },
+		// Vite project (built output from the Cloudflare Vite plugin)
+		{ configPath: "./dist/web_worker/wrangler.json" },
+	],
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Point each entry in the `workers` array to a project directory that contains Build Output. Run [`cf build`](/cf/projects/#build) in each project first, so tests use its production build. Relative paths resolve from the current working directory, or from `root` if you set it:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer({
+	workers: [{ projectDir: "./workers/web" }, { projectDir: "./workers/api" }],
+});
+```
+
+</TypeScriptExample>
+
+A project's Build Output can contain more than one Worker. The test server runs the build's default Worker, unless you set `name` to the name of another Worker in the same build:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer({
+	workers: [
+		{ projectDir: "./" },
+		// Another Worker from the same build
+		{ projectDir: "./", name: "admin-worker" },
+	],
+});
+```
+
+</TypeScriptExample>
+
+Remote bindings use the same credentials as `cf`. If you are not logged in, run `cf auth login` or set `CLOUDFLARE_API_TOKEN`.
+
+</CliVariant>
+</CliVariants>
+
+## Select an environment
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+By default, the test server loads the top-level Wrangler configuration. Set `env` if you want to load a specific environment from the configuration.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc", env: "test" }],
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+The test server runs Build Output as it was built. To test a [mode](/cf/projects/#modes), build the project in that mode:
+
+```sh
+cf build --mode staging
+```
+
+Secrets then read their local values from the `.dev.vars` and `.env` files for that mode, as in [`cf dev`](/cf/projects/#local-variables-and-secrets).
+
+</CliVariant>
+</CliVariants>
+
+## Override variables and secrets
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+You can override `vars` and `secrets` for each Worker in the test server if you want to avoid creating a separate Wrangler environment for testing.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{
+			configPath: "./wrangler.jsonc",
+			vars: { API_HOST: "http://identity.example.com" },
+			secrets: { API_TOKEN: "test-token" },
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Use `envOverrides` to replace a Worker's variables and secrets with test values, so that you do not need a separate mode for testing. Write each value as in `cloudflare.config.ts`:
+
+<TypeScriptExample>
+
+```ts
+import { createTestServer } from "@cloudflare/test-server";
+import { bindings } from "cf/config";
+
+const server = createTestServer({
+	workers: [
+		{
+			projectDir: "./",
+			envOverrides: {
+				API_HOST: bindings.text("http://identity.example.com"),
+				API_TOKEN: bindings.text("test-token"),
+			},
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+`envOverrides` can only replace bindings that the Worker declares. A variable or secret takes `bindings.text()` or `bindings.json()`, a Durable Object takes another Durable Object, and any other binding takes one of its own type, or a [test Worker](/workers/testing/test-server/prepare-test-state/#mock-bindings-with-test-workers) that mocks it.
+
+A secret without an override reads its local value from the project's `.dev.vars` or `.env` files. Only secrets that `cloudflare.config.ts` declares with `bindings.secret()` read these files.
+
+</CliVariant>
+</CliVariants>
+
+## Configure the test server after setup
+
+If part of the Worker configuration depends on the test setup, you can create the test server without options and configure it with `server.update()` before starting the server.
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness();
+let upstream: { url: string; close(): Promise<void> };
+
+beforeAll(async () => {
+	upstream = await startLocalApi();
+
+	await server.update({
+		workers: [
+			{
+				configPath: "./wrangler.jsonc",
+				vars: { API_HOST: upstream.url },
+			},
+		],
+	});
+
+	await server.listen();
+});
+
+afterAll(async () => {
+	await server.close();
+	await upstream.close();
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer();
+let upstream: { url: string; close(): Promise<void> };
+
+beforeAll(async () => {
+	upstream = await startLocalApi();
+
+	await server.update({
+		workers: [
+			{
+				projectDir: "./",
+				envOverrides: { API_HOST: bindings.text(upstream.url) },
+			},
+		],
+	});
+
+	await server.listen();
+});
+
+afterAll(async () => {
+	await server.close();
+	await upstream.close();
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
+
+## Reset the test server between tests
+
+When reusing a server across tests, call `server.reset()` after each test. It recreates local storage and restores Workers to the options used when the current session started.
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+afterEach(async () => {
+	await server.reset();
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer({
+	workers: [{ projectDir: "./" }],
+});
+
+afterEach(async () => {
+	await server.reset();
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
+
+After a reset, apply any required schema migrations and seed data again. For examples, refer to [Prepare test state](/workers/testing/test-server/prepare-test-state/).
+
+## Print debug output when tests fail
+
+`server.debug()` prints the server timeline and captured Workers runtime logs. Call it when a test throws an exception or fails and you need more information to debug it.
+
+The following example uses a cleanup hook from Vitest:
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [{ configPath: "./wrangler.jsonc" }],
+});
+
+afterEach(({ task }) => {
+	if (task.result?.state === "fail") {
+		server.debug();
+	}
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer({
+	workers: [{ projectDir: "./" }],
+});
+
+afterEach(({ task }) => {
+	if (task.result?.state === "fail") {
+		server.debug();
+	}
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
+
+## Specify types for Worker handles
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+`server.getWorker()` accepts types for the Worker environment and module exports. You can define these types manually. But to keep them aligned with your Worker, you can generate the env type from the Wrangler configuration and derive the exports from its source module.
+
+Give each Worker a distinct environment interface so the generated declarations can be used together:
+
+<PackageManagers
+	type="exec"
+	pkg="wrangler"
+	args="types ./workers/api/worker-configuration.d.ts --config ./workers/api/wrangler.jsonc --env-interface ApiEnv"
+/>
+
+Repeat this command for each Worker and include the generated files in the TypeScript configuration for your tests:
+
+```json
+{
+	"include": ["./workers/*/worker-configuration.d.ts", "./tests/**/*.ts"]
+}
+```
+
+Pass the generated environment interface to `server.getWorker()`. Use `typeof import()` to derive the Worker exports from its source module:
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker<
+	ApiEnv,
+	typeof import("../workers/api/index")
+>("api-worker");
+```
+
+</TypeScriptExample>
+
+In this example, `ApiEnv` comes from `worker-configuration.d.ts`. The module type includes the default export and its RPC methods. Re-run [`wrangler types`](/workers/languages/typescript/#generate-types) when the Worker configuration changes.
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Pass the type of a Worker's `cloudflare.config.ts` module to `server.getWorker()`. The handle infers the Worker's environment and exports from it, including the default export's RPC methods:
+
+<TypeScriptExample>
+
+```ts
+const apiWorker =
+	server.getWorker<typeof import("../workers/api/cloudflare.config")>(
+		"api-worker",
+	);
+```
+
+</TypeScriptExample>
+
+Without a config type, the handle's environment and exports are `any`. To type them directly, pass the types to `getEnv()` and `getExport()`:
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker("api-worker");
+const env = await apiWorker.getEnv<{ API_HOST: string }>();
+const api = await apiWorker.getExport<{ getMessage(): string }>();
+```
+
+</TypeScriptExample>
+
+Resource bindings, such as D1 and KV, use the global types from `@cloudflare/workers-types`. Include them in the TypeScript configuration for your tests, or these bindings are typed as `any`:
+
+```json
+{
+	"compilerOptions": {
+		"types": ["@cloudflare/workers-types", "node"]
+	}
+}
+```
+
+</CliVariant>
+</CliVariants>

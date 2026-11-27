@@ -4,18 +4,21 @@ pcx_content_type: example
 sidebar:
   order: 4
 head: []
-description: Test routes, dispatch events, control Workflows, and assert logged behavior with createTestHarness.
+description: Test routes, dispatch events, control Workflows, and assert logged behavior with the test server.
 products:
   - workers
 ---
 
-import { TypeScriptExample } from "~/components";
+import { CliVariant, CliVariants, TypeScriptExample } from "~/components";
 
-Use the test harness to send requests through configured routes or target a specific Worker directly. You can also dispatch events like scheduled events.
+Use the test server to send requests through configured routes or target a specific Worker directly. You can also dispatch events like scheduled events.
 
 ## Test route dispatch across Workers
 
-When a test harness runs multiple Workers, add each Worker to the `workers` array. The first Worker is the primary Worker. `server.fetch()` sends relative URLs to the primary Worker and matches absolute URLs against configured routes. If no route matches, it falls back to the primary Worker:
+When a test server runs multiple Workers, add each Worker to the `workers` array. The first Worker is the primary Worker. `server.fetch()` sends relative URLs to the primary Worker and matches absolute URLs against configured routes. If no route matches, it falls back to the primary Worker:
+
+<CliVariants>
+<CliVariant cli="wrangler">
 
 <TypeScriptExample>
 
@@ -35,6 +38,31 @@ const webResponse = await server.fetch("http://example.com/users/123");
 ```
 
 </TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer({
+	workers: [
+		/** Includes `triggers.fetch({ pattern: "example.com/*" })` */
+		{ projectDir: "./workers/web" },
+		/** Includes `triggers.fetch({ pattern: "api.example.com/v1/*" })` */
+		{ projectDir: "./workers/api" },
+	],
+});
+
+const primaryResponse = await server.fetch("/");
+const apiResponse = await server.fetch("http://api.example.com/v1/users/123");
+const webResponse = await server.fetch("http://example.com/users/123");
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
 
 ## Interact with a specific Worker
 
@@ -58,7 +86,7 @@ await apiWorker.scheduled({
 
 ## Assert logged behavior
 
-The test harness captures logs from the Workers runtime. To assert that a Worker logged a specific message, use `server.getLogs()` to retrieve the log entries.
+The test server captures logs from the Workers runtime. To assert that a Worker logged a specific message, use `server.getLogs()` to retrieve the log entries.
 
 Captured logs are reset when you call `server.reset()`. You can also call `server.clearLogs()` to isolate logs before and after a specific action:
 
@@ -100,6 +128,9 @@ test("logs scheduled job results", async ({ expect }) => {
 
 ## Inspect and control Workflow execution
 
+<CliVariants>
+<CliVariant cli="wrangler">
+
 If your Worker starts a Workflow, you can use `worker.introspectWorkflow(bindingName)` to control new instances and inspect their state.
 
 <TypeScriptExample>
@@ -139,3 +170,52 @@ await instance.waitForStatus("complete");
 ```
 
 </TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+If your Worker starts a Workflow, you can use `worker.introspectWorkflow(exportName)` to control new instances and inspect their state. Pass the name that the Worker exports the Workflow class as. The Workflow does not need a binding.
+
+<TypeScriptExample>
+
+```ts
+const worker =
+	server.getWorker<typeof import("../workers/api/cloudflare.config")>(
+		"api-worker",
+	);
+await using workflow = await worker.introspectWorkflow("MyWorkflow");
+
+await workflow.modifyAll(async (modifier) => {
+	await modifier.disableSleeps([{ name: "wait-for-approval" }]);
+});
+
+await worker.fetch("/start-workflow");
+
+const [instance] = await workflow.get();
+await instance.waitForStatus("complete");
+expect(await instance.getOutput()).toEqual({ approved: true });
+```
+
+</TypeScriptExample>
+
+If the test already knows the instance ID, you can also introspect that instance directly with `worker.introspectWorkflowInstance(exportName, instanceId)`.
+
+<TypeScriptExample>
+
+```ts
+const instance = await worker.introspectWorkflowInstance(
+	"MyWorkflow",
+	"instance-id",
+);
+
+await instance.modify(async (modifier) => {
+	await modifier.mockStepResult({ name: "load-user" }, { id: "123" });
+});
+
+await instance.waitForStatus("complete");
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>

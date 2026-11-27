@@ -1,0 +1,340 @@
+---
+title: Prepare test state
+pcx_content_type: example
+sidebar:
+  order: 3
+head: []
+description: Seed local storage and replace dependencies in test server tests.
+products:
+  - workers
+---
+
+import { CliVariant, CliVariants, TypeScriptExample } from "~/components";
+
+An integration test may need data in local storage before it runs. It may also depend on external services that you do not want to call during the test. Use the test server to prepare this state and replace those dependencies.
+
+## Access configured bindings
+
+`worker.getEnv()` returns the variables, secrets, and bindings configured for a Worker. You can [specify types](/workers/testing/test-server/configure/#specify-types-for-worker-handles) for `server.getWorker()` so these values are typed. Then use the returned storage bindings to seed data directly from a test:
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker<ApiEnv>("api-worker");
+const env = await apiWorker.getEnv();
+
+await env.USERS.put("123", JSON.stringify({ name: "Ada" }));
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+<TypeScriptExample>
+
+```ts
+const apiWorker =
+	server.getWorker<typeof import("../workers/api/cloudflare.config")>(
+		"api-worker",
+	);
+const env = await apiWorker.getEnv();
+
+await env.USERS.put("123", JSON.stringify({ name: "Ada" }));
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
+
+## Apply D1 migrations
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Use `worker.applyD1Migrations(bindingName)` to read the migration settings for a D1 binding from the Wrangler configuration. It uses the configured `migrations_dir` and `migrations_pattern`. Without these options, it reads `.sql` files from the `migrations` directory relative to the configuration file.
+
+Call it after storage is reset to apply migrations that have not already run. Then access the database with `worker.getEnv()` and seed the required rows.
+
+<TypeScriptExample>
+
+```ts
+const apiWorker = server.getWorker<ApiEnv>("api-worker");
+
+beforeEach(async () => {
+	await apiWorker.applyD1Migrations("DATABASE");
+
+	const env = await apiWorker.getEnv();
+	await env.DATABASE.prepare(
+		"INSERT INTO daily_reports (date, user_ids) VALUES (?, ?)",
+	)
+		.bind("2026-05-29", JSON.stringify(["123", "456"]))
+		.run();
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Use `worker.applyD1Migrations(bindingName)` to apply migration files to a D1 binding. It reads `.sql` files from the `migrations` directory in the project directory. To read them from elsewhere, pass the `dir`, `pattern`, and `table` options, which work as in `cf d1 migrations apply`. It does not migrate a remote D1 database. To test against a local one, replace the binding in `envOverrides`, such as `DATABASE: bindings.d1()`.
+
+Call it after storage is reset to apply migrations that have not already run. Then access the database with `worker.getEnv()` and seed the required rows.
+
+<TypeScriptExample>
+
+```ts
+const apiWorker =
+	server.getWorker<typeof import("../workers/api/cloudflare.config")>(
+		"api-worker",
+	);
+
+beforeEach(async () => {
+	await apiWorker.applyD1Migrations("DATABASE");
+
+	const env = await apiWorker.getEnv();
+	await env.DATABASE.prepare(
+		"INSERT INTO daily_reports (date, user_ids) VALUES (?, ?)",
+	)
+		.bind("2026-05-29", JSON.stringify(["123", "456"]))
+		.run();
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
+
+## Prepare Durable Object storage
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+`worker.getDurableObjectStorage()` gives you access to the storage of a SQLite-backed Durable Object instance. Pass its binding name or exported class name. Then select the instance by name or ID.
+
+The returned handle executes SQL inside the Durable Object. Use it to seed an instance before a test or inspect its state after the Worker runs.
+
+<TypeScriptExample>
+
+```ts
+const worker = server.getWorker<ApiEnv>("api-worker");
+const storage = await worker.getDurableObjectStorage("COUNTER", {
+	name: "user-123",
+});
+
+await storage.exec(
+	"INSERT INTO counters (id, value) VALUES (?, ?)",
+	"user-123",
+	0,
+);
+
+await worker.fetch("/counter/user-123");
+
+const rows = await storage.exec<{ value: number }>(
+	"SELECT value FROM counters WHERE id = ?",
+	"user-123",
+);
+expect(rows).toEqual([{ value: 1 }]);
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+`worker.getDurableObjectStorage()` gives you access to the storage of a SQLite-backed Durable Object instance. Pass the name that the Worker exports the Durable Object class as. Then select the instance by name or ID.
+
+The returned handle executes SQL inside the Durable Object. Use it to seed an instance before a test or inspect its state after the Worker runs.
+
+<TypeScriptExample>
+
+```ts
+const worker =
+	server.getWorker<typeof import("../workers/api/cloudflare.config")>(
+		"api-worker",
+	);
+const storage = await worker.getDurableObjectStorage("Counter", {
+	name: "user-123",
+});
+
+await storage.exec(
+	"INSERT INTO counters (id, value) VALUES (?, ?)",
+	"user-123",
+	0,
+);
+
+await worker.fetch("/counter/user-123");
+
+const rows = await storage.exec<{ value: number }>(
+	"SELECT value FROM counters WHERE id = ?",
+	"user-123",
+);
+expect(rows).toEqual([{ value: 1 }]);
+```
+
+</TypeScriptExample>
+
+`worker.listDurableObjectIds()` and `worker.evictDurableObject()` also take the export name.
+
+</CliVariant>
+</CliVariants>
+
+## Mock outbound requests
+
+The test server proxies outbound `fetch()` requests from your Workers through the `globalThis.fetch()` function in your Node environment. This allows you to intercept these requests and return a predictable response in your tests.
+
+Here is an example using `vi.spyOn()` to mock a single request. But you can also use [Mock Service Worker (MSW)](/workers/testing/test-server/integrations/#mock-service-worker) to intercept these requests based on your preferences.
+
+<TypeScriptExample>
+
+```ts
+import { afterEach, test, vi } from "vitest";
+
+afterEach(() => {
+	vi.restoreAllMocks();
+});
+
+test("loads a user profile", async ({ expect }) => {
+	vi.spyOn(globalThis, "fetch").mockImplementation(async (input, init) => {
+		const request = new Request(input, init);
+
+		if (request.url === "http://identity.example.com/profile/123") {
+			return Response.json({ id: "123", name: "Ada" });
+		}
+
+		throw new Error(`Unexpected request: ${request.method} ${request.url}`);
+	});
+
+	const worker = server.getWorker();
+	const response = await worker.fetch("/users/123");
+	expect(await response.json()).toEqual({ id: "123", name: "Ada" });
+});
+```
+
+</TypeScriptExample>
+
+## Mock bindings with test Workers
+
+<CliVariants>
+<CliVariant cli="wrangler">
+
+Use `bindingOverrides` when you want to control the behavior of a binding. It routes the binding to a test Worker running inside the test server. For example, a test Worker can replace the Browser Rendering binding and return a known screenshot without starting a browser.
+
+The test Worker can also expose JSRPC methods that configure its behavior. Use `worker.getExport()` to access the default export from your test.
+
+<TypeScriptExample>
+
+```ts
+const server = createTestHarness({
+	workers: [
+		{
+			configPath: "./workers/web/wrangler.jsonc",
+			bindingOverrides: { BROWSER: "mock-browser" },
+		},
+		// The test Worker (mock-browser) that replaces the Browser Rendering binding
+		{ configPath: "./workers/mock-browser/wrangler.jsonc" },
+	],
+});
+
+// Access the test Worker to configure its behavior or assert its state.
+const mockBrowser = await server
+	.getWorker<unknown, typeof import("../workers/mock-browser")>("mock-browser")
+	.getExport();
+
+// Configure the screenshot to be returned through the overridden binding.
+await mockBrowser.setScreenshot([137, 80, 78, 71]);
+
+const response = await server.fetch("/reports/2026-05-29.png");
+expect(await response.bytes()).toEqual(Uint8Array.from([137, 80, 78, 71]));
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+<CliVariant cli="cf">
+
+Use `envOverrides` with `bindings.worker()` when you want to control the behavior of a binding. It routes the binding to a test Worker running inside the test server. For example, a test Worker can replace the Browser Rendering binding and return a known screenshot without starting a browser.
+
+The test Worker can also expose JSRPC methods that configure its behavior. Use `worker.getExport()` to access the default export from your test.
+
+<TypeScriptExample>
+
+```ts
+import { createTestServer } from "@cloudflare/test-server";
+import { bindings } from "cf/config";
+
+const server = createTestServer({
+	workers: [
+		{
+			projectDir: "./workers/web",
+			envOverrides: { BROWSER: bindings.worker({ worker: "mock-browser" }) },
+		},
+		// The test Worker (mock-browser) that replaces the Browser Rendering binding
+		{ projectDir: "./workers/mock-browser" },
+	],
+});
+
+// Access the test Worker to configure its behavior or assert its state.
+const mockBrowser = await server
+	.getWorker<
+		typeof import("../workers/mock-browser/cloudflare.config")
+	>("mock-browser")
+	.getExport();
+
+// Configure the screenshot to be returned through the overridden binding.
+await mockBrowser.setScreenshot([137, 80, 78, 71]);
+
+const response = await server.fetch("/reports/2026-05-29.png");
+expect(await response.bytes()).toEqual(Uint8Array.from([137, 80, 78, 71]));
+```
+
+</TypeScriptExample>
+
+A test Worker does not need a project of its own. Pass its [Miniflare](/workers/testing/miniflare/) Worker configuration as `miniflareConfig`, and Miniflare runs it as given: the code of each module goes in `manifest`, and each binding takes the value to use. The following test Worker replaces an AI binding:
+
+<TypeScriptExample>
+
+```ts
+const server = createTestServer({
+	workers: [
+		{
+			projectDir: "./",
+			envOverrides: { AI: bindings.worker({ worker: "mock-ai" }) },
+		},
+		{
+			miniflareConfig: {
+				name: "mock-ai",
+				compatibilityDate: "2026-06-01",
+				manifest: {
+					mainModule: "index.js",
+					modules: {
+						"index.js": {
+							type: "esm",
+							contents: `
+								import { WorkerEntrypoint } from "cloudflare:workers";
+
+								export default class extends WorkerEntrypoint {
+									run(model, options) {
+										return { response: "Hello from a mock model" };
+									}
+								}
+							`,
+						},
+					},
+				},
+			},
+		},
+	],
+});
+```
+
+</TypeScriptExample>
+
+</CliVariant>
+</CliVariants>
