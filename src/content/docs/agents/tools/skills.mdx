@@ -1,6 +1,6 @@
 ---
 title: Skills
-description: Give your agent Agent Skills tools to discover, load, and read skills on demand. Use Think, Pi Durable, AI SDK, or your own harness.
+description: Give your agent skill tools to discover, load, and read skills on demand. Use Think, Pi Durable, AI SDK, or your own harness.
 pcx_content_type: integration-guide
 sidebar:
   order: 5
@@ -10,18 +10,18 @@ products:
 
 import { PackageManagers, Steps, TypeScriptExample } from "~/components";
 
-Give your agent tools to use [Agent Skills](/agents/skills/): on-demand instructions, references, and scripts stored as `SKILL.md` folders. The model sees a short catalog of skill names and descriptions, then loads a skill only when a task matches it.
+Give your agent tools to use [skills](/agents/skills/): on-demand instructions, references, and scripts stored as `SKILL.md` folders. The model sees a short catalog of skill names and descriptions, then loads a skill only when a task matches it.
 
-Skills come from [sources](/agents/skills/sources/computer/): a Computer Workspace, an R2 bucket, or code. The tools are the same whichever source you use.
+Skills come from [sources](/agents/skills/sources/): a Computer Workspace, an R2 bucket, or code. The tools are the same whichever source you use.
 
 Use the supplied adapters with [Think](/agents/harnesses/think/), [Pi Durable](/agents/harnesses/pi/), or the AI SDK. For another harness, use the catalog functions in `agents/skills`.
 
 ## What the tools add
 
-| Tool                  | What it does                                                                                                  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `activate_skill`      | Returns a skill's instructions, its folder when it has one, and the list of files bundled with it.            |
-| `read_skill_resource` | Returns one bundled file, by `{ name, path }` or a qualified path such as `release-notes/references/guide.md`. |
+| Tool                  | What it does                                                                                                              |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `activate_skill`      | Returns a skill's instructions, its folder when it has one, and the list of files bundled with it.                        |
+| `read_skill_resource` | Returns one bundled file, by `{ name, path }` or a qualified path such as `release-notes/references/guide.md`.            |
 | `run_skill_script`    | Runs a bundled script. Only added when you set the experimental [script runner](/agents/skills/execution/#script-runner). |
 
 The tools only appear when at least one skill is available. `name` is limited to the skills in the catalog. Binary files are returned as base64.
@@ -45,7 +45,7 @@ These examples require an existing harness. For a new agent, start with [Think](
 
    <PackageManagers pkg="agents@latest" />
 
-2. Choose a [source](/agents/skills/sources/computer/) for your skills.
+2. Choose a [source](/agents/skills/sources/) for your skills.
 
 3. Register the tools with your harness using one of the examples that follow.
 
@@ -167,18 +167,18 @@ Define `name` as one of `catalog.skills.map((entry) => entry.skill.name)`. Add `
 
 A broken skill never stops the agent. `loadSkillCatalog()` reports problems in `catalog.diagnostics` and keeps the other skills:
 
-| Diagnostic       | Cause                                                                                          |
-| ---------------- | ---------------------------------------------------------------------------------------------- |
-| `SkillWarning`   | A skill breaks a [specification rule](/agents/skills/#validation) but was loaded anyway.        |
+| Diagnostic       | Cause                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------- |
+| `SkillWarning`   | A skill breaks a [specification rule](/agents/skills/#validation) but was loaded anyway.                |
 | `InvalidSkill`   | A skill could not be loaded, for example because it has no `description`. It is not shown to the model. |
-| `SourceFailed`   | A source could not be listed, for example because the bucket was unavailable.                  |
-| `DuplicateSkill` | Two sources provide the same skill name. The first source wins.                                |
+| `SourceFailed`   | A source could not be listed, for example because the bucket was unavailable.                           |
+| `DuplicateSkill` | Two sources provide the same skill name. The first source wins.                                         |
 
 Tool failures, such as an unknown skill or a missing file, are returned to the model as tool errors so it can try again. The AI SDK tools throw, and the Pi tools return `isError: true`.
 
 ## Related
 
-- [Agent Skills concepts](/agents/concepts/agent-skills/): the open format and progressive disclosure
-- [Agent Skills](/agents/skills/): sources and validation in the Agents SDK
+- [Skills concepts](/agents/concepts/skills/): the open format and progressive disclosure
+- [Skills](/agents/skills/): sources and validation in the Agents SDK
 - [Execution](/agents/skills/execution/): run skill scripts
 - [File system](/agents/tools/filesystem/): give the agent a Workspace to store skills in

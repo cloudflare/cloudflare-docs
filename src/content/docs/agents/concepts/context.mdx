@@ -18,7 +18,7 @@ Context is everything the model is told on a request besides the conversation it
 
 **Tool descriptions.** Each tool's name, description, and input schema. The model reads them to decide which tool to call, so they go in every request, and a long tool list costs tokens on every turn.
 
-**Skills.** A [skill](/agents/concepts/agent-skills/) is a set of instructions and files for one kind of task. The request carries a short catalog, one line per skill, and the model loads a skill's instructions with a tool call only when a task needs them. For most agents, skills are the way to add knowledge and procedures: they cost little until they are used, and other agents can read the same skill files.
+**Skills.** A [skill](/agents/concepts/skills/) is a set of instructions and files for one kind of task. The request carries a short catalog, one line per skill, and the model loads a skill's instructions with a tool call only when a task needs them. For most agents, skills are the way to add knowledge and procedures: they cost little until they are used, and other agents can read the same skill files.
 
 **Memory.** Facts the agent saves so they outlast the conversation that taught them, such as the user's time zone or the decision made last week. The agent writes them with a tool to storage you choose, such as SQLite in the Durable Object, and they reach the model again either in the system prompt or when the agent looks them up with a search tool. Memory is not the transcript: compaction can summarize the conversation that taught a fact, and the saved fact stays as it was.
 
@@ -65,5 +65,5 @@ To see whether you are hitting the cache, read the usage the provider returns wi
 ## Related
 
 - [Sessions](/agents/concepts/sessions/): the transcript, and how it becomes a request.
-- [Skills](/agents/concepts/agent-skills/): instructions and files the model loads on demand.
+- [Skills](/agents/concepts/skills/): instructions and files the model loads on demand.
 - [Think context](/agents/harnesses/think/context/): context blocks in Think.
