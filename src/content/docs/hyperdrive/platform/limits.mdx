@@ -58,6 +58,8 @@ These limits apply to queries sent through Hyperdrive.
 
 Queries exceeding the maximum duration are terminated. Query responses larger than 50 MB are not cached but are still returned to your Worker.
 
+The duration limit applies to each statement, not to a transaction as a whole. To understand what happens to an open transaction when the client disconnects, refer to [Connection lifecycle](/hyperdrive/concepts/connection-lifecycle/).
+
 ## Request a limit increase
 
 You can request adjustments to limits that conflict with your project goals by contacting Cloudflare. Not all limits can be increased.
