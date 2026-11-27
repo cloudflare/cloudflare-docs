@@ -95,12 +95,17 @@ export default {
 		const deployments = await response.json();
 
 		for (const deployment of deployments.result) {
-			// Check if the deployment is older than `expirationDays`
+			// Skip production deployments so the live deployment is never deleted
+			if (deployment.environment === "production") {
+				continue;
+			}
+
+			// Check if the preview deployment is older than `expirationDays`
 			if (
 				(Date.now() - new Date(deployment.created_on)) / 86400000 >
 				expirationDays
 			) {
-				// Delete the deployment (`force=true` also deletes aliased deployments)
+				// Delete the preview deployment (`force=true` also deletes aliased preview deployments)
 				await fetch(`${endpoint}/${deployment.id}?force=true`, {
 					method: "DELETE",
 					headers: {
