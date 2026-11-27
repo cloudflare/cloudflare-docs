@@ -4,24 +4,21 @@ pcx_content_type: get-started
 head:
   - tag: title
     content: Create projects with C3 CLI
-description: Use C3 (`create-cloudflare` CLI) to set up and deploy new
-  applications using framework-specific setup guides to ensure each new
-  application follows Cloudflare and any third-party best practices for
-  deployment.
+description: Create a Cloudflare Pages project with C3 (`create-cloudflare` CLI). For new Workers projects, use `cf init` or automatic configuration.
 products:
   - pages
 ---
 
 import {
 	Render,
-	TabItem,
-	Tabs,
 	Type,
 	MetaInfo,
 	PackageManagers,
 } from "~/components";
 
-Cloudflare provides a CLI command for creating new Workers and Pages projects — `npm create cloudflare`, powered by the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare).
+For new Cloudflare Workers projects, use [`cf init`](/cf/get-started/first-worker/) with the Cloudflare CLI or [automatic configuration](/workers/framework-guides/automatic-configuration/) (`wrangler deploy` / `wrangler setup`).
+
+Cloudflare provides `npm create cloudflare`, powered by the [`create-cloudflare` package](https://www.npmjs.com/package/create-cloudflare), for scaffolding Pages projects from templates.
 
 ## Create a new application
 
@@ -39,20 +36,20 @@ To create a Pages project you must now specify the `--platform=pages` arg, other
 
 If you choose the "Framework Starter" option, you will be prompted to choose a framework to use. The following frameworks are currently supported:
 
-- [Angular](/pages/framework-guides/deploy-an-angular-site/)
-- [Astro](/pages/framework-guides/deploy-an-astro-site/)
-- [Docusaurus](/pages/framework-guides/deploy-a-docusaurus-site/)
-- [Gatsby](/pages/framework-guides/deploy-a-gatsby-site/)
-- [Hono](/pages/framework-guides/deploy-a-hono-site/)
-- [Next.js static exports](/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/)
-- [Nuxt](/pages/framework-guides/deploy-a-nuxt-site/)
-- [Qwik](/pages/framework-guides/deploy-a-qwik-site/)
-- [React](/pages/framework-guides/deploy-a-react-site/)
-- [Redwood](/workers/framework-guides/web-apps/redwoodsdk/)
-- [Remix](/pages/framework-guides/deploy-a-remix-site/)
-- [SolidStart](/pages/framework-guides/deploy-a-solid-start-site/)
-- [SvelteKit](/pages/framework-guides/deploy-a-svelte-kit-site/)
-- [Vue](/pages/framework-guides/deploy-a-vue-site/)
+- [Angular](/workers/framework-guides/web-apps/more-web-frameworks/angular/)
+- [Astro](/workers/framework-guides/web-apps/astro/)
+- [Docusaurus](/workers/framework-guides/web-apps/more-web-frameworks/docusaurus/)
+- [Gatsby](/workers/framework-guides/web-apps/more-web-frameworks/gatsby/)
+- [Hono](/workers/framework-guides/web-apps/more-web-frameworks/hono/)
+- [Next.js](/workers/framework-guides/web-apps/nextjs/)
+- [Nuxt](/workers/framework-guides/web-apps/more-web-frameworks/nuxt/)
+- [Qwik](/workers/framework-guides/web-apps/more-web-frameworks/qwik/)
+- [React](/workers/framework-guides/web-apps/react/)
+- [RedwoodSDK](/workers/framework-guides/web-apps/redwoodsdk/)
+- [Remix](/workers/framework-guides/web-apps/remix/)
+- [SolidStart](/workers/framework-guides/web-apps/more-web-frameworks/solid/)
+- [SvelteKit](/workers/framework-guides/web-apps/sveltekit/)
+- [Vue](/workers/framework-guides/web-apps/vue/)
 
 When you use a framework, `npm create cloudflare` directly uses the framework's own command for generating a new projects, which may prompt additional questions. This ensures that the project you create is up-to-date with the latest version of the framework, and you have all the same options when creating you project via `npm create cloudflare` that you would if you created your project using the framework's tooling directly.
 
