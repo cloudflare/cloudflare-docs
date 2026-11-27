@@ -22,7 +22,7 @@ This page contains examples of the JSON objects used in the Programmable Flow Pr
 {
   "id": "31c70c65-9f81-4669-94ed-1e1e041e7b06",
   "name": "rate-limiter",
-  "status": "success",
+  "state": "success",
   "version": 1,
   "created_on": "2024-01-01T13:06:04.721954+01:00",
   "modified_on": "2024-01-01T13:06:04.721954+01:00"
@@ -32,9 +32,12 @@ This page contains examples of the JSON objects used in the Programmable Flow Pr
 | Field | Description |
 | --- | --- |
 | `id` | Unique identifier for the program. |
-| `name` | Name of the program, derived from the uploaded filename. |
-| `status` | Compilation and verification status. One of `success` or `failed`. Programs with `failed` status are automatically deleted after 30 days of inactivity. |
-| `version` | Current program version. A new program starts at `1`, and each update increments the version. |
+| `name` | Name of the program, from the `X-Program-Name` header. Up to 64 bytes, and unique in the account. Defaults to the program ID. |
+| `state` | Result of the compilation and verification of the current version: `success`, `failed_compiler`, or `failed_verifier`. Only programs in the `success` state can be used in rules. Cloudflare automatically deletes programs that are not in the `success` state, are not used by any rule, and have not been modified for 30 days. |
+| `err_msg` | Compiler or verifier output, if the program is not in the `success` state. |
+| `version` | Current program version. A new program starts at `1`, and each update increments the version. For details, refer to [Program versions](/ddos-protection/advanced-ddos-systems/api/programmable-flow-protection/#program-versions). |
+| `active` | Whether any rule uses the program. Only accurate in list responses. In other responses, the value is always `false`. |
+| `rules_count` | Number of rules that use the program. Only accurate in list responses. In other responses, the value is always `0`. |
 | `created_on` | Timestamp when the program was created. |
 | `modified_on` | Timestamp when the program was last modified. |
 
@@ -58,11 +61,11 @@ This page contains examples of the JSON objects used in the Programmable Flow Pr
 | --- | --- |
 | `id` | Unique identifier for the rule. |
 | `program_id` | The ID of the program this rule executes. |
-| `program_version` | The program version this rule executes. On rule creation, this defaults to the program's current version. |
-| `scope` | The scope of the rule. Must be one of `global`, `region`, or `datacenter`. |
-| `name` | For `global` scope, use `global`. For `region` or `datacenter` scope, provide the region code or datacenter code. |
+| `program_version` | The program version this rule executes. On rule creation, this defaults to the program's current version. When the program is updated, the rule switches to the new version. |
+| `scope` | The scope of the rule. Must be one of `global`, `region`, or `datacenter`. Cannot be changed after the rule is created. |
+| `name` | For `global` scope, use `global`. For `region` scope, use a Cloudflare region code. For `datacenter` scope, use a data center code. Cannot be changed after the rule is created. |
 | `mode` | The rule mode. Must be one of `enabled`, `disabled`, or `monitoring`. |
-| `expression` | A [Rules language expression](/ruleset-engine/rules-language/expressions/) to filter which packets the rule applies to. Optional. |
+| `expression` | A [Rules language expression](/ruleset-engine/rules-language/expressions/) that selects the packets the rule applies to. Required. Use `true` to apply the rule to all UDP packets. |
 | `created_on` | Timestamp when the rule was created. |
 | `modified_on` | Timestamp when the rule was last modified. |
 
@@ -70,23 +73,27 @@ This page contains examples of the JSON objects used in the Programmable Flow Pr
 
 The `scope` field determines where the rule executes:
 
-- `global` — The rule executes at all Cloudflare locations. You can only create one global rule per account.
-- `region` — The rule executes at all Cloudflare locations within the specified region.
-- `datacenter` — The rule executes only at the specified Cloudflare datacenter.
+- `global`: the rule executes at all Cloudflare data centers.
+- `region`: the rule executes at all Cloudflare data centers within the specified region.
+- `datacenter`: the rule executes only at the specified Cloudflare data center.
 
-When multiple rules match a packet, the rule with the most specific scope executes. A datacenter-scoped rule takes precedence over a region-scoped rule, which takes precedence over a global rule.
+Each combination of scope and name can only have one rule, so an account can have only one global rule.
+
+Each data center runs only the rule with the most specific scope: a data center rule takes precedence over a region rule, which takes precedence over the global rule. If a packet does not match the expression of that rule, Cloudflare passes the packet without running a program. For details, refer to [Rules](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#rules).
 
 ### Mode
 
 The `mode` field determines how the rule behaves:
 
-- `enabled` — The program runs and its verdict (pass or drop) is applied to packets.
-- `disabled` — The rule is inactive and the program does not run.
-- `monitoring` — The program runs but packets are never dropped, regardless of the program's verdict. Use this mode to test a program before enabling it.
+- `enabled`: the program runs and its verdict (pass or drop) is applied to packets.
+- `disabled`: the rule is inactive, the program does not run, and the state of the rule is deleted.
+- `monitoring`: the program runs and updates its state, but packets are never dropped and challenges are not sent. Use this mode to test a program before enabling it.
+
+For details, refer to [Mode](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#mode).
 
 ### Expression
 
-The `expression` field is a [Rules language expression](/ruleset-engine/rules-language/expressions/) up to 8,192 characters. The expression filters which packets the rule applies to. Only packets matching the expression are processed by the program.
+The `expression` field is a [Rules language expression](/ruleset-engine/rules-language/expressions/) of up to 8,192 bytes, with up to 32 levels of nesting. The expression selects which packets the rule applies to. Only packets matching the expression are processed by the program. Expressions cannot use functions.
 
 Supported fields:
 
@@ -95,13 +102,11 @@ Supported fields:
 - `udp.srcport`
 - `udp.dstport`
 
-If the expression is empty or omitted, the rule applies to all UDP packets within its scope.
-
-For more information on rule settings, refer to [Rule settings](/ddos-protection/advanced-ddos-systems/concepts/#rule-settings).
+The `expression` field is required. To apply the rule to all UDP packets within its scope, use the expression `true`.
 
 ## Parameters
 
-The `params` object contains all of the account's [parameter maps](/ddos-protection/advanced-ddos-systems/overview/programmable-flow-protection/#parameter-maps), keyed by name.
+The `params` object contains all of the account's [parameter maps](/ddos-protection/advanced-ddos-systems/programmable-flow-protection/concepts/#parameter-maps), keyed by name.
 
 ```json
 {
@@ -142,6 +147,6 @@ All fields are required.
 
 ### Entries
 
-Each key must be a single IP address that matches the map's `key` type. Each value must be a non-negative integer that fits the map's `value` type.
+Each key must be a single IP address that matches the map's `key` type. Each value must be a non-negative integer that fits the map's `value` type. The API rejects IPv4-mapped IPv6 addresses, addresses with a zone, keys that are equivalent to another key in the same map, and values with leading zeros, decimals, or exponents. Map names must be non-empty and fit on one line.
 
 For `u64` maps, you can also write values as strings, such as `"18446744073709551615"`. Use strings for values above `9007199254740991`, because many JSON libraries round larger numbers.
