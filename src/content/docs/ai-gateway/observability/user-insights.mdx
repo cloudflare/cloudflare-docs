@@ -8,7 +8,24 @@ products:
   - ai-gateway
 ---
 
+import { DashButton, Steps } from "~/components";
+
 The User Insights dashboard shows how much your organization spends on AI, which identities are responsible for that spend, and which users deviate from their typical usage. It uses the traffic already flowing through your gateway, so there is no additional setup.
+
+## View User Insights
+
+<Steps>
+
+1. In the Cloudflare dashboard, go to the **AI Gateway** page.
+
+   <DashButton url="/?to=/:account/ai/ai-gateway" />
+
+2. Select your gateway.
+3. Select **Analytics** > **User Insights**.
+
+</Steps>
+
+User Insights shows the last 30 days until you select another time range, and shows at most 30 days.
 
 ## Attribute usage to identities
 
