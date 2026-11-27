@@ -98,6 +98,8 @@ To update a named image, change its Dockerfile or set `image` to a new digest-pi
 
 Deploying an updated image map does not restart running Containers. A running Container continues to use its startup image. Durable Object code decides when to stop that Container and start it with the updated reference. This application-controlled restart is how you roll out image changes with the `durable_object` policy.
 
+#### Use the new image on next start
+
 To keep a running Container on its current image, use the configured image only on its next start:
 
 <TypeScriptExample filename="src/index.ts">
@@ -114,9 +116,11 @@ if (!this.ctx.container.running) {
 
 </TypeScriptExample>
 
+#### Replace immediately
+
 To upgrade a running Container immediately, compare its image with the configured image. When they differ, stop the Container and start it with the configured image.
 
-`inspect()` reports an empty image while a Container is starting and for a Container restored from a snapshot. The following example does not replace a Container in either case:
+`inspect()` reports an empty image while a Container is starting and for a Container restored from a snapshot. Both replacement examples skip these cases.
 
 <TypeScriptExample filename="src/index.ts">
 
@@ -143,23 +147,51 @@ if (!this.ctx.container.running) {
 `destroy()` stops the Container immediately. In-progress work and any filesystem changes made since startup are lost. To preserve the filesystem, create a [snapshot](/containers/guides/snapshots/) before you stop the Container. A snapshot is tied to the image it was created from, so you cannot restore it onto the updated image.
 :::
 
-To let in-progress work finish before upgrading, send `SIGTERM` (`15`) with [`signal()`](/containers/api/durable-object-container/#signal) and wait for [`monitor()`](/containers/api/durable-object-container/#monitor) to settle before starting the updated image. Handle `SIGTERM` in your container process so it exits cleanly after draining active work:
+#### Replace after draining
+
+To give in-progress work time to finish before upgrading, send `SIGTERM` (`15`) with [`signal()`](/containers/api/durable-object-container/#signal). Handle `SIGTERM` in your container process so it stops accepting new work and exits after finishing active work.
+
+Wait for [`monitor()`](/containers/api/durable-object-container/#monitor) up to a deadline you choose. This example waits up to 30 seconds, then calls [`destroy()`](/containers/api/durable-object-container/#destroy) if the Container is still running. The fallback stops any remaining work before the Container starts with the updated image.
 
 <TypeScriptExample filename="src/index.ts">
 
 ```ts
-const image = this.ctx.container.images.base;
-const info = await this.ctx.container.inspect();
-
-if (info && info.image !== "" && info.image !== image) {
-	this.ctx.container.signal(15);
-	await this.ctx.container.monitor().catch(() => {
-		// monitor() rejects on non-zero exit codes
-	});
+const container = this.ctx.container;
+if (!container) {
+	throw new Error("No container is configured for this Durable Object");
 }
 
-if (!this.ctx.container.running) {
-	this.ctx.container.start({
+const image = container.images.base;
+const info = await container.inspect();
+
+if (info && info.image !== "" && info.image !== image) {
+	const SIGTERM = 15;
+	const drainTimeoutMs = 30_000;
+	let drainTimer: ReturnType<typeof setTimeout> | undefined;
+
+	container.signal(SIGTERM);
+	try {
+		await Promise.race([
+			container.monitor().catch((error) => {
+				console.error("Container stopped with an error", error);
+			}),
+			new Promise<void>((resolve) => {
+				drainTimer = setTimeout(resolve, drainTimeoutMs);
+			}),
+		]);
+	} finally {
+		if (drainTimer !== undefined) {
+			clearTimeout(drainTimer);
+		}
+	}
+
+	if (container.running) {
+		await container.destroy();
+	}
+}
+
+if (!container.running) {
+	container.start({
 		image,
 		instance: "standard-2",
 		enableInternet: false,

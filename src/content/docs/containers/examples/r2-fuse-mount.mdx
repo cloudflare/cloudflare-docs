@@ -22,7 +22,7 @@ Mount an [R2 bucket](/r2/) with Filesystem in Userspace (FUSE). This example sta
 FUSE provides filesystem access to object storage. It does not provide local-disk performance or full POSIX filesystem semantics. It is useful for reading datasets, models, and shared assets.
 
 :::note
-If your container only needs HTTP object access rather than a POSIX mount, use [`ctx.container.interceptOutboundHttp()`](/containers/configuration/workers-connections/) to forward requests through a `WorkerEntrypoint` with an R2 binding. That pattern keeps R2 credentials out of the container and works with `enableInternet: false`.
+If your container only needs to read R2 objects over HTTP, [use a Worker with an R2 binding](/containers/configuration/workers-connections/#use-bindings-in-an-entrypoint) instead of mounting the bucket.
 :::
 
 ## Configure the Worker
